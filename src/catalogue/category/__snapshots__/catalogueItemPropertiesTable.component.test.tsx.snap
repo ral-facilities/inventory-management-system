@@ -1,0 +1,441 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CatalogeItemPropertiesTable > renders table correctly (editing properties) 1`] = `
+<DocumentFragment>
+  <div
+    style="width: 100%;"
+  >
+    <div
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-1atu56z-MuiPaper-root"
+    >
+      <div
+        class="MuiTableContainer-root css-bkm888-MuiTableContainer-root"
+        data-testid="properties-table-container"
+      >
+        <table
+          class="MuiTable-root MuiTable-stickyHeader css-ts728e-MuiTable-root"
+          style="--header-mrt_row_select-size: 60; --col-mrt_row_select-size: 60; --header-property_name-size: 250; --col-property_name-size: 250; --header-property_type-size: 200; --col-property_type-size: 200; --header-property_allowed_values-size: 300; --col-property_allowed_values-size: 300; --header-property_unit_id-size: 200; --col-property_unit_id-size: 200; --header-property_mandatory-size: 200; --col-property_mandatory-size: 200; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
+        >
+          <thead
+            class="MuiTableHead-root css-q4cnup-MuiTableHead-root"
+          >
+            <tr
+              class="MuiTableRow-root MuiTableRow-head css-ssspk8-MuiTableRow-root"
+            />
+          </thead>
+          <tbody
+            class="MuiTableBody-root css-19hv8cu-MuiTableBody-root"
+          >
+            <tr
+              style="display: grid;"
+            >
+              <td
+                colspan="7"
+                style="display: grid;"
+              >
+                <p
+                  class="MuiTypography-root MuiTypography-body1 css-4ohuce-MuiTypography-root"
+                >
+                  No records to display
+                </p>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot
+            class="MuiTableFooter-root css-4ar9ic-MuiTableFooter-root"
+          />
+        </table>
+      </div>
+      <div
+        class="MuiBox-root css-10gei56"
+      >
+        <div
+          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-entered css-v9zqoq-MuiCollapse-root"
+          style="min-height: 0px;"
+        >
+          <div
+            class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+          >
+            <div
+              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+            >
+              <span
+                aria-busy="true"
+                aria-label="Loading"
+                class="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate css-qprkun-MuiLinearProgress-root"
+                role="progressbar"
+              >
+                <span
+                  class="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Indeterminate css-5ir5xx-MuiLinearProgress-bar1"
+                />
+                <span
+                  class="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar2Indeterminate css-1r8wrcl-MuiLinearProgress-bar2"
+                />
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+          style="min-height: 0px;"
+        >
+          <div
+            class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+          >
+            <div
+              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+            >
+              <div
+                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-1pnnppi-MuiPaper-root-MuiAlert-root"
+                role="alert"
+              >
+                <div
+                  class="MuiAlert-message css-1pxa9xg-MuiAlert-message"
+                >
+                  <div
+                    class="MuiStack-root css-5kul5x-MuiStack-root"
+                  >
+                    <div
+                      class="MuiBox-root css-k008qs"
+                    >
+                       
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="MuiBox-root css-1llu0od"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-13zw5gk-MuiTypography-root"
+          >
+            Returned 0 out of 3 Properties
+          </p>
+          <div
+            class="MuiBox-root css-nokk8"
+          >
+            <div
+              class="MuiTablePagination-root MuiBox-root css-8k4lth"
+            >
+              <div
+                class="MuiBox-root css-exd1zr"
+              >
+                <label
+                  class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-uqq6zz-MuiFormLabel-root-MuiInputLabel-root"
+                  for="mrt-rows-per-page"
+                >
+                  Rows per page
+                </label>
+                <div
+                  class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
+                >
+                  <div
+                    aria-controls=":r1:"
+                    aria-expanded="false"
+                    aria-haspopup="listbox"
+                    aria-label="Rows per page"
+                    class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input"
+                    role="combobox"
+                    tabindex="0"
+                  >
+                    5
+                  </div>
+                  <input
+                    aria-hidden="true"
+                    aria-invalid="false"
+                    class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                    id="mrt-rows-per-page"
+                    tabindex="-1"
+                    value="5"
+                  />
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon"
+                    data-testid="ArrowDropDownIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M7 10l5 5 5-5z"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <nav
+                aria-label="pagination navigation"
+                class="MuiPagination-root MuiPagination-outlined css-1oj2twp-MuiPagination-root"
+              >
+                <ul
+                  class="MuiPagination-ul css-wjh20t-MuiPagination-ul"
+                >
+                  <li>
+                    <button
+                      aria-label="Go to previous page"
+                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
+                      disabled=""
+                      tabindex="-1"
+                      type="button"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiPaginationItem-icon css-g2z002-MuiSvgIcon-root-MuiPaginationItem-icon"
+                        data-testid="ChevronLeftIcon"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"
+                        />
+                      </svg>
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      aria-label="Go to next page"
+                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
+                      disabled=""
+                      tabindex="-1"
+                      type="button"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiPaginationItem-icon css-g2z002-MuiSvgIcon-root-MuiPaginationItem-icon"
+                        data-testid="ChevronRightIcon"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                        />
+                      </svg>
+                    </button>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`CatalogeItemPropertiesTable > renders table correctly (not editing properties) 1`] = `
+<DocumentFragment>
+  <div
+    style="width: 100%;"
+  >
+    <div
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-1atu56z-MuiPaper-root"
+    >
+      <div
+        class="MuiTableContainer-root css-yaerxu-MuiTableContainer-root"
+        data-testid="properties-table-container"
+      >
+        <table
+          class="MuiTable-root MuiTable-stickyHeader css-ts728e-MuiTable-root"
+          style="--header-property_name-size: 250; --col-property_name-size: 250; --header-property_type-size: 200; --col-property_type-size: 200; --header-property_allowed_values-size: 300; --col-property_allowed_values-size: 300; --header-property_unit_id-size: 200; --col-property_unit_id-size: 200; --header-property_mandatory-size: 200; --col-property_mandatory-size: 200; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
+        >
+          <thead
+            class="MuiTableHead-root css-q4cnup-MuiTableHead-root"
+          >
+            <tr
+              class="MuiTableRow-root MuiTableRow-head css-ssspk8-MuiTableRow-root"
+            />
+          </thead>
+          <tbody
+            class="MuiTableBody-root css-129p5vw-MuiTableBody-root"
+          >
+            <tr
+              aria-label="Pumping Speed row"
+              class="MuiTableRow-root MuiTableRow-root css-i1y727-MuiTableRow-root-MuiTableRow-root"
+              data-index="0"
+              role="row"
+            />
+            <tr
+              aria-label="Ultimate Pressure row"
+              class="MuiTableRow-root MuiTableRow-root css-i1y727-MuiTableRow-root-MuiTableRow-root"
+              data-index="1"
+              role="row"
+            />
+            <tr
+              aria-label="Axis row"
+              class="MuiTableRow-root MuiTableRow-root css-i1y727-MuiTableRow-root-MuiTableRow-root"
+              data-index="2"
+              role="row"
+            />
+          </tbody>
+          <tfoot
+            class="MuiTableFooter-root css-4ar9ic-MuiTableFooter-root"
+          />
+        </table>
+      </div>
+      <div
+        class="MuiBox-root css-10gei56"
+      >
+        <div
+          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+          style="min-height: 0px;"
+        >
+          <div
+            class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+          >
+            <div
+              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+            >
+              <div
+                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-3fnbcm-MuiPaper-root-MuiAlert-root"
+                role="alert"
+              >
+                <div
+                  class="MuiAlert-message css-1pxa9xg-MuiAlert-message"
+                >
+                  <div
+                    class="MuiStack-root css-5kul5x-MuiStack-root"
+                  >
+                    <div
+                      class="MuiBox-root css-k008qs"
+                    >
+                       
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="MuiBox-root css-1llu0od"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-13zw5gk-MuiTypography-root"
+          >
+            Total Properties: 3
+          </p>
+          <div
+            class="MuiBox-root css-nokk8"
+          >
+            <div
+              class="MuiTablePagination-root MuiBox-root css-8k4lth"
+            >
+              <div
+                class="MuiBox-root css-exd1zr"
+              >
+                <label
+                  class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-uqq6zz-MuiFormLabel-root-MuiInputLabel-root"
+                  for="mrt-rows-per-page"
+                >
+                  Rows per page
+                </label>
+                <div
+                  class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
+                >
+                  <div
+                    aria-controls=":r0:"
+                    aria-expanded="false"
+                    aria-haspopup="listbox"
+                    aria-label="Rows per page"
+                    class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input"
+                    role="combobox"
+                    tabindex="0"
+                  >
+                    5
+                  </div>
+                  <input
+                    aria-hidden="true"
+                    aria-invalid="false"
+                    class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                    id="mrt-rows-per-page"
+                    tabindex="-1"
+                    value="5"
+                  />
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon"
+                    data-testid="ArrowDropDownIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M7 10l5 5 5-5z"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <nav
+                aria-label="pagination navigation"
+                class="MuiPagination-root MuiPagination-outlined css-1oj2twp-MuiPagination-root"
+              >
+                <ul
+                  class="MuiPagination-ul css-wjh20t-MuiPagination-ul"
+                >
+                  <li>
+                    <button
+                      aria-label="Go to previous page"
+                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
+                      disabled=""
+                      tabindex="-1"
+                      type="button"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiPaginationItem-icon css-g2z002-MuiSvgIcon-root-MuiPaginationItem-icon"
+                        data-testid="ChevronLeftIcon"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"
+                        />
+                      </svg>
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      aria-current="true"
+                      aria-label="page 1"
+                      class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-selected MuiPaginationItem-page css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
+                      tabindex="0"
+                      type="button"
+                    >
+                      1
+                      <span
+                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                      />
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      aria-label="Go to next page"
+                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
+                      disabled=""
+                      tabindex="-1"
+                      type="button"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiPaginationItem-icon css-g2z002-MuiSvgIcon-root-MuiPaginationItem-icon"
+                        data-testid="ChevronRightIcon"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                        />
+                      </svg>
+                    </button>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

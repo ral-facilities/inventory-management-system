@@ -413,15 +413,10 @@ describe('CatalogueCategoryDirectoryDialog', () => {
 
       expect(screen.getAllByLabelText('Property Name *').length).toEqual(1);
       await user.click(screen.getByRole('button', { name: 'Back' }));
-      await waitFor(() => {
-        // expect(screen.getByText('Name')).toBeInTheDocument();
-        const propertyTable = screen.getByRole('table');
+
+      const propertyTable = screen.getByRole('table');
+      await waitFor(async () => {
         expect(propertyTable).toBeInTheDocument();
-        // eslint-disable-next-line testing-library/no-wait-for-multiple-assertions
-        // expect(
-        //   within(propertyTable).getByText('Pumping Speed')
-        // ).toBeInTheDocument();
-        screen.debug(propertyTable);
       });
 
       await user.click(screen.getByText('Add catalogue item property'));

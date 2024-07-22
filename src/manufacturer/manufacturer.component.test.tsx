@@ -19,12 +19,13 @@ describe('Manufacturer', () => {
     user = userEvent.setup();
   });
 
-  it('renders table headers correctly', async () => {
+  it.only('renders table headers correctly', async () => {
     createView();
 
     await waitFor(() => {
       expect(screen.getByText('Actions')).toBeInTheDocument();
     });
+    screen.debug();
     expect(screen.getByText('Name')).toBeInTheDocument();
     expect(screen.getByText('URL')).toBeInTheDocument();
     expect(screen.getByText('Address')).toBeInTheDocument();

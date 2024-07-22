@@ -10,6 +10,8 @@ import {
   CatalogueCategoryPropertyMigration,
 } from '../../app.types';
 import {
+  TableBodyCellOverFlowTip,
+  TableCellOverFlowTipProps,
   TableGroupedCell,
   TableHeaderOverflowTip,
   displayTableRowCountText,
@@ -19,6 +21,7 @@ import {
 import { useGetUnits } from '../../api/units';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import React from 'react';
+import { TableCellBaseProps, TableRow } from '@mui/material';
 
 export interface PropertiesTableProps {
   properties: AddCatalogueCategoryPropertyWithPlacementIds[];
@@ -79,10 +82,6 @@ export function PropertiesTable(props: PropertiesTableProps) {
           row.property.type === 'string' ? 'Text' : row.property.type,
         id: 'property.type',
         size: 200,
-        Cell: ({ row }) =>
-          row.original.property.type === 'string'
-            ? 'Text'
-            : row.original.property.type,
         GroupedCell: TableGroupedCell,
       },
       {
@@ -101,7 +100,7 @@ export function PropertiesTable(props: PropertiesTableProps) {
       {
         header: 'Unit',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => row.property.unit_id,
+        //accessorFn: (row) => row.property.unit_id,
         id: 'property.unit_id',
         size: 200,
         enableGrouping: false,
@@ -184,6 +183,13 @@ export function PropertiesTable(props: PropertiesTableProps) {
       // @ts-expect-error: MRT Table Container props does not have data-testid
       'data-testid': 'properties-table-container',
     },
+
+    muiTableBodyRowProps: ({ row }) => {
+      return {
+        component: TableRow,
+        'aria-label': `${row.original.property.name} row`,
+      };
+    },
     // muiTableBodyCellProps: ({ column }) => {
     //   const disabledGroupedHeaderColumnIDs = [
     //     'item.asset_number',
@@ -215,6 +221,21 @@ export function PropertiesTable(props: PropertiesTableProps) {
     //         }
     //   );
     // },
+    muiTableBodyCellProps: ({ column }) =>
+      // Ignore MRT rendered cells e.g. expand , spacer etc
+      column.id.startsWith('mrt')
+        ? {}
+        : {
+            component: (props: TableCellBaseProps) => {
+              return (
+                <TableBodyCellOverFlowTip
+                  {...({
+                    ...props,
+                  } as TableCellOverFlowTipProps)}
+                />
+              );
+            },
+          },
     muiSelectCheckboxProps: ({ row }) => {
       return {
         onClick: () => handleRowSelection(row),
