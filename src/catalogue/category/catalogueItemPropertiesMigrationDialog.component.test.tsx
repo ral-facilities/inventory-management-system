@@ -392,7 +392,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       );
     });
 
-    it.only('uses labels to navigate through the stepper', async () => {
+    it('uses labels to navigate through the stepper', async () => {
       createView();
       await user.click(
         screen.getByLabelText(

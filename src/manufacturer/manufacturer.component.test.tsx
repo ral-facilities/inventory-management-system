@@ -19,7 +19,7 @@ describe('Manufacturer', () => {
     user = userEvent.setup();
   });
 
-  it.only('renders table headers correctly', async () => {
+  it('renders table headers correctly', async () => {
     createView();
 
     await waitFor(() => {
