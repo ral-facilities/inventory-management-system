@@ -121,6 +121,13 @@ describe('Catalogue', () => {
   it('renders catalogue items table correctly', async () => {
     createView('/catalogue/4');
 
+    await waitFor(
+      () => {
+        expect(screen.queryAllByRole('progressbar').length).toBe(0);
+      },
+      { timeout: 5000 }
+    );
+
     await waitFor(() => {
       expect(screen.getByText('Cameras 1')).toBeInTheDocument();
     });
