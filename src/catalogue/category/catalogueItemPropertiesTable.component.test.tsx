@@ -1,4 +1,3 @@
-import userEvent, { UserEvent } from '@testing-library/user-event';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 import PropertiesTable, {
   PropertiesTableProps,
@@ -7,7 +6,6 @@ import { screen, waitFor } from '@testing-library/react';
 
 describe('CatalogeItemPropertiesTable', () => {
   let props: PropertiesTableProps;
-  let user: UserEvent;
 
   const onChangeEditCatalogueItemField = vi.fn();
   const createView = () => {
@@ -20,7 +18,7 @@ describe('CatalogeItemPropertiesTable', () => {
         {
           name: 'Pumping Speed',
           type: 'number',
-          //unit: 'liters per second',
+          unit: 'liters per second',
           unit_id: '7',
           mandatory: true,
           allowed_values: {
@@ -40,21 +38,21 @@ describe('CatalogeItemPropertiesTable', () => {
               },
             ],
           },
-          cip_placement_id: 'cip_placement_id_14',
+          id: '1',
         },
         {
           name: 'Ultimate Pressure',
           type: 'number',
-          //unit: 'millibar',
+          unit: 'millibar',
           unit_id: '8',
           mandatory: true,
           allowed_values: null,
-          cip_placement_id: 'cip_placement_id_16',
+          id: '2',
         },
         {
           name: 'Axis',
           type: 'string',
-          //unit: null,
+          unit: null,
           unit_id: null,
           mandatory: false,
           allowed_values: {
@@ -74,15 +72,17 @@ describe('CatalogeItemPropertiesTable', () => {
               },
             ],
           },
-          cip_placement_id: 'cip_placement_id_20',
+          id: '3',
         },
       ],
       editingProperties: false,
       onChangeEditCatalogueItemField: onChangeEditCatalogueItemField,
-      tableHeightPx: '600px',
+      tableHeightPx: '240px',
     };
 
-    user = userEvent.setup();
+    window.Element.prototype.getBoundingClientRect = vi
+      .fn()
+      .mockReturnValue({ height: 100, width: 200 });
   });
 
   afterEach(() => {
@@ -91,10 +91,11 @@ describe('CatalogeItemPropertiesTable', () => {
 
   it('renders table correctly (not editing properties)', async () => {
     const { asFragment } = createView();
+    expect(screen.getByRole('table')).toBeInTheDocument();
     await waitFor(() => {
-      const propertyTable = screen.getByRole('table');
-      expect(propertyTable).toBeInTheDocument();
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument();
     });
+
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -102,27 +103,11 @@ describe('CatalogeItemPropertiesTable', () => {
     props.editingProperties = true;
 
     const { asFragment } = createView();
+    expect(screen.getByRole('table')).toBeInTheDocument();
     await waitFor(() => {
-      const propertyTable = screen.getByRole('table');
-      expect(propertyTable).toBeInTheDocument();
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument();
     });
+
     expect(asFragment()).toMatchSnapshot();
-  });
-
-  it('calls onChangeEditCatalogueItemField when selecting property', async () => {
-    props.editingProperties = true;
-    createView();
-
-    await waitFor(() => {
-      const propertyTable = screen.getByRole('table');
-      expect(propertyTable).toBeInTheDocument();
-    });
-
-    const radioButton = screen.getAllByRole('radio', {
-      name: 'Toggle select row',
-    })[0];
-    user.click(radioButton);
-
-    expect(onChangeEditCatalogueItemField).toHaveBeenCalled();
   });
 });

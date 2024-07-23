@@ -6,7 +6,7 @@ import {
   useMaterialReactTable,
 } from 'material-react-table';
 import {
-  AddCatalogueCategoryPropertyWithPlacementIds,
+  CatalogueCategoryProperty,
   CatalogueCategoryPropertyMigration,
 } from '../../app.types';
 import {
@@ -24,7 +24,7 @@ import React from 'react';
 import { TableCellBaseProps, TableRow } from '@mui/material';
 
 export interface PropertiesTableProps {
-  properties: AddCatalogueCategoryPropertyWithPlacementIds[];
+  properties: CatalogueCategoryProperty[];
   editingProperties: boolean;
   onChangeEditCatalogueItemField?: (
     catalogueItemField: CatalogueCategoryPropertyMigration
@@ -33,7 +33,7 @@ export interface PropertiesTableProps {
 }
 
 interface TableRowData {
-  property: AddCatalogueCategoryPropertyWithPlacementIds;
+  property: CatalogueCategoryProperty;
 }
 
 export function PropertiesTable(props: PropertiesTableProps) {
@@ -192,6 +192,7 @@ export function PropertiesTable(props: PropertiesTableProps) {
     muiSelectCheckboxProps: ({ row }) => {
       return {
         onClick: () => handleRowSelection(row),
+        'aria-label': `${row.index} radio button`,
       };
     },
     muiSearchTextFieldProps: {
@@ -207,7 +208,7 @@ export function PropertiesTable(props: PropertiesTableProps) {
     },
     // Functions
     ...onPreservedStatesChange,
-    getRowId: (row) => row.property.cip_placement_id,
+    getRowId: (row) => row.property.id,
     renderBottomToolbarCustomActions: ({ table }) =>
       displayTableRowCountText(table, properties, 'Properties', {
         paddingLeft: '8px',

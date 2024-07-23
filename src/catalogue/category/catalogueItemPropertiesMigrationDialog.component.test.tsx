@@ -43,6 +43,10 @@ describe('CatalogueCategoryDirectoryDialog', () => {
     };
 
     user = userEvent.setup();
+
+    window.Element.prototype.getBoundingClientRect = vi
+      .fn()
+      .mockReturnValue({ height: 100, width: 200 });
   });
 
   const modifyValues = async (values: {
@@ -69,13 +73,20 @@ describe('CatalogueCategoryDirectoryDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
+      await waitFor(() => {
+        expect(screen.getByRole('table')).toBeInTheDocument();
+      });
+
       if (values.type === 'Edit' && values.editRadio) {
-        const selectedRadioButton = screen.getAllByRole('radio', {
-          name: 'Toggle select row',
-        })[values.editRadio];
-        // const selectedRadioButton = screen.getByLabelText(
-        //   `${values.editRadio} radio button`
-        // );
+        // const selectedRadioButton = within(
+        //   screen.getAllByRole('row')[values.editRadio]
+        // ).getByLabelText('number');
+        // // const selectedRadioButton = screen.getByRole('radio', {
+        // //   name: 'Toggle select row',
+        // // });
+        const selectedRadioButton = screen.getByLabelText(
+          `${values.editRadio} radio button`
+        );
 
         await user.click(selectedRadioButton);
       }
@@ -414,10 +425,11 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       expect(screen.getAllByLabelText('Property Name *').length).toEqual(1);
       await user.click(screen.getByRole('button', { name: 'Back' }));
 
-      const propertyTable = screen.getByRole('table');
-      await waitFor(async () => {
-        expect(propertyTable).toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.getByRole('table')).toBeInTheDocument();
       });
+
+      expect(screen.getByText('Pumping Speed')).toBeInTheDocument();
 
       await user.click(screen.getByText('Add catalogue item property'));
 
