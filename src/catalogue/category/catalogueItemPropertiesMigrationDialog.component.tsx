@@ -225,8 +225,9 @@ function CatalogueItemPropertiesMigrationDialog(
           return !(item.errors && item.errors.fieldName === 'default_value');
         });
     } else {
-      (updatedCatalogueItemField[field] as boolean | string | number | null) =
-        value;
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      updatedCatalogueItemField[field] = value;
     }
 
     setCatalogueItemField(updatedCatalogueItemField);
@@ -654,7 +655,7 @@ function CatalogueItemPropertiesMigrationDialog(
           values:
             catalogueItemField?.type === 'number'
               ? convertedValues
-              : allowedValuesList ?? [],
+              : (allowedValuesList ?? []),
         };
       }
 
@@ -724,7 +725,7 @@ function CatalogueItemPropertiesMigrationDialog(
           values:
             catalogueItemField.type === 'number'
               ? convertedValues
-              : allowedValuesList ?? [],
+              : (allowedValuesList ?? []),
         };
 
         isAllowedValuesUpdated =
