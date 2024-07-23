@@ -394,3 +394,29 @@ export const displayTableRowCountText = <TData extends MRT_RowData>(
 
   return <Typography sx={{ ...sx }}>{tableRowCountText}</Typography>;
 };
+
+export const checkForDuplicates = (props: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any[];
+  idName: string;
+  field: string;
+}) => {
+  const { data, idName, field } = props;
+  const duplicateIds: string[] = [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const seenValues: { [key: string]: { [key: string]: string; value: any } } =
+    {};
+
+  data.forEach((value) => {
+    const currentValue = value[field];
+    if (currentValue) {
+      if (seenValues[currentValue]) {
+        duplicateIds.push(value[idName], seenValues[currentValue][idName]);
+      } else {
+        seenValues[currentValue] = value;
+      }
+    }
+  });
+
+  return duplicateIds;
+};
