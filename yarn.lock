@@ -254,7 +254,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.14.6, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.23.9, @babel/runtime@npm:^7.24.7, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.14.6, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.23.9, @babel/runtime@npm:^7.24.8, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
   version: 7.24.8
   resolution: "@babel/runtime@npm:7.24.8"
   dependencies:
@@ -1081,7 +1081,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/system@npm:^5.16.0, @mui/system@npm:^5.16.4":
+"@mui/system@npm:^5.16.2, @mui/system@npm:^5.16.4":
   version: 5.16.4
   resolution: "@mui/system@npm:5.16.4"
   dependencies:
@@ -1121,7 +1121,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/utils@npm:^5.15.14, @mui/utils@npm:^5.16.0, @mui/utils@npm:^5.16.4":
+"@mui/utils@npm:^5.15.14, @mui/utils@npm:^5.16.2, @mui/utils@npm:^5.16.4":
   version: 5.16.4
   resolution: "@mui/utils@npm:5.16.4"
   dependencies:
@@ -1141,13 +1141,13 @@ __metadata:
   linkType: hard
 
 "@mui/x-date-pickers@npm:^7.6.1":
-  version: 7.10.0
-  resolution: "@mui/x-date-pickers@npm:7.10.0"
+  version: 7.11.0
+  resolution: "@mui/x-date-pickers@npm:7.11.0"
   dependencies:
-    "@babel/runtime": "npm:^7.24.7"
+    "@babel/runtime": "npm:^7.24.8"
     "@mui/base": "npm:^5.0.0-beta.40"
-    "@mui/system": "npm:^5.16.0"
-    "@mui/utils": "npm:^5.16.0"
+    "@mui/system": "npm:^5.16.2"
+    "@mui/utils": "npm:^5.16.2"
     "@types/react-transition-group": "npm:^4.4.10"
     clsx: "npm:^2.1.1"
     prop-types: "npm:^15.8.1"
@@ -1184,7 +1184,7 @@ __metadata:
       optional: true
     moment-jalaali:
       optional: true
-  checksum: 10c0/6a9280e909adb1cfeb2355b0dc9e26d5f3c279e61f616099887e35b7bbba9d5a5fce8ff7cd68209aed5710c5e655a4d256ee022043fde54b90b86b1cc063761f
+  checksum: 10c0/5497d136c71cfa29e7c00b6a1a3af11a67911aa775fc14695503944a6e951438a147751fb9b104eb40d231581ed5a9f01440f7ead1313131cee7ce7684f16547
   languageName: node
   linkType: hard
 
