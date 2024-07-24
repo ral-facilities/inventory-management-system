@@ -32,7 +32,6 @@ import {
 } from '../../app.types';
 import { generateUniqueId } from '../../utils';
 import { convertListToNumbers } from './catalogueCategoryDialog.component';
-//import CataloguePropertiesForm from './cataloguePropertiesForm.component';
 import CataloguePropertyForm from './cataloguePropertyForm.component';
 import PropertiesTable from './catalogueItemPropertiesTable.component';
 
@@ -831,20 +830,6 @@ function CatalogueItemPropertiesMigrationDialog(
                 }
                 tableHeightPx="240px"
               />
-              // <CataloguePropertiesForm
-              //   isDisabled={true}
-              //   formFields={updatedSelectedCatalogueCategory.properties}
-              //   onChangeEditCatalogueItemField={
-              //     propertyMigrationType === 'Edit'
-              //       ? onChangeEditCatalogueItemField
-              //       : undefined
-              //   }
-              //   selectedCatalogueItemField={
-              //     propertyMigrationType === 'Edit'
-              //       ? catalogueItemField
-              //       : undefined
-              //   }
-              // />
             )}
           </Grid>
         );

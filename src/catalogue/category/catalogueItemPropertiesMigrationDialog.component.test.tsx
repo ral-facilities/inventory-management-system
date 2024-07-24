@@ -80,12 +80,6 @@ describe('CatalogueCategoryDirectoryDialog', () => {
 
       // 0 evaluates to falsy, therefore check if not undefined
       if (values.type === 'Edit' && values.editRadio !== undefined) {
-        // const selectedRadioButton = within(
-        //   screen.getAllByRole('row')[values.editRadio]
-        // ).getByLabelText('number');
-        // // const selectedRadioButton = screen.getByRole('radio', {
-        // //   name: 'Toggle select row',
-        // // });
         const selectedRadioButton = screen.getByLabelText(
           `${values.editRadio} radio button`
         );

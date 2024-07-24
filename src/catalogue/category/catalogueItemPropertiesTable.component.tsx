@@ -1,7 +1,6 @@
 import {
   MRT_ColumnDef,
   MRT_Row,
-  //MRT_RowSelectionState,
   MaterialReactTable,
   useMaterialReactTable,
 } from 'material-react-table';
@@ -17,7 +16,6 @@ import {
   displayTableRowCountText,
   getPageHeightCalc,
 } from '../../utils';
-//import { PropertyFiltersType } from "../items/catalogueItemsTable.component";
 import { useGetUnits } from '../../api/units';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import React from 'react';
@@ -75,7 +73,7 @@ export function PropertiesTable(props: PropertiesTableProps) {
         accessorFn: (row) =>
           row.property.type === 'string' ? 'Text' : row.property.type,
         id: 'property.type',
-        size: 200,
+        size: editingProperties ? 150 : 200,
         GroupedCell: TableGroupedCell,
       },
       {
@@ -93,7 +91,7 @@ export function PropertiesTable(props: PropertiesTableProps) {
         header: 'Unit',
         Header: TableHeaderOverflowTip,
         id: 'property.unit_id',
-        size: 200,
+        size: editingProperties ? 175 : 200,
         enableGrouping: false,
         Cell: ({ row }) =>
           unitsData?.find((unit) => unit.id === row.original.property.unit_id)
