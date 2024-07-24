@@ -18,7 +18,6 @@ describe('CatalogeItemPropertiesTable', () => {
         {
           name: 'Pumping Speed',
           type: 'number',
-          unit: 'liters per second',
           unit_id: '7',
           mandatory: true,
           allowed_values: {
@@ -38,21 +37,17 @@ describe('CatalogeItemPropertiesTable', () => {
               },
             ],
           },
-          id: '1',
         },
         {
           name: 'Ultimate Pressure',
           type: 'number',
-          unit: 'millibar',
           unit_id: '8',
           mandatory: true,
           allowed_values: null,
-          id: '2',
         },
         {
           name: 'Axis',
           type: 'string',
-          unit: null,
           unit_id: null,
           mandatory: false,
           allowed_values: {
@@ -72,7 +67,6 @@ describe('CatalogeItemPropertiesTable', () => {
               },
             ],
           },
-          id: '3',
         },
       ],
       editingProperties: false,
