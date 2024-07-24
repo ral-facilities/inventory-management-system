@@ -15,8 +15,8 @@ import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { BreadcrumbsInfo } from '../../api/api.types';
 import {
-  useCatalogueBreadcrumbs,
-  useCatalogueCategory,
+  useGetCatalogueBreadcrumbs,
+  useGetCatalogueCategory,
 } from '../../api/catalogueCategories';
 import { useCatalogueItem } from '../../api/catalogueItems';
 import { useGetManufacturer } from '../../api/manufacturers';
@@ -32,10 +32,10 @@ function CatalogueItemsLandingPage() {
   const { data: catalogueItemIdData, isLoading: catalogueItemIdDataLoading } =
     useCatalogueItem(catalogueItemId);
 
-  const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
+  const { data: catalogueBreadcrumbs } = useGetCatalogueBreadcrumbs(
     catalogueItemIdData?.catalogue_category_id
   );
-  const { data: catalogueCategoryData } = useCatalogueCategory(
+  const { data: catalogueCategoryData } = useGetCatalogueCategory(
     catalogueItemIdData?.catalogue_category_id
   );
 

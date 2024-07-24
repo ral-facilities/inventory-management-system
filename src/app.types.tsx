@@ -1,4 +1,4 @@
-import { System } from './api/api.types';
+import { CatalogueCategory, System } from './api/api.types';
 
 export const MicroFrontendId = 'scigateway';
 export const MicroFrontendToken = `${MicroFrontendId}:token`;
@@ -11,18 +11,6 @@ export const TAB_VALUES = [
   'Admin',
 ] as const;
 export type TabValue = (typeof TAB_VALUES)[number];
-
-export interface AddCatalogueCategory {
-  name: string;
-  parent_id?: string | null;
-  is_leaf: boolean;
-  properties?: AddCatalogueCategoryProperty[];
-}
-
-export interface AddCatalogueCategoryWithPlacementIds
-  extends AddCatalogueCategory {
-  properties?: AddCatalogueCategoryPropertyWithPlacementIds[];
-}
 
 export interface EditCatalogueCategory {
   name?: string;
@@ -43,68 +31,6 @@ export interface CopyToCatalogueCategory {
   // Existing known catalogue category names at the destination
   // (for appending to the names to avoid duplication)
   existingCategoryCodes: string[];
-}
-
-export interface CatalogueCategory {
-  id: string;
-  name: string;
-  parent_id: string | null;
-  code: string;
-  is_leaf: boolean;
-  properties?: CatalogueCategoryProperty[];
-  created_time: string;
-  modified_time: string;
-}
-
-export interface AllowedValuesList {
-  type: 'list';
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  values: any[];
-}
-export type AllowedValues = AllowedValuesList;
-
-export interface AddCatalogueCategoryProperty {
-  name: string;
-  type: string;
-  unit_id?: string | null;
-  mandatory: boolean;
-  allowed_values?: AllowedValues | null;
-  default_value?: string | number | boolean;
-}
-
-export interface CatalogueCategoryPropertyMigration {
-  id?: string;
-  name: string;
-  type: string;
-  unit_id?: string | null;
-  mandatory: boolean;
-  allowed_values?: AllowedValues | null;
-  default_value?: string | number | boolean;
-}
-
-export interface AddPropertyMigration {
-  catalogueCategory: CatalogueCategory;
-  property: CatalogueCategoryPropertyMigration;
-}
-
-export interface EditPropertyMigration {
-  catalogueCategory: CatalogueCategory;
-  property: Partial<CatalogueCategoryPropertyMigration>;
-}
-
-export type AddCatalogueCategoryPropertyTypes =
-  | AddCatalogueCategoryProperty
-  | CatalogueCategoryPropertyMigration;
-
-export interface CatalogueCategoryProperty
-  extends AddCatalogueCategoryProperty {
-  id: string;
-  unit?: string | null;
-}
-
-export interface AddCatalogueCategoryPropertyWithPlacementIds
-  extends AddCatalogueCategoryProperty {
-  cip_placement_id: string; // Catalogue item properties (cip)
 }
 
 export interface ObsoleteDetails {
@@ -238,14 +164,6 @@ export interface MoveItemsToSystem {
   usageStatuses: MoveItemsToSystemUsageStatus[];
   selectedItems: Item[];
   targetSystem: System;
-}
-
-export interface CatalogueItemPropertiesErrorsType {
-  cip_placement_id: string;
-  errors: {
-    fieldName: keyof AddCatalogueCategoryProperty;
-    errorMessage: string;
-  } | null;
 }
 
 export interface AdvancedSerialNumberOptionsType {

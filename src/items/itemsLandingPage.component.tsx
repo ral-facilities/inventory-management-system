@@ -16,8 +16,8 @@ import { Link, useParams } from 'react-router-dom';
 
 import { BreadcrumbsInfo } from '../api/api.types';
 import {
-  useCatalogueBreadcrumbs,
-  useCatalogueCategory,
+  useGetCatalogueBreadcrumbs,
+  useGetCatalogueCategory,
 } from '../api/catalogueCategories';
 import { useCatalogueItem } from '../api/catalogueItems';
 import { useItem } from '../api/items';
@@ -40,11 +40,11 @@ function ItemsLandingPage() {
     itemData?.catalogue_item_id
   );
 
-  const { data: catalogueCategoryData } = useCatalogueCategory(
+  const { data: catalogueCategoryData } = useGetCatalogueCategory(
     catalogueItemData?.catalogue_category_id
   );
 
-  const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
+  const { data: catalogueBreadcrumbs } = useGetCatalogueBreadcrumbs(
     catalogueItemData?.catalogue_category_id
   );
 

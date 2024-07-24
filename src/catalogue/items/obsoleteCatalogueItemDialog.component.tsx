@@ -16,17 +16,17 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
+import { CatalogueCategory } from '../../api/api.types';
 import {
-  useCatalogueBreadcrumbs,
-  useCatalogueCategories,
-  useCatalogueCategory,
+  useGetCatalogueBreadcrumbs,
+  useGetCatalogueCategories,
+  useGetCatalogueCategory,
 } from '../../api/catalogueCategories';
 import {
   useCatalogueItem,
   useEditCatalogueItem,
 } from '../../api/catalogueItems';
 import {
-  CatalogueCategory,
   CatalogueItem,
   EditCatalogueItem,
   ObsoleteDetails,
@@ -111,15 +111,15 @@ const ObsoleteCatalogueItemDialog = (
 
   // Current category and its children
   const { data: catalogueCategoryData } =
-    useCatalogueCategory(catalogueCurrDirId);
+    useGetCatalogueCategory(catalogueCurrDirId);
 
   const {
     data: catalogueCategoryDataList,
     isLoading: catalogueCategoryDataListLoading,
-  } = useCatalogueCategories(false, catalogueCurrDirId ?? 'null');
+  } = useGetCatalogueCategories(false, catalogueCurrDirId ?? 'null');
 
   const { data: catalogueBreadcrumbs } =
-    useCatalogueBreadcrumbs(catalogueCurrDirId);
+    useGetCatalogueBreadcrumbs(catalogueCurrDirId);
   const { mutateAsync: editCatalogueItem, isPending: isEditPending } =
     useEditCatalogueItem();
 

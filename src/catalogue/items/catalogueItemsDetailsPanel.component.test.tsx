@@ -7,7 +7,8 @@ import {
 } from '../../testUtils';
 
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import { CatalogueCategory, CatalogueItem } from '../../app.types';
+import { CatalogueCategory } from '../../api/api.types';
+import { CatalogueItem } from '../../app.types';
 import CatalogueItemsDetailsPanel, {
   CatalogueItemsDetailsPanelProps,
 } from './catalogueItemsDetailsPanel.component';

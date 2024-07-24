@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { CatalogueCategory } from '../../app.types';
+import { CatalogueCategory } from '../../api/api.types';
 import { OverflowTip, formatDateTimeStrings } from '../../utils';
 export interface CatalogueCardProps extends CatalogueCategory {
   onChangeOpenDeleteDialog: (catalogueCategory: CatalogueCategory) => void;

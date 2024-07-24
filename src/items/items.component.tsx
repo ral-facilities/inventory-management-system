@@ -3,8 +3,8 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { BreadcrumbsInfo } from '../api/api.types';
 import {
-  useCatalogueBreadcrumbs,
-  useCatalogueCategory,
+  useGetCatalogueBreadcrumbs,
+  useGetCatalogueCategory,
 } from '../api/catalogueCategories';
 import { useCatalogueItem } from '../api/catalogueItems';
 import { useNavigateToCatalogue } from '../catalogue/catalogue.component';
@@ -18,11 +18,11 @@ export function Items() {
 
   const { data: catalogueItem, isLoading: catalogueItemLoading } =
     useCatalogueItem(catalogueItemId);
-  const { data: catalogueCategory } = useCatalogueCategory(
+  const { data: catalogueCategory } = useGetCatalogueCategory(
     catalogueItem?.catalogue_category_id
   );
 
-  const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
+  const { data: catalogueBreadcrumbs } = useGetCatalogueBreadcrumbs(
     catalogueItem?.catalogue_category_id
   );
 

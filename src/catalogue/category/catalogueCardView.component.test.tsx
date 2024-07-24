@@ -1,6 +1,6 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import { CatalogueCategory } from '../../app.types';
+import { CatalogueCategory } from '../../api/api.types';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 import CardView, {
   CatalogueCardViewProps,
@@ -32,6 +32,7 @@ describe('CardView', () => {
         is_leaf: true,
         created_time: '2024-01-01T12:00:00.000+00:00',
         modified_time: '2024-01-02T13:10:10.000+00:00',
+        properties: [],
       });
     }
     return data;

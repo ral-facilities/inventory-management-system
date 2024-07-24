@@ -1,6 +1,7 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import { CatalogueCategory, CatalogueItem } from '../app.types';
+import { CatalogueCategory } from '../api/api.types';
+import { CatalogueItem } from '../app.types';
 import {
   getCatalogueCategoryById,
   getCatalogueItemById,
