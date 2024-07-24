@@ -36,6 +36,7 @@ import {
 } from './state/scigateway.actions';
 import Systems from './systems/systems.component';
 import ViewTabs from './view/viewTabs.component';
+import ErrorPage from './errorPage.component';
 
 export const paths = {
   any: '*',
@@ -73,6 +74,7 @@ const queryClient = new QueryClient({
 const router = createBrowserRouter([
   {
     Component: Layout,
+    errorElement: <ErrorPage />,
     children: [
       { path: paths.any, Component: ViewTabs },
       { path: paths.root, Component: HomePage },
