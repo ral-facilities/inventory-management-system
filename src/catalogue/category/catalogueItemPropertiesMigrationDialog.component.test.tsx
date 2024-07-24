@@ -859,7 +859,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       );
     });
 
-    it.only('edits an existing property allowed values (type number) ', async () => {
+    it('edits an existing property allowed values (type number) ', async () => {
       createView();
       await modifyValues({
         type: 'Edit',
@@ -883,7 +883,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       );
     });
 
-    it.only('display error message if the nothing has changed', async () => {
+    it('display error message if the nothing has changed', async () => {
       createView();
       await modifyValues({
         type: 'Edit',
@@ -915,7 +915,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       expect(formError2).not.toBeInTheDocument();
     });
 
-    it.only('display error message duplicate name', async () => {
+    it('display error message duplicate name', async () => {
       createView();
       await modifyValues({
         type: 'Edit',
