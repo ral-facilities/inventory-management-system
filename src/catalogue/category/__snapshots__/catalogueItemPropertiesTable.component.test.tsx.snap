@@ -14,7 +14,7 @@ exports[`CatalogeItemPropertiesTable > renders table correctly (editing properti
       >
         <table
           class="MuiTable-root MuiTable-stickyHeader css-ts728e-MuiTable-root"
-          style="--header-mrt_row_select-size: 60; --col-mrt_row_select-size: 60; --header-property_name-size: 250; --col-property_name-size: 250; --header-property_type-size: 200; --col-property_type-size: 200; --header-property_allowed_values-size: 300; --col-property_allowed_values-size: 300; --header-property_unit_id-size: 200; --col-property_unit_id-size: 200; --header-property_mandatory-size: 200; --col-property_mandatory-size: 200; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
+          style="--header-mrt_row_select-size: 60; --col-mrt_row_select-size: 60; --header-property_name-size: 250; --col-property_name-size: 250; --header-property_type-size: 150; --col-property_type-size: 150; --header-property_allowed_values-size: 300; --col-property_allowed_values-size: 300; --header-property_unit_id-size: 175; --col-property_unit_id-size: 175; --header-property_mandatory-size: 200; --col-property_mandatory-size: 200; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
         >
           <thead
             class="MuiTableHead-root css-q4cnup-MuiTableHead-root"
