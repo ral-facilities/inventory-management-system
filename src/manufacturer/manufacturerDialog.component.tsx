@@ -310,7 +310,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
             const response = error.response?.data as APIError;
             if (response && error.response?.status === 409) {
               setNameError(
-                'A manufacturer with the same name already exists. Please enter a different name'
+                'A manufacturer with the same name has been found. Please enter a different name'
               );
               return;
             }
