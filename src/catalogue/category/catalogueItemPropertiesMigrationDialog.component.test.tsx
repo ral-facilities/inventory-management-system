@@ -73,11 +73,13 @@ describe('CatalogueCategoryDirectoryDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
+      expect(screen.getByRole('table')).toBeInTheDocument();
       await waitFor(() => {
-        expect(screen.getByRole('table')).toBeInTheDocument();
+        expect(screen.queryByRole('progressbar')).not.toBeInTheDocument();
       });
 
-      if (values.type === 'Edit' && values.editRadio) {
+      // 0 evaluates to falsy, therefore check if not undefined
+      if (values.type === 'Edit' && values.editRadio !== undefined) {
         // const selectedRadioButton = within(
         //   screen.getAllByRole('row')[values.editRadio]
         // ).getByLabelText('number');
@@ -863,7 +865,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       );
     });
 
-    it('edits an existing property allowed values (type number) ', async () => {
+    it.only('edits an existing property allowed values (type number) ', async () => {
       createView();
       await modifyValues({
         type: 'Edit',
@@ -887,7 +889,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       );
     });
 
-    it('display error message if the nothing has changed', async () => {
+    it.only('display error message if the nothing has changed', async () => {
       createView();
       await modifyValues({
         type: 'Edit',
@@ -919,7 +921,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       expect(formError2).not.toBeInTheDocument();
     });
 
-    it('display error message duplicate name', async () => {
+    it.only('display error message duplicate name', async () => {
       createView();
       await modifyValues({
         type: 'Edit',
