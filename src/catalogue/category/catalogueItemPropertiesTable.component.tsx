@@ -6,7 +6,7 @@ import {
   useMaterialReactTable,
 } from 'material-react-table';
 import {
-  CatalogueCategoryProperty,
+  AddCatalogueCategoryProperty,
   CatalogueCategoryPropertyMigration,
 } from '../../app.types';
 import {
@@ -24,7 +24,7 @@ import React from 'react';
 import { TableCellBaseProps, TableRow } from '@mui/material';
 
 export interface PropertiesTableProps {
-  properties: CatalogueCategoryProperty[];
+  properties: AddCatalogueCategoryProperty[];
   editingProperties: boolean;
   onChangeEditCatalogueItemField?: (
     catalogueItemField: CatalogueCategoryPropertyMigration
@@ -33,7 +33,7 @@ export interface PropertiesTableProps {
 }
 
 interface TableRowData {
-  property: CatalogueCategoryProperty;
+  property: AddCatalogueCategoryProperty;
 }
 
 export function PropertiesTable(props: PropertiesTableProps) {
@@ -208,7 +208,6 @@ export function PropertiesTable(props: PropertiesTableProps) {
     },
     // Functions
     ...onPreservedStatesChange,
-    getRowId: (row) => row.property.id,
     renderBottomToolbarCustomActions: ({ table }) =>
       displayTableRowCountText(table, properties, 'Properties', {
         paddingLeft: '8px',
