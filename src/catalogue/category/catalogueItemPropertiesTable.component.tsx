@@ -106,7 +106,7 @@ export function PropertiesTable(props: PropertiesTableProps) {
         GroupedCell: TableGroupedCell,
       },
     ];
-  }, [unitsData]);
+  }, [editingProperties, unitsData]);
 
   const handleRowSelection = React.useCallback(
     (row: MRT_Row<TableRowData>) => {
