@@ -205,8 +205,9 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
           };
         }
       } else {
-        (updatedFormFields[fieldIndex][field] as boolean | string | null) =
-          value;
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        updatedFormFields[fieldIndex][field] = value;
       }
       if (field === 'type') {
         const updatedAllowedValuesListErrors = allowedValuesListErrors.filter(
