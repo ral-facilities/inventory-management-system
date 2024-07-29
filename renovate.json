@@ -13,7 +13,9 @@
   "packageRules": [
     {
       "matchBaseBranches": ["main"],
-      "lockFileMaintenance": false
+      "lockFileMaintenance": {
+        "enabled": false
+      }
     },
     {
       "matchPackagePatterns": ["*"],
