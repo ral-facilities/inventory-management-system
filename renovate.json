@@ -35,12 +35,14 @@
   ],
   "lockFileMaintenance": {
     "enabled": true,
+    "reviewers": ["@joshuadkitenge", "@joelvdavies"],
     "assignees": ["@joshuadkitenge", "@joelvdavies"],
     "prBodyNotes": ["- Please ensure that `yarn dev` works correctly."]
   },
   "vulnerabilityAlerts": {
     "enabled": true,
     "labels": ["security"],
+    "reviewers": ["@joshuadkitenge", "@joelvdavies"],
     "assignees": ["@joshuadkitenge", "@joelvdavies"],
     "prBodyNotes": [
       "- Please ensure that `yarn dev` works correctly.<br>- Once this PR has been merged, please follow the release process instructions here: https://github.com/ral-facilities/inventory-management-system/wiki/Release-Process.<br><br>Additionally, please verify if this PR can be grouped with others before being released."
