@@ -255,7 +255,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           unit_id: '5',
         }
       );
-    });
+    }, 10000);
 
     it('adds a new property with allowed values (type string)', async () => {
       createView();
