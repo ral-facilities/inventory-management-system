@@ -82,7 +82,7 @@ export function PropertiesTable(props: PropertiesTableProps) {
         accessorFn: (row) =>
           row.property.allowed_values?.values
             .map((value) => value['value'])
-            .join(', ') ?? 'Any',
+            .join(', '),
         id: 'property.allowed_values',
         size: 300,
         enableGrouping: false,
