@@ -1,11 +1,10 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base",
+    "config:best-practices",
     "schedule:nonOfficeHours",
     ":maintainLockFilesWeekly",
-    "npm:unpublishSafe",
-    "helpers:pinGitHubActionDigests"
+    "npm:unpublishSafe"
   ],
   "postUpdateOptions": ["yarnDedupeHighest"],
   "labels": ["dependencies"],
@@ -14,7 +13,9 @@
   "packageRules": [
     {
       "matchBaseBranches": ["main"],
-      "lockFileMaintenance": false
+      "lockFileMaintenance": {
+        "enabled": false
+      }
     },
     {
       "matchPackagePatterns": ["*"],
@@ -31,5 +32,20 @@
       "matchBaseBranches": ["main"],
       "enabled": true
     }
-  ]
+  ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "reviewers": ["@joshuadkitenge", "@joelvdavies"],
+    "assignees": ["@joshuadkitenge", "@joelvdavies"],
+    "prBodyNotes": ["- Please ensure that `yarn dev` works correctly."]
+  },
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "labels": ["security"],
+    "reviewers": ["@joshuadkitenge", "@joelvdavies"],
+    "assignees": ["@joshuadkitenge", "@joelvdavies"],
+    "prBodyNotes": [
+      "- Please ensure that `yarn dev` works correctly.<br>- Once this PR has been merged, please follow the release process instructions here: https://github.com/ral-facilities/inventory-management-system/wiki/Release-Process.<br><br>Additionally, please verify if this PR can be grouped with others before being released."
+    ]
+  }
 }
