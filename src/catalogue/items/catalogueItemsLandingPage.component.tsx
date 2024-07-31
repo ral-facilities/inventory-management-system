@@ -13,13 +13,13 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { BreadcrumbsInfo } from '../../api/api.types';
 import {
   useCatalogueBreadcrumbs,
   useCatalogueCategory,
 } from '../../api/catalogueCategories';
 import { useCatalogueItem } from '../../api/catalogueItems';
-import { useManufacturer } from '../../api/manufacturers';
-import { BreadcrumbsInfo } from '../../app.types';
+import { useGetManufacturer } from '../../api/manufacturers';
 import { formatDateTimeStrings } from '../../utils';
 import Breadcrumbs from '../../view/breadcrumbs.component';
 import { useNavigateToCatalogue } from '../catalogue.component';
@@ -54,7 +54,7 @@ function CatalogueItemsLandingPage() {
       });
   }, [catalogueBreadcrumbs, catalogueItemIdData]);
 
-  const { data: manufacturer } = useManufacturer(
+  const { data: manufacturer } = useGetManufacturer(
     catalogueItemIdData?.manufacturer_id
   );
 

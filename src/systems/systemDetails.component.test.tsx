@@ -1,6 +1,6 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import { System } from '../app.types';
+import { System } from '../api/api.types';
 import SystemsJSON from '../mocks/Systems.json';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import SystemDetails, { SystemDetailsProps } from './systemDetails.component';

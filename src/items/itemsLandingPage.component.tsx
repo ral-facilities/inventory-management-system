@@ -14,15 +14,15 @@ import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
+import { BreadcrumbsInfo } from '../api/api.types';
 import {
   useCatalogueBreadcrumbs,
   useCatalogueCategory,
 } from '../api/catalogueCategories';
 import { useCatalogueItem } from '../api/catalogueItems';
 import { useItem } from '../api/items';
-import { useManufacturer } from '../api/manufacturers';
-import { useSystem } from '../api/systems';
-import { BreadcrumbsInfo } from '../app.types';
+import { useGetManufacturer } from '../api/manufacturers';
+import { useGetSystem } from '../api/systems';
 import { useNavigateToCatalogue } from '../catalogue/catalogue.component';
 import { formatDateTimeStrings } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
@@ -48,7 +48,7 @@ function ItemsLandingPage() {
     catalogueItemData?.catalogue_category_id
   );
 
-  const { data: systemData } = useSystem(itemData?.system_id);
+  const { data: systemData } = useGetSystem(itemData?.system_id);
 
   const [itemLandingBreadcrumbs, setItemLandingBreadcrumbs] = React.useState<
     BreadcrumbsInfo | undefined
@@ -71,7 +71,7 @@ function ItemsLandingPage() {
       });
   }, [catalogueBreadcrumbs, catalogueItemData, id, itemData?.serial_number]);
 
-  const { data: manufacturer } = useManufacturer(
+  const { data: manufacturer } = useGetManufacturer(
     catalogueItemData?.manufacturer_id
   );
 

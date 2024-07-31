@@ -9,8 +9,6 @@ import { AxiosError } from 'axios';
 import {
   AddCatalogueCategory,
   AddPropertyMigration,
-  APIError,
-  BreadcrumbsInfo,
   CatalogueCategory,
   CatalogueCategoryProperty,
   CopyToCatalogueCategory,
@@ -23,6 +21,7 @@ import {
 import handleTransferState from '../handleTransferState';
 import { generateUniqueNameUsingCode } from '../utils';
 import { imsApi } from './api';
+import { APIError, BreadcrumbsInfo } from './api.types';
 
 const fetchCatalogueCategories = async (
   parent_id: string

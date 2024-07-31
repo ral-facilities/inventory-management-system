@@ -28,7 +28,7 @@ describe('Add manufacturer dialog', () => {
     props = {
       open: true,
       onClose: onClose,
-      type: 'create',
+      type: 'post',
     };
     user = userEvent.setup();
   });
@@ -208,7 +208,9 @@ describe('Add manufacturer dialog', () => {
 
       await waitFor(() => {
         expect(
-          screen.getByText('A manufacturer with the same name already exists.')
+          screen.getByText(
+            'A manufacturer with the same name has been found. Please enter a different name.'
+          )
         ).toBeInTheDocument();
       });
       expect(onClose).not.toHaveBeenCalled();
@@ -245,7 +247,7 @@ describe('Add manufacturer dialog', () => {
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
 
-      expect(screen.getByText('Please enter a valid URL')).toBeInTheDocument();
+      expect(screen.getByText('Please enter a valid URL.')).toBeInTheDocument();
       expect(onClose).not.toHaveBeenCalled();
     });
 
@@ -275,7 +277,7 @@ describe('Add manufacturer dialog', () => {
       props = {
         ...props,
         selectedManufacturer: getManufacturerById('1'),
-        type: 'edit',
+        type: 'patch',
       };
 
       axiosPatchSpy = vi.spyOn(imsApi, 'patch');
@@ -343,7 +345,7 @@ describe('Add manufacturer dialog', () => {
 
       expect(
         screen.getByText(
-          "There have been no changes made. Please change a field's value or press Cancel to exit"
+          "There have been no changes made. Please change a field's value or press Cancel to exit."
         )
       ).toBeInTheDocument();
     });
@@ -365,7 +367,7 @@ describe('Add manufacturer dialog', () => {
 
       await user.click(saveButton);
 
-      expect(screen.getByText('Please enter a valid URL')).toBeInTheDocument();
+      expect(screen.getByText('Please enter a valid URL.')).toBeInTheDocument();
     });
 
     it('can clear URL without any errors', async () => {
@@ -405,7 +407,7 @@ describe('Add manufacturer dialog', () => {
 
       expect(
         screen.getByText(
-          'A manufacturer with the same name has been found. Please enter a different name'
+          'A manufacturer with the same name has been found. Please enter a different name.'
         )
       ).toBeInTheDocument();
     });

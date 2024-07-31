@@ -22,13 +22,13 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
+import { APIError, Manufacturer } from '../../api/api.types';
 import {
   useAddCatalogueItem,
   useEditCatalogueItem,
 } from '../../api/catalogueItems';
-import { useManufacturers } from '../../api/manufacturers';
+import { useGetManufacturers } from '../../api/manufacturers';
 import {
-  APIError,
   AddCatalogueItem,
   CatalogueCategory,
   CatalogueCategoryProperty,
@@ -36,7 +36,6 @@ import {
   CatalogueItem,
   CatalogueItemDetailsPlaceholder,
   EditCatalogueItem,
-  Manufacturer,
 } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component';
@@ -202,7 +201,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   const { mutateAsync: editCatalogueItem, isPending: isEditPending } =
     useEditCatalogueItem();
 
-  const { data: manufacturerList } = useManufacturers();
+  const { data: manufacturerList } = useGetManufacturers();
   const selectedCatalogueItemManufacturer =
     manufacturerList?.find(
       (manufacturer) =>
@@ -828,7 +827,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             <ManufacturerDialog
               open={addManufacturerDialogOpen}
               onClose={() => setAddManufacturerDialogOpen(false)}
-              type="create"
+              type="post"
             />
 
             <Grid item xs={12}>

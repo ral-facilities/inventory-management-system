@@ -17,8 +17,8 @@ import {
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { useUsageStatuses } from '../../api/usageStatuses.tsx';
-import { UsageStatus } from '../../app.types.tsx';
+import { UsageStatus } from '../../api/api.types.tsx';
+import { useGetUsageStatuses } from '../../api/usageStatuses.tsx';
 import { usePreservedTableState } from '../../common/preservedTableState.component.tsx';
 import {
   TableBodyCellOverFlowTip,
@@ -32,7 +32,7 @@ import UsageStatusDialog from './usageStatusDialog.component.tsx';
 
 function UsageStatuses() {
   const { data: usageStatusData, isLoading: usageStatusDataLoading } =
-    useUsageStatuses();
+    useGetUsageStatuses();
 
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
 

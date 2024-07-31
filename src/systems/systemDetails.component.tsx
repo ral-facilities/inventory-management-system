@@ -10,8 +10,8 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
-import { getSystemImportanceColour, useSystem } from '../api/systems';
-import { System } from '../app.types';
+import { System } from '../api/api.types';
+import { getSystemImportanceColour, useGetSystem } from '../api/systems';
 import { OverflowTip, formatDateTimeStrings } from '../utils';
 import SystemDialog from './systemDialog.component';
 import { SystemItemsTable } from './systemItemsTable.component';
@@ -37,7 +37,7 @@ const EditSystemButton = (props: SystemButtonProps) => {
       <SystemDialog
         open={editSystemDialogOpen}
         onClose={() => setEditSystemDialogOpen(false)}
-        type="edit"
+        requestType="patch"
         selectedSystem={props.system}
       />
     </>
@@ -49,7 +49,7 @@ export interface SystemDetailsProps {
 }
 
 function SystemDetails(props: SystemDetailsProps) {
-  const { data: system, isLoading: systemLoading } = useSystem(props.id);
+  const { data: system, isLoading: systemLoading } = useGetSystem(props.id);
 
   return systemLoading && props.id !== null ? (
     <Box

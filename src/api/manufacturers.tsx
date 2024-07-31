@@ -8,119 +8,116 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
-import { AddManufacturer, EditManufacturer, Manufacturer } from '../app.types';
 import { imsApi } from './api';
+import { Manufacturer, ManufacturerPatch, ManufacturerPost } from './api.types';
 
-const getAllManufacturers = async (): Promise<Manufacturer[]> => {
+const getManufacturers = async (): Promise<Manufacturer[]> => {
   return imsApi.get(`/v1/manufacturers`, {}).then((response) => response.data);
 };
 
-export const useManufacturers = (): UseQueryResult<
+export const useGetManufacturers = (): UseQueryResult<
   Manufacturer[],
   AxiosError
 > => {
   return useQuery({
     queryKey: ['Manufacturers'],
     queryFn: () => {
-      return getAllManufacturers();
+      return getManufacturers();
     },
   });
 };
 
-const addManufacturer = async (
-  manufacturer: AddManufacturer
+const postManufacturer = async (
+  manufacturer: ManufacturerPost
 ): Promise<Manufacturer> => {
   return imsApi
     .post<Manufacturer>(`/v1/manufacturers`, manufacturer)
     .then((response) => response.data);
 };
 
-export const useAddManufacturer = (): UseMutationResult<
+export const usePostManufacturer = (): UseMutationResult<
   Manufacturer,
   AxiosError,
-  AddManufacturer
+  ManufacturerPost
 > => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (manufacturer: AddManufacturer) =>
-      addManufacturer(manufacturer),
+    mutationFn: (manufacturer: ManufacturerPost) =>
+      postManufacturer(manufacturer),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['Manufacturers'] });
     },
   });
 };
 
-const deleteManufacturer = async (session: Manufacturer): Promise<void> => {
+const deleteManufacturer = async (manufacturerID: string): Promise<void> => {
   return imsApi
-    .delete(`/v1/manufacturers/${session.id}`, {})
+    .delete(`/v1/manufacturers/${manufacturerID}`, {})
     .then((response) => response.data);
 };
 
 export const useDeleteManufacturer = (): UseMutationResult<
   void,
   AxiosError,
-  Manufacturer
+  string
 > => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (session: Manufacturer) => deleteManufacturer(session),
+    mutationFn: (manufacturerID: string) => deleteManufacturer(manufacturerID),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['Manufacturers'] });
     },
   });
 };
 
-const fetchManufacturer = async (id: string): Promise<Manufacturer> => {
-  return imsApi.get(`/v1/manufacturers/${id}`).then((response) => {
-    return response.data;
-  });
+const getManufacturer = async (id: string): Promise<Manufacturer> => {
+  return imsApi
+    .get(`/v1/manufacturers/${id}`)
+    .then((response) => response.data);
 };
 
-export const useManufacturer = (
+export const useGetManufacturer = (
   id?: string | null
 ): UseQueryResult<Manufacturer, AxiosError> => {
   return useQuery({
     queryKey: ['Manufacturer', id],
-    queryFn: () => {
-      return fetchManufacturer(id ?? '');
-    },
+    queryFn: () => getManufacturer(id ?? ''),
     enabled: !!id,
   });
 };
 
-export const useManufacturerIds = (
+export const useGetManufacturerIds = (
   ids: string[]
 ): UseQueryResult<Manufacturer>[] => {
   return useQueries({
     queries: ids.map((id) => ({
       queryKey: ['Manufacturer', id],
-      queryFn: () => fetchManufacturer(id),
+      queryFn: () => getManufacturer(id),
     })),
   });
 };
 
-const editManufacturer = async (
-  manufacturer: EditManufacturer
+const patchManufacturer = async (
+  id: string,
+  manufacturer: ManufacturerPatch
 ): Promise<Manufacturer> => {
-  const { id, ...updatedManufacturer } = manufacturer;
   return imsApi
-    .patch<Manufacturer>(`/v1/manufacturers/${id}`, updatedManufacturer)
+    .patch<Manufacturer>(`/v1/manufacturers/${id}`, manufacturer)
     .then((response) => response.data);
 };
 
-export const useEditManufacturer = (): UseMutationResult<
+export const usePatchManufacturer = (): UseMutationResult<
   Manufacturer,
   AxiosError,
-  EditManufacturer
+  { id: string; manufacturer: ManufacturerPatch }
 > => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (manufacturer: EditManufacturer) =>
-      editManufacturer(manufacturer),
-    onSuccess: (manufacturerReturned: Manufacturer) => {
+    mutationFn: ({ id, manufacturer }) => patchManufacturer(id, manufacturer),
+    onSuccess: (updatedManufacturer: Manufacturer) => {
       queryClient.invalidateQueries({ queryKey: ['Manufacturers'] });
       queryClient.invalidateQueries({
-        queryKey: ['Manufacturer', manufacturerReturned.id],
+        queryKey: ['Manufacturer', updatedManufacturer.id],
       });
     },
   });

@@ -41,7 +41,7 @@ exports[`Catalogue Items Dialog > renders details step correctly 1`] = `
           class="MuiDialogContent-root css-ypiqx9-MuiDialogContent-root"
         >
           <div
-            class="MuiStepper-root MuiStepper-horizontal MuiStepper-nonLinear css-r3cjyt-MuiStepper-root"
+            class="MuiStepper-root MuiStepper-horizontal css-r3cjyt-MuiStepper-root"
           >
             <div
               class="MuiStep-root MuiStep-horizontal css-179wqtw-MuiStep-root"
@@ -536,7 +536,7 @@ exports[`Catalogue Items Dialog > renders details step correctly 1`] = `
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11 css-ykovpn-MuiGrid-root"
                 >
                   <div
-                    class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1y8r37a-MuiAutocomplete-root"
+                    class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-ia8vjw-MuiAutocomplete-root"
                   >
                     <div
                       class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -777,7 +777,7 @@ exports[`Catalogue Items Dialog > renders properties step correctly 1`] = `
           class="MuiDialogContent-root css-ypiqx9-MuiDialogContent-root"
         >
           <div
-            class="MuiStepper-root MuiStepper-horizontal MuiStepper-nonLinear css-r3cjyt-MuiStepper-root"
+            class="MuiStepper-root MuiStepper-horizontal css-r3cjyt-MuiStepper-root"
           >
             <div
               class="MuiStep-root MuiStep-horizontal css-179wqtw-MuiStep-root"
@@ -1205,7 +1205,7 @@ exports[`Catalogue Items Dialog > renders properties step correctly 1`] = `
                         class="MuiFormControl-root MuiFormControl-fullWidth css-q8hpuo-MuiFormControl-root"
                       >
                         <div
-                          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-l44isr-MuiAutocomplete-root"
+                          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-1sdws2l-MuiAutocomplete-root"
                         >
                           <div
                             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -1328,7 +1328,7 @@ exports[`Catalogue Items Dialog > renders properties step correctly 1`] = `
                         class="MuiFormControl-root MuiFormControl-fullWidth css-q8hpuo-MuiFormControl-root"
                       >
                         <div
-                          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon css-l44isr-MuiAutocomplete-root"
+                          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon css-1sdws2l-MuiAutocomplete-root"
                         >
                           <div
                             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"

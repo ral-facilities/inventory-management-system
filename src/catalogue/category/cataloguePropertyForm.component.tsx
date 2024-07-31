@@ -8,14 +8,14 @@ import {
   Stack,
   TextField,
 } from '@mui/material';
-import { useUnits } from '../../api/units';
+import { v4 as uuidv4 } from 'uuid';
+import { Unit } from '../../api/api.types';
+import { useGetUnits } from '../../api/units';
 import {
   AddCatalogueCategoryPropertyTypes,
   CatalogueCategoryProperty,
   CatalogueItemPropertiesErrorsType,
-  Unit,
 } from '../../app.types';
-import { v4 as uuidv4 } from 'uuid';
 
 export interface CataloguePropertyFormProps {
   type: 'disabled' | 'normal' | 'add migration' | 'edit migration';
@@ -54,7 +54,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
     currentCatalogueItemField,
   } = props;
 
-  const { data: units } = useUnits();
+  const { data: units } = useGetUnits();
 
   return (
     <Stack direction={isList ? 'row' : 'column'} spacing={1} px={0.5} py={1}>

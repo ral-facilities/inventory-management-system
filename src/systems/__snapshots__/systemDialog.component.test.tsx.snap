@@ -71,6 +71,7 @@ exports[`Systems Dialog > Add > renders correctly when adding 1`] = `
                     aria-invalid="false"
                     class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
                     id="system-name-input"
+                    name="name"
                     required=""
                     type="text"
                     value=""
@@ -113,6 +114,7 @@ exports[`Systems Dialog > Add > renders correctly when adding 1`] = `
                     aria-invalid="false"
                     class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
                     id="system-description-input"
+                    name="description"
                     style="height: 0px; overflow: hidden;"
                   />
                   <textarea
@@ -158,6 +160,7 @@ exports[`Systems Dialog > Add > renders correctly when adding 1`] = `
                     aria-invalid="false"
                     class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
                     id="system-location-input"
+                    name="location"
                     type="text"
                     value=""
                   />
@@ -197,6 +200,7 @@ exports[`Systems Dialog > Add > renders correctly when adding 1`] = `
                     aria-invalid="false"
                     class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
                     id="system-owner-input"
+                    name="owner"
                     type="text"
                     value=""
                   />
@@ -219,7 +223,7 @@ exports[`Systems Dialog > Add > renders correctly when adding 1`] = `
               class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
             >
               <div
-                class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1x6bjyf-MuiAutocomplete-root"
+                class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1tw9w9k-MuiAutocomplete-root"
               >
                 <div
                   class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"

@@ -20,10 +20,11 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { System, UsageStatus } from '../api/api.types';
 import { useCatalogueItemIds } from '../api/catalogueItems';
 import { useItems } from '../api/items';
-import { useUsageStatuses } from '../api/usageStatuses';
-import { CatalogueItem, Item, System, UsageStatus } from '../app.types';
+import { useGetUsageStatuses } from '../api/usageStatuses';
+import { CatalogueItem, Item } from '../app.types';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
 import {
@@ -115,7 +116,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     undefined
   );
 
-  const { data: usageStatusesData } = useUsageStatuses();
+  const { data: usageStatusesData } = useGetUsageStatuses();
 
   // Obtain the selected system data, not just the selection state
   const selectedRowIds = Object.keys(rowSelection);

@@ -7,7 +7,7 @@ import {
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { System } from '../app.types';
+import { System } from '../api/api.types';
 import {
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
@@ -145,10 +145,10 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
       return (
         <>
           <SystemDialog
-            open={true}
+            open
             onClose={() => table.setCreatingRow(null)}
             parentId={systemParentId}
-            type="add"
+            requestType="post"
           />
         </>
       );
