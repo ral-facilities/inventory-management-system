@@ -7,12 +7,8 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import {
-  AddCatalogueCategory,
   AddPropertyMigration,
-  CatalogueCategory,
-  CatalogueCategoryProperty,
   CopyToCatalogueCategory,
-  EditCatalogueCategory,
   EditPropertyMigration,
   MoveToCatalogueCategory,
   TransferState,
@@ -21,7 +17,14 @@ import {
 import handleTransferState from '../handleTransferState';
 import { generateUniqueNameUsingCode } from '../utils';
 import { imsApi } from './api';
-import { APIError, BreadcrumbsInfo } from './api.types';
+import {
+  APIError,
+  BreadcrumbsInfo,
+  CatalogueCategory,
+  CatalogueCategoryPatch,
+  CatalogueCategoryPost,
+  CatalogueCategoryProperty,
+} from './api.types';
 
 const fetchCatalogueCategories = async (
   parent_id: string
@@ -75,7 +78,7 @@ export const useCatalogueBreadcrumbs = (
 };
 
 const addCatalogueCategory = async (
-  catalogueCategory: AddCatalogueCategory
+  catalogueCategory: CatalogueCategoryPost
 ): Promise<CatalogueCategory> => {
   return imsApi
     .post<CatalogueCategory>(`/v1/catalogue-categories`, catalogueCategory)
@@ -85,11 +88,11 @@ const addCatalogueCategory = async (
 export const useAddCatalogueCategory = (): UseMutationResult<
   CatalogueCategory,
   AxiosError,
-  AddCatalogueCategory
+  CatalogueCategoryPost
 > => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (catalogueCategory: AddCatalogueCategory) =>
+    mutationFn: (catalogueCategory: CatalogueCategoryPost) =>
       addCatalogueCategory(catalogueCategory),
     onSuccess: (category) => {
       queryClient.invalidateQueries({
@@ -174,11 +177,10 @@ export const useAddCatalogueCategoryProperty = (): UseMutationResult<
 const editCatalogueCategoryProperty = async (
   editPropertyMigration: EditPropertyMigration
 ): Promise<CatalogueCategoryProperty> => {
-  const { id, ...propertyBody } = editPropertyMigration.property;
   return imsApi
     .patch<CatalogueCategoryProperty>(
-      `/v1/catalogue-categories/${editPropertyMigration.catalogueCategory.id}/properties/${id}`,
-      propertyBody
+      `/v1/catalogue-categories/${editPropertyMigration.catalogueCategory.id}/properties/${editPropertyMigration.property_id}`,
+      editPropertyMigration.property
     )
     .then((response) => response.data);
 };
@@ -243,23 +245,26 @@ export const useEditCatalogueCategoryProperty = (): UseMutationResult<
 };
 
 const editCatalogueCategory = async (
-  catalogueCategory: EditCatalogueCategory
+  id: string,
+  catalogueCategory: CatalogueCategoryPatch
 ): Promise<CatalogueCategory> => {
-  const { id, ...updatedCategory } = catalogueCategory;
   return imsApi
-    .patch<CatalogueCategory>(`/v1/catalogue-categories/${id}`, updatedCategory)
+    .patch<CatalogueCategory>(
+      `/v1/catalogue-categories/${id}`,
+      catalogueCategory
+    )
     .then((response) => response.data);
 };
 
 export const useEditCatalogueCategory = (): UseMutationResult<
   CatalogueCategory,
   AxiosError,
-  EditCatalogueCategory
+  { id: string; catalogueCategory: CatalogueCategoryPatch }
 > => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (catalogueCategory: EditCatalogueCategory) =>
-      editCatalogueCategory(catalogueCategory),
+    mutationFn: ({ id, catalogueCategory }) =>
+      editCatalogueCategory(id, catalogueCategory),
     onSuccess: (category) => {
       queryClient.invalidateQueries({
         queryKey: ['CatalogueCategories', category.parent_id ?? 'null'],
@@ -292,8 +297,7 @@ export const useMoveToCatalogueCategory = (): UseMutationResult<
 
       const promises = moveToCatalogueCategory.selectedCategories.map(
         async (category: CatalogueCategory) => {
-          return editCatalogueCategory({
-            id: category.id,
+          return editCatalogueCategory(category.id, {
             parent_id: moveToCatalogueCategory.targetCategory?.id || null,
           })
             .then((result) => {
@@ -369,10 +373,10 @@ export const useCopyToCatalogueCategory = (): UseMutationResult<
           // Data to post (backend will just ignore the extra here - only id and code)
           // Also use Object.assign to copy the data otherwise will modify in place causing issues
           // in tests
-          const categoryAdd: AddCatalogueCategory = Object.assign(
+          const categoryAdd: CatalogueCategoryPost = Object.assign(
             {},
             category
-          ) as AddCatalogueCategory;
+          ) as CatalogueCategoryPost;
 
           // Assign new parent
           categoryAdd.parent_id =

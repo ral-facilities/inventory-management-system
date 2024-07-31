@@ -1,6 +1,9 @@
 import { screen } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import { renderComponentWithRouterProvider } from '../../testUtils';
+import {
+  CREATED_MODIFIED_TIME_VALUES,
+  renderComponentWithRouterProvider,
+} from '../../testUtils';
 import CatalogueCard, { CatalogueCardProps } from './catalogueCard.component';
 
 describe('Catalogue Card', () => {
@@ -23,14 +26,14 @@ describe('Catalogue Card', () => {
       parent_id: '',
       code: 'beam-characterization',
       is_leaf: false,
+      properties: [],
       onChangeOpenDeleteDialog: onChangeOpenDeleteDialog,
       onChangeOpenEditNameDialog: onChangeOpenEditNameDialog,
       onChangeOpenEditPropertiesDialog: onChangeOpenEditPropertiesDialog,
       onChangeOpenSaveAsDialog: onChangeOpenSaveAsDialog,
       isSelected: false,
       onToggleSelect: onToggleSelect,
-      created_time: '2024-01-01T12:00:00.000+00:00',
-      modified_time: '2024-01-02T13:10:10.000+00:00',
+      ...CREATED_MODIFIED_TIME_VALUES,
     };
     user = userEvent.setup();
   });

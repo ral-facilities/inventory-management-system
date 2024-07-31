@@ -1,7 +1,8 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { HttpResponse, http } from 'msw';
-import { CatalogueCategoryProperty, CatalogueItemProperty } from '../app.types';
+import { CatalogueCategoryProperty } from '../api/api.types';
+import { CatalogueItemProperty } from '../app.types';
 import { server } from '../mocks/server';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import Catalogue, { matchCatalogueItemProperties } from './catalogue.component';
@@ -13,18 +14,27 @@ describe('matchCatalogueItemProperties', () => {
         id: '1',
         name: 'Name1',
         type: 'string',
+        unit: null,
+        unit_id: null,
+        allowed_values: null,
         mandatory: true,
       },
       {
         id: '2',
         name: 'Name2',
         type: 'number',
+        unit: null,
+        unit_id: null,
+        allowed_values: null,
         mandatory: false,
       },
       {
         id: '3',
         name: 'Name3',
         type: 'boolean',
+        unit: null,
+        unit_id: null,
+        allowed_values: null,
         mandatory: true,
       },
     ];
@@ -56,12 +66,18 @@ describe('matchCatalogueItemProperties', () => {
         id: '1',
         name: 'Name1',
         type: 'string',
+        unit: null,
+        unit_id: null,
+        allowed_values: null,
         mandatory: true,
       },
       {
         id: '2',
         name: 'Name2',
         type: 'number',
+        unit: null,
+        unit_id: null,
+        allowed_values: null,
         mandatory: false,
       },
     ];

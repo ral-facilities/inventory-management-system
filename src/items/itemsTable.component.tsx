@@ -21,10 +21,10 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { System } from '../api/api.types';
+import { CatalogueCategory, System } from '../api/api.types';
 import { useItems } from '../api/items';
 import { useGetSystemIds } from '../api/systems';
-import { CatalogueCategory, CatalogueItem, Item } from '../app.types';
+import { CatalogueItem, Item } from '../app.types';
 import {
   PropertyFiltersType,
   findPropertyValue,

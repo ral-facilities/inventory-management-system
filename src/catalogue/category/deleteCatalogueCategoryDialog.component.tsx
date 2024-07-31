@@ -11,9 +11,8 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { APIError } from '../../api/api.types';
+import { APIError, CatalogueCategory } from '../../api/api.types';
 import { useDeleteCatalogueCategory } from '../../api/catalogueCategories';
-import { CatalogueCategory } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 
 export interface DeleteCatalogueCategoryDialogProps {

@@ -3,10 +3,11 @@ import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http } from 'msw';
 import { MockInstance } from 'vitest';
 import { imsApi } from '../../api/api';
+
 import {
-  AddCatalogueCategoryProperty,
   CatalogueCategory,
-} from '../../app.types';
+  CatalogueCategoryPostProperty,
+} from '../../api/api.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { server } from '../../mocks/server';
 import {
@@ -27,7 +28,7 @@ describe('Catalogue Category Dialog', () => {
   let user: UserEvent;
 
   interface TestAddCatalogueCategoryProperty
-    extends AddCatalogueCategoryProperty {
+    extends CatalogueCategoryPostProperty {
     unit?: string;
   }
   const createView = () => {
@@ -738,6 +739,7 @@ describe('Catalogue Category Dialog', () => {
       id: '1',
       code: 'test',
       is_leaf: false,
+      properties: [],
       ...CREATED_MODIFIED_TIME_VALUES,
     };
 
@@ -845,12 +847,17 @@ describe('Catalogue Category Dialog', () => {
             name: 'Measurement Range',
             type: 'number',
             unit: 'volts',
+            unit_id: '9',
+            allowed_values: null,
             mandatory: true,
           },
           {
             id: '1',
             name: 'Accuracy',
             type: 'string',
+            unit: null,
+            unit_id: null,
+            allowed_values: null,
             mandatory: true,
           },
         ],
@@ -929,6 +936,7 @@ describe('Catalogue Category Dialog', () => {
       id: '1',
       code: 'test',
       is_leaf: false,
+      properties: [],
       ...CREATED_MODIFIED_TIME_VALUES,
     };
 
@@ -977,7 +985,9 @@ describe('Catalogue Category Dialog', () => {
             id: '1',
             name: 'Field 1',
             type: 'text',
-            unit: '',
+            unit: null,
+            unit_id: null,
+            allowed_values: null,
             mandatory: false,
           },
           {
@@ -985,9 +995,19 @@ describe('Catalogue Category Dialog', () => {
             name: 'Field 2',
             type: 'number',
             unit: 'millimeters',
+            unit_id: '5',
+            allowed_values: null,
             mandatory: true,
           },
-          { id: '3', name: 'Field 3', type: 'boolean', mandatory: false },
+          {
+            id: '3',
+            name: 'Field 3',
+            type: 'boolean',
+            unit: null,
+            unit_id: null,
+            allowed_values: null,
+            mandatory: false,
+          },
         ],
       };
       createView();

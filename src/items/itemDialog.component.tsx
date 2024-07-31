@@ -24,15 +24,17 @@ import {
 import { DatePicker } from '@mui/x-date-pickers';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { UsageStatus } from '../api/api.types';
+import {
+  CatalogueCategory,
+  CatalogueCategoryProperty,
+  UsageStatus,
+} from '../api/api.types';
 import { useAddItem, useAddItems, useEditItem } from '../api/items';
 import { useGetSystems, useGetSystemsBreadcrumbs } from '../api/systems';
 import { useGetUsageStatuses } from '../api/usageStatuses';
 import {
   AddItem,
   AdvancedSerialNumberOptionsType,
-  CatalogueCategory,
-  CatalogueCategoryProperty,
   CatalogueItem,
   EditItem,
   Item,

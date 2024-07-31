@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import { MRT_RowSelectionState } from 'material-react-table';
 import React from 'react';
+import { CatalogueCategory } from '../../api/api.types';
 import {
   useCatalogueBreadcrumbs,
   useCatalogueCategories,
@@ -21,7 +22,7 @@ import {
   useCopyToCatalogueItem,
   useMoveToCatalogueItem,
 } from '../../api/catalogueItems';
-import { CatalogueCategory, CatalogueItem } from '../../app.types';
+import { CatalogueItem } from '../../app.types';
 import handleTransferState from '../../handleTransferState';
 import Breadcrumbs from '../../view/breadcrumbs.component';
 import CatalogueCategoryTableView from '../category/catalogueCategoryTableView.component';

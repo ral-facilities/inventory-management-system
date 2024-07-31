@@ -1,7 +1,6 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import {
   AddCatalogueItem,
-  CatalogueCategory,
   CatalogueItem,
   EditCatalogueItem,
   TransferToCatalogueItem,
@@ -12,6 +11,7 @@ import {
   catalogueItemData,
   hooksWrapperWithProviders,
 } from '../testUtils';
+import { CatalogueCategory } from './api.types';
 import {
   useAddCatalogueItem,
   useCatalogueItem,
@@ -320,6 +320,7 @@ describe('catalogue items api functions', () => {
               type: 'number',
               unit: 'fps',
               unit_id: '2',
+              allowed_values: null,
               mandatory: true,
             },
           ],
@@ -453,6 +454,7 @@ describe('catalogue items api functions', () => {
               type: 'number',
               unit: 'fps',
               unit_id: '2',
+              allowed_values: null,
               mandatory: true,
             },
           ],

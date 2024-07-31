@@ -13,16 +13,13 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { CatalogueCategory, CatalogueCategoryProperty } from '../api/api.types';
 import {
   useCatalogueBreadcrumbs,
   useCatalogueCategories,
   useCatalogueCategory,
 } from '../api/catalogueCategories';
-import {
-  CatalogueCategory,
-  CatalogueCategoryProperty,
-  CatalogueItemProperty,
-} from '../app.types';
+import { CatalogueItemProperty } from '../app.types';
 import { generateUniqueName } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import CatalogueCardView from './category/catalogueCardView.component';
