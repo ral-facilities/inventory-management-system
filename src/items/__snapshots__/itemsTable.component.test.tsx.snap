@@ -2513,7 +2513,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                       class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
                     >
                       <div
-                        class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon css-1j0qgw8-MuiAutocomplete-root"
+                        class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon css-ka7ti6-MuiAutocomplete-root"
                       >
                         <div
                           class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-jk1t0h-MuiFormControl-root-MuiTextField-root"
@@ -4172,7 +4172,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                       class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
                     >
                       <div
-                        class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon css-1j0qgw8-MuiAutocomplete-root"
+                        class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon css-ka7ti6-MuiAutocomplete-root"
                       >
                         <div
                           class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-jk1t0h-MuiFormControl-root-MuiTextField-root"
