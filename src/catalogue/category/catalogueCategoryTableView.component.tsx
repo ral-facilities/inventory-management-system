@@ -167,7 +167,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
             open={true}
             onClose={() => table.setCreatingRow(null)}
             parentId={catalogueCategoryParentId ?? null}
-            type={requestOrigin === 'category' ? 'add' : 'save as'}
+            type={requestOrigin === 'category' ? 'add' : 'duplicate'}
             selectedCatalogueCategory={
               catalogueItemParentCategory
                 ? {

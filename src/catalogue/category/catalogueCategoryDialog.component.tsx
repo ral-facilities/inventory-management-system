@@ -46,7 +46,7 @@ export interface CatalogueCategoryDialogProps {
   open: boolean;
   onClose: () => void;
   parentId: string | null;
-  type: 'add' | 'edit' | 'save as';
+  type: 'add' | 'edit' | 'duplicate';
   selectedCatalogueCategory?: CatalogueCategory;
   resetSelectedCatalogueCategory: () => void;
 }
