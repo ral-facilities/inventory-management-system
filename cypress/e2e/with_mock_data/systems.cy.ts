@@ -495,14 +495,14 @@ describe('Systems', () => {
     });
   });
 
-  describe('Save as', () => {
+  describe('Duplicate', () => {
     // Error checking is omitted here as same logic as in add
 
     it('save as a system editing all fields (in root)', () => {
       cy.visit('/systems');
 
       cy.findAllByLabelText('Row Actions').eq(1).click();
-      cy.findByText('Save as').click();
+      cy.findByText('Duplicate').click();
 
       // Should default to having _copy_1 in the name
       cy.findByLabelText('Name *').should('have.value', 'Pulse Laser_copy_1');
@@ -544,7 +544,7 @@ describe('Systems', () => {
       cy.visit('/systems/65328f34a40ff5301575a4e3');
 
       cy.findAllByLabelText('Row Actions').eq(0).click();
-      cy.findByText('Save as').click();
+      cy.findByText('Duplicate').click();
 
       // Should default to having _copy_1 in the name
       cy.findByLabelText('Name *').should('have.value', 'Smaller laser_copy_1');
