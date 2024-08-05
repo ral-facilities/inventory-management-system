@@ -254,7 +254,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.14.6, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.23.9, @babel/runtime@npm:^7.24.8, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.14.6, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.23.9, @babel/runtime@npm:^7.25.0, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
   version: 7.25.0
   resolution: "@babel/runtime@npm:7.25.0"
   dependencies:
@@ -797,44 +797,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/core@npm:^1.0.0":
-  version: 1.6.2
-  resolution: "@floating-ui/core@npm:1.6.2"
-  dependencies:
-    "@floating-ui/utils": "npm:^0.2.0"
-  checksum: 10c0/db2621dc682e7f043d6f118d087ae6a6bfdacf40b26ede561760dd53548c16e2e7c59031e013e37283801fa307b55e6de65bf3b316b96a054e4a6a7cb937c59e
-  languageName: node
-  linkType: hard
-
-"@floating-ui/dom@npm:^1.0.0":
-  version: 1.6.5
-  resolution: "@floating-ui/dom@npm:1.6.5"
-  dependencies:
-    "@floating-ui/core": "npm:^1.0.0"
-    "@floating-ui/utils": "npm:^0.2.0"
-  checksum: 10c0/ebdc14806f786e60df8e7cc2c30bf9cd4d75fe734f06d755588bbdef2f60d0a0f21dffb14abdc58dea96e5577e2e366feca6d66ba962018efd1bc91a3ece4526
-  languageName: node
-  linkType: hard
-
-"@floating-ui/react-dom@npm:^2.0.8":
-  version: 2.1.0
-  resolution: "@floating-ui/react-dom@npm:2.1.0"
-  dependencies:
-    "@floating-ui/dom": "npm:^1.0.0"
-  peerDependencies:
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-  checksum: 10c0/9ee44dfeb27f585fb1e0114cbe37c72ff5d34149900f4f3013f6b0abf8c3365eab13286c360f97fbe0c44bb91a745e7a4c18b82d111990b45a7a7796dc55e461
-  languageName: node
-  linkType: hard
-
-"@floating-ui/utils@npm:^0.2.0":
-  version: 0.2.2
-  resolution: "@floating-ui/utils@npm:0.2.2"
-  checksum: 10c0/b2becdcafdf395af1641348da0031ff1eaad2bc60c22e14bd3abad4acfe2c8401e03097173d89a2f646a99b75819a78ef21ebb2572cab0042a56dd654b0065cd
-  languageName: node
-  linkType: hard
-
 "@hapi/hoek@npm:^9.0.0, @hapi/hoek@npm:^9.3.0":
   version: 9.3.0
   resolution: "@hapi/hoek@npm:9.3.0"
@@ -996,28 +958,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/base@npm:^5.0.0-beta.40":
-  version: 5.0.0-beta.41
-  resolution: "@mui/base@npm:5.0.0-beta.41"
-  dependencies:
-    "@babel/runtime": "npm:^7.23.9"
-    "@floating-ui/react-dom": "npm:^2.0.8"
-    "@mui/types": "npm:^7.2.14"
-    "@mui/utils": "npm:^5.15.14"
-    "@popperjs/core": "npm:^2.11.8"
-    clsx: "npm:^2.1.0"
-    prop-types: "npm:^15.8.1"
-  peerDependencies:
-    "@types/react": ^17.0.0 || ^18.0.0
-    react: ^17.0.0 || ^18.0.0
-    react-dom: ^17.0.0 || ^18.0.0
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-  checksum: 10c0/076c85e28f1b87d0481ebc6b7320b94fd4340f2e48b9e803e4d08686fa71706378dbb0444fc26e4cf47449c5fca901c130ed09a86e28f0c1d66a824b914dbff1
-  languageName: node
-  linkType: hard
-
 "@mui/core-downloads-tracker@npm:^5.16.6":
   version: 5.16.6
   resolution: "@mui/core-downloads-tracker@npm:5.16.6"
@@ -1140,7 +1080,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/types@npm:^7.2.14, @mui/types@npm:^7.2.15":
+"@mui/types@npm:^7.2.15":
   version: 7.2.15
   resolution: "@mui/types@npm:7.2.15"
   peerDependencies:
@@ -1152,7 +1092,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/utils@npm:^5.15.14, @mui/utils@npm:^5.16.5, @mui/utils@npm:^5.16.6":
+"@mui/utils@npm:^5.16.5, @mui/utils@npm:^5.16.6":
   version: 5.16.6
   resolution: "@mui/utils@npm:5.16.6"
   dependencies:
@@ -1173,11 +1113,10 @@ __metadata:
   linkType: hard
 
 "@mui/x-date-pickers@npm:^7.6.1":
-  version: 7.11.1
-  resolution: "@mui/x-date-pickers@npm:7.11.1"
+  version: 7.12.0
+  resolution: "@mui/x-date-pickers@npm:7.12.0"
   dependencies:
-    "@babel/runtime": "npm:^7.24.8"
-    "@mui/base": "npm:^5.0.0-beta.40"
+    "@babel/runtime": "npm:^7.25.0"
     "@mui/system": "npm:^5.16.5"
     "@mui/utils": "npm:^5.16.5"
     "@types/react-transition-group": "npm:^4.4.10"
@@ -1216,7 +1155,7 @@ __metadata:
       optional: true
     moment-jalaali:
       optional: true
-  checksum: 10c0/3343ed39fa7f69722ae049e41403d00764a75151314604ad6a9e23e7b5253a73c22af575b85ea9650eb6d7e735a8a8d0358134d7f8bdae1f26e1c7fb47060fa4
+  checksum: 10c0/926624d4a9f05b892c794700ca36fd2d02cba36b34fe8f6100f2db97f48b2770785e631ce7590e7f212b9b8d988c29b71c7564882e798e499c5a3c34b9dd297e
   languageName: node
   linkType: hard
 
