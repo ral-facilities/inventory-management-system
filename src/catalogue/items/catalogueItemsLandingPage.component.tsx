@@ -43,8 +43,7 @@ function CatalogueItemsLandingPage() {
     React.useState<BreadcrumbsInfo | undefined>(catalogueBreadcrumbs);
 
   React.useEffect(() => {
-    catalogueBreadcrumbs &&
-      catalogueItemIdData &&
+    if (catalogueBreadcrumbs && catalogueItemIdData)
       setCatalogueLandingBreadcrumbs({
         ...catalogueBreadcrumbs,
         trail: [

@@ -60,47 +60,47 @@ describe('Catalogue Items Dialog', () => {
     manufacturer?: string;
     notes?: string;
   }) => {
-    values.name !== undefined &&
+    if (values.name !== undefined)
       fireEvent.change(screen.getByLabelText('Name *'), {
         target: { value: values.name },
       });
 
-    values.description !== undefined &&
+    if (values.description !== undefined)
       fireEvent.change(screen.getByLabelText('Description'), {
         target: { value: values.description },
       });
 
-    values.costGbp !== undefined &&
+    if (values.costGbp !== undefined)
       fireEvent.change(screen.getByLabelText('Cost (£) *'), {
         target: { value: values.costGbp },
       });
 
-    values.costToReworkGbp !== undefined &&
+    if (values.costToReworkGbp !== undefined)
       fireEvent.change(screen.getByLabelText('Cost to rework (£)'), {
         target: { value: values.costToReworkGbp },
       });
 
-    values.daysToReplace !== undefined &&
+    if (values.daysToReplace !== undefined)
       fireEvent.change(screen.getByLabelText('Time to replace (days) *'), {
         target: { value: values.daysToReplace },
       });
 
-    values.daysToRework !== undefined &&
+    if (values.daysToRework !== undefined)
       fireEvent.change(screen.getByLabelText('Time to rework (days)'), {
         target: { value: values.daysToRework },
       });
 
-    values.drawingNumber !== undefined &&
+    if (values.drawingNumber !== undefined)
       fireEvent.change(screen.getByLabelText('Drawing number'), {
         target: { value: values.drawingNumber },
       });
 
-    values.drawingLink !== undefined &&
+    if (values.drawingLink !== undefined)
       fireEvent.change(screen.getByLabelText('Drawing link'), {
         target: { value: values.drawingLink },
       });
 
-    values.itemModelNumber !== undefined &&
+    if (values.itemModelNumber !== undefined)
       fireEvent.change(screen.getByLabelText('Model number'), {
         target: { value: values.itemModelNumber },
       });
@@ -110,17 +110,17 @@ describe('Catalogue Items Dialog', () => {
       await user.type(manufacturerPopup, values.manufacturer);
     }
 
-    values.notes !== undefined &&
+    if (values.notes !== undefined)
       fireEvent.change(screen.getByLabelText('Notes'), {
         target: { value: values.notes },
       });
 
-    values.resolution !== undefined &&
+    if (values.resolution !== undefined)
       fireEvent.change(screen.getByLabelText('Resolution (megapixels) *'), {
         target: { value: values.resolution },
       });
 
-    values.frameRate !== undefined &&
+    if (values.frameRate !== undefined)
       fireEvent.change(screen.getByLabelText('Frame Rate (fps)'), {
         target: { value: values.frameRate },
       });
@@ -135,12 +135,12 @@ describe('Catalogue Items Dialog', () => {
       await user.type(olderAutocomplete, values.older);
     }
 
-    values.sensorBrand !== undefined &&
+    if (values.sensorBrand !== undefined)
       fireEvent.change(screen.getByLabelText('Sensor brand'), {
         target: { value: values.sensorBrand },
       });
 
-    values.sensorType !== undefined &&
+    if (values.sensorType !== undefined)
       fireEvent.change(screen.getByLabelText('Sensor Type *'), {
         target: { value: values.sensorType },
       });

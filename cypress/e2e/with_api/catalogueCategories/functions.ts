@@ -37,7 +37,7 @@ const modifyCatalogueCategory = (
 
   if (values.newFormFields) {
     // Assume want a leaf now
-    !values.editCatalogueCategoryName &&
+    if (!values.editCatalogueCategoryName)
       cy.findByLabelText('Catalogue Items').click();
 
     // Add any required fields

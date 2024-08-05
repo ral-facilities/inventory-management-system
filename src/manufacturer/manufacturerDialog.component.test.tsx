@@ -46,42 +46,42 @@ describe('Add manufacturer dialog', () => {
     postcode?: string;
     telephone?: string;
   }) => {
-    values.name !== undefined &&
+    if (values.name !== undefined)
       fireEvent.change(screen.getByLabelText('Name *'), {
         target: { value: values.name },
       });
 
-    values.url !== undefined &&
+    if (values.url !== undefined)
       fireEvent.change(screen.getByLabelText('URL'), {
         target: { value: values.url },
       });
 
-    values.addressLine !== undefined &&
+    if (values.addressLine !== undefined)
       fireEvent.change(screen.getByLabelText('Address Line *'), {
         target: { value: values.addressLine },
       });
 
-    values.town !== undefined &&
+    if (values.town !== undefined)
       fireEvent.change(screen.getByLabelText('Town'), {
         target: { value: values.town || '' },
       });
 
-    values.county !== undefined &&
+    if (values.county !== undefined)
       fireEvent.change(screen.getByLabelText('County'), {
         target: { value: values.county || '' },
       });
 
-    values.country !== undefined &&
+    if (values.country !== undefined)
       fireEvent.change(screen.getByLabelText('Country *'), {
         target: { value: values.country },
       });
 
-    values.postcode !== undefined &&
+    if (values.postcode !== undefined)
       fireEvent.change(screen.getByLabelText('Post/Zip code *'), {
         target: { value: values.postcode },
       });
 
-    values.telephone !== undefined &&
+    if (values.telephone !== undefined)
       fireEvent.change(screen.getByLabelText('Telephone number'), {
         target: { value: values.telephone || '' },
       });

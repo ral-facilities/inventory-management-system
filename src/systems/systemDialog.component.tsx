@@ -140,13 +140,13 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
         ) {
           const editSystemData: SystemPatch = {};
 
-          isNameUpdated && (editSystemData.name = systemData.name);
-          isDescriptionUpdated &&
-            (editSystemData.description = systemData.description);
-          isLocationUpdated && (editSystemData.location = systemData.location);
-          isOwnerUpdated && (editSystemData.owner = systemData.owner);
-          isImportanceUpdated &&
-            (editSystemData.importance = systemData.importance);
+          if (isNameUpdated) editSystemData.name = systemData.name;
+          if (isDescriptionUpdated)
+            editSystemData.description = systemData.description;
+          if (isLocationUpdated) editSystemData.location = systemData.location;
+          if (isOwnerUpdated) editSystemData.owner = systemData.owner;
+          if (isImportanceUpdated)
+            editSystemData.importance = systemData.importance;
 
           patchSystem({
             id: selectedSystem.id,
@@ -178,9 +178,14 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
   );
 
   const onSubmit = (data: SystemPost) => {
-    requestType === 'patch'
-      ? handleEditSystem(data)
-      : handleAddSaveSystem({ ...data, parent_id: parentId ?? undefined });
+    if (requestType === 'patch') {
+      handleEditSystem(data);
+    } else {
+      handleAddSaveSystem({
+        ...data,
+        parent_id: parentId ?? undefined,
+      });
+    }
   };
 
   // For title
