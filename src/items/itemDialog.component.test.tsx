@@ -85,7 +85,7 @@ describe('ItemDialog', () => {
     usageStatus?: string;
     notes?: string;
   }) => {
-    values.serialNumber !== undefined &&
+    if (values.serialNumber !== undefined)
       fireEvent.change(screen.getByLabelText('Serial number'), {
         target: { value: values.serialNumber },
       });
@@ -94,42 +94,42 @@ describe('ItemDialog', () => {
       await user.click(screen.getByText('Show advanced options'));
       expect(screen.getByText('Close advanced options')).toBeInTheDocument();
 
-      values.serialNumberAdvancedOptions?.quantity !== undefined &&
+      if (values.serialNumberAdvancedOptions?.quantity !== undefined)
         fireEvent.change(screen.getByLabelText('Quantity'), {
           target: { value: values.serialNumberAdvancedOptions.quantity },
         });
-      values.serialNumberAdvancedOptions?.startingValue !== undefined &&
+      if (values.serialNumberAdvancedOptions?.startingValue !== undefined)
         fireEvent.change(screen.getByLabelText('Starting value'), {
           target: { value: values.serialNumberAdvancedOptions.startingValue },
         });
     }
 
-    values.assetNumber !== undefined &&
+    if (values.assetNumber !== undefined)
       fireEvent.change(screen.getByLabelText('Asset number'), {
         target: { value: values.assetNumber },
       });
 
-    values.purchaseOrderNumber !== undefined &&
+    if (values.purchaseOrderNumber !== undefined)
       fireEvent.change(screen.getByLabelText('Purchase order number'), {
         target: { value: values.purchaseOrderNumber },
       });
 
-    values.notes !== undefined &&
+    if (values.notes !== undefined)
       fireEvent.change(screen.getByLabelText('Notes'), {
         target: { value: values.notes },
       });
 
-    values.warrantyEndDate !== undefined &&
-      (await user.type(
+    if (values.warrantyEndDate !== undefined)
+      await user.type(
         screen.getByLabelText('Warranty end date'),
         values.warrantyEndDate
-      ));
+      );
 
-    values.deliveredDate !== undefined &&
-      (await user.type(
+    if (values.deliveredDate !== undefined)
+      await user.type(
         screen.getByLabelText('Delivered date'),
         values.deliveredDate
-      ));
+      );
 
     if (values.isDefective !== undefined) {
       const isDefectiveAutocomplete = screen.getAllByRole('combobox')[0];
@@ -150,12 +150,12 @@ describe('ItemDialog', () => {
     broken?: string;
     older?: string;
   }) => {
-    values.resolution !== undefined &&
+    if (values.resolution !== undefined)
       fireEvent.change(screen.getByLabelText('Resolution (megapixels) *'), {
         target: { value: values.resolution },
       });
 
-    values.frameRate !== undefined &&
+    if (values.frameRate !== undefined)
       fireEvent.change(screen.getByLabelText('Frame Rate (fps)'), {
         target: { value: values.frameRate },
       });
@@ -170,12 +170,12 @@ describe('ItemDialog', () => {
       await user.type(olderAutocomplete, values.older);
     }
 
-    values.sensorBrand !== undefined &&
+    if (values.sensorBrand !== undefined)
       fireEvent.change(screen.getByLabelText('Sensor brand'), {
         target: { value: values.sensorBrand },
       });
 
-    values.sensorType !== undefined &&
+    if (values.sensorType !== undefined)
       fireEvent.change(screen.getByLabelText('Sensor Type *'), {
         target: { value: values.sensorType },
       });

@@ -173,14 +173,16 @@ const ObsoleteCatalogueItemDialog = (
       const editObsoleteCatalogueItem: EditCatalogueItem = {
         id: catalogueItem.id,
       };
-      isIsObsoleteUpdated &&
-        (editObsoleteCatalogueItem.is_obsolete = obsoleteDetails.is_obsolete);
-      isObsoleteReasonUpdated &&
-        (editObsoleteCatalogueItem.obsolete_reason =
-          obsoleteDetails.obsolete_reason);
-      isReplacementIdUpdated &&
-        (editObsoleteCatalogueItem.obsolete_replacement_catalogue_item_id =
-          obsoleteDetails.obsolete_replacement_catalogue_item_id);
+      if (isIsObsoleteUpdated)
+        editObsoleteCatalogueItem.is_obsolete = obsoleteDetails.is_obsolete;
+
+      if (isObsoleteReasonUpdated)
+        editObsoleteCatalogueItem.obsolete_reason =
+          obsoleteDetails.obsolete_reason;
+
+      if (isReplacementIdUpdated)
+        editObsoleteCatalogueItem.obsolete_replacement_catalogue_item_id =
+          obsoleteDetails.obsolete_replacement_catalogue_item_id;
 
       if (
         editObsoleteCatalogueItem.id &&

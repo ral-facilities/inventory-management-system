@@ -150,7 +150,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   const handleMoveTo = React.useCallback(() => {
     const hasUsageStatusErrors = validateUsageStatus();
     if (hasSystemErrors || hasUsageStatusErrors) {
-      hasSystemErrors && setPlaceIntoSystemError(hasSystemErrors);
+      if (hasSystemErrors) setPlaceIntoSystemError(hasSystemErrors);
       return;
     }
 
