@@ -8,7 +8,6 @@
   ],
   "postUpdateOptions": ["yarnDedupeHighest"],
   "labels": ["dependencies"],
-  "separateMinorPatch": true,
   "baseBranches": ["main", "develop"],
   "packageRules": [
     {
