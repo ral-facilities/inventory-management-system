@@ -47,7 +47,7 @@ export interface CatalogueItemsDialogProps {
   onClose: () => void;
   parentInfo: CatalogueCategory | undefined;
   selectedCatalogueItem?: CatalogueItem;
-  type: 'edit' | 'create' | 'save as';
+  type: 'edit' | 'create' | 'duplicate';
 }
 
 function isValidUrl(url: string) {

@@ -270,7 +270,7 @@ describe('Catalogue Items Table', () => {
     });
   });
 
-  it('opens and closes the catalogue item dialog for save as', async () => {
+  it('opens and closes the catalogue item dialog for duplicate', async () => {
     createView();
 
     await waitFor(() => {
@@ -280,11 +280,11 @@ describe('Catalogue Items Table', () => {
     await user.click(rowActionsButton[0]);
 
     await waitFor(() => {
-      expect(screen.getByText('Save as')).toBeInTheDocument();
+      expect(screen.getByText('Duplicate')).toBeInTheDocument();
     });
 
-    const saveAsButton = screen.getByText('Save as');
-    await user.click(saveAsButton);
+    const duplicateButton = screen.getByText('Duplicate');
+    await user.click(duplicateButton);
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
     });
@@ -296,7 +296,7 @@ describe('Catalogue Items Table', () => {
     });
   });
 
-  it('opens the add catalogue item dialog for save as (more catalogue item details filled in)', async () => {
+  it('opens the add catalogue item dialog for duplicate (more catalogue item details filled in)', async () => {
     createView();
 
     await waitFor(() => {
@@ -306,11 +306,11 @@ describe('Catalogue Items Table', () => {
     await user.click(rowActionsButton[1]);
 
     await waitFor(() => {
-      expect(screen.getByText('Save as')).toBeInTheDocument();
+      expect(screen.getByText('Duplicate')).toBeInTheDocument();
     });
 
-    const saveAsButton = screen.getByText('Save as');
-    await user.click(saveAsButton);
+    const duplicateButton = screen.getByText('Duplicate');
+    await user.click(duplicateButton);
   });
 
   it('navigates to replacement obsolete item', async () => {
