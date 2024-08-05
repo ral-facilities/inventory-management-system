@@ -88,7 +88,7 @@
     "eslint-plugin-react-hooks": "4.6.2",
     "eslint-plugin-testing-library": "6.2.2",
     "express": "4.19.2",
-    "jsdom": "24.1.0",
+    "jsdom": "24.1.1",
     "prettier": "3.3.3",
     "serve": "14.2.3",
     "serve-static": "1.15.0",
