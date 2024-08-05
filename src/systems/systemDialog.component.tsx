@@ -36,7 +36,7 @@ export interface SystemDialogProps {
   open: boolean;
   onClose: () => void;
   requestType: RequestType;
-  saveAs?: boolean;
+  duplicate?: boolean;
   // Only required for add
   parentId?: string | null;
   // Only required for pre-populating fields for an edit dialog
@@ -44,10 +44,10 @@ export interface SystemDialogProps {
 }
 
 const SystemDialog = React.memo((props: SystemDialogProps) => {
-  const { open, onClose, parentId, requestType, selectedSystem, saveAs } =
+  const { open, onClose, parentId, requestType, selectedSystem, duplicate } =
     props;
 
-  const isNotCreating = (requestType !== 'post' || saveAs) && selectedSystem;
+  const isNotCreating = (requestType !== 'post' || duplicate) && selectedSystem;
 
   const { mutateAsync: postSystem, isPending: isAddPending } = usePostSystem();
   const { mutateAsync: patchSystem, isPending: isEditPending } =
