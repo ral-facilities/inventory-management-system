@@ -889,9 +889,9 @@ describe('ItemDialog', () => {
       expect(onClose).not.toHaveBeenCalled();
     });
 
-    it('save as an item', async () => {
+    it('duplicate an item', async () => {
       props.selectedItem = getItemById('G463gOIA');
-      props.type = 'save as';
+      props.type = 'duplicate';
       createView();
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
