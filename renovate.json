@@ -17,9 +17,9 @@
       }
     },
     {
-      "matchPackagePatterns": ["*"],
       "matchBaseBranches": ["main"],
-      "enabled": false
+      "enabled": false,
+      "matchPackageNames": ["*"]
     },
     {
       "matchManagers": ["dockerfile"],
