@@ -498,7 +498,7 @@ describe('Systems', () => {
   describe('Duplicate', () => {
     // Error checking is omitted here as same logic as in add
 
-    it('save as a system editing all fields (in root)', () => {
+    it('duplicates a system editing all fields (in root)', () => {
       cy.visit('/systems');
 
       cy.findAllByLabelText('Row Actions').eq(1).click();
@@ -540,7 +540,7 @@ describe('Systems', () => {
       });
     });
 
-    it("save as a system editing only a system's name (in subsystem)", () => {
+    it("duplicates a system editing only a system's name (in subsystem)", () => {
       cy.visit('/systems/65328f34a40ff5301575a4e3');
 
       cy.findAllByLabelText('Row Actions').eq(0).click();

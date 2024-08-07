@@ -5,7 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
-import SaveAsIcon from '@mui/icons-material/SaveAs';
+import DuplicateIcon from '@mui/icons-material/SaveAs';
 import {
   Box,
   Button,
@@ -295,7 +295,7 @@ function Systems() {
           }}
         >
           <ListItemIcon>
-            <SaveAsIcon />
+            <DuplicateIcon />
           </ListItemIcon>
           <ListItemText>Duplicate</ListItemText>
         </MenuItem>,

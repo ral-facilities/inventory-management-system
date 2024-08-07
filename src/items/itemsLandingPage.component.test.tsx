@@ -227,7 +227,7 @@ describe('Items Landing Page', () => {
     expect(screen.getAllByText('None')[1]).toBeInTheDocument();
   });
 
-  it('opens the edit item dialog for save as', async () => {
+  it('opens the edit item dialog for duplicate', async () => {
     createView('/catalogue/item/1/items/KvT2Ox7n');
 
     const serialNumber = '5YUQDDjKpz2z';
