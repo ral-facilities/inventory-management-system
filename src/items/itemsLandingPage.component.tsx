@@ -55,8 +55,7 @@ function ItemsLandingPage() {
   >(catalogueBreadcrumbs);
 
   React.useEffect(() => {
-    catalogueBreadcrumbs &&
-      catalogueItemData &&
+    if (catalogueBreadcrumbs && catalogueItemData)
       setItemLandingBreadcrumbs({
         ...catalogueBreadcrumbs,
         trail: [

@@ -417,7 +417,7 @@ const CatalogueCategoryDialog = React.memo(
                 values:
                   property.type === 'number'
                     ? convertedValues
-                    : allowedValuesList ?? [],
+                    : (allowedValuesList ?? []),
               },
             };
           }
@@ -478,7 +478,7 @@ const CatalogueCategoryDialog = React.memo(
         const isNameUpdated =
           categoryData.name !== selectedCatalogueCategory?.name;
 
-        isNameUpdated && (catalogueCategory.name = categoryData.name);
+        if (isNameUpdated) catalogueCategory.name = categoryData.name;
 
         if (
           catalogueCategory.id && // Check if id is present

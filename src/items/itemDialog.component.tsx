@@ -454,19 +454,18 @@ function ItemDialog(props: ItemDialogProps) {
         id: selectedItem.id,
       };
 
-      isSerialNumberUpdated && (item.serial_number = details.serial_number);
-      isPurchaseOrderNumberUpdated &&
-        (item.purchase_order_number = details.purchase_order_number);
-      isIsDefectiveUpdated && (item.is_defective = details.is_defective);
-      isUsageStatusUpdated && (item.usage_status_id = details.usage_status_id);
-      isWarrantyEndDateUpdated &&
-        (item.warranty_end_date = details.warranty_end_date);
-      isAssetNumberUpdated && (item.asset_number = details.asset_number);
-      isSerialNumberUpdated && (item.serial_number = details.serial_number);
-      isDeliveredDateUpdated && (item.delivered_date = details.delivered_date);
-      isNotesUpdated && (item.notes = details.notes);
-      isSystemIdUpdated && (item.system_id = details.system_id);
-      isCatalogueItemPropertiesUpdated && (item.properties = updatedProperties);
+      if (isSerialNumberUpdated) item.serial_number = details.serial_number;
+      if (isPurchaseOrderNumberUpdated)
+        item.purchase_order_number = details.purchase_order_number;
+      if (isIsDefectiveUpdated) item.is_defective = details.is_defective;
+      if (isUsageStatusUpdated) item.usage_status_id = details.usage_status_id;
+      if (isWarrantyEndDateUpdated)
+        item.warranty_end_date = details.warranty_end_date;
+      if (isAssetNumberUpdated) item.asset_number = details.asset_number;
+      if (isDeliveredDateUpdated) item.delivered_date = details.delivered_date;
+      if (isNotesUpdated) item.notes = details.notes;
+      if (isSystemIdUpdated) item.system_id = details.system_id;
+      if (isCatalogueItemPropertiesUpdated) item.properties = updatedProperties;
 
       if (
         item.id &&

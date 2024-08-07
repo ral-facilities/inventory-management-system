@@ -56,7 +56,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
   } = props;
 
   const handleAddField = () => {
-    onChangeFormFields &&
+    if (onChangeFormFields)
       onChangeFormFields([
         ...formFields,
         {
@@ -68,7 +68,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
           cip_placement_id: generateUniqueId('cip_placement_id_'),
         },
       ]);
-    resetFormError && resetFormError();
+    if (resetFormError) resetFormError();
   };
 
   const handleDeleteField = (cip_placement_id: string) => {
