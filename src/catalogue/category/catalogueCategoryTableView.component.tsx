@@ -115,7 +115,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
       return {
         component: TableRow,
         onClick: () => {
-          canPlaceHere && onChangeParentCategoryId(row.original.id);
+          if (canPlaceHere) onChangeParentCategoryId(row.original.id);
         },
         'aria-label': `${row.original.name} row`,
         style: {

@@ -27,7 +27,7 @@ interface AddressPost extends Omit<Address, 'town' | 'county'> {
   county?: string | null;
 }
 
-interface AddressPatch extends Partial<Address> {}
+type AddressPatch = Partial<Address>;
 
 export interface ManufacturerPost {
   name: string;
@@ -100,4 +100,4 @@ export interface System extends CreatedModifiedMixin {
   parent_id: string | null;
 }
 
-export interface SystemPatch extends Partial<SystemPost> {}
+export type SystemPatch = Partial<SystemPost>;

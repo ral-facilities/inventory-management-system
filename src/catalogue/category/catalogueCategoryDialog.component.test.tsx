@@ -42,7 +42,7 @@ describe('Catalogue Category Dialog', () => {
     // New fields to add (if any)
     newFormFields?: TestAddCatalogueCategoryProperty[];
   }) => {
-    values.name !== undefined &&
+    if (values.name !== undefined)
       fireEvent.change(screen.getByLabelText('Name *'), {
         target: { value: values.name },
       });

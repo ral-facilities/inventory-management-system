@@ -603,12 +603,13 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       ) {
         if (row.original.catalogueItem.id === selectedRowIds[0]) {
           // Deselect
-          onChangeObsoleteReplacementId && onChangeObsoleteReplacementId(null);
+          if (onChangeObsoleteReplacementId)
+            onChangeObsoleteReplacementId(null);
 
           setRowSelection({});
         } else {
           // Select
-          onChangeObsoleteReplacementId &&
+          if (onChangeObsoleteReplacementId)
             onChangeObsoleteReplacementId(row.original.catalogueItem.id);
 
           setRowSelection((prev) => ({
