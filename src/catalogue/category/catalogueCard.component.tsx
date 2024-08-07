@@ -1,7 +1,7 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import DuplicateIcon from '@mui/icons-material/SaveAs';
+import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   Button,
   Card,
@@ -159,7 +159,7 @@ function CatalogueCard(props: CatalogueCardProps) {
               sx={{ m: 0 }}
             >
               <ListItemIcon>
-                <DuplicateIcon />
+                <SaveAsIcon />
               </ListItemIcon>
               Duplicate
             </MenuItem>

@@ -2,7 +2,7 @@ import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import DuplicateIcon from '@mui/icons-material/SaveAs';
+import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   Box,
   Button,
@@ -515,7 +515,7 @@ export function ItemsTable(props: ItemTableProps) {
           sx={{ m: 0 }}
         >
           <ListItemIcon>
-            <DuplicateIcon />
+            <SaveAsIcon />
           </ListItemIcon>
           <ListItemText>Duplicate</ListItemText>
         </MenuItem>,
