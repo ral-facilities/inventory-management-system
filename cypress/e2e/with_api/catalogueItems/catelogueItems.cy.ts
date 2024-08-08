@@ -1,6 +1,6 @@
 import {
   addCatalogueCategories,
-  saveAsCatalogueCategory,
+  duplicateCatalogueCategory,
 } from '../catalogueCategories/functions';
 import { addManufacturer } from '../manufacturers/functions';
 import { addUnits } from '../units/functions';
@@ -10,7 +10,7 @@ import {
   editCatalogueItem,
   moveToCatalogueItems,
   obsoleteCatalogueItem,
-  saveAsCatalogueItem,
+  duplicateCatalogueItem,
 } from './functions';
 
 describe('catalogue items', () => {
@@ -28,7 +28,7 @@ describe('catalogue items', () => {
     addUnits(['mm', 'nm'], true);
     cy.visit('/catalogue');
     addCatalogueCategories(true);
-    saveAsCatalogueCategory('Spherical Lenses');
+    duplicateCatalogueCategory('Spherical Lenses');
   });
   afterEach(() => {
     cy.clearMocks();
@@ -43,7 +43,7 @@ describe('catalogue items', () => {
   it('CRUD for catalogue items', () => {
     addCatalogueItem();
     editCatalogueItem();
-    saveAsCatalogueItem('Plano-Convex Lens 2');
+    duplicateCatalogueItem('Plano-Convex Lens 2');
     obsoleteCatalogueItem({
       name: 'Plano-Convex Lens 2',
       obsolete_replacement: 'Plano-Convex Lens 2_copy_1',

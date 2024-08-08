@@ -918,9 +918,9 @@ describe('Catalogue Category Dialog', () => {
     });
   });
 
-  describe('Save as Catalogue Category Dialog', () => {
+  describe('Duplicate Catalogue Category Dialog', () => {
     //All of actual logic is same as add so is tested above
-    //checks that the dialog renders/opens correctly for `save as`
+    //checks that the dialog renders/opens correctly for `duplicate`
 
     let axiosPostSpy: MockInstance;
     const mockData: CatalogueCategory = {
@@ -937,7 +937,7 @@ describe('Catalogue Category Dialog', () => {
         open: true,
         onClose: onClose,
         parentId: null,
-        type: 'save as',
+        type: 'duplicate',
         selectedCatalogueCategory: mockData,
         resetSelectedCatalogueCategory: resetSelectedCatalogueCategory,
       };

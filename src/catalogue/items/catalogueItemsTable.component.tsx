@@ -224,7 +224,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     ? 'No catalogue items found'
     : 'No results found: Try adding an item by using the Add Catalogue Item button on the top left of your screen';
   const [itemDialogType, setItemsDialogType] = React.useState<
-    'create' | 'save as' | 'edit'
+    'create' | 'duplicate' | 'edit'
   >('create');
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     const viewCatalogueItemProperties = parentInfo.properties ?? [];
@@ -803,7 +803,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                 : {
                     ...row.original.catalogueItem,
                     name:
-                      itemDialogType === 'save as'
+                      itemDialogType === 'duplicate'
                         ? generateUniqueName(
                             row.original.catalogueItem.name,
                             catalogueCategoryNames
@@ -888,10 +888,10 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           <ListItemText>Edit</ListItemText>
         </MenuItem>,
         <MenuItem
-          key="save as"
-          aria-label={`Save catalogue item ${row.original.catalogueItem.name} as`}
+          key="duplicate"
+          aria-label={`Duplicate catalogue item ${row.original.catalogueItem.name}`}
           onClick={() => {
-            setItemsDialogType('save as');
+            setItemsDialogType('duplicate');
             table.setCreatingRow(row);
             closeMenu();
           }}
@@ -900,7 +900,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           <ListItemIcon>
             <SaveAsIcon />
           </ListItemIcon>
-          <ListItemText>Save as</ListItemText>
+          <ListItemText>Duplicate</ListItemText>
         </MenuItem>,
         <MenuItem
           key="delete"

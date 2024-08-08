@@ -24,7 +24,7 @@ export interface CatalogueCardViewProps {
   onChangeOpenEditPropertiesCategoryDialog: (
     catalogueCategory: CatalogueCategory
   ) => void;
-  onChangeOpenSaveAsDialog: (catalogueCategory: CatalogueCategory) => void;
+  onChangeOpenDuplicateDialog: (catalogueCategory: CatalogueCategory) => void;
   handleToggleSelect: (catalogueCategory: CatalogueCategory) => void;
   selectedCategories: CatalogueCategory[];
 }
@@ -35,7 +35,7 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
     onChangeOpenDeleteCategoryDialog,
     onChangeOpenEditNameCategoryDialog,
     onChangeOpenEditPropertiesCategoryDialog,
-    onChangeOpenSaveAsDialog,
+    onChangeOpenDuplicateDialog,
     handleToggleSelect,
     selectedCategories,
   } = props;
@@ -82,7 +82,7 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
               onChangeOpenEditPropertiesDialog={
                 onChangeOpenEditPropertiesCategoryDialog
               }
-              onChangeOpenSaveAsDialog={onChangeOpenSaveAsDialog}
+              onChangeOpenDuplicateDialog={onChangeOpenDuplicateDialog}
               onToggleSelect={handleToggleSelect}
               isSelected={selectedCategories.some(
                 (selectedCategory: CatalogueCategory) =>

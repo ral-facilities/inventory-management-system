@@ -96,7 +96,7 @@ const CustomTextField: React.FC<TextFieldProps> = (renderProps) => {
 export interface ItemDialogProps {
   open: boolean;
   onClose: () => void;
-  type: 'create' | 'edit' | 'save as';
+  type: 'create' | 'edit' | 'duplicate';
   catalogueItem?: CatalogueItem;
   catalogueCategory?: CatalogueCategory;
   selectedItem?: Item;

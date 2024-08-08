@@ -170,11 +170,11 @@ const modifyCatalogueItem = (
   }
 };
 
-export const saveAsCatalogueItem = (name: string) => {
+export const duplicateCatalogueItem = (name: string) => {
   cy.findByLabelText(`${name} row`).within(() => {
     cy.findByLabelText('Row Actions').click();
   });
-  cy.findByLabelText(`Save catalogue item ${name} as`).click();
+  cy.findByLabelText(`Duplicate catalogue item ${name}`).click();
 
   cy.findByRole('button', { name: 'Next' }).click();
   cy.findByRole('button', { name: 'Finish' }).click();

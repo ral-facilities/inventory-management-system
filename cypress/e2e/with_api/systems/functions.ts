@@ -54,9 +54,9 @@ export const modifySystem = (
   }
 };
 
-export const saveAsSystem = (name: string, index: number) => {
+export const duplicateSystem = (name: string, index: number) => {
   cy.findAllByLabelText('Row Actions').eq(index).click();
-  cy.findByText(`Save as`).click();
+  cy.findByText(`Duplicate`).click();
 
   cy.findByRole('button', { name: 'Save' }).click();
 
