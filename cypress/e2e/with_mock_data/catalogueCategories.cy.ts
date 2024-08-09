@@ -1316,7 +1316,7 @@ describe('Catalogue Category', () => {
 
     cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.findByLabelText('Axis radio button').click();
+    cy.findAllByRole('radio', { name: 'Toggle select row' }).last().click();
 
     cy.findByRole('button', { name: 'Next' }).click();
 
@@ -1364,7 +1364,7 @@ describe('Catalogue Category', () => {
 
     cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.findByLabelText('Axis radio button').click();
+    cy.findAllByRole('radio', { name: 'Toggle select row' }).last().click();
 
     cy.findByRole('button', { name: 'Next' }).click();
 
@@ -1408,7 +1408,7 @@ describe('Catalogue Category', () => {
 
     cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.findByLabelText('Axis radio button').click();
+    cy.findAllByRole('radio', { name: 'Toggle select row' }).last().click();
 
     cy.findByRole('button', { name: 'Next' }).click();
 
@@ -1452,7 +1452,7 @@ describe('Catalogue Category', () => {
 
     cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.findByLabelText('Axis radio button').click();
+    cy.findAllByRole('radio', { name: 'Toggle select row' }).last().click();
 
     cy.findByRole('button', { name: 'Next' }).click();
 
@@ -1505,7 +1505,7 @@ describe('Catalogue Category', () => {
 
     cy.findByRole('button', { name: 'Back' }).click();
 
-    cy.findByLabelText('Pumping Speed radio button').click();
+    cy.findAllByRole('radio', { name: 'Toggle select row' }).first().click();
 
     cy.findByRole('button', { name: 'Next' }).click();
 

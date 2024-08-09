@@ -1,4 +1,4 @@
-import { fireEvent, screen, within } from '@testing-library/react';
+import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { MockInstance } from 'vitest';
 import { imsApi } from '../../api/api';
@@ -43,11 +43,15 @@ describe('CatalogueCategoryDirectoryDialog', () => {
     };
 
     user = userEvent.setup();
+
+    window.Element.prototype.getBoundingClientRect = vi
+      .fn()
+      .mockReturnValue({ height: 100, width: 200 });
   });
 
   const modifyValues = async (values: {
     type: 'Edit' | 'Add';
-    editRadio?: string;
+    editRadio?: number;
     formField: Partial<TestCatalogueCategoryPropertyMigration>;
     justModifyPropertyForm: boolean;
   }) => {
@@ -69,7 +73,13 @@ describe('CatalogueCategoryDirectoryDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
-      if (values.type === 'Edit' && values.editRadio) {
+      expect(screen.getByRole('table')).toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.queryByRole('progressbar')).not.toBeInTheDocument();
+      });
+
+      // 0 evaluates to falsy, therefore check if not undefined
+      if (values.type === 'Edit' && values.editRadio !== undefined) {
         const selectedRadioButton = screen.getByLabelText(
           `${values.editRadio} radio button`
         );
@@ -245,7 +255,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           unit_id: '5',
         }
       );
-    });
+    }, 10000);
 
     it('adds a new property with allowed values (type string)', async () => {
       createView();
@@ -410,7 +420,13 @@ describe('CatalogueCategoryDirectoryDialog', () => {
 
       expect(screen.getAllByLabelText('Property Name *').length).toEqual(1);
       await user.click(screen.getByRole('button', { name: 'Back' }));
-      expect(screen.getAllByLabelText('Property Name *').length).toEqual(3);
+
+      await waitFor(() => {
+        expect(screen.getByRole('table')).toBeInTheDocument();
+      });
+
+      expect(screen.getByText('Pumping Speed')).toBeInTheDocument();
+
       await user.click(screen.getByText('Add catalogue item property'));
 
       expect(screen.getAllByLabelText('Property Name *').length).toEqual(1);
@@ -802,7 +818,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       createView();
       await modifyValues({
         type: 'Edit',
-        editRadio: 'Ultimate Pressure',
+        editRadio: 1,
         formField: {
           name: 'test',
         },
@@ -823,7 +839,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       createView();
       await modifyValues({
         type: 'Edit',
-        editRadio: 'Axis',
+        editRadio: 2,
         formField: {
           allowed_values: { type: 'list', values: ['a'] },
         },
@@ -847,7 +863,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       createView();
       await modifyValues({
         type: 'Edit',
-        editRadio: 'Pumping Speed',
+        editRadio: 0,
         formField: {
           allowed_values: { type: 'list', values: [600] },
         },
@@ -871,7 +887,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       createView();
       await modifyValues({
         type: 'Edit',
-        editRadio: 'Pumping Speed',
+        editRadio: 0,
         formField: {},
         justModifyPropertyForm: false,
       });
@@ -903,7 +919,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       createView();
       await modifyValues({
         type: 'Edit',
-        editRadio: 'Pumping Speed',
+        editRadio: 0,
         formField: { name: 'Axis' },
         justModifyPropertyForm: false,
       });

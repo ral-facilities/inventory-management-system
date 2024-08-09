@@ -868,10 +868,10 @@ describe('Catalogue Category Dialog', () => {
       });
       expect(onClose).not.toHaveBeenCalled();
 
-      const formName = screen.getAllByLabelText('Property Name *');
+      const formName = screen.getByLabelText('Name *');
 
       // Modify the name field using userEvent
-      fireEvent.change(formName[0], {
+      fireEvent.change(formName, {
         target: { value: 'Updated Field' },
       });
 
