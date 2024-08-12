@@ -6,25 +6,6 @@ on:
 permissions:
   contents: read
 
-changelog:
-  exclude:
-    labels:
-      - documentation
-  categories:
-    - title: Features
-      labels:
-        - feature
-        - enhancement
-    - title: Bug Fixes
-      labels:
-        - bug
-    - title: Security Fixes
-      labels:
-        - security
-    - title: Other Changes
-      labels:
-        - '*'
-
 jobs:
   docker:
     # This job builds the Docker image and if successful, it pushes it to Harbor.
