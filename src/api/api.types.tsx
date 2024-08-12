@@ -104,6 +104,10 @@ export interface SystemPatch extends Partial<SystemPost> {}
 
 // ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
 
+export enum AllowedValuesListType {
+  Any = 'any',
+  List = 'list',
+}
 export interface AllowedValuesList {
   type: 'list';
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -1,4 +1,4 @@
-import { undefined, z, ZodDiscriminatedUnionOption } from 'zod';
+import { z, ZodDiscriminatedUnionOption } from 'zod';
 import {
   CatalogueCategoryPropertyType,
   SystemImportanceType,
@@ -151,24 +151,64 @@ export const SystemsSchema = (requestType: RequestType) =>
 // ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const checkForDuplicateAllowedValues = (data: any[], ctx: z.RefinementCtx) => {
+const handleAllowedValuesErrors = (data: any, ctx: z.RefinementCtx) => {
+  const issues: z.ZodIssue[] = [];
+
+  // Validate each value in the data array using the appropriate schema
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data.values.forEach((item: any, index: number) => {
+    const numberSchema = MandatoryNumberSchema({
+      requiredErrorMessage: 'Please enter a value.',
+      invalidTypeErrorMessage: 'Please enter a valid number.',
+    });
+
+    const stringSchema = MandatoryStringSchema({
+      errorMessage: 'Please enter a value.',
+    });
+
+    const result =
+      data.valueType === 'number'
+        ? numberSchema.safeParse(item.value)
+        : stringSchema.safeParse(item.value);
+    if (!result.success) {
+      issues.push({
+        path: ['values', index, 'value'],
+        message: result.error.errors[0]?.message || 'Invalid value.',
+        code: 'custom',
+      });
+    }
+  });
+
+  // Check for duplicates
   const duplicateIds = checkForDuplicates({
-    data,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    data: data.values.map((val: { av_placement_id: string; value: any }) => ({
+      ...val,
+      value: data.valueType === 'number' ? Number(val.value) : val.value,
+    })),
     idName: 'av_placement_id',
     field: 'value',
   });
 
   if (duplicateIds.length > 0) {
-    const duplicateIssues: z.ZodIssue[] = duplicateIds.map((duplicateId) => ({
-      path: ['values', duplicateId],
-      message: 'Duplicate value',
-      code: 'custom',
-    }));
+    duplicateIds.forEach((duplicateId) => {
+      const itemIndex = data.values.findIndex(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (item: any) => item.av_placement_id === duplicateId
+      );
 
-    duplicateIssues.forEach((issue) => {
-      ctx.addIssue(issue);
+      issues.push({
+        path: ['values', itemIndex, 'value'],
+        message: 'Duplicate value.',
+        code: 'custom',
+      });
     });
   }
+
+  // Add all queued issues in one loop
+  issues.forEach((issue) => {
+    ctx.addIssue(issue);
+  });
 
   return data;
 };
@@ -182,12 +222,18 @@ const checkForDuplicatePropertyNames = (data: any[], ctx: z.RefinementCtx) => {
   });
 
   if (duplicateIds.length > 0) {
-    const duplicateIssues: z.ZodIssue[] = duplicateIds.map((duplicateId) => ({
-      path: [duplicateId, 'name'],
-      message:
-        'Duplicate property name. Please change the name or remove the property.',
-      code: 'custom',
-    }));
+    const duplicateIssues: z.ZodIssue[] = duplicateIds.map((duplicateId) => {
+      const itemIndex = data.findIndex(
+        (item) => item.cip_placement_id === duplicateId
+      );
+
+      return {
+        path: [itemIndex, 'name'],
+        message:
+          'Duplicate property name. Please change the name or remove the property.',
+        code: 'custom',
+      };
+    });
 
     duplicateIssues.forEach((issue) => {
       ctx.addIssue(issue);
@@ -237,44 +283,25 @@ const propertiesTypeList: [
   }),
 ];
 
-const AllowedValuesNumberSchema = z.object({
-  value: MandatoryNumberSchema({
-    requiredErrorMessage: 'Please enter a value.',
-    invalidTypeErrorMessage: 'Please enter a valid number.',
-  }),
+const allowedValuesObject = z.object({
+  value: z.any(),
   av_placement_id: z.string(),
 });
 
-const AllowedValuesStringSchema = z.object({
-  value: MandatoryStringSchema({ errorMessage: 'Please enter a value.' }),
-  av_placement_id: z.string(),
+const AllowedValuesListSchema = z.object({
+  type: z.literal('list'),
+  // The error handling had to be done manually for the  allowed values as
+  // there was an error displaying duplicate and invalid errors at the same
+  // time
+  values: z
+    .object({
+      valueType: z.enum(['string', 'number']),
+      values: z
+        .array(allowedValuesObject)
+        .min(1, { message: 'Please create a valid list item.' }),
+    })
+    .superRefine((data, ctx) => handleAllowedValuesErrors(data, ctx)),
 });
-
-const AllowedValuesListSchema = z
-  .object({
-    type: z.literal('list'),
-    values: z.discriminatedUnion('valueType', [
-      z.object({
-        valueType: z.literal('number'),
-        values: z
-          .array(AllowedValuesNumberSchema)
-          .superRefine((data, ctx) =>
-            checkForDuplicateAllowedValues(data, ctx)
-          ),
-      }),
-      z.object({
-        valueType: z.literal('string'),
-        values: z
-          .array(AllowedValuesStringSchema)
-          .superRefine((data, ctx) =>
-            checkForDuplicateAllowedValues(data, ctx)
-          ),
-      }),
-    ]),
-  })
-  .transform((data) => {
-    return { ...data, values: data.values.values.map((val) => val.value) };
-  });
 
 export const CatalogueCategoryPropertyPatchSchema = z.object({
   name: MandatoryStringSchema({
@@ -289,11 +316,6 @@ export const CatalogueCategoryPostPropertySchema =
     type: z.nativeEnum(CatalogueCategoryPropertyType),
     unit_id: OptionalOrNullableStringSchema({ requestType: 'post' }),
     mandatory: MandatoryBooleanSchema({}),
-  }).transform((data) => {
-    const { cip_placement_id, ...rest } = data;
-    return {
-      ...rest,
-    };
   });
 
 export const CatalogueCategoryPropertyPostSchema =
@@ -309,19 +331,11 @@ export const CatalogueCategoryPropertyPostSchema =
     };
   });
 
-export const CatalogueCategorySchema = z
-  .object({
-    name: MandatoryStringSchema({ errorMessage: 'Please enter a name.' }),
-    is_leaf: z.boolean(),
-    properties: z
-      .array(CatalogueCategoryPostPropertySchema)
-      .superRefine((data, ctx) => checkForDuplicatePropertyNames(data, ctx))
-      .optional(),
-  })
-  .transform((data) => {
-    const { is_leaf, properties } = data;
-    return {
-      ...data,
-      properties: is_leaf ? properties : undefined,
-    };
-  });
+export const CatalogueCategorySchema = z.object({
+  name: MandatoryStringSchema({ errorMessage: 'Please enter a name.' }),
+  is_leaf: MandatoryBooleanSchema({}),
+  properties: z
+    .array(CatalogueCategoryPostPropertySchema)
+    .superRefine((data, ctx) => checkForDuplicatePropertyNames(data, ctx))
+    .optional(),
+});

@@ -277,7 +277,7 @@ describe('Catalogue', () => {
     });
   });
 
-  it('opens the edit name catalogue category dialog', async () => {
+  it('opens the edit catalogue category dialog', async () => {
     createView('/catalogue/1');
 
     await waitFor(() => {
@@ -290,7 +290,7 @@ describe('Catalogue', () => {
     await user.click(actionsButton);
 
     const editButton = screen.getByRole('menuitem', {
-      name: 'edit name Amp Meters catalogue category button',
+      name: 'edit Amp Meters catalogue category button',
     });
     await user.click(editButton);
 
@@ -302,35 +302,6 @@ describe('Catalogue', () => {
 
     await user.type(screen.getByLabelText('Name *'), '1');
     await user.click(saveButton);
-    await waitFor(() => {
-      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-    });
-  });
-
-  it('opens the edit properties catalogue category dialog', async () => {
-    createView('/catalogue/1');
-
-    await waitFor(() => {
-      expect(screen.getByText('Cameras')).toBeInTheDocument();
-    });
-
-    const actionsButton = screen.getByRole('button', {
-      name: 'actions Cameras catalogue category button',
-    });
-    await user.click(actionsButton);
-
-    const editButton = screen.getByRole('menuitem', {
-      name: 'edit properties Cameras catalogue category button',
-    });
-    await user.click(editButton);
-
-    await waitFor(() => {
-      expect(screen.getByRole('dialog')).toBeInTheDocument();
-    });
-
-    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
-
-    await user.click(cancelButton);
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });

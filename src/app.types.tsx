@@ -12,6 +12,43 @@ export const TAB_VALUES = [
 ] as const;
 export type TabValue = (typeof TAB_VALUES)[number];
 
+export interface AddCatalogueCategory {
+  name: string;
+  parent_id?: string | null;
+  is_leaf: boolean;
+  properties?: AddCatalogueCategoryProperty[];
+}
+
+export interface AllowedValuesList {
+  type: 'list';
+  values: {
+    valueType: 'number' | 'string';
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    values: { av_placement_id: string; value: any }[];
+  };
+}
+export type AllowedValues = AllowedValuesList;
+
+export interface AddCatalogueCategoryProperty {
+  name: string;
+  type: string;
+  unit_id?: string | null;
+  mandatory: string;
+  allowed_values?: AllowedValues | null;
+}
+
+export interface AddCatalogueCategoryWithPlacementIds {
+  name: string;
+  parent_id?: string | null;
+  is_leaf: string;
+  properties?: AddCatalogueCategoryPropertyWithPlacementIds[];
+}
+
+export interface AddCatalogueCategoryPropertyWithPlacementIds
+  extends AddCatalogueCategoryProperty {
+  cip_placement_id: string; // Catalogue item properties (cip)
+}
+
 export interface EditCatalogueCategory {
   name?: string;
   id: string;

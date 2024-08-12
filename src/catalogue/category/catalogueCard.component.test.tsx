@@ -47,12 +47,8 @@ describe('Catalogue Card', () => {
     });
     await user.click(actionsButton);
 
-    const editNameButton = screen.getByRole('menuitem', {
-      name: 'edit name Beam Characterization catalogue category button',
-    });
-
-    const editPropertiesButton = screen.getByRole('menuitem', {
-      name: 'edit properties Beam Characterization catalogue category button',
+    const editButton = screen.getByRole('menuitem', {
+      name: 'edit Beam Characterization catalogue category button',
     });
 
     const saveAsButton = screen.getByRole('menuitem', {
@@ -63,18 +59,18 @@ describe('Catalogue Card', () => {
       name: 'delete Beam Characterization catalogue category button',
     });
 
-    expect(editNameButton).toBeVisible();
-    expect(editPropertiesButton).toBeVisible();
+    expect(editButton).toBeVisible();
+
     expect(deleteButton).toBeVisible();
     expect(saveAsButton).toBeVisible();
 
-    await user.click(editNameButton);
+    await user.click(editButton);
     await user.click(
       screen.getByRole('button', {
         name: 'actions Beam Characterization catalogue category button',
       })
     );
-    expect(editNameButton).not.toBeVisible();
+    expect(editButton).not.toBeVisible();
   });
 
   it('opens the delete dialog', async () => {
