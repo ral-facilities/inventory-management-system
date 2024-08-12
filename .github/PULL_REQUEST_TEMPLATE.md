@@ -2,6 +2,8 @@
 
 Enter a description of the changes here
 
+## Label the pull request appropriately
+
 ## Testing instructions
 
 Add a set up instructions describing how the reviewer should test the code
