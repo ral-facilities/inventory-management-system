@@ -13,6 +13,9 @@ changelog:
     - title: Security Fixes
       labels:
         - security
+    - title: Dependencies
+      labels:
+        - dependencies
     - title: Other Changes
       labels:
         - '*'
