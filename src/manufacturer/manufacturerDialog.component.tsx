@@ -93,9 +93,10 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   }, [clearErrors, errors, selectedManufacturer, watch]);
 
   const handleClose = React.useCallback(() => {
+    reset();
     clearErrors();
     onClose();
-  }, [clearErrors, onClose]);
+  }, [clearErrors, onClose, reset]);
 
   const handleAddManufacturer = React.useCallback(
     (manufacturerData: ManufacturerPost) => {

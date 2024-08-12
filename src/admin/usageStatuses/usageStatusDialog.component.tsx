@@ -32,6 +32,7 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
     formState: { errors },
     setError,
     clearErrors,
+    reset,
   } = useForm<UsageStatusPost>({
     resolver: zodResolver(UsageStatusSchema),
   });
@@ -40,9 +41,10 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
     usePostUsageStatus();
 
   const handleClose = React.useCallback(() => {
+    reset();
     clearErrors();
     onClose();
-  }, [clearErrors, onClose]);
+  }, [clearErrors, onClose, reset]);
 
   const handleAddUsageStatus = React.useCallback(
     (usageStatusData: UsageStatusPost) => {
