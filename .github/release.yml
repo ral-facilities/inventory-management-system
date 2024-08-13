@@ -26,3 +26,4 @@ changelog:
     - title: Other Changes
       labels:
         - '*'
+include_empty_categories: true
