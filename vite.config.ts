@@ -3,6 +3,7 @@ import browserslistToEsbuild from 'browserslist-to-esbuild';
 import fs from 'node:fs';
 import path from 'path';
 import { PluginOption, UserConfig, defineConfig, loadEnv } from 'vite';
+import { coverageConfigDefaults } from 'vitest/config';
 
 /* See https://github.com/mswjs/msw/discussions/712 */
 function excludeMSWPlugin(): PluginOption {
@@ -138,9 +139,9 @@ export default defineConfig(({ mode }) => {
           ['lcov', { outputFile: 'lcov.info', silent: true }],
         ],
         exclude: [
+          ...coverageConfigDefaults.exclude,
           'public/*',
           'server/*',
-          'cypress/*',
           // Leave handlers to show up unused code
           'src/mocks/browser.ts',
           'src/mocks/server.ts',
