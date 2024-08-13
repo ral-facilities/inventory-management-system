@@ -3,7 +3,6 @@ import browserslistToEsbuild from 'browserslist-to-esbuild';
 import fs from 'node:fs';
 import path from 'path';
 import { PluginOption, UserConfig, defineConfig, loadEnv } from 'vite';
-import { coverageConfigDefaults } from 'vitest/config';
 
 /* See https://github.com/mswjs/msw/discussions/712 */
 function excludeMSWPlugin(): PluginOption {
@@ -35,6 +34,15 @@ function jsonHMR(): PluginOption {
       }
     },
   };
+}
+
+// Obtain default coverage config from vitest when not building for production
+// (to avoid importing vitest during build as its a dev dependency)
+let coverageConfigDefaultsExclude: string[] = [];
+if (process.env.NODE_ENV !== 'production') {
+  await import('vitest/config').then((vitestConfig) => {
+    coverageConfigDefaultsExclude = vitestConfig.coverageConfigDefaults.exclude;
+  });
 }
 
 // https://vitejs.dev/config/
@@ -139,7 +147,7 @@ export default defineConfig(({ mode }) => {
           ['lcov', { outputFile: 'lcov.info', silent: true }],
         ],
         exclude: [
-          ...coverageConfigDefaults.exclude,
+          ...coverageConfigDefaultsExclude,
           'public/*',
           'server/*',
           // Leave handlers to show up unused code
