@@ -2,20 +2,27 @@ changelog:
   exclude:
     labels:
       - documentation
+      - dependencies
   categories:
-    - title: Features
+    - title: Added
       labels:
         - feature
+    - title: Changed
+      labels:
         - enhancement
-    - title: Bug Fixes
+    - title: Deprecated
+      labels:
+        - deprecated
+    - title: Removed
+      labels:
+        - removed
+        - invalid
+    - title: Fixed
       labels:
         - bug
-    - title: Security Fixes
+    - title: Security
       labels:
         - security
-    - title: Dependencies
-      labels:
-        - dependencies
     - title: Other Changes
       labels:
         - '*'
