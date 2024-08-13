@@ -23,6 +23,7 @@ import {
   TableContainer,
   TableRow,
   Typography,
+  Tooltip,
 } from '@mui/material';
 import {
   // To resolve react/jsx-pascal-case
@@ -84,14 +85,19 @@ const AddSystemButton = (props: { systemId: string | null }) => {
   const [addSystemDialogOpen, setAddSystemDialogOpen] =
     React.useState<boolean>(false);
 
+  let ariaLabelText = props.systemId === null ? 'Add System' : 'Add Subsystem'
   return (
     <>
-      <IconButton
-        aria-label={props.systemId === null ? 'add system' : 'add subsystem'}
-        onClick={() => setAddSystemDialogOpen(true)}
+      <Tooltip 
+        title = {ariaLabelText}
       >
-        <AddIcon />
-      </IconButton>
+        <IconButton
+          aria-label= {ariaLabelText}
+          onClick={() => setAddSystemDialogOpen(true)}
+        >
+          <AddIcon />
+        </IconButton>
+      </Tooltip>  
       <SystemDialog
         open={addSystemDialogOpen}
         onClose={() => setAddSystemDialogOpen(false)}
