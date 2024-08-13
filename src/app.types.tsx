@@ -33,6 +33,7 @@ export interface AddCatalogueCategoryProperty {
   name: string;
   type: string;
   unit_id?: string | null;
+  unit?: string | null;
   mandatory: string;
   allowed_values?: AllowedValues | null;
 }

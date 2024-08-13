@@ -39,6 +39,7 @@ import {
   CatalogueCategory,
   CatalogueCategoryPost,
   CatalogueCategoryPostProperty,
+  CatalogueCategoryProperty,
   CatalogueCategoryPropertyType,
 } from '../../api/api.types';
 import {
@@ -53,6 +54,7 @@ import {
 } from '../../app.types';
 import { CatalogueCategorySchema, RequestType } from '../../form.schemas';
 import handleIMS_APIError from '../../handleIMS_APIError';
+import CatalogueItemsPropertiesTable from './catalogueItemPropertiesTable.component';
 
 // Function to convert a list of strings to a list of numbers
 export const convertListToNumbers = (values: string[]): number[] => {
@@ -69,6 +71,7 @@ export interface CatalogueCategoryDialogProps {
   resetSelectedCatalogueCategory: () => void;
 }
 
+//-------------------------------------Transform form type to API type----------------------------------
 function transformToCatalogueCategoryPost(
   input: AddCatalogueCategoryWithPlacementIds
 ): CatalogueCategoryPost {
@@ -111,6 +114,53 @@ function transformAllowedValues(
     };
   }
   return undefined;
+}
+
+//-------------------------------------Transform API type to form type----------------------------------
+
+export function transformToAddCatalogueCategoryWithPlacementIds(
+  input: CatalogueCategory
+): AddCatalogueCategoryWithPlacementIds {
+  return {
+    name: input.name,
+    is_leaf: input.is_leaf ? 'true' : 'false',
+    parent_id: input.parent_id || null,
+    properties: input.properties.map(transformPostPropertyToAddProperty),
+  };
+}
+
+function transformPostPropertyToAddProperty(
+  property: CatalogueCategoryProperty
+): AddCatalogueCategoryPropertyWithPlacementIds {
+  const allowedValuesWithId =
+    property.allowed_values?.type === 'list'
+      ? property.allowed_values.values.map((value) => ({
+          av_placement_id: crypto.randomUUID(),
+          value: String(value),
+        }))
+      : undefined;
+
+  const modifiedCatalogueItemProperty: AddCatalogueCategoryPropertyWithPlacementIds =
+    {
+      name: property.name,
+      type: property.type,
+      unit: property.unit ?? undefined,
+      unit_id: property.unit_id ?? undefined,
+      mandatory: property.mandatory ? 'true' : 'false',
+      cip_placement_id: crypto.randomUUID(),
+      allowed_values:
+        allowedValuesWithId && allowedValuesWithId.length > 0
+          ? {
+              type: 'list',
+              values: {
+                valueType: property.type as 'string' | 'number',
+                values: allowedValuesWithId,
+              },
+            }
+          : undefined,
+    };
+
+  return modifiedCatalogueItemProperty;
 }
 
 const AllowedValuesListTextFields = (props: { nestIndex: number }) => {
@@ -231,7 +281,10 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
 
   const initialCatalogueCategory: AddCatalogueCategoryWithPlacementIds =
     React.useMemo(() => {
-      if (!selectedCatalogueCategory && (requestType === 'post' || !saveAs))
+      if (
+        (!selectedCatalogueCategory && (requestType === 'post' || !saveAs)) ||
+        !selectedCatalogueCategory
+      )
         return {
           name: '',
           parent_id: null,
@@ -239,56 +292,12 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
           properties: undefined,
         };
 
-      const updatedCatalogueItemProperties =
-        selectedCatalogueCategory?.properties?.map((property) => {
-          // Transform allowed_values to an array of objects with id and value keys
-          const allowedValuesWithId = property.allowed_values?.values.map(
-            (value) => ({
-              av_placement_id: crypto.randomUUID(),
-              value: String(value),
-            })
-          ) || [
-            {
-              av_placement_id: crypto.randomUUID(),
-              value: '',
-            },
-          ]; // Default case if allowed_values is undefined or empty
-          const { id, ...propertyWithoutID } = property;
-          let modifiedCatalogueItemProperty: AddCatalogueCategoryPropertyWithPlacementIds =
-            {
-              ...propertyWithoutID,
-              cip_placement_id: crypto.randomUUID(),
-              allowed_values: undefined,
-              mandatory:
-                propertyWithoutID.mandatory === true ? 'true' : 'false',
-              unit_id: propertyWithoutID.unit_id ?? undefined,
-            };
-
-          if (property.allowed_values) {
-            modifiedCatalogueItemProperty = {
-              ...modifiedCatalogueItemProperty,
-              allowed_values: {
-                type: property.allowed_values?.type,
-                values: {
-                  values: allowedValuesWithId,
-                  valueType: property.type as 'string' | 'number',
-                },
-              },
-            };
-          }
-
-          return modifiedCatalogueItemProperty;
-        }) || undefined;
-
-      return {
-        ...selectedCatalogueCategory,
-        name: selectedCatalogueCategory?.name || '',
-        is_leaf: selectedCatalogueCategory?.is_leaf === true ? 'true' : 'false', // Ensure `is_leaf` is converted to a string
-        properties: updatedCatalogueItemProperties,
-      };
+      return transformToAddCatalogueCategoryWithPlacementIds(
+        selectedCatalogueCategory
+      );
     }, [requestType, saveAs, selectedCatalogueCategory]);
 
-  const methods = useForm<AddCatalogueCategoryWithPlacementIds>({
+  const formMethods = useForm<AddCatalogueCategoryWithPlacementIds>({
     resolver: zodResolver(CatalogueCategorySchema),
     defaultValues: initialCatalogueCategory,
   });
@@ -303,7 +312,7 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
     reset,
     resetField,
     setValue,
-  } = methods;
+  } = formMethods;
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -508,271 +517,297 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
               </Grid>
               <Grid item sx={{ paddingLeft: 1, paddingTop: 3 }}>
                 <Typography variant="h6">Catalogue Item Fields</Typography>
-                {fields.map((field, index) => {
-                  const properties = watch(`properties`);
+                {requestType === 'post' ? (
+                  <>
+                    {fields.map((field, index) => {
+                      const properties = watch(`properties`);
 
-                  const allowedValuesType =
-                    properties &&
-                    properties?.length > 0 &&
-                    properties[index]?.allowed_values?.type;
+                      const allowedValuesType =
+                        properties &&
+                        properties?.length > 0 &&
+                        properties[index]?.allowed_values?.type;
 
-                  const type =
-                    properties &&
-                    properties?.length > 0 &&
-                    properties[index].type;
+                      const type =
+                        properties &&
+                        properties?.length > 0 &&
+                        properties[index].type;
 
-                  return (
-                    <Stack
-                      direction="row"
-                      key={field.cip_placement_id}
-                      spacing={1}
-                      px={0.5}
-                      py={1}
-                    >
-                      <TextField
-                        id={crypto.randomUUID()}
-                        label="Property Name"
-                        variant="outlined"
-                        required
-                        {...register(`properties.${index}.name`)}
-                        onChange={(event) => {
-                          clearDuplicateNameErrors();
-                          register(`properties.${index}.name`).onChange(event);
-                        }}
-                        error={!!errors?.properties?.[index]?.name}
-                        helperText={errors?.properties?.[index]?.name?.message}
-                        sx={{ minWidth: '150px', width: '150px' }}
-                      />
-                      <Controller
-                        control={control}
-                        name={`properties.${index}.type`}
-                        render={({ field: { value, onChange } }) => (
-                          <Autocomplete
+                      return (
+                        <Stack
+                          direction="row"
+                          key={field.cip_placement_id}
+                          spacing={1}
+                          px={0.5}
+                          py={1}
+                        >
+                          <TextField
                             id={crypto.randomUUID()}
-                            disableClearable
-                            value={(
-                              Object.keys(
-                                CatalogueCategoryPropertyType
-                              ) as Array<
-                                keyof typeof CatalogueCategoryPropertyType
-                              >
-                            ).find(
-                              (key) =>
-                                CatalogueCategoryPropertyType[key] === value
-                            )}
-                            onChange={(_event, value) => {
-                              const formattedValue =
-                                CatalogueCategoryPropertyType[
-                                  value as keyof typeof CatalogueCategoryPropertyType
-                                ];
-                              onChange(formattedValue);
-
-                              if (
-                                allowedValuesType &&
-                                formattedValue !== 'boolean'
-                              )
-                                setValue(
-                                  `properties.${index}.allowed_values.values.valueType`,
-                                  formattedValue
-                                );
-
-                              if (formattedValue === 'boolean') {
-                                resetField(
-                                  `properties.${index}.allowed_values`
-                                );
-                                resetField(`properties.${index}.unit_id`);
-                              }
+                            label="Property Name"
+                            variant="outlined"
+                            required
+                            {...register(`properties.${index}.name`)}
+                            onChange={(event) => {
+                              clearDuplicateNameErrors();
+                              register(`properties.${index}.name`).onChange(
+                                event
+                              );
                             }}
-                            sx={{
-                              minWidth: '150px',
-                              width: '150px',
-                            }}
-                            fullWidth
-                            options={Object.keys(CatalogueCategoryPropertyType)}
-                            isOptionEqualToValue={(option, value) =>
-                              option == value || value == ''
+                            error={!!errors?.properties?.[index]?.name}
+                            helperText={
+                              errors?.properties?.[index]?.name?.message
                             }
-                            renderInput={(params) => (
-                              <TextField
-                                {...params}
-                                required={true}
-                                label="Select Type"
-                                variant="outlined"
-                              />
-                            )}
+                            sx={{ minWidth: '150px', width: '150px' }}
                           />
-                        )}
-                      />
-                      <Controller
-                        control={control}
-                        name={`properties.${index}.allowed_values`}
-                        render={({ field: { value, onChange } }) => {
-                          return (
-                            <Autocomplete
-                              disableClearable
-                              disabled={type === 'boolean'}
-                              id={crypto.randomUUID()}
-                              value={
-                                (
-                                  Object.keys(AllowedValuesListType) as Array<
-                                    keyof typeof AllowedValuesListType
+                          <Controller
+                            control={control}
+                            name={`properties.${index}.type`}
+                            render={({ field: { value, onChange } }) => (
+                              <Autocomplete
+                                id={crypto.randomUUID()}
+                                disableClearable
+                                value={(
+                                  Object.keys(
+                                    CatalogueCategoryPropertyType
+                                  ) as Array<
+                                    keyof typeof CatalogueCategoryPropertyType
                                   >
                                 ).find(
                                   (key) =>
-                                    AllowedValuesListType[key] === value?.type
-                                ) ?? 'Any'
-                              }
-                              onChange={(_event, value) => {
-                                const formattedValue =
-                                  AllowedValuesListType[
-                                    value as keyof typeof AllowedValuesListType
-                                  ];
+                                    CatalogueCategoryPropertyType[key] === value
+                                )}
+                                onChange={(_event, value) => {
+                                  const formattedValue =
+                                    CatalogueCategoryPropertyType[
+                                      value as keyof typeof CatalogueCategoryPropertyType
+                                    ];
+                                  onChange(formattedValue);
 
-                                onChange(
-                                  formattedValue === 'list'
-                                    ? {
-                                        type: formattedValue,
-                                        values: { valueType: type, values: [] },
-                                      }
-                                    : undefined
-                                );
-                              }}
-                              sx={{
-                                width: '200px',
-                                minWidth: '200px',
-                              }}
-                              fullWidth
-                              options={Object.keys(AllowedValuesListType)}
-                              isOptionEqualToValue={(option, value) =>
-                                option.toLowerCase() == value.toLowerCase() ||
-                                value == ''
-                              }
-                              renderInput={(params) => (
-                                <TextField
-                                  {...params}
-                                  required={true}
-                                  label="Select Allowed values"
-                                  variant="outlined"
+                                  if (
+                                    allowedValuesType &&
+                                    formattedValue !== 'boolean'
+                                  )
+                                    setValue(
+                                      `properties.${index}.allowed_values.values.valueType`,
+                                      formattedValue
+                                    );
+
+                                  if (formattedValue === 'boolean') {
+                                    resetField(
+                                      `properties.${index}.allowed_values`
+                                    );
+                                    resetField(`properties.${index}.unit_id`);
+                                  }
+                                }}
+                                sx={{
+                                  minWidth: '150px',
+                                  width: '150px',
+                                }}
+                                fullWidth
+                                options={Object.keys(
+                                  CatalogueCategoryPropertyType
+                                )}
+                                isOptionEqualToValue={(option, value) =>
+                                  option == value || value == ''
+                                }
+                                renderInput={(params) => (
+                                  <TextField
+                                    {...params}
+                                    required={true}
+                                    label="Select Type"
+                                    variant="outlined"
+                                  />
+                                )}
+                              />
+                            )}
+                          />
+                          <Controller
+                            control={control}
+                            name={`properties.${index}.allowed_values`}
+                            render={({ field: { value, onChange } }) => {
+                              return (
+                                <Autocomplete
+                                  disableClearable
                                   disabled={type === 'boolean'}
-                                />
-                              )}
-                            />
-                          );
-                        }}
-                      />
-                      {allowedValuesType === 'list' && type !== 'boolean' && (
-                        <Stack
-                          direction="column"
-                          sx={{
-                            width: '200px',
-                            minWidth: '200px',
-                            alignItems: 'center',
-                            display: 'flex',
-                            justifyContent: 'center',
-                          }}
-                        >
-                          <FormProvider {...methods}>
-                            <AllowedValuesListTextFields nestIndex={index} />
-                          </FormProvider>
-                        </Stack>
-                      )}
-                      <Controller
-                        control={control}
-                        name={`properties.${index}.unit_id`}
-                        render={({ field: { value, onChange } }) => (
-                          <Autocomplete
-                            disabled={type === 'boolean'}
-                            options={units ?? []}
-                            getOptionLabel={(option) => option.value}
-                            value={
-                              units?.find((unit) => unit.id === value) || null
-                            }
-                            sx={{
-                              width: '200px',
-                              minWidth: '200px',
-                            }}
-                            onChange={(_event, unit) => {
-                              onChange(unit?.id ?? null);
-                            }}
-                            renderInput={(params) => (
-                              <TextField
-                                {...params}
-                                label="Select Unit"
-                                variant="outlined"
-                                disabled={type === 'boolean'}
-                              />
-                            )}
-                          />
-                        )}
-                      />
+                                  id={crypto.randomUUID()}
+                                  value={
+                                    (
+                                      Object.keys(
+                                        AllowedValuesListType
+                                      ) as Array<
+                                        keyof typeof AllowedValuesListType
+                                      >
+                                    ).find(
+                                      (key) =>
+                                        AllowedValuesListType[key] ===
+                                        value?.type
+                                    ) ?? 'Any'
+                                  }
+                                  onChange={(_event, value) => {
+                                    const formattedValue =
+                                      AllowedValuesListType[
+                                        value as keyof typeof AllowedValuesListType
+                                      ];
 
-                      <Controller
-                        control={control}
-                        name={`properties.${index}.mandatory`}
-                        render={({ field: { value, onChange } }) => (
-                          <Autocomplete
-                            disableClearable
-                            id={crypto.randomUUID()}
-                            value={value === 'true' ? 'Yes' : 'No'}
-                            onChange={(_event, value) => {
-                              onChange(value === 'Yes' ? 'true' : 'false');
+                                    onChange(
+                                      formattedValue === 'list'
+                                        ? {
+                                            type: formattedValue,
+                                            values: {
+                                              valueType: type,
+                                              values: [],
+                                            },
+                                          }
+                                        : undefined
+                                    );
+                                  }}
+                                  sx={{
+                                    width: '200px',
+                                    minWidth: '200px',
+                                  }}
+                                  fullWidth
+                                  options={Object.keys(AllowedValuesListType)}
+                                  isOptionEqualToValue={(option, value) =>
+                                    option.toLowerCase() ==
+                                      value.toLowerCase() || value == ''
+                                  }
+                                  renderInput={(params) => (
+                                    <TextField
+                                      {...params}
+                                      required={true}
+                                      label="Select Allowed values"
+                                      variant="outlined"
+                                      disabled={type === 'boolean'}
+                                    />
+                                  )}
+                                />
+                              );
                             }}
-                            sx={{
-                              width: '150px',
-                              minWidth: '150px',
-                            }}
-                            fullWidth
-                            options={['Yes', 'No']}
-                            renderInput={(params) => (
-                              <TextField
-                                {...params}
-                                label="Select is mandatory?"
-                                variant="outlined"
+                          />
+                          {allowedValuesType === 'list' &&
+                            type !== 'boolean' && (
+                              <Stack
+                                direction="column"
+                                sx={{
+                                  width: '200px',
+                                  minWidth: '200px',
+                                  alignItems: 'center',
+                                  display: 'flex',
+                                  justifyContent: 'center',
+                                }}
+                              >
+                                <FormProvider {...formMethods}>
+                                  <AllowedValuesListTextFields
+                                    nestIndex={index}
+                                  />
+                                </FormProvider>
+                              </Stack>
+                            )}
+                          <Controller
+                            control={control}
+                            name={`properties.${index}.unit_id`}
+                            render={({ field: { value, onChange } }) => (
+                              <Autocomplete
+                                disabled={type === 'boolean'}
+                                options={units ?? []}
+                                getOptionLabel={(option) => option.value}
+                                value={
+                                  units?.find((unit) => unit.id === value) ||
+                                  null
+                                }
+                                sx={{
+                                  width: '200px',
+                                  minWidth: '200px',
+                                }}
+                                onChange={(_event, unit) => {
+                                  onChange(unit?.id ?? null);
+                                }}
+                                renderInput={(params) => (
+                                  <TextField
+                                    {...params}
+                                    label="Select Unit"
+                                    variant="outlined"
+                                    disabled={type === 'boolean'}
+                                  />
+                                )}
                               />
                             )}
                           />
-                        )}
-                      />
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          alignItems: 'center',
+
+                          <Controller
+                            control={control}
+                            name={`properties.${index}.mandatory`}
+                            render={({ field: { value, onChange } }) => (
+                              <Autocomplete
+                                disableClearable
+                                id={crypto.randomUUID()}
+                                value={value === 'true' ? 'Yes' : 'No'}
+                                onChange={(_event, value) => {
+                                  onChange(value === 'Yes' ? 'true' : 'false');
+                                }}
+                                sx={{
+                                  width: '150px',
+                                  minWidth: '150px',
+                                }}
+                                fullWidth
+                                options={['Yes', 'No']}
+                                renderInput={(params) => (
+                                  <TextField
+                                    {...params}
+                                    label="Select is mandatory?"
+                                    variant="outlined"
+                                  />
+                                )}
+                              />
+                            )}
+                          />
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'center',
+                            }}
+                          >
+                            <IconButton
+                              aria-label={
+                                'Delete catalogue category field entry'
+                              }
+                              onClick={() => {
+                                remove(index);
+                                clearDuplicateNameErrors();
+                              }}
+                            >
+                              <DeleteIcon />
+                            </IconButton>
+                          </Box>
+                        </Stack>
+                      );
+                    })}
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <IconButton
+                        sx={{ margin: '8px' }}
+                        onClick={() => {
+                          append({
+                            cip_placement_id: crypto.randomUUID(),
+                            name: '',
+                            type: CatalogueCategoryPropertyType.Text,
+                            mandatory: 'false',
+                          });
                         }}
+                        aria-label={'Add catalogue category field entry'}
                       >
-                        <IconButton
-                          aria-label={'Delete catalogue category field entry'}
-                          onClick={() => {
-                            remove(index);
-                            clearDuplicateNameErrors();
-                          }}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      </Box>
-                    </Stack>
-                  );
-                })}
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                  }}
-                >
-                  <IconButton
-                    sx={{ margin: '8px' }}
-                    onClick={() => {
-                      append({
-                        cip_placement_id: crypto.randomUUID(),
-                        name: '',
-                        type: CatalogueCategoryPropertyType.Text,
-                        mandatory: 'false',
-                      });
-                    }}
-                    aria-label={'Add catalogue category field entry'}
-                  >
-                    <AddIcon />
-                  </IconButton>
-                </Box>
+                        <AddIcon />
+                      </IconButton>
+                    </Box>
+                  </>
+                ) : (
+                  <Box mt={1}>
+                    <CatalogueItemsPropertiesTable properties={fields} />
+                  </Box>
+                )}
               </Grid>
             </>
           )}

@@ -1222,7 +1222,7 @@ describe('Catalogue Category Dialog', () => {
       });
       expect(onClose).not.toHaveBeenCalled();
 
-      const formName = screen.getAllByLabelText('Property Name *');
+      const formName = screen.getAllByLabelText('Name *');
 
       // Modify the name field using userEvent
       fireEvent.change(formName[0], {
@@ -1391,7 +1391,7 @@ describe('Catalogue Category Dialog', () => {
       expect(onClose).toHaveBeenCalled();
     });
 
-    it('saves as a catalogue category (with properties)', async () => {
+    it('saves as a catalogue category (with properties and allowed values)', async () => {
       props.selectedCatalogueCategory = {
         ...mockData,
         is_leaf: true,
