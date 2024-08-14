@@ -36,6 +36,7 @@
       "vulnerabilityAlerts": {
         "enabled": true
       }
+    }
   ],
   "lockFileMaintenance": {
     "enabled": true,
