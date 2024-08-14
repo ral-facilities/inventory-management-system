@@ -816,13 +816,15 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 />
               </Grid>
               <Grid item xs={1}>
-                <IconButton
-                  sx={{ mx: '4px', my: '2px' }}
-                  onClick={() => setAddManufacturerDialogOpen(true)}
-                  aria-label="add manufacturer"
-                >
-                  <AddIcon />
-                </IconButton>
+                <Tooltip title = "Add Manufacturer">
+                  <IconButton
+                    sx={{ mx: '4px', my: '2px' }}
+                    onClick={() => setAddManufacturerDialogOpen(true)}
+                    aria-label="add manufacturer"
+                  >
+                    <AddIcon />
+                  </IconButton>
+                </Tooltip>
               </Grid>
             </Grid>
             <ManufacturerDialog

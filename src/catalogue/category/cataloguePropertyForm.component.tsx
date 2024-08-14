@@ -7,6 +7,7 @@ import {
   IconButton,
   Stack,
   TextField,
+  Tooltip,
 } from '@mui/material';
 import { v4 as uuidv4 } from 'uuid';
 import { Unit } from '../../api/api.types';
@@ -405,12 +406,14 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
           }}
         >
           {type !== 'disabled' && isList && (
-            <IconButton
-              aria-label={'Delete catalogue Item Field entry'}
-              onClick={() => handleDeleteField && handleDeleteField()}
-            >
-              <DeleteIcon />
-            </IconButton>
+            <Tooltip title = "Delete Field">
+              <IconButton
+                aria-label={'Delete catalogue Item Field entry'}
+                onClick={() => handleDeleteField && handleDeleteField()}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
           )}
         </Box>
       </Box>
