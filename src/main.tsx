@@ -1,5 +1,5 @@
 import axios from 'axios';
-import * as log from 'loglevel';
+import log from 'loglevel';
 import { SetupWorker } from 'msw/browser';
 import React from 'react';
 import ReactDOMClient from 'react-dom/client';
@@ -100,6 +100,7 @@ export function unmount(props: unknown): Promise<void> {
     });
 }
 
+// TODO JOEL: Add tests for this like OG?
 // only export this for testing
 export const fetchSettings =
   (): Promise<InventoryManagementSystemSettings | void> => {
@@ -167,8 +168,16 @@ export const fetchSettings =
       });
   };
 
+const settings = fetchSettings();
+setSettings(settings);
+
 async function prepare() {
-  if (import.meta.env.DEV || import.meta.env.VITE_APP_INCLUDE_MSW === 'true') {
+  // When in dev, only use MSW if the api url is given, otherwise load MSW as it must have been explicitly requested
+  const settingsResult = await settings;
+  if (
+    import.meta.env.VITE_APP_INCLUDE_MSW === 'true' ||
+    settingsResult?.apiUrl === ''
+  ) {
     // Need to use require instead of import as import breaks when loaded in SG
     const { worker } = await import('./mocks/browser');
     return (worker as SetupWorker).start({
@@ -181,13 +190,8 @@ async function prepare() {
         print.warning();
       },
     });
-  }
-  return Promise.resolve();
+  } else return Promise.resolve();
 }
-
-const settings = fetchSettings();
-
-setSettings(settings);
 
 /* Renders only if we're not being loaded by SG  */
 const conditionalSciGatewayRender = () => {
@@ -196,27 +200,12 @@ const conditionalSciGatewayRender = () => {
   }
 };
 
-if (import.meta.env.DEV) {
-  // When in dev, only use MSW if the api url or otherwise if MSW is explicitly requested
-  settings
-    .then((settings) => {
-      if (
-        (settings && settings.apiUrl !== '') ||
-        import.meta.env.VITE_APP_INCLUDE_MSW === 'false'
-      )
-        conditionalSciGatewayRender();
-      else prepare().then(() => conditionalSciGatewayRender());
-    })
-    .catch((error) => log.error(`Got error: ${error.message}`));
+if (import.meta.env.DEV || import.meta.env.VITE_APP_INCLUDE_MSW === 'true') {
+  prepare().then(() => conditionalSciGatewayRender());
 
   log.setDefaultLevel(log.levels.DEBUG);
 } else {
-  // When in production, only use MSW if explicitly requested
-  if (import.meta.env.VITE_APP_INCLUDE_MSW === 'true') {
-    prepare().then(() => conditionalSciGatewayRender());
-    log.setDefaultLevel(log.levels.DEBUG);
-  } else {
-    conditionalSciGatewayRender();
-    log.setDefaultLevel(log.levels.ERROR);
-  }
+  conditionalSciGatewayRender();
+
+  log.setDefaultLevel(log.levels.ERROR);
 }
