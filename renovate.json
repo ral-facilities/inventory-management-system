@@ -30,7 +30,12 @@
       "matchManagers": ["github-actions"],
       "matchBaseBranches": ["main"],
       "enabled": true
-    }
+    },
+    {
+      "matchBaseBranches": ["main"],
+      "vulnerabilityAlerts": {
+        "enabled": true
+      }
   ],
   "lockFileMaintenance": {
     "enabled": true,
