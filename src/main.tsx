@@ -100,7 +100,7 @@ export function unmount(props: unknown): Promise<void> {
     });
 }
 
-// TODO JOEL: Add tests for this like OG?
+// TODO: Add tests for this like OG?
 // only export this for testing
 export const fetchSettings =
   (): Promise<InventoryManagementSystemSettings | void> => {
