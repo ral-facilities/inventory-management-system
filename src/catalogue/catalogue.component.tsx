@@ -76,7 +76,20 @@ const AddCategoryButton = (props: AddCatalogueButtonProps) => {
 
   return (
     <>
-      <Tooltip title = "Add Category">
+      <Tooltip 
+        title = "Add Category"
+        slotProps={{
+          popper: {
+            modifiers: [
+              {
+                name: 'offset',
+                options: {
+                  offset: [0, -10],
+                },
+              },
+            ],
+          },
+        }}>
         <IconButton
           sx={{ mx: 1, my: 2 }}
           onClick={() => setAddCategoryDialogOpen(true)}

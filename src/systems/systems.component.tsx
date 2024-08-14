@@ -90,6 +90,18 @@ const AddSystemButton = (props: { systemId: string | null }) => {
     <>
       <Tooltip 
         title = {ariaLabelText}
+        slotProps={{
+          popper: {
+            modifiers: [
+              {
+                name: 'offset',
+                options: {
+                  offset: [0, -10],
+                },
+              },
+            ],
+          },
+        }}
       >
         <IconButton
           aria-label= {ariaLabelText}
