@@ -623,6 +623,7 @@ exports[`Catalogue Items Dialog > renders details step correctly 1`] = `
                   <button
                     aria-label="add manufacturer"
                     class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-rfqbm8-MuiButtonBase-root-MuiIconButton-root"
+                    data-mui-internal-clone-element="true"
                     tabindex="0"
                     type="button"
                   >
@@ -763,13 +764,13 @@ exports[`Catalogue Items Dialog > renders properties step correctly 1`] = `
       tabindex="-1"
     >
       <div
-        aria-labelledby=":re:"
+        aria-labelledby=":rf:"
         class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthLg MuiDialog-paperFullWidth css-1t8b64z-MuiPaper-root-MuiDialog-paper"
         role="dialog"
       >
         <h2
           class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-bdhsul-MuiTypography-root-MuiDialogTitle-root"
-          id=":re:"
+          id=":rf:"
         >
           Add Catalogue Item
         </h2>
