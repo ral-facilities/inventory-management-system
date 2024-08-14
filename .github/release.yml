@@ -10,16 +10,15 @@ changelog:
     - title: Changed
       labels:
         - enhancement
+    - title: Fixed
+      labels:
+        - bug
     - title: Deprecated
       labels:
         - deprecated
     - title: Removed
       labels:
         - removed
-        - invalid
-    - title: Fixed
-      labels:
-        - bug
     - title: Security
       labels:
         - security
