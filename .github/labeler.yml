@@ -1,6 +1,2 @@
-feature/*:
-  - feature
-bugfix/*:
-  - bugfix
-hotfix/*:
-  - hotfix
+feature:
+  - head-branch: ['^feature/']
