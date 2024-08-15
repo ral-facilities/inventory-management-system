@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Check PR title
         run: |
-          if [[ ! ${{ github.event.pull_request.title }} =~ (feature|bug): ]]; then
+          if [[ ! ${{ github.event.pull_request.title }} =~ ^(feature|bug): ]]; then
             echo "PR title does not follow the required convention. It must start with 'fix:', 'feature:', or 'chore:'."
             exit 1
           fi
