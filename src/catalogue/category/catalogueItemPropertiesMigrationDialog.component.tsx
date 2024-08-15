@@ -711,7 +711,7 @@ function CatalogueItemPropertiesMigrationDialog(
       const isNameUpdated =
         catalogueItemField.name !== initialPropertyDetails?.name;
 
-      isNameUpdated && (property.name = catalogueItemField.name);
+      if (isNameUpdated) property.name = catalogueItemField.name;
 
       let isAllowedValuesUpdated = false;
 
@@ -732,7 +732,7 @@ function CatalogueItemPropertiesMigrationDialog(
           JSON.stringify(initialPropertyDetails?.allowed_values?.values) !==
           JSON.stringify(allowedValues.values);
 
-        isAllowedValuesUpdated && (property.allowed_values = allowedValues);
+        if (isAllowedValuesUpdated) property.allowed_values = allowedValues;
       }
 
       if (isNameUpdated || isAllowedValuesUpdated) {

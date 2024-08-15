@@ -9,13 +9,13 @@ import { AxiosError } from 'axios';
 import {
   AddItem,
   AddItems,
-  APIError,
   EditItem,
   Item,
   MoveItemsToSystem,
   TransferState,
 } from '../app.types';
 import { imsApi } from './api';
+import { APIError } from './api.types';
 
 const addItem = async (item: AddItem): Promise<Item> => {
   return imsApi.post<Item>(`/v1/items`, item).then((response) => response.data);
@@ -97,8 +97,8 @@ const fetchItems = async (
 ): Promise<Item[]> => {
   const queryParams = new URLSearchParams();
 
-  system_id && queryParams.append('system_id', system_id);
-  catalogue_item_id &&
+  if (system_id) queryParams.append('system_id', system_id);
+  if (catalogue_item_id)
     queryParams.append('catalogue_item_id', catalogue_item_id);
   return imsApi
     .get(`/v1/items`, {

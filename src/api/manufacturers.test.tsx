@@ -1,15 +1,15 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { AddManufacturer, Manufacturer } from '../app.types';
 import ManufacturersJSON from '../mocks/Manufacturers.json';
 import {
   CREATED_MODIFIED_TIME_VALUES,
   hooksWrapperWithProviders,
 } from '../testUtils';
+import { Manufacturer, ManufacturerPost } from './api.types';
 import {
-  useAddManufacturer,
   useDeleteManufacturer,
-  useManufacturerIds,
-  useManufacturers,
+  useGetManufacturerIds,
+  useGetManufacturers,
+  usePostManufacturer,
 } from './manufacturers';
 
 describe('manufacturer api functions', () => {
@@ -17,10 +17,10 @@ describe('manufacturer api functions', () => {
     vi.clearAllMocks();
   });
 
-  describe('useAddManufacturer', () => {
-    let mockDataAdd: AddManufacturer;
+  describe('usePostManufacturer', () => {
+    let mockDataPost: ManufacturerPost;
     beforeEach(() => {
-      mockDataAdd = {
+      mockDataPost = {
         name: 'Manufacturer D',
         url: 'http://test.co.uk',
         address: {
@@ -35,11 +35,11 @@ describe('manufacturer api functions', () => {
     });
 
     it('posts a request to add manufacturer and returns successful response', async () => {
-      const { result } = renderHook(() => useAddManufacturer(), {
+      const { result } = renderHook(() => usePostManufacturer(), {
         wrapper: hooksWrapperWithProviders(),
       });
       expect(result.current.isIdle).toBe(true);
-      result.current.mutate(mockDataAdd);
+      result.current.mutate(mockDataPost);
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
@@ -87,7 +87,7 @@ describe('manufacturer api functions', () => {
         wrapper: hooksWrapperWithProviders(),
       });
       expect(result.current.isIdle).toBe(true);
-      result.current.mutate(mockDataView);
+      result.current.mutate(mockDataView.id);
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
@@ -95,9 +95,9 @@ describe('manufacturer api functions', () => {
     });
   });
 
-  describe('useManufacturer', () => {
+  describe('useGetManufacturers', () => {
     it('sends request to fetch manufacturer data and returns successful response', async () => {
-      const { result } = renderHook(() => useManufacturers(), {
+      const { result } = renderHook(() => useGetManufacturers(), {
         wrapper: hooksWrapperWithProviders(),
       });
 
@@ -109,9 +109,9 @@ describe('manufacturer api functions', () => {
     });
   });
 
-  describe('useManufacturerIds', () => {
+  describe('useGetManufacturerIds', () => {
     it('sends request to fetch manufacturer data and returns successful response', async () => {
-      const { result } = renderHook(() => useManufacturerIds(['1', '2']), {
+      const { result } = renderHook(() => useGetManufacturerIds(['1', '2']), {
         wrapper: hooksWrapperWithProviders(),
       });
 

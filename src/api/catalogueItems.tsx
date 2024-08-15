@@ -8,7 +8,6 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import {
-  APIError,
   AddCatalogueItem,
   CatalogueItem,
   EditCatalogueItem,
@@ -16,6 +15,7 @@ import {
   TransferToCatalogueItem,
 } from '../app.types';
 import { imsApi } from './api';
+import { APIError } from './api.types';
 
 const addCatalogueItem = async (
   catalogueItem: AddCatalogueItem

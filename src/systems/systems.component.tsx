@@ -35,8 +35,8 @@ import {
 } from 'material-react-table';
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
-import { System } from '../app.types';
+import { System } from '../api/api.types';
+import { useGetSystems, useGetSystemsBreadcrumbs } from '../api/systems';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import {
   OverflowTip,
@@ -47,8 +47,10 @@ import {
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { DeleteSystemDialog } from './deleteSystemDialog.component';
 import SystemDetails from './systemDetails.component';
-import SystemDialog, { SystemDialogType } from './systemDialog.component';
+import SystemDialog from './systemDialog.component';
 import { SystemDirectoryDialog } from './systemDirectoryDialog.component';
+
+export type SystemMenuDialogType = 'edit' | 'duplicate' | 'delete';
 
 /* Returns function that navigates to a specific system id (or to the root of all systems
    if given null) */
@@ -94,7 +96,7 @@ const AddSystemButton = (props: { systemId: string | null }) => {
         open={addSystemDialogOpen}
         onClose={() => setAddSystemDialogOpen(false)}
         parentId={props.systemId}
-        type="add"
+        requestType="post"
       />
     </>
   );
@@ -160,8 +162,6 @@ const CopySystemsButton = (props: {
   );
 };
 
-type MenuDialogType = SystemDialogType | 'delete';
-
 const columns: MRT_ColumnDef<System>[] = [
   {
     accessorKey: 'name',
@@ -200,15 +200,16 @@ function Systems() {
 
   // When all menu's closed will be undefined
   const [menuDialogType, setMenuDialogType] = React.useState<
-    MenuDialogType | undefined
+    SystemMenuDialogType | undefined
   >(undefined);
 
   // Data
-  const { data: systemsBreadcrumbs } = useSystemsBreadcrumbs(systemId);
-  const { data: subsystemsData, isLoading: subsystemsDataLoading } = useSystems(
-    // String value of null for filtering root systems
-    systemId === null ? 'null' : systemId
-  );
+  const { data: systemsBreadcrumbs } = useGetSystemsBreadcrumbs(systemId);
+  const { data: subsystemsData, isLoading: subsystemsDataLoading } =
+    useGetSystems(
+      // String value of null for filtering root systems
+      systemId === null ? 'null' : systemId
+    );
 
   // Obtain the selected system data, not just the selection state
   const selectedRowIds = Object.keys(rowSelection);
@@ -217,7 +218,7 @@ function Systems() {
       selectedRowIds.includes(subsystem.id)
     ) ?? [];
 
-  // Names for preventing duplicates in the save as dialog
+  // Names for preventing duplicates in the duplicate dialog
   const subsystemNames: string[] =
     subsystemsData?.map((subsystem) => subsystem.name) || [];
 
@@ -282,10 +283,10 @@ function Systems() {
           <ListItemText>Edit</ListItemText>
         </MenuItem>,
         <MenuItem
-          key="save as"
-          aria-label={`Save system ${row.original.name} as new system`}
+          key="duplicate"
+          aria-label={`Duplicate system ${row.original.name}`}
           onClick={() => {
-            setMenuDialogType('save as');
+            setMenuDialogType('duplicate');
             setSelectedSystemForMenu({
               ...row.original,
               name: generateUniqueName(row.original.name, subsystemNames),
@@ -296,7 +297,7 @@ function Systems() {
           <ListItemIcon>
             <SaveAsIcon />
           </ListItemIcon>
-          <ListItemText>Save as</ListItemText>
+          <ListItemText>Duplicate</ListItemText>
         </MenuItem>,
         <MenuItem
           key="delete"
@@ -507,11 +508,8 @@ function Systems() {
       <SystemDialog
         open={menuDialogType !== undefined && menuDialogType !== 'delete'}
         onClose={() => setMenuDialogType(undefined)}
-        type={
-          menuDialogType !== undefined && menuDialogType !== 'delete'
-            ? menuDialogType
-            : 'edit'
-        }
+        requestType={menuDialogType === 'edit' ? 'patch' : 'post'}
+        duplicate={menuDialogType === 'duplicate'}
         selectedSystem={selectedSystemForMenu}
         parentId={systemId}
       />

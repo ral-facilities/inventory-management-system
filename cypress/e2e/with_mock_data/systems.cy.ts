@@ -276,7 +276,6 @@ describe('Systems', () => {
           JSON.stringify({
             name: 'System name',
             importance: 'medium',
-            parent_id: null,
           })
         );
       });
@@ -309,7 +308,6 @@ describe('Systems', () => {
             location: 'System location',
             owner: 'System owner',
             importance: 'high',
-            parent_id: null,
           })
         );
       });
@@ -346,11 +344,11 @@ describe('Systems', () => {
 
       cy.findByRole('button', { name: 'add system' }).click();
       cy.findByRole('button', { name: 'Save' }).click();
-      cy.findByText('Please enter a name').should('be.visible');
+      cy.findByText('Please enter a name.').should('be.visible');
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
       cy.findByRole('button', { name: 'add system' }).click();
-      cy.findByText('Please enter a name').should('not.exist');
+      cy.findByText('Please enter a name.').should('not.exist');
     });
 
     it('displays error message if the system has a duplicate name that disappears once closed', () => {
@@ -360,13 +358,13 @@ describe('Systems', () => {
       cy.findByLabelText('Name *').type('Error 409');
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByText(
-        'A System with the same name already exists within the same parent System'
+        'A System with the same name already exists within the same parent System. Please enter a different name.'
       ).should('be.visible');
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
       cy.findByRole('button', { name: 'add system' }).click();
       cy.findByText(
-        'A System with the same name already exists within the same parent System'
+        'A System with the same name already exists within the same parent System. Please enter a different name.'
       ).should('not.exist');
     });
   });
@@ -445,14 +443,14 @@ describe('Systems', () => {
       cy.findByText('Edit').click();
 
       cy.findByRole('button', { name: 'Save' }).click();
-      cy.findByText('Please edit a form entry before clicking save').should(
-        'be.visible'
-      );
+      cy.findByText(
+        "There have been no changes made. Please change a field's value or press Cancel to exit."
+      ).should('be.visible');
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByLabelText('Description').type('1');
-      cy.findByText('Please edit a form entry before clicking save').should(
-        'not.exist'
-      );
+      cy.findByText(
+        "There have been no changes made. Please change a field's value or press Cancel to exit."
+      ).should('not.exist');
     });
 
     it('displays error message when name is not given that disappears once closed', () => {
@@ -463,14 +461,14 @@ describe('Systems', () => {
 
       cy.findByLabelText('Name *').clear();
       cy.findByRole('button', { name: 'Save' }).click();
-      cy.findByText('Please enter a name').should('be.visible');
+      cy.findByText('Please enter a name.').should('be.visible');
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
 
       cy.findAllByLabelText('Row Actions').eq(1).click();
       cy.findByText('Edit').click();
 
-      cy.findByText('Please enter a name').should('not.exist');
+      cy.findByText('Please enter a name.').should('not.exist');
     });
 
     it('displays error message if the system has a duplicate name that disappears once closed', () => {
@@ -483,7 +481,7 @@ describe('Systems', () => {
       cy.findByLabelText('Name *').type('Error 409');
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByText(
-        'A System with the same name already exists within the same parent System'
+        'A System with the same name already exists within the same parent System. Please enter a different name.'
       ).should('be.visible');
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
@@ -492,19 +490,19 @@ describe('Systems', () => {
       cy.findByText('Edit').click();
 
       cy.findByText(
-        'A System with the same name already exists within the same parent System'
+        'A System with the same name already exists within the same parent System. Please enter a different name.'
       ).should('not.exist');
     });
   });
 
-  describe('Save as', () => {
-    // Error checking is ommitted here as same logic as in add
+  describe('Duplicate', () => {
+    // Error checking is omitted here as same logic as in add
 
-    it('save as a system editing all fields (in root)', () => {
+    it('duplicates a system editing all fields (in root)', () => {
       cy.visit('/systems');
 
       cy.findAllByLabelText('Row Actions').eq(1).click();
-      cy.findByText('Save as').click();
+      cy.findByText('Duplicate').click();
 
       // Should default to having _copy_1 in the name
       cy.findByLabelText('Name *').should('have.value', 'Pulse Laser_copy_1');
@@ -537,17 +535,16 @@ describe('Systems', () => {
             location: 'System location',
             owner: 'System owner',
             importance: 'medium',
-            parent_id: null,
           })
         );
       });
     });
 
-    it("save as a system editing only a system's name (in subsystem)", () => {
+    it("duplicates a system editing only a system's name (in subsystem)", () => {
       cy.visit('/systems/65328f34a40ff5301575a4e3');
 
       cy.findAllByLabelText('Row Actions').eq(0).click();
-      cy.findByText('Save as').click();
+      cy.findByText('Duplicate').click();
 
       // Should default to having _copy_1 in the name
       cy.findByLabelText('Name *').should('have.value', 'Smaller laser_copy_1');

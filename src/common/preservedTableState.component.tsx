@@ -25,7 +25,7 @@ interface State {
 }
 
 /* State but where undefined => should not be present in the url */
-interface StatePartial extends Partial<State> {}
+type StatePartial = Partial<State>;
 
 /* Column filter value but defined as it will be stored in URL search params (includes type information) */
 interface SearchParamsColumnFilterValue {

@@ -11,8 +11,8 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
+import { APIError, System } from '../api/api.types';
 import { useDeleteSystem } from '../api/systems';
-import { APIError, System } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
 
 export interface DeleteSystemDialogProps {

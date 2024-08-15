@@ -7,19 +7,17 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import {
-  APIError,
-  AddSystem,
-  BreadcrumbsInfo,
-  CopyToSystem,
-  EditSystem,
-  MoveToSystem,
-  System,
-  SystemImportanceType,
-  TransferState,
-} from '../app.types';
+import { CopyToSystem, MoveToSystem, TransferState } from '../app.types';
 import { generateUniqueNameUsingCode } from '../utils';
 import { imsApi } from './api';
+import {
+  APIError,
+  BreadcrumbsInfo,
+  System,
+  SystemImportanceType,
+  SystemPatch,
+  SystemPost,
+} from './api.types';
 
 /** Utility for turning an importance into an MUI palette colour to display */
 export const getSystemImportanceColour = (
@@ -35,7 +33,7 @@ export const getSystemImportanceColour = (
   }
 };
 
-const fetchSystems = async (parent_id?: string): Promise<System[]> => {
+const getSystems = async (parent_id?: string): Promise<System[]> => {
   const queryParams = new URLSearchParams();
 
   if (parent_id) queryParams.append('parent_id', parent_id);
@@ -45,79 +43,77 @@ const fetchSystems = async (parent_id?: string): Promise<System[]> => {
   });
 };
 
-export const useSystemIds = (ids: string[]): UseQueryResult<System>[] => {
+export const useGetSystemIds = (ids: string[]): UseQueryResult<System>[] => {
   return useQueries({
     queries: ids.map((id) => ({
       queryKey: ['System', id],
-      queryFn: () => fetchSystem(id),
+      queryFn: () => getSystem(id),
     })),
   });
 };
 
-export const useSystems = (
+export const useGetSystems = (
   parent_id?: string
 ): UseQueryResult<System[], AxiosError> => {
   return useQuery({
     queryKey: ['Systems', parent_id],
     queryFn: () => {
-      return fetchSystems(parent_id);
+      return getSystems(parent_id);
     },
   });
 };
 
-const fetchSystem = async (id: string): Promise<System> => {
+const getSystem = async (id: string): Promise<System> => {
   return imsApi.get(`/v1/systems/${id}`).then((response) => {
     return response.data;
   });
 };
 
 // Allows a value of undefined or null to disable
-export const useSystem = (
+export const useGetSystem = (
   id?: string | null
 ): UseQueryResult<System, AxiosError> => {
   return useQuery({
     queryKey: ['System', id],
     queryFn: () => {
-      return fetchSystem(id ?? '');
+      return getSystem(id ?? '');
     },
     enabled: !!id,
   });
 };
 
-const fetchSystemsBreadcrumbs = async (
-  id: string
-): Promise<BreadcrumbsInfo> => {
+const getSystemsBreadcrumbs = async (id: string): Promise<BreadcrumbsInfo> => {
   return imsApi.get(`/v1/systems/${id}/breadcrumbs`, {}).then((response) => {
     return response.data;
   });
 };
 
-export const useSystemsBreadcrumbs = (
+export const useGetSystemsBreadcrumbs = (
   id?: string | null
 ): UseQueryResult<BreadcrumbsInfo, AxiosError> => {
   return useQuery({
     queryKey: ['SystemBreadcrumbs', id],
     queryFn: () => {
-      return fetchSystemsBreadcrumbs(id ?? '');
+      return getSystemsBreadcrumbs(id ?? '');
     },
     enabled: !!id,
   });
 };
 
-const addSystem = async (system: AddSystem): Promise<System> => {
+const postSystem = async (system: SystemPost): Promise<System> => {
   return imsApi
     .post<System>(`/v1/systems`, system)
     .then((response) => response.data);
 };
 
-export const useAddSystem = (): UseMutationResult<
+export const usePostSystem = (): UseMutationResult<
   System,
   AxiosError,
-  AddSystem
+  SystemPost
 > => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (system: AddSystem) => addSystem(system),
+    mutationFn: (system: SystemPost) => postSystem(system),
     onSuccess: (systemResponse) => {
       queryClient.invalidateQueries({
         queryKey: ['Systems', systemResponse.parent_id ?? 'null'],
@@ -126,22 +122,23 @@ export const useAddSystem = (): UseMutationResult<
   });
 };
 
-const editSystem = async (system: EditSystem): Promise<System> => {
-  const { id, ...updateData } = system;
-
+const patchSystem = async (
+  id: string,
+  system: SystemPatch
+): Promise<System> => {
   return imsApi
-    .patch<System>(`/v1/systems/${id}`, updateData)
+    .patch<System>(`/v1/systems/${id}`, system)
     .then((response) => response.data);
 };
 
-export const useEditSystem = (): UseMutationResult<
+export const usePatchSystem = (): UseMutationResult<
   System,
   AxiosError,
-  EditSystem
+  { id: string; system: SystemPatch }
 > => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (system: EditSystem) => editSystem(system),
+    mutationFn: ({ id, system }) => patchSystem(id, system),
     onSuccess: (systemResponse: System) => {
       queryClient.invalidateQueries({
         queryKey: ['Systems', systemResponse.parent_id ?? 'null'],
@@ -196,8 +193,7 @@ export const useMoveToSystem = (): UseMutationResult<
 
       const promises = moveToSystem.selectedSystems.map(
         async (system: System) => {
-          return editSystem({
-            id: system.id,
+          return patchSystem(system.id, {
             parent_id: moveToSystem.targetSystem?.id || null,
           })
             .then(() => {
@@ -266,7 +262,7 @@ export const useCopyToSystem = (): UseMutationResult<
           // Data to post (backend will just ignore the extra here - only id and code)
           // Also use Object.assign to copy the data otherwise will modify in place causing issues
           // in tests
-          const systemAdd: AddSystem = Object.assign({}, system) as AddSystem;
+          const systemAdd: SystemPost = Object.assign({}, system) as SystemPost;
 
           // Assign new parent
           systemAdd.parent_id = copyToSystem.targetSystem?.id || null;
@@ -278,7 +274,7 @@ export const useCopyToSystem = (): UseMutationResult<
             copyToSystem.existingSystemCodes
           );
 
-          return addSystem(systemAdd)
+          return postSystem(systemAdd)
             .then((result: System) => {
               const targetSystemName =
                 copyToSystem.targetSystem?.name || 'Root';

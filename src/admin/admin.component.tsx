@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { BreadcrumbsInfo } from '../app.types';
+import { BreadcrumbsInfo } from '../api/api.types';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import Units from './units/units.component';
 import UsageStatuses from './usageStatuses/usageStatuses.component';

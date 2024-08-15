@@ -10,43 +10,33 @@ import {
   DialogTitle,
   FormHelperText,
   Grid,
+  MenuItem,
   TextField,
 } from '@mui/material';
 import { AxiosError } from 'axios';
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
-  getSystemImportanceColour,
-  useAddSystem,
-  useEditSystem,
-} from '../api/systems';
-import {
-  APIError,
-  AddSystem,
-  EditSystem,
   System,
   SystemImportanceType,
-} from '../app.types';
+  SystemPatch,
+  SystemPost,
+} from '../api/api.types';
+import {
+  getSystemImportanceColour,
+  usePatchSystem,
+  usePostSystem,
+} from '../api/systems';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Controller, useForm } from 'react-hook-form';
+import { RequestType, SystemsSchema } from '../form.schemas';
 import handleIMS_APIError from '../handleIMS_APIError';
-import { trimStringValues } from '../utils';
-
-export type SystemDialogType = 'add' | 'edit' | 'save as';
-
-const getEmptySystem = (): AddSystem => {
-  return {
-    // Here using null for optional values only, so that types for isUpdated parameters
-    // can match
-    name: '',
-    description: null,
-    location: null,
-    owner: null,
-    importance: SystemImportanceType.MEDIUM,
-  } as AddSystem;
-};
 
 export interface SystemDialogProps {
   open: boolean;
   onClose: () => void;
-  type: SystemDialogType;
+  requestType: RequestType;
+  duplicate?: boolean;
   // Only required for add
   parentId?: string | null;
   // Only required for pre-populating fields for an edit dialog
@@ -54,153 +44,148 @@ export interface SystemDialogProps {
 }
 
 const SystemDialog = React.memo((props: SystemDialogProps) => {
-  const { open, onClose, parentId, type, selectedSystem } = props;
+  const { open, onClose, parentId, requestType, selectedSystem, duplicate } =
+    props;
 
-  // User entered properties
-  const [systemData, setSystemData] =
-    React.useState<AddSystem>(getEmptySystem());
+  const isNotCreating = (requestType !== 'post' || duplicate) && selectedSystem;
 
-  // Ensure system data is updated when the selected system changes
-  useEffect(() => {
-    if (open) {
-      if (type === 'add') setSystemData(getEmptySystem());
-      else if (selectedSystem) setSystemData(selectedSystem as AddSystem);
+  const { mutateAsync: postSystem, isPending: isAddPending } = usePostSystem();
+  const { mutateAsync: patchSystem, isPending: isEditPending } =
+    usePatchSystem();
+
+  const initialSystem: SystemPost = React.useMemo(
+    () =>
+      isNotCreating
+        ? selectedSystem
+        : {
+            name: '',
+            description: '',
+            location: '',
+            owner: '',
+            importance: SystemImportanceType.MEDIUM,
+          },
+    [isNotCreating, selectedSystem]
+  );
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+    watch,
+    control,
+    setError,
+    clearErrors,
+    reset,
+  } = useForm<SystemPost>({
+    resolver: zodResolver(SystemsSchema(requestType)),
+    defaultValues: initialSystem,
+  });
+
+  // Load the values for editing.
+  React.useEffect(() => {
+    reset(initialSystem);
+  }, [initialSystem, reset]);
+
+  // Clears form errors when a value has been changed
+  React.useEffect(() => {
+    if (errors.root?.formError) {
+      const subscription = watch(() => clearErrors('root.formError'));
+      return () => subscription.unsubscribe();
     }
-  }, [selectedSystem, open, type]);
-
-  // Error messages for the above properties (undefined means no error)
-  const [nameError, setNameError] = React.useState<string | undefined>(
-    undefined
-  );
-
-  // Form error that should disappear when the form is modified
-  const [formError, setFormError] = React.useState<string | undefined>(
-    undefined
-  );
+  }, [clearErrors, errors, watch]);
 
   const handleClose = React.useCallback(() => {
-    if (type === 'add') setSystemData(getEmptySystem());
-    // Reset for edit
-    else setSystemData(selectedSystem as AddSystem);
-
-    // Remove all errors
-    setNameError(undefined);
-    setFormError(undefined);
-
+    clearErrors();
     onClose();
-  }, [onClose, selectedSystem, type]);
+  }, [clearErrors, onClose]);
 
-  const { mutateAsync: addSystem, isPending: isAddPending } = useAddSystem();
-  const { mutateAsync: editSystem, isPending: isEditPending } = useEditSystem();
-
-  // Returns true when all fields valid
-  const validateFields = React.useCallback((): boolean => {
-    if (systemData.name.trim() === '') {
-      setNameError('Please enter a name');
-      return false;
-    }
-    return true;
-  }, [systemData.name]);
-
-  const handleAddSaveSystem = React.useCallback(() => {
-    // Validate the entered fields
-    if (validateFields()) {
-      // Should be valid so add the system
-      const system: AddSystem = {
-        name: systemData.name,
-        // For optional params use undefined when the parameters are null
-        description: systemData.description || undefined,
-        location: systemData.location || undefined,
-        owner: systemData.owner || undefined,
-        importance: systemData.importance,
-      };
-      if (parentId !== undefined) system.parent_id = parentId;
-      addSystem(trimStringValues(system))
+  const handleAddSaveSystem = React.useCallback(
+    (system: SystemPost) => {
+      postSystem(system)
         .then(() => handleClose())
         .catch((error: AxiosError) => {
-          const response = error.response?.data as APIError;
-
           // 409 occurs when there is a system with a duplicate name with the
           // same parent
-          if (response && error.response?.status === 409)
-            setNameError(response.detail);
-          else handleIMS_APIError(error);
+          if (error.response?.status === 409) {
+            setError('name', {
+              message:
+                'A System with the same name already exists within the same parent System. Please enter a different name.',
+            });
+          } else handleIMS_APIError(error);
         });
-    }
-  }, [
-    addSystem,
-    handleClose,
-    parentId,
-    systemData.description,
-    systemData.importance,
-    systemData.location,
-    systemData.name,
-    systemData.owner,
-    validateFields,
-  ]);
+    },
+    [postSystem, handleClose, setError]
+  );
 
-  const handleEditSystem = React.useCallback(() => {
-    // Validate the entered fields
-    if (validateFields() && selectedSystem) {
-      // Now ensure there is actually something to update
-      const isNameUpdated = systemData.name !== selectedSystem?.name;
-      const isDescriptionUpdated =
-        systemData.description !== selectedSystem?.description;
-      const isLocationUpdated =
-        systemData.location !== selectedSystem?.location;
-      const isOwnerUpdated = systemData.owner !== selectedSystem?.owner;
-      const isImportanceUpdated =
-        systemData.importance !== selectedSystem?.importance;
+  const handleEditSystem = React.useCallback(
+    (systemData: SystemPost) => {
+      // Validate the entered fields
+      if (selectedSystem) {
+        // Now ensure there is actually something to update
+        const isNameUpdated = systemData.name !== selectedSystem?.name;
+        const isDescriptionUpdated =
+          systemData.description !== selectedSystem?.description;
+        const isLocationUpdated =
+          systemData.location !== selectedSystem?.location;
+        const isOwnerUpdated = systemData.owner !== selectedSystem?.owner;
+        const isImportanceUpdated =
+          systemData.importance !== selectedSystem?.importance;
 
-      if (
-        isNameUpdated ||
-        isDescriptionUpdated ||
-        isLocationUpdated ||
-        isOwnerUpdated ||
-        isImportanceUpdated
-      ) {
-        const editSystemData: EditSystem = { id: selectedSystem.id };
+        if (
+          isNameUpdated ||
+          isDescriptionUpdated ||
+          isLocationUpdated ||
+          isOwnerUpdated ||
+          isImportanceUpdated
+        ) {
+          const editSystemData: SystemPatch = {};
 
-        isNameUpdated && (editSystemData.name = systemData.name);
-        isDescriptionUpdated &&
-          (editSystemData.description = systemData.description);
-        isLocationUpdated && (editSystemData.location = systemData.location);
-        isOwnerUpdated && (editSystemData.owner = systemData.owner);
-        isImportanceUpdated &&
-          (editSystemData.importance = systemData.importance);
+          if (isNameUpdated) editSystemData.name = systemData.name;
+          if (isDescriptionUpdated)
+            editSystemData.description = systemData.description;
+          if (isLocationUpdated) editSystemData.location = systemData.location;
+          if (isOwnerUpdated) editSystemData.owner = systemData.owner;
+          if (isImportanceUpdated)
+            editSystemData.importance = systemData.importance;
 
-        editSystem(trimStringValues(editSystemData))
-          .then((response) => {
-            setSystemData(response);
-            handleClose();
+          patchSystem({
+            id: selectedSystem.id,
+            system: editSystemData,
           })
-          .catch((error: AxiosError) => {
-            const response = error.response?.data as APIError;
-
-            // 409 occurs when there is a system with a duplicate name with the
-            // same parent
-            if (response && error.response?.status === 409)
-              setNameError(response.detail);
-            else handleIMS_APIError(error);
+            .then(() => {
+              handleClose();
+            })
+            .catch((error: AxiosError) => {
+              // 409 occurs when there is a system with a duplicate name with the
+              // same parent
+              if (error.response?.status === 409) {
+                setError('name', {
+                  message:
+                    'A System with the same name already exists within the same parent System. Please enter a different name.',
+                });
+                return;
+              }
+              handleIMS_APIError(error);
+            });
+        } else
+          setError('root.formError', {
+            message:
+              "There have been no changes made. Please change a field's value or press Cancel to exit.",
           });
-      } else setFormError('Please edit a form entry before clicking save');
-    }
-  }, [
-    editSystem,
-    handleClose,
-    selectedSystem,
-    systemData.description,
-    systemData.importance,
-    systemData.location,
-    systemData.name,
-    systemData.owner,
-    validateFields,
-  ]);
+      }
+    },
+    [selectedSystem, setError, patchSystem, handleClose]
+  );
 
-  // Reset form error on any form modification
-  const handleFormChange = (newSystemData: AddSystem) => {
-    setSystemData(newSystemData);
-    setFormError(undefined);
+  const onSubmit = (data: SystemPost) => {
+    if (requestType === 'patch') {
+      handleEditSystem(data);
+    } else {
+      handleAddSaveSystem({
+        ...data,
+        parent_id: parentId ?? undefined,
+      });
+    }
   };
 
   // For title
@@ -209,7 +194,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
   return (
     <Dialog open={open} maxWidth="md" fullWidth>
       <DialogTitle>
-        {type === 'edit' ? `Edit ${systemText}` : `Add ${systemText}`}
+        {requestType === 'patch' ? `Edit ${systemText}` : `Add ${systemText}`}
       </DialogTitle>
       <DialogContent>
         <Grid container direction="column" spacing={2}>
@@ -217,14 +202,10 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
             <TextField
               id="system-name-input"
               label="Name"
-              required={true}
-              value={systemData.name}
-              error={nameError !== undefined}
-              helperText={nameError}
-              onChange={(event) => {
-                handleFormChange({ ...systemData, name: event.target.value });
-                setNameError(undefined);
-              }}
+              required
+              {...register('name')}
+              error={!!errors.name}
+              helperText={errors.name?.message}
               fullWidth
             />
           </Grid>
@@ -232,13 +213,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
             <TextField
               id="system-description-input"
               label="Description"
-              value={systemData.description ?? ''}
-              onChange={(event) => {
-                handleFormChange({
-                  ...systemData,
-                  description: event.target.value || null,
-                });
-              }}
+              {...register('description')}
               multiline
               fullWidth
             />
@@ -247,13 +222,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
             <TextField
               id="system-location-input"
               label="Location"
-              value={systemData.location ?? ''}
-              onChange={(event) => {
-                handleFormChange({
-                  ...systemData,
-                  location: event.target.value || null,
-                });
-              }}
+              {...register('location')}
               fullWidth
             />
           </Grid>
@@ -261,68 +230,63 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
             <TextField
               id="system-owner-input"
               label="Owner"
-              value={systemData.owner ?? ''}
-              onChange={(event) => {
-                handleFormChange({
-                  ...systemData,
-                  owner: event.target.value || null,
-                });
-              }}
+              {...register('owner')}
               fullWidth
             />
           </Grid>
           <Grid item>
-            <Autocomplete
-              multiple
-              limitTags={1}
-              disableClearable={true}
-              id="importance-select"
-              options={Object.values(SystemImportanceType)}
-              getOptionLabel={(option) => option}
-              value={[systemData.importance]}
-              onChange={(_event, value) => {
-                if (value.length === 0) return;
-                // as is a multiple autocomplete this removes original selection from list
-                // therefore only the new option is in the array
-                value.shift();
+            <Controller
+              control={control}
+              name="importance"
+              render={({ field: { value, onChange } }) => (
+                <Autocomplete
+                  multiple
+                  limitTags={1}
+                  disableClearable={true}
+                  id="importance-select"
+                  options={Object.values(SystemImportanceType)}
+                  getOptionLabel={(option) => option}
+                  value={[value]}
+                  onChange={(_event, value) => {
+                    if (value.length === 0) return;
+                    // as is a multiple autocomplete this removes original selection from list
+                    // therefore only the new option is in the array
+                    value.shift();
 
-                handleFormChange({
-                  ...systemData,
-                  importance: value[0],
-                });
-              }}
-              renderInput={(params) => (
-                <TextField label="Importance" {...params} />
-              )}
-              renderTags={() => (
-                <Chip
-                  label={systemData.importance}
-                  sx={() => {
-                    const colorName = getSystemImportanceColour(
-                      systemData.importance
-                    );
-                    return {
-                      margin: 0,
-                      bgcolor: `${colorName}.main`,
-                      color: `${colorName}.contrastText`,
-                    };
+                    onChange(value[0]);
                   }}
+                  renderInput={(params) => (
+                    <TextField label="Importance" {...params} />
+                  )}
+                  renderTags={() => (
+                    <Chip
+                      label={value}
+                      sx={() => {
+                        const colorName = getSystemImportanceColour(value);
+                        return {
+                          margin: 0,
+                          bgcolor: `${colorName}.main`,
+                          color: `${colorName}.contrastText`,
+                        };
+                      }}
+                    />
+                  )}
+                  renderOption={(props, option) => (
+                    <MenuItem {...props} key={option}>
+                      <Chip
+                        label={option}
+                        sx={() => {
+                          const colorName = getSystemImportanceColour(option);
+                          return {
+                            margin: 0,
+                            bgcolor: `${colorName}.main`,
+                            color: `${colorName}.contrastText`,
+                          };
+                        }}
+                      />
+                    </MenuItem>
+                  )}
                 />
-              )}
-              renderOption={(props, option) => (
-                <li {...props} key={option}>
-                  <Chip
-                    label={option}
-                    sx={() => {
-                      const colorName = getSystemImportanceColour(option);
-                      return {
-                        margin: 0,
-                        bgcolor: `${colorName}.main`,
-                        color: `${colorName}.contrastText`,
-                      };
-                    }}
-                  />
-                </li>
               )}
             />
           </Grid>
@@ -340,12 +304,11 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
           <Button
             variant="outlined"
             sx={{ width: '50%', mx: 1 }}
-            onClick={type === 'edit' ? handleEditSystem : handleAddSaveSystem}
+            onClick={handleSubmit(onSubmit)}
             disabled={
               isAddPending ||
               isEditPending ||
-              formError !== undefined ||
-              nameError !== undefined
+              Object.values(errors).length !== 0
             }
             endIcon={
               isAddPending || isEditPending ? (
@@ -356,9 +319,9 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
             Save
           </Button>
         </Box>
-        {formError && (
+        {errors.root?.formError && (
           <FormHelperText sx={{ marginTop: 4 }} error>
-            {formError}
+            {errors.root?.formError.message}
           </FormHelperText>
         )}
       </DialogActions>

@@ -12,7 +12,7 @@ describe('CardView', () => {
   const onChangeOpenDeleteCategoryDialog = vi.fn();
   const onChangeOpenEditNameCategoryDialog = vi.fn();
   const onChangeOpenEditPropertiesCategoryDialog = vi.fn();
-  const onChangeOpenSaveAsDialog = vi.fn();
+  const onChangeOpenDuplicateDialog = vi.fn();
   const handleToggleSelect = vi.fn();
   const createView = () => {
     return renderComponentWithRouterProvider(
@@ -45,7 +45,7 @@ describe('CardView', () => {
       onChangeOpenEditNameCategoryDialog: onChangeOpenEditNameCategoryDialog,
       onChangeOpenEditPropertiesCategoryDialog:
         onChangeOpenEditPropertiesCategoryDialog,
-      onChangeOpenSaveAsDialog: onChangeOpenSaveAsDialog,
+      onChangeOpenDuplicateDialog: onChangeOpenDuplicateDialog,
       handleToggleSelect: handleToggleSelect,
       selectedCategories: [],
     };

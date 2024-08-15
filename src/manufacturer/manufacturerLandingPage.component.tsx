@@ -11,8 +11,8 @@ import {
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { paths } from '../App';
-import { useManufacturer } from '../api/manufacturers';
-import { BreadcrumbsInfo } from '../app.types';
+import { BreadcrumbsInfo } from '../api/api.types';
+import { useGetManufacturer } from '../api/manufacturers';
 import { formatDateTimeStrings } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import ManufacturerDialog from './manufacturerDialog.component';
@@ -21,7 +21,7 @@ function ManufacturerLandingPage() {
   const { manufacturer_id: manufacturerId } = useParams();
 
   const { data: manufacturerData, isLoading: manufacturerDataLoading } =
-    useManufacturer(manufacturerId);
+    useGetManufacturer(manufacturerId);
 
   const [editManufacturerDialogOpen, setEditManufacturerDialogOpen] =
     React.useState<boolean>(false);
@@ -38,7 +38,7 @@ function ManufacturerLandingPage() {
     React.useState<BreadcrumbsInfo | undefined>(undefined);
 
   React.useEffect(() => {
-    manufacturerData &&
+    if (manufacturerData)
       setManufacturerLandingBreadcrumbs({
         full_trail: true,
         trail: [
@@ -263,7 +263,7 @@ function ManufacturerLandingPage() {
         open={editManufacturerDialogOpen}
         onClose={() => setEditManufacturerDialogOpen(false)}
         selectedManufacturer={manufacturerData}
-        type="edit"
+        type="patch"
       />
     </Grid>
   );

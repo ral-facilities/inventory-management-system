@@ -11,14 +11,14 @@ import {
 } from '@mui/material';
 import { MRT_RowSelectionState } from 'material-react-table';
 import React from 'react';
+import { System } from '../api/api.types';
 import {
   useCopyToSystem,
+  useGetSystem,
+  useGetSystems,
+  useGetSystemsBreadcrumbs,
   useMoveToSystem,
-  useSystem,
-  useSystems,
-  useSystemsBreadcrumbs,
 } from '../api/systems';
-import { System } from '../app.types';
 import handleTransferState from '../handleTransferState';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { SystemsTableView } from './systemsTableView.component';
@@ -46,14 +46,14 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
   }, [props.parentSystemId]);
 
   const { data: parentSystemBreadcrumbs } =
-    useSystemsBreadcrumbs(parentSystemId);
+    useGetSystemsBreadcrumbs(parentSystemId);
 
-  const { data: systemsData, isLoading: systemsDataLoading } = useSystems(
+  const { data: systemsData, isLoading: systemsDataLoading } = useGetSystems(
     parentSystemId === null ? 'null' : parentSystemId
   );
 
   const { data: targetSystem, isLoading: targetSystemLoading } =
-    useSystem(parentSystemId);
+    useGetSystem(parentSystemId);
 
   const { mutateAsync: moveToSystem, isPending: isMovePending } =
     useMoveToSystem();

@@ -21,9 +21,10 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useManufacturers } from '../api/manufacturers';
-import { Manufacturer } from '../app.types';
+import { Manufacturer } from '../api/api.types';
+import { useGetManufacturers } from '../api/manufacturers';
 import { usePreservedTableState } from '../common/preservedTableState.component';
+import { RequestType } from '../form.schemas';
 import {
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
@@ -38,7 +39,7 @@ import ManufacturerDialog from './manufacturerDialog.component';
 
 function ManufacturerComponent() {
   const { data: manufacturerData, isLoading: manufacturerDataLoading } =
-    useManufacturers();
+    useGetManufacturers();
 
   const [deleteManufacturerDialog, setDeleteManufacturerDialog] =
     React.useState<boolean>(false);
@@ -49,9 +50,8 @@ function ManufacturerComponent() {
 
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
 
-  const [manufacturerDialogType, setManufacturerDialogType] = React.useState<
-    'edit' | 'create'
-  >('create');
+  const [manufacturerDialogType, setManufacturerDialogType] =
+    React.useState<RequestType>('post');
 
   const columns = React.useMemo<MRT_ColumnDef<Manufacturer>[]>(() => {
     return [
@@ -231,7 +231,7 @@ function ManufacturerComponent() {
           <ManufacturerDialog
             open={true}
             onClose={() => {
-              setManufacturerDialogType('create');
+              setManufacturerDialogType('post');
               table.setCreatingRow(null);
             }}
             type={manufacturerDialogType}
@@ -273,7 +273,7 @@ function ManufacturerComponent() {
           key="edit"
           aria-label={`Edit manufacturer ${row.original.name}`}
           onClick={() => {
-            setManufacturerDialogType('edit');
+            setManufacturerDialogType('patch');
             setSelectedManufacturer(row.original);
             table.setCreatingRow(true);
             closeMenu();

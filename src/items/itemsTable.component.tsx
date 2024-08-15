@@ -21,9 +21,10 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { System } from '../api/api.types';
 import { useItems } from '../api/items';
-import { useSystemIds } from '../api/systems';
-import { CatalogueCategory, CatalogueItem, Item, System } from '../app.types';
+import { useGetSystemIds } from '../api/systems';
+import { CatalogueCategory, CatalogueItem, Item } from '../app.types';
 import {
   PropertyFiltersType,
   findPropertyValue,
@@ -77,7 +78,7 @@ export function ItemsTable(props: ItemTableProps) {
   );
 
   let isLoading = isLoadingItems;
-  const systemList: (System | undefined)[] = useSystemIds(
+  const systemList: (System | undefined)[] = useGetSystemIds(
     Array.from(systemIdSet.values())
   ).map((query) => {
     isLoading = isLoading || query.isLoading;
@@ -101,7 +102,7 @@ export function ItemsTable(props: ItemTableProps) {
   }, [itemsData, isLoading]);
 
   const [itemDialogType, setItemsDialogType] = React.useState<
-    'create' | 'save as' | 'edit'
+    'create' | 'duplicate' | 'edit'
   >('create');
 
   // Breadcrumbs + Mui table V2 + extra
@@ -450,7 +451,7 @@ export function ItemsTable(props: ItemTableProps) {
                 : {
                     ...row.original.item,
                     notes:
-                      itemDialogType === 'save as'
+                      itemDialogType === 'duplicate'
                         ? `${row.original.item.notes || ''}\n\nThis is a copy of the item with this Serial Number: ${row.original.item.serial_number ?? 'No serial number'}`
                         : row.original.item.notes,
                   }
@@ -504,10 +505,10 @@ export function ItemsTable(props: ItemTableProps) {
           <ListItemText>Edit</ListItemText>
         </MenuItem>,
         <MenuItem
-          key="save as"
-          aria-label={`Save item ${row.original.item.id} as`}
+          key="duplicate"
+          aria-label={`Duplicate item ${row.original.item.id}`}
           onClick={() => {
-            setItemsDialogType('save as');
+            setItemsDialogType('duplicate');
             table.setCreatingRow(row);
             closeMenu();
           }}
@@ -516,7 +517,7 @@ export function ItemsTable(props: ItemTableProps) {
           <ListItemIcon>
             <SaveAsIcon />
           </ListItemIcon>
-          <ListItemText>Save as</ListItemText>
+          <ListItemText>Duplicate</ListItemText>
         </MenuItem>,
         <MenuItem
           key="delete"

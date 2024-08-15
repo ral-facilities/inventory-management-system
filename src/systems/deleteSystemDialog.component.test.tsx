@@ -3,7 +3,7 @@ import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http } from 'msw';
 import { MockInstance } from 'vitest';
 import { imsApi } from '../api/api';
-import { System, SystemImportanceType } from '../app.types';
+import { System, SystemImportanceType } from '../api/api.types';
 import handleIMS_APIError from '../handleIMS_APIError';
 import SystemsJSON from '../mocks/Systems.json';
 import { server } from '../mocks/server';

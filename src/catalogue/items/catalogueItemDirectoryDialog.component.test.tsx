@@ -223,7 +223,7 @@ describe('catalogue item directory Dialog', () => {
       });
     });
 
-    it('renders add button when viewing category table, and has save as functionality when clicked', async () => {
+    it('renders add button when viewing category table, and has duplicate functionality when clicked', async () => {
       props.parentCategoryId = '5';
 
       createView();

@@ -1,7 +1,7 @@
 import { RenderResult, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http } from 'msw';
-import { UsageStatus } from '../../app.types';
+import { UsageStatus } from '../../api/api.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { server } from '../../mocks/server';
 import { renderComponentWithRouterProvider } from '../../testUtils';
@@ -23,18 +23,18 @@ describe('Delete Usage status dialog', () => {
   };
 
   beforeEach(() => {
-    (usageStatus = {
+    usageStatus = {
       id: '1',
       value: 'test',
       code: 'test',
       created_time: '2024-01-01T12:00:00.000+00:00',
       modified_time: '2024-01-02T13:10:10.000+00:00',
-    }),
-      (props = {
-        open: true,
-        onClose: onClose,
-        usageStatus: usageStatus,
-      });
+    };
+    props = {
+      open: true,
+      onClose: onClose,
+      usageStatus: usageStatus,
+    };
     user = userEvent.setup();
   });
 

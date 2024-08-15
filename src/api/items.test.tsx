@@ -7,7 +7,6 @@ import {
   Item,
   MoveItemsToSystem,
   MoveItemsToSystemUsageStatus,
-  System,
 } from '../app.types';
 import SystemsJSON from '../mocks/Systems.json';
 import {
@@ -17,6 +16,7 @@ import {
   hooksWrapperWithProviders,
 } from '../testUtils';
 import { imsApi } from './api';
+import { System } from './api.types';
 import {
   useAddItem,
   useAddItems,
@@ -249,7 +249,7 @@ describe('items api functions', () => {
     let moveItemsToSystem: MoveItemsToSystem;
 
     // Use patch spy for testing since response is not actual data in this case
-    // so can't test the underlying use of editSystem otherwise
+    // so can't test the underlying use of patchSystem otherwise
     let axiosPatchSpy: MockInstance;
 
     beforeEach(() => {
@@ -355,7 +355,7 @@ describe('items api functions', () => {
     let addItems: AddItems;
 
     // Use post spy for testing since response is not actual data in this case
-    // so can't test the underlying use of editSystem otherwise
+    // so can't test the underlying use of patchSystem otherwise
     let axiosPostSpy: MockInstance;
     const { id, ...item } = getItemById('KvT2Ox7n') as Item;
 

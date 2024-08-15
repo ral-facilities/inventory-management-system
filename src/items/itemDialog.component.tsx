@@ -24,9 +24,10 @@ import {
 import { DatePicker } from '@mui/x-date-pickers';
 import { AxiosError } from 'axios';
 import React from 'react';
+import { UsageStatus } from '../api/api.types';
 import { useAddItem, useAddItems, useEditItem } from '../api/items';
-import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
-import { useUsageStatuses } from '../api/usageStatuses';
+import { useGetSystems, useGetSystemsBreadcrumbs } from '../api/systems';
+import { useGetUsageStatuses } from '../api/usageStatuses';
 import {
   AddItem,
   AdvancedSerialNumberOptionsType,
@@ -37,7 +38,6 @@ import {
   Item,
   ItemDetails,
   ItemDetailsPlaceholder,
-  UsageStatus,
 } from '../app.types';
 import { matchCatalogueItemProperties } from '../catalogue/catalogue.component';
 import handleIMS_APIError from '../handleIMS_APIError';
@@ -96,7 +96,7 @@ const CustomTextField: React.FC<TextFieldProps> = (renderProps) => {
 export interface ItemDialogProps {
   open: boolean;
   onClose: () => void;
-  type: 'create' | 'edit' | 'save as';
+  type: 'create' | 'edit' | 'duplicate';
   catalogueItem?: CatalogueItem;
   catalogueCategory?: CatalogueCategory;
   selectedItem?: Item;
@@ -157,7 +157,7 @@ function ItemDialog(props: ItemDialogProps) {
     string | undefined
   >(undefined);
 
-  const { data: usageStatuses } = useUsageStatuses();
+  const { data: usageStatuses } = useGetUsageStatuses();
   const { mutateAsync: addItem, isPending: isAddItemPending } = useAddItem();
   const { mutateAsync: addItems, isPending: isAddItemsPending } = useAddItems();
   const { mutateAsync: editItem, isPending: isEditItemPending } = useEditItem();
@@ -361,12 +361,12 @@ function ItemDialog(props: ItemDialogProps) {
     selectedItem?.system_id ?? null
   );
 
-  const { data: systemsData, isLoading: systemsDataLoading } = useSystems(
+  const { data: systemsData, isLoading: systemsDataLoading } = useGetSystems(
     parentSystemId === null ? 'null' : parentSystemId
   );
 
   const { data: parentSystemBreadcrumbs } =
-    useSystemsBreadcrumbs(parentSystemId);
+    useGetSystemsBreadcrumbs(parentSystemId);
 
   const handleAddItem = React.useCallback(() => {
     const { updatedProperties, hasPropertiesErrors } =
@@ -454,19 +454,18 @@ function ItemDialog(props: ItemDialogProps) {
         id: selectedItem.id,
       };
 
-      isSerialNumberUpdated && (item.serial_number = details.serial_number);
-      isPurchaseOrderNumberUpdated &&
-        (item.purchase_order_number = details.purchase_order_number);
-      isIsDefectiveUpdated && (item.is_defective = details.is_defective);
-      isUsageStatusUpdated && (item.usage_status_id = details.usage_status_id);
-      isWarrantyEndDateUpdated &&
-        (item.warranty_end_date = details.warranty_end_date);
-      isAssetNumberUpdated && (item.asset_number = details.asset_number);
-      isSerialNumberUpdated && (item.serial_number = details.serial_number);
-      isDeliveredDateUpdated && (item.delivered_date = details.delivered_date);
-      isNotesUpdated && (item.notes = details.notes);
-      isSystemIdUpdated && (item.system_id = details.system_id);
-      isCatalogueItemPropertiesUpdated && (item.properties = updatedProperties);
+      if (isSerialNumberUpdated) item.serial_number = details.serial_number;
+      if (isPurchaseOrderNumberUpdated)
+        item.purchase_order_number = details.purchase_order_number;
+      if (isIsDefectiveUpdated) item.is_defective = details.is_defective;
+      if (isUsageStatusUpdated) item.usage_status_id = details.usage_status_id;
+      if (isWarrantyEndDateUpdated)
+        item.warranty_end_date = details.warranty_end_date;
+      if (isAssetNumberUpdated) item.asset_number = details.asset_number;
+      if (isDeliveredDateUpdated) item.delivered_date = details.delivered_date;
+      if (isNotesUpdated) item.notes = details.notes;
+      if (isSystemIdUpdated) item.system_id = details.system_id;
+      if (isCatalogueItemPropertiesUpdated) item.properties = updatedProperties;
 
       if (
         item.id &&

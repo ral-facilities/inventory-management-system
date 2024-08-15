@@ -1,20 +1,20 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { AddUnit, Unit } from '../app.types';
 import UnitsJSON from '../mocks/Units.json';
 import {
   CREATED_MODIFIED_TIME_VALUES,
   hooksWrapperWithProviders,
 } from '../testUtils';
-import { useAddUnit, useDeleteUnit, useUnits } from './units';
+import { Unit, UnitPost } from './api.types';
+import { useDeleteUnit, useGetUnits, usePostUnit } from './units';
 
 describe('units api functions', () => {
   afterEach(() => {
     vi.clearAllMocks();
   });
 
-  describe('useUnits', () => {
+  describe('useGetUnits', () => {
     it('sends request to fetch the units and returns successful response', async () => {
-      const { result } = renderHook(() => useUnits(), {
+      const { result } = renderHook(() => useGetUnits(), {
         wrapper: hooksWrapperWithProviders(),
       });
 
@@ -26,20 +26,20 @@ describe('units api functions', () => {
     });
   });
 
-  describe('useAddUnits', () => {
-    let mockDataAdd: AddUnit;
+  describe('usePostUnits', () => {
+    let mockDataPost: UnitPost;
     beforeEach(() => {
-      mockDataAdd = {
+      mockDataPost = {
         value: 'test',
       };
     });
 
     it('posts a request to add a unit and returns successful response', async () => {
-      const { result } = renderHook(() => useAddUnit(), {
+      const { result } = renderHook(() => usePostUnit(), {
         wrapper: hooksWrapperWithProviders(),
       });
       expect(result.current.isIdle).toBe(true);
-      result.current.mutate(mockDataAdd);
+      result.current.mutate(mockDataPost);
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });

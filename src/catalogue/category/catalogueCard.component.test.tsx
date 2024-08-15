@@ -10,7 +10,7 @@ describe('Catalogue Card', () => {
   const onChangeOpenDeleteDialog = vi.fn();
   const onChangeOpenEditNameDialog = vi.fn();
   const onChangeOpenEditPropertiesDialog = vi.fn();
-  const onChangeOpenSaveAsDialog = vi.fn();
+  const onChangeOpenDuplicateDialog = vi.fn();
   const onToggleSelect = vi.fn();
   const createView = () => {
     return renderComponentWithRouterProvider(<CatalogueCard {...props} />);
@@ -26,7 +26,7 @@ describe('Catalogue Card', () => {
       onChangeOpenDeleteDialog: onChangeOpenDeleteDialog,
       onChangeOpenEditNameDialog: onChangeOpenEditNameDialog,
       onChangeOpenEditPropertiesDialog: onChangeOpenEditPropertiesDialog,
-      onChangeOpenSaveAsDialog: onChangeOpenSaveAsDialog,
+      onChangeOpenDuplicateDialog: onChangeOpenDuplicateDialog,
       isSelected: false,
       onToggleSelect: onToggleSelect,
       created_time: '2024-01-01T12:00:00.000+00:00',
@@ -56,8 +56,8 @@ describe('Catalogue Card', () => {
       name: 'edit properties Beam Characterization catalogue category button',
     });
 
-    const saveAsButton = screen.getByRole('menuitem', {
-      name: 'save as Beam Characterization catalogue category button',
+    const duplicateButton = screen.getByRole('menuitem', {
+      name: 'duplicate Beam Characterization catalogue category button',
     });
 
     const deleteButton = screen.getByRole('menuitem', {
@@ -67,7 +67,7 @@ describe('Catalogue Card', () => {
     expect(editNameButton).toBeVisible();
     expect(editPropertiesButton).toBeVisible();
     expect(deleteButton).toBeVisible();
-    expect(saveAsButton).toBeVisible();
+    expect(duplicateButton).toBeVisible();
 
     await user.click(editNameButton);
     await user.click(
@@ -133,7 +133,7 @@ describe('Catalogue Card', () => {
     expect(onChangeOpenEditPropertiesDialog).toHaveBeenCalled();
   });
 
-  it('opens the save as dialog', async () => {
+  it('opens the duplicate dialog', async () => {
     props.is_leaf = true;
     createView();
     const actionsButton = screen.getByRole('button', {
@@ -142,10 +142,10 @@ describe('Catalogue Card', () => {
     await user.click(actionsButton);
 
     const editButton = screen.getByRole('menuitem', {
-      name: 'save as Beam Characterization catalogue category button',
+      name: 'duplicate Beam Characterization catalogue category button',
     });
     await user.click(editButton);
 
-    expect(onChangeOpenSaveAsDialog).toHaveBeenCalled();
+    expect(onChangeOpenDuplicateDialog).toHaveBeenCalled();
   });
 });

@@ -1,13 +1,21 @@
 import { DefaultBodyType, http, HttpResponse, PathParams } from 'msw';
 import {
+  BreadcrumbsInfo,
+  Manufacturer,
+  ManufacturerPatch,
+  ManufacturerPost,
+  System,
+  SystemPatch,
+  SystemPost,
+  Unit,
+  UnitPost,
+  UsageStatus,
+  UsageStatusPost,
+} from '../api/api.types';
+import {
   AddCatalogueCategory,
   AddCatalogueItem,
   AddItem,
-  AddManufacturer,
-  AddSystem,
-  AddUnit,
-  AddUsageStatus,
-  BreadcrumbsInfo,
   CatalogueCategory,
   CatalogueCategoryProperty,
   CatalogueCategoryPropertyMigration,
@@ -15,13 +23,7 @@ import {
   EditCatalogueCategory,
   EditCatalogueItem,
   EditItem,
-  EditManufacturer,
-  EditSystem,
   Item,
-  Manufacturer,
-  System,
-  Unit,
-  UsageStatus,
 } from '../app.types';
 import { generateUniqueId } from '../utils';
 import CatalogueCategoriesJSON from './CatalogueCategories.json';
@@ -409,7 +411,7 @@ export const handlers = [
 
   // ------------------------------------ MANUFACTURERS ------------------------------------
 
-  http.post<PathParams, AddManufacturer, Manufacturer | ErrorResponse>(
+  http.post<PathParams, ManufacturerPost, Manufacturer | ErrorResponse>(
     '/v1/manufacturers',
     async ({ request }) => {
       const body = await request.json();
@@ -469,7 +471,7 @@ export const handlers = [
     }
   ),
 
-  http.patch<{ id: string }, EditManufacturer, Manufacturer | ErrorResponse>(
+  http.patch<{ id: string }, ManufacturerPatch, Manufacturer | ErrorResponse>(
     '/v1/manufacturers/:id',
     async ({ request }) => {
       const body = await request.json();
@@ -538,7 +540,7 @@ export const handlers = [
 
   // ------------------------------------ SYSTEMS ------------------------------------
 
-  http.post<PathParams, AddSystem, System | ErrorResponse>(
+  http.post<PathParams, SystemPost, System | ErrorResponse>(
     '/v1/systems',
     async ({ request }) => {
       const body = await request.json();
@@ -613,7 +615,7 @@ export const handlers = [
     }
   ),
 
-  http.patch<{ id: string }, EditSystem, System | ErrorResponse>(
+  http.patch<{ id: string }, SystemPatch, System | ErrorResponse>(
     '/v1/systems/:id',
     async ({ request, params }) => {
       const body = await request.json();
@@ -802,13 +804,13 @@ export const handlers = [
     return HttpResponse.json({ status: 204 });
   }),
 
-  // ------------------------------------ Units ------------------------------------------------
+  // ------------------------------------ UNITS ------------------------------------------------
 
   http.get('/v1/units', () => {
     return HttpResponse.json(UnitsJSON, { status: 200 });
   }),
 
-  http.post<PathParams, AddUnit, Unit | ErrorResponse>(
+  http.post<PathParams, UnitPost, Unit | ErrorResponse>(
     '/v1/units',
     async ({ request }) => {
       const body = await request.json();
@@ -864,13 +866,13 @@ export const handlers = [
     }
   }),
 
-  // ------------------------------------ Usage Status ------------------------------------------------
+  // ------------------------------------ USAGE STATUSES ------------------------------------------------
 
   http.get('/v1/usage-statuses', () => {
     return HttpResponse.json(UsageStatusJSON, { status: 200 });
   }),
 
-  http.post<PathParams, AddUsageStatus, UsageStatus | ErrorResponse>(
+  http.post<PathParams, UsageStatusPost, UsageStatus | ErrorResponse>(
     '/v1/usage-statuses',
     async ({ request }) => {
       const body = await request.json();

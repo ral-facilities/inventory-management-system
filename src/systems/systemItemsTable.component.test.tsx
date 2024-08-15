@@ -1,6 +1,7 @@
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import { Item, System } from '../app.types';
+import { System } from '../api/api.types';
+import { Item } from '../app.types';
 import ItemJSON from '../mocks/Items.json';
 import SystemsJSON from '../mocks/Systems.json';
 import { renderComponentWithRouterProvider } from '../testUtils';
@@ -356,17 +357,17 @@ describe('SystemItemsTable', () => {
           });
         }
       }
-      values.cameras1 &&
-        (await selectUsageStatus({
+      if (values.cameras1)
+        await selectUsageStatus({
           index: 0,
           usage_status_id: values.cameras1,
-        }));
+        });
 
-      values.cameras6 &&
-        (await selectUsageStatus({
+      if (values.cameras6)
+        await selectUsageStatus({
           index: 1,
           usage_status_id: values.cameras6,
-        }));
+        });
     };
 
     it('renders correctly', async () => {

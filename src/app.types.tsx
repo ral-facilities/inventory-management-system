@@ -1,3 +1,5 @@
+import { System } from './api/api.types';
+
 export const MicroFrontendId = 'scigateway';
 export const MicroFrontendToken = `${MicroFrontendId}:token`;
 
@@ -50,35 +52,6 @@ export interface CatalogueCategory {
   code: string;
   is_leaf: boolean;
   properties?: CatalogueCategoryProperty[];
-  created_time: string;
-  modified_time: string;
-}
-
-export interface AddManufacturer {
-  name: string;
-  url?: string | null;
-  address: AddAddress;
-  telephone?: string | null;
-}
-
-export interface EditManufacturer {
-  name?: string;
-  url?: string | null;
-  address?: EditAddress;
-  telephone?: string | null;
-  id?: string | null;
-}
-
-export interface ManufacturerDetails {
-  name: string;
-  url: string | null;
-  address: AddAddress;
-  telephone: string | null;
-}
-
-export interface Manufacturer extends ManufacturerDetails {
-  id: string;
-  code: string;
   created_time: string;
   modified_time: string;
 }
@@ -196,64 +169,10 @@ export interface TransferToCatalogueItem {
   targetCatalogueCategory: CatalogueCategory | null;
 }
 
-export interface APIError {
-  detail: string;
-}
-
-interface AddAddress {
-  address_line: string;
-  town?: string | null;
-  county?: string | null;
-  postcode: string;
-  country: string;
-}
-interface EditAddress {
-  address_line?: string;
-  town?: string | null;
-  county?: string | null;
-  postcode?: string;
-  country?: string;
-}
 export interface TransferState {
   name: string;
   message: string;
   state: 'success' | 'error' | 'information';
-}
-export interface BreadcrumbsInfo {
-  trail: [id: string, name: string][];
-  full_trail: boolean;
-}
-
-export enum SystemImportanceType {
-  LOW = 'low',
-  MEDIUM = 'medium',
-  HIGH = 'high',
-}
-
-export interface AddSystem {
-  name: string;
-  description?: string | null;
-  location?: string | null;
-  owner?: string | null;
-  importance: SystemImportanceType;
-  parent_id?: string | null;
-}
-
-export interface System {
-  id: string;
-  name: string;
-  description: string | null;
-  location: string | null;
-  owner: string | null;
-  importance: SystemImportanceType;
-  parent_id: string | null;
-  code: string;
-  created_time: string;
-  modified_time: string;
-}
-
-export interface EditSystem extends Partial<AddSystem> {
-  id: string;
 }
 
 export interface MoveToSystem {
@@ -269,11 +188,6 @@ export interface CopyToSystem {
   // Existing known system names at the destination
   // (for appending to the names to avoid duplication)
   existingSystemCodes: string[];
-}
-
-export interface UsageStatus {
-  id: string;
-  value: string;
 }
 
 export interface ItemDetails {
@@ -341,24 +255,4 @@ export interface AdvancedSerialNumberOptionsType {
 export interface AllowedValuesListErrorsType {
   cip_placement_id: string | null;
   errors: { av_placement_id: string; errorMessage: string }[] | null;
-}
-
-export interface AddUnit {
-  value: string;
-}
-export interface Unit extends AddUnit {
-  id: string;
-  code: string;
-  created_time: string;
-  modified_time: string;
-}
-
-export interface AddUsageStatus {
-  value: string;
-}
-export interface UsageStatus extends AddUsageStatus {
-  id: string;
-  code: string;
-  created_time: string;
-  modified_time: string;
 }

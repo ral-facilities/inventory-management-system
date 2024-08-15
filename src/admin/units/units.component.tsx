@@ -17,8 +17,8 @@ import {
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { useUnits } from '../../api/units';
-import { Unit } from '../../app.types';
+import { Unit } from '../../api/api.types.tsx';
+import { useGetUnits } from '../../api/units.tsx';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import {
   TableBodyCellOverFlowTip,
@@ -31,7 +31,7 @@ import DeleteUnitDialog from './deleteUnitsDialog.component.tsx';
 import UnitsDialog from './unitsDialog.component.tsx';
 
 function Units() {
-  const { data: unitData, isLoading: unitDataLoading } = useUnits();
+  const { data: unitData, isLoading: unitDataLoading } = useGetUnits();
 
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
 

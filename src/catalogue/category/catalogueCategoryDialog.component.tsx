@@ -19,12 +19,12 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
+import { APIError } from '../../api/api.types';
 import {
   useAddCatalogueCategory,
   useEditCatalogueCategory,
 } from '../../api/catalogueCategories';
 import {
-  APIError,
   AddCatalogueCategory,
   AddCatalogueCategoryProperty,
   AddCatalogueCategoryPropertyWithPlacementIds,
@@ -46,7 +46,7 @@ export interface CatalogueCategoryDialogProps {
   open: boolean;
   onClose: () => void;
   parentId: string | null;
-  type: 'add' | 'edit' | 'save as';
+  type: 'add' | 'edit' | 'duplicate';
   selectedCatalogueCategory?: CatalogueCategory;
   resetSelectedCatalogueCategory: () => void;
 }
@@ -417,7 +417,7 @@ const CatalogueCategoryDialog = React.memo(
                 values:
                   property.type === 'number'
                     ? convertedValues
-                    : allowedValuesList ?? [],
+                    : (allowedValuesList ?? []),
               },
             };
           }
@@ -478,7 +478,7 @@ const CatalogueCategoryDialog = React.memo(
         const isNameUpdated =
           categoryData.name !== selectedCatalogueCategory?.name;
 
-        isNameUpdated && (catalogueCategory.name = categoryData.name);
+        if (isNameUpdated) catalogueCategory.name = categoryData.name;
 
         if (
           catalogueCategory.id && // Check if id is present

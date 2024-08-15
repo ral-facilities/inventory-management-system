@@ -8,7 +8,7 @@ import {
   Breadcrumbs as MuiBreadcrumbs,
   styled,
 } from '@mui/material';
-import { BreadcrumbsInfo } from '../app.types';
+import { BreadcrumbsInfo } from '../api/api.types';
 import { OverflowTip } from '../utils';
 
 export interface BreadcrumbsProps {

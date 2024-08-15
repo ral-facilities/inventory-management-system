@@ -1,13 +1,12 @@
 import { Box, Grid, LinearProgress, Typography } from '@mui/material';
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import { BreadcrumbsInfo } from '../api/api.types';
 import {
   useCatalogueBreadcrumbs,
   useCatalogueCategory,
 } from '../api/catalogueCategories';
 import { useCatalogueItem } from '../api/catalogueItems';
-
-import { BreadcrumbsInfo } from '../app.types';
 import { useNavigateToCatalogue } from '../catalogue/catalogue.component';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import ItemsTable from './itemsTable.component';
@@ -32,8 +31,7 @@ export function Items() {
   >(catalogueBreadcrumbs);
 
   React.useEffect(() => {
-    catalogueBreadcrumbs &&
-      catalogueItem &&
+    if (catalogueBreadcrumbs && catalogueItem)
       setItemsBreadcrumbs({
         ...catalogueBreadcrumbs,
         trail: [
@@ -43,7 +41,6 @@ export function Items() {
         ],
       });
   }, [catalogueBreadcrumbs, catalogueItem]);
-
   return (
     <Grid container>
       <Grid
