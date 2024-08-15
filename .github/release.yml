@@ -4,7 +4,7 @@ changelog:
       - documentation
       - dependencies
   categories:
-    - title: Added
+    - title: New Features
       labels:
         - feature
     - title: Changed
