@@ -74,20 +74,7 @@ function CatalogueCard(props: CatalogueCardProps) {
         }}
       >
         <CardActions>
-          <Tooltip 
-          title = "Toggle Select"
-          slotProps={{
-            popper: {
-              modifiers: [
-                {
-                  name: 'offset',
-                  options: {
-                    offset: [0, -10],
-                  },
-                },
-              ],
-            },
-          }}>
+          <Tooltip title = "Toggle Select">
             <Checkbox
               onClick={(event) => {
                 event.preventDefault();
@@ -113,20 +100,7 @@ function CatalogueCard(props: CatalogueCardProps) {
           <OverflowTip>{catalogueCategory.name}</OverflowTip>
         </CardContent>
         <CardActions>
-          <Tooltip 
-            title = "Actions"
-            slotProps={{
-              popper: {
-                modifiers: [
-                  {
-                    name: 'offset',
-                    options: {
-                      offset: [0, -10],
-                    },
-                  },
-                ],
-              },
-            }}>
+          <Tooltip title = "Actions">
             <IconButton
               onClick={(event) => {
                 event.preventDefault();

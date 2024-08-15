@@ -88,21 +88,7 @@ const AddSystemButton = (props: { systemId: string | null }) => {
   let ariaLabelText = props.systemId === null ? 'Add System' : 'Add Subsystem'
   return (
     <>
-      <Tooltip 
-        title = {ariaLabelText}
-        slotProps={{
-          popper: {
-            modifiers: [
-              {
-                name: 'offset',
-                options: {
-                  offset: [0, -10],
-                },
-              },
-            ],
-          },
-        }}
-      >
+      <Tooltip title = {ariaLabelText}>
         <IconButton
           aria-label= {ariaLabelText}
           onClick={() => setAddSystemDialogOpen(true)}
