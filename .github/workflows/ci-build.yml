@@ -8,18 +8,7 @@ on:
       - develop
 
 jobs:
-  pr-title-enforcement:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Check PR title
-        uses: Slashgear/action-check-pr-title@v4.3.0
-        with:
-          regexp: '^(feat|fix|docs):.*' # Regex the title should match.
-          helpMessage: 'Example: feat: example of title'
-
   lint-and-unit-test:
-    needs: [pr-title-enforcement]
     name: Lint & Unit Tests
     runs-on: ubuntu-latest
 
@@ -51,7 +40,6 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
 
   e2e-tests:
-    needs: [pr-title-enforcement]
     name: End-to-End (with mock data) Tests
     runs-on: ubuntu-latest
 
@@ -81,7 +69,6 @@ jobs:
           path: cypress/screenshots
 
   e2e-tests-api:
-    needs: [pr-title-enforcement]
     name: End-to-End (with api) Tests
     runs-on: ubuntu-latest
 
