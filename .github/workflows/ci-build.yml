@@ -13,13 +13,10 @@ jobs:
 
     steps:
       - name: Check PR title
-        run: |
-          if [[ ! ${{ github.event.pull_request.title }} =~ ^(feature|bug): ]]; then
-            echo "PR title does not follow the required convention. It must start with 'fix:', 'feature:', or 'chore:'."
-            exit 1
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
+       - uses: Slashgear/action-check-pr-title@v4.3.0
+          with:
+            regexp: "(feat|fix|docs): .++" # Regex the title should match.
+            helpMessage: "Example: 'feat: example of title'"
 
   lint-and-unit-test:
     needs: [pr-title-enforcement]
