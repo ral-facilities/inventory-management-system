@@ -13,10 +13,10 @@ jobs:
 
     steps:
       - name: Check PR title
-       - uses: Slashgear/action-check-pr-title@v4.3.0
-          with:
-            regexp: "(feat|fix|docs): .++" # Regex the title should match.
-            helpMessage: "Example: 'feat: example of title'"
+      - uses: Slashgear/action-check-pr-title@v4.3.0
+        with:
+          regexp: '(feat|fix|docs): .++' # Regex the title should match.
+          helpMessage: "Example: 'feat: example of title'"
 
   lint-and-unit-test:
     needs: [pr-title-enforcement]
