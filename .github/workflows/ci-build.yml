@@ -182,3 +182,13 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+  pr-title-enforcement:
+    runs-on: ubuntu-latest
+    run: |
+      if [[ ! ${{ github.event.pull_request.title }} =~ (feature|bug): ]]; then
+        echo "PR title does not follow the required convention. It must start with 'fix:', 'feature:', or 'chore:'."
+        exit 1
+      fi
+    env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
