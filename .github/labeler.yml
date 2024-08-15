@@ -1,0 +1,6 @@
+feature/*:
+  - feature
+bugfix/*:
+  - bugfix
+hotfix/*:
+  - hotfix

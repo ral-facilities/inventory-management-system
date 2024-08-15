@@ -10,7 +10,6 @@ jobs:
 
     steps:
       - name: Check PR title
-        uses: Slashgear/action-check-pr-title@v4.3.0
+        uses: actions/labeler@v3
         with:
-          regexp: '^(feat|fix|docs):.*' # Regex the title should match.
-          helpMessage: 'Example: feat: example of title'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
