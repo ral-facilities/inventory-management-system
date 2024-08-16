@@ -605,7 +605,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     [errorMessages, propertyErrors]
   );
 
-  const optionsStart = manufacturerList ? (manufacturerList).map((option) => {
+  const optionsStart = manufacturerList && (manufacturerList).map((option) => {
     let md;
     if (option.id == "1") {
       md = (new Date()).getTime()
@@ -616,12 +616,24 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     const isRecent = now - 1000*60*10 <= md;
     const recentDisplay = isRecent ? "Recent" : "A-Z"
     return {
-      isrecent: recentDisplay,
-      ...option
+      ...option,
+      isrecent: recentDisplay
     };
-  }) : null;
+  });
 
-  const options = optionsStart ? sortDataList(optionsStart, "name"): null
+  const optionsRecent = optionsStart && optionsStart.filter( (option) => {
+    return (option.isrecent === "Recent")
+  })
+
+  const optionsDuplicate = optionsRecent && optionsRecent.map((option) => {
+    return {
+      ...option,
+      isrecent: "A-Z"
+    }
+  })
+
+  const optionsFinal = optionsStart && optionsStart.concat(optionsDuplicate ?? [])
+  const options = optionsFinal ? sortDataList(optionsFinal, "name"): null
 
   console.log(JSON.stringify(options))
 
