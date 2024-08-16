@@ -605,6 +605,26 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     [errorMessages, propertyErrors]
   );
 
+  const optionsStart = manufacturerList ? (manufacturerList).map((option) => {
+    let md;
+    if (option.id == "1") {
+      md = (new Date()).getTime()
+    } else {
+      md = (new Date(option.created_time)).getTime()
+    }
+    const now = (new Date()).getTime()
+    const isRecent = now - 1000*60*10 <= md;
+    const recentDisplay = isRecent ? "Recent" : "A-Z"
+    return {
+      isrecent: recentDisplay,
+      ...option
+    };
+  }) : null;
+
+  const options = optionsStart ? sortDataList(optionsStart, "name"): null
+
+  console.log(JSON.stringify(options))
+
   const renderStepContent = (step: number) => {
     switch (step) {
       case 0:
@@ -794,7 +814,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                       newManufacturer?.id ?? null
                     );
                   }}
-                  options={sortDataList(manufacturerList ?? [], 'name')}
+                  options={options ?? []}
+                  groupBy={(option) => option.isrecent}
                   size="small"
                   isOptionEqualToValue={(option, value) =>
                     option.name === value.name
