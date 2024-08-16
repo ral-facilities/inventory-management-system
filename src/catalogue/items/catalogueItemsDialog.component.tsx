@@ -605,37 +605,34 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     [errorMessages, propertyErrors]
   );
 
-  const optionsStart = manufacturerList && (manufacturerList).map((option) => {
-    let md;
-    if (option.id == "1") {
-      md = (new Date()).getTime()
-    } else {
-      md = (new Date(option.created_time)).getTime()
-    }
-    const now = (new Date()).getTime()
-    const isRecent = now - 1000*60*10 <= md;
-    const recentDisplay = isRecent ? "Recent" : "A-Z"
-    return {
-      ...option,
-      isrecent: recentDisplay
-    };
-  });
 
-  const optionsRecent = optionsStart && optionsStart.filter( (option) => {
-    return (option.isrecent === "Recent")
-  })
+  const options = ():any[] => {
+    const classifiedManufacturers = manufacturerList ? (manufacturerList).map((option) => {
+      const created_date = (new Date(option.created_time)).getTime()
+      const date_now = (new Date()).getTime()
+      //dates are in ms; numerical expression is equivalent to 10 minutes
+      const recentDisplay = date_now - 1000*60*10 <= created_date ? "Recently Created" : "A-Z"
+      return {
+        ...option,
+        isrecent: recentDisplay
+      };
+    }) : [];
 
-  const optionsDuplicate = optionsRecent && optionsRecent.map((option) => {
-    return {
-      ...option,
-      isrecent: "A-Z"
-    }
-  })
+    //duplicating the recent manufacturers, so that they appear twice.
+    const recentManufacturers = classifiedManufacturers
+    .filter((option) => {
+      return option.isrecent === "Recently Created";
+    })
+    .map((option) => {
+      return {
+        ...option,
+        isrecent: "A-Z",
+      };
+    });
 
-  const optionsFinal = optionsStart && optionsStart.concat(optionsDuplicate ?? [])
-  const options = optionsFinal ? sortDataList(optionsFinal, "name"): null
+    return classifiedManufacturers.concat(recentManufacturers);
 
-  console.log(JSON.stringify(options))
+  }
 
   const renderStepContent = (step: number) => {
     switch (step) {
@@ -826,7 +823,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                       newManufacturer?.id ?? null
                     );
                   }}
-                  options={options ?? []}
+                  options={sortDataList(options(), "name") ?? []}
                   groupBy={(option) => option.isrecent}
                   size="small"
                   isOptionEqualToValue={(option, value) =>
