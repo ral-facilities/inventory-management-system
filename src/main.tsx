@@ -1,6 +1,5 @@
 import axios from 'axios';
 import log from 'loglevel';
-import { SetupWorker } from 'msw/browser';
 import React from 'react';
 import ReactDOMClient from 'react-dom/client';
 import singleSpaReact from 'single-spa-react';
@@ -180,7 +179,7 @@ async function prepare() {
   ) {
     // Need to use require instead of import as import breaks when loaded in SG
     const { worker } = await import('./mocks/browser');
-    return (worker as SetupWorker).start({
+    return worker.start({
       onUnhandledRequest(request, print) {
         // Ignore unhandled requests to non-localhost things (normally means you're contacting a real server)
         if (request.url.includes('localhost')) {

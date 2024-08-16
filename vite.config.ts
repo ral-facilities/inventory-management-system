@@ -27,7 +27,7 @@ function jsonHMR(): PluginOption {
       if (file.endsWith('.json')) {
         console.log('reloading json file...');
 
-        server.hot.send({
+        server.ws.send({
           type: 'full-reload',
           path: '*',
         });
