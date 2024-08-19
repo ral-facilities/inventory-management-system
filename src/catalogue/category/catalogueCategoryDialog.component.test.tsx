@@ -315,7 +315,7 @@ describe('Catalogue Category Dialog', () => {
       expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
     });
 
-  /* 
+  
     it('create a catalogue category with content being catalogue items', async () => {
       createView();
 
@@ -392,7 +392,7 @@ describe('Catalogue Category Dialog', () => {
       expect(onClose).toHaveBeenCalled();
     });
 
-    */
+    
     it('create a catalogue category with content being catalogue items (allowed_values list of strings)', async () => {
       createView();
 
