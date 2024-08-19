@@ -75,17 +75,19 @@ function CatalogueCard(props: CatalogueCardProps) {
       >
         <CardActions>
           <Tooltip title = "Toggle Select">
-            <Checkbox
-              onClick={(event) => {
-                event.preventDefault();
-                handleCheckboxClick();
-              }}
-              checked={isSelected}
-              inputProps={{
-                'aria-label': 'controlled',
-              }}
-              aria-label={`${catalogueCategory.name} checkbox`}
-            />
+            <span>
+              <Checkbox
+                onClick={(event) => {
+                  event.preventDefault();
+                  handleCheckboxClick();
+                }}
+                checked={isSelected}
+                inputProps={{
+                  'aria-label': 'controlled',
+                }}
+                aria-label={`${catalogueCategory.name} checkbox`}
+              />
+            </span>
           </Tooltip>
         </CardActions>
         <CardContent
@@ -101,16 +103,18 @@ function CatalogueCard(props: CatalogueCardProps) {
         </CardContent>
         <CardActions>
           <Tooltip title = "Actions">
-            <IconButton
-              onClick={(event) => {
-                event.preventDefault();
-                setAnchorEl(event.currentTarget);
-                setMenuOpen(true);
-              }}
-              aria-label={`actions ${catalogueCategory.name} catalogue category button`}
-            >
-              <MoreHorizIcon />
-            </IconButton>
+            <span>
+              <IconButton
+                onClick={(event) => {
+                  event.preventDefault();
+                  setAnchorEl(event.currentTarget);
+                  setMenuOpen(true);
+                }}
+                aria-label={`actions ${catalogueCategory.name} catalogue category button`}
+              >
+                <MoreHorizIcon />
+              </IconButton>
+            </span>  
           </Tooltip>
           <Menu
             anchorEl={anchorEl}

@@ -89,12 +89,14 @@ const AddSystemButton = (props: { systemId: string | null }) => {
   return (
     <>
       <Tooltip title = {ariaLabelText}>
-        <IconButton
-          aria-label= {ariaLabelText}
-          onClick={() => setAddSystemDialogOpen(true)}
-        >
-          <AddIcon />
-        </IconButton>
+        <span>
+          <IconButton
+            aria-label= {ariaLabelText}
+            onClick={() => setAddSystemDialogOpen(true)}
+          >
+            <AddIcon />
+          </IconButton>
+        </span>
       </Tooltip>  
       <SystemDialog
         open={addSystemDialogOpen}

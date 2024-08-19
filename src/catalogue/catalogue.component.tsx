@@ -77,14 +77,16 @@ const AddCategoryButton = (props: AddCatalogueButtonProps) => {
   return (
     <>
       <Tooltip title = "Add Category">
-        <IconButton
-          sx={{ mx: 1, my: 2 }}
-          onClick={() => setAddCategoryDialogOpen(true)}
-          disabled={props.disabled}
-          aria-label="add catalogue category"
-        >
-          <AddIcon />
-        </IconButton>
+        <span>
+          <IconButton
+            sx={{ mx: 1, my: 2 }}
+            onClick={() => setAddCategoryDialogOpen(true)}
+            disabled={props.disabled}
+            aria-label="add catalogue category"
+          >
+            <AddIcon />
+          </IconButton>
+        </span>
       </Tooltip>  
       <CatalogueCategoryDialog
         open={addCategoryDialogOpen}

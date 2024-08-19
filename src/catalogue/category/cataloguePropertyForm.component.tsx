@@ -407,12 +407,14 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
         >
           {type !== 'disabled' && isList && (
             <Tooltip title = "Delete Field">
-              <IconButton
-                aria-label={'Delete catalogue Item Field entry'}
-                onClick={() => handleDeleteField && handleDeleteField()}
-              >
-                <DeleteIcon />
-              </IconButton>
+              <span>
+                <IconButton
+                  aria-label={'Delete catalogue Item Field entry'}
+                  onClick={() => handleDeleteField && handleDeleteField()}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </span>
             </Tooltip>
           )}
         </Box>

@@ -520,13 +520,15 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
       })}
       {!isDisabled && (
         <Tooltip title = "Add Field">
-          <IconButton
-            sx={{ margin: '8px' }}
-            onClick={handleAddField}
-            aria-label={'Add catalogue category field entry'}
-          >
-            <AddIcon />
-          </IconButton>
+          <span>
+            <IconButton
+              sx={{ margin: '8px' }}
+              onClick={handleAddField}
+              aria-label={'Add catalogue category field entry'}
+            >
+              <AddIcon />
+            </IconButton>
+          </span>
         </Tooltip>
       )}
     </div>
