@@ -17,6 +17,7 @@ import { resetUniqueIdCounter } from '../../utils';
 import CatalogueCategoryDialog, {
   CatalogueCategoryDialogProps,
 } from './catalogueCategoryDialog.component';
+import { act } from 'react';
 
 vi.mock('../../handleIMS_APIError');
 
@@ -318,24 +319,27 @@ describe('Catalogue Category Dialog', () => {
     it('create a catalogue category with content being catalogue items', async () => {
       createView();
 
-      await modifyValues({
-        name: 'test',
-        newFormFields: [
-          {
-            name: 'radius',
-            type: 'number',
-            unit: 'millimeters',
-            mandatory: true,
-          },
-        ],
-      });
+      await act(async () => {
+        await modifyValues({
+          name: 'test',
+          newFormFields: [
+            {
+              name: 'radius',
+              type: 'number',
+              unit: 'millimeters',
+              mandatory: true,
+            },
+          ],
+        });})
 
       expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
-      await waitFor(() => user.click(saveButton));
-
+      await act (async () => {
+        await waitFor(() => user.click(saveButton));
+      })
+      
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
         properties: [
           {
