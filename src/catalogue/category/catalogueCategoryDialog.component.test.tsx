@@ -13,7 +13,6 @@ import {
   CREATED_MODIFIED_TIME_VALUES,
   renderComponentWithRouterProvider,
 } from '../../testUtils';
-import { resetUniqueIdCounter } from '../../utils';
 import CatalogueCategoryDialog, {
   CatalogueCategoryDialogProps,
 } from './catalogueCategoryDialog.component';
