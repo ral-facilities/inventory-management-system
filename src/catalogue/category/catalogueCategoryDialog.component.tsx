@@ -372,22 +372,18 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
           patchCatalogueCategory({
             id: selectedCatalogueCategory.id,
             catalogueCategory: { name: data.name },
-          })
-            .then(() => {
-              resetSelectedCatalogueCategory();
-            })
-            .catch((error: AxiosError) => {
-              const response = error.response?.data as APIError;
-              if (response && error.response?.status === 409) {
-                setError('name', {
-                  message:
-                    'A Catalogue category with the same name already exists within the same parent Catalogue category. Please enter a different name.',
-                });
-                return;
-              }
+          }).catch((error: AxiosError) => {
+            const response = error.response?.data as APIError;
+            if (response && error.response?.status === 409) {
+              setError('name', {
+                message:
+                  'A Catalogue category with the same name already exists within the same parent Catalogue category. Please enter a different name.',
+              });
+              return;
+            }
 
-              handleIMS_APIError(error);
-            });
+            handleIMS_APIError(error);
+          });
         } else
           setError('name', {
             message:
@@ -395,12 +391,7 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
           });
       }
     },
-    [
-      selectedCatalogueCategory,
-      patchCatalogueCategory,
-      resetSelectedCatalogueCategory,
-      setError,
-    ]
+    [selectedCatalogueCategory, patchCatalogueCategory, setError]
   );
 
   const onSubmit = (data: AddCatalogueCategoryWithPlacementIds) => {
