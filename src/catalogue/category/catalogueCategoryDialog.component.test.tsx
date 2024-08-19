@@ -17,6 +17,7 @@ import { resetUniqueIdCounter } from '../../utils';
 import CatalogueCategoryDialog, {
   CatalogueCategoryDialogProps,
 } from './catalogueCategoryDialog.component';
+import { act } from 'react';
 
 vi.mock('../../handleIMS_APIError');
 
@@ -319,23 +320,25 @@ describe('Catalogue Category Dialog', () => {
       createView();
 
       console.log("Before modifyValues");
-      await modifyValues({
-        name: 'test',
-        newFormFields: [
-          {
-            name: 'radius',
-            type: 'number',
-            unit: 'millimeters',
-            mandatory: true,
-          },
-        ],
-      });
+      await act(async () => {
+        await modifyValues({
+          name: 'test',
+          newFormFields: [
+            {
+              name: 'radius',
+              type: 'number',
+              unit: 'millimeters',
+              mandatory: true,
+            },
+          ],
+        });})
+
       console.log("After modifyValues");
 
       expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
-      
+
       console.log("Before clicking save button");
       await waitFor(() => user.click(saveButton));
       console.log("After clicking save button");
