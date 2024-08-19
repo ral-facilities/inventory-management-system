@@ -54,7 +54,7 @@ import {
 } from '../../app.types';
 import { CatalogueCategorySchema, RequestType } from '../../form.schemas';
 import handleIMS_APIError from '../../handleIMS_APIError';
-import CatalogueItemsPropertiesTable from './catalogueItemPropertiesTable.component';
+import CatalogueItemsPropertiesTable from './property/catalogueItemPropertiesTable.component';
 
 // Function to convert a list of strings to a list of numbers
 export const convertListToNumbers = (values: string[]): number[] => {
@@ -100,7 +100,7 @@ function transformProperty(
   };
 }
 
-function transformAllowedValues(
+export function transformAllowedValues(
   allowedValues: AllowedValuesPlaceholder
 ): AllowedValues | undefined {
   if (allowedValues.type === 'list') {
@@ -301,6 +301,7 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
     resolver: zodResolver(CatalogueCategorySchema),
     defaultValues: initialCatalogueCategory,
   });
+
   const {
     handleSubmit,
     register,
@@ -325,14 +326,6 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
   React.useEffect(() => {
     reset(initialCatalogueCategory);
   }, [initialCatalogueCategory, reset]);
-
-  // Clears form errors when a value has been changed
-  React.useEffect(() => {
-    if (errors.root?.formError) {
-      const subscription = watch(() => clearErrors('root.formError'));
-      return () => subscription.unsubscribe();
-    }
-  }, [clearErrors, errors, watch]);
 
   const { mutateAsync: postCatalogueCategory, isPending: isAddPending } =
     usePostCatalogueCategory();
@@ -382,7 +375,6 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
           })
             .then(() => {
               resetSelectedCatalogueCategory();
-              handleClose();
             })
             .catch((error: AxiosError) => {
               const response = error.response?.data as APIError;
@@ -397,9 +389,9 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
               handleIMS_APIError(error);
             });
         } else
-          setError('root.formError', {
+          setError('name', {
             message:
-              "There have been no changes made. Please change a field's value or press Cancel to exit.",
+              'There have been no changes made. Please change the name field value or press Close.',
           });
       }
     },
@@ -407,7 +399,6 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
       selectedCatalogueCategory,
       patchCatalogueCategory,
       resetSelectedCatalogueCategory,
-      handleClose,
       setError,
     ]
   );
@@ -428,7 +419,6 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
   };
 
   const { data: units } = useGetUnits();
-
   const clearDuplicateNameErrors = React.useCallback(() => {
     const errorIndexes =
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -458,17 +448,50 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
       </DialogTitle>
       <DialogContent>
         <Grid container direction="column" spacing={1}>
-          <Grid item sx={{ mt: 1 }}>
-            <TextField
-              id="catalogue-category-name-input"
-              label="Name"
-              required
-              sx={{ marginLeft: '4px', marginTop: '8px' }}
-              {...register('name')}
-              error={!!errors.name}
-              helperText={errors.name?.message}
-              fullWidth
-            />
+          <Grid item container sx={{ mt: 1, alignItems: 'center' }}>
+            <Grid item xs={requestType === 'patch' ? 11 : 12}>
+              <TextField
+                id="catalogue-category-name-input"
+                label="Name"
+                required
+                sx={{ marginLeft: '4px', marginTop: '8px' }}
+                {...register('name')}
+                error={!!errors.name}
+                helperText={errors.name?.message}
+                fullWidth
+              />
+            </Grid>
+            {requestType === 'patch' && (
+              <Grid
+                sx={{
+                  alignItems: 'center',
+                  marginTop: '8px',
+                  justifyContent: 'center',
+                  paddingLeft: 1,
+                }}
+                item
+                xs={1}
+              >
+                <Button
+                  size="large"
+                  variant="outlined"
+                  sx={{ width: '50%', mx: 1 }}
+                  onClick={handleSubmit(onSubmit)}
+                  disabled={
+                    isEditPending ||
+                    isAddPending ||
+                    Object.values(errors).length !== 0
+                  }
+                  endIcon={
+                    isAddPending || isEditPending ? (
+                      <CircularProgress size={20} />
+                    ) : null
+                  }
+                >
+                  Save
+                </Button>
+              </Grid>
+            )}
           </Grid>
           <Grid item>
             <Controller
@@ -516,7 +539,7 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
                 <Divider sx={{ minWidth: '700px' }} />
               </Grid>
               <Grid item sx={{ paddingLeft: 1, paddingTop: 3 }}>
-                <Typography variant="h6">Catalogue Item Fields</Typography>
+                <Typography variant="h6">Catalogue Item Properties</Typography>
                 {requestType === 'post' ? (
                   <>
                     {fields.map((field, index) => {
@@ -804,9 +827,15 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
                     </Box>
                   </>
                 ) : (
-                  <Box mt={1}>
-                    <CatalogueItemsPropertiesTable properties={fields} />
-                  </Box>
+                  selectedCatalogueCategory && (
+                    <Box mt={1}>
+                      <CatalogueItemsPropertiesTable
+                        properties={fields}
+                        requestType={requestType}
+                        catalogueCategory={selectedCatalogueCategory}
+                      />
+                    </Box>
+                  )
                 )}
               </Grid>
             </>
@@ -827,34 +856,31 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
         >
           <Button
             variant="outlined"
-            sx={{ width: '50%', mx: 1 }}
+            sx={{ width: requestType === 'patch' ? '100%' : '50%', mx: 1 }}
             onClick={handleClose}
           >
-            Cancel
+            {requestType === 'post' ? 'Cancel' : 'Close'}
           </Button>
-          <Button
-            variant="outlined"
-            sx={{ width: '50%', mx: 1 }}
-            onClick={handleSubmit(onSubmit)}
-            disabled={
-              isEditPending ||
-              isAddPending ||
-              Object.values(errors).length !== 0
-            }
-            endIcon={
-              isAddPending || isEditPending ? (
-                <CircularProgress size={20} />
-              ) : null
-            }
-          >
-            Save
-          </Button>
+          {requestType === 'post' && (
+            <Button
+              variant="outlined"
+              sx={{ width: '50%', mx: 1 }}
+              onClick={handleSubmit(onSubmit)}
+              disabled={
+                isEditPending ||
+                isAddPending ||
+                Object.values(errors).length !== 0
+              }
+              endIcon={
+                isAddPending || isEditPending ? (
+                  <CircularProgress size={20} />
+                ) : null
+              }
+            >
+              Save
+            </Button>
+          )}
         </Box>
-        {errors.root?.formError && (
-          <FormHelperText sx={{ marginTop: 4 }} error>
-            {errors.root?.formError.message}
-          </FormHelperText>
-        )}
       </DialogActions>
     </Dialog>
   );

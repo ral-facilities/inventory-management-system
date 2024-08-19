@@ -1,4 +1,12 @@
-import { TableCellBaseProps, TableRow } from '@mui/material';
+import {
+  Box,
+  Button,
+  ListItemIcon,
+  ListItemText,
+  MenuItem,
+  TableCellBaseProps,
+  TableRow,
+} from '@mui/material';
 import {
   MRT_ColumnDef,
   MaterialReactTable,
@@ -6,23 +14,38 @@ import {
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { CatalogueCategoryPropertyType } from '../../api/api.types';
-import { AddCatalogueCategoryPropertyWithPlacementIds } from '../../app.types';
-import { usePreservedTableState } from '../../common/preservedTableState.component';
+import {
+  CatalogueCategory,
+  CatalogueCategoryPropertyType,
+} from '../../../api/api.types';
+import { AddCatalogueCategoryPropertyWithPlacementIds } from '../../../app.types';
+import { usePreservedTableState } from '../../../common/preservedTableState.component';
 import {
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
   TableGroupedCell,
   TableHeaderOverflowTip,
   displayTableRowCountText,
-} from '../../utils';
+} from '../../../utils';
+
+import AddIcon from '@mui/icons-material/Add';
+import ClearIcon from '@mui/icons-material/Clear';
+import EditIcon from '@mui/icons-material/Edit';
+import { RequestType } from '../../../form.schemas';
+import AddPropertyMigrationDialog from './addPropertyMigrationDialog.component';
+import EditPropertyMigrationDialog from './editPropertyMigrationDialog.component';
 
 export interface PropertiesTableProps {
   properties: AddCatalogueCategoryPropertyWithPlacementIds[];
+  requestType: RequestType;
+  catalogueCategory: CatalogueCategory;
 }
 
 export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
-  const { properties } = props;
+  const { properties, catalogueCategory } = props;
+
+  const [propertyDialogRequestType, setPropertyDialogRequestType] =
+    React.useState<RequestType>('post');
 
   const columns = React.useMemo<
     MRT_ColumnDef<AddCatalogueCategoryPropertyWithPlacementIds>[]
@@ -33,7 +56,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.name,
         id: 'name',
-        size: 250,
+        size: 220,
         enableGrouping: false,
       },
       {
@@ -46,7 +69,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
             >
           ).find((key) => CatalogueCategoryPropertyType[key] === row.type),
         id: 'type',
-        size: 200,
+        size: 180,
         GroupedCell: TableGroupedCell,
       },
       {
@@ -65,7 +88,8 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.unit,
         id: 'unit',
-        size: 200,
+        size: 180,
+        GroupedCell: TableGroupedCell,
       },
       {
         header: 'Mandatory',
@@ -94,7 +118,6 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
     // Features
     enableTopToolbar: true,
     enableFacetedValues: true,
-    enableRowActions: false,
     enableStickyHeader: true,
     enableDensityToggle: false,
     enableHiding: true,
@@ -103,6 +126,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
     enableGrouping: true,
     enablePagination: true,
     enableMultiRowSelection: false,
+    enableRowActions: true,
     // Other settings
     manualFiltering: false,
     paginationDisplayMode: 'pages',
@@ -155,9 +179,77 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
     },
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: [5, 10, 15],
+      rowsPerPageOptions: [5],
       shape: 'rounded',
       variant: 'outlined',
+    },
+
+    renderCreateRowDialogContent: ({ table, row }) => {
+      return propertyDialogRequestType === 'post' ? (
+        <AddPropertyMigrationDialog
+          open
+          onClose={() => {
+            table.setCreatingRow(null);
+          }}
+          catalogueCategory={catalogueCategory}
+        />
+      ) : (
+        <EditPropertyMigrationDialog
+          open
+          onClose={() => {
+            table.setCreatingRow(null);
+          }}
+          catalogueCategory={catalogueCategory}
+          selectedProperty={row.original}
+        />
+      );
+    },
+
+    renderTopToolbarCustomActions: ({ table }) => (
+      <Box sx={{ display: 'flex' }}>
+        <Button
+          startIcon={<AddIcon />}
+          sx={{ mx: 0.5 }}
+          variant="outlined"
+          onClick={() => {
+            setPropertyDialogRequestType('post');
+            table.setCreatingRow(true);
+          }}
+        >
+          Add Property
+        </Button>
+
+        <Button
+          startIcon={<ClearIcon />}
+          sx={{ mx: 0.5 }}
+          variant="outlined"
+          disabled={preservedState.columnFilters.length === 0}
+          onClick={() => {
+            table.resetColumnFilters();
+          }}
+        >
+          Clear Filters
+        </Button>
+      </Box>
+    ),
+    renderRowActionMenuItems: ({ closeMenu, row, table }) => {
+      return [
+        <MenuItem
+          key="edit"
+          aria-label={`Edit property ${row.original.name}`}
+          onClick={() => {
+            setPropertyDialogRequestType('patch');
+            table.setCreatingRow(row);
+            closeMenu();
+          }}
+          sx={{ m: 0 }}
+        >
+          <ListItemIcon>
+            <EditIcon />
+          </ListItemIcon>
+          <ListItemText>Edit</ListItemText>
+        </MenuItem>,
+      ];
     },
     // Functions
     ...onPreservedStatesChange,

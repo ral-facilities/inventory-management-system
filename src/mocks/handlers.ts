@@ -2,6 +2,7 @@ import { DefaultBodyType, http, HttpResponse, PathParams } from 'msw';
 import {
   BreadcrumbsInfo,
   CatalogueCategory,
+  CatalogueCategoryPatch,
   CatalogueCategoryPost,
   CatalogueCategoryProperty,
   CatalogueCategoryPropertyPatch,
@@ -21,7 +22,6 @@ import {
   AddCatalogueItem,
   AddItem,
   CatalogueItem,
-  EditCatalogueCategory,
   EditCatalogueItem,
   EditItem,
   Item,
@@ -147,7 +147,7 @@ export const handlers = [
 
   http.patch<
     { id: string },
-    EditCatalogueCategory,
+    CatalogueCategoryPatch,
     CatalogueCategory | ErrorResponse
   >('/v1/catalogue-categories/:id', async ({ request, params }) => {
     const { id } = params;

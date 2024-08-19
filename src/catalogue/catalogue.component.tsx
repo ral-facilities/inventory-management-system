@@ -225,6 +225,18 @@ function Catalogue() {
   const [selectedCatalogueCategory, setSelectedCatalogueCategory] =
     React.useState<CatalogueCategory | undefined>(undefined);
 
+  React.useEffect(() => {
+    const catalogueCategoryIds = catalogueCategoryData?.map(
+      (category) => category.id
+    );
+    if (catalogueCategoryIds?.includes(selectedCatalogueCategory?.id ?? '')) {
+      const updatedCategory = catalogueCategoryData?.find(
+        (category) => category.id === selectedCatalogueCategory?.id
+      );
+      setSelectedCatalogueCategory(updatedCategory);
+    }
+  }, [catalogueCategoryData, selectedCatalogueCategory]);
+
   const onChangeOpenDeleteCategoryDialog = (
     catalogueCategory: CatalogueCategory
   ) => {

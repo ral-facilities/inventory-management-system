@@ -315,13 +315,13 @@ describe('Catalogue Category Dialog', () => {
       createView();
 
       expect(
-        screen.queryByText('Catalogue Item Fields')
+        screen.queryByText('Catalogue Item Properties')
       ).not.toBeInTheDocument();
 
       const itemsRadio = screen.getByLabelText('Catalogue Items');
       await user.click(itemsRadio);
 
-      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+      expect(screen.getByText('Catalogue Item Properties')).toBeInTheDocument();
     });
 
     it('create a catalogue category with content being catalogue items', async () => {
@@ -339,7 +339,7 @@ describe('Catalogue Category Dialog', () => {
         ],
       });
 
-      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+      expect(screen.getByText('Catalogue Item Properties')).toBeInTheDocument();
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
@@ -387,7 +387,7 @@ describe('Catalogue Category Dialog', () => {
         ],
       });
 
-      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+      expect(screen.getByText('Catalogue Item Properties')).toBeInTheDocument();
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
@@ -448,7 +448,7 @@ describe('Catalogue Category Dialog', () => {
         })
       );
 
-      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+      expect(screen.getByText('Catalogue Item Properties')).toBeInTheDocument();
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
@@ -509,7 +509,7 @@ describe('Catalogue Category Dialog', () => {
         })
       );
 
-      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+      expect(screen.getByText('Catalogue Item Properties')).toBeInTheDocument();
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
@@ -570,7 +570,7 @@ describe('Catalogue Category Dialog', () => {
         })
       );
 
-      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+      expect(screen.getByText('Catalogue Item Properties')).toBeInTheDocument();
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
@@ -618,7 +618,7 @@ describe('Catalogue Category Dialog', () => {
         ],
       });
 
-      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+      expect(screen.getByText('Catalogue Item Properties')).toBeInTheDocument();
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
@@ -658,7 +658,7 @@ describe('Catalogue Category Dialog', () => {
         ],
       });
 
-      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+      expect(screen.getByText('Catalogue Item Properties')).toBeInTheDocument();
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
@@ -689,7 +689,7 @@ describe('Catalogue Category Dialog', () => {
         ],
       });
 
-      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+      expect(screen.getByText('Catalogue Item Properties')).toBeInTheDocument();
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
@@ -719,7 +719,7 @@ describe('Catalogue Category Dialog', () => {
         ],
       });
 
-      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+      expect(screen.getByText('Catalogue Item Properties')).toBeInTheDocument();
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
@@ -799,7 +799,7 @@ describe('Catalogue Category Dialog', () => {
         ],
       });
 
-      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+      expect(screen.getByText('Catalogue Item Properties')).toBeInTheDocument();
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
@@ -844,7 +844,7 @@ describe('Catalogue Category Dialog', () => {
         ],
       });
 
-      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+      expect(screen.getByText('Catalogue Item Properties')).toBeInTheDocument();
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
@@ -889,7 +889,7 @@ describe('Catalogue Category Dialog', () => {
         ],
       });
 
-      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+      expect(screen.getByText('Catalogue Item Properties')).toBeInTheDocument();
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
@@ -929,7 +929,7 @@ describe('Catalogue Category Dialog', () => {
         ],
       });
 
-      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+      expect(screen.getByText('Catalogue Item Properties')).toBeInTheDocument();
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
@@ -964,7 +964,7 @@ describe('Catalogue Category Dialog', () => {
         ],
       });
 
-      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+      expect(screen.getByText('Catalogue Item Properties')).toBeInTheDocument();
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
@@ -1004,7 +1004,7 @@ describe('Catalogue Category Dialog', () => {
         ],
       });
 
-      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+      expect(screen.getByText('Catalogue Item Properties')).toBeInTheDocument();
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
@@ -1045,7 +1045,7 @@ describe('Catalogue Category Dialog', () => {
         ],
       });
 
-      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+      expect(screen.getByText('Catalogue Item Properties')).toBeInTheDocument();
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
@@ -1216,7 +1216,7 @@ describe('Catalogue Category Dialog', () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            "There have been no changes made. Please change a field's value or press Cancel to exit."
+            'There have been no changes made. Please change the name field value or press Close.'
           )
         ).toBeInTheDocument();
       });
@@ -1232,7 +1232,7 @@ describe('Catalogue Category Dialog', () => {
       await waitFor(() => {
         expect(
           screen.queryByText(
-            "There have been no changes made. Please change a field's value or press Cancel to exit."
+            'There have been no changes made. Please change the name field value or press Close.'
           )
         ).not.toBeInTheDocument();
       });
@@ -1255,8 +1255,6 @@ describe('Catalogue Category Dialog', () => {
         name: 'test2',
         properties: undefined,
       });
-
-      expect(onClose).toHaveBeenCalled();
     });
 
     it('edits a new catalogue category at sub level ("/catalogue/*")', async () => {
@@ -1269,8 +1267,6 @@ describe('Catalogue Category Dialog', () => {
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/1', {
         name: 'test2',
       });
-
-      expect(onClose).toHaveBeenCalled();
     });
   });
 

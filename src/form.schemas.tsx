@@ -249,37 +249,55 @@ const propertiesTypeList: [
 ] = [
   z.object({
     valueType: z.literal('number_true'),
-    value: MandatoryNumberSchema({
-      requiredErrorMessage:
-        'Please enter a valid value as this field is mandatory',
-      invalidTypeErrorMessage: 'Please enter a valid number',
+    value: z.object({
+      value: MandatoryNumberSchema({
+        requiredErrorMessage:
+          'Please enter a valid value as this field is mandatory.',
+        invalidTypeErrorMessage: 'Please enter a valid number.',
+      }),
+      av_placement_id: z.string(),
     }),
   }),
   z.object({
     valueType: z.literal('string_true'),
-    value: MandatoryStringSchema({
-      errorMessage: 'Please enter a valid value as this field is mandatory.',
+    value: z.object({
+      value: MandatoryStringSchema({
+        errorMessage: 'Please enter a valid value as this field is mandatory.',
+      }),
+      av_placement_id: z.string(),
     }),
   }),
   z.object({
     valueType: z.literal('boolean_true'),
-    value: MandatoryBooleanSchema({
-      errorMessage: 'Please select either True or False.',
+    value: z.object({
+      value: MandatoryBooleanSchema({
+        errorMessage: 'Please select either True or False.',
+      }),
+      av_placement_id: z.string(),
     }),
   }),
   z.object({
     valueType: z.literal('number_false'),
-    value: OptionalNumberSchema({
-      invalidTypeErrorMessage: 'Please enter a valid number',
+    value: z.object({
+      value: OptionalNumberSchema({
+        invalidTypeErrorMessage: 'Please enter a valid number.',
+      }),
+      av_placement_id: z.string(),
     }),
   }),
   z.object({
     valueType: z.literal('string_false'),
-    value: OptionalStringSchema,
+    value: z.object({
+      value: OptionalStringSchema,
+      av_placement_id: z.string(),
+    }),
   }),
   z.object({
     valueType: z.literal('boolean_false'),
-    value: OptionalBooleanSchema,
+    value: z.object({
+      value: OptionalBooleanSchema,
+      av_placement_id: z.string(),
+    }),
   }),
 ];
 
@@ -324,11 +342,6 @@ export const CatalogueCategoryPropertyPostSchema =
     unit_id: OptionalOrNullableStringSchema({ requestType: 'post' }),
     mandatory: MandatoryBooleanSchema({}),
     default_value: z.discriminatedUnion('valueType', propertiesTypeList),
-  }).transform((data) => {
-    return {
-      ...data,
-      default_value: data.default_value.value,
-    };
   });
 
 export const CatalogueCategorySchema = z.object({

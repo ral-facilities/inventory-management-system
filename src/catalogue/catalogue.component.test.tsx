@@ -302,6 +302,9 @@ describe('Catalogue', () => {
 
     await user.type(screen.getByLabelText('Name *'), '1');
     await user.click(saveButton);
+
+    const closeButton = screen.getByRole('button', { name: 'Close' });
+    await user.click(closeButton);
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
