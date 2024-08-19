@@ -189,6 +189,248 @@ describe('Catalogue Category Dialog', () => {
       resetUniqueIdCounter();
     });
 
+    it('renders text correctly', async () => {
+      createView();
+      expect(screen.getByLabelText('Name *')).toBeInTheDocument();
+      expect(screen.getByText('Save')).toBeInTheDocument();
+      expect(screen.getByText('Cancel')).toBeInTheDocument();
+    });
+
+    it('disables save button and shows circular progress indicator when request is pending', async () => {
+      server.use(
+        http.post('/v1/catalogue-categories', () => {
+          return new Promise(() => {});
+        })
+      );
+
+      createView();
+
+      await modifyValues({ name: 'test' });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      expect(saveButton).toBeDisabled();
+      expect(await screen.findByRole('progressbar')).toBeInTheDocument();
+    });
+
+    it('displays warning message when name field is not defined', async () => {
+      createView();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      const helperTexts = screen.getByText('Please enter a name.');
+      expect(helperTexts).toBeInTheDocument();
+      expect(onClose).not.toHaveBeenCalled();
+    });
+
+    it('displays warning message when name already exists within the parent catalogue category', async () => {
+      createView();
+
+      await modifyValues({ name: 'test_dup' });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      await waitFor(() => {
+        expect(
+          screen.getByText(
+            'A catalogue category with the same name already exists within the parent catalogue category'
+          )
+        ).toBeInTheDocument();
+      });
+      expect(onClose).not.toHaveBeenCalled();
+    });
+
+    it('displays warning message when an unknown error occurs', async () => {
+      createView();
+
+      await modifyValues({ name: 'Error 500' });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+      expect(handleIMS_APIError).toHaveBeenCalled();
+      expect(onClose).not.toHaveBeenCalled();
+    });
+
+    it('adds a new catalogue category at root level ("/catalogue")', async () => {
+      createView();
+
+      await modifyValues({ name: 'test' });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
+        is_leaf: false,
+        name: 'test',
+      });
+
+      expect(onClose).toHaveBeenCalled();
+    });
+
+    it('adds a new catalogue category at sub level ("/catalogue/*")', async () => {
+      props = {
+        ...props,
+        parentId: '1',
+      };
+
+      createView();
+
+      await modifyValues({ name: 'test' });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
+        is_leaf: false,
+        name: 'test',
+        parent_id: '1',
+      });
+
+      expect(onClose).toHaveBeenCalled();
+    });
+
+    it('calls onClose when Close button is clicked', async () => {
+      createView();
+      const closeButton = screen.getByRole('button', { name: 'Cancel' });
+      await user.click(closeButton);
+
+      await waitFor(() => {
+        expect(onClose).toHaveBeenCalled();
+      });
+    });
+
+    it('changes directory content type when radio is clicked', async () => {
+      createView();
+
+      expect(
+        screen.queryByText('Catalogue Item Fields')
+      ).not.toBeInTheDocument();
+
+      const itemsRadio = screen.getByLabelText('Catalogue Items');
+      await user.click(itemsRadio);
+
+      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+    });
+
+  /* 
+    it('create a catalogue category with content being catalogue items', async () => {
+      createView();
+
+      await modifyValues({
+        name: 'test',
+        newFormFields: [
+          {
+            name: 'radius',
+            type: 'number',
+            unit: 'millimeters',
+            mandatory: true,
+          },
+        ],
+      });
+
+      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await waitFor(() => user.click(saveButton));
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
+        properties: [
+          {
+            mandatory: true,
+            name: 'radius',
+            type: 'number',
+            unit_id: '5',
+          },
+        ],
+        is_leaf: true,
+        name: 'test',
+      });
+
+      expect(onClose).toHaveBeenCalled();
+    });
+
+    it('create a catalogue category with content being catalogue items (allowed_values list of numbers)', async () => {
+      createView();
+
+      await modifyValues({
+        name: 'test',
+        newFormFields: [
+          {
+            name: 'radius',
+            type: 'number',
+            unit: 'millimeters',
+            allowed_values: { type: 'list', values: [1, 2, 8] },
+            mandatory: true,
+          },
+        ],
+      });
+
+      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await waitFor(() => user.click(saveButton));
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
+        properties: [
+          {
+            allowed_values: { type: 'list', values: [1, 2, 8] },
+            mandatory: true,
+            name: 'radius',
+            type: 'number',
+            unit_id: '5',
+          },
+        ],
+        is_leaf: true,
+        name: 'test',
+      });
+
+      expect(onClose).toHaveBeenCalled();
+    });
+
+    */
+    it('create a catalogue category with content being catalogue items (allowed_values list of strings)', async () => {
+      createView();
+
+      await modifyValues({
+        name: 'test',
+        newFormFields: [
+          {
+            name: 'radius',
+            type: 'text',
+            unit: 'millimeters',
+            allowed_values: { type: 'list', values: ['1', '2', '8'] },
+            mandatory: true,
+          },
+        ],
+      });
+
+      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await waitFor(() => user.click(saveButton));
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
+        properties: [
+          {
+            allowed_values: { type: 'list', values: ['1', '2', '8'] },
+            mandatory: true,
+            name: 'radius',
+            type: 'string',
+            unit_id: '5',
+          },
+        ],
+        is_leaf: true,
+        name: 'test',
+      });
+
+      expect(onClose).toHaveBeenCalled();
+    });
 
     it('displays an error message when the type or name field are not filled', async () => {
       createView();
