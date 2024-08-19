@@ -17,7 +17,6 @@ import { resetUniqueIdCounter } from '../../utils';
 import CatalogueCategoryDialog, {
   CatalogueCategoryDialogProps,
 } from './catalogueCategoryDialog.component';
-import { act } from 'react';
 
 vi.mock('../../handleIMS_APIError');
 
