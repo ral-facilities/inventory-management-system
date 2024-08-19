@@ -43,14 +43,18 @@ const Breadcrumbs = (props: BreadcrumbsProps) => {
   const breadcrumbMaxWidth = `${(100 - 10) / trailPrefix.concat(breadcrumbsInfo?.trail ?? emptyElement).length}vw`;
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <Tooltip title = "Home">
-        <IconButton
-          onClick={onChangeNavigateHome}
-          aria-label={navigateHomeAriaLabel}
-        >
-          <HomeIcon />
-        </IconButton>
-      </Tooltip>
+      <span>
+          <Tooltip title = "Home">
+            <span>
+              <IconButton
+                onClick={onChangeNavigateHome}
+                aria-label={navigateHomeAriaLabel}
+              >
+                <HomeIcon />
+              </IconButton>
+            </span>
+          </Tooltip>
+          </span>
       <StyledBreadcrumbs
         separator={<NavigateNext fontSize="small" />}
         aria-label="breadcrumb"
