@@ -190,6 +190,288 @@ describe('Catalogue Category Dialog', () => {
     });
 
 
+    it('displays an error message when the type or name field are not filled', async () => {
+      createView();
+
+      await modifyValues({
+        name: 'test',
+        newFormFields: [
+          { name: '', type: 'number', unit: 'millimeters', mandatory: true },
+          { name: 'radius', type: '', unit: 'millimeters', mandatory: true },
+          { name: '', type: '', unit: 'millimeters', mandatory: true },
+        ],
+      });
+
+      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await waitFor(() => user.click(saveButton));
+
+      const nameHelperTexts = screen.queryAllByText('Please select a type');
+      const typeHelperTexts = screen.queryAllByText(
+        'Please enter a property name'
+      );
+
+      expect(nameHelperTexts.length).toBe(2);
+      expect(typeHelperTexts.length).toBe(2);
+
+      expect(onClose).not.toHaveBeenCalled();
+    }, 10000);
+
+    it('display error if duplicate property names are entered', async () => {
+      createView();
+      await modifyValues({
+        name: 'test',
+        newFormFields: [
+          { name: 'Field 1', type: 'text', mandatory: false },
+          {
+            name: 'Field 2',
+            type: 'number',
+            unit: 'millimeters',
+            mandatory: true,
+          },
+          { name: 'Field 1', type: 'boolean', mandatory: false },
+        ],
+      });
+
+      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await waitFor(() => user.click(saveButton));
+
+      const duplicatePropertyNameHelperText = screen.queryAllByText(
+        'Duplicate property name. Please change the name or remove the property'
+      );
+      expect(duplicatePropertyNameHelperText.length).toBe(2);
+
+      expect(onClose).not.toHaveBeenCalled();
+    }, 10000);
+
+    it('clears formFields when catalogue content is catalogue categories', async () => {
+      createView();
+
+      await modifyValues({
+        newFormFields: [
+          {
+            name: 'radius',
+            type: 'number',
+            unit: 'millimeters',
+            mandatory: true,
+          },
+        ],
+      });
+
+      expect(screen.getByDisplayValue('Number')).toBeInTheDocument();
+      expect(screen.getByDisplayValue('radius')).toBeInTheDocument();
+      expect(screen.getByDisplayValue('millimeters')).toBeInTheDocument();
+      expect(screen.getByDisplayValue('Yes')).toBeInTheDocument();
+
+      const categoriesRadio = screen.getByLabelText('Catalogue Categories');
+      await user.click(categoriesRadio);
+
+      expect(screen.queryByDisplayValue('Number')).not.toBeInTheDocument();
+      expect(screen.queryByDisplayValue('radius')).not.toBeInTheDocument();
+      expect(screen.queryByDisplayValue('millimeters')).not.toBeInTheDocument();
+      expect(screen.queryByDisplayValue('Yes')).not.toBeInTheDocument();
+    }, 10000);
+
+    it('displays duplicate values and incorrect type error (allowed_values list of numbers)', async () => {
+      createView();
+
+      await modifyValues({
+        name: 'test',
+        newFormFields: [
+          {
+            name: 'radius',
+            type: 'number',
+            unit: 'millimeters',
+            allowed_values: { type: 'list', values: [1, 1, 'dsa'] },
+            mandatory: true,
+          },
+        ],
+      });
+
+      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await waitFor(() => user.click(saveButton));
+
+      const duplicateHelperTexts = screen.queryAllByText('Duplicate value');
+      const incorrectTypeHelperTexts = screen.queryAllByText(
+        'Please enter a valid number'
+      );
+
+      expect(duplicateHelperTexts.length).toEqual(2);
+      expect(incorrectTypeHelperTexts.length).toEqual(1);
+
+      expect(onClose).not.toHaveBeenCalled();
+    }, 10000);
+
+    it('displays duplicate values values with different significant figures (allowed_values list of numbers)', async () => {
+      createView();
+
+      await modifyValues({
+        name: 'test',
+        newFormFields: [
+          {
+            name: 'radius',
+            type: 'number',
+            unit: 'millimeters',
+            allowed_values: { type: 'list', values: ['1.0', '1'] },
+            mandatory: true,
+          },
+        ],
+      });
+
+      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await waitFor(() => user.click(saveButton));
+
+      const duplicateHelperTexts = screen.queryAllByText('Duplicate value');
+
+      expect(duplicateHelperTexts.length).toEqual(2);
+
+      expect(onClose).not.toHaveBeenCalled();
+    }, 10000);
+
+    it('displays duplicate values and incorrect type error and deletes an allowed value to check if errors states are in correct location (allowed_values list of numbers)', async () => {
+      createView();
+
+      await modifyValues({
+        name: 'test',
+        newFormFields: [
+          {
+            name: 'radius',
+            type: 'number',
+            unit: 'millimeters',
+            allowed_values: { type: 'list', values: [1, 1, 'dsad', 2] },
+            mandatory: true,
+          },
+        ],
+      });
+
+      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await waitFor(() => user.click(saveButton));
+
+      const duplicateHelperTexts = screen.queryAllByText('Duplicate value');
+      const incorrectTypeHelperTexts = screen.queryAllByText(
+        'Please enter a valid number'
+      );
+
+      expect(duplicateHelperTexts.length).toEqual(2);
+      expect(incorrectTypeHelperTexts.length).toEqual(1);
+
+      expect(onClose).not.toHaveBeenCalled();
+
+      await user.click(
+        screen.getByTestId(`av_placement_id_4: Delete list item`)
+      );
+
+      const duplicateHelperTexts2 = screen.queryByText('Duplicate value');
+
+      expect(duplicateHelperTexts2).not.toBeInTheDocument();
+    }, 10000);
+
+    it('displays error if the allowed values list is empty', async () => {
+      createView();
+
+      await modifyValues({
+        name: 'test',
+        newFormFields: [
+          {
+            name: 'radius',
+            type: 'number',
+            unit: 'millimeters',
+            allowed_values: { type: 'list', values: [] },
+            mandatory: true,
+          },
+        ],
+      });
+
+      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await waitFor(() => user.click(saveButton));
+
+      const listHelperTexts = screen.queryAllByText(
+        'Please create a valid list item'
+      );
+
+      expect(listHelperTexts.length).toEqual(1);
+
+      expect(onClose).not.toHaveBeenCalled();
+    });
+
+    it('displays error type is undefined and a list item is undefined', async () => {
+      createView();
+
+      await modifyValues({
+        name: 'test',
+        newFormFields: [
+          {
+            name: 'radius',
+            type: '',
+            unit: 'millimeters',
+            allowed_values: { type: 'list', values: ['', ''] },
+            mandatory: true,
+          },
+        ],
+      });
+
+      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await waitFor(() => user.click(saveButton));
+
+      const listHelperTexts = screen.queryAllByText('Please enter a value');
+
+      expect(listHelperTexts.length).toEqual(2);
+
+      expect(onClose).not.toHaveBeenCalled();
+    });
+
+    it('displays duplicate values error (allowed_values list of string)', async () => {
+      createView();
+
+      await modifyValues({
+        name: 'test',
+        newFormFields: [
+          {
+            name: 'radius',
+            type: 'text',
+            unit: 'millimeters',
+            allowed_values: {
+              type: 'list',
+              values: [1, 1, 'dsa', 'sa', '$%^&*()'],
+            },
+            mandatory: true,
+          },
+        ],
+      });
+
+      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await waitFor(() => user.click(saveButton));
+
+      const duplicateHelperTexts = screen.queryAllByText('Duplicate value');
+
+      expect(duplicateHelperTexts.length).toEqual(2);
+
+      expect(onClose).not.toHaveBeenCalled();
+    });
+
     it('does not close dialog on background click, or on escape key press', async () => {
       createView();
 
