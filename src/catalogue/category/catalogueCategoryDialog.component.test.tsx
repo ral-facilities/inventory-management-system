@@ -13,6 +13,7 @@ import {
   CREATED_MODIFIED_TIME_VALUES,
   renderComponentWithRouterProvider,
 } from '../../testUtils';
+import { resetUniqueIdCounter } from '../../utils';
 import CatalogueCategoryDialog, {
   CatalogueCategoryDialogProps,
 } from './catalogueCategoryDialog.component';
@@ -166,6 +167,46 @@ describe('Catalogue Category Dialog', () => {
       }
     }
   };
+
+  describe('Add Catalogue Category Dialog', () => {
+    let axiosPostSpy: MockInstance;
+    beforeEach(() => {
+      props = {
+        open: true,
+        onClose: onClose,
+        parentId: null,
+        type: 'add',
+        resetSelectedCatalogueCategory: resetSelectedCatalogueCategory,
+      };
+      user = userEvent.setup();
+
+      axiosPostSpy = vi.spyOn(imsApi, 'post');
+    });
+
+    afterEach(() => {
+      vi.clearAllMocks();
+      axiosPostSpy.mockRestore();
+      resetUniqueIdCounter();
+    });
+
+
+    it('does not close dialog on background click, or on escape key press', async () => {
+      createView();
+
+      await userEvent.click(document.body);
+
+      expect(onClose).not.toHaveBeenCalled();
+
+      fireEvent.keyDown(screen.getByRole('dialog'), {
+        key: 'Escape',
+        code: 'Escape',
+        keyCode: 27,
+        charCode: 27,
+      });
+
+      expect(onClose).not.toHaveBeenCalled();
+    });
+  });
 
   describe('Edit Catalogue Category Dialog', () => {
     let axiosPatchSpy: MockInstance;
