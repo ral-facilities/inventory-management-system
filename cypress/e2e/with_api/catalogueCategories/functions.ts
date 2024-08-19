@@ -19,7 +19,7 @@ const modifyCatalogueCategory = (
     }).click();
 
     cy.findByRole('menuitem', {
-      name: `edit name ${values.editCatalogueCategoryName} catalogue category button`,
+      name: `edit ${values.editCatalogueCategoryName} catalogue category button`,
     }).click();
 
     if (values.newFormFields) {
@@ -90,7 +90,7 @@ const modifyCatalogueCategory = (
               .eq(i)
               .click();
 
-            cy.findAllByLabelText('List Item')
+            cy.findAllByLabelText('List item')
               .eq(j)
               .type(field.allowed_values.values[j]);
           }
@@ -100,6 +100,8 @@ const modifyCatalogueCategory = (
   }
 
   cy.findByRole('button', { name: 'Save' }).click();
+  if (values.editCatalogueCategoryName)
+    cy.findByRole('button', { name: 'Close' }).click();
   if (!ignoreChecks) {
     cy.findByText(values.name).should('exist');
 

@@ -21,7 +21,7 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import { DatePicker } from '@mui/x-date-pickers';
+import { DesktopDatePicker } from '@mui/x-date-pickers';
 import { AxiosError } from 'axios';
 import React from 'react';
 import {
@@ -740,7 +740,7 @@ function ItemDialog(props: ItemDialogProps) {
             </Grid>
 
             <Grid item xs={12}>
-              <DatePicker
+              <DesktopDatePicker
                 label="Warranty end date"
                 value={itemDetails.warranty_end_date}
                 onChange={(date) =>
@@ -759,7 +759,7 @@ function ItemDialog(props: ItemDialogProps) {
               />
             </Grid>
             <Grid item xs={12}>
-              <DatePicker
+              <DesktopDatePicker
                 label="Delivered date"
                 value={itemDetails.delivered_date}
                 onChange={(date) =>
