@@ -318,7 +318,6 @@ describe('Catalogue Category Dialog', () => {
     it('create a catalogue category with content being catalogue items', async () => {
       createView();
 
-      console.log("Before modifyValues");
       await modifyValues({
         name: 'test',
         newFormFields: [
@@ -330,15 +329,12 @@ describe('Catalogue Category Dialog', () => {
           },
         ],
       });
-      console.log("After modifyValues");
 
       expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
-      
-      console.log("Before clicking save button");
+
       await waitFor(() => user.click(saveButton));
-      console.log("After clicking save button");
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
         properties: [
