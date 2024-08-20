@@ -320,19 +320,19 @@ describe('Catalogue Category Dialog', () => {
       createView();
 
       console.log("Before modifyValues");
+      await act(async () => {
+        await modifyValues({
+          name: 'test',
+          newFormFields: [
+            {
+              name: 'radius',
+              type: 'number',
+              unit: 'millimeters',
+              mandatory: true,
+            },
+          ],
+        });})
 
-      await modifyValues({
-        name: 'test',
-        newFormFields: [
-          {
-            name: 'radius',
-            type: 'number',
-            unit: 'millimeters',
-            mandatory: true,
-          },
-        ],
-      });
-      
       console.log("After modifyValues");
 
       expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
@@ -340,9 +340,7 @@ describe('Catalogue Category Dialog', () => {
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
       console.log("Before clicking save button");
-      await act(async () => {
-        await waitFor(() => user.click(saveButton));
-      })
+      await waitFor(() => user.click(saveButton));
       console.log("After clicking save button");
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
