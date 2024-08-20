@@ -225,8 +225,9 @@ function CatalogueItemPropertiesMigrationDialog(
           return !(item.errors && item.errors.fieldName === 'default_value');
         });
     } else {
-      (updatedCatalogueItemField[field] as boolean | string | number | null) =
-        value;
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      updatedCatalogueItemField[field] = value;
     }
 
     setCatalogueItemField(updatedCatalogueItemField);
@@ -654,7 +655,7 @@ function CatalogueItemPropertiesMigrationDialog(
           values:
             catalogueItemField?.type === 'number'
               ? convertedValues
-              : allowedValuesList ?? [],
+              : (allowedValuesList ?? []),
         };
       }
 
@@ -710,7 +711,7 @@ function CatalogueItemPropertiesMigrationDialog(
       const isNameUpdated =
         catalogueItemField.name !== initialPropertyDetails?.name;
 
-      isNameUpdated && (property.name = catalogueItemField.name);
+      if (isNameUpdated) property.name = catalogueItemField.name;
 
       let isAllowedValuesUpdated = false;
 
@@ -724,14 +725,14 @@ function CatalogueItemPropertiesMigrationDialog(
           values:
             catalogueItemField.type === 'number'
               ? convertedValues
-              : allowedValuesList ?? [],
+              : (allowedValuesList ?? []),
         };
 
         isAllowedValuesUpdated =
           JSON.stringify(initialPropertyDetails?.allowed_values?.values) !==
           JSON.stringify(allowedValues.values);
 
-        isAllowedValuesUpdated && (property.allowed_values = allowedValues);
+        if (isAllowedValuesUpdated) property.allowed_values = allowedValues;
       }
 
       if (isNameUpdated || isAllowedValuesUpdated) {

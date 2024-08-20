@@ -24,7 +24,7 @@ export interface CatalogueCardProps extends CatalogueCategory {
   onChangeOpenEditPropertiesDialog: (
     catalogueCategory: CatalogueCategory
   ) => void;
-  onChangeOpenSaveAsDialog: (catalogueCategory: CatalogueCategory) => void;
+  onChangeOpenDuplicateDialog: (catalogueCategory: CatalogueCategory) => void;
   onToggleSelect: (catalogueCategory: CatalogueCategory) => void;
   isSelected: boolean;
 }
@@ -34,7 +34,7 @@ function CatalogueCard(props: CatalogueCardProps) {
     onChangeOpenDeleteDialog,
     onChangeOpenEditNameDialog,
     onChangeOpenEditPropertiesDialog,
-    onChangeOpenSaveAsDialog,
+    onChangeOpenDuplicateDialog,
     onToggleSelect,
     isSelected,
     ...catalogueCategory
@@ -150,10 +150,10 @@ function CatalogueCard(props: CatalogueCardProps) {
             )}
             <MenuItem
               key={2}
-              aria-label={`save as ${catalogueCategory.name} catalogue category button`}
+              aria-label={`duplicate ${catalogueCategory.name} catalogue category button`}
               onClick={(event) => {
                 event.preventDefault();
-                onChangeOpenSaveAsDialog(catalogueCategory);
+                onChangeOpenDuplicateDialog(catalogueCategory);
                 handleActionsClose();
               }}
               sx={{ m: 0 }}
@@ -161,7 +161,7 @@ function CatalogueCard(props: CatalogueCardProps) {
               <ListItemIcon>
                 <SaveAsIcon />
               </ListItemIcon>
-              Save as
+              Duplicate
             </MenuItem>
             <MenuItem
               key={3}

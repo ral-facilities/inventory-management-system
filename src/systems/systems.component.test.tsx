@@ -333,7 +333,7 @@ describe('Systems', () => {
     });
   });
 
-  it('can open the save as dialog and close it again', async () => {
+  it('can open the duplicate dialog and close it again', async () => {
     createView('/systems');
 
     await waitFor(() => {
@@ -342,7 +342,7 @@ describe('Systems', () => {
 
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
 
-    await clickRowAction(0, 'Save as');
+    await clickRowAction(0, 'Duplicate');
 
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();

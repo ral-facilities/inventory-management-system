@@ -480,7 +480,7 @@ export const handlers = [
         return HttpResponse.json(
           {
             detail:
-              'A manufacturer with the same name has been found. Please enter a different name',
+              'A manufacturer with the same name already exists. Please enter a different name',
           },
           { status: 409 }
         );

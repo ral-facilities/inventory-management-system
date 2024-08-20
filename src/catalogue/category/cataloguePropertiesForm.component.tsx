@@ -56,7 +56,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
   } = props;
 
   const handleAddField = () => {
-    onChangeFormFields &&
+    if (onChangeFormFields)
       onChangeFormFields([
         ...formFields,
         {
@@ -68,7 +68,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
           cip_placement_id: generateUniqueId('cip_placement_id_'),
         },
       ]);
-    resetFormError && resetFormError();
+    if (resetFormError) resetFormError();
   };
 
   const handleDeleteField = (cip_placement_id: string) => {
@@ -205,8 +205,9 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
           };
         }
       } else {
-        (updatedFormFields[fieldIndex][field] as boolean | string | null) =
-          value;
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        updatedFormFields[fieldIndex][field] = value;
       }
       if (field === 'type') {
         const updatedAllowedValuesListErrors = allowedValuesListErrors.filter(

@@ -167,7 +167,7 @@ describe('Catalogue Category', () => {
       name: 'edit name Motion catalogue category button',
     }).should('be.visible');
     cy.findByRole('menuitem', {
-      name: 'save as Motion catalogue category button',
+      name: 'duplicate Motion catalogue category button',
     }).should('be.visible');
     cy.findByRole('menuitem', {
       name: 'delete Motion catalogue category button',
@@ -182,11 +182,11 @@ describe('Catalogue Category', () => {
     }).should('be.visible');
   });
 
-  it('"save as" a catalogue category', () => {
+  it('"duplicate" a catalogue category', () => {
     cy.findByRole('button', {
       name: 'actions Motion catalogue category button',
     }).click();
-    cy.findByText('Save as').click();
+    cy.findByText('Duplicate').click();
 
     cy.startSnoopingBrowserMockedRequest();
 
