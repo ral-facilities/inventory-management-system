@@ -238,7 +238,7 @@ describe('Systems', () => {
     cy.findByRole('link', { name: 'Pulse Laser' }).should('be.visible');
     cy.findByRole('link', { name: 'Giant laser' }).should('be.visible');
     cy.findByRole('link', { name: 'Laser Star' }).should('be.visible');
-    cy.findByRole('link', { name: 'Smaller laser' }).should('be.visible');
+    cy.findByRole('link', { name: "Laser Xpress" }).should('be.visible');
 
     // One in title, one in breadcrumbs
     cy.findAllByText('Plasma Beam').should('have.length', 2);
