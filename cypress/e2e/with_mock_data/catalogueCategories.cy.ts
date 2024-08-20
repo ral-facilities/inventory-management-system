@@ -734,6 +734,7 @@ describe('Catalogue Category', () => {
           parent_id: null,
           code: 'test_dup',
           is_leaf: false,
+          properties: [],
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
         })
@@ -745,6 +746,7 @@ describe('Catalogue Category', () => {
           parent_id: null,
           code: 'amp-meters',
           is_leaf: false,
+          properties: [],
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
         })
@@ -848,6 +850,7 @@ describe('Catalogue Category', () => {
           parent_id: '2',
           code: 'test_dup',
           is_leaf: false,
+          properties: [],
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
         })
@@ -859,6 +862,7 @@ describe('Catalogue Category', () => {
           parent_id: '2',
           code: 'amp-meters',
           is_leaf: false,
+          properties: [],
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
         })
