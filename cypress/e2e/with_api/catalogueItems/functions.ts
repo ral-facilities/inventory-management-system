@@ -92,7 +92,7 @@ const modifyCatalogueItem = (
     });
 
   cy.findByLabelText('Manufacturer *').click();
-  cy.findByRole('option', { name: values.manufacturer }).click();
+  cy.findAllByRole('option', { name: values.manufacturer}).first().click();
 
   cy.findByRole('button', { name: 'Next' }).click();
 
