@@ -606,7 +606,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   );
 
 
-  const options = ():any[] => {
+  const options = ():Array<Manufacturer & {isrecent: string}> => {
     const classifiedManufacturers = manufacturerList ? (manufacturerList).map((option) => {
       const created_date = (new Date(option.created_time)).getTime()
       const date_now = (new Date()).getTime()
