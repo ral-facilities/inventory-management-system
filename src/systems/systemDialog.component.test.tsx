@@ -34,19 +34,19 @@ describe('Systems Dialog', () => {
     owner?: string;
     importance?: SystemImportanceType;
   }) => {
-    values.name !== undefined &&
+    if (values.name !== undefined)
       fireEvent.change(screen.getByLabelText('Name *'), {
         target: { value: values.name },
       });
-    values.description !== undefined &&
+    if (values.description !== undefined)
       fireEvent.change(screen.getByLabelText('Description'), {
         target: { value: values.description },
       });
-    values.location !== undefined &&
+    if (values.location !== undefined)
       fireEvent.change(screen.getByLabelText('Location'), {
         target: { value: values.location },
       });
-    values.owner !== undefined &&
+    if (values.owner !== undefined)
       fireEvent.change(screen.getByLabelText('Owner'), {
         target: { value: values.owner },
       });
@@ -406,9 +406,9 @@ describe('Systems Dialog', () => {
     });
   });
 
-  describe('Save as', () => {
+  describe('Duplicate', () => {
     // Mostly tested above anyway, so only a few checks here to ensure
-    // correct logic (out of add/edit) is applied when the dialogue type is 'save as'
+    // correct logic (out of add/edit) is applied when the dialogue type is 'duplicate'
 
     const MOCK_SELECTED_SYSTEM: System = {
       name: 'Mock laser',
@@ -432,7 +432,7 @@ describe('Systems Dialog', () => {
 
     beforeEach(() => {
       props.requestType = 'post';
-      props.saveAs = true;
+      props.duplicate = true;
       props.parentId = null;
       props.selectedSystem = MOCK_SELECTED_SYSTEM;
     });

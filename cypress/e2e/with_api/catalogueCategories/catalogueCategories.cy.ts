@@ -5,7 +5,7 @@ import {
   deleteCatalogueCategories,
   editCatalogueCategories,
   moveToCatalogueCategories,
-  saveAsCatalogueCategories,
+  duplicateCatalogueCategories,
 } from './functions';
 
 describe('Catalogue Category', () => {
@@ -25,7 +25,7 @@ describe('Catalogue Category', () => {
     cy.visit('/catalogue');
     addCatalogueCategories();
     editCatalogueCategories();
-    saveAsCatalogueCategories();
+    duplicateCatalogueCategories();
     copyToCatalogueCategories();
     moveToCatalogueCategories();
     deleteCatalogueCategories();

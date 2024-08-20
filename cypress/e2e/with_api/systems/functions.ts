@@ -45,18 +45,18 @@ export const modifySystem = (
     cy.findByText(values.name).click();
 
     cy.findAllByText(values.name).should('have.length.gte', 1);
-    values.description && cy.findByText(values.description).should('exist');
-    values.owner && cy.findByText(values.owner).should('exist');
-    values.location && cy.findByText(values.location).should('exist');
+    if (values.description) cy.findByText(values.description).should('exist');
+    if (values.owner) cy.findByText(values.owner).should('exist');
+    if (values.location) cy.findByText(values.location).should('exist');
     cy.findByText(values.importance).should('exist');
 
     cy.go('back');
   }
 };
 
-export const saveAsSystem = (name: string, index: number) => {
+export const duplicateSystem = (name: string, index: number) => {
   cy.findAllByLabelText('Row Actions').eq(index).click();
-  cy.findByText(`Save as`).click();
+  cy.findByText(`Duplicate`).click();
 
   cy.findByRole('button', { name: 'Save' }).click();
 

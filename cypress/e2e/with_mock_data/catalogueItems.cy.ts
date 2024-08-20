@@ -77,11 +77,11 @@ describe('Catalogue Items', () => {
     });
   });
 
-  it('"save as" a catalogue item', () => {
+  it('"duplicate" a catalogue item', () => {
     cy.visit('/catalogue/5');
 
     cy.findAllByLabelText('Row Actions').eq(1).click();
-    cy.findByText('Save as').click();
+    cy.findByText('Duplicate').click();
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -870,7 +870,7 @@ describe('Catalogue Items', () => {
     cy.url().should('contain', 'catalogue/item/89/items');
   });
 
-  it('opens add dialog for categories in directory and has functionality of save as', () => {
+  it('opens add dialog for categories in directory and has functionality of duplicate', () => {
     cy.visit('/catalogue/5');
     cy.findAllByLabelText('Toggle select row').first().click();
     cy.findByRole('button', { name: 'Move to' }).click();
