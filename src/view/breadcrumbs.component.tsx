@@ -7,7 +7,7 @@ import {
   Link,
   Breadcrumbs as MuiBreadcrumbs,
   styled,
-  Tooltip
+  Tooltip,
 } from '@mui/material';
 import { BreadcrumbsInfo } from '../api/api.types';
 import { OverflowTip } from '../utils';
@@ -44,12 +44,14 @@ const Breadcrumbs = (props: BreadcrumbsProps) => {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <Tooltip title = "Home">
-        <IconButton
-          onClick={onChangeNavigateHome}
-          aria-label={navigateHomeAriaLabel}
-        >
-          <HomeIcon />
-        </IconButton>
+        <span>
+          <IconButton
+            onClick={onChangeNavigateHome}
+            aria-label={navigateHomeAriaLabel}
+          >
+            <HomeIcon />
+          </IconButton>
+        </span>
       </Tooltip>
       <StyledBreadcrumbs
         separator={<NavigateNext fontSize="small" />}
