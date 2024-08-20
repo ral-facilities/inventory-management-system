@@ -1,12 +1,12 @@
 import { fixupPluginRules } from '@eslint/compat';
 import eslint from '@eslint/js';
+import prettierPlugin from 'eslint-config-prettier';
 import cypressPlugin from 'eslint-plugin-cypress/flat';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import reactTestingLibraryPlugin from 'eslint-plugin-testing-library';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
-import prettierPlugin from 'eslint-config-prettier';
 
 export default tseslint.config(
   {

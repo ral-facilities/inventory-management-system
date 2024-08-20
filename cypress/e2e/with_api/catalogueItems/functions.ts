@@ -122,31 +122,32 @@ const modifyCatalogueItem = (
     cy.findByText(values.name).should('exist');
     cy.findByText(values.name).click();
 
-    values.description && cy.findByText(values.description).should('exist');
+    if (values.description) cy.findByText(values.description).should('exist');
 
     cy.findByText(values.costGbp).should('exist');
 
-    values.costToReworkGbp &&
+    if (values.costToReworkGbp)
       cy.findByText(values.costToReworkGbp).should('exist');
 
     cy.findByText(values.daysToReplace).should('exist');
 
-    values.daysToRework && cy.findByText(values.daysToRework).should('exist');
+    if (values.daysToRework) cy.findByText(values.daysToRework).should('exist');
 
-    values.drawingNumber && cy.findByText(values.drawingNumber).should('exist');
+    if (values.drawingNumber)
+      cy.findByText(values.drawingNumber).should('exist');
 
-    values.drawingLink && cy.findByText(values.drawingLink).should('exist');
+    if (values.drawingLink) cy.findByText(values.drawingLink).should('exist');
 
-    values.itemModelNumber &&
+    if (values.itemModelNumber)
       cy.findByText(values.itemModelNumber).should('exist');
 
-    values.notes && cy.findByText(values.notes).should('exist');
+    if (values.notes) cy.findByText(values.notes).should('exist');
 
     cy.findByText(values.manufacturer).should('exist');
 
     cy.findByText(values.substrate).should('exist');
 
-    values.diameter && cy.findByText(values.diameter).should('exist');
+    if (values.diameter) cy.findByText(values.diameter).should('exist');
 
     cy.findByText(values.wavelengthRange).should('exist');
 
@@ -169,11 +170,11 @@ const modifyCatalogueItem = (
   }
 };
 
-export const saveAsCatalogueItem = (name: string) => {
+export const duplicateCatalogueItem = (name: string) => {
   cy.findByLabelText(`${name} row`).within(() => {
     cy.findByLabelText('Row Actions').click();
   });
-  cy.findByLabelText(`Save catalogue item ${name} as`).click();
+  cy.findByLabelText(`Duplicate catalogue item ${name}`).click();
 
   cy.findByRole('button', { name: 'Next' }).click();
   cy.findByRole('button', { name: 'Finish' }).click();

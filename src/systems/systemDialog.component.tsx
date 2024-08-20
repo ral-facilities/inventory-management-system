@@ -36,7 +36,7 @@ export interface SystemDialogProps {
   open: boolean;
   onClose: () => void;
   requestType: RequestType;
-  saveAs?: boolean;
+  duplicate?: boolean;
   // Only required for add
   parentId?: string | null;
   // Only required for pre-populating fields for an edit dialog
@@ -44,10 +44,10 @@ export interface SystemDialogProps {
 }
 
 const SystemDialog = React.memo((props: SystemDialogProps) => {
-  const { open, onClose, parentId, requestType, selectedSystem, saveAs } =
+  const { open, onClose, parentId, requestType, selectedSystem, duplicate } =
     props;
 
-  const isNotCreating = (requestType !== 'post' || saveAs) && selectedSystem;
+  const isNotCreating = (requestType !== 'post' || duplicate) && selectedSystem;
 
   const { mutateAsync: postSystem, isPending: isAddPending } = usePostSystem();
   const { mutateAsync: patchSystem, isPending: isEditPending } =
@@ -140,13 +140,13 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
         ) {
           const editSystemData: SystemPatch = {};
 
-          isNameUpdated && (editSystemData.name = systemData.name);
-          isDescriptionUpdated &&
-            (editSystemData.description = systemData.description);
-          isLocationUpdated && (editSystemData.location = systemData.location);
-          isOwnerUpdated && (editSystemData.owner = systemData.owner);
-          isImportanceUpdated &&
-            (editSystemData.importance = systemData.importance);
+          if (isNameUpdated) editSystemData.name = systemData.name;
+          if (isDescriptionUpdated)
+            editSystemData.description = systemData.description;
+          if (isLocationUpdated) editSystemData.location = systemData.location;
+          if (isOwnerUpdated) editSystemData.owner = systemData.owner;
+          if (isImportanceUpdated)
+            editSystemData.importance = systemData.importance;
 
           patchSystem({
             id: selectedSystem.id,
@@ -178,9 +178,14 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
   );
 
   const onSubmit = (data: SystemPost) => {
-    requestType === 'patch'
-      ? handleEditSystem(data)
-      : handleAddSaveSystem({ ...data, parent_id: parentId ?? undefined });
+    if (requestType === 'patch') {
+      handleEditSystem(data);
+    } else {
+      handleAddSaveSystem({
+        ...data,
+        parent_id: parentId ?? undefined,
+      });
+    }
   };
 
   // For title

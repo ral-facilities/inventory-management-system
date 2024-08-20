@@ -37,7 +37,7 @@ const modifyCatalogueCategory = (
 
   if (values.newFormFields) {
     // Assume want a leaf now
-    !values.editCatalogueCategoryName &&
+    if (!values.editCatalogueCategoryName)
       cy.findByLabelText('Catalogue Items').click();
 
     // Add any required fields
@@ -134,13 +134,13 @@ const deleteCatalogueCategory = (name: string) => {
   cy.findByRole('button', { name: 'Continue' }).click();
 };
 
-export const saveAsCatalogueCategory = (name: string) => {
+export const duplicateCatalogueCategory = (name: string) => {
   cy.findByRole('button', {
     name: `actions ${name} catalogue category button`,
   }).click();
 
   cy.findByRole('menuitem', {
-    name: `save as ${name} catalogue category button`,
+    name: `duplicate ${name} catalogue category button`,
   }).click();
 
   cy.findByRole('button', { name: 'Save' }).click();
@@ -241,11 +241,11 @@ export const editCatalogueCategories = () => {
   });
 };
 
-export const saveAsCatalogueCategories = () => {
+export const duplicateCatalogueCategories = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
-  saveAsCatalogueCategory('Lenses 2');
+  duplicateCatalogueCategory('Lenses 2');
   cy.findByText('Lenses 2').click();
-  saveAsCatalogueCategory('Spherical Lenses 2');
+  duplicateCatalogueCategory('Spherical Lenses 2');
 };
 
 export const copyToCatalogueCategories = () => {
