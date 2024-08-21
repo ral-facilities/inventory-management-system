@@ -621,6 +621,24 @@ describe('Catalogue Items Dialog', () => {
     expect(onClose).not.toHaveBeenCalled();
   }, 10000);
 
+  it('displays recently added section', async () => {
+
+    props = {
+      ...props,
+      parentInfo: getCatalogueCategoryById('4'),
+    };
+
+    createView();
+
+    const manufacturerPopup = screen.getAllByRole('combobox')[0];
+    user.type(manufacturerPopup, 'Man')
+
+    const options = await screen.findAllByRole('option');
+    expect(options).toHaveLength(4)
+    expect(screen.getByText("A-Z")).toBeInTheDocument()
+
+  }, 10000);
+
   it('opens add manufacturer dialog and returns back to catalogue item dialog', async () => {
     props = {
       ...props,
