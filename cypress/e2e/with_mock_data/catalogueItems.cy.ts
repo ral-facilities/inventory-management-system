@@ -249,6 +249,7 @@ describe('Catalogue Items', () => {
     });
   });
 
+
   it('displays the error messages and clears when values are changed', () => {
     cy.findByRole('button', { name: 'Add Catalogue Item' }).click();
     cy.findByRole('dialog')
@@ -416,6 +417,8 @@ describe('Catalogue Items', () => {
       'High-resolution cameras for beam characterization. 1'
     );
     cy.findByLabelText('Manufacturer *').should('have.value', 'Manufacturer A');
+    cy.findByLabelText('Manufacturer *').click().wait(500);
+    cy.contains('A-Z').should('be.visible');
     cy.findByRole('button', { name: 'Next' }).click();
     cy.findByLabelText('Resolution (megapixels) *').should('have.value', '12');
     cy.findByLabelText('Frame Rate (fps)').should('have.value', '30');
