@@ -219,7 +219,7 @@ function Catalogue() {
   const [editCategoryDialogOpen, setEditCategoryDialogOpen] =
     React.useState<boolean>(false);
 
-  const [saveAsCategoryDialogOpen, setSaveAsCategoryDialogOpen] =
+  const [duplicateCategoryDialogOpen, setDuplicateCategoryDialogOpen] =
     React.useState<boolean>(false);
 
   const [selectedCatalogueCategory, setSelectedCatalogueCategory] =
@@ -251,8 +251,10 @@ function Catalogue() {
     setSelectedCatalogueCategory(catalogueCategory);
   };
 
-  const onChangeOpenSaveAsDialog = (catalogueCategory: CatalogueCategory) => {
-    setSaveAsCategoryDialogOpen(true);
+  const onChangeOpenDuplicateDialog = (
+    catalogueCategory: CatalogueCategory
+  ) => {
+    setDuplicateCategoryDialogOpen(true);
     setSelectedCatalogueCategory(catalogueCategory);
   };
 
@@ -384,7 +386,7 @@ function Catalogue() {
             catalogueCategoryData={catalogueCategoryData}
             onChangeOpenDeleteCategoryDialog={onChangeOpenDeleteCategoryDialog}
             onChangeOpenEditCategoryDialog={onChangeOpenEditCategoryDialog}
-            onChangeOpenSaveAsDialog={onChangeOpenSaveAsDialog}
+            onChangeOpenDuplicateDialog={onChangeOpenDuplicateDialog}
             handleToggleSelect={handleToggleSelect}
             selectedCategories={selectedCategories}
           />
@@ -406,11 +408,11 @@ function Catalogue() {
       />
 
       <CatalogueCategoryDialog
-        open={saveAsCategoryDialogOpen}
-        onClose={() => setSaveAsCategoryDialogOpen(false)}
+        open={duplicateCategoryDialogOpen}
+        onClose={() => setDuplicateCategoryDialogOpen(false)}
         parentId={parentId}
         requestType="post"
-        saveAs
+        duplicate
         selectedCatalogueCategory={
           selectedCatalogueCategory
             ? {

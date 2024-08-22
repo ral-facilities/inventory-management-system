@@ -158,11 +158,11 @@ describe('Catalogue Category', () => {
     });
   });
 
-  it('"save as" a catalogue category', () => {
+  it('"duplicate" a catalogue category', () => {
     cy.findByRole('button', {
       name: 'actions Motion catalogue category button',
     }).click();
-    cy.findByText('Save as').click();
+    cy.findByText('Duplicate').click();
 
     cy.startSnoopingBrowserMockedRequest();
 

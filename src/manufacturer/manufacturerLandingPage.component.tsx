@@ -38,7 +38,7 @@ function ManufacturerLandingPage() {
     React.useState<BreadcrumbsInfo | undefined>(undefined);
 
   React.useEffect(() => {
-    manufacturerData &&
+    if (manufacturerData)
       setManufacturerLandingBreadcrumbs({
         full_trail: true,
         trail: [

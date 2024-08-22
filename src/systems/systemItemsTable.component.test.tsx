@@ -357,17 +357,17 @@ describe('SystemItemsTable', () => {
           });
         }
       }
-      values.cameras1 &&
-        (await selectUsageStatus({
+      if (values.cameras1)
+        await selectUsageStatus({
           index: 0,
           usage_status_id: values.cameras1,
-        }));
+        });
 
-      values.cameras6 &&
-        (await selectUsageStatus({
+      if (values.cameras6)
+        await selectUsageStatus({
           index: 1,
           usage_status_id: values.cameras6,
-        }));
+        });
     };
 
     it('renders correctly', async () => {

@@ -31,8 +31,7 @@ export function Items() {
   >(catalogueBreadcrumbs);
 
   React.useEffect(() => {
-    catalogueBreadcrumbs &&
-      catalogueItem &&
+    if (catalogueBreadcrumbs && catalogueItem)
       setItemsBreadcrumbs({
         ...catalogueBreadcrumbs,
         trail: [
@@ -42,7 +41,6 @@ export function Items() {
         ],
       });
   }, [catalogueBreadcrumbs, catalogueItem]);
-
   return (
     <Grid container>
       <Grid

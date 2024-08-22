@@ -66,7 +66,7 @@ export interface CatalogueCategoryDialogProps {
   onClose: () => void;
   parentId: string | null;
   requestType: RequestType;
-  saveAs?: boolean;
+  duplicate?: boolean;
   selectedCatalogueCategory?: CatalogueCategory;
   resetSelectedCatalogueCategory: () => void;
 }
@@ -274,7 +274,7 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
     onClose,
     parentId,
     requestType,
-    saveAs,
+    duplicate,
     selectedCatalogueCategory,
     resetSelectedCatalogueCategory,
   } = props;
@@ -282,7 +282,8 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
   const initialCatalogueCategory: AddCatalogueCategoryWithPlacementIds =
     React.useMemo(() => {
       if (
-        (!selectedCatalogueCategory && (requestType === 'post' || !saveAs)) ||
+        (!selectedCatalogueCategory &&
+          (requestType === 'post' || !duplicate)) ||
         !selectedCatalogueCategory
       )
         return {
@@ -295,7 +296,7 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
       return transformToAddCatalogueCategoryWithPlacementIds(
         selectedCatalogueCategory
       );
-    }, [requestType, saveAs, selectedCatalogueCategory]);
+    }, [requestType, duplicate, selectedCatalogueCategory]);
 
   const formMethods = useForm<AddCatalogueCategoryWithPlacementIds>({
     resolver: zodResolver(CatalogueCategorySchema),

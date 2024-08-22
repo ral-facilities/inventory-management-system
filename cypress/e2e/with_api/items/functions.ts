@@ -225,9 +225,9 @@ export const addProperty = () => {
   cy.findByText('Items').click();
 };
 
-export const saveAsItem = (serialNumber: string, index: number) => {
+export const duplicateItem = (serialNumber: string, index: number) => {
   cy.findAllByLabelText('Row Actions').eq(index).click();
-  cy.findByText(`Save as`).click();
+  cy.findByText(`Duplicate`).click();
 
   cy.findByRole('button', { name: 'Next' }).click();
   cy.findByRole('button', { name: 'Next' }).click();

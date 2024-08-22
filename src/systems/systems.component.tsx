@@ -50,7 +50,7 @@ import SystemDetails from './systemDetails.component';
 import SystemDialog from './systemDialog.component';
 import { SystemDirectoryDialog } from './systemDirectoryDialog.component';
 
-export type SystemMenuDialogType = 'edit' | 'save as' | 'delete';
+export type SystemMenuDialogType = 'edit' | 'duplicate' | 'delete';
 
 /* Returns function that navigates to a specific system id (or to the root of all systems
    if given null) */
@@ -218,7 +218,7 @@ function Systems() {
       selectedRowIds.includes(subsystem.id)
     ) ?? [];
 
-  // Names for preventing duplicates in the save as dialog
+  // Names for preventing duplicates in the duplicate dialog
   const subsystemNames: string[] =
     subsystemsData?.map((subsystem) => subsystem.name) || [];
 
@@ -283,10 +283,10 @@ function Systems() {
           <ListItemText>Edit</ListItemText>
         </MenuItem>,
         <MenuItem
-          key="save as"
-          aria-label={`Save system ${row.original.name} as new system`}
+          key="duplicate"
+          aria-label={`Duplicate system ${row.original.name}`}
           onClick={() => {
-            setMenuDialogType('save as');
+            setMenuDialogType('duplicate');
             setSelectedSystemForMenu({
               ...row.original,
               name: generateUniqueName(row.original.name, subsystemNames),
@@ -297,7 +297,7 @@ function Systems() {
           <ListItemIcon>
             <SaveAsIcon />
           </ListItemIcon>
-          <ListItemText>Save as</ListItemText>
+          <ListItemText>Duplicate</ListItemText>
         </MenuItem>,
         <MenuItem
           key="delete"
@@ -509,7 +509,7 @@ function Systems() {
         open={menuDialogType !== undefined && menuDialogType !== 'delete'}
         onClose={() => setMenuDialogType(undefined)}
         requestType={menuDialogType === 'edit' ? 'patch' : 'post'}
-        saveAs={menuDialogType === 'save as'}
+        duplicate={menuDialogType === 'duplicate'}
         selectedSystem={selectedSystemForMenu}
         parentId={systemId}
       />

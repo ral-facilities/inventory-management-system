@@ -1270,9 +1270,9 @@ describe('Catalogue Category Dialog', () => {
     });
   });
 
-  describe('Save as Catalogue Category Dialog', () => {
+  describe('Duplicate Catalogue Category Dialog', () => {
     //All of actual logic is same as add so is tested above
-    //checks that the dialog renders/opens correctly for `save as`
+    //checks that the dialog renders/opens correctly for `duplicate`
 
     let axiosPostSpy: MockInstance;
     const mockData: CatalogueCategory = {
@@ -1291,7 +1291,7 @@ describe('Catalogue Category Dialog', () => {
         onClose: onClose,
         parentId: null,
         requestType: 'post',
-        saveAs: true,
+        duplicate: true,
         selectedCatalogueCategory: mockData,
         resetSelectedCatalogueCategory: resetSelectedCatalogueCategory,
       };
@@ -1299,13 +1299,13 @@ describe('Catalogue Category Dialog', () => {
       axiosPostSpy = vi.spyOn(imsApi, 'post');
     });
 
-    it('renders correctly when saving as', async () => {
+    it('renders correctly when duplicating', async () => {
       createView();
 
       expect(screen.getByText('Add Catalogue Category')).toBeInTheDocument();
     });
 
-    it('saves as a catalogue category', async () => {
+    it('duplicates a catalogue category', async () => {
       createView();
 
       const values = {
@@ -1322,7 +1322,7 @@ describe('Catalogue Category Dialog', () => {
       expect(onClose).toHaveBeenCalled();
     });
 
-    it('saves as a catalogue category (with properties)', async () => {
+    it('duplicate a catalogue category (with properties)', async () => {
       props.selectedCatalogueCategory = {
         ...mockData,
         is_leaf: true,
@@ -1387,7 +1387,7 @@ describe('Catalogue Category Dialog', () => {
       expect(onClose).toHaveBeenCalled();
     });
 
-    it('saves as a catalogue category (with properties and allowed values)', async () => {
+    it('duplicate a catalogue category (with properties and allowed values)', async () => {
       props.selectedCatalogueCategory = {
         ...mockData,
         is_leaf: true,

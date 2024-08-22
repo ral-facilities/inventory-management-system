@@ -445,9 +445,9 @@ describe('Items', () => {
     });
   });
 
-  it('save as an item', () => {
+  it('duplicate an item', () => {
     cy.findAllByLabelText('Row Actions').first().click();
-    cy.findByText('Save as').click();
+    cy.findByText('Duplicate').click();
 
     cy.startSnoopingBrowserMockedRequest();
 

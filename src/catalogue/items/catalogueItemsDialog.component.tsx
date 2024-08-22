@@ -50,7 +50,7 @@ export interface CatalogueItemsDialogProps {
   onClose: () => void;
   parentInfo: CatalogueCategory | undefined;
   selectedCatalogueItem?: CatalogueItem;
-  type: 'edit' | 'create' | 'save as';
+  type: 'edit' | 'create' | 'duplicate';
 }
 
 function isValidUrl(url: string) {
@@ -493,26 +493,27 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
       const isNotesUpdated = details.notes !== selectedCatalogueItem.notes;
 
-      isNameUpdated && (catalogueItem.name = details.name);
-      isDescriptionUpdated && (catalogueItem.description = details.description);
-      isCostGbpUpdated && (catalogueItem.cost_gbp = details.cost_gbp);
-      isCostToReworkGbpUpdated &&
-        (catalogueItem.cost_to_rework_gbp = details.cost_to_rework_gbp);
-      isDaysToReplaceUpdated &&
-        (catalogueItem.days_to_replace = details.days_to_replace);
-      isDaysToReworkUpdated &&
-        (catalogueItem.days_to_rework = details.days_to_rework);
-      isDrawingNumberUpdated &&
-        (catalogueItem.drawing_number = details.drawing_number);
-      isDrawingLinkUpdated &&
-        (catalogueItem.drawing_link = details.drawing_link);
-      isModelNumberUpdated &&
-        (catalogueItem.item_model_number = details.item_model_number);
-      isCatalogueItemPropertiesUpdated &&
-        (catalogueItem.properties = updatedProperties);
-      isManufacturerUpdated &&
-        (catalogueItem.manufacturer_id = details.manufacturer_id);
-      isNotesUpdated && (catalogueItem.notes = details.notes);
+      if (isNameUpdated) catalogueItem.name = details.name;
+      if (isDescriptionUpdated) catalogueItem.description = details.description;
+      if (isCostGbpUpdated) catalogueItem.cost_gbp = details.cost_gbp;
+      if (isCostToReworkGbpUpdated)
+        catalogueItem.cost_to_rework_gbp = details.cost_to_rework_gbp;
+      if (isDaysToReplaceUpdated)
+        catalogueItem.days_to_replace = details.days_to_replace;
+      if (isDaysToReworkUpdated)
+        catalogueItem.days_to_rework = details.days_to_rework;
+      if (isDrawingNumberUpdated)
+        catalogueItem.drawing_number = details.drawing_number;
+      if (isDrawingLinkUpdated)
+        catalogueItem.drawing_link = details.drawing_link;
+      if (isModelNumberUpdated)
+        catalogueItem.item_model_number = details.item_model_number;
+      if (isCatalogueItemPropertiesUpdated) {
+        catalogueItem.properties = updatedProperties;
+      }
+      if (isManufacturerUpdated)
+        catalogueItem.manufacturer_id = details.manufacturer_id;
+      if (isNotesUpdated) catalogueItem.notes = details.notes;
 
       if (
         catalogueItem.id &&

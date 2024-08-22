@@ -102,7 +102,7 @@ export function ItemsTable(props: ItemTableProps) {
   }, [itemsData, isLoading]);
 
   const [itemDialogType, setItemsDialogType] = React.useState<
-    'create' | 'save as' | 'edit'
+    'create' | 'duplicate' | 'edit'
   >('create');
 
   // Breadcrumbs + Mui table V2 + extra
@@ -451,7 +451,7 @@ export function ItemsTable(props: ItemTableProps) {
                 : {
                     ...row.original.item,
                     notes:
-                      itemDialogType === 'save as'
+                      itemDialogType === 'duplicate'
                         ? `${row.original.item.notes || ''}\n\nThis is a copy of the item with this Serial Number: ${row.original.item.serial_number ?? 'No serial number'}`
                         : row.original.item.notes,
                   }
@@ -505,10 +505,10 @@ export function ItemsTable(props: ItemTableProps) {
           <ListItemText>Edit</ListItemText>
         </MenuItem>,
         <MenuItem
-          key="save as"
-          aria-label={`Save item ${row.original.item.id} as`}
+          key="duplicate"
+          aria-label={`Duplicate item ${row.original.item.id}`}
           onClick={() => {
-            setItemsDialogType('save as');
+            setItemsDialogType('duplicate');
             table.setCreatingRow(row);
             closeMenu();
           }}
@@ -517,7 +517,7 @@ export function ItemsTable(props: ItemTableProps) {
           <ListItemIcon>
             <SaveAsIcon />
           </ListItemIcon>
-          <ListItemText>Save as</ListItemText>
+          <ListItemText>Duplicate</ListItemText>
         </MenuItem>,
         <MenuItem
           key="delete"

@@ -248,7 +248,7 @@ export const TableBodyCellOverFlowTip: React.FC<TableCellOverFlowTipProps> = (
 
   if (React.isValidElement(tableCellProps.children)) {
     const renderValue =
-      tableCellProps.children?.props.children[0].props.cell.renderValue();
+      tableCellProps.children?.props.children[0]?.props.cell.renderValue();
     isEmpty =
       renderValue === '' ||
       renderValue === null ||

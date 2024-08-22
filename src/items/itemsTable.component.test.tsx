@@ -271,7 +271,7 @@ describe('Items Table', () => {
     });
   });
 
-  it('can open the save as dialog and close it again', async () => {
+  it('can open the duplicate dialog and close it again', async () => {
     createView();
 
     const serialNumber = '5YUQDDjKpz2z';
@@ -282,11 +282,11 @@ describe('Items Table', () => {
     await user.click(rowActionsButton[0]);
 
     await waitFor(() => {
-      expect(screen.getByText('Save as')).toBeInTheDocument();
+      expect(screen.getByText('Duplicate')).toBeInTheDocument();
     });
 
-    const saveAsButton = screen.getByText('Save as');
-    await user.click(saveAsButton);
+    const duplicateButton = screen.getByText('Duplicate');
+    await user.click(duplicateButton);
 
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
@@ -299,7 +299,7 @@ describe('Items Table', () => {
     });
   });
 
-  it('can open the save as dialog and checks that the notes have been updated', async () => {
+  it('can open the duplicate dialog and checks that the notes have been updated', async () => {
     createView();
 
     const serialNumber = '5YUQDDjKpz2z';
@@ -310,11 +310,11 @@ describe('Items Table', () => {
     await user.click(rowActionsButton[0]);
 
     await waitFor(() => {
-      expect(screen.getByText('Save as')).toBeInTheDocument();
+      expect(screen.getByText('Duplicate')).toBeInTheDocument();
     });
 
-    const saveAsButton = screen.getByText('Save as');
-    await user.click(saveAsButton);
+    const duplicateButton = screen.getByText('Duplicate');
+    await user.click(duplicateButton);
 
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
@@ -325,7 +325,7 @@ describe('Items Table', () => {
     );
   });
 
-  it('can open the save as dialog and checks that the notes have been updated when notes is null', async () => {
+  it('can open the duplicate dialog and checks that the notes have been updated when notes is null', async () => {
     props.catalogueCategory = getCatalogueCategoryById(
       '4'
     ) as CatalogueCategory;
@@ -340,11 +340,11 @@ describe('Items Table', () => {
     await user.click(rowActionsButton[0]);
 
     await waitFor(() => {
-      expect(screen.getByText('Save as')).toBeInTheDocument();
+      expect(screen.getByText('Duplicate')).toBeInTheDocument();
     });
 
-    const saveAsButton = screen.getByText('Save as');
-    await user.click(saveAsButton);
+    const duplicateButton = screen.getByText('Duplicate');
+    await user.click(duplicateButton);
 
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
@@ -355,7 +355,7 @@ describe('Items Table', () => {
     );
   });
 
-  it('can open the save as dialog and checks that the notes have been updated with no serial number', async () => {
+  it('can open the duplicate dialog and checks that the notes have been updated with no serial number', async () => {
     props.catalogueCategory = getCatalogueCategoryById(
       '4'
     ) as CatalogueCategory;
@@ -370,11 +370,11 @@ describe('Items Table', () => {
     await user.click(rowActionsButton[3]);
 
     await waitFor(() => {
-      expect(screen.getByText('Save as')).toBeInTheDocument();
+      expect(screen.getByText('Duplicate')).toBeInTheDocument();
     });
 
-    const saveAsButton = screen.getByText('Save as');
-    await user.click(saveAsButton);
+    const duplicateButton = screen.getByText('Duplicate');
+    await user.click(duplicateButton);
 
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
@@ -385,7 +385,7 @@ describe('Items Table', () => {
     );
   });
 
-  it('can open the save as dialog (no delivered date or warranty date) and close it again', async () => {
+  it('can open the duplicate dialog (no delivered date or warranty date) and close it again', async () => {
     props.catalogueCategory = getCatalogueCategoryById(
       '4'
     ) as CatalogueCategory;
@@ -400,11 +400,11 @@ describe('Items Table', () => {
     await user.click(rowActionsButton[3]);
 
     await waitFor(() => {
-      expect(screen.getByText('Save as')).toBeInTheDocument();
+      expect(screen.getByText('Duplicate')).toBeInTheDocument();
     });
 
-    const saveAsButton = screen.getByText('Save as');
-    await user.click(saveAsButton);
+    const duplicateButton = screen.getByText('Duplicate');
+    await user.click(duplicateButton);
 
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();

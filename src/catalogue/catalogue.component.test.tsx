@@ -140,6 +140,13 @@ describe('Catalogue', () => {
   it('renders catalogue items table correctly', async () => {
     createView('/catalogue/4');
 
+    await waitFor(
+      () => {
+        expect(screen.queryAllByRole('progressbar').length).toBe(0);
+      },
+      { timeout: 5000 }
+    );
+
     await waitFor(() => {
       expect(screen.getByText('Cameras 1')).toBeInTheDocument();
     });
@@ -310,7 +317,7 @@ describe('Catalogue', () => {
     });
   });
 
-  it('can open the save as catalogue category dialog and close it again', async () => {
+  it('can open the duplicate catalogue category dialog and close it again', async () => {
     createView('/catalogue/1');
 
     await waitFor(() => {
@@ -323,7 +330,7 @@ describe('Catalogue', () => {
     await user.click(actionsButton);
 
     const editButton = screen.getByRole('menuitem', {
-      name: 'save as Amp Meters catalogue category button',
+      name: 'duplicate Amp Meters catalogue category button',
     });
     await user.click(editButton);
 

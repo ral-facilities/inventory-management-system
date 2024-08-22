@@ -150,8 +150,8 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
 
         let manufacturerToEdit: ManufacturerPatch = {};
 
-        isNameUpdated && (manufacturerToEdit.name = manufacturerData.name);
-        isURLUpdated && (manufacturerToEdit.url = manufacturerData.url);
+        if (isNameUpdated) manufacturerToEdit.name = manufacturerData.name;
+        if (isURLUpdated) manufacturerToEdit.url = manufacturerData.url;
 
         if (isAddressLineUpdated) {
           manufacturerToEdit = {
@@ -199,8 +199,8 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           };
         }
 
-        isTelephoneUpdated &&
-          (manufacturerToEdit.telephone = manufacturerData.telephone);
+        if (isTelephoneUpdated)
+          manufacturerToEdit.telephone = manufacturerData.telephone;
 
         if (
           isNameUpdated ||
@@ -241,9 +241,11 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   );
 
   const onSubmit = (data: ManufacturerPost) => {
-    type === 'post'
-      ? handleAddManufacturer(data)
-      : handleEditManufacturer(data);
+    if (type === 'post') {
+      handleAddManufacturer(data);
+    } else {
+      handleEditManufacturer(data);
+    }
   };
 
   return (
