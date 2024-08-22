@@ -95,9 +95,8 @@ const modifyCatalogueItem = (
   cy.findByLabelText('Manufacturer *').click();
   cy.contains('Recently Created').should('be.visible');
   cy.contains('A-Z').should('be.visible');
-  let options = cy.findAllByRole('option', { name: values.manufacturer})
-  options.should('have.length', 2)
-  options.first().click();
+  cy.findAllByRole('option', { name: values.manufacturer}).should('have.length', 2)
+  cy.findAllByRole('option', { name: values.manufacturer}).first().click();
 
   cy.findByRole('button', { name: 'Next' }).click();
 
