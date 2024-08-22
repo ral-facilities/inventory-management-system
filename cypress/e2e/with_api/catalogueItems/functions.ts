@@ -92,7 +92,7 @@ const modifyCatalogueItem = (
     });
 
   cy.findAllByLabelText('Manufacturer *').first().click();
-  cy.contains('Recently Created').should('be.visible');
+  cy.contains('Recently Added').should('be.visible');
   cy.contains('A-Z').should('be.visible');
   cy.findAllByRole('option', { name: values.manufacturer}).should('have.length', 2)
   cy.findAllByRole('option', { name: values.manufacturer}).first().click();
