@@ -91,8 +91,7 @@ const modifyCatalogueItem = (
       }
     });
 
-  cy.findByLabelText('Manufacturer *').click();
-  cy.findByLabelText('Manufacturer *').click();
+  cy.findAllByLabelText('Manufacturer *').first().click();
   cy.contains('Recently Created').should('be.visible');
   cy.contains('A-Z').should('be.visible');
   cy.findAllByRole('option', { name: values.manufacturer}).should('have.length', 2)
