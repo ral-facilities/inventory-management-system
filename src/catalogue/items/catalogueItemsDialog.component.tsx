@@ -611,7 +611,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       const created_date = (new Date(option.created_time)).getTime()
       const date_now = (new Date()).getTime()
       //dates are in ms; numerical expression is equivalent to 10 minutes
-      const recentDisplay = date_now - 1000*60*10 <= created_date ? "Recently Created" : "A-Z"
+      const recentDisplay = date_now - 1000*60*10 <= created_date ? "Recently Added" : "A-Z"
       return {
         ...option,
         isrecent: recentDisplay
@@ -621,7 +621,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     //duplicating the recent manufacturers, so that they appear twice.
     const recentManufacturers = classifiedManufacturers
     .filter((option) => {
-      return option.isrecent === "Recently Created";
+      return option.isrecent === "Recently Added";
     })
     .map((option) => {
       return {
