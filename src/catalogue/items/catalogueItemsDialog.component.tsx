@@ -615,13 +615,13 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     }) : [];
 
     //duplicating the recent manufacturers, so that they appear twice.
+    const date_now = (new Date()).getTime()
     const recentManufacturers = classifiedManufacturers
     .filter((option) => {
       const created_date = (new Date(option.created_time)).getTime()
-      const date_now = (new Date()).getTime()
       //dates are in ms; numerical expression is equivalent to 10 minutes
-      const recentDisplay = date_now - 1000*60*10 <= created_date
-      return recentDisplay;
+      const isRecent = date_now - 1000*60*10 <= created_date
+      return isRecent;
     })
     .map((option) => {
       return {
@@ -630,6 +630,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       };
     });
 
+    /*returns them in reverse alphabetical order, since they will be sorted by "isrecent",
+    and then reversed to put "Recently Added" section first */
     return (sortDataList(recentManufacturers, "name").reverse()).concat(sortDataList(classifiedManufacturers, "name").reverse());
 
   }
