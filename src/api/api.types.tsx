@@ -151,8 +151,7 @@ export interface CatalogueCategoryPost {
   properties?: CatalogueCategoryPostProperty[] | null;
 }
 
-export interface CatalogueCategoryPatch
-  extends Partial<CatalogueCategoryPost> {}
+export type CatalogueCategoryPatch = Partial<CatalogueCategoryPost>;
 
 export interface CatalogueCategory
   extends Omit<CatalogueCategoryPost, 'parent_id' | 'properties'>,
