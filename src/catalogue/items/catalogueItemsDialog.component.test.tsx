@@ -148,6 +148,7 @@ describe('Catalogue Items Dialog', () => {
 
   afterEach(() => {
     vi.clearAllMocks();
+    vi.useRealTimers();
   });
 
   it('renders details step correctly', async () => {
@@ -622,21 +623,24 @@ describe('Catalogue Items Dialog', () => {
   }, 10000);
 
   it('displays recently added section', async () => {
-
+    vi.setSystemTime(new Date("2024-01-09T12:00:00.000+00:00"));
+  
     props = {
       ...props,
       parentInfo: getCatalogueCategoryById('4'),
     };
 
     createView();
-
     const manufacturerPopup = screen.getAllByRole('combobox')[0];
+    
     user.type(manufacturerPopup, 'Man')
-
     const options = await screen.findAllByRole('option');
-    expect(options).toHaveLength(4)
+    expect(options).toHaveLength(5)
+    expect(screen.getAllByText("Manufacturer B")).toHaveLength(2);
     expect(screen.getByText("A-Z")).toBeInTheDocument()
+    expect(screen.getByText("Recently Added")).toBeInTheDocument()
 
+    vi.useRealTimers();
   }, 10000);
 
   it('opens add manufacturer dialog and returns back to catalogue item dialog', async () => {

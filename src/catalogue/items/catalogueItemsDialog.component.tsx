@@ -608,29 +608,29 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
   const options = ():Array<Manufacturer & {isrecent: string}> => {
     const classifiedManufacturers = manufacturerList ? (manufacturerList).map((option) => {
-      const created_date = (new Date(option.created_time)).getTime()
-      const date_now = (new Date()).getTime()
-      //dates are in ms; numerical expression is equivalent to 10 minutes
-      const recentDisplay = date_now - 1000*60*10 <= created_date ? "Recently Added" : "A-Z"
       return {
         ...option,
-        isrecent: recentDisplay
+        isrecent: "A-Z"
       };
     }) : [];
 
     //duplicating the recent manufacturers, so that they appear twice.
     const recentManufacturers = classifiedManufacturers
     .filter((option) => {
-      return option.isrecent === "Recently Added";
+      const created_date = (new Date(option.created_time)).getTime()
+      const date_now = (new Date()).getTime()
+      //dates are in ms; numerical expression is equivalent to 10 minutes
+      const recentDisplay = date_now - 1000*60*10 <= created_date
+      return recentDisplay;
     })
     .map((option) => {
       return {
         ...option,
-        isrecent: "A-Z",
+        isrecent: "Recently Added",
       };
     });
 
-    return classifiedManufacturers.concat(recentManufacturers);
+    return (sortDataList(recentManufacturers, "name").reverse()).concat(sortDataList(classifiedManufacturers, "name").reverse());
 
   }
 
@@ -823,7 +823,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                       newManufacturer?.id ?? null
                     );
                   }}
-                  options={sortDataList(options(), "name") ?? []}
+                  options={sortDataList(options(), "isrecent").reverse() ?? []}
                   groupBy={(option) => option.isrecent}
                   size="small"
                   isOptionEqualToValue={(option, value) =>
