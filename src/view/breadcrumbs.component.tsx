@@ -31,6 +31,16 @@ const Breadcrumbs = (props: BreadcrumbsProps) => {
     navigateHomeAriaLabel,
   } = props;
 
+  const tooltipLabelMap = new Map<string, string>([
+    ['navigate to admin page', "Admin Home"],
+    ['navigate to catalogue home', "Catalogue Home"],
+    ['Navigate back to Catalogue home', "Catalogue Home"],
+    ['navigate to systems home', "Systems Home"],
+    ['navigate to manufacturer home', "Manufacturers Home"],
+]);
+
+  const tooltipLabel = tooltipLabelMap.get(navigateHomeAriaLabel) ?? "Home"
+
   const emptyElement = ['', ''];
 
   const trailPrefix =
@@ -43,7 +53,7 @@ const Breadcrumbs = (props: BreadcrumbsProps) => {
   const breadcrumbMaxWidth = `${(100 - 10) / trailPrefix.concat(breadcrumbsInfo?.trail ?? emptyElement).length}vw`;
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <Tooltip title = "Home">
+      <Tooltip title = {tooltipLabel}>
         <span>
           <IconButton
             onClick={onChangeNavigateHome}
