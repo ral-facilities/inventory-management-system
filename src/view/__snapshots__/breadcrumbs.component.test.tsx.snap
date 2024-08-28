@@ -6,7 +6,7 @@ exports[`Channel Breadcrumbs > should render correctly for path 1`] = `
     class="MuiBox-root css-70qvj9"
   >
     <span
-      aria-label="Home"
+      aria-label="Catalogue Home"
       class=""
       data-mui-internal-clone-element="true"
     >
@@ -120,7 +120,7 @@ exports[`Channel Breadcrumbs > should render correctly for path when the subtree
     class="MuiBox-root css-70qvj9"
   >
     <span
-      aria-label="Home"
+      aria-label="Catalogue Home"
       class=""
       data-mui-internal-clone-element="true"
     >
@@ -371,7 +371,7 @@ exports[`Channel Breadcrumbs > should render correctly for root 1`] = `
     class="MuiBox-root css-70qvj9"
   >
     <span
-      aria-label="Home"
+      aria-label="Catalogue Home"
       class=""
       data-mui-internal-clone-element="true"
     >

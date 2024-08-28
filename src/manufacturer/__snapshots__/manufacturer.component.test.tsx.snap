@@ -12,7 +12,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
         class="MuiBox-root css-70qvj9"
       >
         <span
-          aria-label="Home"
+          aria-label="Manufacturers Home"
           class=""
           data-mui-internal-clone-element="true"
         >

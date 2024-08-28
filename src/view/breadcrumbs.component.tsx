@@ -31,15 +31,21 @@ const Breadcrumbs = (props: BreadcrumbsProps) => {
     navigateHomeAriaLabel,
   } = props;
 
-  const tooltipLabelMap = new Map<string, string>([
-    ['navigate to admin page', "Admin Home"],
-    ['navigate to catalogue home', "Catalogue Home"],
-    ['Navigate back to Catalogue home', "Catalogue Home"],
-    ['navigate to systems home', "Systems Home"],
-    ['navigate to manufacturer home', "Manufacturers Home"],
-]);
 
-  const tooltipLabel = tooltipLabelMap.get(navigateHomeAriaLabel) ?? "Home"
+  const getTooltipFromAria = (navigateHomeAriaLabel: string): string => {
+    const lowerAriaLabel = navigateHomeAriaLabel.toLowerCase();
+
+    if (lowerAriaLabel.includes('catalogue')) {
+      return 'Catalogue Home';
+    } else if (lowerAriaLabel.includes('system')) {
+      return 'Systems Home';
+    } else if (lowerAriaLabel.includes('admin')) {
+      return 'Admin Home';
+    } else if (lowerAriaLabel.includes('manufacturer')) {
+      return 'Manufacturers Home'
+    } 
+    return 'Home';
+  }
 
   const emptyElement = ['', ''];
 
@@ -53,7 +59,7 @@ const Breadcrumbs = (props: BreadcrumbsProps) => {
   const breadcrumbMaxWidth = `${(100 - 10) / trailPrefix.concat(breadcrumbsInfo?.trail ?? emptyElement).length}vw`;
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <Tooltip title = {tooltipLabel}>
+      <Tooltip title = {getTooltipFromAria(navigateHomeAriaLabel)}>
         <span>
           <IconButton
             onClick={onChangeNavigateHome}
