@@ -768,7 +768,7 @@ describe('Catalogue Category', () => {
           id: '19',
           name: 'Amp Meters',
           parent_id: null,
-          code: 'amp-meters',
+          code: 'amp meters',
           is_leaf: false,
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
@@ -882,7 +882,7 @@ describe('Catalogue Category', () => {
           id: '19',
           name: 'Amp Meters',
           parent_id: '2',
-          code: 'amp-meters',
+          code: 'amp meters',
           is_leaf: false,
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
@@ -1543,15 +1543,15 @@ describe('Catalogue Category', () => {
 
     // Breadcrumbs
     cy.findByText(
-      'overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow'
+      'overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow'
     ).trigger('mouseover');
 
     cy.findAllByText(
-      'overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow'
+      'overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow'
     ).should('have.length', 2);
 
     cy.findAllByText(
-      'overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow'
+      'overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow'
     )
       .first()
       .trigger('mouseout');

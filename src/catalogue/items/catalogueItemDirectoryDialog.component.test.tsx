@@ -32,7 +32,7 @@ describe('catalogue item directory Dialog', () => {
         id: '5',
         name: 'Energy Meters',
         parent_id: '1',
-        code: 'energy-meters',
+        code: 'energy meters',
         is_leaf: true,
 
         properties: [
@@ -215,7 +215,7 @@ describe('catalogue item directory Dialog', () => {
       });
 
       await user.click(
-        screen.getByRole('link', { name: 'beam-characterization' })
+        screen.getByRole('link', { name: 'beam characterization' })
       );
 
       await waitFor(() => {
@@ -233,7 +233,7 @@ describe('catalogue item directory Dialog', () => {
       });
 
       await user.click(
-        screen.getByRole('link', { name: 'beam-characterization' })
+        screen.getByRole('link', { name: 'beam characterization' })
       );
 
       await waitFor(() => {

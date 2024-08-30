@@ -38,7 +38,7 @@ describe('Items Landing Page', () => {
     await waitFor(() => {
       expect(
         screen.getByRole('link', {
-          name: 'beam-characterization',
+          name: 'beam characterization',
         })
       ).toBeInTheDocument();
     });

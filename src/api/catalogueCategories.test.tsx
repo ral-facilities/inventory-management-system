@@ -226,7 +226,7 @@ describe('catalogue categories api functions', () => {
       });
 
       expect(result.current.data).toEqual({
-        code: 'beam-characterization',
+        code: 'beam characterization',
         id: '1',
         is_leaf: false,
         name: 'Beam Characterization',
@@ -251,7 +251,7 @@ describe('catalogue categories api functions', () => {
         id: '6',
         name: 'Wavefront Sensors',
         parent_id: '1',
-        code: 'wavefront-sensors',
+        code: 'wavefront sensors',
         is_leaf: true,
         properties: [
           {
@@ -275,7 +275,7 @@ describe('catalogue categories api functions', () => {
         id: '5',
         name: 'Energy Meters',
         parent_id: '1',
-        code: 'energy-meters',
+        code: 'energy meters',
         is_leaf: true,
         properties: [
           {
@@ -363,7 +363,7 @@ describe('catalogue categories api functions', () => {
         id: '6',
         parent_id: null,
         name: 'Wavefront Sensors',
-        code: 'wavefront-sensors',
+        code: 'wavefront sensors',
         is_leaf: false,
         ...CREATED_MODIFIED_TIME_VALUES,
       };
@@ -416,7 +416,7 @@ describe('catalogue categories api functions', () => {
         id: '6',
         name: 'Wavefront Sensors',
         parent_id: '1',
-        code: 'wavefront-sensors',
+        code: 'wavefront sensors',
         is_leaf: true,
         properties: [
           {
@@ -440,7 +440,7 @@ describe('catalogue categories api functions', () => {
         id: '5',
         name: 'Energy Meters',
         parent_id: '1',
-        code: 'energy-meters',
+        code: 'energy meters',
         is_leaf: true,
         properties: [
           {
@@ -528,7 +528,7 @@ describe('catalogue categories api functions', () => {
         id: '6',
         parent_id: null,
         name: 'Wavefront Sensors',
-        code: 'wavefront-sensors',
+        code: 'wavefront sensors',
         is_leaf: false,
         ...CREATED_MODIFIED_TIME_VALUES,
       };

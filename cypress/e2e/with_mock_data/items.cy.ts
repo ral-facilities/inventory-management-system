@@ -43,7 +43,7 @@ describe('Items', () => {
     cy.findByText('Cameras 3').should('exist');
     cy.findByText('Cameras 4').should('exist');
 
-    cy.findByRole('link', { name: 'beam-characterization' }).click();
+    cy.findByRole('link', { name: 'beam characterization' }).click();
 
     cy.findByText('Cameras').should('exist');
     cy.findByText('Energy Meters').should('exist');

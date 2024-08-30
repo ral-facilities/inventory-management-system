@@ -837,7 +837,7 @@ describe('Catalogue Category Dialog', () => {
         id: '18',
         name: 'Voltage Meters',
         parent_id: '1',
-        code: 'voltage-meters',
+        code: 'voltage meters',
         is_leaf: true,
         properties: [
           {
