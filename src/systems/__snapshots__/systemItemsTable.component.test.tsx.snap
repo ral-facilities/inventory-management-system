@@ -247,8 +247,10 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
             class="MuiTableRow-root MuiTableRow-head css-ssspk8-MuiTableRow-root"
           >
             <th
+              aria-sort="none"
               class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-leh31c-MuiTableCell-root"
               colspan="1"
+              data-can-sort="true"
               data-index="0"
               scope="col"
             >
@@ -419,6 +421,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
               </div>
             </th>
             <th
+              aria-sort="none"
               class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-o6xm3h-MuiTableCell-root"
               colspan="1"
               data-index="1"
@@ -479,6 +482,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
               </div>
             </th>
             <th
+              aria-sort="none"
               class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1swc2q2-MuiTableCell-root"
               colspan="1"
               data-index="2"
@@ -527,8 +531,10 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
               </div>
             </th>
             <th
+              aria-sort="none"
               class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-o13k6y-MuiTableCell-root"
               colspan="1"
+              data-can-sort="true"
               data-index="3"
               scope="col"
             >
@@ -699,8 +705,10 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
               </div>
             </th>
             <th
+              aria-sort="none"
               class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-9b6v12-MuiTableCell-root"
               colspan="1"
+              data-can-sort="true"
               data-index="4"
               scope="col"
             >
@@ -917,8 +925,10 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
               </div>
             </th>
             <th
+              aria-sort="none"
               class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-bif6tz-MuiTableCell-root"
               colspan="1"
+              data-can-sort="true"
               data-index="5"
               scope="col"
             >
@@ -1135,8 +1145,10 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
               </div>
             </th>
             <th
+              aria-sort="none"
               class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-vh0csv-MuiTableCell-root"
               colspan="1"
+              data-can-sort="true"
               data-index="6"
               scope="col"
             >
@@ -1353,8 +1365,10 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
               </div>
             </th>
             <th
+              aria-sort="none"
               class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ex5lr1-MuiTableCell-root"
               colspan="1"
+              data-can-sort="true"
               data-index="7"
               scope="col"
             >
@@ -1531,8 +1545,10 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
               </div>
             </th>
             <th
+              aria-sort="none"
               class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-199mejp-MuiTableCell-root"
               colspan="1"
+              data-can-sort="true"
               data-index="8"
               scope="col"
             >
@@ -1709,6 +1725,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
               </div>
             </th>
             <th
+              aria-sort="none"
               class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1mc0kk9-MuiTableCell-root"
               colspan="1"
               data-index="9"
@@ -2716,8 +2733,10 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
             class="MuiTableRow-root MuiTableRow-head css-7sv680-MuiTableRow-root"
           >
             <th
+              aria-sort="none"
               class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6tsrk2-MuiTableCell-root"
               colspan="1"
+              data-can-sort="true"
               data-index="0"
               scope="col"
             >
@@ -2861,6 +2880,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
               </div>
             </th>
             <th
+              aria-sort="none"
               class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-14ibfyy-MuiTableCell-root"
               colspan="1"
               data-index="1"
@@ -2914,8 +2934,10 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
               </div>
             </th>
             <th
+              aria-sort="none"
               class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-kvdwgk-MuiTableCell-root"
               colspan="1"
+              data-can-sort="true"
               data-index="2"
               scope="col"
             >
@@ -3059,6 +3081,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
               </div>
             </th>
             <th
+              aria-sort="none"
               class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-kd7qqp-MuiTableCell-root"
               colspan="1"
               data-index="3"
