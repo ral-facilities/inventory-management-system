@@ -230,6 +230,7 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
               class="MuiTableRow-root MuiTableRow-head css-ssspk8-MuiTableRow-root"
             >
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-87lrtp-MuiTableCell-root"
                 colspan="1"
                 data-index="0"
@@ -253,8 +254,10 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-13vkfc2-MuiTableCell-root"
                 colspan="1"
+                data-can-sort="true"
                 data-index="1"
                 scope="col"
               >
@@ -425,8 +428,10 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-z9vzbz-MuiTableCell-root"
                 colspan="1"
+                data-can-sort="true"
                 data-index="2"
                 scope="col"
               >
@@ -643,8 +648,10 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-g7ri5v-MuiTableCell-root"
                 colspan="1"
+                data-can-sort="true"
                 data-index="3"
                 scope="col"
               >
@@ -861,8 +868,10 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1h8jfht-MuiTableCell-root"
                 colspan="1"
+                data-can-sort="true"
                 data-index="4"
                 scope="col"
               >
@@ -1802,6 +1811,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
               class="MuiTableRow-root MuiTableRow-head css-ssspk8-MuiTableRow-root"
             >
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-87lrtp-MuiTableCell-root"
                 colspan="1"
                 data-index="0"
@@ -1825,8 +1835,10 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-18f6efy-MuiTableCell-root"
                 colspan="1"
+                data-can-sort="true"
                 data-index="1"
                 scope="col"
               >
@@ -1997,8 +2009,10 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-a6uitn-MuiTableCell-root"
                 colspan="1"
+                data-can-sort="true"
                 data-index="2"
                 scope="col"
               >
@@ -2221,8 +2235,10 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1gwclhr-MuiTableCell-root"
                 colspan="1"
+                data-can-sort="true"
                 data-index="3"
                 scope="col"
               >
@@ -2393,8 +2409,10 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-lqtyjk-MuiTableCell-root"
                 colspan="1"
+                data-can-sort="true"
                 data-index="4"
                 scope="col"
               >
@@ -3117,6 +3135,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
               class="MuiTableRow-root MuiTableRow-head css-7sv680-MuiTableRow-root"
             >
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-14ibfyy-MuiTableCell-root"
                 colspan="1"
                 data-index="0"
@@ -3170,8 +3189,10 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-kvdwgk-MuiTableCell-root"
                 colspan="1"
+                data-can-sort="true"
                 data-index="1"
                 scope="col"
               >
@@ -3315,8 +3336,10 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1m6i3pb-MuiTableCell-root"
                 colspan="1"
+                data-can-sort="true"
                 data-index="2"
                 scope="col"
               >
@@ -3506,8 +3529,10 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sugsee-MuiTableCell-root"
                 colspan="1"
+                data-can-sort="true"
                 data-index="3"
                 scope="col"
               >
@@ -3697,8 +3722,10 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ayc45b-MuiTableCell-root"
                 colspan="1"
+                data-can-sort="true"
                 data-index="4"
                 scope="col"
               >
@@ -3888,8 +3915,10 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1bfvlvl-MuiTableCell-root"
                 colspan="1"
+                data-can-sort="true"
                 data-index="5"
                 scope="col"
               >
@@ -4079,8 +4108,10 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-hbvwly-MuiTableCell-root"
                 colspan="1"
+                data-can-sort="true"
                 data-index="6"
                 scope="col"
               >

@@ -123,6 +123,7 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
               class="MuiTableRow-root MuiTableRow-head css-7sv680-MuiTableRow-root"
             >
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-14ibfyy-MuiTableCell-root"
                 colspan="1"
                 data-index="0"
@@ -176,6 +177,7 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-h8gbz7-MuiTableCell-root"
                 colspan="1"
                 data-index="1"
@@ -199,8 +201,10 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6tsrk2-MuiTableCell-root"
                 colspan="1"
+                data-can-sort="true"
                 data-index="2"
                 scope="col"
               >
@@ -344,8 +348,10 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6nbvx3-MuiTableCell-root"
                 colspan="1"
+                data-can-sort="true"
                 data-index="3"
                 scope="col"
               >
