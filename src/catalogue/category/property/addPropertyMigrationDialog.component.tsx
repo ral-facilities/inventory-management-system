@@ -4,6 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import WarningIcon from '@mui/icons-material/Warning';
 import {
   Autocomplete,
+  Box,
   Button,
   Checkbox,
   Dialog,
@@ -17,6 +18,7 @@ import {
   Paper,
   Stack,
   TextField,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import React from 'react';
@@ -124,28 +126,43 @@ const AllowedValuesListTextFields = () => {
                 />
               )}
             />
-
-            <IconButton
-              aria-label={`Delete list item`}
-              onClick={() => {
-                clearDefaultValue(field.av_placement_id);
-                remove(index);
-                clearDuplicateValueErrors();
-              }}
-            >
-              <DeleteIcon />
-            </IconButton>
+            <Tooltip title="Delete Allowed Value">
+              <span>
+                <IconButton
+                  aria-label={`Delete list item`}
+                  onClick={() => {
+                    clearDefaultValue(field.av_placement_id);
+                    remove(index);
+                    clearDuplicateValueErrors();
+                  }}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </span>
+            </Tooltip>
           </Stack>
         );
       })}
-      <IconButton
-        aria-label={`Add list item`}
-        onClick={() =>
-          append({ av_placement_id: crypto.randomUUID(), value: '' })
-        }
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
       >
-        <AddIcon />
-      </IconButton>
+        <Tooltip title="Add Allowed Value">
+          <span>
+            <IconButton
+              aria-label={`Add list item`}
+              onClick={() =>
+                append({ av_placement_id: crypto.randomUUID(), value: '' })
+              }
+            >
+              <AddIcon />
+            </IconButton>
+          </span>
+        </Tooltip>
+      </Box>
       {!!errors?.allowed_values?.values?.values && (
         <FormHelperText error>
           {errors?.allowed_values?.values?.values?.message}
@@ -441,7 +458,7 @@ const AddPropertyMigrationDialog = (props: AddPropertyMigrationDialogProps) => {
             <Controller
               control={control}
               name={`default_value`}
-              render={({ field: { value, onChange } }) => {
+              render={({ field: { value: defaultValue, onChange } }) => {
                 return (
                   <Autocomplete
                     disableClearable={property.mandatory === 'true'}
@@ -449,7 +466,7 @@ const AddPropertyMigrationDialog = (props: AddPropertyMigrationDialogProps) => {
                       clearIndicator: { onClick: resetDefaultValue },
                     }}
                     id={crypto.randomUUID()}
-                    value={value?.value || ''}
+                    value={defaultValue?.value || ''}
                     onChange={(_event, newValue) => {
                       onChange({
                         valueType: `${property.type}_${property.mandatory}`,
@@ -489,7 +506,7 @@ const AddPropertyMigrationDialog = (props: AddPropertyMigrationDialogProps) => {
             <Controller
               control={control}
               name={`default_value`}
-              render={({ field: { value, onChange } }) => {
+              render={({ field: { value: defaultValue, onChange } }) => {
                 return (
                   <Autocomplete
                     disableClearable={property.mandatory === 'true'}
@@ -498,16 +515,18 @@ const AddPropertyMigrationDialog = (props: AddPropertyMigrationDialogProps) => {
                     }}
                     id={crypto.randomUUID()}
                     value={
-                      value?.value?.value
-                        ? String(value.value.value).charAt(0).toUpperCase() +
-                          String(value.value.value).slice(1)
+                      defaultValue?.value?.value
+                        ? String(defaultValue.value.value)
+                            .charAt(0)
+                            .toUpperCase() +
+                          String(defaultValue.value.value).slice(1)
                         : ''
                     }
                     onChange={(_event, newValue) => {
                       onChange({
                         valueType: `${property.type}_${property.mandatory}`,
                         value: {
-                          av_placement_id: value.value.av_placement_id,
+                          av_placement_id: defaultValue.value.av_placement_id,
                           value: newValue ? newValue.toLowerCase() : '',
                         },
                       });
@@ -538,6 +557,7 @@ const AddPropertyMigrationDialog = (props: AddPropertyMigrationDialogProps) => {
               control={control}
               name={`default_value`}
               render={({ field }) => {
+                const defaultValue = field.value;
                 return (
                   <TextField
                     required={property.mandatory === 'true'}
@@ -545,12 +565,12 @@ const AddPropertyMigrationDialog = (props: AddPropertyMigrationDialogProps) => {
                     id={crypto.randomUUID()}
                     variant="outlined"
                     {...field}
-                    value={field?.value?.value?.value ?? ''}
+                    value={defaultValue?.value?.value ?? ''}
                     onChange={(event) => {
                       field.onChange({
                         valueType: `${property.type}_${property.mandatory}`,
                         value: {
-                          av_placement_id: field.value.value.av_placement_id,
+                          av_placement_id: defaultValue.value.av_placement_id,
                           value: event.target.value,
                         },
                       });

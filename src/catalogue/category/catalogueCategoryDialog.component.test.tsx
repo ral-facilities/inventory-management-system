@@ -731,7 +731,7 @@ describe('Catalogue Category Dialog', () => {
       expect(duplicatePropertyNameHelperText.length).toBe(2);
 
       const deletePropertyButtons = await screen.findAllByLabelText(
-        'Delete catalogue category field entry'
+        'Delete catalogue category property entry'
       );
 
       await user.click(deletePropertyButtons[0]);

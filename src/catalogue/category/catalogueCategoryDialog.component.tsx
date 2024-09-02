@@ -21,6 +21,7 @@ import {
   RadioGroup,
   Stack,
   TextField,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import { AxiosError } from 'axios';
@@ -781,17 +782,21 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
                               alignItems: 'center',
                             }}
                           >
-                            <IconButton
-                              aria-label={
-                                'Delete catalogue category field entry'
-                              }
-                              onClick={() => {
-                                remove(index);
-                                clearDuplicateNameErrors();
-                              }}
-                            >
-                              <DeleteIcon />
-                            </IconButton>
+                            <Tooltip title="Delete Property">
+                              <span>
+                                <IconButton
+                                  aria-label={
+                                    'Delete catalogue category property entry'
+                                  }
+                                  onClick={() => {
+                                    remove(index);
+                                    clearDuplicateNameErrors();
+                                  }}
+                                >
+                                  <DeleteIcon />
+                                </IconButton>
+                              </span>
+                            </Tooltip>
                           </Box>
                         </Stack>
                       );
@@ -802,20 +807,24 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
                         alignItems: 'center',
                       }}
                     >
-                      <IconButton
-                        sx={{ margin: '8px' }}
-                        onClick={() => {
-                          append({
-                            cip_placement_id: crypto.randomUUID(),
-                            name: '',
-                            type: CatalogueCategoryPropertyType.Text,
-                            mandatory: 'false',
-                          });
-                        }}
-                        aria-label={'Add catalogue category field entry'}
-                      >
-                        <AddIcon />
-                      </IconButton>
+                      <Tooltip title="Add Property">
+                        <span>
+                          <IconButton
+                            sx={{ margin: '8px' }}
+                            onClick={() => {
+                              append({
+                                cip_placement_id: crypto.randomUUID(),
+                                name: '',
+                                type: CatalogueCategoryPropertyType.Text,
+                                mandatory: 'false',
+                              });
+                            }}
+                            aria-label={'Add catalogue category field entry'}
+                          >
+                            <AddIcon />
+                          </IconButton>
+                        </span>
+                      </Tooltip>
                     </Box>
                   </>
                 ) : (

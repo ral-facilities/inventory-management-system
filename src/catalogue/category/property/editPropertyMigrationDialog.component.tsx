@@ -3,6 +3,7 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {
   Autocomplete,
+  Box,
   Button,
   Dialog,
   DialogActions,
@@ -12,6 +13,7 @@ import {
   IconButton,
   Stack,
   TextField,
+  Tooltip,
 } from '@mui/material';
 import React from 'react';
 import {
@@ -115,27 +117,43 @@ const AllowedValuesListTextFields = (props: {
             />
 
             {!allowedValuesIds?.includes(field.av_placement_id) && (
-              <IconButton
-                aria-label={`Delete list item`}
-                onClick={() => {
-                  remove(index);
-                  clearDuplicateValueErrors();
-                }}
-              >
-                <DeleteIcon />
-              </IconButton>
+              <Tooltip title="Delete Allowed Value">
+                <span>
+                  <IconButton
+                    aria-label={`Delete list item`}
+                    onClick={() => {
+                      remove(index);
+                      clearDuplicateValueErrors();
+                    }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </span>
+              </Tooltip>
             )}
           </Stack>
         );
       })}
-      <IconButton
-        aria-label={`Add list item`}
-        onClick={() =>
-          append({ av_placement_id: crypto.randomUUID(), value: '' })
-        }
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
       >
-        <AddIcon />
-      </IconButton>
+        <Tooltip title="Add Allowed Value">
+          <span>
+            <IconButton
+              aria-label={`Add list item`}
+              onClick={() =>
+                append({ av_placement_id: crypto.randomUUID(), value: '' })
+              }
+            >
+              <AddIcon />
+            </IconButton>
+          </span>
+        </Tooltip>
+      </Box>
     </>
   );
 };

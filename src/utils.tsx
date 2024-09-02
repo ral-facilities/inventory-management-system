@@ -402,7 +402,7 @@ export const checkForDuplicates = (props: {
   field: string;
 }) => {
   const { data, idName, field } = props;
-  const duplicateIds: string[] = [];
+  const duplicateIds: Set<string> = new Set();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const seenValues: { [key: string]: { [key: string]: string; value: any } } =
     {};
@@ -411,12 +411,13 @@ export const checkForDuplicates = (props: {
     const currentValue = value[field];
     if (currentValue) {
       if (seenValues[currentValue]) {
-        duplicateIds.push(value[idName], seenValues[currentValue][idName]);
+        duplicateIds.add(value[idName]);
+        duplicateIds.add(seenValues[currentValue][idName]);
       } else {
         seenValues[currentValue] = value;
       }
     }
   });
 
-  return duplicateIds;
+  return Array.from(duplicateIds);
 };
