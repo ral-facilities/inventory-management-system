@@ -266,6 +266,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
               class="MuiTableRow-root MuiTableRow-head css-ssspk8-MuiTableRow-root"
             >
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-14og0m0-MuiTableCell-root"
                 colspan="1"
                 data-index="0"
@@ -289,8 +290,10 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1vee8kb-MuiTableCell-root"
                 colspan="1"
+                data-can-sort="true"
                 data-index="1"
                 scope="col"
               >
@@ -461,8 +464,10 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1xga52j-MuiTableCell-root"
                 colspan="1"
+                data-can-sort="true"
                 data-index="2"
                 scope="col"
               >
@@ -679,8 +684,10 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1qr4xtz-MuiTableCell-root"
                 colspan="1"
+                data-can-sort="true"
                 data-index="3"
                 scope="col"
               >
@@ -897,8 +904,10 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1rj1bys-MuiTableCell-root"
                 colspan="1"
+                data-can-sort="true"
                 data-index="4"
                 scope="col"
               >
@@ -1069,8 +1078,10 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1la1r8f-MuiTableCell-root"
                 colspan="1"
+                data-can-sort="true"
                 data-index="5"
                 scope="col"
               >
@@ -1241,8 +1252,10 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1a2u3h8-MuiTableCell-root"
                 colspan="1"
+                data-can-sort="true"
                 data-index="6"
                 scope="col"
               >
@@ -1413,6 +1426,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1mc0kk9-MuiTableCell-root"
                 colspan="1"
                 data-index="7"
