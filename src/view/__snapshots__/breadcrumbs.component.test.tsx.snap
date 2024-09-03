@@ -11,7 +11,7 @@ exports[`Channel Breadcrumbs > should render correctly for path 1`] = `
       data-mui-internal-clone-element="true"
     >
       <button
-        aria-label=Catalogue
+        aria-label="navigate to catalogue home"
         class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
         tabindex="0"
         type="button"
@@ -125,7 +125,7 @@ exports[`Channel Breadcrumbs > should render correctly for path when the subtree
       data-mui-internal-clone-element="true"
     >
       <button
-        aria-label=Catalogue
+        aria-label="navigate to catalogue home"
         class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
         tabindex="0"
         type="button"
@@ -376,7 +376,7 @@ exports[`Channel Breadcrumbs > should render correctly for root 1`] = `
       data-mui-internal-clone-element="true"
     >
       <button
-        aria-label=Catalogue
+        aria-label="navigate to catalogue home"
         class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
         tabindex="0"
         type="button"

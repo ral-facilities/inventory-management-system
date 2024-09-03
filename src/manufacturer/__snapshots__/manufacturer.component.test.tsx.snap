@@ -17,7 +17,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
           data-mui-internal-clone-element="true"
         >
           <button
-            aria-label="navigate to manufacturer home"
+            aria-label="navigate to manufacturers home"
             class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
             tabindex="0"
             type="button"

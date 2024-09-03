@@ -91,7 +91,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
             // When there is more than one value start from root
             await user.click(
               screen.getByRole('button', {
-                name: 'Navigate back to Catalogue home',
+                name: 'navigate to catalogue home',
               })
             );
 
@@ -550,7 +550,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
     // Navigate to root directory
     await user.click(
       screen.getByRole('button', {
-        name: 'Navigate back to Catalogue home',
+        name: 'navigate to catalogue home',
       })
     );
 
