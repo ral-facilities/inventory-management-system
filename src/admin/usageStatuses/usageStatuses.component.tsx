@@ -48,6 +48,21 @@ function UsageStatuses() {
       {
         header: 'Value',
         accessorFn: (row) => row.value,
+        filterVariant: 'multi-select',
+        renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) => [
+          <MenuItem
+            key="filterFnInclude"
+            onClick={() => onSelectFilterMode('Include')}
+          >
+            Include
+          </MenuItem>,
+          <MenuItem
+          key="filterFnExclude"
+          onClick={() => onSelectFilterMode('Exclude')}
+        >
+          Excludes
+        </MenuItem>,
+        ],
         id: 'value',
         Cell: ({ row }) => row.original.value,
       },
@@ -90,7 +105,16 @@ function UsageStatuses() {
     columns: columns,
     data: usageStatusData ?? [],
     // Features
+    filterFns: {
+      Exclude: (row, id, filterValue) =>{
+        return !(filterValue.includes(row.getValue(id)));
+      },
+      Include: (row, id, filterValue) =>{
+        return (filterValue.includes(row.getValue(id)));
+      },
+    },
     enableColumnOrdering: true,
+    enableColumnFilterModes: true,
     enableFacetedValues: true,
     enableRowActions: true,
     enableStickyHeader: true,
