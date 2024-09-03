@@ -623,6 +623,7 @@ describe('Catalogue Items Dialog', () => {
   }, 10000);
 
   it('displays recently added section', async () => {
+    vi.useFakeTimers();
     vi.setSystemTime(new Date("2024-01-09T12:00:00.000+00:00"));
   
     props = {
@@ -634,6 +635,7 @@ describe('Catalogue Items Dialog', () => {
     const manufacturerPopup = screen.getAllByRole('combobox')[0];
     
     user.type(manufacturerPopup, 'Man')
+    vi.advanceTimersByTimeAsync(2000);
     const options = await screen.findAllByRole('option');
     expect(options).toHaveLength(5)
     expect(screen.getAllByText("Manufacturer B")).toHaveLength(2);
