@@ -639,8 +639,6 @@ describe('Catalogue Items Dialog', () => {
     expect(screen.getAllByText("Manufacturer B")).toHaveLength(2);
     expect(screen.getByText("A-Z")).toBeInTheDocument()
     expect(screen.getByText("Recently Added")).toBeInTheDocument()
-
-    vi.useRealTimers();
   }, 10000);
 
   it('opens add manufacturer dialog and returns back to catalogue item dialog', async () => {

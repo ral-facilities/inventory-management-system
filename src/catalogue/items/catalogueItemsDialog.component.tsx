@@ -620,7 +620,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     .filter((option) => {
       const created_date = (new Date(option.created_time)).getTime()
       //dates are in ms; numerical expression is equivalent to 10 minutes
-      const isRecent = date_now - 1000*60*10 <= created_date
+      let isRecent = date_now - 1000*60*10 <= created_date
       return isRecent;
     })
     .map((option) => {
