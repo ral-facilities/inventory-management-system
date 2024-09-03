@@ -4,6 +4,9 @@ describe('Catalogue Items', () => {
   });
   afterEach(() => {
     cy.clearMocks();
+    cy.clock().then((clock) => {
+      clock.restore()
+    })
   });
   it('adds a catalogue item', () => {
     cy.findByRole('button', { name: 'Add Catalogue Item' }).click();
