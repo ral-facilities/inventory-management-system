@@ -262,7 +262,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
 
     // Last breadcrumb
     await waitFor(() => {
-      expect(screen.getByText('energy meters')).toBeInTheDocument();
+      expect(screen.getByText('energy-meters')).toBeInTheDocument();
     });
 
     // Expected replacement catalogue item name
@@ -494,7 +494,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
     await modifyForm(true, {});
 
     // Navigate up a category
-    await user.click(screen.getByRole('link', { name: 'vacuum pumps' }));
+    await user.click(screen.getByRole('link', { name: 'vacuum-pumps' }));
 
     // Select new item
     await user.click(

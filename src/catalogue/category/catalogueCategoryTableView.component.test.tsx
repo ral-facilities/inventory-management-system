@@ -27,7 +27,7 @@ describe('CatalogueCategoryTableView', () => {
           id: '5',
           name: 'Energy Meters',
           parent_id: '1',
-          code: 'energy meters',
+          code: 'energy-meters',
           is_leaf: true,
           properties: [
             {
@@ -91,7 +91,7 @@ describe('CatalogueCategoryTableView', () => {
           id: '5',
           name: 'Energy Meters',
           parent_id: '1',
-          code: 'energy meters',
+          code: 'energy-meters',
           is_leaf: true,
           properties: [
             {
@@ -109,7 +109,7 @@ describe('CatalogueCategoryTableView', () => {
           id: '6',
           name: 'Wavefront Sensors',
           parent_id: '1',
-          code: 'wavefront sensors',
+          code: 'wavefront-sensors',
           is_leaf: true,
           properties: [
             {
@@ -132,7 +132,7 @@ describe('CatalogueCategoryTableView', () => {
           id: '18',
           name: 'Voltage Meters',
           parent_id: '1',
-          code: 'voltage meters',
+          code: 'voltage-meters',
           is_leaf: true,
           properties: [
             {
@@ -150,7 +150,7 @@ describe('CatalogueCategoryTableView', () => {
           id: '19',
           name: 'Amp Meters',
           parent_id: '1',
-          code: 'amp meters',
+          code: 'amp-meters',
           is_leaf: false,
           ...CREATED_MODIFIED_TIME_VALUES,
         },
@@ -236,7 +236,7 @@ describe('CatalogueCategoryTableView', () => {
         id: '19',
         name: 'Amp Meters',
         parent_id: '1',
-        code: 'amp meters',
+        code: 'amp-meters',
         is_leaf: false,
         ...CREATED_MODIFIED_TIME_VALUES,
       },

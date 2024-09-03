@@ -1,7 +1,7 @@
 [
   {
     "id": "1",
-    "trail": [["1", "beam characterization"]],
+    "trail": [["1", "beam-characterization"]],
     "full_trail": true
   },
   {
@@ -11,7 +11,7 @@
   },
   {
     "id": "3",
-    "trail": [["3", "vacuum technology"]],
+    "trail": [["3", "vacuum-technology"]],
     "full_trail": true
   },
   {
@@ -19,25 +19,25 @@
     "trail": [
       [
         "9086",
-        "overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow"
+        "overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow"
       ]
     ],
     "full_trail": true
   },
   {
     "id": "15",
-    "trail": [["15", "High Power Lasers"]],
+    "trail": [["15", "High-Power-Lasers"]],
     "full_trail": true
   },
   {
     "id": "16",
-    "trail": [["16", "X-RAY Beams"]],
+    "trail": [["16", "X-RAY-Beams"]],
     "full_trail": true
   },
   {
     "id": "4",
     "trail": [
-      ["1", "beam characterization"],
+      ["1", "beam-characterization"],
       ["4", "cameras"]
     ],
     "full_trail": true
@@ -45,24 +45,24 @@
   {
     "id": "5",
     "trail": [
-      ["1", "beam characterization"],
-      ["5", "energy meters"]
+      ["1", "beam-characterization"],
+      ["5", "energy-meters"]
     ],
     "full_trail": true
   },
   {
     "id": "8967",
     "trail": [
-      ["1", "beam characterization"],
-      ["8967", "energy meters v2"]
+      ["1", "beam-characterization"],
+      ["8967", "energy-meters-v2"]
     ],
     "full_trail": true
   },
   {
     "id": "6",
     "trail": [
-      ["1", "beam characterization"],
-      ["6", "wavefront sensors"]
+      ["1", "beam-characterization"],
+      ["6", "wavefront-sensors"]
     ],
     "full_trail": true
   },
@@ -79,7 +79,7 @@
     "trail": [
       ["2", "motion"],
       ["8", "actuators"],
-      ["9", "motorized actuators"]
+      ["9", "motorized-actuators"]
     ],
     "full_trail": true
   },
@@ -88,7 +88,7 @@
     "trail": [
       ["2", "motion"],
       ["8", "actuators"],
-      ["20", "electric actuators"]
+      ["20", "electric-actuators"]
     ],
     "full_trail": true
   },
@@ -97,7 +97,7 @@
     "trail": [
       ["2", "motion"],
       ["8", "actuators"],
-      ["20", "electric actuators"],
+      ["20", "electric-actuators"],
       ["21", "hydraulic"]
     ],
     "full_trail": true
@@ -107,7 +107,7 @@
     "trail": [
       ["2", "motion"],
       ["8", "actuators"],
-      ["20", "electric actuators"],
+      ["20", "electric-actuators"],
       ["21", "hydraulic"],
       ["22", "linear"]
     ],
@@ -117,7 +117,7 @@
     "id": "23",
     "trail": [
       ["8", "actuators"],
-      ["20", "electric actuators"],
+      ["20", "electric-actuators"],
       ["21", "hydraulic"],
       ["22", "linear"],
       ["23", "smart"]
@@ -127,51 +127,51 @@
   {
     "id": "10",
     "trail": [
-      ["3", "vacuum technology"],
-      ["10", "vacuum pumps"]
+      ["3", "vacuum-technology"],
+      ["10", "vacuum-pumps"]
     ],
     "full_trail": true
   },
   {
     "id": "11",
     "trail": [
-      ["3", "vacuum technology"],
-      ["10", "vacuum pumps"],
-      ["11", "cryo pumps"]
+      ["3", "vacuum-technology"],
+      ["10", "vacuum-pumps"],
+      ["11", "cryopumps"]
     ],
     "full_trail": true
   },
   {
     "id": "12",
     "trail": [
-      ["3", "vacuum technology"],
-      ["10", "vacuum pumps"],
-      ["12", "dry vacuum pumps"]
+      ["3", "vacuum-technology"],
+      ["10", "vacuum-pumps"],
+      ["12", "dry-vacuum-pumps"]
     ],
     "full_trail": false
   },
   {
     "id": "13",
     "trail": [
-      ["3", "vacuum technology"],
-      ["10", "vacuum pumps"],
-      ["13", "turbomolecular pumps"]
+      ["3", "vacuum-technology"],
+      ["10", "vacuum-pumps"],
+      ["13", "turbomolecular-pumps"]
     ],
     "full_trail": true
   },
   {
     "id": "14",
     "trail": [
-      ["3", "vacuum technology"],
-      ["10", "vacuum pumps"],
-      ["14", "turbo pumps"]
+      ["3", "vacuum-technology"],
+      ["10", "vacuum-pumps"],
+      ["14", "turbo-pumps"]
     ],
     "full_trail": true
   },
   {
     "id": "17",
     "trail": [
-      ["15", "High Power Lasers"],
+      ["15", "High-Power-Lasers"],
       ["17", "Frequency"]
     ],
     "full_trail": true
@@ -179,23 +179,23 @@
   {
     "id": "18",
     "trail": [
-      ["1", "beam characterization"],
-      ["18", "voltage meters"]
+      ["1", "beam-characterization"],
+      ["18", "voltage-meters"]
     ],
     "full_trail": true
   },
   {
     "id": "19",
     "trail": [
-      ["1", "beam characterization"],
-      ["19", "amp meters"]
+      ["1", "beam-characterization"],
+      ["19", "amp-meters"]
     ],
     "full_trail": true
   },
   {
     "id": "79",
     "trail": [
-      ["1", "beam characterization"],
+      ["1", "beam-characterization"],
       ["79", "test-dup"]
     ],
     "full_trail": true
