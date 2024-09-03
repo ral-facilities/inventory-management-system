@@ -6,7 +6,7 @@ describe('Items', () => {
     cy.clearMocks();
   });
   it('should be able to navigate back to the catalogue catalogue item table view', () => {
-    cy.findByRole('link', { name: 'cameras' }).click();
+    cy.findByRole('link', { name: 'Cameras' }).click();
     cy.findByText('Cameras 1').should('be.visible');
     cy.findByText('Cameras 2').should('be.visible');
     cy.findByText('Cameras 3').should('be.visible');
@@ -36,14 +36,14 @@ describe('Items', () => {
     cy.findByText('Obsolete reason').should('exist');
     cy.findByText('Drawing Number').should('exist');
 
-    cy.findByRole('link', { name: 'cameras' }).click();
+    cy.findByRole('link', { name: 'Cameras' }).click();
 
     cy.findByText('Cameras 1').should('exist');
     cy.findByText('Cameras 2').should('exist');
     cy.findByText('Cameras 3').should('exist');
     cy.findByText('Cameras 4').should('exist');
 
-    cy.findByRole('link', { name: 'beam-characterization' }).click();
+    cy.findByRole('link', { name: 'Beam Characterization' }).click();
 
     cy.findByText('Cameras').should('exist');
     cy.findByText('Energy Meters').should('exist');

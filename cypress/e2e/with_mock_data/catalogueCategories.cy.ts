@@ -24,11 +24,11 @@ describe('Catalogue Category', () => {
 
   it('should create the breadcrumbs when navigating to a non root catalogue category', () => {
     cy.visit('/catalogue/8');
-    cy.findByRole('link', { name: 'motion' }).should('be.visible');
+    cy.findByRole('link', { name: 'Motion' }).should('be.visible');
     cy.findByText('actuators').should('be.visible');
 
-    cy.findByRole('link', { name: 'motion' }).click();
-    cy.findByRole('link', { name: 'motion' }).should('not.exist');
+    cy.findByRole('link', { name: 'Motion' }).click();
+    cy.findByRole('link', { name: 'Motion' }).should('not.exist');
     cy.findByText('actuators').should('not.exist');
     cy.findByText('motion').should('be.visible');
     cy.url().should('include', '/catalogue/2');
@@ -36,10 +36,10 @@ describe('Catalogue Category', () => {
 
   it('should navigate back to the root directory when the home button is pressed', () => {
     cy.visit('/catalogue/8');
-    cy.findByRole('link', { name: 'motion' }).should('exist');
+    cy.findByRole('link', { name: 'Motion' }).should('exist');
     cy.findByText('actuators').should('exist');
     cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
-    cy.findByRole('link', { name: 'motion' }).should('not.exist');
+    cy.findByRole('link', { name: 'Motion' }).should('not.exist');
     cy.findByText('actuators').should('not.exist');
   });
 
