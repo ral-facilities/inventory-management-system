@@ -189,7 +189,7 @@ const CatalogueItemDirectoryDialog = (
               breadcrumbsInfo={catalogueBreadcrumbs}
               onChangeNode={setParentCategoryId}
               onChangeNavigateHome={() => setParentCategoryId(null)}
-              navigateHomeAriaLabel="navigate to catalogue home"
+              homeLocation={'Catalogue'}
             />
           </Grid>
         </Grid>

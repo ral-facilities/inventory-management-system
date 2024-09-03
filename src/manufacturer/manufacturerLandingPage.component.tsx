@@ -67,7 +67,7 @@ function ManufacturerLandingPage() {
             onChangeNode={onChangeNode}
             onChangeNavigateHome={() => onChangeNode(null)}
             breadcrumbsInfo={manufacturerLandingBreadcrumbs}
-            navigateHomeAriaLabel="navigate to manufacturer home"
+            homeLocation={'Manufacturers'}
           />
         </Grid>
         {manufacturerData && (

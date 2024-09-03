@@ -311,7 +311,7 @@ function Catalogue() {
               onChangeNode={navigateToCatalogue}
               breadcrumbsInfo={catalogueBreadcrumbs}
               onChangeNavigateHome={() => navigateToCatalogue(null)}
-              navigateHomeAriaLabel={'navigate to catalogue home'}
+              homeLocation={'Catalogue'}
             />
             <NavigateNext
               fontSize="medium"

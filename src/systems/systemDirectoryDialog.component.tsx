@@ -163,7 +163,7 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
               breadcrumbsInfo={parentSystemBreadcrumbs}
               onChangeNode={setParentSystemId}
               onChangeNavigateHome={() => setParentSystemId(null)}
-              navigateHomeAriaLabel={'navigate to systems home'}
+              homeLocation={'Systems'}
             />
           </Grid>
         </Grid>

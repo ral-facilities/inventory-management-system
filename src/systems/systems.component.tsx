@@ -347,7 +347,7 @@ function Systems() {
               breadcrumbsInfo={systemsBreadcrumbs}
               onChangeNode={navigateToSystem}
               onChangeNavigateHome={() => navigateToSystem(null)}
-              navigateHomeAriaLabel={'navigate to systems home'}
+              homeLocation={'Systems'}
             />
             {systemsBreadcrumbs && (
               <NavigateNext

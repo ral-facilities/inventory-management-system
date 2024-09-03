@@ -118,7 +118,7 @@ function ItemsLandingPage() {
             onChangeNode={navigateToCatalogue}
             breadcrumbsInfo={itemLandingBreadcrumbs}
             onChangeNavigateHome={() => navigateToCatalogue(null)}
-            navigateHomeAriaLabel={'navigate to catalogue home'}
+            homeLocation={'Catalogue'}
           />
         </Grid>
         {itemData && (

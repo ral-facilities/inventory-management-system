@@ -69,7 +69,7 @@ function AdminPage() {
               onChangeNode={navigateToAdminFunction}
               breadcrumbsInfo={adminBreadCrumbs}
               onChangeNavigateHome={() => navigateToAdminFunction(null)}
-              navigateHomeAriaLabel={'navigate to admin page'}
+              homeLocation={'Admin'}
             />
           </Box>
         </div>
