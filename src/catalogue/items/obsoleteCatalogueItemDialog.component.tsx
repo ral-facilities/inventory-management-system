@@ -255,7 +255,7 @@ const ObsoleteCatalogueItemDialog = (
               onChangeNode={onChangeNode}
               breadcrumbsInfo={catalogueBreadcrumbs}
               onChangeNavigateHome={() => setCatalogueCurrDirId(null)}
-              homeLocation={'Catalogue'}
+              homeLocation="Catalogue"
             />
             {catalogueCategoryData?.is_leaf ? (
               <CatalogueItemsTable

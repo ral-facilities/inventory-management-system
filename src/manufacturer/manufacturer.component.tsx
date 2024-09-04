@@ -324,7 +324,7 @@ function ManufacturerComponent() {
           onChangeNode={onChangeNode}
           onChangeNavigateHome={onChangeNode}
           breadcrumbsInfo={undefined}
-          homeLocation={'Manufacturers'}
+          homeLocation="Manufacturers"
         />
       </Box>
       <MaterialReactTable table={table} />

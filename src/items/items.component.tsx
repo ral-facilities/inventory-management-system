@@ -62,7 +62,7 @@ export function Items() {
           onChangeNode={navigateToCatalogue}
           breadcrumbsInfo={itemsBreadcrumbs}
           onChangeNavigateHome={() => navigateToCatalogue(null)}
-          homeLocation={'Catalogue'}
+          homeLocation="Catalogue"
         />
       </Grid>
 

@@ -69,7 +69,7 @@ function AdminPage() {
               onChangeNode={navigateToAdminFunction}
               breadcrumbsInfo={adminBreadCrumbs}
               onChangeNavigateHome={() => navigateToAdminFunction(null)}
-              homeLocation={'Admin'}
+              homeLocation="Admin"
             />
           </Box>
         </div>

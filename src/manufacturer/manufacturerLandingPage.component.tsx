@@ -67,7 +67,7 @@ function ManufacturerLandingPage() {
             onChangeNode={onChangeNode}
             onChangeNavigateHome={() => onChangeNode(null)}
             breadcrumbsInfo={manufacturerLandingBreadcrumbs}
-            homeLocation={'Manufacturers'}
+            homeLocation="Manufacturers"
           />
         </Grid>
         {manufacturerData && (

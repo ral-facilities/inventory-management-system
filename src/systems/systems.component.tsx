@@ -347,7 +347,7 @@ function Systems() {
               breadcrumbsInfo={systemsBreadcrumbs}
               onChangeNode={navigateToSystem}
               onChangeNavigateHome={() => navigateToSystem(null)}
-              homeLocation={'Systems'}
+              homeLocation="Systems"
             />
             {systemsBreadcrumbs && (
               <NavigateNext

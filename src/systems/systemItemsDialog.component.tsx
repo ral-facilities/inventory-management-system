@@ -229,7 +229,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
                 onChangeNavigateHome={() => {
                   changeParentSystemId(null);
                 }}
-                homeLocation={'Systems'}
+                homeLocation="Systems"
               />
             </Grid>
             <Grid item xs={12}>

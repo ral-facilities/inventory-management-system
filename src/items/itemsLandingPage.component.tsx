@@ -118,7 +118,7 @@ function ItemsLandingPage() {
             onChangeNode={navigateToCatalogue}
             breadcrumbsInfo={itemLandingBreadcrumbs}
             onChangeNavigateHome={() => navigateToCatalogue(null)}
-            homeLocation={'Catalogue'}
+            homeLocation="Catalogue"
           />
         </Grid>
         {itemData && (

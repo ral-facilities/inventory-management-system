@@ -311,7 +311,7 @@ function Catalogue() {
               onChangeNode={navigateToCatalogue}
               breadcrumbsInfo={catalogueBreadcrumbs}
               onChangeNavigateHome={() => navigateToCatalogue(null)}
-              homeLocation={'Catalogue'}
+              homeLocation="Catalogue"
             />
             <NavigateNext
               fontSize="medium"
