@@ -215,7 +215,7 @@ describe('catalogue categories api functions', () => {
       expect(result.current.data).toEqual({
         full_trail: true,
         id: '2',
-        trail: [['2', 'motion']],
+        trail: [['2', 'Motion']],
       });
     });
   });

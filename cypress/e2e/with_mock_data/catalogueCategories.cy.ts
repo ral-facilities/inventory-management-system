@@ -30,7 +30,7 @@ describe('Catalogue Category', () => {
     cy.findByRole('link', { name: 'Motion' }).click();
     cy.findByRole('link', { name: 'Motion' }).should('not.exist');
     cy.findByText('Actuators').should('not.exist');
-    cy.findByText('motion').should('be.visible');
+    cy.findByText('Motion').should('be.visible');
     cy.url().should('include', '/catalogue/2');
   });
 
