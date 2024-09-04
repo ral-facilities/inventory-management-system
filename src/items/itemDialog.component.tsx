@@ -1064,7 +1064,7 @@ function ItemDialog(props: ItemDialogProps) {
               onChangeNavigateHome={() => {
                 setParentSystemId(null);
               }}
-              navigateHomeAriaLabel={'navigate to systems home'}
+              homeLocation="Systems"
             />
             <SystemsTableView
               systemsData={systemsData}

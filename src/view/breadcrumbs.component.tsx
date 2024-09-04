@@ -7,6 +7,7 @@ import {
   Link,
   Breadcrumbs as MuiBreadcrumbs,
   styled,
+  Tooltip,
 } from '@mui/material';
 import { BreadcrumbsInfo } from '../api/api.types';
 import { OverflowTip } from '../utils';
@@ -15,7 +16,7 @@ export interface BreadcrumbsProps {
   breadcrumbsInfo?: BreadcrumbsInfo;
   onChangeNode: (newId: string) => void;
   onChangeNavigateHome: () => void;
-  navigateHomeAriaLabel: string;
+  homeLocation: 'Systems' | 'Admin' | 'Manufacturers' | 'Catalogue';
 }
 
 const StyledBreadcrumbs = styled(MuiBreadcrumbs)({
@@ -27,8 +28,11 @@ const Breadcrumbs = (props: BreadcrumbsProps) => {
     breadcrumbsInfo,
     onChangeNode,
     onChangeNavigateHome,
-    navigateHomeAriaLabel,
+    homeLocation,
   } = props;
+
+  const homeAriaLabel = `navigate to ${homeLocation.toLowerCase()} home`;
+  const tooltipLabel = `${homeLocation} Home`
 
   const emptyElement = ['', ''];
 
@@ -42,12 +46,16 @@ const Breadcrumbs = (props: BreadcrumbsProps) => {
   const breadcrumbMaxWidth = `${(100 - 10) / trailPrefix.concat(breadcrumbsInfo?.trail ?? emptyElement).length}vw`;
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <IconButton
-        onClick={onChangeNavigateHome}
-        aria-label={navigateHomeAriaLabel}
-      >
-        <HomeIcon />
-      </IconButton>
+      <Tooltip title = {tooltipLabel}>
+        <span>
+          <IconButton
+            onClick={onChangeNavigateHome}
+            aria-label={homeAriaLabel}
+          >
+            <HomeIcon />
+          </IconButton>
+        </span>
+      </Tooltip>
       <StyledBreadcrumbs
         separator={<NavigateNext fontSize="small" />}
         aria-label="breadcrumb"

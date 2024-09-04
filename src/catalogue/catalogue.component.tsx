@@ -10,6 +10,7 @@ import {
   IconButton,
   LinearProgress,
   Typography,
+  Tooltip,
 } from '@mui/material';
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -75,14 +76,18 @@ const AddCategoryButton = (props: AddCatalogueButtonProps) => {
 
   return (
     <>
-      <IconButton
-        sx={{ mx: 1, my: 2 }}
-        onClick={() => setAddCategoryDialogOpen(true)}
-        disabled={props.disabled}
-        aria-label="add catalogue category"
-      >
-        <AddIcon />
-      </IconButton>
+      <Tooltip title = "Add Category">
+        <span>
+          <IconButton
+            sx={{ mx: 1, my: 2 }}
+            onClick={() => setAddCategoryDialogOpen(true)}
+            disabled={props.disabled}
+            aria-label="add catalogue category"
+          >
+            <AddIcon />
+          </IconButton>
+        </span>
+      </Tooltip>  
       <CatalogueCategoryDialog
         open={addCategoryDialogOpen}
         onClose={() => setAddCategoryDialogOpen(false)}
@@ -306,7 +311,7 @@ function Catalogue() {
               onChangeNode={navigateToCatalogue}
               breadcrumbsInfo={catalogueBreadcrumbs}
               onChangeNavigateHome={() => navigateToCatalogue(null)}
-              navigateHomeAriaLabel={'navigate to catalogue home'}
+              homeLocation="Catalogue"
             />
             <NavigateNext
               fontSize="medium"

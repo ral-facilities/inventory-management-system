@@ -6,6 +6,7 @@ import {
   IconButton,
   Radio,
   RadioGroup,
+  Tooltip,
 } from '@mui/material';
 import React from 'react';
 
@@ -518,13 +519,17 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
         );
       })}
       {!isDisabled && (
-        <IconButton
-          sx={{ margin: '8px' }}
-          onClick={handleAddField}
-          aria-label={'Add catalogue category field entry'}
-        >
-          <AddIcon />
-        </IconButton>
+        <Tooltip title = "Add Field">
+          <span>
+            <IconButton
+              sx={{ margin: '8px' }}
+              onClick={handleAddField}
+              aria-label={'Add catalogue category field entry'}
+            >
+              <AddIcon />
+            </IconButton>
+          </span>
+        </Tooltip>
       )}
     </div>
   );

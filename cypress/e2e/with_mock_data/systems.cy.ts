@@ -259,7 +259,7 @@ describe('Systems', () => {
 
   describe('Add', () => {
     it('adds a root system with only required parameters', () => {
-      cy.findByRole('button', { name: 'add system' }).click();
+      cy.findByRole('button', { name: 'Add System' }).click();
       cy.findByLabelText('Name *').type('System name');
 
       cy.startSnoopingBrowserMockedRequest();
@@ -282,7 +282,7 @@ describe('Systems', () => {
     });
 
     it('adds a root system with all parameters', () => {
-      cy.findByRole('button', { name: 'add system' }).click();
+      cy.findByRole('button', { name: 'Add System' }).click();
 
       cy.findByLabelText('Name *').type('System name');
       cy.findByLabelText('Description').type('System description');
@@ -316,7 +316,7 @@ describe('Systems', () => {
     it('adds a subsystem', () => {
       cy.visit('/systems/65328f34a40ff5301575a4e3');
 
-      cy.findByRole('button', { name: 'add subsystem' }).click();
+      cy.findByRole('button', { name: 'Add Subsystem' }).click();
       cy.findByLabelText('Name *').type('System name');
 
       cy.startSnoopingBrowserMockedRequest();
@@ -342,19 +342,19 @@ describe('Systems', () => {
     it('displays error message when name is not given that disappears once closed', () => {
       cy.visit('/systems');
 
-      cy.findByRole('button', { name: 'add system' }).click();
+      cy.findByRole('button', { name: 'Add System' }).click();
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByText('Please enter a name.').should('be.visible');
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
-      cy.findByRole('button', { name: 'add system' }).click();
+      cy.findByRole('button', { name: 'Add System' }).click();
       cy.findByText('Please enter a name.').should('not.exist');
     });
 
     it('displays error message if the system has a duplicate name that disappears once closed', () => {
       cy.visit('/systems');
 
-      cy.findByRole('button', { name: 'add system' }).click();
+      cy.findByRole('button', { name: 'Add System' }).click();
       cy.findByLabelText('Name *').type('Error 409');
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByText(
@@ -362,7 +362,7 @@ describe('Systems', () => {
       ).should('be.visible');
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
-      cy.findByRole('button', { name: 'add system' }).click();
+      cy.findByRole('button', { name: 'Add System' }).click();
       cy.findByText(
         'A System with the same name already exists within the same parent System. Please enter a different name.'
       ).should('not.exist');
