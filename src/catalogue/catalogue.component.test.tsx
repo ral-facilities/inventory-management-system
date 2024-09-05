@@ -358,13 +358,13 @@ describe('Catalogue', () => {
     createView('/catalogue/8');
 
     await waitFor(() => {
-      expect(screen.getByRole('link', { name: 'motion' })).toBeInTheDocument();
+      expect(screen.getByRole('link', { name: 'Motion' })).toBeInTheDocument();
     });
-    await user.click(screen.getByRole('link', { name: 'motion' }));
+    await user.click(screen.getByRole('link', { name: 'Motion' }));
 
     await waitFor(() => {
       expect(
-        screen.queryByRole('link', { name: 'motion' })
+        screen.queryByRole('link', { name: 'Motion' })
       ).not.toBeInTheDocument();
     });
   });

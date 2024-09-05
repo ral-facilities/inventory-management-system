@@ -145,7 +145,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
         expect(screen.getByText('Motorized Actuators')).toBeInTheDocument();
       });
 
-      await user.click(screen.getByRole('link', { name: 'motion' }));
+      await user.click(screen.getByRole('link', { name: 'Motion' }));
 
       await waitFor(() => {
         expect(screen.getByText('Actuators')).toBeInTheDocument();

@@ -236,17 +236,17 @@ describe('Systems', () => {
     cy.visit('/systems/65328f34a40ff5301575a4e9');
 
     cy.findByRole('link', { name: 'Pulse Laser' }).should('be.visible');
-    cy.findByRole('link', { name: 'Giant laser' }).should('be.visible');
+    cy.findByRole('link', { name: 'Laser Tech' }).should('be.visible');
     cy.findByRole('link', { name: 'Laser Star' }).should('be.visible');
-    cy.findByRole('link', { name: 'Smaller laser' }).should('be.visible');
+    cy.findByRole('link', { name: "Laser Xpress" }).should('be.visible');
 
     // One in title, one in breadcrumbs
     cy.findAllByText('Plasma Beam').should('have.length', 2);
 
     // Check can navigate back with breadcrumbs
-    cy.findByRole('link', { name: 'Giant laser' }).click();
+    cy.findByRole('link', { name: 'Laser Tech' }).click();
     cy.url().should('include', '/systems/65328f34a40ff5301575a4e6');
-    cy.findAllByText('Giant laser').should('have.length', 2);
+    cy.findAllByText('Laser Tech').should('have.length', 2);
 
     // Check can go back to root
     cy.findByRole('button', { name: 'navigate to systems home' }).click();
