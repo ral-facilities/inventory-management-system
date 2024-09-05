@@ -336,7 +336,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
             const date = new Date(row.item.delivered_date);
             date.setSeconds(0, 0);
             return date;
-          } else null;
+          } else return null;
         },
         id: 'item.delivered_date',
         filterVariant: 'date-range',

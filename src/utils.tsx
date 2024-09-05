@@ -396,9 +396,11 @@ export const displayTableRowCountText = <TData extends MRT_RowData>(
 };
 
 export const customFilterFunctions = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   filterExclude: (row: MRT_RowData, id: string, filterValue: any) => {
     return !filterValue.includes(row.getValue(id));
   },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   filterInclude: (row: MRT_RowData, id: string, filterValue: any) => {
     return filterValue.includes(row.getValue(id));
   },

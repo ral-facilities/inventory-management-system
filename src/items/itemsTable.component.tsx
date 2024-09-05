@@ -186,7 +186,7 @@ export function ItemsTable(props: ItemTableProps) {
             const date = new Date(row.item.warranty_end_date);
             date.setSeconds(0, 0);
             return date;
-          } else null;
+          } else return null;
         },
         id: 'item.warranty_end_date',
         filterVariant: 'date-range',
@@ -208,7 +208,7 @@ export function ItemsTable(props: ItemTableProps) {
             const date = new Date(row.item.delivered_date);
             date.setSeconds(0, 0);
             return date;
-          } else null;
+          } else return null;
         },
         id: 'item.delivered_date',
         filterVariant: 'date-range',

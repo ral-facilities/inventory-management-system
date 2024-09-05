@@ -1834,7 +1834,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
               data-index="4"
             >
               <div
-                aria-label="Tue Jan 02 2024 13:10:10 GMT+0000 (Coordinated Universal Time),Tue Jan 02 2024 13:10:10 GMT+0000 (Coordinated Universal Time)"
+                aria-label="Tue Jan 02 2024 13:10:00 GMT+0000 (Coordinated Universal Time),Tue Jan 02 2024 13:10:00 GMT+0000 (Coordinated Universal Time)"
                 class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                 data-mui-internal-clone-element="true"
                 role="tooltip"
@@ -2299,7 +2299,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
               data-index="4"
             >
               <div
-                aria-label="Tue Jan 02 2024 13:10:10 GMT+0000 (Coordinated Universal Time),Tue Jan 02 2024 13:10:10 GMT+0000 (Coordinated Universal Time)"
+                aria-label="Tue Jan 02 2024 13:10:00 GMT+0000 (Coordinated Universal Time),Tue Jan 02 2024 13:10:00 GMT+0000 (Coordinated Universal Time)"
                 class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                 data-mui-internal-clone-element="true"
                 role="tooltip"
