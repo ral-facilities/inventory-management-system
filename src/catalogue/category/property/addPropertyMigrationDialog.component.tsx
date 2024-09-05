@@ -277,7 +277,7 @@ const AddPropertyMigrationDialog = (props: AddPropertyMigrationDialogProps) => {
     reset();
     clearErrors();
     onClose();
-    setIsTermsAndConditionsChecked(false);
+    setIsMigrationWarningChecked(false);
   }, [clearErrors, onClose, reset]);
 
   const property = watch();
@@ -316,7 +316,7 @@ const AddPropertyMigrationDialog = (props: AddPropertyMigrationDialogProps) => {
       value: { av_placement_id: crypto.randomUUID(), value: '' },
     });
 
-  const [isTermsAndConditionsChecked, setIsTermsAndConditionsChecked] =
+  const [isMigrationWarningChecked, setIsMigrationWarningChecked] =
     React.useState(false);
   return (
     <Dialog open={open} maxWidth="sm" fullWidth>
@@ -649,11 +649,15 @@ const AddPropertyMigrationDialog = (props: AddPropertyMigrationDialogProps) => {
         <Grid container px={1.5}>
           <Grid item sx={{ width: '100%' }}>
             <MigrationWarningMessage
-              isChecked={isTermsAndConditionsChecked}
-              setIsChecked={setIsTermsAndConditionsChecked}
+              isChecked={isMigrationWarningChecked}
+              setIsChecked={setIsMigrationWarningChecked}
             />
           </Grid>
-          <Grid item display="flex" sx={{ width: '100%', marginTop: 2 }}>
+          <Grid
+            item
+            display="flex"
+            sx={{ width: '100%', marginTop: 2, marginBottom: 1 }}
+          >
             <Button
               variant="outlined"
               sx={{ width: '50%', mx: 1 }}
@@ -667,8 +671,7 @@ const AddPropertyMigrationDialog = (props: AddPropertyMigrationDialogProps) => {
               sx={{ width: '50%', mx: 1 }}
               onClick={handleSubmit(onSubmit)}
               disabled={
-                Object.values(errors).length !== 0 ||
-                !isTermsAndConditionsChecked
+                Object.values(errors).length !== 0 || !isMigrationWarningChecked
               }
             >
               Save

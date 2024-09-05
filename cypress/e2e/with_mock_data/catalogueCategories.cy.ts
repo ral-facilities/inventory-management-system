@@ -128,7 +128,7 @@ describe('Catalogue Category', () => {
       .should('be.visible')
       .within(() => {
         cy.contains(
-          'A Catalogue category with the same name already exists within the same parent Catalogue category. Please enter a different name.'
+          'A catalogue category with the same name already exists within the same parent catalogue category. Please enter a different name.'
         );
       });
     cy.findByRole('button', { name: 'Save' }).should('be.disabled');

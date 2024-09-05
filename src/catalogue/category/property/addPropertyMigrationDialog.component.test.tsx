@@ -527,7 +527,7 @@ describe('AddPropertyMigrationDialog', () => {
     expect(allowedValuesError2).not.toBeInTheDocument();
   });
 
-  it('displays error for duplicate allowed values and clears when list value is deleted (type number)', async () => {
+  it('displays error for duplicate allowed values and clears when list value is deleted', async () => {
     createView();
     await modifyValues({
       name: 'test',

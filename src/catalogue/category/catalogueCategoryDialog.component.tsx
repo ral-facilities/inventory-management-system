@@ -66,10 +66,10 @@ export interface CatalogueCategoryDialogProps {
   open: boolean;
   onClose: () => void;
   parentId: string | null;
-  requestType: RequestType;
-  duplicate?: boolean;
   selectedCatalogueCategory?: CatalogueCategory;
   resetSelectedCatalogueCategory: () => void;
+  requestType: RequestType;
+  duplicate?: boolean;
 }
 
 //-------------------------------------Transform form type to API type----------------------------------
@@ -282,21 +282,28 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
 
   const initialCatalogueCategory: AddCatalogueCategoryWithPlacementIds =
     React.useMemo(() => {
+      const emptyCatalogueCategory: AddCatalogueCategoryWithPlacementIds = {
+        name: '',
+        parent_id: null,
+        is_leaf: 'false',
+        properties: undefined,
+      };
       if (
-        (!selectedCatalogueCategory &&
-          (requestType === 'post' || !duplicate)) ||
-        !selectedCatalogueCategory
-      )
-        return {
-          name: '',
-          parent_id: null,
-          is_leaf: 'false', // Use 'false' as a string instead of a boolean
-          properties: undefined,
-        };
+        !selectedCatalogueCategory &&
+        (requestType === 'post' || !duplicate)
+      ) {
+        return emptyCatalogueCategory;
+      }
 
-      return transformToAddCatalogueCategoryWithPlacementIds(
-        selectedCatalogueCategory
-      );
+      // Only call transformToAddCatalogueCategoryWithPlacementIds if selectedCatalogueCategory is defined
+      if (selectedCatalogueCategory) {
+        return transformToAddCatalogueCategoryWithPlacementIds(
+          selectedCatalogueCategory
+        );
+      }
+
+      // Add a fallback in case selectedCatalogueCategory is undefined
+      return emptyCatalogueCategory;
     }, [requestType, duplicate, selectedCatalogueCategory]);
 
   const formMethods = useForm<AddCatalogueCategoryWithPlacementIds>({
@@ -350,7 +357,7 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
           if (response && error.response?.status === 409) {
             setError('name', {
               message:
-                'A Catalogue category with the same name already exists within the same parent Catalogue category. Please enter a different name.',
+                'A catalogue category with the same name already exists within the same parent catalogue category. Please enter a different name.',
             });
             return;
           }
@@ -379,7 +386,7 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
             if (response && error.response?.status === 409) {
               setError('name', {
                 message:
-                  'A Catalogue category with the same name already exists within the same parent Catalogue category. Please enter a different name.',
+                  'A catalogue category with the same name already exists within the same parent catalogue category. Please enter a different name.',
               });
               return;
             }

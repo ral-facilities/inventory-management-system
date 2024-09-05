@@ -395,7 +395,11 @@ const EditPropertyMigrationDialog = (
               setIsChecked={setIsTermsAndConditionsChecked}
             />
           </Grid>
-          <Grid item display="flex" sx={{ width: '100%', marginTop: 2 }}>
+          <Grid
+            item
+            display="flex"
+            sx={{ width: '100%', marginTop: 2, marginBottom: 1 }}
+          >
             <Button
               variant="outlined"
               sx={{ width: '50%', mx: 1 }}

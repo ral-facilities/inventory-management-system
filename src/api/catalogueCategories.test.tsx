@@ -1,6 +1,7 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { MockInstance } from 'vitest';
 
+import { CopyToCatalogueCategory, MoveToCatalogueCategory } from '../app.types';
 import handleTransferState from '../handleTransferState';
 import {
   CREATED_MODIFIED_TIME_VALUES,
@@ -17,8 +18,6 @@ import {
   CatalogueCategoryPropertyType,
 } from './api.types';
 import {
-  CopyToCatalogueCategoryRHF,
-  MoveToCatalogueCategoryRHF,
   useCopyToCatalogueCategory,
   useDeleteCatalogueCategory,
   useGetCatalogueBreadcrumbs,
@@ -313,7 +312,7 @@ describe('catalogue categories api functions', () => {
       },
     ];
 
-    let moveToCatalogueCategory: MoveToCatalogueCategoryRHF;
+    let moveToCatalogueCategory: MoveToCatalogueCategory;
 
     let axiosPatchSpy: MockInstance;
 
@@ -488,7 +487,7 @@ describe('catalogue categories api functions', () => {
       },
     ];
 
-    let copyToCatalogueCategory: CopyToCatalogueCategoryRHF;
+    let copyToCatalogueCategory: CopyToCatalogueCategory;
 
     let axiosPostSpy: MockInstance;
 

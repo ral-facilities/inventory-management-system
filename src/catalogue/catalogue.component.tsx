@@ -9,8 +9,8 @@ import {
   Grid,
   IconButton,
   LinearProgress,
-  Typography,
   Tooltip,
+  Typography,
 } from '@mui/material';
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -72,7 +72,7 @@ const AddCategoryButton = (props: AddCatalogueButtonProps) => {
 
   return (
     <>
-      <Tooltip title = "Add Category">
+      <Tooltip title="Add Category">
         <span>
           <IconButton
             sx={{ mx: 1, my: 2 }}
@@ -83,7 +83,7 @@ const AddCategoryButton = (props: AddCatalogueButtonProps) => {
             <AddIcon />
           </IconButton>
         </span>
-      </Tooltip>  
+      </Tooltip>
       <CatalogueCategoryDialog
         open={addCategoryDialogOpen}
         onClose={() => setAddCategoryDialogOpen(false)}
@@ -230,16 +230,25 @@ function Catalogue() {
   const [selectedCatalogueCategory, setSelectedCatalogueCategory] =
     React.useState<CatalogueCategory | undefined>(undefined);
 
+  // useEffect hook to handle updates to selectedCatalogueCategory when catalogueCategoryData changes
   React.useEffect(() => {
+    // Extract the IDs of all categories from the catalogueCategoryData array
     const catalogueCategoryIds = catalogueCategoryData?.map(
       (category) => category.id
     );
+
+    // Check if the selectedCatalogueCategory's ID is part of the catalogueCategoryIds array
+    // This ensures that the selected category is still valid after an "add" or "edit" migration
     if (catalogueCategoryIds?.includes(selectedCatalogueCategory?.id ?? '')) {
+      // Find the updated category from the catalogueCategoryData array
       const updatedCategory = catalogueCategoryData?.find(
         (category) => category.id === selectedCatalogueCategory?.id
       );
+
+      // Update the state with the updated category, triggering a re-render of the dialog
       setSelectedCatalogueCategory(updatedCategory);
     }
+    // Dependencies for this effect: it will re-run when either catalogueCategoryData or selectedCatalogueCategory changes
   }, [catalogueCategoryData, selectedCatalogueCategory]);
 
   const onChangeOpenDeleteCategoryDialog = (

@@ -6,7 +6,11 @@ import {
   UseQueryResult,
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { TransferState } from '../app.types';
+import {
+  CopyToCatalogueCategory,
+  MoveToCatalogueCategory,
+  TransferState,
+} from '../app.types';
 
 import handleTransferState from '../handleTransferState';
 import { generateUniqueNameUsingCode } from '../utils';
@@ -290,32 +294,15 @@ export const usePatchCatalogueCategory = (): UseMutationResult<
   });
 };
 
-// TODO move back into app.types
-
-export interface MoveToCatalogueCategoryRHF {
-  selectedCategories: CatalogueCategory[];
-  // Null if root
-  targetCategory: CatalogueCategory | null;
-}
-
-export interface CopyToCatalogueCategoryRHF {
-  selectedCategories: CatalogueCategory[];
-  // Null if root
-  targetCategory: CatalogueCategory | null;
-  // Existing known catalogue category names at the destination
-  // (for appending to the names to avoid duplication)
-  existingCategoryCodes: string[];
-}
-
 export const useMoveToCatalogueCategory = (): UseMutationResult<
   TransferState[],
   AxiosError,
-  MoveToCatalogueCategoryRHF
+  MoveToCatalogueCategory
 > => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (moveToCatalogueCategory: MoveToCatalogueCategoryRHF) => {
+    mutationFn: async (moveToCatalogueCategory: MoveToCatalogueCategory) => {
       const transferStates: TransferState[] = [];
 
       // Ids for invalidation (parentIds must be a string value of 'null' for invalidation)
@@ -383,12 +370,12 @@ export const useMoveToCatalogueCategory = (): UseMutationResult<
 export const useCopyToCatalogueCategory = (): UseMutationResult<
   TransferState[],
   AxiosError,
-  CopyToCatalogueCategoryRHF
+  CopyToCatalogueCategory
 > => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (copyToCatalogueCategory: CopyToCatalogueCategoryRHF) => {
+    mutationFn: async (copyToCatalogueCategory: CopyToCatalogueCategory) => {
       const transferStates: TransferState[] = [];
 
       // Ids for invalidation (must be a string value of 'null' if null

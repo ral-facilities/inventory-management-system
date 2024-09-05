@@ -247,7 +247,7 @@ describe('AddPropertyMigrationDialog', () => {
     expect(nameError2).not.toBeInTheDocument();
   });
 
-  it('display duplicate value error message and clears error by deleting new value (type string)', async () => {
+  it('display duplicate value error message and clears error by deleting new value', async () => {
     props.selectedProperty = formattedProperties[2];
     createView();
     await modifyValues({
@@ -272,7 +272,7 @@ describe('AddPropertyMigrationDialog', () => {
     });
   });
 
-  it('display duplicate value error message and clears error by modifying value (type number)', async () => {
+  it('display duplicate value error message and clears error by modifying value', async () => {
     createView();
     await modifyValues({
       allowed_values: { type: 'list', values: [500] },

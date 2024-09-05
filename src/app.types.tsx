@@ -47,6 +47,9 @@ export interface AddCatalogueCategoryPropertyWithPlacementIds
 export interface AddPropertyMigration extends AddCatalogueCategoryProperty {
   default_value: {
     valueType: string;
+    // The "value" contains the av_placement_id because it could correspond to an option
+    // from the allowed values in the add migration. Since this option can potentially
+    // be a duplicate, the av_placement_id serves as a unique identifier to differentiate them.
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     value: { av_placement_id: string; value: any };
   };
@@ -56,6 +59,7 @@ export interface EditPropertyMigration {
   name?: string;
   allowed_values?: AllowedValues | null;
 }
+
 export interface MoveToCatalogueCategory {
   selectedCategories: CatalogueCategory[];
   // Null if root

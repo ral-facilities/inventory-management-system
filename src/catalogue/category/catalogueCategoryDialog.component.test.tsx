@@ -245,7 +245,7 @@ describe('Catalogue Category Dialog', () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            'A Catalogue category with the same name already exists within the same parent Catalogue category. Please enter a different name.'
+            'A catalogue category with the same name already exists within the same parent catalogue category. Please enter a different name.'
           )
         ).toBeInTheDocument();
       });
@@ -867,7 +867,7 @@ describe('Catalogue Category Dialog', () => {
       expect(duplicateHelperTexts2).not.toBeInTheDocument();
     }, 10000);
 
-    it('displays invalid type  errors (allowed_values list of numbers)', async () => {
+    it('displays invalid type errors (allowed_values list of numbers)', async () => {
       createView();
 
       await modifyValues({
@@ -1152,7 +1152,7 @@ describe('Catalogue Category Dialog', () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            'A Catalogue category with the same name already exists within the same parent Catalogue category. Please enter a different name.'
+            'A catalogue category with the same name already exists within the same parent catalogue category. Please enter a different name.'
           )
         ).toBeInTheDocument();
       });

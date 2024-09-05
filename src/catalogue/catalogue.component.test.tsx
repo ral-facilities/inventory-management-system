@@ -284,7 +284,7 @@ describe('Catalogue', () => {
     });
   });
 
-  it('opens the edit catalogue category dialog', async () => {
+  it('can open the edit catalogue category dialog and close it again', async () => {
     createView('/catalogue/1');
 
     await waitFor(() => {
