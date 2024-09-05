@@ -216,7 +216,7 @@ describe('catalogue item directory Dialog', () => {
       });
 
       await user.click(
-        screen.getByRole('link', { name: 'beam-characterization' })
+        screen.getByRole('link', { name: 'Beam Characterization' })
       );
 
       await waitFor(() => {
@@ -234,7 +234,7 @@ describe('catalogue item directory Dialog', () => {
       });
 
       await user.click(
-        screen.getByRole('link', { name: 'beam-characterization' })
+        screen.getByRole('link', { name: 'Beam Characterization' })
       );
 
       await waitFor(() => {

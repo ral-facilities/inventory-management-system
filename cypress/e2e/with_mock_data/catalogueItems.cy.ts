@@ -396,7 +396,7 @@ describe('Catalogue Items', () => {
       'exist'
     );
 
-    cy.findByRole('link', { name: 'cameras' }).click();
+    cy.findByRole('link', { name: 'Cameras' }).click();
 
     cy.findByText('Cameras 1').should('exist');
     cy.findByText('Cameras 2').should('exist');
@@ -878,7 +878,7 @@ describe('Catalogue Items', () => {
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.findByRole('link', { name: 'beam-characterization' }).click();
+        cy.findByRole('link', { name: 'Beam Characterization' }).click();
       });
 
     cy.findByText('Cameras').should('be.visible');
@@ -906,7 +906,7 @@ describe('Catalogue Items', () => {
       .within(() => {
         cy.findByRole('button', { name: 'Move here' }).should('be.disabled');
 
-        cy.findByRole('link', { name: 'beam-characterization' }).click();
+        cy.findByRole('link', { name: 'Beam Characterization' }).click();
         cy.findByText('Energy Meters V2').click();
 
         cy.startSnoopingBrowserMockedRequest();
@@ -938,7 +938,7 @@ describe('Catalogue Items', () => {
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.findByRole('link', { name: 'beam-characterization' }).click();
+        cy.findByRole('link', { name: 'Beam Characterization' }).click();
         cy.findByText('Cameras').click();
 
         cy.findByRole('button', { name: 'Move here' }).click();
@@ -961,7 +961,7 @@ describe('Catalogue Items', () => {
       .should('be.visible')
       .within(() => {
         cy.findByRole('button', { name: 'Move here' }).should('be.disabled');
-        cy.findByRole('link', { name: 'beam-characterization' }).click();
+        cy.findByRole('link', { name: 'Beam Characterization' }).click();
         cy.findByRole('button', { name: 'Move here' }).should('be.disabled');
         cy.findByText('Energy Meters').click();
         cy.findByRole('button', { name: 'Move here' }).should('be.disabled');
@@ -979,7 +979,7 @@ describe('Catalogue Items', () => {
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.findByRole('link', { name: 'beam-characterization' }).click();
+        cy.findByRole('link', { name: 'Beam Characterization' }).click();
 
         cy.findByRole('button', { name: 'Copy here' }).should('be.disabled');
 
@@ -1060,7 +1060,7 @@ describe('Catalogue Items', () => {
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.findByRole('link', { name: 'beam-characterization' }).click();
+        cy.findByRole('link', { name: 'Beam Characterization' }).click();
         cy.findByText('Cameras').click();
 
         cy.findByRole('button', { name: 'Copy here' }).click();

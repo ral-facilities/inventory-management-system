@@ -91,7 +91,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
             // When there is more than one value start from root
             await user.click(
               screen.getByRole('button', {
-                name: 'Navigate back to Catalogue home',
+                name: 'navigate to catalogue home',
               })
             );
 
@@ -262,7 +262,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
 
     // Last breadcrumb
     await waitFor(() => {
-      expect(screen.getByText('energy-meters')).toBeInTheDocument();
+      expect(screen.getByText('Energy Meters')).toBeInTheDocument();
     });
 
     // Expected replacement catalogue item name
@@ -494,7 +494,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
     await modifyForm(true, {});
 
     // Navigate up a category
-    await user.click(screen.getByRole('link', { name: 'vacuum-pumps' }));
+    await user.click(screen.getByRole('link', { name: 'Vacuum Pumps' }));
 
     // Select new item
     await user.click(
@@ -550,7 +550,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
     // Navigate to root directory
     await user.click(
       screen.getByRole('button', {
-        name: 'Navigate back to Catalogue home',
+        name: 'navigate to catalogue home',
       })
     );
 

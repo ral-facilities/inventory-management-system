@@ -3080,9 +3080,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:13.13.3":
-  version: 13.13.3
-  resolution: "cypress@npm:13.13.3"
+"cypress@npm:13.14.1":
+  version: 13.14.1
+  resolution: "cypress@npm:13.14.1"
   dependencies:
     "@cypress/request": "npm:^3.0.1"
     "@cypress/xvfb": "npm:^1.2.4"
@@ -3128,7 +3128,7 @@ __metadata:
     yauzl: "npm:^2.10.0"
   bin:
     cypress: bin/cypress
-  checksum: 10c0/187fdbe0ca6eedd04a04828971847ef5f3d0e0c2bd74a25a761dd2cc0de1fb84f7e4c1bc4f88e46f753d87748b31eca3ddaae798275546fe1964c8453cbe4a63
+  checksum: 10c0/1f9c18a6ae5ebfdb4f1d0c6d85e47c90cab8ef89a992b7dff8c142316b1e3abd94aef78b41d2a593ff5ce226ecda5ea456850426123fcc124a46653e9bd7e7b5
   languageName: node
   linkType: hard
 
@@ -4939,7 +4939,7 @@ __metadata:
     browserslist: "npm:^4.23.0"
     browserslist-to-esbuild: "npm:^2.1.1"
     cross-env: "npm:7.0.3"
-    cypress: "npm:13.13.3"
+    cypress: "npm:13.14.1"
     date-fns: "npm:3.6.0"
     eslint: "npm:9.9.1"
     eslint-config-prettier: "npm:9.1.0"
@@ -4951,7 +4951,7 @@ __metadata:
     express: "npm:4.19.2"
     globals: "npm:15.9.0"
     history: "npm:^5.3.0"
-    jsdom: "npm:24.1.1"
+    jsdom: "npm:25.0.0"
     loglevel: "npm:^1.9.1"
     lz-string: "npm:^1.5.0"
     material-react-table: "npm:^2.13.0"
@@ -5461,9 +5461,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsdom@npm:24.1.1":
-  version: 24.1.1
-  resolution: "jsdom@npm:24.1.1"
+"jsdom@npm:25.0.0":
+  version: 25.0.0
+  resolution: "jsdom@npm:25.0.0"
   dependencies:
     cssstyle: "npm:^4.0.1"
     data-urls: "npm:^5.0.0"
@@ -5491,7 +5491,7 @@ __metadata:
   peerDependenciesMeta:
     canvas:
       optional: true
-  checksum: 10c0/02d6bfe32f09f26329c0e53ad9f9883a3c671fc1f75725167d2089ca412f5b7ca85ff8aa62327d1cc6fc70ffbb3b18dfc7642c4b2096c2c8b19aaf9a48473eb3
+  checksum: 10c0/1552bcfb816b2c69ae159ba0cd79e8964030c106cc0cb2deb20a64c1ca54e1ea41352b9802d89b7cf823e43e6d74ed7289abff4aacc95b1b2bc936570aab3594
   languageName: node
   linkType: hard
 
