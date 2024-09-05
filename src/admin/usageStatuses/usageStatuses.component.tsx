@@ -26,6 +26,7 @@ import {
   displayTableRowCountText,
   formatDateTimeStrings,
   getPageHeightCalc,
+  customFilterFunctions,
 } from '../../utils.tsx';
 import DeleteUsageStatusDialog from './deleteUsageStatusDialog.component.tsx';
 import UsageStatusDialog from './usageStatusDialog.component.tsx';
@@ -52,16 +53,16 @@ function UsageStatuses() {
         renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) => [
           <MenuItem
             key="filterFnInclude"
-            onClick={() => onSelectFilterMode('Include')}
+            onClick={() => onSelectFilterMode('filterInclude')}
           >
             Include
           </MenuItem>,
           <MenuItem
-          key="filterFnExclude"
-          onClick={() => onSelectFilterMode('Exclude')}
-        >
-          Excludes
-        </MenuItem>,
+            key="filterFnExclude"
+            onClick={() => onSelectFilterMode('filterExclude')}
+          >
+            Exclude
+          </MenuItem>,
         ],
         id: 'value',
         Cell: ({ row }) => row.original.value,
@@ -105,14 +106,7 @@ function UsageStatuses() {
     columns: columns,
     data: usageStatusData ?? [],
     // Features
-    filterFns: {
-      Exclude: (row, id, filterValue) =>{
-        return !(filterValue.includes(row.getValue(id)));
-      },
-      Include: (row, id, filterValue) =>{
-        return (filterValue.includes(row.getValue(id)));
-      },
-    },
+    filterFns: customFilterFunctions,
     enableColumnOrdering: true,
     enableColumnFilterModes: true,
     enableFacetedValues: true,

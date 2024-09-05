@@ -394,3 +394,12 @@ export const displayTableRowCountText = <TData extends MRT_RowData>(
 
   return <Typography sx={{ ...sx }}>{tableRowCountText}</Typography>;
 };
+
+export const customFilterFunctions = {
+  filterExclude: (row: MRT_RowData, id: string, filterValue: any) => {
+    return !filterValue.includes(row.getValue(id));
+  },
+  filterInclude: (row: MRT_RowData, id: string, filterValue: any) => {
+    return filterValue.includes(row.getValue(id));
+  },
+};
