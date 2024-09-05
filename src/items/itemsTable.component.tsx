@@ -133,7 +133,11 @@ export function ItemsTable(props: ItemTableProps) {
       {
         header: 'Last modified',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => new Date(row.item.modified_time),
+        accessorFn: (row) => {
+          const date = new Date(row.item.modified_time);
+          date.setSeconds(0, 0);
+          return date;
+        },
         id: 'item.modified_time',
         filterVariant: 'datetime-range',
         size: 350,
@@ -145,7 +149,11 @@ export function ItemsTable(props: ItemTableProps) {
       {
         header: 'Created',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => new Date(row.item.created_time),
+        accessorFn: (row) => {
+          const date = new Date(row.item.created_time);
+          date.setSeconds(0, 0);
+          return date;
+        },
         id: 'item.created_time',
         filterVariant: 'datetime-range',
         size: 350,
@@ -173,10 +181,13 @@ export function ItemsTable(props: ItemTableProps) {
       {
         header: 'Warranty End Date',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) =>
-          row.item.warranty_end_date
-            ? new Date(row.item.warranty_end_date)
-            : null,
+        accessorFn: (row) => {
+          if (row.item.warranty_end_date) {
+            const date = new Date(row.item.warranty_end_date);
+            date.setSeconds(0, 0);
+            return date;
+          } else null;
+        },
         id: 'item.warranty_end_date',
         filterVariant: 'date-range',
         size: 350,
@@ -192,8 +203,13 @@ export function ItemsTable(props: ItemTableProps) {
       {
         header: 'Delivered Date',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) =>
-          row.item.delivered_date ? new Date(row.item.delivered_date) : null,
+        accessorFn: (row) => {
+          if (row.item.delivered_date) {
+            const date = new Date(row.item.delivered_date);
+            date.setSeconds(0, 0);
+            return date;
+          } else null;
+        },
         id: 'item.delivered_date',
         filterVariant: 'date-range',
         size: 350,

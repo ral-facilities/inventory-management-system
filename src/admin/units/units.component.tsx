@@ -52,7 +52,11 @@ function Units() {
       },
       {
         header: 'Last modified',
-        accessorFn: (row) => new Date(row.modified_time),
+        accessorFn: (row) => {
+          const date = new Date(row.modified_time);
+          date.setSeconds(0, 0);
+          return date;
+        },
         id: 'modified_time',
         filterVariant: 'datetime-range',
         size: 350,
@@ -63,7 +67,11 @@ function Units() {
       },
       {
         header: 'Created',
-        accessorFn: (row) => new Date(row.created_time),
+        accessorFn: (row) => {
+          const date = new Date(row.created_time);
+          date.setSeconds(0, 0);
+          return date;
+        },
         id: 'created_time',
         filterVariant: 'datetime-range',
         size: 350,

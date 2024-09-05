@@ -57,7 +57,11 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
       },
       {
         header: 'Last modified',
-        accessorFn: (row) => new Date(row.modified_time),
+        accessorFn: (row) => {
+          const date = new Date(row.modified_time);
+          date.setSeconds(0, 0);
+          return date;
+        },
         id: 'modified_time',
         filterVariant: 'datetime-range',
         size: 567.5,

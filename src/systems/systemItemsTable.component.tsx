@@ -122,10 +122,10 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
   const selectedRowIds = Object.keys(rowSelection);
   const selectedItems =
     type === 'normal'
-      ? itemsData?.filter((item) => selectedRowIds.includes(item.id)) ?? []
-      : moveToSelectedItems?.filter((item) =>
+      ? (itemsData?.filter((item) => selectedRowIds.includes(item.id)) ?? [])
+      : (moveToSelectedItems?.filter((item) =>
           selectedRowIds.includes(item.id)
-        ) ?? [];
+        ) ?? []);
 
   // Fetch catalogue items for each item to display in the table
   const catalogueItemIdSet = React.useMemo(
@@ -300,7 +300,11 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       {
         header: 'Last modified',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => new Date(row.item.modified_time),
+        accessorFn: (row) => {
+          const date = new Date(row.item.modified_time);
+          date.setSeconds(0, 0);
+          return date;
+        },
         id: 'item.modified_time',
         filterVariant: 'datetime-range',
         size: 350,
@@ -312,7 +316,11 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       {
         header: 'Created',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => new Date(row.item.created_time),
+        accessorFn: (row) => {
+          const date = new Date(row.item.created_time);
+          date.setSeconds(0, 0);
+          return date;
+        },
         id: 'item.created_time',
         filterVariant: 'datetime-range',
         size: 350,
@@ -323,8 +331,13 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       {
         header: 'Delivered Date',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) =>
-          row.item.delivered_date ? new Date(row.item.delivered_date) : null,
+        accessorFn: (row) => {
+          if (row.item.delivered_date) {
+            const date = new Date(row.item.delivered_date);
+            date.setSeconds(0, 0);
+            return date;
+          } else null;
+        },
         id: 'item.delivered_date',
         filterVariant: 'date-range',
         size: 350,
