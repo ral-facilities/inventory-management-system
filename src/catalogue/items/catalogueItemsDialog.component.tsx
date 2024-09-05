@@ -605,36 +605,38 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     [errorMessages, propertyErrors]
   );
 
-
-  const options = ():Array<Manufacturer & {isrecent: string}> => {
-    const classifiedManufacturers = manufacturerList ? (manufacturerList).map((option) => {
-      return {
-        ...option,
-        isrecent: "A-Z"
-      };
-    }) : [];
+  const options = (): Array<Manufacturer & { isRecent: string }> => {
+    const classifiedManufacturers = manufacturerList
+      ? manufacturerList.map((option) => {
+          return {
+            ...option,
+            isRecent: 'A-Z',
+          };
+        })
+      : [];
 
     //duplicating the recent manufacturers, so that they appear twice.
-    const date_now = (new Date()).getTime()
+    const date_now = new Date().getTime();
     const recentManufacturers = classifiedManufacturers
-    .filter((option) => {
-      const created_date = (new Date(option.created_time)).getTime()
-      //dates are in ms; numerical expression is equivalent to 10 minutes
-      let isRecent = date_now - 1000*60*10 <= created_date
-      return isRecent;
-    })
-    .map((option) => {
-      return {
-        ...option,
-        isrecent: "Recently Added",
-      };
-    });
+      .filter((option) => {
+        const created_date = new Date(option.created_time).getTime();
+        const TEN_MINUTES = 1000 * 60 * 10;
+        const isRecent = date_now - TEN_MINUTES <= created_date;
+        return isRecent;
+      })
+      .map((option) => {
+        return {
+          ...option,
+          isRecent: 'Recently Added',
+        };
+      });
 
-    /*returns them in reverse alphabetical order, since they will be sorted by "isrecent",
+    /*returns them in reverse alphabetical order, since they will be sorted by "isRecent",
     and then reversed to put "Recently Added" section first */
-    return (sortDataList(recentManufacturers, "name").reverse()).concat(sortDataList(classifiedManufacturers, "name").reverse());
-
-  }
+    return sortDataList(recentManufacturers, 'name')
+      .reverse()
+      .concat(sortDataList(classifiedManufacturers, 'name').reverse());
+  };
 
   const renderStepContent = (step: number) => {
     switch (step) {
@@ -825,8 +827,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                       newManufacturer?.id ?? null
                     );
                   }}
-                  options={sortDataList(options(), "isrecent").reverse() ?? []}
-                  groupBy={(option) => option.isrecent}
+                  options={sortDataList(options(), 'isRecent').reverse() ?? []}
+                  groupBy={(option) => option.isRecent}
                   size="small"
                   isOptionEqualToValue={(option, value) =>
                     option.name === value.name
