@@ -159,6 +159,7 @@ export default defineConfig(({ mode }) => {
           'src/mocks/browser.ts',
           'src/mocks/server.ts',
           'src/vite-env.d.ts',
+          'src/main.tsx',
         ],
       },
     },
