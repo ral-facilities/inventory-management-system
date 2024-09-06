@@ -1,7 +1,6 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import {
   AddCatalogueItem,
-  CatalogueCategory,
   CatalogueItem,
   EditCatalogueItem,
   TransferToCatalogueItem,
@@ -12,6 +11,7 @@ import {
   catalogueItemData,
   hooksWrapperWithProviders,
 } from '../testUtils';
+import { CatalogueCategory, CatalogueCategoryPropertyType } from './api.types';
 import {
   useAddCatalogueItem,
   useCatalogueItem,
@@ -317,10 +317,11 @@ describe('catalogue items api functions', () => {
             {
               id: '91',
               name: 'center wavelength',
-              type: 'number',
+              type: CatalogueCategoryPropertyType.Number,
               unit: 'fps',
               unit_id: '2',
               mandatory: true,
+              allowed_values: null,
             },
           ],
           id: '657305bc1e468454e97b638a',
@@ -450,10 +451,11 @@ describe('catalogue items api functions', () => {
             {
               id: '90',
               name: 'center wavelength',
-              type: 'number',
+              type: CatalogueCategoryPropertyType.Number,
               unit: 'fps',
               unit_id: '2',
               mandatory: true,
+              allowed_values: null,
             },
           ],
           id: '657305bc1e468454e97b638a',

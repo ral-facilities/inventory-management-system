@@ -12,16 +12,17 @@ import {
 } from '@mui/material';
 import { MRT_RowSelectionState } from 'material-react-table';
 import React from 'react';
+import { CatalogueCategory } from '../../api/api.types';
 import {
-  useCatalogueBreadcrumbs,
-  useCatalogueCategories,
-  useCatalogueCategory,
+  useGetCatalogueBreadcrumbs,
+  useGetCatalogueCategories,
+  useGetCatalogueCategory,
 } from '../../api/catalogueCategories';
 import {
   useCopyToCatalogueItem,
   useMoveToCatalogueItem,
 } from '../../api/catalogueItems';
-import { CatalogueCategory, CatalogueItem } from '../../app.types';
+import { CatalogueItem } from '../../app.types';
 import handleTransferState from '../../handleTransferState';
 import Breadcrumbs from '../../view/breadcrumbs.component';
 import CatalogueCategoryTableView from '../category/catalogueCategoryTableView.component';
@@ -60,7 +61,7 @@ const CatalogueItemDirectoryDialog = (
   const {
     data: catalogueCategoryData,
     isLoading: catalogueCategoryDataLoading,
-  } = useCatalogueCategories(
+  } = useGetCatalogueCategories(
     false,
     parentCategoryId === null ? 'null' : parentCategoryId
   );
@@ -82,7 +83,7 @@ const CatalogueItemDirectoryDialog = (
     useCopyToCatalogueItem();
 
   const { data: targetCatalogueCategory } =
-    useCatalogueCategory(parentCategoryId);
+    useGetCatalogueCategory(parentCategoryId);
 
   const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
     undefined
@@ -149,7 +150,7 @@ const CatalogueItemDirectoryDialog = (
   ]);
 
   const { data: catalogueBreadcrumbs } =
-    useCatalogueBreadcrumbs(parentCategoryId);
+    useGetCatalogueBreadcrumbs(parentCategoryId);
 
   return (
     <Dialog

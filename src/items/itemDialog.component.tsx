@@ -21,18 +21,20 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import { DatePicker } from '@mui/x-date-pickers';
+import { DesktopDatePicker } from '@mui/x-date-pickers';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { UsageStatus } from '../api/api.types';
+import {
+  CatalogueCategory,
+  CatalogueCategoryProperty,
+  UsageStatus,
+} from '../api/api.types';
 import { useAddItem, useAddItems, useEditItem } from '../api/items';
 import { useGetSystems, useGetSystemsBreadcrumbs } from '../api/systems';
 import { useGetUsageStatuses } from '../api/usageStatuses';
 import {
   AddItem,
   AdvancedSerialNumberOptionsType,
-  CatalogueCategory,
-  CatalogueCategoryProperty,
   CatalogueItem,
   EditItem,
   Item,
@@ -737,7 +739,7 @@ function ItemDialog(props: ItemDialogProps) {
             </Grid>
 
             <Grid item xs={12}>
-              <DatePicker
+              <DesktopDatePicker
                 label="Warranty end date"
                 value={itemDetails.warranty_end_date}
                 onChange={(date) =>
@@ -756,7 +758,7 @@ function ItemDialog(props: ItemDialogProps) {
               />
             </Grid>
             <Grid item xs={12}>
-              <DatePicker
+              <DesktopDatePicker
                 label="Delivered date"
                 value={itemDetails.delivered_date}
                 onChange={(date) =>

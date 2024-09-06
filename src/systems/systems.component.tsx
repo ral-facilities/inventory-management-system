@@ -85,7 +85,7 @@ const AddSystemButton = (props: { systemId: string | null }) => {
   const [addSystemDialogOpen, setAddSystemDialogOpen] =
     React.useState<boolean>(false);
 
-  let ariaLabelText = props.systemId === null ? 'Add System' : 'Add Subsystem'
+  const ariaLabelText = props.systemId === null ? 'Add System' : 'Add Subsystem'
   return (
     <>
       <Tooltip title = {ariaLabelText}>

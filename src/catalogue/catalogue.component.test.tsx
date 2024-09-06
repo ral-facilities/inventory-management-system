@@ -1,7 +1,11 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { HttpResponse, http } from 'msw';
-import { CatalogueCategoryProperty, CatalogueItemProperty } from '../app.types';
+import {
+  CatalogueCategoryProperty,
+  CatalogueCategoryPropertyType,
+} from '../api/api.types';
+import { CatalogueItemProperty } from '../app.types';
 import { server } from '../mocks/server';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import Catalogue, { matchCatalogueItemProperties } from './catalogue.component';
@@ -12,20 +16,29 @@ describe('matchCatalogueItemProperties', () => {
       {
         id: '1',
         name: 'Name1',
-        type: 'string',
+        type: CatalogueCategoryPropertyType.Text,
         mandatory: true,
+        unit_id: null,
+        unit: null,
+        allowed_values: null,
       },
       {
         id: '2',
         name: 'Name2',
-        type: 'number',
+        type: CatalogueCategoryPropertyType.Number,
         mandatory: false,
+        unit_id: null,
+        unit: null,
+        allowed_values: null,
       },
       {
         id: '3',
         name: 'Name3',
-        type: 'boolean',
+        type: CatalogueCategoryPropertyType.Boolean,
         mandatory: true,
+        unit_id: null,
+        unit: null,
+        allowed_values: null,
       },
     ];
 
@@ -55,14 +68,20 @@ describe('matchCatalogueItemProperties', () => {
       {
         id: '1',
         name: 'Name1',
-        type: 'string',
+        type: CatalogueCategoryPropertyType.Text,
         mandatory: true,
+        unit_id: null,
+        unit: null,
+        allowed_values: null,
       },
       {
         id: '2',
         name: 'Name2',
-        type: 'number',
+        type: CatalogueCategoryPropertyType.Number,
         mandatory: false,
+        unit_id: null,
+        unit: null,
+        allowed_values: null,
       },
     ];
 
@@ -265,7 +284,7 @@ describe('Catalogue', () => {
     });
   });
 
-  it('opens the edit name catalogue category dialog', async () => {
+  it('can open the edit catalogue category dialog and close it again', async () => {
     createView('/catalogue/1');
 
     await waitFor(() => {
@@ -278,7 +297,7 @@ describe('Catalogue', () => {
     await user.click(actionsButton);
 
     const editButton = screen.getByRole('menuitem', {
-      name: 'edit name Amp Meters catalogue category button',
+      name: 'edit Amp Meters catalogue category button',
     });
     await user.click(editButton);
 
@@ -290,35 +309,9 @@ describe('Catalogue', () => {
 
     await user.type(screen.getByLabelText('Name *'), '1');
     await user.click(saveButton);
-    await waitFor(() => {
-      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-    });
-  });
 
-  it('opens the edit properties catalogue category dialog', async () => {
-    createView('/catalogue/1');
-
-    await waitFor(() => {
-      expect(screen.getByText('Cameras')).toBeInTheDocument();
-    });
-
-    const actionsButton = screen.getByRole('button', {
-      name: 'actions Cameras catalogue category button',
-    });
-    await user.click(actionsButton);
-
-    const editButton = screen.getByRole('menuitem', {
-      name: 'edit properties Cameras catalogue category button',
-    });
-    await user.click(editButton);
-
-    await waitFor(() => {
-      expect(screen.getByRole('dialog')).toBeInTheDocument();
-    });
-
-    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
-
-    await user.click(cancelButton);
+    const closeButton = screen.getByRole('button', { name: 'Close' });
+    await user.click(closeButton);
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });

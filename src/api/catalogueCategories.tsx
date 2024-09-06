@@ -7,13 +7,7 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import {
-  AddCatalogueCategory,
-  AddPropertyMigration,
-  CatalogueCategory,
-  CatalogueCategoryProperty,
   CopyToCatalogueCategory,
-  EditCatalogueCategory,
-  EditPropertyMigration,
   MoveToCatalogueCategory,
   TransferState,
 } from '../app.types';
@@ -21,9 +15,18 @@ import {
 import handleTransferState from '../handleTransferState';
 import { generateUniqueNameUsingCode } from '../utils';
 import { imsApi } from './api';
-import { APIError, BreadcrumbsInfo } from './api.types';
+import {
+  APIError,
+  BreadcrumbsInfo,
+  CatalogueCategory,
+  CatalogueCategoryPatch,
+  CatalogueCategoryPost,
+  CatalogueCategoryProperty,
+  CatalogueCategoryPropertyPatch,
+  CatalogueCategoryPropertyPost,
+} from './api.types';
 
-const fetchCatalogueCategories = async (
+const getCatalogueCategories = async (
   parent_id: string
 ): Promise<CatalogueCategory[]> => {
   const queryParams = new URLSearchParams();
@@ -39,20 +42,20 @@ const fetchCatalogueCategories = async (
     });
 };
 
-export const useCatalogueCategories = (
+export const useGetCatalogueCategories = (
   isLeaf: boolean,
   parent_id: string
 ): UseQueryResult<CatalogueCategory[], AxiosError> => {
   return useQuery({
     queryKey: ['CatalogueCategories', parent_id],
     queryFn: () => {
-      return fetchCatalogueCategories(parent_id);
+      return getCatalogueCategories(parent_id);
     },
     enabled: !isLeaf,
   });
 };
 
-const fetchCatalogueBreadcrumbs = async (
+const getCatalogueBreadcrumbs = async (
   id: string
 ): Promise<BreadcrumbsInfo> => {
   return imsApi
@@ -62,35 +65,35 @@ const fetchCatalogueBreadcrumbs = async (
     });
 };
 
-export const useCatalogueBreadcrumbs = (
+export const useGetCatalogueBreadcrumbs = (
   id?: string | null
 ): UseQueryResult<BreadcrumbsInfo, AxiosError> => {
   return useQuery({
     queryKey: ['CatalogueBreadcrumbs', id],
     queryFn: () => {
-      return fetchCatalogueBreadcrumbs(id ?? '');
+      return getCatalogueBreadcrumbs(id ?? '');
     },
     enabled: !!id,
   });
 };
 
-const addCatalogueCategory = async (
-  catalogueCategory: AddCatalogueCategory
+const postCatalogueCategory = async (
+  catalogueCategory: CatalogueCategoryPost
 ): Promise<CatalogueCategory> => {
   return imsApi
     .post<CatalogueCategory>(`/v1/catalogue-categories`, catalogueCategory)
     .then((response) => response.data);
 };
 
-export const useAddCatalogueCategory = (): UseMutationResult<
+export const usePostCatalogueCategory = (): UseMutationResult<
   CatalogueCategory,
   AxiosError,
-  AddCatalogueCategory
+  CatalogueCategoryPost
 > => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (catalogueCategory: AddCatalogueCategory) =>
-      addCatalogueCategory(catalogueCategory),
+    mutationFn: (catalogueCategory: CatalogueCategoryPost) =>
+      postCatalogueCategory(catalogueCategory),
     onSuccess: (category) => {
       queryClient.invalidateQueries({
         queryKey: ['CatalogueCategories', category.parent_id ?? 'null'],
@@ -99,34 +102,38 @@ export const useAddCatalogueCategory = (): UseMutationResult<
   });
 };
 
-const addCatalogueCategoryProperty = async (
-  addPropertyMigration: AddPropertyMigration
+const postCatalogueCategoryProperty = async (
+  catalogueCategory: CatalogueCategory,
+  property: CatalogueCategoryPropertyPost
 ): Promise<CatalogueCategoryProperty> => {
   return imsApi
     .post<CatalogueCategoryProperty>(
-      `/v1/catalogue-categories/${addPropertyMigration.catalogueCategory.id}/properties`,
-      addPropertyMigration.property
+      `/v1/catalogue-categories/${catalogueCategory.id}/properties`,
+      property
     )
     .then((response) => response.data);
 };
 
-export const useAddCatalogueCategoryProperty = (): UseMutationResult<
+export const usePostCatalogueCategoryProperty = (): UseMutationResult<
   CatalogueCategoryProperty,
   AxiosError,
-  AddPropertyMigration
+  {
+    catalogueCategory: CatalogueCategory;
+    property: CatalogueCategoryPropertyPost;
+  }
 > => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (addPropertyMigration: AddPropertyMigration) => {
+    mutationFn: ({ catalogueCategory, property }) => {
       handleTransferState([
         {
-          name: addPropertyMigration.catalogueCategory.name,
-          message: `Adding property ${addPropertyMigration.property.name} in ${addPropertyMigration.catalogueCategory.name}`,
+          name: catalogueCategory.name,
+          message: `Adding property ${property.name} in ${catalogueCategory.name}`,
           state: 'information',
         },
       ]);
-      return addCatalogueCategoryProperty(addPropertyMigration);
+      return postCatalogueCategoryProperty(catalogueCategory, property);
     },
     onSuccess: (data, variables) => {
       const { name } = data;
@@ -171,34 +178,43 @@ export const useAddCatalogueCategoryProperty = (): UseMutationResult<
   });
 };
 
-const editCatalogueCategoryProperty = async (
-  editPropertyMigration: EditPropertyMigration
+const patchCatalogueCategoryProperty = async (
+  catalogueCategory: CatalogueCategory,
+  propertyId: string,
+  property: CatalogueCategoryPropertyPatch
 ): Promise<CatalogueCategoryProperty> => {
-  const { id, ...propertyBody } = editPropertyMigration.property;
   return imsApi
     .patch<CatalogueCategoryProperty>(
-      `/v1/catalogue-categories/${editPropertyMigration.catalogueCategory.id}/properties/${id}`,
-      propertyBody
+      `/v1/catalogue-categories/${catalogueCategory.id}/properties/${propertyId}`,
+      property
     )
     .then((response) => response.data);
 };
 
-export const useEditCatalogueCategoryProperty = (): UseMutationResult<
+export const usePatchCatalogueCategoryProperty = (): UseMutationResult<
   CatalogueCategoryProperty,
   AxiosError,
-  EditPropertyMigration
+  {
+    catalogueCategory: CatalogueCategory;
+    propertyId: string;
+    property: CatalogueCategoryPropertyPatch;
+  }
 > => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (editPropertyMigration: EditPropertyMigration) => {
+    mutationFn: ({ catalogueCategory, propertyId, property }) => {
       handleTransferState([
         {
-          name: editPropertyMigration.catalogueCategory.name,
-          message: `Editing property ${editPropertyMigration.property.name} in ${editPropertyMigration.catalogueCategory.name}`,
+          name: catalogueCategory.name,
+          message: `Editing property ${property.name} in ${catalogueCategory.name}`,
           state: 'information',
         },
       ]);
-      return editCatalogueCategoryProperty(editPropertyMigration);
+      return patchCatalogueCategoryProperty(
+        catalogueCategory,
+        propertyId,
+        property
+      );
     },
     onSuccess: (data, variables) => {
       const { name } = data;
@@ -242,24 +258,27 @@ export const useEditCatalogueCategoryProperty = (): UseMutationResult<
   });
 };
 
-const editCatalogueCategory = async (
-  catalogueCategory: EditCatalogueCategory
+const patchCatalogueCategory = async (
+  id: string,
+  catalogueCategory: CatalogueCategoryPatch
 ): Promise<CatalogueCategory> => {
-  const { id, ...updatedCategory } = catalogueCategory;
   return imsApi
-    .patch<CatalogueCategory>(`/v1/catalogue-categories/${id}`, updatedCategory)
+    .patch<CatalogueCategory>(
+      `/v1/catalogue-categories/${id}`,
+      catalogueCategory
+    )
     .then((response) => response.data);
 };
 
-export const useEditCatalogueCategory = (): UseMutationResult<
+export const usePatchCatalogueCategory = (): UseMutationResult<
   CatalogueCategory,
   AxiosError,
-  EditCatalogueCategory
+  { id: string; catalogueCategory: CatalogueCategoryPatch }
 > => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (catalogueCategory: EditCatalogueCategory) =>
-      editCatalogueCategory(catalogueCategory),
+    mutationFn: ({ id, catalogueCategory }) =>
+      patchCatalogueCategory(id, catalogueCategory),
     onSuccess: (category) => {
       queryClient.invalidateQueries({
         queryKey: ['CatalogueCategories', category.parent_id ?? 'null'],
@@ -292,8 +311,7 @@ export const useMoveToCatalogueCategory = (): UseMutationResult<
 
       const promises = moveToCatalogueCategory.selectedCategories.map(
         async (category: CatalogueCategory) => {
-          return editCatalogueCategory({
-            id: category.id,
+          return patchCatalogueCategory(category.id, {
             parent_id: moveToCatalogueCategory.targetCategory?.id || null,
           })
             .then((result) => {
@@ -369,23 +387,23 @@ export const useCopyToCatalogueCategory = (): UseMutationResult<
           // Data to post (backend will just ignore the extra here - only id and code)
           // Also use Object.assign to copy the data otherwise will modify in place causing issues
           // in tests
-          const categoryAdd: AddCatalogueCategory = Object.assign(
+          const categoryPost: CatalogueCategoryPost = Object.assign(
             {},
             category
-          ) as AddCatalogueCategory;
+          ) as CatalogueCategoryPost;
 
           // Assign new parent
-          categoryAdd.parent_id =
+          categoryPost.parent_id =
             copyToCatalogueCategory.targetCategory?.id || null;
 
           // Avoid duplicates
-          categoryAdd.name = generateUniqueNameUsingCode(
-            categoryAdd.name,
+          categoryPost.name = generateUniqueNameUsingCode(
+            categoryPost.name,
             category.code,
             copyToCatalogueCategory.existingCategoryCodes
           );
 
-          return addCatalogueCategory(categoryAdd)
+          return postCatalogueCategory(categoryPost)
             .then((result) => {
               const targetCategoryName =
                 copyToCatalogueCategory.targetCategory?.name || 'Root';
@@ -424,29 +442,29 @@ export const useCopyToCatalogueCategory = (): UseMutationResult<
   });
 };
 const deleteCatalogueCategory = async (
-  catalogueCategory: CatalogueCategory
+  catalogueCategoryId: string
 ): Promise<void> => {
   return imsApi
-    .delete(`/v1/catalogue-categories/${catalogueCategory.id}`)
+    .delete(`/v1/catalogue-categories/${catalogueCategoryId}`)
     .then((response) => response.data);
 };
 
 export const useDeleteCatalogueCategory = (): UseMutationResult<
   void,
   AxiosError,
-  CatalogueCategory
+  string
 > => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (catalogueCategory: CatalogueCategory) =>
-      deleteCatalogueCategory(catalogueCategory),
+    mutationFn: (catalogueCategoryId: string) =>
+      deleteCatalogueCategory(catalogueCategoryId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['CatalogueCategories'] });
     },
   });
 };
 
-const fetchCatalogueCategory = async (
+const getCatalogueCategory = async (
   id: string | undefined
 ): Promise<CatalogueCategory> => {
   return imsApi.get(`/v1/catalogue-categories/${id}`, {}).then((response) => {
@@ -454,13 +472,13 @@ const fetchCatalogueCategory = async (
   });
 };
 
-export const useCatalogueCategory = (
+export const useGetCatalogueCategory = (
   id?: string | null
 ): UseQueryResult<CatalogueCategory, AxiosError> => {
   return useQuery({
     queryKey: ['CatalogueCategory', id],
     queryFn: () => {
-      return fetchCatalogueCategory(id ?? '');
+      return getCatalogueCategory(id ?? '');
     },
     enabled: !!id,
   });
