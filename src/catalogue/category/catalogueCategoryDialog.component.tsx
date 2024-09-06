@@ -62,16 +62,6 @@ export const convertListToNumbers = (values: string[]): number[] => {
   return values.map((value) => parseFloat(value));
 };
 
-export interface CatalogueCategoryDialogProps {
-  open: boolean;
-  onClose: () => void;
-  parentId: string | null;
-  selectedCatalogueCategory?: CatalogueCategory;
-  resetSelectedCatalogueCategory: () => void;
-  requestType: RequestType;
-  duplicate?: boolean;
-}
-
 //-------------------------------------Transform form type to API type----------------------------------
 function transformToCatalogueCategoryPost(
   input: AddCatalogueCategoryWithPlacementIds
@@ -268,6 +258,16 @@ const AllowedValuesListTextFields = (props: { nestIndex: number }) => {
     </>
   );
 };
+
+export interface CatalogueCategoryDialogProps {
+  open: boolean;
+  onClose: () => void;
+  parentId: string | null;
+  selectedCatalogueCategory?: CatalogueCategory;
+  resetSelectedCatalogueCategory: () => void;
+  requestType: RequestType;
+  duplicate?: boolean;
+}
 
 const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
   const {

@@ -230,7 +230,8 @@ function Catalogue() {
   const [selectedCatalogueCategory, setSelectedCatalogueCategory] =
     React.useState<CatalogueCategory | undefined>(undefined);
 
-  // useEffect hook to handle updates to selectedCatalogueCategory when catalogueCategoryData changes
+  // useEffect hook to update selectedCatalogueCategory when catalogueCategoryData changes
+  // Ensures that the edit dialog has the latest property data after a migration (add or edit) is completed
   React.useEffect(() => {
     // Extract the IDs of all categories from the catalogueCategoryData array
     const catalogueCategoryIds = catalogueCategoryData?.map(
