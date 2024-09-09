@@ -117,7 +117,7 @@ Cypress.Commands.add('findBrowserMockedRequests', ({ method, url }) => {
 declare global {
   interface Window {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    msw: { http: any; worker: any; matchRequestUrl: any };
+    msw: { worker: any; http: any; matchRequestUrl: any };
   }
 }
 
