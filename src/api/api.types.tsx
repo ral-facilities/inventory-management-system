@@ -179,6 +179,7 @@ export interface Property extends PropertyPost {
   unit_id: string | null;
   unit: string | null;
 }
+
 export interface CatalogueItemPost {
   catalogue_category_id: string;
   manufacturer_id: string;
