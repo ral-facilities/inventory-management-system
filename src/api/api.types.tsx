@@ -216,7 +216,8 @@ export interface CatalogueItemPatch
   is_obsolete?: boolean;
 }
 
-export interface CatalogueItem {
+export interface CatalogueItem extends CreatedModifiedMixin {
+  id: string;
   catalogue_category_id: string;
   manufacturer_id: string;
   name: string;
