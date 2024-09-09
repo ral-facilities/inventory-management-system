@@ -27,10 +27,14 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { CatalogueCategory, Manufacturer } from '../../api/api.types';
-import { useCatalogueItems } from '../../api/catalogueItems';
+import {
+  CatalogueCategory,
+  CatalogueItem,
+  Manufacturer,
+} from '../../api/api.types';
+import { useGetCatalogueItems } from '../../api/catalogueItems';
 import { useGetManufacturerIds } from '../../api/manufacturers';
-import { CatalogueItem, CatalogueItemPropertyResponse } from '../../app.types';
+import { CatalogueItemPropertyResponse } from '../../app.types';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import {
   TableBodyCellOverFlowTip,
@@ -162,7 +166,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
 
   const { data: catalogueItemsData, isLoading: isLoadingCatalogueItems } =
-    useCatalogueItems(parentInfo.id);
+    useGetCatalogueItems(parentInfo.id);
 
   // States
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);

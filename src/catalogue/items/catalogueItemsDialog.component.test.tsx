@@ -12,7 +12,7 @@ import CatalogueItemsDialog, {
 import { http } from 'msw';
 import { MockInstance } from 'vitest';
 import { imsApi } from '../../api/api';
-import { CatalogueItem } from '../../app.types';
+import { CatalogueItem } from '../../api/api.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { server } from '../../mocks/server';
 
