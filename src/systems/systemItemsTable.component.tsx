@@ -20,11 +20,11 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { System, UsageStatus } from '../api/api.types';
-import { useCatalogueItemIds } from '../api/catalogueItems';
+import { CatalogueItem, System, UsageStatus } from '../api/api.types';
+import { useGetCatalogueItemIds } from '../api/catalogueItems';
 import { useItems } from '../api/items';
 import { useGetUsageStatuses } from '../api/usageStatuses';
-import { CatalogueItem, Item } from '../app.types';
+import { Item } from '../app.types';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
 import {
@@ -122,10 +122,10 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
   const selectedRowIds = Object.keys(rowSelection);
   const selectedItems =
     type === 'normal'
-      ? itemsData?.filter((item) => selectedRowIds.includes(item.id)) ?? []
-      : moveToSelectedItems?.filter((item) =>
+      ? (itemsData?.filter((item) => selectedRowIds.includes(item.id)) ?? [])
+      : (moveToSelectedItems?.filter((item) =>
           selectedRowIds.includes(item.id)
-        ) ?? [];
+        ) ?? []);
 
   // Fetch catalogue items for each item to display in the table
   const catalogueItemIdSet = React.useMemo(
@@ -141,12 +141,13 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
   );
   let isLoading = type === 'normal' ? isLoadingItems : false;
 
-  const catalogueItemList: (CatalogueItem | undefined)[] = useCatalogueItemIds(
-    Array.from(catalogueItemIdSet.values())
-  ).map((query) => {
-    isLoading = isLoading || query.isLoading;
-    return query.data;
-  });
+  const catalogueItemList: (CatalogueItem | undefined)[] =
+    useGetCatalogueItemIds(Array.from(catalogueItemIdSet.values())).map(
+      (query) => {
+        isLoading = isLoading || query.isLoading;
+        return query.data;
+      }
+    );
 
   // Once loading has finished - pair up all data for the table rows
   // If performance becomes a problem with this should remove find and fetch catalogue

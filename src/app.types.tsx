@@ -1,4 +1,4 @@
-import { CatalogueCategory, System } from './api/api.types';
+import { CatalogueCategory, CatalogueItem, System } from './api/api.types';
 
 export const MicroFrontendId = 'scigateway';
 export const MicroFrontendToken = `${MicroFrontendId}:token`;
@@ -114,20 +114,6 @@ export interface CatalogueItemPropertyResponse {
   value: string | number | boolean | null;
   unit: string | null;
   unit_id?: string | null;
-}
-
-export interface CatalogueItem extends CatalogueItemDetails {
-  properties: CatalogueItemPropertyResponse[];
-  id: string;
-  created_time: string;
-  modified_time: string;
-}
-export interface AddCatalogueItem extends CatalogueItemDetails {
-  properties: CatalogueItemProperty[];
-}
-
-export interface EditCatalogueItem extends Partial<AddCatalogueItem> {
-  id: string;
 }
 
 // Used for the move to and copy to

@@ -26,19 +26,19 @@ import {
   APIError,
   CatalogueCategory,
   CatalogueCategoryProperty,
+  CatalogueItem,
+  CatalogueItemPatch,
+  CatalogueItemPost,
   Manufacturer,
 } from '../../api/api.types';
 import {
-  useAddCatalogueItem,
-  useEditCatalogueItem,
+  usePatchCatalogueItem,
+  usePostCatalogueItem,
 } from '../../api/catalogueItems';
 import { useGetManufacturers } from '../../api/manufacturers';
 import {
-  AddCatalogueItem,
   CatalogueDetailsErrorMessages,
-  CatalogueItem,
   CatalogueItemDetailsPlaceholder,
-  EditCatalogueItem,
 } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component';
@@ -199,10 +199,10 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     setFormErrorMessage(undefined);
   };
 
-  const { mutateAsync: addCatalogueItem, isPending: isAddPending } =
-    useAddCatalogueItem();
-  const { mutateAsync: editCatalogueItem, isPending: isEditPending } =
-    useEditCatalogueItem();
+  const { mutateAsync: postCatalogueItem, isPending: isAddPending } =
+    usePostCatalogueItem();
+  const { mutateAsync: patchCatalogueItem, isPending: isEditPending } =
+    usePatchCatalogueItem();
 
   const { data: manufacturerList } = useGetManufacturers();
   const selectedCatalogueItemManufacturer =
@@ -422,13 +422,13 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
     if (hasPropertiesErrors || hasDetailsErrors) return;
 
-    const catalogueItem: AddCatalogueItem = {
+    const catalogueItem: CatalogueItemPost = {
       ...details,
       properties: updatedProperties,
       name: details.name,
     };
 
-    addCatalogueItem(trimStringValues(catalogueItem))
+    postCatalogueItem(trimStringValues(catalogueItem))
       .then(() => handleClose())
       .catch((error: AxiosError) => {
         handleIMS_APIError(error);
@@ -437,7 +437,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     handlePropertiesFormErrorStates,
     handleDetailsFormErrorStates,
     details,
-    addCatalogueItem,
+    postCatalogueItem,
     handleClose,
   ]);
 
@@ -487,9 +487,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       const isManufacturerUpdated =
         JSON.stringify(details.manufacturer_id) !==
         JSON.stringify(selectedCatalogueItem.manufacturer_id);
-      const catalogueItem: EditCatalogueItem = {
-        id: selectedCatalogueItem.id,
-      };
+      const catalogueItem: CatalogueItemPatch = {};
 
       const isNotesUpdated = details.notes !== selectedCatalogueItem.notes;
 
@@ -516,7 +514,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       if (isNotesUpdated) catalogueItem.notes = details.notes;
 
       if (
-        catalogueItem.id &&
+        selectedCatalogueItem.id &&
         (isNameUpdated ||
           isDescriptionUpdated ||
           isCostGbpUpdated ||
@@ -530,7 +528,10 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           isManufacturerUpdated ||
           isNotesUpdated)
       ) {
-        editCatalogueItem(trimStringValues(catalogueItem))
+        patchCatalogueItem({
+          id: selectedCatalogueItem.id,
+          catalogueItem: trimStringValues(catalogueItem),
+        })
           .then(() => handleClose())
           .catch((error: AxiosError) => {
             const response = error.response?.data as APIError;
@@ -554,7 +555,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     handlePropertiesFormErrorStates,
     handleDetailsFormErrorStates,
     details,
-    editCatalogueItem,
+    patchCatalogueItem,
     handleClose,
   ]);
 
@@ -819,7 +820,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 />
               </Grid>
               <Grid item xs={1}>
-                <Tooltip title = "Add Manufacturer">
+                <Tooltip title="Add Manufacturer">
                   <span>
                     <IconButton
                       sx={{ mx: '4px', my: '2px' }}

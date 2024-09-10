@@ -3,8 +3,7 @@ import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http } from 'msw';
 import { MockInstance } from 'vitest';
 import { imsApi } from '../api/api';
-import { CatalogueCategory } from '../api/api.types';
-import { CatalogueItem } from '../app.types';
+import { CatalogueCategory, CatalogueItem } from '../api/api.types';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { server } from '../mocks/server';
 import {

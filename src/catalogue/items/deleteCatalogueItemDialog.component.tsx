@@ -11,9 +11,8 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { APIError } from '../../api/api.types';
+import { APIError, CatalogueItem } from '../../api/api.types';
 import { useDeleteCatalogueItem } from '../../api/catalogueItems';
-import { CatalogueItem } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 
 export interface DeleteCatalogueItemDialogProps {
@@ -41,7 +40,7 @@ const DeleteCatalogueItemDialog = (props: DeleteCatalogueItemDialogProps) => {
   }, [onClose]);
   const handleDeleteCatalogueCategory = React.useCallback(() => {
     if (catalogueItem) {
-      deleteCatalogueItem(catalogueItem)
+      deleteCatalogueItem(catalogueItem.id)
         .then(() => {
           onClose();
           onChangeCatalogueItem(undefined);

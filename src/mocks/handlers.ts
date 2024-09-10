@@ -7,6 +7,9 @@ import {
   CatalogueCategoryProperty,
   CatalogueCategoryPropertyPatch,
   CatalogueCategoryPropertyPost,
+  CatalogueItem,
+  CatalogueItemPatch,
+  CatalogueItemPost,
   Manufacturer,
   ManufacturerPatch,
   ManufacturerPost,
@@ -18,14 +21,7 @@ import {
   UsageStatus,
   UsageStatusPost,
 } from '../api/api.types';
-import {
-  AddCatalogueItem,
-  AddItem,
-  CatalogueItem,
-  EditCatalogueItem,
-  EditItem,
-  Item,
-} from '../app.types';
+import { AddItem, EditItem, Item } from '../app.types';
 import { generateUniqueId } from '../utils';
 import CatalogueCategoriesJSON from './CatalogueCategories.json';
 import CatalogueCategoryBreadcrumbsJSON from './CatalogueCategoryBreadcrumbs.json';
@@ -266,7 +262,7 @@ export const handlers = [
 
   // ------------------------------------ CATALOGUE ITEMS ------------------------------------
 
-  http.post<PathParams, AddCatalogueItem, CatalogueItem | ErrorResponse>(
+  http.post<PathParams, CatalogueItemPost, CatalogueItem | ErrorResponse>(
     '/v1/catalogue-items',
     async ({ request }) => {
       let body = await request.json();
@@ -343,7 +339,7 @@ export const handlers = [
     }
   ),
 
-  http.patch<{ id: string }, EditCatalogueItem, CatalogueItem | ErrorResponse>(
+  http.patch<{ id: string }, CatalogueItemPatch, CatalogueItem | ErrorResponse>(
     '/v1/catalogue-items/:id',
     async ({ request, params }) => {
       const body = await request.json();
