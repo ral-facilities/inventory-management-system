@@ -218,7 +218,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.14.6, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.23.9, @babel/runtime@npm:^7.25.4, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.7":
+"@babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.14.6, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.23.9, @babel/runtime@npm:^7.25.6, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.7":
   version: 7.25.6
   resolution: "@babel/runtime@npm:7.25.6"
   dependencies:
@@ -1055,11 +1055,12 @@ __metadata:
   linkType: hard
 
 "@mui/x-date-pickers@npm:^7.6.1":
-  version: 7.15.0
-  resolution: "@mui/x-date-pickers@npm:7.15.0"
+  version: 7.16.0
+  resolution: "@mui/x-date-pickers@npm:7.16.0"
   dependencies:
-    "@babel/runtime": "npm:^7.25.4"
+    "@babel/runtime": "npm:^7.25.6"
     "@mui/utils": "npm:^5.16.6"
+    "@mui/x-internals": "npm:7.16.0"
     "@types/react-transition-group": "npm:^4.4.11"
     clsx: "npm:^2.1.1"
     prop-types: "npm:^15.8.1"
@@ -1097,7 +1098,19 @@ __metadata:
       optional: true
     moment-jalaali:
       optional: true
-  checksum: 10c0/4aa0f0c2e0f8a59cee3845174b20c53371d09ee77c214b6b89845a8f5c9e90a5d3d087bf556ca5a3346cbbd0219ed1694e89a2371a91187482a9b508b25f2d45
+  checksum: 10c0/82ce2bbc42bcf30e6e7a8ea1a15a868e23c767c99e5741be0aa07356b734941198c043aadd76d10cdc4af3f0a7cf9eee0a67fa8e1b57a88cc161454716318841
+  languageName: node
+  linkType: hard
+
+"@mui/x-internals@npm:7.16.0":
+  version: 7.16.0
+  resolution: "@mui/x-internals@npm:7.16.0"
+  dependencies:
+    "@babel/runtime": "npm:^7.25.6"
+    "@mui/utils": "npm:^5.16.6"
+  peerDependencies:
+    react: ^17.0.0 || ^18.0.0
+  checksum: 10c0/77decc15d9053d716ea369058092fe8ef690978fd36c413be84d4a54b565ca779384e6e126fe292da119ec1b048c45385097935394c3381095ce78abab8324d4
   languageName: node
   linkType: hard
 
