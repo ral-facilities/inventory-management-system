@@ -42,6 +42,7 @@ import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component'
 import { sortDataList, trimStringValues } from '../../utils';
 import { matchCatalogueItemProperties } from '../catalogue.component';
 
+const RECENT_MANUFACTURER_CUTOFF_TIME = 10 * 60 * 1000;
 export interface CatalogueItemsDialogProps {
   open: boolean;
   onClose: () => void;
@@ -620,8 +621,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     const recentManufacturers = classifiedManufacturers
       .filter((option) => {
         const created_date = new Date(option.created_time).getTime();
-        const TEN_MINUTES = 1000 * 60 * 10;
-        const isRecent = date_now - TEN_MINUTES <= created_date;
+        const isRecent =
+          date_now - RECENT_MANUFACTURER_CUTOFF_TIME <= created_date;
         return isRecent;
       })
       .map((option) => {
