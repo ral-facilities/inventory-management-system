@@ -88,7 +88,7 @@
     "jsdom": "^24.1.0",
     "prettier": "^3.3.0",
     "serve": "^14.2.3",
-    "serve-static": "1.15.0",
+    "serve-static": "1.16.0",
     "start-server-and-test": "^2.0.3",
     "typescript-eslint": "^7.13.0",
     "vitest": "^2.0.0"
