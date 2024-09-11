@@ -575,7 +575,7 @@ function CatalogueItemsLandingPage() {
         onClose={() => setEditItemDialogOpen(false)}
         parentInfo={catalogueCategoryData}
         selectedCatalogueItem={catalogueItemIdData}
-        type="edit"
+        requestType="patch"
       />
     </Grid>
   );

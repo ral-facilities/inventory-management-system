@@ -796,7 +796,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
               table.setCreatingRow(null);
             }}
             parentInfo={parentInfo}
-            type={itemDialogType}
+            duplicate={itemDialogType === 'duplicate'}
+            requestType={itemDialogType === 'edit' ? 'patch' : 'post'}
             selectedCatalogueItem={
               itemDialogType === 'create'
                 ? undefined
