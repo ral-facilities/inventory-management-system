@@ -5836,8 +5836,8 @@ __metadata:
   linkType: hard
 
 "material-react-table@npm:^2.13.0":
-  version: 2.13.2
-  resolution: "material-react-table@npm:2.13.2"
+  version: 2.13.3
+  resolution: "material-react-table@npm:2.13.3"
   dependencies:
     "@tanstack/match-sorter-utils": "npm:8.19.4"
     "@tanstack/react-table": "npm:8.20.5"
@@ -5851,7 +5851,7 @@ __metadata:
     "@mui/x-date-pickers": ">=6.15.0"
     react: ">=17.0"
     react-dom: ">=17.0"
-  checksum: 10c0/cdc86f7a373280d390d4d582b653c9d940a9742ffcb7f9bcd534160357bad806b58fb6c6a76426280289ca1bf15e955ea8e6fd788d44c801e00ec581810073b1
+  checksum: 10c0/c00a3521767e879d541ef12c425048d5bd5368ff2f30883558be49630c908a878347768397c9a902651f005f2d10a06d1e8ff6d86851df4a8cbe750c4847fa5d
   languageName: node
   linkType: hard
 
