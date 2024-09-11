@@ -49,20 +49,16 @@ describe('Catalogue Items', () => {
       const request = postRequests[0];
       expect(JSON.stringify(await request.json())).equal(
         JSON.stringify({
-          catalogue_category_id: '4',
+          manufacturer_id: '1',
           name: 'test',
+          description: 'test Description',
           cost_gbp: 5000,
           cost_to_rework_gbp: 400,
           days_to_replace: 14,
           days_to_rework: 5,
-          description: 'test Description',
-          item_model_number: 'MXtest',
-          is_obsolete: false,
-          obsolete_reason: null,
-          obsolete_replacement_catalogue_item_id: null,
-          drawing_link: 'https://example.com',
           drawing_number: 'MX43242',
-          manufacturer_id: '1',
+          drawing_link: 'https://example.com',
+          item_model_number: 'MXtest',
           notes: 'This is a test note',
           properties: [
             { id: '1', value: 18 },
@@ -72,6 +68,10 @@ describe('Catalogue Items', () => {
             { id: '5', value: true },
             { id: '6', value: false },
           ],
+          catalogue_category_id: '4',
+          is_obsolete: false,
+          obsolete_replacement_catalogue_item_id: null,
+          obsolete_reason: null,
         })
       );
     });
@@ -97,25 +97,25 @@ describe('Catalogue Items', () => {
       const request = postRequests[0];
       expect(JSON.stringify(await request.json())).equal(
         JSON.stringify({
-          catalogue_category_id: '5',
+          manufacturer_id: '3',
           name: 'Energy Meters 27_copy_1',
+          description: 'Precision energy meters for accurate measurements. 27',
           cost_gbp: 600,
           cost_to_rework_gbp: 89,
           days_to_replace: 7,
           days_to_rework: 60,
-          description: 'Precision energy meters for accurate measurements. 27',
-          item_model_number: null,
-          is_obsolete: false,
-          obsolete_reason: null,
-          obsolete_replacement_catalogue_item_id: null,
-          drawing_link: null,
           drawing_number: null,
-          manufacturer_id: '3',
+          drawing_link: null,
+          item_model_number: null,
           notes: 'Need to find new manufacturer. 27',
           properties: [
             { id: '7', value: 2000 },
             { id: '8', value: null },
           ],
+          catalogue_category_id: '5',
+          is_obsolete: false,
+          obsolete_replacement_catalogue_item_id: null,
+          obsolete_reason: null,
         })
       );
     });
@@ -158,20 +158,16 @@ describe('Catalogue Items', () => {
       const request = postRequests[0];
       expect(JSON.stringify(await request.json())).equal(
         JSON.stringify({
-          catalogue_category_id: '4',
+          manufacturer_id: '1',
           name: 'test',
+          description: null,
           cost_gbp: 5000,
           cost_to_rework_gbp: null,
           days_to_replace: 14,
           days_to_rework: null,
-          description: null,
-          item_model_number: null,
-          is_obsolete: false,
-          obsolete_reason: null,
-          obsolete_replacement_catalogue_item_id: null,
-          drawing_link: null,
           drawing_number: null,
-          manufacturer_id: '1',
+          drawing_link: null,
+          item_model_number: null,
           notes: null,
           properties: [
             { id: '1', value: 18 },
@@ -181,6 +177,10 @@ describe('Catalogue Items', () => {
             { id: '5', value: true },
             { id: '6', value: null },
           ],
+          catalogue_category_id: '4',
+          is_obsolete: false,
+          obsolete_replacement_catalogue_item_id: null,
+          obsolete_reason: null,
         })
       );
     });
@@ -224,26 +224,26 @@ describe('Catalogue Items', () => {
       const request = postRequests[0];
       expect(JSON.stringify(await request.json())).equal(
         JSON.stringify({
-          catalogue_category_id: '12',
+          manufacturer_id: '1',
           name: 'test',
+          description: null,
           cost_gbp: 5000,
           cost_to_rework_gbp: null,
           days_to_replace: 14,
           days_to_rework: null,
-          description: null,
-          item_model_number: null,
-          is_obsolete: false,
-          obsolete_reason: null,
-          obsolete_replacement_catalogue_item_id: null,
-          drawing_link: null,
           drawing_number: null,
-          manufacturer_id: '1',
+          drawing_link: null,
+          item_model_number: null,
           notes: null,
           properties: [
             { id: '17', value: 400 },
             { id: '18', value: 0.2 },
             { id: '19', value: 'y' },
           ],
+          catalogue_category_id: '12',
+          is_obsolete: false,
+          obsolete_replacement_catalogue_item_id: null,
+          obsolete_reason: null,
         })
       );
     });
@@ -256,13 +256,13 @@ describe('Catalogue Items', () => {
       .within(() => {
         cy.findByRole('button', { name: 'Next' }).click();
 
-        cy.findByText('Please enter a name').should('exist');
-        cy.findByText('Please enter a cost').should('exist');
+        cy.findByText('Please enter a name.').should('exist');
+        cy.findByText('Please enter a cost.').should('exist');
         cy.findByText(
-          'Please enter how many days it would take to replace'
+          'Please enter how many days it would take to replace.'
         ).should('exist');
         cy.findByText(
-          'Please choose a manufacturer, or add a new manufacturer'
+          'Please choose a manufacturer or add a new manufacturer. Then select a manufacturer.'
         ).should('exist');
 
         cy.findByRole('button', { name: 'Next' }).should('be.disabled');
@@ -274,23 +274,25 @@ describe('Catalogue Items', () => {
         cy.findByLabelText('Manufacturer *').click();
         cy.findByLabelText('Manufacturer *').type('Man{downArrow}{enter}');
 
-        cy.findByText('Please enter name').should('not.exist');
-        cy.findByText('Please select either True or False').should('not.exist');
-        cy.findByText('Please enter a cost').should('not.exist');
+        cy.findByText('Please enter name.').should('not.exist');
+        cy.findByText('Please select either True or False.').should(
+          'not.exist'
+        );
+        cy.findByText('Please enter a cost.').should('not.exist');
         cy.findByText(
-          'Please enter how many days it would take to replace'
+          'Please enter how many days it would take to replace.'
         ).should('not.exist');
         cy.findByText(
-          'Please chose a manufacturer, or add a new manufacturer'
+          'Please chose a manufacturer, or add a new manufacturer.'
         ).should('not.exist');
 
         cy.findByRole('button', { name: 'Next' }).click();
         cy.findByRole('button', { name: 'Finish' }).click();
 
-        cy.findByText('Please select either True or False').should('exist');
+        cy.findByText('Please select either True or False.').should('exist');
 
         cy.findAllByText(
-          'Please enter a valid value as this field is mandatory'
+          'Please enter a valid value as this field is mandatory.'
         ).should('have.length', 2);
       });
     cy.findByLabelText('Resolution (megapixels) *').type('18');
@@ -301,7 +303,7 @@ describe('Catalogue Items', () => {
       .should('be.visible')
       .within(() => {
         cy.findAllByText(
-          'Please enter a valid value as this field is mandatory'
+          'Please enter a valid value as this field is mandatory.'
         ).should('have.length', 0);
 
         // value error from number field
@@ -314,9 +316,7 @@ describe('Catalogue Items', () => {
         cy.findByLabelText('Time to replace (days) *').type('32gf');
         cy.findByLabelText('Drawing link').type('test.co.uk');
 
-        cy.findByRole('button', { name: 'Next' }).click();
-
-        cy.findAllByText('Please enter a valid number').should(
+        cy.findAllByText('Please enter a valid number.').should(
           'have.length',
           2
         );
@@ -336,9 +336,8 @@ describe('Catalogue Items', () => {
         cy.findByLabelText('Resolution (megapixels) *').clear();
         cy.findByLabelText('Resolution (megapixels) *').type('dsfs');
         cy.findByLabelText('Frame Rate (fps)').type('fdsfsd');
-        cy.findByRole('button', { name: 'Finish' }).click();
 
-        cy.findAllByText('Please enter a valid number').should(
+        cy.findAllByText('Please enter a valid number.').should(
           'have.length',
           2
         );
@@ -532,7 +531,9 @@ describe('Catalogue Items', () => {
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.contains('Please edit a form entry before clicking save');
+        cy.contains(
+          "There have been no changes made. Please change a field's value or press Cancel to exit."
+        );
       });
     cy.findByRole('button', { name: 'Finish' }).should('be.disabled');
   });
