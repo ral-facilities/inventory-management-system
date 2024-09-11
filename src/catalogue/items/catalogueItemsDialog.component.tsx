@@ -435,8 +435,12 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       switch (step) {
         case 0:
           return Object.values(errorsStep1).length !== 0;
-        case 1:
-          return Object.values(errorsStep2).length !== 0;
+        case 1: {
+          return (
+            Object.keys(errorsStep2).filter((val) => val !== 'root').length !==
+            0
+          );
+        }
       }
     },
     [errorsStep1, errorsStep2]
