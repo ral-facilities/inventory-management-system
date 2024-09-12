@@ -321,7 +321,7 @@ describe('Catalogue Items', () => {
           2
         );
         cy.findAllByText(
-          'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted'
+          'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted.'
         ).should('exist');
         cy.findByRole('button', { name: 'Next' }).should('be.disabled');
         cy.findByLabelText('Cost (£) *').clear();

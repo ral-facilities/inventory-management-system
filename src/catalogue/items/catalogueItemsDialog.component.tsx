@@ -39,13 +39,13 @@ import {
 } from '../../api/catalogueItems';
 import { useGetManufacturers } from '../../api/manufacturers';
 import {
-  CatalogueItemStep1,
-  CatalogueItemStep1Post,
+  CatalogueItemDetailsStep,
+  CatalogueItemDetailsStepPost,
   PropertiesStep,
   PropertyValue,
 } from '../../app.types';
 import {
-  CatalogueItemSchemaStep1,
+  CatalogueItemDetailsStepSchema,
   PropertiesStepSchema,
   RequestType,
 } from '../../form.schemas';
@@ -55,9 +55,9 @@ import { sortDataList } from '../../utils';
 
 const RECENT_MANUFACTURER_CUTOFF_TIME = 10 * 60 * 1000;
 
-function toCatalogueItemStep1(
+function toCatalogueItemDetailsStep(
   item: CatalogueItem | undefined
-): CatalogueItemStep1 {
+): CatalogueItemDetailsStep {
   if (!item) {
     return {
       manufacturer_id: '',
@@ -129,9 +129,9 @@ function convertToPropertyPost(
   });
 }
 
-function convertToCatalogueItemStep1Post(
-  item: CatalogueItemStep1
-): CatalogueItemStep1Post {
+function convertToCatalogueItemDetailsStepPost(
+  item: CatalogueItemDetailsStep
+): CatalogueItemDetailsStepPost {
   return {
     manufacturer_id: item.manufacturer_id,
     name: item.name,
@@ -173,22 +173,24 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     [parentInfo]
   );
 
-  const catalogueItemStep1FormMethods = useForm<CatalogueItemStep1>({
-    resolver: zodResolver(CatalogueItemSchemaStep1(requestType)),
-    defaultValues: toCatalogueItemStep1(selectedCatalogueItem),
-  });
+  const CatalogueItemDetailsStepFormMethods = useForm<CatalogueItemDetailsStep>(
+    {
+      resolver: zodResolver(CatalogueItemDetailsStepSchema(requestType)),
+      defaultValues: toCatalogueItemDetailsStep(selectedCatalogueItem),
+    }
+  );
 
   const {
-    handleSubmit: handleSubmitStep1,
-    register: registerStep1,
-    formState: { errors: errorsStep1 },
-    control: controlStep1,
-    clearErrors: clearErrorsStep1,
-    reset: resetStep1,
-    watch: watchStep1,
-  } = catalogueItemStep1FormMethods;
+    handleSubmit: handleSubmitDetailsStep,
+    register: registerDetailsStep,
+    formState: { errors: errorsDetailsStep },
+    control: controlDetailsStep,
+    clearErrors: clearErrorsDetailsStep,
+    reset: resetDetailsStep,
+    watch: watchDetailsStep,
+  } = CatalogueItemDetailsStepFormMethods;
 
-  const catalogueItemStep2FormMethods = useForm<PropertiesStep>({
+  const catalogueItemPropertiesStepFormMethods = useForm<PropertiesStep>({
     resolver: zodResolver(PropertiesStepSchema),
     defaultValues: {
       properties: convertToPropertyValueList(parentInfo, selectedCatalogueItem),
@@ -196,44 +198,58 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   });
 
   const {
-    handleSubmit: handleSubmitStep2,
-    register: registerStep2,
-    formState: { errors: errorsStep2 },
-    control: controlStep2,
-    clearErrors: clearErrorsStep2,
-    reset: resetStep2,
-    watch: watchStep2,
-    setError: setErrorStep2,
-  } = catalogueItemStep2FormMethods;
+    handleSubmit: handleSubmitPropertiesStep,
+    register: registerPropertiesStep,
+    formState: { errors: errorsPropertiesStep },
+    control: controlPropertiesStep,
+    clearErrors: clearErrorsPropertiesStep,
+    reset: resetPropertiesStep,
+    watch: watchPropertiesStep,
+    setError: setErrorPropertiesStep,
+  } = catalogueItemPropertiesStepFormMethods;
 
   const handleClose = React.useCallback(() => {
-    resetStep1();
-    clearErrorsStep1();
-    resetStep2();
-    clearErrorsStep2();
+    resetDetailsStep();
+    clearErrorsDetailsStep();
+    resetPropertiesStep();
+    clearErrorsPropertiesStep();
     setActiveStep(0);
     onClose();
-  }, [clearErrorsStep1, clearErrorsStep2, onClose, resetStep1, resetStep2]);
+  }, [
+    clearErrorsDetailsStep,
+    clearErrorsPropertiesStep,
+    onClose,
+    resetDetailsStep,
+    resetPropertiesStep,
+  ]);
 
   // Load the values for editing.
   React.useEffect(() => {
-    resetStep1(toCatalogueItemStep1(selectedCatalogueItem));
-    resetStep2({
+    resetDetailsStep(toCatalogueItemDetailsStep(selectedCatalogueItem));
+    resetPropertiesStep({
       properties: convertToPropertyValueList(parentInfo, selectedCatalogueItem),
     });
-  }, [parentInfo, resetStep1, resetStep2, selectedCatalogueItem]);
+  }, [
+    parentInfo,
+    resetDetailsStep,
+    resetPropertiesStep,
+    selectedCatalogueItem,
+  ]);
 
   // Clears form errors when a value has been changed
   React.useEffect(() => {
-    const subscription1 = watchStep1(() => clearErrorsStep2('root.formError'));
-
+    const subscription1 = watchDetailsStep(() =>
+      clearErrorsPropertiesStep('root.formError')
+    );
     return () => subscription1.unsubscribe();
-  }, [clearErrorsStep2, watchStep1]);
+  }, [clearErrorsPropertiesStep, watchDetailsStep]);
 
   React.useEffect(() => {
-    const subscription = watchStep2(() => clearErrorsStep2('root.formError'));
+    const subscription = watchPropertiesStep(() =>
+      clearErrorsPropertiesStep('root.formError')
+    );
     return () => subscription.unsubscribe();
-  }, [clearErrorsStep2, watchStep2]);
+  }, [clearErrorsPropertiesStep, watchPropertiesStep]);
 
   const { mutateAsync: postCatalogueItem, isPending: isAddPending } =
     usePostCatalogueItem();
@@ -348,7 +364,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
               if (response && error.response?.status === 409) {
                 if (response.detail.includes('child elements')) {
-                  setErrorStep2('root.formError', {
+                  setErrorPropertiesStep('root.formError', {
                     message: response.detail,
                   });
                 }
@@ -357,14 +373,19 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               handleIMS_APIError(error);
             });
         } else {
-          setErrorStep2('root.formError', {
+          setErrorPropertiesStep('root.formError', {
             message:
               "There have been no changes made. Please change a field's value or press Cancel to exit.",
           });
         }
       }
     },
-    [selectedCatalogueItem, patchCatalogueItem, handleClose, setErrorStep2]
+    [
+      selectedCatalogueItem,
+      patchCatalogueItem,
+      handleClose,
+      setErrorPropertiesStep,
+    ]
   );
 
   // Stepper
@@ -378,36 +399,36 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     (event: React.SyntheticEvent, activeStep: number) => {
       switch (activeStep) {
         case 0:
-          return handleSubmitStep1(() => {
+          return handleSubmitDetailsStep(() => {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
           })(event);
         case 1:
           return false;
       }
     },
-    [handleSubmitStep1]
+    [handleSubmitDetailsStep]
   );
 
   const handleFinish = React.useCallback(
     async (event: React.SyntheticEvent) => {
-      let step1Data: CatalogueItemStep1 | undefined;
-      let step2Data: PropertiesStep | undefined;
+      let DetailsStepData: CatalogueItemDetailsStep | undefined;
+      let PropertiesStepData: PropertiesStep | undefined;
 
       // Wrap the handleSubmit call for Step 1 in a promise
-      await handleSubmitStep1((validData) => {
-        step1Data = validData; // If valid, set the data
+      await handleSubmitDetailsStep((validData) => {
+        DetailsStepData = validData; // If valid, set the data
       })(event);
 
-      await handleSubmitStep2((validData) => {
-        step2Data = validData; // If valid, set the data
+      await handleSubmitPropertiesStep((validData) => {
+        PropertiesStepData = validData; // If valid, set the data
       })(event);
 
-      if (!step1Data) return;
-      if (!step2Data) return;
+      if (!DetailsStepData) return;
+      if (!PropertiesStepData) return;
 
       const data: CatalogueItemPost = {
-        ...convertToCatalogueItemStep1Post(step1Data),
-        properties: convertToPropertyPost(step2Data.properties),
+        ...convertToCatalogueItemDetailsStepPost(DetailsStepData),
+        properties: convertToPropertyPost(PropertiesStepData.properties),
         catalogue_category_id: parentId ?? '',
         is_obsolete: false,
         obsolete_replacement_catalogue_item_id: null,
@@ -423,8 +444,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       duplicate,
       handleAddCatalogueItem,
       handleEditCatalogueItem,
-      handleSubmitStep1,
-      handleSubmitStep2,
+      handleSubmitDetailsStep,
+      handleSubmitPropertiesStep,
       parentId,
       requestType,
     ]
@@ -438,16 +459,16 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     (step: number) => {
       switch (step) {
         case 0:
-          return Object.values(errorsStep1).length !== 0;
+          return Object.values(errorsDetailsStep).length !== 0;
         case 1: {
           return (
-            Object.keys(errorsStep2).filter((val) => val !== 'root').length !==
-            0
+            Object.keys(errorsPropertiesStep).filter((val) => val !== 'root')
+              .length !== 0
           );
         }
       }
     },
-    [errorsStep1, errorsStep2]
+    [errorsDetailsStep, errorsPropertiesStep]
   );
 
   const options = (): Array<Manufacturer & { isRecent: string }> => {
@@ -494,10 +515,10 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 label="Name"
                 size="small"
                 required={true}
-                {...registerStep1('name')}
+                {...registerDetailsStep('name')}
                 fullWidth
-                error={!!errorsStep1.name}
-                helperText={errorsStep1.name?.message}
+                error={!!errorsDetailsStep.name}
+                helperText={errorsDetailsStep.name?.message}
               />
             </Grid>
             <Grid item xs={12}>
@@ -505,7 +526,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 id="catalogue-item-description-input"
                 label="Description"
                 size="small"
-                {...registerStep1('description')}
+                {...registerDetailsStep('description')}
                 fullWidth
                 multiline
               />
@@ -516,9 +537,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 label="Cost (£)"
                 size="small"
                 required={true}
-                {...registerStep1('cost_gbp')}
-                error={!!errorsStep1.cost_gbp}
-                helperText={errorsStep1.cost_gbp?.message}
+                {...registerDetailsStep('cost_gbp')}
+                error={!!errorsDetailsStep.cost_gbp}
+                helperText={errorsDetailsStep.cost_gbp?.message}
                 fullWidth
               />
             </Grid>
@@ -528,9 +549,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 id="catalogue-item-cost-rework-input"
                 label="Cost to rework (£)"
                 size="small"
-                {...registerStep1('cost_to_rework_gbp')}
-                error={!!errorsStep1.cost_to_rework_gbp}
-                helperText={errorsStep1.cost_to_rework_gbp?.message}
+                {...registerDetailsStep('cost_to_rework_gbp')}
+                error={!!errorsDetailsStep.cost_to_rework_gbp}
+                helperText={errorsDetailsStep.cost_to_rework_gbp?.message}
                 fullWidth
               />
             </Grid>
@@ -541,9 +562,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 label="Time to replace (days)"
                 size="small"
                 required={true}
-                {...registerStep1('days_to_replace')}
-                error={!!errorsStep1.days_to_replace}
-                helperText={errorsStep1.days_to_replace?.message}
+                {...registerDetailsStep('days_to_replace')}
+                error={!!errorsDetailsStep.days_to_replace}
+                helperText={errorsDetailsStep.days_to_replace?.message}
                 fullWidth
               />
             </Grid>
@@ -553,9 +574,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 id="catalogue-item-rework-input"
                 label="Time to rework (days)"
                 size="small"
-                {...registerStep1('days_to_rework')}
-                error={!!errorsStep1.days_to_rework}
-                helperText={errorsStep1.days_to_rework?.message}
+                {...registerDetailsStep('days_to_rework')}
+                error={!!errorsDetailsStep.days_to_rework}
+                helperText={errorsDetailsStep.days_to_rework?.message}
                 fullWidth
               />
             </Grid>
@@ -565,7 +586,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 id="catalogue-item-drawing-number-input"
                 label="Drawing number"
                 size="small"
-                {...registerStep1('drawing_number')}
+                {...registerDetailsStep('drawing_number')}
                 fullWidth
               />
             </Grid>
@@ -575,9 +596,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 id="catalogue-item-drawing-link-input"
                 label="Drawing link"
                 size="small"
-                {...registerStep1('drawing_link')}
-                error={!!errorsStep1.drawing_link}
-                helperText={errorsStep1.drawing_link?.message}
+                {...registerDetailsStep('drawing_link')}
+                error={!!errorsDetailsStep.drawing_link}
+                helperText={errorsDetailsStep.drawing_link?.message}
                 fullWidth
               />
             </Grid>
@@ -587,7 +608,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 id="catalogue-item-model-input"
                 label="Model number"
                 size="small"
-                {...registerStep1('item_model_number')}
+                {...registerDetailsStep('item_model_number')}
                 fullWidth
               />
             </Grid>
@@ -595,7 +616,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             <Grid item xs={12} style={{ display: 'flex' }}>
               <Grid item xs={11}>
                 <Controller
-                  control={controlStep1}
+                  control={controlDetailsStep}
                   name="manufacturer_id"
                   render={({ field: { value, onChange } }) => (
                     <Autocomplete
@@ -611,6 +632,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                         onChange(newManufacturer?.id);
                       }}
                       id="catalogue-item-manufacturer-input"
+                      disableClearable
                       options={
                         sortDataList(options(), 'isRecent').reverse() ?? []
                       }
@@ -623,10 +645,12 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                       renderInput={(params) => (
                         <TextField
                           {...params}
-                          required={true}
+                          required
                           label="Manufacturer"
-                          error={!!errorsStep1.manufacturer_id}
-                          helperText={errorsStep1.manufacturer_id?.message}
+                          error={!!errorsDetailsStep.manufacturer_id}
+                          helperText={
+                            errorsDetailsStep.manufacturer_id?.message
+                          }
                         />
                       )}
                     />
@@ -658,7 +682,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 id="catalogue-item-notes-input"
                 label="Notes"
                 size="small"
-                {...registerStep1('notes')}
+                {...registerDetailsStep('notes')}
                 multiline
                 minRows={5}
                 fullWidth
@@ -678,7 +702,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                         <Grid item xs={11} sx={{ display: 'flex' }}>
                           {property.type === 'boolean' ? (
                             <Controller
-                              control={controlStep2}
+                              control={controlPropertiesStep}
                               name={`properties.${index}.value.value`}
                               render={({
                                 field: { value: propertyValue, onChange },
@@ -712,12 +736,14 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                       required={property.mandatory ?? false}
                                       label={property.name}
                                       error={
-                                        !!errorsStep2?.properties?.[index]
-                                          ?.value?.value
+                                        !!errorsPropertiesStep?.properties?.[
+                                          index
+                                        ]?.value?.value
                                       }
                                       helperText={
-                                        errorsStep2?.properties?.[index]?.value
-                                          ?.value?.message as string
+                                        errorsPropertiesStep?.properties?.[
+                                          index
+                                        ]?.value?.value?.message as string
                                       }
                                     />
                                   )}
@@ -726,7 +752,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                             />
                           ) : property.allowed_values ? (
                             <Controller
-                              control={controlStep2}
+                              control={controlPropertiesStep}
                               name={`properties.${index}.value.value`}
                               render={({
                                 field: { value: propertyValue, onChange },
@@ -762,12 +788,14 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                           : ''
                                       }`}
                                       error={
-                                        !!errorsStep2?.properties?.[index]
-                                          ?.value?.value
+                                        !!errorsPropertiesStep?.properties?.[
+                                          index
+                                        ]?.value?.value
                                       }
                                       helperText={
-                                        errorsStep2?.properties?.[index]?.value
-                                          ?.value?.message as string
+                                        errorsPropertiesStep?.properties?.[
+                                          index
+                                        ]?.value?.value?.message as string
                                       }
                                     />
                                   )}
@@ -781,17 +809,18 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                 property.unit ? `(${property.unit})` : ''
                               }`}
                               size="small"
-                              {...registerStep2(
+                              {...registerPropertiesStep(
                                 `properties.${index}.value.value`
                               )}
                               required={property.mandatory ?? false}
                               fullWidth
                               error={
-                                !!errorsStep2?.properties?.[index]?.value?.value
+                                !!errorsPropertiesStep?.properties?.[index]
+                                  ?.value?.value
                               }
                               helperText={
-                                errorsStep2?.properties?.[index]?.value?.value
-                                  ?.message as string
+                                errorsPropertiesStep?.properties?.[index]?.value
+                                  ?.value?.message as string
                               }
                             />
                           )}
@@ -907,8 +936,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             disabled={
               isEditPending ||
               isAddPending ||
-              Object.values(errorsStep1).length !== 0 ||
-              Object.values(errorsStep2).length !== 0
+              Object.values(errorsDetailsStep).length !== 0 ||
+              Object.values(errorsPropertiesStep).length !== 0
             }
             onClick={handleFinish}
             sx={{ mr: 3 }}
@@ -922,7 +951,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           </Button>
         ) : (
           <Button
-            disabled={Object.values(errorsStep1).length !== 0}
+            disabled={Object.values(errorsDetailsStep).length !== 0}
             onClick={(event) => handleNext(event, activeStep)}
             sx={{ mr: 3 }}
           >
@@ -937,9 +966,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           alignItems: 'center',
         }}
       >
-        {errorsStep2.root?.formError && (
+        {errorsPropertiesStep.root?.formError && (
           <FormHelperText sx={{ marginBottom: 2, textAlign: 'center' }} error>
-            {errorsStep2.root?.formError.message}
+            {errorsPropertiesStep.root?.formError.message}
           </FormHelperText>
         )}
       </Box>

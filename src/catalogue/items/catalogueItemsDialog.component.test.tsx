@@ -553,7 +553,7 @@ describe('Catalogue Items Dialog', () => {
 
     expect(
       screen.getByText(
-        'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted'
+        'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted.'
       )
     ).toBeInTheDocument();
 

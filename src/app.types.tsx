@@ -67,7 +67,7 @@ export interface MoveToCatalogueCategory {
   targetCategory: CatalogueCategory | null;
 }
 
-export interface CatalogueItemStep1 {
+export interface CatalogueItemDetailsStep {
   manufacturer_id: string;
   name: string;
   description?: string | null;
@@ -81,7 +81,7 @@ export interface CatalogueItemStep1 {
   notes?: string | null;
 }
 
-export interface CatalogueItemStep1Post {
+export interface CatalogueItemDetailsStepPost {
   manufacturer_id: string;
   name: string;
   description?: string | null;

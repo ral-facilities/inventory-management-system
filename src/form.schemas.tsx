@@ -376,7 +376,7 @@ export const CatalogueCategorySchema = z.object({
 
 // ------------------------------------ CATALOGUE ITEMS ------------------------------------
 
-export const CatalogueItemSchemaStep1 = (requestType: RequestType) => {
+export const CatalogueItemDetailsStepSchema = (requestType: RequestType) => {
   return z.object({
     manufacturer_id: MandatoryStringSchema({
       errorMessage:
@@ -405,7 +405,7 @@ export const CatalogueItemSchemaStep1 = (requestType: RequestType) => {
     drawing_link: OptionalOrNullableURLSchema({
       requestType,
       errorMessage:
-        'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted',
+        'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted.',
     }),
     item_model_number: OptionalOrNullableStringSchema({ requestType }),
     notes: OptionalOrNullableStringSchema({ requestType }),
