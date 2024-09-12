@@ -617,12 +617,12 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       : [];
 
     //duplicating the recent manufacturers, so that they appear twice.
-    const date_now = new Date().getTime();
+    const currentDate = new Date().getTime();
     const recentManufacturers = classifiedManufacturers
       .filter((option) => {
-        const created_date = new Date(option.created_time).getTime();
+        const createdDate = new Date(option.created_time).getTime();
         const isRecent =
-          date_now - RECENT_MANUFACTURER_CUTOFF_TIME <= created_date;
+          currentDate - RECENT_MANUFACTURER_CUTOFF_TIME <= createdDate;
         return isRecent;
       })
       .map((option) => {
