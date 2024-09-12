@@ -46,6 +46,8 @@ function UsageStatuses() {
     UsageStatus | undefined
   >(undefined);
 
+  const [isEquals, setIsEquals] = React.useState<boolean>(false);
+
   const columns = React.useMemo<MRT_ColumnDef<UsageStatus>[]>(() => {
     return [
       {
@@ -66,7 +68,15 @@ function UsageStatuses() {
           removeSecondsFromDate(row.modified_time);
         },
         id: 'modified_time',
-        filterVariant: 'datetime-range',
+        filterVariant: isEquals ? 'date' : 'datetime',
+        renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) => {
+          const happiny = filterFunctionsRendering({
+            onSelectFilterMode: onSelectFilterMode,
+            selectedFilters: ['between', 'equals'],
+          });
+          //console.dir(happiny[0].props.selected);
+          return happiny;
+        },
         size: 350,
         enableGrouping: false,
         Cell: ({ row }) =>
@@ -87,8 +97,17 @@ function UsageStatuses() {
           formatDateTimeStrings(row.original.created_time, true),
       },
     ];
-  }, []);
+  }, [isEquals]);
 
+  const current_mode = Object(columns[1].filterFn).name;
+  console.log(`CURRENT VARIANT: ${columns[1].filterVariant}`);
+  console.log(`CURRENT MODE: ${current_mode}`);
+
+  if (current_mode == 'equals2' && isEquals == false) {
+    setIsEquals(true);
+  } else if (current_mode == 'between' && isEquals == true) {
+    setIsEquals(false);
+  }
   const noResultsTxt =
     'No results found: Try adding a Usage Status by using the Add Usage Status button';
 

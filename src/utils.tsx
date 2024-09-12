@@ -417,6 +417,7 @@ const customFilterFunctions: customFilterFunctionInterface[] = [
     Name: 'filterExclude',
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     FilterFunction(row: MRT_RowData, id: string, filterValue: any): any {
+      console.log(`AHHHH${filterValue}`);
       return !filterValue.includes(row.getValue(id));
     },
     Label: 'Exclude',
@@ -459,16 +460,19 @@ export const filterFunctionsRendering = (
 ) => {
   const { onSelectFilterMode, selectedFilters } = props;
   //TODO sort out rendering type
-  let rendering: any = selectedFilters.map((option, index) => {
+  let rendering: any = selectedFilters.map((option) => {
     const filter = customFilterFunctions.find(
       (filter) => filter.Name == option
     );
     return filter ? (
-      <MenuItem key={index} onClick={() => onSelectFilterMode(filter.Name)}>
+      <MenuItem
+        key={filter.Name}
+        onClick={() => onSelectFilterMode(filter.Name)}
+      >
         {filter.Label}
       </MenuItem>
     ) : (
-      <MenuItem key={index} onClick={() => onSelectFilterMode(option)}>
+      <MenuItem key={option} onClick={() => onSelectFilterMode(option)}>
         {option}
       </MenuItem>
     );
