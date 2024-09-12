@@ -661,6 +661,37 @@ describe('Catalogue Items Dialog', () => {
     expect(onClose).not.toHaveBeenCalled();
   });
 
+  describe('Recently Added Section', () => {
+    beforeEach(() => {
+      vi.useFakeTimers();
+      vi.setSystemTime(new Date('2024-01-09T12:00:00.000+00:00'));
+    });
+
+    afterEach(() => {
+      vi.useRealTimers();
+    });
+
+    it('displays recently added section', async () => {
+      props = {
+        ...props,
+        parentInfo: getCatalogueCategoryById('4'),
+      };
+
+      createView();
+
+      const manufacturerPopup = screen.getAllByRole('combobox')[0];
+
+      vi.advanceTimersByTimeAsync(2000);
+      await user.type(manufacturerPopup, 'Man');
+
+      const options = await screen.findAllByRole('option');
+      expect(options).toHaveLength(5);
+      expect(screen.getAllByText('Manufacturer B')).toHaveLength(2);
+      expect(screen.getByText('A-Z')).toBeInTheDocument();
+      expect(screen.getByText('Recently Added')).toBeInTheDocument();
+    }, 10000);
+  });
+
   describe('Edit a catalogue item', () => {
     let axiosPatchSpy: MockInstance;
 

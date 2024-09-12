@@ -403,6 +403,25 @@ describe('Catalogue Items', () => {
     cy.findByText('Cameras 4').should('exist');
   });
 
+  describe('Recently Added Section', () => {
+    beforeEach(() => {
+      cy.clock(new Date('2024-01-09T12:00:00.000+00:00'), ['Date']);
+    });
+    afterEach(() => {
+      cy.clock().then((clock) => {
+        clock.restore();
+      });
+    });
+    it('navigates to the landing page, opens the edit dialog, and correctly shows recently added section', () => {
+      cy.findByText('Cameras 1').click();
+      cy.findByRole('button', { name: 'Edit' }).click();
+      cy.findByLabelText('Manufacturer *').click();
+      cy.contains('A-Z').should('be.visible');
+      cy.contains('Recently Added').should('be.visible');
+      cy.findAllByText('Manufacturer B').should('have.length', 2);
+    });
+  });
+
   it('navigates to the landing page, and opens the edit dialog and closes', () => {
     cy.findByText('Cameras 1').click();
     cy.findByText(

@@ -51,6 +51,9 @@ import {
 } from '../../form.schemas';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component';
+import { sortDataList } from '../../utils';
+
+const RECENT_MANUFACTURER_CUTOFF_TIME = 10 * 60 * 1000;
 
 function toCatalogueItemStep1(
   item: CatalogueItem | undefined
@@ -145,6 +148,7 @@ function convertToCatalogueItemStep1Post(
     notes: item.notes ?? null,
   };
 }
+
 export interface CatalogueItemsDialogProps {
   open: boolean;
   onClose: () => void;
@@ -446,6 +450,39 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     [errorsStep1, errorsStep2]
   );
 
+  const options = (): Array<Manufacturer & { isRecent: string }> => {
+    const classifiedManufacturers = manufacturerList
+      ? manufacturerList.map((option) => {
+          return {
+            ...option,
+            isRecent: 'A-Z',
+          };
+        })
+      : [];
+
+    //duplicating the recent manufacturers, so that they appear twice.
+    const currentDate = new Date().getTime();
+    const recentManufacturers = classifiedManufacturers
+      .filter((option) => {
+        const createdDate = new Date(option.created_time).getTime();
+        const isRecent =
+          currentDate - RECENT_MANUFACTURER_CUTOFF_TIME <= createdDate;
+        return isRecent;
+      })
+      .map((option) => {
+        return {
+          ...option,
+          isRecent: 'Recently Added',
+        };
+      });
+
+    /*returns them in reverse alphabetical order, since they will be sorted by "isRecent",
+    and then reversed to put "Recently Added" section first */
+    return sortDataList(recentManufacturers, 'name')
+      .reverse()
+      .concat(sortDataList(classifiedManufacturers, 'name').reverse());
+  };
+
   const renderStepContent = (step: number) => {
     switch (step) {
       case 0:
@@ -574,7 +611,10 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                         onChange(newManufacturer?.id);
                       }}
                       id="catalogue-item-manufacturer-input"
-                      options={manufacturerList ?? []}
+                      options={
+                        sortDataList(options(), 'isRecent').reverse() ?? []
+                      }
+                      groupBy={(option) => option.isRecent}
                       size="small"
                       isOptionEqualToValue={(option, value) =>
                         option.name === value.name
