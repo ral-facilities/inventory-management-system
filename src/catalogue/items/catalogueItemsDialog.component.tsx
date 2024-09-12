@@ -45,6 +45,7 @@ import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component'
 import { sortDataList, trimStringValues } from '../../utils';
 import { matchCatalogueItemProperties } from '../catalogue.component';
 
+const RECENT_MANUFACTURER_CUTOFF_TIME = 10 * 60 * 1000;
 export interface CatalogueItemsDialogProps {
   open: boolean;
   onClose: () => void;
@@ -609,6 +610,39 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     [errorMessages, propertyErrors]
   );
 
+  const options = (): Array<Manufacturer & { isRecent: string }> => {
+    const classifiedManufacturers = manufacturerList
+      ? manufacturerList.map((option) => {
+          return {
+            ...option,
+            isRecent: 'A-Z',
+          };
+        })
+      : [];
+
+    //duplicating the recent manufacturers, so that they appear twice.
+    const currentDate = new Date().getTime();
+    const recentManufacturers = classifiedManufacturers
+      .filter((option) => {
+        const createdDate = new Date(option.created_time).getTime();
+        const isRecent =
+          currentDate - RECENT_MANUFACTURER_CUTOFF_TIME <= createdDate;
+        return isRecent;
+      })
+      .map((option) => {
+        return {
+          ...option,
+          isRecent: 'Recently Added',
+        };
+      });
+
+    /*returns them in reverse alphabetical order, since they will be sorted by "isRecent",
+    and then reversed to put "Recently Added" section first */
+    return sortDataList(recentManufacturers, 'name')
+      .reverse()
+      .concat(sortDataList(classifiedManufacturers, 'name').reverse());
+  };
+
   const renderStepContent = (step: number) => {
     switch (step) {
       case 0:
@@ -798,7 +832,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                       newManufacturer?.id ?? null
                     );
                   }}
-                  options={sortDataList(manufacturerList ?? [], 'name')}
+                  options={sortDataList(options(), 'isRecent').reverse() ?? []}
+                  groupBy={(option) => option.isRecent}
                   size="small"
                   isOptionEqualToValue={(option, value) =>
                     option.name === value.name
