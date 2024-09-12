@@ -1,2 +1,16 @@
 feature:
   - head-branch: ['^feature/']
+dependencies:
+  - head-branch: ['^dependencies/']
+enhancement:
+  - head-branch: ['^enhancement/']
+bug:
+  - head-branch: ['^bug/']
+deprecated:
+  - head-branch: ['^deprecated/']
+removed:
+  - head-branch: ['^removed/']
+security:
+  - head-branch: ['^security/']
+documentation:
+  - head-branch: ['^documentation/']
