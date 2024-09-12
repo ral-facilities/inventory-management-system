@@ -27,6 +27,7 @@ import React from 'react';
 import {
   CatalogueCategory,
   CatalogueCategoryProperty,
+  CatalogueItem,
   UsageStatus,
 } from '../api/api.types';
 import { useAddItem, useAddItems, useEditItem } from '../api/items';
@@ -35,7 +36,6 @@ import { useGetUsageStatuses } from '../api/usageStatuses';
 import {
   AddItem,
   AdvancedSerialNumberOptionsType,
-  CatalogueItem,
   EditItem,
   Item,
   ItemDetails,

@@ -165,3 +165,74 @@ export interface CatalogueCategory
   parent_id: string | null;
   properties: CatalogueCategoryProperty[];
 }
+
+// ------------------------------------ CATALOGUE ITEMS ------------------------------------
+
+export interface PropertyPost {
+  id: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  value: any;
+}
+
+export interface Property extends PropertyPost {
+  name: string;
+  unit_id: string | null;
+  unit: string | null;
+}
+
+export interface CatalogueItemPost {
+  catalogue_category_id: string;
+  manufacturer_id: string;
+  name: string;
+  description?: string | null;
+  cost_gbp: number;
+  cost_to_rework_gbp?: number | null;
+  days_to_replace: number;
+  days_to_rework?: number | null;
+  drawing_number?: string | null;
+  drawing_link?: string | null;
+  item_model_number?: string | null;
+  is_obsolete: boolean;
+  obsolete_reason?: string | null;
+  obsolete_replacement_catalogue_item_id?: string | null;
+  notes?: string | null;
+  properties?: PropertyPost[] | null;
+}
+
+export interface CatalogueItemPatch
+  extends Omit<
+    CatalogueItemPost,
+    | 'catalogue_category_id'
+    | 'manufacturer_id'
+    | 'name'
+    | 'cost_gbp'
+    | 'days_to_replace'
+    | 'is_obsolete'
+  > {
+  catalogue_category_id?: string | null;
+  manufacturer_id?: string | null;
+  name?: string | null;
+  cost_gbp?: number | null;
+  days_to_replace?: number | null;
+  is_obsolete?: boolean;
+}
+
+export interface CatalogueItem extends CreatedModifiedMixin {
+  id: string;
+  catalogue_category_id: string;
+  manufacturer_id: string;
+  name: string;
+  description: string | null;
+  cost_gbp: number;
+  cost_to_rework_gbp: number | null;
+  days_to_replace: number;
+  days_to_rework: number | null;
+  drawing_number: string | null;
+  drawing_link: string | null;
+  item_model_number: string | null;
+  is_obsolete: boolean;
+  obsolete_reason: string | null;
+  obsolete_replacement_catalogue_item_id: string | null;
+  notes: string | null;
+  properties: Property[];
+}

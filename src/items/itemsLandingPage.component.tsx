@@ -19,7 +19,7 @@ import {
   useGetCatalogueBreadcrumbs,
   useGetCatalogueCategory,
 } from '../api/catalogueCategories';
-import { useCatalogueItem } from '../api/catalogueItems';
+import { useGetCatalogueItem } from '../api/catalogueItems';
 import { useItem } from '../api/items';
 import { useGetManufacturer } from '../api/manufacturers';
 import { useGetSystem } from '../api/systems';
@@ -36,7 +36,7 @@ function ItemsLandingPage() {
 
   const { data: itemData, isLoading: itemDataIsLoading } = useItem(id);
 
-  const { data: catalogueItemData } = useCatalogueItem(
+  const { data: catalogueItemData } = useGetCatalogueItem(
     itemData?.catalogue_item_id
   );
 

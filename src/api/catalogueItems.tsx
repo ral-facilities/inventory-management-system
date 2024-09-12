@@ -7,40 +7,39 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import {
-  AddCatalogueItem,
-  CatalogueItem,
-  EditCatalogueItem,
-  TransferState,
-  TransferToCatalogueItem,
-} from '../app.types';
+import { TransferState, TransferToCatalogueItem } from '../app.types';
 import { imsApi } from './api';
-import { APIError } from './api.types';
+import {
+  APIError,
+  CatalogueItem,
+  CatalogueItemPatch,
+  CatalogueItemPost,
+} from './api.types';
 
-const addCatalogueItem = async (
-  catalogueItem: AddCatalogueItem
+const postCatalogueItem = async (
+  catalogueItem: CatalogueItemPost
 ): Promise<CatalogueItem> => {
   return imsApi
     .post<CatalogueItem>(`/v1/catalogue-items`, catalogueItem)
     .then((response) => response.data);
 };
 
-export const useAddCatalogueItem = (): UseMutationResult<
+export const usePostCatalogueItem = (): UseMutationResult<
   CatalogueItem,
   AxiosError,
-  AddCatalogueItem
+  CatalogueItemPost
 > => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (catalogueItem: AddCatalogueItem) =>
-      addCatalogueItem(catalogueItem),
+    mutationFn: (catalogueItem: CatalogueItemPost) =>
+      postCatalogueItem(catalogueItem),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['CatalogueItems'] });
     },
   });
 };
 
-const fetchCatalogueItems = async (
+const getCatalogueItems = async (
   catalogueCategoryId: string | null
 ): Promise<CatalogueItem[]> => {
   const queryParams = new URLSearchParams();
@@ -57,18 +56,18 @@ const fetchCatalogueItems = async (
     });
 };
 
-export const useCatalogueItems = (
+export const useGetCatalogueItems = (
   catalogueCategoryId: string | null
 ): UseQueryResult<CatalogueItem[], AxiosError> => {
   return useQuery({
     queryKey: ['CatalogueItems', catalogueCategoryId],
     queryFn: () => {
-      return fetchCatalogueItems(catalogueCategoryId);
+      return getCatalogueItems(catalogueCategoryId);
     },
   });
 };
 
-const fetchCatalogueItem = async (
+const getCatalogueItem = async (
   catalogueCategoryId: string | undefined
 ): Promise<CatalogueItem> => {
   const queryParams = new URLSearchParams();
@@ -82,46 +81,44 @@ const fetchCatalogueItem = async (
     });
 };
 
-export const useCatalogueItem = (
+export const useGetCatalogueItem = (
   catalogueCategoryId: string | undefined
 ): UseQueryResult<CatalogueItem, AxiosError> => {
   return useQuery({
     queryKey: ['CatalogueItem', catalogueCategoryId],
     queryFn: () => {
-      return fetchCatalogueItem(catalogueCategoryId);
+      return getCatalogueItem(catalogueCategoryId);
     },
     enabled: catalogueCategoryId !== undefined,
   });
 };
 
-export const useCatalogueItemIds = (
+export const useGetCatalogueItemIds = (
   ids: string[]
 ): UseQueryResult<CatalogueItem>[] => {
   return useQueries({
     queries: ids.map((id) => ({
       queryKey: ['CatalogueItem', id],
-      queryFn: () => fetchCatalogueItem(id),
+      queryFn: () => getCatalogueItem(id),
     })),
   });
 };
 
-const deleteCatalogueItem = async (
-  catalogueItem: CatalogueItem
-): Promise<void> => {
+const deleteCatalogueItem = async (catalogueItemId: string): Promise<void> => {
   return imsApi
-    .delete(`/v1/catalogue-items/${catalogueItem.id}`, {})
+    .delete(`/v1/catalogue-items/${catalogueItemId}`, {})
     .then((response) => response.data);
 };
 
 export const useDeleteCatalogueItem = (): UseMutationResult<
   void,
   AxiosError,
-  CatalogueItem
+  string
 > => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (catalogueItem: CatalogueItem) =>
-      deleteCatalogueItem(catalogueItem),
+    mutationFn: (catalogueItemId: string) =>
+      deleteCatalogueItem(catalogueItemId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['CatalogueItems'] });
       queryClient.removeQueries({ queryKey: ['CatalogueItem'] });
@@ -129,24 +126,24 @@ export const useDeleteCatalogueItem = (): UseMutationResult<
   });
 };
 
-const editCatalogueItem = async (
-  catalogueItem: EditCatalogueItem
+const patchCatalogueItem = async (
+  id: string,
+  catalogueItem: CatalogueItemPatch
 ): Promise<CatalogueItem> => {
-  const { id, ...updatedItem } = catalogueItem;
   return imsApi
-    .patch<CatalogueItem>(`/v1/catalogue-items/${id}`, updatedItem)
+    .patch<CatalogueItem>(`/v1/catalogue-items/${id}`, catalogueItem)
     .then((response) => response.data);
 };
 
-export const useEditCatalogueItem = (): UseMutationResult<
+export const usePatchCatalogueItem = (): UseMutationResult<
   CatalogueItem,
   AxiosError,
-  EditCatalogueItem
+  { id: string; catalogueItem: CatalogueItemPatch }
 > => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (catalogueItem: EditCatalogueItem) =>
-      editCatalogueItem(catalogueItem),
+    mutationFn: ({ id, catalogueItem }) =>
+      patchCatalogueItem(id, catalogueItem),
     onSuccess: (catalogueItemResponse: CatalogueItem) => {
       queryClient.invalidateQueries({
         queryKey: [
@@ -176,8 +173,7 @@ export const useMoveToCatalogueItem = (): UseMutationResult<
 
       const promises = moveToCatalogueItem.selectedCatalogueItems.map(
         async (catalogueItem: CatalogueItem) => {
-          return editCatalogueItem({
-            id: catalogueItem.id,
+          return patchCatalogueItem(catalogueItem.id, {
             catalogue_category_id:
               moveToCatalogueItem.targetCatalogueCategory?.id,
           })
@@ -264,16 +260,16 @@ export const useCopyToCatalogueItem = (): UseMutationResult<
             return { id: targetPropertyId, value: property.value };
           });
 
-          const catalogueItemAdd: AddCatalogueItem = Object.assign(
+          const catalogueItemAdd: CatalogueItemPost = Object.assign(
             {},
             { ...catalogueItem, properties: properties }
-          ) as AddCatalogueItem;
+          ) as CatalogueItemPost;
 
           // Assign new parent
           catalogueItemAdd.catalogue_category_id =
             copyToCatalogueItem.targetCatalogueCategory?.id ?? '';
 
-          return addCatalogueItem(catalogueItemAdd)
+          return postCatalogueItem(catalogueItemAdd)
             .then((result: CatalogueItem) => {
               const targetSystemName =
                 copyToCatalogueItem.targetCatalogueCategory?.name || 'Root';

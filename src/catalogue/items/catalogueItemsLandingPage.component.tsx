@@ -18,7 +18,7 @@ import {
   useGetCatalogueBreadcrumbs,
   useGetCatalogueCategory,
 } from '../../api/catalogueCategories';
-import { useCatalogueItem } from '../../api/catalogueItems';
+import { useGetCatalogueItem } from '../../api/catalogueItems';
 import { useGetManufacturer } from '../../api/manufacturers';
 import { formatDateTimeStrings } from '../../utils';
 import Breadcrumbs from '../../view/breadcrumbs.component';
@@ -30,7 +30,7 @@ function CatalogueItemsLandingPage() {
   const navigateToCatalogue = useNavigateToCatalogue();
 
   const { data: catalogueItemIdData, isLoading: catalogueItemIdDataLoading } =
-    useCatalogueItem(catalogueItemId);
+    useGetCatalogueItem(catalogueItemId);
 
   const { data: catalogueBreadcrumbs } = useGetCatalogueBreadcrumbs(
     catalogueItemIdData?.catalogue_category_id

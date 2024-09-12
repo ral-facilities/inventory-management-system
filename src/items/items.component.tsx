@@ -6,7 +6,7 @@ import {
   useGetCatalogueBreadcrumbs,
   useGetCatalogueCategory,
 } from '../api/catalogueCategories';
-import { useCatalogueItem } from '../api/catalogueItems';
+import { useGetCatalogueItem } from '../api/catalogueItems';
 import { useNavigateToCatalogue } from '../catalogue/catalogue.component';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import ItemsTable from './itemsTable.component';
@@ -17,7 +17,7 @@ export function Items() {
   const navigateToCatalogue = useNavigateToCatalogue();
 
   const { data: catalogueItem, isLoading: catalogueItemLoading } =
-    useCatalogueItem(catalogueItemId);
+    useGetCatalogueItem(catalogueItemId);
   const { data: catalogueCategory } = useGetCatalogueCategory(
     catalogueItem?.catalogue_category_id
   );
