@@ -1,5 +1,6 @@
 import {
   Link as MuiLink,
+  MenuItem,
   SxProps,
   TableCell,
   Theme,
@@ -11,6 +12,7 @@ import { format, parseISO } from 'date-fns';
 import {
   MRT_Cell,
   MRT_Column,
+  MRT_FilterOption,
   MRT_Header,
   MRT_Row,
   MRT_RowData,
@@ -395,13 +397,87 @@ export const displayTableRowCountText = <TData extends MRT_RowData>(
   return <Typography sx={{ ...sx }}>{tableRowCountText}</Typography>;
 };
 
-export const customFilterFunctions = {
+/*
+TODO: INVESTIGATE CREATING INTERFACE FOR FILTER_FN OR REPLACE WITH MRT_FILTERFN
+interface filterFunctionProps {
+  row: MRT_RowData;
+  id: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  filterExclude: (row: MRT_RowData, id: string, filterValue: any) => {
-    return !filterValue.includes(row.getValue(id));
-  },
+  filterValue: any;
+}*/
+
+interface customFilterFunctionInterface {
+  Name: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  filterInclude: (row: MRT_RowData, id: string, filterValue: any) => {
-    return filterValue.includes(row.getValue(id));
+  FilterFunction(row: MRT_RowData, id: string, filterValue: any): any;
+  Label: string;
+}
+const customFilterFunctions: customFilterFunctionInterface[] = [
+  {
+    Name: 'filterExclude',
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    FilterFunction(row: MRT_RowData, id: string, filterValue: any): any {
+      return !filterValue.includes(row.getValue(id));
+    },
+    Label: 'Exclude',
   },
+  {
+    Name: 'filterInclude',
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    FilterFunction(row: MRT_RowData, id: string, filterValue: any): any {
+      return filterValue.includes(row.getValue(id));
+    },
+    Label: 'Include',
+  },
+];
+
+export function getCustomFilterFunctions(): Record<
+  string,
+  { (row: MRT_RowData, id: string, filterValue: any): any }
+> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let filterFunctionsRecord: Record<
+    string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    { (row: MRT_RowData, id: string, filterValue: any): any }
+  > = customFilterFunctions.reduce<
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    Record<string, { (row: MRT_RowData, id: string, filterValue: any): any }>
+  >((result, currentValue) => {
+    result[currentValue.Name] = currentValue.FilterFunction;
+    return result;
+  }, {});
+  return filterFunctionsRecord;
+}
+interface filterFunctionRenderingProps {
+  onSelectFilterMode: (filterMode: MRT_FilterOption) => void;
+  selectedFilters: string[];
+}
+
+export const filterFunctionsRendering = (
+  props: filterFunctionRenderingProps
+) => {
+  const { onSelectFilterMode, selectedFilters } = props;
+  //TODO sort out rendering type
+  let rendering: any = selectedFilters.map((option, index) => {
+    const filter = customFilterFunctions.find(
+      (filter) => filter.Name == option
+    );
+    return filter ? (
+      <MenuItem key={index} onClick={() => onSelectFilterMode(filter.Name)}>
+        {filter.Label}
+      </MenuItem>
+    ) : (
+      <MenuItem key={index} onClick={() => onSelectFilterMode(option)}>
+        {option}
+      </MenuItem>
+    );
+  });
+  return rendering;
 };
+
+export function removeSecondsFromDate(date: string): Date {
+  const modifiedDate = new Date(date);
+  modifiedDate.setSeconds(0, 0);
+  return modifiedDate;
+}

@@ -13,6 +13,7 @@ import {
   TableCellOverFlowTipProps,
   formatDateTimeStrings,
   generateUniqueName,
+  removeSecondsFromDate,
 } from '../../utils';
 import CatalogueCategoryDialog from './catalogueCategoryDialog.component';
 
@@ -58,9 +59,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
       {
         header: 'Last modified',
         accessorFn: (row) => {
-          const date = new Date(row.modified_time);
-          date.setSeconds(0, 0);
-          return date;
+          removeSecondsFromDate(row.modified_time);
         },
         id: 'modified_time',
         filterVariant: 'datetime-range',

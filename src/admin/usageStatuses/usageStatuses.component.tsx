@@ -24,9 +24,11 @@ import {
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
   displayTableRowCountText,
+  filterFunctionsRendering,
   formatDateTimeStrings,
   getPageHeightCalc,
-  customFilterFunctions,
+  getCustomFilterFunctions,
+  removeSecondsFromDate,
 } from '../../utils.tsx';
 import DeleteUsageStatusDialog from './deleteUsageStatusDialog.component.tsx';
 import UsageStatusDialog from './usageStatusDialog.component.tsx';
@@ -50,29 +52,18 @@ function UsageStatuses() {
         header: 'Value',
         accessorFn: (row) => row.value,
         filterVariant: 'multi-select',
-        renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) => [
-          <MenuItem
-            key="filterFnInclude"
-            onClick={() => onSelectFilterMode('filterInclude')}
-          >
-            Include
-          </MenuItem>,
-          <MenuItem
-            key="filterFnExclude"
-            onClick={() => onSelectFilterMode('filterExclude')}
-          >
-            Exclude
-          </MenuItem>,
-        ],
+        renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) =>
+          filterFunctionsRendering({
+            onSelectFilterMode: onSelectFilterMode,
+            selectedFilters: ['filterInclude', 'filterExclude'],
+          }),
         id: 'value',
         Cell: ({ row }) => row.original.value,
       },
       {
         header: 'Last modified',
         accessorFn: (row) => {
-          const date = new Date(row.modified_time);
-          date.setSeconds(0, 0);
-          return date;
+          removeSecondsFromDate(row.modified_time);
         },
         id: 'modified_time',
         filterVariant: 'datetime-range',
@@ -85,9 +76,7 @@ function UsageStatuses() {
       {
         header: 'Created',
         accessorFn: (row) => {
-          const date = new Date(row.created_time);
-          date.setSeconds(0, 0);
-          return date;
+          removeSecondsFromDate(row.created_time);
         },
         id: 'created_time',
         filterVariant: 'datetime-range',
@@ -114,7 +103,7 @@ function UsageStatuses() {
     columns: columns,
     data: usageStatusData ?? [],
     // Features
-    filterFns: customFilterFunctions,
+    filterFns: getCustomFilterFunctions(),
     enableColumnOrdering: true,
     enableColumnFilterModes: true,
     enableFacetedValues: true,

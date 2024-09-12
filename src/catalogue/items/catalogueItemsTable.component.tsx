@@ -45,6 +45,7 @@ import {
   formatDateTimeStrings,
   generateUniqueName,
   getPageHeightCalc,
+  removeSecondsFromDate,
 } from '../../utils';
 import CatalogueItemDirectoryDialog from './catalogueItemDirectoryDialog.component';
 import CatalogueItemsDetailsPanel from './catalogueItemsDetailsPanel.component';
@@ -259,9 +260,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         header: 'Last modified',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => {
-          const date = new Date(row.catalogueItem.modified_time);
-          date.setSeconds(0, 0);
-          return date;
+          removeSecondsFromDate(row.catalogueItem.modified_time);
         },
         id: 'catalogueItem.modified_time',
         filterVariant: 'datetime-range',
@@ -274,9 +273,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         header: 'Created',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => {
-          const date = new Date(row.catalogueItem.created_time);
-          date.setSeconds(0, 0);
-          return date;
+          removeSecondsFromDate(row.catalogueItem.created_time);
         },
         id: 'catalogueItem.created_time',
         filterVariant: 'datetime-range',

@@ -34,6 +34,7 @@ import {
   TableGroupedCell,
   TableHeaderOverflowTip,
   formatDateTimeStrings,
+  removeSecondsFromDate,
 } from '../utils';
 import SystemItemsDialog, {
   ItemUsageStatusesErrorStateType,
@@ -301,9 +302,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         header: 'Last modified',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => {
-          const date = new Date(row.item.modified_time);
-          date.setSeconds(0, 0);
-          return date;
+          removeSecondsFromDate(row.item.modified_time);
         },
         id: 'item.modified_time',
         filterVariant: 'datetime-range',
@@ -317,9 +316,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         header: 'Created',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => {
-          const date = new Date(row.item.created_time);
-          date.setSeconds(0, 0);
-          return date;
+          removeSecondsFromDate(row.item.created_time);
         },
         id: 'item.created_time',
         filterVariant: 'datetime-range',
@@ -332,11 +329,9 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         header: 'Delivered Date',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => {
-          if (row.item.delivered_date) {
-            const date = new Date(row.item.delivered_date);
-            date.setSeconds(0, 0);
-            return date;
-          } else return null;
+          row.item.delivered_date
+            ? removeSecondsFromDate(row.item.delivered_date)
+            : null;
         },
         id: 'item.delivered_date',
         filterVariant: 'date-range',

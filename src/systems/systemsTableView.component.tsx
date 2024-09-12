@@ -12,6 +12,7 @@ import {
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
   formatDateTimeStrings,
+  removeSecondsFromDate,
 } from '../utils';
 import SystemDialog from './systemDialog.component';
 
@@ -51,9 +52,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
       {
         header: 'Last modified',
         accessorFn: (row) => {
-          const date = new Date(row.modified_time);
-          date.setSeconds(0, 0);
-          return date;
+          removeSecondsFromDate(row.modified_time);
         },
         id: 'modified_time',
         filterVariant: 'datetime-range',
