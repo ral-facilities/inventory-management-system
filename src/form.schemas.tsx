@@ -59,7 +59,7 @@ const MandatoryBooleanSchema = (props: BaseZodSchemaProps) =>
 const OptionalBooleanSchema = z
   .string()
   .toLowerCase()
-  .transform((val) => (!val ? null : JSON.parse(val)))
+  .transform((val) => (!val ? undefined : JSON.parse(val)))
   .pipe(z.boolean().optional());
 
 const MandatoryNumberSchema = (props: NumberZodSchemaProps) =>
@@ -86,6 +86,27 @@ const OptionalNumberSchema = (props: NumberZodSchemaProps) =>
         })
         .optional()
     );
+
+const NullableNumberSchema = (props: NumberZodSchemaProps) =>
+  z
+    .string()
+    .transform((val) => (!val ? null : val))
+    .pipe(
+      z.coerce
+        .number({
+          invalid_type_error: props.invalidTypeErrorMessage,
+        })
+        .nullable()
+    );
+
+const OptionalOrNullableNumberSchema = (props: PostPatchZodSchemaProps) =>
+  props.requestType === 'post'
+    ? OptionalNumberSchema({
+        invalidTypeErrorMessage: props.errorMessage,
+      })
+    : NullableNumberSchema({
+        invalidTypeErrorMessage: props.errorMessage,
+      });
 
 const OptionalUrlSchema = (props: BaseZodSchemaProps) =>
   z.string().trim().url({ message: props.errorMessage }).optional();
@@ -351,4 +372,46 @@ export const CatalogueCategorySchema = z.object({
     .array(CatalogueCategoryPostPropertySchema)
     .superRefine((data, ctx) => checkForDuplicatePropertyNames(data, ctx))
     .optional(),
+});
+
+// ------------------------------------ CATALOGUE ITEMS ------------------------------------
+
+export const CatalogueItemDetailsStepSchema = (requestType: RequestType) => {
+  return z.object({
+    manufacturer_id: MandatoryStringSchema({
+      errorMessage:
+        'Please choose a manufacturer or add a new manufacturer. Then select a manufacturer.',
+    }),
+    name: MandatoryStringSchema({ errorMessage: 'Please enter a name.' }),
+    cost_gbp: MandatoryNumberSchema({
+      requiredErrorMessage: 'Please enter a cost.',
+      invalidTypeErrorMessage: 'Please enter a valid number.',
+    }),
+    cost_to_rework_gbp: OptionalOrNullableNumberSchema({
+      requestType,
+      errorMessage: 'Please enter a valid number.',
+    }),
+    days_to_replace: MandatoryNumberSchema({
+      requiredErrorMessage:
+        'Please enter how many days it would take to replace.',
+      invalidTypeErrorMessage: 'Please enter a valid number.',
+    }),
+    days_to_rework: OptionalOrNullableNumberSchema({
+      requestType,
+      errorMessage: 'Please enter a valid number.',
+    }),
+    description: OptionalOrNullableStringSchema({ requestType }),
+    drawing_number: OptionalOrNullableStringSchema({ requestType }),
+    drawing_link: OptionalOrNullableURLSchema({
+      requestType,
+      errorMessage:
+        'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted.',
+    }),
+    item_model_number: OptionalOrNullableStringSchema({ requestType }),
+    notes: OptionalOrNullableStringSchema({ requestType }),
+  });
+};
+
+export const PropertiesStepSchema = z.object({
+  properties: z.array(z.discriminatedUnion('valueType', propertiesTypeList)),
 });
