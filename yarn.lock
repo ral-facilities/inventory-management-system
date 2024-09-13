@@ -2438,7 +2438,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.6.1, axios@npm:^1.7.2":
+"axios@npm:^1.7.2, axios@npm:^1.7.4":
   version: 1.7.7
   resolution: "axios@npm:1.7.7"
   dependencies:
@@ -4994,7 +4994,7 @@ __metadata:
     serve: "npm:14.2.3"
     serve-static: "npm:1.16.0"
     single-spa-react: "npm:5.1.4"
-    start-server-and-test: "npm:2.0.6"
+    start-server-and-test: "npm:2.0.7"
     typescript: "npm:^5.4.5"
     typescript-eslint: "npm:8.4.0"
     uuid: "npm:^10.0.0"
@@ -5445,7 +5445,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"joi@npm:^17.11.0":
+"joi@npm:^17.13.3":
   version: 17.13.3
   resolution: "joi@npm:17.13.3"
   dependencies:
@@ -7642,9 +7642,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"start-server-and-test@npm:2.0.6":
-  version: 2.0.6
-  resolution: "start-server-and-test@npm:2.0.6"
+"start-server-and-test@npm:2.0.7":
+  version: 2.0.7
+  resolution: "start-server-and-test@npm:2.0.7"
   dependencies:
     arg: "npm:^5.0.2"
     bluebird: "npm:3.7.2"
@@ -7653,12 +7653,12 @@ __metadata:
     execa: "npm:5.1.1"
     lazy-ass: "npm:1.6.0"
     ps-tree: "npm:1.2.0"
-    wait-on: "npm:7.2.0"
+    wait-on: "npm:8.0.0"
   bin:
     server-test: src/bin/start.js
     start-server-and-test: src/bin/start.js
     start-test: src/bin/start.js
-  checksum: 10c0/3284982fca9d36a788647133fc85826a899467d6c275b6f20f0007b5d64076b45e77c1a3c8c141e05dca5212f9d932708a2fa2e8631d1147acddf050307916b9
+  checksum: 10c0/8f79d30a4a777b0cd762529575e96dbd2fa6cb4e334039cf2c5a88847eb89baba6afe3d0f94f069a661813376fb37e9d9604c3c10bfc0cc83045ffe90cc933b1
   languageName: node
   linkType: hard
 
@@ -8475,18 +8475,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wait-on@npm:7.2.0":
-  version: 7.2.0
-  resolution: "wait-on@npm:7.2.0"
+"wait-on@npm:8.0.0":
+  version: 8.0.0
+  resolution: "wait-on@npm:8.0.0"
   dependencies:
-    axios: "npm:^1.6.1"
-    joi: "npm:^17.11.0"
+    axios: "npm:^1.7.4"
+    joi: "npm:^17.13.3"
     lodash: "npm:^4.17.21"
     minimist: "npm:^1.2.8"
     rxjs: "npm:^7.8.1"
   bin:
     wait-on: bin/wait-on
-  checksum: 10c0/1eff2189b3e4b0975889f3e480c75ca2a0d4275072779a6329e7cae8b729620594aa044509ddd89967de6ab2162169501b67b8d9562c16cac517837ffce17337
+  checksum: 10c0/f649106ecdb74d8f18f7db3840c17c55269ac6d4672c30be06835fe66e735107d74576600310b1139161a2ddb7f4aa1453011d9f141b0aa5f1c365fbe7b532ec
   languageName: node
   linkType: hard
 
