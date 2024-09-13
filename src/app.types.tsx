@@ -1,4 +1,10 @@
-import { CatalogueCategory, CatalogueItem, System } from './api/api.types';
+import {
+  CatalogueCategory,
+  CatalogueItem,
+  Item,
+  ItemPost,
+  System,
+} from './api/api.types';
 
 export const MicroFrontendId = 'scigateway';
 export const MicroFrontendToken = `${MicroFrontendId}:token`;
@@ -10,7 +16,14 @@ export const TAB_VALUES = [
   'Manufacturers',
   'Admin',
 ] as const;
+
 export type TabValue = (typeof TAB_VALUES)[number];
+
+export interface TransferState {
+  name: string;
+  message: string;
+  state: 'success' | 'error' | 'information';
+}
 
 // ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
 export interface AllowedValuesList {
@@ -67,6 +80,8 @@ export interface MoveToCatalogueCategory {
   targetCategory: CatalogueCategory | null;
 }
 
+// ------------------------------------ CATALOGUE ITEM ------------------------------------
+
 export interface CatalogueItemDetailsStep {
   manufacturer_id: string;
   name: string;
@@ -113,19 +128,6 @@ export interface ObsoleteDetails {
   obsolete_reason: string | null;
 }
 
-export interface CatalogueItemProperty {
-  id: string;
-  value: string | number | boolean | null;
-}
-
-export interface CatalogueItemPropertyResponse {
-  id: string;
-  name: string;
-  value: string | number | boolean | null;
-  unit: string | null;
-  unit_id?: string | null;
-}
-
 // Used for the move to and copy to
 export interface TransferToCatalogueItem {
   selectedCatalogueItems: CatalogueItem[];
@@ -133,11 +135,7 @@ export interface TransferToCatalogueItem {
   targetCatalogueCategory: CatalogueCategory | null;
 }
 
-export interface TransferState {
-  name: string;
-  message: string;
-  state: 'success' | 'error' | 'information';
-}
+// ------------------------------------ SYSTEM ---------------------------------
 
 export interface MoveToSystem {
   selectedSystems: System[];
@@ -154,6 +152,7 @@ export interface CopyToSystem {
   existingSystemCodes: string[];
 }
 
+// ------------------------------------ ITEMS ------------------------------------
 export interface ItemDetails {
   catalogue_item_id: string;
   system_id: string;
@@ -172,26 +171,10 @@ export type ItemDetailsPlaceholder = {
     : string | null;
 };
 
-export interface AddItem extends ItemDetails {
-  properties: CatalogueItemProperty[];
-}
-
-export interface AddItems {
+export interface PostItems {
   quantity: number;
   startingValue: number;
-  item: AddItem;
-}
-
-export interface Item extends ItemDetails {
-  properties: CatalogueItemPropertyResponse[];
-  id: string;
-  usage_status: string;
-  created_time: string;
-  modified_time: string;
-}
-
-export interface EditItem extends Partial<AddItem> {
-  id: string;
+  item: ItemPost;
 }
 
 export interface MoveItemsToSystemUsageStatus {
@@ -207,8 +190,4 @@ export interface MoveItemsToSystem {
 export interface AdvancedSerialNumberOptionsType {
   quantity: string | null;
   startingValue: string | null;
-}
-export interface AllowedValuesListErrorsType {
-  cip_placement_id: string | null;
-  errors: { av_placement_id: string; errorMessage: string }[] | null;
 }

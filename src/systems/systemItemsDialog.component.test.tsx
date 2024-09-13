@@ -2,7 +2,7 @@ import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { MockInstance } from 'vitest';
 import { imsApi } from '../api/api';
-import { Item } from '../app.types';
+import { Item } from '../api/api.types';
 import ItemsJSON from '../mocks/Items.json';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import SystemItemsDialog, {

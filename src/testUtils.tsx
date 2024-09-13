@@ -14,9 +14,9 @@ import {
   CatalogueCategory,
   CatalogueCategoryProperty,
   CatalogueItem,
+  Item,
   Manufacturer,
 } from './api/api.types';
-import { Item } from './app.types';
 import CatalogueCategoriesJSON from './mocks/CatalogueCategories.json';
 import CatalogueItemsJSON from './mocks/CatalogueItems.json';
 import ItemsJSON from './mocks/Items.json';

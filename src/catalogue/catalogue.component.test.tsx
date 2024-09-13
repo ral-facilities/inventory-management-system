@@ -4,8 +4,8 @@ import { HttpResponse, http } from 'msw';
 import {
   CatalogueCategoryProperty,
   CatalogueCategoryPropertyType,
+  Property,
 } from '../api/api.types';
-import { CatalogueItemProperty } from '../app.types';
 import { server } from '../mocks/server';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import Catalogue, { matchCatalogueItemProperties } from './catalogue.component';
@@ -42,18 +42,27 @@ describe('matchCatalogueItemProperties', () => {
       },
     ];
 
-    const itemProperties: CatalogueItemProperty[] = [
+    const itemProperties: Property[] = [
       {
         id: '1',
+        name: 'Name1',
         value: 'Value1',
+        unit_id: null,
+        unit: null,
       },
       {
         id: '2',
         value: '42',
+        name: 'Name2',
+        unit_id: null,
+        unit: null,
       },
       {
         id: '3',
         value: true,
+        name: 'Name3',
+        unit_id: null,
+        unit: null,
       },
     ];
 
@@ -85,10 +94,13 @@ describe('matchCatalogueItemProperties', () => {
       },
     ];
 
-    const itemProperties: CatalogueItemProperty[] = [
+    const itemProperties: Property[] = [
       {
         id: '1',
+        name: 'Name1',
         value: 'Value1',
+        unit_id: null,
+        unit: null,
       },
     ];
 
