@@ -14,20 +14,16 @@ export interface BreadcrumbsInfo {
 
 // ------------------------------------ MANUFACTURERS -----------------------------------------------
 
-interface Address {
+interface AddressPost {
   address_line: string;
-  town: string | null;
-  county: string | null;
+  town?: string | null;
+  county?: string | null;
   country: string;
   postcode: string;
 }
+type Address = Required<AddressPost>;
 
-interface AddressPost extends Omit<Address, 'town' | 'county'> {
-  town?: string | null;
-  county?: string | null;
-}
-
-type AddressPatch = Partial<Address>;
+type AddressPatch = Partial<AddressPost>;
 
 export interface ManufacturerPost {
   name: string;
@@ -42,13 +38,11 @@ export interface ManufacturerPatch
 }
 
 export interface Manufacturer
-  extends Omit<ManufacturerPost, 'telephone' | 'url' | 'address'>,
+  extends Required<Omit<ManufacturerPost, 'address'>>,
     CreatedModifiedMixin {
   id: string;
   code: string;
   address: Address;
-  url: string | null;
-  telephone: string | null;
 }
 
 // ------------------------------------ UNITS -------------------------------------------------------
@@ -89,18 +83,12 @@ export interface SystemPost {
   parent_id?: string | null;
 }
 
-export interface System extends CreatedModifiedMixin {
-  id: string;
-  name: string;
-  code: string;
-  description: string | null;
-  location: string | null;
-  owner: string | null;
-  importance: SystemImportanceType;
-  parent_id: string | null;
-}
-
 export type SystemPatch = Partial<SystemPost>;
+
+export interface System extends CreatedModifiedMixin, Required<SystemPost> {
+  id: string;
+  code: string;
+}
 
 // ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
 
@@ -141,11 +129,9 @@ export interface CatalogueCategoryPropertyPatch {
 }
 
 export interface CatalogueCategoryProperty
-  extends Omit<CatalogueCategoryPostProperty, 'unit_id' | 'allowed_values'> {
+  extends Required<CatalogueCategoryPostProperty> {
   id: string;
-  unit_id: string | null;
   unit: string | null;
-  allowed_values: AllowedValues | null;
 }
 
 export interface CatalogueCategoryPost {
@@ -158,11 +144,10 @@ export interface CatalogueCategoryPost {
 export type CatalogueCategoryPatch = Partial<CatalogueCategoryPost>;
 
 export interface CatalogueCategory
-  extends Omit<CatalogueCategoryPost, 'parent_id' | 'properties'>,
+  extends Required<Omit<CatalogueCategoryPost, 'properties'>>,
     CreatedModifiedMixin {
   id: string;
   code: string;
-  parent_id: string | null;
   properties: CatalogueCategoryProperty[];
 }
 
@@ -199,40 +184,35 @@ export interface CatalogueItemPost {
   properties?: PropertyPost[] | null;
 }
 
-export interface CatalogueItemPatch
-  extends Omit<
-    CatalogueItemPost,
-    | 'catalogue_category_id'
-    | 'manufacturer_id'
-    | 'name'
-    | 'cost_gbp'
-    | 'days_to_replace'
-    | 'is_obsolete'
-  > {
-  catalogue_category_id?: string | null;
-  manufacturer_id?: string | null;
-  name?: string | null;
-  cost_gbp?: number | null;
-  days_to_replace?: number | null;
-  is_obsolete?: boolean;
+export type CatalogueItemPatch = Partial<CatalogueItemPost>;
+export interface CatalogueItem
+  extends CreatedModifiedMixin,
+    Required<Omit<CatalogueItemPost, 'properties'>> {
+  id: string;
+  properties: Property[];
 }
 
-export interface CatalogueItem extends CreatedModifiedMixin {
+// ------------------------------------ ITEMS ------------------------------------------------
+
+export interface ItemPost {
+  catalogue_item_id: string;
+  system_id: string;
+  purchase_order_number?: string | null;
+  is_defective: boolean;
+  usage_status_id: string;
+  warranty_end_date?: string | null;
+  asset_number?: string | null;
+  serial_number?: string | null;
+  delivered_date?: string | null;
+  notes?: string | null;
+  properties?: PropertyPost[] | null;
+}
+
+export type ItemPatch = Partial<ItemPost>;
+
+export interface Item
+  extends CreatedModifiedMixin,
+    Required<Omit<ItemPost, 'properties'>> {
   id: string;
-  catalogue_category_id: string;
-  manufacturer_id: string;
-  name: string;
-  description: string | null;
-  cost_gbp: number;
-  cost_to_rework_gbp: number | null;
-  days_to_replace: number;
-  days_to_rework: number | null;
-  drawing_number: string | null;
-  drawing_link: string | null;
-  item_model_number: string | null;
-  is_obsolete: boolean;
-  obsolete_reason: string | null;
-  obsolete_replacement_catalogue_item_id: string | null;
-  notes: string | null;
   properties: Property[];
 }
