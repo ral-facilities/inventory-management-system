@@ -302,7 +302,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         header: 'Last modified',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => {
-          removeSecondsFromDate(row.item.modified_time);
+          return removeSecondsFromDate(row.item.modified_time);
         },
         id: 'item.modified_time',
         filterVariant: 'datetime-range',
@@ -316,7 +316,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         header: 'Created',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => {
-          removeSecondsFromDate(row.item.created_time);
+          return removeSecondsFromDate(row.item.created_time);
         },
         id: 'item.created_time',
         filterVariant: 'datetime-range',

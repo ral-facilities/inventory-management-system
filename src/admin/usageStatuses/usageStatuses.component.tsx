@@ -34,6 +34,8 @@ import DeleteUsageStatusDialog from './deleteUsageStatusDialog.component.tsx';
 import UsageStatusDialog from './usageStatusDialog.component.tsx';
 
 function UsageStatuses() {
+  const [isEquals, setIsEquals] = React.useState<boolean>(false);
+
   const { data: usageStatusData, isLoading: usageStatusDataLoading } =
     useGetUsageStatuses();
 
@@ -45,8 +47,6 @@ function UsageStatuses() {
   const [selectedUsageStatus, setSelectedUsageStatus] = React.useState<
     UsageStatus | undefined
   >(undefined);
-
-  const [isEquals, setIsEquals] = React.useState<boolean>(false);
 
   const columns = React.useMemo<MRT_ColumnDef<UsageStatus>[]>(() => {
     return [
@@ -65,28 +65,25 @@ function UsageStatuses() {
       {
         header: 'Last modified',
         accessorFn: (row) => {
-          removeSecondsFromDate(row.modified_time);
+          return removeSecondsFromDate(row.modified_time);
         },
-        id: 'modified_time',
         filterVariant: isEquals ? 'date' : 'datetime',
-        renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) => {
-          const happiny = filterFunctionsRendering({
+        renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) =>
+          filterFunctionsRendering({
             onSelectFilterMode: onSelectFilterMode,
-            selectedFilters: ['between', 'equals'],
-          });
-          //console.dir(happiny[0].props.selected);
-          return happiny;
-        },
+            selectedFilters: ['betweenInclusive', 'equalsDate'],
+          }),
         size: 350,
         enableGrouping: false,
         Cell: ({ row }) =>
-          row.original.modified_time &&
-          formatDateTimeStrings(row.original.modified_time, true),
+          row.original.modified_time && isEquals
+            ? formatDateTimeStrings(row.original.modified_time, false)
+            : formatDateTimeStrings(row.original.modified_time, true),
       },
       {
         header: 'Created',
         accessorFn: (row) => {
-          removeSecondsFromDate(row.created_time);
+          return removeSecondsFromDate(row.created_time);
         },
         id: 'created_time',
         filterVariant: 'datetime-range',
@@ -100,14 +97,13 @@ function UsageStatuses() {
   }, [isEquals]);
 
   const current_mode = Object(columns[1].filterFn).name;
-  console.log(`CURRENT VARIANT: ${columns[1].filterVariant}`);
-  console.log(`CURRENT MODE: ${current_mode}`);
 
-  if (current_mode == 'equals2' && isEquals == false) {
+  if (current_mode == 'FilterFunction' && isEquals == false) {
     setIsEquals(true);
-  } else if (current_mode == 'between' && isEquals == true) {
+  } else if (current_mode == 'betweenInclusive' && isEquals == true) {
     setIsEquals(false);
   }
+
   const noResultsTxt =
     'No results found: Try adding a Usage Status by using the Add Usage Status button';
 

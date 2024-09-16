@@ -54,7 +54,7 @@ function Units() {
       {
         header: 'Last modified',
         accessorFn: (row) => {
-          removeSecondsFromDate(row.modified_time);
+          return removeSecondsFromDate(row.modified_time);
         },
         id: 'modified_time',
         filterVariant: 'datetime-range',
@@ -67,7 +67,7 @@ function Units() {
       {
         header: 'Created',
         accessorFn: (row) => {
-          removeSecondsFromDate(row.created_time);
+          return removeSecondsFromDate(row.created_time);
         },
         id: 'created_time',
         filterVariant: 'datetime-range',

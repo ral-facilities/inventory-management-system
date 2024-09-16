@@ -417,7 +417,6 @@ const customFilterFunctions: customFilterFunctionInterface[] = [
     Name: 'filterExclude',
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     FilterFunction(row: MRT_RowData, id: string, filterValue: any): any {
-      console.log(`AHHHH${filterValue}`);
       return !filterValue.includes(row.getValue(id));
     },
     Label: 'Exclude',
@@ -429,6 +428,15 @@ const customFilterFunctions: customFilterFunctionInterface[] = [
       return filterValue.includes(row.getValue(id));
     },
     Label: 'Include',
+  },
+  {
+    Name: 'equalsDate',
+    FilterFunction(row: MRT_RowData, id: string, filterValue: any): any {
+      const rowDate: Date = row.getValue(id);
+      rowDate.setHours(0, 0, 0, 0);
+      return filterValue.getTime() === rowDate.getTime();
+    },
+    Label: 'Equals',
   },
 ];
 

@@ -59,7 +59,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
       {
         header: 'Last modified',
         accessorFn: (row) => {
-          removeSecondsFromDate(row.modified_time);
+          return removeSecondsFromDate(row.modified_time);
         },
         id: 'modified_time',
         filterVariant: 'datetime-range',

@@ -52,7 +52,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
       {
         header: 'Last modified',
         accessorFn: (row) => {
-          removeSecondsFromDate(row.modified_time);
+          return removeSecondsFromDate(row.modified_time);
         },
         id: 'modified_time',
         filterVariant: 'datetime-range',
