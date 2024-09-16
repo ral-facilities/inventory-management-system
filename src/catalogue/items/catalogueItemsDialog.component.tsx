@@ -1,3 +1,4 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import AddIcon from '@mui/icons-material/Add';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {
@@ -9,7 +10,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControl,
   FormHelperText,
   Grid,
   IconButton,
@@ -22,6 +22,7 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import {
   APIError,
   CatalogueCategory,
@@ -30,6 +31,7 @@ import {
   CatalogueItemPatch,
   CatalogueItemPost,
   Manufacturer,
+  PropertyPost,
 } from '../../api/api.types';
 import {
   usePatchCatalogueItem,
@@ -37,167 +39,217 @@ import {
 } from '../../api/catalogueItems';
 import { useGetManufacturers } from '../../api/manufacturers';
 import {
-  CatalogueDetailsErrorMessages,
-  CatalogueItemDetailsPlaceholder,
+  CatalogueItemDetailsStep,
+  CatalogueItemDetailsStepPost,
+  PropertiesStep,
+  PropertyValue,
 } from '../../app.types';
+import {
+  CatalogueItemDetailsStepSchema,
+  PropertiesStepSchema,
+  RequestType,
+} from '../../form.schemas';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component';
-import { sortDataList, trimStringValues } from '../../utils';
-import { matchCatalogueItemProperties } from '../catalogue.component';
+import { sortDataList } from '../../utils';
+
+const RECENT_MANUFACTURER_CUTOFF_TIME = 10 * 60 * 1000;
+
+function toCatalogueItemDetailsStep(
+  item: CatalogueItem | undefined
+): CatalogueItemDetailsStep {
+  if (!item) {
+    return {
+      manufacturer_id: '',
+      name: '',
+      description: '',
+      cost_gbp: '',
+      cost_to_rework_gbp: '',
+      days_to_replace: '',
+      days_to_rework: '',
+      drawing_number: '',
+      drawing_link: '',
+      item_model_number: '',
+      notes: '',
+    };
+  }
+
+  return {
+    manufacturer_id: item.manufacturer_id,
+    name: item.name,
+    description: item.description ?? '',
+    cost_gbp: String(item.cost_gbp),
+    cost_to_rework_gbp:
+      item.cost_to_rework_gbp !== null ? String(item.cost_to_rework_gbp) : '',
+    days_to_replace: String(item.days_to_replace),
+    days_to_rework:
+      item.days_to_rework !== null ? String(item.days_to_rework) : '',
+    drawing_number: item.drawing_number ?? '',
+    drawing_link: item.drawing_link ?? '',
+    item_model_number: item.item_model_number ?? '',
+    notes: item.notes ?? '',
+  };
+}
+
+function convertToPropertyValueList(
+  catalogueCategory?: CatalogueCategory,
+  catalogueItem?: CatalogueItem
+): PropertyValue[] {
+  const catalogueCategoryProperties = catalogueCategory?.properties || [];
+  const properties = catalogueItem?.properties || [];
+  return catalogueCategoryProperties.map((property) => {
+    // Find the matching property for this property by id
+    const matchingCategoryProperty = properties?.find(
+      (catProp) => catProp.id === property.id
+    );
+
+    const valueType = `${property.type}_${property.mandatory}`;
+
+    return {
+      valueType: valueType,
+      value: {
+        av_placement_id: property.id,
+        value:
+          matchingCategoryProperty && matchingCategoryProperty.value !== null
+            ? String(matchingCategoryProperty.value)
+            : '',
+      },
+    };
+  });
+}
+
+function convertToPropertyPost(
+  propertyValues: PropertyValue[]
+): PropertyPost[] {
+  return propertyValues.map((propertyValue) => {
+    return {
+      id: propertyValue.value.av_placement_id,
+      value: propertyValue.value.value ?? null,
+    };
+  });
+}
+
+function convertToCatalogueItemDetailsStepPost(
+  item: CatalogueItemDetailsStep
+): CatalogueItemDetailsStepPost {
+  return {
+    manufacturer_id: item.manufacturer_id,
+    name: item.name,
+    description: item.description ?? null,
+    cost_gbp: Number(item.cost_gbp), // Convert string to number
+    cost_to_rework_gbp: item.cost_to_rework_gbp
+      ? Number(item.cost_to_rework_gbp)
+      : null, // Convert if not null
+    days_to_replace: Number(item.days_to_replace), // Convert string to number
+    days_to_rework: item.days_to_rework ? Number(item.days_to_rework) : null, // Convert if not null
+    drawing_number: item.drawing_number ?? null,
+    drawing_link: item.drawing_link ?? null,
+    item_model_number: item.item_model_number ?? null,
+    notes: item.notes ?? null,
+  };
+}
 
 export interface CatalogueItemsDialogProps {
   open: boolean;
   onClose: () => void;
   parentInfo: CatalogueCategory | undefined;
   selectedCatalogueItem?: CatalogueItem;
-  type: 'edit' | 'create' | 'duplicate';
+  requestType: RequestType;
+  duplicate?: boolean;
 }
-
-function isValidUrl(url: string) {
-  try {
-    const parsedUrl = new URL(url);
-    return (
-      (parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:') &&
-      parsedUrl.hostname.includes('.') // Checks for the typical top-level domain
-    );
-  } catch (_error) {
-    return false;
-  }
-}
-
-const isValidNumber = (input: string): boolean => {
-  const numberValue = Number(input);
-  return !isNaN(numberValue) && input.trim() !== '';
-};
 
 function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
-  const { open, onClose, parentInfo, selectedCatalogueItem, type } = props;
+  const {
+    open,
+    onClose,
+    parentInfo,
+    selectedCatalogueItem,
+    requestType,
+    duplicate,
+  } = props;
   const parentId = parentInfo?.id ?? null;
   const parentCatalogueItemPropertiesInfo = React.useMemo(
     () => parentInfo?.properties ?? [],
     [parentInfo]
   );
 
-  const [catalogueItemDetails, setCatalogueItemDetails] =
-    React.useState<CatalogueItemDetailsPlaceholder>({
-      catalogue_category_id: null,
-      name: '',
-      description: null,
-      cost_gbp: null,
-      cost_to_rework_gbp: null,
-      days_to_replace: null,
-      days_to_rework: null,
-      drawing_number: null,
-      drawing_link: null,
-      item_model_number: null,
-      is_obsolete: null,
-      obsolete_replacement_catalogue_item_id: null,
-      obsolete_reason: null,
-      manufacturer_id: null,
-      notes: null,
-    });
-
-  const [propertyValues, setPropertyValues] = React.useState<(string | null)[]>(
-    []
+  const CatalogueItemDetailsStepFormMethods = useForm<CatalogueItemDetailsStep>(
+    {
+      resolver: zodResolver(CatalogueItemDetailsStepSchema(requestType)),
+      defaultValues: toCatalogueItemDetailsStep(selectedCatalogueItem),
+    }
   );
 
-  const [formError, setFormError] = React.useState(false);
-  const [formErrorMessage, setFormErrorMessage] = React.useState<
-    string | undefined
-  >(undefined);
+  const {
+    handleSubmit: handleSubmitDetailsStep,
+    register: registerDetailsStep,
+    formState: { errors: errorsDetailsStep },
+    control: controlDetailsStep,
+    clearErrors: clearErrorsDetailsStep,
+    reset: resetDetailsStep,
+    watch: watchDetailsStep,
+  } = CatalogueItemDetailsStepFormMethods;
 
-  const [propertyErrors, setPropertyErrors] = React.useState(
-    new Array(parentCatalogueItemPropertiesInfo.length).fill(false)
-  );
-  // set the errors as the types into the input fields
+  const catalogueItemPropertiesStepFormMethods = useForm<PropertiesStep>({
+    resolver: zodResolver(PropertiesStepSchema),
+    defaultValues: {
+      properties: convertToPropertyValueList(parentInfo, selectedCatalogueItem),
+    },
+  });
 
-  const [errorMessages, setErrorMessages] = React.useState<
-    Partial<CatalogueDetailsErrorMessages>
-  >({});
+  const {
+    handleSubmit: handleSubmitPropertiesStep,
+    register: registerPropertiesStep,
+    formState: { errors: errorsPropertiesStep },
+    control: controlPropertiesStep,
+    clearErrors: clearErrorsPropertiesStep,
+    reset: resetPropertiesStep,
+    watch: watchPropertiesStep,
+    setError: setErrorPropertiesStep,
+  } = catalogueItemPropertiesStepFormMethods;
 
   const handleClose = React.useCallback(() => {
-    setCatalogueItemDetails({
-      catalogue_category_id: null,
-      name: null,
-      description: null,
-      cost_gbp: null,
-      cost_to_rework_gbp: null,
-      days_to_replace: null,
-      days_to_rework: null,
-      drawing_number: null,
-      drawing_link: null,
-      item_model_number: null,
-      is_obsolete: 'false',
-      obsolete_replacement_catalogue_item_id: null,
-      obsolete_reason: null,
-      manufacturer_id: null,
-      notes: null,
-    });
-
+    resetDetailsStep();
+    clearErrorsDetailsStep();
+    resetPropertiesStep();
+    clearErrorsPropertiesStep();
     setActiveStep(0);
-    setPropertyValues([]);
-    setPropertyErrors(
-      new Array(parentCatalogueItemPropertiesInfo.length).fill(false)
-    );
-    setErrorMessages({});
-    setFormError(false);
-    setFormErrorMessage(undefined);
     onClose();
   }, [
-    parentCatalogueItemPropertiesInfo.length,
-    setCatalogueItemDetails,
-    setPropertyValues,
+    clearErrorsDetailsStep,
+    clearErrorsPropertiesStep,
     onClose,
+    resetDetailsStep,
+    resetPropertiesStep,
   ]);
 
+  // Load the values for editing.
   React.useEffect(() => {
-    if (selectedCatalogueItem) {
-      setCatalogueItemDetails({
-        catalogue_category_id: selectedCatalogueItem.catalogue_category_id,
-        name: selectedCatalogueItem.name,
-        description: selectedCatalogueItem.description,
-        cost_gbp: String(selectedCatalogueItem.cost_gbp),
-        cost_to_rework_gbp: selectedCatalogueItem.cost_to_rework_gbp
-          ? String(selectedCatalogueItem.cost_to_rework_gbp)
-          : null,
-        days_to_replace: String(selectedCatalogueItem.days_to_replace),
-        days_to_rework: selectedCatalogueItem.days_to_rework
-          ? String(selectedCatalogueItem.days_to_rework)
-          : null,
-        drawing_number: selectedCatalogueItem.drawing_number,
-        drawing_link: selectedCatalogueItem.drawing_link,
-        item_model_number: selectedCatalogueItem.item_model_number,
-        is_obsolete: String(selectedCatalogueItem.is_obsolete),
-        obsolete_replacement_catalogue_item_id:
-          selectedCatalogueItem.obsolete_replacement_catalogue_item_id,
-        obsolete_reason: selectedCatalogueItem.obsolete_reason,
-        manufacturer_id: selectedCatalogueItem.manufacturer_id,
-        notes: selectedCatalogueItem.notes,
-      });
-      setPropertyValues(
-        matchCatalogueItemProperties(
-          parentCatalogueItemPropertiesInfo,
-          selectedCatalogueItem.properties ?? []
-        )
-      );
-    }
-  }, [parentCatalogueItemPropertiesInfo, selectedCatalogueItem, open]);
+    resetDetailsStep(toCatalogueItemDetailsStep(selectedCatalogueItem));
+    resetPropertiesStep({
+      properties: convertToPropertyValueList(parentInfo, selectedCatalogueItem),
+    });
+  }, [
+    parentInfo,
+    resetDetailsStep,
+    resetPropertiesStep,
+    selectedCatalogueItem,
+  ]);
 
-  const handlePropertyChange = (index: number, value: string | null) => {
-    const updatedPropertyValues = [...propertyValues];
-    if (value === null || (typeof value === 'string' && value.trim() === '')) {
-      updatedPropertyValues[index] = null;
-    } else {
-      updatedPropertyValues[index] = value;
-    }
-    setPropertyValues(updatedPropertyValues);
-    // Clear the error state for the changed property
-    const updatedPropertyErrors = [...propertyErrors];
-    updatedPropertyErrors[index] = false;
-    setPropertyErrors(updatedPropertyErrors);
-    setFormError(false);
-    setFormErrorMessage(undefined);
-  };
+  // Clears form errors when a value has been changed
+  React.useEffect(() => {
+    const subscription1 = watchDetailsStep(() =>
+      clearErrorsPropertiesStep('root.formError')
+    );
+    return () => subscription1.unsubscribe();
+  }, [clearErrorsPropertiesStep, watchDetailsStep]);
+
+  React.useEffect(() => {
+    const subscription = watchPropertiesStep(() =>
+      clearErrorsPropertiesStep('root.formError')
+    );
+    return () => subscription.unsubscribe();
+  }, [clearErrorsPropertiesStep, watchPropertiesStep]);
 
   const { mutateAsync: postCatalogueItem, isPending: isAddPending } =
     usePostCatalogueItem();
@@ -205,393 +257,199 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     usePatchCatalogueItem();
 
   const { data: manufacturerList } = useGetManufacturers();
-  const selectedCatalogueItemManufacturer =
-    manufacturerList?.find(
-      (manufacturer) =>
-        manufacturer.id === selectedCatalogueItem?.manufacturer_id
-    ) || null;
-  const [selectedManufacturer, setSelectedManufacturer] =
-    React.useState<Manufacturer | null>(null);
-
-  const [inputValue, setInputValue] = React.useState<string | null>(
-    selectedManufacturer?.name ?? null
-  );
 
   const [addManufacturerDialogOpen, setAddManufacturerDialogOpen] =
     React.useState<boolean>(false);
 
-  const handleDetailsFormErrorStates = React.useCallback(() => {
-    let hasDetailsErrors = false;
+  const handleAddCatalogueItem = React.useCallback(
+    (catalogueItem: CatalogueItemPost) => {
+      postCatalogueItem(catalogueItem)
+        .then(() => handleClose())
+        .catch((error: AxiosError) => {
+          handleIMS_APIError(error);
+        });
+    },
+    [postCatalogueItem, handleClose]
+  );
 
-    if (
-      !catalogueItemDetails.days_to_replace ||
-      catalogueItemDetails.days_to_replace.trim() === ''
-    ) {
-      setErrorMessages((prevErrorMessages) => ({
-        ...prevErrorMessages,
-        days_to_replace: 'Please enter how many days it would take to replace',
-      }));
-      hasDetailsErrors = true;
-    } else {
-      if (!isValidNumber(catalogueItemDetails.days_to_replace)) {
-        setErrorMessages((prevErrorMessages) => ({
-          ...prevErrorMessages,
-          days_to_replace: 'Please enter a valid number',
-        }));
-        hasDetailsErrors = true;
-      }
-    }
+  const handleEditCatalogueItem = React.useCallback(
+    (data: CatalogueItemPost) => {
+      if (selectedCatalogueItem) {
+        const isNameUpdated = data.name !== selectedCatalogueItem.name;
 
-    // Check the catalogue item Name is defined
-    if (!catalogueItemDetails.name || catalogueItemDetails.name.trim() === '') {
-      setErrorMessages((prevErrorMessages) => ({
-        ...prevErrorMessages,
-        name: 'Please enter a name',
-      }));
-      hasDetailsErrors = true;
-    }
-    // Check the catalogue item cost is not falsy and is a valid number
+        const isDescriptionUpdated =
+          data.description !== selectedCatalogueItem.description;
 
-    if (
-      !catalogueItemDetails.cost_gbp ||
-      catalogueItemDetails.cost_gbp.trim() === ''
-    ) {
-      setErrorMessages((prevErrorMessages) => ({
-        ...prevErrorMessages,
-        cost_gbp: 'Please enter a cost',
-      }));
-      hasDetailsErrors = true;
-    } else {
-      if (!isValidNumber(catalogueItemDetails.cost_gbp)) {
-        setErrorMessages((prevErrorMessages) => ({
-          ...prevErrorMessages,
-          cost_gbp: 'Please enter a valid number',
-        }));
-        hasDetailsErrors = true;
-      }
-    }
+        const isCostGbpUpdated =
+          data.cost_gbp !== selectedCatalogueItem.cost_gbp;
 
-    // Check the catalogue item cost to rework is a valid number
+        const isCostToReworkGbpUpdated =
+          data.cost_to_rework_gbp !== selectedCatalogueItem.cost_to_rework_gbp;
 
-    if (
-      catalogueItemDetails.cost_to_rework_gbp !== null &&
-      catalogueItemDetails.cost_to_rework_gbp !== ''
-    ) {
-      if (!isValidNumber(catalogueItemDetails.cost_to_rework_gbp)) {
-        setErrorMessages((prevErrorMessages) => ({
-          ...prevErrorMessages,
-          cost_to_rework_gbp: 'Please enter a valid number',
-        }));
-        hasDetailsErrors = true;
-      }
-    }
+        const isDaysToReplaceUpdated =
+          data.days_to_replace !== selectedCatalogueItem.days_to_replace;
 
-    // Check the catalogue item days to rework is a valid number
+        const isDaysToReworkUpdated =
+          data.days_to_rework !== selectedCatalogueItem.days_to_rework;
 
-    if (
-      catalogueItemDetails.days_to_rework !== null &&
-      catalogueItemDetails.days_to_rework !== ''
-    ) {
-      if (!isValidNumber(catalogueItemDetails.days_to_rework)) {
-        setErrorMessages((prevErrorMessages) => ({
-          ...prevErrorMessages,
-          days_to_rework: 'Please enter a valid number',
-        }));
-        hasDetailsErrors = true;
-      }
-    }
+        const isDrawingNumberUpdated =
+          data.drawing_number !== selectedCatalogueItem.drawing_number;
 
-    // Check the catalogue item drawing Link is valid
+        const isDrawingLinkUpdated =
+          data.drawing_link !== selectedCatalogueItem.drawing_link;
 
-    if (
-      catalogueItemDetails.drawing_link !== null &&
-      !isValidUrl(catalogueItemDetails.drawing_link)
-    ) {
-      if (catalogueItemDetails.drawing_link.trim()) {
-        setErrorMessages((prevErrorMessages) => ({
-          ...prevErrorMessages,
-          drawing_link:
-            'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted',
-        }));
-        hasDetailsErrors = true;
-      }
-    }
-    // Check Manufacturer
-    if (
-      selectedManufacturer === null &&
-      catalogueItemDetails.manufacturer_id === null
-    ) {
-      setErrorMessages((prevErrorMessages) => ({
-        ...prevErrorMessages,
-        manufacturer_id:
-          'Please choose a manufacturer, or add a new manufacturer',
-      }));
-      hasDetailsErrors = true;
-    }
+        const isModelNumberUpdated =
+          data.item_model_number !== selectedCatalogueItem.item_model_number;
 
-    return { hasDetailsErrors };
-  }, [catalogueItemDetails, selectedManufacturer]);
+        const isCatalogueItemPropertiesUpdated =
+          JSON.stringify(data.properties) !==
+          JSON.stringify(
+            selectedCatalogueItem.properties.map(({ unit, name, ...rest }) => ({
+              id: rest.id,
+              value: rest.value,
+            }))
+          );
 
-  const handlePropertiesFormErrorStates = React.useCallback(() => {
-    let hasPropertiesErrors = false;
+        const isManufacturerUpdated =
+          JSON.stringify(data.manufacturer_id) !==
+          JSON.stringify(selectedCatalogueItem.manufacturer_id);
+        const catalogueItem: CatalogueItemPatch = {};
 
-    // Check properties
-    const updatedPropertyErrors = [...propertyErrors];
+        const isNotesUpdated = data.notes !== selectedCatalogueItem.notes;
 
-    const updatedProperties = parentCatalogueItemPropertiesInfo.map(
-      (property, index) => {
-        if (property.mandatory && !propertyValues[index]) {
-          updatedPropertyErrors[index] = true;
-          hasPropertiesErrors = true;
-        } else {
-          updatedPropertyErrors[index] = false;
+        if (isNameUpdated) catalogueItem.name = data.name;
+        if (isDescriptionUpdated) catalogueItem.description = data.description;
+        if (isCostGbpUpdated) catalogueItem.cost_gbp = data.cost_gbp;
+        if (isCostToReworkGbpUpdated)
+          catalogueItem.cost_to_rework_gbp = data.cost_to_rework_gbp;
+        if (isDaysToReplaceUpdated)
+          catalogueItem.days_to_replace = data.days_to_replace;
+        if (isDaysToReworkUpdated)
+          catalogueItem.days_to_rework = data.days_to_rework;
+        if (isDrawingNumberUpdated)
+          catalogueItem.drawing_number = data.drawing_number;
+        if (isDrawingLinkUpdated)
+          catalogueItem.drawing_link = data.drawing_link;
+        if (isModelNumberUpdated)
+          catalogueItem.item_model_number = data.item_model_number;
+        if (isCatalogueItemPropertiesUpdated) {
+          catalogueItem.properties = data.properties;
         }
+        if (isManufacturerUpdated)
+          catalogueItem.manufacturer_id = data.manufacturer_id;
+        if (isNotesUpdated) catalogueItem.notes = data.notes;
 
         if (
-          propertyValues[index] &&
-          property.type === 'number' &&
-          isNaN(Number(propertyValues[index]))
+          selectedCatalogueItem.id &&
+          (isNameUpdated ||
+            isDescriptionUpdated ||
+            isCostGbpUpdated ||
+            isCostToReworkGbpUpdated ||
+            isDaysToReplaceUpdated ||
+            isDaysToReworkUpdated ||
+            isDrawingNumberUpdated ||
+            isDrawingLinkUpdated ||
+            isModelNumberUpdated ||
+            isCatalogueItemPropertiesUpdated ||
+            isManufacturerUpdated ||
+            isNotesUpdated)
         ) {
-          updatedPropertyErrors[index] = true;
-          hasPropertiesErrors = true;
-        }
+          patchCatalogueItem({
+            id: selectedCatalogueItem.id,
+            catalogueItem: catalogueItem,
+          })
+            .then(() => handleClose())
+            .catch((error: AxiosError) => {
+              const response = error.response?.data as APIError;
 
-        if (!propertyValues[index])
-          return {
-            id: property.id,
-            value: null,
-          };
-
-        let typedValue: string | number | boolean | null =
-          propertyValues[index]; // Assume it's a string by default
-
-        // Check if the type of the 'property' is boolean
-        if (property.type === 'boolean') {
-          // If the type is boolean, then check the type of 'propertyValues[index]'
-          typedValue = propertyValues[index] === 'true' ? true : false;
-        } else if (property.type === 'number') {
-          typedValue = Number(propertyValues[index]);
-        }
-
-        return {
-          id: property.id,
-          value: typedValue,
-        };
-      }
-    );
-
-    setPropertyErrors(updatedPropertyErrors);
-
-    return { hasPropertiesErrors, updatedProperties };
-  }, [propertyErrors, parentCatalogueItemPropertiesInfo, propertyValues]);
-  const details = React.useMemo(
-    () => ({
-      catalogue_category_id: parentId ?? '',
-      name: catalogueItemDetails.name ?? '',
-      cost_gbp: catalogueItemDetails.cost_gbp
-        ? Number(catalogueItemDetails.cost_gbp)
-        : 0,
-      cost_to_rework_gbp:
-        catalogueItemDetails.cost_to_rework_gbp === null
-          ? null
-          : Number(catalogueItemDetails.cost_to_rework_gbp),
-      days_to_replace: catalogueItemDetails.days_to_replace
-        ? Number(catalogueItemDetails.days_to_replace)
-        : 0,
-      days_to_rework:
-        catalogueItemDetails.days_to_rework === null
-          ? null
-          : Number(catalogueItemDetails.days_to_rework),
-      description: catalogueItemDetails.description,
-      item_model_number: catalogueItemDetails.item_model_number,
-      is_obsolete: false,
-      obsolete_reason: catalogueItemDetails.obsolete_reason,
-      obsolete_replacement_catalogue_item_id:
-        catalogueItemDetails.obsolete_replacement_catalogue_item_id,
-      drawing_link: catalogueItemDetails.drawing_link,
-      drawing_number: catalogueItemDetails.drawing_number,
-      manufacturer_id: catalogueItemDetails.manufacturer_id ?? '',
-      notes: catalogueItemDetails.notes,
-    }),
-    [catalogueItemDetails, parentId]
-  );
-  const handleAddCatalogueItem = React.useCallback(() => {
-    const { updatedProperties, hasPropertiesErrors } =
-      handlePropertiesFormErrorStates();
-    const { hasDetailsErrors } = handleDetailsFormErrorStates();
-
-    if (hasPropertiesErrors || hasDetailsErrors) return;
-
-    const catalogueItem: CatalogueItemPost = {
-      ...details,
-      properties: updatedProperties,
-      name: details.name,
-    };
-
-    postCatalogueItem(trimStringValues(catalogueItem))
-      .then(() => handleClose())
-      .catch((error: AxiosError) => {
-        handleIMS_APIError(error);
-      });
-  }, [
-    handlePropertiesFormErrorStates,
-    handleDetailsFormErrorStates,
-    details,
-    postCatalogueItem,
-    handleClose,
-  ]);
-
-  const handleEditCatalogueItem = React.useCallback(() => {
-    if (selectedCatalogueItem) {
-      const { updatedProperties, hasPropertiesErrors } =
-        handlePropertiesFormErrorStates();
-      const { hasDetailsErrors } = handleDetailsFormErrorStates();
-
-      if (hasPropertiesErrors || hasDetailsErrors) return;
-
-      const isNameUpdated = details.name !== selectedCatalogueItem.name;
-
-      const isDescriptionUpdated =
-        details.description !== selectedCatalogueItem.description;
-
-      const isCostGbpUpdated =
-        details.cost_gbp !== selectedCatalogueItem.cost_gbp;
-
-      const isCostToReworkGbpUpdated =
-        details.cost_to_rework_gbp !== selectedCatalogueItem.cost_to_rework_gbp;
-
-      const isDaysToReplaceUpdated =
-        details.days_to_replace !== selectedCatalogueItem.days_to_replace;
-
-      const isDaysToReworkUpdated =
-        details.days_to_rework !== selectedCatalogueItem.days_to_rework;
-
-      const isDrawingNumberUpdated =
-        details.drawing_number !== selectedCatalogueItem.drawing_number;
-
-      const isDrawingLinkUpdated =
-        details.drawing_link !== selectedCatalogueItem.drawing_link;
-
-      const isModelNumberUpdated =
-        details.item_model_number !== selectedCatalogueItem.item_model_number;
-
-      const isCatalogueItemPropertiesUpdated =
-        JSON.stringify(updatedProperties) !==
-        JSON.stringify(
-          selectedCatalogueItem.properties.map(({ unit, name, ...rest }) => ({
-            id: rest.id,
-            value: rest.value,
-          }))
-        );
-
-      const isManufacturerUpdated =
-        JSON.stringify(details.manufacturer_id) !==
-        JSON.stringify(selectedCatalogueItem.manufacturer_id);
-      const catalogueItem: CatalogueItemPatch = {};
-
-      const isNotesUpdated = details.notes !== selectedCatalogueItem.notes;
-
-      if (isNameUpdated) catalogueItem.name = details.name;
-      if (isDescriptionUpdated) catalogueItem.description = details.description;
-      if (isCostGbpUpdated) catalogueItem.cost_gbp = details.cost_gbp;
-      if (isCostToReworkGbpUpdated)
-        catalogueItem.cost_to_rework_gbp = details.cost_to_rework_gbp;
-      if (isDaysToReplaceUpdated)
-        catalogueItem.days_to_replace = details.days_to_replace;
-      if (isDaysToReworkUpdated)
-        catalogueItem.days_to_rework = details.days_to_rework;
-      if (isDrawingNumberUpdated)
-        catalogueItem.drawing_number = details.drawing_number;
-      if (isDrawingLinkUpdated)
-        catalogueItem.drawing_link = details.drawing_link;
-      if (isModelNumberUpdated)
-        catalogueItem.item_model_number = details.item_model_number;
-      if (isCatalogueItemPropertiesUpdated) {
-        catalogueItem.properties = updatedProperties;
-      }
-      if (isManufacturerUpdated)
-        catalogueItem.manufacturer_id = details.manufacturer_id;
-      if (isNotesUpdated) catalogueItem.notes = details.notes;
-
-      if (
-        selectedCatalogueItem.id &&
-        (isNameUpdated ||
-          isDescriptionUpdated ||
-          isCostGbpUpdated ||
-          isCostToReworkGbpUpdated ||
-          isDaysToReplaceUpdated ||
-          isDaysToReworkUpdated ||
-          isDrawingNumberUpdated ||
-          isDrawingLinkUpdated ||
-          isModelNumberUpdated ||
-          isCatalogueItemPropertiesUpdated ||
-          isManufacturerUpdated ||
-          isNotesUpdated)
-      ) {
-        patchCatalogueItem({
-          id: selectedCatalogueItem.id,
-          catalogueItem: trimStringValues(catalogueItem),
-        })
-          .then(() => handleClose())
-          .catch((error: AxiosError) => {
-            const response = error.response?.data as APIError;
-
-            if (response && error.response?.status === 409) {
-              if (response.detail.includes('child elements')) {
-                setFormError(true);
-                setFormErrorMessage(response.detail);
+              if (response && error.response?.status === 409) {
+                if (response.detail.includes('child elements')) {
+                  setErrorPropertiesStep('root.formError', {
+                    message: response.detail,
+                  });
+                }
+                return;
               }
-              return;
-            }
-            handleIMS_APIError(error);
+              handleIMS_APIError(error);
+            });
+        } else {
+          setErrorPropertiesStep('root.formError', {
+            message:
+              "There have been no changes made. Please change a field's value or press Cancel to exit.",
           });
-      } else {
-        setFormError(true);
-        setFormErrorMessage('Please edit a form entry before clicking save');
+        }
       }
-    }
-  }, [
-    selectedCatalogueItem,
-    handlePropertiesFormErrorStates,
-    handleDetailsFormErrorStates,
-    details,
-    patchCatalogueItem,
-    handleClose,
-  ]);
-
-  const handleCatalogueDetails = (
-    field: keyof CatalogueDetailsErrorMessages,
-    value: string | null
-  ) => {
-    const updatedDetails = { ...catalogueItemDetails };
-
-    setErrorMessages({ ...errorMessages, [field]: undefined });
-    setFormError(false);
-    setFormErrorMessage(undefined);
-
-    if (value?.trim() === '') {
-      updatedDetails[field] = null;
-    } else {
-      updatedDetails[field] = value as string;
-    }
-
-    setCatalogueItemDetails(updatedDetails);
-  };
+    },
+    [
+      selectedCatalogueItem,
+      patchCatalogueItem,
+      handleClose,
+      setErrorPropertiesStep,
+    ]
+  );
 
   // Stepper
   const STEPS = [
-    (type === 'edit' ? 'Edit' : 'Add') + ' catalogue item details',
-    (type === 'edit' ? 'Edit' : 'Add') + ' catalogue item properties',
+    (requestType === 'patch' ? 'Edit' : 'Add') + ' catalogue item details',
+    (requestType === 'patch' ? 'Edit' : 'Add') + ' catalogue item properties',
   ];
   const [activeStep, setActiveStep] = React.useState<number>(0);
 
-  const handleNext = (activeStep: number) => {
-    if (activeStep === 0) {
-      const { hasDetailsErrors } = handleDetailsFormErrorStates();
-      if (hasDetailsErrors) return; // Do not proceed with next if there are errors
-    }
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
+  const handleNext = React.useCallback(
+    (event: React.SyntheticEvent, activeStep: number) => {
+      switch (activeStep) {
+        case 0:
+          return handleSubmitDetailsStep(() => {
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+          })(event);
+        case 1:
+          return false;
+      }
+    },
+    [handleSubmitDetailsStep]
+  );
+
+  const handleFinish = React.useCallback(
+    async (event: React.SyntheticEvent) => {
+      let DetailsStepData: CatalogueItemDetailsStep | undefined;
+      let PropertiesStepData: PropertiesStep | undefined;
+
+      // Wrap the handleSubmit call for Step 1 in a promise
+      await handleSubmitDetailsStep((validData) => {
+        DetailsStepData = validData; // If valid, set the data
+      })(event);
+
+      await handleSubmitPropertiesStep((validData) => {
+        PropertiesStepData = validData; // If valid, set the data
+      })(event);
+
+      if (!DetailsStepData) return;
+      if (!PropertiesStepData) return;
+
+      const data: CatalogueItemPost = {
+        ...convertToCatalogueItemDetailsStepPost(DetailsStepData),
+        properties: convertToPropertyPost(PropertiesStepData.properties),
+        catalogue_category_id: parentId ?? '',
+        is_obsolete: false,
+        obsolete_replacement_catalogue_item_id: null,
+        obsolete_reason: null,
+      };
+      if (requestType === 'post' || duplicate) {
+        handleAddCatalogueItem(data);
+      } else {
+        handleEditCatalogueItem(data);
+      }
+    },
+    [
+      duplicate,
+      handleAddCatalogueItem,
+      handleEditCatalogueItem,
+      handleSubmitDetailsStep,
+      handleSubmitPropertiesStep,
+      parentId,
+      requestType,
+    ]
+  );
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -601,13 +459,50 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     (step: number) => {
       switch (step) {
         case 0:
-          return JSON.stringify(errorMessages) !== '{}';
-        case 1:
-          return propertyErrors.some((value) => value === true);
+          return Object.values(errorsDetailsStep).length !== 0;
+        case 1: {
+          return (
+            Object.keys(errorsPropertiesStep).filter((val) => val !== 'root')
+              .length !== 0
+          );
+        }
       }
     },
-    [errorMessages, propertyErrors]
+    [errorsDetailsStep, errorsPropertiesStep]
   );
+
+  const options = (): Array<Manufacturer & { isRecent: string }> => {
+    const classifiedManufacturers = manufacturerList
+      ? manufacturerList.map((option) => {
+          return {
+            ...option,
+            isRecent: 'A-Z',
+          };
+        })
+      : [];
+
+    //duplicating the recent manufacturers, so that they appear twice.
+    const currentDate = new Date().getTime();
+    const recentManufacturers = classifiedManufacturers
+      .filter((option) => {
+        const createdDate = new Date(option.created_time).getTime();
+        const isRecent =
+          currentDate - RECENT_MANUFACTURER_CUTOFF_TIME <= createdDate;
+        return isRecent;
+      })
+      .map((option) => {
+        return {
+          ...option,
+          isRecent: 'Recently Added',
+        };
+      });
+
+    /*returns them in reverse alphabetical order, since they will be sorted by "isRecent",
+    and then reversed to put "Recently Added" section first */
+    return sortDataList(recentManufacturers, 'name')
+      .reverse()
+      .concat(sortDataList(classifiedManufacturers, 'name').reverse());
+  };
 
   const renderStepContent = (step: number) => {
     switch (step) {
@@ -620,15 +515,10 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 label="Name"
                 size="small"
                 required={true}
-                value={catalogueItemDetails.name ?? ''}
-                onChange={(event) => {
-                  handleCatalogueDetails('name', event.target.value);
-                }}
+                {...registerDetailsStep('name')}
                 fullWidth
-                error={errorMessages.name !== undefined}
-                helperText={
-                  errorMessages.name !== undefined ? errorMessages.name : ''
-                }
+                error={!!errorsDetailsStep.name}
+                helperText={errorsDetailsStep.name?.message}
               />
             </Grid>
             <Grid item xs={12}>
@@ -636,10 +526,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 id="catalogue-item-description-input"
                 label="Description"
                 size="small"
-                value={catalogueItemDetails.description ?? ''}
-                onChange={(event) => {
-                  handleCatalogueDetails('description', event.target.value);
-                }}
+                {...registerDetailsStep('description')}
                 fullWidth
                 multiline
               />
@@ -650,16 +537,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 label="Cost (£)"
                 size="small"
                 required={true}
-                value={catalogueItemDetails.cost_gbp ?? ''}
-                onChange={(event) => {
-                  handleCatalogueDetails('cost_gbp', event.target.value);
-                }}
-                error={errorMessages.cost_gbp !== undefined}
-                helperText={
-                  errorMessages.cost_gbp !== undefined
-                    ? errorMessages.cost_gbp
-                    : ''
-                }
+                {...registerDetailsStep('cost_gbp')}
+                error={!!errorsDetailsStep.cost_gbp}
+                helperText={errorsDetailsStep.cost_gbp?.message}
                 fullWidth
               />
             </Grid>
@@ -669,19 +549,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 id="catalogue-item-cost-rework-input"
                 label="Cost to rework (£)"
                 size="small"
-                value={catalogueItemDetails.cost_to_rework_gbp ?? ''}
-                onChange={(event) => {
-                  handleCatalogueDetails(
-                    'cost_to_rework_gbp',
-                    event.target.value
-                  );
-                }}
-                error={errorMessages.cost_to_rework_gbp !== undefined}
-                helperText={
-                  errorMessages.cost_to_rework_gbp !== undefined
-                    ? errorMessages.cost_to_rework_gbp
-                    : ''
-                }
+                {...registerDetailsStep('cost_to_rework_gbp')}
+                error={!!errorsDetailsStep.cost_to_rework_gbp}
+                helperText={errorsDetailsStep.cost_to_rework_gbp?.message}
                 fullWidth
               />
             </Grid>
@@ -692,16 +562,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 label="Time to replace (days)"
                 size="small"
                 required={true}
-                value={catalogueItemDetails.days_to_replace ?? ''}
-                onChange={(event) => {
-                  handleCatalogueDetails('days_to_replace', event.target.value);
-                }}
-                error={errorMessages.days_to_replace !== undefined}
-                helperText={
-                  errorMessages.days_to_replace !== undefined
-                    ? errorMessages.days_to_replace
-                    : ''
-                }
+                {...registerDetailsStep('days_to_replace')}
+                error={!!errorsDetailsStep.days_to_replace}
+                helperText={errorsDetailsStep.days_to_replace?.message}
                 fullWidth
               />
             </Grid>
@@ -711,16 +574,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 id="catalogue-item-rework-input"
                 label="Time to rework (days)"
                 size="small"
-                value={catalogueItemDetails.days_to_rework ?? ''}
-                onChange={(event) => {
-                  handleCatalogueDetails('days_to_rework', event.target.value);
-                }}
-                error={errorMessages.days_to_rework !== undefined}
-                helperText={
-                  errorMessages.days_to_rework !== undefined
-                    ? errorMessages.days_to_rework
-                    : ''
-                }
+                {...registerDetailsStep('days_to_rework')}
+                error={!!errorsDetailsStep.days_to_rework}
+                helperText={errorsDetailsStep.days_to_rework?.message}
                 fullWidth
               />
             </Grid>
@@ -730,10 +586,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 id="catalogue-item-drawing-number-input"
                 label="Drawing number"
                 size="small"
-                value={catalogueItemDetails.drawing_number ?? ''}
-                onChange={(event) => {
-                  handleCatalogueDetails('drawing_number', event.target.value);
-                }}
+                {...registerDetailsStep('drawing_number')}
                 fullWidth
               />
             </Grid>
@@ -743,16 +596,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 id="catalogue-item-drawing-link-input"
                 label="Drawing link"
                 size="small"
-                value={catalogueItemDetails.drawing_link ?? ''}
-                onChange={(event) => {
-                  handleCatalogueDetails('drawing_link', event.target.value);
-                }}
-                error={errorMessages.drawing_link !== undefined}
-                helperText={
-                  errorMessages.drawing_link !== undefined
-                    ? errorMessages.drawing_link
-                    : ''
-                }
+                {...registerDetailsStep('drawing_link')}
+                error={!!errorsDetailsStep.drawing_link}
+                helperText={errorsDetailsStep.drawing_link?.message}
                 fullWidth
               />
             </Grid>
@@ -762,59 +608,51 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 id="catalogue-item-model-input"
                 label="Model number"
                 size="small"
-                value={catalogueItemDetails.item_model_number ?? ''}
-                onChange={(event) => {
-                  handleCatalogueDetails(
-                    'item_model_number',
-                    event.target.value
-                  );
-                }}
+                {...registerDetailsStep('item_model_number')}
                 fullWidth
               />
             </Grid>
 
             <Grid item xs={12} style={{ display: 'flex' }}>
               <Grid item xs={11}>
-                <Autocomplete
-                  id="catalogue-item-manufacturer-input"
-                  disableClearable={true}
-                  value={
-                    //logic means that current manufacturer renders in edit dialog, but behaves the same as add dialog (so can be changed/cleared)
-                    selectedCatalogueItemManufacturer &&
-                    selectedManufacturer === null &&
-                    inputValue !== ''
-                      ? selectedCatalogueItemManufacturer
-                      : selectedManufacturer
-                  }
-                  inputValue={inputValue ?? ''}
-                  onInputChange={(_event, newInputValue) =>
-                    setInputValue(newInputValue)
-                  }
-                  onChange={(_event, newManufacturer: Manufacturer | null) => {
-                    setSelectedManufacturer(newManufacturer ?? null);
-                    setInputValue(newManufacturer?.name ?? '');
-                    handleCatalogueDetails(
-                      'manufacturer_id',
-                      newManufacturer?.id ?? null
-                    );
-                  }}
-                  options={sortDataList(manufacturerList ?? [], 'name')}
-                  size="small"
-                  isOptionEqualToValue={(option, value) =>
-                    option.name === value.name
-                  }
-                  getOptionLabel={(option) => option.name}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      required={true}
-                      label="Manufacturer"
-                      error={errorMessages.manufacturer_id !== undefined}
-                      helperText={
-                        errorMessages.manufacturer_id !== undefined
-                          ? errorMessages.manufacturer_id
-                          : ''
+                <Controller
+                  control={controlDetailsStep}
+                  name="manufacturer_id"
+                  render={({ field: { value, onChange } }) => (
+                    <Autocomplete
+                      value={
+                        manufacturerList?.find(
+                          (manufacturer) => manufacturer.id === value
+                        ) || null
                       }
+                      onChange={(
+                        _event: React.SyntheticEvent,
+                        newManufacturer: Manufacturer | null
+                      ) => {
+                        onChange(newManufacturer?.id);
+                      }}
+                      id="catalogue-item-manufacturer-input"
+                      disableClearable
+                      options={
+                        sortDataList(options(), 'isRecent').reverse() ?? []
+                      }
+                      groupBy={(option) => option.isRecent}
+                      size="small"
+                      isOptionEqualToValue={(option, value) =>
+                        option.name === value.name
+                      }
+                      getOptionLabel={(option) => option.name}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          required
+                          label="Manufacturer"
+                          error={!!errorsDetailsStep.manufacturer_id}
+                          helperText={
+                            errorsDetailsStep.manufacturer_id?.message
+                          }
+                        />
+                      )}
                     />
                   )}
                 />
@@ -844,12 +682,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 id="catalogue-item-notes-input"
                 label="Notes"
                 size="small"
+                {...registerDetailsStep('notes')}
                 multiline
                 minRows={5}
-                value={catalogueItemDetails.notes ?? ''}
-                onChange={(event) => {
-                  handleCatalogueDetails('notes', event.target.value);
-                }}
                 fullWidth
               />
             </Grid>
@@ -866,86 +701,107 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                       <Grid container spacing={1.5}>
                         <Grid item xs={11} sx={{ display: 'flex' }}>
                           {property.type === 'boolean' ? (
-                            <FormControl fullWidth>
-                              <Autocomplete
-                                disableClearable={property.mandatory ?? false}
-                                id={`catalogue-item-property-${property.name.replace(
-                                  /\s+/g,
-                                  '-'
-                                )}`}
-                                value={
-                                  propertyValues[index]
-                                    ? (propertyValues[index] as string)
-                                        .charAt(0)
-                                        .toUpperCase() +
-                                      (propertyValues[index] as string).slice(1)
-                                    : ''
-                                }
-                                size="small"
-                                onChange={(_event, value) => {
-                                  handlePropertyChange(
-                                    index,
-                                    value?.toLowerCase() as string
-                                  );
-                                }}
-                                sx={{ alignItems: 'center' }}
-                                fullWidth
-                                options={['True', 'False']}
-                                isOptionEqualToValue={(option, value) =>
-                                  option.toLowerCase() == value.toLowerCase() ||
-                                  value == ''
-                                }
-                                renderInput={(params) => (
-                                  <TextField
-                                    {...params}
-                                    required={property.mandatory ?? false}
-                                    label={property.name}
-                                    error={propertyErrors[index]}
-                                    helperText={
-                                      propertyErrors[index] &&
-                                      'Please select either True or False'
-                                    }
-                                  />
-                                )}
-                              />
-                            </FormControl>
+                            <Controller
+                              control={controlPropertiesStep}
+                              name={`properties.${index}.value.value`}
+                              render={({
+                                field: { value: propertyValue, onChange },
+                              }) => (
+                                <Autocomplete
+                                  disableClearable={property.mandatory ?? false}
+                                  id={`catalogue-item-property-${property.name.replace(
+                                    /\s+/g,
+                                    '-'
+                                  )}`}
+                                  value={
+                                    propertyValue
+                                      ? propertyValue.charAt(0).toUpperCase() +
+                                        propertyValue.slice(1)
+                                      : ''
+                                  }
+                                  size="small"
+                                  onChange={(_event, value) => {
+                                    onChange(value);
+                                  }}
+                                  sx={{ alignItems: 'center' }}
+                                  fullWidth
+                                  options={['True', 'False']}
+                                  isOptionEqualToValue={(option, value) =>
+                                    option.toLowerCase() ==
+                                      value.toLowerCase() || value == ''
+                                  }
+                                  renderInput={(params) => (
+                                    <TextField
+                                      {...params}
+                                      required={property.mandatory ?? false}
+                                      label={property.name}
+                                      error={
+                                        !!errorsPropertiesStep?.properties?.[
+                                          index
+                                        ]?.value?.value
+                                      }
+                                      helperText={
+                                        errorsPropertiesStep?.properties?.[
+                                          index
+                                        ]?.value?.value?.message as string
+                                      }
+                                    />
+                                  )}
+                                />
+                              )}
+                            />
                           ) : property.allowed_values ? (
-                            <FormControl fullWidth>
-                              <Autocomplete
-                                disableClearable={property.mandatory ?? false}
-                                id={`catalogue-item-property-${property.name.replace(
-                                  /\s+/g,
-                                  '-'
-                                )}`}
-                                value={(propertyValues[index] as string) ?? ''}
-                                size="small"
-                                onChange={(_event, value) => {
-                                  handlePropertyChange(index, value);
-                                }}
-                                sx={{ alignItems: 'center' }}
-                                fullWidth
-                                options={property.allowed_values.values}
-                                getOptionLabel={(option) => option.toString()}
-                                isOptionEqualToValue={(option, value) =>
-                                  option.toString() === value.toString() ||
-                                  value === ''
-                                }
-                                renderInput={(params) => (
-                                  <TextField
-                                    {...params}
-                                    required={property.mandatory ?? false}
-                                    label={`${property.name} ${
-                                      property.unit ? `(${property.unit})` : ''
-                                    }`}
-                                    error={propertyErrors[index]}
-                                    helperText={
-                                      propertyErrors[index] &&
-                                      'Please enter a valid value as this field is mandatory'
-                                    }
-                                  />
-                                )}
-                              />
-                            </FormControl>
+                            <Controller
+                              control={controlPropertiesStep}
+                              name={`properties.${index}.value.value`}
+                              render={({
+                                field: { value: propertyValue, onChange },
+                              }) => (
+                                <Autocomplete
+                                  disableClearable={property.mandatory ?? false}
+                                  id={`catalogue-item-property-${property.name.replace(
+                                    /\s+/g,
+                                    '-'
+                                  )}`}
+                                  value={(propertyValue as string) ?? ''}
+                                  size="small"
+                                  onChange={(_event, value) => {
+                                    onChange(String(value));
+                                  }}
+                                  sx={{ alignItems: 'center' }}
+                                  fullWidth
+                                  options={
+                                    property.allowed_values?.values ?? []
+                                  }
+                                  getOptionLabel={(option) => option.toString()}
+                                  isOptionEqualToValue={(option, value) =>
+                                    option.toString() === value.toString() ||
+                                    value === ''
+                                  }
+                                  renderInput={(params) => (
+                                    <TextField
+                                      {...params}
+                                      required={property.mandatory ?? false}
+                                      label={`${property.name} ${
+                                        property.unit
+                                          ? `(${property.unit})`
+                                          : ''
+                                      }`}
+                                      error={
+                                        !!errorsPropertiesStep?.properties?.[
+                                          index
+                                        ]?.value?.value
+                                      }
+                                      helperText={
+                                        errorsPropertiesStep?.properties?.[
+                                          index
+                                        ]?.value?.value?.message as string
+                                      }
+                                    />
+                                  )}
+                                />
+                              )}
+                            />
                           ) : (
                             <TextField
                               id={`catalogue-item-${property.name}-input`}
@@ -953,28 +809,18 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                 property.unit ? `(${property.unit})` : ''
                               }`}
                               size="small"
+                              {...registerPropertiesStep(
+                                `properties.${index}.value.value`
+                              )}
                               required={property.mandatory ?? false}
-                              value={propertyValues[index] || ''}
-                              onChange={(event) =>
-                                handlePropertyChange(
-                                  index,
-                                  event.target.value ? event.target.value : null
-                                )
-                              }
                               fullWidth
-                              error={propertyErrors[index]}
+                              error={
+                                !!errorsPropertiesStep?.properties?.[index]
+                                  ?.value?.value
+                              }
                               helperText={
-                                // Check if 'propertyErrors[index]' exists and evaluate its value
-                                propertyErrors[index]
-                                  ? // If 'propertyErrors[index]' is truthy, perform the following checks:
-                                    property.mandatory && !propertyValues[index]
-                                    ? // If 'property' is mandatory and 'propertyValues[index]' is empty, return a mandatory field error message
-                                      'Please enter a valid value as this field is mandatory'
-                                    : property.type === 'number' &&
-                                      isNaN(Number(propertyValues[index])) &&
-                                      'Please enter a valid number' // If 'property' is of type 'number' and 'propertyValues[index]' is not a valid number, return an invalid number error message
-                                  : // If 'propertyErrors[index]' is falsy, return an empty string (no error)
-                                    ''
+                                errorsPropertiesStep?.properties?.[index]?.value
+                                  ?.value?.message as string
                               }
                             />
                           )}
@@ -1042,7 +888,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       fullWidth
     >
       <DialogTitle>{`${
-        type === 'edit' ? 'Edit' : 'Add'
+        requestType === 'patch' ? 'Edit' : 'Add'
       } Catalogue Item`}</DialogTitle>
       <DialogContent>
         <Stepper
@@ -1090,15 +936,10 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             disabled={
               isEditPending ||
               isAddPending ||
-              JSON.stringify(errorMessages) !== '{}' ||
-              formError ||
-              propertyErrors.some((value) => {
-                return value === true;
-              })
+              Object.values(errorsDetailsStep).length !== 0 ||
+              Object.values(errorsPropertiesStep).length !== 0
             }
-            onClick={
-              type === 'edit' ? handleEditCatalogueItem : handleAddCatalogueItem
-            }
+            onClick={handleFinish}
             sx={{ mr: 3 }}
             endIcon={
               isAddPending || isEditPending ? (
@@ -1110,8 +951,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           </Button>
         ) : (
           <Button
-            disabled={JSON.stringify(errorMessages) !== '{}' || formError}
-            onClick={() => handleNext(activeStep)}
+            disabled={Object.values(errorsDetailsStep).length !== 0}
+            onClick={(event) => handleNext(event, activeStep)}
             sx={{ mr: 3 }}
           >
             Next
@@ -1125,12 +966,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           alignItems: 'center',
         }}
       >
-        {formError && (
-          <FormHelperText
-            sx={{ marginBottom: '16px', textAlign: 'center' }}
-            error
-          >
-            {formErrorMessage}
+        {errorsPropertiesStep.root?.formError && (
+          <FormHelperText sx={{ marginBottom: 2, textAlign: 'center' }} error>
+            {errorsPropertiesStep.root?.formError.message}
           </FormHelperText>
         )}
       </Box>

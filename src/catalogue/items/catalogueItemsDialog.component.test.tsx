@@ -35,7 +35,8 @@ describe('Catalogue Items Dialog', () => {
       open: true,
       onClose: onClose,
       parentInfo: undefined,
-      type: 'create',
+      requestType: 'post',
+      duplicate: false,
     };
 
     user = userEvent.setup();
@@ -372,7 +373,9 @@ describe('Catalogue Items Dialog', () => {
       broken: 'T{arrowdown}{enter}',
       older: 'F{arrowdown}{enter}',
     });
-    expect(screen.getByRole('button', { name: 'Finish' })).not.toBeDisabled();
+    expect(
+      await screen.findByRole('button', { name: 'Finish' })
+    ).not.toBeDisabled();
   }, 10000);
 
   it('displays an error if a mandatory catalogue item property is not defined (allowed list of values )', async () => {
@@ -405,11 +408,11 @@ describe('Catalogue Items Dialog', () => {
     await user.click(screen.getByRole('button', { name: 'Finish' }));
 
     const mandatoryFieldHelperText = screen.getAllByText(
-      'Please enter a valid value as this field is mandatory'
+      'Please enter a valid value as this field is mandatory.'
     );
 
     expect(mandatoryFieldHelperText[0]).toHaveTextContent(
-      'Please enter a valid value as this field is mandatory'
+      'Please enter a valid value as this field is mandatory.'
     );
   }, 10000);
 
@@ -468,7 +471,7 @@ describe('Catalogue Items Dialog', () => {
   it('displays error messages when mandatory fields are not filled in', async () => {
     props = {
       ...props,
-      type: 'create',
+      requestType: 'post',
       parentInfo: getCatalogueCategoryById('4'),
     };
 
@@ -478,14 +481,14 @@ describe('Catalogue Items Dialog', () => {
 
     expect(
       screen.getByText(
-        'Please choose a manufacturer, or add a new manufacturer'
+        'Please choose a manufacturer or add a new manufacturer. Then select a manufacturer.'
       )
     ).toBeInTheDocument();
 
-    const nameHelperText = screen.getByText('Please enter a name');
-    const costHelperText = screen.getByText('Please enter a cost');
+    const nameHelperText = screen.getByText('Please enter a name.');
+    const costHelperText = screen.getByText('Please enter a cost.');
     const daysToReplaceHelperText = screen.getByText(
-      'Please enter how many days it would take to replace'
+      'Please enter how many days it would take to replace.'
     );
     expect(nameHelperText).toBeInTheDocument();
     expect(costHelperText).toBeInTheDocument();
@@ -502,18 +505,18 @@ describe('Catalogue Items Dialog', () => {
     await user.click(screen.getByRole('button', { name: 'Finish' }));
 
     const mandatoryFieldHelperText = screen.getAllByText(
-      'Please enter a valid value as this field is mandatory'
+      'Please enter a valid value as this field is mandatory.'
     );
 
     const mandatoryFieldBooleanHelperText = screen.getByText(
-      'Please select either True or False'
+      'Please select either True or False.'
     );
 
     expect(mandatoryFieldBooleanHelperText).toBeInTheDocument();
 
     expect(mandatoryFieldHelperText.length).toBe(2);
     expect(mandatoryFieldHelperText[0]).toHaveTextContent(
-      'Please enter a valid value as this field is mandatory'
+      'Please enter a valid value as this field is mandatory.'
     );
   }, 6000);
 
@@ -540,17 +543,17 @@ describe('Catalogue Items Dialog', () => {
 
     await user.click(screen.getByRole('button', { name: 'Next' }));
     const validNumberDetailsHelperText = screen.getAllByText(
-      'Please enter a valid number'
+      'Please enter a valid number.'
     );
 
     expect(validNumberDetailsHelperText.length).toBe(4);
     expect(validNumberDetailsHelperText[0]).toHaveTextContent(
-      'Please enter a valid number'
+      'Please enter a valid number.'
     );
 
     expect(
       screen.getByText(
-        'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted'
+        'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted.'
       )
     ).toBeInTheDocument();
 
@@ -576,11 +579,11 @@ describe('Catalogue Items Dialog', () => {
     await user.click(screen.getByRole('button', { name: 'Finish' }));
 
     const validNumberPropertiesHelperText = screen.getAllByText(
-      'Please enter a valid number'
+      'Please enter a valid number.'
     );
     expect(validNumberPropertiesHelperText.length).toBe(2);
     expect(validNumberPropertiesHelperText[0]).toHaveTextContent(
-      'Please enter a valid number'
+      'Please enter a valid number.'
     );
   }, 10000);
 
@@ -658,13 +661,44 @@ describe('Catalogue Items Dialog', () => {
     expect(onClose).not.toHaveBeenCalled();
   });
 
+  describe('Recently Added Section', () => {
+    beforeEach(() => {
+      vi.useFakeTimers();
+      vi.setSystemTime(new Date('2024-01-09T12:00:00.000+00:00'));
+    });
+
+    afterEach(() => {
+      vi.useRealTimers();
+    });
+
+    it('displays recently added section', async () => {
+      props = {
+        ...props,
+        parentInfo: getCatalogueCategoryById('4'),
+      };
+
+      createView();
+
+      const manufacturerPopup = screen.getAllByRole('combobox')[0];
+
+      vi.advanceTimersByTimeAsync(2000);
+      await user.type(manufacturerPopup, 'Man');
+
+      const options = await screen.findAllByRole('option');
+      expect(options).toHaveLength(5);
+      expect(screen.getAllByText('Manufacturer B')).toHaveLength(2);
+      expect(screen.getByText('A-Z')).toBeInTheDocument();
+      expect(screen.getByText('Recently Added')).toBeInTheDocument();
+    }, 10000);
+  });
+
   describe('Edit a catalogue item', () => {
     let axiosPatchSpy: MockInstance;
 
     beforeEach(() => {
       props = {
         ...props,
-        type: 'edit',
+        requestType: 'patch',
       };
 
       axiosPatchSpy = vi.spyOn(imsApi, 'patch');
@@ -838,10 +872,10 @@ describe('Catalogue Items Dialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
-      const nameHelperText = screen.getByText('Please enter a name');
-      const costHelperText = screen.getByText('Please enter a cost');
+      const nameHelperText = screen.getByText('Please enter a name.');
+      const costHelperText = screen.getByText('Please enter a cost.');
       const daysToReplaceHelperText = screen.getByText(
-        'Please enter how many days it would take to replace'
+        'Please enter how many days it would take to replace.'
       );
 
       expect(nameHelperText).toBeInTheDocument();
@@ -867,12 +901,12 @@ describe('Catalogue Items Dialog', () => {
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       const mandatoryFieldHelperText = screen.getAllByText(
-        'Please enter a valid value as this field is mandatory'
+        'Please enter a valid value as this field is mandatory.'
       );
 
       expect(mandatoryFieldHelperText.length).toBe(2);
       expect(mandatoryFieldHelperText[0]).toHaveTextContent(
-        'Please enter a valid value as this field is mandatory'
+        'Please enter a valid value as this field is mandatory.'
       );
     }, 6000);
 
@@ -949,7 +983,9 @@ describe('Catalogue Items Dialog', () => {
 
       await waitFor(() => {
         expect(
-          screen.getByText('Please edit a form entry before clicking save')
+          screen.getByText(
+            "There have been no changes made. Please change a field's value or press Cancel to exit."
+          )
         ).toBeInTheDocument();
       });
 
@@ -977,7 +1013,9 @@ describe('Catalogue Items Dialog', () => {
 
       await waitFor(() => {
         expect(
-          screen.getByText('Please edit a form entry before clicking save')
+          screen.getByText(
+            "There have been no changes made. Please change a field's value or press Cancel to exit."
+          )
         ).toBeInTheDocument();
       });
     });

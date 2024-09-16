@@ -44,15 +44,16 @@ export interface AddCatalogueCategoryPropertyWithPlacementIds
   cip_placement_id: string; // Catalogue item properties (cip)
 }
 
+export interface PropertyValue {
+  valueType: string;
+  // The "value" contains the av_placement_id because it could correspond to an option
+  // from the allowed values in the add migration. Since this option can potentially
+  // be a duplicate, the av_placement_id serves as a unique identifier to differentiate them.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  value: { av_placement_id: string; value: any };
+}
 export interface AddPropertyMigration extends AddCatalogueCategoryProperty {
-  default_value: {
-    valueType: string;
-    // The "value" contains the av_placement_id because it could correspond to an option
-    // from the allowed values in the add migration. Since this option can potentially
-    // be a duplicate, the av_placement_id serves as a unique identifier to differentiate them.
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    value: { av_placement_id: string; value: any };
-  };
+  default_value: PropertyValue;
 }
 
 export interface EditPropertyMigration {
@@ -66,6 +67,37 @@ export interface MoveToCatalogueCategory {
   targetCategory: CatalogueCategory | null;
 }
 
+export interface CatalogueItemDetailsStep {
+  manufacturer_id: string;
+  name: string;
+  description?: string | null;
+  cost_gbp: string;
+  cost_to_rework_gbp?: string | null;
+  days_to_replace: string;
+  days_to_rework?: string | null;
+  drawing_number?: string | null;
+  drawing_link?: string | null;
+  item_model_number?: string | null;
+  notes?: string | null;
+}
+
+export interface CatalogueItemDetailsStepPost {
+  manufacturer_id: string;
+  name: string;
+  description?: string | null;
+  cost_gbp: number;
+  cost_to_rework_gbp?: number | null;
+  days_to_replace: number;
+  days_to_rework?: number | null;
+  drawing_number?: string | null;
+  drawing_link?: string | null;
+  item_model_number?: string | null;
+  notes?: string | null;
+}
+
+export interface PropertiesStep {
+  properties: PropertyValue[];
+}
 export interface CopyToCatalogueCategory {
   selectedCategories: CatalogueCategory[];
   // Null if root
@@ -80,28 +112,6 @@ export interface ObsoleteDetails {
   obsolete_replacement_catalogue_item_id: string | null;
   obsolete_reason: string | null;
 }
-export interface CatalogueItemDetails extends ObsoleteDetails {
-  catalogue_category_id: string;
-  name: string;
-  description: string | null;
-  cost_gbp: number;
-  cost_to_rework_gbp: number | null;
-  days_to_replace: number;
-  days_to_rework: number | null;
-  drawing_number: string | null;
-  drawing_link: string | null;
-  item_model_number: string | null;
-  manufacturer_id: string;
-  notes: string | null;
-}
-// need so we can cast string to number e.g for 10.50
-export type CatalogueItemDetailsPlaceholder = {
-  [K in keyof CatalogueItemDetails]: string | null;
-};
-
-export type CatalogueDetailsErrorMessages = {
-  [K in keyof CatalogueItemDetails]: string;
-};
 
 export interface CatalogueItemProperty {
   id: string;
