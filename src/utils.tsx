@@ -406,13 +406,30 @@ interface filterFunctionProps {
   filterValue: any;
 }*/
 
+export type filterVariantType =
+  | 'multi-select'
+  | 'autocomplete'
+  | 'checkbox'
+  | 'date'
+  | 'date-range'
+  | 'datetime'
+  | 'datetime-range'
+  | 'range'
+  | 'range-slider'
+  | 'select'
+  | 'text'
+  | 'time'
+  | 'time-range'
+  | undefined;
 interface customFilterFunctionInterface {
   Name: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   FilterFunction(row: MRT_RowData, id: string, filterValue: any): any;
   Label: string;
+  FilterVariant: filterVariantType;
+  HideSeconds?: boolean;
 }
-const customFilterFunctions: customFilterFunctionInterface[] = [
+export const customFilterFunctions: customFilterFunctionInterface[] = [
   {
     Name: 'filterExclude',
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -420,6 +437,7 @@ const customFilterFunctions: customFilterFunctionInterface[] = [
       return !filterValue.includes(row.getValue(id));
     },
     Label: 'Exclude',
+    FilterVariant: 'multi-select',
   },
   {
     Name: 'filterInclude',
@@ -428,6 +446,7 @@ const customFilterFunctions: customFilterFunctionInterface[] = [
       return filterValue.includes(row.getValue(id));
     },
     Label: 'Include',
+    FilterVariant: 'multi-select',
   },
   {
     Name: 'equalsDate',
@@ -437,6 +456,40 @@ const customFilterFunctions: customFilterFunctionInterface[] = [
       return filterValue.getTime() === rowDate.getTime();
     },
     Label: 'Equals',
+    FilterVariant: 'date',
+    HideSeconds: true,
+  },
+  {
+    Name: 'betweenInclusiveDateTime',
+    FilterFunction(row: MRT_RowData, id: string, filterValue: any): any {
+      const rowDate: Date = row.getValue(id);
+      const lowerBound = filterValue[0];
+      const upperBound = filterValue[1];
+      return lowerBound <= rowDate.getTime() && upperBound >= rowDate.getTime();
+    },
+    Label: 'Between',
+    FilterVariant: 'datetime-range',
+    HideSeconds: false,
+  },
+  {
+    Name: 'beforeInclusiveDateTime',
+    FilterFunction(row: MRT_RowData, id: string, filterValue: any): any {
+      const rowDate: Date = row.getValue(id);
+      return filterValue >= rowDate.getTime();
+    },
+    Label: 'Before',
+    FilterVariant: 'datetime',
+    HideSeconds: false,
+  },
+  {
+    Name: 'afterInclusiveDateTime',
+    FilterFunction(row: MRT_RowData, id: string, filterValue: any): any {
+      const rowDate: Date = row.getValue(id);
+      return filterValue <= rowDate.getTime();
+    },
+    Label: 'After',
+    FilterVariant: 'datetime',
+    HideSeconds: false,
   },
 ];
 
@@ -468,19 +521,16 @@ export const filterFunctionsRendering = (
 ) => {
   const { onSelectFilterMode, selectedFilters } = props;
   //TODO sort out rendering type
-  let rendering: any = selectedFilters.map((option) => {
+  let rendering: any = selectedFilters.map((option, index) => {
     const filter = customFilterFunctions.find(
       (filter) => filter.Name == option
     );
     return filter ? (
-      <MenuItem
-        key={filter.Name}
-        onClick={() => onSelectFilterMode(filter.Name)}
-      >
+      <MenuItem key={index} onClick={() => onSelectFilterMode(filter.Name)}>
         {filter.Label}
       </MenuItem>
     ) : (
-      <MenuItem key={option} onClick={() => onSelectFilterMode(option)}>
+      <MenuItem key={index} onClick={() => onSelectFilterMode(option)}>
         {option}
       </MenuItem>
     );
@@ -488,8 +538,40 @@ export const filterFunctionsRendering = (
   return rendering;
 };
 
+export function customFiltersLocalization(): Record<string, string> {
+  let filtersLocalizationRecord: Record<string, string> =
+    customFilterFunctions.reduce<Record<string, string>>(
+      (result, currentValue) => {
+        const filterFunctionName = currentValue.Name;
+        const indexString =
+          'filter' +
+          filterFunctionName.charAt(0).toUpperCase() +
+          filterFunctionName.slice(1);
+        result[indexString] = currentValue.Label;
+        return result;
+      },
+      {}
+    );
+  return filtersLocalizationRecord;
+}
+
+export function getFilterVariant(filterFunction: string): filterVariantType {
+  const filterVariant = customFilterFunctions.find(
+    (filter) => filter.Name == filterFunction
+  )?.FilterVariant;
+  return filterVariant;
+}
+
 export function removeSecondsFromDate(date: string): Date {
   const modifiedDate = new Date(date);
   modifiedDate.setSeconds(0, 0);
   return modifiedDate;
+}
+
+export function renderSeconds(filterFunction: string): boolean {
+  let returnValue: boolean | undefined;
+  returnValue = customFilterFunctions
+    .find((filter) => filter.Name == filterFunction)
+    ?.FilterVariant?.includes('time');
+  return returnValue ?? true;
 }
