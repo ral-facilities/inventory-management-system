@@ -1,6 +1,18 @@
 import { DefaultBodyType, http, HttpResponse, PathParams } from 'msw';
 import {
   BreadcrumbsInfo,
+  CatalogueCategory,
+  CatalogueCategoryPatch,
+  CatalogueCategoryPost,
+  CatalogueCategoryProperty,
+  CatalogueCategoryPropertyPatch,
+  CatalogueCategoryPropertyPost,
+  CatalogueItem,
+  CatalogueItemPatch,
+  CatalogueItemPost,
+  Item,
+  ItemPatch,
+  ItemPost,
   Manufacturer,
   ManufacturerPatch,
   ManufacturerPost,
@@ -12,19 +24,6 @@ import {
   UsageStatus,
   UsageStatusPost,
 } from '../api/api.types';
-import {
-  AddCatalogueCategory,
-  AddCatalogueItem,
-  AddItem,
-  CatalogueCategory,
-  CatalogueCategoryProperty,
-  CatalogueCategoryPropertyMigration,
-  CatalogueItem,
-  EditCatalogueCategory,
-  EditCatalogueItem,
-  EditItem,
-  Item,
-} from '../app.types';
 import { generateUniqueId } from '../utils';
 import CatalogueCategoriesJSON from './CatalogueCategories.json';
 import CatalogueCategoryBreadcrumbsJSON from './CatalogueCategoryBreadcrumbs.json';
@@ -47,7 +46,7 @@ export const handlers = [
 
   http.post<
     PathParams,
-    AddCatalogueCategory,
+    CatalogueCategoryPost,
     CatalogueCategory | ErrorResponse
   >('/v1/catalogue-categories', async ({ request }) => {
     let body = await request.json();
@@ -146,7 +145,7 @@ export const handlers = [
 
   http.patch<
     { id: string },
-    EditCatalogueCategory,
+    CatalogueCategoryPatch,
     CatalogueCategory | ErrorResponse
   >('/v1/catalogue-categories/:id', async ({ request, params }) => {
     const { id } = params;
@@ -205,12 +204,16 @@ export const handlers = [
 
   http.post<
     PathParams,
-    CatalogueCategoryPropertyMigration,
+    CatalogueCategoryPropertyPost,
     CatalogueCategoryProperty | ErrorResponse
   >(
     '/v1/catalogue-categories/:catalogue_category_id/properties',
     async ({ request }) => {
       const body = await request.json();
+
+      const unitValue = UnitsJSON.find(
+        (unit) => body.unit_id === unit.id
+      )?.value;
 
       if (body.name == 'Error 500') {
         return HttpResponse.json(
@@ -223,6 +226,7 @@ export const handlers = [
         {
           id: '1',
           ...body,
+          unit: unitValue ?? null,
         } as CatalogueCategoryProperty,
         { status: 200 }
       );
@@ -231,7 +235,7 @@ export const handlers = [
 
   http.patch<
     PathParams,
-    Partial<CatalogueCategoryPropertyMigration>,
+    CatalogueCategoryPropertyPatch,
     CatalogueCategoryProperty | ErrorResponse
   >(
     '/v1/catalogue-categories/:catalogue_category_id/properties/:property_id',
@@ -260,7 +264,7 @@ export const handlers = [
 
   // ------------------------------------ CATALOGUE ITEMS ------------------------------------
 
-  http.post<PathParams, AddCatalogueItem, CatalogueItem | ErrorResponse>(
+  http.post<PathParams, CatalogueItemPost, CatalogueItem | ErrorResponse>(
     '/v1/catalogue-items',
     async ({ request }) => {
       let body = await request.json();
@@ -337,7 +341,7 @@ export const handlers = [
     }
   ),
 
-  http.patch<{ id: string }, EditCatalogueItem, CatalogueItem | ErrorResponse>(
+  http.patch<{ id: string }, CatalogueItemPatch, CatalogueItem | ErrorResponse>(
     '/v1/catalogue-items/:id',
     async ({ request, params }) => {
       const body = await request.json();
@@ -671,7 +675,7 @@ export const handlers = [
 
   // ------------------------------------ ITEMS ------------------------------------------------
 
-  http.post<PathParams, AddItem, Item | ErrorResponse>(
+  http.post<PathParams, ItemPost, Item | ErrorResponse>(
     '/v1/items',
     async ({ request }) => {
       let body = await request.json();
@@ -751,7 +755,7 @@ export const handlers = [
     return HttpResponse.json(data, { status: 200 });
   }),
 
-  http.patch<{ id: string }, EditItem, Item | ErrorResponse>(
+  http.patch<{ id: string }, ItemPatch, Item | ErrorResponse>(
     '/v1/items/:id',
     async ({ request, params }) => {
       const body = await request.json();

@@ -27,14 +27,14 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Manufacturer } from '../../api/api.types';
-import { useCatalogueItems } from '../../api/catalogueItems';
-import { useGetManufacturerIds } from '../../api/manufacturers';
 import {
   CatalogueCategory,
   CatalogueItem,
-  CatalogueItemPropertyResponse,
-} from '../../app.types';
+  Manufacturer,
+  Property,
+} from '../../api/api.types';
+import { useGetCatalogueItems } from '../../api/catalogueItems';
+import { useGetManufacturerIds } from '../../api/manufacturers';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import {
   TableBodyCellOverFlowTip,
@@ -118,7 +118,7 @@ const CopyCatalogueItemsButton = (props: {
 };
 
 export function findPropertyValue(
-  properties: CatalogueItemPropertyResponse[],
+  properties: Property[],
   targetId: string | undefined
 ) {
   // Use the find method to locate the object with the target name
@@ -167,7 +167,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
 
   const { data: catalogueItemsData, isLoading: isLoadingCatalogueItems } =
-    useCatalogueItems(parentInfo.id);
+    useGetCatalogueItems(parentInfo.id);
 
   // States
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
@@ -259,9 +259,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       {
         header: 'Last modified',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => {
-          return removeSecondsFromDate(row.catalogueItem.modified_time);
-        },
+        accessorFn: (row) =>
+          removeSecondsFromDate(row.catalogueItem.modified_time),
         id: 'catalogueItem.modified_time',
         filterVariant: 'datetime-range',
         size: 350,
@@ -272,9 +271,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       {
         header: 'Created',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => {
-          return removeSecondsFromDate(row.catalogueItem.created_time);
-        },
+        accessorFn: (row) =>
+          removeSecondsFromDate(row.catalogueItem.created_time),
         id: 'catalogueItem.created_time',
         filterVariant: 'datetime-range',
         size: 350,
@@ -801,7 +799,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
               table.setCreatingRow(null);
             }}
             parentInfo={parentInfo}
-            type={itemDialogType}
+            duplicate={itemDialogType === 'duplicate'}
+            requestType={itemDialogType === 'edit' ? 'patch' : 'post'}
             selectedCatalogueItem={
               itemDialogType === 'create'
                 ? undefined

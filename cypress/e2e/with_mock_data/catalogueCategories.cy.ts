@@ -24,23 +24,23 @@ describe('Catalogue Category', () => {
 
   it('should create the breadcrumbs when navigating to a non root catalogue category', () => {
     cy.visit('/catalogue/8');
-    cy.findByRole('link', { name: 'motion' }).should('be.visible');
-    cy.findByText('actuators').should('be.visible');
+    cy.findByRole('link', { name: 'Motion' }).should('be.visible');
+    cy.findByText('Actuators').should('be.visible');
 
-    cy.findByRole('link', { name: 'motion' }).click();
-    cy.findByRole('link', { name: 'motion' }).should('not.exist');
-    cy.findByText('actuators').should('not.exist');
-    cy.findByText('motion').should('be.visible');
+    cy.findByRole('link', { name: 'Motion' }).click();
+    cy.findByRole('link', { name: 'Motion' }).should('not.exist');
+    cy.findByText('Actuators').should('not.exist');
+    cy.findByText('Motion').should('be.visible');
     cy.url().should('include', '/catalogue/2');
   });
 
   it('should navigate back to the root directory when the home button is pressed', () => {
     cy.visit('/catalogue/8');
-    cy.findByRole('link', { name: 'motion' }).should('exist');
-    cy.findByText('actuators').should('exist');
+    cy.findByRole('link', { name: 'Motion' }).should('exist');
+    cy.findByText('Actuators').should('exist');
     cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
-    cy.findByRole('link', { name: 'motion' }).should('not.exist');
-    cy.findByText('actuators').should('not.exist');
+    cy.findByRole('link', { name: 'Motion' }).should('not.exist');
+    cy.findByText('Actuators').should('not.exist');
   });
 
   it('should be able to navigate through categories while preserving the page state when going back', () => {
@@ -128,7 +128,7 @@ describe('Catalogue Category', () => {
       .should('be.visible')
       .within(() => {
         cy.contains(
-          'A catalogue category with the same name already exists within the parent catalogue category'
+          'A catalogue category with the same name already exists within the same parent catalogue category. Please enter a different name.'
         );
       });
     cy.findByRole('button', { name: 'Save' }).should('be.disabled');
@@ -156,30 +156,6 @@ describe('Catalogue Category', () => {
         JSON.stringify({ name: 'test', is_leaf: false })
       );
     });
-  });
-
-  it('opens actions menu and then closes', () => {
-    cy.findByRole('button', {
-      name: 'actions Motion catalogue category button',
-    }).click();
-
-    cy.findByRole('menuitem', {
-      name: 'edit name Motion catalogue category button',
-    }).should('be.visible');
-    cy.findByRole('menuitem', {
-      name: 'duplicate Motion catalogue category button',
-    }).should('be.visible');
-    cy.findByRole('menuitem', {
-      name: 'delete Motion catalogue category button',
-    })
-      .should('be.visible')
-      .click();
-
-    cy.findByText('Cancel').click();
-
-    cy.findByRole('button', {
-      name: 'actions Motion catalogue category button',
-    }).should('be.visible');
   });
 
   it('"duplicate" a catalogue category', () => {
@@ -270,8 +246,7 @@ describe('Catalogue Category', () => {
 
     cy.findByRole('button', { name: 'Save' }).click();
 
-    cy.findByText('Please enter a property name').should('exist');
-    cy.findByText('Please select a type').should('exist');
+    cy.findByText('Please enter a property name.').should('exist');
 
     cy.findAllByLabelText('Property Name *').last().type('Updated Field 2');
     cy.findAllByLabelText('Select Type *').last().click();
@@ -327,8 +302,7 @@ describe('Catalogue Category', () => {
 
     cy.findByRole('button', { name: 'Save' }).click();
 
-    cy.findByText('Please enter a property name').should('exist');
-    cy.findByText('Please select a type').should('exist');
+    cy.findByText('Please enter a property name.').should('exist');
 
     cy.findAllByLabelText('Property Name *').last().type('Updated Field 2');
     cy.findAllByLabelText('Select Type *').last().click();
@@ -336,7 +310,7 @@ describe('Catalogue Category', () => {
     cy.findAllByLabelText('Select Allowed values *').last().click();
     cy.findByRole('option', { name: 'List' }).click();
     cy.findByRole('button', { name: 'Add list item' }).click();
-    cy.findAllByLabelText('List Item').eq(0).type('10');
+    cy.findAllByLabelText('List item').eq(0).type('10');
     cy.findByRole('button', { name: 'Save' }).click();
     cy.findByRole('dialog').should('not.exist');
 
@@ -394,22 +368,22 @@ describe('Catalogue Category', () => {
     cy.findByRole('option', { name: 'List' }).click();
     cy.findAllByRole('button', { name: 'Add list item' }).eq(1).click();
     cy.findAllByRole('button', { name: 'Add list item' }).eq(1).click();
-    cy.findAllByLabelText('List Item').eq(2).type('10');
-    cy.findAllByLabelText('List Item').eq(3).type('10');
+    cy.findAllByLabelText('List item').eq(2).type('10');
+    cy.findAllByLabelText('List item').eq(3).type('10');
 
     cy.findByRole('button', { name: 'Save' }).click();
 
-    cy.findAllByText('Please enter a value').should('have.length', 2);
-    cy.findAllByText('Duplicate value').should('have.length', 2);
+    cy.findAllByText('Please enter a value.').should('have.length', 2);
+    cy.findAllByText('Duplicate value.').should('have.length', 2);
 
     // Clearing the errors
 
-    cy.findAllByLabelText('List Item').eq(3).clear();
-    cy.findAllByLabelText('List Item').eq(3).type('11');
+    cy.findAllByLabelText('List item').eq(3).clear();
+    cy.findAllByLabelText('List item').eq(3).type('11');
     cy.findAllByText('Duplicate value').should('have.length', 0);
 
-    cy.findAllByLabelText('List Item').eq(0).type('10');
-    cy.findAllByLabelText('List Item').eq(1).type('11');
+    cy.findAllByLabelText('List item').eq(0).type('10');
+    cy.findAllByLabelText('List item').eq(1).type('11');
     cy.findAllByText('Please enter a value').should('have.length', 0);
   });
 
@@ -431,8 +405,8 @@ describe('Catalogue Category', () => {
     cy.findByRole('option', { name: 'List' }).click();
     cy.findByRole('button', { name: 'Add list item' }).click();
     cy.findByRole('button', { name: 'Add list item' }).click();
-    cy.findAllByLabelText('List Item').eq(0).type('dsadd');
-    cy.findAllByLabelText('List Item').eq(1).type('10');
+    cy.findAllByLabelText('List item').eq(0).type('dsadd');
+    cy.findAllByLabelText('List item').eq(1).type('10');
 
     cy.findByRole('button', {
       name: 'Add catalogue category field entry',
@@ -445,18 +419,18 @@ describe('Catalogue Category', () => {
     cy.findByRole('option', { name: 'List' }).click();
     cy.findAllByRole('button', { name: 'Add list item' }).eq(1).click();
     cy.findAllByRole('button', { name: 'Add list item' }).eq(1).click();
-    cy.findAllByLabelText('List Item').eq(2).type('dsadd');
-    cy.findAllByLabelText('List Item').eq(3).type('10');
+    cy.findAllByLabelText('List item').eq(2).type('dsadd');
+    cy.findAllByLabelText('List item').eq(3).type('10');
 
     cy.findByRole('button', { name: 'Save' }).click();
 
-    cy.findAllByText('Please enter a valid number').should('have.length', 2);
+    cy.findAllByText('Please enter a valid number.').should('have.length', 2);
 
     // Clearing the errors
 
     cy.findAllByLabelText('Delete list item').eq(0).click();
     cy.findAllByLabelText('Delete list item').eq(1).click();
-    cy.findAllByText('Please enter a valid number').should('have.length', 0);
+    cy.findAllByText('Please enter a valid number.').should('have.length', 0);
   });
 
   it('displays the allowed values list error states (number)', () => {
@@ -489,8 +463,8 @@ describe('Catalogue Category', () => {
     cy.findByRole('option', { name: 'List' }).click();
     cy.findAllByRole('button', { name: 'Add list item' }).eq(1).click();
     cy.findAllByRole('button', { name: 'Add list item' }).eq(1).click();
-    cy.findAllByLabelText('List Item').eq(2).type('10');
-    cy.findAllByLabelText('List Item').eq(3).type('10');
+    cy.findAllByLabelText('List item').eq(2).type('10');
+    cy.findAllByLabelText('List item').eq(3).type('10');
 
     cy.findByRole('button', {
       name: 'Add catalogue category field entry',
@@ -503,30 +477,30 @@ describe('Catalogue Category', () => {
     cy.findByRole('option', { name: 'List' }).click();
     cy.findAllByRole('button', { name: 'Add list item' }).eq(2).click();
     cy.findAllByRole('button', { name: 'Add list item' }).eq(2).click();
-    cy.findAllByLabelText('List Item').eq(4).type('10b');
-    cy.findAllByLabelText('List Item').eq(5).type('10c');
+    cy.findAllByLabelText('List item').eq(4).type('10b');
+    cy.findAllByLabelText('List item').eq(5).type('10c');
 
     cy.findByRole('button', { name: 'Save' }).click();
 
-    cy.findAllByText('Please enter a value').should('have.length', 2);
-    cy.findAllByText('Duplicate value').should('have.length', 2);
-    cy.findAllByText('Please enter a valid number').should('have.length', 2);
+    cy.findAllByText('Please enter a value.').should('have.length', 2);
+    cy.findAllByText('Duplicate value.').should('have.length', 2);
+    cy.findAllByText('Please enter a valid number.').should('have.length', 2);
 
     // Clearing the errors
 
-    cy.findAllByLabelText('List Item').eq(4).clear();
-    cy.findAllByLabelText('List Item').eq(4).type('11');
-    cy.findAllByLabelText('List Item').eq(5).clear();
-    cy.findAllByLabelText('List Item').eq(5).type('12');
-    cy.findAllByText('Please enter a valid number').should('have.length', 0);
+    cy.findAllByLabelText('List item').eq(4).clear();
+    cy.findAllByLabelText('List item').eq(4).type('11');
+    cy.findAllByLabelText('List item').eq(5).clear();
+    cy.findAllByLabelText('List item').eq(5).type('12');
+    cy.findAllByText('Please enter a valid number.').should('have.length', 0);
 
-    cy.findAllByLabelText('List Item').eq(3).clear();
-    cy.findAllByLabelText('List Item').eq(3).type('11');
-    cy.findAllByText('Duplicate value').should('have.length', 0);
+    cy.findAllByLabelText('List item').eq(3).clear();
+    cy.findAllByLabelText('List item').eq(3).type('11');
+    cy.findAllByText('Duplicate value.').should('have.length', 0);
 
-    cy.findAllByLabelText('List Item').eq(0).first().type('10');
-    cy.findAllByLabelText('List Item').eq(1).first().type('11');
-    cy.findAllByText('Please enter a value').should('have.length', 0);
+    cy.findAllByLabelText('List item').eq(0).first().type('10');
+    cy.findAllByLabelText('List item').eq(1).first().type('11');
+    cy.findAllByText('Please enter a value.').should('have.length', 0);
   });
 
   it('displays error message when duplicate names for properties are entered', () => {
@@ -556,7 +530,7 @@ describe('Catalogue Category', () => {
     cy.findByRole('button', { name: 'Save' }).click();
 
     cy.findAllByText(
-      'Duplicate property name. Please change the name or remove the property'
+      'Duplicate property name. Please change the name or remove the property.'
     ).should('exist');
   });
 
@@ -567,14 +541,13 @@ describe('Catalogue Category', () => {
     }).click();
 
     cy.findByRole('menuitem', {
-      name: 'edit name Amp Meters catalogue category button',
+      name: 'edit Amp Meters catalogue category button',
     }).click();
     cy.findByLabelText('Name *').type('1');
 
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Save' }).click();
-    cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
       method: 'PATCH',
@@ -595,7 +568,7 @@ describe('Catalogue Category', () => {
     }).click();
 
     cy.findByRole('menuitem', {
-      name: 'edit name Beam Characterization catalogue category button',
+      name: 'edit Beam Characterization catalogue category button',
     }).click();
 
     cy.findByRole('button', { name: 'Save' }).click();
@@ -603,7 +576,9 @@ describe('Catalogue Category', () => {
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.contains('Please edit a form entry before clicking save');
+        cy.contains(
+          'There have been no changes made. Please change the name field value or press Close.'
+        );
       });
     cy.findByRole('button', { name: 'Save' }).should('be.disabled');
   });
@@ -759,6 +734,7 @@ describe('Catalogue Category', () => {
           parent_id: null,
           code: 'test_dup',
           is_leaf: false,
+          properties: [],
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
         })
@@ -770,6 +746,7 @@ describe('Catalogue Category', () => {
           parent_id: null,
           code: 'amp-meters',
           is_leaf: false,
+          properties: [],
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
         })
@@ -873,6 +850,7 @@ describe('Catalogue Category', () => {
           parent_id: '2',
           code: 'test_dup',
           is_leaf: false,
+          properties: [],
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
         })
@@ -884,6 +862,7 @@ describe('Catalogue Category', () => {
           parent_id: '2',
           code: 'amp-meters',
           is_leaf: false,
+          properties: [],
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
         })
@@ -939,29 +918,25 @@ describe('Catalogue Category', () => {
     }).click();
 
     cy.findByRole('menuitem', {
-      name: 'edit properties Dry Vacuum Pumps catalogue category button',
+      name: 'edit Dry Vacuum Pumps catalogue category button',
     }).click();
 
-    cy.findByLabelText(
-      'Select Edit to edit an existing property or select Add to add a new property'
-    ).click();
-    cy.findByRole('option', { name: 'Add' }).click();
-
-    cy.findByRole('button', { name: 'Next' }).click();
-
-    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByText('Add Property').click();
 
     cy.findByLabelText('Property Name *').type('test 1');
-    cy.findByLabelText('Select Type *').click();
-    cy.findByText('Text').click();
     cy.findAllByLabelText('Select is mandatory?').last().click();
     cy.findByRole('option', { name: 'Yes' }).click();
     cy.findByLabelText('Default value *').type('test');
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
-    cy.findByRole('dialog').should('not.exist');
+    cy.findByRole('checkbox', {
+      name: 'Confirm understanding and proceed checkbox',
+    }).click();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findByText('Add Property').should('have.length', 1);
 
     cy.findBrowserMockedRequests({
       method: 'POST',
@@ -987,21 +962,14 @@ describe('Catalogue Category', () => {
     }).click();
 
     cy.findByRole('menuitem', {
-      name: 'edit properties Dry Vacuum Pumps catalogue category button',
+      name: 'edit Dry Vacuum Pumps catalogue category button',
     }).click();
 
-    cy.findByLabelText(
-      'Select Edit to edit an existing property or select Add to add a new property'
-    ).click();
-    cy.findByRole('option', { name: 'Add' }).click();
-
-    cy.findByRole('button', { name: 'Next' }).click();
-
-    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByText('Add Property').click();
 
     cy.findByLabelText('Property Name *').type('test 1');
     cy.findByLabelText('Select Type *').click();
-    cy.findByText('Number').click();
+    cy.findByRole('option', { name: 'Number' }).click();
     cy.findByLabelText('Select is mandatory?').click();
     cy.findByRole('option', { name: 'No' }).click();
     cy.findByLabelText('Default value').type('1');
@@ -1010,8 +978,20 @@ describe('Catalogue Category', () => {
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
-    cy.findByRole('dialog').should('not.exist');
+    cy.findByRole('checkbox', {
+      name: 'Confirm understanding and proceed checkbox',
+    }).click();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findByText('Add Property').should('have.length', 1);
+
+    // Active waiting (test column filters) for the patch request below
+    cy.findByLabelText('Filter by Name').type('Axis');
+    cy.findByRole('button', { name: 'Clear Filters' }).should('exist');
+    cy.findByRole('button', { name: 'Clear Filters' }).should(
+      'be.not.disabled'
+    );
 
     cy.findBrowserMockedRequests({
       method: 'POST',
@@ -1023,9 +1003,9 @@ describe('Catalogue Category', () => {
         JSON.stringify({
           name: 'test 1',
           type: 'number',
+          unit_id: '5',
           mandatory: false,
           default_value: 1,
-          unit_id: '5',
         })
       );
     });
@@ -1039,28 +1019,33 @@ describe('Catalogue Category', () => {
     }).click();
 
     cy.findByRole('menuitem', {
-      name: 'edit properties Dry Vacuum Pumps catalogue category button',
+      name: 'edit Dry Vacuum Pumps catalogue category button',
     }).click();
 
-    cy.findByLabelText(
-      'Select Edit to edit an existing property or select Add to add a new property'
-    ).click();
-    cy.findByRole('option', { name: 'Add' }).click();
-
-    cy.findByRole('button', { name: 'Next' }).click();
-
-    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByText('Add Property').click();
 
     cy.findByLabelText('Property Name *').type('test 1');
     cy.findByLabelText('Select Type *').click();
-    cy.findByText('Boolean').click();
+    cy.findByRole('option', { name: 'Boolean' }).click();
     cy.findByLabelText('Select Default value').click();
     cy.findByRole('option', { name: 'False' }).click();
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
-    cy.findByRole('dialog').should('not.exist');
+    cy.findByRole('checkbox', {
+      name: 'Confirm understanding and proceed checkbox',
+    }).click();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findByText('Add Property').should('have.length', 1);
+
+    // Active waiting (test column filters) for the patch request below
+    cy.findByLabelText('Filter by Name').type('Axis');
+    cy.findByRole('button', { name: 'Clear Filters' }).should('exist');
+    cy.findByRole('button', { name: 'Clear Filters' }).should(
+      'be.not.disabled'
+    );
 
     cy.findBrowserMockedRequests({
       method: 'POST',
@@ -1087,21 +1072,13 @@ describe('Catalogue Category', () => {
     }).click();
 
     cy.findByRole('menuitem', {
-      name: 'edit properties Dry Vacuum Pumps catalogue category button',
+      name: 'edit Dry Vacuum Pumps catalogue category button',
     }).click();
 
-    cy.findByLabelText(
-      'Select Edit to edit an existing property or select Add to add a new property'
-    ).click();
-    cy.findByRole('option', { name: 'Add' }).click();
-
-    cy.findByRole('button', { name: 'Next' }).click();
-
-    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByText('Add Property').click();
 
     cy.findByLabelText('Property Name *').type('test 1');
-    cy.findByLabelText('Select Type *').click();
-    cy.findByText('Text').click();
+
     cy.findAllByLabelText('Select is mandatory?').last().click();
     cy.findByRole('option', { name: 'Yes' }).click();
 
@@ -1109,18 +1086,30 @@ describe('Catalogue Category', () => {
     cy.findByRole('option', { name: 'List' }).click();
 
     cy.findByRole('button', { name: 'Add list item' }).click();
-    cy.findAllByLabelText('List Item').eq(0).type('10');
+    cy.findAllByLabelText('List item').eq(0).type('10');
 
     cy.findByRole('button', { name: 'Add list item' }).click();
-    cy.findAllByLabelText('List Item').eq(1).type('11');
+    cy.findAllByLabelText('List item').eq(1).type('11');
 
     cy.findByLabelText('Select Default value *').click();
     cy.findByRole('option', { name: '11' }).click();
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
-    cy.findByRole('dialog').should('not.exist');
+    cy.findByRole('checkbox', {
+      name: 'Confirm understanding and proceed checkbox',
+    }).click();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findByText('Add Property').should('have.length', 1);
+
+    // Active waiting (test column filters) for the patch request below
+    cy.findByLabelText('Filter by Name').type('Axis');
+    cy.findByRole('button', { name: 'Clear Filters' }).should('exist');
+    cy.findByRole('button', { name: 'Clear Filters' }).should(
+      'be.not.disabled'
+    );
 
     cy.findBrowserMockedRequests({
       method: 'POST',
@@ -1148,21 +1137,14 @@ describe('Catalogue Category', () => {
     }).click();
 
     cy.findByRole('menuitem', {
-      name: 'edit properties Dry Vacuum Pumps catalogue category button',
+      name: 'edit Dry Vacuum Pumps catalogue category button',
     }).click();
 
-    cy.findByLabelText(
-      'Select Edit to edit an existing property or select Add to add a new property'
-    ).click();
-    cy.findByRole('option', { name: 'Add' }).click();
-
-    cy.findByRole('button', { name: 'Next' }).click();
-
-    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByText('Add Property').click();
 
     cy.findByLabelText('Property Name *').type('test 1');
     cy.findByLabelText('Select Type *').click();
-    cy.findByText('Number').click();
+    cy.findByRole('option', { name: 'Number' }).click();
     cy.findAllByLabelText('Select is mandatory?').last().click();
     cy.findByRole('option', { name: 'No' }).click();
 
@@ -1170,18 +1152,30 @@ describe('Catalogue Category', () => {
     cy.findByRole('option', { name: 'List' }).click();
 
     cy.findByRole('button', { name: 'Add list item' }).click();
-    cy.findAllByLabelText('List Item').eq(0).type('10');
+    cy.findAllByLabelText('List item').eq(0).type('10');
 
     cy.findByRole('button', { name: 'Add list item' }).click();
-    cy.findAllByLabelText('List Item').eq(1).type('11');
+    cy.findAllByLabelText('List item').eq(1).type('11');
 
     cy.findByLabelText('Select Default value').click();
     cy.findByRole('option', { name: '11' }).click();
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
-    cy.findByRole('dialog').should('not.exist');
+    cy.findByRole('checkbox', {
+      name: 'Confirm understanding and proceed checkbox',
+    }).click();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findByText('Add Property').should('have.length', 1);
+
+    // Active waiting (test column filters) for the patch request below
+    cy.findByLabelText('Filter by Name').type('Axis');
+    cy.findByRole('button', { name: 'Clear Filters' }).should('exist');
+    cy.findByRole('button', { name: 'Clear Filters' }).should(
+      'be.not.disabled'
+    );
 
     cy.findBrowserMockedRequests({
       method: 'POST',
@@ -1209,17 +1203,10 @@ describe('Catalogue Category', () => {
     }).click();
 
     cy.findByRole('menuitem', {
-      name: 'edit properties Dry Vacuum Pumps catalogue category button',
+      name: 'edit Dry Vacuum Pumps catalogue category button',
     }).click();
 
-    cy.findByLabelText(
-      'Select Edit to edit an existing property or select Add to add a new property'
-    ).click();
-    cy.findByRole('option', { name: 'Add' }).click();
-
-    cy.findByRole('button', { name: 'Next' }).click();
-
-    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByText('Add Property').click();
 
     // Initiate missing value errors
 
@@ -1231,71 +1218,81 @@ describe('Catalogue Category', () => {
     cy.findAllByLabelText('Select is mandatory?').last().click();
     cy.findByRole('option', { name: 'Yes' }).click();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('checkbox', {
+      name: 'Confirm understanding and proceed checkbox',
+    }).click();
 
-    cy.findByText('Please enter a property name').should('exist');
-    cy.findByText('Please select a type').should('exist');
-    cy.findByText('Please enter a value').should('exist');
-    cy.findByText('Please enter a default value').should('exist');
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findByText('Please enter a property name.').should('exist');
+    cy.findByText('Please enter a value.').should('exist');
+    cy.findByText(
+      'Please enter a valid value as this field is mandatory.'
+    ).should('exist');
 
     // Clear error missing value errors and initiate duplicate errors
 
     cy.findByLabelText('Property Name *').type('Axis');
-    cy.findByLabelText('Select Type *').click();
-    cy.findByText('Text').click();
 
-    cy.findAllByLabelText('List Item').eq(0).type('test1');
+    cy.findAllByLabelText('List item').eq(0).type('test1');
 
     cy.findByRole('button', { name: 'Add list item' }).click();
-    cy.findAllByLabelText('List Item').eq(1).type('test1');
+    cy.findAllByLabelText('List item').eq(1).type('test1');
 
     cy.findByLabelText('Select Default value *').click();
     cy.findAllByRole('option', { name: 'test1' }).first().click();
 
-    cy.findByText('Please enter a property name').should('not.exist');
-    cy.findByText('Please select a type').should('not.exist');
-    cy.findByText('Please enter a value').should('not.exist');
-    cy.findByText('Please enter a default value').should('not.exist');
+    cy.findByText('Please enter a property name.').should('not.exist');
+    cy.findByText('Please enter a value.').should('not.exist');
+    cy.findByText(
+      'Please enter a valid value as this field is mandatory.'
+    ).should('not.exist');
 
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findAllByText('Duplicate value.').should('have.length', 1);
 
-    cy.findByText('Duplicate property name. Please change the name').should(
+    cy.findAllByLabelText('List item').eq(1).clear();
+    cy.findAllByLabelText('List item').eq(1).type('test2');
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findByText('Duplicate property name. Please change the name.').should(
       'exist'
     );
-    cy.findAllByText('Duplicate value').should('have.length', 2);
 
     // Clear duplicate value errors and initiate invalid type errors
 
     cy.findByLabelText('Property Name *').clear();
     cy.findByLabelText('Property Name *').type('test');
-    cy.findAllByLabelText('List Item').eq(1).clear();
-    cy.findAllByLabelText('List Item').eq(1).type('test2');
 
     cy.findByLabelText('Select Type *').click();
-    cy.findByText('Number').click();
+    cy.findByRole('option', { name: 'Number' }).click();
 
     cy.findByLabelText('Select Default value *').click();
     cy.findAllByRole('option', { name: 'test2' }).first().click();
 
-    cy.findByText('Duplicate property name. Please change the name').should(
+    cy.findByText('Duplicate property name. Please change the name.').should(
       'not.exist'
     );
-    cy.findByText('Duplicate value').should('not.exist');
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByText('Duplicate value.').should('not.exist');
 
-    cy.findAllByText('Please enter a valid number').should('have.length', 3);
+    cy.findAllByText('Please enter a valid number.').should('have.length', 1);
+
+    cy.findAllByLabelText('List item').eq(1).clear();
+    cy.findAllByLabelText('List item').eq(1).type('hgjf');
+
+    cy.findAllByText('Please enter a valid number.').should('have.length', 1);
 
     // Clear the invalid type errors
-    cy.findAllByLabelText('List Item').eq(1).clear();
-    cy.findAllByLabelText('List Item').eq(1).type('2');
+    cy.findAllByLabelText('List item').eq(1).clear();
+    cy.findAllByLabelText('List item').eq(1).type('2');
 
-    cy.findAllByLabelText('List Item').eq(0).clear();
-    cy.findAllByLabelText('List Item').eq(0).type('1');
+    cy.findAllByLabelText('List item').eq(0).clear();
+    cy.findAllByLabelText('List item').eq(0).type('1');
 
     cy.findByLabelText('Select Default value *').click();
     cy.findAllByRole('option', { name: '2' }).first().click();
 
-    cy.findByText('Please enter a valid number').should('not.exist');
+    cy.findByText('Please enter a valid number.').should('not.exist');
   });
 
   it('edits an existing property', () => {
@@ -1306,30 +1303,34 @@ describe('Catalogue Category', () => {
     }).click();
 
     cy.findByRole('menuitem', {
-      name: 'edit properties Dry Vacuum Pumps catalogue category button',
+      name: 'edit Dry Vacuum Pumps catalogue category button',
     }).click();
 
-    cy.findByLabelText(
-      'Select Edit to edit an existing property or select Add to add a new property'
-    ).click();
-    cy.findByRole('option', { name: 'Edit' }).click();
-
-    cy.findByRole('button', { name: 'Next' }).click();
-
-    cy.findByLabelText('Axis radio button').click();
-
-    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findAllByLabelText('Row Actions').last().click();
+    cy.findByLabelText('Edit property Axis').click();
 
     cy.findByLabelText('Property Name *').clear();
     cy.findByLabelText('Property Name *').type('test 1');
 
     cy.findByRole('button', { name: 'Add list item' }).click();
-    cy.findAllByLabelText('List Item').last().type('a');
+    cy.findAllByLabelText('List item').last().type('a');
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
-    cy.findByRole('dialog').should('not.exist');
+    cy.findByRole('checkbox', {
+      name: 'Confirm understanding and proceed checkbox',
+    }).click();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findByText('Add Property').should('have.length', 1);
+
+    // Active waiting (test column filters) for the patch request below
+    cy.findByLabelText('Filter by Name').type('Axis');
+    cy.findByRole('button', { name: 'Clear Filters' }).should('exist');
+    cy.findByRole('button', { name: 'Clear Filters' }).should(
+      'be.not.disabled'
+    );
 
     cy.findBrowserMockedRequests({
       method: 'PATCH',
@@ -1354,27 +1355,31 @@ describe('Catalogue Category', () => {
     }).click();
 
     cy.findByRole('menuitem', {
-      name: 'edit properties Dry Vacuum Pumps catalogue category button',
+      name: 'edit Dry Vacuum Pumps catalogue category button',
     }).click();
 
-    cy.findByLabelText(
-      'Select Edit to edit an existing property or select Add to add a new property'
-    ).click();
-    cy.findByRole('option', { name: 'Edit' }).click();
-
-    cy.findByRole('button', { name: 'Next' }).click();
-
-    cy.findByLabelText('Axis radio button').click();
-
-    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findAllByLabelText('Row Actions').last().click();
+    cy.findByLabelText('Edit property Axis').click();
 
     cy.findByLabelText('Property Name *').clear();
     cy.findByLabelText('Property Name *').type('test 1');
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
-    cy.findByRole('dialog').should('not.exist');
+    cy.findByRole('checkbox', {
+      name: 'Confirm understanding and proceed checkbox',
+    }).click();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findByText('Add Property').should('have.length', 1);
+
+    // Active waiting (test column filters) for the patch request below
+    cy.findByLabelText('Filter by Name').type('Axis');
+    cy.findByRole('button', { name: 'Clear Filters' }).should('exist');
+    cy.findByRole('button', { name: 'Clear Filters' }).should(
+      'be.not.disabled'
+    );
 
     cy.findBrowserMockedRequests({
       method: 'PATCH',
@@ -1398,27 +1403,31 @@ describe('Catalogue Category', () => {
     }).click();
 
     cy.findByRole('menuitem', {
-      name: 'edit properties Dry Vacuum Pumps catalogue category button',
+      name: 'edit Dry Vacuum Pumps catalogue category button',
     }).click();
 
-    cy.findByLabelText(
-      'Select Edit to edit an existing property or select Add to add a new property'
-    ).click();
-    cy.findByRole('option', { name: 'Edit' }).click();
-
-    cy.findByRole('button', { name: 'Next' }).click();
-
-    cy.findByLabelText('Axis radio button').click();
-
-    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findAllByLabelText('Row Actions').last().click();
+    cy.findByLabelText('Edit property Axis').click();
 
     cy.findByRole('button', { name: 'Add list item' }).click();
-    cy.findAllByLabelText('List Item').last().type('a');
+    cy.findAllByLabelText('List item').last().type('a');
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
-    cy.findByRole('dialog').should('not.exist');
+    cy.findByRole('checkbox', {
+      name: 'Confirm understanding and proceed checkbox',
+    }).click();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findByText('Add Property').should('have.length', 1);
+
+    // Active waiting (test column filters) for the patch request below
+    cy.findByLabelText('Filter by Name').type('Axis');
+    cy.findByRole('button', { name: 'Clear Filters' }).should('exist');
+    cy.findByRole('button', { name: 'Clear Filters' }).should(
+      'be.not.disabled'
+    );
 
     cy.findBrowserMockedRequests({
       method: 'PATCH',
@@ -1434,7 +1443,7 @@ describe('Catalogue Category', () => {
     });
   });
 
-  it('display edit form errors on property dialog', () => {
+  it('display edit form errors on property dialog (mandatory errors)', () => {
     cy.visit('/catalogue/10');
 
     cy.findByRole('button', {
@@ -1442,19 +1451,11 @@ describe('Catalogue Category', () => {
     }).click();
 
     cy.findByRole('menuitem', {
-      name: 'edit properties Dry Vacuum Pumps catalogue category button',
+      name: 'edit Dry Vacuum Pumps catalogue category button',
     }).click();
 
-    cy.findByLabelText(
-      'Select Edit to edit an existing property or select Add to add a new property'
-    ).click();
-    cy.findByRole('option', { name: 'Edit' }).click();
-
-    cy.findByRole('button', { name: 'Next' }).click();
-
-    cy.findByLabelText('Axis radio button').click();
-
-    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findAllByLabelText('Row Actions').last().click();
+    cy.findByLabelText('Edit property Axis').click();
 
     // Initiate missing value errors
 
@@ -1464,65 +1465,79 @@ describe('Catalogue Category', () => {
 
     cy.findByLabelText('Property Name *').clear();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('checkbox', {
+      name: 'Confirm understanding and proceed checkbox',
+    }).click();
 
-    cy.findByText('Please enter a property name').should('exist');
-    cy.findAllByText('Please enter a value').should('have.length', 3);
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findByText('Please enter a property name.').should('exist');
+    cy.findAllByText('Please enter a value.').should('have.length', 3);
+  });
+
+  it('display edit form errors on property dialog', () => {
+    cy.visit('/catalogue/10');
+
+    cy.findByRole('button', {
+      name: 'actions Dry Vacuum Pumps catalogue category button',
+    }).click();
+
+    cy.findByRole('menuitem', {
+      name: 'edit Dry Vacuum Pumps catalogue category button',
+    }).click();
+
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByLabelText('Edit property Pumping Speed').click();
 
     // Clear error missing value errors and initiate duplicate errors
+    cy.findByLabelText('Property Name *').clear();
+    cy.findByLabelText('Property Name *').type('Axis');
 
-    cy.findByLabelText('Property Name *').type('Pumping Speed');
+    cy.findByRole('checkbox', {
+      name: 'Confirm understanding and proceed checkbox',
+    }).click();
 
-    cy.findAllByLabelText('List Item').eq(3).type('test1');
-    cy.findAllByLabelText('List Item').eq(4).type('test1');
-    cy.findAllByLabelText('List Item').eq(5).type('test1');
+    cy.findByRole('button', { name: 'Save' }).click();
 
-    cy.findByText('Please enter a property name').should('not.exist');
-    cy.findByText('Please enter a value').should('not.exist');
+    cy.findByRole('button', { name: 'Add list item' }).click();
+    cy.findByRole('button', { name: 'Add list item' }).click();
+    cy.findByRole('button', { name: 'Add list item' }).click();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findAllByLabelText('List item').eq(3).type('1');
+    cy.findAllByLabelText('List item').eq(4).type('1');
+    cy.findAllByText('Duplicate value.').should('have.length', 1);
+    cy.findAllByLabelText('List item').eq(5).type('1');
+    cy.findAllByText('Duplicate value.').should('have.length', 1);
 
-    cy.findByText('Duplicate property name. Please change the name').should(
+    cy.findByText('Duplicate property name. Please change the name.').should(
       'exist'
     );
-    cy.findAllByText('Duplicate value').should('have.length', 3);
 
     // Clear duplicate value errors
 
     cy.findByLabelText('Property Name *').clear();
     cy.findByLabelText('Property Name *').type('test');
-    cy.findAllByLabelText('List Item').eq(4).clear();
-    cy.findAllByLabelText('List Item').eq(4).type('test2');
-    cy.findAllByLabelText('List Item').eq(5).clear();
-    cy.findAllByLabelText('List Item').eq(5).type('test3');
+    cy.findAllByLabelText('List item').eq(4).clear();
+    cy.findAllByLabelText('List item').eq(4).type('test2');
+    cy.findAllByLabelText('List item').eq(5).clear();
+    cy.findAllByLabelText('List item').eq(5).type('test3');
 
-    cy.findByText('Duplicate property name. Please change the name').should(
+    cy.findByText('Duplicate property name. Please change the name.').should(
       'not.exist'
     );
-    cy.findByText('Duplicate value').should('not.exist');
+    cy.findByText('Duplicate value.').should('not.exist');
 
     // initiate invalid type errors
 
-    cy.findByRole('button', { name: 'Back' }).click();
-
-    cy.findByLabelText('Pumping Speed radio button').click();
-
-    cy.findByRole('button', { name: 'Next' }).click();
-
-    cy.findByRole('button', { name: 'Add list item' }).click();
-
-    cy.findAllByLabelText('List Item').eq(3).clear();
-    cy.findAllByLabelText('List Item').eq(3).type('test2');
-
-    cy.findByRole('button', { name: 'Finish' }).click();
-
-    cy.findAllByText('Please enter a valid number').should('exist');
+    cy.findAllByText('Please enter a valid number.').should('have.length', 2);
 
     // Clear the invalid type errors
-    cy.findAllByLabelText('List Item').eq(3).clear();
-    cy.findAllByLabelText('List Item').eq(3).type('900');
+    cy.findAllByLabelText('List item').eq(3).clear();
+    cy.findAllByLabelText('List item').eq(3).type('900');
+    cy.findAllByLabelText('Delete list item').eq(1).click();
+    cy.findAllByLabelText('Delete list item').eq(1).click();
 
-    cy.findByText('Please enter a valid number').should('not.exist');
+    cy.findByText('Please enter a valid number.').should('not.exist');
   });
   // The tooltip tests are very flaky; issue to fix later: https://github.com/ral-facilities/inventory-management-system/issues/637
   it.skip('display overflow tooltip on hover', () => {

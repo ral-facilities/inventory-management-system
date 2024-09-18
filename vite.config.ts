@@ -27,7 +27,7 @@ function jsonHMR(): PluginOption {
       if (file.endsWith('.json')) {
         console.log('reloading json file...');
 
-        server.hot.send({
+        server.ws.send({
           type: 'full-reload',
           path: '*',
         });
@@ -38,10 +38,11 @@ function jsonHMR(): PluginOption {
 
 // Obtain default coverage config from vitest when not building for production
 // (to avoid importing vitest during build as its a dev dependency)
-let coverageConfigDefaultsExclude: string[] = [];
+let vitestCoverageConfigDefaultsExclude: string[] = [];
 if (process.env.NODE_ENV !== 'production') {
   await import('vitest/config').then((vitestConfig) => {
-    coverageConfigDefaultsExclude = vitestConfig.coverageConfigDefaults.exclude;
+    vitestCoverageConfigDefaultsExclude =
+      vitestConfig.coverageConfigDefaults.exclude;
   });
 }
 
@@ -90,7 +91,11 @@ export default defineConfig(({ mode }) => {
     // Config for deployment in SciGateway
     config.build = {
       lib: {
-        // https://github.com/vitejs/vite/issues/7130
+        // We use `umd` here as `es` causes some import statements to leak into the main.js, breaking the build
+        // removing this entirely uses a default of both, which for build results in `umd` taking precedence but when
+        // using --watch, `es` appears to replace it intermittently. Hopefully this can be fixed in the future and we
+        // can use `es` instead.
+        formats: ['umd'],
         entry: 'src/main.tsx',
         name: 'inventory-management-system',
       },
@@ -147,7 +152,7 @@ export default defineConfig(({ mode }) => {
           ['lcov', { outputFile: 'lcov.info', silent: true }],
         ],
         exclude: [
-          ...coverageConfigDefaultsExclude,
+          ...vitestCoverageConfigDefaultsExclude,
           'public/*',
           'server/*',
           // Leave handlers to show up unused code

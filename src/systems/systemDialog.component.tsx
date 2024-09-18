@@ -95,9 +95,10 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
   }, [clearErrors, errors, watch]);
 
   const handleClose = React.useCallback(() => {
+    reset();
     clearErrors();
     onClose();
-  }, [clearErrors, onClose]);
+  }, [clearErrors, onClose, reset]);
 
   const handleAddSaveSystem = React.useCallback(
     (system: SystemPost) => {

@@ -149,7 +149,7 @@ describe('Manufacturer', () => {
     });
 
     const homeButton = screen.getByRole('button', {
-      name: 'navigate to manufacturer home',
+      name: 'navigate to manufacturers home',
     });
 
     await user.click(homeButton);

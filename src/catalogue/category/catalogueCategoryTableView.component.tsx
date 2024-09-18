@@ -7,7 +7,7 @@ import {
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { CatalogueCategory } from '../../app.types';
+import { CatalogueCategory } from '../../api/api.types';
 import {
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
@@ -58,9 +58,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
       },
       {
         header: 'Last modified',
-        accessorFn: (row) => {
-          return removeSecondsFromDate(row.modified_time);
-        },
+        accessorFn: (row) => removeSecondsFromDate(row.modified_time),
         id: 'modified_time',
         filterVariant: 'datetime-range',
         size: 567.5,
@@ -170,7 +168,8 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
             open={true}
             onClose={() => table.setCreatingRow(null)}
             parentId={catalogueCategoryParentId ?? null}
-            type={requestOrigin === 'category' ? 'add' : 'duplicate'}
+            requestType="post"
+            duplicate={requestOrigin === 'item'}
             selectedCatalogueCategory={
               catalogueItemParentCategory
                 ? {

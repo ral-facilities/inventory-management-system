@@ -21,8 +21,11 @@ import { UsageStatus } from '../../api/api.types.tsx';
 import { useGetUsageStatuses } from '../../api/usageStatuses.tsx';
 import { usePreservedTableState } from '../../common/preservedTableState.component.tsx';
 import {
+  customFiltersLocalization,
+  getFilterVariant,
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
+  renderSeconds,
   displayTableRowCountText,
   filterFunctionsRendering,
   formatDateTimeStrings,
@@ -34,12 +37,17 @@ import DeleteUsageStatusDialog from './deleteUsageStatusDialog.component.tsx';
 import UsageStatusDialog from './usageStatusDialog.component.tsx';
 
 function UsageStatuses() {
-  const [isEquals, setIsEquals] = React.useState<boolean>(false);
-
   const { data: usageStatusData, isLoading: usageStatusDataLoading } =
     useGetUsageStatuses();
 
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
+
+  const [filterFunctionState, setfilterFunctionState] = React.useState<
+    Record<string, string>
+  >({
+    modified_time: 'betweenInclusiveDateTime',
+    created_time: 'betweenInclusiveDateTime',
+  });
 
   const [deleteUsageStatusDialog, setDeleteUsageStatusDialog] =
     React.useState<boolean>(false);
@@ -53,55 +61,82 @@ function UsageStatuses() {
       {
         header: 'Value',
         accessorFn: (row) => row.value,
-        filterVariant: 'multi-select',
-        renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) =>
-          filterFunctionsRendering({
-            onSelectFilterMode: onSelectFilterMode,
-            selectedFilters: ['filterInclude', 'filterExclude'],
-          }),
+        filterVariant: 'text',
+        enableColumnFilterModes: false,
         id: 'value',
         Cell: ({ row }) => row.original.value,
       },
       {
         header: 'Last modified',
-        accessorFn: (row) => {
-          return removeSecondsFromDate(row.modified_time);
-        },
-        filterVariant: isEquals ? 'date' : 'datetime',
+        accessorFn: (row) => removeSecondsFromDate(row.modified_time),
+        filterVariant: getFilterVariant(filterFunctionState['modified_time']),
+        filterFn: filterFunctionState['modified_time'],
+        id: 'modified_time',
         renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) =>
           filterFunctionsRendering({
             onSelectFilterMode: onSelectFilterMode,
-            selectedFilters: ['betweenInclusive', 'equalsDate'],
+            selectedFilters: [
+              'betweenInclusiveDateTime',
+              'equalsDate',
+              'beforeInclusiveDateTime',
+              'afterInclusiveDateTime',
+            ],
           }),
         size: 350,
         enableGrouping: false,
         Cell: ({ row }) =>
-          row.original.modified_time && isEquals
-            ? formatDateTimeStrings(row.original.modified_time, false)
-            : formatDateTimeStrings(row.original.modified_time, true),
+          formatDateTimeStrings(
+            row.original.modified_time,
+            renderSeconds(filterFunctionState['modified_time'])
+          ),
       },
       {
         header: 'Created',
-        accessorFn: (row) => {
-          return removeSecondsFromDate(row.created_time);
-        },
+        accessorFn: (row) => removeSecondsFromDate(row.created_time),
         id: 'created_time',
-        filterVariant: 'datetime-range',
+        filterVariant: getFilterVariant(filterFunctionState['created_time']),
+        filterFn: filterFunctionState['created_time'],
+        renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) =>
+          filterFunctionsRendering({
+            onSelectFilterMode: onSelectFilterMode,
+            selectedFilters: [
+              'betweenInclusiveDateTime',
+              'equalsDate',
+              'beforeInclusiveDateTime',
+              'afterInclusiveDateTime',
+            ],
+          }),
         size: 350,
         enableGrouping: false,
         enableHiding: true,
         Cell: ({ row }) =>
-          formatDateTimeStrings(row.original.created_time, true),
+          formatDateTimeStrings(
+            row.original.created_time,
+            renderSeconds(filterFunctionState['created_time'])
+          ),
       },
     ];
-  }, [isEquals]);
+  }, [filterFunctionState]);
 
-  const current_mode = Object(columns[1].filterFn).name;
-
-  if (current_mode == 'FilterFunction' && isEquals == false) {
-    setIsEquals(true);
-  } else if (current_mode == 'betweenInclusive' && isEquals == true) {
-    setIsEquals(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const currentFilterMode: Record<string, any> = {};
+  let changed = false;
+  for (const key in filterFunctionState) {
+    currentFilterMode[key] = Object(
+      columns.find((column) => column.id == key)
+    )._filterFn;
+    if (
+      currentFilterMode[key] != undefined &&
+      filterFunctionState[key] != currentFilterMode[key]
+    ) {
+      changed = true;
+    }
+  }
+  if (changed) {
+    setfilterFunctionState({
+      modified_time: currentFilterMode['modified_time'],
+      created_time: currentFilterMode['created_time'],
+    });
   }
 
   const noResultsTxt =
@@ -136,8 +171,10 @@ function UsageStatuses() {
     // Localisation
     localization: {
       ...MRT_Localization_EN,
+      ...customFiltersLocalization(),
       noRecordsToDisplay: noResultsTxt,
-    },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } as any,
     // State
     initialState: {
       showColumnFilters: true,

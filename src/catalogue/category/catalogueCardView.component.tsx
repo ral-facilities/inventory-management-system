@@ -8,7 +8,7 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { CatalogueCategory } from '../../app.types';
+import { CatalogueCategory } from '../../api/api.types';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import { getPageHeightCalc } from '../../utils';
 import CatalogueCard from './catalogueCard.component';
@@ -18,10 +18,7 @@ export interface CatalogueCardViewProps {
   onChangeOpenDeleteCategoryDialog: (
     catalogueCategory: CatalogueCategory
   ) => void;
-  onChangeOpenEditNameCategoryDialog: (
-    catalogueCategory: CatalogueCategory
-  ) => void;
-  onChangeOpenEditPropertiesCategoryDialog: (
+  onChangeOpenEditCategoryDialog: (
     catalogueCategory: CatalogueCategory
   ) => void;
   onChangeOpenDuplicateDialog: (catalogueCategory: CatalogueCategory) => void;
@@ -33,8 +30,7 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
   const {
     catalogueCategoryData,
     onChangeOpenDeleteCategoryDialog,
-    onChangeOpenEditNameCategoryDialog,
-    onChangeOpenEditPropertiesCategoryDialog,
+    onChangeOpenEditCategoryDialog,
     onChangeOpenDuplicateDialog,
     handleToggleSelect,
     selectedCategories,
@@ -78,10 +74,7 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
             <CatalogueCard
               {...item}
               onChangeOpenDeleteDialog={onChangeOpenDeleteCategoryDialog}
-              onChangeOpenEditNameDialog={onChangeOpenEditNameCategoryDialog}
-              onChangeOpenEditPropertiesDialog={
-                onChangeOpenEditPropertiesCategoryDialog
-              }
+              onChangeOpenEditDialog={onChangeOpenEditCategoryDialog}
               onChangeOpenDuplicateDialog={onChangeOpenDuplicateDialog}
               onToggleSelect={handleToggleSelect}
               isSelected={selectedCategories.some(

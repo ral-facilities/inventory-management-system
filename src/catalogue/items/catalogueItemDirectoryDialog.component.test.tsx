@@ -2,6 +2,7 @@ import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { MockInstance } from 'vitest';
 import { imsApi } from '../../api/api';
+import { CatalogueCategoryPropertyType } from '../../api/api.types';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 import CatalogueItemDirectoryDialog, {
   CatalogueItemDirectoryDialogProps,
@@ -39,7 +40,7 @@ describe('catalogue item directory Dialog', () => {
           {
             id: '7',
             name: 'Measurement Range',
-            type: 'number',
+            type: CatalogueCategoryPropertyType.Number,
             unit: 'Joules',
             unit_id: '3',
             mandatory: true,
@@ -48,7 +49,7 @@ describe('catalogue item directory Dialog', () => {
           {
             id: '8',
             name: 'Accuracy',
-            type: 'string',
+            type: CatalogueCategoryPropertyType.Text,
             unit: null,
             unit_id: null,
             mandatory: false,
@@ -215,7 +216,7 @@ describe('catalogue item directory Dialog', () => {
       });
 
       await user.click(
-        screen.getByRole('link', { name: 'beam-characterization' })
+        screen.getByRole('link', { name: 'Beam Characterization' })
       );
 
       await waitFor(() => {
@@ -233,7 +234,7 @@ describe('catalogue item directory Dialog', () => {
       });
 
       await user.click(
-        screen.getByRole('link', { name: 'beam-characterization' })
+        screen.getByRole('link', { name: 'Beam Characterization' })
       );
 
       await waitFor(() => {
