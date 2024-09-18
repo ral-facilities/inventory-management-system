@@ -173,6 +173,7 @@ function UsageStatuses() {
       ...MRT_Localization_EN,
       ...customFiltersLocalization(),
       noRecordsToDisplay: noResultsTxt,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any,
     // State
     initialState: {
