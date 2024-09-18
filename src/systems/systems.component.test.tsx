@@ -146,7 +146,7 @@ describe('Systems', () => {
       expect(screen.getByText('Root systems')).toBeInTheDocument();
     });
 
-    await user.click(screen.getByRole('button', { name: 'add system' }));
+    await user.click(screen.getByRole('button', { name: 'Add System' }));
 
     expect(screen.getByRole('dialog')).toBeInTheDocument();
 
@@ -164,7 +164,7 @@ describe('Systems', () => {
       expect(screen.getByText('Subsystems')).toBeInTheDocument();
     });
 
-    await user.click(screen.getByRole('button', { name: 'add subsystem' }));
+    await user.click(screen.getByRole('button', { name: 'Add Subsystem' }));
 
     expect(screen.getByRole('dialog')).toBeInTheDocument();
 

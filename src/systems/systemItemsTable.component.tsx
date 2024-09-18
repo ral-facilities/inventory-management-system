@@ -20,11 +20,10 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { System, UsageStatus } from '../api/api.types';
-import { useCatalogueItemIds } from '../api/catalogueItems';
-import { useItems } from '../api/items';
+import { CatalogueItem, Item, System, UsageStatus } from '../api/api.types';
+import { useGetCatalogueItemIds } from '../api/catalogueItems';
+import { useGetItems } from '../api/items';
 import { useGetUsageStatuses } from '../api/usageStatuses';
-import { CatalogueItem, Item } from '../app.types';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
 import {
@@ -112,7 +111,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     {}
   );
   // Data
-  const { data: itemsData, isLoading: isLoadingItems } = useItems(
+  const { data: itemsData, isLoading: isLoadingItems } = useGetItems(
     system?.id,
     undefined
   );
@@ -142,12 +141,13 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
   );
   let isLoading = type === 'normal' ? isLoadingItems : false;
 
-  const catalogueItemList: (CatalogueItem | undefined)[] = useCatalogueItemIds(
-    Array.from(catalogueItemIdSet.values())
-  ).map((query) => {
-    isLoading = isLoading || query.isLoading;
-    return query.data;
-  });
+  const catalogueItemList: (CatalogueItem | undefined)[] =
+    useGetCatalogueItemIds(Array.from(catalogueItemIdSet.values())).map(
+      (query) => {
+        isLoading = isLoading || query.isLoading;
+        return query.data;
+      }
+    );
 
   // Once loading has finished - pair up all data for the table rows
   // If performance becomes a problem with this should remove find and fetch catalogue

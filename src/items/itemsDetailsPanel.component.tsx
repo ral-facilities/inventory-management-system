@@ -9,9 +9,9 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { CatalogueItem, Item } from '../api/api.types';
 import { useGetManufacturer } from '../api/manufacturers';
 import { useGetSystem } from '../api/systems';
-import { CatalogueItem, Item } from '../app.types';
 import { formatDateTimeStrings } from '../utils';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

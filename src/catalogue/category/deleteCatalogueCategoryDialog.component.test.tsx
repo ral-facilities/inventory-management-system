@@ -6,7 +6,7 @@ import {
 } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http } from 'msw';
-import { CatalogueCategory } from '../../app.types';
+import { CatalogueCategory } from '../../api/api.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { server } from '../../mocks/server';
 import {
@@ -38,6 +38,7 @@ describe('delete Catalogue Category dialogue', () => {
       id: '1',
       code: 'test',
       is_leaf: false,
+      properties: [],
       ...CREATED_MODIFIED_TIME_VALUES,
     };
     props = {

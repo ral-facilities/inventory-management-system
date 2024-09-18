@@ -1,12 +1,11 @@
 import { screen, waitFor } from '@testing-library/react';
+import userEvent, { UserEvent } from '@testing-library/user-event';
+import { CatalogueItem, Item } from '../api/api.types';
 import {
   getCatalogueItemById,
   getItemById,
   renderComponentWithRouterProvider,
 } from '../testUtils';
-
-import userEvent, { UserEvent } from '@testing-library/user-event';
-import { CatalogueItem, Item } from '../app.types';
 import ItemsDetailsPanel, {
   ItemsDetailsPanelProps,
 } from './itemsDetailsPanel.component';

@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { renderComponentWithRouterProvider } from './testUtils';
 import {
   OverflowTip,
+  checkForDuplicates,
   generateUniqueId,
   generateUniqueName,
   generateUniqueNameUsingCode,
@@ -288,5 +289,52 @@ describe('Utility functions', () => {
       { name: 'John' },
       { name: 'Susan' },
     ]);
+  });
+});
+
+describe('checkForDuplicates', () => {
+  it('should return an empty array when there are no duplicates', () => {
+    const data = [
+      { id: '1', name: 'Alice' },
+      { id: '2', name: 'Bob' },
+      { id: '3', name: 'Charlie' },
+    ];
+
+    const result = checkForDuplicates({ data, idName: 'id', field: 'name' });
+    expect(result).toEqual([]);
+  });
+
+  it('should return duplicate ids when there are duplicates', () => {
+    const data = [
+      { id: '1', name: 'Alice' },
+      { id: '2', name: 'Bob' },
+      { id: '3', name: 'Alice' },
+    ];
+
+    const result = checkForDuplicates({ data, idName: 'id', field: 'name' });
+    expect(result).toEqual(['3', '1']);
+  });
+
+  it('should handle data with missing field values', () => {
+    const data = [
+      { id: '1', name: 'Alice' },
+      { id: '2', name: 'Bob' },
+      { id: '3' }, // Missing 'name' field
+    ];
+
+    const result = checkForDuplicates({ data, idName: 'id', field: 'name' });
+    expect(result).toEqual([]);
+  });
+
+  it('should return duplicate ids correctly when multiple duplicates exist', () => {
+    const data = [
+      { id: '1', name: 'Alice' },
+      { id: '2', name: 'Bob' },
+      { id: '3', name: 'Alice' },
+      { id: '4', name: 'Bob' },
+    ];
+
+    const result = checkForDuplicates({ data, idName: 'id', field: 'name' });
+    expect(result).toEqual(['3', '1', '4', '2']);
   });
 });

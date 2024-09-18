@@ -16,7 +16,7 @@ describe('Channel Breadcrumbs', () => {
       onChangeNode: onChangeNode,
       onChangeNavigateHome: onChangeNavigateHome,
       breadcrumbsInfo: { trail: [], full_trail: true },
-      navigateHomeAriaLabel: 'navigate to catalogue home',
+      homeLocation: 'Catalogue',
     };
   });
 

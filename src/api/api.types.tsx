@@ -14,20 +14,16 @@ export interface BreadcrumbsInfo {
 
 // ------------------------------------ MANUFACTURERS -----------------------------------------------
 
-interface Address {
+interface AddressPost {
   address_line: string;
-  town: string | null;
-  county: string | null;
+  town?: string | null;
+  county?: string | null;
   country: string;
   postcode: string;
 }
+type Address = Required<AddressPost>;
 
-interface AddressPost extends Omit<Address, 'town' | 'county'> {
-  town?: string | null;
-  county?: string | null;
-}
-
-type AddressPatch = Partial<Address>;
+type AddressPatch = Partial<AddressPost>;
 
 export interface ManufacturerPost {
   name: string;
@@ -42,13 +38,11 @@ export interface ManufacturerPatch
 }
 
 export interface Manufacturer
-  extends Omit<ManufacturerPost, 'telephone' | 'url' | 'address'>,
+  extends Required<Omit<ManufacturerPost, 'address'>>,
     CreatedModifiedMixin {
   id: string;
   code: string;
   address: Address;
-  url: string | null;
-  telephone: string | null;
 }
 
 // ------------------------------------ UNITS -------------------------------------------------------
@@ -89,15 +83,137 @@ export interface SystemPost {
   parent_id?: string | null;
 }
 
-export interface System extends CreatedModifiedMixin {
+export type SystemPatch = Partial<SystemPost>;
+
+export interface System extends CreatedModifiedMixin, Required<SystemPost> {
   id: string;
-  name: string;
   code: string;
-  description: string | null;
-  location: string | null;
-  owner: string | null;
-  importance: SystemImportanceType;
-  parent_id: string | null;
 }
 
-export type SystemPatch = Partial<SystemPost>;
+// ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
+
+export enum AllowedValuesListType {
+  Any = 'any',
+  List = 'list',
+}
+export interface AllowedValuesList {
+  type: 'list';
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  values: any[];
+}
+export type AllowedValues = AllowedValuesList;
+
+export enum CatalogueCategoryPropertyType {
+  Number = 'number',
+  Text = 'string',
+  Boolean = 'boolean',
+}
+
+export interface CatalogueCategoryPostProperty {
+  name: string;
+  type: CatalogueCategoryPropertyType;
+  unit_id?: string | null;
+  mandatory: boolean;
+  allowed_values?: AllowedValues | null;
+}
+
+export interface CatalogueCategoryPropertyPost
+  extends CatalogueCategoryPostProperty {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default_value: any;
+}
+
+export interface CatalogueCategoryPropertyPatch {
+  name?: string;
+  allowed_values?: AllowedValues | null;
+}
+
+export interface CatalogueCategoryProperty
+  extends Required<CatalogueCategoryPostProperty> {
+  id: string;
+  unit: string | null;
+}
+
+export interface CatalogueCategoryPost {
+  name: string;
+  is_leaf: boolean;
+  parent_id?: string | null;
+  properties?: CatalogueCategoryPostProperty[] | null;
+}
+
+export type CatalogueCategoryPatch = Partial<CatalogueCategoryPost>;
+
+export interface CatalogueCategory
+  extends Required<Omit<CatalogueCategoryPost, 'properties'>>,
+    CreatedModifiedMixin {
+  id: string;
+  code: string;
+  properties: CatalogueCategoryProperty[];
+}
+
+// ------------------------------------ CATALOGUE ITEMS ------------------------------------
+
+export interface PropertyPost {
+  id: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  value: any;
+}
+
+export interface Property extends PropertyPost {
+  name: string;
+  unit_id: string | null;
+  unit: string | null;
+}
+
+export interface CatalogueItemPost {
+  catalogue_category_id: string;
+  manufacturer_id: string;
+  name: string;
+  description?: string | null;
+  cost_gbp: number;
+  cost_to_rework_gbp?: number | null;
+  days_to_replace: number;
+  days_to_rework?: number | null;
+  drawing_number?: string | null;
+  drawing_link?: string | null;
+  item_model_number?: string | null;
+  is_obsolete: boolean;
+  obsolete_reason?: string | null;
+  obsolete_replacement_catalogue_item_id?: string | null;
+  notes?: string | null;
+  properties?: PropertyPost[] | null;
+}
+
+export type CatalogueItemPatch = Partial<CatalogueItemPost>;
+export interface CatalogueItem
+  extends CreatedModifiedMixin,
+    Required<Omit<CatalogueItemPost, 'properties'>> {
+  id: string;
+  properties: Property[];
+}
+
+// ------------------------------------ ITEMS ------------------------------------------------
+
+export interface ItemPost {
+  catalogue_item_id: string;
+  system_id: string;
+  purchase_order_number?: string | null;
+  is_defective: boolean;
+  usage_status_id: string;
+  warranty_end_date?: string | null;
+  asset_number?: string | null;
+  serial_number?: string | null;
+  delivered_date?: string | null;
+  notes?: string | null;
+  properties?: PropertyPost[] | null;
+}
+
+export type ItemPatch = Partial<ItemPost>;
+
+export interface Item
+  extends CreatedModifiedMixin,
+    Required<Omit<ItemPost, 'properties'>> {
+  id: string;
+  usage_status: string;
+  properties: Property[];
+}
