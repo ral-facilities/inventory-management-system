@@ -563,9 +563,8 @@ export function removeSecondsFromDate(date: string): Date {
 }
 
 export function renderSeconds(filterFunction: string): boolean {
-  let returnValue: boolean | undefined;
-  returnValue = customFilterFunctions
+  const keepSeconds: boolean | undefined = customFilterFunctions
     .find((filter) => filter.Name == filterFunction)
     ?.FilterVariant?.includes('time');
-  return returnValue ?? true;
+  return keepSeconds ?? true;
 }

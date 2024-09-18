@@ -118,6 +118,7 @@ function UsageStatuses() {
     ];
   }, [filterFunctionState]);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const currentFilterMode: Record<string, any> = {};
   let changed = false;
   for (const key in filterFunctionState) {
