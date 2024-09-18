@@ -68,10 +68,8 @@ function UsageStatuses() {
       },
       {
         header: 'Last modified',
-        accessorFn: (row) => {
-          return removeSecondsFromDate(row.modified_time);
-        },
-        filterVariant: getFilterVariant(currentFilterMode['modified_time']),
+        accessorFn: (row) => removeSecondsFromDate(row.modified_time),
+        filterVariant: getFilterVariant(filterFunctionState['modified_time']),
         filterFn: filterFunctionState['modified_time'],
         id: 'modified_time',
         renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) =>
@@ -94,11 +92,9 @@ function UsageStatuses() {
       },
       {
         header: 'Created',
-        accessorFn: (row) => {
-          return removeSecondsFromDate(row.created_time);
-        },
+        accessorFn: (row) => removeSecondsFromDate(row.created_time),
         id: 'created_time',
-        filterVariant: getFilterVariant(currentFilterMode['created_time']),
+        filterVariant: getFilterVariant(filterFunctionState['created_time']),
         filterFn: filterFunctionState['created_time'],
         renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) =>
           filterFunctionsRendering({

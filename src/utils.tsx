@@ -397,15 +397,6 @@ export const displayTableRowCountText = <TData extends MRT_RowData>(
   return <Typography sx={{ ...sx }}>{tableRowCountText}</Typography>;
 };
 
-/*
-TODO: INVESTIGATE CREATING INTERFACE FOR FILTER_FN OR REPLACE WITH MRT_FILTERFN
-interface filterFunctionProps {
-  row: MRT_RowData;
-  id: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  filterValue: any;
-}*/
-
 export type filterVariantType =
   | 'multi-select'
   | 'autocomplete'
@@ -450,6 +441,7 @@ export const customFilterFunctions: customFilterFunctionInterface[] = [
   },
   {
     Name: 'equalsDate',
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     FilterFunction(row: MRT_RowData, id: string, filterValue: any): any {
       const rowDate: Date = row.getValue(id);
       rowDate.setHours(0, 0, 0, 0);
@@ -461,6 +453,7 @@ export const customFilterFunctions: customFilterFunctionInterface[] = [
   },
   {
     Name: 'betweenInclusiveDateTime',
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     FilterFunction(row: MRT_RowData, id: string, filterValue: any): any {
       const rowDate: Date = row.getValue(id);
       const lowerBound = filterValue[0];
@@ -473,6 +466,7 @@ export const customFilterFunctions: customFilterFunctionInterface[] = [
   },
   {
     Name: 'beforeInclusiveDateTime',
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     FilterFunction(row: MRT_RowData, id: string, filterValue: any): any {
       const rowDate: Date = row.getValue(id);
       return filterValue >= rowDate.getTime();
@@ -483,6 +477,7 @@ export const customFilterFunctions: customFilterFunctionInterface[] = [
   },
   {
     Name: 'afterInclusiveDateTime',
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     FilterFunction(row: MRT_RowData, id: string, filterValue: any): any {
       const rowDate: Date = row.getValue(id);
       return filterValue <= rowDate.getTime();
@@ -495,9 +490,9 @@ export const customFilterFunctions: customFilterFunctionInterface[] = [
 
 export function getCustomFilterFunctions(): Record<
   string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   { (row: MRT_RowData, id: string, filterValue: any): any }
 > {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let filterFunctionsRecord: Record<
     string,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -518,10 +513,9 @@ interface filterFunctionRenderingProps {
 
 export const filterFunctionsRendering = (
   props: filterFunctionRenderingProps
-) => {
+): React.ReactNode[] => {
   const { onSelectFilterMode, selectedFilters } = props;
-  //TODO sort out rendering type
-  let rendering: any = selectedFilters.map((option, index) => {
+  let rendering: React.ReactNode[] = selectedFilters.map((option, index) => {
     const filter = customFilterFunctions.find(
       (filter) => filter.Name == option
     );

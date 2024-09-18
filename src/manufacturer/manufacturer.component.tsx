@@ -76,9 +76,7 @@ function ManufacturerComponent() {
       {
         header: 'Last modified',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => {
-          return removeSecondsFromDate(row.modified_time);
-        },
+        accessorFn: (row) => removeSecondsFromDate(row.modified_time),
         id: 'modified_time',
         filterVariant: 'datetime-range',
         size: 350,
@@ -90,9 +88,7 @@ function ManufacturerComponent() {
       {
         header: 'Created',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => {
-          return removeSecondsFromDate(row.created_time);
-        },
+        accessorFn: (row) => removeSecondsFromDate(row.created_time),
         id: 'created_time',
         filterVariant: 'datetime-range',
         size: 350,

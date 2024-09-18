@@ -301,9 +301,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       {
         header: 'Last modified',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => {
-          return removeSecondsFromDate(row.item.modified_time);
-        },
+        accessorFn: (row) => removeSecondsFromDate(row.item.modified_time),
         id: 'item.modified_time',
         filterVariant: 'datetime-range',
         size: 350,
@@ -315,9 +313,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       {
         header: 'Created',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => {
-          return removeSecondsFromDate(row.item.created_time);
-        },
+        accessorFn: (row) => removeSecondsFromDate(row.item.created_time),
         id: 'item.created_time',
         filterVariant: 'datetime-range',
         size: 350,
@@ -328,11 +324,10 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       {
         header: 'Delivered Date',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => {
+        accessorFn: (row) =>
           row.item.delivered_date
             ? removeSecondsFromDate(row.item.delivered_date)
-            : null;
-        },
+            : null,
         id: 'item.delivered_date',
         filterVariant: 'date-range',
         size: 350,

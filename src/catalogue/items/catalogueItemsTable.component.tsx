@@ -259,9 +259,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       {
         header: 'Last modified',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => {
-          return removeSecondsFromDate(row.catalogueItem.modified_time);
-        },
+        accessorFn: (row) =>
+          removeSecondsFromDate(row.catalogueItem.modified_time),
         id: 'catalogueItem.modified_time',
         filterVariant: 'datetime-range',
         size: 350,
@@ -272,9 +271,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       {
         header: 'Created',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => {
-          return removeSecondsFromDate(row.catalogueItem.created_time);
-        },
+        accessorFn: (row) =>
+          removeSecondsFromDate(row.catalogueItem.created_time),
         id: 'catalogueItem.created_time',
         filterVariant: 'datetime-range',
         size: 350,
