@@ -28,16 +28,16 @@ import {
   CatalogueCategory,
   CatalogueCategoryProperty,
   CatalogueItem,
+  Item,
+  ItemPatch,
+  ItemPost,
   UsageStatus,
 } from '../api/api.types';
-import { useAddItem, useAddItems, useEditItem } from '../api/items';
+import { usePatchItem, usePostItem, usePostItems } from '../api/items';
 import { useGetSystems, useGetSystemsBreadcrumbs } from '../api/systems';
 import { useGetUsageStatuses } from '../api/usageStatuses';
 import {
-  AddItem,
   AdvancedSerialNumberOptionsType,
-  EditItem,
-  Item,
   ItemDetails,
   ItemDetailsPlaceholder,
 } from '../app.types';
@@ -160,9 +160,11 @@ function ItemDialog(props: ItemDialogProps) {
   >(undefined);
 
   const { data: usageStatuses } = useGetUsageStatuses();
-  const { mutateAsync: addItem, isPending: isAddItemPending } = useAddItem();
-  const { mutateAsync: addItems, isPending: isAddItemsPending } = useAddItems();
-  const { mutateAsync: editItem, isPending: isEditItemPending } = useEditItem();
+  const { mutateAsync: addItem, isPending: isAddItemPending } = usePostItem();
+  const { mutateAsync: postItems, isPending: isAddItemsPending } =
+    usePostItems();
+  const { mutateAsync: editItem, isPending: isEditItemPending } =
+    usePatchItem();
 
   React.useEffect(() => {
     if (type === 'create' && open) {
@@ -377,13 +379,13 @@ function ItemDialog(props: ItemDialogProps) {
     const { hasUsageStatusError } = handleUsageStatusErrors();
     if (hasPropertiesErrors || hasUsageStatusError) return;
 
-    const item: AddItem = {
+    const item: ItemPost = {
       ...details,
       properties: updatedProperties,
     };
 
     if (advancedSerialNumberOptions.quantity) {
-      addItems({
+      postItems({
         quantity: Number(advancedSerialNumberOptions.quantity),
         startingValue: Number(advancedSerialNumberOptions.startingValue ?? 1),
         item: trimStringValues(item),
@@ -404,7 +406,7 @@ function ItemDialog(props: ItemDialogProps) {
     details,
     advancedSerialNumberOptions.quantity,
     advancedSerialNumberOptions.startingValue,
-    addItems,
+    postItems,
     handleClose,
     addItem,
   ]);
@@ -452,9 +454,7 @@ function ItemDialog(props: ItemDialogProps) {
 
       const isSystemIdUpdated = details.system_id !== selectedItem.system_id;
 
-      const item: EditItem = {
-        id: selectedItem.id,
-      };
+      const item: ItemPatch = {};
 
       if (isSerialNumberUpdated) item.serial_number = details.serial_number;
       if (isPurchaseOrderNumberUpdated)
@@ -470,7 +470,7 @@ function ItemDialog(props: ItemDialogProps) {
       if (isCatalogueItemPropertiesUpdated) item.properties = updatedProperties;
 
       if (
-        item.id &&
+        selectedItem.id &&
         (isSerialNumberUpdated ||
           isPurchaseOrderNumberUpdated ||
           isIsDefectiveUpdated ||
@@ -483,7 +483,7 @@ function ItemDialog(props: ItemDialogProps) {
           isCatalogueItemPropertiesUpdated ||
           isSystemIdUpdated)
       ) {
-        editItem(trimStringValues(item))
+        editItem({ id: selectedItem.id, item: trimStringValues(item) })
           .then(() => handleClose())
           .catch((error: AxiosError) => {
             handleIMS_APIError(error);

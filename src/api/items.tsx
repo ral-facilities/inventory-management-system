@@ -6,56 +6,53 @@ import {
   UseQueryResult,
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import {
-  AddItem,
-  AddItems,
-  EditItem,
-  Item,
-  MoveItemsToSystem,
-  TransferState,
-} from '../app.types';
+import { MoveItemsToSystem, PostItems, TransferState } from '../app.types';
 import { imsApi } from './api';
-import { APIError } from './api.types';
+import { APIError, Item, ItemPatch, ItemPost } from './api.types';
 
-const addItem = async (item: AddItem): Promise<Item> => {
+const postItem = async (item: ItemPost): Promise<Item> => {
   return imsApi.post<Item>(`/v1/items`, item).then((response) => response.data);
 };
 
-export const useAddItem = (): UseMutationResult<Item, AxiosError, AddItem> => {
+export const usePostItem = (): UseMutationResult<
+  Item,
+  AxiosError,
+  ItemPost
+> => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (item: AddItem) => addItem(item),
+    mutationFn: (item: ItemPost) => postItem(item),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['Items'] });
     },
   });
 };
 
-export const useAddItems = (): UseMutationResult<
+export const usePostItems = (): UseMutationResult<
   TransferState[],
   AxiosError,
-  AddItems
+  PostItems
 > => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (addItems: AddItems) => {
+    mutationFn: async (postItems: PostItems) => {
       const transferStates: TransferState[] = [];
       const successfulSerialNumbers: string[] = [];
 
       const promises = [];
 
       for (
-        let i = addItems.startingValue;
-        i < addItems.startingValue + addItems.quantity;
+        let i = postItems.startingValue;
+        i < postItems.startingValue + postItems.quantity;
         i++
       ) {
-        const item: AddItem = {
-          ...addItems.item,
+        const item: ItemPost = {
+          ...postItems.item,
           serial_number:
-            addItems.item.serial_number?.replace('%s', String(i)) ?? null,
+            postItems.item.serial_number?.replace('%s', String(i)) ?? null,
         };
 
-        const promise = addItem(item)
+        const promise = postItem(item)
           .then((result: Item) => {
             transferStates.push({
               name: result.serial_number ?? '',
@@ -79,10 +76,10 @@ export const useAddItems = (): UseMutationResult<
       await Promise.all(promises);
       if (successfulSerialNumbers.length > 0) {
         queryClient.invalidateQueries({
-          queryKey: ['Items', undefined, addItems.item.catalogue_item_id],
+          queryKey: ['Items', undefined, postItems.item.catalogue_item_id],
         });
         queryClient.invalidateQueries({
-          queryKey: ['Items', addItems.item.system_id, undefined],
+          queryKey: ['Items', postItems.item.system_id, undefined],
         });
       }
 
@@ -91,7 +88,7 @@ export const useAddItems = (): UseMutationResult<
   });
 };
 
-const fetchItems = async (
+const getItems = async (
   system_id?: string,
   catalogue_item_id?: string
 ): Promise<Item[]> => {
@@ -109,20 +106,20 @@ const fetchItems = async (
     });
 };
 
-export const useItems = (
+export const useGetItems = (
   system_id?: string,
   catalogue_item_id?: string
 ): UseQueryResult<Item[], AxiosError> => {
   return useQuery({
     queryKey: ['Items', system_id, catalogue_item_id],
     queryFn: () => {
-      return fetchItems(system_id, catalogue_item_id);
+      return getItems(system_id, catalogue_item_id);
     },
     enabled: system_id !== undefined || catalogue_item_id !== undefined,
   });
 };
 
-const fetchItem = async (id: string): Promise<Item> => {
+const getItem = async (id: string): Promise<Item> => {
   const queryParams = new URLSearchParams();
 
   return imsApi
@@ -134,13 +131,13 @@ const fetchItem = async (id: string): Promise<Item> => {
     });
 };
 
-export const useItem = (
+export const useGetItem = (
   id?: string | null
 ): UseQueryResult<Item, AxiosError> => {
   return useQuery({
     queryKey: ['Item', id],
     queryFn: () => {
-      return fetchItem(id ?? '');
+      return getItem(id ?? '');
     },
     enabled: !!id,
   });
@@ -163,21 +160,20 @@ export const useDeleteItem = (): UseMutationResult<void, AxiosError, Item> => {
   });
 };
 
-const editItem = async (item: EditItem): Promise<Item> => {
-  const { id, ...updatedItem } = item;
+const patchItem = async (id: string, item: ItemPatch): Promise<Item> => {
   return imsApi
-    .patch<Item>(`/v1/items/${id}`, updatedItem)
+    .patch<Item>(`/v1/items/${id}`, item)
     .then((response) => response.data);
 };
 
-export const useEditItem = (): UseMutationResult<
+export const usePatchItem = (): UseMutationResult<
   Item,
   AxiosError,
-  EditItem
+  { id: string; item: ItemPatch }
 > => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (item: EditItem) => editItem(item),
+    mutationFn: ({ id, item }) => patchItem(id, item),
     onSuccess: (itemResponse: Item) => {
       queryClient.invalidateQueries({
         queryKey: [
@@ -217,8 +213,7 @@ export const useMoveItemsToSystem = (): UseMutationResult<
 
       const promises = moveItemsToSystem.selectedItems.map(
         async (item: Item) => {
-          return editItem({
-            id: item.id,
+          return patchItem(item.id, {
             system_id: moveItemsToSystem.targetSystem?.id || '',
             usage_status_id: moveItemsToSystem.usageStatuses.find(
               (status) => status.item_id === item.id

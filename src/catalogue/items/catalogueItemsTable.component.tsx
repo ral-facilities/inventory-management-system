@@ -31,10 +31,10 @@ import {
   CatalogueCategory,
   CatalogueItem,
   Manufacturer,
+  Property,
 } from '../../api/api.types';
 import { useGetCatalogueItems } from '../../api/catalogueItems';
 import { useGetManufacturerIds } from '../../api/manufacturers';
-import { CatalogueItemPropertyResponse } from '../../app.types';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import {
   TableBodyCellOverFlowTip,
@@ -117,7 +117,7 @@ const CopyCatalogueItemsButton = (props: {
 };
 
 export function findPropertyValue(
-  properties: CatalogueItemPropertyResponse[],
+  properties: Property[],
   targetId: string | undefined
 ) {
   // Use the find method to locate the object with the target name

@@ -14,13 +14,16 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { CatalogueCategory, CatalogueCategoryProperty } from '../api/api.types';
+import {
+  CatalogueCategory,
+  CatalogueCategoryProperty,
+  Property,
+} from '../api/api.types';
 import {
   useGetCatalogueBreadcrumbs,
   useGetCatalogueCategories,
   useGetCatalogueCategory,
 } from '../api/catalogueCategories';
-import { CatalogueItemProperty } from '../app.types';
 import { generateUniqueName } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import CatalogueCardView from './category/catalogueCardView.component';
@@ -157,7 +160,7 @@ const CopyCategoriesButton = (props: {
 
 export function matchCatalogueItemProperties(
   form: CatalogueCategoryProperty[],
-  items: CatalogueItemProperty[]
+  items: Property[]
 ): (string | null)[] {
   const result: (string | null)[] = [];
 

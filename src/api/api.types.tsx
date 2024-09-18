@@ -214,5 +214,6 @@ export interface Item
   extends CreatedModifiedMixin,
     Required<Omit<ItemPost, 'properties'>> {
   id: string;
+  usage_status: string;
   properties: Property[];
 }

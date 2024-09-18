@@ -13,13 +13,14 @@ import {
 } from '@mui/material';
 import { MRT_RowSelectionState } from 'material-react-table';
 import React from 'react';
+import { Item } from '../api/api.types';
 import { useMoveItemsToSystem } from '../api/items';
 import {
   useGetSystem,
   useGetSystems,
   useGetSystemsBreadcrumbs,
 } from '../api/systems';
-import { Item, MoveItemsToSystemUsageStatus } from '../app.types';
+import { MoveItemsToSystemUsageStatus } from '../app.types';
 import handleTransferState from '../handleTransferState';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { SystemItemsTable } from './systemItemsTable.component';
