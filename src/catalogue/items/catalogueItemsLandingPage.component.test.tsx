@@ -36,7 +36,7 @@ describe('Catalogue Items Landing Page', () => {
     await waitFor(() => {
       expect(
         screen.getByRole('link', {
-          name: 'cameras',
+          name: 'Cameras',
         })
       ).toBeInTheDocument();
     });
@@ -61,7 +61,7 @@ describe('Catalogue Items Landing Page', () => {
     await waitFor(() => {
       expect(
         screen.getByRole('link', {
-          name: 'cameras',
+          name: 'Cameras',
         })
       ).toBeInTheDocument();
     });
@@ -243,12 +243,12 @@ describe('Catalogue Items Landing Page', () => {
     createView('/catalogue/item/89');
     await waitFor(() => {
       expect(
-        screen.getByRole('link', { name: 'energy-meters' })
+        screen.getByRole('link', { name: 'Energy Meters' })
       ).toBeInTheDocument();
     });
 
     const breadcrumb = screen.getByRole('link', {
-      name: 'energy-meters',
+      name: 'Energy Meters',
     });
 
     await user.click(breadcrumb);
@@ -262,7 +262,7 @@ describe('Catalogue Items Landing Page', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByRole('link', { name: 'energy-meters' })
+        screen.getByRole('link', { name: 'Energy Meters' })
       ).toBeInTheDocument();
     });
 

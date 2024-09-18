@@ -21,10 +21,14 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { System } from '../api/api.types';
-import { useItems } from '../api/items';
+import {
+  CatalogueCategory,
+  CatalogueItem,
+  Item,
+  System,
+} from '../api/api.types';
+import { useGetItems } from '../api/items';
 import { useGetSystemIds } from '../api/systems';
-import { CatalogueCategory, CatalogueItem, Item } from '../app.types';
 import {
   PropertyFiltersType,
   findPropertyValue,
@@ -62,7 +66,7 @@ export function ItemsTable(props: ItemTableProps) {
 
   const noResultsTxt =
     'No results found: Try adding an item by using the Add Item button on the top left of your screen';
-  const { data: itemsData, isLoading: isLoadingItems } = useItems(
+  const { data: itemsData, isLoading: isLoadingItems } = useGetItems(
     undefined,
     catalogueItem.id
   );

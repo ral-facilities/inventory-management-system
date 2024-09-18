@@ -325,7 +325,7 @@ function ManufacturerComponent() {
           onChangeNode={onChangeNode}
           onChangeNavigateHome={onChangeNode}
           breadcrumbsInfo={undefined}
-          navigateHomeAriaLabel="navigate to manufacturer home"
+          homeLocation="Manufacturers"
         />
       </Box>
       <MaterialReactTable table={table} />

@@ -9,26 +9,26 @@ import {
   Grid,
   IconButton,
   LinearProgress,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
-  useCatalogueBreadcrumbs,
-  useCatalogueCategories,
-  useCatalogueCategory,
-} from '../api/catalogueCategories';
-import {
   CatalogueCategory,
   CatalogueCategoryProperty,
-  CatalogueItemProperty,
-} from '../app.types';
+  Property,
+} from '../api/api.types';
+import {
+  useGetCatalogueBreadcrumbs,
+  useGetCatalogueCategories,
+  useGetCatalogueCategory,
+} from '../api/catalogueCategories';
 import { generateUniqueName } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import CatalogueCardView from './category/catalogueCardView.component';
 import CatalogueCategoryDialog from './category/catalogueCategoryDialog.component';
 import CatalogueCategoryDirectoryDialog from './category/catalogueCategoryDirectoryDialog.component';
-import CatalogueItemPropertiesMigrationDialog from './category/catalogueItemPropertiesMigrationDialog.component';
 import DeleteCatalogueCategoryDialog from './category/deleteCatalogueCategoryDialog.component';
 import CatalogueItemsTable from './items/catalogueItemsTable.component';
 
@@ -75,19 +75,23 @@ const AddCategoryButton = (props: AddCatalogueButtonProps) => {
 
   return (
     <>
-      <IconButton
-        sx={{ mx: 1, my: 2 }}
-        onClick={() => setAddCategoryDialogOpen(true)}
-        disabled={props.disabled}
-        aria-label="add catalogue category"
-      >
-        <AddIcon />
-      </IconButton>
+      <Tooltip title="Add Category">
+        <span>
+          <IconButton
+            sx={{ mx: 1, my: 2 }}
+            onClick={() => setAddCategoryDialogOpen(true)}
+            disabled={props.disabled}
+            aria-label="add catalogue category"
+          >
+            <AddIcon />
+          </IconButton>
+        </span>
+      </Tooltip>
       <CatalogueCategoryDialog
         open={addCategoryDialogOpen}
         onClose={() => setAddCategoryDialogOpen(false)}
         parentId={props.parentId}
-        type="add"
+        requestType="post"
         resetSelectedCatalogueCategory={props.resetSelectedCatalogueCategory}
       />
     </>
@@ -156,7 +160,7 @@ const CopyCategoriesButton = (props: {
 
 export function matchCatalogueItemProperties(
   form: CatalogueCategoryProperty[],
-  items: CatalogueItemProperty[]
+  items: Property[]
 ): (string | null)[] {
   const result: (string | null)[] = [];
 
@@ -192,10 +196,10 @@ function Catalogue() {
   const {
     data: catalogueCategoryDetail,
     isLoading: catalogueCategoryDetailLoading,
-  } = useCatalogueCategory(catalogueCategoryId);
+  } = useGetCatalogueCategory(catalogueCategoryId);
 
   const { data: catalogueBreadcrumbs } =
-    useCatalogueBreadcrumbs(catalogueCategoryId);
+    useGetCatalogueBreadcrumbs(catalogueCategoryId);
 
   const parentInfo = React.useMemo(
     () => catalogueCategoryDetail,
@@ -207,7 +211,7 @@ function Catalogue() {
   const {
     data: catalogueCategoryData,
     isLoading: catalogueCategoryDataLoading,
-  } = useCatalogueCategories(
+  } = useGetCatalogueCategories(
     catalogueCategoryDetailLoading ? true : !!parentInfo && parentInfo.is_leaf,
     // String value of null for filtering root catalogue category
     !catalogueCategoryId ? 'null' : catalogueCategoryId
@@ -220,19 +224,36 @@ function Catalogue() {
   const [deleteCategoryDialogOpen, setDeleteCategoryDialogOpen] =
     React.useState<boolean>(false);
 
-  const [editCategoryNameDialogOpen, setEditCategoryNameDialogOpen] =
+  const [editCategoryDialogOpen, setEditCategoryDialogOpen] =
     React.useState<boolean>(false);
-
-  const [
-    editCategoryPropertiesDialogOpen,
-    setEditCategoryPropertiesDialogOpen,
-  ] = React.useState<boolean>(false);
 
   const [duplicateCategoryDialogOpen, setDuplicateCategoryDialogOpen] =
     React.useState<boolean>(false);
 
   const [selectedCatalogueCategory, setSelectedCatalogueCategory] =
     React.useState<CatalogueCategory | undefined>(undefined);
+
+  // useEffect hook to update selectedCatalogueCategory when catalogueCategoryData changes
+  // Ensures that the edit dialog has the latest property data after a migration (add or edit) is completed
+  React.useEffect(() => {
+    // Extract the IDs of all categories from the catalogueCategoryData array
+    const catalogueCategoryIds = catalogueCategoryData?.map(
+      (category) => category.id
+    );
+
+    // Check if the selectedCatalogueCategory's ID is part of the catalogueCategoryIds array
+    // This ensures that the selected category is still valid after an "add" or "edit" migration
+    if (catalogueCategoryIds?.includes(selectedCatalogueCategory?.id ?? '')) {
+      // Find the updated category from the catalogueCategoryData array
+      const updatedCategory = catalogueCategoryData?.find(
+        (category) => category.id === selectedCatalogueCategory?.id
+      );
+
+      // Update the state with the updated category, triggering a re-render of the dialog
+      setSelectedCatalogueCategory(updatedCategory);
+    }
+    // Dependencies for this effect: it will re-run when either catalogueCategoryData or selectedCatalogueCategory changes
+  }, [catalogueCategoryData, selectedCatalogueCategory]);
 
   const onChangeOpenDeleteCategoryDialog = (
     catalogueCategory: CatalogueCategory
@@ -241,20 +262,16 @@ function Catalogue() {
     setSelectedCatalogueCategory(catalogueCategory);
   };
 
-  const onChangeOpenEditNameCategoryDialog = (
+  const onChangeOpenEditCategoryDialog = (
     catalogueCategory: CatalogueCategory
   ) => {
-    setEditCategoryNameDialogOpen(true);
+    setEditCategoryDialogOpen(true);
     setSelectedCatalogueCategory(catalogueCategory);
   };
 
-  const onChangeOpenEditPropertiesCategoryDialog = (
+  const onChangeOpenDuplicateDialog = (
     catalogueCategory: CatalogueCategory
   ) => {
-    setEditCategoryPropertiesDialogOpen(true);
-    setSelectedCatalogueCategory(catalogueCategory);
-  };
-  const onChangeOpenDuplicateDialog = (catalogueCategory: CatalogueCategory) => {
     setDuplicateCategoryDialogOpen(true);
     setSelectedCatalogueCategory(catalogueCategory);
   };
@@ -306,7 +323,7 @@ function Catalogue() {
               onChangeNode={navigateToCatalogue}
               breadcrumbsInfo={catalogueBreadcrumbs}
               onChangeNavigateHome={() => navigateToCatalogue(null)}
-              navigateHomeAriaLabel={'navigate to catalogue home'}
+              homeLocation="Catalogue"
             />
             <NavigateNext
               fontSize="medium"
@@ -386,12 +403,7 @@ function Catalogue() {
           <CatalogueCardView
             catalogueCategoryData={catalogueCategoryData}
             onChangeOpenDeleteCategoryDialog={onChangeOpenDeleteCategoryDialog}
-            onChangeOpenEditNameCategoryDialog={
-              onChangeOpenEditNameCategoryDialog
-            }
-            onChangeOpenEditPropertiesCategoryDialog={
-              onChangeOpenEditPropertiesCategoryDialog
-            }
+            onChangeOpenEditCategoryDialog={onChangeOpenEditCategoryDialog}
             onChangeOpenDuplicateDialog={onChangeOpenDuplicateDialog}
             handleToggleSelect={handleToggleSelect}
             selectedCategories={selectedCategories}
@@ -403,30 +415,22 @@ function Catalogue() {
       )}
 
       <CatalogueCategoryDialog
-        open={editCategoryNameDialogOpen}
-        onClose={() => setEditCategoryNameDialogOpen(false)}
+        open={editCategoryDialogOpen}
+        onClose={() => setEditCategoryDialogOpen(false)}
         parentId={parentId}
-        type="edit"
+        requestType="patch"
         selectedCatalogueCategory={selectedCatalogueCategory}
         resetSelectedCatalogueCategory={() =>
           setSelectedCatalogueCategory(undefined)
         }
       />
-      {selectedCatalogueCategory && (
-        <CatalogueItemPropertiesMigrationDialog
-          open={editCategoryPropertiesDialogOpen}
-          onClose={() => setEditCategoryPropertiesDialogOpen(false)}
-          selectedCatalogueCategory={selectedCatalogueCategory}
-          resetSelectedCatalogueCategory={() =>
-            setSelectedCatalogueCategory(undefined)
-          }
-        />
-      )}
+
       <CatalogueCategoryDialog
         open={duplicateCategoryDialogOpen}
         onClose={() => setDuplicateCategoryDialogOpen(false)}
         parentId={parentId}
-        type="duplicate"
+        requestType="post"
+        duplicate
         selectedCatalogueCategory={
           selectedCatalogueCategory
             ? {

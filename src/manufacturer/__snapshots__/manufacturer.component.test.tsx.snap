@@ -11,27 +11,33 @@ exports[`Manufacturer > renders table data correctly 1`] = `
       <div
         class="MuiBox-root css-70qvj9"
       >
-        <button
-          aria-label="navigate to manufacturer home"
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
-          tabindex="0"
-          type="button"
+        <span
+          aria-label="Manufacturers Home"
+          class=""
+          data-mui-internal-clone-element="true"
         >
-          <svg
-            aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-            data-testid="HomeIcon"
-            focusable="false"
-            viewBox="0 0 24 24"
+          <button
+            aria-label="navigate to manufacturers home"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+            tabindex="0"
+            type="button"
           >
-            <path
-              d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="HomeIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+              />
+            </svg>
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
             />
-          </svg>
-          <span
-            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-          />
-        </button>
+          </button>
+        </span>
         <nav
           aria-label="breadcrumb"
           class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1mc59t7-MuiTypography-root-MuiBreadcrumbs-root"
@@ -148,7 +154,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                         aria-invalid="false"
                         autocomplete="new-password"
                         class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12yjm75-MuiInputBase-input-MuiOutlinedInput-input"
-                        id=":r16:"
+                        id=":r18:"
                         placeholder="Search"
                         type="text"
                         value=""
@@ -266,6 +272,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
               class="MuiTableRow-root MuiTableRow-head css-ssspk8-MuiTableRow-root"
             >
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-14og0m0-MuiTableCell-root"
                 colspan="1"
                 data-index="0"
@@ -289,8 +296,10 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1vee8kb-MuiTableCell-root"
                 colspan="1"
+                data-can-sort="true"
                 data-index="1"
                 scope="col"
               >
@@ -419,7 +428,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                             aria-label="Filter by Name"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r1e:"
+                            id=":r1g:"
                             placeholder="Filter by Name"
                             title="Filter by Name"
                             type="text"
@@ -461,8 +470,10 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1xga52j-MuiTableCell-root"
                 colspan="1"
+                data-can-sort="true"
                 data-index="2"
                 scope="col"
               >
@@ -594,7 +605,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                               aria-label="Min"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r1k:"
+                              id=":r1m:"
                               inputmode="text"
                               placeholder="Min"
                               title="Min"
@@ -639,7 +650,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                               aria-label="Max"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r1m:"
+                              id=":r1o:"
                               inputmode="text"
                               placeholder="Max"
                               title="Max"
@@ -679,8 +690,10 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1qr4xtz-MuiTableCell-root"
                 colspan="1"
+                data-can-sort="true"
                 data-index="3"
                 scope="col"
               >
@@ -812,7 +825,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                               aria-label="Min"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r3j:"
+                              id=":r3l:"
                               inputmode="text"
                               placeholder="Min"
                               title="Min"
@@ -857,7 +870,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                               aria-label="Max"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r3l:"
+                              id=":r3n:"
                               inputmode="text"
                               placeholder="Max"
                               title="Max"
@@ -897,8 +910,10 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1rj1bys-MuiTableCell-root"
                 colspan="1"
+                data-can-sort="true"
                 data-index="4"
                 scope="col"
               >
@@ -1027,7 +1042,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                             aria-label="Filter by URL"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r1s:"
+                            id=":r1u:"
                             placeholder="Filter by URL"
                             title="Filter by URL"
                             type="text"
@@ -1069,8 +1084,10 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1la1r8f-MuiTableCell-root"
                 colspan="1"
+                data-can-sort="true"
                 data-index="5"
                 scope="col"
               >
@@ -1199,7 +1216,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                             aria-label="Filter by Address"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r22:"
+                            id=":r24:"
                             placeholder="Filter by Address"
                             title="Filter by Address"
                             type="text"
@@ -1241,8 +1258,10 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1a2u3h8-MuiTableCell-root"
                 colspan="1"
+                data-can-sort="true"
                 data-index="6"
                 scope="col"
               >
@@ -1371,7 +1390,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                             aria-label="Filter by Telephone number"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r28:"
+                            id=":r2a:"
                             placeholder="Filter by Telephone number"
                             title="Filter by Telephone number"
                             type="text"
@@ -1413,6 +1432,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 </div>
               </th>
               <th
+                aria-sort="none"
                 class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1mc0kk9-MuiTableCell-root"
                 colspan="1"
                 data-index="7"
@@ -1651,7 +1671,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  02 Jan 2024 13:10
+                  09 Jan 2024 13:10
                 </div>
               </td>
               <td
@@ -1663,7 +1683,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  01 Jan 2024 12:00
+                  09 Jan 2024 12:00
                 </div>
               </td>
               <td
@@ -2089,7 +2109,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                   class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
                   <div
-                    aria-controls=":r2a:"
+                    aria-controls=":r2c:"
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-label="Rows per page"

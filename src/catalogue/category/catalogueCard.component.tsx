@@ -13,17 +13,15 @@ import {
   Menu,
   MenuItem,
   Typography,
+  Tooltip,
 } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { CatalogueCategory } from '../../app.types';
+import { CatalogueCategory } from '../../api/api.types';
 import { OverflowTip, formatDateTimeStrings } from '../../utils';
 export interface CatalogueCardProps extends CatalogueCategory {
   onChangeOpenDeleteDialog: (catalogueCategory: CatalogueCategory) => void;
-  onChangeOpenEditNameDialog: (catalogueCategory: CatalogueCategory) => void;
-  onChangeOpenEditPropertiesDialog: (
-    catalogueCategory: CatalogueCategory
-  ) => void;
+  onChangeOpenEditDialog: (catalogueCategory: CatalogueCategory) => void;
   onChangeOpenDuplicateDialog: (catalogueCategory: CatalogueCategory) => void;
   onToggleSelect: (catalogueCategory: CatalogueCategory) => void;
   isSelected: boolean;
@@ -32,8 +30,7 @@ export interface CatalogueCardProps extends CatalogueCategory {
 function CatalogueCard(props: CatalogueCardProps) {
   const {
     onChangeOpenDeleteDialog,
-    onChangeOpenEditNameDialog,
-    onChangeOpenEditPropertiesDialog,
+    onChangeOpenEditDialog,
     onChangeOpenDuplicateDialog,
     onToggleSelect,
     isSelected,
@@ -73,17 +70,21 @@ function CatalogueCard(props: CatalogueCardProps) {
         }}
       >
         <CardActions>
-          <Checkbox
-            onClick={(event) => {
-              event.preventDefault();
-              handleCheckboxClick();
-            }}
-            checked={isSelected}
-            inputProps={{
-              'aria-label': 'controlled',
-            }}
-            aria-label={`${catalogueCategory.name} checkbox`}
-          />
+          <Tooltip title = "Toggle Select">
+            <span>
+              <Checkbox
+                onClick={(event) => {
+                  event.preventDefault();
+                  handleCheckboxClick();
+                }}
+                checked={isSelected}
+                inputProps={{
+                  'aria-label': 'controlled',
+                }}
+                aria-label={`${catalogueCategory.name} checkbox`}
+              />
+            </span>
+          </Tooltip>
         </CardActions>
         <CardContent
           sx={{
@@ -97,16 +98,20 @@ function CatalogueCard(props: CatalogueCardProps) {
           <OverflowTip>{catalogueCategory.name}</OverflowTip>
         </CardContent>
         <CardActions>
-          <IconButton
-            onClick={(event) => {
-              event.preventDefault();
-              setAnchorEl(event.currentTarget);
-              setMenuOpen(true);
-            }}
-            aria-label={`actions ${catalogueCategory.name} catalogue category button`}
-          >
-            <MoreHorizIcon />
-          </IconButton>
+          <Tooltip title = "Actions">
+            <span>
+              <IconButton
+                onClick={(event) => {
+                  event.preventDefault();
+                  setAnchorEl(event.currentTarget);
+                  setMenuOpen(true);
+                }}
+                aria-label={`actions ${catalogueCategory.name} catalogue category button`}
+              >
+                <MoreHorizIcon />
+              </IconButton>
+            </span>  
+          </Tooltip>
           <Menu
             anchorEl={anchorEl}
             open={menuOpen}
@@ -119,35 +124,17 @@ function CatalogueCard(props: CatalogueCardProps) {
               key={0}
               onClick={(event) => {
                 event.preventDefault();
-                onChangeOpenEditNameDialog(catalogueCategory);
+                onChangeOpenEditDialog(catalogueCategory);
                 handleActionsClose();
               }}
-              aria-label={`edit name ${catalogueCategory.name} catalogue category button`}
+              aria-label={`edit ${catalogueCategory.name} catalogue category button`}
               sx={{ m: 0 }}
             >
               <ListItemIcon>
                 <EditIcon />
               </ListItemIcon>
-              Edit name
+              Edit
             </MenuItem>
-
-            {catalogueCategory.is_leaf && (
-              <MenuItem
-                key={1}
-                onClick={(event) => {
-                  event.preventDefault();
-                  onChangeOpenEditPropertiesDialog(catalogueCategory);
-                  handleActionsClose();
-                }}
-                aria-label={`edit properties ${catalogueCategory.name} catalogue category button`}
-                sx={{ m: 0 }}
-              >
-                <ListItemIcon>
-                  <EditIcon />
-                </ListItemIcon>
-                Edit properties
-              </MenuItem>
-            )}
             <MenuItem
               key={2}
               aria-label={`duplicate ${catalogueCategory.name} catalogue category button`}

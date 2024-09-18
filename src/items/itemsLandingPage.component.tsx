@@ -16,11 +16,11 @@ import { Link, useParams } from 'react-router-dom';
 
 import { BreadcrumbsInfo } from '../api/api.types';
 import {
-  useCatalogueBreadcrumbs,
-  useCatalogueCategory,
+  useGetCatalogueBreadcrumbs,
+  useGetCatalogueCategory,
 } from '../api/catalogueCategories';
-import { useCatalogueItem } from '../api/catalogueItems';
-import { useItem } from '../api/items';
+import { useGetCatalogueItem } from '../api/catalogueItems';
+import { useGetItem } from '../api/items';
 import { useGetManufacturer } from '../api/manufacturers';
 import { useGetSystem } from '../api/systems';
 import { useNavigateToCatalogue } from '../catalogue/catalogue.component';
@@ -34,17 +34,17 @@ function ItemsLandingPage() {
   const { item_id: id } = useParams();
   const navigateToCatalogue = useNavigateToCatalogue();
 
-  const { data: itemData, isLoading: itemDataIsLoading } = useItem(id);
+  const { data: itemData, isLoading: itemDataIsLoading } = useGetItem(id);
 
-  const { data: catalogueItemData } = useCatalogueItem(
+  const { data: catalogueItemData } = useGetCatalogueItem(
     itemData?.catalogue_item_id
   );
 
-  const { data: catalogueCategoryData } = useCatalogueCategory(
+  const { data: catalogueCategoryData } = useGetCatalogueCategory(
     catalogueItemData?.catalogue_category_id
   );
 
-  const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
+  const { data: catalogueBreadcrumbs } = useGetCatalogueBreadcrumbs(
     catalogueItemData?.catalogue_category_id
   );
 
@@ -118,7 +118,7 @@ function ItemsLandingPage() {
             onChangeNode={navigateToCatalogue}
             breadcrumbsInfo={itemLandingBreadcrumbs}
             onChangeNavigateHome={() => navigateToCatalogue(null)}
-            navigateHomeAriaLabel={'navigate to catalogue home'}
+            homeLocation="Catalogue"
           />
         </Grid>
         {itemData && (

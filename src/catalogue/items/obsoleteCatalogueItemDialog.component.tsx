@@ -17,20 +17,20 @@ import {
 import { AxiosError } from 'axios';
 import React from 'react';
 import {
-  useCatalogueBreadcrumbs,
-  useCatalogueCategories,
-  useCatalogueCategory,
-} from '../../api/catalogueCategories';
-import {
-  useCatalogueItem,
-  useEditCatalogueItem,
-} from '../../api/catalogueItems';
-import {
   CatalogueCategory,
   CatalogueItem,
-  EditCatalogueItem,
-  ObsoleteDetails,
-} from '../../app.types';
+  CatalogueItemPatch,
+} from '../../api/api.types';
+import {
+  useGetCatalogueBreadcrumbs,
+  useGetCatalogueCategories,
+  useGetCatalogueCategory,
+} from '../../api/catalogueCategories';
+import {
+  useGetCatalogueItem,
+  usePatchCatalogueItem,
+} from '../../api/catalogueItems';
+import { ObsoleteDetails } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { trimStringValues } from '../../utils';
 import Breadcrumbs from '../../view/breadcrumbs.component';
@@ -79,7 +79,7 @@ const ObsoleteCatalogueItemDialog = (
 
   // Start at the parent category of the current replacement item if it exists
   // otherwise at the current category
-  const { data: catalogueItemObsoleteData } = useCatalogueItem(
+  const { data: catalogueItemObsoleteData } = useGetCatalogueItem(
     obsoleteDetails.obsolete_replacement_catalogue_item_id ?? undefined
   );
   const setDefaultCatalogueCurrDirId = React.useCallback(() => {
@@ -111,17 +111,17 @@ const ObsoleteCatalogueItemDialog = (
 
   // Current category and its children
   const { data: catalogueCategoryData } =
-    useCatalogueCategory(catalogueCurrDirId);
+    useGetCatalogueCategory(catalogueCurrDirId);
 
   const {
     data: catalogueCategoryDataList,
     isLoading: catalogueCategoryDataListLoading,
-  } = useCatalogueCategories(false, catalogueCurrDirId ?? 'null');
+  } = useGetCatalogueCategories(false, catalogueCurrDirId ?? 'null');
 
   const { data: catalogueBreadcrumbs } =
-    useCatalogueBreadcrumbs(catalogueCurrDirId);
+    useGetCatalogueBreadcrumbs(catalogueCurrDirId);
   const { mutateAsync: editCatalogueItem, isPending: isEditPending } =
-    useEditCatalogueItem();
+    usePatchCatalogueItem();
 
   // Removes parameters when is_obsolete changed to false
   const handleObsoleteChange = (isObsolete: boolean) => {
@@ -170,9 +170,7 @@ const ObsoleteCatalogueItemDialog = (
         obsoleteDetails.obsolete_replacement_catalogue_item_id !==
         catalogueItem.obsolete_replacement_catalogue_item_id;
 
-      const editObsoleteCatalogueItem: EditCatalogueItem = {
-        id: catalogueItem.id,
-      };
+      const editObsoleteCatalogueItem: CatalogueItemPatch = {};
       if (isIsObsoleteUpdated)
         editObsoleteCatalogueItem.is_obsolete = obsoleteDetails.is_obsolete;
 
@@ -185,12 +183,15 @@ const ObsoleteCatalogueItemDialog = (
           obsoleteDetails.obsolete_replacement_catalogue_item_id;
 
       if (
-        editObsoleteCatalogueItem.id &&
+        catalogueItem.id &&
         (isIsObsoleteUpdated ||
           isObsoleteReasonUpdated ||
           isReplacementIdUpdated)
       ) {
-        editCatalogueItem(trimStringValues(editObsoleteCatalogueItem))
+        editCatalogueItem({
+          id: catalogueItem.id,
+          catalogueItem: trimStringValues(editObsoleteCatalogueItem),
+        })
           .then(() => {
             handleClose();
           })
@@ -255,7 +256,7 @@ const ObsoleteCatalogueItemDialog = (
               onChangeNode={onChangeNode}
               breadcrumbsInfo={catalogueBreadcrumbs}
               onChangeNavigateHome={() => setCatalogueCurrDirId(null)}
-              navigateHomeAriaLabel={'Navigate back to Catalogue home'}
+              homeLocation="Catalogue"
             />
             {catalogueCategoryData?.is_leaf ? (
               <CatalogueItemsTable
