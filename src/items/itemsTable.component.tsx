@@ -446,7 +446,8 @@ export function ItemsTable(props: ItemTableProps) {
             onClose={() => {
               table.setCreatingRow(null);
             }}
-            type={itemDialogType}
+            duplicate={itemDialogType === 'duplicate'}
+            requestType={itemDialogType === 'edit' ? 'patch' : 'post'}
             catalogueCategory={catalogueCategory}
             catalogueItem={catalogueItem}
             selectedItem={

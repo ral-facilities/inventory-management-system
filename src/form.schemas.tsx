@@ -3,7 +3,12 @@ import {
   CatalogueCategoryPropertyType,
   SystemImportanceType,
 } from './api/api.types';
-import { checkForDuplicates } from './utils';
+import {
+  checkForDuplicates,
+  datePickerMaxDate,
+  datePickerMinDate,
+  invalidDateFormatMessage,
+} from './utils';
 
 export type RequestType = 'post' | 'patch';
 
@@ -14,9 +19,26 @@ interface BaseZodSchemaProps {
 interface NumberZodSchemaProps {
   requiredErrorMessage?: string;
   invalidTypeErrorMessage?: string;
+  min?: number;
+  max?: number;
+  isInteger?: boolean;
+}
+
+interface DateZodSchemaProps {
+  minDate: Date;
+  maxDate: Date;
+  dateFormatErrorMessage?: string;
 }
 
 interface PostPatchZodSchemaProps extends BaseZodSchemaProps {
+  requestType: RequestType;
+}
+
+interface PostPatchZodNumberSchemaProps extends NumberZodSchemaProps {
+  requestType: RequestType;
+}
+
+interface PostPatchZodDateSchemaProps extends DateZodSchemaProps {
   requestType: RequestType;
 }
 
@@ -69,10 +91,20 @@ const MandatoryNumberSchema = (props: NumberZodSchemaProps) =>
       message: props.requiredErrorMessage,
     })
     .pipe(
-      z.coerce.number({
-        invalid_type_error: props.invalidTypeErrorMessage,
-        required_error: props.requiredErrorMessage,
-      })
+      z.coerce
+        .number({
+          invalid_type_error: props.invalidTypeErrorMessage,
+          required_error: props.requiredErrorMessage,
+        })
+        .min(props.min ?? -Infinity, {
+          message: `Number must be greater than or equal to ${props.min}`,
+        })
+        .max(props.max ?? Infinity, {
+          message: `Number must be less than or equal to ${props.max}`,
+        })
+        .refine((value) => (props.isInteger ? Number.isInteger(value) : true), {
+          message: 'Please enter a valid integer.',
+        })
     );
 
 const OptionalNumberSchema = (props: NumberZodSchemaProps) =>
@@ -83,6 +115,15 @@ const OptionalNumberSchema = (props: NumberZodSchemaProps) =>
       z.coerce
         .number({
           invalid_type_error: props.invalidTypeErrorMessage,
+        })
+        .min(props.min ?? -Infinity, {
+          message: `Number must be greater than or equal to ${props.min}`,
+        })
+        .max(props.max ?? Infinity, {
+          message: `Number must be less than or equal to ${props.max}`,
+        })
+        .refine((value) => (props.isInteger ? Number.isInteger(value) : true), {
+          message: 'Please enter a valid integer.',
         })
         .optional()
     );
@@ -96,16 +137,78 @@ const NullableNumberSchema = (props: NumberZodSchemaProps) =>
         .number({
           invalid_type_error: props.invalidTypeErrorMessage,
         })
+        .min(props.min ?? -Infinity, {
+          message: `Number must be greater than or equal to ${props.min}`,
+        })
+        .max(props.max ?? Infinity, {
+          message: `Number must be less than or equal to ${props.max}`,
+        })
+        .refine((value) => (props.isInteger ? Number.isInteger(value) : true), {
+          message: 'Please enter a valid integer.',
+        })
         .nullable()
     );
 
-const OptionalOrNullableNumberSchema = (props: PostPatchZodSchemaProps) =>
+const NullableDateSchema = (props: DateZodSchemaProps) =>
+  z
+    .any()
+    .transform((val) => (!val ? null : val))
+    .pipe(
+      z.coerce
+        .date({
+          errorMap: (issue, { defaultError }) => ({
+            message:
+              issue.code === 'invalid_date'
+                ? props.dateFormatErrorMessage || defaultError
+                : defaultError,
+          }),
+        })
+        .max(props.maxDate, {
+          message: `Date cannot be later than ${props.maxDate.toLocaleDateString()}.`,
+        })
+        .min(props.minDate, {
+          message: `Date cannot be earlier than ${props.minDate.toLocaleDateString()}.`,
+        })
+        .nullable()
+    );
+
+const OptionalDateSchema = (props: DateZodSchemaProps) =>
+  z
+    .any()
+    .transform((val) => (!val ? undefined : val))
+    .pipe(
+      z.coerce
+        .date({
+          errorMap: (issue, { defaultError }) => ({
+            message:
+              issue.code === 'invalid_date'
+                ? props.dateFormatErrorMessage || defaultError
+                : defaultError,
+          }),
+        })
+        .max(props.maxDate, {
+          message: `Date cannot be later than ${props.maxDate.toLocaleDateString()}.`,
+        })
+        .min(props.minDate, {
+          message: `Date cannot be earlier than ${props.minDate.toLocaleDateString()}.`,
+        })
+        .optional()
+    );
+
+const OptionalOrNullableDateSchema = (props: PostPatchZodDateSchemaProps) =>
+  props.requestType === 'post'
+    ? OptionalDateSchema({ ...props })
+    : NullableDateSchema({ ...props });
+
+const OptionalOrNullableNumberSchema = (
+  props: PostPatchZodNumberSchemaProps
+) =>
   props.requestType === 'post'
     ? OptionalNumberSchema({
-        invalidTypeErrorMessage: props.errorMessage,
+        ...props,
       })
     : NullableNumberSchema({
-        invalidTypeErrorMessage: props.errorMessage,
+        ...props,
       });
 
 const OptionalUrlSchema = (props: BaseZodSchemaProps) =>
@@ -389,7 +492,7 @@ export const CatalogueItemDetailsStepSchema = (requestType: RequestType) => {
     }),
     cost_to_rework_gbp: OptionalOrNullableNumberSchema({
       requestType,
-      errorMessage: 'Please enter a valid number.',
+      invalidTypeErrorMessage: 'Please enter a valid number.',
     }),
     days_to_replace: MandatoryNumberSchema({
       requiredErrorMessage:
@@ -398,7 +501,7 @@ export const CatalogueItemDetailsStepSchema = (requestType: RequestType) => {
     }),
     days_to_rework: OptionalOrNullableNumberSchema({
       requestType,
-      errorMessage: 'Please enter a valid number.',
+      invalidTypeErrorMessage: 'Please enter a valid number.',
     }),
     description: OptionalOrNullableStringSchema({ requestType }),
     drawing_number: OptionalOrNullableStringSchema({ requestType }),
@@ -415,3 +518,90 @@ export const CatalogueItemDetailsStepSchema = (requestType: RequestType) => {
 export const PropertiesStepSchema = z.object({
   properties: z.array(z.discriminatedUnion('valueType', propertiesTypeList)),
 });
+
+// ------------------------------------ CATALOGUE ITEMS ------------------------------------
+
+export const ItemDetailsStepSchema = (requestType: RequestType) => {
+  return z.object({
+    purchase_order_number: OptionalOrNullableStringSchema({ requestType }),
+    is_defective: MandatoryBooleanSchema({}),
+    usage_status_id: MandatoryStringSchema({
+      errorMessage: 'Please select a usage status.',
+    }),
+    warranty_end_date: OptionalOrNullableDateSchema({
+      requestType: requestType,
+      maxDate: datePickerMaxDate,
+      minDate: datePickerMinDate,
+      dateFormatErrorMessage: invalidDateFormatMessage,
+    }),
+    asset_number: OptionalOrNullableStringSchema({ requestType }),
+    serial_number: z
+      .object({
+        serial_number: OptionalOrNullableStringSchema({ requestType }),
+        quantity: OptionalOrNullableNumberSchema({
+          requestType,
+          invalidTypeErrorMessage: 'Please enter a valid number.',
+          min: 2,
+          max: 99,
+          isInteger: true,
+        }),
+        starting_value: OptionalOrNullableNumberSchema({
+          requestType,
+          invalidTypeErrorMessage: 'Please enter a valid number.',
+          isInteger: true,
+          min: 0,
+        }),
+      })
+      .superRefine((data, ctx) => {
+        const issues: z.ZodIssue[] = [];
+
+        if (
+          (typeof data.starting_value === 'number' ||
+            typeof data.quantity === 'number') &&
+          !data.serial_number?.includes('%s')
+        ) {
+          issues.push({
+            path: ['serial_number'],
+            message:
+              'Please use %s to specify the location you want to append the number to serial number.',
+            code: 'custom',
+          });
+        }
+
+        if (
+          typeof data.starting_value !== 'number' &&
+          typeof data.quantity === 'number'
+        ) {
+          issues.push({
+            path: ['starting_value'],
+            message: 'Please enter a starting value.',
+            code: 'custom',
+          });
+        }
+
+        if (
+          typeof data.starting_value === 'number' &&
+          typeof data.quantity !== 'number'
+        ) {
+          issues.push({
+            path: ['quantity'],
+            message: 'Please enter a quantity value.',
+            code: 'custom',
+          });
+        }
+
+        // Add all queued issues in one loop
+        issues.forEach((issue) => {
+          ctx.addIssue(issue);
+        });
+        return data;
+      }),
+    delivered_date: OptionalOrNullableDateSchema({
+      requestType: requestType,
+      maxDate: datePickerMaxDate,
+      minDate: datePickerMinDate,
+      dateFormatErrorMessage: invalidDateFormatMessage,
+    }),
+    notes: OptionalOrNullableStringSchema({ requestType }),
+  });
+};

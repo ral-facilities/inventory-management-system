@@ -554,7 +554,7 @@ function ItemsLandingPage() {
           onClose={() => {
             setEditItemDialogOpen(false);
           }}
-          type="edit"
+          requestType="patch"
           catalogueCategory={catalogueCategoryData}
           catalogueItem={catalogueItemData}
           selectedItem={itemData}

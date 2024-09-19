@@ -421,3 +421,7 @@ export const checkForDuplicates = (props: {
 
   return Array.from(duplicateIds);
 };
+
+export const datePickerMinDate = new Date('1900-01-01');
+export const datePickerMaxDate = new Date('2100-01-01');
+export const invalidDateFormatMessage = 'Date format: dd/MM/yyyy';

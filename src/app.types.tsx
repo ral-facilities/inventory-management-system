@@ -153,27 +153,35 @@ export interface CopyToSystem {
 }
 
 // ------------------------------------ ITEMS ------------------------------------
-export interface ItemDetails {
-  catalogue_item_id: string;
-  system_id: string;
-  purchase_order_number: string | null;
+export interface ItemDetailsStep {
+  purchase_order_number?: string | null;
+  is_defective: string;
+  usage_status_id: string;
+  warranty_end_date?: string | null;
+  asset_number?: string | null;
+  serial_number: {
+    serial_number?: string | null;
+    quantity?: string;
+    starting_value?: string;
+  };
+  delivered_date?: string | null;
+  notes?: string | null;
+}
+
+export interface ItemDetailsStepPost {
+  purchase_order_number?: string | null;
   is_defective: boolean;
   usage_status_id: string;
-  warranty_end_date: string | null;
-  asset_number: string | null;
-  serial_number: string | null;
-  delivered_date: string | null;
-  notes: string | null;
+  warranty_end_date?: string | null;
+  asset_number?: string | null;
+  serial_number?: string | null;
+  delivered_date?: string | null;
+  notes?: string | null;
 }
-export type ItemDetailsPlaceholder = {
-  [K in keyof ItemDetails]: K extends 'delivered_date' | 'warranty_end_date'
-    ? Date | null
-    : string | null;
-};
 
 export interface PostItems {
   quantity: number;
-  startingValue: number;
+  starting_value: number;
   item: ItemPost;
 }
 
@@ -189,5 +197,5 @@ export interface MoveItemsToSystem {
 
 export interface AdvancedSerialNumberOptionsType {
   quantity: string | null;
-  startingValue: string | null;
+  starting_value: string | null;
 }

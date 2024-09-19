@@ -31,6 +31,7 @@ import {
   CatalogueItemPatch,
   CatalogueItemPost,
   Manufacturer,
+  Property,
   PropertyPost,
 } from '../../api/api.types';
 import {
@@ -91,12 +92,11 @@ function toCatalogueItemDetailsStep(
   };
 }
 
-function convertToPropertyValueList(
+export function convertToPropertyValueList(
   catalogueCategory?: CatalogueCategory,
-  catalogueItem?: CatalogueItem
+  properties?: Property[]
 ): PropertyValue[] {
   const catalogueCategoryProperties = catalogueCategory?.properties || [];
-  const properties = catalogueItem?.properties || [];
   return catalogueCategoryProperties.map((property) => {
     // Find the matching property for this property by id
     const matchingCategoryProperty = properties?.find(
@@ -118,7 +118,7 @@ function convertToPropertyValueList(
   });
 }
 
-function convertToPropertyPost(
+export function convertToPropertyPost(
   propertyValues: PropertyValue[]
 ): PropertyPost[] {
   return propertyValues.map((propertyValue) => {
@@ -193,7 +193,10 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   const catalogueItemPropertiesStepFormMethods = useForm<PropertiesStep>({
     resolver: zodResolver(PropertiesStepSchema),
     defaultValues: {
-      properties: convertToPropertyValueList(parentInfo, selectedCatalogueItem),
+      properties: convertToPropertyValueList(
+        parentInfo,
+        selectedCatalogueItem?.properties
+      ),
     },
   });
 
@@ -227,13 +230,17 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   React.useEffect(() => {
     resetDetailsStep(toCatalogueItemDetailsStep(selectedCatalogueItem));
     resetPropertiesStep({
-      properties: convertToPropertyValueList(parentInfo, selectedCatalogueItem),
+      properties: convertToPropertyValueList(
+        parentInfo,
+        selectedCatalogueItem?.properties
+      ),
     });
   }, [
     parentInfo,
     resetDetailsStep,
     resetPropertiesStep,
     selectedCatalogueItem,
+    selectedCatalogueItem?.properties,
   ]);
 
   // Clears form errors when a value has been changed

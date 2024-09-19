@@ -84,8 +84,6 @@ describe('Items', () => {
       expect(postRequests.length).eq(1);
       expect(JSON.stringify(await postRequests[0].json())).equal(
         JSON.stringify({
-          catalogue_item_id: '1',
-          system_id: '65328f34a40ff5301575a4e3',
           purchase_order_number: null,
           is_defective: false,
           usage_status_id: '0',
@@ -102,6 +100,8 @@ describe('Items', () => {
             { id: '5', value: true },
             { id: '6', value: false },
           ],
+          catalogue_item_id: '1',
+          system_id: '65328f34a40ff5301575a4e3',
         })
       );
     });
@@ -134,8 +134,6 @@ describe('Items', () => {
       for (let i = 0; i < 3; i++) {
         expect(JSON.stringify(await postRequests[i].json())).equal(
           JSON.stringify({
-            catalogue_item_id: '1',
-            system_id: '65328f34a40ff5301575a4e3',
             purchase_order_number: null,
             is_defective: false,
             usage_status_id: '0',
@@ -152,6 +150,8 @@ describe('Items', () => {
               { id: '5', value: true },
               { id: '6', value: false },
             ],
+            catalogue_item_id: '1',
+            system_id: '65328f34a40ff5301575a4e3',
           })
         );
       }
@@ -161,18 +161,23 @@ describe('Items', () => {
   it('displays error messages for serial number advanced options', () => {
     cy.findByRole('button', { name: 'Add Item' }).click();
 
+    cy.findByLabelText('Usage status *').click();
+    cy.findByText('New').click();
+
     cy.findByText('Show advanced options').click();
 
     cy.findByLabelText('Starting value').type('10');
 
-    cy.findByText('Please enter a quantity value').should('exist');
+    cy.findByRole('button', { name: 'Next' }).click();
+
+    cy.findByText('Please enter a quantity value.').should('exist');
 
     cy.findByLabelText('Starting value').clear();
 
     cy.findByLabelText('Quantity').type('10a');
     cy.findByLabelText('Starting value').type('10a');
 
-    cy.findAllByText('Please enter a valid number').should('have.length', 2);
+    cy.findAllByText('Please enter a valid number.').should('have.length', 2);
 
     cy.findByLabelText('Quantity').clear();
     cy.findByLabelText('Starting value').clear();
@@ -180,8 +185,7 @@ describe('Items', () => {
     cy.findByLabelText('Quantity').type('10.5');
     cy.findByLabelText('Starting value').type('10.5');
 
-    cy.findByText('Quantity must be an integer').should('exist');
-    cy.findByText('Starting value must be an integer').should('exist');
+    cy.findAllByText('Please enter a valid integer.').should('have.length', 2);
 
     cy.findByLabelText('Quantity').clear();
     cy.findByLabelText('Starting value').clear();
@@ -189,10 +193,8 @@ describe('Items', () => {
     cy.findByLabelText('Quantity').type('-1');
     cy.findByLabelText('Starting value').type('-1');
 
-    cy.findByText('Quantity must be greater than 1').should('exist');
-    cy.findByText('Starting value must be greater than or equal to 0').should(
-      'exist'
-    );
+    cy.findByText('Number must be greater than or equal to 0').should('exist');
+    cy.findByText('Number must be greater than or equal to 2').should('exist');
 
     cy.findByLabelText('Quantity').clear();
     cy.findByLabelText('Starting value').clear();
@@ -200,17 +202,21 @@ describe('Items', () => {
     cy.findByLabelText('Quantity').type('100');
     cy.findByLabelText('Starting value').type('2');
 
-    cy.findByText(
-      'Please use %s to specify the location you want to append the number to serial number'
-    ).should('exist');
-    cy.findByText('Quantity must be less than 100').should('exist');
+    cy.findByText('Number must be less than or equal to 99').should('exist');
 
     cy.findByLabelText('Quantity').clear();
     cy.findByLabelText('Starting value').clear();
 
-    cy.findByLabelText('Serial number').type('test %s');
     cy.findByLabelText('Quantity').type('4');
     cy.findByLabelText('Starting value').type('2');
+
+    cy.findByRole('button', { name: 'Next' }).click();
+
+    cy.findByText(
+      'Please use %s to specify the location you want to append the number to serial number.'
+    ).should('exist');
+
+    cy.findByLabelText('Serial number').type('test %s');
 
     cy.findByText('e.g. test 2').should('exist');
   });
@@ -244,8 +250,6 @@ describe('Items', () => {
       expect(postRequests.length).eq(1);
       expect(JSON.stringify(await postRequests[0].json())).equal(
         JSON.stringify({
-          catalogue_item_id: '17',
-          system_id: '65328f34a40ff5301575a4e3',
           purchase_order_number: null,
           is_defective: false,
           usage_status_id: '2',
@@ -259,6 +263,8 @@ describe('Items', () => {
             { id: '18', value: 0.2 },
             { id: '19', value: 'y' },
           ],
+          catalogue_item_id: '17',
+          system_id: '65328f34a40ff5301575a4e3',
         })
       );
     });
@@ -305,8 +311,6 @@ describe('Items', () => {
       expect(postRequests.length).eq(1);
       expect(JSON.stringify(await postRequests[0].json())).equal(
         JSON.stringify({
-          catalogue_item_id: '1',
-          system_id: '65328f34a40ff5301575a4e3',
           purchase_order_number: 'test23',
           is_defective: true,
           usage_status_id: '3',
@@ -323,6 +327,8 @@ describe('Items', () => {
             { id: '5', value: false },
             { id: '6', value: true },
           ],
+          catalogue_item_id: '1',
+          system_id: '65328f34a40ff5301575a4e3',
         })
       );
     });
@@ -335,21 +341,28 @@ describe('Items', () => {
     cy.findByLabelText('Delivered date').type('12/02/');
 
     cy.findAllByText('Date format: dd/MM/yyyy').should('have.length', 2);
-    cy.findByLabelText('Warranty end date').clear();
-    cy.findByLabelText('Delivered date').clear();
+
+    cy.findAllByRole('button', { name: 'Clear value' }).first().click();
+    cy.findAllByRole('button', { name: 'Clear value' }).first().click();
 
     cy.findByLabelText('Warranty end date').type('12/02/4000');
     cy.findByLabelText('Delivered date').type('12/02/4000');
-    cy.findAllByText('Exceeded maximum date').should('have.length', 2);
+    cy.findAllByText('Date cannot be later than 1/1/2100.').should(
+      'have.length',
+      2
+    );
+
+    cy.findAllByRole('button', { name: 'Clear value' }).first().click();
+    cy.findAllByRole('button', { name: 'Clear value' }).first().click();
 
     cy.findByLabelText('Warranty end date').type('12/02/2000');
     cy.findByLabelText('Delivered date').type('12/02/2000');
-    cy.findByText('Exceeded maximum date').should('not.exist');
+    cy.findByText('Date cannot be later than 1/1/2100.').should('not.exist');
     cy.findByText('Date format: dd/MM/yyyy').should('not.exist');
 
     cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.findByText('Please select a Usage Status').should('exist');
+    cy.findByText('Please select a usage status.').should('exist');
 
     cy.findByLabelText('Usage status *').click();
     cy.findByText('New').click();
@@ -362,14 +375,14 @@ describe('Items', () => {
     cy.findByRole('button', { name: 'Next' }).click();
 
     cy.findAllByText(
-      'Please enter a valid value as this field is mandatory'
+      'Please enter a valid value as this field is mandatory.'
     ).should('have.length', 2);
 
     cy.findByLabelText('Resolution (megapixels) *').type('test');
     cy.findByLabelText('Sensor Type *').type('test');
 
     cy.findAllByText(
-      'Please enter a valid value as this field is mandatory'
+      'Please enter a valid value as this field is mandatory.'
     ).should('not.exist');
   });
 
@@ -463,8 +476,6 @@ describe('Items', () => {
       expect(postRequests.length).eq(1);
       expect(JSON.stringify(await postRequests[0].json())).equal(
         JSON.stringify({
-          catalogue_item_id: '1',
-          system_id: '65328f34a40ff5301575a4e3',
           purchase_order_number: '6JYHEjwN',
           is_defective: false,
           usage_status_id: '1',
@@ -482,6 +493,8 @@ describe('Items', () => {
             { id: '5', value: true },
             { id: '6', value: false },
           ],
+          catalogue_item_id: '1',
+          system_id: '65328f34a40ff5301575a4e3',
         })
       );
     });
@@ -633,8 +646,8 @@ describe('Items', () => {
     cy.findByRole('button', { name: 'Next' }).click();
     cy.findByRole('button', { name: 'Finish' }).click();
 
-    cy.findByText('Please edit a form entry before clicking save').should(
-      'exist'
-    );
+    cy.findByText(
+      "There have been no changes made. Please change a field's value or press Cancel to exit."
+    ).should('exist');
   });
 });
