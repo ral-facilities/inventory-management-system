@@ -535,6 +535,16 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByText('Close advanced options'));
       await modifyDetailsValues({
+        serialNumberAdvancedOptions: { quantity: '10', starting_value: '' },
+      });
+
+      expect(
+        await screen.findByText('Please enter a starting value.')
+      ).toBeInTheDocument();
+
+      await user.click(screen.getByText('Close advanced options'));
+
+      await modifyDetailsValues({
         serialNumberAdvancedOptions: { quantity: '10a', starting_value: '10a' },
       });
 
