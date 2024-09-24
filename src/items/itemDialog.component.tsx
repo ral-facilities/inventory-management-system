@@ -248,10 +248,10 @@ function ItemDialog(props: ItemDialogProps) {
 
   // Clears form errors when a value has been changed
   React.useEffect(() => {
-    const subscription1 = watchDetailsStep(() =>
+    const subscription = watchDetailsStep(() =>
       clearErrorsPropertiesStep('root.formError')
     );
-    return () => subscription1.unsubscribe();
+    return () => subscription.unsubscribe();
   }, [clearErrorsPropertiesStep, watchDetailsStep]);
 
   React.useEffect(() => {
