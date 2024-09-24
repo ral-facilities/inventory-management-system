@@ -1,16 +1,27 @@
-import { Link } from '@mui/material';
+import { Link, MenuItem } from '@mui/material';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderComponentWithRouterProvider } from './testUtils';
 import {
+  ColumnFilterEntries,
   OverflowTip,
   checkForDuplicates,
+  customFilterFunctionInterface,
+  customFilterFunctions,
+  filterFunctionsRendering,
+  filterVariantType,
   generateUniqueId,
   generateUniqueName,
   generateUniqueNameUsingCode,
+  getCustomFilterFunctions,
+  getFilterVariant,
+  removeSecondsFromDate,
+  renderSeconds,
   sortDataList,
   trimStringValues,
 } from './utils';
+import { MRT_FilterOption, MRT_RowData } from 'material-react-table';
+import { isValidElement } from 'react';
 
 describe('Utility functions', () => {
   afterEach(() => {
@@ -289,6 +300,412 @@ describe('Utility functions', () => {
       { name: 'John' },
       { name: 'Susan' },
     ]);
+  });
+});
+
+describe('Custom Filter Functions', () => {
+  describe('filterExclude', () => {
+    let person: MRT_RowData;
+    let filterExclude:
+      | ((row: MRT_RowData, id: string, filterValue: any) => any)
+      | undefined;
+    beforeAll(() => {
+      person = {
+        name: 'Dan',
+        age: 4,
+        status: 'unemployed',
+        getValue: (id: string) => {
+          return person[id as keyof MRT_RowData]; // Return the corresponding field from the object
+        },
+      };
+      filterExclude = customFilterFunctions.find(
+        (filter) => filter.Name == 'filterExclude'
+      )?.FilterFunction;
+    });
+    it('should correctly exclude record', () => {
+      const result = filterExclude
+        ? filterExclude(person, 'status', ['unemployed'])
+        : undefined;
+      expect(result).toBe(false);
+    });
+    it('should correctly include record', () => {
+      const result = filterExclude
+        ? filterExclude(person, 'age', [8, 29])
+        : undefined;
+      expect(result).toBe(true);
+    });
+  });
+
+  describe('filterInclude', () => {
+    let person: MRT_RowData;
+    let filterInclude:
+      | ((row: MRT_RowData, id: string, filterValue: any) => any)
+      | undefined;
+    beforeAll(() => {
+      person = {
+        name: 'Dan',
+        age: 4,
+        status: 'unemployed',
+        getValue: (id: string) => {
+          return person[id as keyof MRT_RowData]; // Return the corresponding field from the object
+        },
+      };
+      filterInclude = customFilterFunctions.find(
+        (filter) => filter.Name == 'filterInclude'
+      )?.FilterFunction;
+    });
+    it('should correctly exclude record', () => {
+      const result = filterInclude
+        ? filterInclude(person, 'name', ['Sam'])
+        : undefined;
+      expect(result).toBe(false);
+    });
+    it('should correctly include record', () => {
+      const result = filterInclude
+        ? filterInclude(person, 'status', ['unemployed', 'retired'])
+        : undefined;
+      expect(result).toBe(true);
+    });
+  });
+
+  describe('equalsDate', () => {
+    let person: MRT_RowData;
+    let equalsDate:
+      | ((row: MRT_RowData, id: string, filterValue: any) => any)
+      | undefined;
+    let dateOfBirth: Date;
+    beforeAll(() => {
+      dateOfBirth = new Date('2024-01-02T00:00:00.000Z');
+      person = {
+        name: 'Dan',
+        age: 4,
+        status: 'unemployed',
+        date_of_birth: dateOfBirth,
+        getValue: (id: string) => {
+          return person[id as keyof MRT_RowData]; // Return the corresponding field from the object
+        },
+      };
+      equalsDate = customFilterFunctions.find(
+        (filter) => filter.Name == 'equalsDate'
+      )?.FilterFunction;
+    });
+    it('should correctly exclude record', () => {
+      const wrong_date = new Date('2024-03-02T00:00:00.000Z');
+      const result = equalsDate
+        ? equalsDate(person, 'date_of_birth', wrong_date)
+        : undefined;
+      expect(result).toBe(false);
+    });
+    it('should correctly include record', () => {
+      const result = equalsDate
+        ? equalsDate(person, 'date_of_birth', dateOfBirth)
+        : undefined;
+      expect(result).toBe(true);
+    });
+  });
+
+  describe('betweenInclusiveDateTime', () => {
+    let person: MRT_RowData;
+    let betweenInclusiveDateTime:
+      | ((row: MRT_RowData, id: string, filterValue: any) => any)
+      | undefined;
+    let dateOfBirth: Date;
+    beforeAll(() => {
+      dateOfBirth = new Date('2024-01-02T00:00:00.000Z');
+      person = {
+        name: 'Dan',
+        age: 4,
+        status: 'unemployed',
+        date_of_birth: dateOfBirth,
+        getValue: (id: string) => {
+          return person[id as keyof MRT_RowData]; // Return the corresponding field from the object
+        },
+      };
+      betweenInclusiveDateTime = customFilterFunctions.find(
+        (filter) => filter.Name == 'betweenInclusiveDateTime'
+      )?.FilterFunction;
+    });
+    it('should correctly include record with an in range upper and lower bound', () => {
+      const filterValue = [new Date('2024-01-01T00:00:00.000Z'), dateOfBirth];
+      const result = betweenInclusiveDateTime
+        ? betweenInclusiveDateTime(person, 'date_of_birth', filterValue)
+        : undefined;
+      expect(result).toBe(true);
+    });
+    it('should correctly include record with just an upper bound', () => {
+      const filterValue = ['', dateOfBirth];
+      const result = betweenInclusiveDateTime
+        ? betweenInclusiveDateTime(person, 'date_of_birth', filterValue)
+        : undefined;
+      expect(result).toBe(true);
+    });
+    it('should correctly include record with just a lower bound', () => {
+      const filterValue = [dateOfBirth, ''];
+      const result = betweenInclusiveDateTime
+        ? betweenInclusiveDateTime(person, 'date_of_birth', filterValue)
+        : undefined;
+      expect(result).toBe(true);
+    });
+    it('should correctly exclude record with an out of range upper and lower bound', () => {
+      const filterValue = [
+        new Date('2024-01-05T00:00:00.000Z'),
+        new Date('2024-01-20T00:00:00.000Z'),
+      ];
+      const result = betweenInclusiveDateTime
+        ? betweenInclusiveDateTime(person, 'date_of_birth', filterValue)
+        : undefined;
+      expect(result).toBe(false);
+    });
+    it('should correctly exclude record with just a lower bound', () => {
+      const filterValue = [new Date('2024-03-01T00:00:00.000Z'), ''];
+      const result = betweenInclusiveDateTime
+        ? betweenInclusiveDateTime(person, 'date_of_birth', filterValue)
+        : undefined;
+      expect(result).toBe(false);
+    });
+    it('should correctly include record with just a higher bound', () => {
+      const filterValue = ['', new Date('2024-01-01T00:00:00.000Z')];
+      const result = betweenInclusiveDateTime
+        ? betweenInclusiveDateTime(person, 'date_of_birth', filterValue)
+        : undefined;
+      expect(result).toBe(false);
+    });
+  });
+
+  describe('beforeInclusiveDateTime', () => {
+    let person: MRT_RowData;
+    let beforeInclusiveDateTime:
+      | ((row: MRT_RowData, id: string, filterValue: any) => any)
+      | undefined;
+    let dateOfBirth: Date;
+    beforeAll(() => {
+      dateOfBirth = new Date('2024-01-02T00:00:00.000Z');
+      person = {
+        name: 'Dan',
+        age: 4,
+        status: 'unemployed',
+        date_of_birth: dateOfBirth,
+        getValue: (id: string) => {
+          return person[id as keyof MRT_RowData]; // Return the corresponding field from the object
+        },
+      };
+      beforeInclusiveDateTime = customFilterFunctions.find(
+        (filter) => filter.Name == 'beforeInclusiveDateTime'
+      )?.FilterFunction;
+    });
+    it('should correctly exclude record', () => {
+      const olderDate = new Date('2024-01-01T00:00:00.000Z');
+      const result = beforeInclusiveDateTime
+        ? beforeInclusiveDateTime(person, 'date_of_birth', olderDate)
+        : undefined;
+      expect(result).toBe(false);
+    });
+    it('should correctly include record', () => {
+      const result = beforeInclusiveDateTime
+        ? beforeInclusiveDateTime(person, 'date_of_birth', dateOfBirth)
+        : undefined;
+      expect(result).toBe(true);
+    });
+  });
+
+  describe('afterInclusiveDateTime', () => {
+    let person: MRT_RowData;
+    let afterInclusiveDateTime:
+      | ((row: MRT_RowData, id: string, filterValue: any) => any)
+      | undefined;
+    let dateOfBirth: Date;
+    beforeAll(() => {
+      dateOfBirth = new Date('2024-01-02T00:00:00.000Z');
+      person = {
+        name: 'Dan',
+        age: 4,
+        status: 'unemployed',
+        date_of_birth: dateOfBirth,
+        getValue: (id: string) => {
+          return person[id as keyof MRT_RowData]; // Return the corresponding field from the object
+        },
+      };
+      afterInclusiveDateTime = customFilterFunctions.find(
+        (filter) => filter.Name == 'afterInclusiveDateTime'
+      )?.FilterFunction;
+    });
+    it('should correctly exclude record', () => {
+      const recentDate = new Date('2024-05-01T00:00:00.000Z');
+      const result = afterInclusiveDateTime
+        ? afterInclusiveDateTime(person, 'date_of_birth', recentDate)
+        : undefined;
+      expect(result).toBe(false);
+    });
+    it('should correctly include record', () => {
+      const result = afterInclusiveDateTime
+        ? afterInclusiveDateTime(person, 'date_of_birth', dateOfBirth)
+        : undefined;
+      expect(result).toBe(true);
+    });
+  });
+  it('should correctly format filter functions', () => {
+    const testFilterFunctions: customFilterFunctionInterface[] = [
+      {
+        Name: 'filterExclude',
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        FilterFunction(row: MRT_RowData, id: string, filterValue: any): any {
+          return !filterValue.includes(row.getValue(id));
+        },
+        Label: 'Exclude',
+        FilterVariant: 'multi-select',
+      },
+      {
+        Name: 'filterInclude',
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        FilterFunction(row: MRT_RowData, id: string, filterValue: any): any {
+          return filterValue.includes(row.getValue(id));
+        },
+        Label: 'Include',
+        FilterVariant: 'multi-select',
+      },
+    ];
+    const expectedResult: Record<
+      string,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      { (row: MRT_RowData, id: string, filterValue: any): any }
+    > = {
+      filterExclude: testFilterFunctions[0]['FilterFunction'],
+      filterInclude: testFilterFunctions[1]['FilterFunction'],
+    };
+    expect(getCustomFilterFunctions(testFilterFunctions)).toEqual(
+      expectedResult
+    );
+  });
+  it('renders custom filters dropdown correctly', () => {
+    const table = {
+      setFilterValue: (value: any) => {
+        return value;
+      },
+    };
+
+    function onSelectFilterMode(_filterMode: MRT_FilterOption): void {}
+
+    const selectedFilters: ColumnFilterEntries[] = [
+      {
+        filterName: 'between',
+        filterVariant: 'date-range',
+        filterLabel: 'Between',
+      },
+      {
+        filterName: 'equals',
+        filterVariant: 'datetime',
+        filterLabel: 'Equals',
+      },
+    ];
+
+    const expectedResult = [
+      <MenuItem
+        key={0}
+        onClick={() => {
+          onSelectFilterMode(selectedFilters[0]['filterName']);
+          table.setFilterValue(undefined);
+        }}
+      >
+        {selectedFilters[0]['filterLabel']}
+      </MenuItem>,
+      <MenuItem
+        key={1}
+        onClick={() => {
+          onSelectFilterMode(selectedFilters[1]['filterName']);
+          table.setFilterValue(undefined);
+        }}
+      >
+        {selectedFilters[1]['filterLabel']}
+      </MenuItem>,
+    ];
+
+    const renderedResult = filterFunctionsRendering({
+      onSelectFilterMode,
+      selectedFilters,
+      table,
+    });
+
+    const expectedLabels = expectedResult.map((item) => item.props.children);
+    const renderedLabels = renderedResult.map((item) => {
+      return isValidElement(item) ? item.props.children : item;
+    });
+
+    expect(renderedLabels).toEqual(expectedLabels);
+  });
+
+  it('gets filter variant correctly', () => {
+    const testFilterFunctions: customFilterFunctionInterface[] = [
+      {
+        Name: 'filterExclude',
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        FilterFunction(row: MRT_RowData, id: string, filterValue: any): any {
+          return !filterValue.includes(row.getValue(id));
+        },
+        Label: 'Exclude',
+        FilterVariant: 'text',
+      },
+      {
+        Name: 'filterInclude',
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        FilterFunction(row: MRT_RowData, id: string, filterValue: any): any {
+          return filterValue.includes(row.getValue(id));
+        },
+        Label: 'Include',
+        FilterVariant: 'multi-select',
+      },
+    ];
+    const expectedResult = 'multi-select';
+    const actualResult = getFilterVariant('filterInclude', testFilterFunctions);
+    expect(actualResult).toEqual(expectedResult);
+  });
+
+  it('gets filter label correctly', () => {
+    const testFilterFunctions: customFilterFunctionInterface[] = [
+      {
+        Name: 'filterExclude',
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        FilterFunction(row: MRT_RowData, id: string, filterValue: any): any {
+          return !filterValue.includes(row.getValue(id));
+        },
+        Label: 'Exclude',
+        FilterVariant: 'text',
+      },
+      {
+        Name: 'filterInclude',
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        FilterFunction(row: MRT_RowData, id: string, filterValue: any): any {
+          return filterValue.includes(row.getValue(id));
+        },
+        Label: 'Include',
+        FilterVariant: 'multi-select',
+      },
+    ];
+    const expectedResult = 'multi-select';
+    const actualResult = getFilterVariant('filterInclude', testFilterFunctions);
+    expect(actualResult).toEqual(expectedResult);
+  });
+
+  it('correctly removes seconds from date', () => {
+    const inputDate: string = '2024-01-02T13:10:10.000+00:00';
+    const expectedResult: Date = new Date('2024-01-02T13:10:00.000+00:00');
+    const actualResult: Date = removeSecondsFromDate(inputDate);
+    expect(actualResult).toEqual(expectedResult);
+  });
+
+  describe('renders seconds?', () => {
+    it('correctly returns true to render seconds', () => {
+      const filterVariant: filterVariantType = 'datetime-range';
+      const actualResult = renderSeconds(filterVariant);
+      const expectedResult = true;
+      expect(actualResult).toEqual(expectedResult);
+    });
+
+    it('correctly returns false to render seconds', () => {
+      const filterVariant: filterVariantType = 'date';
+      const actualResult = renderSeconds(filterVariant);
+      const expectedResult = false;
+      expect(actualResult).toEqual(expectedResult);
+    });
   });
 });
 

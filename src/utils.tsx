@@ -412,13 +412,12 @@ export type filterVariantType =
   | 'time'
   | 'time-range'
   | undefined;
-interface customFilterFunctionInterface {
+export interface customFilterFunctionInterface {
   Name: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   FilterFunction(row: MRT_RowData, id: string, filterValue: any): any;
   Label: string;
   FilterVariant: filterVariantType;
-  HideSeconds?: boolean;
 }
 export const customFilterFunctions: customFilterFunctionInterface[] = [
   {
@@ -444,25 +443,26 @@ export const customFilterFunctions: customFilterFunctionInterface[] = [
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     FilterFunction(row: MRT_RowData, id: string, filterValue: any): any {
       const rowDate: Date = row.getValue(id);
-      rowDate.setHours(0, 0, 0, 0);
-      return filterValue.getTime() === rowDate.getTime();
+      const adjustedDate: Date = new Date(rowDate);
+      adjustedDate.setHours(0, 0, 0, 0);
+      return filterValue.getTime() === adjustedDate.getTime();
     },
     Label: 'Equals',
     FilterVariant: 'date',
-    HideSeconds: true,
   },
   {
     Name: 'betweenInclusiveDateTime',
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     FilterFunction(row: MRT_RowData, id: string, filterValue: any): any {
       const rowDate: Date = row.getValue(id);
-      const lowerBound = filterValue[0];
-      const upperBound = filterValue[1];
+      const lowerBound: number = filterValue[0] ? filterValue[0].getTime() : 0;
+      const upperBound: number = filterValue[1]
+        ? filterValue[1].getTime()
+        : new Date().getTime();
       return lowerBound <= rowDate.getTime() && upperBound >= rowDate.getTime();
     },
     Label: 'Between',
     FilterVariant: 'datetime-range',
-    HideSeconds: false,
   },
   {
     Name: 'beforeInclusiveDateTime',
@@ -473,7 +473,6 @@ export const customFilterFunctions: customFilterFunctionInterface[] = [
     },
     Label: 'Before',
     FilterVariant: 'datetime',
-    HideSeconds: false,
   },
   {
     Name: 'afterInclusiveDateTime',
@@ -484,11 +483,12 @@ export const customFilterFunctions: customFilterFunctionInterface[] = [
     },
     Label: 'After',
     FilterVariant: 'datetime',
-    HideSeconds: false,
   },
 ];
 
-export function getCustomFilterFunctions(): Record<
+export function getCustomFilterFunctions(
+  customFilterFunctions: customFilterFunctionInterface[]
+): Record<
   string,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   { (row: MRT_RowData, id: string, filterValue: any): any }
@@ -506,54 +506,56 @@ export function getCustomFilterFunctions(): Record<
   }, {});
   return filterFunctionsRecord;
 }
+
+export interface ColumnFilterEntries {
+  filterName: string;
+  filterVariant: filterVariantType;
+  filterLabel: string;
+}
 interface filterFunctionRenderingProps {
   onSelectFilterMode: (filterMode: MRT_FilterOption) => void;
-  selectedFilters: string[];
+  selectedFilters: ColumnFilterEntries[];
+  table: any;
 }
 
 export const filterFunctionsRendering = (
   props: filterFunctionRenderingProps
 ): React.ReactNode[] => {
-  const { onSelectFilterMode, selectedFilters } = props;
+  const { onSelectFilterMode, selectedFilters, table } = props;
   let rendering: React.ReactNode[] = selectedFilters.map((option, index) => {
-    const filter = customFilterFunctions.find(
-      (filter) => filter.Name == option
-    );
-    return filter ? (
-      <MenuItem key={index} onClick={() => onSelectFilterMode(filter.Name)}>
-        {filter.Label}
-      </MenuItem>
-    ) : (
-      <MenuItem key={index} onClick={() => onSelectFilterMode(option)}>
-        {option}
+    return (
+      <MenuItem
+        key={index}
+        onClick={() => {
+          onSelectFilterMode(option.filterName);
+          table.setFilterValue(undefined);
+        }}
+      >
+        {option.filterLabel}
       </MenuItem>
     );
   });
   return rendering;
 };
 
-export function customFiltersLocalization(): Record<string, string> {
-  let filtersLocalizationRecord: Record<string, string> =
-    customFilterFunctions.reduce<Record<string, string>>(
-      (result, currentValue) => {
-        const filterFunctionName = currentValue.Name;
-        const indexString =
-          'filter' +
-          filterFunctionName.charAt(0).toUpperCase() +
-          filterFunctionName.slice(1);
-        result[indexString] = currentValue.Label;
-        return result;
-      },
-      {}
-    );
-  return filtersLocalizationRecord;
-}
-
-export function getFilterVariant(filterFunction: string): filterVariantType {
+export function getFilterVariant(
+  filterFunction: string,
+  customFilterFunctions: customFilterFunctionInterface[]
+): filterVariantType {
   const filterVariant = customFilterFunctions.find(
     (filter) => filter.Name == filterFunction
   )?.FilterVariant;
   return filterVariant;
+}
+
+export function getFilterLabel(
+  filterFunction: string,
+  customFilterFunctions: customFilterFunctionInterface[]
+): string {
+  const filterLabel =
+    customFilterFunctions.find((filter) => filter.Name == filterFunction)
+      ?.Label || filterFunction;
+  return filterLabel;
 }
 
 export function removeSecondsFromDate(date: string): Date {
@@ -562,13 +564,13 @@ export function removeSecondsFromDate(date: string): Date {
   return modifiedDate;
 }
 
-export function renderSeconds(filterFunction: string): boolean {
-  const keepSeconds: boolean | undefined = customFilterFunctions
-    .find((filter) => filter.Name == filterFunction)
-    ?.FilterVariant?.includes('time');
-  return keepSeconds ?? true;
+export function renderSeconds(filterVariant: filterVariantType): boolean {
+  const keepSeconds: boolean = filterVariant
+    ? filterVariant.includes('time')
+    : true;
+  return keepSeconds;
 }
-    
+
 export const checkForDuplicates = (props: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any[];
