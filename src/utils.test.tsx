@@ -1,5 +1,5 @@
-import { Link, MenuItem } from '@mui/material';
-import { screen, waitFor } from '@testing-library/react';
+import { Link } from '@mui/material';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderComponentWithRouterProvider } from './testUtils';
 import {
@@ -8,7 +8,7 @@ import {
   checkForDuplicates,
   customFilterFunctionInterface,
   customFilterFunctions,
-  filterFunctionsRendering,
+  getFilterMenu,
   filterVariantType,
   generateUniqueId,
   generateUniqueName,
@@ -16,12 +16,11 @@ import {
   getCustomFilterFunctions,
   getFilterVariant,
   removeSecondsFromDate,
-  renderSeconds,
+  showSeconds,
   sortDataList,
   trimStringValues,
 } from './utils';
 import { MRT_FilterOption, MRT_RowData } from 'material-react-table';
-import { isValidElement } from 'react';
 
 describe('Utility functions', () => {
   afterEach(() => {
@@ -306,9 +305,8 @@ describe('Utility functions', () => {
 describe('Custom Filter Functions', () => {
   describe('filterExclude', () => {
     let person: MRT_RowData;
-    let filterExclude:
-      | ((row: MRT_RowData, id: string, filterValue: any) => any)
-      | undefined;
+    let filterExclude: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ((row: MRT_RowData, id: string, filterValue: any) => any) | undefined;
     beforeAll(() => {
       person = {
         name: 'Dan',
@@ -338,9 +336,8 @@ describe('Custom Filter Functions', () => {
 
   describe('filterInclude', () => {
     let person: MRT_RowData;
-    let filterInclude:
-      | ((row: MRT_RowData, id: string, filterValue: any) => any)
-      | undefined;
+    let filterInclude: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ((row: MRT_RowData, id: string, filterValue: any) => any) | undefined;
     beforeAll(() => {
       person = {
         name: 'Dan',
@@ -370,9 +367,8 @@ describe('Custom Filter Functions', () => {
 
   describe('equalsDate', () => {
     let person: MRT_RowData;
-    let equalsDate:
-      | ((row: MRT_RowData, id: string, filterValue: any) => any)
-      | undefined;
+    let equalsDate: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ((row: MRT_RowData, id: string, filterValue: any) => any) | undefined;
     let dateOfBirth: Date;
     beforeAll(() => {
       dateOfBirth = new Date('2024-01-02T00:00:00.000Z');
@@ -406,9 +402,8 @@ describe('Custom Filter Functions', () => {
 
   describe('betweenInclusiveDateTime', () => {
     let person: MRT_RowData;
-    let betweenInclusiveDateTime:
-      | ((row: MRT_RowData, id: string, filterValue: any) => any)
-      | undefined;
+    let betweenInclusiveDateTime: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ((row: MRT_RowData, id: string, filterValue: any) => any) | undefined;
     let dateOfBirth: Date;
     beforeAll(() => {
       dateOfBirth = new Date('2024-01-02T00:00:00.000Z');
@@ -474,9 +469,8 @@ describe('Custom Filter Functions', () => {
 
   describe('beforeInclusiveDateTime', () => {
     let person: MRT_RowData;
-    let beforeInclusiveDateTime:
-      | ((row: MRT_RowData, id: string, filterValue: any) => any)
-      | undefined;
+    let beforeInclusiveDateTime: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ((row: MRT_RowData, id: string, filterValue: any) => any) | undefined;
     let dateOfBirth: Date;
     beforeAll(() => {
       dateOfBirth = new Date('2024-01-02T00:00:00.000Z');
@@ -510,9 +504,8 @@ describe('Custom Filter Functions', () => {
 
   describe('afterInclusiveDateTime', () => {
     let person: MRT_RowData;
-    let afterInclusiveDateTime:
-      | ((row: MRT_RowData, id: string, filterValue: any) => any)
-      | undefined;
+    let afterInclusiveDateTime: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ((row: MRT_RowData, id: string, filterValue: any) => any) | undefined;
     let dateOfBirth: Date;
     beforeAll(() => {
       dateOfBirth = new Date('2024-01-02T00:00:00.000Z');
@@ -578,7 +571,7 @@ describe('Custom Filter Functions', () => {
   });
   it('renders custom filters dropdown correctly', () => {
     const table = {
-      setFilterValue: (value: any) => {
+      setFilterValue: (value: string | undefined) => {
         return value;
       },
     };
@@ -598,39 +591,16 @@ describe('Custom Filter Functions', () => {
       },
     ];
 
-    const expectedResult = [
-      <MenuItem
-        key={0}
-        onClick={() => {
-          onSelectFilterMode(selectedFilters[0]['filterName']);
-          table.setFilterValue(undefined);
-        }}
-      >
-        {selectedFilters[0]['filterLabel']}
-      </MenuItem>,
-      <MenuItem
-        key={1}
-        onClick={() => {
-          onSelectFilterMode(selectedFilters[1]['filterName']);
-          table.setFilterValue(undefined);
-        }}
-      >
-        {selectedFilters[1]['filterLabel']}
-      </MenuItem>,
-    ];
+    render(getFilterMenu({ onSelectFilterMode, selectedFilters, table }));
 
-    const renderedResult = filterFunctionsRendering({
-      onSelectFilterMode,
-      selectedFilters,
-      table,
+    const expectedLabels = selectedFilters.map((filter) => filter.filterLabel);
+    const renderedLabels = expectedLabels.map((label) =>
+      screen.getByText(label)
+    );
+
+    renderedLabels.forEach((label, index) => {
+      expect(label.textContent).toBe(expectedLabels[index]);
     });
-
-    const expectedLabels = expectedResult.map((item) => item.props.children);
-    const renderedLabels = renderedResult.map((item) => {
-      return isValidElement(item) ? item.props.children : item;
-    });
-
-    expect(renderedLabels).toEqual(expectedLabels);
   });
 
   it('gets filter variant correctly', () => {
@@ -695,14 +665,14 @@ describe('Custom Filter Functions', () => {
   describe('renders seconds?', () => {
     it('correctly returns true to render seconds', () => {
       const filterVariant: filterVariantType = 'datetime-range';
-      const actualResult = renderSeconds(filterVariant);
+      const actualResult = showSeconds(filterVariant);
       const expectedResult = true;
       expect(actualResult).toEqual(expectedResult);
     });
 
     it('correctly returns false to render seconds', () => {
       const filterVariant: filterVariantType = 'date';
-      const actualResult = renderSeconds(filterVariant);
+      const actualResult = showSeconds(filterVariant);
       const expectedResult = false;
       expect(actualResult).toEqual(expectedResult);
     });

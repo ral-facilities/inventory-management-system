@@ -515,10 +515,11 @@ export interface ColumnFilterEntries {
 interface filterFunctionRenderingProps {
   onSelectFilterMode: (filterMode: MRT_FilterOption) => void;
   selectedFilters: ColumnFilterEntries[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   table: any;
 }
 
-export const filterFunctionsRendering = (
+export const getFilterMenu = (
   props: filterFunctionRenderingProps
 ): React.ReactNode[] => {
   const { onSelectFilterMode, selectedFilters, table } = props;
@@ -564,7 +565,7 @@ export function removeSecondsFromDate(date: string): Date {
   return modifiedDate;
 }
 
-export function renderSeconds(filterVariant: filterVariantType): boolean {
+export function showSeconds(filterVariant: filterVariantType): boolean {
   const keepSeconds: boolean = filterVariant
     ? filterVariant.includes('time')
     : true;

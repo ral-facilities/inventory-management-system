@@ -25,9 +25,9 @@ import {
   TableBodyCellOverFlowTip,
   customFilterFunctions,
   TableCellOverFlowTipProps,
-  renderSeconds,
+  showSeconds,
   displayTableRowCountText,
-  filterFunctionsRendering,
+  getFilterMenu,
   formatDateTimeStrings,
   getPageHeightCalc,
   getCustomFilterFunctions,
@@ -59,52 +59,56 @@ function UsageStatuses() {
     },
   });
 
-  const filterFunctionStorage: Record<string, ColumnFilterEntries[]> = {
-    modified_time: [
-      {
-        filterName: 'betweenInclusive',
-        filterVariant: 'datetime-range',
-        filterLabel: 'Between',
-      },
-      {
-        filterName: 'equalsDate',
-        filterVariant: getFilterVariant('equalsDate', customFilterFunctions),
-        filterLabel: getFilterLabel('equalsDate', customFilterFunctions),
-      },
-      {
-        filterName: 'beforeInclusiveDateTime',
-        filterVariant: 'datetime',
-        filterLabel: 'Before',
-      },
-      {
-        filterName: 'greaterThanOrEqualTo',
-        filterVariant: 'datetime',
-        filterLabel: 'After',
-      },
-    ],
-    created_time: [
-      {
-        filterName: 'betweenInclusive',
-        filterVariant: 'datetime-range',
-        filterLabel: 'Between',
-      },
-      {
-        filterName: 'equalsDate',
-        filterVariant: getFilterVariant('equalsDate', customFilterFunctions),
-        filterLabel: getFilterLabel('equalsDate', customFilterFunctions),
-      },
-      {
-        filterName: 'beforeInclusiveDateTime',
-        filterVariant: 'datetime',
-        filterLabel: 'Before',
-      },
-      {
-        filterName: 'greaterThanOrEqualTo',
-        filterVariant: 'datetime',
-        filterLabel: 'After',
-      },
-    ],
-  };
+  const filterFunctionStorage = React.useMemo<
+    Record<string, ColumnFilterEntries[]>
+  >(() => {
+    return {
+      modified_time: [
+        {
+          filterName: 'betweenInclusive',
+          filterVariant: 'datetime-range',
+          filterLabel: 'Between',
+        },
+        {
+          filterName: 'equalsDate',
+          filterVariant: getFilterVariant('equalsDate', customFilterFunctions),
+          filterLabel: getFilterLabel('equalsDate', customFilterFunctions),
+        },
+        {
+          filterName: 'beforeInclusiveDateTime',
+          filterVariant: 'datetime',
+          filterLabel: 'Before',
+        },
+        {
+          filterName: 'greaterThanOrEqualTo',
+          filterVariant: 'datetime',
+          filterLabel: 'After',
+        },
+      ],
+      created_time: [
+        {
+          filterName: 'betweenInclusive',
+          filterVariant: 'datetime-range',
+          filterLabel: 'Between',
+        },
+        {
+          filterName: 'equalsDate',
+          filterVariant: getFilterVariant('equalsDate', customFilterFunctions),
+          filterLabel: getFilterLabel('equalsDate', customFilterFunctions),
+        },
+        {
+          filterName: 'beforeInclusiveDateTime',
+          filterVariant: 'datetime',
+          filterLabel: 'Before',
+        },
+        {
+          filterName: 'greaterThanOrEqualTo',
+          filterVariant: 'datetime',
+          filterLabel: 'After',
+        },
+      ],
+    };
+  }, []);
 
   const customFiltersLocalization: Record<string, string> = Object.keys(
     filterFunctionStorage
@@ -147,7 +151,7 @@ function UsageStatuses() {
         filterFn: filterFunctionState['modified_time']['filterName'],
         id: 'modified_time',
         renderColumnFilterModeMenuItems: ({ onSelectFilterMode, table }) =>
-          filterFunctionsRendering({
+          getFilterMenu({
             onSelectFilterMode: onSelectFilterMode,
             selectedFilters: filterFunctionStorage['modified_time'],
             table: table.getColumn('modified_time'),
@@ -157,7 +161,7 @@ function UsageStatuses() {
         Cell: ({ row }) =>
           formatDateTimeStrings(
             row.original.modified_time,
-            renderSeconds(filterFunctionState['modified_time']['filterVariant'])
+            showSeconds(filterFunctionState['modified_time']['filterVariant'])
           ),
       },
       {
@@ -167,7 +171,7 @@ function UsageStatuses() {
         filterVariant: filterFunctionState['created_time']['filterVariant'],
         filterFn: filterFunctionState['created_time']['filterName'],
         renderColumnFilterModeMenuItems: ({ onSelectFilterMode, table }) => {
-          return filterFunctionsRendering({
+          return getFilterMenu({
             onSelectFilterMode: onSelectFilterMode,
             selectedFilters: filterFunctionStorage['created_time'],
             table: table.getColumn('created_time'),
@@ -179,11 +183,11 @@ function UsageStatuses() {
         Cell: ({ row }) =>
           formatDateTimeStrings(
             row.original.created_time,
-            renderSeconds(filterFunctionState['created_time']['filterVariant'])
+            showSeconds(filterFunctionState['created_time']['filterVariant'])
           ),
       },
     ];
-  }, [filterFunctionState]);
+  }, [filterFunctionState, filterFunctionStorage]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const currentFilterMode: Record<string, any> = {};
