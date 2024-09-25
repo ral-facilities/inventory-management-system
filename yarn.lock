@@ -4993,7 +4993,7 @@ __metadata:
     jsdom: "npm:25.0.0"
     loglevel: "npm:^1.9.1"
     lz-string: "npm:^1.5.0"
-    material-react-table: "npm:^2.13.0"
+    material-react-table: "npm:^3.0.0"
     msw: "npm:2.4.9"
     prettier: "npm:3.3.3"
     react: "npm:^18.3.1"
@@ -5845,23 +5845,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"material-react-table@npm:^2.13.0":
-  version: 2.13.3
-  resolution: "material-react-table@npm:2.13.3"
+"material-react-table@npm:^3.0.0":
+  version: 3.0.1
+  resolution: "material-react-table@npm:3.0.1"
   dependencies:
     "@tanstack/match-sorter-utils": "npm:8.19.4"
     "@tanstack/react-table": "npm:8.20.5"
     "@tanstack/react-virtual": "npm:3.10.6"
     highlight-words: "npm:1.2.2"
   peerDependencies:
-    "@emotion/react": ">=11.11"
-    "@emotion/styled": ">=11.11"
-    "@mui/icons-material": ">=5.11"
-    "@mui/material": ">=5.13"
-    "@mui/x-date-pickers": ">=6.15.0"
-    react: ">=17.0"
-    react-dom: ">=17.0"
-  checksum: 10c0/c00a3521767e879d541ef12c425048d5bd5368ff2f30883558be49630c908a878347768397c9a902651f005f2d10a06d1e8ff6d86851df4a8cbe750c4847fa5d
+    "@emotion/react": ">=11.13"
+    "@emotion/styled": ">=11.13"
+    "@mui/icons-material": ">=6"
+    "@mui/material": ">=6"
+    "@mui/x-date-pickers": ">=7.15"
+    react: ">=18.0"
+    react-dom: ">=18.0"
+  checksum: 10c0/aa9edafec20b24555b1a00c090ecae545af2768ce7c747e7dc626e3491512d2ab9bcf5b0c11725cb8bdba577bf4c8ef8720e61c3071114714e18ac6e65b017cf
   languageName: node
   linkType: hard
 
