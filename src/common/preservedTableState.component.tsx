@@ -2,6 +2,7 @@ import { ColumnFilter } from '@tanstack/react-table';
 import LZString from 'lz-string';
 import {
   MRT_ColumnFiltersState,
+  MRT_ColumnFilterFnsState,
   MRT_ColumnOrderState,
   MRT_GroupingState,
   MRT_PaginationState,
@@ -16,6 +17,7 @@ import { useLocation, useSearchParams } from 'react-router-dom';
 // State as will be stored after parsing from search params
 interface State {
   cF: MRT_ColumnFiltersState;
+  cFn: MRT_ColumnFilterFnsState;
   srt: MRT_SortingState;
   cVis: MRT_VisibilityState;
   gFil: string | undefined; // Global filter
@@ -247,6 +249,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
   const defaultState: State = useMemo(
     () => ({
       cF: [],
+      cFn: props?.initialState?.columnFilterFns || {},
       srt: [],
       // Use given default or {}
       cVis: props?.initialState?.columnVisibility || {},
@@ -262,6 +265,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       props?.initialState?.columnVisibility,
+      props?.initialState?.columnFilterFns,
       props?.initialState?.grouping,
       props?.initialState?.pagination,
       firstUpdate.current?.cO,
@@ -274,6 +278,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
   const state: State = useMemo(
     () => ({
       cF: parsedState.cF || defaultState.cF,
+      cFn: parsedState.cFn || defaultState.cFn,
       srt: parsedState.srt || defaultState.srt,
       cVis: parsedState.cVis || defaultState.cVis,
       gFil: parsedState.gFil || defaultState.gFil,
@@ -285,6 +290,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
     }),
     [
       defaultState.cF,
+      defaultState.cFn,
       defaultState.cO,
       defaultState.cVis,
       defaultState.g,
@@ -292,6 +298,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       defaultState.p,
       defaultState.srt,
       parsedState.cF,
+      parsedState.cFn,
       parsedState.cO,
       parsedState.cVis,
       parsedState.g,
@@ -357,6 +364,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
             } else if (filter.value) isDefaultState = false;
           }
         }
+        console.log(`new check ${JSON.stringify(newValue)}`);
 
         return {
           ...prevState,
@@ -365,6 +373,26 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       });
     },
     [defaultState.cF, updateSearchParams]
+  );
+
+  const setColumnFilterFns = useCallback(
+    (updaterOrValue: Updater<MRT_ColumnFilterFnsState>) => {
+      console.log(`BABABOOEY`);
+      updateSearchParams((prevState: StatePartial) => {
+        console.log(`LALALLALALA`);
+        const newValue = getValueFromUpdater(
+          updaterOrValue,
+          prevState.cFn || defaultState.cFn
+        );
+        console.log(`ARGGGH ${JSON.stringify(defaultState.cFn)}`);
+        console.log(`NEW VALUE: ${JSON.stringify(newValue)}`);
+        return {
+          ...prevState,
+          cFn: newValue === undefined ? {} : newValue,
+        };
+      });
+    },
+    [defaultState.cFn, updateSearchParams]
   );
 
   const setSorting = useCallback(
@@ -511,9 +539,23 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
     [defaultState.p, props?.paginationOnly, state.p, updateSearchParams]
   );
 
+  console.log(
+    `STATE ${JSON.stringify({
+      columnFilters: state.cF,
+      columnFilterFns: state.cFn,
+      sorting: state.srt,
+      columnVisibility: state.cVis,
+      globalFilter: state.gFil,
+      grouping: state.g,
+      columnOrder: state.cO,
+      pagination: state.p,
+    })}`
+  );
+
   return {
     preservedState: {
       columnFilters: state.cF,
+      columnFilterFns: state.cFn,
       sorting: state.srt,
       columnVisibility: state.cVis,
       globalFilter: state.gFil,
@@ -523,6 +565,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
     },
     onPreservedStatesChange: {
       onColumnFiltersChange: setColumnFilters,
+      onColumnFilterFnsChange: setColumnFilterFns,
       onSortingChange: setSorting,
       onColumnVisibilityChange: setColumnVisibility,
       onGlobalFilterChange: setGlobalFilter,

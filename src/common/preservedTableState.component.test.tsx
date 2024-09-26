@@ -37,6 +37,7 @@ describe('Preserved table state functions', () => {
       expect(JSON.stringify(result.current.preservedState)).toBe(
         JSON.stringify({
           columnFilters: [],
+          columnFilterFns: {},
           sorting: [],
           columnVisibility: {},
           globalFilter: undefined,
@@ -59,6 +60,7 @@ describe('Preserved table state functions', () => {
       expect(JSON.stringify(result.current.preservedState)).toBe(
         JSON.stringify({
           columnFilters: [],
+          columnFilterFns: {},
           sorting: [],
           columnVisibility: {},
           globalFilter: undefined,
@@ -88,6 +90,7 @@ describe('Preserved table state functions', () => {
       expect(JSON.stringify(result.current.preservedState)).toBe(
         JSON.stringify({
           columnFilters: [],
+          columnFilterFns: {},
           sorting: [],
           columnVisibility: {},
           globalFilter: undefined,
@@ -120,6 +123,7 @@ describe('Preserved table state functions', () => {
       expect(JSON.stringify(result.current.preservedState)).toBe(
         JSON.stringify({
           columnFilters: [],
+          columnFilterFns: {},
           sorting: [],
           columnVisibility: { created_time: false },
           globalFilter: undefined,
@@ -207,6 +211,7 @@ describe('Preserved table state functions', () => {
               value: [null, '2024-06-11T23:00:00.000Z'],
             },
           ],
+          columnFilterFns: {},
           sorting: [{ id: 'catalogueItem.name', desc: true }],
           columnVisibility: {
             'catalogueItem.created_time': false,
@@ -238,6 +243,7 @@ describe('Preserved table state functions', () => {
       expect(JSON.stringify(result.current.preservedState)).toBe(
         JSON.stringify({
           columnFilters: [],
+          columnFilterFns: {},
           sorting: [],
           columnVisibility: {},
           globalFilter: undefined,
@@ -267,6 +273,8 @@ describe('Preserved table state functions', () => {
                 value: [null, '2024-06-11T23:00:00.000Z'],
               },
             ],
+            //should actually have values in practice, but not working on this table in this PR.
+            columnFilterFns: {},
             sorting: [{ id: 'catalogueItem.name', desc: true }],
             columnVisibility: {
               'catalogueItem.created_time': false,
@@ -311,6 +319,7 @@ describe('Preserved table state functions', () => {
               value: [null, '2024-06-11T23:00:00.000Z'],
             },
           ],
+          columnFilterFns: {},
           sorting: [{ id: 'catalogueItem.name', desc: true }],
           columnVisibility: {
             'catalogueItem.created_time': false,
@@ -342,6 +351,7 @@ describe('Preserved table state functions', () => {
       expect(JSON.stringify(result.current.preservedState)).toBe(
         JSON.stringify({
           columnFilters: [],
+          columnFilterFns: {},
           sorting: [],
           columnVisibility: {},
           globalFilter: undefined,

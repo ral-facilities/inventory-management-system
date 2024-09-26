@@ -1,6 +1,5 @@
 import {
   Link as MuiLink,
-  MenuItem,
   SxProps,
   TableCell,
   Theme,
@@ -12,6 +11,8 @@ import { format, parseISO } from 'date-fns';
 import {
   MRT_Cell,
   MRT_Column,
+  MRT_ColumnDef,
+  MRT_ColumnFilterFnsState,
   MRT_FilterOption,
   MRT_Header,
   MRT_Row,
@@ -397,179 +398,26 @@ export const displayTableRowCountText = <TData extends MRT_RowData>(
   return <Typography sx={{ ...sx }}>{tableRowCountText}</Typography>;
 };
 
-export type filterVariantType =
-  | 'multi-select'
-  | 'autocomplete'
-  | 'checkbox'
-  | 'date'
-  | 'date-range'
-  | 'datetime'
-  | 'datetime-range'
-  | 'range'
-  | 'range-slider'
-  | 'select'
-  | 'text'
-  | 'time'
-  | 'time-range'
-  | undefined;
-export interface customFilterFunctionInterface {
-  Name: string;
+export const getInitialColumnFilterFnState = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  FilterFunction(row: MRT_RowData, id: string, filterValue: any): any;
-  Label: string;
-  FilterVariant: filterVariantType;
-}
-export const customFilterFunctions: customFilterFunctionInterface[] = [
-  {
-    Name: 'filterExclude',
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    FilterFunction(row: MRT_RowData, id: string, filterValue: any): any {
-      return !filterValue.includes(row.getValue(id));
+  columns: MRT_ColumnDef<any>[]
+): MRT_ColumnFilterFnsState => {
+  const initialState = columns.reduce<MRT_ColumnFilterFnsState>(
+    (result, column) => {
+      if (column.id) {
+        result[column.id] = column.filterFn as MRT_FilterOption;
+      }
+      return result;
     },
-    Label: 'Exclude',
-    FilterVariant: 'multi-select',
-  },
-  {
-    Name: 'filterInclude',
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    FilterFunction(row: MRT_RowData, id: string, filterValue: any): any {
-      return filterValue.includes(row.getValue(id));
-    },
-    Label: 'Include',
-    FilterVariant: 'multi-select',
-  },
-  {
-    Name: 'equalsDate',
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    FilterFunction(row: MRT_RowData, id: string, filterValue: any): any {
-      const rowDate: Date = row.getValue(id);
-      const adjustedDate: Date = new Date(rowDate);
-      adjustedDate.setHours(0, 0, 0, 0);
-      return filterValue.getTime() === adjustedDate.getTime();
-    },
-    Label: 'Equals',
-    FilterVariant: 'date',
-  },
-  {
-    Name: 'betweenInclusiveDateTime',
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    FilterFunction(row: MRT_RowData, id: string, filterValue: any): any {
-      const rowDate: Date = row.getValue(id);
-      const lowerBound: number = filterValue[0] ? filterValue[0].getTime() : 0;
-      const upperBound: number = filterValue[1]
-        ? filterValue[1].getTime()
-        : new Date().getTime();
-      return lowerBound <= rowDate.getTime() && upperBound >= rowDate.getTime();
-    },
-    Label: 'Between',
-    FilterVariant: 'datetime-range',
-  },
-  {
-    Name: 'beforeInclusiveDateTime',
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    FilterFunction(row: MRT_RowData, id: string, filterValue: any): any {
-      const rowDate: Date = row.getValue(id);
-      return filterValue >= rowDate.getTime();
-    },
-    Label: 'Before',
-    FilterVariant: 'datetime',
-  },
-  {
-    Name: 'afterInclusiveDateTime',
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    FilterFunction(row: MRT_RowData, id: string, filterValue: any): any {
-      const rowDate: Date = row.getValue(id);
-      return filterValue <= rowDate.getTime();
-    },
-    Label: 'After',
-    FilterVariant: 'datetime',
-  },
-];
-
-export function getCustomFilterFunctions(
-  customFilterFunctions: customFilterFunctionInterface[]
-): Record<
-  string,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  { (row: MRT_RowData, id: string, filterValue: any): any }
-> {
-  let filterFunctionsRecord: Record<
-    string,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    { (row: MRT_RowData, id: string, filterValue: any): any }
-  > = customFilterFunctions.reduce<
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    Record<string, { (row: MRT_RowData, id: string, filterValue: any): any }>
-  >((result, currentValue) => {
-    result[currentValue.Name] = currentValue.FilterFunction;
-    return result;
-  }, {});
-  return filterFunctionsRecord;
-}
-
-export interface ColumnFilterEntries {
-  filterName: string;
-  filterVariant: filterVariantType;
-  filterLabel: string;
-}
-interface filterFunctionRenderingProps {
-  onSelectFilterMode: (filterMode: MRT_FilterOption) => void;
-  selectedFilters: ColumnFilterEntries[];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  table: any;
-}
-
-export const getFilterMenu = (
-  props: filterFunctionRenderingProps
-): React.ReactNode[] => {
-  const { onSelectFilterMode, selectedFilters, table } = props;
-  let rendering: React.ReactNode[] = selectedFilters.map((option, index) => {
-    return (
-      <MenuItem
-        key={index}
-        onClick={() => {
-          onSelectFilterMode(option.filterName);
-          table.setFilterValue(undefined);
-        }}
-      >
-        {option.filterLabel}
-      </MenuItem>
-    );
-  });
-  return rendering;
+    {}
+  );
+  return initialState;
 };
-
-export function getFilterVariant(
-  filterFunction: string,
-  customFilterFunctions: customFilterFunctionInterface[]
-): filterVariantType {
-  const filterVariant = customFilterFunctions.find(
-    (filter) => filter.Name == filterFunction
-  )?.FilterVariant;
-  return filterVariant;
-}
-
-export function getFilterLabel(
-  filterFunction: string,
-  customFilterFunctions: customFilterFunctionInterface[]
-): string {
-  const filterLabel =
-    customFilterFunctions.find((filter) => filter.Name == filterFunction)
-      ?.Label || filterFunction;
-  return filterLabel;
-}
 
 export function removeSecondsFromDate(date: string): Date {
   const modifiedDate = new Date(date);
   modifiedDate.setSeconds(0, 0);
   return modifiedDate;
-}
-
-export function showSeconds(filterVariant: filterVariantType): boolean {
-  const keepSeconds: boolean = filterVariant
-    ? filterVariant.includes('time')
-    : true;
-  return keepSeconds;
 }
 
 export const checkForDuplicates = (props: {
