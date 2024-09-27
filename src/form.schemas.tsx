@@ -3,14 +3,13 @@ import {
   CatalogueCategoryPropertyType,
   SystemImportanceType,
 } from './api/api.types';
-import {
-  checkForDuplicates,
-  datePickerMaxDate,
-  datePickerMinDate,
-  invalidDateFormatMessage,
-} from './utils';
+import { checkForDuplicates } from './utils';
 
 export type RequestType = 'post' | 'patch';
+
+export const DATE_PICKER_MIN_DATE = new Date('1900-01-01');
+export const DATE_PICKER_MAX_DATE = new Date('2100-01-01');
+export const INVALID_DATE_FORMAT_MESSAGE = 'Date format: dd/MM/yyyy';
 
 interface BaseZodSchemaProps {
   errorMessage?: string;
@@ -530,9 +529,9 @@ export const ItemDetailsStepSchema = (requestType: RequestType) => {
     }),
     warranty_end_date: OptionalOrNullableDateSchema({
       requestType: requestType,
-      maxDate: datePickerMaxDate,
-      minDate: datePickerMinDate,
-      dateFormatErrorMessage: invalidDateFormatMessage,
+      maxDate: DATE_PICKER_MAX_DATE,
+      minDate: DATE_PICKER_MIN_DATE,
+      dateFormatErrorMessage: INVALID_DATE_FORMAT_MESSAGE,
     }),
     asset_number: OptionalOrNullableStringSchema({ requestType }),
     serial_number: z
@@ -598,9 +597,9 @@ export const ItemDetailsStepSchema = (requestType: RequestType) => {
       }),
     delivered_date: OptionalOrNullableDateSchema({
       requestType: requestType,
-      maxDate: datePickerMaxDate,
-      minDate: datePickerMinDate,
-      dateFormatErrorMessage: invalidDateFormatMessage,
+      maxDate: DATE_PICKER_MAX_DATE,
+      minDate: DATE_PICKER_MIN_DATE,
+      dateFormatErrorMessage: INVALID_DATE_FORMAT_MESSAGE,
     }),
     notes: OptionalOrNullableStringSchema({ requestType }),
   });

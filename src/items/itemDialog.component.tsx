@@ -46,6 +46,9 @@ import {
   convertToPropertyValueList,
 } from '../catalogue/items/catalogueItemsDialog.component';
 import {
+  DATE_PICKER_MAX_DATE,
+  DATE_PICKER_MIN_DATE,
+  INVALID_DATE_FORMAT_MESSAGE,
   ItemDetailsStepSchema,
   PropertiesStepSchema,
   RequestType,
@@ -53,12 +56,6 @@ import {
 import handleIMS_APIError from '../handleIMS_APIError';
 import handleTransferState from '../handleTransferState';
 import { SystemsTableView } from '../systems/systemsTableView.component';
-import {
-  datePickerMaxDate,
-  datePickerMinDate,
-  invalidDateFormatMessage,
-  trimStringValues,
-} from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 
 function toItemDetailsStep(item: Item | undefined): ItemDetailsStep {
@@ -122,7 +119,7 @@ const dateErrorMessageHandler = (props: {
   const { minDate, maxDate, error } = props;
   switch (error) {
     case 'invalidDate':
-      return invalidDateFormatMessage;
+      return INVALID_DATE_FORMAT_MESSAGE;
     case 'minDate':
       return `Date cannot be earlier than ${minDate.toLocaleDateString()}.`;
     case 'maxDate':
@@ -375,7 +372,7 @@ function ItemDialog(props: ItemDialogProps) {
             isCatalogueItemPropertiesUpdated ||
             isSystemIdUpdated)
         ) {
-          editItem({ id: selectedItem.id, item: trimStringValues(item) })
+          editItem({ id: selectedItem.id, item: item })
             .then(() => handleClose())
             .catch((error: AxiosError) => {
               handleIMS_APIError(error);
@@ -638,8 +635,8 @@ function ItemDialog(props: ItemDialogProps) {
                         ? new Date(field.value)
                         : null
                     }
-                    maxDate={datePickerMaxDate}
-                    minDate={datePickerMinDate}
+                    maxDate={DATE_PICKER_MAX_DATE}
+                    minDate={DATE_PICKER_MIN_DATE}
                     onChange={(value) => {
                       if (value && !isNaN(value.getTime())) {
                         // If the date is valid, convert it to ISO string
@@ -664,8 +661,8 @@ function ItemDialog(props: ItemDialogProps) {
                     onError={(error) => {
                       const errorMessage = dateErrorMessageHandler({
                         error,
-                        minDate: datePickerMinDate,
-                        maxDate: datePickerMaxDate,
+                        minDate: DATE_PICKER_MIN_DATE,
+                        maxDate: DATE_PICKER_MAX_DATE,
                       });
                       if (errorMessage !== '') {
                         setErrorDetailsStep('warranty_end_date', {
@@ -692,8 +689,8 @@ function ItemDialog(props: ItemDialogProps) {
                         ? new Date(field.value)
                         : null
                     }
-                    maxDate={datePickerMaxDate}
-                    minDate={datePickerMinDate}
+                    maxDate={DATE_PICKER_MAX_DATE}
+                    minDate={DATE_PICKER_MIN_DATE}
                     onChange={(value) => {
                       if (value && !isNaN(value.getTime())) {
                         // If the date is valid, convert it to ISO string
@@ -715,8 +712,8 @@ function ItemDialog(props: ItemDialogProps) {
                     onError={(error) => {
                       const errorMessage = dateErrorMessageHandler({
                         error,
-                        minDate: datePickerMinDate,
-                        maxDate: datePickerMaxDate,
+                        minDate: DATE_PICKER_MIN_DATE,
+                        maxDate: DATE_PICKER_MAX_DATE,
                       });
                       if (errorMessage !== '') {
                         setErrorDetailsStep('delivered_date', {
