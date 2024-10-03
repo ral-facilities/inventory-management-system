@@ -87,16 +87,24 @@ function UsageStatuses() {
     ];
   }, []);
 
+  const initialColumnFilterFnState = React.useMemo(() => {
+    return getInitialColumnFilterFnState(columns);
+  }, [columns]);
+
   const noResultsTxt =
     'No results found: Try adding a Usage Status by using the Add Usage Status button';
 
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
       pagination: { pageSize: 15, pageIndex: 0 },
-      columnFilterFns: getInitialColumnFilterFnState(columns),
+      columnFilterFns: initialColumnFilterFnState,
     },
     storeInUrl: true,
   });
+
+  console.log(
+    `INITIAL STATE ${JSON.stringify(getInitialColumnFilterFnState(columns))}`
+  );
 
   const table = useMaterialReactTable({
     columns: columns,

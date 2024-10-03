@@ -25,6 +25,7 @@ import {
   TableCellOverFlowTipProps,
   displayTableRowCountText,
   formatDateTimeStrings,
+  getInitialColumnFilterFnState,
   getPageHeightCalc,
   removeSecondsFromDate,
 } from '../../utils';
@@ -82,6 +83,7 @@ function Units() {
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
       pagination: { pageSize: 15, pageIndex: 0 },
+      columnFilterFns: getInitialColumnFilterFnState(columns),
     },
     storeInUrl: true,
   });

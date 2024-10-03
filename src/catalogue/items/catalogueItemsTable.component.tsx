@@ -649,6 +649,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     enableStickyHeader: true,
     enableDensityToggle: false,
     enableRowSelection: true,
+    enableColumnFilterModes: true,
     enableHiding: !dense,
     enableTopToolbar: true,
     enableMultiRowSelection: !dense,

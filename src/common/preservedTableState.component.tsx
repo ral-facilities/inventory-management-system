@@ -195,6 +195,8 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
     getParsedState(unparsedState)
   );
 
+  console.log(`PARSED STATE ${JSON.stringify(parsedState)}`);
+
   // Update the search params only if necessary
   useEffect(() => {
     if (props?.storeInUrl) {
@@ -272,6 +274,8 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       firstUpdate.current?.p,
     ]
   );
+
+  console.log(`DEFAULT STATE ${JSON.stringify(defaultState)}`);
 
   // Convert the state stored into the url to one that can be used
   // (apply any default values here)
@@ -364,7 +368,6 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
             } else if (filter.value) isDefaultState = false;
           }
         }
-        console.log(`new check ${JSON.stringify(newValue)}`);
 
         return {
           ...prevState,
@@ -377,18 +380,17 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
 
   const setColumnFilterFns = useCallback(
     (updaterOrValue: Updater<MRT_ColumnFilterFnsState>) => {
-      console.log(`BABABOOEY`);
       updateSearchParams((prevState: StatePartial) => {
-        console.log(`LALALLALALA`);
         const newValue = getValueFromUpdater(
           updaterOrValue,
           prevState.cFn || defaultState.cFn
         );
-        console.log(`ARGGGH ${JSON.stringify(defaultState.cFn)}`);
-        console.log(`NEW VALUE: ${JSON.stringify(newValue)}`);
+        const initialValue = defaultState.cFn;
+        const isDefaultState =
+          JSON.stringify(initialValue) === JSON.stringify(newValue);
         return {
           ...prevState,
-          cFn: newValue === undefined ? {} : newValue,
+          cFn: isDefaultState ? undefined : newValue,
         };
       });
     },
@@ -540,7 +542,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
   );
 
   console.log(
-    `STATE ${JSON.stringify({
+    `PRESERVED STATE ${JSON.stringify({
       columnFilters: state.cF,
       columnFilterFns: state.cFn,
       sorting: state.srt,
