@@ -61,6 +61,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
         accessorFn: (row) => removeSecondsFromDate(row.modified_time),
         id: 'modified_time',
         filterVariant: 'datetime-range',
+        filterFn: 'betweenInclusive',
         size: 567.5,
         enableGrouping: false,
         Cell: ({ row }) =>

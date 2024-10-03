@@ -195,8 +195,6 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
     getParsedState(unparsedState)
   );
 
-  console.log(`PARSED STATE ${JSON.stringify(parsedState)}`);
-
   // Update the search params only if necessary
   useEffect(() => {
     if (props?.storeInUrl) {
@@ -274,8 +272,6 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       firstUpdate.current?.p,
     ]
   );
-
-  console.log(`DEFAULT STATE ${JSON.stringify(defaultState)}`);
 
   // Convert the state stored into the url to one that can be used
   // (apply any default values here)
@@ -539,19 +535,6 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       });
     },
     [defaultState.p, props?.paginationOnly, state.p, updateSearchParams]
-  );
-
-  console.log(
-    `PRESERVED STATE ${JSON.stringify({
-      columnFilters: state.cF,
-      columnFilterFns: state.cFn,
-      sorting: state.srt,
-      columnVisibility: state.cVis,
-      globalFilter: state.gFil,
-      grouping: state.g,
-      columnOrder: state.cO,
-      pagination: state.p,
-    })}`
   );
 
   return {

@@ -102,10 +102,6 @@ function UsageStatuses() {
     storeInUrl: true,
   });
 
-  console.log(
-    `INITIAL STATE ${JSON.stringify(getInitialColumnFilterFnState(columns))}`
-  );
-
   const table = useMaterialReactTable({
     columns: columns,
     data: usageStatusData ?? [],

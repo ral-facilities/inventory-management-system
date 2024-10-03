@@ -25,7 +25,6 @@ import {
   TableCellOverFlowTipProps,
   displayTableRowCountText,
   formatDateTimeStrings,
-  getInitialColumnFilterFnState,
   getPageHeightCalc,
   removeSecondsFromDate,
 } from '../../utils';
@@ -49,6 +48,7 @@ function Units() {
       {
         header: 'Value',
         accessorFn: (row) => row.value,
+        filterFn: 'fuzzy',
         id: 'value',
         Cell: ({ row }) => row.original.value,
       },
@@ -57,6 +57,7 @@ function Units() {
         accessorFn: (row) => removeSecondsFromDate(row.modified_time),
         id: 'modified_time',
         filterVariant: 'datetime-range',
+        filterFn: 'betweenInclusive',
         size: 350,
         enableGrouping: false,
         Cell: ({ row }) =>
@@ -68,6 +69,7 @@ function Units() {
         accessorFn: (row) => removeSecondsFromDate(row.created_time),
         id: 'created_time',
         filterVariant: 'datetime-range',
+        filterFn: 'betweenInclusive',
         size: 350,
         enableGrouping: false,
         enableHiding: true,
@@ -83,7 +85,6 @@ function Units() {
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
       pagination: { pageSize: 15, pageIndex: 0 },
-      columnFilterFns: getInitialColumnFilterFnState(columns),
     },
     storeInUrl: true,
   });

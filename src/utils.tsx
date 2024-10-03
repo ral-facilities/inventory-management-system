@@ -414,6 +414,7 @@ export const getInitialColumnFilterFnState = (
   return initialState;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getColumnIds = (columns: MRT_ColumnDef<any>[]): string[] => {
   const columnIds = columns.reduce<string[]>((result, column) => {
     if (column.id) {

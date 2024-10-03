@@ -263,6 +263,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           removeSecondsFromDate(row.catalogueItem.modified_time),
         id: 'catalogueItem.modified_time',
         filterVariant: 'datetime-range',
+        filterFn: 'betweenInclusive',
         size: 350,
         enableGrouping: false,
         Cell: ({ row }) =>
@@ -275,6 +276,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           removeSecondsFromDate(row.catalogueItem.created_time),
         id: 'catalogueItem.created_time',
         filterVariant: 'datetime-range',
+        filterFn: 'betweenInclusive',
         size: 350,
         enableGrouping: false,
         enableHiding: true,
@@ -649,7 +651,6 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     enableStickyHeader: true,
     enableDensityToggle: false,
     enableRowSelection: true,
-    enableColumnFilterModes: true,
     enableHiding: !dense,
     enableTopToolbar: true,
     enableMultiRowSelection: !dense,

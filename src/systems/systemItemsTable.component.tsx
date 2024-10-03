@@ -304,6 +304,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         accessorFn: (row) => removeSecondsFromDate(row.item.modified_time),
         id: 'item.modified_time',
         filterVariant: 'datetime-range',
+        filterFn: 'betweenInclusive',
         size: 350,
         enableGrouping: false,
         Cell: ({ row }) =>
@@ -316,6 +317,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         accessorFn: (row) => removeSecondsFromDate(row.item.created_time),
         id: 'item.created_time',
         filterVariant: 'datetime-range',
+        filterFn: 'betweenInclusive',
         size: 350,
         enableGrouping: false,
         Cell: ({ row }) =>
@@ -330,6 +332,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
             : null,
         id: 'item.delivered_date',
         filterVariant: 'date-range',
+        filterFn: 'betweenInclusive',
         size: 350,
         Cell: ({ row }) =>
           row.original.item.delivered_date &&

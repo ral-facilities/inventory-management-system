@@ -54,6 +54,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
         accessorFn: (row) => removeSecondsFromDate(row.modified_time),
         id: 'modified_time',
         filterVariant: 'datetime-range',
+        filterFn: 'betweenInclusive',
         size: 400,
         enableGrouping: false,
         Cell: ({ row }) =>
