@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4
+        uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6 # v4
         with:
           node-version: 20
           cache: 'yarn'
@@ -35,7 +35,7 @@ jobs:
 
       - name: Upload coverage reports to Codecov
         if: success()
-        uses: codecov/codecov-action@e28ff129e5465c2c0dcc6f003fc735cb6ae0c673 # v4
+        uses: codecov/codecov-action@b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238 # v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
@@ -48,7 +48,7 @@ jobs:
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4
+        uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6 # v4
         with:
           node-version: 20
           cache: 'yarn'
@@ -74,7 +74,7 @@ jobs:
 
     steps:
       - name: Clone api repo
-        uses: actions/checkout@6d193bf28034eafb982f37bd894289fe649468fc
+        uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938
         with:
           repository: ral-facilities/inventory-management-system-api
           ref: develop
@@ -123,7 +123,7 @@ jobs:
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4
+        uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6 # v4
         with:
           node-version: 20
           cache: 'yarn'
@@ -138,7 +138,7 @@ jobs:
 
       - name: Output docker logs (mongodb)
         if: failure()
-        run: docker logs mongodb_container
+        run: docker logs ims_api_mongodb_container
 
       - name: Output docker logs (api)
         if: failure()
@@ -159,7 +159,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repo
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
 
       - name: Login to Harbor
         uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
