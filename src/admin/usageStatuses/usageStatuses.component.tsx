@@ -57,6 +57,8 @@ function UsageStatuses() {
           'contains',
           'startsWith',
           'endsWith',
+          'notEquals',
+          'betweenInclusive',
         ],
         id: 'value',
         Cell: ({ row }) => row.original.value,
