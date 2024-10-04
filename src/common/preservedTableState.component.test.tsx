@@ -112,6 +112,7 @@ describe('Preserved table state functions', () => {
               columnVisibility: { created_time: false },
               grouping: ['catalogue_item.name'],
               pagination: { pageSize: 20, pageIndex: 5 },
+              columnFilterFns: { 'catalogue_item.name': 'betweenInclusive' },
             },
             storeInUrl: true,
           }),
@@ -123,7 +124,7 @@ describe('Preserved table state functions', () => {
       expect(JSON.stringify(result.current.preservedState)).toBe(
         JSON.stringify({
           columnFilters: [],
-          columnFilterFns: {},
+          columnFilterFns: { 'catalogue_item.name': 'betweenInclusive' },
           sorting: [],
           columnVisibility: { created_time: false },
           globalFilter: undefined,
@@ -557,6 +558,110 @@ describe('Preserved table state functions', () => {
       expect(window.location.search).toBe(
         '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0luSCAZgsUgCoKXEgA0IAbjhIx4IDAE8ADt2ggAzhgBOCAHb5eAoTJAgAvj1ATpqJJm59B2YbIBMABhsAWALR2AbK7dsbAZmh27fztqALsALT0AXV1ooA'
       );
+    });
+
+    it('onColumnFilterFnsChange updates the state and url correctly', async () => {
+      const { result } = renderHookWithBrowserRouterURL(
+        () =>
+          usePreservedTableState({
+            storeInUrl: true,
+          }),
+        '/'
+      );
+
+      // Change the state to a non-default value
+      act(() =>
+        result.current.onPreservedStatesChange.onColumnFilterFnsChange({
+          'catalogueItem.modified_time': 'betweenInclusive',
+          'catalogueItem.created_time': 'between',
+        })
+      );
+
+      await waitFor(() =>
+        expect(
+          JSON.stringify(result.current.preservedState.columnFilterFns)
+        ).toBe(
+          JSON.stringify({
+            'catalogueItem.modified_time': 'betweenInclusive',
+            'catalogueItem.created_time': 'between',
+          })
+        )
+      );
+
+      expect(window.location.search).toBe(
+        '?state=N4IgxgYgdiBcpgIYBdEBsD2BzArgUwElk8BbAOhIwBMBLAMxryoH1kaS84QAjPZAdzx4oBKGDQ4AzjQBunADTgU6bPiKkyYAE54UTVu06wefQcJABfC0A'
+      );
+
+      // Now change back to a default value
+      act(() =>
+        result.current.onPreservedStatesChange.onColumnFilterFnsChange({})
+      );
+
+      await waitFor(() =>
+        expect(
+          JSON.stringify(result.current.preservedState.columnFilterFns)
+        ).toBe(JSON.stringify({}))
+      );
+      expect(window.location.search).toBe('');
+    });
+
+    it('onColumnFilterFnsChange updates the state and url correctly, when using an initial state', async () => {
+      const { result } = renderHookWithBrowserRouterURL(
+        () =>
+          usePreservedTableState({
+            storeInUrl: true,
+            initialState: {
+              columnFilterFns: {
+                'catalogueItem.modified_time': 'between',
+                'catalogueItem.created_time': 'between',
+              },
+            },
+          }),
+        '/'
+      );
+
+      // Change the state to a non-default value
+      act(() =>
+        result.current.onPreservedStatesChange.onColumnFilterFnsChange({
+          'catalogueItem.modified_time': 'betweenInclusive',
+          'catalogueItem.created_time': 'between',
+        })
+      );
+
+      await waitFor(() =>
+        expect(
+          JSON.stringify(result.current.preservedState.columnFilterFns)
+        ).toBe(
+          JSON.stringify({
+            'catalogueItem.modified_time': 'betweenInclusive',
+            'catalogueItem.created_time': 'between',
+          })
+        )
+      );
+
+      expect(window.location.search).toBe(
+        '?state=N4IgxgYgdiBcpgIYBdEBsD2BzArgUwElk8BbAOhIwBMBLAMxryoH1kaS84QAjPZAdzx4oBKGDQ4AzjQBunADTgU6bPiKkyYAE54UTVu06wefQcJABfC0A'
+      );
+
+      // Now change back to a default value
+      act(() =>
+        result.current.onPreservedStatesChange.onColumnFilterFnsChange({
+          'catalogueItem.modified_time': 'between',
+          'catalogueItem.created_time': 'between',
+        })
+      );
+
+      await waitFor(() =>
+        expect(
+          JSON.stringify(result.current.preservedState.columnFilterFns)
+        ).toBe(
+          JSON.stringify({
+            'catalogueItem.modified_time': 'between',
+            'catalogueItem.created_time': 'between',
+          })
+        )
+      );
+      expect(window.location.search).toBe('');
     });
 
     it('onSortingChange updates the state and url correctly', async () => {
