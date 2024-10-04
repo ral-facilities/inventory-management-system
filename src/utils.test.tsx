@@ -305,7 +305,7 @@ describe('Custom Filter Functions', () => {
   });
 });
 
-it('correctly creates filterFns initial state', () => {
+it('getInitialColumnFilterFnState correctly creates filterFns initial state', () => {
   const expectedResult = { created_time: 'between', value: 'fuzzy' };
 
   const columns: MRT_ColumnDef<UsageStatus>[] = [
