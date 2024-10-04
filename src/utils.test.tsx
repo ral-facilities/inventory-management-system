@@ -297,7 +297,7 @@ describe('Utility functions', () => {
 });
 
 describe('Custom Filter Functions', () => {
-  it('correctly removes seconds from date', () => {
+  it('removeSecondsFromDate correctly removes seconds from date', () => {
     const inputDate: string = '2024-01-02T13:10:10.000+00:00';
     const expectedResult: Date = new Date('2024-01-02T13:10:00.000+00:00');
     const actualResult: Date = removeSecondsFromDate(inputDate);
@@ -305,7 +305,7 @@ describe('Custom Filter Functions', () => {
   });
 });
 
-it('correctly creates filterFns initial state', () => {
+it('getInitialColumnFilterFnState correctly creates filterFns initial state', () => {
   const expectedResult = { created_time: 'between', value: 'fuzzy' };
 
   const columns: MRT_ColumnDef<UsageStatus>[] = [
