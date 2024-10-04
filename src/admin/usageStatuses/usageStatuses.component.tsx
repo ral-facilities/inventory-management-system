@@ -50,6 +50,7 @@ function UsageStatuses() {
       {
         header: 'Value',
         accessorFn: (row) => row.value,
+        id: 'value',
         filterVariant: 'text',
         filterFn: 'fuzzy',
         columnFilterModeOptions: [
@@ -60,15 +61,14 @@ function UsageStatuses() {
           'notEquals',
           'betweenInclusive',
         ],
-        id: 'value',
         Cell: ({ row }) => row.original.value,
       },
       {
         header: 'Last modified',
         accessorFn: (row) => removeSecondsFromDate(row.modified_time),
+        id: 'modified_time',
         filterVariant: 'datetime-range',
         filterFn: 'between',
-        id: 'modified_time',
         size: 350,
         enableGrouping: false,
         Cell: ({ row }) =>
@@ -126,8 +126,7 @@ function UsageStatuses() {
     localization: {
       ...MRT_Localization_EN,
       noRecordsToDisplay: noResultsTxt,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } as any,
+    },
     // State
     initialState: {
       showColumnFilters: true,

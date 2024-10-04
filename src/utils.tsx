@@ -414,17 +414,6 @@ export const getInitialColumnFilterFnState = (
   return initialState;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const getColumnIds = (columns: MRT_ColumnDef<any>[]): string[] => {
-  const columnIds = columns.reduce<string[]>((result, column) => {
-    if (column.id) {
-      result.push(column.id);
-    }
-    return result;
-  }, []);
-  return columnIds;
-};
-
 export function removeSecondsFromDate(date: string): Date {
   const modifiedDate = new Date(date);
   modifiedDate.setSeconds(0, 0);
