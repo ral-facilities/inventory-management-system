@@ -48,8 +48,8 @@ function Units() {
       {
         header: 'Value',
         accessorFn: (row) => row.value,
-        filterFn: 'fuzzy',
         id: 'value',
+        filterFn: 'fuzzy',
         Cell: ({ row }) => row.original.value,
       },
       {

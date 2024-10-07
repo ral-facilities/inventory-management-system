@@ -274,7 +274,6 @@ describe('Preserved table state functions', () => {
                 value: [null, '2024-06-11T23:00:00.000Z'],
               },
             ],
-            //should actually have values in practice, but not working on this table in this PR.
             columnFilterFns: {},
             sorting: [{ id: 'catalogueItem.name', desc: true }],
             columnVisibility: {

@@ -294,38 +294,36 @@ describe('Utility functions', () => {
       { name: 'Susan' },
     ]);
   });
-});
 
-describe('Custom Filter Functions', () => {
   it('removeSecondsFromDate correctly removes seconds from date', () => {
     const inputDate: string = '2024-01-02T13:10:10.000+00:00';
     const expectedResult: Date = new Date('2024-01-02T13:10:00.000+00:00');
     const actualResult: Date = removeSecondsFromDate(inputDate);
     expect(actualResult).toEqual(expectedResult);
   });
-});
 
-it('getInitialColumnFilterFnState correctly creates filterFns initial state', () => {
-  const expectedResult = { created_time: 'between', value: 'fuzzy' };
+  it('getInitialColumnFilterFnState correctly creates filterFns initial state', () => {
+    const expectedResult = { created_time: 'between', value: 'fuzzy' };
 
-  const columns: MRT_ColumnDef<UsageStatus>[] = [
-    {
-      header: 'Value',
-      filterVariant: 'text',
-      filterFn: 'fuzzy',
-      enableColumnFilterModes: false,
-      id: 'value',
-    },
-    {
-      header: 'Created',
-      filterVariant: 'datetime-range',
-      filterFn: 'between',
-      id: 'created_time',
-    },
-  ];
+    const columns: MRT_ColumnDef<UsageStatus>[] = [
+      {
+        header: 'Value',
+        filterVariant: 'text',
+        filterFn: 'fuzzy',
+        enableColumnFilterModes: false,
+        id: 'value',
+      },
+      {
+        header: 'Created',
+        filterVariant: 'datetime-range',
+        filterFn: 'between',
+        id: 'created_time',
+      },
+    ];
 
-  const actualResult = getInitialColumnFilterFnState(columns);
-  expect(actualResult).toEqual(expectedResult);
+    const actualResult = getInitialColumnFilterFnState(columns);
+    expect(actualResult).toEqual(expectedResult);
+  });
 });
 
 describe('checkForDuplicates', () => {
