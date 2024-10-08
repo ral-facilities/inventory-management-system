@@ -342,8 +342,8 @@ describe('Items', () => {
 
     cy.findAllByText('Date format: dd/MM/yyyy').should('have.length', 2);
 
-    cy.findAllByRole('button', { name: 'Clear value' }).first().click();
-    cy.findAllByRole('button', { name: 'Clear value' }).first().click();
+    cy.findAllByRole('button', { name: 'Clear' }).first().click();
+    cy.findAllByRole('button', { name: 'Clear' }).first().click();
 
     cy.findByLabelText('Warranty end date').type('12/02/4000');
     cy.findByLabelText('Delivered date').type('12/02/4000');
@@ -352,8 +352,8 @@ describe('Items', () => {
       2
     );
 
-    cy.findAllByRole('button', { name: 'Clear value' }).first().click();
-    cy.findAllByRole('button', { name: 'Clear value' }).first().click();
+    cy.findAllByRole('button', { name: 'Clear' }).first().click();
+    cy.findAllByRole('button', { name: 'Clear' }).first().click();
 
     cy.findByLabelText('Warranty end date').type('12/02/2000');
     cy.findByLabelText('Delivered date').type('12/02/2000');
