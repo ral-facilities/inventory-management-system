@@ -42,8 +42,8 @@ export const usePostItems = (): UseMutationResult<
       const promises = [];
 
       for (
-        let i = postItems.startingValue;
-        i < postItems.startingValue + postItems.quantity;
+        let i = postItems.starting_value;
+        i < postItems.starting_value + postItems.quantity;
         i++
       ) {
         const item: ItemPost = {

@@ -358,7 +358,7 @@ describe('items api functions', () => {
     beforeEach(() => {
       postItems = {
         quantity: 2,
-        startingValue: 10,
+        starting_value: 10,
         item: {
           ...item,
           serial_number: item.serial_number + '_%s',
@@ -386,8 +386,8 @@ describe('items api functions', () => {
       });
 
       for (
-        let i = postItems.startingValue;
-        i < postItems.startingValue + postItems.quantity;
+        let i = postItems.starting_value;
+        i < postItems.starting_value + postItems.quantity;
         i++
       ) {
         expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
@@ -426,8 +426,8 @@ describe('items api functions', () => {
       });
 
       for (
-        let i = postItems.startingValue;
-        i < postItems.startingValue + postItems.quantity;
+        let i = postItems.starting_value;
+        i < postItems.starting_value + postItems.quantity;
         i++
       ) {
         expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {

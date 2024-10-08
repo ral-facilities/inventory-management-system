@@ -1,3 +1,4 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {
   Autocomplete,
@@ -9,7 +10,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControl,
   FormHelperText,
   Grid,
   IconButton,
@@ -17,13 +17,13 @@ import {
   StepLabel,
   Stepper,
   TextField,
-  TextFieldProps,
   Tooltip,
   Typography,
 } from '@mui/material';
-import { DesktopDatePicker } from '@mui/x-date-pickers';
+import { DatePicker, DateValidationError } from '@mui/x-date-pickers';
 import { AxiosError } from 'axios';
 import React from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import {
   CatalogueCategory,
   CatalogueCategoryProperty,
@@ -37,68 +37,103 @@ import { usePatchItem, usePostItem, usePostItems } from '../api/items';
 import { useGetSystems, useGetSystemsBreadcrumbs } from '../api/systems';
 import { useGetUsageStatuses } from '../api/usageStatuses';
 import {
-  AdvancedSerialNumberOptionsType,
-  ItemDetails,
-  ItemDetailsPlaceholder,
+  ItemDetailsStep,
+  ItemDetailsStepPost,
+  PropertiesStep,
 } from '../app.types';
-import { matchCatalogueItemProperties } from '../catalogue/catalogue.component';
+import {
+  convertToPropertyPost,
+  convertToPropertyValueList,
+} from '../catalogue/items/catalogueItemsDialog.component';
+import {
+  DATE_PICKER_MAX_DATE,
+  DATE_PICKER_MIN_DATE,
+  INVALID_DATE_FORMAT_MESSAGE,
+  ItemDetailsStepSchema,
+  PropertiesStepSchema,
+  RequestType,
+} from '../form.schemas';
 import handleIMS_APIError from '../handleIMS_APIError';
 import handleTransferState from '../handleTransferState';
 import { SystemsTableView } from '../systems/systemsTableView.component';
-import { trimStringValues } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
-const maxYear = 2100;
-export function isValidDateTime(input: Date | string | null) {
-  // Attempt to create a Date object from the input
-  let dateObj: Date;
-  if (input instanceof Date) {
-    dateObj = input;
-  } else if (typeof input === 'string') {
-    dateObj = new Date(input);
-  } else {
-    // Handle null or other non-supported types
-    dateObj = new Date('');
+
+function toItemDetailsStep(item: Item | undefined): ItemDetailsStep {
+  if (!item) {
+    return {
+      purchase_order_number: '',
+      is_defective: 'false',
+      usage_status_id: '',
+      warranty_end_date: null,
+      asset_number: '',
+      serial_number: {
+        serial_number: '',
+        starting_value: '',
+        quantity: '',
+      },
+      delivered_date: null,
+      notes: '',
+    };
   }
 
-  // Check if the Date object is valid and the string was successfully parsed
-  // Also, check if the original string is not equal to 'Invalid Date'
-  // Check if the date is larger than the year 2100, the maximum date of the date picker
-  return (
-    !isNaN(dateObj.getTime()) &&
-    dateObj.toString() !== 'Invalid Date' &&
-    !(dateObj.getUTCFullYear() >= maxYear)
-  );
+  return {
+    purchase_order_number: item.purchase_order_number ?? '',
+    is_defective: String(item.is_defective),
+    usage_status_id: item.usage_status_id,
+    warranty_end_date: item.warranty_end_date,
+    asset_number: item.asset_number ?? '',
+    serial_number: {
+      serial_number: item.serial_number ?? '',
+      starting_value: '',
+      quantity: '',
+    },
+    delivered_date: item.delivered_date,
+    notes: item.notes ?? '',
+  };
 }
 
-const CustomTextField: React.FC<TextFieldProps> = (renderProps) => {
-  const { id, ...inputProps } = renderProps.inputProps ?? {};
-  let helperText = 'Date format: dd/MM/yyyy';
+function convertToItemDetailsStepPost(
+  item: ItemDetailsStep
+): ItemDetailsStepPost {
+  return {
+    purchase_order_number: item.purchase_order_number ?? null,
+    is_defective: item.is_defective ? true : false,
+    usage_status_id: item.usage_status_id,
+    warranty_end_date: item.warranty_end_date
+      ? new Date(item.warranty_end_date).toISOString()
+      : null,
+    asset_number: item.asset_number ?? null,
+    serial_number: item.serial_number.serial_number ?? null,
+    delivered_date: item.delivered_date
+      ? new Date(item.delivered_date).toISOString()
+      : null,
+    notes: item.notes ?? null,
+  };
+}
 
-  if (
-    renderProps.value &&
-    Number((renderProps.value as string).split('/')[2]) >= maxYear
-  ) {
-    helperText = 'Exceeded maximum date';
+const dateErrorMessageHandler = (props: {
+  minDate: Date;
+  maxDate: Date;
+  error: DateValidationError;
+}): string => {
+  const { minDate, maxDate, error } = props;
+  switch (error) {
+    case 'invalidDate':
+      return INVALID_DATE_FORMAT_MESSAGE;
+    case 'minDate':
+      return `Date cannot be earlier than ${minDate.toLocaleDateString()}.`;
+    case 'maxDate':
+      return `Date cannot be later than ${maxDate.toLocaleDateString()}.`;
+    default:
+      return '';
   }
-  return (
-    <TextField
-      {...renderProps}
-      fullWidth
-      id={id}
-      size="small"
-      inputProps={{
-        ...inputProps,
-      }}
-      error={renderProps.error}
-      {...(renderProps.error && { helperText: helperText })}
-    />
-  );
 };
 
 export interface ItemDialogProps {
   open: boolean;
   onClose: () => void;
-  type: 'create' | 'edit' | 'duplicate';
+  requestType: RequestType;
+  duplicate?: boolean;
   catalogueItem?: CatalogueItem;
   catalogueCategory?: CatalogueCategory;
   selectedItem?: Item;
@@ -108,7 +143,8 @@ function ItemDialog(props: ItemDialogProps) {
   const {
     open,
     onClose,
-    type,
+    requestType,
+    duplicate,
     catalogueItem,
     catalogueCategory,
     selectedItem,
@@ -118,46 +154,8 @@ function ItemDialog(props: ItemDialogProps) {
     [catalogueCategory]
   );
 
-  const [itemDetails, setItemDetails] = React.useState<ItemDetailsPlaceholder>({
-    catalogue_item_id: null,
-    system_id: null,
-    purchase_order_number: null,
-    is_defective: null,
-    usage_status_id: null,
-    warranty_end_date: null,
-    asset_number: null,
-    serial_number: null,
-    delivered_date: null,
-    notes: null,
-  });
-
-  const [hasDateErrors, setHasDateErrors] = React.useState<{
-    warranty_end_date: boolean;
-    delivered_date: boolean;
-  }>({ warranty_end_date: false, delivered_date: false });
-
-  const [hasUsageStatusErrors, setHasUsageStatusErrors] =
-    React.useState<boolean>(false);
-
-  const [propertyValues, setPropertyValues] = React.useState<(string | null)[]>(
-    []
-  );
-
-  const [advancedSerialNumberOptions, setAdvancedSerialNumberOptions] =
-    React.useState<AdvancedSerialNumberOptionsType>({
-      quantity: null,
-      startingValue: null,
-    });
   const [showAdvancedSerialNumberOptions, setShowAdvancedSerialNumberOptions] =
     React.useState(false);
-
-  const [propertyErrors, setPropertyErrors] = React.useState(
-    new Array(parentCatalogueItemPropertiesInfo.length).fill(false)
-  );
-
-  const [formErrorMessage, setFormErrorMessage] = React.useState<
-    string | undefined
-  >(undefined);
 
   const { data: usageStatuses } = useGetUsageStatuses();
   const { mutateAsync: addItem, isPending: isAddItemPending } = usePostItem();
@@ -166,204 +164,18 @@ function ItemDialog(props: ItemDialogProps) {
   const { mutateAsync: editItem, isPending: isEditItemPending } =
     usePatchItem();
 
-  React.useEffect(() => {
-    if (type === 'create' && open) {
-      setPropertyValues(
-        matchCatalogueItemProperties(
-          parentCatalogueItemPropertiesInfo,
-          catalogueItem?.properties ?? []
-        )
-      );
-    }
-  }, [parentCatalogueItemPropertiesInfo, catalogueItem, open, type]);
-
-  React.useEffect(() => {
-    if (selectedItem && open) {
-      setItemDetails({
-        catalogue_item_id: null,
-        system_id: selectedItem.system_id,
-        purchase_order_number: selectedItem.purchase_order_number,
-        is_defective: selectedItem.is_defective ? 'true' : 'false',
-        usage_status_id: selectedItem.usage_status_id,
-        warranty_end_date: selectedItem.warranty_end_date
-          ? new Date(selectedItem.warranty_end_date)
-          : null,
-        asset_number: selectedItem.asset_number,
-        serial_number: selectedItem.serial_number,
-        delivered_date: selectedItem.delivered_date
-          ? new Date(selectedItem.delivered_date)
-          : null,
-        notes: selectedItem.notes,
-      });
-
-      setPropertyValues(
-        matchCatalogueItemProperties(
-          parentCatalogueItemPropertiesInfo,
-          selectedItem.properties ?? []
-        )
-      );
-    }
-  }, [parentCatalogueItemPropertiesInfo, selectedItem, open]);
-
-  const handlePropertyChange = (index: number, value: string | null) => {
-    const updatedPropertyValues = [...propertyValues];
-
-    if (value === null || (typeof value === 'string' && value.trim() === '')) {
-      updatedPropertyValues[index] = null;
-    } else {
-      updatedPropertyValues[index] = value;
-    }
-    setPropertyValues(updatedPropertyValues);
-    // Clear the error state for the changed property
-    const updatedPropertyErrors = [...propertyErrors];
-    updatedPropertyErrors[index] = false;
-    setPropertyErrors(updatedPropertyErrors);
-    setFormErrorMessage(undefined);
-  };
-
-  const handleItemDetails = React.useCallback(
-    (field: keyof ItemDetailsPlaceholder, value: string | Date | null) => {
-      const updatedItemDetails = { ...itemDetails };
-
-      switch (field) {
-        case 'delivered_date':
-        case 'warranty_end_date':
-          updatedItemDetails[field] = value as Date | null;
-          break;
-        default:
-          if (
-            value === null ||
-            (typeof value === 'string' && value.trim() === '')
-          ) {
-            updatedItemDetails[field] = null;
-          } else {
-            updatedItemDetails[field] = value as string;
-          }
-          break;
-      }
-
-      setItemDetails(updatedItemDetails);
-      setFormErrorMessage(undefined);
-    },
-    [itemDetails]
-  );
   const handleClose = React.useCallback(() => {
     onClose();
-    setItemDetails({
-      catalogue_item_id: null,
-      system_id: null,
-      purchase_order_number: null,
-      is_defective: null,
-      usage_status_id: null,
-      warranty_end_date: null,
-      asset_number: null,
-      serial_number: null,
-      delivered_date: null,
-      notes: null,
-    });
     setActiveStep(0);
-    setPropertyValues([]);
-    setPropertyErrors(
-      new Array(parentCatalogueItemPropertiesInfo.length).fill(false)
-    );
-  }, [onClose, parentCatalogueItemPropertiesInfo]);
-
-  const handleFormPropertiesErrorStates = React.useCallback(() => {
-    let hasPropertiesErrors = false;
-
-    // Check properties
-    const updatedPropertyErrors = [...propertyErrors];
-
-    const updatedProperties = parentCatalogueItemPropertiesInfo.map(
-      (property, index) => {
-        if (property.mandatory && !propertyValues[index]) {
-          updatedPropertyErrors[index] = true;
-          hasPropertiesErrors = true;
-        } else {
-          updatedPropertyErrors[index] = false;
-        }
-
-        if (
-          propertyValues[index] &&
-          property.type === 'number' &&
-          isNaN(Number(propertyValues[index]))
-        ) {
-          updatedPropertyErrors[index] = true;
-          hasPropertiesErrors = true;
-        }
-
-        if (!propertyValues[index])
-          return {
-            id: property.id,
-            value: null,
-          };
-
-        let typedValue: string | number | boolean | null =
-          propertyValues[index]; // Assume it's a string by default
-
-        // Check if the type of the 'property' is boolean
-        if (property.type === 'boolean') {
-          // If the type is boolean, then check the type of 'propertyValues[index]'
-          typedValue = propertyValues[index] === 'true' ? true : false;
-        } else if (property.type === 'number') {
-          typedValue = Number(propertyValues[index]);
-        }
-
-        return {
-          id: property.id,
-          value: typedValue,
-        };
-      }
-    );
-
-    setPropertyErrors(updatedPropertyErrors);
-
-    return { hasPropertiesErrors, updatedProperties };
-  }, [propertyErrors, parentCatalogueItemPropertiesInfo, propertyValues]);
-
-  const handleUsageStatusErrors = React.useCallback(() => {
-    let hasUsageStatusError = false;
-
-    if (
-      itemDetails.usage_status_id == '' ||
-      itemDetails.usage_status_id == null
-    ) {
-      setHasUsageStatusErrors(true);
-      hasUsageStatusError = true;
-    }
-
-    return { hasUsageStatusError };
-  }, [itemDetails.usage_status_id]);
-
-  const details: ItemDetails = React.useMemo(() => {
-    return {
-      catalogue_item_id: catalogueItem?.id ?? '',
-      system_id: itemDetails.system_id ?? '',
-      purchase_order_number: itemDetails.purchase_order_number,
-      is_defective: itemDetails.is_defective === 'true' ? true : false,
-      usage_status_id: itemDetails.usage_status_id
-        ? itemDetails.usage_status_id
-        : '',
-      warranty_end_date:
-        itemDetails.warranty_end_date &&
-        isValidDateTime(itemDetails.warranty_end_date)
-          ? itemDetails.warranty_end_date.toISOString()
-          : null,
-      asset_number: itemDetails.asset_number,
-      serial_number: itemDetails.serial_number,
-      delivered_date:
-        itemDetails.delivered_date &&
-        isValidDateTime(itemDetails.delivered_date)
-          ? itemDetails.delivered_date.toISOString()
-          : null,
-      notes: itemDetails.notes,
-    };
-  }, [itemDetails, catalogueItem]);
+  }, [onClose]);
 
   //move to systems
   const [parentSystemId, setParentSystemId] = React.useState<string | null>(
     selectedItem?.system_id ?? null
   );
+
+  const [parentSystemIdError, setParentSystemIdError] =
+    React.useState<boolean>(false);
 
   const { data: systemsData, isLoading: systemsDataLoading } = useGetSystems(
     parentSystemId === null ? 'null' : parentSystemId
@@ -372,235 +184,342 @@ function ItemDialog(props: ItemDialogProps) {
   const { data: parentSystemBreadcrumbs } =
     useGetSystemsBreadcrumbs(parentSystemId);
 
-  const handleAddItem = React.useCallback(() => {
-    const { updatedProperties, hasPropertiesErrors } =
-      handleFormPropertiesErrorStates();
+  const ItemDetailsStepFormMethods = useForm<ItemDetailsStep>({
+    resolver: zodResolver(ItemDetailsStepSchema(requestType)),
+    defaultValues: toItemDetailsStep(selectedItem),
+  });
 
-    const { hasUsageStatusError } = handleUsageStatusErrors();
-    if (hasPropertiesErrors || hasUsageStatusError) return;
+  const {
+    handleSubmit: handleSubmitDetailsStep,
+    register: registerDetailsStep,
+    formState: { errors: errorsDetailsStep },
+    control: controlDetailsStep,
+    clearErrors: clearErrorsDetailsStep,
+    reset: resetDetailsStep,
+    watch: watchDetailsStep,
+    setError: setErrorDetailsStep,
+  } = ItemDetailsStepFormMethods;
 
-    const item: ItemPost = {
-      ...details,
-      properties: updatedProperties,
-    };
+  const itemPropertiesStepFormMethods = useForm<PropertiesStep>({
+    resolver: zodResolver(PropertiesStepSchema),
+    defaultValues: {
+      properties: convertToPropertyValueList(
+        catalogueCategory,
+        selectedItem?.properties
+      ),
+    },
+  });
 
-    if (advancedSerialNumberOptions.quantity) {
-      postItems({
-        quantity: Number(advancedSerialNumberOptions.quantity),
-        startingValue: Number(advancedSerialNumberOptions.startingValue ?? 1),
-        item: trimStringValues(item),
-      }).then((response) => {
-        handleTransferState(response);
-        handleClose();
-      });
-    } else {
-      addItem(trimStringValues(item))
-        .then(() => handleClose())
-        .catch((error: AxiosError) => {
-          handleIMS_APIError(error);
-        });
-    }
+  const {
+    handleSubmit: handleSubmitPropertiesStep,
+    register: registerPropertiesStep,
+    formState: { errors: errorsPropertiesStep },
+    control: controlPropertiesStep,
+    clearErrors: clearErrorsPropertiesStep,
+    reset: resetPropertiesStep,
+    watch: watchPropertiesStep,
+    setError: setErrorPropertiesStep,
+  } = itemPropertiesStepFormMethods;
+
+  const itemDetails = watchDetailsStep();
+  const serialNumberAdvancedOptions = itemDetails.serial_number;
+
+  // Load the values for editing.
+  React.useEffect(() => {
+    resetDetailsStep(toItemDetailsStep(selectedItem));
+    resetPropertiesStep({
+      properties: convertToPropertyValueList(
+        catalogueCategory,
+        requestType === 'post' && !duplicate
+          ? catalogueItem?.properties
+          : selectedItem?.properties
+      ),
+    });
   }, [
-    handleFormPropertiesErrorStates,
-    handleUsageStatusErrors,
-    details,
-    advancedSerialNumberOptions.quantity,
-    advancedSerialNumberOptions.startingValue,
-    postItems,
-    handleClose,
-    addItem,
+    catalogueCategory,
+    catalogueItem?.properties,
+    duplicate,
+    requestType,
+    resetDetailsStep,
+    resetPropertiesStep,
+    selectedItem,
+    selectedItem?.properties,
   ]);
 
-  const handleEditItem = React.useCallback(() => {
-    if (selectedItem) {
-      const { updatedProperties, hasPropertiesErrors } =
-        handleFormPropertiesErrorStates();
+  // Clears form errors when a value has been changed
+  React.useEffect(() => {
+    const subscription = watchDetailsStep(() =>
+      clearErrorsPropertiesStep('root.formError')
+    );
+    return () => subscription.unsubscribe();
+  }, [clearErrorsPropertiesStep, watchDetailsStep]);
 
-      const { hasUsageStatusError } = handleUsageStatusErrors();
+  React.useEffect(() => {
+    const subscription = watchPropertiesStep(() =>
+      clearErrorsPropertiesStep('root.formError')
+    );
+    return () => subscription.unsubscribe();
+  }, [clearErrorsPropertiesStep, watchPropertiesStep]);
 
-      if (hasPropertiesErrors || hasUsageStatusError) return;
+  React.useEffect(() => {
+    if (parentSystemId !== selectedItem?.system_id)
+      clearErrorsPropertiesStep('root.formError');
+  }, [clearErrorsPropertiesStep, parentSystemId, selectedItem?.system_id]);
 
-      const isPurchaseOrderNumberUpdated =
-        details.purchase_order_number !== selectedItem.purchase_order_number;
+  React.useEffect(() => {
+    if (
+      !serialNumberAdvancedOptions.quantity &&
+      !serialNumberAdvancedOptions.starting_value
+    ) {
+      clearErrorsDetailsStep([
+        'serial_number.quantity',
+        'serial_number.serial_number',
+        'serial_number.starting_value',
+      ]);
+    }
+  }, [
+    clearErrorsDetailsStep,
+    serialNumberAdvancedOptions.quantity,
+    serialNumberAdvancedOptions.starting_value,
+  ]);
 
-      const isIsDefectiveUpdated =
-        details.is_defective !== selectedItem.is_defective;
+  React.useEffect(() => {
+    if (parentSystemIdError && parentSystemId) {
+      setParentSystemIdError(false);
+    }
+  }, [parentSystemId, parentSystemIdError]);
 
-      const isUsageStatusUpdated =
-        details.usage_status_id !== selectedItem.usage_status_id;
+  const handleAddItem = React.useCallback(
+    (data: ItemPost, quantity?: number, starting_value?: number) => {
+      const item: ItemPost = {
+        ...data,
+      };
 
-      const isWarrantyEndDateUpdated =
-        details.warranty_end_date !== selectedItem.warranty_end_date;
-
-      const isAssetNumberUpdated =
-        details.asset_number !== selectedItem.asset_number;
-
-      const isSerialNumberUpdated =
-        details.serial_number !== selectedItem.serial_number;
-
-      const isDeliveredDateUpdated =
-        details.delivered_date !== selectedItem.delivered_date;
-
-      const isNotesUpdated = details.notes !== selectedItem.notes;
-
-      const isCatalogueItemPropertiesUpdated =
-        JSON.stringify(updatedProperties) !==
-        JSON.stringify(
-          selectedItem.properties.map(({ unit, name, ...rest }) => ({
-            id: rest.id,
-            value: rest.value,
-          }))
-        );
-
-      const isSystemIdUpdated = details.system_id !== selectedItem.system_id;
-
-      const item: ItemPatch = {};
-
-      if (isSerialNumberUpdated) item.serial_number = details.serial_number;
-      if (isPurchaseOrderNumberUpdated)
-        item.purchase_order_number = details.purchase_order_number;
-      if (isIsDefectiveUpdated) item.is_defective = details.is_defective;
-      if (isUsageStatusUpdated) item.usage_status_id = details.usage_status_id;
-      if (isWarrantyEndDateUpdated)
-        item.warranty_end_date = details.warranty_end_date;
-      if (isAssetNumberUpdated) item.asset_number = details.asset_number;
-      if (isDeliveredDateUpdated) item.delivered_date = details.delivered_date;
-      if (isNotesUpdated) item.notes = details.notes;
-      if (isSystemIdUpdated) item.system_id = details.system_id;
-      if (isCatalogueItemPropertiesUpdated) item.properties = updatedProperties;
-
-      if (
-        selectedItem.id &&
-        (isSerialNumberUpdated ||
-          isPurchaseOrderNumberUpdated ||
-          isIsDefectiveUpdated ||
-          isUsageStatusUpdated ||
-          isWarrantyEndDateUpdated ||
-          isAssetNumberUpdated ||
-          isSerialNumberUpdated ||
-          isDeliveredDateUpdated ||
-          isNotesUpdated ||
-          isCatalogueItemPropertiesUpdated ||
-          isSystemIdUpdated)
-      ) {
-        editItem({ id: selectedItem.id, item: trimStringValues(item) })
+      if (typeof quantity === 'number' && typeof starting_value === 'number') {
+        postItems({
+          quantity: quantity,
+          starting_value: starting_value,
+          item: item,
+        }).then((response) => {
+          handleTransferState(response);
+          handleClose();
+        });
+      } else {
+        addItem(item)
           .then(() => handleClose())
           .catch((error: AxiosError) => {
             handleIMS_APIError(error);
           });
-      } else {
-        setFormErrorMessage('Please edit a form entry before clicking save');
       }
-    }
-  }, [
-    selectedItem,
-    handleFormPropertiesErrorStates,
-    handleUsageStatusErrors,
-    details,
-    editItem,
-    handleClose,
-  ]);
+    },
+    [postItems, handleClose, addItem]
+  );
+
+  const handleEditItem = React.useCallback(
+    (data: ItemPost) => {
+      if (selectedItem) {
+        const isPurchaseOrderNumberUpdated =
+          data.purchase_order_number !== selectedItem.purchase_order_number;
+
+        const isIsDefectiveUpdated =
+          data.is_defective !== selectedItem.is_defective;
+
+        const isUsageStatusUpdated =
+          data.usage_status_id !== selectedItem.usage_status_id;
+
+        const isWarrantyEndDateUpdated =
+          data.warranty_end_date !== selectedItem.warranty_end_date;
+
+        const isAssetNumberUpdated =
+          data.asset_number !== selectedItem.asset_number;
+
+        const isSerialNumberUpdated =
+          data.serial_number !== selectedItem.serial_number;
+
+        const isDeliveredDateUpdated =
+          data.delivered_date !== selectedItem.delivered_date;
+
+        const isNotesUpdated = data.notes !== selectedItem.notes;
+
+        const isCatalogueItemPropertiesUpdated =
+          JSON.stringify(data.properties) !==
+          JSON.stringify(
+            selectedItem.properties.map(({ unit, name, ...rest }) => ({
+              id: rest.id,
+              value: rest.value,
+            }))
+          );
+
+        const isSystemIdUpdated = data.system_id !== selectedItem.system_id;
+
+        const item: ItemPatch = {};
+
+        if (isSerialNumberUpdated) item.serial_number = data.serial_number;
+        if (isPurchaseOrderNumberUpdated)
+          item.purchase_order_number = data.purchase_order_number;
+        if (isIsDefectiveUpdated) item.is_defective = data.is_defective;
+        if (isUsageStatusUpdated) item.usage_status_id = data.usage_status_id;
+        if (isWarrantyEndDateUpdated)
+          item.warranty_end_date = data.warranty_end_date;
+        if (isAssetNumberUpdated) item.asset_number = data.asset_number;
+        if (isDeliveredDateUpdated) item.delivered_date = data.delivered_date;
+        if (isNotesUpdated) item.notes = data.notes;
+        if (isSystemIdUpdated) item.system_id = data.system_id;
+        if (isCatalogueItemPropertiesUpdated) item.properties = data.properties;
+
+        if (
+          selectedItem.id &&
+          (isSerialNumberUpdated ||
+            isPurchaseOrderNumberUpdated ||
+            isIsDefectiveUpdated ||
+            isUsageStatusUpdated ||
+            isWarrantyEndDateUpdated ||
+            isAssetNumberUpdated ||
+            isSerialNumberUpdated ||
+            isDeliveredDateUpdated ||
+            isNotesUpdated ||
+            isCatalogueItemPropertiesUpdated ||
+            isSystemIdUpdated)
+        ) {
+          editItem({ id: selectedItem.id, item: item })
+            .then(() => handleClose())
+            .catch((error: AxiosError) => {
+              handleIMS_APIError(error);
+            });
+        } else {
+          setErrorPropertiesStep('root.formError', {
+            message:
+              "There have been no changes made. Please change a field's value or press Cancel to exit.",
+          });
+        }
+      }
+    },
+    [selectedItem, editItem, handleClose, setErrorPropertiesStep]
+  );
 
   // Stepper
   const STEPS = [
-    (type === 'edit' ? 'Edit' : 'Add') + ' item details',
-    (type === 'edit' ? 'Edit' : 'Add') + ' item properties',
+    (requestType === 'patch' ? 'Edit' : 'Add') + ' item details',
+    (requestType === 'patch' ? 'Edit' : 'Add') + ' item properties',
     'Place into a system',
   ];
   const [activeStep, setActiveStep] = React.useState<number>(0);
 
+  const handlePropertiesStep = React.useCallback(
+    async (
+      event: React.SyntheticEvent
+    ): Promise<{
+      hasErrors: boolean;
+      detailsStepData: ItemDetailsStep | undefined;
+      propertiesStepData: PropertiesStep | undefined;
+    }> => {
+      let hasErrors: boolean = false;
+      let detailsStepData: ItemDetailsStep | undefined;
+      let propertiesStepData: PropertiesStep | undefined;
+
+      // Handle the submission for Step 1
+      await handleSubmitDetailsStep((validData) => {
+        detailsStepData = validData; // Assign data if valid
+      })(event);
+
+      await handleSubmitPropertiesStep((validData) => {
+        propertiesStepData = validData; // Assign data if valid
+      })(event);
+
+      // Ensure both data objects are set before proceeding
+      if (!detailsStepData || !propertiesStepData) {
+        hasErrors = true;
+      }
+      return { hasErrors, detailsStepData, propertiesStepData };
+    },
+    [handleSubmitDetailsStep, handleSubmitPropertiesStep]
+  );
+
   const handleNext = React.useCallback(
-    (step: number) => {
+    async (event: React.SyntheticEvent, step: number) => {
       switch (step) {
-        case 0: {
-          const { hasUsageStatusError } = handleUsageStatusErrors();
-          return (
-            !hasUsageStatusError &&
-            setActiveStep((prevActiveStep) => prevActiveStep + 1)
-          );
-        }
+        case 0:
+          return handleSubmitDetailsStep(() => {
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+          })(event);
+
         case 1: {
-          const { hasPropertiesErrors } = handleFormPropertiesErrorStates();
-          return (
-            !hasPropertiesErrors &&
-            setActiveStep((prevActiveStep) => prevActiveStep + 1)
-          );
+          const { hasErrors } = await handlePropertiesStep(event);
+          if (hasErrors) return;
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
+          break;
         }
         default:
           setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }
     },
-    [handleFormPropertiesErrorStates, handleUsageStatusErrors]
+    [handlePropertiesStep, handleSubmitDetailsStep]
   );
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
-  React.useEffect(() => {
-    setItemDetails((prev) => ({
-      ...prev,
-      system_id: parentSystemId,
-    }));
-    setFormErrorMessage(undefined);
-  }, [parentSystemId]);
 
-  const hasSerialNumberErrors =
-    advancedSerialNumberOptions.quantity &&
-    !itemDetails.serial_number?.trim().includes('%s') &&
-    'Please use %s to specify the location you want to append the number to serial number';
+  const handleFinish = React.useCallback(
+    async (event: React.SyntheticEvent) => {
+      const { detailsStepData, propertiesStepData } =
+        await handlePropertiesStep(event);
 
-  const hasQuantityErrors = !advancedSerialNumberOptions.quantity?.trim()
-    ? ''
-    : isNaN(Number(advancedSerialNumberOptions.quantity))
-      ? 'Please enter a valid number'
-      : !Number.isInteger(Number(advancedSerialNumberOptions.quantity))
-        ? 'Quantity must be an integer'
-        : Number(advancedSerialNumberOptions.quantity) <= 1
-          ? 'Quantity must be greater than 1'
-          : Number(advancedSerialNumberOptions.quantity) >= 100
-            ? 'Quantity must be less than 100'
-            : '';
+      if (!parentSystemId) {
+        setParentSystemIdError(true);
+      }
 
-  const hasStartingValueErrors =
-    !advancedSerialNumberOptions.quantity &&
-    !!advancedSerialNumberOptions.startingValue?.trim()
-      ? 'Please enter a quantity value'
-      : isNaN(Number(advancedSerialNumberOptions.startingValue))
-        ? 'Please enter a valid number'
-        : !Number.isInteger(Number(advancedSerialNumberOptions.startingValue))
-          ? 'Starting value must be an integer'
-          : Number(advancedSerialNumberOptions.startingValue) < 0
-            ? 'Starting value must be greater than or equal to 0'
-            : '';
+      if (detailsStepData && propertiesStepData && parentSystemId) {
+        const data: ItemPost = {
+          ...convertToItemDetailsStepPost(detailsStepData),
+          properties: convertToPropertyPost(propertiesStepData?.properties),
+          catalogue_item_id: catalogueItem?.id ?? '',
+          system_id: parentSystemId ?? '',
+        };
+
+        const startingValue = !isNaN(
+          Number(detailsStepData.serial_number.starting_value)
+        )
+          ? Number(detailsStepData.serial_number.starting_value)
+          : undefined;
+
+        const quantity = !isNaN(Number(detailsStepData.serial_number.quantity))
+          ? Number(detailsStepData.serial_number.quantity)
+          : undefined;
+
+        if (requestType === 'post' || duplicate) {
+          handleAddItem(data, quantity, startingValue);
+        } else {
+          handleEditItem(data);
+        }
+      }
+    },
+    [
+      catalogueItem?.id,
+      duplicate,
+      handleAddItem,
+      handleEditItem,
+      handlePropertiesStep,
+      parentSystemId,
+      requestType,
+    ]
+  );
 
   const isStepFailed = React.useCallback(
     (step: number) => {
       switch (step) {
         case 0:
-          return (
-            // Date error
-            Object.values(hasDateErrors).some(
-              (value: boolean) => value === true
-            ) ||
-            hasUsageStatusErrors ||
-            !!hasSerialNumberErrors ||
-            !!hasQuantityErrors ||
-            !!hasStartingValueErrors
-          );
+          return Object.values(errorsDetailsStep).length !== 0;
         case 1:
-          return propertyErrors.some((value) => value === true);
+          return (
+            Object.keys(errorsPropertiesStep).filter((val) => val !== 'root')
+              .length !== 0
+          );
         case 2:
-          return false;
+          return parentSystemIdError;
       }
     },
-    [
-      hasDateErrors,
-      hasQuantityErrors,
-      hasSerialNumberErrors,
-      hasStartingValueErrors,
-      hasUsageStatusErrors,
-      propertyErrors,
-    ]
+    [errorsDetailsStep, errorsPropertiesStep, parentSystemIdError]
   );
 
   const renderStepContent = (step: number) => {
@@ -613,24 +532,25 @@ function ItemDialog(props: ItemDialogProps) {
                 id="item-serial-number-input"
                 label="Serial number"
                 size="small"
-                value={itemDetails.serial_number ?? ''}
-                onChange={(event) => {
-                  handleItemDetails('serial_number', event.target.value);
-                }}
+                {...registerDetailsStep('serial_number.serial_number')}
                 fullWidth
-                error={!!hasSerialNumberErrors}
+                error={!!errorsDetailsStep.serial_number?.serial_number}
                 helperText={
-                  hasSerialNumberErrors ||
-                  (advancedSerialNumberOptions.quantity &&
-                    itemDetails.serial_number?.trim().includes('%s') &&
-                    `e.g. ${itemDetails.serial_number?.replace(
+                  errorsDetailsStep.serial_number?.serial_number?.message ||
+                  (itemDetails.serial_number.quantity &&
+                    itemDetails.serial_number.starting_value &&
+                    itemDetails.serial_number.serial_number &&
+                    itemDetails.serial_number.serial_number
+                      .trim()
+                      .includes('%s') &&
+                    `e.g. ${itemDetails.serial_number.serial_number?.replace(
                       '%s',
-                      advancedSerialNumberOptions.startingValue ?? '1'
+                      itemDetails.serial_number.starting_value
                     )}`)
                 }
               />
 
-              {type !== 'edit' && (
+              {requestType !== 'patch' && (
                 <>
                   <Grid
                     item
@@ -666,19 +586,11 @@ function ItemDialog(props: ItemDialogProps) {
                             label="Quantity"
                             size="small"
                             fullWidth
-                            value={advancedSerialNumberOptions.quantity ?? ''}
-                            onChange={(event) => {
-                              setAdvancedSerialNumberOptions(
-                                (prev: AdvancedSerialNumberOptionsType) => ({
-                                  ...prev,
-                                  quantity: event.target.value
-                                    ? event.target.value
-                                    : null,
-                                })
-                              );
-                            }}
-                            error={!!hasQuantityErrors}
-                            helperText={hasQuantityErrors}
+                            {...registerDetailsStep('serial_number.quantity')}
+                            error={!!errorsDetailsStep.serial_number?.quantity}
+                            helperText={
+                              errorsDetailsStep.serial_number?.quantity?.message
+                            }
                           />
                         </Grid>
                         <Grid item xs={6}>
@@ -687,21 +599,16 @@ function ItemDialog(props: ItemDialogProps) {
                             label="Starting value"
                             size="small"
                             fullWidth
-                            value={
-                              advancedSerialNumberOptions.startingValue ?? ''
+                            {...registerDetailsStep(
+                              'serial_number.starting_value'
+                            )}
+                            error={
+                              !!errorsDetailsStep.serial_number?.starting_value
                             }
-                            onChange={(event) => {
-                              setAdvancedSerialNumberOptions(
-                                (prev: AdvancedSerialNumberOptionsType) => ({
-                                  ...prev,
-                                  startingValue: event.target.value
-                                    ? event.target.value
-                                    : null,
-                                })
-                              );
-                            }}
-                            error={!!hasStartingValueErrors}
-                            helperText={hasStartingValueErrors}
+                            helperText={
+                              errorsDetailsStep.serial_number?.starting_value
+                                ?.message
+                            }
                           />
                         </Grid>
                       </Grid>
@@ -715,10 +622,7 @@ function ItemDialog(props: ItemDialogProps) {
                 id="item-asset-input"
                 label="Asset number"
                 size="small"
-                value={itemDetails.asset_number ?? ''}
-                onChange={(event) => {
-                  handleItemDetails('asset_number', event.target.value);
-                }}
+                {...registerDetailsStep('asset_number')}
                 fullWidth
               />
             </Grid>
@@ -727,120 +631,178 @@ function ItemDialog(props: ItemDialogProps) {
                 id="item-purchase-order-input"
                 label="Purchase order number"
                 size="small"
-                value={itemDetails.purchase_order_number ?? ''}
-                onChange={(event) => {
-                  handleItemDetails(
-                    'purchase_order_number',
-                    event.target.value
-                  );
-                }}
+                {...registerDetailsStep('purchase_order_number')}
                 fullWidth
               />
             </Grid>
-
             <Grid item xs={12}>
-              <DesktopDatePicker
-                label="Warranty end date"
-                value={itemDetails.warranty_end_date}
-                onChange={(date) =>
-                  handleItemDetails('warranty_end_date', date ? date : null)
-                }
-                slots={{ textField: CustomTextField }}
-                slotProps={{
-                  actionBar: { actions: ['clear'] },
-                }}
-                onError={(error) => {
-                  setHasDateErrors((prev) => ({
-                    ...prev,
-                    warranty_end_date: error ? true : false,
-                  }));
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <DesktopDatePicker
-                label="Delivered date"
-                value={itemDetails.delivered_date}
-                onChange={(date) =>
-                  handleItemDetails('delivered_date', date ? date : null)
-                }
-                slotProps={{
-                  actionBar: { actions: ['clear'] },
-                }}
-                slots={{ textField: CustomTextField }}
-                onError={(error) => {
-                  setHasDateErrors((prev) => ({
-                    ...prev,
-                    delivered_date: error ? true : false,
-                  }));
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl fullWidth>
-                <Autocomplete
-                  disableClearable={true}
-                  id="item-is-defective-input"
-                  value={itemDetails.is_defective == 'true' ? 'Yes' : 'No'}
-                  size="small"
-                  onChange={(_event, value) =>
-                    handleItemDetails(
-                      'is_defective',
-                      value == 'Yes' ? 'true' : 'false'
-                    )
-                  }
-                  sx={{ alignItems: 'center' }}
-                  fullWidth
-                  options={['Yes', 'No']}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      required={true}
-                      label="Is defective"
-                    />
-                  )}
-                />
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl size="small" fullWidth>
-                <Autocomplete
-                  disableClearable={itemDetails.usage_status_id != null}
-                  id="item-usage-status-input"
-                  value={
-                    usageStatuses?.find(
-                      (usageStatus) =>
-                        usageStatus.id == itemDetails.usage_status_id
-                    ) ?? null
-                  }
-                  size="small"
-                  onChange={(_event, usageStatus: UsageStatus | null) => {
-                    setHasUsageStatusErrors(false);
-                    handleItemDetails(
-                      'usage_status_id',
-                      usageStatus?.id ?? null
-                    );
-                  }}
-                  sx={{ alignItems: 'center' }}
-                  fullWidth
-                  options={usageStatuses ?? []}
-                  isOptionEqualToValue={(option, value) =>
-                    option.id == value.id
-                  }
-                  getOptionLabel={(option) => option.value}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      required={true}
-                      label="Usage status"
-                      error={hasUsageStatusErrors}
-                      helperText={
-                        hasUsageStatusErrors && 'Please select a Usage Status'
+              <Controller
+                name="warranty_end_date"
+                control={controlDetailsStep}
+                render={({ field }) => (
+                  <DatePicker
+                    label="Warranty end date"
+                    {...field}
+                    value={
+                      field.value && !isNaN(Date.parse(field.value))
+                        ? new Date(field.value)
+                        : null
+                    }
+                    maxDate={DATE_PICKER_MAX_DATE}
+                    minDate={DATE_PICKER_MIN_DATE}
+                    onChange={(value) => {
+                      if (value && !isNaN(value.getTime())) {
+                        // If the date is valid, convert it to ISO string
+                        field.onChange(value.toISOString());
+                      } else {
+                        // If invalid, clear the value
+                        field.onChange('');
                       }
-                    />
-                  )}
-                />
-              </FormControl>
+                    }}
+                    slotProps={{
+                      actionBar: { actions: ['clear'] },
+                      textField: {
+                        size: 'small',
+                        fullWidth: true,
+                        error: !!errorsDetailsStep.warranty_end_date,
+                        helperText:
+                          errorsDetailsStep.warranty_end_date?.message,
+                      },
+                      field: { clearable: true },
+                      clearButton: { size: 'small' },
+                    }}
+                    onError={(error) => {
+                      const errorMessage = dateErrorMessageHandler({
+                        error,
+                        minDate: DATE_PICKER_MIN_DATE,
+                        maxDate: DATE_PICKER_MAX_DATE,
+                      });
+                      if (errorMessage !== '') {
+                        setErrorDetailsStep('warranty_end_date', {
+                          message: errorMessage,
+                        });
+                      } else {
+                        clearErrorsDetailsStep('warranty_end_date');
+                      }
+                    }}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Controller
+                name="delivered_date"
+                control={controlDetailsStep}
+                render={({ field }) => (
+                  <DatePicker
+                    label="Delivered date"
+                    {...field}
+                    value={
+                      field.value && !isNaN(Date.parse(field.value))
+                        ? new Date(field.value)
+                        : null
+                    }
+                    maxDate={DATE_PICKER_MAX_DATE}
+                    minDate={DATE_PICKER_MIN_DATE}
+                    onChange={(value) => {
+                      if (value && !isNaN(value.getTime())) {
+                        // If the date is valid, convert it to ISO string
+                        field.onChange(value.toISOString());
+                      }
+                    }}
+                    slotProps={{
+                      actionBar: { actions: ['clear'] },
+                      textField: (props) => ({
+                        ...props,
+                        size: 'small',
+                        fullWidth: true,
+                        error: !!errorsDetailsStep.delivered_date,
+                        helperText: errorsDetailsStep.delivered_date?.message,
+                      }),
+                      field: { clearable: true },
+                      clearButton: { size: 'small' },
+                    }}
+                    onError={(error) => {
+                      const errorMessage = dateErrorMessageHandler({
+                        error,
+                        minDate: DATE_PICKER_MIN_DATE,
+                        maxDate: DATE_PICKER_MAX_DATE,
+                      });
+                      if (errorMessage !== '') {
+                        setErrorDetailsStep('delivered_date', {
+                          message: errorMessage,
+                        });
+                      } else {
+                        clearErrorsDetailsStep('delivered_date');
+                      }
+                    }}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Controller
+                control={controlDetailsStep}
+                name="is_defective"
+                render={({ field: { value, onChange } }) => (
+                  <Autocomplete
+                    disableClearable={true}
+                    id="item-is-defective-input"
+                    value={value === 'true' ? 'Yes' : 'No'}
+                    size="small"
+                    onChange={(_event, value) =>
+                      onChange(value === 'Yes' ? 'true' : 'false')
+                    }
+                    sx={{ alignItems: 'center' }}
+                    fullWidth
+                    options={['Yes', 'No']}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        required={true}
+                        label="Is defective"
+                      />
+                    )}
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Controller
+                control={controlDetailsStep}
+                name="usage_status_id"
+                render={({ field: { value, onChange } }) => (
+                  <Autocomplete
+                    disableClearable={value != null}
+                    id="item-usage-status-input"
+                    value={
+                      usageStatuses?.find(
+                        (usageStatus) => usageStatus.id == value
+                      ) ?? null
+                    }
+                    size="small"
+                    onChange={(_event, usageStatus: UsageStatus | null) => {
+                      onChange(usageStatus?.id ?? null);
+                    }}
+                    sx={{ alignItems: 'center' }}
+                    fullWidth
+                    options={usageStatuses ?? []}
+                    isOptionEqualToValue={(option, value) =>
+                      option.id == value.id
+                    }
+                    getOptionLabel={(option) => option.value}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        required={true}
+                        label="Usage status"
+                        error={!!errorsDetailsStep.usage_status_id}
+                        helperText={errorsDetailsStep.usage_status_id?.message}
+                      />
+                    )}
+                  />
+                )}
+              />
             </Grid>
 
             <Grid item container xs={12} sx={{ display: 'flex' }}>
@@ -851,10 +813,7 @@ function ItemDialog(props: ItemDialogProps) {
                   size="small"
                   multiline
                   minRows={5}
-                  value={itemDetails.notes ?? ''}
-                  onChange={(event) => {
-                    handleItemDetails('notes', event.target.value);
-                  }}
+                  {...registerDetailsStep('notes')}
                   fullWidth
                 />
               </Grid>
@@ -892,114 +851,126 @@ function ItemDialog(props: ItemDialogProps) {
                       <Grid container spacing={1.5}>
                         <Grid item xs={11} sx={{ display: 'flex' }}>
                           {property.type === 'boolean' ? (
-                            <FormControl fullWidth>
-                              <Autocomplete
-                                disableClearable={property.mandatory ?? false}
-                                id={`catalogue-item-property-${property.name.replace(
-                                  /\s+/g,
-                                  '-'
-                                )}`}
-                                value={
-                                  propertyValues[index]
-                                    ? (propertyValues[index] as string)
-                                        .charAt(0)
-                                        .toUpperCase() +
-                                      (propertyValues[index] as string).slice(1)
-                                    : null
-                                }
-                                size="small"
-                                onChange={(_event, value) => {
-                                  handlePropertyChange(
-                                    index,
-                                    value?.toLowerCase() as string
-                                  );
-                                }}
-                                sx={{ alignItems: 'center' }}
-                                fullWidth
-                                options={['True', 'False']}
-                                isOptionEqualToValue={(option, value) =>
-                                  option === value
-                                }
-                                renderInput={(params) => (
-                                  <TextField
-                                    {...params}
-                                    required={property.mandatory ?? false}
-                                    label={property.name}
-                                    error={propertyErrors[index]}
-                                    helperText={
-                                      propertyErrors[index] &&
-                                      'Please select either True or False'
-                                    }
-                                  />
-                                )}
-                              />
-                            </FormControl>
+                            <Controller
+                              control={controlPropertiesStep}
+                              name={`properties.${index}.value.value`}
+                              render={({
+                                field: { value: propertyValue, onChange },
+                              }) => (
+                                <Autocomplete
+                                  disableClearable={property.mandatory ?? false}
+                                  id={`catalogue-item-property-${property.name.replace(
+                                    /\s+/g,
+                                    '-'
+                                  )}`}
+                                  value={
+                                    propertyValue
+                                      ? propertyValue.charAt(0).toUpperCase() +
+                                        propertyValue.slice(1)
+                                      : ''
+                                  }
+                                  size="small"
+                                  onChange={(_event, value) => {
+                                    onChange(value);
+                                  }}
+                                  sx={{ alignItems: 'center' }}
+                                  fullWidth
+                                  options={['True', 'False']}
+                                  isOptionEqualToValue={(option, value) =>
+                                    option.toLowerCase() ==
+                                      value.toLowerCase() || value == ''
+                                  }
+                                  renderInput={(params) => (
+                                    <TextField
+                                      {...params}
+                                      required={property.mandatory ?? false}
+                                      label={property.name}
+                                      error={
+                                        !!errorsPropertiesStep?.properties?.[
+                                          index
+                                        ]?.value?.value
+                                      }
+                                      helperText={
+                                        errorsPropertiesStep?.properties?.[
+                                          index
+                                        ]?.value?.value?.message as string
+                                      }
+                                    />
+                                  )}
+                                />
+                              )}
+                            />
                           ) : property.allowed_values ? (
-                            <FormControl fullWidth>
-                              <Autocomplete
-                                disableClearable={property.mandatory ?? false}
-                                id={`catalogue-item-property-${property.name.replace(
-                                  /\s+/g,
-                                  '-'
-                                )}`}
-                                value={(propertyValues[index] as string) ?? ''}
-                                size="small"
-                                onChange={(_event, value) => {
-                                  handlePropertyChange(index, value);
-                                }}
-                                sx={{ alignItems: 'center' }}
-                                fullWidth
-                                options={property.allowed_values.values}
-                                getOptionLabel={(option) => option.toString()}
-                                isOptionEqualToValue={(option, value) =>
-                                  option.toString() === value.toString() ||
-                                  value === ''
-                                }
-                                renderInput={(params) => (
-                                  <TextField
-                                    {...params}
-                                    required={property.mandatory ?? false}
-                                    label={`${property.name} ${
-                                      property.unit ? `(${property.unit})` : ''
-                                    }`}
-                                    error={propertyErrors[index]}
-                                    helperText={
-                                      propertyErrors[index] &&
-                                      'Please enter a valid value as this field is mandatory'
-                                    }
-                                  />
-                                )}
-                              />
-                            </FormControl>
+                            <Controller
+                              control={controlPropertiesStep}
+                              name={`properties.${index}.value.value`}
+                              render={({
+                                field: { value: propertyValue, onChange },
+                              }) => (
+                                <Autocomplete
+                                  disableClearable={property.mandatory ?? false}
+                                  id={`catalogue-item-property-${property.name.replace(
+                                    /\s+/g,
+                                    '-'
+                                  )}`}
+                                  value={(propertyValue as string) ?? ''}
+                                  size="small"
+                                  onChange={(_event, value) => {
+                                    onChange(String(value));
+                                  }}
+                                  sx={{ alignItems: 'center' }}
+                                  fullWidth
+                                  options={
+                                    property.allowed_values?.values ?? []
+                                  }
+                                  getOptionLabel={(option) => option.toString()}
+                                  isOptionEqualToValue={(option, value) =>
+                                    option.toString() === value.toString() ||
+                                    value === ''
+                                  }
+                                  renderInput={(params) => (
+                                    <TextField
+                                      {...params}
+                                      required={property.mandatory ?? false}
+                                      label={`${property.name} ${
+                                        property.unit
+                                          ? `(${property.unit})`
+                                          : ''
+                                      }`}
+                                      error={
+                                        !!errorsPropertiesStep?.properties?.[
+                                          index
+                                        ]?.value?.value
+                                      }
+                                      helperText={
+                                        errorsPropertiesStep?.properties?.[
+                                          index
+                                        ]?.value?.value?.message as string
+                                      }
+                                    />
+                                  )}
+                                />
+                              )}
+                            />
                           ) : (
                             <TextField
-                              id={`item-${property.id}-input`}
+                              id={`catalogue-item-${property.name}-input`}
                               label={`${property.name} ${
                                 property.unit ? `(${property.unit})` : ''
                               }`}
                               size="small"
+                              {...registerPropertiesStep(
+                                `properties.${index}.value.value`
+                              )}
                               required={property.mandatory ?? false}
-                              value={propertyValues[index] || ''}
-                              onChange={(event) =>
-                                handlePropertyChange(
-                                  index,
-                                  event.target.value ? event.target.value : null
-                                )
-                              }
                               fullWidth
-                              error={propertyErrors[index]}
+                              error={
+                                !!errorsPropertiesStep?.properties?.[index]
+                                  ?.value?.value
+                              }
                               helperText={
-                                // Check if 'propertyErrors[index]' exists and evaluate its value
-                                propertyErrors[index]
-                                  ? // If 'propertyErrors[index]' is truthy, perform the following checks:
-                                    property.mandatory && !propertyValues[index]
-                                    ? // If 'property' is mandatory and 'propertyValues[index]' is empty, return a mandatory field error message
-                                      'Please enter a valid value as this field is mandatory'
-                                    : property.type === 'number' &&
-                                      isNaN(Number(propertyValues[index])) &&
-                                      'Please enter a valid number' // If 'property' is of type 'number' and 'propertyValues[index]' is not a valid number, return an invalid number error message
-                                  : // If 'propertyErrors[index]' is falsy, return an empty string (no error)
-                                    ''
+                                errorsPropertiesStep?.properties?.[index]?.value
+                                  ?.value?.message as string
                               }
                             />
                           )}
@@ -1090,7 +1061,10 @@ function ItemDialog(props: ItemDialogProps) {
       fullWidth
     >
       <DialogTitle>
-        <Grid item xs={12}>{`${type === 'edit' ? 'Edit' : 'Add'} Item`}</Grid>
+        <Grid
+          item
+          xs={12}
+        >{`${requestType === 'patch' ? 'Edit' : 'Add'} Item`}</Grid>
       </DialogTitle>
       <DialogContent>
         <Stepper
@@ -1141,18 +1115,12 @@ function ItemDialog(props: ItemDialogProps) {
               isAddItemsPending ||
               isAddItemPending ||
               isEditItemPending ||
-              !itemDetails.system_id ||
-              formErrorMessage !== undefined ||
-              propertyErrors.some((value) => value === true) ||
-              Object.values(hasDateErrors).some(
-                (value: boolean) => value === true
-              ) ||
-              hasUsageStatusErrors ||
-              !!hasSerialNumberErrors ||
-              !!hasQuantityErrors ||
-              !!hasStartingValueErrors
+              Object.keys(errorsPropertiesStep).filter((val) => val !== 'root')
+                .length !== 0 ||
+              Object.values(errorsDetailsStep).length !== 0 ||
+              parentSystemIdError
             }
-            onClick={type === 'edit' ? handleEditItem : handleAddItem}
+            onClick={handleFinish}
             sx={{ mr: 3 }}
             endIcon={
               isAddItemsPending || isAddItemPending || isEditItemPending ? (
@@ -1165,14 +1133,14 @@ function ItemDialog(props: ItemDialogProps) {
         ) : (
           <Button
             disabled={isStepFailed(activeStep)}
-            onClick={() => handleNext(activeStep)}
+            onClick={(event) => handleNext(event, activeStep)}
             sx={{ mr: 3 }}
           >
             Next
           </Button>
         )}
       </DialogActions>
-      {formErrorMessage && (
+      {errorsPropertiesStep.root?.formError && (
         <Box
           sx={{
             mx: 3,
@@ -1182,8 +1150,8 @@ function ItemDialog(props: ItemDialogProps) {
             justifyContent: 'center',
           }}
         >
-          <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
-            {formErrorMessage}
+          <FormHelperText sx={{ marginBottom: 2, textAlign: 'center' }} error>
+            {errorsPropertiesStep.root?.formError.message}
           </FormHelperText>
         </Box>
       )}
