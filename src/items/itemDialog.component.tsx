@@ -174,6 +174,9 @@ function ItemDialog(props: ItemDialogProps) {
     selectedItem?.system_id ?? null
   );
 
+  const [parentSystemIdError, setParentSystemIdError] =
+    React.useState<boolean>(false);
+
   const { data: systemsData, isLoading: systemsDataLoading } = useGetSystems(
     parentSystemId === null ? 'null' : parentSystemId
   );
@@ -279,6 +282,12 @@ function ItemDialog(props: ItemDialogProps) {
     serialNumberAdvancedOptions.quantity,
     serialNumberAdvancedOptions.starting_value,
   ]);
+
+  React.useEffect(() => {
+    if (parentSystemIdError && parentSystemId) {
+      setParentSystemIdError(false);
+    }
+  }, [parentSystemId, parentSystemIdError]);
 
   const handleAddItem = React.useCallback(
     (data: ItemPost, quantity?: number, starting_value?: number) => {
@@ -456,7 +465,11 @@ function ItemDialog(props: ItemDialogProps) {
       const { detailsStepData, propertiesStepData } =
         await handlePropertiesStep(event);
 
-      if (detailsStepData && propertiesStepData) {
+      if (!parentSystemId) {
+        setParentSystemIdError(true);
+      }
+
+      if (detailsStepData && propertiesStepData && parentSystemId) {
         const data: ItemPost = {
           ...convertToItemDetailsStepPost(detailsStepData),
           properties: convertToPropertyPost(propertiesStepData?.properties),
@@ -503,10 +516,10 @@ function ItemDialog(props: ItemDialogProps) {
               .length !== 0
           );
         case 2:
-          return !parentSystemId;
+          return parentSystemIdError;
       }
     },
-    [errorsDetailsStep, errorsPropertiesStep, parentSystemId]
+    [errorsDetailsStep, errorsPropertiesStep, parentSystemIdError]
   );
 
   const renderStepContent = (step: number) => {
@@ -1105,7 +1118,7 @@ function ItemDialog(props: ItemDialogProps) {
               Object.keys(errorsPropertiesStep).filter((val) => val !== 'root')
                 .length !== 0 ||
               Object.values(errorsDetailsStep).length !== 0 ||
-              !parentSystemId
+              parentSystemIdError
             }
             onClick={handleFinish}
             sx={{ mr: 3 }}
