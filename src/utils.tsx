@@ -398,9 +398,8 @@ export const displayTableRowCountText = <TData extends MRT_RowData>(
   return <Typography sx={{ ...sx }}>{tableRowCountText}</Typography>;
 };
 
-export const getInitialColumnFilterFnState = (
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  columns: MRT_ColumnDef<any>[]
+export const getInitialColumnFilterFnState = <TData extends MRT_RowData>(
+  columns: MRT_ColumnDef<TData>[]
 ): MRT_ColumnFilterFnsState => {
   const initialState = columns.reduce<MRT_ColumnFilterFnsState>(
     (result, column) => {
@@ -413,12 +412,6 @@ export const getInitialColumnFilterFnState = (
   );
   return initialState;
 };
-
-export function removeSecondsFromDate(date: string): Date {
-  const modifiedDate = new Date(date);
-  modifiedDate.setSeconds(0, 0);
-  return modifiedDate;
-}
 
 export const checkForDuplicates = (props: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

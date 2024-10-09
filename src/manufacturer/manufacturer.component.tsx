@@ -32,7 +32,6 @@ import {
   displayTableRowCountText,
   formatDateTimeStrings,
   getPageHeightCalc,
-  removeSecondsFromDate,
 } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
@@ -76,7 +75,7 @@ function ManufacturerComponent() {
       {
         header: 'Last modified',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => removeSecondsFromDate(row.modified_time),
+        accessorFn: (row) => row.modified_time,
         id: 'modified_time',
         filterVariant: 'datetime-range',
         filterFn: 'betweenInclusive',
@@ -89,7 +88,7 @@ function ManufacturerComponent() {
       {
         header: 'Created',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => removeSecondsFromDate(row.created_time),
+        accessorFn: (row) => row.created_time,
         id: 'created_time',
         filterVariant: 'datetime-range',
         filterFn: 'betweenInclusive',

@@ -26,7 +26,6 @@ import {
   displayTableRowCountText,
   formatDateTimeStrings,
   getPageHeightCalc,
-  removeSecondsFromDate,
 } from '../../utils';
 import DeleteUnitDialog from './deleteUnitsDialog.component.tsx';
 import UnitsDialog from './unitsDialog.component.tsx';
@@ -49,12 +48,11 @@ function Units() {
         header: 'Value',
         accessorFn: (row) => row.value,
         id: 'value',
-        filterFn: 'fuzzy',
         Cell: ({ row }) => row.original.value,
       },
       {
         header: 'Last modified',
-        accessorFn: (row) => removeSecondsFromDate(row.modified_time),
+        accessorFn: (row) => row.modified_time,
         id: 'modified_time',
         filterVariant: 'datetime-range',
         filterFn: 'betweenInclusive',
@@ -66,7 +64,7 @@ function Units() {
       },
       {
         header: 'Created',
-        accessorFn: (row) => removeSecondsFromDate(row.created_time),
+        accessorFn: (row) => row.created_time,
         id: 'created_time',
         filterVariant: 'datetime-range',
         filterFn: 'betweenInclusive',

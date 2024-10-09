@@ -27,7 +27,6 @@ import {
   formatDateTimeStrings,
   getInitialColumnFilterFnState,
   getPageHeightCalc,
-  removeSecondsFromDate,
 } from '../../utils.tsx';
 import DeleteUsageStatusDialog from './deleteUsageStatusDialog.component.tsx';
 import UsageStatusDialog from './usageStatusDialog.component.tsx';
@@ -59,16 +58,16 @@ function UsageStatuses() {
           'startsWith',
           'endsWith',
           'notEquals',
-          'betweenInclusive',
+          'equals',
         ],
         Cell: ({ row }) => row.original.value,
       },
       {
         header: 'Last modified',
-        accessorFn: (row) => removeSecondsFromDate(row.modified_time),
+        accessorFn: (row) => row.modified_time,
         id: 'modified_time',
         filterVariant: 'datetime-range',
-        filterFn: 'between',
+        filterFn: 'betweenInclusive',
         size: 350,
         enableGrouping: false,
         Cell: ({ row }) =>
@@ -76,10 +75,10 @@ function UsageStatuses() {
       },
       {
         header: 'Created',
-        accessorFn: (row) => removeSecondsFromDate(row.created_time),
+        accessorFn: (row) => row.created_time,
         id: 'created_time',
         filterVariant: 'datetime-range',
-        filterFn: 'between',
+        filterFn: 'betweenInclusive',
         size: 350,
         enableGrouping: false,
         enableHiding: true,
