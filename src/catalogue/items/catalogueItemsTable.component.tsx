@@ -261,6 +261,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         accessorFn: (row) => new Date(row.catalogueItem.modified_time),
         id: 'catalogueItem.modified_time',
         filterVariant: 'datetime-range',
+        filterFn: 'betweenInclusive',
         size: 350,
         enableGrouping: false,
         Cell: ({ row }) =>
@@ -272,6 +273,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         accessorFn: (row) => new Date(row.catalogueItem.created_time),
         id: 'catalogueItem.created_time',
         filterVariant: 'datetime-range',
+        filterFn: 'betweenInclusive',
         size: 350,
         enableGrouping: false,
         enableHiding: true,

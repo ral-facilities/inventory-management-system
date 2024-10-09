@@ -55,6 +55,7 @@ function Units() {
         accessorFn: (row) => new Date(row.modified_time),
         id: 'modified_time',
         filterVariant: 'datetime-range',
+        filterFn: 'betweenInclusive',
         size: 350,
         enableGrouping: false,
         Cell: ({ row }) =>
@@ -66,6 +67,7 @@ function Units() {
         accessorFn: (row) => new Date(row.created_time),
         id: 'created_time',
         filterVariant: 'datetime-range',
+        filterFn: 'betweenInclusive',
         size: 350,
         enableGrouping: false,
         enableHiding: true,

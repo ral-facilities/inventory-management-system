@@ -25,6 +25,7 @@ import {
   TableCellOverFlowTipProps,
   displayTableRowCountText,
   formatDateTimeStrings,
+  getInitialColumnFilterFnState,
   getPageHeightCalc,
 } from '../../utils.tsx';
 import DeleteUsageStatusDialog from './deleteUsageStatusDialog.component.tsx';
@@ -49,6 +50,16 @@ function UsageStatuses() {
         header: 'Value',
         accessorFn: (row) => row.value,
         id: 'value',
+        filterVariant: 'text',
+        filterFn: 'fuzzy',
+        columnFilterModeOptions: [
+          'fuzzy',
+          'contains',
+          'startsWith',
+          'endsWith',
+          'notEquals',
+          'equals',
+        ],
         Cell: ({ row }) => row.original.value,
       },
       {
@@ -56,10 +67,10 @@ function UsageStatuses() {
         accessorFn: (row) => new Date(row.modified_time),
         id: 'modified_time',
         filterVariant: 'datetime-range',
+        filterFn: 'betweenInclusive',
         size: 350,
         enableGrouping: false,
         Cell: ({ row }) =>
-          row.original.modified_time &&
           formatDateTimeStrings(row.original.modified_time, true),
       },
       {
@@ -67,6 +78,7 @@ function UsageStatuses() {
         accessorFn: (row) => new Date(row.created_time),
         id: 'created_time',
         filterVariant: 'datetime-range',
+        filterFn: 'betweenInclusive',
         size: 350,
         enableGrouping: false,
         enableHiding: true,
@@ -76,12 +88,17 @@ function UsageStatuses() {
     ];
   }, []);
 
+  const initialColumnFilterFnState = React.useMemo(() => {
+    return getInitialColumnFilterFnState(columns);
+  }, [columns]);
+
   const noResultsTxt =
     'No results found: Try adding a Usage Status by using the Add Usage Status button';
 
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
       pagination: { pageSize: 15, pageIndex: 0 },
+      columnFilterFns: initialColumnFilterFnState,
     },
     storeInUrl: true,
   });
@@ -91,6 +108,7 @@ function UsageStatuses() {
     data: usageStatusData ?? [],
     // Features
     enableColumnOrdering: true,
+    enableColumnFilterModes: true,
     enableFacetedValues: true,
     enableRowActions: true,
     enableStickyHeader: true,

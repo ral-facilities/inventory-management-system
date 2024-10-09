@@ -8,9 +8,12 @@ import {
   generateUniqueId,
   generateUniqueName,
   generateUniqueNameUsingCode,
+  getInitialColumnFilterFnState,
   sortDataList,
   trimStringValues,
 } from './utils';
+import { MRT_ColumnDef } from 'material-react-table';
+import { UsageStatus } from './api/api.types';
 
 describe('Utility functions', () => {
   afterEach(() => {
@@ -289,6 +292,29 @@ describe('Utility functions', () => {
       { name: 'John' },
       { name: 'Susan' },
     ]);
+  });
+
+  it('getInitialColumnFilterFnState correctly creates filterFns initial state', () => {
+    const expectedResult = { created_time: 'between', value: 'fuzzy' };
+
+    const columns: MRT_ColumnDef<UsageStatus>[] = [
+      {
+        header: 'Value',
+        filterVariant: 'text',
+        filterFn: 'fuzzy',
+        enableColumnFilterModes: false,
+        id: 'value',
+      },
+      {
+        header: 'Created',
+        filterVariant: 'datetime-range',
+        filterFn: 'between',
+        id: 'created_time',
+      },
+    ];
+
+    const actualResult = getInitialColumnFilterFnState(columns);
+    expect(actualResult).toEqual(expectedResult);
   });
 });
 

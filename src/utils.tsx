@@ -11,6 +11,9 @@ import { format, parseISO } from 'date-fns';
 import {
   MRT_Cell,
   MRT_Column,
+  MRT_ColumnDef,
+  MRT_ColumnFilterFnsState,
+  MRT_FilterOption,
   MRT_Header,
   MRT_Row,
   MRT_RowData,
@@ -393,6 +396,21 @@ export const displayTableRowCountText = <TData extends MRT_RowData>(
       : `Returned ${tableRowCount} out of ${dataLength} ${dataName}`;
 
   return <Typography sx={{ ...sx }}>{tableRowCountText}</Typography>;
+};
+
+export const getInitialColumnFilterFnState = <TData extends MRT_RowData>(
+  columns: MRT_ColumnDef<TData>[]
+): MRT_ColumnFilterFnsState => {
+  const initialState = columns.reduce<MRT_ColumnFilterFnsState>(
+    (result, column) => {
+      if (column.id) {
+        result[column.id] = column.filterFn as MRT_FilterOption;
+      }
+      return result;
+    },
+    {}
+  );
+  return initialState;
 };
 
 export const checkForDuplicates = (props: {
