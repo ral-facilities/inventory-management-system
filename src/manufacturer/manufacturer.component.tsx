@@ -75,7 +75,7 @@ function ManufacturerComponent() {
       {
         header: 'Last modified',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => row.modified_time,
+        accessorFn: (row) => new Date(row.modified_time),
         id: 'modified_time',
         filterVariant: 'datetime-range',
         filterFn: 'betweenInclusive',
@@ -88,7 +88,7 @@ function ManufacturerComponent() {
       {
         header: 'Created',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => row.created_time,
+        accessorFn: (row) => new Date(row.created_time),
         id: 'created_time',
         filterVariant: 'datetime-range',
         filterFn: 'betweenInclusive',

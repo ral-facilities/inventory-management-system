@@ -64,7 +64,7 @@ function UsageStatuses() {
       },
       {
         header: 'Last modified',
-        accessorFn: (row) => row.modified_time,
+        accessorFn: (row) => new Date(row.modified_time),
         id: 'modified_time',
         filterVariant: 'datetime-range',
         filterFn: 'betweenInclusive',
@@ -75,7 +75,7 @@ function UsageStatuses() {
       },
       {
         header: 'Created',
-        accessorFn: (row) => row.created_time,
+        accessorFn: (row) => new Date(row.created_time),
         id: 'created_time',
         filterVariant: 'datetime-range',
         filterFn: 'betweenInclusive',

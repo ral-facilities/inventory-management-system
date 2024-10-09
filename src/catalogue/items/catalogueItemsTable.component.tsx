@@ -258,7 +258,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       {
         header: 'Last modified',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => row.catalogueItem.modified_time,
+        accessorFn: (row) => new Date(row.catalogueItem.modified_time),
         id: 'catalogueItem.modified_time',
         filterVariant: 'datetime-range',
         filterFn: 'betweenInclusive',
@@ -270,7 +270,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       {
         header: 'Created',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => row.catalogueItem.created_time,
+        accessorFn: (row) => new Date(row.catalogueItem.created_time),
         id: 'catalogueItem.created_time',
         filterVariant: 'datetime-range',
         filterFn: 'betweenInclusive',

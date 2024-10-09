@@ -50,7 +50,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
       },
       {
         header: 'Last modified',
-        accessorFn: (row) => row.modified_time,
+        accessorFn: (row) => new Date(row.modified_time),
         id: 'modified_time',
         filterVariant: 'datetime-range',
         filterFn: 'betweenInclusive',

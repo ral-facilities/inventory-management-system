@@ -300,7 +300,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       {
         header: 'Last modified',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => row.item.modified_time,
+        accessorFn: (row) => new Date(row.item.modified_time),
         id: 'item.modified_time',
         filterVariant: 'datetime-range',
         filterFn: 'betweenInclusive',
@@ -313,7 +313,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       {
         header: 'Created',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => row.item.created_time,
+        accessorFn: (row) => new Date(row.item.created_time),
         id: 'item.created_time',
         filterVariant: 'datetime-range',
         filterFn: 'betweenInclusive',
@@ -326,7 +326,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         header: 'Delivered Date',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) =>
-          row.item.delivered_date ? row.item.delivered_date : null,
+          row.item.delivered_date ? new Date(row.item.delivered_date) : null,
         id: 'item.delivered_date',
         filterVariant: 'date-range',
         filterFn: 'betweenInclusive',

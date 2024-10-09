@@ -680,7 +680,7 @@ exports[`Usage statuses > renders table correctly 1`] = `
                             id=":rd:-helper-text"
                           >
                             <label>
-                              Filter Mode: Between
+                              Filter Mode: Between Inclusive
                             </label>
                           </p>
                         </div>
@@ -931,7 +931,7 @@ exports[`Usage statuses > renders table correctly 1`] = `
                             id=":rl:-helper-text"
                           >
                             <label>
-                              Filter Mode: Between
+                              Filter Mode: Between Inclusive
                             </label>
                           </p>
                         </div>
