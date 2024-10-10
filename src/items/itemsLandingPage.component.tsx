@@ -1,9 +1,5 @@
-import AttachmentOutlinedIcon from '@mui/icons-material/AttachmentOutlined';
-import CollectionsOutlinedIcon from '@mui/icons-material/CollectionsOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import NotesIcon from '@mui/icons-material/Notes';
 import PrintIcon from '@mui/icons-material/Print';
 import {
   Box,
@@ -17,8 +13,8 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import React, { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React from 'react';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { BreadcrumbsInfo } from '../api/api.types';
 import {
   useGetCatalogueBreadcrumbs,
@@ -32,6 +28,9 @@ import { useNavigateToCatalogue } from '../catalogue/catalogue.component';
 import PlaceholderImage from '../common/placeholderImage.component';
 import {
   a11yProps,
+  CATALOGUE_LANDING_PAGE_TAB_VALUES,
+  CatalogueLandingPageTabValue,
+  defaultCatalogueLandingPageIconMapping,
   formatDateTimeStrings,
   StyledTab,
   TabPanel,
@@ -39,27 +38,13 @@ import {
 import Breadcrumbs from '../view/breadcrumbs.component';
 import ItemDialog from './itemDialog.component';
 
-const ITEMS_TAB_VALUES = [
-  'Information',
-  'Gallery',
-  'Attachments',
-  'Notes',
-] as const;
-
-const iconMapping: Record<ItemsTabValue, React.ReactElement> = {
-  Information: <InfoOutlinedIcon />,
-  Gallery: <CollectionsOutlinedIcon />,
-  Attachments: <AttachmentOutlinedIcon />,
-  Notes: <NotesIcon />,
-};
-
-type ItemsTabValue = (typeof ITEMS_TAB_VALUES)[number];
-
 function ItemsLandingPage() {
   // Navigation
 
   const { item_id: id } = useParams();
   const navigateToCatalogue = useNavigateToCatalogue();
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { data: itemData, isLoading: itemDataIsLoading } = useGetItem(id);
 
@@ -104,13 +89,27 @@ function ItemsLandingPage() {
   const [editItemDialogOpen, setEditItemDialogOpen] =
     React.useState<boolean>(false);
 
-  const [tabValue, setTabValue] = useState<ItemsTabValue>('Information');
+  // Retrieve the tab value from the URL or default to "Information"
+  const urlTabValue =
+    (searchParams.get('tab') as CatalogueLandingPageTabValue) || 'Information';
+  const [tabValue, setTabValue] =
+    React.useState<CatalogueLandingPageTabValue>(urlTabValue);
+
+  React.useEffect(() => {
+    const value = searchParams.get('tab');
+    if (!value) setSearchParams({ tab: 'Information' }, { replace: true });
+  }, [searchParams, setSearchParams]);
+
+  React.useEffect(() => {
+    setTabValue(urlTabValue);
+  }, [urlTabValue]);
 
   const handleTabChange = (
     _event: React.SyntheticEvent,
-    newValue: ItemsTabValue
+    newValue: CatalogueLandingPageTabValue
   ) => {
     setTabValue(newValue);
+    setSearchParams({ tab: newValue }, { replace: true });
   };
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -157,7 +156,7 @@ function ItemsLandingPage() {
             {/* Image Section */}
             <Grid item container xs={12}>
               <Grid item xs={12} sm={4}>
-                <PlaceholderImage maxHeight="400px" maxWidth="500px" />
+                <PlaceholderImage />
               </Grid>
               {/* Title and Description Section */}
               <Grid
@@ -204,6 +203,7 @@ function ItemsLandingPage() {
                 sm={2}
                 sx={{
                   textAlign: 'right',
+                  justifyContent: 'flex-end',
                   alignItems: 'top',
                   '@media print': {
                     display: 'none',
@@ -271,9 +271,9 @@ function ItemsLandingPage() {
                 onChange={handleTabChange}
                 aria-label="view tabs"
               >
-                {ITEMS_TAB_VALUES.map((value) => (
+                {CATALOGUE_LANDING_PAGE_TAB_VALUES.map((value) => (
                   <StyledTab
-                    icon={iconMapping[value]}
+                    icon={defaultCatalogueLandingPageIconMapping[value]}
                     iconPosition="start"
                     value={value}
                     label={value}
@@ -283,7 +283,10 @@ function ItemsLandingPage() {
                 ))}
               </Tabs>
             </Grid>
-            <TabPanel<ItemsTabValue> value={tabValue} label="Information">
+            <TabPanel<CatalogueLandingPageTabValue>
+              value={tabValue}
+              label="Information"
+            >
               <Grid item container spacing={1} xs={12} mt={1}>
                 <Grid
                   item
@@ -574,15 +577,18 @@ function ItemsLandingPage() {
                 )}
               </Grid>
             </TabPanel>
-            <TabPanel<ItemsTabValue>
+            <TabPanel<CatalogueLandingPageTabValue>
               value={tabValue}
               label="Gallery"
             ></TabPanel>
-            <TabPanel<ItemsTabValue>
+            <TabPanel<CatalogueLandingPageTabValue>
               value={tabValue}
               label="Attachments"
             ></TabPanel>
-            <TabPanel<ItemsTabValue> value={tabValue} label="Notes">
+            <TabPanel<CatalogueLandingPageTabValue>
+              value={tabValue}
+              label="Notes"
+            >
               <Grid container item xs={12}>
                 <Typography
                   sx={{
