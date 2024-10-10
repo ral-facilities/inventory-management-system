@@ -1,19 +1,24 @@
+import AttachmentOutlinedIcon from '@mui/icons-material/AttachmentOutlined';
+import CollectionsOutlinedIcon from '@mui/icons-material/CollectionsOutlined';
 import EditIcon from '@mui/icons-material/Edit';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import NotesIcon from '@mui/icons-material/Notes';
 import PrintIcon from '@mui/icons-material/Print';
 import {
   Box,
-  Button,
-  Collapse,
+  Divider,
+  IconButton,
   LinearProgress,
+  Menu,
+  MenuItem,
   Link as MuiLink,
+  Tabs,
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-
 import { BreadcrumbsInfo } from '../api/api.types';
 import {
   useGetCatalogueBreadcrumbs,
@@ -24,9 +29,31 @@ import { useGetItem } from '../api/items';
 import { useGetManufacturer } from '../api/manufacturers';
 import { useGetSystem } from '../api/systems';
 import { useNavigateToCatalogue } from '../catalogue/catalogue.component';
-import { formatDateTimeStrings } from '../utils';
+import PlaceholderImage from '../common/placeholderImage.component';
+import {
+  a11yProps,
+  formatDateTimeStrings,
+  StyledTab,
+  TabPanel,
+} from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import ItemDialog from './itemDialog.component';
+
+const ITEMS_TAB_VALUES = [
+  'Information',
+  'Gallery',
+  'Attachments',
+  'Notes',
+] as const;
+
+const iconMapping: Record<ItemsTabValue, React.ReactElement> = {
+  Information: <InfoOutlinedIcon />,
+  Gallery: <CollectionsOutlinedIcon />,
+  Attachments: <AttachmentOutlinedIcon />,
+  Notes: <NotesIcon />,
+};
+
+type ItemsTabValue = (typeof ITEMS_TAB_VALUES)[number];
 
 function ItemsLandingPage() {
   // Navigation
@@ -74,26 +101,28 @@ function ItemsLandingPage() {
     catalogueItemData?.manufacturer_id
   );
 
-  const [showProperties, setShowProperties] = useState(true);
-
-  const toggleProperties = () => {
-    setShowProperties(!showProperties);
-  };
-
-  const [showManufacturer, setShowManufacturer] = useState(true);
-
-  const toggleManufacturer = () => {
-    setShowManufacturer(!showManufacturer);
-  };
-
-  const [showDetails, setShowDetails] = useState(true);
-
-  const toggleDetails = () => {
-    setShowDetails(!showDetails);
-  };
-
   const [editItemDialogOpen, setEditItemDialogOpen] =
     React.useState<boolean>(false);
+
+  const [tabValue, setTabValue] = useState<ItemsTabValue>('Information');
+
+  const handleTabChange = (
+    _event: React.SyntheticEvent,
+    newValue: ItemsTabValue
+  ) => {
+    setTabValue(newValue);
+  };
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const menuOpen = Boolean(anchorEl);
+
+  const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <Grid container flexDirection="column">
@@ -121,295 +150,244 @@ function ItemsLandingPage() {
             homeLocation="Catalogue"
           />
         </Grid>
-        {itemData && (
-          <Grid item container sx={{ display: 'flex', py: 2 }}>
-            <Button
-              startIcon={<EditIcon />}
-              sx={{ mx: 0.5 }}
-              variant="outlined"
-              onClick={() => {
-                setEditItemDialogOpen(true);
-              }}
-            >
-              Edit
-            </Button>
-            <Button
-              startIcon={<PrintIcon />}
-              sx={{ mx: 0.5 }}
-              variant="outlined"
-              onClick={() => {
-                window.print();
-              }}
-            >
-              Print
-            </Button>
-          </Grid>
-        )}
       </Grid>
       {catalogueItemData && itemData && (
-        <Grid item container sx={{ px: '192px' }} xs={12} spacing={1}>
-          <Grid item xs={12}>
-            <Typography
-              sx={{ margin: 1, textAlign: 'center', wordWrap: 'break-word' }}
-              variant="h4"
-            >
-              {catalogueItemData.name}
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Typography sx={{ margin: 1, textAlign: 'center' }} variant="h6">
-              Description:
-            </Typography>
-            <Typography
-              sx={{
-                margin: 1,
-                textAlign: 'center',
-                whiteSpace: 'pre-line',
-                wordWrap: 'break-word',
-              }}
-              variant="body1"
-              color="text.secondary"
-            >
-              {catalogueItemData.description ?? 'None'}
-            </Typography>
-          </Grid>
-
-          <Grid item container spacing={1} xs={12}>
-            <Grid
-              item
-              xs={12}
-              onClick={toggleDetails}
-              sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                cursor: 'pointer',
-              }}
-              aria-label={`${showDetails ? 'Close' : 'Show'} item details`}
-            >
-              {showDetails ? (
-                <>
-                  <Typography variant="h6">Details</Typography>
-                  <ExpandLessIcon />
-                </>
-              ) : (
-                <>
-                  <Typography variant="h6">Details</Typography>
-                  <ExpandMoreIcon />
-                </>
-              )}
-            </Grid>
-
+        <Grid item container justifyContent="center" xs={12}>
+          <Grid item xs={10} style={{ maxWidth: '80%' }}>
+            {/* Image Section */}
             <Grid item container xs={12}>
-              <Collapse sx={{ width: '100%' }} in={showDetails}>
-                <Grid item container spacing={1}>
-                  <Grid item xs={12} sm={6} md={4}>
-                    <Typography align="left" color="text.primary">
-                      Serial Number
-                    </Typography>
-                    <Typography
-                      align="left"
-                      color="text.secondary"
-                      sx={{ wordWrap: 'break-word' }}
-                    >
-                      {itemData.serial_number ?? 'None'}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={4}>
-                    <Typography align="left" color="text.primary">
-                      Asset Number
-                    </Typography>
-                    <Typography
-                      align="left"
-                      color="text.secondary"
-                      sx={{ wordWrap: 'break-word' }}
-                    >
-                      {itemData.asset_number ?? 'None'}
-                    </Typography>
-                  </Grid>
+              <Grid item xs={12} sm={4}>
+                <PlaceholderImage maxHeight="400px" maxWidth="500px" />
+              </Grid>
+              {/* Title and Description Section */}
+              <Grid
+                item
+                container
+                xs={12}
+                sm={6}
+                sx={{ alignItems: 'flex-start', pl: 2 }}
+              >
+                <Grid item xs={12}>
+                  <Typography
+                    variant="h4"
+                    gutterBottom
+                    sx={{
+                      fontWeight: 'bold',
+                      wordWrap: 'break-word',
+                    }}
+                  >
+                    {catalogueItemData.name}
+                  </Typography>
 
-                  <Grid item xs={12} sm={6} md={4}>
-                    <Typography align="left" color="text.primary">
-                      Purchase Order Number
-                    </Typography>
-                    <Typography
-                      align="left"
-                      color="text.secondary"
-                      sx={{ wordWrap: 'break-word' }}
-                    >
-                      {itemData.purchase_order_number ?? 'None'}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={4}>
-                    <Typography align="left" color="text.primary">
-                      Warranty End Date
-                    </Typography>
-                    <Typography align="left" color="text.secondary">
-                      {itemData.warranty_end_date
-                        ? formatDateTimeStrings(
-                            itemData.warranty_end_date,
-                            false
-                          )
-                        : 'None'}
-                    </Typography>
-                  </Grid>
+                  <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
+                    Serial Number: {itemData.serial_number ?? 'None'}
+                  </Typography>
 
-                  <Grid item xs={12} sm={6} md={4}>
-                    <Typography align="left" color="text.primary">
-                      Delivered Date
-                    </Typography>
-                    <Typography align="left" color="text.secondary">
-                      {itemData.delivered_date
-                        ? formatDateTimeStrings(itemData.delivered_date, false)
-                        : 'None'}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={4}>
-                    <Typography align="left" color="text.primary">
-                      Is Defective
-                    </Typography>
-                    <Typography align="left" color="text.secondary">
-                      {itemData.is_defective ? 'Yes' : 'No'}
-                    </Typography>
-                  </Grid>
-
-                  <Grid item xs={12} sm={6} md={4}>
-                    <Typography align="left" color="text.primary">
-                      Usage Status
-                    </Typography>
-                    <Typography
-                      align="left"
-                      color="text.secondary"
-                      sx={{ wordWrap: 'break-word' }}
-                    >
-                      {itemData.usage_status}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={4}>
-                    <Typography align="left" color="text.primary">
-                      System
-                    </Typography>
-                    <Typography
-                      align="left"
-                      color="text.secondary"
-                      sx={{ wordWrap: 'break-word' }}
-                    >
-                      <MuiLink
-                        underline="hover"
-                        component={Link}
-                        to={'/systems/' + systemData?.id}
-                      >
-                        {systemData?.name}
-                      </MuiLink>
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={4}>
-                    <Typography align="left" color="text.primary">
-                      Last modified
-                    </Typography>
-                    <Typography align="left" color="text.secondary">
-                      {formatDateTimeStrings(itemData.modified_time, true)}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={4}>
-                    <Typography align="left" color="text.primary">
-                      Created
-                    </Typography>
-                    <Typography align="left" color="text.secondary">
-                      {formatDateTimeStrings(itemData.created_time, true)}
-                    </Typography>
-                  </Grid>
+                  <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
+                    Description:
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    sx={{ whiteSpace: 'pre-line', wordWrap: 'break-word' }}
+                    color="text.secondary"
+                  >
+                    {catalogueItemData.description ?? 'None'}
+                  </Typography>
                 </Grid>
-              </Collapse>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              onClick={toggleProperties}
-              sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                cursor: 'pointer',
-              }}
-              aria-label={`${
-                showProperties ? 'Close' : 'Show'
-              } item properties`}
-            >
-              {showProperties ? (
-                <>
-                  <Typography variant="h6">Properties</Typography>
-                  <ExpandLessIcon />
-                </>
-              ) : (
-                <>
-                  <Typography variant="h6">Properties</Typography>
-                  <ExpandMoreIcon />
-                </>
-              )}
-            </Grid>
-            <Grid container item xs={12}>
-              <Collapse sx={{ width: '100%' }} in={showProperties}>
-                <Grid container item spacing={1}>
-                  {itemData.properties &&
-                    itemData.properties.map((property, index) => (
-                      <Grid item xs={12} sm={6} md={4} key={index}>
-                        <Typography
-                          align="left"
-                          color="text.primary"
-                          sx={{ wordWrap: 'break-word' }}
-                        >{`${property.name} ${
-                          property.unit ? `(${property.unit})` : ''
-                        }`}</Typography>
-                        <Typography
-                          align="left"
-                          color="text.secondary"
-                          sx={{ wordWrap: 'break-word' }}
-                        >
-                          {property.value !== null
-                            ? String(property.value)
-                            : 'None'}
-                        </Typography>
-                      </Grid>
-                    ))}
+              </Grid>
+
+              {/* Actions Section */}
+              <Grid
+                item
+                xs={12}
+                container
+                sm={2}
+                sx={{
+                  textAlign: 'right',
+                  alignItems: 'top',
+                  '@media print': {
+                    display: 'none',
+                  },
+                }}
+              >
+                <Grid item>
+                  <Typography
+                    variant="body1"
+                    sx={{ display: 'inline-block', mr: 1 }}
+                  >
+                    Actions
+                  </Typography>
+                  <IconButton
+                    onClick={handleMenuClick}
+                    sx={{
+                      border: '1px solid',
+                      borderRadius: 1,
+                      padding: '6px',
+                    }}
+                    aria-label="actions menu"
+                  >
+                    <ExpandMoreIcon />
+                  </IconButton>
+
+                  {/* Menu Component */}
+                  <Menu
+                    anchorEl={anchorEl}
+                    open={menuOpen}
+                    onClose={handleMenuClose}
+                    transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                    sx={{
+                      '@media print': {
+                        display: 'none',
+                      },
+                    }}
+                  >
+                    <MenuItem
+                      onClick={() => {
+                        setEditItemDialogOpen(true);
+                        handleMenuClose();
+                      }}
+                    >
+                      <EditIcon fontSize="small" sx={{ mr: 1 }} />
+                      Edit
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        window.print();
+                        handleMenuClose();
+                      }}
+                    >
+                      <PrintIcon fontSize="small" sx={{ mr: 1 }} />
+                      Print
+                    </MenuItem>
+                  </Menu>
                 </Grid>
-              </Collapse>
+              </Grid>
             </Grid>
 
-            <Grid
-              item
-              xs={12}
-              onClick={toggleManufacturer}
-              sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                cursor: 'pointer',
-              }}
-              aria-label={`${
-                showManufacturer ? 'Close' : 'Show'
-              } item manufacturer details`}
-            >
-              {showManufacturer ? (
-                <>
-                  <Typography variant="h6">Manufacturer</Typography>
-                  <ExpandLessIcon />
-                </>
-              ) : (
-                <>
-                  <Typography variant="h6">Manufacturer</Typography>
-                  <ExpandMoreIcon />
-                </>
-              )}
+            <Grid item xs={12}>
+              <Tabs
+                value={tabValue}
+                onChange={handleTabChange}
+                aria-label="view tabs"
+              >
+                {ITEMS_TAB_VALUES.map((value) => (
+                  <StyledTab
+                    icon={iconMapping[value]}
+                    iconPosition="start"
+                    value={value}
+                    label={value}
+                    key={value}
+                    {...a11yProps(value)}
+                  />
+                ))}
+              </Tabs>
             </Grid>
+            <TabPanel<ItemsTabValue> value={tabValue} label="Information">
+              <Grid item container spacing={1} xs={12} mt={1}>
+                <Grid
+                  item
+                  xs={12}
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'start',
+                  }}
+                >
+                  <Typography variant="h6">Details</Typography>
+                  <Divider sx={{ width: '100%', mt: 1 }} />
+                </Grid>
 
-            {manufacturer && (
-              <Grid item container xs={12}>
-                <Collapse sx={{ width: '100%' }} in={showManufacturer}>
-                  <Grid container item spacing={1} xs={12}>
+                <Grid item container xs={12}>
+                  <Grid item container spacing={1}>
                     <Grid item xs={12} sm={6} md={4}>
                       <Typography align="left" color="text.primary">
-                        Name
+                        Serial Number
+                      </Typography>
+                      <Typography
+                        align="left"
+                        color="text.secondary"
+                        sx={{ wordWrap: 'break-word' }}
+                      >
+                        {itemData.serial_number ?? 'None'}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4}>
+                      <Typography align="left" color="text.primary">
+                        Asset Number
+                      </Typography>
+                      <Typography
+                        align="left"
+                        color="text.secondary"
+                        sx={{ wordWrap: 'break-word' }}
+                      >
+                        {itemData.asset_number ?? 'None'}
+                      </Typography>
+                    </Grid>
+
+                    <Grid item xs={12} sm={6} md={4}>
+                      <Typography align="left" color="text.primary">
+                        Purchase Order Number
+                      </Typography>
+                      <Typography
+                        align="left"
+                        color="text.secondary"
+                        sx={{ wordWrap: 'break-word' }}
+                      >
+                        {itemData.purchase_order_number ?? 'None'}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4}>
+                      <Typography align="left" color="text.primary">
+                        Warranty End Date
+                      </Typography>
+                      <Typography align="left" color="text.secondary">
+                        {itemData.warranty_end_date
+                          ? formatDateTimeStrings(
+                              itemData.warranty_end_date,
+                              false
+                            )
+                          : 'None'}
+                      </Typography>
+                    </Grid>
+
+                    <Grid item xs={12} sm={6} md={4}>
+                      <Typography align="left" color="text.primary">
+                        Delivered Date
+                      </Typography>
+                      <Typography align="left" color="text.secondary">
+                        {itemData.delivered_date
+                          ? formatDateTimeStrings(
+                              itemData.delivered_date,
+                              false
+                            )
+                          : 'None'}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4}>
+                      <Typography align="left" color="text.primary">
+                        Is Defective
+                      </Typography>
+                      <Typography align="left" color="text.secondary">
+                        {itemData.is_defective ? 'Yes' : 'No'}
+                      </Typography>
+                    </Grid>
+
+                    <Grid item xs={12} sm={6} md={4}>
+                      <Typography align="left" color="text.primary">
+                        Usage Status
+                      </Typography>
+                      <Typography
+                        align="left"
+                        color="text.secondary"
+                        sx={{ wordWrap: 'break-word' }}
+                      >
+                        {itemData.usage_status}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4}>
+                      <Typography align="left" color="text.primary">
+                        System
                       </Typography>
                       <Typography
                         align="left"
@@ -419,108 +397,207 @@ function ItemsLandingPage() {
                         <MuiLink
                           underline="hover"
                           component={Link}
-                          to={`/manufacturers/${manufacturer.id}`}
+                          to={'/systems/' + systemData?.id}
                         >
-                          {manufacturer.name}
+                          {systemData?.name}
                         </MuiLink>
                       </Typography>
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
                       <Typography align="left" color="text.primary">
-                        URL
+                        Last modified
                       </Typography>
-                      <Typography
-                        align="left"
-                        color="text.secondary"
-                        sx={{ wordWrap: 'break-word' }}
-                      >
-                        {manufacturer.url ? (
-                          <MuiLink
-                            component={Link}
-                            underline="hover"
-                            target="_blank"
-                            to={manufacturer.url}
-                          >
-                            {manufacturer.url}
-                          </MuiLink>
-                        ) : (
-                          'None'
-                        )}
+                      <Typography align="left" color="text.secondary">
+                        {formatDateTimeStrings(itemData.modified_time, true)}
                       </Typography>
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
                       <Typography align="left" color="text.primary">
-                        Telephone number
+                        Created
                       </Typography>
-                      <Typography
-                        align="left"
-                        color="text.secondary"
-                        sx={{ wordWrap: 'break-word' }}
-                      >
-                        {manufacturer?.telephone ?? 'None'}
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                      <Typography align="left" color="text.primary">
-                        Address
-                      </Typography>
-                      <Typography
-                        align="left"
-                        color="text.secondary"
-                        sx={{ wordWrap: 'break-word' }}
-                      >
-                        {manufacturer?.address.address_line}
-                      </Typography>
-                      <Typography
-                        align="left"
-                        color="text.secondary"
-                        sx={{ wordWrap: 'break-word' }}
-                      >
-                        {manufacturer?.address.town}
-                      </Typography>
-                      <Typography
-                        align="left"
-                        color="text.secondary"
-                        sx={{ wordWrap: 'break-word' }}
-                      >
-                        {manufacturer?.address.county}
-                      </Typography>
-                      <Typography
-                        align="left"
-                        color="text.secondary"
-                        sx={{ wordWrap: 'break-word' }}
-                      >
-                        {manufacturer?.address.country}
-                      </Typography>
-                      <Typography
-                        align="left"
-                        color="text.secondary"
-                        sx={{ wordWrap: 'break-word' }}
-                      >
-                        {manufacturer?.address.postcode}
+                      <Typography align="left" color="text.secondary">
+                        {formatDateTimeStrings(itemData.created_time, true)}
                       </Typography>
                     </Grid>
                   </Grid>
-                </Collapse>
+                </Grid>
+
+                <Grid
+                  item
+                  xs={12}
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'start',
+                  }}
+                >
+                  <Typography variant="h6">Properties</Typography>
+                  <Divider sx={{ width: '100%', mt: 1 }} />
+                </Grid>
+                <Grid container item xs={12}>
+                  <Grid container item spacing={1}>
+                    {itemData.properties &&
+                      itemData.properties.map((property, index) => (
+                        <Grid item xs={12} sm={6} md={4} key={index}>
+                          <Typography
+                            align="left"
+                            color="text.primary"
+                            sx={{ wordWrap: 'break-word' }}
+                          >{`${property.name} ${
+                            property.unit ? `(${property.unit})` : ''
+                          }`}</Typography>
+                          <Typography
+                            align="left"
+                            color="text.secondary"
+                            sx={{ wordWrap: 'break-word' }}
+                          >
+                            {property.value !== null
+                              ? String(property.value)
+                              : 'None'}
+                          </Typography>
+                        </Grid>
+                      ))}
+                  </Grid>
+                </Grid>
+
+                <Grid
+                  item
+                  xs={12}
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'start',
+                  }}
+                >
+                  <Typography variant="h6">Manufacturer</Typography>
+                  <Divider sx={{ width: '100%', mt: 1 }} />
+                </Grid>
+
+                {manufacturer && (
+                  <Grid item container xs={12}>
+                    <Grid container item spacing={1} xs={12}>
+                      <Grid item xs={12} sm={6} md={4}>
+                        <Typography align="left" color="text.primary">
+                          Name
+                        </Typography>
+                        <Typography
+                          align="left"
+                          color="text.secondary"
+                          sx={{ wordWrap: 'break-word' }}
+                        >
+                          <MuiLink
+                            underline="hover"
+                            component={Link}
+                            to={`/manufacturers/${manufacturer.id}`}
+                          >
+                            {manufacturer.name}
+                          </MuiLink>
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={12} sm={6} md={4}>
+                        <Typography align="left" color="text.primary">
+                          URL
+                        </Typography>
+                        <Typography
+                          align="left"
+                          color="text.secondary"
+                          sx={{ wordWrap: 'break-word' }}
+                        >
+                          {manufacturer.url ? (
+                            <MuiLink
+                              component={Link}
+                              underline="hover"
+                              target="_blank"
+                              to={manufacturer.url}
+                            >
+                              {manufacturer.url}
+                            </MuiLink>
+                          ) : (
+                            'None'
+                          )}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={12} sm={6} md={4}>
+                        <Typography align="left" color="text.primary">
+                          Telephone number
+                        </Typography>
+                        <Typography
+                          align="left"
+                          color="text.secondary"
+                          sx={{ wordWrap: 'break-word' }}
+                        >
+                          {manufacturer?.telephone ?? 'None'}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={12} sm={6} md={4}>
+                        <Typography align="left" color="text.primary">
+                          Address
+                        </Typography>
+                        <Typography
+                          align="left"
+                          color="text.secondary"
+                          sx={{ wordWrap: 'break-word' }}
+                        >
+                          {manufacturer?.address.address_line}
+                        </Typography>
+                        <Typography
+                          align="left"
+                          color="text.secondary"
+                          sx={{ wordWrap: 'break-word' }}
+                        >
+                          {manufacturer?.address.town}
+                        </Typography>
+                        <Typography
+                          align="left"
+                          color="text.secondary"
+                          sx={{ wordWrap: 'break-word' }}
+                        >
+                          {manufacturer?.address.county}
+                        </Typography>
+                        <Typography
+                          align="left"
+                          color="text.secondary"
+                          sx={{ wordWrap: 'break-word' }}
+                        >
+                          {manufacturer?.address.country}
+                        </Typography>
+                        <Typography
+                          align="left"
+                          color="text.secondary"
+                          sx={{ wordWrap: 'break-word' }}
+                        >
+                          {manufacturer?.address.postcode}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                )}
               </Grid>
-            )}
-          </Grid>
-          <Grid item xs={12}>
-            <Typography sx={{ margin: 1, textAlign: 'center' }} variant="h6">
-              Notes:
-            </Typography>
-            <Typography
-              sx={{
-                margin: 1,
-                textAlign: 'center',
-                whiteSpace: 'pre-line',
-                wordWrap: 'break-word',
-              }}
-              variant="body1"
-              color="text.secondary"
-            >
-              {itemData.notes ?? 'None'}
-            </Typography>
+            </TabPanel>
+            <TabPanel<ItemsTabValue>
+              value={tabValue}
+              label="Gallery"
+            ></TabPanel>
+            <TabPanel<ItemsTabValue>
+              value={tabValue}
+              label="Attachments"
+            ></TabPanel>
+            <TabPanel<ItemsTabValue> value={tabValue} label="Notes">
+              <Grid container item xs={12}>
+                <Typography
+                  sx={{
+                    mt: 1,
+                    mb: 3,
+                    whiteSpace: 'pre-line',
+                    wordWrap: 'break-word',
+                  }}
+                  variant="body1"
+                  color="text.secondary"
+                >
+                  {itemData.notes ?? 'None'}
+                </Typography>
+              </Grid>
+            </TabPanel>
           </Grid>
         </Grid>
       )}

@@ -1,0 +1,15 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PlaceholderImage Component > matches the snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-vdzf4z"
+  >
+    <h5
+      class="MuiTypography-root MuiTypography-h5 css-ag7rrr-MuiTypography-root"
+    >
+      No Image
+    </h5>
+  </div>
+</DocumentFragment>
+`;
