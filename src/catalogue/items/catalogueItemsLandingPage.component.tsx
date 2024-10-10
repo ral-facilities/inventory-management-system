@@ -14,8 +14,8 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import React, { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React from 'react';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { BreadcrumbsInfo } from '../../api/api.types';
 import {
   useGetCatalogueBreadcrumbs,
@@ -40,6 +40,7 @@ import CatalogueItemsDialog from './catalogueItemsDialog.component';
 function CatalogueItemsLandingPage() {
   const { catalogue_item_id: catalogueItemId } = useParams();
   const navigateToCatalogue = useNavigateToCatalogue();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { data: catalogueItemIdData, isLoading: catalogueItemIdDataLoading } =
     useGetCatalogueItem(catalogueItemId);
@@ -72,8 +73,16 @@ function CatalogueItemsLandingPage() {
   const [editItemDialogOpen, setEditItemDialogOpen] =
     React.useState<boolean>(false);
 
+  // Retrieve the tab value from the URL or default to "Information"
+  const urlTabValue =
+    (searchParams.get('tab') as CatalogueLandingPageTabValue) || 'Information';
   const [tabValue, setTabValue] =
-    useState<CatalogueLandingPageTabValue>('Information');
+    React.useState<CatalogueLandingPageTabValue>(urlTabValue);
+
+  React.useEffect(() => {
+    // Synchronize the tab value state with the URL whenever it changes
+    setSearchParams({ tab: tabValue });
+  }, [tabValue, setSearchParams]);
 
   const handleTabChange = (
     _event: React.SyntheticEvent,
