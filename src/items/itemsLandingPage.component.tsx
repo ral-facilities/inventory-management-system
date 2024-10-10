@@ -1,9 +1,5 @@
-import AttachmentOutlinedIcon from '@mui/icons-material/AttachmentOutlined';
-import CollectionsOutlinedIcon from '@mui/icons-material/CollectionsOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import NotesIcon from '@mui/icons-material/Notes';
 import PrintIcon from '@mui/icons-material/Print';
 import {
   Box,
@@ -32,28 +28,15 @@ import { useNavigateToCatalogue } from '../catalogue/catalogue.component';
 import PlaceholderImage from '../common/placeholderImage.component';
 import {
   a11yProps,
+  CATALOGUE_LANDING_PAGE_TAB_VALUES,
+  CatalogueLandingPageTabValue,
+  defaultCatalogueLandingPageIconMapping,
   formatDateTimeStrings,
   StyledTab,
   TabPanel,
 } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import ItemDialog from './itemDialog.component';
-
-const ITEMS_TAB_VALUES = [
-  'Information',
-  'Gallery',
-  'Attachments',
-  'Notes',
-] as const;
-
-const iconMapping: Record<ItemsTabValue, React.ReactElement> = {
-  Information: <InfoOutlinedIcon />,
-  Gallery: <CollectionsOutlinedIcon />,
-  Attachments: <AttachmentOutlinedIcon />,
-  Notes: <NotesIcon />,
-};
-
-type ItemsTabValue = (typeof ITEMS_TAB_VALUES)[number];
 
 function ItemsLandingPage() {
   // Navigation
@@ -104,11 +87,12 @@ function ItemsLandingPage() {
   const [editItemDialogOpen, setEditItemDialogOpen] =
     React.useState<boolean>(false);
 
-  const [tabValue, setTabValue] = useState<ItemsTabValue>('Information');
+  const [tabValue, setTabValue] =
+    useState<CatalogueLandingPageTabValue>('Information');
 
   const handleTabChange = (
     _event: React.SyntheticEvent,
-    newValue: ItemsTabValue
+    newValue: CatalogueLandingPageTabValue
   ) => {
     setTabValue(newValue);
   };
@@ -157,7 +141,7 @@ function ItemsLandingPage() {
             {/* Image Section */}
             <Grid item container xs={12}>
               <Grid item xs={12} sm={4}>
-                <PlaceholderImage maxHeight="400px" maxWidth="500px" />
+                <PlaceholderImage />
               </Grid>
               {/* Title and Description Section */}
               <Grid
@@ -204,6 +188,7 @@ function ItemsLandingPage() {
                 sm={2}
                 sx={{
                   textAlign: 'right',
+                  justifyContent: 'flex-end',
                   alignItems: 'top',
                   '@media print': {
                     display: 'none',
@@ -271,9 +256,9 @@ function ItemsLandingPage() {
                 onChange={handleTabChange}
                 aria-label="view tabs"
               >
-                {ITEMS_TAB_VALUES.map((value) => (
+                {CATALOGUE_LANDING_PAGE_TAB_VALUES.map((value) => (
                   <StyledTab
-                    icon={iconMapping[value]}
+                    icon={defaultCatalogueLandingPageIconMapping[value]}
                     iconPosition="start"
                     value={value}
                     label={value}
@@ -283,7 +268,10 @@ function ItemsLandingPage() {
                 ))}
               </Tabs>
             </Grid>
-            <TabPanel<ItemsTabValue> value={tabValue} label="Information">
+            <TabPanel<CatalogueLandingPageTabValue>
+              value={tabValue}
+              label="Information"
+            >
               <Grid item container spacing={1} xs={12} mt={1}>
                 <Grid
                   item
@@ -574,15 +562,18 @@ function ItemsLandingPage() {
                 )}
               </Grid>
             </TabPanel>
-            <TabPanel<ItemsTabValue>
+            <TabPanel<CatalogueLandingPageTabValue>
               value={tabValue}
               label="Gallery"
             ></TabPanel>
-            <TabPanel<ItemsTabValue>
+            <TabPanel<CatalogueLandingPageTabValue>
               value={tabValue}
               label="Attachments"
             ></TabPanel>
-            <TabPanel<ItemsTabValue> value={tabValue} label="Notes">
+            <TabPanel<CatalogueLandingPageTabValue>
+              value={tabValue}
+              label="Notes"
+            >
               <Grid container item xs={12}>
                 <Typography
                   sx={{
