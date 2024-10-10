@@ -395,7 +395,8 @@ describe('Catalogue Items', () => {
     });
     it('navigates to the landing page, opens the edit dialog, and correctly shows recently added section', () => {
       cy.findByText('Cameras 1').click();
-      cy.findByRole('button', { name: 'Edit' }).click();
+      cy.findByRole('button', { name: 'actions menu' }).click();
+      cy.findByText('Edit').click();
       cy.findByLabelText('Manufacturer *').click();
       cy.contains('A-Z').should('be.visible');
       cy.contains('Recently Added').should('be.visible');
@@ -408,7 +409,8 @@ describe('Catalogue Items', () => {
     cy.findByText(
       'High-resolution cameras for beam characterization. 1'
     ).should('exist');
-    cy.findByRole('button', { name: 'Edit' }).click();
+    cy.findByRole('button', { name: 'actions menu' }).click();
+    cy.findByText('Edit').click();
     cy.findByLabelText('Name *').should('have.value', 'Cameras 1');
     cy.findByLabelText('Description').should(
       'have.value',
