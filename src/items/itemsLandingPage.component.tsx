@@ -96,14 +96,20 @@ function ItemsLandingPage() {
     React.useState<CatalogueLandingPageTabValue>(urlTabValue);
 
   React.useEffect(() => {
-    // Synchronize the tab value state with the URL whenever it changes
-    setSearchParams({ tab: tabValue });
-  }, [tabValue, setSearchParams]);
+    const value = searchParams.get('tab');
+    if (!value) setSearchParams({ tab: 'Information' }, { replace: true });
+  }, [searchParams, setSearchParams]);
+
+  React.useEffect(() => {
+    setTabValue(urlTabValue);
+  }, [urlTabValue]);
+
   const handleTabChange = (
     _event: React.SyntheticEvent,
     newValue: CatalogueLandingPageTabValue
   ) => {
     setTabValue(newValue);
+    setSearchParams({ tab: newValue }, { replace: true });
   };
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);

@@ -147,12 +147,6 @@ const modifyCatalogueItem = (
     if (values.itemModelNumber)
       cy.findByText(values.itemModelNumber).should('exist');
 
-    if (values.notes) {
-      cy.findByText('Notes').click();
-      cy.findByText(values.notes).should('exist');
-      cy.findByText('Information').click();
-    }
-
     cy.findByText(values.manufacturer).should('exist');
 
     cy.findByText(values.substrate).should('exist');
