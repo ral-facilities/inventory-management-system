@@ -60,7 +60,7 @@ describe('Systems', () => {
     });
     cy.location('search').should(
       'eq',
-      '?subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
+      '?tab=Items&subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
     );
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(0)
@@ -81,7 +81,7 @@ describe('Systems', () => {
     });
     cy.location('search').should(
       'eq',
-      '?subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g&state=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
+      '?tab=Items&subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g&state=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
     );
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(1)
@@ -108,7 +108,7 @@ describe('Systems', () => {
       });
     cy.location('search').should(
       'eq',
-      '?subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
+      '?tab=Items&subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
     );
 
     cy.go('back');
@@ -125,7 +125,7 @@ describe('Systems', () => {
         cy.findByText('30').should('not.exist');
         cy.findByText('15').should('be.visible');
       });
-    cy.location('search').should('eq', '');
+    cy.location('search').should('eq', '?tab=Items');
   });
 
   it('should be able to navigate through subsystems while preserving the table states when going back', () => {
@@ -145,7 +145,7 @@ describe('Systems', () => {
     });
     cy.location('search').should(
       'eq',
-      '?subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
+      '?tab=Items&subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
     );
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(0)
@@ -166,7 +166,7 @@ describe('Systems', () => {
     });
     cy.location('search').should(
       'eq',
-      '?subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g&state=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
+      '?tab=Items&subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g&state=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
     );
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(1)
@@ -186,7 +186,7 @@ describe('Systems', () => {
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(1)
       .within(() => cy.findByText('15').should('be.visible'));
-    cy.location('search').should('eq', '');
+    cy.location('search').should('eq', '?tab=Items');
 
     //Ensure same state is recovered
     cy.go('back');
@@ -197,7 +197,7 @@ describe('Systems', () => {
     // Rows per page
     cy.location('search').should(
       'eq',
-      '?subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g&state=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
+      '?tab=Items&subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g&state=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
     );
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(0)
@@ -238,7 +238,7 @@ describe('Systems', () => {
     cy.findByRole('link', { name: 'Pulse Laser' }).should('be.visible');
     cy.findByRole('link', { name: 'Laser Tech' }).should('be.visible');
     cy.findByRole('link', { name: 'Laser Star' }).should('be.visible');
-    cy.findByRole('link', { name: "Laser Xpress" }).should('be.visible');
+    cy.findByRole('link', { name: 'Laser Xpress' }).should('be.visible');
 
     // One in title, one in breadcrumbs
     cy.findAllByText('Plasma Beam').should('have.length', 2);
@@ -580,7 +580,8 @@ describe('Systems', () => {
   it('edits a system from a landing page', () => {
     cy.visit('/systems/65328f34a40ff5301575a4e3');
 
-    cy.findByRole('button', { name: 'Edit System' }).click();
+    cy.findByRole('button', { name: 'actions menu' }).click();
+    cy.findByText('Edit').click();
 
     cy.findByLabelText('Name *').clear();
     cy.findByLabelText('Name *').type('System name');

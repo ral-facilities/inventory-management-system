@@ -15,7 +15,10 @@ describe('SystemDetails', () => {
       mockSystemDetails = SystemsJSON.filter(
         (system) => system.id === props.id
       )[0] as System;
-    return renderComponentWithRouterProvider(<SystemDetails {...props} />);
+    return renderComponentWithRouterProvider(
+      <SystemDetails {...props} />,
+      'systems'
+    );
   };
 
   beforeEach(() => {
@@ -24,10 +27,6 @@ describe('SystemDetails', () => {
     };
 
     user = userEvent.setup();
-
-    window.Element.prototype.getBoundingClientRect = vi
-      .fn()
-      .mockReturnValue({ height: 100, width: 200 });
   });
 
   it('renders correctly when no system is selected', async () => {
@@ -62,6 +61,34 @@ describe('SystemDetails', () => {
 
     // Items table
     expect(screen.getByRole('table')).toBeInTheDocument();
+  });
+
+  it('renders correctly when a system is selected and navigate to attachments ', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText(mockSystemDetails.name)).toBeInTheDocument();
+    });
+    expect(screen.queryByText('Please select a system')).toBeFalsy();
+    expect(
+      screen.getByText(mockSystemDetails.location ?? '')
+    ).toBeInTheDocument();
+    expect(screen.getByText(mockSystemDetails.owner ?? '')).toBeInTheDocument();
+    expect(
+      screen.getByText(mockSystemDetails.importance ?? '')
+    ).toBeInTheDocument();
+    // Can have new line character which breaks normal matching
+    expect(
+      screen.getByText(
+        (_, element) => element?.textContent === mockSystemDetails.description
+      )
+    ).toBeInTheDocument();
+
+    // Items table
+    expect(screen.getByRole('table')).toBeInTheDocument();
+    await user.click(screen.getByText('Attachments'));
+
+    expect(screen.queryByRole('table')).not.toBeInTheDocument();
   });
 
   it('renders correctly when a system is not found', async () => {
@@ -101,7 +128,9 @@ describe('SystemDetails', () => {
 
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: 'Edit System' }));
+    await user.click(screen.getByRole('button', { name: 'actions menu' }));
+
+    await user.click(screen.getByText('Edit'));
 
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();

@@ -1,5 +1,6 @@
 import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
 import PrintIcon from '@mui/icons-material/Print';
 import {
   Box,
@@ -242,10 +243,11 @@ function CatalogueItemsLandingPage() {
                     </MenuItem>
                   </Menu>
                   <Button
-                    sx={{ display: 'inline-block', ml: 0.5, py: '5.75px' }}
+                    sx={{ ml: 0.5, py: '5.75px' }}
                     variant="outlined"
                     component={Link}
                     to={'items'}
+                    startIcon={<InventoryOutlinedIcon />}
                   >
                     Items
                   </Button>
