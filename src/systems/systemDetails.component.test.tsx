@@ -128,7 +128,9 @@ describe('SystemDetails', () => {
 
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: 'actions menu' }));
+    await user.click(
+      screen.getByRole('button', { name: 'systems page actions menu' })
+    );
 
     await user.click(screen.getByText('Edit'));
 

@@ -80,7 +80,7 @@ const SystemActionsMenu = (props: SystemButtonProps) => {
           borderRadius: 1,
           padding: '6px',
         }}
-        aria-label="actions menu"
+        aria-label="systems page actions menu"
       >
         <ExpandMoreIcon />
       </IconButton>
@@ -291,7 +291,7 @@ function SystemDetails(props: SystemDetailsProps) {
             <Tabs
               value={tabValue}
               onChange={handleTabChange}
-              aria-label="view tabs"
+              aria-label="systems page view tabs"
             >
               {SYSTEM_LANDING_PAGE_TAB_VALUES.map((value) => (
                 <StyledTab
