@@ -120,7 +120,9 @@ describe('Items Landing Page', () => {
       expect(screen.getByText('Cameras 1')).toBeInTheDocument();
     });
 
-    await user.click(screen.getByRole('button', { name: 'actions menu' }));
+    await user.click(
+      screen.getByRole('button', { name: 'items landing page actions menu' })
+    );
 
     const printButton = screen.getByText('Print');
 
@@ -190,7 +192,9 @@ describe('Items Landing Page', () => {
       expect(screen.getByText(serialNumber)).toBeInTheDocument();
     });
 
-    await user.click(screen.getByRole('button', { name: 'actions menu' }));
+    await user.click(
+      screen.getByRole('button', { name: 'items landing page actions menu' })
+    );
 
     const editButton = screen.getByText('Edit');
     await user.click(editButton);
