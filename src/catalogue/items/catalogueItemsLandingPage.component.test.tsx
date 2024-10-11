@@ -128,7 +128,11 @@ describe('Catalogue Items Landing Page', () => {
       expect(screen.getByText('Cameras 1')).toBeInTheDocument();
     });
 
-    await user.click(screen.getByRole('button', { name: 'actions menu' }));
+    await user.click(
+      screen.getByRole('button', {
+        name: 'catalogue items landing page actions menu',
+      })
+    );
 
     const editButton = screen.getByText('Edit');
     await user.click(editButton);
@@ -151,7 +155,11 @@ describe('Catalogue Items Landing Page', () => {
       expect(screen.getByText('Energy Meters 27')).toBeInTheDocument();
     });
 
-    await user.click(screen.getByRole('button', { name: 'actions menu' }));
+    await user.click(
+      screen.getByRole('button', {
+        name: 'catalogue items landing page actions menu',
+      })
+    );
 
     const editButton = screen.getByText('Edit');
     await user.click(editButton);
@@ -187,7 +195,11 @@ describe('Catalogue Items Landing Page', () => {
       expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
     });
 
-    await user.click(screen.getByRole('button', { name: 'actions menu' }));
+    await user.click(
+      screen.getByRole('button', {
+        name: 'catalogue items landing page actions menu',
+      })
+    );
 
     const printButton = screen.getByText('Print');
 

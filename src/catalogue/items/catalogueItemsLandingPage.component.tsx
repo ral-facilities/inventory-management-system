@@ -204,7 +204,7 @@ function CatalogueItemsLandingPage() {
                       borderRadius: 1,
                       padding: '6px',
                     }}
-                    aria-label="actions menu"
+                    aria-label="catalogue items landing page actions menu"
                   >
                     <ExpandMoreIcon />
                   </IconButton>
@@ -257,7 +257,7 @@ function CatalogueItemsLandingPage() {
               <Tabs
                 value={tabValue}
                 onChange={handleTabChange}
-                aria-label="view tabs"
+                aria-label="catalogue items landing page view tabs"
               >
                 {CATALOGUE_LANDING_PAGE_TAB_VALUES.map((value) => (
                   <StyledTab
