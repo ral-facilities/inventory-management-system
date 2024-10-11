@@ -39,7 +39,7 @@ describe('Catalogue Card', () => {
     expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
   });
 
-  it('opens the actions menu and closes it', async () => {
+  it('opens the items landing page actions menu and closes it', async () => {
     props.is_leaf = true;
     createView();
     const actionsButton = screen.getByRole('button', {
