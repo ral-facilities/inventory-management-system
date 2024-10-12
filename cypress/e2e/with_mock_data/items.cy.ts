@@ -419,6 +419,164 @@ describe('Items', () => {
     cy.findByText('Zf7P8Qu8TD8c').should('exist');
   });
 
+  describe('Attachments', () => {
+    afterEach(() => {
+      cy.clearMocks();
+    });
+
+    it('uploads attachment', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+      cy.findByRole('button', {
+        name: 'items landing page actions menu',
+      }).click();
+      cy.findByText('Upload Attachment').click();
+
+      cy.findByText(/files cannot be larger than/i).should('exist');
+      cy.get('.uppy-Dashboard-input').as('fileInput');
+
+      cy.get('@fileInput')
+        .first()
+        .selectFile(
+          [
+            'cypress/fixtures/documents/test1.txt',
+            'cypress/fixtures/documents/test2.txt',
+          ],
+          { force: true }
+        );
+      cy.startSnoopingBrowserMockedRequest();
+      cy.findByText('Upload 2 files').click();
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: '/attachments',
+      }).should(async (postRequests) => {
+        expect(postRequests.length).eq(2);
+        expect(JSON.stringify(await postRequests[0].json())).equal(
+          JSON.stringify({
+            entity_id: 'KvT2Ox7n',
+            file_name: 'test1.txt',
+            title: '',
+            description: '',
+          })
+        );
+        expect(JSON.stringify(await postRequests[1].json())).equal(
+          JSON.stringify({
+            entity_id: 'KvT2Ox7n',
+            file_name: 'test2.txt',
+            title: '',
+            description: '',
+          })
+        );
+      });
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: 'object-storage/:key',
+      }).should(async (postRequests) => {
+        expect(postRequests.length).eq(2);
+      });
+    });
+
+    it('errors when file is removed mid upload', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+      cy.findByRole('button', {
+        name: 'items landing page actions menu',
+      }).click();
+      cy.findByText('Upload Attachment').click();
+
+      cy.findByText(/files cannot be larger than/i).should('exist');
+      cy.get('.uppy-Dashboard-input').as('fileInput');
+
+      cy.get('@fileInput')
+        .first()
+        .selectFile(['cypress/fixtures/documents/removeError.txt'], {
+          force: true,
+        });
+      cy.startSnoopingBrowserMockedRequest();
+      cy.findByText('Upload 1 file').click();
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: '/attachments',
+      }).should(async (postRequests) => {
+        expect(postRequests.length).eq(1);
+        expect(JSON.stringify(await postRequests[0].json())).equal(
+          JSON.stringify({
+            entity_id: 'KvT2Ox7n',
+            file_name: 'removeError.txt',
+            title: '',
+            description: '',
+          })
+        );
+      });
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: 'object-storage/:key',
+      }).should(async (postRequests) => {
+        expect(postRequests.length).eq(1);
+      });
+
+      // Click the "Remove file" button
+      cy.findByRole('button', { name: 'Remove file' }).click();
+
+      // Assert that the text "Upload 1 file" is not in the document
+      cy.findByText('Upload 1 file').should('not.exist');
+    });
+
+    it('errors when presigned url fails', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+      cy.findByRole('button', {
+        name: 'items landing page actions menu',
+      }).click();
+      cy.findByText('Upload Attachment').click();
+
+      cy.findByText(/files cannot be larger than/i).should('exist');
+      cy.get('.uppy-Dashboard-input').as('fileInput');
+
+      cy.get('@fileInput')
+        .first()
+        .selectFile(['cypress/fixtures/documents/uploadError.txt'], {
+          force: true,
+        });
+      cy.startSnoopingBrowserMockedRequest();
+      cy.findByText('Upload 1 file').click();
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: '/attachments',
+      }).should(async (postRequests) => {
+        expect(postRequests.length).eq(1);
+        expect(JSON.stringify(await postRequests[0].json())).equal(
+          JSON.stringify({
+            entity_id: 'KvT2Ox7n',
+            file_name: 'uploadError.txt',
+            title: '',
+            description: '',
+          })
+        );
+      });
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: 'object-storage/:key',
+      }).should(async (postRequests) => {
+        expect(postRequests.length).eq(1);
+      });
+
+      cy.findByLabelText('Show error details').should('exist');
+    });
+  });
+
   it('delete an item', () => {
     cy.findAllByLabelText('Row Actions').first().click();
     cy.findByText('Delete').click();
