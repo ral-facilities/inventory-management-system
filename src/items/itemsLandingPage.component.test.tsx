@@ -222,7 +222,33 @@ describe('Items Landing Page', () => {
       screen.getByRole('button', { name: 'items landing page actions menu' })
     );
 
-    const editButton = screen.getByText('Upload Attachment');
+    const editButton = screen.getByText('Upload Attachments');
+    await user.click(editButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const closeButton = screen.getByRole('button', { name: 'Close' });
+    await user.click(closeButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('opens the upload image dialog', async () => {
+    createView('/catalogue/item/1/items/KvT2Ox7n');
+
+    const serialNumber = '5YUQDDjKpz2z';
+    await waitFor(() => {
+      expect(screen.getByText(serialNumber)).toBeInTheDocument();
+    });
+
+    await user.click(
+      screen.getByRole('button', { name: 'items landing page actions menu' })
+    );
+
+    const editButton = screen.getByText('Upload Images');
     await user.click(editButton);
 
     await waitFor(() => {

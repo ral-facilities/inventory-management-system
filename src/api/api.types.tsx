@@ -232,8 +232,25 @@ export interface UploadInfo {
   fields: Record<string, string>;
 }
 export interface AttachmentsPostMetadataResponse
-  extends AttachmentsPostMetadata,
+  extends Required<AttachmentsPostMetadata>,
     CreatedModifiedMixin {
   id: string;
   upload_info: UploadInfo;
+}
+
+// ------------------------------------ IMAGES ------------------------------------------------
+
+export interface ImagePost {
+  entity_id: string;
+  file_name: string;
+  title?: string | null;
+  description?: string | null;
+  upload_file: File;
+}
+
+export interface Image
+  extends Required<Omit<ImagePost, 'upload_file'>>,
+    CreatedModifiedMixin {
+  id: string;
+  thumbnail: string;
 }

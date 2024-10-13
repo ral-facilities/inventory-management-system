@@ -31,7 +31,8 @@ import { useGetManufacturer } from '../api/manufacturers';
 import { useGetSystem } from '../api/systems';
 import { useNavigateToCatalogue } from '../catalogue/catalogue.component';
 import UploadAttachmentsDialog from '../common/attachments/uploadAttachmentsDialog.component';
-import PlaceholderImage from '../common/placeholderImage.component';
+import PlaceholderImage from '../common/images/placeholderImage.component';
+import UploadImagesDialog from '../common/images/uploadImagesDialog.component';
 import {
   a11yProps,
   formatDateTimeStrings,
@@ -106,6 +107,9 @@ function ItemsLandingPage() {
   const [editItemDialogOpen, setEditItemDialogOpen] =
     React.useState<boolean>(false);
   const [openUploadAttachmentsDialog, setOpenUploadAttachmentsDialog] =
+    React.useState(false);
+
+  const [openUploadImagesDialog, setOpenUploadImagesDialog] =
     React.useState(false);
 
   const [tabValue, setTabValue] = useState<ItemsTabValue>('Information');
@@ -262,7 +266,16 @@ function ItemsLandingPage() {
                       }}
                     >
                       <UploadIcon fontSize="small" sx={{ mr: 1 }} />
-                      Upload Attachment
+                      Upload Attachments
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        setOpenUploadImagesDialog(true);
+                        handleMenuClose();
+                      }}
+                    >
+                      <UploadIcon fontSize="small" sx={{ mr: 1 }} />
+                      Upload Images
                     </MenuItem>
                     <MenuItem
                       onClick={() => {
@@ -652,11 +665,19 @@ function ItemsLandingPage() {
       )}
 
       {itemData && (
-        <UploadAttachmentsDialog
-          open={openUploadAttachmentsDialog}
-          onClose={() => setOpenUploadAttachmentsDialog(false)}
-          entityId={itemData.id}
-        />
+        <>
+          <UploadAttachmentsDialog
+            open={openUploadAttachmentsDialog}
+            onClose={() => setOpenUploadAttachmentsDialog(false)}
+            entityId={itemData.id}
+          />
+
+          <UploadImagesDialog
+            open={openUploadImagesDialog}
+            onClose={() => setOpenUploadImagesDialog(false)}
+            entityId={itemData.id}
+          />
+        </>
       )}
     </Grid>
   );
