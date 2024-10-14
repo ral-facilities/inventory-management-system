@@ -70,7 +70,7 @@
     "@babel/eslint-parser": "7.25.1",
     "@eslint/compat": "1.1.1",
     "@eslint/js": "9.10.0",
-    "@tanstack/eslint-plugin-query": "5.53.0",
+    "@tanstack/eslint-plugin-query": "5.59.7",
     "@testing-library/cypress": "10.0.2",
     "@testing-library/dom": "10.4.0",
     "@testing-library/jest-dom": "6.5.0",
