@@ -41,6 +41,7 @@ import {
   TableHeaderOverflowTip,
   displayTableRowCountText,
   formatDateTimeStrings,
+  getInitialColumnFilterFnState,
   getPageHeightCalc,
 } from '../utils';
 import DeleteItemDialog from './deleteItemDialog.component';
@@ -125,6 +126,16 @@ export function ItemsTable(props: ItemTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.serial_number ?? 'No serial number',
         id: 'item.serial_number',
+        filterFn: 'fuzzy',
+        columnFilterModeOptions: [
+          'fuzzy',
+          'contains',
+          'startsWith',
+          'endsWith',
+          'equals',
+          'notEquals',
+          'betweenInclusive',
+        ],
         size: 250,
         Cell: ({ row }) => (
           <MuiLink underline="hover" component={Link} to={row.original.item.id}>
@@ -165,6 +176,15 @@ export function ItemsTable(props: ItemTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.asset_number,
         id: 'item.asset_number',
+        filterFn: 'fuzzy',
+        columnFilterModeOptions: [
+          'fuzzy',
+          'contains',
+          'startsWith',
+          'endsWith',
+          'equals',
+          'notEquals',
+        ],
         size: 250,
         GroupedCell: TableGroupedCell,
       },
@@ -173,6 +193,15 @@ export function ItemsTable(props: ItemTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.purchase_order_number,
         id: 'item.purchase_order_number',
+        filterFn: 'fuzzy',
+        columnFilterModeOptions: [
+          'fuzzy',
+          'contains',
+          'startsWith',
+          'endsWith',
+          'equals',
+          'notEquals',
+        ],
         size: 350,
         GroupedCell: TableGroupedCell,
       },
@@ -184,8 +213,14 @@ export function ItemsTable(props: ItemTableProps) {
             ? new Date(row.item.warranty_end_date)
             : null,
         id: 'item.warranty_end_date',
-        filterVariant: 'date-range',
+        filterVariant: 'date',
         filterFn: 'betweenInclusive',
+        columnFilterModeOptions: [
+          'between',
+          'betweenInclusive',
+          'equals',
+          'notEquals',
+        ],
         size: 350,
         Cell: ({ row }) =>
           row.original.item.warranty_end_date &&
@@ -204,6 +239,12 @@ export function ItemsTable(props: ItemTableProps) {
         id: 'item.delivered_date',
         filterVariant: 'date-range',
         filterFn: 'betweenInclusive',
+        columnFilterModeOptions: [
+          'between',
+          'betweenInclusive',
+          'equals',
+          'notEquals',
+        ],
         size: 350,
         Cell: ({ row }) =>
           row.original.item.delivered_date &&
@@ -217,10 +258,13 @@ export function ItemsTable(props: ItemTableProps) {
       {
         header: 'Is Defective',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => (row.item.is_defective === true ? 'Yes' : 'No'),
+        accessorFn: (row) =>
+          row.item.is_defective === true ? 'true' : 'false',
         id: 'item.is_defective',
+        filterVariant: 'checkbox',
+        enableColumnFilterModes: false,
         size: 200,
-        filterVariant: 'autocomplete',
+        Cell: ({ row }) => (row.original.item.is_defective ? 'Yes' : 'No'),
       },
       {
         header: 'Usage Status',
@@ -228,7 +272,7 @@ export function ItemsTable(props: ItemTableProps) {
         accessorFn: (row) => row.item.usage_status,
         id: 'item.usage_status',
         size: 200,
-        filterVariant: 'autocomplete',
+        enableColumnFilterModes: false,
       },
       {
         header: 'System',
@@ -254,6 +298,15 @@ export function ItemsTable(props: ItemTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.notes ?? '',
         id: 'item.notes',
+        filterFn: 'fuzzy',
+        columnFilterModeOptions: [
+          'fuzzy',
+          'contains',
+          'startsWith',
+          'endsWith',
+          'equals',
+          'notEquals',
+        ],
         size: 250,
         enableGrouping: false,
       },
@@ -324,10 +377,15 @@ export function ItemsTable(props: ItemTableProps) {
     ];
   }, [catalogueCategory]);
 
+  const initialColumnFilterFnState = React.useMemo(() => {
+    return getInitialColumnFilterFnState(columns);
+  }, [columns]);
+
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
       columnVisibility: { created_time: false },
       pagination: { pageSize: dense ? 5 : 15, pageIndex: 0 },
+      columnFilterFns: initialColumnFilterFnState,
     },
     storeInUrl: !dense,
   });
@@ -349,6 +407,7 @@ export function ItemsTable(props: ItemTableProps) {
     enableColumnOrdering: dense ? false : true,
     enableFacetedValues: true,
     enableColumnResizing: dense ? false : true,
+    enableColumnFilterModes: true,
     enableRowActions: dense ? false : true,
     enableStickyHeader: true,
     enableDensityToggle: false,
