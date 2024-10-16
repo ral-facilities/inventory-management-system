@@ -15,12 +15,12 @@ const PlaceholderImage = (props: PlaceholderImageProps) => {
         width: '100%',
         height: '100%',
         borderRadius: 2,
-        backgroundColor: 'inherit', // Light gray background
+        backgroundColor: 'inherit',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        textAlign: 'center', // Center the text
-        color: theme.palette.text.primary, // Text color
+        textAlign: 'center',
+        color: theme.palette.text.primary,
         border: '1px dashed',
         borderColor: theme.palette.text.primary,
       })}
