@@ -29,10 +29,10 @@ import {
   CATALOGUE_LANDING_PAGE_TAB_VALUES,
   CatalogueLandingPageTabValue,
   defaultCatalogueLandingPageIconMapping,
-  formatDateTimeStrings,
   StyledTab,
-  TabPanel,
-} from '../../utils';
+} from '../../common/tab/tab.utils';
+import TabPanel from '../../common/tab/tabPanel.component';
+import { formatDateTimeStrings } from '../../utils';
 import Breadcrumbs from '../../view/breadcrumbs.component';
 import { useNavigateToCatalogue } from '../catalogue.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';

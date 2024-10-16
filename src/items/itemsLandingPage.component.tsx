@@ -31,10 +31,10 @@ import {
   CATALOGUE_LANDING_PAGE_TAB_VALUES,
   CatalogueLandingPageTabValue,
   defaultCatalogueLandingPageIconMapping,
-  formatDateTimeStrings,
   StyledTab,
-  TabPanel,
-} from '../utils';
+} from '../common/tab/tab.utils';
+import TabPanel from '../common/tab/tabPanel.component';
+import { formatDateTimeStrings } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import ItemDialog from './itemDialog.component';
 
@@ -152,7 +152,7 @@ function ItemsLandingPage() {
       </Grid>
       {catalogueItemData && itemData && (
         <Grid item container justifyContent="center" xs={12}>
-          <Grid item xs={10} style={{ maxWidth: '80%' }}>
+          <Grid item container xs={10} style={{ maxWidth: '80%' }}>
             {/* Image Section */}
             <Grid item container xs={12}>
               <Grid item xs={12} sm={4}>
@@ -432,6 +432,7 @@ function ItemsLandingPage() {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'start',
+                    mt: 3,
                   }}
                 >
                   <Typography variant="h6">Properties</Typography>
@@ -470,6 +471,7 @@ function ItemsLandingPage() {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'start',
+                    mt: 3,
                   }}
                 >
                   <Typography variant="h6">Manufacturer</Typography>

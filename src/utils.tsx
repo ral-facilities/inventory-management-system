@@ -1,13 +1,6 @@
-import AttachmentOutlinedIcon from '@mui/icons-material/AttachmentOutlined';
-import CollectionsOutlinedIcon from '@mui/icons-material/CollectionsOutlined';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import NotesIcon from '@mui/icons-material/Notes';
 import {
-  Box,
   Link as MuiLink,
-  styled,
   SxProps,
-  Tab,
   TableCell,
   Theme,
   Tooltip,
@@ -427,66 +420,4 @@ export const checkForDuplicates = (props: {
   });
 
   return Array.from(duplicateIds);
-};
-
-export interface TabPanelProps<T> {
-  children?: React.ReactNode;
-  value: T | false;
-  label: T | false;
-}
-
-export function TabPanel<T>({
-  children,
-  value,
-  label,
-  ...other
-}: TabPanelProps<T>) {
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== label}
-      id={`${label}-tabpanel`}
-      aria-labelledby={`${label}-tab`}
-      style={{ height: '100%' }}
-      {...other}
-    >
-      {value === label && <Box height="100%">{children}</Box>}
-    </div>
-  );
-}
-
-export function a11yProps<T>(label: T) {
-  return {
-    id: `${label}-tab`,
-    'aria-controls': `${label}-tabpanel`,
-  };
-}
-
-export const StyledTab = styled(Tab)(({ theme }) => ({
-  textTransform: 'none',
-  fontWeight: theme.typography.fontWeightBold,
-  fontSize: theme.typography.pxToRem(16),
-}));
-
-// Base tab values
-export const CATALOGUE_LANDING_PAGE_TAB_VALUES = [
-  'Information',
-  'Gallery',
-  'Attachments',
-  'Notes',
-] as const;
-
-// Type for base tab values
-export type CatalogueLandingPageTabValue =
-  (typeof CATALOGUE_LANDING_PAGE_TAB_VALUES)[number];
-
-// Default icons for the base values
-export const defaultCatalogueLandingPageIconMapping: Record<
-  CatalogueLandingPageTabValue,
-  React.ReactElement
-> = {
-  Information: <InfoOutlinedIcon />,
-  Gallery: <CollectionsOutlinedIcon />,
-  Attachments: <AttachmentOutlinedIcon />,
-  Notes: <NotesIcon />,
 };
