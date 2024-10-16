@@ -444,6 +444,7 @@ function CatalogueItemsLandingPage() {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'start',
+                    mt: 3,
                   }}
                 >
                   <Typography variant="h6">Properties</Typography>
@@ -482,6 +483,7 @@ function CatalogueItemsLandingPage() {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'start',
+                    mt: 3,
                   }}
                 >
                   <Typography variant="h6">Manufacturer</Typography>
