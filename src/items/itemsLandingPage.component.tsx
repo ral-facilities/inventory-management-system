@@ -30,12 +30,8 @@ import { useGetManufacturer } from '../api/manufacturers';
 import { useGetSystem } from '../api/systems';
 import { useNavigateToCatalogue } from '../catalogue/catalogue.component';
 import PlaceholderImage from '../common/placeholderImage.component';
-import {
-  a11yProps,
-  formatDateTimeStrings,
-  StyledTab,
-  TabPanel,
-} from '../utils';
+import TabPanel, { a11yProps, StyledTab } from '../common/tabPanel.component';
+import { formatDateTimeStrings } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import ItemDialog from './itemDialog.component';
 
@@ -153,7 +149,7 @@ function ItemsLandingPage() {
       </Grid>
       {catalogueItemData && itemData && (
         <Grid item container justifyContent="center" xs={12}>
-          <Grid item xs={10} style={{ maxWidth: '80%' }}>
+          <Grid item container xs={10} style={{ maxWidth: '80%' }}>
             {/* Image Section */}
             <Grid item container xs={12}>
               <Grid item xs={12} sm={4}>
@@ -429,6 +425,7 @@ function ItemsLandingPage() {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'start',
+                    mt: 3,
                   }}
                 >
                   <Typography variant="h6">Properties</Typography>
@@ -467,6 +464,7 @@ function ItemsLandingPage() {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'start',
+                    mt: 3,
                   }}
                 >
                   <Typography variant="h6">Manufacturer</Typography>

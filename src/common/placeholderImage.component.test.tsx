@@ -6,7 +6,7 @@ describe('PlaceholderImage Component', () => {
     const { asFragment } = render(
       <PlaceholderImage maxWidth="300px" maxHeight="200px" />
     );
-    // Take a snapshot of the rendered component
+
     expect(asFragment()).toMatchSnapshot();
   });
 });
