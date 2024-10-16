@@ -370,7 +370,7 @@ describe('Catalogue Items', () => {
     cy.findByText('Cameras 4').should('exist');
   });
 
-  it('navigates to the landing page, toggles the properties and navigates back to the table view', () => {
+  it('navigates to the landing page and navigates back to the table view', () => {
     cy.findByText('Cameras 1').click();
     cy.findByText(
       'High-resolution cameras for beam characterization. 1'

@@ -4,13 +4,9 @@ import React from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { paths } from '../App';
 import { TAB_VALUES, TabValue } from '../app.types';
-import {
-  a11yProps,
-  getSciGatewayPageHeightCalc,
-  isRunningInDevelopment,
-  StyledTab,
-  TabPanel,
-} from '../utils';
+import { a11yProps, StyledTab } from '../common/tab/tab.utils';
+import TabPanel from '../common/tab/tabPanel.component';
+import { getSciGatewayPageHeightCalc, isRunningInDevelopment } from '../utils';
 
 function ViewTabs() {
   const [value, setValue] = React.useState<TabValue | false>('Catalogue');
