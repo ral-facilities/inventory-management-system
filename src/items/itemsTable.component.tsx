@@ -13,6 +13,8 @@ import {
   TableCellBaseProps,
 } from '@mui/material';
 import {
+  LiteralUnion,
+  MRT_FilterOption,
   MRT_Row,
   MaterialReactTable,
   useMaterialReactTable,
@@ -35,10 +37,12 @@ import {
 } from '../catalogue/items/catalogueItemsTable.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import {
+  MRT_Functions_Localisation,
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
   TableGroupedCell,
   TableHeaderOverflowTip,
+  customFilterFunctions,
   displayTableRowCountText,
   formatDateTimeStrings,
   getInitialColumnFilterFnState,
@@ -114,11 +118,40 @@ export function ItemsTable(props: ItemTableProps) {
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     const viewCatalogueItemProperties = catalogueCategory?.properties ?? [];
-    const propertyFilters: PropertyFiltersType = {
-      boolean: 'autocomplete',
+    const propertyFilterVariants: PropertyFiltersType = {
+      boolean: 'checkbox',
       string: 'text',
       number: 'range',
       null: 'text',
+    };
+    const propertyFilterFns: Record<string, string> = {
+      boolean: 'fuzzy',
+      string: 'fuzzy',
+      number: 'betweenInclusive',
+      null: 'fuzzy',
+    };
+    const propertyFilterModeOptions: Record<
+      string,
+      LiteralUnion<string & MRT_FilterOption, string>[]
+    > = {
+      boolean: [],
+      string: [
+        'fuzzy',
+        'contains',
+        'startsWith',
+        'endsWith',
+        'equals',
+        'notEquals',
+      ],
+      number: ['between', 'betweenInclusive', 'equals', 'notEquals'],
+      null: [
+        'fuzzy',
+        'contains',
+        'startsWith',
+        'endsWith',
+        'equals',
+        'notEquals',
+      ],
     };
     return [
       {
@@ -271,8 +304,24 @@ export function ItemsTable(props: ItemTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.usage_status,
         id: 'item.usage_status',
+        filterVariant: 'multi-select',
+        filterFn: 'arrIncludesSome',
+        columnFilterModeOptions: ['arrIncludesSome', 'arrIncludesNone'],
+        renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) => [
+          <MenuItem
+            key="arrIncludesSome"
+            onClick={() => onSelectFilterMode('arrIncludesSome')}
+          >
+            Includes
+          </MenuItem>,
+          <MenuItem
+            key="arrIncludesNone"
+            onClick={() => onSelectFilterMode('arrIncludesNone')}
+          >
+            Excludes
+          </MenuItem>,
+        ],
         size: 200,
-        enableColumnFilterModes: false,
       },
       {
         header: 'System',
@@ -280,6 +329,23 @@ export function ItemsTable(props: ItemTableProps) {
         accessorFn: (row) => row.system?.name ?? '',
         getGroupingValue: (row) => row.system?.id ?? '',
         id: 'system.name',
+        filterVariant: 'multi-select',
+        filterFn: 'arrIncludesSome',
+        columnFilterModeOptions: ['arrIncludesSome', 'arrIncludesNone'],
+        renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) => [
+          <MenuItem
+            key="arrIncludesSome"
+            onClick={() => onSelectFilterMode('arrIncludesSome')}
+          >
+            Includes
+          </MenuItem>,
+          <MenuItem
+            key="arrIncludesNone"
+            onClick={() => onSelectFilterMode('arrIncludesNone')}
+          >
+            Excludes
+          </MenuItem>,
+        ],
         size: 250,
         Cell: ({ row }) => (
           <MuiLink
@@ -322,8 +388,8 @@ export function ItemsTable(props: ItemTableProps) {
               row.item.properties,
               property.id
             ) as boolean) === true
-              ? 'Yes'
-              : 'No';
+              ? 'true'
+              : 'false';
           } else if (property.type === 'number') {
             return typeof findPropertyValue(
               row.item.properties,
@@ -340,10 +406,20 @@ export function ItemsTable(props: ItemTableProps) {
         },
         size: 250,
         filterVariant:
-          propertyFilters[
+          propertyFilterVariants[
             property.type as 'string' | 'boolean' | 'number' | 'null'
           ],
-
+        filterFn:
+          propertyFilterFns[
+            property.type as 'string' | 'boolean' | 'number' | 'null'
+          ],
+        columnFilterModeOptions:
+          propertyFilterModeOptions[
+            property.type as 'string' | 'boolean' | 'number' | 'null'
+          ],
+        enableColumnFilterModes:
+          (property.type as 'string' | 'boolean' | 'number' | 'null') !==
+          'boolean',
         Cell: ({ row }: { row: MRT_Row<TableRowData> }) => {
           if (
             typeof findPropertyValue(
@@ -418,6 +494,7 @@ export function ItemsTable(props: ItemTableProps) {
     enableColumnVirtualization: dense ? false : true,
     enableGrouping: !dense,
     enablePagination: true,
+    filterFns: customFilterFunctions,
     // Other settings
     columnVirtualizerOptions: dense
       ? undefined
@@ -440,6 +517,7 @@ export function ItemsTable(props: ItemTableProps) {
     // Localisation
     localization: {
       ...MRT_Localization_EN,
+      ...MRT_Functions_Localisation,
       noRecordsToDisplay: noResultsTxt,
     },
     //State

@@ -5,6 +5,7 @@ import { renderComponentWithRouterProvider } from './testUtils';
 import {
   OverflowTip,
   checkForDuplicates,
+  customFilterFunctions,
   generateUniqueId,
   generateUniqueName,
   generateUniqueNameUsingCode,
@@ -12,7 +13,7 @@ import {
   sortDataList,
   trimStringValues,
 } from './utils';
-import { MRT_ColumnDef } from 'material-react-table';
+import { MRT_ColumnDef, MRT_RowData } from 'material-react-table';
 import { UsageStatus } from './api/api.types';
 
 describe('Utility functions', () => {
@@ -315,6 +316,33 @@ describe('Utility functions', () => {
 
     const actualResult = getInitialColumnFilterFnState(columns);
     expect(actualResult).toEqual(expectedResult);
+  });
+});
+
+describe('customFilterFunctions', () => {
+  describe('arrIncludesNone', () => {
+    let person: MRT_RowData;
+    let filterExclude: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (row: MRT_RowData, id: string, filterValue: any) => boolean;
+    beforeAll(() => {
+      person = {
+        name: 'Dan',
+        age: 4,
+        status: 'unemployed',
+        getValue: (id: string) => {
+          return person[id as keyof MRT_RowData]; // Return the corresponding field from the object
+        },
+      };
+      filterExclude = customFilterFunctions['arrIncludesNone'];
+    });
+    it('should correctly exclude record', () => {
+      const result = filterExclude(person, 'status', ['unemployed']);
+      expect(result).toBe(false);
+    });
+    it('should correctly include record', () => {
+      const result = filterExclude(person, 'age', [8, 29]);
+      expect(result).toBe(true);
+    });
   });
 });
 
