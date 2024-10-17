@@ -30,7 +30,7 @@ describe('TabView Component', () => {
           value: 'tab2',
           icon: <div>icon 2</div>,
           component: <div>Content for Tab 2</div>,
-          order: 3, // Changing order to test order sorting
+          order: 3,
         },
         {
           value: 'tab3',
@@ -40,9 +40,9 @@ describe('TabView Component', () => {
         },
       ],
       gallery: true,
-      galleryOrder: 4, // Added gallery tab with an order
+      galleryOrder: 4,
       attachments: true,
-      attachmentsOrder: 5, // Added attachments tab with an order
+      attachmentsOrder: 5,
     };
   });
 
