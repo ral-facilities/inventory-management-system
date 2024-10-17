@@ -1,7 +1,7 @@
 import { Box, SxProps, Theme, Typography } from '@mui/material';
 
 export interface PlaceholderImageProps {
-  sx?: SxProps<Theme>; // Making 'sx' optional to avoid errors if not passed
+  sx?: SxProps<Theme>;
 }
 
 const PlaceholderImage = (props: PlaceholderImageProps) => {
