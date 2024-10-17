@@ -413,6 +413,30 @@ export const getInitialColumnFilterFnState = <TData extends MRT_RowData>(
   return initialState;
 };
 
+type filterValueType = string | number | (string | number)[];
+
+interface FilterFn {
+  (row: MRT_RowData, id: string, filterValue: filterValueType): boolean;
+}
+
+export const customFilterFunctions: Record<string, FilterFn> = {
+  arrIncludesNone: (
+    row: MRT_RowData,
+    id: string,
+    filterValue: filterValueType
+  ) => {
+    if (Array.isArray(filterValue)) {
+      return !filterValue.includes(row.getValue(id));
+    }
+    return row.getValue(id) === filterValue;
+  },
+};
+
+export const MRT_Functions_Localisation: Record<string, string> = {
+  filterArrIncludesNone: 'Excludes',
+  filterArrIncludesSome: 'Includes',
+};
+
 export const checkForDuplicates = (props: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any[];
