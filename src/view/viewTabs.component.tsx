@@ -4,7 +4,8 @@ import React from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { paths } from '../App';
 import { TAB_VALUES, TabValue } from '../app.types';
-import TabPanel, { a11yProps, StyledTab } from '../common/tabPanel.component';
+import { a11yProps, StyledTab } from '../common/tab/tab.utils';
+import TabPanel from '../common/tab/tabPanel.component';
 import { getSciGatewayPageHeightCalc, isRunningInDevelopment } from '../utils';
 
 function ViewTabs() {
@@ -66,7 +67,7 @@ function ViewTabs() {
               height: 'calc(100% - 48px)',
             }}
           >
-            <TabPanel<TabValue> value={value} label={value}>
+            <TabPanel value={value} label={value}>
               <Outlet />
             </TabPanel>
           </Box>
