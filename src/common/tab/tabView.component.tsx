@@ -7,64 +7,93 @@ import { useSearchParams } from 'react-router-dom';
 import { a11yProps, StyledTab } from '../../common/tab/tab.utils';
 import TabPanel from '../../common/tab/tabPanel.component';
 
+type AdditionalTabValues = 'Gallery' | 'Attachments';
+
 export interface TabViewProps<T> {
-  defaultTab: T;
+  defaultTab: T | AdditionalTabValues;
   ariaLabelPrefix: string;
   tabData: {
-    value: T;
+    value: T | AdditionalTabValues;
     icon?: React.ReactElement;
     component: React.ReactNode;
+    order?: number;
   }[];
   galleryEntityId?: string;
+  galleryOrder?: number;
   attachmentsEntityId?: string;
+  attachmentsOrder?: number;
 }
 
 function TabView<T>(props: TabViewProps<T>) {
   const {
     defaultTab,
     ariaLabelPrefix,
-    tabData,
+    tabData: initialTabData,
     galleryEntityId,
+    galleryOrder,
     attachmentsEntityId,
+    attachmentsOrder,
   } = props;
+
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // Retrieve the tab value from the URL or default to the passed defaultTab prop
-  const urlTabValue = (searchParams.get('tab') as T) || defaultTab;
-  const [tabValue, setTabValue] = React.useState<T>(urlTabValue);
+  const urlTabValue =
+    (searchParams.get('tab') as T | AdditionalTabValues) || defaultTab;
+  const [tabValue, setTabValue] = React.useState<T | AdditionalTabValues>(
+    urlTabValue
+  );
+
+  React.useEffect(() => {
+    setTabValue(urlTabValue);
+  }, [urlTabValue]);
 
   const handleTabChange = React.useCallback(
     (_event: React.SyntheticEvent, newValue: T) => {
       setTabValue(newValue);
+
+      const updatedParams = new URLSearchParams(searchParams);
+
       if (newValue === defaultTab) {
-        searchParams.delete('tab');
-        setSearchParams(searchParams, { replace: true });
+        updatedParams.delete('tab');
       } else {
-        setSearchParams(
-          { tab: newValue as unknown as string },
-          { replace: true }
-        );
+        updatedParams.set('tab', newValue as unknown as string);
       }
+
+      setSearchParams(updatedParams);
     },
     [defaultTab, searchParams, setSearchParams]
   );
 
-  // Optionally add Gallery and Attachments tabs
-  if (galleryEntityId) {
-    tabData.push({
-      value: 'Gallery' as T,
-      icon: <CollectionsOutlinedIcon />,
-      component: <></>,
-    });
-  }
+  const tabData = React.useMemo(() => {
+    const updatedTabData = [...initialTabData];
 
-  if (attachmentsEntityId) {
-    tabData.push({
-      value: 'Attachments' as T,
-      icon: <AttachmentOutlinedIcon />,
-      component: <></>,
-    });
-  }
+    if (galleryEntityId) {
+      updatedTabData.push({
+        value: 'Gallery' as AdditionalTabValues,
+        icon: <CollectionsOutlinedIcon />,
+        component: <></>,
+        order: galleryOrder ?? updatedTabData.length + 1,
+      });
+    }
+
+    if (attachmentsEntityId) {
+      updatedTabData.push({
+        value: 'Attachments' as AdditionalTabValues,
+        icon: <AttachmentOutlinedIcon />,
+        component: <></>,
+        order: attachmentsOrder ?? updatedTabData.length + 2,
+      });
+    }
+
+    // Sort the tabs by the `order` field
+    return updatedTabData.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+  }, [
+    initialTabData,
+    galleryEntityId,
+    galleryOrder,
+    attachmentsEntityId,
+    attachmentsOrder,
+  ]);
 
   return (
     <Grid container flexDirection="column">
@@ -88,7 +117,7 @@ function TabView<T>(props: TabViewProps<T>) {
       </Grid>
       <Grid item xs={12}>
         {tabData.map(({ value, component }) => (
-          <TabPanel<T>
+          <TabPanel<T | AdditionalTabValues>
             key={value as unknown as string}
             value={tabValue}
             label={value}
