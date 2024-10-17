@@ -168,7 +168,9 @@ function CatalogueItemsLandingPage() {
               defaultTab="Information"
               ariaLabelPrefix="catalogue items landing page"
               gallery
+              galleryOrder={1}
               attachments
+              attachmentsOrder={2}
               tabData={[
                 {
                   value: 'Information',
@@ -492,6 +494,7 @@ function CatalogueItemsLandingPage() {
                       )}
                     </Grid>
                   ),
+                  order: 0,
                 },
                 {
                   value: 'Notes',
@@ -510,6 +513,7 @@ function CatalogueItemsLandingPage() {
                       {catalogueItemIdData.notes ?? 'None'}
                     </Typography>
                   ),
+                  order: 3,
                 },
               ]}
             />

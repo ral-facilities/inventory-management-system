@@ -1,7 +1,3 @@
-import AttachmentOutlinedIcon from '@mui/icons-material/AttachmentOutlined';
-import CollectionsOutlinedIcon from '@mui/icons-material/CollectionsOutlined';
-import EditIcon from '@mui/icons-material/Edit';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
 import {
   Box,
@@ -9,114 +5,22 @@ import {
   CircularProgress,
   Divider,
   Grid,
-  IconButton,
-  Menu,
-  MenuItem,
-  Tabs,
   Typography,
 } from '@mui/material';
 import React from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { System } from '../api/api.types';
 import { getSystemImportanceColour, useGetSystem } from '../api/systems';
+import ActionMenu from '../common/actionMenu.component';
 import PlaceholderImage from '../common/placeholderImage.component';
-import {
-  OverflowTip,
-  StyledTab,
-  TabPanel,
-  a11yProps,
-  formatDateTimeStrings,
-} from '../utils';
+import TabView from '../common/tab/tabView.component';
+import { formatDateTimeStrings, OverflowTip } from '../utils';
 import SystemDialog from './systemDialog.component';
 import { SystemItemsTable } from './systemItemsTable.component';
 
-export const SYSTEM_LANDING_PAGE_TAB_VALUES = [
-  'Items',
-  'Gallery',
-  'Attachments',
-] as const;
+export const SYSTEM_LANDING_PAGE_TAB_VALUES = ['Items'] as const;
 
 // Type for base tab values
 export type SystemLandingPageTabValue =
   (typeof SYSTEM_LANDING_PAGE_TAB_VALUES)[number];
-
-export const systemLandingPageIconMapping: Record<
-  SystemLandingPageTabValue,
-  React.ReactElement
-> = {
-  Items: <InventoryOutlinedIcon />,
-  Gallery: <CollectionsOutlinedIcon />,
-  Attachments: <AttachmentOutlinedIcon />,
-};
-
-interface SystemButtonProps {
-  system: System;
-}
-
-const SystemActionsMenu = (props: SystemButtonProps) => {
-  const [editSystemDialogOpen, setEditSystemDialogOpen] =
-    React.useState<boolean>(false);
-
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const menuOpen = Boolean(anchorEl);
-
-  const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
-
-  return (
-    <Grid item xs sx={{ marginLeft: 'auto', padding: 0, textAlign: 'right' }}>
-      <Typography variant="body1" sx={{ display: 'inline-block', mr: 1 }}>
-        Actions
-      </Typography>
-      <IconButton
-        onClick={handleMenuClick}
-        sx={{
-          border: '1px solid',
-          borderRadius: 1,
-          padding: '6px',
-        }}
-        aria-label="systems page actions menu"
-      >
-        <ExpandMoreIcon />
-      </IconButton>
-
-      {/* Menu Component */}
-      <Menu
-        anchorEl={anchorEl}
-        open={menuOpen}
-        onClose={handleMenuClose}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        sx={{
-          '@media print': {
-            display: 'none',
-          },
-        }}
-      >
-        <MenuItem
-          onClick={() => {
-            setEditSystemDialogOpen(true);
-            handleMenuClose();
-          }}
-        >
-          <EditIcon fontSize="small" sx={{ mr: 1 }} />
-          Edit
-        </MenuItem>
-      </Menu>
-      <SystemDialog
-        open={editSystemDialogOpen}
-        onClose={() => setEditSystemDialogOpen(false)}
-        requestType="patch"
-        selectedSystem={props.system}
-      />
-    </Grid>
-  );
-};
 
 export interface SystemDetailsProps {
   id: string | null;
@@ -125,30 +29,8 @@ export interface SystemDetailsProps {
 function SystemDetails(props: SystemDetailsProps) {
   const { data: system, isLoading: systemLoading } = useGetSystem(props.id);
 
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  // Retrieve the tab value from the URL or default to "Information"
-  const urlTabValue =
-    (searchParams.get('tab') as SystemLandingPageTabValue) || 'Items';
-  const [tabValue, setTabValue] =
-    React.useState<SystemLandingPageTabValue>(urlTabValue);
-
-  React.useEffect(() => {
-    const value = searchParams.get('tab');
-    if (!value && system) setSearchParams({ tab: 'Items' }, { replace: true });
-  }, [searchParams, setSearchParams, system]);
-
-  React.useEffect(() => {
-    setTabValue(urlTabValue);
-  }, [urlTabValue]);
-
-  const handleTabChange = (
-    _event: React.SyntheticEvent,
-    newValue: SystemLandingPageTabValue
-  ) => {
-    setTabValue(newValue);
-    setSearchParams({ tab: newValue }, { replace: true });
-  };
+  const [editSystemDialogOpen, setEditSystemDialogOpen] =
+    React.useState<boolean>(false);
 
   return systemLoading && props.id !== null ? (
     <Box
@@ -189,7 +71,24 @@ function SystemDetails(props: SystemDetailsProps) {
               : system.name}
           </OverflowTip>
         </Grid>
-        {system !== undefined && <SystemActionsMenu system={system} />}
+        {system !== undefined && (
+          <ActionMenu
+            ariaLabelPrefix="systems page"
+            editMenuItem={{
+              onClick: () => {
+                setEditSystemDialogOpen(true);
+              },
+              dialog: (
+                <SystemDialog
+                  open={editSystemDialogOpen}
+                  onClose={() => setEditSystemDialogOpen(false)}
+                  requestType="patch"
+                  selectedSystem={system}
+                />
+              ),
+            }}
+          />
+        )}
       </Grid>
       <Grid></Grid>
       <Divider role="presentation" />
@@ -287,38 +186,21 @@ function SystemDetails(props: SystemDetailsProps) {
               {system.description ?? 'None'}
             </Typography>
           </Grid>
-          <Grid item>
-            <Tabs
-              value={tabValue}
-              onChange={handleTabChange}
-              aria-label="systems page view tabs"
-            >
-              {SYSTEM_LANDING_PAGE_TAB_VALUES.map((value) => (
-                <StyledTab
-                  icon={systemLandingPageIconMapping[value]}
-                  iconPosition="start"
-                  value={value}
-                  label={value}
-                  key={value}
-                  {...a11yProps(value)}
-                />
-              ))}
-            </Tabs>
-          </Grid>
 
-          <Grid item>
-            <TabPanel<SystemLandingPageTabValue> value={tabValue} label="Items">
-              <SystemItemsTable system={system} type="normal" />
-            </TabPanel>
-            <TabPanel<SystemLandingPageTabValue>
-              value={tabValue}
-              label="Gallery"
-            ></TabPanel>
-            <TabPanel<SystemLandingPageTabValue>
-              value={tabValue}
-              label="Attachments"
-            ></TabPanel>
-          </Grid>
+          <TabView<SystemLandingPageTabValue>
+            ariaLabelPrefix="systems page"
+            defaultTab="Items"
+            gallery
+            attachments
+            tabData={[
+              {
+                value: 'Items',
+                icon: <InventoryOutlinedIcon />,
+                component: <SystemItemsTable system={system} type="normal" />,
+                order: 0,
+              },
+            ]}
+          />
         </Grid>
       )}
     </>
