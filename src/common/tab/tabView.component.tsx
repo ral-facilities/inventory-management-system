@@ -34,6 +34,7 @@ function TabView<T>(props: TabViewProps<T>) {
     attachmentsEntityId,
     attachmentsOrder,
   } = props;
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const urlTabValue =
@@ -41,6 +42,10 @@ function TabView<T>(props: TabViewProps<T>) {
   const [tabValue, setTabValue] = React.useState<T | AdditionalTabValues>(
     urlTabValue
   );
+
+  React.useEffect(() => {
+    setTabValue(urlTabValue);
+  }, [urlTabValue]);
 
   const handleTabChange = React.useCallback(
     (_event: React.SyntheticEvent, newValue: T) => {
@@ -54,7 +59,7 @@ function TabView<T>(props: TabViewProps<T>) {
         updatedParams.set('tab', newValue as unknown as string);
       }
 
-      setSearchParams(updatedParams, { replace: true });
+      setSearchParams(updatedParams);
     },
     [defaultTab, searchParams, setSearchParams]
   );

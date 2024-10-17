@@ -16,12 +16,6 @@ import { formatDateTimeStrings, OverflowTip } from '../utils';
 import SystemDialog from './systemDialog.component';
 import { SystemItemsTable } from './systemItemsTable.component';
 
-export const SYSTEM_LANDING_PAGE_TAB_VALUES = ['Items'] as const;
-
-// Type for base tab values
-export type SystemLandingPageTabValue =
-  (typeof SYSTEM_LANDING_PAGE_TAB_VALUES)[number];
-
 export interface SystemDetailsProps {
   id: string | null;
 }
@@ -187,7 +181,7 @@ function SystemDetails(props: SystemDetailsProps) {
             </Typography>
           </Grid>
           <Grid item container sx={{ marginTop: 2, display: 'inline-block' }}>
-            <TabView<SystemLandingPageTabValue>
+            <TabView
               ariaLabelPrefix="systems page"
               defaultTab="Items"
               galleryEntityId={system.id}

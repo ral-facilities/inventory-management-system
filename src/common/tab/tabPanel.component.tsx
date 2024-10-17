@@ -6,12 +6,7 @@ export interface TabPanelProps<T> {
   label: T | false;
 }
 
-export function TabPanel<T>({
-  children,
-  value,
-  label,
-  ...other
-}: TabPanelProps<T>) {
+function TabPanel<T>({ children, value, label, ...other }: TabPanelProps<T>) {
   return (
     <div
       role="tabpanel"
