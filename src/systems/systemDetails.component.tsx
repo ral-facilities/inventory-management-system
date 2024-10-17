@@ -186,21 +186,22 @@ function SystemDetails(props: SystemDetailsProps) {
               {system.description ?? 'None'}
             </Typography>
           </Grid>
-
-          <TabView<SystemLandingPageTabValue>
-            ariaLabelPrefix="systems page"
-            defaultTab="Items"
-            gallery
-            attachments
-            tabData={[
-              {
-                value: 'Items',
-                icon: <InventoryOutlinedIcon />,
-                component: <SystemItemsTable system={system} type="normal" />,
-                order: 0,
-              },
-            ]}
-          />
+          <Grid item container sx={{ marginTop: 2, display: 'inline-block' }}>
+            <TabView<SystemLandingPageTabValue>
+              ariaLabelPrefix="systems page"
+              defaultTab="Items"
+              gallery
+              attachments
+              tabData={[
+                {
+                  value: 'Items',
+                  icon: <InventoryOutlinedIcon />,
+                  component: <SystemItemsTable system={system} type="normal" />,
+                  order: 0,
+                },
+              ]}
+            />
+          </Grid>
         </Grid>
       )}
     </>
