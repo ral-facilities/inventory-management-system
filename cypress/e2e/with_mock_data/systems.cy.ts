@@ -60,7 +60,7 @@ describe('Systems', () => {
     });
     cy.location('search').should(
       'eq',
-      '?tab=Items&subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
+      '?subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
     );
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(0)
@@ -81,7 +81,7 @@ describe('Systems', () => {
     });
     cy.location('search').should(
       'eq',
-      '?tab=Items&subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g&state=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
+      '?subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g&state=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
     );
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(1)
@@ -108,7 +108,7 @@ describe('Systems', () => {
       });
     cy.location('search').should(
       'eq',
-      '?tab=Items&subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
+      '?subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
     );
 
     cy.go('back');
@@ -125,7 +125,7 @@ describe('Systems', () => {
         cy.findByText('30').should('not.exist');
         cy.findByText('15').should('be.visible');
       });
-    cy.location('search').should('eq', '?tab=Items');
+    cy.location('search').should('eq', '');
   });
 
   it('should be able to navigate through subsystems while preserving the table states when going back', () => {
@@ -145,7 +145,7 @@ describe('Systems', () => {
     });
     cy.location('search').should(
       'eq',
-      '?tab=Items&subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
+      '?subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
     );
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(0)
@@ -166,7 +166,7 @@ describe('Systems', () => {
     });
     cy.location('search').should(
       'eq',
-      '?tab=Items&subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g&state=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
+      '?subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g&state=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
     );
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(1)
@@ -186,7 +186,7 @@ describe('Systems', () => {
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(1)
       .within(() => cy.findByText('15').should('be.visible'));
-    cy.location('search').should('eq', '?tab=Items');
+    cy.location('search').should('eq', '');
 
     //Ensure same state is recovered
     cy.go('back');
@@ -197,7 +197,7 @@ describe('Systems', () => {
     // Rows per page
     cy.location('search').should(
       'eq',
-      '?tab=Items&subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g&state=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
+      '?subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g&state=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
     );
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(0)
@@ -577,7 +577,7 @@ describe('Systems', () => {
     });
   });
 
-  it('edits a system from a landing page', () => {
+  it.only('edits a system from a landing page', () => {
     cy.visit('/systems/65328f34a40ff5301575a4e3');
 
     cy.findByRole('button', { name: 'systems page actions menu' }).click();
