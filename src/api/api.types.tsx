@@ -252,5 +252,5 @@ export interface Image
   extends Required<Omit<ImagePost, 'upload_file'>>,
     CreatedModifiedMixin {
   id: string;
-  thumbnail: string;
+  thumbnail_base64: string;
 }
