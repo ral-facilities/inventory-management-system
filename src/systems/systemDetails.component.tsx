@@ -11,7 +11,7 @@ import React from 'react';
 import { System } from '../api/api.types';
 import { getSystemImportanceColour, useGetSystem } from '../api/systems';
 import ActionMenu from '../common/actionMenu.component';
-import PlaceholderImage from '../common/placeholderImage.component';
+import PlaceholderImage from '../common/images/placeholderImage.component';
 import TabView from '../common/tab/tabView.component';
 import { formatDateTimeStrings, OverflowTip } from '../utils';
 import SystemDialog from './systemDialog.component';
