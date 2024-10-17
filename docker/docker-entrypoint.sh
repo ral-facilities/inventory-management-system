@@ -4,7 +4,8 @@
 TEMPFILE="$(mktemp)"
 
 # Set values in inventory-management-system-settings.json from environment variables
-sed -e "s|\"apiUrl\": \".*\"|\"apiUrl\": \"$API_URL\"|" \
+sed -e "s|\"imsApiUrl\": \".*\"|\"imsApiUrl\": \"$IMS_API_URL\"|" \
+    -e "s|\"storageApiUrl\": \".*\"|\"storageApiUrl\": \"$STORAGE_API_URL\"|" \
     -e "s|\"pluginHost\": \".*\"|\"pluginHost\": \"$PLUGIN_HOST\"|" \
     /usr/local/apache2/htdocs/inventory-management-system-settings.json > "$TEMPFILE"
 

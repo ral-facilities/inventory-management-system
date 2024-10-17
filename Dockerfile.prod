@@ -62,7 +62,8 @@ RUN set -eux; \
 # Switch to non-root user defined in httpd image
 USER www-data
 
-ENV API_URL="/inventory-management-system-api"
+ENV IMS_API_URL="/inventory-management-system-api"
+ENV STORAGE_API_URL = "/object-store-api"
 ENV PLUGIN_HOST="/inventory-management-system"
 
 COPY docker/docker-entrypoint.sh /usr/local/bin/

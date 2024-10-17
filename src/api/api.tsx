@@ -7,9 +7,18 @@ import { APIError } from './api.types';
 
 export const imsApi = axios.create();
 
+export const storageApi = axios.create();
+
 imsApi.interceptors.request.use(async (config) => {
-  const apiUrl = (await settings)?.apiUrl || '';
-  config.baseURL = apiUrl;
+  const imsApiUrl = (await settings)?.imsApiUrl || '';
+  config.baseURL = imsApiUrl;
+  config.headers['Authorization'] = `Bearer ${readSciGatewayToken()}`;
+  return config;
+});
+
+storageApi.interceptors.request.use(async (config) => {
+  const storageApiUrl = (await settings)?.storageApiUrl || '';
+  config.baseURL = storageApiUrl;
   config.headers['Authorization'] = `Bearer ${readSciGatewayToken()}`;
   return config;
 });
@@ -41,8 +50,57 @@ imsApi.interceptors.response.use(
   (error) => {
     const originalRequest = error.config;
     const errorMessage: string = error.response?.data
-      ? (error.response.data as APIError).detail.toLocaleLowerCase() ??
-        error.message
+      ? ((error.response.data as APIError).detail.toLocaleLowerCase() ??
+        error.message)
+      : error.message;
+
+    // Check if the token is invalid and needs refreshing
+    // only allow a request to be retried once. Don't retry if not logged
+    // in, it should not have been accessible
+    if (
+      error.response?.status === 403 &&
+      errorMessage.includes('expired token') &&
+      !originalRequest._retried &&
+      localStorage.getItem('scigateway:token')
+    ) {
+      originalRequest._retried = true;
+
+      // Prevent other requests from also attempting to refresh while waiting for
+      // SciGateway to refresh the token
+      if (!isFetchingAccessToken) {
+        isFetchingAccessToken = true;
+
+        // Request SciGateway to refresh the token
+        document.dispatchEvent(
+          new CustomEvent(MicroFrontendId, {
+            detail: {
+              type: InvalidateTokenType,
+            },
+          })
+        );
+      }
+
+      // Add request to queue to be resolved only once SciGateway has successfully
+      // refreshed the token
+      return new Promise((resolve, reject) => {
+        failedAuthRequestQueue.push((shouldReject?: boolean) => {
+          if (shouldReject) reject(error);
+          else resolve(imsApi(originalRequest));
+        });
+      });
+    }
+    // Any other error
+    else return Promise.reject(error);
+  }
+);
+
+storageApi.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const originalRequest = error.config;
+    const errorMessage: string = error.response?.data
+      ? ((error.response.data as APIError).detail.toLocaleLowerCase() ??
+        error.message)
       : error.message;
 
     // Check if the token is invalid and needs refreshing

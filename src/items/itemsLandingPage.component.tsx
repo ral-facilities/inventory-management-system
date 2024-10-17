@@ -39,6 +39,7 @@ const ItemsActionMenu = (props: {
     <ActionMenu
       ariaLabelPrefix="items landing page"
       printMenuItem
+      uploadAttachmentsEntityId={item.id}
       editMenuItem={{
         onClick: () => setEditItemDialogOpen(true),
         dialog: (

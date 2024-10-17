@@ -217,3 +217,23 @@ export interface Item
   usage_status: string;
   properties: Property[];
 }
+
+// ------------------------------------ ATTACHMENTS ------------------------------------------------
+
+export interface AttachmentsPostMetadata {
+  entity_id: string;
+  file_name: string;
+  title?: string | null;
+  description?: string | null;
+}
+
+export interface UploadInfo {
+  url: string;
+  fields: Record<string, string>;
+}
+export interface AttachmentsPostMetadataResponse
+  extends AttachmentsPostMetadata,
+    CreatedModifiedMixin {
+  id: string;
+  upload_info: UploadInfo;
+}
