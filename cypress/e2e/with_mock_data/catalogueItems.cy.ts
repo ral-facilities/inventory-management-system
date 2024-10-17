@@ -399,7 +399,7 @@ describe('Catalogue Items', () => {
         name: 'catalogue items landing page actions menu',
       }).click();
       cy.findByText('Edit').click();
-      cy.findByLabelText('Manufacturer *').click();
+      cy.findByLabelText('Manufacturer *').click({ force: true });
       cy.contains('A-Z').should('be.visible');
       cy.contains('Recently Added').should('be.visible');
       cy.findAllByText('Manufacturer B').should('have.length', 2);
