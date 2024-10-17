@@ -17,9 +17,9 @@ const PlaceholderImage = (props: PlaceholderImageProps) => {
         alignItems: 'center',
         justifyContent: 'center',
         textAlign: 'center',
-        color: (theme: Theme) => theme.palette.text.primary,
+        color: 'text.primary',
         border: '1px dashed',
-        borderColor: (theme: Theme) => theme.palette.text.primary,
+        borderColor: 'text.primary',
         ...sx,
       }}
     >

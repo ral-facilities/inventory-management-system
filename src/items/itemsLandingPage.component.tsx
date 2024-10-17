@@ -17,7 +17,6 @@ import { useGetSystem } from '../api/systems';
 import { useNavigateToCatalogue } from '../catalogue/catalogue.component';
 import ActionMenu from '../common/actionMenu.component';
 import PlaceholderImage from '../common/placeholderImage.component';
-import { CatalogueLandingPageTabValue } from '../common/tab/tab.utils';
 import TabView from '../common/tab/tabView.component';
 import { formatDateTimeStrings } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
@@ -177,12 +176,12 @@ function ItemsLandingPage() {
               />
             </Grid>
 
-            <TabView<CatalogueLandingPageTabValue>
+            <TabView
               defaultTab="Information"
               ariaLabelPrefix="items landing page"
-              gallery
+              galleryEntityId={itemData.id}
               galleryOrder={1}
-              attachments
+              attachmentsEntityId={itemData.id}
               attachmentsOrder={2}
               tabData={[
                 {

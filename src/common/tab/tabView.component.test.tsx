@@ -39,9 +39,9 @@ describe('TabView Component', () => {
           order: 2,
         },
       ],
-      gallery: true,
+      galleryEntityId: '1',
       galleryOrder: 4,
-      attachments: true,
+      attachmentsEntityId: '1',
       attachmentsOrder: 5,
     };
   });

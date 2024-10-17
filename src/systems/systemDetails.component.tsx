@@ -190,8 +190,8 @@ function SystemDetails(props: SystemDetailsProps) {
             <TabView<SystemLandingPageTabValue>
               ariaLabelPrefix="systems page"
               defaultTab="Items"
-              gallery
-              attachments
+              galleryEntityId={system.id}
+              attachmentsEntityId={system.id}
               tabData={[
                 {
                   value: 'Items',

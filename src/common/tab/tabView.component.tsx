@@ -18,9 +18,9 @@ export interface TabViewProps<T> {
     component: React.ReactNode;
     order?: number;
   }[];
-  gallery?: boolean;
+  galleryEntityId?: string;
   galleryOrder?: number;
-  attachments?: boolean;
+  attachmentsEntityId?: string;
   attachmentsOrder?: number;
 }
 
@@ -29,9 +29,9 @@ function TabView<T>(props: TabViewProps<T>) {
     defaultTab,
     ariaLabelPrefix,
     tabData: initialTabData,
-    gallery,
+    galleryEntityId,
     galleryOrder,
-    attachments,
+    attachmentsEntityId,
     attachmentsOrder,
   } = props;
   const [searchParams, setSearchParams] = useSearchParams();
@@ -62,7 +62,7 @@ function TabView<T>(props: TabViewProps<T>) {
   const tabData = React.useMemo(() => {
     const updatedTabData = [...initialTabData];
 
-    if (gallery) {
+    if (galleryEntityId) {
       updatedTabData.push({
         value: 'Gallery' as AdditionalTabValues,
         icon: <CollectionsOutlinedIcon />,
@@ -71,7 +71,7 @@ function TabView<T>(props: TabViewProps<T>) {
       });
     }
 
-    if (attachments) {
+    if (attachmentsEntityId) {
       updatedTabData.push({
         value: 'Attachments' as AdditionalTabValues,
         icon: <AttachmentOutlinedIcon />,
@@ -82,7 +82,13 @@ function TabView<T>(props: TabViewProps<T>) {
 
     // Sort the tabs by the `order` field
     return updatedTabData.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
-  }, [initialTabData, gallery, galleryOrder, attachments, attachmentsOrder]);
+  }, [
+    initialTabData,
+    galleryEntityId,
+    galleryOrder,
+    attachmentsEntityId,
+    attachmentsOrder,
+  ]);
 
   return (
     <Grid container flexDirection="column">

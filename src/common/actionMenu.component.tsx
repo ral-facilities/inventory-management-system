@@ -12,8 +12,6 @@ export interface ActionMenuProps {
   printMenuItem?: boolean;
 }
 function ActionMenu(props: ActionMenuProps) {
-  // Navigation
-
   const { editMenuItem, printMenuItem, ariaLabelPrefix } = props;
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
