@@ -273,7 +273,7 @@ export const editItem = () => {
     assetNumber: 'PY42343424',
     purchaseOrderNumber: '2334',
     warrantyEndDate: '17/02/2030',
-    deliveredDate: '19/03/2026',
+    deliveredDate: '19/03/2024',
     isDefective: 'No',
     usageStatus: 'Used',
     notes: 'tests',

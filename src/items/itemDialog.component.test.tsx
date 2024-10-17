@@ -421,7 +421,7 @@ describe('ItemDialog', () => {
         purchaseOrderNumber: 'test21',
         notes: 'test',
         warrantyEndDate: '17/02/2035',
-        deliveredDate: '23/09/2045',
+        deliveredDate: '23/09/2024',
         isDefective: 'Y{arrowdown}{enter}',
         usageStatus: 'U{arrowdown}{enter}',
       });
@@ -448,7 +448,7 @@ describe('ItemDialog', () => {
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
         asset_number: 'test43',
         catalogue_item_id: '1',
-        delivered_date: '2045-09-23T00:00:00.000Z',
+        delivered_date: '2024-09-23T00:00:00.000Z',
         is_defective: true,
         notes: 'test',
         properties: [
@@ -622,7 +622,7 @@ describe('ItemDialog', () => {
         purchaseOrderNumber: 'test21',
         notes: 'test',
         warrantyEndDate: '17/02/2035',
-        deliveredDate: '23/09/2045',
+        deliveredDate: '23/09/2024',
         isDefective: 'Y{arrowdown}{enter}',
         usageStatus: 'U{arrowdown}{enter}',
       });
@@ -649,7 +649,7 @@ describe('ItemDialog', () => {
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
         asset_number: 'test43',
         catalogue_item_id: '1',
-        delivered_date: '2045-09-23T00:00:00.000Z',
+        delivered_date: '2024-09-23T00:00:00.000Z',
         is_defective: true,
         notes: 'test',
         properties: [
@@ -702,7 +702,7 @@ describe('ItemDialog', () => {
         purchaseOrderNumber: 'test21',
         notes: 'test',
         warrantyEndDate: '17/02/2035',
-        deliveredDate: '23/09/2045',
+        deliveredDate: '23/09/2024',
         isDefective: 'Y{arrowdown}{enter}',
         usageStatus: 'U{arrowdown}{enter}',
       });
@@ -770,7 +770,8 @@ describe('ItemDialog', () => {
       });
 
       const validDateMaxHelperText = await screen.findAllByText(
-        'Date cannot be later than 1/1/2100.'
+        'Date cannot be later than',
+        {exact: false}
       );
       expect(validDateMaxHelperText.length).toEqual(2);
 
@@ -782,7 +783,10 @@ describe('ItemDialog', () => {
       });
 
       expect(
-        screen.queryByText('Date cannot be later than 1/1/2100.')
+        screen.queryByText(
+          'Date cannot be later than',
+          {exact: false}
+        )
       ).not.toBeInTheDocument();
       expect(
         screen.queryByText(
@@ -983,7 +987,7 @@ describe('ItemDialog', () => {
         purchaseOrderNumber: 'test21',
         notes: 'test',
         warrantyEndDate: '17/02/2035',
-        deliveredDate: '23/09/2045',
+        deliveredDate: '23/09/2024',
         isDefective: 'Y{arrowdown}{enter}',
         usageStatus: 'U{enter}',
       });
@@ -1014,7 +1018,7 @@ describe('ItemDialog', () => {
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
         asset_number: 'test43',
-        delivered_date: '2045-09-23T23:00:00.000Z',
+        delivered_date: '2024-09-23T23:00:00.000Z',
         is_defective: true,
         notes: 'test',
         properties: [
