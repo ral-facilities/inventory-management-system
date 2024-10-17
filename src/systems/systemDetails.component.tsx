@@ -8,6 +8,7 @@ import {
   Typography,
 } from '@mui/material';
 import React from 'react';
+import { System } from '../api/api.types';
 import { getSystemImportanceColour, useGetSystem } from '../api/systems';
 import ActionMenu from '../common/actionMenu.component';
 import PlaceholderImage from '../common/placeholderImage.component';
@@ -16,15 +17,37 @@ import { formatDateTimeStrings, OverflowTip } from '../utils';
 import SystemDialog from './systemDialog.component';
 import { SystemItemsTable } from './systemItemsTable.component';
 
+const SystemDetailsActionMenu = (props: { system: System }) => {
+  const { system } = props;
+  const [editSystemDialogOpen, setEditSystemDialogOpen] =
+    React.useState<boolean>(false);
+
+  return (
+    <ActionMenu
+      ariaLabelPrefix="systems page"
+      editMenuItem={{
+        onClick: () => {
+          setEditSystemDialogOpen(true);
+        },
+        dialog: (
+          <SystemDialog
+            open={editSystemDialogOpen}
+            onClose={() => setEditSystemDialogOpen(false)}
+            requestType="patch"
+            selectedSystem={system}
+          />
+        ),
+      }}
+    />
+  );
+};
+
 export interface SystemDetailsProps {
   id: string | null;
 }
 
 function SystemDetails(props: SystemDetailsProps) {
   const { data: system, isLoading: systemLoading } = useGetSystem(props.id);
-
-  const [editSystemDialogOpen, setEditSystemDialogOpen] =
-    React.useState<boolean>(false);
 
   return systemLoading && props.id !== null ? (
     <Box
@@ -65,24 +88,7 @@ function SystemDetails(props: SystemDetailsProps) {
               : system.name}
           </OverflowTip>
         </Grid>
-        {system !== undefined && (
-          <ActionMenu
-            ariaLabelPrefix="systems page"
-            editMenuItem={{
-              onClick: () => {
-                setEditSystemDialogOpen(true);
-              },
-              dialog: (
-                <SystemDialog
-                  open={editSystemDialogOpen}
-                  onClose={() => setEditSystemDialogOpen(false)}
-                  requestType="patch"
-                  selectedSystem={system}
-                />
-              ),
-            }}
-          />
-        )}
+        {system !== undefined && <SystemDetailsActionMenu system={system} />}
       </Grid>
       <Grid></Grid>
       <Divider role="presentation" />

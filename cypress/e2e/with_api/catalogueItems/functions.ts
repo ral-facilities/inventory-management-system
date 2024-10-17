@@ -170,6 +170,7 @@ const modifyCatalogueItem = (
       cy.findByText(values.notes).should('exist');
     }
     cy.go('back');
+    cy.go('back');
   }
 };
 
