@@ -26,5 +26,4 @@ export function TabPanel<T>({
   );
 }
 
-// Default export
 export default TabPanel;
