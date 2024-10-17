@@ -20,7 +20,6 @@ import { useGetCatalogueItem } from '../../api/catalogueItems';
 import { useGetManufacturer } from '../../api/manufacturers';
 import ActionMenu from '../../common/actionMenu.component';
 import PlaceholderImage from '../../common/placeholderImage.component';
-import { CatalogueLandingPageTabValue } from '../../common/tab/tab.utils';
 import TabView from '../../common/tab/tabView.component';
 import { formatDateTimeStrings } from '../../utils';
 import Breadcrumbs from '../../view/breadcrumbs.component';
@@ -91,7 +90,13 @@ function CatalogueItemsLandingPage() {
       </Grid>
       {catalogueItemIdData && (
         <Grid item container justifyContent="center" xs={12}>
-          <Grid item xs={10} style={{ maxWidth: '80%' }}>
+          <Grid
+            item
+            container
+            xs={10}
+            display="inline-block"
+            style={{ maxWidth: '80%' }}
+          >
             {/* Image Section */}
             <Grid item container xs={12}>
               <Grid item xs={12} sm={4}>
@@ -162,11 +167,11 @@ function CatalogueItemsLandingPage() {
               </Grid>
             </Grid>
 
-            <TabView<CatalogueLandingPageTabValue>
+            <TabView
               defaultTab="Information"
               ariaLabelPrefix="catalogue items landing page"
-              gallery
-              attachments
+              galleryEntityId={catalogueItemIdData.id}
+              attachmentsEntityId={catalogueItemIdData.id}
               tabData={[
                 {
                   value: 'Information',

@@ -15,12 +15,18 @@ export interface TabViewProps<T> {
     icon?: React.ReactElement;
     component: React.ReactNode;
   }[];
-  gallery?: boolean;
-  attachments?: boolean;
+  galleryEntityId?: string;
+  attachmentsEntityId?: string;
 }
 
 function TabView<T>(props: TabViewProps<T>) {
-  const { defaultTab, ariaLabelPrefix, tabData, gallery, attachments } = props;
+  const {
+    defaultTab,
+    ariaLabelPrefix,
+    tabData,
+    galleryEntityId,
+    attachmentsEntityId,
+  } = props;
   const [searchParams, setSearchParams] = useSearchParams();
 
   // Retrieve the tab value from the URL or default to the passed defaultTab prop
@@ -44,7 +50,7 @@ function TabView<T>(props: TabViewProps<T>) {
   );
 
   // Optionally add Gallery and Attachments tabs
-  if (gallery) {
+  if (galleryEntityId) {
     tabData.push({
       value: 'Gallery' as T,
       icon: <CollectionsOutlinedIcon />,
@@ -52,7 +58,7 @@ function TabView<T>(props: TabViewProps<T>) {
     });
   }
 
-  if (attachments) {
+  if (attachmentsEntityId) {
     tabData.push({
       value: 'Attachments' as T,
       icon: <AttachmentOutlinedIcon />,

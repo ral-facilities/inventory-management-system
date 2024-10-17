@@ -67,7 +67,7 @@ function ViewTabs() {
               height: 'calc(100% - 48px)',
             }}
           >
-            <TabPanel<TabValue> value={value} label={value}>
+            <TabPanel value={value} label={value}>
               <Outlet />
             </TabPanel>
           </Box>
