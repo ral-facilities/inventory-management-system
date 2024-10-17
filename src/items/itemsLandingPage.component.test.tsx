@@ -222,7 +222,7 @@ describe('Items Landing Page', () => {
       screen.getByRole('button', { name: 'items landing page actions menu' })
     );
 
-    const editButton = screen.getByText('Upload Attachment');
+    const editButton = screen.getByText('Upload Attachments');
     await user.click(editButton);
 
     await waitFor(() => {

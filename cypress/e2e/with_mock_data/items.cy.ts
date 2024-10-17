@@ -1,3 +1,5 @@
+import { HttpResponse } from 'msw';
+
 describe('Items', () => {
   beforeEach(() => {
     cy.visit('/catalogue/item/1/items');
@@ -432,7 +434,7 @@ describe('Items', () => {
       cy.findByRole('button', {
         name: 'items landing page actions menu',
       }).click();
-      cy.findByText('Upload Attachment').click();
+      cy.findByText('Upload Attachments').click();
 
       cy.findByText(/files cannot be larger than/i).should('exist');
       cy.get('.uppy-Dashboard-input').as('fileInput');
@@ -474,7 +476,7 @@ describe('Items', () => {
 
       cy.findBrowserMockedRequests({
         method: 'POST',
-        url: 'object-storage/:key',
+        url: '/object-storage',
       }).should(async (postRequests) => {
         expect(postRequests.length).eq(2);
       });
@@ -488,7 +490,7 @@ describe('Items', () => {
       cy.findByRole('button', {
         name: 'items landing page actions menu',
       }).click();
-      cy.findByText('Upload Attachment').click();
+      cy.findByText('Upload Attachments').click();
 
       cy.findByText(/files cannot be larger than/i).should('exist');
       cy.get('.uppy-Dashboard-input').as('fileInput');
@@ -518,7 +520,7 @@ describe('Items', () => {
 
       cy.findBrowserMockedRequests({
         method: 'POST',
-        url: 'object-storage/:key',
+        url: '/object-storage',
       }).should(async (postRequests) => {
         expect(postRequests.length).eq(1);
       });
@@ -531,6 +533,16 @@ describe('Items', () => {
     });
 
     it('errors when presigned url fails', () => {
+      cy.window().its('msw').should('not.equal', undefined);
+      cy.window().then((window) => {
+        const { worker, http } = window.msw;
+
+        worker.use(
+          http.post('/object-storage', () => {
+            return HttpResponse.json({}, { status: 400 });
+          })
+        );
+      });
       cy.findByText('5YUQDDjKpz2z').click();
       cy.findByText(
         'High-resolution cameras for beam characterization. 1'
@@ -538,7 +550,7 @@ describe('Items', () => {
       cy.findByRole('button', {
         name: 'items landing page actions menu',
       }).click();
-      cy.findByText('Upload Attachment').click();
+      cy.findByText('Upload Attachments').click();
 
       cy.findByText(/files cannot be larger than/i).should('exist');
       cy.get('.uppy-Dashboard-input').as('fileInput');
@@ -568,7 +580,7 @@ describe('Items', () => {
 
       cy.findBrowserMockedRequests({
         method: 'POST',
-        url: 'object-storage/:key',
+        url: '/object-storage',
       }).should(async (postRequests) => {
         expect(postRequests.length).eq(1);
       });

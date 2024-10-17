@@ -945,7 +945,7 @@ export const handlers = [
     const body = (await request.json()) as AttachmentsPostMetadata;
 
     const upload_info: UploadInfo = {
-      url: `object-storage/${body.file_name.split('.')[0]}`,
+      url: `/object-storage`,
       fields: {
         'Content-Type': 'multipart/form-data',
         key: `attachments/test`,
@@ -969,15 +969,9 @@ export const handlers = [
 
   // ------------------------------------ Object Store ------------------------------------------------
 
-  http.post('object-storage/:key', async ({ params }) => {
-    const { key } = params;
-
-    if (key === 'uploadError') {
-      return HttpResponse.json({ detail: '' }, { status: 400 });
-    }
-
+  http.post('/object-storage', async () => {
     const totalChunks = 10; // Number of progress updates
-    const delay = key === 'removeError' ? 1000 : 100; // Delay in ms for each progress update
+    const delay = 1000; // Delay in ms for each progress update
 
     // Simulate progress updates
     for (let i = 0; i < totalChunks; i++) {

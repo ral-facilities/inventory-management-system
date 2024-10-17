@@ -21,7 +21,6 @@ import { useGetCatalogueItem } from '../../api/catalogueItems';
 import { useGetManufacturer } from '../../api/manufacturers';
 import ActionMenu from '../../common/actionMenu.component';
 import PlaceholderImage from '../../common/placeholderImage.component';
-import { CatalogueLandingPageTabValue } from '../../common/tab/tab.utils';
 import TabView from '../../common/tab/tabView.component';
 import { formatDateTimeStrings } from '../../utils';
 import Breadcrumbs from '../../view/breadcrumbs.component';
@@ -164,7 +163,7 @@ function CatalogueItemsLandingPage() {
               </Grid>
             </Grid>
 
-            <TabView<CatalogueLandingPageTabValue>
+            <TabView
               defaultTab="Information"
               ariaLabelPrefix="catalogue items landing page"
               gallery
