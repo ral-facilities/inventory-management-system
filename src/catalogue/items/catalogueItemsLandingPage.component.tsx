@@ -12,7 +12,11 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { BreadcrumbsInfo } from '../../api/api.types';
+import {
+  BreadcrumbsInfo,
+  CatalogueCategory,
+  CatalogueItem,
+} from '../../api/api.types';
 import {
   useGetCatalogueBreadcrumbs,
   useGetCatalogueCategory,
@@ -26,6 +30,33 @@ import { formatDateTimeStrings } from '../../utils';
 import Breadcrumbs from '../../view/breadcrumbs.component';
 import { useNavigateToCatalogue } from '../catalogue.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
+
+const CatalogueItemsActionMenu = (props: {
+  catalogueItem: CatalogueItem;
+  catalogueCategory: CatalogueCategory;
+}) => {
+  const { catalogueItem, catalogueCategory } = props;
+  const [editItemDialogOpen, setEditItemDialogOpen] =
+    React.useState<boolean>(false);
+  return (
+    <ActionMenu
+      ariaLabelPrefix="catalogue items landing page"
+      printMenuItem
+      editMenuItem={{
+        onClick: () => setEditItemDialogOpen(true),
+        dialog: (
+          <CatalogueItemsDialog
+            open={editItemDialogOpen}
+            onClose={() => setEditItemDialogOpen(false)}
+            parentInfo={catalogueCategory}
+            selectedCatalogueItem={catalogueItem}
+            requestType="patch"
+          />
+        ),
+      }}
+    />
+  );
+};
 
 function CatalogueItemsLandingPage() {
   const { catalogue_item_id: catalogueItemId } = useParams();
@@ -59,9 +90,6 @@ function CatalogueItemsLandingPage() {
     catalogueItemIdData?.manufacturer_id
   );
 
-  const [editItemDialogOpen, setEditItemDialogOpen] =
-    React.useState<boolean>(false);
-
   return (
     <Grid container flexDirection="column">
       <Grid
@@ -89,7 +117,7 @@ function CatalogueItemsLandingPage() {
           />
         </Grid>
       </Grid>
-      {catalogueItemIdData && (
+      {catalogueItemIdData && catalogueCategoryData && (
         <Grid item container justifyContent="center" xs={12}>
           <Grid
             item
@@ -138,21 +166,9 @@ function CatalogueItemsLandingPage() {
               <Grid item container justifyContent={'flex-end'} xs={12} sm={2}>
                 {/* Actions Section */}
                 <Grid item>
-                  <ActionMenu
-                    ariaLabelPrefix="catalogue items landing page"
-                    printMenuItem
-                    editMenuItem={{
-                      onClick: () => setEditItemDialogOpen(true),
-                      dialog: (
-                        <CatalogueItemsDialog
-                          open={editItemDialogOpen}
-                          onClose={() => setEditItemDialogOpen(false)}
-                          parentInfo={catalogueCategoryData}
-                          selectedCatalogueItem={catalogueItemIdData}
-                          requestType="patch"
-                        />
-                      ),
-                    }}
+                  <CatalogueItemsActionMenu
+                    catalogueItem={catalogueItemIdData}
+                    catalogueCategory={catalogueCategoryData}
                   />
                 </Grid>
                 <Grid item>
@@ -549,14 +565,6 @@ function CatalogueItemsLandingPage() {
           <LinearProgress />
         </Box>
       )}
-
-      <CatalogueItemsDialog
-        open={editItemDialogOpen}
-        onClose={() => setEditItemDialogOpen(false)}
-        parentInfo={catalogueCategoryData}
-        selectedCatalogueItem={catalogueItemIdData}
-        requestType="patch"
-      />
     </Grid>
   );
 }
