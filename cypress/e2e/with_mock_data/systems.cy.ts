@@ -577,7 +577,7 @@ describe('Systems', () => {
     });
   });
 
-  it.only('edits a system from a landing page', () => {
+  it('edits a system from a landing page', () => {
     cy.visit('/systems/65328f34a40ff5301575a4e3');
 
     cy.findByRole('button', { name: 'systems page actions menu' }).click();
