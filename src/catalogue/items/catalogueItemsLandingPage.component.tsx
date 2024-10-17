@@ -62,17 +62,6 @@ function CatalogueItemsLandingPage() {
   const [editItemDialogOpen, setEditItemDialogOpen] =
     React.useState<boolean>(false);
 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const menuOpen = Boolean(anchorEl);
-
-  const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
-
   return (
     <Grid container flexDirection="column">
       <Grid
