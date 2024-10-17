@@ -519,7 +519,7 @@ export const PropertiesStepSchema = z.object({
   properties: z.array(z.discriminatedUnion('valueType', propertiesTypeList)),
 });
 
-// ------------------------------------ CATALOGUE ITEMS ------------------------------------
+// ------------------------------------ ITEMS ------------------------------------
 
 export const ItemDetailsStepSchema = (requestType: RequestType) => {
   return z.object({
