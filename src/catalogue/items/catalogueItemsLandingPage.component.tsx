@@ -91,7 +91,13 @@ function CatalogueItemsLandingPage() {
       </Grid>
       {catalogueItemIdData && (
         <Grid item container justifyContent="center" xs={12}>
-          <Grid item xs={10} style={{ maxWidth: '80%' }}>
+          <Grid
+            item
+            container
+            xs={10}
+            display="inline-block"
+            style={{ maxWidth: '80%' }}
+          >
             {/* Image Section */}
             <Grid item container xs={12}>
               <Grid item xs={12} sm={4}>
@@ -166,9 +172,9 @@ function CatalogueItemsLandingPage() {
             <TabView
               defaultTab="Information"
               ariaLabelPrefix="catalogue items landing page"
-              gallery
+              galleryEntityId={catalogueItemIdData.id}
               galleryOrder={1}
-              attachments
+              attachmentsEntityId={catalogueItemIdData.id}
               attachmentsOrder={2}
               tabData={[
                 {

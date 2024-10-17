@@ -180,9 +180,9 @@ function ItemsLandingPage() {
             <TabView
               defaultTab="Information"
               ariaLabelPrefix="items landing page"
-              gallery
+              galleryEntityId={itemData.id}
               galleryOrder={1}
-              attachments
+              attachmentsEntityId={itemData.id}
               attachmentsOrder={2}
               tabData={[
                 {

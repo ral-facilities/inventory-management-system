@@ -15,8 +15,6 @@ export interface ActionMenuProps {
   uploadAttachmentsEntityId?: string;
 }
 function ActionMenu(props: ActionMenuProps) {
-  // Navigation
-
   const {
     editMenuItem,
     printMenuItem,
