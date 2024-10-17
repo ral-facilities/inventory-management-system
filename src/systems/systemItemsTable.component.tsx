@@ -303,6 +303,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         accessorFn: (row) => new Date(row.item.modified_time),
         id: 'item.modified_time',
         filterVariant: 'datetime-range',
+        filterFn: 'betweenInclusive',
         size: 350,
         enableGrouping: false,
         Cell: ({ row }) =>
@@ -315,6 +316,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         accessorFn: (row) => new Date(row.item.created_time),
         id: 'item.created_time',
         filterVariant: 'datetime-range',
+        filterFn: 'betweenInclusive',
         size: 350,
         enableGrouping: false,
         Cell: ({ row }) =>
@@ -327,6 +329,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           row.item.delivered_date ? new Date(row.item.delivered_date) : null,
         id: 'item.delivered_date',
         filterVariant: 'date-range',
+        filterFn: 'betweenInclusive',
         size: 350,
         Cell: ({ row }) =>
           row.original.item.delivered_date &&
