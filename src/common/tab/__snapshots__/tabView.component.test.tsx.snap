@@ -1,0 +1,188 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TabView Component > renders correctly 1`] = `
+<body>
+  <div>
+    <div
+      class="MuiGrid-root MuiGrid-container css-k6wrnl-MuiGrid-root"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+      >
+        <div
+          class="MuiTabs-root css-1ujnqem-MuiTabs-root"
+        >
+          <div
+            class="MuiTabs-scroller MuiTabs-fixed css-jpln7h-MuiTabs-scroller"
+            style="overflow: hidden; margin-bottom: 0px;"
+          >
+            <div
+              aria-label="test view tabs"
+              class="MuiTabs-flexContainer css-heg063-MuiTabs-flexContainer"
+              role="tablist"
+            >
+              <button
+                aria-controls="tab1-tabpanel"
+                aria-selected="true"
+                class="MuiButtonBase-root MuiTab-root MuiTab-labelIcon MuiTab-textColorPrimary Mui-selected css-12xzlyc-MuiButtonBase-root-MuiTab-root"
+                id="tab1-tab"
+                role="tab"
+                tabindex="0"
+                type="button"
+              >
+                <div
+                  class="MuiTab-iconWrapper"
+                >
+                  icon 1
+                </div>
+                tab1
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+              <button
+                aria-controls="tab3-tabpanel"
+                aria-selected="false"
+                class="MuiButtonBase-root MuiTab-root MuiTab-labelIcon MuiTab-textColorPrimary css-12xzlyc-MuiButtonBase-root-MuiTab-root"
+                id="tab3-tab"
+                role="tab"
+                tabindex="-1"
+                type="button"
+              >
+                <div
+                  class="MuiTab-iconWrapper"
+                >
+                  icon 3
+                </div>
+                tab3
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+              <button
+                aria-controls="tab2-tabpanel"
+                aria-selected="false"
+                class="MuiButtonBase-root MuiTab-root MuiTab-labelIcon MuiTab-textColorPrimary css-12xzlyc-MuiButtonBase-root-MuiTab-root"
+                id="tab2-tab"
+                role="tab"
+                tabindex="-1"
+                type="button"
+              >
+                <div
+                  class="MuiTab-iconWrapper"
+                >
+                  icon 2
+                </div>
+                tab2
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+              <button
+                aria-controls="Gallery-tabpanel"
+                aria-selected="false"
+                class="MuiButtonBase-root MuiTab-root MuiTab-labelIcon MuiTab-textColorPrimary css-12xzlyc-MuiButtonBase-root-MuiTab-root"
+                id="Gallery-tab"
+                role="tab"
+                tabindex="-1"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiTab-iconWrapper css-i4bv87-MuiSvgIcon-root"
+                  data-testid="CollectionsOutlinedIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M20 4v12H8V4zm0-2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2m-8.5 9.67 1.69 2.26 2.48-3.1L19 15H9zM2 6v14c0 1.1.9 2 2 2h14v-2H4V6z"
+                  />
+                </svg>
+                Gallery
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+              <button
+                aria-controls="Attachments-tabpanel"
+                aria-selected="false"
+                class="MuiButtonBase-root MuiTab-root MuiTab-labelIcon MuiTab-textColorPrimary css-12xzlyc-MuiButtonBase-root-MuiTab-root"
+                id="Attachments-tab"
+                role="tab"
+                tabindex="-1"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiTab-iconWrapper css-i4bv87-MuiSvgIcon-root"
+                  data-testid="AttachmentOutlinedIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M18.5 16H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h12.5c1.38 0 2.5 1.12 2.5 2.5S20.88 13 19.5 13H9c-.55 0-1-.45-1-1s.45-1 1-1h9.5V9.5H9c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5h10.5c2.21 0 4-1.79 4-4s-1.79-4-4-4H7c-3.04 0-5.5 2.46-5.5 5.5s2.46 5.5 5.5 5.5h11.5z"
+                  />
+                </svg>
+                Attachments
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+            </div>
+            <span
+              class="MuiTabs-indicator css-1aquho2-MuiTabs-indicator"
+              style="left: 0px; width: 0px;"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+      >
+        <div
+          aria-labelledby="tab1-tab"
+          id="tab1-tabpanel"
+          role="tabpanel"
+          style="height: 100%;"
+        >
+          <div
+            class="MuiBox-root css-10klw3m"
+          >
+            <div>
+              Content for Tab 1
+            </div>
+          </div>
+        </div>
+        <div
+          aria-labelledby="tab3-tab"
+          hidden=""
+          id="tab3-tabpanel"
+          role="tabpanel"
+          style="height: 100%;"
+        />
+        <div
+          aria-labelledby="tab2-tab"
+          hidden=""
+          id="tab2-tabpanel"
+          role="tabpanel"
+          style="height: 100%;"
+        />
+        <div
+          aria-labelledby="Gallery-tab"
+          hidden=""
+          id="Gallery-tabpanel"
+          role="tabpanel"
+          style="height: 100%;"
+        />
+        <div
+          aria-labelledby="Attachments-tab"
+          hidden=""
+          id="Attachments-tabpanel"
+          role="tabpanel"
+          style="height: 100%;"
+        />
+      </div>
+    </div>
+  </div>
+</body>
+`;

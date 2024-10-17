@@ -1,48 +1,26 @@
-import EditIcon from '@mui/icons-material/Edit';
+import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
 import {
   Box,
   Chip,
   CircularProgress,
   Divider,
   Grid,
-  IconButton,
-  Tooltip,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
-import { System } from '../api/api.types';
+import React from 'react';
 import { getSystemImportanceColour, useGetSystem } from '../api/systems';
-import { OverflowTip, formatDateTimeStrings } from '../utils';
+import ActionMenu from '../common/actionMenu.component';
+import PlaceholderImage from '../common/placeholderImage.component';
+import TabView from '../common/tab/tabView.component';
+import { formatDateTimeStrings, OverflowTip } from '../utils';
 import SystemDialog from './systemDialog.component';
 import { SystemItemsTable } from './systemItemsTable.component';
 
-interface SystemButtonProps {
-  system: System;
-}
+export const SYSTEM_LANDING_PAGE_TAB_VALUES = ['Items'] as const;
 
-const EditSystemButton = (props: SystemButtonProps) => {
-  const [editSystemDialogOpen, setEditSystemDialogOpen] =
-    useState<boolean>(false);
-
-  return (
-    <>
-      <Tooltip title="Edit System">
-        <IconButton
-          sx={{ marginLeft: 'auto', padding: 0 }}
-          onClick={() => setEditSystemDialogOpen(true)}
-        >
-          <EditIcon />
-        </IconButton>
-      </Tooltip>
-      <SystemDialog
-        open={editSystemDialogOpen}
-        onClose={() => setEditSystemDialogOpen(false)}
-        requestType="patch"
-        selectedSystem={props.system}
-      />
-    </>
-  );
-};
+// Type for base tab values
+export type SystemLandingPageTabValue =
+  (typeof SYSTEM_LANDING_PAGE_TAB_VALUES)[number];
 
 export interface SystemDetailsProps {
   id: string | null;
@@ -50,6 +28,9 @@ export interface SystemDetailsProps {
 
 function SystemDetails(props: SystemDetailsProps) {
   const { data: system, isLoading: systemLoading } = useGetSystem(props.id);
+
+  const [editSystemDialogOpen, setEditSystemDialogOpen] =
+    React.useState<boolean>(false);
 
   return systemLoading && props.id !== null ? (
     <Box
@@ -66,27 +47,50 @@ function SystemDetails(props: SystemDetailsProps) {
     </Box>
   ) : (
     <>
-      <Box
+      <Grid
+        container
+        item
         sx={{
           display: 'flex',
           alignItems: 'center',
-          margin: 1.5,
+          my: '5px',
         }}
+        spacing={1}
       >
-        <OverflowTip
-          sx={{
-            typography: 'h6',
-            fontWeight: 'bold',
-          }}
-        >
-          {system === undefined
-            ? !systemLoading && props.id !== null
-              ? 'System not found'
-              : 'No system selected'
-            : system.name}
-        </OverflowTip>
-        {system !== undefined && <EditSystemButton system={system} />}
-      </Box>
+        <Grid item xs={9}>
+          <OverflowTip
+            sx={{
+              typography: 'h5',
+              fontWeight: 'bold',
+            }}
+          >
+            {system === undefined
+              ? !systemLoading && props.id !== null
+                ? 'System not found'
+                : 'No system selected'
+              : system.name}
+          </OverflowTip>
+        </Grid>
+        {system !== undefined && (
+          <ActionMenu
+            ariaLabelPrefix="systems page"
+            editMenuItem={{
+              onClick: () => {
+                setEditSystemDialogOpen(true);
+              },
+              dialog: (
+                <SystemDialog
+                  open={editSystemDialogOpen}
+                  onClose={() => setEditSystemDialogOpen(false)}
+                  requestType="patch"
+                  selectedSystem={system}
+                />
+              ),
+            }}
+          />
+        )}
+      </Grid>
+      <Grid></Grid>
       <Divider role="presentation" />
       {system === undefined ? (
         <Box
@@ -106,76 +110,74 @@ function SystemDetails(props: SystemDetailsProps) {
           )}
         </Box>
       ) : (
-        <Grid
-          container
-          direction="column"
-          sx={{ padding: 1.5 }}
-          wrap="nowrap"
-          spacing={1}
-        >
+        <Grid container item direction="column" wrap="nowrap" spacing={1}>
           <Grid
             container
             item
             direction="row"
             justifyContent="space-evenly"
-            sx={{ margin: 0 }}
+            sx={{ margin: 0, mt: 1 }}
           >
-            <Grid item container spacing={1}>
-              <Grid item xs={12} sm={6}>
-                <Typography variant="h6">Location</Typography>
-                <Typography
-                  variant="body1"
-                  color="text.secondary"
-                  sx={{ wordWrap: 'break-word' }}
-                >
-                  {system.location ?? 'None'}
-                </Typography>
+            <Grid item container spacing={2}>
+              <Grid item xs={12} sm={4}>
+                <PlaceholderImage />
               </Grid>
-              <Grid item xs={12} sm={6} sx={{ display: 'inline-flex' }}>
-                <Typography variant="h6">Importance</Typography>
-                <Chip
-                  label={system.importance}
-                  sx={() => {
-                    const colorName = getSystemImportanceColour(
-                      system.importance
-                    );
-                    return {
-                      margin: 0,
-                      marginLeft: 1,
-                      bgcolor: `${colorName}.main`,
-                      color: `${colorName}.contrastText`,
-                    };
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Typography variant="h6">Owner</Typography>
-                <Typography
-                  variant="body1"
-                  color="text.secondary"
-                  sx={{ wordWrap: 'break-word' }}
-                >
-                  {system.owner ?? 'None'}
-                </Typography>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Typography variant="h6">Last modified</Typography>
-                <Typography variant="body1" color="text.secondary">
-                  {formatDateTimeStrings(system.modified_time, true)}
-                </Typography>
-              </Grid>
+              <Grid item container spacing={1} xs={12} sm={8}>
+                <Grid item xs={12} sm={6}>
+                  <Typography color="text.primary">Location</Typography>
+                  <Typography
+                    variant="body1"
+                    color="text.secondary"
+                    sx={{ wordWrap: 'break-word' }}
+                  >
+                    {system.location ?? 'None'}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6} sx={{ display: 'inline-flex' }}>
+                  <Typography color="text.primary">Importance</Typography>
+                  <Chip
+                    label={system.importance}
+                    sx={() => {
+                      const colorName = getSystemImportanceColour(
+                        system.importance
+                      );
+                      return {
+                        margin: 0,
+                        marginLeft: 1,
+                        bgcolor: `${colorName}.main`,
+                        color: `${colorName}.contrastText`,
+                      };
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography color="text.primary">Owner</Typography>
+                  <Typography
+                    variant="body1"
+                    color="text.secondary"
+                    sx={{ wordWrap: 'break-word' }}
+                  >
+                    {system.owner ?? 'None'}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography color="text.primary">Last modified</Typography>
+                  <Typography variant="body1" color="text.secondary">
+                    {formatDateTimeStrings(system.modified_time, true)}
+                  </Typography>
+                </Grid>
 
-              <Grid item xs={12} sm={6}>
-                <Typography variant="h6">Created</Typography>
-                <Typography variant="body1" color="text.secondary">
-                  {formatDateTimeStrings(system.created_time, true)}
-                </Typography>
+                <Grid item xs={12} sm={6}>
+                  <Typography color="text.primary">Created</Typography>
+                  <Typography variant="body1" color="text.secondary">
+                    {formatDateTimeStrings(system.created_time, true)}
+                  </Typography>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
-
-          <Grid item>
-            <Typography variant="h6">Description</Typography>
+          <Grid item mt={2}>
+            <Typography color="text.primary">Description</Typography>
             <Typography
               variant="body1"
               color="text.secondary"
@@ -184,16 +186,21 @@ function SystemDetails(props: SystemDetailsProps) {
               {system.description ?? 'None'}
             </Typography>
           </Grid>
-          <Grid item>
-            <Typography variant="h6" sx={{ paddingTop: 4 }}>
-              Items
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Divider />
-          </Grid>
-          <Grid item>
-            <SystemItemsTable system={system} type="normal" />
+          <Grid item container sx={{ marginTop: 2, display: 'inline-block' }}>
+            <TabView<SystemLandingPageTabValue>
+              ariaLabelPrefix="systems page"
+              defaultTab="Items"
+              gallery
+              attachments
+              tabData={[
+                {
+                  value: 'Items',
+                  icon: <InventoryOutlinedIcon />,
+                  component: <SystemItemsTable system={system} type="normal" />,
+                  order: 0,
+                },
+              ]}
+            />
           </Grid>
         </Grid>
       )}
