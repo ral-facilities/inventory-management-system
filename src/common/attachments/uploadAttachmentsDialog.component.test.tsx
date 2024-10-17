@@ -3,8 +3,10 @@ import userEvent, { UserEvent } from '@testing-library/user-event';
 import { act } from 'react';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 
+import { http, HttpResponse } from 'msw';
 import { MockInstance } from 'vitest';
 import { storageApi } from '../../api/api';
+import { server } from '../../mocks/server';
 import UploadAttachmentsDialog, {
   UploadAttachmentsDialogProps,
 } from './uploadAttachmentsDialog.component';
@@ -102,15 +104,17 @@ describe('Upload attachment dialog', () => {
       title: '',
     });
 
-    expect(xhrPostSpy).toHaveBeenCalledWith(
-      'POST',
-      'object-storage/test1',
-      true
-    );
+    expect(xhrPostSpy).toHaveBeenCalledWith('POST', '/object-storage', true);
   });
   // Works locally but doesn't work on CI
   it.skip('errors when presigned url fails', async () => {
     // Render the component
+
+    server.use(
+      http.post('/object-storage', () => {
+        return HttpResponse.json({}, { status: 400 });
+      })
+    );
 
     createView();
 
@@ -153,11 +157,7 @@ describe('Upload attachment dialog', () => {
       title: '',
     });
 
-    expect(xhrPostSpy).toHaveBeenCalledWith(
-      'POST',
-      'object-storage/uploadError',
-      true
-    );
+    expect(xhrPostSpy).toHaveBeenCalledWith('POST', '/object-storage', true);
     await waitFor(() => {
       expect(screen.getByRole('button', { name: 'Close' })).not.toBeDisabled();
     });
@@ -207,11 +207,7 @@ describe('Upload attachment dialog', () => {
       title: '',
     });
 
-    expect(xhrPostSpy).toHaveBeenCalledWith(
-      'POST',
-      'object-storage/removeError',
-      true
-    );
+    expect(xhrPostSpy).toHaveBeenCalledWith('POST', '/object-storage', true);
 
     await user.click(
       await screen.findByRole('button', { name: 'Remove file' })

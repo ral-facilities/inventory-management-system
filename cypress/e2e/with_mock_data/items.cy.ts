@@ -1,3 +1,5 @@
+import { HttpResponse } from 'msw';
+
 describe('Items', () => {
   beforeEach(() => {
     cy.visit('/catalogue/item/1/items');
@@ -403,7 +405,7 @@ describe('Items', () => {
     cy.findByText('Zf7P8Qu8TD8c').should('exist');
   });
 
-  it('navigates to the landing page, toggles the properties and navigates back to the table view', () => {
+  it('navigates to the landing page and navigates back to the table view', () => {
     cy.findByText('5YUQDDjKpz2z').click();
     cy.findByText(
       'High-resolution cameras for beam characterization. 1'
@@ -474,7 +476,7 @@ describe('Items', () => {
 
       cy.findBrowserMockedRequests({
         method: 'POST',
-        url: 'object-storage/:key',
+        url: '/object-storage',
       }).should(async (postRequests) => {
         expect(postRequests.length).eq(2);
       });
@@ -518,7 +520,7 @@ describe('Items', () => {
 
       cy.findBrowserMockedRequests({
         method: 'POST',
-        url: 'object-storage/:key',
+        url: '/object-storage',
       }).should(async (postRequests) => {
         expect(postRequests.length).eq(1);
       });
@@ -531,6 +533,16 @@ describe('Items', () => {
     });
 
     it('errors when presigned url fails', () => {
+      cy.window().its('msw').should('not.equal', undefined);
+      cy.window().then((window) => {
+        const { worker, http } = window.msw;
+
+        worker.use(
+          http.post('/object-storage', () => {
+            return HttpResponse.json({}, { status: 400 });
+          })
+        );
+      });
       cy.findByText('5YUQDDjKpz2z').click();
       cy.findByText(
         'High-resolution cameras for beam characterization. 1'
@@ -568,7 +580,7 @@ describe('Items', () => {
 
       cy.findBrowserMockedRequests({
         method: 'POST',
-        url: 'object-storage/:key',
+        url: '/object-storage',
       }).should(async (postRequests) => {
         expect(postRequests.length).eq(1);
       });

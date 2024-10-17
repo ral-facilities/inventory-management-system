@@ -35,7 +35,7 @@ describe('attachments api functions', () => {
         title: 'test',
         description: 'test',
         upload_info: {
-          url: 'object-storage/test',
+          url: '/object-storage',
           fields: {
             'Content-Type': 'multipart/form-data',
             key: 'attachments/test',
