@@ -119,7 +119,7 @@ export function ItemsTable(props: ItemTableProps) {
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     const viewCatalogueItemProperties = catalogueCategory?.properties ?? [];
     const propertyFilterVariants: PropertyFiltersType = {
-      boolean: 'checkbox',
+      boolean: 'select',
       string: 'text',
       number: 'range',
       null: 'text',
@@ -291,10 +291,9 @@ export function ItemsTable(props: ItemTableProps) {
       {
         header: 'Is Defective',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) =>
-          row.item.is_defective === true ? 'true' : 'false',
+        accessorFn: (row) => (row.item.is_defective === true ? 'Yes' : 'No'),
         id: 'item.is_defective',
-        filterVariant: 'checkbox',
+        filterVariant: 'select',
         enableColumnFilterModes: false,
         size: 200,
         Cell: ({ row }) => (row.original.item.is_defective ? 'Yes' : 'No'),
@@ -321,7 +320,7 @@ export function ItemsTable(props: ItemTableProps) {
             Excludes
           </MenuItem>,
         ],
-        size: 200,
+        size: 250,
       },
       {
         header: 'System',
@@ -388,8 +387,8 @@ export function ItemsTable(props: ItemTableProps) {
               row.item.properties,
               property.id
             ) as boolean) === true
-              ? 'true'
-              : 'false';
+              ? 'Yes'
+              : 'No';
           } else if (property.type === 'number') {
             return typeof findPropertyValue(
               row.item.properties,

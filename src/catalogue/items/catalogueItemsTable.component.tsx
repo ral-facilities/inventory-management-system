@@ -147,7 +147,7 @@ export interface CatalogueItemsTableProps {
 }
 
 export type PropertyFiltersType = {
-  boolean: 'select' | 'text' | 'range' | 'autocomplete' | 'checkbox';
+  boolean: 'select' | 'text' | 'range' | 'autocomplete';
   string: 'select' | 'text' | 'range';
   number: 'select' | 'text' | 'range';
   null: 'select' | 'text' | 'range';
