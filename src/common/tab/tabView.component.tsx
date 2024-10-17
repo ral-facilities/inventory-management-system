@@ -64,7 +64,7 @@ function TabView<T>(props: TabViewProps<T>) {
 
     if (gallery) {
       updatedTabData.push({
-        value: 'Gallery' as T,
+        value: 'Gallery' as AdditionalTabValues,
         icon: <CollectionsOutlinedIcon />,
         component: <></>,
         order: galleryOrder ?? updatedTabData.length + 1,
@@ -73,7 +73,7 @@ function TabView<T>(props: TabViewProps<T>) {
 
     if (attachments) {
       updatedTabData.push({
-        value: 'Attachments' as T,
+        value: 'Attachments' as AdditionalTabValues,
         icon: <AttachmentOutlinedIcon />,
         component: <></>,
         order: attachmentsOrder ?? updatedTabData.length + 2,
