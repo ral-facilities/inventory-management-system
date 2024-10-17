@@ -403,30 +403,11 @@ describe('Items', () => {
     cy.findByText('Zf7P8Qu8TD8c').should('exist');
   });
 
-  it('navigates to the landing page, toggles the properties and navigates back to the table view', () => {
+  it('navigates to the landing page and navigates back to the table view', () => {
     cy.findByText('5YUQDDjKpz2z').click();
     cy.findByText(
       'High-resolution cameras for beam characterization. 1'
     ).should('exist');
-    cy.findByLabelText('Close item properties').should('exist');
-
-    cy.findByLabelText('Close item properties').click();
-
-    cy.findByLabelText('Close item properties').should('not.exist');
-    cy.findByLabelText('Show item properties').should('exist');
-
-    cy.findByLabelText('Close item manufacturer details').should('exist');
-
-    cy.findByLabelText('Close item manufacturer details').click();
-
-    cy.findByLabelText('Close item manufacturer details').should('not.exist');
-
-    cy.findByLabelText('Close item details').should('exist');
-
-    cy.findByLabelText('Close item details').click();
-
-    cy.findByLabelText('Close item details').should('not.exist');
-    cy.findByLabelText('Show item manufacturer details').should('exist');
 
     cy.findByRole('link', {
       name: 'Items',
