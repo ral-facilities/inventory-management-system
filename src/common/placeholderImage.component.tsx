@@ -1,17 +1,14 @@
-import { Box, Typography } from '@mui/material';
+import { Box, SxProps, Theme, Typography } from '@mui/material';
 
 export interface PlaceholderImageProps {
-  maxWidth: string;
-  maxHeight: string;
+  sx?: SxProps<Theme>;
 }
 
 const PlaceholderImage = (props: PlaceholderImageProps) => {
-  const { maxHeight, maxWidth } = props;
+  const { sx } = props;
   return (
     <Box
-      sx={(theme) => ({
-        maxWidth: maxWidth,
-        maxHeight: maxHeight,
+      sx={{
         width: '100%',
         height: '100%',
         borderRadius: 2,
@@ -20,10 +17,11 @@ const PlaceholderImage = (props: PlaceholderImageProps) => {
         alignItems: 'center',
         justifyContent: 'center',
         textAlign: 'center',
-        color: theme.palette.text.primary,
+        color: 'text.primary',
         border: '1px dashed',
-        borderColor: theme.palette.text.primary,
-      })}
+        borderColor: 'text.primary',
+        ...sx,
+      }}
     >
       <Typography variant="h5">No Image</Typography>
     </Box>

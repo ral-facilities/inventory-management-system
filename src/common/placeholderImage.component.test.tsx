@@ -3,10 +3,7 @@ import PlaceholderImage from './placeholderImage.component'; // Adjust the impor
 
 describe('PlaceholderImage Component', () => {
   it('matches the snapshot', () => {
-    const { asFragment } = render(
-      <PlaceholderImage maxWidth="300px" maxHeight="200px" />
-    );
-
+    const { asFragment } = render(<PlaceholderImage />);
     expect(asFragment()).toMatchSnapshot();
   });
 });
