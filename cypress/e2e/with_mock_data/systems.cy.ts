@@ -238,7 +238,7 @@ describe('Systems', () => {
     cy.findByRole('link', { name: 'Pulse Laser' }).should('be.visible');
     cy.findByRole('link', { name: 'Laser Tech' }).should('be.visible');
     cy.findByRole('link', { name: 'Laser Star' }).should('be.visible');
-    cy.findByRole('link', { name: "Laser Xpress" }).should('be.visible');
+    cy.findByRole('link', { name: 'Laser Xpress' }).should('be.visible');
 
     // One in title, one in breadcrumbs
     cy.findAllByText('Plasma Beam').should('have.length', 2);
@@ -580,7 +580,8 @@ describe('Systems', () => {
   it('edits a system from a landing page', () => {
     cy.visit('/systems/65328f34a40ff5301575a4e3');
 
-    cy.findByRole('button', { name: 'Edit System' }).click();
+    cy.findByRole('button', { name: 'systems page actions menu' }).click();
+    cy.findByText('Edit').click();
 
     cy.findByLabelText('Name *').clear();
     cy.findByLabelText('Name *').type('System name');
