@@ -1,5 +1,6 @@
 {
-  "apiUrl": "http://127.0.0.1:8000",
+  "imsApiUrl": "http://127.0.0.1:8000",
+  "storageApiUrl": "",
   "routes": [
     {
       "section": "Inventory Management System",
