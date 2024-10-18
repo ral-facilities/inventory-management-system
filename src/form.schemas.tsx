@@ -9,6 +9,7 @@ export type RequestType = 'post' | 'patch';
 
 export const DATE_PICKER_MIN_DATE = new Date('1900-01-01');
 export const DATE_PICKER_MAX_DATE = new Date('2100-01-01');
+export const DATE_TODAY = new Date();
 export const INVALID_DATE_FORMAT_MESSAGE = 'Date format: dd/MM/yyyy';
 
 interface BaseZodSchemaProps {
@@ -518,7 +519,7 @@ export const PropertiesStepSchema = z.object({
   properties: z.array(z.discriminatedUnion('valueType', propertiesTypeList)),
 });
 
-// ------------------------------------ CATALOGUE ITEMS ------------------------------------
+// ------------------------------------ ITEMS ------------------------------------
 
 export const ItemDetailsStepSchema = (requestType: RequestType) => {
   return z.object({
@@ -597,7 +598,7 @@ export const ItemDetailsStepSchema = (requestType: RequestType) => {
       }),
     delivered_date: OptionalOrNullableDateSchema({
       requestType: requestType,
-      maxDate: DATE_PICKER_MAX_DATE,
+      maxDate: DATE_TODAY,
       minDate: DATE_PICKER_MIN_DATE,
       dateFormatErrorMessage: INVALID_DATE_FORMAT_MESSAGE,
     }),
