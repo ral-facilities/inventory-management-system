@@ -1,6 +1,6 @@
 {
   "imsApiUrl": "",
-  "storageApiUrl": "",
+  "osApiUrl": "",
   "routes": [
     {
       "section": "homepage",

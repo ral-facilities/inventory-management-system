@@ -96,5 +96,5 @@ export const imsApi = createAuthenticatedClient({
 });
 
 export const storageApi = createAuthenticatedClient({
-  getURL: (settings) => settings.storageApiUrl,
+  getURL: (settings) => settings.osApiUrl,
 });

@@ -15,7 +15,7 @@ const ConfigTest: React.FC = (): React.ReactElement => {
 vi.mock('./settings', () => ({
   settings: Promise.resolve({
     imsApiUrl: '',
-    storageApiUrl: '',
+    osApiUrl: '',
     routes: [
       {
         section: 'homepage',
@@ -78,7 +78,7 @@ describe('ConfigProvider', () => {
     expect(screen.getByTestId('settings')).toHaveTextContent(
       JSON.stringify({
         imsApiUrl: '',
-        storageApiUrl: '',
+        osApiUrl: '',
         routes: [
           {
             section: 'homepage',

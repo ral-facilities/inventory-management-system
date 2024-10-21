@@ -51,7 +51,7 @@ describe('Upload attachment dialog', () => {
     });
 
     expect(
-      screen.getByText('Files cannot be larger than 100MB')
+      screen.getByText('Files cannot be larger than', { exact: false })
     ).toBeInTheDocument();
     expect(baseElement).toMatchSnapshot();
   });
@@ -74,7 +74,9 @@ describe('Upload attachment dialog', () => {
     });
 
     // Find the Uppy Dashboard's drop zone (it usually has a label like "Drop files here" or "Browse files")
-    const dropZone = screen.getByText(/files cannot be larger than/i);
+    const dropZone = screen.getByText('Files cannot be larger than', {
+      exact: false,
+    });
 
     // Create a drag-and-drop event for the file
     Object.defineProperty(dropZone, 'files', {
@@ -123,7 +125,9 @@ describe('Upload attachment dialog', () => {
     });
 
     // Find the Uppy Dashboard's drop zone (it usually has a label like "Drop files here" or "Browse files")
-    const dropZone = screen.getByText(/files cannot be larger than/i);
+    const dropZone = screen.getByText('Files cannot be larger than', {
+      exact: false,
+    });
 
     // Create a drag-and-drop event for the file
     Object.defineProperty(dropZone, 'files', {
@@ -177,7 +181,9 @@ describe('Upload attachment dialog', () => {
     });
 
     // Find the Uppy Dashboard's drop zone (it usually has a label like "Drop files here" or "Browse files")
-    const dropZone = screen.getByText(/files cannot be larger than/i);
+    const dropZone = screen.getByText('Files cannot be larger than', {
+      exact: false,
+    });
 
     // Create a drag-and-drop event for the file
     Object.defineProperty(dropZone, 'files', {

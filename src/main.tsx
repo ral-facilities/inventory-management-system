@@ -122,9 +122,9 @@ export const fetchSettings =
           throw new Error('imsApiUrl is undefined in settings');
         }
 
-        // Ensure the storageApiUrl name exists.
-        if (!('storageApiUrl' in settings)) {
-          throw new Error('storageApiUrl is undefined in settings');
+        // Ensure the osApiUrl name exists.
+        if (!('osApiUrl' in settings)) {
+          throw new Error('osApiUrl is undefined in settings');
         }
 
         if (Array.isArray(settings['routes']) && settings['routes'].length) {
@@ -180,7 +180,7 @@ async function prepare() {
   if (
     import.meta.env.VITE_APP_INCLUDE_MSW === 'true' ||
     settingsResult?.imsApiUrl === '' ||
-    settingsResult?.storageApiUrl === ''
+    settingsResult?.osApiUrl === ''
   ) {
     // Need to use require instead of import as import breaks when loaded in SG
     const { worker } = await import('./mocks/browser');

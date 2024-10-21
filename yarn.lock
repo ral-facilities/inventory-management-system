@@ -2102,38 +2102,26 @@ __metadata:
   linkType: hard
 
 "@uppy/drag-drop@npm:^4.0.2":
-  version: 4.0.2
-  resolution: "@uppy/drag-drop@npm:4.0.2"
+  version: 4.0.3
+  resolution: "@uppy/drag-drop@npm:4.0.3"
   dependencies:
-    "@uppy/utils": "npm:^6.0.2"
+    "@uppy/utils": "npm:^6.0.3"
     preact: "npm:^10.5.13"
   peerDependencies:
-    "@uppy/core": ^4.1.1
-  checksum: 10c0/a9b6da8fd75b3c1db1bfa1cbde05ed6eea0cbcaa508c4abd2da6be5308e7fbad9d74aa440c63e5bddad7d3152b2a9ca423af0db099f9087ae1e4bd2b828a554d
+    "@uppy/core": ^4.2.2
+  checksum: 10c0/1f1c119e5d583576c593beb9eb1cbb7d99b0b17bc33a2f9231615a2f58c450b96db00b3d24a93e54f9e1aea7b37fa496a4b9eb5052afbe3399b4699ad3f76334
   languageName: node
   linkType: hard
 
 "@uppy/file-input@npm:^4.0.1":
-  version: 4.0.1
-  resolution: "@uppy/file-input@npm:4.0.1"
+  version: 4.0.2
+  resolution: "@uppy/file-input@npm:4.0.2"
   dependencies:
-    "@uppy/utils": "npm:^6.0.2"
+    "@uppy/utils": "npm:^6.0.3"
     preact: "npm:^10.5.13"
   peerDependencies:
-    "@uppy/core": ^4.1.1
-  checksum: 10c0/76704f7e4e2df6ee1aa09933cd81ad770a09dd6a1a35bd2c1a318df6b9a3833de00a6c56e4a2cd4f41e645d92b8e23f3b8797b9a1647627cff3568833d624a16
-  languageName: node
-  linkType: hard
-
-"@uppy/golden-retriever@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "@uppy/golden-retriever@npm:4.0.0"
-  dependencies:
-    "@uppy/utils": "npm:^6.0.0"
-    lodash: "npm:^4.17.21"
-  peerDependencies:
-    "@uppy/core": ^4.0.0
-  checksum: 10c0/9048e5e0887daab13aa55f1c7f438422618e6028f2ce9d08456bafdcea921d9f5c3338e5c507412da02557777d852f7ed594ba8b9c01f3154e7830b83c728da9
+    "@uppy/core": ^4.2.2
+  checksum: 10c0/4bedfec2fbc1dd8cdf97b45eab91a5c0d0059408be8295d0abb7ede56b3bed3d53bc2a969f7ed1cc9f0153577f8f693a1c34b5c71515567be404b5e1f2011813
   languageName: node
   linkType: hard
 
@@ -2245,6 +2233,16 @@ __metadata:
     lodash: "npm:^4.17.21"
     preact: "npm:^10.5.13"
   checksum: 10c0/a0fd7dc9e21bb681770aecf645cf9fdf29fb0dcf25d564038dd38dd8c3777a078d1334e552459c54fb484a0bdeb79fccb0c72b0fb082ca24c72ecd01d7e0ac92
+  languageName: node
+  linkType: hard
+
+"@uppy/utils@npm:^6.0.3":
+  version: 6.0.3
+  resolution: "@uppy/utils@npm:6.0.3"
+  dependencies:
+    lodash: "npm:^4.17.21"
+    preact: "npm:^10.5.13"
+  checksum: 10c0/3e370eeec4f747ea220102dbaa376e9ad8d6e7efc5ac5f99a8e3f8424cc69ba2bbef3fa1a54900a6e0ac50df5a67463b7c62f394da07ecf342414ba0b2050634
   languageName: node
   linkType: hard
 
@@ -5358,7 +5356,6 @@ __metadata:
     "@uppy/dashboard": "npm:^4.1.0"
     "@uppy/drag-drop": "npm:^4.0.2"
     "@uppy/file-input": "npm:^4.0.1"
-    "@uppy/golden-retriever": "npm:^4.0.0"
     "@uppy/progress-bar": "npm:^4.0.0"
     "@uppy/react": "npm:^4.0.2"
     "@vitejs/plugin-react": "npm:^4.3.0"

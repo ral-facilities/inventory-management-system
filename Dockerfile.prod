@@ -63,7 +63,7 @@ RUN set -eux; \
 USER www-data
 
 ENV IMS_API_URL="/inventory-management-system-api"
-ENV STORAGE_API_URL = "/object-store-api"
+ENV OS_API_URL = "/object-storage-api"
 ENV PLUGIN_HOST="/inventory-management-system"
 
 COPY docker/docker-entrypoint.sh /usr/local/bin/

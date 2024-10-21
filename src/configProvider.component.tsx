@@ -7,7 +7,7 @@ import {
 
 const initialConfiguration: InventoryManagementSystemSettings = {
   imsApiUrl: '',
-  storageApiUrl: '',
+  osApiUrl: '',
   routes: [],
   pluginHost: '',
 };

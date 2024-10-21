@@ -16,7 +16,7 @@ import React from 'react';
 import { usePostAttachmentMetadata } from '../../api/attachments';
 
 const MAX_FILE_SIZE_MB = 100;
-const MAX_FILE_SIZE_B = MAX_FILE_SIZE_MB * 1048576;
+const MAX_FILE_SIZE_B = MAX_FILE_SIZE_MB * 1000 * 1000;
 
 export interface UploadAttachmentsDialogProps {
   open: boolean;
@@ -36,7 +36,7 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
 
   const { mutateAsync: postAttachmentMetadata } = usePostAttachmentMetadata();
 
-  // // Handlers for upload-error and file-removed events
+  // Handlers for upload-error and file-removed events
   const handleUploadError = React.useCallback(
     (fileMetadataMap: Record<string, string>) =>
       (file?: UppyFile<Meta, AwsBody>) => {
