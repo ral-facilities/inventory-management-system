@@ -566,8 +566,6 @@ describe('Items', () => {
           JSON.stringify({
             entity_id: 'KvT2Ox7n',
             file_name: 'uploadError.txt',
-            title: '',
-            description: '',
           })
         );
       });
