@@ -466,7 +466,7 @@ export const COLUMN_FILTER_MODE_OPTIONS: Record<
   string,
   LiteralUnion<string & MRT_FilterOption, string>[]
 > = {
-  boolean: [],
+  boolean: ['fuzzy'],
   date: ['between', 'betweenInclusive', 'equals', 'notEquals'],
   dateTime: ['between', 'betweenInclusive'],
   string: [

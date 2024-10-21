@@ -13,8 +13,8 @@ import {
   TableCellBaseProps,
 } from '@mui/material';
 import {
-  MRT_Row,
   MaterialReactTable,
+  MRT_Row,
   useMaterialReactTable,
   type MRT_ColumnDef,
 } from 'material-react-table';
@@ -32,11 +32,6 @@ import { useGetSystemIds } from '../api/systems';
 import { findPropertyValue } from '../catalogue/items/catalogueItemsTable.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import {
-  MRT_Functions_Localisation,
-  TableBodyCellOverFlowTip,
-  TableCellOverFlowTipProps,
-  TableGroupedCell,
-  TableHeaderOverflowTip,
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
   COLUMN_FILTER_VARIANTS,
@@ -45,7 +40,12 @@ import {
   formatDateTimeStrings,
   getInitialColumnFilterFnState,
   getPageHeightCalc,
+  MRT_Functions_Localisation,
   OPTIONAL_FILTER_MODE_OPTIONS,
+  TableBodyCellOverFlowTip,
+  TableCellOverFlowTipProps,
+  TableGroupedCell,
+  TableHeaderOverflowTip,
 } from '../utils';
 import DeleteItemDialog from './deleteItemDialog.component';
 import ItemDialog from './itemDialog.component';
@@ -335,7 +335,7 @@ export function ItemsTable(props: ItemTableProps) {
             } else if (returnValue === false) {
               return 'No';
             } else {
-              return 'Empty';
+              return '';
             }
           } else if (property.type === 'number') {
             return typeof findPropertyValue(
@@ -365,14 +365,19 @@ export function ItemsTable(props: ItemTableProps) {
               ...COLUMN_FILTER_MODE_OPTIONS[
                 property.type as 'string' | 'boolean' | 'number' | 'null'
               ],
-              ...['empty', 'notEmpty'],
+              ...OPTIONAL_FILTER_MODE_OPTIONS,
             ]
           : COLUMN_FILTER_MODE_OPTIONS[
               property.type as 'string' | 'boolean' | 'number' | 'null'
             ],
         enableColumnFilterModes:
-          (property.type as 'string' | 'boolean' | 'number' | 'null') !==
-          'boolean',
+          (property.type as 'string' | 'boolean' | 'number' | 'null') ===
+          'boolean'
+            ? property.mandatory
+              ? false
+              : true
+            : true,
+        filterSelectOptions: ['Yes', 'No'],
         Cell: ({ row }: { row: MRT_Row<TableRowData> }) => {
           if (
             typeof findPropertyValue(
