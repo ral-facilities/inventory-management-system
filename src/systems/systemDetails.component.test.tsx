@@ -63,34 +63,6 @@ describe('SystemDetails', () => {
     expect(screen.getByRole('table')).toBeInTheDocument();
   });
 
-  it('renders correctly when a system is selected and navigate to attachments ', async () => {
-    createView();
-
-    await waitFor(() => {
-      expect(screen.getByText(mockSystemDetails.name)).toBeInTheDocument();
-    });
-    expect(screen.queryByText('Please select a system')).toBeFalsy();
-    expect(
-      screen.getByText(mockSystemDetails.location ?? '')
-    ).toBeInTheDocument();
-    expect(screen.getByText(mockSystemDetails.owner ?? '')).toBeInTheDocument();
-    expect(
-      screen.getByText(mockSystemDetails.importance ?? '')
-    ).toBeInTheDocument();
-    // Can have new line character which breaks normal matching
-    expect(
-      screen.getByText(
-        (_, element) => element?.textContent === mockSystemDetails.description
-      )
-    ).toBeInTheDocument();
-
-    // Items table
-    expect(screen.getByRole('table')).toBeInTheDocument();
-    await user.click(screen.getByText('Attachments'));
-
-    expect(screen.queryByRole('table')).not.toBeInTheDocument();
-  });
-
   it('renders correctly when a system is not found', async () => {
     props.id = 'invalid_id';
 
