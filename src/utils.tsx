@@ -413,18 +413,14 @@ export const getInitialColumnFilterFnState = <TData extends MRT_RowData>(
   return initialState;
 };
 
-type filterValueType = string | number | (string | number)[];
-
 interface FilterFn {
-  (row: MRT_RowData, id: string, filterValue: filterValueType): boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (row: MRT_RowData, id: string, filterValue: any): boolean;
 }
 
 export const customFilterFunctions: Record<string, FilterFn> = {
-  arrIncludesNone: (
-    row: MRT_RowData,
-    id: string,
-    filterValue: filterValueType
-  ) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  arrIncludesNone: (row: MRT_RowData, id: string, filterValue: any) => {
     if (Array.isArray(filterValue)) {
       return !filterValue.includes(row.getValue(id));
     }

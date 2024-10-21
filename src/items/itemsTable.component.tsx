@@ -121,7 +121,7 @@ export function ItemsTable(props: ItemTableProps) {
     const propertyFilterVariants: PropertyFiltersType = {
       boolean: 'select',
       string: 'text',
-      number: 'range',
+      number: 'text',
       null: 'text',
     };
     const propertyFilterFns: Record<string, string> = {
@@ -207,9 +207,9 @@ export function ItemsTable(props: ItemTableProps) {
       {
         header: 'Asset Number',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => row.item.asset_number,
+        accessorFn: (row) => row.item.asset_number ?? '',
         id: 'item.asset_number',
-        filterFn: 'fuzzy',
+        filterFn: 'contains',
         columnFilterModeOptions: [
           'fuzzy',
           'contains',
@@ -217,6 +217,8 @@ export function ItemsTable(props: ItemTableProps) {
           'endsWith',
           'equals',
           'notEquals',
+          'empty',
+          'notEmpty',
         ],
         size: 250,
         GroupedCell: TableGroupedCell,
@@ -224,7 +226,7 @@ export function ItemsTable(props: ItemTableProps) {
       {
         header: 'Purchase Order Number',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => row.item.purchase_order_number,
+        accessorFn: (row) => row.item.purchase_order_number ?? '',
         id: 'item.purchase_order_number',
         filterFn: 'fuzzy',
         columnFilterModeOptions: [
@@ -270,7 +272,7 @@ export function ItemsTable(props: ItemTableProps) {
         accessorFn: (row) =>
           row.item.delivered_date ? new Date(row.item.delivered_date) : null,
         id: 'item.delivered_date',
-        filterVariant: 'date-range',
+        filterVariant: 'date',
         filterFn: 'betweenInclusive',
         columnFilterModeOptions: [
           'between',
@@ -371,6 +373,8 @@ export function ItemsTable(props: ItemTableProps) {
           'endsWith',
           'equals',
           'notEquals',
+          'empty',
+          'notEmpty',
         ],
         size: 250,
         enableGrouping: false,
@@ -383,24 +387,29 @@ export function ItemsTable(props: ItemTableProps) {
         GroupedCell: TableGroupedCell,
         accessorFn: (row: TableRowData) => {
           if (property.type === 'boolean') {
-            return (findPropertyValue(
+            const returnValue: boolean = findPropertyValue(
               row.item.properties,
               property.id
-            ) as boolean) === true
-              ? 'Yes'
-              : 'No';
+            ) as boolean;
+            if (returnValue === true) {
+              return 'Yes';
+            } else if (returnValue === false) {
+              return 'No';
+            } else {
+              return 'Empty';
+            }
           } else if (property.type === 'number') {
             return typeof findPropertyValue(
               row.item.properties,
               property.id
             ) === 'number'
               ? findPropertyValue(row.item.properties, property.id)
-              : 0;
+              : '';
           } else {
             // if the value doesn't exist it return type "true" we need to change this
             // to '' to allow this column to be filterable
 
-            return findPropertyValue(row.item.properties, property.id);
+            return findPropertyValue(row.item.properties, property.id) ?? '';
           }
         },
         size: 250,
@@ -412,10 +421,16 @@ export function ItemsTable(props: ItemTableProps) {
           propertyFilterFns[
             property.type as 'string' | 'boolean' | 'number' | 'null'
           ],
-        columnFilterModeOptions:
-          propertyFilterModeOptions[
-            property.type as 'string' | 'boolean' | 'number' | 'null'
-          ],
+        columnFilterModeOptions: !property.mandatory
+          ? [
+              ...propertyFilterModeOptions[
+                property.type as 'string' | 'boolean' | 'number' | 'null'
+              ],
+              ...['empty', 'notEmpty'],
+            ]
+          : propertyFilterModeOptions[
+              property.type as 'string' | 'boolean' | 'number' | 'null'
+            ],
         enableColumnFilterModes:
           (property.type as 'string' | 'boolean' | 'number' | 'null') !==
           'boolean',
@@ -695,6 +710,20 @@ export function ItemsTable(props: ItemTableProps) {
         )
       : undefined,
   });
+
+  const rows = table.getRowModel().rows;
+
+  if (rows.length > 0) {
+    console.log(
+      `Row Data Value ${rows[0].getValue('item.purchase_order_number')}`
+    );
+  } else {
+    console.log('No rows available');
+  }
+
+  console.log(
+    `FILTER VALUE ${table.getColumn('item.purchase_order_number').getFilterValue()}`
+  );
   return (
     <div style={{ width: '100%' }}>
       <MaterialReactTable table={table} />
