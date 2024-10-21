@@ -509,6 +509,10 @@ export const CatalogueItemDetailsStepSchema = (requestType: RequestType) => {
       errorMessage:
         'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted.',
     }),
+    expected_lifetime: OptionalOrNullableNumberSchema({
+      requestType,
+      invalidTypeErrorMessage: 'Please enter a valid number.',
+    }),
     item_model_number: OptionalOrNullableStringSchema({ requestType }),
     notes: OptionalOrNullableStringSchema({ requestType }),
   });

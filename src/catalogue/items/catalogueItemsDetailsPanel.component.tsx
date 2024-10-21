@@ -169,6 +169,13 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
               </Grid>
 
               <Grid item xs={12} sm={6} key={8}>
+                <Typography color="text.primary">Expected Lifetime</Typography>
+                <Typography color="text.secondary">
+                  {catalogueItemIdData.expected_lifetime ?? 'None'}
+                </Typography>
+              </Grid>
+
+              <Grid item xs={12} sm={6} key={9}>
                 <Typography color="text.primary">Model Number</Typography>
                 <Typography
                   color="text.secondary"
@@ -178,7 +185,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
-              <Grid item xs={12} sm={6} key={9}>
+              <Grid item xs={12} sm={6} key={10}>
                 <Typography color="text.primary">Last Modified</Typography>
                 <Typography color="text.secondary">
                   {formatDateTimeStrings(
@@ -188,7 +195,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
-              <Grid item xs={12} sm={6} key={10}>
+              <Grid item xs={12} sm={6} key={11}>
                 <Typography color="text.primary">Created</Typography>
                 <Typography color="text.secondary">
                   {formatDateTimeStrings(

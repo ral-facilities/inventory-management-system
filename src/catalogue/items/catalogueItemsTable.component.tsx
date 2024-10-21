@@ -497,10 +497,17 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       {
         header: 'Expected Lifetime',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => row.catalogueItem.expected_lifetime ?? '',
-        filterVariant: 'range',
+        accessorFn: (row) => row.catalogueItem.expected_lifetime ?? 0,
         id: 'catalogueItem.expected_lifetime',
         size: 250,
+        filterVariant: 'range',
+        Cell: ({ row }) => {
+          return row.original.catalogueItem.expected_lifetime === 0
+            ? 0
+            : row.original.catalogueItem.expected_lifetime !== null
+              ? row.original.catalogueItem.expected_lifetime
+              : '';
+        },
         GroupedCell: TableGroupedCell,
       },
       {
@@ -736,6 +743,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         'catalogueItem.days_to_rework',
         'catalogueItem.drawing_number',
         'catalogueItem.drawing_link',
+        'catalogueItem.expected_lifetime',
         'catalogueItem.item_model_number',
         'manufacturer.url',
       ];
