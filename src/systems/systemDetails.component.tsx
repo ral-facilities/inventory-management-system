@@ -19,6 +19,7 @@ import { SystemItemsTable } from './systemItemsTable.component';
 
 const SystemDetailsActionMenu = (props: { system: System }) => {
   const { system } = props;
+
   const [editSystemDialogOpen, setEditSystemDialogOpen] =
     React.useState<boolean>(false);
 
