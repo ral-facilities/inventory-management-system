@@ -655,19 +655,6 @@ export function ItemsTable(props: ItemTableProps) {
       : undefined,
   });
 
-  const rows = table.getRowModel().rows;
-
-  if (rows.length > 0) {
-    console.log(
-      `Row Data Value ${rows[0].getValue('item.purchase_order_number')}`
-    );
-  } else {
-    console.log('No rows available');
-  }
-
-  console.log(
-    `FILTER VALUE ${table.getColumn('item.purchase_order_number').getFilterValue()}`
-  );
   return (
     <div style={{ width: '100%' }}>
       <MaterialReactTable table={table} />
