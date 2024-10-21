@@ -495,6 +495,15 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           TableGroupedCell({ ...props, outputType: 'Link' }),
       },
       {
+        header: 'Expected Lifetime',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => row.catalogueItem.expected_lifetime ?? '',
+        filterVariant: 'range',
+        id: 'catalogueItem.expected_lifetime',
+        size: 250,
+        GroupedCell: TableGroupedCell,
+      },
+      {
         header: 'Item Model Number',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem.item_model_number ?? '',
