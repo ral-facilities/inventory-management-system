@@ -460,16 +460,12 @@ describe('Items', () => {
           JSON.stringify({
             entity_id: 'KvT2Ox7n',
             file_name: 'test1.txt',
-            title: '',
-            description: '',
           })
         );
         expect(JSON.stringify(await postRequests[1].json())).equal(
           JSON.stringify({
             entity_id: 'KvT2Ox7n',
             file_name: 'test2.txt',
-            title: '',
-            description: '',
           })
         );
       });
@@ -512,8 +508,6 @@ describe('Items', () => {
           JSON.stringify({
             entity_id: 'KvT2Ox7n',
             file_name: 'removeError.txt',
-            title: '',
-            description: '',
           })
         );
       });
