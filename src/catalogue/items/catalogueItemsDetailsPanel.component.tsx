@@ -13,7 +13,7 @@ import {
   CatalogueItem,
   Manufacturer,
 } from '../../api/api.types';
-import PlaceholderImage from '../../common/placeholderImage.component';
+import PlaceholderImage from '../../common/images/placeholderImage.component';
 import { formatDateTimeStrings } from '../../utils';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -2246,6 +2246,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@uppy/xhr-upload@npm:^4.2.0":
+  version: 4.2.1
+  resolution: "@uppy/xhr-upload@npm:4.2.1"
+  dependencies:
+    "@uppy/companion-client": "npm:^4.1.0"
+    "@uppy/utils": "npm:^6.0.3"
+  peerDependencies:
+    "@uppy/core": ^4.2.2
+  checksum: 10c0/fa679ad00bfafc235fb38d552e4aaaee8eb9fd7c74baeeb9f0d10a8976738b0a9a881e82847697555d2475ab9e9033f178a50a5de0d16e78475c04aaf47d85ef
+  languageName: node
+  linkType: hard
+
 "@vitejs/plugin-react@npm:^4.3.0":
   version: 4.3.2
   resolution: "@vitejs/plugin-react@npm:4.3.2"
@@ -5358,6 +5370,7 @@ __metadata:
     "@uppy/file-input": "npm:^4.0.1"
     "@uppy/progress-bar": "npm:^4.0.0"
     "@uppy/react": "npm:^4.0.2"
+    "@uppy/xhr-upload": "npm:^4.2.0"
     "@vitejs/plugin-react": "npm:^4.3.0"
     "@vitest/coverage-v8": "npm:2.1.1"
     axios: "npm:^1.7.2"

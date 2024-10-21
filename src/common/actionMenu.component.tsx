@@ -7,12 +7,14 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import UploadAttachmentsDialog from './attachments/uploadAttachmentsDialog.component';
+import UploadImagesDialog from './images/uploadImagesDialog.component';
 
 export interface ActionMenuProps {
   ariaLabelPrefix: string;
   editMenuItem: { onClick: () => void; dialog: React.ReactNode };
   printMenuItem?: boolean;
   uploadAttachmentsEntityId?: string;
+  uploadImagesEntityId?: string;
 }
 function ActionMenu(props: ActionMenuProps) {
   const {
@@ -20,12 +22,16 @@ function ActionMenu(props: ActionMenuProps) {
     printMenuItem,
     ariaLabelPrefix,
     uploadAttachmentsEntityId,
+    uploadImagesEntityId,
   } = props;
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const menuOpen = Boolean(anchorEl);
 
   const [openUploadAttachmentsDialog, setOpenUploadAttachmentsDialog] =
+    React.useState(false);
+
+  const [openUploadImagesDialog, setOpenUploadImagesDialog] =
     React.useState(false);
 
   const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -100,6 +106,17 @@ function ActionMenu(props: ActionMenuProps) {
               Upload Attachments
             </MenuItem>
           )}
+          {uploadImagesEntityId && (
+            <MenuItem
+              onClick={() => {
+                setOpenUploadImagesDialog(true);
+                handleMenuClose();
+              }}
+            >
+              <UploadIcon fontSize="small" sx={{ mr: 1 }} />
+              Upload Images
+            </MenuItem>
+          )}
           {printMenuItem && (
             <MenuItem
               onClick={() => {
@@ -119,6 +136,13 @@ function ActionMenu(props: ActionMenuProps) {
           open={openUploadAttachmentsDialog}
           onClose={() => setOpenUploadAttachmentsDialog(false)}
           entityId={uploadAttachmentsEntityId}
+        />
+      )}
+      {uploadImagesEntityId && (
+        <UploadImagesDialog
+          open={openUploadImagesDialog}
+          onClose={() => setOpenUploadImagesDialog(false)}
+          entityId={uploadImagesEntityId}
         />
       )}
     </Grid>
