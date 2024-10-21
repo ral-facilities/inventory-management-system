@@ -37,7 +37,7 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
     setIsUploading(false);
   }, [onClose]);
 
-  const storageApiUrl = async () => (await settings)?.storageApiUrl || '';
+  const osApiUrl = async () => (await settings)?.osApiUrl || '';
 
   React.useEffect(() => {
     if (open) {
@@ -56,7 +56,7 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
         entity_id: entityId, // Add entityId here
       });
 
-      storageApiUrl().then((url) => {
+      osApiUrl().then((url) => {
         uppyInstance.use(XHR, {
           endpoint: `${url}/images`,
           method: 'POST',

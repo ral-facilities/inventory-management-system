@@ -1,7 +1,8 @@
 import { DefaultBodyType, http, HttpResponse, PathParams } from 'msw';
 import {
-  AttachmentsPostMetadata,
-  AttachmentsPostMetadataResponse,
+  AttachmentMetadataPost,
+  AttachmentMetadataPostResponse,
+  AttachmentMetadataUploadInfo,
   BreadcrumbsInfo,
   CatalogueCategory,
   CatalogueCategoryPatch,
@@ -23,7 +24,6 @@ import {
   SystemPost,
   Unit,
   UnitPost,
-  UploadInfo,
   UsageStatus,
   UsageStatusPost,
 } from '../api/api.types';
@@ -939,12 +939,12 @@ export const handlers = [
 
   http.post<
     PathParams,
-    AttachmentsPostMetadata,
-    AttachmentsPostMetadataResponse | ErrorResponse
+    AttachmentMetadataPost,
+    AttachmentMetadataPostResponse | ErrorResponse
   >('/attachments', async ({ request }) => {
-    const body = (await request.json()) as AttachmentsPostMetadata;
+    const body = (await request.json()) as AttachmentMetadataPost;
 
-    const upload_info: UploadInfo = {
+    const upload_info: AttachmentMetadataUploadInfo = {
       url: `/object-storage`,
       fields: {
         'Content-Type': 'multipart/form-data',

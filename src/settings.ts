@@ -2,7 +2,7 @@ import { PluginRoute } from './state/actions/actions.types';
 
 export interface InventoryManagementSystemSettings {
   imsApiUrl: string;
-  storageApiUrl: string;
+  osApiUrl: string;
   routes: PluginRoute[];
   pluginHost?: string;
 }

@@ -117,7 +117,7 @@ function TabView<T>(props: TabViewProps<T>) {
       </Grid>
       <Grid item xs={12}>
         {tabData.map(({ value, component }) => (
-          <TabPanel<T | AdditionalTabValues>
+          <TabPanel
             key={value as unknown as string}
             value={tabValue}
             label={value}

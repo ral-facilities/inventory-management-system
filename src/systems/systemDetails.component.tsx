@@ -70,7 +70,7 @@ function SystemDetails(props: SystemDetailsProps) {
         sx={{
           display: 'flex',
           alignItems: 'center',
-          my: '5px',
+          my: 0.625,
         }}
         spacing={1}
       >

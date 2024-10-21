@@ -220,22 +220,22 @@ export interface Item
 
 // ------------------------------------ ATTACHMENTS ------------------------------------------------
 
-export interface AttachmentsPostMetadata {
+export interface AttachmentMetadataPost {
   entity_id: string;
   file_name: string;
   title?: string | null;
   description?: string | null;
 }
 
-export interface UploadInfo {
+export interface AttachmentMetadataUploadInfo {
   url: string;
   fields: Record<string, string>;
 }
-export interface AttachmentsPostMetadataResponse
-  extends Required<AttachmentsPostMetadata>,
+export interface AttachmentMetadataPostResponse
+  extends Required<AttachmentMetadataPost>,
     CreatedModifiedMixin {
   id: string;
-  upload_info: UploadInfo;
+  upload_info: AttachmentMetadataUploadInfo;
 }
 
 // ------------------------------------ IMAGES ------------------------------------------------
