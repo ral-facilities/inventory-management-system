@@ -96,8 +96,10 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
           const response = await postAttachmentMetadata({
             entity_id: entityId,
             file_name: (file.meta.name as string) || '',
-            title: (file.meta.title as string) || '',
-            description: (file.meta.description as string) || '',
+            title: file.meta.title ? (file.meta.title as string) : undefined,
+            description: file.meta.description
+              ? (file.meta.description as string)
+              : undefined,
           });
 
           setFileMetadataMap((prev) => ({

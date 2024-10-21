@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { vi } from 'vitest';
 import { renderComponentWithRouterProvider } from '../testUtils';
@@ -20,6 +20,7 @@ describe('ActionMenu Component', () => {
   beforeEach(() => {
     props = {
       ariaLabelPrefix: 'catalogue items landing page',
+      uploadAttachmentsEntityId: '1',
       editMenuItem: mockEditMenuItem,
       printMenuItem: true,
     };
@@ -89,5 +90,28 @@ describe('ActionMenu Component', () => {
 
     // Verify that window.print was called
     expect(window.print).toHaveBeenCalled();
+  });
+
+  it('opens the upload attachment dialog', async () => {
+    createView();
+
+    // Open the menu
+    const actionButton = screen.getByLabelText(
+      'catalogue items landing page actions menu'
+    );
+    await user.click(actionButton);
+
+    const editButton = screen.getByText('Upload Attachments');
+    await user.click(editButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const closeButton = screen.getByRole('button', { name: 'Close' });
+    await user.click(closeButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
   });
 });
