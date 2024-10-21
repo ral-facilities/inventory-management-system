@@ -13,8 +13,6 @@ import {
   TableCellBaseProps,
 } from '@mui/material';
 import {
-  LiteralUnion,
-  MRT_FilterOption,
   MRT_Row,
   MaterialReactTable,
   useMaterialReactTable,
@@ -31,10 +29,7 @@ import {
 } from '../api/api.types';
 import { useGetItems } from '../api/items';
 import { useGetSystemIds } from '../api/systems';
-import {
-  PropertyFiltersType,
-  findPropertyValue,
-} from '../catalogue/items/catalogueItemsTable.component';
+import { findPropertyValue } from '../catalogue/items/catalogueItemsTable.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import {
   MRT_Functions_Localisation,
@@ -42,11 +37,15 @@ import {
   TableCellOverFlowTipProps,
   TableGroupedCell,
   TableHeaderOverflowTip,
+  COLUMN_FILTER_FUNCTIONS,
+  COLUMN_FILTER_MODE_OPTIONS,
+  COLUMN_FILTER_VARIANTS,
   customFilterFunctions,
   displayTableRowCountText,
   formatDateTimeStrings,
   getInitialColumnFilterFnState,
   getPageHeightCalc,
+  OPTIONAL_FILTER_MODE_OPTIONS,
 } from '../utils';
 import DeleteItemDialog from './deleteItemDialog.component';
 import ItemDialog from './itemDialog.component';
@@ -118,56 +117,17 @@ export function ItemsTable(props: ItemTableProps) {
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     const viewCatalogueItemProperties = catalogueCategory?.properties ?? [];
-    const propertyFilterVariants: PropertyFiltersType = {
-      boolean: 'select',
-      string: 'text',
-      number: 'text',
-      null: 'text',
-    };
-    const propertyFilterFns: Record<string, string> = {
-      boolean: 'fuzzy',
-      string: 'fuzzy',
-      number: 'betweenInclusive',
-      null: 'fuzzy',
-    };
-    const propertyFilterModeOptions: Record<
-      string,
-      LiteralUnion<string & MRT_FilterOption, string>[]
-    > = {
-      boolean: [],
-      string: [
-        'fuzzy',
-        'contains',
-        'startsWith',
-        'endsWith',
-        'equals',
-        'notEquals',
-      ],
-      number: ['between', 'betweenInclusive', 'equals', 'notEquals'],
-      null: [
-        'fuzzy',
-        'contains',
-        'startsWith',
-        'endsWith',
-        'equals',
-        'notEquals',
-      ],
-    };
     return [
       {
         header: 'Serial Number',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.serial_number ?? 'No serial number',
         id: 'item.serial_number',
-        filterFn: 'fuzzy',
+        filterVariant: COLUMN_FILTER_VARIANTS['string'],
+        filterFn: COLUMN_FILTER_FUNCTIONS['string'],
         columnFilterModeOptions: [
-          'fuzzy',
-          'contains',
-          'startsWith',
-          'endsWith',
-          'equals',
-          'notEquals',
-          'betweenInclusive',
+          ...COLUMN_FILTER_MODE_OPTIONS['string'],
+          ...['betweenInclusive'],
         ],
         size: 250,
         Cell: ({ row }) => (
@@ -183,8 +143,9 @@ export function ItemsTable(props: ItemTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.item.modified_time),
         id: 'item.modified_time',
-        filterVariant: 'datetime-range',
-        filterFn: 'betweenInclusive',
+        filterVariant: COLUMN_FILTER_VARIANTS['datetime'],
+        filterFn: COLUMN_FILTER_FUNCTIONS['datetime'],
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS['datetime'],
         size: 350,
         Cell: ({ row }) =>
           row.original.item.modified_time &&
@@ -196,8 +157,9 @@ export function ItemsTable(props: ItemTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.item.created_time),
         id: 'item.created_time',
-        filterVariant: 'datetime-range',
-        filterFn: 'betweenInclusive',
+        filterVariant: COLUMN_FILTER_VARIANTS['datetime'],
+        filterFn: COLUMN_FILTER_FUNCTIONS['datetime'],
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS['datetime'],
         size: 350,
         Cell: ({ row }) =>
           formatDateTimeStrings(row.original.item.created_time, true),
@@ -209,16 +171,11 @@ export function ItemsTable(props: ItemTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.asset_number ?? '',
         id: 'item.asset_number',
-        filterFn: 'contains',
+        filterVariant: COLUMN_FILTER_VARIANTS['string'],
+        filterFn: COLUMN_FILTER_FUNCTIONS['string'],
         columnFilterModeOptions: [
-          'fuzzy',
-          'contains',
-          'startsWith',
-          'endsWith',
-          'equals',
-          'notEquals',
-          'empty',
-          'notEmpty',
+          ...COLUMN_FILTER_MODE_OPTIONS['string'],
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
         ],
         size: 250,
         GroupedCell: TableGroupedCell,
@@ -228,14 +185,11 @@ export function ItemsTable(props: ItemTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.purchase_order_number ?? '',
         id: 'item.purchase_order_number',
-        filterFn: 'fuzzy',
+        filterVariant: COLUMN_FILTER_VARIANTS['string'],
+        filterFn: COLUMN_FILTER_FUNCTIONS['string'],
         columnFilterModeOptions: [
-          'fuzzy',
-          'contains',
-          'startsWith',
-          'endsWith',
-          'equals',
-          'notEquals',
+          ...COLUMN_FILTER_MODE_OPTIONS['string'],
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
         ],
         size: 350,
         GroupedCell: TableGroupedCell,
@@ -248,14 +202,9 @@ export function ItemsTable(props: ItemTableProps) {
             ? new Date(row.item.warranty_end_date)
             : null,
         id: 'item.warranty_end_date',
-        filterVariant: 'date',
-        filterFn: 'betweenInclusive',
-        columnFilterModeOptions: [
-          'between',
-          'betweenInclusive',
-          'equals',
-          'notEquals',
-        ],
+        filterVariant: COLUMN_FILTER_VARIANTS['date'],
+        filterFn: COLUMN_FILTER_FUNCTIONS['date'],
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS['date'],
         size: 350,
         Cell: ({ row }) =>
           row.original.item.warranty_end_date &&
@@ -272,14 +221,9 @@ export function ItemsTable(props: ItemTableProps) {
         accessorFn: (row) =>
           row.item.delivered_date ? new Date(row.item.delivered_date) : null,
         id: 'item.delivered_date',
-        filterVariant: 'date',
-        filterFn: 'betweenInclusive',
-        columnFilterModeOptions: [
-          'between',
-          'betweenInclusive',
-          'equals',
-          'notEquals',
-        ],
+        filterVariant: COLUMN_FILTER_VARIANTS['date'],
+        filterFn: COLUMN_FILTER_FUNCTIONS['date'],
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS['date'],
         size: 350,
         Cell: ({ row }) =>
           row.original.item.delivered_date &&
@@ -295,7 +239,7 @@ export function ItemsTable(props: ItemTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => (row.item.is_defective === true ? 'Yes' : 'No'),
         id: 'item.is_defective',
-        filterVariant: 'select',
+        filterVariant: COLUMN_FILTER_VARIANTS['boolean'],
         enableColumnFilterModes: false,
         size: 200,
         Cell: ({ row }) => (row.original.item.is_defective ? 'Yes' : 'No'),
@@ -365,16 +309,11 @@ export function ItemsTable(props: ItemTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.notes ?? '',
         id: 'item.notes',
-        filterFn: 'fuzzy',
+        filterVariant: COLUMN_FILTER_VARIANTS['string'],
+        filterFn: COLUMN_FILTER_FUNCTIONS['string'],
         columnFilterModeOptions: [
-          'fuzzy',
-          'contains',
-          'startsWith',
-          'endsWith',
-          'equals',
-          'notEquals',
-          'empty',
-          'notEmpty',
+          ...COLUMN_FILTER_MODE_OPTIONS['string'],
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
         ],
         size: 250,
         enableGrouping: false,
@@ -414,21 +353,21 @@ export function ItemsTable(props: ItemTableProps) {
         },
         size: 250,
         filterVariant:
-          propertyFilterVariants[
+          COLUMN_FILTER_VARIANTS[
             property.type as 'string' | 'boolean' | 'number' | 'null'
           ],
         filterFn:
-          propertyFilterFns[
+          COLUMN_FILTER_FUNCTIONS[
             property.type as 'string' | 'boolean' | 'number' | 'null'
           ],
         columnFilterModeOptions: !property.mandatory
           ? [
-              ...propertyFilterModeOptions[
+              ...COLUMN_FILTER_MODE_OPTIONS[
                 property.type as 'string' | 'boolean' | 'number' | 'null'
               ],
               ...['empty', 'notEmpty'],
             ]
-          : propertyFilterModeOptions[
+          : COLUMN_FILTER_MODE_OPTIONS[
               property.type as 'string' | 'boolean' | 'number' | 'null'
             ],
         enableColumnFilterModes:

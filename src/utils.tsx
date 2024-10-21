@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import { format, parseISO } from 'date-fns';
 import {
+  LiteralUnion,
   MRT_Cell,
   MRT_Column,
   MRT_ColumnDef,
@@ -432,6 +433,58 @@ export const MRT_Functions_Localisation: Record<string, string> = {
   filterArrIncludesNone: 'Excludes',
   filterArrIncludesSome: 'Includes',
 };
+
+export type PropertyFiltersType = {
+  boolean: 'select' | 'text' | 'range' | 'autocomplete';
+  string: 'select' | 'text' | 'range';
+  number: 'select' | 'text' | 'range';
+  null: 'select' | 'text' | 'range';
+};
+
+export type ColumnFiltersType = PropertyFiltersType & {
+  datetime: 'datetime-range' | 'datetime';
+  date: 'date-range' | 'date';
+};
+
+export const COLUMN_FILTER_VARIANTS: ColumnFiltersType = {
+  boolean: 'select',
+  string: 'text',
+  number: 'text',
+  null: 'text',
+  datetime: 'datetime-range',
+  date: 'date',
+};
+export const COLUMN_FILTER_FUNCTIONS: Record<string, MRT_FilterOption> = {
+  boolean: 'fuzzy',
+  date: 'betweenInclusive',
+  datetime: 'betweenInclusive',
+  string: 'fuzzy',
+  number: 'betweenInclusive',
+  null: 'fuzzy',
+};
+export const COLUMN_FILTER_MODE_OPTIONS: Record<
+  string,
+  LiteralUnion<string & MRT_FilterOption, string>[]
+> = {
+  boolean: [],
+  date: ['between', 'betweenInclusive', 'equals', 'notEquals'],
+  dateTime: ['between', 'betweenInclusive'],
+  string: [
+    'fuzzy',
+    'contains',
+    'startsWith',
+    'endsWith',
+    'equals',
+    'notEquals',
+  ],
+  number: ['between', 'betweenInclusive', 'equals', 'notEquals'],
+  null: ['fuzzy', 'contains', 'startsWith', 'endsWith', 'equals', 'notEquals'],
+};
+
+export const OPTIONAL_FILTER_MODE_OPTIONS: MRT_FilterOption[] = [
+  'empty',
+  'notEmpty',
+];
 
 export const checkForDuplicates = (props: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
