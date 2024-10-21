@@ -17,7 +17,7 @@ import React from 'react';
 import { settings } from '../../settings';
 
 const MAX_FILE_SIZE_MB = 500;
-const MAX_FILE_SIZE_B = MAX_FILE_SIZE_MB * 1048576;
+const MAX_FILE_SIZE_B = MAX_FILE_SIZE_MB * 1000 * 1000;
 
 export interface UploadImagesDialogProps {
   open: boolean;
