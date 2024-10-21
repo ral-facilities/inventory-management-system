@@ -100,10 +100,8 @@ describe('Upload attachment dialog', () => {
 
     // Assert axios post was called
     expect(axiosPostSpy).toHaveBeenCalledWith('/attachments', {
-      description: '',
       entity_id: '1',
       file_name: 'test1.txt',
-      title: '',
     });
 
     expect(xhrPostSpy).toHaveBeenCalledWith('POST', '/object-storage', true);
@@ -155,10 +153,8 @@ describe('Upload attachment dialog', () => {
 
     // Assert axios post was called
     expect(axiosPostSpy).toHaveBeenCalledWith('/attachments', {
-      description: '',
       entity_id: '1',
       file_name: 'uploadError.txt',
-      title: '',
     });
 
     expect(xhrPostSpy).toHaveBeenCalledWith('POST', '/object-storage', true);
@@ -207,10 +203,8 @@ describe('Upload attachment dialog', () => {
 
     // Assert axios post was called
     expect(axiosPostSpy).toHaveBeenCalledWith('/attachments', {
-      description: '',
       entity_id: '1',
       file_name: 'removeError.txt',
-      title: '',
     });
 
     expect(xhrPostSpy).toHaveBeenCalledWith('POST', '/object-storage', true);
