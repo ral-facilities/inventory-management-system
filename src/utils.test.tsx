@@ -343,6 +343,14 @@ describe('customFilterFunctions', () => {
       const result = filterExclude(person, 'age', [8, 29]);
       expect(result).toBe(true);
     });
+    it('should correctly exclude record, when filter value is not a list', () => {
+      const result = filterExclude(person, 'status', 'unemployed');
+      expect(result).toBe(false);
+    });
+    it('should correctly include record, when filter value is not a list', () => {
+      const result = filterExclude(person, 'age', 3);
+      expect(result).toBe(true);
+    });
   });
 });
 

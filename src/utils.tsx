@@ -431,7 +431,6 @@ export const customFilterFunctions: Record<string, FilterFn> = {
 
 export const MRT_Functions_Localisation: Record<string, string> = {
   filterArrIncludesNone: 'Excludes',
-  filterArrIncludesSome: 'Includes',
 };
 
 export type PropertyFiltersType = {
