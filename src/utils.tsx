@@ -425,7 +425,7 @@ export const customFilterFunctions: Record<string, FilterFn> = {
     if (Array.isArray(filterValue)) {
       return !filterValue.includes(row.getValue(id));
     }
-    return row.getValue(id) === filterValue;
+    return row.getValue(id) !== filterValue;
   },
 };
 
