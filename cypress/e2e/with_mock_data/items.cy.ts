@@ -491,7 +491,7 @@ describe('Items', () => {
             { id: '3', value: 'CMOS' },
             { id: '4', value: null },
             { id: '5', value: true },
-            { id: '6', value: false },
+            { id: '6', value: null },
           ],
           catalogue_item_id: '1',
           system_id: '65328f34a40ff5301575a4e3',
