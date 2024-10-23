@@ -19,7 +19,7 @@ describe('Catalogue Items', () => {
         cy.findByLabelText('Time to rework (days)').type('5');
         cy.findByLabelText('Drawing number').type('MX43242');
         cy.findByLabelText('Drawing link').type('https://example.com');
-        cy.findByLabelText('Expected Lifetime').type('345');
+        cy.findByLabelText('Expected Lifetime (days)').type('345');
         cy.findByLabelText('Model number').type('MXtest');
         cy.findByLabelText('Manufacturer *').click();
         cy.findByLabelText('Manufacturer *').type('Man{downArrow}{enter}');
@@ -319,9 +319,9 @@ describe('Catalogue Items', () => {
         cy.findByLabelText('Time to replace (days) *').clear();
         cy.findByLabelText('Cost (£) *').type('gfdg');
         cy.findByLabelText('Time to replace (days) *').type('32gf');
-        cy.findByLabelText('Expected Lifetime').clear();
+        cy.findByLabelText('Expected Lifetime (days)').clear();
         cy.findByLabelText('Drawing link').type('test.co.uk');
-        cy.findByLabelText('Expected Lifetime').type('friday');
+        cy.findByLabelText('Expected Lifetime (days)').type('friday');
 
         cy.findAllByText('Please enter a valid number.').should(
           'have.length',
@@ -337,8 +337,8 @@ describe('Catalogue Items', () => {
         cy.findByLabelText('Time to replace (days) *').type('14');
         cy.findByLabelText('Drawing link').clear();
         cy.findByLabelText('Drawing link').type('https://test.co.uk');
-        cy.findByLabelText('Expected Lifetime').clear();
-        cy.findByLabelText('Expected Lifetime').type('200');
+        cy.findByLabelText('Expected Lifetime (days)').clear();
+        cy.findByLabelText('Expected Lifetime (days)').type('200');
 
         cy.findByRole('button', { name: 'Next' }).click();
 
@@ -591,7 +591,7 @@ describe('Catalogue Items', () => {
         cy.findByLabelText('Drawing number').type('MX43242');
         cy.findByLabelText('Drawing link').type('https://example.com');
         cy.findByLabelText('Model number').type('MXtest');
-        cy.findByLabelText('Expected Lifetime').type('345');
+        cy.findByLabelText('Expected Lifetime (days)').type('345');
         cy.findByLabelText('Manufacturer *').click();
         cy.findByLabelText('Manufacturer *').type(
           'Man{downArrow}{downArrow}{enter}'
@@ -1029,7 +1029,7 @@ describe('Catalogue Items', () => {
           days_to_rework: null,
           drawing_number: null,
           drawing_link: 'http://example-drawing-link.com',
-          expected_lifetime: null,
+          expected_lifetime: 840,
           item_model_number: null,
           is_obsolete: true,
           obsolete_replacement_catalogue_item_id: '6',

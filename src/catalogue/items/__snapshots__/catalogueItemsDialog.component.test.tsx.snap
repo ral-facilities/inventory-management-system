@@ -509,7 +509,7 @@ exports[`Catalogue Items Dialog > renders details step correctly 1`] = `
                     for="catalogue-item-expected-lifetime-input"
                     id="catalogue-item-expected-lifetime-input-label"
                   >
-                    Expected Lifetime
+                    Expected Lifetime (days)
                   </label>
                   <div
                     class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall css-md26zr-MuiInputBase-root-MuiOutlinedInput-root"
@@ -530,7 +530,7 @@ exports[`Catalogue Items Dialog > renders details step correctly 1`] = `
                         class="css-yjsfm1"
                       >
                         <span>
-                          Expected Lifetime
+                          Expected Lifetime (days)
                         </span>
                       </legend>
                     </fieldset>

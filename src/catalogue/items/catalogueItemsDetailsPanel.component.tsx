@@ -169,7 +169,9 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
               </Grid>
 
               <Grid item xs={12} sm={6} key={8}>
-                <Typography color="text.primary">Expected Lifetime</Typography>
+                <Typography color="text.primary">
+                  Expected Lifetime (days)
+                </Typography>
                 <Typography color="text.secondary">
                   {catalogueItemIdData.expected_lifetime ?? 'None'}
                 </Typography>

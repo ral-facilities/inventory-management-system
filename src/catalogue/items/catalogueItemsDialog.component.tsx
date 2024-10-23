@@ -624,7 +624,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             <Grid item xs={12}>
               <TextField
                 id="catalogue-item-expected-lifetime-input"
-                label="Expected Lifetime"
+                label="Expected Lifetime (days)"
                 size="small"
                 {...registerDetailsStep('expected_lifetime')}
                 error={!!errorsDetailsStep.expected_lifetime}

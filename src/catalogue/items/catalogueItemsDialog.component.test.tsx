@@ -103,7 +103,7 @@ describe('Catalogue Items Dialog', () => {
       });
 
     if (values.expectedLifetime !== undefined)
-      fireEvent.change(screen.getByLabelText('Expected Lifetime'), {
+      fireEvent.change(screen.getByLabelText('Expected Lifetime (days)'), {
         target: { value: values.expectedLifetime },
       });
 

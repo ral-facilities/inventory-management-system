@@ -252,7 +252,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        Expected Lifetime
+                        Expected Lifetime (days)
                       </p>
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
@@ -816,7 +816,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        Expected Lifetime
+                        Expected Lifetime (days)
                       </p>
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
@@ -1386,7 +1386,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        Expected Lifetime
+                        Expected Lifetime (days)
                       </p>
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
@@ -1910,12 +1910,12 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        Expected Lifetime
+                        Expected Lifetime (days)
                       </p>
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
-                        None
+                        840
                       </p>
                     </div>
                     <div
@@ -2444,12 +2444,12 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        Expected Lifetime
+                        Expected Lifetime (days)
                       </p>
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
-                        None
+                        840
                       </p>
                     </div>
                     <div
@@ -2977,12 +2977,12 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        Expected Lifetime
+                        Expected Lifetime (days)
                       </p>
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
-                        None
+                        840
                       </p>
                     </div>
                     <div
@@ -3510,12 +3510,12 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        Expected Lifetime
+                        Expected Lifetime (days)
                       </p>
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
-                        None
+                        840
                       </p>
                     </div>
                     <div

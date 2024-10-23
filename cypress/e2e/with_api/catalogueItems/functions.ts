@@ -78,10 +78,12 @@ const modifyCatalogueItem = (
       }
 
       if (values.expectedLifetime) {
-        cy.findByLabelText('Expected Lifetime').clear();
-        cy.findByLabelText('Expected Lifetime').type(values.expectedLifetime);
+        cy.findByLabelText('Expected Lifetime (days)').clear();
+        cy.findByLabelText('Expected Lifetime (days)').type(
+          values.expectedLifetime
+        );
       } else {
-        cy.findByLabelText('Expected Lifetime').clear();
+        cy.findByLabelText('Expected Lifetime (days)').clear();
       }
 
       if (values.itemModelNumber) {
