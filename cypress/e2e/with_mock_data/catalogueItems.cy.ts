@@ -19,6 +19,7 @@ describe('Catalogue Items', () => {
         cy.findByLabelText('Time to rework (days)').type('5');
         cy.findByLabelText('Drawing number').type('MX43242');
         cy.findByLabelText('Drawing link').type('https://example.com');
+        cy.findByLabelText('Expected Lifetime').type('345');
         cy.findByLabelText('Model number').type('MXtest');
         cy.findByLabelText('Manufacturer *').click();
         cy.findByLabelText('Manufacturer *').type('Man{downArrow}{enter}');
@@ -58,6 +59,7 @@ describe('Catalogue Items', () => {
           days_to_rework: 5,
           drawing_number: 'MX43242',
           drawing_link: 'https://example.com',
+          expected_lifetime: 345,
           item_model_number: 'MXtest',
           notes: 'This is a test note',
           properties: [
@@ -106,6 +108,7 @@ describe('Catalogue Items', () => {
           days_to_rework: 60,
           drawing_number: null,
           drawing_link: null,
+          expected_lifetime: null,
           item_model_number: null,
           notes: 'Need to find new manufacturer. 27',
           properties: [
@@ -167,6 +170,7 @@ describe('Catalogue Items', () => {
           days_to_rework: null,
           drawing_number: null,
           drawing_link: null,
+          expected_lifetime: null,
           item_model_number: null,
           notes: null,
           properties: [
@@ -233,6 +237,7 @@ describe('Catalogue Items', () => {
           days_to_rework: null,
           drawing_number: null,
           drawing_link: null,
+          expected_lifetime: null,
           item_model_number: null,
           notes: null,
           properties: [
@@ -314,11 +319,13 @@ describe('Catalogue Items', () => {
         cy.findByLabelText('Time to replace (days) *').clear();
         cy.findByLabelText('Cost (£) *').type('gfdg');
         cy.findByLabelText('Time to replace (days) *').type('32gf');
+        cy.findByLabelText('Expected Lifetime').clear();
         cy.findByLabelText('Drawing link').type('test.co.uk');
+        cy.findByLabelText('Expected Lifetime').type('friday');
 
         cy.findAllByText('Please enter a valid number.').should(
           'have.length',
-          2
+          3
         );
         cy.findAllByText(
           'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted.'
@@ -330,6 +337,8 @@ describe('Catalogue Items', () => {
         cy.findByLabelText('Time to replace (days) *').type('14');
         cy.findByLabelText('Drawing link').clear();
         cy.findByLabelText('Drawing link').type('https://test.co.uk');
+        cy.findByLabelText('Expected Lifetime').clear();
+        cy.findByLabelText('Expected Lifetime').type('200');
 
         cy.findByRole('button', { name: 'Next' }).click();
 
@@ -582,6 +591,7 @@ describe('Catalogue Items', () => {
         cy.findByLabelText('Drawing number').type('MX43242');
         cy.findByLabelText('Drawing link').type('https://example.com');
         cy.findByLabelText('Model number').type('MXtest');
+        cy.findByLabelText('Expected Lifetime').type('345');
         cy.findByLabelText('Manufacturer *').click();
         cy.findByLabelText('Manufacturer *').type(
           'Man{downArrow}{downArrow}{enter}'
@@ -611,6 +621,7 @@ describe('Catalogue Items', () => {
           days_to_rework: 605,
           drawing_number: 'MX43242',
           drawing_link: 'https://example.com',
+          expected_lifetime: 345,
           item_model_number: 'MXtest',
           manufacturer_id: '1',
           notes: 'This is an updated note',
@@ -1018,6 +1029,7 @@ describe('Catalogue Items', () => {
           days_to_rework: null,
           drawing_number: null,
           drawing_link: 'http://example-drawing-link.com',
+          expected_lifetime: null,
           item_model_number: null,
           is_obsolete: true,
           obsolete_replacement_catalogue_item_id: '6',
@@ -1044,6 +1056,7 @@ describe('Catalogue Items', () => {
           days_to_rework: 60,
           drawing_number: null,
           drawing_link: null,
+          expected_lifetime: null,
           item_model_number: null,
           is_obsolete: false,
           obsolete_replacement_catalogue_item_id: null,
