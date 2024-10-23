@@ -1,5 +1,4 @@
 import { screen } from '@testing-library/react';
-
 import userEvent from '@testing-library/user-event';
 import { act } from 'react';
 import { renderComponentWithRouterProvider } from '../../testUtils';
@@ -25,18 +24,25 @@ describe('TabView Component', () => {
           value: 'tab1',
           icon: <div>icon 1</div>,
           component: <div>Content for Tab 1</div>,
+          order: 1,
         },
         {
           value: 'tab2',
           icon: <div>icon 2</div>,
           component: <div>Content for Tab 2</div>,
+          order: 3,
         },
         {
           value: 'tab3',
           icon: <div>icon 3</div>,
           component: <div>Content for Tab 3</div>,
+          order: 2,
         },
       ],
+      galleryEntityId: '1',
+      galleryOrder: 4,
+      attachmentsEntityId: '1',
+      attachmentsOrder: 5,
     };
   });
 
@@ -47,9 +53,9 @@ describe('TabView Component', () => {
     });
     expect(baseElement).toMatchSnapshot();
   });
+
   it('renders correctly with default tab', () => {
     createView('/catalogue/item/1');
-
     expect(screen.getByText('Content for Tab 1')).toBeInTheDocument();
   });
 
@@ -73,9 +79,24 @@ describe('TabView Component', () => {
     expect(router.state.location.search).toBe('');
   });
 
-  it('load tab from url', () => {
+  it('loads tab from URL', () => {
     createView('/catalogue/item/1?tab=tab2');
-
     expect(screen.getByText('Content for Tab 2')).toBeInTheDocument();
+  });
+
+  it('renders tabs in correct order', () => {
+    createView('/catalogue/item/1');
+
+    const tabs = screen.getAllByRole('tab');
+    const tabLabels = tabs.map((tab) => tab.textContent);
+
+    // Check that the tabs are ordered as expected
+    expect(tabLabels).toEqual([
+      'icon 1tab1',
+      'icon 3tab3',
+      'icon 2tab2',
+      'Gallery',
+      'Attachments',
+    ]);
   });
 });

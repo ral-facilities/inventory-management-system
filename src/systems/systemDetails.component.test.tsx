@@ -15,7 +15,10 @@ describe('SystemDetails', () => {
       mockSystemDetails = SystemsJSON.filter(
         (system) => system.id === props.id
       )[0] as System;
-    return renderComponentWithRouterProvider(<SystemDetails {...props} />);
+    return renderComponentWithRouterProvider(
+      <SystemDetails {...props} />,
+      'systems'
+    );
   };
 
   beforeEach(() => {
@@ -24,10 +27,6 @@ describe('SystemDetails', () => {
     };
 
     user = userEvent.setup();
-
-    window.Element.prototype.getBoundingClientRect = vi
-      .fn()
-      .mockReturnValue({ height: 100, width: 200 });
   });
 
   it('renders correctly when no system is selected', async () => {
@@ -101,7 +100,11 @@ describe('SystemDetails', () => {
 
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: 'Edit System' }));
+    await user.click(
+      screen.getByRole('button', { name: 'systems page actions menu' })
+    );
+
+    await user.click(screen.getByText('Edit'));
 
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();

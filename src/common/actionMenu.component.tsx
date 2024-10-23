@@ -9,7 +9,7 @@ import React from 'react';
 export interface ActionMenuProps {
   ariaLabelPrefix: string;
   editMenuItem: { onClick: () => void; dialog: React.ReactNode };
-  printMenuItem: boolean;
+  printMenuItem?: boolean;
 }
 function ActionMenu(props: ActionMenuProps) {
   const { editMenuItem, printMenuItem, ariaLabelPrefix } = props;
