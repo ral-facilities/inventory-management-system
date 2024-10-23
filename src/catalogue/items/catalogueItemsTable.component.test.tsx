@@ -550,7 +550,7 @@ describe('Catalogue Items Table', () => {
     // that prevents anything outside of the show/hide menu from being found even when using escape/clicking on the document
     // body first)
     const { router } = createView(
-      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUAdsnYJU1QgJTps%2BYqUpksDKJyiMWbDvG4ZeA6AQDuAAjFk4xnv0HKRa8QwIwaUAA6ssCS4nRSEVUXUKWCYsACMYLAwCUmDTZyVhVTsKOISk0iZaXwxkMHICCVQmDPCCJih1eoZUsxdMiPFcxOS62mQEoMc00NcsyN9qLF8CalYvCgB2FvSwt2yJqZm5mAoADmWR9vdKMCwYKpxY31l5FdGOk7Oq1CxCqyxqAGsmS%2Buh1pqa0iDGQAE8YCxXkUSmUDm1atkQeDIW9LB9PnDAWMPNRkJYoBIcEwJHgyLEZpjVtjKAxcfjCUwMASMf87kdsg1yExNJ4MMTSeTqHCyMgSdwwKg8LRqJJpEYTK0RWLSpLpRQpRhhaK8OLVTMKMgGLSvA4Fc4lTqVVL9aQkr4ABaBeUheFA8QSLCkU1OAC%2BPqAA'
+      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUAdsnYJU1QgJTps%2BYqUpksDKJyiMWbDvG4ZeA6AQDuAAjFk4xnv0HKRa8QwIwaUAA6ssCS4nRSEVUXUKWCYsACMYLAwCUmDTZyVhVTsKOISk0iZaXwxkMHICCVQmDPCCJih1eoZUsxdMiPFcxOS62mQEoMc00NcsyN9qLF8CalYvCgB2FvSwt2yJqZm5mAoADmWR9vdKMCwYKpxY31l5FdGOk7Oq1CxCqyxqAGsmS%2Buh1pqa0iDGQAE8YCxXkUSmUDm1atkQeDIW9LB9PnDAWMPNRkJYoBIcEwJHgyLEZpjVtjKAxcfjCUwMASMf87kdsg1yExNJ4MMTSeTqHCyMgSdwwKg8LRqJJpEYTK0RWLSpLpRQpRhhaK8OLVTMKMgGLSvA4Fc4lTqVVL9aQkr4ABaBeUheFA8QSLCkU0urEPCgEAAe0wl%2BiZnGShmWAF8o0A'
     );
 
     await waitFor(() => {
@@ -562,7 +562,7 @@ describe('Catalogue Items Table', () => {
     });
     expect(clearFiltersButton).toBeDisabled();
     expect(router.state.location.search).toBe(
-      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUAdsnYJU1QgJTps%2BYqUpksDKJyiMWbDvG4ZeA6AQDuAAjFk4xnv0HKRa8QwIwaUAA6ssCS4nRSEVUXUKWCYsACMYLAwCUmDTZyVhVTsKOISk0iZaXwxkMHICCVQmDPCCJih1eoZUsxdMiPFcxOS62mQEoMc00NcsyN9qLF8CalYvCgB2FvSwt2yJqZm5mAoADmWR9vdKMCwYKpxY31l5FdGOk7Oq1CxCqyxqAGsmS%2Buh1pqa0iDGQAE8YCxXkUSmUDm1atkQeDIW9LB9PnDAWMPNRkJYoBIcEwJHgyLEZpjVtjKAxcfjCUwMASMf87kdsg1yExNJ4MMTSeTqHCyMgSdwwKg8LRqJJpEYTK0RWLSpLpRQpRhhaK8OLVTMKMgGLSvA4Fc4lTqVVL9aQkr4ABaBeUheFA8QSLCkU1OAC%2BPqAA'
+      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUAdsnYJU1QgJTps%2BYqUpksDKJyiMWbDvG4ZeA6AQDuAAjFk4xnv0HKRa8QwIwaUAA6ssCS4nRSEVUXUKWCYsACMYLAwCUmDTZyVhVTsKOISk0iZaXwxkMHICCVQmDPCCJih1eoZUsxdMiPFcxOS62mQEoMc00NcsyN9qLF8CalYvCgB2FvSwt2yJqZm5mAoADmWR9vdKMCwYKpxY31l5FdGOk7Oq1CxCqyxqAGsmS%2Buh1pqa0iDGQAE8YCxXkUSmUDm1atkQeDIW9LB9PnDAWMPNRkJYoBIcEwJHgyLEZpjVtjKAxcfjCUwMASMf87kdsg1yExNJ4MMTSeTqHCyMgSdwwKg8LRqJJpEYTK0RWLSpLpRQpRhhaK8OLVTMKMgGLSvA4Fc4lTqVVL9aQkr4ABaBeUheFA8QSLCkU0urEPCgEAAe0wl%2BiZnGShmWAF8o0A'
     );
 
     // Do max first, as it technically has no effect on the outcome of the filter
@@ -576,7 +576,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.queryByText('Energy Meters 26')).not.toBeInTheDocument();
     });
     expect(router.state.location.search).toBe(
-      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUAdsnYJU1QgJTps%2BYqUpksDKJyiMWbDvG4ZeA6AQDuAAjFk4xnv0HKRa8QwIwaUAA6ssCS4nRSEVUXUKWCYsACMYLAwCUmDTZyVhVTsKOISk0iZaXwxkMHICCVQmDPCCJih1eoZUsxdMiPFcxOS62mQEoMc00NcsyN9qLF8CalYvCgB2FvSwt2yJqZm5mAoADmWR9vdKMCwYKpxY31l5FdGOk7Oq1CxCqyxqAGsmS%2Buh1pqa0iDGQAE8YCxXkUSmUDm1atkQeDIW9LB9PnDAWMPNRkJYoBIcEwJHgyLEZpjVtjKAxcfjCUwMASMf87kdsg1yExNJ4MMTSeTqHCyMgSdwwKg8LRqJJpEYTK0RWLSpLpRQpRhhaK8OLVTMKMgGLSvA4Fc4lTqVVL9aQkr4ABaBeUheFA8QSLCkU1OAC%2BigAYggANqgKDNeCu6lUJ4-K4gAQAN0whGDoFQoOmCBA52oBJw8ZASYwKYjuwADGWQH60xmjNm5HmC0WSyAAIwVys%2BgC63Z9QA'
+      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUAdsnYJU1QgJTps%2BYqUpksDKJyiMWbDvG4ZeA6AQDuAAjFk4xnv0HKRa8QwIwaUAA6ssCS4nRSEVUXUKWCYsACMYLAwCUmDTZyVhVTsKOISk0iZaXwxkMHICCVQmDPCCJih1eoZUsxdMiPFcxOS62mQEoMc00NcsyN9qLF8CalYvCgB2FvSwt2yJqZm5mAoADmWR9vdKMCwYKpxY31l5FdGOk7Oq1CxCqyxqAGsmS%2Buh1pqa0iDGQAE8YCxXkUSmUDm1atkQeDIW9LB9PnDAWMPNRkJYoBIcEwJHgyLEZpjVtjKAxcfjCUwMASMf87kdsg1yExNJ4MMTSeTqHCyMgSdwwKg8LRqJJpEYTK0RWLSpLpRQpRhhaK8OLVTMKMgGLSvA4Fc4lTqVVL9aQkr4ABaBeUheFA8QSLCkU0urEPCgEAAe0wl%2BiZnGShmWAF9FAAxBAAbVAUGa8Fd1KoTx%2BVxAAgAbphCInQKhQdMECBztQCThcyACxgi2ndgAGFsgGMlstGStyGt1htNkAARjb7ajAF1J1GgA'
     );
 
     await user.click(clearFiltersButton);
@@ -585,7 +585,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
     });
     expect(router.state.location.search).toBe(
-      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUAdsnYJU1QgJTps%2BYqUpksDKJyiMWbDvG4ZeA6AQDuAAjFk4xnv0HKRa8QwIwaUAA6ssCS4nRSEVUXUKWCYsACMYLAwCUmDTZyVhVTsKOISk0iZaXwxkMHICCVQmDPCCJih1eoZUsxdMiPFcxOS62mQEoMc00NcsyN9qLF8CalYvCgB2FvSwt2yJqZm5mAoADmWR9vdKMCwYKpxY31l5FdGOk7Oq1CxCqyxqAGsmS%2Buh1pqa0iDGQAE8YCxXkUSmUDm1atkQeDIW9LB9PnDAWMPNRkJYoBIcEwJHgyLEZpjVtjKAxcfjCUwMASMf87kdsg1yExNJ4MMTSeTqHCyMgSdwwKg8LRqJJpEYTK0RWLSpLpRQpRhhaK8OLVTMKMgGLSvA4Fc4lTqVVL9aQkr4ABaBeUheFA8QSLCkU1OAC%2BPqAA'
+      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUAdsnYJU1QgJTps%2BYqUpksDKJyiMWbDvG4ZeA6AQDuAAjFk4xnv0HKRa8QwIwaUAA6ssCS4nRSEVUXUKWCYsACMYLAwCUmDTZyVhVTsKOISk0iZaXwxkMHICCVQmDPCCJih1eoZUsxdMiPFcxOS62mQEoMc00NcsyN9qLF8CalYvCgB2FvSwt2yJqZm5mAoADmWR9vdKMCwYKpxY31l5FdGOk7Oq1CxCqyxqAGsmS%2Buh1pqa0iDGQAE8YCxXkUSmUDm1atkQeDIW9LB9PnDAWMPNRkJYoBIcEwJHgyLEZpjVtjKAxcfjCUwMASMf87kdsg1yExNJ4MMTSeTqHCyMgSdwwKg8LRqJJpEYTK0RWLSpLpRQpRhhaK8OLVTMKMgGLSvA4Fc4lTqVVL9aQkr4ABaBeUheFA8QSLCkU0urEPCgEAAe0wl%2BiZnGShmWAF8o0A'
     );
   });
 
@@ -687,7 +687,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Grouped by')).toBeInTheDocument();
     });
     expect(router.state.location.search).toBe(
-      '?state=N4Ig5iBcDaIMYEMAuCA2B7MBXApgSSRwFsA6AOwSJxAF0AaeAeSliICckBaN9Ad05wAPAA4IyAExAN2XHvwRwkAS3RkAzlJAzufTmpyocizYhQZs%2BQqQpUTyNJlwFiJIunFKAZkpziA%2Bsq2DKYOFs6kcGw4yL4BSkEgAGo%2BvAAE4RrB9uZOViTiOGqRSsLKqnZmjpYuSmp%2B6ABGauiGhBWhuS6Nza04flHCqArEOGRIfiE5fUpWfkqSWZVhed0tOIT90c1k7VPhJMI8wjgcPmokAOy7VfuH6MenhSQAHNfLLnDoauNgDcJvnQiX3GSHQm146DYAGs-L9-osOtVSOIEABPOqgzaDYYApH5NEYsFRCHQ3H7cRsBC8JRkMB%2BMhYIgNE5kvIUqk0umoGlQ1k1WZuAqoemM5lsTREMRYTwKJBYKJsciUajSKUyxTyk4keWoCVq2WaxUIcQUwqZLT6jUKkiEQzCAAWqhV8GyNzyZHQhHN2jkelEcBZNAAvkA'
+      '?state=N4Ig5iBcDaIMYEMAuCA2B7MBXApgSSRwFsA6AOwSJxAF0AaeAeSliICckBaN9Ad05wAPAA4IyAExAN2XHvwRwkAS3RkAzlJAzufTmpyocizYhQZs%2BQqQpUTyNJlwFiJIunFKAZkpziA%2Bsq2DKYOFs6kcGw4yL4BSkEgAGo%2BvAAE4RrB9uZOViTiOGqRSsLKqnZmjpYuSmp%2B6ABGauiGhBWhuS6Nza04flHCqArEOGRIfiE5fUpWfkqSWZVhed0tOIT90c1k7VPhJMI8wjgcPmokAOy7VfuH6MenhSQAHNfLLnDoauNgDcJvnQiX3GSHQm146DYAGs-L9-osOtVSOIEABPOqgzaDYYApH5NEYsFRCHQ3H7cRsBC8JRkMB%2BMhYIgNE5kvIUqk0umoGlQ1kuITHRSxbmedbxagIvZ5GbEPxuAqoemM5lsTREMRYTwKJBYKJsciUCVaDVaxS6k4kXWoNUm7Xm-UIcQUwqZY0M006vUkQiGYQAC1URsmNzyZHQhFd2jkelEcBZNAAvkA'
     );
 
     // Reset
@@ -698,7 +698,7 @@ describe('Catalogue Items Table', () => {
     });
     // Expect this to still be here as have now modified the order in some way (as MRT doesn't revert back to its original state in this case)
     expect(router.state.location.search).toBe(
-      '?state=N4Igxg8iBcDaIFsBOAXAtEg9gdzQUwA8AHAQwDsATEAGkVQx32PKtuXS1xLBQEtMyAZxp0OjQXgA2eHiLAkUJSZgDmAVzwBJFHgQA6MiQR45Cpao3bdehJgq8AZrzwUA%2Bn2OnFy9Vp36wJDwFF3deT1oANWdsAAIrBGFaeW8LP2sKPEFA3iI%2BAS9zXwS9XkFXTAAjQUxpHUKfS389Kpq6vFcgokluXTwyFFcUoo1XXn8x1nAzRvT9Vtq8HU7gmrIGtJKiLCI8VGdBPQB2DeLm7cxd-ay9AA5TpuswTEFBlUqiB7m9Z9f3TBW2EwSAA1q53p9kjNNs0KCQAJ7lFAAro9MAmKGpM4ZBFIlF4IGgr4lChIEjYXhkFSuMhqBCVPbE2FkilU1ySSkgpnWca6Vy2TKSGl0hlIEQIchqBzcFBqIJIAxGDGISXSnhyvZ6OWScWqmUahUkCikrJJFW0tWy%2BV6HTSIgACwEyuGsxKZEwOjN7AYuEEpHRYoAugBfIA'
+      '?state=N4Igxg8iBcDaIFsBOAXAtEg9gdzQUwA8AHAQwDsATEAGkVQx32PKtuXS1xLBQEtMyAZxp0OjQXgA2eHiLAkUJSZgDmAVzwBJFHgQA6MiQR45Cpao3bdehJgq8AZrzwUA%2Bn2OnFy9Vp36wJDwFF3deT1oANWdsAAIrBGFaeW8LP2sKPEFA3iI%2BAS9zXwS9XkFXTAAjQUxpHUKfS389Kpq6vFcgokluXTwyFFcUoo1XXn8x1nAzRvT9Vtq8HU7gmrIGtJKiLCI8VGdBPQB2DeLm7cxd-ay9AA5TpuswTEFBlUqiB7m9Z9f3TBW2EwSAA1q53p9kjNNs0KCQAJ7lFAAro9MAmKGpM4ZBFIlF4IGgr4lChIEjYXhkFSuMhqBCVPbE2FkilU1ySSkgpnWQi7HihDkOJbhDHTLGPfTjXSuWyZSQ0ukMpAiBDkNQObgoNRBJAGIyi1W0jU8bV7PTayQqtXGrU6vQkCikrJJRDWzWm3U6aREAAWAlFw1mJTImB0LvYDFwglI6OVAF0AL5AA'
     );
   });
 
@@ -835,7 +835,7 @@ describe('Catalogue Items Table', () => {
     // Get the table element (assuming it has a specific class or role)
     const table = screen.getByTestId('catalogue-items-table-container');
 
-    fireEvent.scroll(table, { target: { scrollLeft: 3000 } });
+    fireEvent.scroll(table, { target: { scrollLeft: 3300 } });
 
     // Check if the manufacturer url cell is visible after scrolling
     expect(await screen.findByText(manufacturerUrl)).toBeInTheDocument();
