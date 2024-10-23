@@ -48,6 +48,7 @@ import {
 import {
   DATE_PICKER_MAX_DATE,
   DATE_PICKER_MIN_DATE,
+  DATE_TODAY,
   INVALID_DATE_FORMAT_MESSAGE,
   ItemDetailsStepSchema,
   PropertiesStepSchema,
@@ -702,7 +703,7 @@ function ItemDialog(props: ItemDialogProps) {
                         ? new Date(field.value)
                         : null
                     }
-                    maxDate={DATE_PICKER_MAX_DATE}
+                    maxDate={DATE_TODAY}
                     minDate={DATE_PICKER_MIN_DATE}
                     onChange={(value) => {
                       if (value && !isNaN(value.getTime())) {
@@ -726,7 +727,7 @@ function ItemDialog(props: ItemDialogProps) {
                       const errorMessage = dateErrorMessageHandler({
                         error,
                         minDate: DATE_PICKER_MIN_DATE,
-                        maxDate: DATE_PICKER_MAX_DATE,
+                        maxDate: DATE_TODAY,
                       });
                       if (errorMessage !== '') {
                         setErrorDetailsStep('delivered_date', {
