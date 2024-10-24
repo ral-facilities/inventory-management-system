@@ -14,7 +14,6 @@ import {
 } from '@mui/material';
 import {
   MaterialReactTable,
-  MRT_Row,
   useMaterialReactTable,
   type MRT_ColumnDef,
 } from 'material-react-table';
@@ -242,7 +241,6 @@ export function ItemsTable(props: ItemTableProps) {
         filterVariant: COLUMN_FILTER_VARIANTS['boolean'],
         enableColumnFilterModes: false,
         size: 200,
-        Cell: ({ row }) => (row.original.item.is_defective ? 'Yes' : 'No'),
       },
       {
         header: 'Usage Status',
@@ -325,30 +323,27 @@ export function ItemsTable(props: ItemTableProps) {
         id: `item.properties.${property.id}`,
         GroupedCell: TableGroupedCell,
         accessorFn: (row: TableRowData) => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const propertyValue: any = findPropertyValue(
+            row.item.properties,
+            property.id
+          );
           if (property.type === 'boolean') {
-            const returnValue: boolean = findPropertyValue(
-              row.item.properties,
-              property.id
-            ) as boolean;
-            if (returnValue === true) {
+            const booleanPropertyValue: boolean = propertyValue as boolean;
+            if (booleanPropertyValue === true) {
               return 'Yes';
-            } else if (returnValue === false) {
+            } else if (booleanPropertyValue === false) {
               return 'No';
             } else {
               return '';
             }
           } else if (property.type === 'number') {
-            return typeof findPropertyValue(
-              row.item.properties,
-              property.id
-            ) === 'number'
-              ? findPropertyValue(row.item.properties, property.id)
-              : '';
+            return typeof propertyValue === 'number' ? propertyValue : '';
           } else {
             // if the value doesn't exist it return type "true" we need to change this
             // to '' to allow this column to be filterable
 
-            return findPropertyValue(row.item.properties, property.id) ?? '';
+            return propertyValue ?? '';
           }
         },
         size: 250,
@@ -378,35 +373,6 @@ export function ItemsTable(props: ItemTableProps) {
               : true
             : true,
         filterSelectOptions: ['Yes', 'No'],
-        Cell: ({ row }: { row: MRT_Row<TableRowData> }) => {
-          if (
-            typeof findPropertyValue(
-              row.original.item.properties,
-              property.id
-            ) === 'number'
-          ) {
-            return findPropertyValue(
-              row.original.item.properties,
-              property.id
-            ) === 0
-              ? 0
-              : findPropertyValue(row.original.item.properties, property.id) !==
-                  null
-                ? findPropertyValue(row.original.item.properties, property.id)
-                : '';
-          } else if (
-            typeof findPropertyValue(
-              row.original.item.properties,
-              property.id
-            ) === 'boolean'
-          ) {
-            return findPropertyValue(row.original.item.properties, property.id)
-              ? 'Yes'
-              : 'No';
-          } else {
-            return findPropertyValue(row.original.item.properties, property.id);
-          }
-        },
       })),
     ];
   }, [catalogueCategory]);
