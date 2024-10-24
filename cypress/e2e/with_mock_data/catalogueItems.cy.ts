@@ -306,8 +306,7 @@ describe('Catalogue Items', () => {
           'Please enter a valid value as this field is mandatory.'
         ).should('have.length', 0);
 
-        // value error from number field
-
+        // details - invalid number input test
         cy.findByRole('button', { name: 'Back' }).click();
 
         cy.findByLabelText('Cost (£) *').clear();
@@ -324,15 +323,35 @@ describe('Catalogue Items', () => {
           'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted.'
         ).should('exist');
         cy.findByRole('button', { name: 'Next' }).should('be.disabled');
+
+        // details - negative number input validation test
+        cy.findByLabelText('Cost (£) *').clear();
+        cy.findByLabelText('Cost (£) *').type('-10')
+        cy.findByLabelText('Cost to rework (£)').clear();
+        cy.findByLabelText('Cost to rework (£)').type('-10')
+        cy.findByLabelText('Time to replace (days) *').clear();
+        cy.findByLabelText('Time to replace (days) *').type('-10')
+        cy.findByLabelText('Time to rework (days)').clear();
+        cy.findByLabelText('Time to rework (days)').type('-10')
+
+        cy.findAllByText('Number must be greater than or equal to 0').should(
+          'have.length',
+          4
+        )
+        cy.findByRole('button', { name: 'Next' }).should('be.disabled');
+
         cy.findByLabelText('Cost (£) *').clear();
         cy.findByLabelText('Cost (£) *').type('5000');
         cy.findByLabelText('Time to replace (days) *').clear();
         cy.findByLabelText('Time to replace (days) *').type('14');
+        cy.findByLabelText('Cost to rework (£)').clear();
+        cy.findByLabelText('Time to rework (days)').clear();
         cy.findByLabelText('Drawing link').clear();
         cy.findByLabelText('Drawing link').type('https://test.co.uk');
 
         cy.findByRole('button', { name: 'Next' }).click();
 
+        // properties - invalid number input test
         cy.findByLabelText('Resolution (megapixels) *').clear();
         cy.findByLabelText('Resolution (megapixels) *').type('dsfs');
         cy.findByLabelText('Frame Rate (fps)').type('fdsfsd');
