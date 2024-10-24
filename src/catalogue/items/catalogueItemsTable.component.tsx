@@ -37,6 +37,7 @@ import { useGetCatalogueItems } from '../../api/catalogueItems';
 import { useGetManufacturerIds } from '../../api/manufacturers';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import {
+  PropertyFiltersType,
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
   TableGroupedCell,
@@ -145,13 +146,6 @@ export interface CatalogueItemsTableProps {
   isItemSelectable?: (item: CatalogueItem) => boolean;
   requestOrigin?: 'move to' | 'obsolete';
 }
-
-export type PropertyFiltersType = {
-  boolean: 'select' | 'text' | 'range' | 'autocomplete';
-  string: 'select' | 'text' | 'range';
-  number: 'select' | 'text' | 'range';
-  null: 'select' | 'text' | 'range';
-};
 
 const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   const {

@@ -50,7 +50,7 @@
       },
       {
         "name": "Older than five years",
-        "value": false,
+        "value": null,
         "unit": null,
         "id": "6",
         "unit_id": null

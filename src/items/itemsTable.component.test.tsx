@@ -433,4 +433,26 @@ describe('Items Table', () => {
 
     expect(view.asFragment()).toMatchSnapshot();
   });
+
+  it('renders the multi-select filter mode dropdown correctly', async () => {
+    createView();
+
+    await ensureColumnsVisible(['Usage Status']);
+
+    const dropdownButton = await screen.findByTestId('FilterListIcon');
+
+    expect(dropdownButton).toBeInTheDocument();
+
+    await user.click(dropdownButton);
+
+    const includeText = await screen.findByRole('menuitem', {
+      name: 'Includes',
+    });
+    const excludeText = await screen.findByRole('menuitem', {
+      name: 'Excludes',
+    });
+
+    expect(includeText).toBeInTheDocument();
+    expect(excludeText).toBeInTheDocument();
+  });
 });
