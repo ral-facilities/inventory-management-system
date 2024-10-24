@@ -92,6 +92,7 @@ export interface CatalogueItemDetailsStep {
   days_to_rework?: string | null;
   drawing_number?: string | null;
   drawing_link?: string | null;
+  expected_lifetime_days?: string | null;
   item_model_number?: string | null;
   notes?: string | null;
 }
@@ -106,6 +107,7 @@ export interface CatalogueItemDetailsStepPost {
   days_to_rework?: number | null;
   drawing_number?: string | null;
   drawing_link?: string | null;
+  expected_lifetime_days?: number | null;
   item_model_number?: string | null;
   notes?: string | null;
 }
