@@ -493,7 +493,7 @@ describe('Items', () => {
 
       cy.get('@fileInput')
         .first()
-        .selectFile(['cypress/fixtures/documents/removeError.txt'], {
+        .selectFile(['cypress/fixtures/documents/test1.txt'], {
           force: true,
         });
       cy.startSnoopingBrowserMockedRequest();
@@ -507,7 +507,7 @@ describe('Items', () => {
         expect(JSON.stringify(await postRequests[0].json())).equal(
           JSON.stringify({
             entity_id: 'KvT2Ox7n',
-            file_name: 'removeError.txt',
+            file_name: 'test1.txt',
           })
         );
       });
@@ -551,7 +551,7 @@ describe('Items', () => {
 
       cy.get('@fileInput')
         .first()
-        .selectFile(['cypress/fixtures/documents/uploadError.txt'], {
+        .selectFile(['cypress/fixtures/documents/test1.txt'], {
           force: true,
         });
       cy.startSnoopingBrowserMockedRequest();
@@ -565,7 +565,7 @@ describe('Items', () => {
         expect(JSON.stringify(await postRequests[0].json())).equal(
           JSON.stringify({
             entity_id: 'KvT2Ox7n',
-            file_name: 'uploadError.txt',
+            file_name: 'test1.txt',
           })
         );
       });

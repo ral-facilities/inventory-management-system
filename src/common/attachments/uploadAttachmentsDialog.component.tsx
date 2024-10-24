@@ -29,12 +29,53 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
   const theme = useTheme();
 
   const [isUploading, setIsUploading] = React.useState(false);
-  const [uppy, setUppy] = React.useState<Uppy<Meta, AwsBody> | null>(null);
+
+  const { mutateAsync: postAttachmentMetadata } = usePostAttachmentMetadata();
+  const [uppy] = React.useState<Uppy<Meta, AwsBody>>(
+    new Uppy<Meta, AwsBody>({
+      debug: true,
+      autoProceed: false,
+      restrictions: {
+        maxFileSize: MAX_FILE_SIZE_B,
+        requiredMetaFields: ['name'],
+      },
+    })
+      .use(AwsS3, {
+        shouldUseMultipart: false,
+        getUploadParameters: async (file) => {
+          // Collect metadata directly from the file object
+          const response = await postAttachmentMetadata({
+            entity_id: entityId,
+            file_name: (file.meta.name as string) || '',
+            title:
+              typeof file.meta.title === 'string' && file.meta.title.trim()
+                ? (file.meta.title as string)
+                : undefined,
+            description:
+              typeof file.meta.description === 'string' &&
+              file.meta.description.trim()
+                ? file.meta.description
+                : undefined,
+          });
+
+          setFileMetadataMap((prev) => ({
+            ...prev,
+            [file.id]: response.id,
+          }));
+
+          return {
+            method: 'POST',
+            url: response.upload_info.url,
+            fields: response.upload_info.fields,
+          };
+        },
+      })
+      .use(ProgressBar)
+  );
+
   const [fileMetadataMap, setFileMetadataMap] = React.useState<
     Record<string, string>
   >({});
-
-  const { mutateAsync: postAttachmentMetadata } = usePostAttachmentMetadata();
 
   // Handlers for upload-error and file-removed events
   const handleUploadError = React.useCallback(
@@ -78,68 +119,16 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
     setIsUploading(false);
   }, [onClose]);
 
-  React.useEffect(() => {
-    if (open) {
-      const uppyInstance = new Uppy<Meta, AwsBody>({
-        autoProceed: false,
-        restrictions: {
-          maxFileSize: MAX_FILE_SIZE_B,
-          requiredMetaFields: ['name'],
-        },
-      });
-
-      // Set up the S3 upload with a pre-signed URL
-      uppyInstance.use(AwsS3, {
-        shouldUseMultipart: false,
-        getUploadParameters: async (file) => {
-          // Collect metadata directly from the file object
-          const response = await postAttachmentMetadata({
-            entity_id: entityId,
-            file_name: (file.meta.name as string) || '',
-            title:
-              typeof file.meta.title === 'string' && file.meta.title.trim()
-                ? (file.meta.title as string)
-                : undefined,
-            description:
-              typeof file.meta.description === 'string' &&
-              file.meta.description.trim()
-                ? file.meta.description
-                : undefined,
-          });
-
-          setFileMetadataMap((prev) => ({
-            ...prev,
-            [file.id]: response.id,
-          }));
-
-          return {
-            method: 'POST',
-            url: response.upload_info.url,
-            fields: response.upload_info.fields,
-          };
-        },
-      });
-
-      // Use the FileInput and ProgressBar plugins
-
-      uppyInstance.use(ProgressBar);
-
-      setUppy(uppyInstance);
-
-      return () => uppyInstance.cancelAll();
-    }
-  }, [open, entityId, postAttachmentMetadata]);
-
   // Track the start and completion of uploads
-  uppy?.on('upload', () => setIsUploading(true));
-  uppy?.on('complete', () => setIsUploading(false));
+  uppy.on('upload', () => setIsUploading(true));
+  uppy.on('complete', () => setIsUploading(false));
 
-  uppy?.on('upload-error', handleUploadError(fileMetadataMap));
+  uppy.on('upload-error', handleUploadError(fileMetadataMap));
 
-  uppy?.on('file-removed', handleFileRemoved(fileMetadataMap));
+  uppy.on('file-removed', handleFileRemoved(fileMetadataMap));
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
+    <Dialog open={open} maxWidth="md" fullWidth>
       <DialogTitle>Upload Attachments</DialogTitle>
       <DialogContent sx={{ display: 'flex', justifyContent: 'center' }}>
         {uppy && (

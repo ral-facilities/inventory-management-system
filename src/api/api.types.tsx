@@ -220,20 +220,21 @@ export interface Item
 
 // ------------------------------------ ATTACHMENTS ------------------------------------------------
 
-export interface AttachmentMetadataPost {
+// This is AttachmentPost on the object-store-api
+export interface AttachmentPostMetadata {
   entity_id: string;
   file_name: string;
   title?: string | null;
   description?: string | null;
 }
 
-export interface AttachmentMetadataUploadInfo {
+export interface AttachmentUploadInfo {
   url: string;
   fields: Record<string, string>;
 }
-export interface AttachmentMetadataPostResponse
-  extends AttachmentMetadataPost,
+export interface AttachmentPostMetadataResponse
+  extends AttachmentPostMetadata,
     CreatedModifiedMixin {
   id: string;
-  upload_info: AttachmentMetadataUploadInfo;
+  upload_info: AttachmentUploadInfo;
 }

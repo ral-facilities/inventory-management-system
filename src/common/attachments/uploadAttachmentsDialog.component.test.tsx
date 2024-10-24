@@ -106,8 +106,9 @@ describe('Upload attachment dialog', () => {
 
     expect(xhrPostSpy).toHaveBeenCalledWith('POST', '/object-storage', true);
   });
+
   // Works locally but doesn't work on CI
-  it.skip('errors when presigned url fails', async () => {
+  it('errors when presigned url fails', async () => {
     // Render the component
 
     server.use(

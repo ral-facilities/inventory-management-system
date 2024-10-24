@@ -1,6 +1,6 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { hooksWrapperWithProviders } from '../testUtils';
-import { AttachmentMetadataPost } from './api.types';
+import { AttachmentPostMetadata } from './api.types';
 import { usePostAttachmentMetadata } from './attachments';
 
 describe('attachments api functions', () => {
@@ -9,7 +9,7 @@ describe('attachments api functions', () => {
   });
 
   describe('usePostAttachmentMetadata', () => {
-    let mockDataPost: AttachmentMetadataPost;
+    let mockDataPost: AttachmentPostMetadata;
     beforeEach(() => {
       mockDataPost = {
         file_name: 'test.doc',
