@@ -506,8 +506,8 @@ exports[`Catalogue Items Dialog > renders details step correctly 1`] = `
                   <label
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeSmall MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeSmall MuiInputLabel-outlined css-1pysi21-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
-                    for="catalogue-item-expected-lifetime-input"
-                    id="catalogue-item-expected-lifetime-input-label"
+                    for="catalogue-item-expected-lifetime-days-input"
+                    id="catalogue-item-expected-lifetime-days-input-label"
                   >
                     Expected Lifetime (days)
                   </label>
@@ -517,8 +517,8 @@ exports[`Catalogue Items Dialog > renders details step correctly 1`] = `
                     <input
                       aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
-                      id="catalogue-item-expected-lifetime-input"
-                      name="expected_lifetime"
+                      id="catalogue-item-expected-lifetime-days-input"
+                      name="expected_lifetime_days"
                       type="text"
                       value=""
                     />

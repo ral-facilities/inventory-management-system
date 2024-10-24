@@ -9,7 +9,7 @@ const modifyCatalogueItem = (
     daysToRework?: string;
     drawingNumber?: string;
     drawingLink?: string;
-    expectedLifetime?: string;
+    expectedLifetimeDays?: string;
     itemModelNumber?: string;
     notes?: string;
     manufacturer: string;
@@ -77,10 +77,10 @@ const modifyCatalogueItem = (
         cy.findByLabelText('Drawing link').clear();
       }
 
-      if (values.expectedLifetime) {
+      if (values.expectedLifetimeDays) {
         cy.findByLabelText('Expected Lifetime (days)').clear();
         cy.findByLabelText('Expected Lifetime (days)').type(
-          values.expectedLifetime
+          values.expectedLifetimeDays
         );
       } else {
         cy.findByLabelText('Expected Lifetime (days)').clear();
@@ -154,8 +154,8 @@ const modifyCatalogueItem = (
 
     if (values.drawingLink) cy.findByText(values.drawingLink).should('exist');
 
-    if (values.expectedLifetime)
-      cy.findByText(values.expectedLifetime).should('exist');
+    if (values.expectedLifetimeDays)
+      cy.findByText(values.expectedLifetimeDays).should('exist');
 
     if (values.itemModelNumber)
       cy.findByText(values.itemModelNumber).should('exist');
@@ -311,7 +311,7 @@ export const addCatalogueItem = (ignoreChecks?: boolean) => {
       daysToRework: '1',
       drawingLink: 'https://example.com/',
       drawingNumber: 'GH45235324',
-      expectedLifetime: '365',
+      expectedLifetimeDays: '365',
       itemModelNumber: 'rew5435453',
       notes: 'test',
       manufacturer: 'ThorsLabs',
@@ -334,7 +334,7 @@ export const editCatalogueItem = () => {
     daysToReplace: '5',
     drawingLink: 'https://example.com/',
     drawingNumber: 'GH4523566324',
-    expectedLifetime: '365',
+    expectedLifetimeDays: '365',
     itemModelNumber: 'rew54359453',
     notes: 'test 2',
     manufacturer: 'ThorsLabs',

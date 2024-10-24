@@ -51,7 +51,7 @@ describe('Catalogue Items Dialog', () => {
     daysToRework?: string;
     drawingNumber?: string;
     drawingLink?: string;
-    expectedLifetime?: string;
+    expectedLifetimeDays?: string;
     itemModelNumber?: string;
     resolution?: string;
     frameRate?: string;
@@ -102,9 +102,9 @@ describe('Catalogue Items Dialog', () => {
         target: { value: values.drawingLink },
       });
 
-    if (values.expectedLifetime !== undefined)
+    if (values.expectedLifetimeDays !== undefined)
       fireEvent.change(screen.getByLabelText('Expected Lifetime (days)'), {
-        target: { value: values.expectedLifetime },
+        target: { value: values.expectedLifetimeDays },
       });
 
     if (values.itemModelNumber !== undefined)
@@ -230,7 +230,7 @@ describe('Catalogue Items Dialog', () => {
       description: '',
       drawingLink: 'https://example.com',
       drawingNumber: 'mk4324',
-      expectedLifetime: '541',
+      expectedLifetimeDays: '541',
       itemModelNumber: 'mk4324',
       name: 'test',
       manufacturer: 'Man{arrowdown}{enter}',
@@ -259,7 +259,7 @@ describe('Catalogue Items Dialog', () => {
       description: null,
       drawing_link: 'https://example.com',
       drawing_number: 'mk4324',
-      expected_lifetime: 541,
+      expected_lifetime_days: 541,
       is_obsolete: false,
       manufacturer_id: '1',
       notes: 'Test note',
@@ -294,7 +294,7 @@ describe('Catalogue Items Dialog', () => {
       description: '',
       drawingLink: 'https://example.com',
       drawingNumber: 'mk4324',
-      expectedLifetime: '146',
+      expectedLifetimeDays: '146',
       itemModelNumber: 'mk4324',
       name: 'test',
       manufacturer: 'Man{arrowdown}{enter}',
@@ -323,7 +323,7 @@ describe('Catalogue Items Dialog', () => {
       description: null,
       drawing_link: 'https://example.com',
       drawing_number: 'mk4324',
-      expected_lifetime: 146,
+      expected_lifetime_days: 146,
       is_obsolete: false,
       item_model_number: 'mk4324',
       notes: null,
@@ -365,7 +365,7 @@ describe('Catalogue Items Dialog', () => {
       description: '',
       drawingLink: 'https://example.com',
       drawingNumber: 'mk4324',
-      expectedLifetime: '321',
+      expectedLifetimeDays: '321',
       itemModelNumber: 'mk4324',
       name: 'test',
       manufacturer: 'Man{arrowdown}{enter}',
@@ -405,7 +405,7 @@ describe('Catalogue Items Dialog', () => {
       description: '',
       drawingLink: 'https://example.com',
       drawingNumber: 'mk4324',
-      expectedLifetime: '524',
+      expectedLifetimeDays: '524',
       itemModelNumber: 'mk4324',
       name: 'test',
       manufacturer: 'Man{arrowdown}{enter}',
@@ -462,7 +462,7 @@ describe('Catalogue Items Dialog', () => {
       description: null,
       drawing_link: null,
       drawing_number: null,
-      expected_lifetime: null,
+      expected_lifetime_days: null,
       is_obsolete: false,
       item_model_number: null,
       manufacturer_id: '1',
@@ -549,7 +549,7 @@ describe('Catalogue Items Dialog', () => {
       description: '',
       drawingLink: 'example.com',
       drawingNumber: 'mk4324',
-      expectedLifetime: '43ab',
+      expectedLifetimeDays: '43ab',
       itemModelNumber: 'mk4324',
       name: 'test',
       manufacturer: 'Man{arrowdown}{enter}',
@@ -577,7 +577,7 @@ describe('Catalogue Items Dialog', () => {
       daysToReplace: '20',
       daysToRework: '2',
       drawingLink: 'https://example.com',
-      expectedLifetime: '43',
+      expectedLifetimeDays: '43',
     });
 
     await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -617,7 +617,7 @@ describe('Catalogue Items Dialog', () => {
       description: '',
       drawingLink: 'https://example.com',
       drawingNumber: 'mk4324',
-      expectedLifetime: '421',
+      expectedLifetimeDays: '421',
       itemModelNumber: 'mk4324',
       name: 'Error 500',
       manufacturer: 'Man{arrowdown}{enter}',
@@ -764,7 +764,7 @@ describe('Catalogue Items Dialog', () => {
         description: ' ',
         drawingLink: 'http://example.com',
         drawingNumber: 'test',
-        expectedLifetime: '486',
+        expectedLifetimeDays: '486',
         itemModelNumber: 'test1',
         name: 'test',
         manufacturer: 'Man{arrowdown}{arrowdown}{enter}',
@@ -782,7 +782,7 @@ describe('Catalogue Items Dialog', () => {
         description: null,
         drawing_link: 'http://example.com',
         drawing_number: 'test',
-        expected_lifetime: 486,
+        expected_lifetime_days: 486,
         item_model_number: 'test1',
         name: 'test',
         manufacturer_id: '3',
@@ -883,7 +883,7 @@ describe('Catalogue Items Dialog', () => {
         description: '',
         drawingLink: '',
         drawingNumber: '',
-        expectedLifetime: '',
+        expectedLifetimeDays: '',
         itemModelNumber: '',
         name: '',
         notes: '',

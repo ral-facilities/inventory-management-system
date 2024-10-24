@@ -307,7 +307,8 @@ function CatalogueItemsLandingPage() {
                               Expected Lifetime (days)
                             </Typography>
                             <Typography align="left" color="text.secondary">
-                              {catalogueItemIdData.expected_lifetime ?? 'None'}
+                              {catalogueItemIdData.expected_lifetime_days ??
+                                'None'}
                             </Typography>
                           </Grid>
 

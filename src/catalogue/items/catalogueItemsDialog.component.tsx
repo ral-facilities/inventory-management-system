@@ -70,7 +70,7 @@ function toCatalogueItemDetailsStep(
       days_to_rework: '',
       drawing_number: '',
       drawing_link: '',
-      expected_lifetime: '',
+      expected_lifetime_days: '',
       item_model_number: '',
       notes: '',
     };
@@ -88,8 +88,10 @@ function toCatalogueItemDetailsStep(
       item.days_to_rework !== null ? String(item.days_to_rework) : '',
     drawing_number: item.drawing_number ?? '',
     drawing_link: item.drawing_link ?? '',
-    expected_lifetime:
-      item.expected_lifetime !== null ? String(item.expected_lifetime) : '',
+    expected_lifetime_days:
+      item.expected_lifetime_days !== null
+        ? String(item.expected_lifetime_days)
+        : '',
     item_model_number: item.item_model_number ?? '',
     notes: item.notes ?? '',
   };
@@ -147,8 +149,8 @@ function convertToCatalogueItemDetailsStepPost(
     days_to_rework: item.days_to_rework ? Number(item.days_to_rework) : null, // Convert if not null
     drawing_number: item.drawing_number ?? null,
     drawing_link: item.drawing_link ?? null,
-    expected_lifetime: item.expected_lifetime
-      ? Number(item.expected_lifetime)
+    expected_lifetime_days: item.expected_lifetime_days
+      ? Number(item.expected_lifetime_days)
       : null, // Convert if not null
     item_model_number: item.item_model_number ?? null,
     notes: item.notes ?? null,
@@ -311,8 +313,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         const isDrawingLinkUpdated =
           data.drawing_link !== selectedCatalogueItem.drawing_link;
 
-        const isExpectedLifetimeUpdated =
-          data.expected_lifetime !== selectedCatalogueItem.expected_lifetime;
+        const isExpectedLifetimeDaysUpdated =
+          data.expected_lifetime_days !==
+          selectedCatalogueItem.expected_lifetime_days;
 
         const isModelNumberUpdated =
           data.item_model_number !== selectedCatalogueItem.item_model_number;
@@ -346,8 +349,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           catalogueItem.drawing_number = data.drawing_number;
         if (isDrawingLinkUpdated)
           catalogueItem.drawing_link = data.drawing_link;
-        if (isExpectedLifetimeUpdated)
-          catalogueItem.expected_lifetime = data.expected_lifetime;
+        if (isExpectedLifetimeDaysUpdated)
+          catalogueItem.expected_lifetime_days = data.expected_lifetime_days;
         if (isModelNumberUpdated)
           catalogueItem.item_model_number = data.item_model_number;
         if (isCatalogueItemPropertiesUpdated) {
@@ -623,12 +626,12 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
             <Grid item xs={12}>
               <TextField
-                id="catalogue-item-expected-lifetime-input"
+                id="catalogue-item-expected-lifetime-days-input"
                 label="Expected Lifetime (days)"
                 size="small"
-                {...registerDetailsStep('expected_lifetime')}
-                error={!!errorsDetailsStep.expected_lifetime}
-                helperText={errorsDetailsStep.expected_lifetime?.message}
+                {...registerDetailsStep('expected_lifetime_days')}
+                error={!!errorsDetailsStep.expected_lifetime_days}
+                helperText={errorsDetailsStep.expected_lifetime_days?.message}
                 fullWidth
               />
             </Grid>

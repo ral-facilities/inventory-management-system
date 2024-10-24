@@ -176,7 +176,7 @@ export interface CatalogueItemPost {
   days_to_rework?: number | null;
   drawing_number?: string | null;
   drawing_link?: string | null;
-  expected_lifetime?: number | null;
+  expected_lifetime_days?: number | null;
   item_model_number?: string | null;
   is_obsolete: boolean;
   obsolete_reason?: string | null;

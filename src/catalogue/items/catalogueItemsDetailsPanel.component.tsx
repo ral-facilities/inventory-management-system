@@ -173,7 +173,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                   Expected Lifetime (days)
                 </Typography>
                 <Typography color="text.secondary">
-                  {catalogueItemIdData.expected_lifetime ?? 'None'}
+                  {catalogueItemIdData.expected_lifetime_days ?? 'None'}
                 </Typography>
               </Grid>
 
