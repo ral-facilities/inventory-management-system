@@ -1,5 +1,8 @@
 import { DefaultBodyType, http, HttpResponse, PathParams } from 'msw';
 import {
+  AttachmentPostMetadata,
+  AttachmentPostMetadataResponse,
+  AttachmentUploadInfo,
   BreadcrumbsInfo,
   CatalogueCategory,
   CatalogueCategoryPatch,
@@ -930,5 +933,51 @@ export const handlers = [
     } else {
       return HttpResponse.json({ detail: '' }, { status: 400 });
     }
+  }),
+
+  // ------------------------------------ IMAGES ------------------------------------------------
+
+  http.post<
+    PathParams,
+    AttachmentPostMetadata,
+    AttachmentPostMetadataResponse | ErrorResponse
+  >('/attachments', async ({ request }) => {
+    const body = (await request.json()) as AttachmentPostMetadata;
+
+    const upload_info: AttachmentUploadInfo = {
+      url: `/object-storage`,
+      fields: {
+        'Content-Type': 'multipart/form-data',
+        key: `attachments/test`,
+        AWSAccessKeyId: 'root',
+        policy: 'policy test ',
+        signature: 'signature test',
+      },
+    };
+
+    return HttpResponse.json(
+      {
+        id: '1',
+        ...body,
+        upload_info: upload_info,
+        modified_time: '2024-01-02T13:10:10.000+00:00',
+        created_time: '2024-01-01T12:00:00.000+00:00',
+      },
+      { status: 200 }
+    );
+  }),
+
+  // ------------------------------------ OBJECT STORAGE ------------------------------------------------
+
+  http.post('/object-storage', async () => {
+    const totalChunks = 10; // Number of progress updates
+    const delay = 1000; // Delay in ms for each progress update
+
+    // Simulate progress updates
+    for (let i = 0; i < totalChunks; i++) {
+      await new Promise((resolve) => setTimeout(resolve, delay));
+    }
+
+    return HttpResponse.json({ status: 204 });
   }),
 ];

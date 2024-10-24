@@ -25,6 +25,7 @@ const SystemDetailsActionMenu = (props: { system: System }) => {
   return (
     <ActionMenu
       ariaLabelPrefix="systems page"
+      uploadAttachmentsEntityId={system.id}
       editMenuItem={{
         onClick: () => {
           setEditSystemDialogOpen(true);
