@@ -81,6 +81,7 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
   const handleUploadError = React.useCallback(
     (fileMetadataMap: Record<string, string>) =>
       (file?: UppyFile<Meta, AwsBody>) => {
+        console.log(file);
         const id = fileMetadataMap[file?.id ?? ''];
         // TODO CHeck if it exist in database first
         // This should fix the multiple deletion error
@@ -130,7 +131,7 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
   return (
     <Dialog open={open} maxWidth="md" fullWidth>
       <DialogTitle>Upload Attachments</DialogTitle>
-      <DialogContent sx={{ display: 'flex', justifyContent: 'center' }}>
+      <DialogContent>
         {uppy && (
           <Dashboard
             uppy={uppy}
