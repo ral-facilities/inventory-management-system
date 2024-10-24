@@ -19,7 +19,7 @@ describe('attachments api functions', () => {
       };
     });
 
-    it('posts a request to add a usage status and returns successful response', async () => {
+    it('should post attachment metadata and return a success response', async () => {
       const { result } = renderHook(() => usePostAttachmentMetadata(), {
         wrapper: hooksWrapperWithProviders(),
       });
@@ -30,10 +30,7 @@ describe('attachments api functions', () => {
       });
       expect(result.current.data).toEqual({
         id: '1',
-        file_name: 'test.doc',
-        entity_id: '1',
-        title: 'test',
-        description: 'test',
+        ...mockDataPost,
         upload_info: {
           url: '/object-storage',
           fields: {
