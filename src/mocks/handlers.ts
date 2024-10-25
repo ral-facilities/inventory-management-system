@@ -1,8 +1,8 @@
 import { DefaultBodyType, http, HttpResponse, PathParams } from 'msw';
 import {
-  AttachmentMetadataPost,
-  AttachmentMetadataPostResponse,
-  AttachmentMetadataUploadInfo,
+  AttachmentPostMetadata,
+  AttachmentPostMetadataResponse,
+  AttachmentUploadInfo,
   BreadcrumbsInfo,
   CatalogueCategory,
   CatalogueCategoryPatch,
@@ -935,16 +935,16 @@ export const handlers = [
     }
   }),
 
-  // ------------------------------------ Images ------------------------------------------------
+  // ------------------------------------ IMAGES ------------------------------------------------
 
   http.post<
     PathParams,
-    AttachmentMetadataPost,
-    AttachmentMetadataPostResponse | ErrorResponse
+    AttachmentPostMetadata,
+    AttachmentPostMetadataResponse | ErrorResponse
   >('/attachments', async ({ request }) => {
-    const body = (await request.json()) as AttachmentMetadataPost;
+    const body = (await request.json()) as AttachmentPostMetadata;
 
-    const upload_info: AttachmentMetadataUploadInfo = {
+    const upload_info: AttachmentUploadInfo = {
       url: `/object-storage`,
       fields: {
         'Content-Type': 'multipart/form-data',
@@ -971,7 +971,7 @@ export const handlers = [
     );
   }),
 
-  // ------------------------------------ Object Store ------------------------------------------------
+  // ------------------------------------ OBJECT STORAGE ------------------------------------------------
 
   http.post('/object-storage', async () => {
     const totalChunks = 10; // Number of progress updates

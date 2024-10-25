@@ -2,25 +2,25 @@ import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { storageApi } from './api';
 import {
-  AttachmentMetadataPost,
-  AttachmentMetadataPostResponse,
+  AttachmentPostMetadata,
+  AttachmentPostMetadataResponse,
 } from './api.types';
 
 const postAttachmentMetadata = async (
-  attachmentMetadata: AttachmentMetadataPost
-): Promise<AttachmentMetadataPostResponse> => {
+  attachmentMetadata: AttachmentPostMetadata
+): Promise<AttachmentPostMetadataResponse> => {
   return storageApi
-    .post<AttachmentMetadataPostResponse>(`/attachments`, attachmentMetadata)
+    .post<AttachmentPostMetadataResponse>(`/attachments`, attachmentMetadata)
     .then((response) => response.data);
 };
 
 export const usePostAttachmentMetadata = (): UseMutationResult<
-  AttachmentMetadataPostResponse,
+  AttachmentPostMetadataResponse,
   AxiosError,
-  AttachmentMetadataPost
+  AttachmentPostMetadata
 > => {
   return useMutation({
-    mutationFn: (attachmentMetadata: AttachmentMetadataPost) =>
+    mutationFn: (attachmentMetadata: AttachmentPostMetadata) =>
       postAttachmentMetadata(attachmentMetadata),
   });
 };

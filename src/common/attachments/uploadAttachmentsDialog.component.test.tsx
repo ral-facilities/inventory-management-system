@@ -3,7 +3,7 @@ import userEvent, { UserEvent } from '@testing-library/user-event';
 import { act } from 'react';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 
-import { http, HttpResponse } from 'msw';
+import { delay, http, HttpResponse } from 'msw';
 import { MockInstance } from 'vitest';
 import { storageApi } from '../../api/api';
 import { server } from '../../mocks/server';
@@ -11,7 +11,6 @@ import UploadAttachmentsDialog, {
   UploadAttachmentsDialogProps,
 } from './uploadAttachmentsDialog.component';
 
-//
 describe('Upload attachment dialog', () => {
   let props: UploadAttachmentsDialogProps;
   let user: UserEvent;
@@ -105,14 +104,18 @@ describe('Upload attachment dialog', () => {
     });
 
     expect(xhrPostSpy).toHaveBeenCalledWith('POST', '/object-storage', true);
+    await waitFor(() => {
+      expect(screen.queryByText('Upload failed')).not.toBeInTheDocument();
+    });
   });
-  // Works locally but doesn't work on CI
-  it.skip('errors when presigned url fails', async () => {
-    // Render the component
 
+  // Works locally but doesn't work on CI
+
+  it('errors when presigned url fails', async () => {
     server.use(
-      http.post('/object-storage', () => {
-        return HttpResponse.json({}, { status: 400 });
+      http.post('/object-storage', async () => {
+        await delay(200);
+        return HttpResponse.error();
       })
     );
 
@@ -165,7 +168,7 @@ describe('Upload attachment dialog', () => {
     expect(
       await screen.findByLabelText('Show error details')
     ).toBeInTheDocument();
-  }, 20000);
+  }, 10000);
 
   it('errors when file is removed mid upload', async () => {
     // Render the component

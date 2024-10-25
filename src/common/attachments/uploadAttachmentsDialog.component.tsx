@@ -14,10 +14,9 @@ import ProgressBar from '@uppy/progress-bar'; // Import the ProgressBar plugin
 import { Dashboard } from '@uppy/react';
 import React from 'react';
 import { usePostAttachmentMetadata } from '../../api/attachments';
-
+// Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000, so here the former is expected despite them really being GiB, MiB and KiB.
 const MAX_FILE_SIZE_MB = 100;
-const MAX_FILE_SIZE_B = MAX_FILE_SIZE_MB * 1000 * 1000;
-
+const MAX_FILE_SIZE_B = MAX_FILE_SIZE_MB * 1024 * 1024;
 export interface UploadAttachmentsDialogProps {
   open: boolean;
   onClose: () => void;
@@ -29,77 +28,32 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
   const theme = useTheme();
 
   const [isUploading, setIsUploading] = React.useState(false);
-  const [uppy, setUppy] = React.useState<Uppy<Meta, AwsBody> | null>(null);
-  const [fileMetadataMap, setFileMetadataMap] = React.useState<
-    Record<string, string>
-  >({});
 
   const { mutateAsync: postAttachmentMetadata } = usePostAttachmentMetadata();
-
-  // Handlers for upload-error and file-removed events
-  const handleUploadError = React.useCallback(
-    (fileMetadataMap: Record<string, string>) =>
-      (file?: UppyFile<Meta, AwsBody>) => {
-        const id = fileMetadataMap[file?.id ?? ''];
-        // TODO CHeck if it exist in database first
-        // This should fix the multiple deletion error
-        if (id) {
-          // TODO delete if the upload has failed
-          // console.log('Delete id ', id);
-          const newMap = { ...fileMetadataMap };
-          delete newMap[file?.id ?? ''];
-        }
-        setIsUploading(false);
+  const [uppy] = React.useState<Uppy<Meta, AwsBody>>(
+    new Uppy<Meta, AwsBody>({
+      autoProceed: false,
+      restrictions: {
+        maxFileSize: MAX_FILE_SIZE_B,
+        requiredMetaFields: ['name'],
       },
-    []
-  );
-
-  const handleFileRemoved = React.useCallback(
-    (fileMetadataMap: Record<string, string>) =>
-      (file: UppyFile<Meta, AwsBody>) => {
-        const id = fileMetadataMap[file?.id ?? ''];
-        // TODO CHeck if it exist in database first
-        // This should fix the multiple deletion error
-        if (id) {
-          // TODO delete if the file has been removed mid upload
-          // console.log('Delete id ', id);
-          const newMap = { ...fileMetadataMap };
-          delete newMap[file?.id ?? ''];
-        }
-
-        setIsUploading(false);
-      },
-    []
-  );
-
-  const handleClose = React.useCallback(() => {
-    onClose();
-    setFileMetadataMap({});
-    setIsUploading(false);
-  }, [onClose]);
-
-  React.useEffect(() => {
-    if (open) {
-      const uppyInstance = new Uppy<Meta, AwsBody>({
-        autoProceed: false,
-        restrictions: {
-          maxFileSize: MAX_FILE_SIZE_B,
-          requiredMetaFields: ['name'],
-        },
-      });
-
-      // Set up the S3 upload with a pre-signed URL
-      uppyInstance.use(AwsS3, {
+    })
+      .use(AwsS3, {
         shouldUseMultipart: false,
         getUploadParameters: async (file) => {
           // Collect metadata directly from the file object
           const response = await postAttachmentMetadata({
             entity_id: entityId,
             file_name: (file.meta.name as string) || '',
-            title: file.meta.title ? (file.meta.title as string) : undefined,
-            description: file.meta.description
-              ? (file.meta.description as string)
-              : undefined,
+            title:
+              typeof file.meta.title === 'string' && file.meta.title.trim()
+                ? (file.meta.title as string)
+                : undefined,
+            description:
+              typeof file.meta.description === 'string' &&
+              file.meta.description.trim()
+                ? file.meta.description
+                : undefined,
           });
 
           setFileMetadataMap((prev) => ({
@@ -113,28 +67,72 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
             fields: response.upload_info.fields,
           };
         },
-      });
+      })
+      .use(ProgressBar)
+  );
 
-      // Use the FileInput and ProgressBar plugins
+  const [fileMetadataMap, setFileMetadataMap] = React.useState<
+    Record<string, string>
+  >({});
 
-      uppyInstance.use(ProgressBar);
+  const handleUploadError = React.useCallback(
+    (file?: UppyFile<Meta, AwsBody>) => {
+      const id = fileMetadataMap[file?.id ?? ''];
 
-      setUppy(uppyInstance);
+      if (id) {
+        // Filter out the failed upload file
+        const newMap = Object.fromEntries(
+          Object.entries(fileMetadataMap).filter(([key]) => key !== file?.id)
+        );
 
-      return () => uppyInstance.cancelAll();
-    }
-  }, [open, entityId, postAttachmentMetadata]);
+        setFileMetadataMap(newMap);
+
+        // Set isUploading to false only if there is exactly one item left before this deletion
+        if (Object.values(newMap).length === 0) {
+          setIsUploading(false);
+        }
+      }
+    },
+    [fileMetadataMap]
+  );
+
+  const handleFileRemoved = React.useCallback(
+    (file: UppyFile<Meta, AwsBody>) => {
+      const id = fileMetadataMap[file?.id ?? ''];
+
+      if (id) {
+        // Filter out the file removed mid-upload
+        const newMap = Object.fromEntries(
+          Object.entries(fileMetadataMap).filter(([key]) => key !== file?.id)
+        );
+
+        setFileMetadataMap(newMap);
+
+        // Set isUploading to false only if there is exactly one item left before this deletion
+        if (Object.values(newMap).length === 0) {
+          setIsUploading(false);
+        }
+      }
+    },
+    [fileMetadataMap]
+  );
+
+  const handleClose = React.useCallback(() => {
+    onClose();
+    setFileMetadataMap({});
+    setIsUploading(false);
+  }, [onClose]);
 
   // Track the start and completion of uploads
-  uppy?.on('upload', () => setIsUploading(true));
-  uppy?.on('complete', () => setIsUploading(false));
+  uppy.on('upload', () => setIsUploading(true));
+  uppy.on('complete', () => setIsUploading(false));
 
-  uppy?.on('upload-error', handleUploadError(fileMetadataMap));
+  uppy.on('upload-error', handleUploadError);
 
-  uppy?.on('file-removed', handleFileRemoved(fileMetadataMap));
+  uppy.on('file-removed', handleFileRemoved);
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
+    <Dialog open={open} maxWidth="md" fullWidth>
       <DialogTitle>Upload Attachments</DialogTitle>
       <DialogContent sx={{ display: 'flex', justifyContent: 'center' }}>
         {uppy && (
@@ -146,15 +144,16 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
             theme={theme.palette.mode}
             metaFields={[
               {
+                id: 'name',
+                name: 'File name',
+                placeholder: 'Enter file name',
+              },
+              {
                 id: 'title',
                 name: 'Title',
                 placeholder: 'Enter file title',
               },
-              {
-                id: 'name',
-                name: 'Name',
-                placeholder: 'Enter file name',
-              },
+
               {
                 id: 'description',
                 name: 'Description',
