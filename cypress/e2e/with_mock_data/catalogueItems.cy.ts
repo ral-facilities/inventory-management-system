@@ -325,6 +325,7 @@ describe('Catalogue Items', () => {
         cy.findByRole('button', { name: 'Next' }).should('be.disabled');
 
         // details - negative number input validation test
+        cy.findByLabelText('Drawing link').clear();
         cy.findByLabelText('Cost (£) *').clear();
         cy.findByLabelText('Cost (£) *').type('-10')
         cy.findByLabelText('Cost to rework (£)').clear();
@@ -346,7 +347,6 @@ describe('Catalogue Items', () => {
         cy.findByLabelText('Time to replace (days) *').type('14');
         cy.findByLabelText('Cost to rework (£)').clear();
         cy.findByLabelText('Time to rework (days)').clear();
-        cy.findByLabelText('Drawing link').clear();
         cy.findByLabelText('Drawing link').type('https://test.co.uk');
 
         cy.findByRole('button', { name: 'Next' }).click();
