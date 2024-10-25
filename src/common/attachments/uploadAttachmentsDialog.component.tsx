@@ -14,10 +14,9 @@ import ProgressBar from '@uppy/progress-bar'; // Import the ProgressBar plugin
 import { Dashboard } from '@uppy/react';
 import React from 'react';
 import { usePostAttachmentMetadata } from '../../api/attachments';
-
+// Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000, so here the former is expected despite them really being GiB, MiB and KiB.
 const MAX_FILE_SIZE_MB = 100;
-const MAX_FILE_SIZE_B = MAX_FILE_SIZE_MB * 1000 * 1000;
-
+const MAX_FILE_SIZE_B = MAX_FILE_SIZE_MB * 1024 * 1024;
 export interface UploadAttachmentsDialogProps {
   open: boolean;
   onClose: () => void;
@@ -33,7 +32,6 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
   const { mutateAsync: postAttachmentMetadata } = usePostAttachmentMetadata();
   const [uppy] = React.useState<Uppy<Meta, AwsBody>>(
     new Uppy<Meta, AwsBody>({
-      debug: true,
       autoProceed: false,
       restrictions: {
         maxFileSize: MAX_FILE_SIZE_B,
@@ -77,41 +75,46 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
     Record<string, string>
   >({});
 
-  // Handlers for upload-error and file-removed events
   const handleUploadError = React.useCallback(
-    (fileMetadataMap: Record<string, string>) =>
-      (file?: UppyFile<Meta, AwsBody>) => {
-        console.log(file);
-        const id = fileMetadataMap[file?.id ?? ''];
-        // TODO CHeck if it exist in database first
-        // This should fix the multiple deletion error
-        if (id) {
-          // TODO delete if the upload has failed
-          // console.log('Delete id ', id);
-          const newMap = { ...fileMetadataMap };
-          delete newMap[file?.id ?? ''];
+    (file?: UppyFile<Meta, AwsBody>) => {
+      const id = fileMetadataMap[file?.id ?? ''];
+
+      if (id) {
+        // Filter out the failed upload file
+        const newMap = Object.fromEntries(
+          Object.entries(fileMetadataMap).filter(([key]) => key !== file?.id)
+        );
+
+        setFileMetadataMap(newMap);
+
+        // Set isUploading to false only if there is exactly one item left before this deletion
+        if (Object.values(newMap).length === 0) {
+          setIsUploading(false);
         }
-        setIsUploading(false);
-      },
-    []
+      }
+    },
+    [fileMetadataMap]
   );
 
   const handleFileRemoved = React.useCallback(
-    (fileMetadataMap: Record<string, string>) =>
-      (file: UppyFile<Meta, AwsBody>) => {
-        const id = fileMetadataMap[file?.id ?? ''];
-        // TODO CHeck if it exist in database first
-        // This should fix the multiple deletion error
-        if (id) {
-          // TODO delete if the file has been removed mid upload
-          // console.log('Delete id ', id);
-          const newMap = { ...fileMetadataMap };
-          delete newMap[file?.id ?? ''];
-        }
+    (file: UppyFile<Meta, AwsBody>) => {
+      const id = fileMetadataMap[file?.id ?? ''];
 
-        setIsUploading(false);
-      },
-    []
+      if (id) {
+        // Filter out the file removed mid-upload
+        const newMap = Object.fromEntries(
+          Object.entries(fileMetadataMap).filter(([key]) => key !== file?.id)
+        );
+
+        setFileMetadataMap(newMap);
+
+        // Set isUploading to false only if there is exactly one item left before this deletion
+        if (Object.values(newMap).length === 0) {
+          setIsUploading(false);
+        }
+      }
+    },
+    [fileMetadataMap]
   );
 
   const handleClose = React.useCallback(() => {
@@ -124,14 +127,14 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
   uppy.on('upload', () => setIsUploading(true));
   uppy.on('complete', () => setIsUploading(false));
 
-  uppy.on('upload-error', handleUploadError(fileMetadataMap));
+  uppy.on('upload-error', handleUploadError);
 
-  uppy.on('file-removed', handleFileRemoved(fileMetadataMap));
+  uppy.on('file-removed', handleFileRemoved);
 
   return (
     <Dialog open={open} maxWidth="md" fullWidth>
       <DialogTitle>Upload Attachments</DialogTitle>
-      <DialogContent>
+      <DialogContent sx={{ display: 'flex', justifyContent: 'center' }}>
         {uppy && (
           <Dashboard
             uppy={uppy}

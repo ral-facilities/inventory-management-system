@@ -31,7 +31,7 @@ jobs:
         run: yarn lint
 
       - name: Run unit tests
-        run: yarn test src/common/attachments/uploadAttachmentsDialog.component.test.tsx --allowOnly
+        run: yarn test
 
       - name: Upload coverage reports to Codecov
         if: success()

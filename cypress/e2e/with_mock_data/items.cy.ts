@@ -1,4 +1,4 @@
-import { HttpResponse } from 'msw';
+import { delay, HttpResponse } from 'msw';
 
 describe('Items', () => {
   beforeEach(() => {
@@ -532,7 +532,8 @@ describe('Items', () => {
         const { worker, http } = window.msw;
 
         worker.use(
-          http.post('/object-storage', () => {
+          http.post('/object-storage', async () => {
+            await delay(200);
             return HttpResponse.json({}, { status: 400 });
           })
         );

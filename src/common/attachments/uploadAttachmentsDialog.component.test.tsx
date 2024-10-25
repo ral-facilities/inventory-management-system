@@ -3,7 +3,7 @@ import userEvent, { UserEvent } from '@testing-library/user-event';
 import { act } from 'react';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 
-import { http, HttpResponse } from 'msw';
+import { delay, http, HttpResponse } from 'msw';
 import { MockInstance } from 'vitest';
 import { storageApi } from '../../api/api';
 import { server } from '../../mocks/server';
@@ -11,14 +11,11 @@ import UploadAttachmentsDialog, {
   UploadAttachmentsDialogProps,
 } from './uploadAttachmentsDialog.component';
 
-//
 describe('Upload attachment dialog', () => {
   let props: UploadAttachmentsDialogProps;
   let user: UserEvent;
   let axiosPostSpy: MockInstance;
   let xhrPostSpy: MockInstance;
-
-  let innerWidthSpy: MockInstance;
 
   const onClose = vi.fn();
 
@@ -37,9 +34,7 @@ describe('Upload attachment dialog', () => {
     user = userEvent.setup();
     axiosPostSpy = vi.spyOn(storageApi, 'post');
     xhrPostSpy = vi.spyOn(window.XMLHttpRequest.prototype, 'open');
-    // vi.spyOn(console, 'error').mockImplementation(() => {});
-
-    innerWidthSpy = vi.spyOn(window, 'innerWidth', 'get').mockReturnValue(1024);
+    vi.spyOn(console, 'error').mockImplementation(() => {});
   });
 
   afterEach(() => {
@@ -117,18 +112,16 @@ describe('Upload attachment dialog', () => {
   // Works locally but doesn't work on CI
 
   it('errors when presigned url fails', async () => {
-    // Render the component
-
     server.use(
-      http.post('/object-storage', () => {
-        console.log('dsadasdsadas');
-        return HttpResponse.json({}, { status: 400 });
+      http.post('/object-storage', async () => {
+        await delay(200);
+        return HttpResponse.error();
       })
     );
 
     createView();
 
-    const file1 = new File(['test'], 'removeError.txt', {
+    const file1 = new File(['test'], 'uploadError.txt', {
       type: 'text/plain',
     });
 
@@ -152,20 +145,11 @@ describe('Upload attachment dialog', () => {
 
     // Wait for the UI to update with the added file
     await waitFor(() => {
-      expect(screen.getByText('removeError.txt')).toBeInTheDocument();
+      expect(screen.getByText('uploadError.txt')).toBeInTheDocument();
     });
 
     await user.click(await screen.findByText('Upload 1 file'));
 
-    window.dispatchEvent(new Event('resize'));
-    console.log(
-      'Mocked innerWidth (mobile) 1:',
-      innerWidthSpy.mock.results[0].value
-    );
-
-    console.log('Mocked innerWidth (mobile) 2:', window.innerWidth);
-
-    console.table(innerWidthSpy.mock.results);
     await waitFor(() => {
       expect(screen.getByRole('button', { name: 'Close' })).toBeDisabled();
     });
@@ -173,18 +157,18 @@ describe('Upload attachment dialog', () => {
     // Assert axios post was called
     expect(axiosPostSpy).toHaveBeenCalledWith('/attachments', {
       entity_id: '1',
-      file_name: 'removeError.txt',
+      file_name: 'uploadError.txt',
     });
 
     expect(xhrPostSpy).toHaveBeenCalledWith('POST', '/object-storage', true);
-    // await waitFor(() => {
-    //   expect(screen.getByRole('button', { name: 'Close' })).not.toBeDisabled();
-    // });
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: 'Close' })).not.toBeDisabled();
+    });
     expect(await screen.findByText('Upload failed')).toBeInTheDocument();
     expect(
       await screen.findByLabelText('Show error details')
     ).toBeInTheDocument();
-  }, 20000);
+  }, 10000);
 
   it('errors when file is removed mid upload', async () => {
     // Render the component
