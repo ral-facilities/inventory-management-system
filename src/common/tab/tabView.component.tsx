@@ -9,7 +9,7 @@ import TabPanel from '../../common/tab/tabPanel.component';
 
 type AdditionalTabValues = 'Gallery' | 'Attachments';
 
-export interface TabViewProps<T> {
+export interface TabViewProps<T extends string> {
   defaultTab: T | AdditionalTabValues;
   ariaLabelPrefix: string;
   tabData: {
@@ -24,7 +24,7 @@ export interface TabViewProps<T> {
   attachmentsOrder?: number;
 }
 
-function TabView<T>(props: TabViewProps<T>) {
+function TabView<T extends string>(props: TabViewProps<T>) {
   const {
     defaultTab,
     ariaLabelPrefix,
@@ -56,7 +56,7 @@ function TabView<T>(props: TabViewProps<T>) {
       if (newValue === defaultTab) {
         updatedParams.delete('tab');
       } else {
-        updatedParams.set('tab', newValue as unknown as string);
+        updatedParams.set('tab', newValue);
       }
 
       setSearchParams(updatedParams);
@@ -108,20 +108,16 @@ function TabView<T>(props: TabViewProps<T>) {
               icon={icon}
               iconPosition="start"
               value={value}
-              label={value as unknown as string}
-              key={value as unknown as string}
-              {...a11yProps(value as unknown as string)}
+              label={value}
+              key={value}
+              {...a11yProps(value)}
             />
           ))}
         </Tabs>
       </Grid>
       <Grid item xs={12}>
         {tabData.map(({ value, component }) => (
-          <TabPanel
-            key={value as unknown as string}
-            value={tabValue}
-            label={value}
-          >
+          <TabPanel key={value} value={tabValue} label={value}>
             {component}
           </TabPanel>
         ))}

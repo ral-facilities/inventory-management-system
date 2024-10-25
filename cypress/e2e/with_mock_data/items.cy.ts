@@ -279,7 +279,7 @@ describe('Items', () => {
     cy.findByLabelText('Asset number').type('test13221');
     cy.findByLabelText('Purchase order number').type('test23');
     cy.findByLabelText('Warranty end date').type('12/02/2028');
-    cy.findByLabelText('Delivered date').type('12/02/2028');
+    cy.findByLabelText('Delivered date').type('12/02/2024');
     cy.findByLabelText('Is defective *').click();
     cy.findByRole('option', { name: 'Yes' }).click();
     cy.findByLabelText('Usage status *').click();
@@ -319,7 +319,7 @@ describe('Items', () => {
           warranty_end_date: '2028-02-12T00:00:00.000Z',
           asset_number: 'test13221',
           serial_number: 'test1234',
-          delivered_date: '2028-02-12T00:00:00.000Z',
+          delivered_date: '2024-02-12T00:00:00.000Z',
           notes: 'test',
           properties: [
             { id: '1', value: 1218 },
@@ -349,7 +349,10 @@ describe('Items', () => {
 
     cy.findByLabelText('Warranty end date').type('12/02/4000');
     cy.findByLabelText('Delivered date').type('12/02/4000');
-    cy.findAllByText('Date cannot be later than 1/1/2100.').should(
+    cy.findAllByText(
+      'Date cannot be later than',
+      {exact: false}
+    ).should(
       'have.length',
       2
     );
@@ -359,7 +362,10 @@ describe('Items', () => {
 
     cy.findByLabelText('Warranty end date').type('12/02/2000');
     cy.findByLabelText('Delivered date').type('12/02/2000');
-    cy.findByText('Date cannot be later than 1/1/2100.').should('not.exist');
+    cy.findByText(
+      'Date cannot be later than',
+      {exact: false}
+    ).should('not.exist');
     cy.findByText('Date format: dd/MM/yyyy').should('not.exist');
 
     cy.findByRole('button', { name: 'Next' }).click();
@@ -659,7 +665,7 @@ describe('Items', () => {
     cy.findByLabelText('Asset number').type('test13221');
     cy.findByLabelText('Purchase order number').type('test23');
     cy.findByLabelText('Warranty end date').type('12/02/2028');
-    cy.findByLabelText('Delivered date').type('12/02/2028');
+    cy.findByLabelText('Delivered date').type('12/02/2024');
     cy.findByLabelText('Is defective *').click();
     cy.findByRole('option', { name: 'Yes' }).click();
     cy.findByLabelText('Usage status *').click();
@@ -699,7 +705,7 @@ describe('Items', () => {
           usage_status_id: '3',
           warranty_end_date: '2028-02-12T23:00:00.000Z',
           asset_number: '75YWiLwy54test13221',
-          delivered_date: '2028-02-12T00:00:00.000Z',
+          delivered_date: '2024-02-12T00:00:00.000Z',
           notes: 'zolZDKKuvAoTFRUWeZNAtest',
           system_id: '65328f34a40ff5301575a4e3',
           properties: [
