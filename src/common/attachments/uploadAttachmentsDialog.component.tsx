@@ -10,10 +10,11 @@ import AwsS3, { AwsBody } from '@uppy/aws-s3';
 import Uppy, { Meta, UppyFile } from '@uppy/core';
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
-import ProgressBar from '@uppy/progress-bar'; // Import the ProgressBar plugin
+import ProgressBar from '@uppy/progress-bar';
 import { Dashboard } from '@uppy/react';
 import React from 'react';
 import { usePostAttachmentMetadata } from '../../api/attachments';
+
 // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000, so here the former is expected despite them really being GiB, MiB and KiB.
 const MAX_FILE_SIZE_MB = 100;
 const MAX_FILE_SIZE_B = MAX_FILE_SIZE_MB * 1024 * 1024;
@@ -41,7 +42,6 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
       .use(AwsS3, {
         shouldUseMultipart: false,
         getUploadParameters: async (file) => {
-          // Collect metadata directly from the file object
           const response = await postAttachmentMetadata({
             entity_id: entityId,
             file_name: (file.meta.name as string) || '',
@@ -75,40 +75,20 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
     Record<string, string>
   >({});
 
-  const handleUploadError = React.useCallback(
-    (file?: UppyFile<Meta, AwsBody>) => {
+  const updateFileMetadata = React.useCallback(
+    (file?: UppyFile<Meta, AwsBody>, deleteMetadata?: boolean) => {
       const id = fileMetadataMap[file?.id ?? ''];
-
       if (id) {
-        // Filter out the failed upload file
-        const newMap = Object.fromEntries(
-          Object.entries(fileMetadataMap).filter(([key]) => key !== file?.id)
-        );
-
-        setFileMetadataMap(newMap);
-
-        // Set isUploading to false only if there is exactly one item left before this deletion
-        if (Object.values(newMap).length === 0) {
-          setIsUploading(false);
+        if (deleteMetadata) {
+          // TODO: Implement logic to delete metadata using id
+          // If metadata exists for the given id, remove it from the api
+          // If not, do nothing and exit the function
         }
-      }
-    },
-    [fileMetadataMap]
-  );
 
-  const handleFileRemoved = React.useCallback(
-    (file: UppyFile<Meta, AwsBody>) => {
-      const id = fileMetadataMap[file?.id ?? ''];
-
-      if (id) {
-        // Filter out the file removed mid-upload
         const newMap = Object.fromEntries(
           Object.entries(fileMetadataMap).filter(([key]) => key !== file?.id)
         );
-
         setFileMetadataMap(newMap);
-
-        // Set isUploading to false only if there is exactly one item left before this deletion
         if (Object.values(newMap).length === 0) {
           setIsUploading(false);
         }
@@ -121,15 +101,16 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
     onClose();
     setFileMetadataMap({});
     setIsUploading(false);
-  }, [onClose]);
+    uppy.clear();
+  }, [onClose, uppy]);
 
   // Track the start and completion of uploads
   uppy.on('upload', () => setIsUploading(true));
   uppy.on('complete', () => setIsUploading(false));
-
-  uppy.on('upload-error', handleUploadError);
-
-  uppy.on('file-removed', handleFileRemoved);
+  uppy.on('upload-error', (file) => updateFileMetadata(file, true));
+  uppy.on('file-removed', (file) => updateFileMetadata(file, true));
+  uppy.on('cancel-all', () => setIsUploading(false));
+  uppy.on('upload-success', (file) => updateFileMetadata(file));
 
   return (
     <Dialog open={open} maxWidth="md" fullWidth>
