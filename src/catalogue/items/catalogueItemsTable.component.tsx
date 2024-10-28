@@ -455,10 +455,10 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         filterVariant: 'range',
         Cell: ({ row }) => {
           // Logic to get the range slider to work with null values
-          return row.original.catalogueItem.cost_to_rework_gbp === 0
+          return row.original.catalogueItem.days_to_rework === 0
             ? 0
-            : row.original.catalogueItem.cost_to_rework_gbp !== null
-              ? row.original.catalogueItem.cost_to_rework_gbp
+            : row.original.catalogueItem.days_to_rework !== null
+              ? row.original.catalogueItem.days_to_rework
               : '';
         },
         GroupedCell: TableGroupedCell,
