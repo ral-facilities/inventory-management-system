@@ -122,10 +122,10 @@ export function ItemsTable(props: ItemTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.serial_number ?? 'No serial number',
         id: 'item.serial_number',
-        filterVariant: COLUMN_FILTER_VARIANTS['string'],
-        filterFn: COLUMN_FILTER_FUNCTIONS['string'],
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: [
-          ...COLUMN_FILTER_MODE_OPTIONS['string'],
+          ...COLUMN_FILTER_MODE_OPTIONS.string,
           ...['betweenInclusive'],
         ],
         size: 250,
@@ -142,9 +142,9 @@ export function ItemsTable(props: ItemTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.item.modified_time),
         id: 'item.modified_time',
-        filterVariant: COLUMN_FILTER_VARIANTS['datetime'],
-        filterFn: COLUMN_FILTER_FUNCTIONS['datetime'],
-        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS['datetime'],
+        filterVariant: COLUMN_FILTER_VARIANTS.datetime,
+        filterFn: COLUMN_FILTER_FUNCTIONS.datetime,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.datetime,
         size: 350,
         Cell: ({ row }) =>
           row.original.item.modified_time &&
@@ -156,9 +156,9 @@ export function ItemsTable(props: ItemTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.item.created_time),
         id: 'item.created_time',
-        filterVariant: COLUMN_FILTER_VARIANTS['datetime'],
-        filterFn: COLUMN_FILTER_FUNCTIONS['datetime'],
-        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS['datetime'],
+        filterVariant: COLUMN_FILTER_VARIANTS.datetime,
+        filterFn: COLUMN_FILTER_FUNCTIONS.datetime,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.datetime,
         size: 350,
         Cell: ({ row }) =>
           formatDateTimeStrings(row.original.item.created_time, true),
@@ -170,10 +170,10 @@ export function ItemsTable(props: ItemTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.asset_number ?? '',
         id: 'item.asset_number',
-        filterVariant: COLUMN_FILTER_VARIANTS['string'],
-        filterFn: COLUMN_FILTER_FUNCTIONS['string'],
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: [
-          ...COLUMN_FILTER_MODE_OPTIONS['string'],
+          ...COLUMN_FILTER_MODE_OPTIONS.string,
           ...OPTIONAL_FILTER_MODE_OPTIONS,
         ],
         size: 250,
@@ -184,10 +184,10 @@ export function ItemsTable(props: ItemTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.purchase_order_number ?? '',
         id: 'item.purchase_order_number',
-        filterVariant: COLUMN_FILTER_VARIANTS['string'],
-        filterFn: COLUMN_FILTER_FUNCTIONS['string'],
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: [
-          ...COLUMN_FILTER_MODE_OPTIONS['string'],
+          ...COLUMN_FILTER_MODE_OPTIONS.string,
           ...OPTIONAL_FILTER_MODE_OPTIONS,
         ],
         size: 350,
@@ -201,9 +201,9 @@ export function ItemsTable(props: ItemTableProps) {
             ? new Date(row.item.warranty_end_date)
             : null,
         id: 'item.warranty_end_date',
-        filterVariant: COLUMN_FILTER_VARIANTS['date'],
-        filterFn: COLUMN_FILTER_FUNCTIONS['date'],
-        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS['date'],
+        filterVariant: COLUMN_FILTER_VARIANTS.date,
+        filterFn: COLUMN_FILTER_FUNCTIONS.date,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.date,
         size: 350,
         Cell: ({ row }) =>
           row.original.item.warranty_end_date &&
@@ -220,9 +220,9 @@ export function ItemsTable(props: ItemTableProps) {
         accessorFn: (row) =>
           row.item.delivered_date ? new Date(row.item.delivered_date) : null,
         id: 'item.delivered_date',
-        filterVariant: COLUMN_FILTER_VARIANTS['date'],
-        filterFn: COLUMN_FILTER_FUNCTIONS['date'],
-        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS['date'],
+        filterVariant: COLUMN_FILTER_VARIANTS.date,
+        filterFn: COLUMN_FILTER_FUNCTIONS.date,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.date,
         size: 350,
         Cell: ({ row }) =>
           row.original.item.delivered_date &&
@@ -238,7 +238,7 @@ export function ItemsTable(props: ItemTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => (row.item.is_defective === true ? 'Yes' : 'No'),
         id: 'item.is_defective',
-        filterVariant: COLUMN_FILTER_VARIANTS['boolean'],
+        filterVariant: COLUMN_FILTER_VARIANTS.boolean,
         enableColumnFilterModes: false,
         size: 200,
       },
@@ -307,10 +307,10 @@ export function ItemsTable(props: ItemTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.notes ?? '',
         id: 'item.notes',
-        filterVariant: COLUMN_FILTER_VARIANTS['string'],
-        filterFn: COLUMN_FILTER_FUNCTIONS['string'],
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: [
-          ...COLUMN_FILTER_MODE_OPTIONS['string'],
+          ...COLUMN_FILTER_MODE_OPTIONS.string,
           ...OPTIONAL_FILTER_MODE_OPTIONS,
         ],
         size: 250,
@@ -355,16 +355,12 @@ export function ItemsTable(props: ItemTableProps) {
           COLUMN_FILTER_FUNCTIONS[
             property.type as 'string' | 'boolean' | 'number' | 'null'
           ],
-        columnFilterModeOptions: !property.mandatory
-          ? [
-              ...COLUMN_FILTER_MODE_OPTIONS[
-                property.type as 'string' | 'boolean' | 'number' | 'null'
-              ],
-              ...OPTIONAL_FILTER_MODE_OPTIONS,
-            ]
-          : COLUMN_FILTER_MODE_OPTIONS[
-              property.type as 'string' | 'boolean' | 'number' | 'null'
-            ],
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS[
+            property.type as 'string' | 'boolean' | 'number' | 'null'
+          ],
+          ...(property.mandatory ? [] : OPTIONAL_FILTER_MODE_OPTIONS),
+        ],
         enableColumnFilterModes:
           (property.type as 'string' | 'boolean' | 'number' | 'null') ===
           'boolean'
