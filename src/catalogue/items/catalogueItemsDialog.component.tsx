@@ -370,6 +370,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             isDaysToReworkUpdated ||
             isDrawingNumberUpdated ||
             isDrawingLinkUpdated ||
+            isExpectedLifetimeDaysUpdated ||
             isModelNumberUpdated ||
             isCatalogueItemPropertiesUpdated ||
             isManufacturerUpdated ||
