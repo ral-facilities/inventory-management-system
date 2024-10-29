@@ -233,7 +233,7 @@ export interface AttachmentUploadInfo {
   fields: Record<string, string>;
 }
 export interface AttachmentPostMetadataResponse
-  extends AttachmentPostMetadata,
+  extends Required<AttachmentPostMetadata>,
     CreatedModifiedMixin {
   id: string;
   upload_info: AttachmentUploadInfo;

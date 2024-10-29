@@ -2137,19 +2137,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uppy/core@npm:^4.2.0":
-  version: 4.2.0
-  resolution: "@uppy/core@npm:4.2.0"
+"@uppy/core@npm:^4.2.2":
+  version: 4.2.2
+  resolution: "@uppy/core@npm:4.2.2"
   dependencies:
     "@transloadit/prettier-bytes": "npm:^0.3.4"
     "@uppy/store-default": "npm:^4.1.0"
-    "@uppy/utils": "npm:^6.0.2"
+    "@uppy/utils": "npm:^6.0.3"
     lodash: "npm:^4.17.21"
     mime-match: "npm:^1.0.2"
     namespace-emitter: "npm:^2.0.1"
     nanoid: "npm:^5.0.0"
     preact: "npm:^10.5.13"
-  checksum: 10c0/c471a6085e251daa6220b1fde26c3cdbc1184b920f26b3d1be825f750e666452637df6e0fe31d451aef5d395be296a72ec2d587bed7c5aaabc0d1bd0242f2b78
+  checksum: 10c0/22ba72603f2e6444c5a86261b0ddb60df4f640e7abe69d7281bb9153fa15c20e6ddbb225899e38b91c48cd54709454422181090bfbd956918c869efbdb30b0f4
   languageName: node
   linkType: hard
 
@@ -5419,7 +5419,7 @@ __metadata:
     "@types/react-router-dom": "npm:5.3.3"
     "@types/uuid": "npm:^10.0.0"
     "@uppy/aws-s3": "npm:^4.1.0"
-    "@uppy/core": "npm:^4.2.0"
+    "@uppy/core": "npm:^4.2.2"
     "@uppy/dashboard": "npm:^4.1.0"
     "@uppy/drag-drop": "npm:^4.0.2"
     "@uppy/file-input": "npm:^4.0.1"

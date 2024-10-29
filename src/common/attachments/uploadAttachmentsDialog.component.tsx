@@ -1,17 +1,10 @@
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  useTheme,
-} from '@mui/material';
-import AwsS3, { AwsBody } from '@uppy/aws-s3';
-import Uppy, { Meta, UppyFile } from '@uppy/core';
+import { useTheme } from '@mui/material';
+import AwsS3 from '@uppy/aws-s3';
+import Uppy, { Body, Meta, UppyFile } from '@uppy/core';
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 import ProgressBar from '@uppy/progress-bar';
-import { Dashboard } from '@uppy/react';
+import { DashboardModal } from '@uppy/react';
 import React from 'react';
 import { usePostAttachmentMetadata } from '../../api/attachments';
 
@@ -28,11 +21,9 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
   const { open, onClose, entityId } = props;
   const theme = useTheme();
 
-  const [isUploading, setIsUploading] = React.useState(false);
-
   const { mutateAsync: postAttachmentMetadata } = usePostAttachmentMetadata();
-  const [uppy] = React.useState<Uppy<Meta, AwsBody>>(
-    new Uppy<Meta, AwsBody>({
+  const [uppy] = React.useState<Uppy<Meta, Body>>(
+    new Uppy<Meta, Body>({
       autoProceed: false,
       restrictions: {
         maxFileSize: MAX_FILE_SIZE_B,
@@ -76,7 +67,7 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
   >({});
 
   const updateFileMetadata = React.useCallback(
-    (file?: UppyFile<Meta, AwsBody>, deleteMetadata?: boolean) => {
+    (file?: UppyFile<Meta, Body>, deleteMetadata?: boolean) => {
       const id = fileMetadataMap[file?.id ?? ''];
       if (id) {
         if (deleteMetadata) {
@@ -89,9 +80,6 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
           Object.entries(fileMetadataMap).filter(([key]) => key !== file?.id)
         );
         setFileMetadataMap(newMap);
-        if (Object.values(newMap).length === 0) {
-          setIsUploading(false);
-        }
       }
     },
     [fileMetadataMap]
@@ -100,61 +88,44 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
   const handleClose = React.useCallback(() => {
     onClose();
     setFileMetadataMap({});
-    setIsUploading(false);
-    uppy.clear();
+    uppy.cancelAll();
   }, [onClose, uppy]);
 
   // Track the start and completion of uploads
-  uppy.on('upload', () => setIsUploading(true));
-  uppy.on('complete', () => setIsUploading(false));
   uppy.on('upload-error', (file) => updateFileMetadata(file, true));
   uppy.on('file-removed', (file) => updateFileMetadata(file, true));
-  uppy.on('cancel-all', () => setIsUploading(false));
   uppy.on('upload-success', (file) => updateFileMetadata(file));
 
   return (
-    <Dialog open={open} maxWidth="md" fullWidth>
-      <DialogTitle>Upload Attachments</DialogTitle>
-      <DialogContent sx={{ display: 'flex', justifyContent: 'center' }}>
-        {uppy && (
-          <Dashboard
-            uppy={uppy}
-            note={`Files cannot be larger than ${MAX_FILE_SIZE_MB}MB`}
-            proudlyDisplayPoweredByUppy={false}
-            doneButtonHandler={handleClose}
-            theme={theme.palette.mode}
-            metaFields={[
-              {
-                id: 'name',
-                name: 'File name',
-                placeholder: 'Enter file name',
-              },
-              {
-                id: 'title',
-                name: 'Title',
-                placeholder: 'Enter file title',
-              },
+    <DashboardModal
+      open={open}
+      onRequestClose={handleClose}
+      closeModalOnClickOutside={false}
+      animateOpenClose={false}
+      uppy={uppy}
+      note={`Files cannot be larger than ${MAX_FILE_SIZE_MB}MB. Only supported attachments are allowed.`}
+      proudlyDisplayPoweredByUppy={false}
+      theme={theme.palette.mode}
+      doneButtonHandler={handleClose}
+      metaFields={[
+        {
+          id: 'name',
+          name: 'File name',
+          placeholder: 'Enter file name',
+        },
+        {
+          id: 'title',
+          name: 'Title',
+          placeholder: 'Enter file title',
+        },
 
-              {
-                id: 'description',
-                name: 'Description',
-                placeholder: 'Enter file description',
-              },
-            ]}
-          />
-        )}
-      </DialogContent>
-      <DialogActions>
-        <Button
-          sx={{ width: '100%', mx: 1 }}
-          onClick={handleClose}
-          disabled={isUploading}
-          color="secondary"
-        >
-          Close
-        </Button>
-      </DialogActions>
-    </Dialog>
+        {
+          id: 'description',
+          name: 'Description',
+          placeholder: 'Enter file description',
+        },
+      ]}
+    />
   );
 };
 

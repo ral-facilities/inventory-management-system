@@ -7,6 +7,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import UploadAttachmentsDialog from './attachments/uploadAttachmentsDialog.component';
+import { StyledUppyBox } from './uppy.utils';
 
 export interface ActionMenuProps {
   ariaLabelPrefix: string;
@@ -114,13 +115,15 @@ function ActionMenu(props: ActionMenuProps) {
         </Menu>
       </Grid>
       {editMenuItem.dialog}
-      {uploadAttachmentsEntityId && (
-        <UploadAttachmentsDialog
-          open={openUploadAttachmentsDialog}
-          onClose={() => setOpenUploadAttachmentsDialog(false)}
-          entityId={uploadAttachmentsEntityId}
-        />
-      )}
+      <StyledUppyBox>
+        {uploadAttachmentsEntityId && (
+          <UploadAttachmentsDialog
+            open={openUploadAttachmentsDialog}
+            onClose={() => setOpenUploadAttachmentsDialog(false)}
+            entityId={uploadAttachmentsEntityId}
+          />
+        )}
+      </StyledUppyBox>
     </Grid>
   );
 }

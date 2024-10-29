@@ -349,10 +349,7 @@ describe('Items', () => {
 
     cy.findByLabelText('Warranty end date').type('12/02/4000');
     cy.findByLabelText('Delivered date').type('12/02/4000');
-    cy.findAllByText(
-      'Date cannot be later than',
-      {exact: false}
-    ).should(
+    cy.findAllByText('Date cannot be later than', { exact: false }).should(
       'have.length',
       2
     );
@@ -362,10 +359,9 @@ describe('Items', () => {
 
     cy.findByLabelText('Warranty end date').type('12/02/2000');
     cy.findByLabelText('Delivered date').type('12/02/2000');
-    cy.findByText(
-      'Date cannot be later than',
-      {exact: false}
-    ).should('not.exist');
+    cy.findByText('Date cannot be later than', { exact: false }).should(
+      'not.exist'
+    );
     cy.findByText('Date format: dd/MM/yyyy').should('not.exist');
 
     cy.findByRole('button', { name: 'Next' }).click();
@@ -442,7 +438,9 @@ describe('Items', () => {
       }).click();
       cy.findByText('Upload Attachments').click();
 
-      cy.findByText(/files cannot be larger than/i).should('exist');
+      cy.findAllByText('Files cannot be larger than', { exact: false }).should(
+        'exist'
+      );
       cy.get('.uppy-Dashboard-input').as('fileInput');
 
       cy.get('@fileInput')
@@ -482,9 +480,21 @@ describe('Items', () => {
       }).should(async (postRequests) => {
         expect(postRequests.length).eq(2);
       });
+      cy.findByText('Complete').should('exist');
     });
 
     it('errors when file is removed mid upload', () => {
+      cy.window().its('msw').should('not.equal', undefined);
+      cy.window().then((window) => {
+        const { worker, http } = window.msw;
+
+        worker.use(
+          http.post('/object-storage', async () => {
+            await delay(500);
+            return HttpResponse.json({}, { status: 200 });
+          })
+        );
+      });
       cy.findByText('5YUQDDjKpz2z').click();
       cy.findByText(
         'High-resolution cameras for beam characterization. 1'
@@ -494,7 +504,9 @@ describe('Items', () => {
       }).click();
       cy.findByText('Upload Attachments').click();
 
-      cy.findByText(/files cannot be larger than/i).should('exist');
+      cy.findAllByText('Files cannot be larger than', { exact: false }).should(
+        'exist'
+      );
       cy.get('.uppy-Dashboard-input').as('fileInput');
 
       cy.get('@fileInput')
@@ -540,7 +552,7 @@ describe('Items', () => {
         worker.use(
           http.post('/object-storage', async () => {
             await delay(200);
-            return HttpResponse.json({}, { status: 400 });
+            return HttpResponse.error();
           })
         );
       });
@@ -553,7 +565,9 @@ describe('Items', () => {
       }).click();
       cy.findByText('Upload Attachments').click();
 
-      cy.findByText(/files cannot be larger than/i).should('exist');
+      cy.findAllByText('Files cannot be larger than', { exact: false }).should(
+        'exist'
+      );
       cy.get('.uppy-Dashboard-input').as('fileInput');
 
       cy.get('@fileInput')
@@ -585,6 +599,7 @@ describe('Items', () => {
       });
 
       cy.findByLabelText('Show error details').should('exist');
+      cy.findByText('Upload failed').should('exist');
     });
   });
 

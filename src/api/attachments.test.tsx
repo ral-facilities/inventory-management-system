@@ -32,7 +32,7 @@ describe('attachments api functions', () => {
         id: '1',
         ...mockDataPost,
         upload_info: {
-          url: '/object-storage',
+          url: 'http://localhost:3000/object-storage',
           fields: {
             'Content-Type': 'multipart/form-data',
             key: 'attachments/test',
