@@ -112,11 +112,14 @@ describe('Upload attachment dialog', () => {
       },
       { timeout: 10000 }
     );
+
+    new Promise((resolve) => setTimeout(resolve, 200));
+
     await waitFor(
       () => {
         expect(screen.getByText('Complete')).toBeInTheDocument();
       },
-      { timeout: 15000 }
+      { timeout: 10000 }
     );
   }, 30000);
 
