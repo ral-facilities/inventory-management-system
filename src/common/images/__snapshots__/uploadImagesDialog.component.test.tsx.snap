@@ -102,7 +102,7 @@ exports[`Upload image dialog > renders dialog correctly 1`] = `
                   <div
                     class="uppy-Dashboard-note"
                   >
-                    Files cannot be larger than 500MB. Only images are allowed.
+                    Files cannot be larger than 50MB. Only images are allowed.
                   </div>
                 </div>
               </div>

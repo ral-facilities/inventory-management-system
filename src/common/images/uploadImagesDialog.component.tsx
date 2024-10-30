@@ -11,7 +11,7 @@ import React from 'react';
 import { settings } from '../../settings';
 
 // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000, so here the former is expected despite them really being GiB, MiB and KiB.
-const MAX_FILE_SIZE_MB = 500;
+const MAX_FILE_SIZE_MB = 50;
 const MAX_FILE_SIZE_B = MAX_FILE_SIZE_MB * 1024 * 1024;
 
 export interface UploadImagesDialogProps {
