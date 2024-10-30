@@ -232,7 +232,7 @@ export interface AttachmentUploadInfo {
   url: string;
   fields: Record<string, string>;
 }
-export interface AttachmentMetadataPostResponse
+export interface AttachmentPostMetadataResponse
   extends Required<AttachmentPostMetadata>,
     CreatedModifiedMixin {
   id: string;

@@ -32,13 +32,13 @@ describe('attachments api functions', () => {
         id: '1',
         ...mockDataPost,
         upload_info: {
-          url: '/object-storage',
+          url: 'http://localhost:3000/object-storage',
           fields: {
             'Content-Type': 'multipart/form-data',
             key: 'attachments/test',
             AWSAccessKeyId: 'root',
-            policy: 'policy test ',
-            signature: 'signature test',
+            policy: 'policy-test',
+            signature: 'signature-test',
           },
         },
         modified_time: '2024-01-02T13:10:10.000+00:00',

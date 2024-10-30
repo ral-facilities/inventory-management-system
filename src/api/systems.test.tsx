@@ -227,7 +227,7 @@ describe('System api functions', () => {
       result.current.mutate('65328f34a40ff5301575a4e9');
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
 
-      expect(result.current.data).toEqual({ status: 204 });
+      expect(result.current.data).toEqual('');
     });
   });
 

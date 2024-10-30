@@ -1,5 +1,6 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import 'blob-polyfill';
 import { act } from 'react';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 
@@ -58,7 +59,7 @@ describe('Upload attachment dialog', () => {
   it('calls onclose when close button is clicked', async () => {
     createView();
 
-    await user.click(screen.getByRole('button', { name: 'Close' }));
+    await user.click(screen.getByLabelText('Close Modal'));
 
     expect(onClose).toHaveBeenCalled();
   });
@@ -102,12 +103,24 @@ describe('Upload attachment dialog', () => {
       entity_id: '1',
       file_name: 'test1.txt',
     });
+    await waitFor(
+      () => {
+        expect(xhrPostSpy).toHaveBeenCalledWith(
+          'POST',
+          'http://localhost:3000/object-storage',
+          true
+        );
+      },
+      { timeout: 10000 }
+    );
 
-    expect(xhrPostSpy).toHaveBeenCalledWith('POST', '/object-storage', true);
-    await waitFor(() => {
-      expect(screen.queryByText('Upload failed')).not.toBeInTheDocument();
-    });
-  });
+    await waitFor(
+      () => {
+        expect(screen.getByText('Complete')).toBeInTheDocument();
+      },
+      { timeout: 10000 }
+    );
+  }, 30000);
 
   // Works locally but doesn't work on CI
 
@@ -150,27 +163,36 @@ describe('Upload attachment dialog', () => {
 
     await user.click(await screen.findByText('Upload 1 file'));
 
-    await waitFor(() => {
-      expect(screen.getByRole('button', { name: 'Close' })).toBeDisabled();
-    });
-
     // Assert axios post was called
     expect(axiosPostSpy).toHaveBeenCalledWith('/attachments', {
       entity_id: '1',
       file_name: 'uploadError.txt',
     });
 
-    expect(xhrPostSpy).toHaveBeenCalledWith('POST', '/object-storage', true);
-    await waitFor(() => {
-      expect(screen.getByRole('button', { name: 'Close' })).not.toBeDisabled();
-    });
-    expect(await screen.findByText('Upload failed')).toBeInTheDocument();
+    expect(xhrPostSpy).toHaveBeenCalledWith(
+      'POST',
+      'http://localhost:3000/object-storage',
+      true
+    );
+
+    await waitFor(
+      () => {
+        expect(screen.getByText('Upload failed')).toBeInTheDocument();
+      },
+      { timeout: 10000 }
+    );
     expect(
       await screen.findByLabelText('Show error details')
     ).toBeInTheDocument();
   }, 10000);
 
   it('errors when file is removed mid upload', async () => {
+    server.use(
+      http.post('/object-storage', async () => {
+        await delay(500);
+        return HttpResponse.json({}, { status: 200 });
+      })
+    );
     // Render the component
 
     createView();
@@ -210,7 +232,11 @@ describe('Upload attachment dialog', () => {
       file_name: 'removeError.txt',
     });
 
-    expect(xhrPostSpy).toHaveBeenCalledWith('POST', '/object-storage', true);
+    expect(xhrPostSpy).toHaveBeenCalledWith(
+      'POST',
+      'http://localhost:3000/object-storage',
+      true
+    );
 
     await user.click(
       await screen.findByRole('button', { name: 'Remove file' })

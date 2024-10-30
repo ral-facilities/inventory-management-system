@@ -1,4 +1,4 @@
-import { DefaultBodyType, http, HttpResponse, PathParams } from 'msw';
+import { DefaultBodyType, delay, http, HttpResponse, PathParams } from 'msw';
 import {
   AttachmentPostMetadata,
   AttachmentPostMetadataResponse,
@@ -198,7 +198,7 @@ export const handlers = [
           { status: 409 }
         );
       } else {
-        return HttpResponse.json({ status: 204 });
+        return HttpResponse.json(undefined, { status: 204 });
       }
     } else {
       return HttpResponse.json({ detail: '' }, { status: 400 });
@@ -409,7 +409,7 @@ export const handlers = [
           { status: 409 }
         );
       } else {
-        return HttpResponse.json({ status: 204 });
+        return HttpResponse.json(undefined, { status: 204 });
       }
     } else {
       return HttpResponse.json({ detail: '' }, { status: 400 });
@@ -538,7 +538,7 @@ export const handlers = [
           { status: 409 }
         );
       } else {
-        return HttpResponse.json({ status: 204 });
+        return HttpResponse.json(undefined, { status: 204 });
       }
     } else {
       return HttpResponse.json({ detail: '' }, { status: 400 });
@@ -669,7 +669,7 @@ export const handlers = [
           { status: 409 }
         );
       } else {
-        return HttpResponse.json({ status: 204 });
+        return HttpResponse.json(undefined, { status: 204 });
       }
     } else {
       return HttpResponse.json({ detail: '' }, { status: 404 });
@@ -808,7 +808,7 @@ export const handlers = [
         { status: 500 }
       );
 
-    return HttpResponse.json({ status: 204 });
+    return HttpResponse.json(undefined, { status: 204 });
   }),
 
   // ------------------------------------ UNITS ------------------------------------------------
@@ -866,7 +866,7 @@ export const handlers = [
           { status: 409 }
         );
       } else {
-        return HttpResponse.json({ status: 204 });
+        return HttpResponse.json(undefined, { status: 204 });
       }
     } else {
       return HttpResponse.json({ detail: '' }, { status: 400 });
@@ -928,14 +928,14 @@ export const handlers = [
           { status: 409 }
         );
       } else {
-        return HttpResponse.json({ status: 204 });
+        return HttpResponse.json(undefined, { status: 204 });
       }
     } else {
       return HttpResponse.json({ detail: '' }, { status: 400 });
     }
   }),
 
-  // ------------------------------------ IMAGES ------------------------------------------------
+  // ------------------------------------ ATTACHMENTS ------------------------------------------------
 
   http.post<
     PathParams,
@@ -945,24 +945,22 @@ export const handlers = [
     const body = (await request.json()) as AttachmentPostMetadata;
 
     const upload_info: AttachmentUploadInfo = {
-      url: `/object-storage`,
+      url: `http://localhost:3000/object-storage`,
       fields: {
         'Content-Type': 'multipart/form-data',
         key: `attachments/test`,
         AWSAccessKeyId: 'root',
-        policy: 'policy test ',
-        signature: 'signature test',
+        policy: 'policy-test',
+        signature: 'signature-test',
       },
     };
 
     return HttpResponse.json(
       {
         id: '1',
-        ...{
-          ...body,
-          title: body.title || '',
-          description: body.description || '',
-        },
+        ...body,
+        title: body.title || '',
+        description: body.description || '',
         upload_info: upload_info,
         modified_time: '2024-01-02T13:10:10.000+00:00',
         created_time: '2024-01-01T12:00:00.000+00:00',
@@ -974,15 +972,8 @@ export const handlers = [
   // ------------------------------------ OBJECT STORAGE ------------------------------------------------
 
   http.post('/object-storage', async () => {
-    const totalChunks = 10; // Number of progress updates
-    const delay = 1000; // Delay in ms for each progress update
-
-    // Simulate progress updates
-    for (let i = 0; i < totalChunks; i++) {
-      await new Promise((resolve) => setTimeout(resolve, delay));
-    }
-
-    return HttpResponse.json({ status: 204 });
+    await delay(200);
+    return HttpResponse.json(undefined, { status: 200 });
   }),
 
   // ------------------------------------ IMAGES ------------------------------------------------

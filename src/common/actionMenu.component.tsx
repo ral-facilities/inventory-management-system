@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import React from 'react';
 import UploadAttachmentsDialog from './attachments/uploadAttachmentsDialog.component';
 import UploadImagesDialog from './images/uploadImagesDialog.component';
+import { StyledUppyBox } from './uppy.utils';
 
 export interface ActionMenuProps {
   ariaLabelPrefix: string;
@@ -131,20 +132,22 @@ function ActionMenu(props: ActionMenuProps) {
         </Menu>
       </Grid>
       {editMenuItem.dialog}
-      {uploadAttachmentsEntityId && (
-        <UploadAttachmentsDialog
-          open={openUploadAttachmentsDialog}
-          onClose={() => setOpenUploadAttachmentsDialog(false)}
-          entityId={uploadAttachmentsEntityId}
-        />
-      )}
-      {uploadImagesEntityId && (
-        <UploadImagesDialog
-          open={openUploadImagesDialog}
-          onClose={() => setOpenUploadImagesDialog(false)}
-          entityId={uploadImagesEntityId}
-        />
-      )}
+      <StyledUppyBox>
+        {uploadAttachmentsEntityId && (
+          <UploadAttachmentsDialog
+            open={openUploadAttachmentsDialog}
+            onClose={() => setOpenUploadAttachmentsDialog(false)}
+            entityId={uploadAttachmentsEntityId}
+          />
+        )}
+        {uploadImagesEntityId && (
+          <UploadImagesDialog
+            open={openUploadImagesDialog}
+            onClose={() => setOpenUploadImagesDialog(false)}
+            entityId={uploadImagesEntityId}
+          />
+        )}
+      </StyledUppyBox>
     </Grid>
   );
 }
