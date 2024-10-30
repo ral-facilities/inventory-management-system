@@ -618,11 +618,13 @@ describe('Items', () => {
       }).click();
       cy.findByText('Upload Images').click();
 
-      cy.findByText(/files cannot be larger than/i).should('exist');
+      cy.findAllByText('Files cannot be larger than', { exact: false }).should(
+        'exist'
+      );
       cy.get('.uppy-Dashboard-input').as('fileInput');
 
       cy.get('@fileInput')
-        .first()
+        .last()
         .selectFile(
           [
             'cypress/fixtures/images/logo1.png',
@@ -639,6 +641,54 @@ describe('Items', () => {
       }).should(async (postRequests: Request[]) => {
         expect(postRequests.length).eq(2);
       });
+      cy.findByText('Complete').should('exist');
+    });
+
+    it('displays error if post is unsuccessfully', () => {
+      cy.window().its('msw').should('not.equal', undefined);
+      cy.window().then((window) => {
+        const { worker, http } = window.msw;
+
+        worker.use(
+          http.post('/images', async () => {
+            return HttpResponse.error();
+          })
+        );
+      });
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+      cy.findByRole('button', {
+        name: 'items landing page actions menu',
+      }).click();
+      cy.findByText('Upload Images').click();
+
+      cy.findAllByText('Files cannot be larger than', { exact: false }).should(
+        'exist'
+      );
+      cy.get('.uppy-Dashboard-input').as('fileInput');
+
+      cy.get('@fileInput')
+        .last()
+        .selectFile(
+          [
+            'cypress/fixtures/images/logo1.png',
+            'cypress/fixtures/images/logo2.png',
+          ],
+          { force: true }
+        );
+      cy.startSnoopingBrowserMockedRequest();
+      cy.findByText('Upload 2 files').click();
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: '/images',
+      }).should(async (postRequests: Request[]) => {
+        expect(postRequests.length).eq(2);
+      });
+
+      cy.findByText('Upload failed').should('exist');
     });
   });
 

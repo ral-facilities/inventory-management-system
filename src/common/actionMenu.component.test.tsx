@@ -131,7 +131,7 @@ describe('ActionMenu Component', () => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
     });
 
-    const closeButton = screen.getByRole('button', { name: 'Close' });
+    const closeButton = screen.getByRole('button', { name: 'Close Modal' });
     await user.click(closeButton);
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();

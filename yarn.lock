@@ -2199,6 +2199,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@uppy/image-editor@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "@uppy/image-editor@npm:3.1.0"
+  dependencies:
+    "@uppy/utils": "npm:^6.0.2"
+    cropperjs: "npm:1.5.7"
+    preact: "npm:^10.5.13"
+  peerDependencies:
+    "@uppy/core": ^4.2.0
+  checksum: 10c0/b88c50813bdd7daf8f4e4cabb7f98e0ee66447559383c3234b3b57b9faa4b6ee6e37b5ebefb3a2d850075e29bc3a69be4a437d23b88039c37d5b01998c0fdeb4
+  languageName: node
+  linkType: hard
+
 "@uppy/informer@npm:^4.1.0":
   version: 4.1.0
   resolution: "@uppy/informer@npm:4.1.0"
@@ -3479,6 +3492,13 @@ __metadata:
     path-type: "npm:^4.0.0"
     yaml: "npm:^1.10.0"
   checksum: 10c0/b923ff6af581638128e5f074a5450ba12c0300b71302398ea38dbeabd33bbcaa0245ca9adbedfcf284a07da50f99ede5658c80bb3e39e2ce770a99d28a21ef03
+  languageName: node
+  linkType: hard
+
+"cropperjs@npm:1.5.7":
+  version: 1.5.7
+  resolution: "cropperjs@npm:1.5.7"
+  checksum: 10c0/0674042b395397f17e8ffd5dcb639663bf00ff4dcbb896329033e7daa255f22ea5a61548460be9cf1c21e44b874d01d8464cde92bb7a9565670a24694b7468f1
   languageName: node
   linkType: hard
 
@@ -5442,6 +5462,7 @@ __metadata:
     "@uppy/dashboard": "npm:^4.1.0"
     "@uppy/drag-drop": "npm:^4.0.2"
     "@uppy/file-input": "npm:^4.0.1"
+    "@uppy/image-editor": "npm:^3.1.0"
     "@uppy/progress-bar": "npm:^4.0.0"
     "@uppy/react": "npm:^4.0.2"
     "@uppy/xhr-upload": "npm:^4.2.0"
