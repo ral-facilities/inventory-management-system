@@ -1,12 +1,11 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import { act } from 'react';
-import { renderComponentWithRouterProvider } from '../../testUtils';
-
 import { delay, http, HttpResponse } from 'msw';
+import { act } from 'react';
 import { MockInstance } from 'vitest';
 import { storageApi } from '../../api/api';
 import { server } from '../../mocks/server';
+import { renderComponentWithRouterProvider } from '../../testUtils';
 import UploadAttachmentsDialog, {
   UploadAttachmentsDialogProps,
 } from './uploadAttachmentsDialog.component';
@@ -112,8 +111,6 @@ describe('Upload attachment dialog', () => {
       },
       { timeout: 10000 }
     );
-
-    new Promise((resolve) => setTimeout(resolve, 200));
 
     await waitFor(
       () => {

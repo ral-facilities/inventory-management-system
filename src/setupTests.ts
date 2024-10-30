@@ -3,6 +3,9 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
+// Needed for proper FormData handling in MSW when running tests in Node environment.
+// See: https://github.com/mswjs/msw/issues/2166
+import 'blob-polyfill';
 import { server } from './mocks/server';
 
 // Establish API mocking before all tests.
