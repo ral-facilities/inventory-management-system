@@ -491,7 +491,7 @@ describe('Items', () => {
         worker.use(
           http.post('/object-storage', async () => {
             await delay(500);
-            return HttpResponse.json({}, { status: 200 });
+            return new HttpResponse(undefined, { status: 200 });
           })
         );
       });
@@ -551,7 +551,6 @@ describe('Items', () => {
 
         worker.use(
           http.post('/object-storage', async () => {
-            await delay(200);
             return HttpResponse.error();
           })
         );

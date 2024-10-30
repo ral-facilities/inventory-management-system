@@ -7,6 +7,7 @@ import ProgressBar from '@uppy/progress-bar';
 import { DashboardModal } from '@uppy/react';
 import React from 'react';
 import { usePostAttachmentMetadata } from '../../api/attachments';
+import { getNonEmptyTrimmedString } from '../../utils';
 
 // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000, so here the former is expected despite them really being GiB, MiB and KiB.
 const MAX_FILE_SIZE_MB = 100;
@@ -22,6 +23,10 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
   const theme = useTheme();
 
   const { mutateAsync: postAttachmentMetadata } = usePostAttachmentMetadata();
+  const [fileMetadataMap, setFileMetadataMap] = React.useState<
+    Record<string, string>
+  >({});
+
   const [uppy] = React.useState<Uppy<Meta, Body>>(
     new Uppy<Meta, Body>({
       autoProceed: false,
@@ -36,15 +41,8 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
           const response = await postAttachmentMetadata({
             entity_id: entityId,
             file_name: (file.meta.name as string) || '',
-            title:
-              typeof file.meta.title === 'string' && file.meta.title.trim()
-                ? (file.meta.title as string)
-                : undefined,
-            description:
-              typeof file.meta.description === 'string' &&
-              file.meta.description.trim()
-                ? file.meta.description
-                : undefined,
+            title: getNonEmptyTrimmedString(file.meta.title),
+            description: getNonEmptyTrimmedString(file.meta.description),
           });
 
           setFileMetadataMap((prev) => ({
@@ -61,10 +59,6 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
       })
       .use(ProgressBar)
   );
-
-  const [fileMetadataMap, setFileMetadataMap] = React.useState<
-    Record<string, string>
-  >({});
 
   const updateFileMetadata = React.useCallback(
     (file?: UppyFile<Meta, Body>, deleteMetadata?: boolean) => {
