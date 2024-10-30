@@ -101,31 +101,19 @@ describe('Upload attachment dialog', () => {
       entity_id: '1',
       file_name: 'test1.txt',
     });
-    await waitFor(
-      () => {
-        expect(xhrPostSpy).toHaveBeenCalledWith(
-          'POST',
-          'http://localhost:3000/object-storage',
-          true
-        );
-      },
-      { timeout: 10000 }
+
+    expect(xhrPostSpy).toHaveBeenCalledWith(
+      'POST',
+      'http://localhost:3000/object-storage',
+      true
     );
 
-    await waitFor(
-      () => {
-        expect(screen.getByText('Complete')).toBeInTheDocument();
-      },
-      { timeout: 10000 }
-    );
-  }, 30000);
-
-  // Works locally but doesn't work on CI
+    expect(await screen.findByText('Complete')).toBeInTheDocument();
+  });
 
   it('errors when presigned url fails', async () => {
     server.use(
       http.post('/object-storage', async () => {
-        await delay(200);
         return HttpResponse.error();
       })
     );
@@ -173,22 +161,18 @@ describe('Upload attachment dialog', () => {
       true
     );
 
-    await waitFor(
-      () => {
-        expect(screen.getByText('Upload failed')).toBeInTheDocument();
-      },
-      { timeout: 10000 }
-    );
+    expect(await screen.findByText('Upload failed')).toBeInTheDocument();
+
     expect(
       await screen.findByLabelText('Show error details')
     ).toBeInTheDocument();
-  }, 10000);
+  });
 
-  it('errors when file is removed mid upload', async () => {
+  it('should send a DELETE request for the attachment document if a file is removed during upload', async () => {
     server.use(
       http.post('/object-storage', async () => {
         await delay(500);
-        return HttpResponse.json({}, { status: 200 });
+        return new HttpResponse(undefined, { status: 200 });
       })
     );
     // Render the component
@@ -239,6 +223,8 @@ describe('Upload attachment dialog', () => {
     await user.click(
       await screen.findByRole('button', { name: 'Remove file' })
     );
+
+    //TODO: Assert axios delete request was called
 
     expect(screen.queryByText('Upload 1 file')).not.toBeInTheDocument();
   });

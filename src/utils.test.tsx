@@ -1,6 +1,8 @@
 import { Link } from '@mui/material';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { MRT_ColumnDef } from 'material-react-table';
+import { UsageStatus } from './api/api.types';
 import { renderComponentWithRouterProvider } from './testUtils';
 import {
   OverflowTip,
@@ -9,11 +11,10 @@ import {
   generateUniqueName,
   generateUniqueNameUsingCode,
   getInitialColumnFilterFnState,
+  getNonEmptyTrimmedString,
   sortDataList,
   trimStringValues,
 } from './utils';
-import { MRT_ColumnDef } from 'material-react-table';
-import { UsageStatus } from './api/api.types';
 
 describe('Utility functions', () => {
   afterEach(() => {
@@ -362,5 +363,25 @@ describe('checkForDuplicates', () => {
 
     const result = checkForDuplicates({ data, idName: 'id', field: 'name' });
     expect(result).toEqual(['3', '1', '4', '2']);
+  });
+});
+
+describe('getNonEmptyTrimmedString', () => {
+  it('should return the string for non-empty strings', () => {
+    expect(getNonEmptyTrimmedString('Hello')).toBe('Hello');
+    expect(getNonEmptyTrimmedString('   Hello   ')).toBe('Hello');
+  });
+
+  it('should return undefined for empty strings', () => {
+    expect(getNonEmptyTrimmedString('')).toBeUndefined();
+    expect(getNonEmptyTrimmedString('   ')).toBeUndefined();
+  });
+
+  it('should return undefined for non-string values', () => {
+    expect(getNonEmptyTrimmedString(123)).toBeUndefined();
+    expect(getNonEmptyTrimmedString(null)).toBeUndefined();
+    expect(getNonEmptyTrimmedString(undefined)).toBeUndefined();
+    expect(getNonEmptyTrimmedString({})).toBeUndefined();
+    expect(getNonEmptyTrimmedString([])).toBeUndefined();
   });
 });
