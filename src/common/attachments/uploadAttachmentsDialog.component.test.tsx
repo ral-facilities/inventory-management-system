@@ -1,5 +1,6 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import 'blob-polyfill';
 import { act } from 'react';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 
@@ -112,8 +113,6 @@ describe('Upload attachment dialog', () => {
       },
       { timeout: 10000 }
     );
-
-    new Promise((resolve) => setTimeout(resolve, 200));
 
     await waitFor(
       () => {

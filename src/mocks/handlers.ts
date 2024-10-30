@@ -950,8 +950,8 @@ export const handlers = [
         'Content-Type': 'multipart/form-data',
         key: `attachments/test`,
         AWSAccessKeyId: 'root',
-        policy: 'policy test ',
-        signature: 'signature test',
+        policy: 'policy-test',
+        signature: 'signature-test',
       },
     };
 
@@ -972,7 +972,7 @@ export const handlers = [
   // ------------------------------------ OBJECT STORAGE ------------------------------------------------
 
   http.post('/object-storage', async () => {
-    delay(200);
-    return HttpResponse.json(undefined, { status: 204 });
+    await delay(200);
+    return HttpResponse.json(undefined, { status: 200 });
   }),
 ];
