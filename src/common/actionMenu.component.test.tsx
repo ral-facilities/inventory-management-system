@@ -118,7 +118,6 @@ describe('ActionMenu Component', () => {
   it('opens the upload images dialog', async () => {
     createView();
 
-    // Open the menu
     const actionButton = screen.getByLabelText(
       'catalogue items landing page actions menu'
     );
