@@ -94,13 +94,8 @@ describe('Upload image dialog', () => {
 
     expect(xhrPostSpy).toHaveBeenCalledWith('POST', '/images', true);
 
-    await waitFor(
-      () => {
-        expect(screen.getByText('Complete')).toBeInTheDocument();
-      },
-      { timeout: 10000 }
-    );
-  }, 20000);
+    expect(await screen.findByText('Complete')).toBeInTheDocument();
+  });
 
   it('displays error if post is unsuccessfully', async () => {
     server.use(
@@ -147,7 +142,7 @@ describe('Upload image dialog', () => {
       () => {
         expect(screen.getByText('Upload failed')).toBeInTheDocument();
       },
-      { timeout: 10000 }
+      { timeout: 5000 }
     );
   });
 });
