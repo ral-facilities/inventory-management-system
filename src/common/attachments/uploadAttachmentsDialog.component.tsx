@@ -7,7 +7,7 @@ import ProgressBar from '@uppy/progress-bar';
 import { DashboardModal } from '@uppy/react';
 import React from 'react';
 import { usePostAttachmentMetadata } from '../../api/attachments';
-import { getNonEmptyString } from '../../utils';
+import { getNonEmptyTrimmedString } from '../../utils';
 
 // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000, so here the former is expected despite them really being GiB, MiB and KiB.
 const MAX_FILE_SIZE_MB = 100;
@@ -41,8 +41,8 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
           const response = await postAttachmentMetadata({
             entity_id: entityId,
             file_name: (file.meta.name as string) || '',
-            title: getNonEmptyString(file.meta.title),
-            description: getNonEmptyString(file.meta.description),
+            title: getNonEmptyTrimmedString(file.meta.title),
+            description: getNonEmptyTrimmedString(file.meta.description),
           });
 
           setFileMetadataMap((prev) => ({

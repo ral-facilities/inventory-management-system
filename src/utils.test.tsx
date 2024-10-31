@@ -11,7 +11,7 @@ import {
   generateUniqueName,
   generateUniqueNameUsingCode,
   getInitialColumnFilterFnState,
-  getNonEmptyString,
+  getNonEmptyTrimmedString,
   sortDataList,
   trimStringValues,
 } from './utils';
@@ -366,22 +366,22 @@ describe('checkForDuplicates', () => {
   });
 });
 
-describe('getNonEmptyString', () => {
+describe('getNonEmptyTrimmedString', () => {
   it('should return the string for non-empty strings', () => {
-    expect(getNonEmptyString('Hello')).toBe('Hello');
-    expect(getNonEmptyString('   Hello   ')).toBe('Hello');
+    expect(getNonEmptyTrimmedString('Hello')).toBe('Hello');
+    expect(getNonEmptyTrimmedString('   Hello   ')).toBe('Hello');
   });
 
   it('should return undefined for empty strings', () => {
-    expect(getNonEmptyString('')).toBeUndefined();
-    expect(getNonEmptyString('   ')).toBeUndefined();
+    expect(getNonEmptyTrimmedString('')).toBeUndefined();
+    expect(getNonEmptyTrimmedString('   ')).toBeUndefined();
   });
 
   it('should return undefined for non-string values', () => {
-    expect(getNonEmptyString(123)).toBeUndefined();
-    expect(getNonEmptyString(null)).toBeUndefined();
-    expect(getNonEmptyString(undefined)).toBeUndefined();
-    expect(getNonEmptyString({})).toBeUndefined();
-    expect(getNonEmptyString([])).toBeUndefined();
+    expect(getNonEmptyTrimmedString(123)).toBeUndefined();
+    expect(getNonEmptyTrimmedString(null)).toBeUndefined();
+    expect(getNonEmptyTrimmedString(undefined)).toBeUndefined();
+    expect(getNonEmptyTrimmedString({})).toBeUndefined();
+    expect(getNonEmptyTrimmedString([])).toBeUndefined();
   });
 });
