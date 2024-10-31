@@ -9,6 +9,7 @@ import { DashboardModal } from '@uppy/react';
 import XHR from '@uppy/xhr-upload';
 import React from 'react';
 import { settings } from '../../settings';
+import { getNonEmptyTrimmedString } from '../../utils';
 
 // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000, so here the former is expected despite them really being GiB, MiB and KiB.
 const MAX_FILE_SIZE_MB = 50;
@@ -59,6 +60,32 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
       entity_id: entityId,
     });
   }, [entityId, uppy]);
+
+  uppy.on('dashboard:file-edit-complete', (file) => {
+    if (file) {
+      // Extract existing metadata
+      const { title, description, ...restMeta } = file.meta;
+
+      // Format title and description
+      const formattedTitle = getNonEmptyTrimmedString(title);
+      const formattedDescription = getNonEmptyTrimmedString(description);
+
+      // Prepare the updated metadata object
+      const updatedFileData = {
+        ...restMeta,
+        ...(formattedTitle && { title: formattedTitle }),
+        ...(formattedDescription && { description: formattedDescription }),
+      };
+
+      // Use patchFilesState to update the metadata
+      // Ensure you call the method properly
+      uppy.patchFilesState({
+        [file.id]: {
+          meta: updatedFileData,
+        },
+      });
+    }
+  });
 
   uppy.on('upload-error', (_file, _error, response) => {
     if (response?.body?.id) {

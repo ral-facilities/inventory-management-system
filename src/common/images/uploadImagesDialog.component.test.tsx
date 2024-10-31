@@ -58,7 +58,7 @@ describe('Upload image dialog', () => {
     expect(onClose).toHaveBeenCalled();
   });
 
-  it('posts an image successfully', async () => {
+  it('uploads an image with a title and description and verifies completion message', async () => {
     // Render the component
 
     createView();
@@ -89,6 +89,18 @@ describe('Upload image dialog', () => {
     await waitFor(() => {
       expect(screen.getByText('image.png')).toBeInTheDocument();
     });
+
+    await user.click(
+      await screen.findByRole('button', { name: 'Edit file image.png' })
+    );
+
+    expect(await screen.findByText('File name')).toBeInTheDocument();
+    const [_, title, description] = screen.getAllByRole('textbox');
+
+    await user.type(title, 'test');
+    await user.type(description, 'test');
+
+    await user.click(await screen.findByText('Save changes'));
 
     await user.click(await screen.findByText('Upload 1 file'));
 

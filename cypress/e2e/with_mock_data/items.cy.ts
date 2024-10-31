@@ -633,6 +633,16 @@ describe('Items', () => {
           ],
           { force: true }
         );
+
+      cy.findByRole('button', { name: 'Edit file logo1.png' }).click();
+
+      cy.findByText('File name').should('be.visible');
+
+      cy.findByPlaceholderText('Enter file title').type('test');
+      cy.findByPlaceholderText('Enter file description').type('test');
+
+      cy.findByText('Save changes').click();
+
       cy.startSnoopingBrowserMockedRequest();
       cy.findByText('Upload 2 files').click();
 
