@@ -433,14 +433,14 @@ export const MRT_Functions_Localisation: Record<string, string> = {
   filterArrIncludesNone: 'Excludes',
 };
 
-export type PropertyFiltersType = {
+export type ItemPropertyFiltersTypes = {
   boolean: 'select' | 'text' | 'range' | 'autocomplete';
   string: 'select' | 'text' | 'range';
   number: 'select' | 'text' | 'range';
   null: 'select' | 'text' | 'range';
 };
 
-export type ColumnFiltersType = PropertyFiltersType & {
+export type ColumnFiltersType = ItemPropertyFiltersTypes & {
   datetime: 'datetime-range' | 'datetime';
   date: 'date-range' | 'date';
 };
@@ -463,7 +463,7 @@ export const COLUMN_FILTER_FUNCTIONS: Record<string, MRT_FilterOption> = {
 };
 export const COLUMN_FILTER_MODE_OPTIONS: Record<
   string,
-  LiteralUnion<string & MRT_FilterOption, string>[]
+  LiteralUnion<string & MRT_FilterOption>[]
 > = {
   boolean: ['fuzzy'],
   date: ['between', 'betweenInclusive', 'equals', 'notEquals'],

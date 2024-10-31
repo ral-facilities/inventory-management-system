@@ -128,7 +128,7 @@ export function ItemsTable(props: ItemTableProps) {
           ...COLUMN_FILTER_MODE_OPTIONS.string,
           ...['betweenInclusive'],
         ],
-        size: 250,
+        size: 225,
         Cell: ({ row }) => (
           <MuiLink underline="hover" component={Link} to={row.original.item.id}>
             {row.original.item.serial_number ?? 'No serial number'}
@@ -176,7 +176,7 @@ export function ItemsTable(props: ItemTableProps) {
           ...COLUMN_FILTER_MODE_OPTIONS.string,
           ...OPTIONAL_FILTER_MODE_OPTIONS,
         ],
-        size: 250,
+        size: 225,
         GroupedCell: TableGroupedCell,
       },
       {
@@ -190,7 +190,7 @@ export function ItemsTable(props: ItemTableProps) {
           ...COLUMN_FILTER_MODE_OPTIONS.string,
           ...OPTIONAL_FILTER_MODE_OPTIONS,
         ],
-        size: 350,
+        size: 275,
         GroupedCell: TableGroupedCell,
       },
       {
@@ -264,7 +264,7 @@ export function ItemsTable(props: ItemTableProps) {
             Excludes
           </MenuItem>,
         ],
-        size: 250,
+        size: 350,
       },
       {
         header: 'System',
@@ -289,7 +289,7 @@ export function ItemsTable(props: ItemTableProps) {
             Excludes
           </MenuItem>,
         ],
-        size: 250,
+        size: 350,
         Cell: ({ row }) => (
           <MuiLink
             underline="hover"
@@ -313,7 +313,7 @@ export function ItemsTable(props: ItemTableProps) {
           ...COLUMN_FILTER_MODE_OPTIONS.string,
           ...OPTIONAL_FILTER_MODE_OPTIONS,
         ],
-        size: 250,
+        size: 200,
         enableGrouping: false,
       },
 
@@ -329,11 +329,8 @@ export function ItemsTable(props: ItemTableProps) {
             property.id
           );
           if (property.type === 'boolean') {
-            const booleanPropertyValue: boolean = propertyValue as boolean;
-            if (booleanPropertyValue === true) {
-              return 'Yes';
-            } else if (booleanPropertyValue === false) {
-              return 'No';
+            if (typeof propertyValue === 'boolean') {
+              return propertyValue ? 'Yes' : 'No';
             } else {
               return '';
             }

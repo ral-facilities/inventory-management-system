@@ -37,7 +37,7 @@ import { useGetCatalogueItems } from '../../api/catalogueItems';
 import { useGetManufacturerIds } from '../../api/manufacturers';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import {
-  PropertyFiltersType,
+  ItemPropertyFiltersTypes,
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
   TableGroupedCell,
@@ -222,7 +222,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   >('create');
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     const viewCatalogueItemProperties = parentInfo.properties ?? [];
-    const propertyFilters: PropertyFiltersType = {
+    const propertyFilters: ItemPropertyFiltersTypes = {
       boolean: 'autocomplete',
       string: 'text',
       number: 'range',

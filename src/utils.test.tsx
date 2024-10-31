@@ -321,20 +321,20 @@ describe('Utility functions', () => {
 
 describe('customFilterFunctions', () => {
   describe('arrIncludesNone', () => {
-    let person: MRT_RowData;
-    let filterExclude: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (row: MRT_RowData, id: string, filterValue: any) => boolean;
-    beforeAll(() => {
-      person = {
-        name: 'Dan',
-        age: 4,
-        status: 'unemployed',
-        getValue: (id: string) => {
-          return person[id as keyof MRT_RowData]; // Return the corresponding field from the object
-        },
-      };
-      filterExclude = customFilterFunctions['arrIncludesNone'];
-    });
+    const person: MRT_RowData = {
+      name: 'Dan',
+      age: 4,
+      status: 'unemployed',
+      getValue: (id: string) => {
+        return person[id as keyof MRT_RowData]; // Return the corresponding field from the object
+      },
+    };
+    const filterExclude: (
+      row: MRT_RowData,
+      id: string,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      filterValue: any
+    ) => boolean = customFilterFunctions['arrIncludesNone'];
     it('should correctly exclude record', () => {
       const result = filterExclude(person, 'status', ['unemployed']);
       expect(result).toBe(false);
