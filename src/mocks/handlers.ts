@@ -1,5 +1,8 @@
-import { DefaultBodyType, http, HttpResponse, PathParams } from 'msw';
+import { DefaultBodyType, delay, http, HttpResponse, PathParams } from 'msw';
 import {
+  AttachmentPostMetadata,
+  AttachmentPostMetadataResponse,
+  AttachmentUploadInfo,
   BreadcrumbsInfo,
   CatalogueCategory,
   CatalogueCategoryPatch,
@@ -195,7 +198,7 @@ export const handlers = [
           { status: 409 }
         );
       } else {
-        return HttpResponse.json({ status: 204 });
+        return HttpResponse.json(undefined, { status: 204 });
       }
     } else {
       return HttpResponse.json({ detail: '' }, { status: 400 });
@@ -406,7 +409,7 @@ export const handlers = [
           { status: 409 }
         );
       } else {
-        return HttpResponse.json({ status: 204 });
+        return HttpResponse.json(undefined, { status: 204 });
       }
     } else {
       return HttpResponse.json({ detail: '' }, { status: 400 });
@@ -535,7 +538,7 @@ export const handlers = [
           { status: 409 }
         );
       } else {
-        return HttpResponse.json({ status: 204 });
+        return HttpResponse.json(undefined, { status: 204 });
       }
     } else {
       return HttpResponse.json({ detail: '' }, { status: 400 });
@@ -666,7 +669,7 @@ export const handlers = [
           { status: 409 }
         );
       } else {
-        return HttpResponse.json({ status: 204 });
+        return HttpResponse.json(undefined, { status: 204 });
       }
     } else {
       return HttpResponse.json({ detail: '' }, { status: 404 });
@@ -805,7 +808,7 @@ export const handlers = [
         { status: 500 }
       );
 
-    return HttpResponse.json({ status: 204 });
+    return HttpResponse.json(undefined, { status: 204 });
   }),
 
   // ------------------------------------ UNITS ------------------------------------------------
@@ -863,7 +866,7 @@ export const handlers = [
           { status: 409 }
         );
       } else {
-        return HttpResponse.json({ status: 204 });
+        return HttpResponse.json(undefined, { status: 204 });
       }
     } else {
       return HttpResponse.json({ detail: '' }, { status: 400 });
@@ -925,10 +928,51 @@ export const handlers = [
           { status: 409 }
         );
       } else {
-        return HttpResponse.json({ status: 204 });
+        return HttpResponse.json(undefined, { status: 204 });
       }
     } else {
       return HttpResponse.json({ detail: '' }, { status: 400 });
     }
+  }),
+
+  // ------------------------------------ ATTACHMENTS ------------------------------------------------
+
+  http.post<
+    PathParams,
+    AttachmentPostMetadata,
+    AttachmentPostMetadataResponse | ErrorResponse
+  >('/attachments', async ({ request }) => {
+    const body = (await request.json()) as AttachmentPostMetadata;
+
+    const upload_info: AttachmentUploadInfo = {
+      url: `http://localhost:3000/object-storage`,
+      fields: {
+        'Content-Type': 'multipart/form-data',
+        key: `attachments/test`,
+        AWSAccessKeyId: 'root',
+        policy: 'policy-test',
+        signature: 'signature-test',
+      },
+    };
+
+    return HttpResponse.json(
+      {
+        id: '1',
+        ...body,
+        title: body.title ?? null,
+        description: body.description ?? null,
+        upload_info: upload_info,
+        modified_time: '2024-01-02T13:10:10.000+00:00',
+        created_time: '2024-01-01T12:00:00.000+00:00',
+      },
+      { status: 200 }
+    );
+  }),
+
+  // ------------------------------------ OBJECT STORAGE ------------------------------------------------
+
+  http.post('/object-storage', async () => {
+    await delay(200);
+    return new HttpResponse(undefined, { status: 200 });
   }),
 ];

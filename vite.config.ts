@@ -3,6 +3,7 @@ import browserslistToEsbuild from 'browserslist-to-esbuild';
 import fs from 'node:fs';
 import path from 'path';
 import { PluginOption, UserConfig, defineConfig, loadEnv } from 'vite';
+import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 
 /* See https://github.com/mswjs/msw/discussions/712 */
 function excludeMSWPlugin(): PluginOption {
@@ -89,6 +90,7 @@ export default defineConfig(({ mode }) => {
 
   if (buildLibrary) {
     // Config for deployment in SciGateway
+    plugins.push(cssInjectedByJsPlugin());
     config.build = {
       lib: {
         // We use `umd` here as `es` causes some import statements to leak into the main.js, breaking the build

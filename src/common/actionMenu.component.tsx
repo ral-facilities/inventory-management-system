@@ -1,21 +1,33 @@
 import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PrintIcon from '@mui/icons-material/Print';
+import UploadIcon from '@mui/icons-material/Upload';
 import { IconButton, Menu, MenuItem } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import React from 'react';
+import UploadAttachmentsDialog from './attachments/uploadAttachmentsDialog.component';
+import { StyledUppyBox } from './uppy.utils';
 
 export interface ActionMenuProps {
   ariaLabelPrefix: string;
   editMenuItem: { onClick: () => void; dialog: React.ReactNode };
   printMenuItem?: boolean;
+  uploadAttachmentsEntityId?: string;
 }
 function ActionMenu(props: ActionMenuProps) {
-  const { editMenuItem, printMenuItem, ariaLabelPrefix } = props;
+  const {
+    editMenuItem,
+    printMenuItem,
+    ariaLabelPrefix,
+    uploadAttachmentsEntityId,
+  } = props;
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const menuOpen = Boolean(anchorEl);
+
+  const [openUploadAttachmentsDialog, setOpenUploadAttachmentsDialog] =
+    React.useState(false);
 
   const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -78,6 +90,17 @@ function ActionMenu(props: ActionMenuProps) {
             <EditIcon fontSize="small" sx={{ mr: 1 }} />
             Edit
           </MenuItem>
+          {uploadAttachmentsEntityId && (
+            <MenuItem
+              onClick={() => {
+                setOpenUploadAttachmentsDialog(true);
+                handleMenuClose();
+              }}
+            >
+              <UploadIcon fontSize="small" sx={{ mr: 1 }} />
+              Upload Attachments
+            </MenuItem>
+          )}
           {printMenuItem && (
             <MenuItem
               onClick={() => {
@@ -92,6 +115,15 @@ function ActionMenu(props: ActionMenuProps) {
         </Menu>
       </Grid>
       {editMenuItem.dialog}
+      <StyledUppyBox>
+        {uploadAttachmentsEntityId && (
+          <UploadAttachmentsDialog
+            open={openUploadAttachmentsDialog}
+            onClose={() => setOpenUploadAttachmentsDialog(false)}
+            entityId={uploadAttachmentsEntityId}
+          />
+        )}
+      </StyledUppyBox>
     </Grid>
   );
 }

@@ -217,3 +217,24 @@ export interface Item
   usage_status: string;
   properties: Property[];
 }
+
+// ------------------------------------ ATTACHMENTS ------------------------------------------------
+
+// This is AttachmentPost on the object-store-api
+export interface AttachmentPostMetadata {
+  entity_id: string;
+  file_name: string;
+  title?: string | null;
+  description?: string | null;
+}
+
+export interface AttachmentUploadInfo {
+  url: string;
+  fields: Record<string, string>;
+}
+export interface AttachmentPostMetadataResponse
+  extends Required<AttachmentPostMetadata>,
+    CreatedModifiedMixin {
+  id: string;
+  upload_info: AttachmentUploadInfo;
+}
