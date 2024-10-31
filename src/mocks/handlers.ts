@@ -1,4 +1,4 @@
-import { DefaultBodyType, http, HttpResponse, PathParams } from 'msw';
+import { DefaultBodyType, delay, http, HttpResponse, PathParams } from 'msw';
 import {
   AttachmentPostMetadata,
   AttachmentPostMetadataResponse,
@@ -972,6 +972,7 @@ export const handlers = [
   // ------------------------------------ OBJECT STORAGE ------------------------------------------------
 
   http.post('/object-storage', async () => {
+    await delay(200);
     return new HttpResponse(undefined, { status: 200 });
   }),
 ];
