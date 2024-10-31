@@ -502,16 +502,16 @@ export const CatalogueItemDetailsStepSchema = (requestType: RequestType) => {
       requestType,
       invalidTypeErrorMessage: 'Please enter a valid number.',
     }),
+    expected_lifetime_days: OptionalOrNullableNumberSchema({
+      requestType,
+      invalidTypeErrorMessage: 'Please enter a valid number.',
+    }),
     description: OptionalOrNullableStringSchema({ requestType }),
     drawing_number: OptionalOrNullableStringSchema({ requestType }),
     drawing_link: OptionalOrNullableURLSchema({
       requestType,
       errorMessage:
         'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted.',
-    }),
-    expected_lifetime_days: OptionalOrNullableNumberSchema({
-      requestType,
-      invalidTypeErrorMessage: 'Please enter a valid number.',
     }),
     item_model_number: OptionalOrNullableStringSchema({ requestType }),
     notes: OptionalOrNullableStringSchema({ requestType }),

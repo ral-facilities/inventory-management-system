@@ -238,12 +238,12 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        Drawing Number
+                        Expected Lifetime (days)
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
-                        None
+                        1080
                       </p>
                     </div>
                     <div
@@ -252,10 +252,10 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        Expected Lifetime (days)
+                        Drawing Number
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                       >
                         None
                       </p>
@@ -802,12 +802,12 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        Drawing Number
+                        Expected Lifetime (days)
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
-                        None
+                        1080
                       </p>
                     </div>
                     <div
@@ -816,10 +816,10 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        Expected Lifetime (days)
+                        Drawing Number
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                       >
                         None
                       </p>
@@ -1372,12 +1372,12 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        Drawing Number
+                        Expected Lifetime (days)
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
-                        None
+                        647
                       </p>
                     </div>
                     <div
@@ -1386,10 +1386,10 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        Expected Lifetime (days)
+                        Drawing Number
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                       >
                         None
                       </p>
@@ -1896,12 +1896,12 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        Drawing Number
+                        Expected Lifetime (days)
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
-                        None
+                        3124
                       </p>
                     </div>
                     <div
@@ -1910,12 +1910,12 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        Expected Lifetime (days)
+                        Drawing Number
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                       >
-                        840
+                        None
                       </p>
                     </div>
                     <div
@@ -2430,12 +2430,12 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        Drawing Number
+                        Expected Lifetime (days)
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
-                        None
+                        3124
                       </p>
                     </div>
                     <div
@@ -2444,12 +2444,12 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        Expected Lifetime (days)
+                        Drawing Number
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                       >
-                        840
+                        None
                       </p>
                     </div>
                     <div
@@ -2963,12 +2963,12 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        Drawing Number
+                        Expected Lifetime (days)
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
-                        None
+                        3124
                       </p>
                     </div>
                     <div
@@ -2977,12 +2977,12 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        Expected Lifetime (days)
+                        Drawing Number
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                       >
-                        840
+                        None
                       </p>
                     </div>
                     <div
@@ -3496,12 +3496,12 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        Drawing Number
+                        Expected Lifetime (days)
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
-                        None
+                        3124
                       </p>
                     </div>
                     <div
@@ -3510,12 +3510,12 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        Expected Lifetime (days)
+                        Drawing Number
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                       >
-                        840
+                        None
                       </p>
                     </div>
                     <div

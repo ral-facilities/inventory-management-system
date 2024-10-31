@@ -158,6 +158,15 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
+              <Grid item xs={12} sm={6} key={8}>
+                <Typography color="text.primary">
+                  Expected Lifetime (days)
+                </Typography>
+                <Typography color="text.secondary">
+                  {catalogueItemIdData.expected_lifetime_days ?? 'None'}
+                </Typography>
+              </Grid>
+
               <Grid item xs={12} sm={6} key={7}>
                 <Typography color="text.primary">Drawing Number</Typography>
                 <Typography
@@ -165,15 +174,6 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                   sx={{ wordWrap: 'break-word' }}
                 >
                   {catalogueItemIdData.drawing_number ?? 'None'}
-                </Typography>
-              </Grid>
-
-              <Grid item xs={12} sm={6} key={8}>
-                <Typography color="text.primary">
-                  Expected Lifetime (days)
-                </Typography>
-                <Typography color="text.secondary">
-                  {catalogueItemIdData.expected_lifetime_days ?? 'None'}
                 </Typography>
               </Grid>
 

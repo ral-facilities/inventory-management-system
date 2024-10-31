@@ -49,9 +49,9 @@ describe('Catalogue Items Dialog', () => {
     costToReworkGbp?: string;
     daysToReplace?: string;
     daysToRework?: string;
+    expectedLifetimeDays?: string;
     drawingNumber?: string;
     drawingLink?: string;
-    expectedLifetimeDays?: string;
     itemModelNumber?: string;
     resolution?: string;
     frameRate?: string;
@@ -92,6 +92,11 @@ describe('Catalogue Items Dialog', () => {
         target: { value: values.daysToRework },
       });
 
+    if (values.expectedLifetimeDays !== undefined)
+      fireEvent.change(screen.getByLabelText('Expected Lifetime (days)'), {
+        target: { value: values.expectedLifetimeDays },
+      });
+
     if (values.drawingNumber !== undefined)
       fireEvent.change(screen.getByLabelText('Drawing number'), {
         target: { value: values.drawingNumber },
@@ -100,11 +105,6 @@ describe('Catalogue Items Dialog', () => {
     if (values.drawingLink !== undefined)
       fireEvent.change(screen.getByLabelText('Drawing link'), {
         target: { value: values.drawingLink },
-      });
-
-    if (values.expectedLifetimeDays !== undefined)
-      fireEvent.change(screen.getByLabelText('Expected Lifetime (days)'), {
-        target: { value: values.expectedLifetimeDays },
       });
 
     if (values.itemModelNumber !== undefined)
@@ -227,10 +227,10 @@ describe('Catalogue Items Dialog', () => {
       costToReworkGbp: '400',
       daysToReplace: '20',
       daysToRework: '2',
+      expectedLifetimeDays: '541',
       description: '',
       drawingLink: 'https://example.com',
       drawingNumber: 'mk4324',
-      expectedLifetimeDays: '541',
       itemModelNumber: 'mk4324',
       name: 'test',
       manufacturer: 'Man{arrowdown}{enter}',
@@ -256,10 +256,10 @@ describe('Catalogue Items Dialog', () => {
       cost_to_rework_gbp: 400,
       days_to_replace: 20,
       days_to_rework: 2,
+      expected_lifetime_days: 541,
       description: null,
       drawing_link: 'https://example.com',
       drawing_number: 'mk4324',
-      expected_lifetime_days: 541,
       is_obsolete: false,
       manufacturer_id: '1',
       notes: 'Test note',
@@ -291,10 +291,10 @@ describe('Catalogue Items Dialog', () => {
       costToReworkGbp: '400',
       daysToReplace: '20',
       daysToRework: '2',
+      expectedLifetimeDays: '146',
       description: '',
       drawingLink: 'https://example.com',
       drawingNumber: 'mk4324',
-      expectedLifetimeDays: '146',
       itemModelNumber: 'mk4324',
       name: 'test',
       manufacturer: 'Man{arrowdown}{enter}',
@@ -320,10 +320,10 @@ describe('Catalogue Items Dialog', () => {
       cost_to_rework_gbp: 400,
       days_to_replace: 20,
       days_to_rework: 2,
+      expected_lifetime_days: 146,
       description: null,
       drawing_link: 'https://example.com',
       drawing_number: 'mk4324',
-      expected_lifetime_days: 146,
       is_obsolete: false,
       item_model_number: 'mk4324',
       notes: null,
@@ -362,10 +362,10 @@ describe('Catalogue Items Dialog', () => {
       costToReworkGbp: '400',
       daysToReplace: '20',
       daysToRework: '2',
+      expectedLifetimeDays: '321',
       description: '',
       drawingLink: 'https://example.com',
       drawingNumber: 'mk4324',
-      expectedLifetimeDays: '321',
       itemModelNumber: 'mk4324',
       name: 'test',
       manufacturer: 'Man{arrowdown}{enter}',
@@ -402,10 +402,10 @@ describe('Catalogue Items Dialog', () => {
       costToReworkGbp: '400',
       daysToReplace: '20',
       daysToRework: '2',
+      expectedLifetimeDays: '524',
       description: '',
       drawingLink: 'https://example.com',
       drawingNumber: 'mk4324',
-      expectedLifetimeDays: '524',
       itemModelNumber: 'mk4324',
       name: 'test',
       manufacturer: 'Man{arrowdown}{enter}',
@@ -459,10 +459,10 @@ describe('Catalogue Items Dialog', () => {
       cost_to_rework_gbp: null,
       days_to_replace: 5,
       days_to_rework: null,
+      expected_lifetime_days: null,
       description: null,
       drawing_link: null,
       drawing_number: null,
-      expected_lifetime_days: null,
       is_obsolete: false,
       item_model_number: null,
       manufacturer_id: '1',
@@ -546,10 +546,10 @@ describe('Catalogue Items Dialog', () => {
       costToReworkGbp: '400a',
       daysToReplace: '20a',
       daysToRework: '2a',
+      expectedLifetimeDays: '43ab',
       description: '',
       drawingLink: 'example.com',
       drawingNumber: 'mk4324',
-      expectedLifetimeDays: '43ab',
       itemModelNumber: 'mk4324',
       name: 'test',
       manufacturer: 'Man{arrowdown}{enter}',
@@ -576,8 +576,8 @@ describe('Catalogue Items Dialog', () => {
       costToReworkGbp: '400',
       daysToReplace: '20',
       daysToRework: '2',
-      drawingLink: 'https://example.com',
       expectedLifetimeDays: '43',
+      drawingLink: 'https://example.com',
     });
 
     await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -614,10 +614,10 @@ describe('Catalogue Items Dialog', () => {
       costToReworkGbp: '400',
       daysToReplace: '20',
       daysToRework: '2',
+      expectedLifetimeDays: '421',
       description: '',
       drawingLink: 'https://example.com',
       drawingNumber: 'mk4324',
-      expectedLifetimeDays: '421',
       itemModelNumber: 'mk4324',
       name: 'Error 500',
       manufacturer: 'Man{arrowdown}{enter}',
@@ -761,10 +761,10 @@ describe('Catalogue Items Dialog', () => {
         costToReworkGbp: '89',
         daysToReplace: '78',
         daysToRework: '68',
+        expectedLifetimeDays: '486',
         description: ' ',
         drawingLink: 'http://example.com',
         drawingNumber: 'test',
-        expectedLifetimeDays: '486',
         itemModelNumber: 'test1',
         name: 'test',
         manufacturer: 'Man{arrowdown}{arrowdown}{enter}',
@@ -779,10 +779,10 @@ describe('Catalogue Items Dialog', () => {
         cost_to_rework_gbp: 89,
         days_to_replace: 78,
         days_to_rework: 68,
+        expected_lifetime_days: 486,
         description: null,
         drawing_link: 'http://example.com',
         drawing_number: 'test',
-        expected_lifetime_days: 486,
         item_model_number: 'test1',
         name: 'test',
         manufacturer_id: '3',
@@ -880,10 +880,10 @@ describe('Catalogue Items Dialog', () => {
         costToReworkGbp: '',
         daysToReplace: '',
         daysToRework: '',
+        expectedLifetimeDays: '',
         description: '',
         drawingLink: '',
         drawingNumber: '',
-        expectedLifetimeDays: '',
         itemModelNumber: '',
         name: '',
         notes: '',

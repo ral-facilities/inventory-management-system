@@ -466,6 +466,22 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         GroupedCell: TableGroupedCell,
       },
       {
+        header: 'Expected Lifetime (Days)',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => row.catalogueItem.expected_lifetime_days ?? '',
+        id: 'catalogueItem.expected_lifetime_days',
+        size: 280,
+        filterVariant: 'range',
+        Cell: ({ row }) => {
+          return row.original.catalogueItem.expected_lifetime_days === 0
+            ? 0
+            : row.original.catalogueItem.expected_lifetime_days !== null
+              ? row.original.catalogueItem.expected_lifetime_days
+              : '';
+        },
+        GroupedCell: TableGroupedCell,
+      },
+      {
         header: 'Drawing Number',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem.drawing_number ?? '',
@@ -493,22 +509,6 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           ),
         GroupedCell: (props) =>
           TableGroupedCell({ ...props, outputType: 'Link' }),
-      },
-      {
-        header: 'Expected Lifetime (Days)',
-        Header: TableHeaderOverflowTip,
-        accessorFn: (row) => row.catalogueItem.expected_lifetime_days ?? '',
-        id: 'catalogueItem.expected_lifetime_days',
-        size: 250,
-        filterVariant: 'range',
-        Cell: ({ row }) => {
-          return row.original.catalogueItem.expected_lifetime_days === 0
-            ? 0
-            : row.original.catalogueItem.expected_lifetime_days !== null
-              ? row.original.catalogueItem.expected_lifetime_days
-              : '';
-        },
-        GroupedCell: TableGroupedCell,
       },
       {
         header: 'Item Model Number',
@@ -743,7 +743,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         'catalogueItem.days_to_rework',
         'catalogueItem.drawing_number',
         'catalogueItem.drawing_link',
-        'catalogueItem.expected__days',
+        'catalogueItem.expected_lifetime_days',
         'catalogueItem.item_model_number',
         'manufacturer.url',
       ];

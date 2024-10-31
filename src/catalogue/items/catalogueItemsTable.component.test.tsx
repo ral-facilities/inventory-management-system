@@ -687,7 +687,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Grouped by')).toBeInTheDocument();
     });
     expect(router.state.location.search).toBe(
-      '?state=N4Ig5iBcDaIMYEMAuCA2B7MBXApgSSRwFsA6AOwSJxAF0AaeAeSliICckBaN9Ad05wAPAA4IyAExAN2XHvwRwkAS3RkAzlJAzufTmpyocizYhQZs%2BQqQpUTyNJlwFiJIunFKAZkpziA%2Bsq2DKYOFs6kcGw4yL4BSkEgAGo%2BvAAE4RrB9uZOViTiOGqRSsLKqnZmjpYuSmp%2B6ABGauiGhBWhuS6Nza04flHCqArEOGRIfiE5fUpWfkqSWZVhed0tOIT90c1k7VPhJMI8wjgcPmokAOy7VfuH6MenhSQAHNfLLnDoauNgDcJvnQiX3GSHQm146DYAGs-L9-osOtVSOIEABPOqgzaDYYApH5NEYsFRCHQ3H7cRsBC8JRkMB%2BMhYIgNE5kvIUqk0umoGlQ1kuITHRSxbmedbxPoo9F80gzYh%2BNwFVD0xnMtiaIhiLCeBRILBRNjkSjUaSa7WKPUnEh61Dq006i0GhDiCmFTJaO3m-UkQiGYQAC1Uxvg2RueTI6EIbu0cj0ojgLJoAF8gA'
+      '?state=N4Ig5iBcDaIMYEMAuCA2B7MBXApgSSRwFsA6AOwSJxAF0AaeAeSliICckBaN9Ad05wAPAA4IyAExAN2XHvwRwkAS3RkAzlJAzufTmpyocizYhQZs%2BQqQpUTyNJlwFiJIunFKAZkpziA%2Bsq2DKYOFs6kcGw4yL4BSkEgAGo%2BvAAE4RrB9uZOViTiOGqRSsLKqnZmjpYuSmp%2B6ABGauiGhBWhuS6Nza04flHCqArEOGRIfiE5fUpWfkqSWZVhed0tOIT90c1k7VPhJMI8wjgcPmokAOy7VfuH6MenhSQAHNfLLnDoauNgDcJvnQiX3GSHQm146DYAGs-L9-osOtVSOIEABPOqgzaDYYApH5NEYsFRCHQ3H7ITHRSxVBedbxPoo9FkvLiNgIXhKMhgPxkLBEBonZkuVnszncmlkKFC0gzYh%2BNwFVA8vkCtiaIhiLCeBRILBRNjkSjUaSa7WKPUnEh61Dq006i0GhDiVmFTJaO3m-UkQiGYQAC1Uxvg2RueTI6EIbu0cj0ojggpoAF8gA'
     );
 
     // Reset
@@ -698,7 +698,7 @@ describe('Catalogue Items Table', () => {
     });
     // Expect this to still be here as have now modified the order in some way (as MRT doesn't revert back to its original state in this case)
     expect(router.state.location.search).toBe(
-      '?state=N4Igxg8iBcDaIFsBOAXAtEg9gdzQUwA8AHAQwDsATEAGkVQx32PKtuXS1xLBQEtMyAZxp0OjQXgA2eHiLAkUJSZgDmAVzwBJFHgQA6MiQR45Cpao3bdehJgq8AZrzwUA%2Bn2OnFy9Vp36wJDwFF3deT1oANWdsAAIrBGFaeW8LP2sKPEFA3iI%2BAS9zXwS9XkFXTAAjQUxpHUKfS389Kpq6vFcgokluXTwyFFcUoo1XXn8x1nAzRvT9Vtq8HU7gmrIGtJKiLCI8VGdBPQB2DeLm7cxd-ay9AA5TpuswTEFBlUqiB7m9Z9f3TBW2EwSAA1q53p9kjNNs0KCQAJ7lFAAro9MAmKGpM4ZBFIlF4IGgr4lChIEjYXhkFSuMhqBCVPbE2FkilU1ySSkgpnWQi7HihDkOJbhDpwxHc-TjXSuWyZSQ0ukMpAiBDkNQObgoNRBJAGIwYxBqjU8bV7PTayQqo2a026kgUUlZJKG2nGrU6vQ6aREAAWAgNw1mJTImB0zvYDFwglI6OVAF0AL5AA'
+      '?state=N4Igxg8iBcDaIFsBOAXAtEg9gdzQUwA8AHAQwDsATEAGkVQx32PKtuXS1xLBQEtMyAZxp0OjQXgA2eHiLAkUJSZgDmAVzwBJFHgQA6MiQR45Cpao3bdehJgq8AZrzwUA%2Bn2OnFy9Vp36wJDwFF3deT1oANWdsAAIrBGFaeW8LP2sKPEFA3iI%2BAS9zXwS9XkFXTAAjQUxpHUKfS389Kpq6vFcgokluXTwyFFcUoo1XXn8x1nAzRvT9Vtq8HU7gmrIGtJKiLCI8VGdBPQB2DeLm7cxd-ay9AA5TpuswTEFBlUqiB7m9Z9f3TBW2EwSAA1q53p9kjNNs0KCQAJ7lFAAro9MAmKGpM4ZBFIlF4IGgr4lQi7HihSSOJbhDpwxHE2FIEjYXhkFSuMhqBCVPYMjJMlls1yUsggvn6ca6Vy2TKSDlcnlIEQIchqBzcFBqIJIAxGDGIVXqnhavZ6LWSZWGjUmnUkCgUIKCJIGzlGzXavQ6aREAAWAn1w1mJTImB0zvYDFwglI6KVAF0AL5AA'
     );
   });
 
@@ -791,7 +791,7 @@ describe('Catalogue Items Table', () => {
     // Get the table element (assuming it has a specific class or role)
     const table = screen.getByTestId('catalogue-items-table-container');
 
-    fireEvent.scroll(table, { target: { scrollLeft: 2500 } });
+    fireEvent.scroll(table, { target: { scrollLeft: 2780 } });
 
     // Check if the drawing link cell is visible after scrolling
     expect(await screen.findByText(drawingLink)).toBeInTheDocument();
@@ -807,7 +807,7 @@ describe('Catalogue Items Table', () => {
       screen.queryByRole('tooltip', { name: 'Drawing Link' })
     ).not.toBeInTheDocument();
 
-    fireEvent.scroll(table, { target: { scrollLeft: -2500 } });
+    fireEvent.scroll(table, { target: { scrollLeft: -2780 } });
 
     expect(
       await screen.findByRole('tooltip', { name: 'Drawing Link' })
