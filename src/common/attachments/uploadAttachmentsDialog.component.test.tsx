@@ -168,7 +168,7 @@ describe('Upload attachment dialog', () => {
     ).toBeInTheDocument();
   });
 
-  it('errors when file is removed mid upload', async () => {
+  it('should send a DELETE request for the attachment document if a file is removed during upload', async () => {
     server.use(
       http.post('/object-storage', async () => {
         await delay(500);
@@ -223,6 +223,8 @@ describe('Upload attachment dialog', () => {
     await user.click(
       await screen.findByRole('button', { name: 'Remove file' })
     );
+
+    //TODO: Assert axios delete request was called
 
     expect(screen.queryByText('Upload 1 file')).not.toBeInTheDocument();
   });

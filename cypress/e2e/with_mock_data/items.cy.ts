@@ -483,7 +483,7 @@ describe('Items', () => {
       cy.findByText('Complete').should('exist');
     });
 
-    it('errors when file is removed mid upload', () => {
+    it('should send a DELETE request for the attachment document if a file is removed during upload', () => {
       cy.window().its('msw').should('not.equal', undefined);
       cy.window().then((window) => {
         const { worker, http } = window.msw;
@@ -539,6 +539,8 @@ describe('Items', () => {
 
       // Click the "Remove file" button
       cy.findByRole('button', { name: 'Remove file' }).click();
+
+      //TODO: Assert axios delete request was called
 
       // Assert that the text "Upload 1 file" is not in the document
       cy.findByText('Upload 1 file').should('not.exist');
