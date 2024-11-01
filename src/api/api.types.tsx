@@ -244,15 +244,16 @@ export interface AttachmentPostMetadataResponse
 export interface ImagePost {
   entity_id: string;
   file_name: string;
+  upload_file: File;
   title?: string | null;
   description?: string | null;
-  upload_file: File;
 }
 
 export interface Image
   extends Required<Omit<ImagePost, 'upload_file'>>,
     CreatedModifiedMixin {
   id: string;
+  primary: boolean;
   thumbnail_base64: string;
 }
 

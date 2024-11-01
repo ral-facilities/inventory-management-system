@@ -1,10 +1,4 @@
-import {
-  cleanup,
-  fireEvent,
-  screen,
-  waitFor,
-  within,
-} from '@testing-library/react';
+import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { act } from 'react';
@@ -74,7 +68,6 @@ describe('Image Gallery', () => {
 
   afterEach(() => {
     vi.clearAllMocks();
-    cleanup();
   });
 
   it('renders correctly', async () => {

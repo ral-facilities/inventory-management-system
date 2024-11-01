@@ -29,11 +29,9 @@ function ActionMenu(props: ActionMenuProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const menuOpen = Boolean(anchorEl);
 
-  const [openUploadAttachmentsDialog, setOpenUploadAttachmentsDialog] =
-    React.useState(false);
-
-  const [openUploadImagesDialog, setOpenUploadImagesDialog] =
-    React.useState(false);
+  const [openUploadDialog, setOpenUploadDialog] = React.useState<
+    'images' | 'attachments' | false
+  >(false);
 
   const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -96,21 +94,10 @@ function ActionMenu(props: ActionMenuProps) {
             <EditIcon fontSize="small" sx={{ mr: 1 }} />
             Edit
           </MenuItem>
-          {uploadAttachmentsEntityId && (
-            <MenuItem
-              onClick={() => {
-                setOpenUploadAttachmentsDialog(true);
-                handleMenuClose();
-              }}
-            >
-              <UploadIcon fontSize="small" sx={{ mr: 1 }} />
-              Upload Attachments
-            </MenuItem>
-          )}
           {uploadImagesEntityId && (
             <MenuItem
               onClick={() => {
-                setOpenUploadImagesDialog(true);
+                setOpenUploadDialog('images');
                 handleMenuClose();
               }}
             >
@@ -118,6 +105,18 @@ function ActionMenu(props: ActionMenuProps) {
               Upload Images
             </MenuItem>
           )}
+          {uploadAttachmentsEntityId && (
+            <MenuItem
+              onClick={() => {
+                setOpenUploadDialog('attachments');
+                handleMenuClose();
+              }}
+            >
+              <UploadIcon fontSize="small" sx={{ mr: 1 }} />
+              Upload Attachments
+            </MenuItem>
+          )}
+
           {printMenuItem && (
             <MenuItem
               onClick={() => {
@@ -135,15 +134,15 @@ function ActionMenu(props: ActionMenuProps) {
       <StyledUppyBox>
         {uploadAttachmentsEntityId && (
           <UploadAttachmentsDialog
-            open={openUploadAttachmentsDialog}
-            onClose={() => setOpenUploadAttachmentsDialog(false)}
+            open={openUploadDialog === 'attachments'}
+            onClose={() => setOpenUploadDialog(false)}
             entityId={uploadAttachmentsEntityId}
           />
         )}
         {uploadImagesEntityId && (
           <UploadImagesDialog
-            open={openUploadImagesDialog}
-            onClose={() => setOpenUploadImagesDialog(false)}
+            open={openUploadDialog === 'images'}
+            onClose={() => setOpenUploadDialog(false)}
             entityId={uploadImagesEntityId}
           />
         )}
