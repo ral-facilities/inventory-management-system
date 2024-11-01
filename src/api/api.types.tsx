@@ -255,3 +255,7 @@ export interface Image
   id: string;
   thumbnail_base64: string;
 }
+
+export interface ImageGet extends Image {
+  download_url: string;
+}
