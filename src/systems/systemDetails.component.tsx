@@ -93,7 +93,6 @@ function SystemDetails(props: SystemDetailsProps) {
         </Grid>
         {system !== undefined && <SystemDetailsActionMenu system={system} />}
       </Grid>
-      <Grid></Grid>
       <Divider role="presentation" />
       {system === undefined ? (
         <Box
