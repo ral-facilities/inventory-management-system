@@ -63,25 +63,19 @@ describe('Upload attachment dialog', () => {
   });
 
   it('posts attachment metadata successfully', async () => {
-    // Render the component
-
     createView();
 
     const file1 = new File(['test'], 'test1.txt', {
       type: 'text/plain',
     });
 
-    // Find the Uppy Dashboard's drop zone (it usually has a label like "Drop files here" or "Browse files")
     const dropZone = screen.getByText('Files cannot be larger than', {
       exact: false,
     });
 
-    // Create a drag-and-drop event for the file
     Object.defineProperty(dropZone, 'files', {
       value: [file1],
     });
-
-    // Fire the drop event
 
     fireEvent.drop(dropZone, {
       dataTransfer: {
@@ -89,14 +83,12 @@ describe('Upload attachment dialog', () => {
       },
     });
 
-    // Wait for the UI to update with the added file
     await waitFor(() => {
       expect(screen.getByText('test1.txt')).toBeInTheDocument();
     });
 
     await user.click(await screen.findByText('Upload 1 file'));
 
-    // Assert axios post was called
     expect(axiosPostSpy).toHaveBeenCalledWith('/attachments', {
       entity_id: '1',
       file_name: 'test1.txt',
@@ -124,17 +116,13 @@ describe('Upload attachment dialog', () => {
       type: 'text/plain',
     });
 
-    // Find the Uppy Dashboard's drop zone (it usually has a label like "Drop files here" or "Browse files")
     const dropZone = screen.getByText('Files cannot be larger than', {
       exact: false,
     });
 
-    // Create a drag-and-drop event for the file
     Object.defineProperty(dropZone, 'files', {
       value: [file1],
     });
-
-    // Fire the drop event
 
     fireEvent.drop(dropZone, {
       dataTransfer: {
@@ -142,14 +130,12 @@ describe('Upload attachment dialog', () => {
       },
     });
 
-    // Wait for the UI to update with the added file
     await waitFor(() => {
       expect(screen.getByText('uploadError.txt')).toBeInTheDocument();
     });
 
     await user.click(await screen.findByText('Upload 1 file'));
 
-    // Assert axios post was called
     expect(axiosPostSpy).toHaveBeenCalledWith('/attachments', {
       entity_id: '1',
       file_name: 'uploadError.txt',
@@ -175,7 +161,6 @@ describe('Upload attachment dialog', () => {
         return new HttpResponse(undefined, { status: 200 });
       })
     );
-    // Render the component
 
     createView();
 
@@ -183,17 +168,13 @@ describe('Upload attachment dialog', () => {
       type: 'text/plain',
     });
 
-    // Find the Uppy Dashboard's drop zone (it usually has a label like "Drop files here" or "Browse files")
     const dropZone = screen.getByText('Files cannot be larger than', {
       exact: false,
     });
 
-    // Create a drag-and-drop event for the file
     Object.defineProperty(dropZone, 'files', {
       value: [file1],
     });
-
-    // Fire the drop event
 
     fireEvent.drop(dropZone, {
       dataTransfer: {
@@ -201,14 +182,12 @@ describe('Upload attachment dialog', () => {
       },
     });
 
-    // Wait for the UI to update with the added file
     await waitFor(() => {
       expect(screen.getByText('removeError.txt')).toBeInTheDocument();
     });
 
     await user.click(await screen.findByText('Upload 1 file'));
 
-    // Assert axios post was called
     expect(axiosPostSpy).toHaveBeenCalledWith('/attachments', {
       entity_id: '1',
       file_name: 'removeError.txt',

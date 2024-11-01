@@ -537,12 +537,10 @@ describe('Items', () => {
         expect(postRequests.length).eq(1);
       });
 
-      // Click the "Remove file" button
       cy.findByRole('button', { name: 'Remove file' }).click();
 
       //TODO: Assert axios delete request was called
 
-      // Assert that the text "Upload 1 file" is not in the document
       cy.findByText('Upload 1 file').should('not.exist');
     });
 
@@ -655,7 +653,7 @@ describe('Items', () => {
       cy.findByText('Complete').should('exist');
     });
 
-    it('displays error if post is unsuccessfully', () => {
+    it('displays error if post is unsuccessful', () => {
       cy.window().its('msw').should('not.equal', undefined);
       cy.window().then((window) => {
         const { worker, http } = window.msw;

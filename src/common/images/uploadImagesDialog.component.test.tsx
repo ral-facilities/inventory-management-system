@@ -59,25 +59,19 @@ describe('Upload image dialog', () => {
   });
 
   it('uploads an image with a title and description and verifies completion message', async () => {
-    // Render the component
-
     createView();
 
     const file1 = new File(['hello world'], 'image.png', {
       type: 'image/png',
     });
 
-    // Find the Uppy Dashboard's drop zone (it usually has a label like "Drop files here" or "Browse files")
     const dropZone = screen.getByText('files cannot be larger than', {
       exact: false,
     });
 
-    // Create a drag-and-drop event for the file
     Object.defineProperty(dropZone, 'files', {
       value: [file1],
     });
-
-    // Fire the drop event
 
     fireEvent.drop(dropZone, {
       dataTransfer: {
@@ -85,7 +79,6 @@ describe('Upload image dialog', () => {
       },
     });
 
-    // Wait for the UI to update with the added file
     await waitFor(() => {
       expect(screen.getByText('image.png')).toBeInTheDocument();
     });
@@ -109,13 +102,12 @@ describe('Upload image dialog', () => {
     expect(await screen.findByText('Complete')).toBeInTheDocument();
   });
 
-  it('displays error if post is unsuccessfully', async () => {
+  it('displays error if post is unsuccessful', async () => {
     server.use(
       http.post('/images', async () => {
         return HttpResponse.error();
       })
     );
-    // Render the component
 
     createView();
 
@@ -123,17 +115,13 @@ describe('Upload image dialog', () => {
       type: 'image/png',
     });
 
-    // Find the Uppy Dashboard's drop zone (it usually has a label like "Drop files here" or "Browse files")
     const dropZone = screen.getByText('files cannot be larger than', {
       exact: false,
     });
 
-    // Create a drag-and-drop event for the file
     Object.defineProperty(dropZone, 'files', {
       value: [file1],
     });
-
-    // Fire the drop event
 
     fireEvent.drop(dropZone, {
       dataTransfer: {
@@ -141,7 +129,6 @@ describe('Upload image dialog', () => {
       },
     });
 
-    // Wait for the UI to update with the added file
     await waitFor(() => {
       expect(screen.getByText('image.png')).toBeInTheDocument();
     });

@@ -63,22 +63,17 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
 
   uppy.on('dashboard:file-edit-complete', (file) => {
     if (file) {
-      // Extract existing metadata
       const { title, description, ...restMeta } = file.meta;
 
-      // Format title and description
       const formattedTitle = getNonEmptyTrimmedString(title);
       const formattedDescription = getNonEmptyTrimmedString(description);
 
-      // Prepare the updated metadata object
       const updatedFileData = {
         ...restMeta,
         ...(formattedTitle && { title: formattedTitle }),
         ...(formattedDescription && { description: formattedDescription }),
       };
 
-      // Use patchFilesState to update the metadata
-      // Ensure you call the method properly
       uppy.patchFilesState({
         [file.id]: {
           meta: updatedFileData,
