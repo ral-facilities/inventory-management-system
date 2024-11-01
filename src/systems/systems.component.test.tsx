@@ -14,10 +14,6 @@ describe('Systems', () => {
 
   beforeEach(() => {
     user = userEvent.setup();
-
-    window.Element.prototype.getBoundingClientRect = vi
-      .fn()
-      .mockReturnValue({ height: 100, width: 200 });
   });
 
   const clickRowAction = async (rowIndex: number, buttonText: string) => {
