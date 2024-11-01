@@ -1055,7 +1055,7 @@ describe('Catalogue Items', () => {
           cost_to_rework_gbp: 89,
           days_to_replace: 7,
           days_to_rework: 60,
-          expected_lifetime_days: null,
+          expected_lifetime_days: 3635,
           drawing_number: null,
           drawing_link: null,
           item_model_number: null,

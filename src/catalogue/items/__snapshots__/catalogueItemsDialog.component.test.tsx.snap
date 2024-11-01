@@ -28,7 +28,7 @@ exports[`Catalogue Items Dialog > renders details step correctly 1`] = `
     >
       <div
         aria-labelledby=":r0:"
-        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthLg MuiDialog-paperFullWidth css-1gvcosv-MuiPaper-root-MuiDialog-paper"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthLg MuiDialog-paperFullWidth css-1h0hssy-MuiPaper-root-MuiDialog-paper"
         role="dialog"
       >
         <h2
@@ -820,7 +820,7 @@ exports[`Catalogue Items Dialog > renders properties step correctly 1`] = `
     >
       <div
         aria-labelledby=":rg:"
-        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthLg MuiDialog-paperFullWidth css-1gvcosv-MuiPaper-root-MuiDialog-paper"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthLg MuiDialog-paperFullWidth css-1h0hssy-MuiPaper-root-MuiDialog-paper"
         role="dialog"
       >
         <h2
