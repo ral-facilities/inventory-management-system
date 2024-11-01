@@ -916,7 +916,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   };
   return (
     <Dialog
-      PaperProps={{ sx: { height: '1300px' } }}
+      PaperProps={{ sx: { height: '910px' } }}
       open={open}
       maxWidth="lg"
       fullWidth
