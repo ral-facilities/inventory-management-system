@@ -1,3 +1,5 @@
+import { delay, HttpResponse } from 'msw';
+
 describe('Items', () => {
   beforeEach(() => {
     cy.visit('/catalogue/item/1/items');
@@ -277,7 +279,7 @@ describe('Items', () => {
     cy.findByLabelText('Asset number').type('test13221');
     cy.findByLabelText('Purchase order number').type('test23');
     cy.findByLabelText('Warranty end date').type('12/02/2028');
-    cy.findByLabelText('Delivered date').type('12/02/2028');
+    cy.findByLabelText('Delivered date').type('12/02/2024');
     cy.findByLabelText('Is defective *').click();
     cy.findByRole('option', { name: 'Yes' }).click();
     cy.findByLabelText('Usage status *').click();
@@ -317,7 +319,7 @@ describe('Items', () => {
           warranty_end_date: '2028-02-12T00:00:00.000Z',
           asset_number: 'test13221',
           serial_number: 'test1234',
-          delivered_date: '2028-02-12T00:00:00.000Z',
+          delivered_date: '2024-02-12T00:00:00.000Z',
           notes: 'test',
           properties: [
             { id: '1', value: 1218 },
@@ -347,7 +349,7 @@ describe('Items', () => {
 
     cy.findByLabelText('Warranty end date').type('12/02/4000');
     cy.findByLabelText('Delivered date').type('12/02/4000');
-    cy.findAllByText('Date cannot be later than 1/1/2100.').should(
+    cy.findAllByText('Date cannot be later than', { exact: false }).should(
       'have.length',
       2
     );
@@ -357,7 +359,9 @@ describe('Items', () => {
 
     cy.findByLabelText('Warranty end date').type('12/02/2000');
     cy.findByLabelText('Delivered date').type('12/02/2000');
-    cy.findByText('Date cannot be later than 1/1/2100.').should('not.exist');
+    cy.findByText('Date cannot be later than', { exact: false }).should(
+      'not.exist'
+    );
     cy.findByText('Date format: dd/MM/yyyy').should('not.exist');
 
     cy.findByRole('button', { name: 'Next' }).click();
@@ -403,30 +407,11 @@ describe('Items', () => {
     cy.findByText('Zf7P8Qu8TD8c').should('exist');
   });
 
-  it('navigates to the landing page, toggles the properties and navigates back to the table view', () => {
+  it('navigates to the landing page and navigates back to the table view', () => {
     cy.findByText('5YUQDDjKpz2z').click();
     cy.findByText(
       'High-resolution cameras for beam characterization. 1'
     ).should('exist');
-    cy.findByLabelText('Close item properties').should('exist');
-
-    cy.findByLabelText('Close item properties').click();
-
-    cy.findByLabelText('Close item properties').should('not.exist');
-    cy.findByLabelText('Show item properties').should('exist');
-
-    cy.findByLabelText('Close item manufacturer details').should('exist');
-
-    cy.findByLabelText('Close item manufacturer details').click();
-
-    cy.findByLabelText('Close item manufacturer details').should('not.exist');
-
-    cy.findByLabelText('Close item details').should('exist');
-
-    cy.findByLabelText('Close item details').click();
-
-    cy.findByLabelText('Close item details').should('not.exist');
-    cy.findByLabelText('Show item manufacturer details').should('exist');
 
     cy.findByRole('link', {
       name: 'Items',
@@ -436,6 +421,187 @@ describe('Items', () => {
     cy.findByText('vYs9Vxx6yWbn').should('exist');
     cy.findByText('PcfCM1jp0SUV').should('exist');
     cy.findByText('Zf7P8Qu8TD8c').should('exist');
+  });
+
+  describe('Attachments', () => {
+    afterEach(() => {
+      cy.clearMocks();
+    });
+
+    it('uploads attachment', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+      cy.findByRole('button', {
+        name: 'items landing page actions menu',
+      }).click();
+      cy.findByText('Upload Attachments').click();
+
+      cy.findAllByText('Files cannot be larger than', { exact: false }).should(
+        'exist'
+      );
+      cy.get('.uppy-Dashboard-input').as('fileInput');
+
+      cy.get('@fileInput')
+        .first()
+        .selectFile(
+          [
+            'cypress/fixtures/documents/test1.txt',
+            'cypress/fixtures/documents/test2.txt',
+          ],
+          { force: true }
+        );
+      cy.startSnoopingBrowserMockedRequest();
+      cy.findByText('Upload 2 files').click();
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: '/attachments',
+      }).should(async (postRequests) => {
+        expect(postRequests.length).eq(2);
+        expect(JSON.stringify(await postRequests[0].json())).equal(
+          JSON.stringify({
+            entity_id: 'KvT2Ox7n',
+            file_name: 'test1.txt',
+          })
+        );
+        expect(JSON.stringify(await postRequests[1].json())).equal(
+          JSON.stringify({
+            entity_id: 'KvT2Ox7n',
+            file_name: 'test2.txt',
+          })
+        );
+      });
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: '/object-storage',
+      }).should(async (postRequests) => {
+        expect(postRequests.length).eq(2);
+      });
+      cy.findByText('Complete').should('exist');
+    });
+
+    it('should send a DELETE request for the attachment document if a file is removed during upload', () => {
+      cy.window().its('msw').should('not.equal', undefined);
+      cy.window().then((window) => {
+        const { worker, http } = window.msw;
+
+        worker.use(
+          http.post('/object-storage', async () => {
+            await delay(500);
+            return new HttpResponse(undefined, { status: 200 });
+          })
+        );
+      });
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+      cy.findByRole('button', {
+        name: 'items landing page actions menu',
+      }).click();
+      cy.findByText('Upload Attachments').click();
+
+      cy.findAllByText('Files cannot be larger than', { exact: false }).should(
+        'exist'
+      );
+      cy.get('.uppy-Dashboard-input').as('fileInput');
+
+      cy.get('@fileInput')
+        .first()
+        .selectFile(['cypress/fixtures/documents/test1.txt'], {
+          force: true,
+        });
+      cy.startSnoopingBrowserMockedRequest();
+      cy.findByText('Upload 1 file').click();
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: '/attachments',
+      }).should(async (postRequests) => {
+        expect(postRequests.length).eq(1);
+        expect(JSON.stringify(await postRequests[0].json())).equal(
+          JSON.stringify({
+            entity_id: 'KvT2Ox7n',
+            file_name: 'test1.txt',
+          })
+        );
+      });
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: '/object-storage',
+      }).should(async (postRequests) => {
+        expect(postRequests.length).eq(1);
+      });
+
+      // Click the "Remove file" button
+      cy.findByRole('button', { name: 'Remove file' }).click();
+
+      //TODO: Assert axios delete request was called
+
+      // Assert that the text "Upload 1 file" is not in the document
+      cy.findByText('Upload 1 file').should('not.exist');
+    });
+
+    it('errors when presigned url fails', () => {
+      cy.window().its('msw').should('not.equal', undefined);
+      cy.window().then((window) => {
+        const { worker, http } = window.msw;
+
+        worker.use(
+          http.post('/object-storage', async () => {
+            return HttpResponse.error();
+          })
+        );
+      });
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+      cy.findByRole('button', {
+        name: 'items landing page actions menu',
+      }).click();
+      cy.findByText('Upload Attachments').click();
+
+      cy.findAllByText('Files cannot be larger than', { exact: false }).should(
+        'exist'
+      );
+      cy.get('.uppy-Dashboard-input').as('fileInput');
+
+      cy.get('@fileInput')
+        .first()
+        .selectFile(['cypress/fixtures/documents/test1.txt'], {
+          force: true,
+        });
+      cy.startSnoopingBrowserMockedRequest();
+      cy.findByText('Upload 1 file').click();
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: '/attachments',
+      }).should(async (postRequests) => {
+        expect(postRequests.length).eq(1);
+        expect(JSON.stringify(await postRequests[0].json())).equal(
+          JSON.stringify({
+            entity_id: 'KvT2Ox7n',
+            file_name: 'test1.txt',
+          })
+        );
+      });
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: '/object-storage',
+      }).should(async (postRequests) => {
+        expect(postRequests.length).eq(1);
+      });
+
+      cy.findByLabelText('Show error details').should('exist');
+      cy.findByText('Upload failed').should('exist');
+    });
   });
 
   it('delete an item', () => {
@@ -515,7 +681,7 @@ describe('Items', () => {
     cy.findByLabelText('Asset number').type('test13221');
     cy.findByLabelText('Purchase order number').type('test23');
     cy.findByLabelText('Warranty end date').type('12/02/2028');
-    cy.findByLabelText('Delivered date').type('12/02/2028');
+    cy.findByLabelText('Delivered date').type('12/02/2024');
     cy.findByLabelText('Is defective *').click();
     cy.findByRole('option', { name: 'Yes' }).click();
     cy.findByLabelText('Usage status *').click();
@@ -555,7 +721,7 @@ describe('Items', () => {
           usage_status_id: '3',
           warranty_end_date: '2028-02-12T23:00:00.000Z',
           asset_number: '75YWiLwy54test13221',
-          delivered_date: '2028-02-12T00:00:00.000Z',
+          delivered_date: '2024-02-12T00:00:00.000Z',
           notes: 'zolZDKKuvAoTFRUWeZNAtest',
           system_id: '65328f34a40ff5301575a4e3',
           properties: [

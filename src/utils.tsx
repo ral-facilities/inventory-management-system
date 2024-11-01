@@ -511,3 +511,9 @@ export const checkForDuplicates = (props: {
 
   return Array.from(duplicateIds);
 };
+
+export function getNonEmptyTrimmedString(value: unknown): string | undefined {
+  return typeof value === 'string' && value.trim() !== ''
+    ? value.trim()
+    : undefined;
+}

@@ -147,8 +147,6 @@ const modifyCatalogueItem = (
     if (values.itemModelNumber)
       cy.findByText(values.itemModelNumber).should('exist');
 
-    if (values.notes) cy.findByText(values.notes).should('exist');
-
     cy.findByText(values.manufacturer).should('exist');
 
     cy.findByText(values.substrate).should('exist');
@@ -168,10 +166,10 @@ const modifyCatalogueItem = (
     }
 
     if (values.notes) {
-      cy.findByText(values.notes).scrollIntoView();
-
+      cy.findByText('Notes').click();
       cy.findByText(values.notes).should('exist');
     }
+    cy.go('back');
     cy.go('back');
   }
 };

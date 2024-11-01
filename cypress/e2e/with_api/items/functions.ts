@@ -161,7 +161,7 @@ export const editProperty = () => {
 
   cy.findAllByText('MX4332424').first().click();
   cy.findByText('Type').should('exist');
-
+  cy.findByRole('button', { name: 'items landing page actions menu' }).click();
   cy.findByText('Edit').click();
   cy.findByRole('button', { name: 'Next' }).click();
   cy.findByLabelText('Type *').click();
@@ -273,7 +273,7 @@ export const editItem = () => {
     assetNumber: 'PY42343424',
     purchaseOrderNumber: '2334',
     warrantyEndDate: '17/02/2030',
-    deliveredDate: '19/03/2026',
+    deliveredDate: '19/03/2024',
     isDefective: 'No',
     usageStatus: 'Used',
     notes: 'tests',
