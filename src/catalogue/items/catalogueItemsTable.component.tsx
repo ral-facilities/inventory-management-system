@@ -470,7 +470,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem.expected_lifetime_days ?? '',
         id: 'catalogueItem.expected_lifetime_days',
-        size: 280,
+        size: 300,
         filterVariant: 'range',
         Cell: ({ row }) => {
           return row.original.catalogueItem.expected_lifetime_days === 0
