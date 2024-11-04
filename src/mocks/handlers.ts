@@ -1032,7 +1032,7 @@ export const handlers = [
           thumbnail = ImageJSON.thumbnail_base64;
           fileName = ImageJSON.file_name;
         } else {
-          thumbnail = thumbnail2;
+          thumbnail = id === 3 ? 'test' : thumbnail2;
           fileName = 'stfc-logo-blue-text.png';
         }
         return {
