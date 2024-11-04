@@ -156,9 +156,21 @@ describe('Upload attachment dialog', () => {
 
   it('should send a DELETE request for the attachment document if a file is removed during upload', async () => {
     server.use(
-      http.post('/object-storage', async () => {
+      http.post('/attachments', async () => {
         await delay(500);
-        return new HttpResponse(undefined, { status: 200 });
+
+        return HttpResponse.json(
+          {
+            id: '1',
+
+            title: null,
+            description: null,
+            upload_info: {},
+            modified_time: '2024-01-02T13:10:10.000+00:00',
+            created_time: '2024-01-01T12:00:00.000+00:00',
+          },
+          { status: 200 }
+        );
       })
     );
 
@@ -192,12 +204,6 @@ describe('Upload attachment dialog', () => {
       entity_id: '1',
       file_name: 'removeError.txt',
     });
-
-    expect(xhrPostSpy).toHaveBeenCalledWith(
-      'POST',
-      'http://localhost:3000/object-storage',
-      true
-    );
 
     await user.click(
       await screen.findByRole('button', { name: 'Remove file' })
