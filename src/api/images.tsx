@@ -9,9 +9,14 @@ export const getImage = async (id: string): Promise<ImageGet> => {
   });
 };
 
-const getImages = async (entityId: string): Promise<Image[]> => {
+const getImages = async (
+  entityId: string,
+  primary?: boolean
+): Promise<Image[]> => {
   const queryParams = new URLSearchParams();
   queryParams.append('entity_id', entityId);
+
+  if (primary !== undefined) queryParams.append('primary', String(primary));
   return storageApi
     .get(`/images`, {
       params: queryParams,
@@ -20,11 +25,12 @@ const getImages = async (entityId: string): Promise<Image[]> => {
 };
 
 export const useGetImages = (
-  entityId?: string
+  entityId?: string,
+  primary?: boolean
 ): UseQueryResult<Image[], AxiosError> => {
   return useQuery({
-    queryKey: ['Images', entityId],
-    queryFn: () => getImages(entityId ?? ''),
+    queryKey: ['Images', entityId, primary],
+    queryFn: () => getImages(entityId ?? '', primary),
     enabled: !!entityId,
   });
 };
