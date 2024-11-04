@@ -94,7 +94,7 @@ describe('Image Gallery', () => {
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
 
-    expect(screen.getAllByText('logo1.png').length).toEqual(10);
+    expect(screen.getAllByText('logo1.png').length).toEqual(8);
     expect(baseElement).toMatchSnapshot();
   });
 
@@ -115,6 +115,34 @@ describe('Image Gallery', () => {
 
     expect(screen.queryByText('logo1.png')).not.toBeInTheDocument();
     expect(baseElement).toMatchSnapshot();
+  });
+
+  it('changes page correctly and rerenders data', async () => {
+    const { router } = createView();
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
+    expect(screen.getAllByText('logo1.png').length).toEqual(8);
+    expect(router.state.location.search).toBe('');
+
+    await user.click(screen.getByRole('button', { name: 'Go to page 2' }));
+
+    await waitFor(() => {
+      expect(screen.getAllByText('logo1.png').length).toEqual(2);
+    });
+
+    expect(router.state.location.search).toBe(
+      '?imageState=N4IgDiBcpghg5gUwMoEsBeioEYBsAacBRASQDsATRADygCYBfBoA'
+    );
+
+    await user.click(screen.getByRole('button', { name: 'Go to page 1' }));
+
+    await waitFor(() => {
+      expect(screen.getAllByText('logo1.png').length).toEqual(8);
+    });
+    expect(router.state.location.search).toBe('');
   });
 
   it('falls back to placeholder thumbnail', async () => {

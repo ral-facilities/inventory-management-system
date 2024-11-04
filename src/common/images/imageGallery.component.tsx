@@ -16,6 +16,8 @@ import { Gallery, GalleryProps, Item } from 'react-photoswipe-gallery';
 import { getImage, useGetImages } from '../../api/images';
 import { InventoryManagementSystemSettingsContext } from '../../configProvider.component';
 import { OverflowTip } from '../../utils';
+import CardViewFooter from '../cardView/cardViewFooter.component';
+import { usePreservedTableState } from '../preservedTableState.component';
 import ImageNotAvailable from '/images/image-not-available.png';
 import ThumbnailNotAvailable from '/images/thumbnail-not-available.png';
 
@@ -29,6 +31,21 @@ const ImageGallery = (props: ImageGalleryProps) => {
   const { entityId } = props;
   const { data: images, isLoading: imageIsLoading } = useGetImages(entityId);
   const queryClient = useQueryClient();
+
+  const { preservedState, onPreservedStatesChange } = usePreservedTableState({
+    initialState: {
+      pagination: { pageSize: 16, pageIndex: 1 },
+    },
+    storeInUrl: true,
+    paginationOnly: true,
+    urlParamName: 'imageState',
+  });
+
+  const startIndex =
+    (preservedState.pagination.pageIndex - 1) *
+    preservedState.pagination.pageSize;
+  const endIndex = startIndex + preservedState.pagination.pageSize;
+  const displayedImages = images?.slice(startIndex, endIndex);
 
   const settings = React.useContext(InventoryManagementSystemSettingsContext);
   const pluginHost = settings.pluginHost;
@@ -137,7 +154,31 @@ const ImageGallery = (props: ImageGalleryProps) => {
 
   return (
     <>
-      {images && (
+      {!imageIsLoading ? (
+        (!images || images.length === 0) && (
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            height="300px"
+            flexDirection="column"
+            textAlign="center"
+          >
+            <Typography variant="h6" fontWeight="bold">
+              No images available
+            </Typography>
+            <Typography variant="body1">
+              Please add an image by opening the Action Menu and clicking the
+              Upload Images menu item.
+            </Typography>
+          </Box>
+        )
+      ) : (
+        <Box sx={{ width: '100%' }}>
+          <LinearProgress />
+        </Box>
+      )}
+      {images && images.length !== 0 && (
         <Gallery
           onBeforeOpen={onBeforeOpen}
           uiElements={uiElements}
@@ -146,7 +187,23 @@ const ImageGallery = (props: ImageGalleryProps) => {
         >
           <Grid container mt={2} gap={2}>
             {images.map((image, index) => {
-              return (
+              const isUndisplayed = !displayedImages?.some(
+                (img) => img.id === image.id
+              );
+
+              return isUndisplayed ? (
+                <Item
+                  thumbnail={`data:image/webp;base64,${image.thumbnail_base64}`}
+                  id={image.id}
+                  caption={image.description ?? undefined}
+                  alt={`Image: ${image.title || image.file_name || index}`}
+                  key={`thumbnail-not-displayed-${image.id}`}
+                >
+                  {({ ref }) => {
+                    return <Box ref={ref} style={{ display: 'none' }} />;
+                  }}
+                </Item>
+              ) : (
                 <Card
                   component={Grid}
                   item
@@ -155,7 +212,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
                   sm={6} // 12 columns on small screens
                   md={4} // 6 columns on medium screens (2 items per row)
                   lg={2.9} // 4 columns on large screens (3 items per row)
-                  key={index}
+                  key={`thumbnail-displayed-${index}`}
                 >
                   <Grid
                     display="flex"
@@ -245,32 +302,16 @@ const ImageGallery = (props: ImageGalleryProps) => {
                 </Card>
               );
             })}
+
+            <CardViewFooter
+              label="Images"
+              dataLength={images.length}
+              pagination={preservedState.pagination}
+              onPaginationChange={onPreservedStatesChange.onPaginationChange}
+              maxResultsList={[16, 24, 32]}
+            />
           </Grid>
         </Gallery>
-      )}
-      {!imageIsLoading ? (
-        (!images || images.length === 0) && (
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            height="300px"
-            flexDirection="column"
-            textAlign="center"
-          >
-            <Typography variant="h6" fontWeight="bold">
-              No images available
-            </Typography>
-            <Typography variant="body1">
-              Please add an image by opening the Action Menu and clicking the
-              Upload Images menu item.
-            </Typography>
-          </Box>
-        )
-      ) : (
-        <Box sx={{ width: '100%' }}>
-          <LinearProgress />
-        </Box>
       )}
     </>
   );

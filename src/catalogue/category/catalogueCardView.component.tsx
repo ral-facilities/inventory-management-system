@@ -1,14 +1,6 @@
-import {
-  FormControl,
-  Grid,
-  MenuItem,
-  Pagination,
-  Select,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import { Grid, useMediaQuery, useTheme } from '@mui/material';
 import { CatalogueCategory } from '../../api/api.types';
+import CardViewFooter from '../../common/cardView/cardViewFooter.component';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import { getPageHeightCalc } from '../../utils';
 import CatalogueCard from './catalogueCard.component';
@@ -85,91 +77,13 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
           </Grid>
         ))}
       </Grid>
-
-      <Grid item container marginTop={'auto'} direction="row">
-        <Grid item xs={12} sm="auto">
-          <Typography
-            sx={{ paddingTop: '20px', paddingLeft: '8px', margin: '8px' }}
-          >
-            {`Total Categories: ${catalogueCategoryData.length}`}
-          </Typography>
-        </Grid>
-
-        <Grid
-          item
-          flexWrap="nowrap"
-          flexDirection="row"
-          display="flex"
-          alignItems="center"
-          justifyContent="flex-end"
-          sm
-        >
-          <FormControl
-            variant="standard"
-            sx={{
-              paddingTop: '16px',
-              margin: 1,
-              display: 'flex',
-              flexDirection: 'row',
-            }}
-          >
-            <Typography
-              sx={{
-                paddingX: 1,
-                paddingTop: 0.5,
-                color: 'text.secondary',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              {'Categories per page'}
-            </Typography>
-            <Select
-              disableUnderline
-              value={preservedState.pagination.pageSize}
-              inputProps={{
-                name: 'Max Results',
-                labelId: 'select-max-results',
-                'aria-label': 'Categories per page',
-              }}
-              onChange={(event) =>
-                onPreservedStatesChange.onPaginationChange({
-                  pageSize: +event.target.value,
-                  pageIndex: 1,
-                })
-              }
-              label={'Max Results'}
-            >
-              <MenuItem value={'30'}>30</MenuItem>
-              <MenuItem value={'45'}>45</MenuItem>
-              <MenuItem value={'60'}>60</MenuItem>
-            </Select>
-          </FormControl>
-          <Pagination
-            variant="outlined"
-            shape="rounded"
-            count={Math.ceil(
-              catalogueCategoryData?.length / preservedState.pagination.pageSize
-            )}
-            page={preservedState.pagination.pageIndex}
-            onChange={(_event, value) =>
-              onPreservedStatesChange.onPaginationChange((prevState) => ({
-                ...prevState,
-                pageIndex: value,
-              }))
-            }
-            size="medium"
-            color="secondary"
-            aria-label="pagination"
-            className="catalogue-categories-pagination"
-            sx={{
-              paddingTop: 2,
-              '& > .MuiPagination-ul': {
-                flexWrap: 'nowrap',
-              },
-            }}
-          />
-        </Grid>
-      </Grid>
+      <CardViewFooter
+        label="Categories"
+        dataLength={catalogueCategoryData.length}
+        pagination={preservedState.pagination}
+        onPaginationChange={onPreservedStatesChange.onPaginationChange}
+        maxResultsList={[30, 45, 60]}
+      />
     </Grid>
   );
 }
