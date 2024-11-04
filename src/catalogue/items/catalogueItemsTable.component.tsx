@@ -37,7 +37,10 @@ import { useGetCatalogueItems } from '../../api/catalogueItems';
 import { useGetManufacturerIds } from '../../api/manufacturers';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import {
-  ItemPropertyFiltersTypes,
+  COLUMN_FILTER_FUNCTIONS,
+  COLUMN_FILTER_MODE_OPTIONS,
+  COLUMN_FILTER_VARIANTS,
+  OPTIONAL_FILTER_MODE_OPTIONS,
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
   TableGroupedCell,
@@ -45,6 +48,7 @@ import {
   displayTableRowCountText,
   formatDateTimeStrings,
   generateUniqueName,
+  getInitialColumnFilterFnState,
   getPageHeightCalc,
 } from '../../utils';
 import CatalogueItemDirectoryDialog from './catalogueItemDirectoryDialog.component';
@@ -222,18 +226,15 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   >('create');
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     const viewCatalogueItemProperties = parentInfo.properties ?? [];
-    const propertyFilters: ItemPropertyFiltersTypes = {
-      boolean: 'autocomplete',
-      string: 'text',
-      number: 'range',
-      null: 'text',
-    };
     return [
       {
         header: 'Name',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem.name,
         id: 'catalogueItem.name',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
         size: 200,
         Cell: ({ renderedCellValue, row }) =>
           dense ? (
@@ -254,8 +255,9 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.catalogueItem.modified_time),
         id: 'catalogueItem.modified_time',
-        filterVariant: 'datetime-range',
-        filterFn: 'betweenInclusive',
+        filterVariant: COLUMN_FILTER_VARIANTS.datetime,
+        filterFn: COLUMN_FILTER_FUNCTIONS.datetime,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.datetime,
         size: 350,
         enableGrouping: false,
         Cell: ({ row }) =>
@@ -266,8 +268,9 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.catalogueItem.created_time),
         id: 'catalogueItem.created_time',
-        filterVariant: 'datetime-range',
-        filterFn: 'betweenInclusive',
+        filterVariant: COLUMN_FILTER_VARIANTS.datetime,
+        filterFn: COLUMN_FILTER_FUNCTIONS.datetime,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.datetime,
         size: 350,
         enableGrouping: false,
         enableHiding: true,
@@ -294,6 +297,12 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem.description ?? '',
         id: 'catalogueItem.description',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS.string,
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
+        ],
         size: 250,
         enableGrouping: false,
       },
@@ -303,8 +312,10 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         accessorFn: (row) =>
           row.catalogueItem.is_obsolete === true ? 'Yes' : 'No',
         id: 'catalogueItem.is_obsolete',
+        filterVariant: COLUMN_FILTER_VARIANTS.boolean,
+        filterFn: COLUMN_FILTER_FUNCTIONS.boolean,
+        enableColumnFilterModes: false,
         size: 200,
-        filterVariant: 'autocomplete',
       },
       {
         header: 'Obsolete replacement link',
@@ -312,7 +323,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         accessorFn: (row) =>
           row.catalogueItem.obsolete_replacement_catalogue_item_id ?? '',
         id: 'catalogueItem.obsolete_replacement_catalogue_item_id',
-        size: 300,
+        size: 275,
         enableSorting: false,
         enableColumnFilter: false,
         enableGrouping: false,
@@ -332,7 +343,13 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem.obsolete_reason ?? '',
         id: 'catalogueItem.obsolete_reason',
-        size: 250,
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS.string,
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
+        ],
+        size: 225,
         enableGrouping: false,
       },
       ...viewCatalogueItemProperties.map((property) => ({
@@ -341,97 +358,72 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         id: `catalogueItem.properties.${property.id}`,
         GroupedCell: TableGroupedCell,
         accessorFn: (row: TableRowData) => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const propertyValue: any = findPropertyValue(
+            row.catalogueItem.properties,
+            property.id
+          );
           if (property.type === 'boolean') {
-            return (findPropertyValue(
-              row.catalogueItem.properties,
-              property.id
-            ) as boolean) === true
-              ? 'Yes'
-              : 'No';
+            if (typeof propertyValue === 'boolean') {
+              return propertyValue ? 'Yes' : 'No';
+            } else {
+              return '';
+            }
           } else if (property.type === 'number') {
-            return typeof findPropertyValue(
-              row.catalogueItem.properties,
-              property.id
-            ) === 'number'
-              ? findPropertyValue(row.catalogueItem.properties, property.id)
-              : 0;
+            return typeof propertyValue === 'number' ? propertyValue : '';
           } else {
             // if the value doesn't exist it return type "true" we need to change this
             // to '' to allow this column to be filterable
 
-            return findPropertyValue(row.catalogueItem.properties, property.id);
+            return propertyValue ?? '';
           }
         },
-        size: 300,
+        size: 250,
         filterVariant:
-          propertyFilters[
+          COLUMN_FILTER_VARIANTS[
             property.type as 'string' | 'boolean' | 'number' | 'null'
           ],
-
-        Cell: ({ row }: { row: MRT_Row<TableRowData> }) => {
-          if (
-            typeof findPropertyValue(
-              row.original.catalogueItem.properties,
-              property.id
-            ) === 'number'
-          ) {
-            return findPropertyValue(
-              row.original.catalogueItem.properties,
-              property.id
-            ) === 0
-              ? 0
-              : findPropertyValue(
-                    row.original.catalogueItem.properties,
-                    property.id
-                  ) !== null
-                ? findPropertyValue(
-                    row.original.catalogueItem.properties,
-                    property.id
-                  )
-                : '';
-          } else if (
-            typeof findPropertyValue(
-              row.original.catalogueItem.properties,
-              property.id
-            ) === 'boolean'
-          ) {
-            return findPropertyValue(
-              row.original.catalogueItem.properties,
-              property.id
-            )
-              ? 'Yes'
-              : 'No';
-          } else {
-            return findPropertyValue(
-              row.original.catalogueItem.properties,
-              property.id
-            );
-          }
-        },
+        filterFn:
+          COLUMN_FILTER_FUNCTIONS[
+            property.type as 'string' | 'boolean' | 'number' | 'null'
+          ],
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS[
+            property.type as 'string' | 'boolean' | 'number' | 'null'
+          ],
+          ...(property.mandatory ? [] : OPTIONAL_FILTER_MODE_OPTIONS),
+        ],
+        enableColumnFilterModes:
+          (property.type as 'string' | 'boolean' | 'number' | 'null') ===
+          'boolean'
+            ? property.mandatory
+              ? false
+              : true
+            : true,
+        filterSelectOptions: ['Yes', 'No'],
       })),
       {
         header: 'Cost (£)',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem.cost_gbp,
         id: 'catalogueItem.cost_gbp',
+        filterVariant: COLUMN_FILTER_VARIANTS.number,
+        filterFn: COLUMN_FILTER_FUNCTIONS.number,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.number,
         size: 250,
-        filterVariant: 'range',
       },
       {
         header: 'Cost to Rework (£)',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => row.catalogueItem.cost_to_rework_gbp ?? 0,
+        accessorFn: (row) => row.catalogueItem.cost_to_rework_gbp ?? '',
         id: 'catalogueItem.cost_to_rework_gbp',
-        size: 300,
-        filterVariant: 'range',
-        Cell: ({ row }) => {
-          // Logic to get the range slider to work with null values
-          return row.original.catalogueItem.cost_to_rework_gbp === 0
-            ? 0
-            : row.original.catalogueItem.cost_to_rework_gbp !== null
-              ? row.original.catalogueItem.cost_to_rework_gbp
-              : '';
-        },
+        size: 250,
+        filterVariant: COLUMN_FILTER_VARIANTS.number,
+        filterFn: COLUMN_FILTER_FUNCTIONS.number,
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS.number,
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
+        ],
         GroupedCell: TableGroupedCell,
       },
       {
@@ -439,24 +431,23 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem.days_to_replace,
         id: 'catalogueItem.days_to_replace',
-        size: 300,
-        filterVariant: 'range',
+        filterVariant: COLUMN_FILTER_VARIANTS.number,
+        filterFn: COLUMN_FILTER_FUNCTIONS.number,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.number,
+        size: 275,
       },
       {
         header: 'Days to Rework',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => row.catalogueItem.days_to_rework ?? 0,
+        accessorFn: (row) => row.catalogueItem.days_to_rework ?? '',
         id: 'catalogueItem.days_to_rework',
         size: 250,
-        filterVariant: 'range',
-        Cell: ({ row }) => {
-          // Logic to get the range slider to work with null values
-          return row.original.catalogueItem.days_to_rework === 0
-            ? 0
-            : row.original.catalogueItem.days_to_rework !== null
-              ? row.original.catalogueItem.days_to_rework
-              : '';
-        },
+        filterVariant: COLUMN_FILTER_VARIANTS.number,
+        filterFn: COLUMN_FILTER_FUNCTIONS.number,
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS.number,
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
+        ],
         GroupedCell: TableGroupedCell,
       },
       {
@@ -464,6 +455,12 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem.drawing_number ?? '',
         id: 'catalogueItem.drawing_number',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS.string,
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
+        ],
         size: 250,
         GroupedCell: TableGroupedCell,
       },
@@ -472,6 +469,12 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem.drawing_link ?? '',
         id: 'catalogueItem.drawing_link',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS.string,
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
+        ],
         size: 250,
         Cell: ({ row }) =>
           row.original.catalogueItem.drawing_link && (
@@ -493,6 +496,12 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem.item_model_number ?? '',
         id: 'catalogueItem.item_model_number',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS.string,
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
+        ],
         size: 250,
         GroupedCell: TableGroupedCell,
       },
@@ -501,6 +510,9 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.manufacturer?.name,
         id: 'manufacturer.name',
+        filterVariant: 'autocomplete',
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
         size: 250,
         Cell: ({ row }) => (
           <MuiLink
@@ -519,6 +531,12 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.manufacturer?.url,
         id: 'manufacturer.url',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS.string,
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
+        ],
         size: 250,
         Cell: ({ row }) => (
           <MuiLink
@@ -540,6 +558,12 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         accessorFn: (row) =>
           `${row.manufacturer?.address.address_line}${row.manufacturer?.address.town}${row.manufacturer?.address.county}${row.manufacturer?.address.postcode}${row.manufacturer?.address.country}`,
         id: 'manufacturer.address',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS.string,
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
+        ],
         size: 300,
         Cell: ({ row }) => (
           <div style={{ display: 'inline-block' }}>
@@ -566,6 +590,12 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.manufacturer?.telephone,
         id: 'manufacturer.telephone',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS.string,
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
+        ],
         size: 300,
       },
       {
@@ -573,6 +603,12 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem.notes ?? '',
         id: 'catalogueItem.notes',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS.string,
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
+        ],
         size: 250,
         enableGrouping: false,
       },
@@ -617,10 +653,15 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     [isItemSelectable, onChangeObsoleteReplacementId, selectedRowIds]
   );
 
+  const initialColumnFilterFnState = React.useMemo(() => {
+    return getInitialColumnFilterFnState(columns);
+  }, [columns]);
+
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
       columnVisibility: { 'catalogueItem.created_time': false },
       pagination: { pageSize: dense ? 5 : 15, pageIndex: 0 },
+      columnFilterFns: initialColumnFilterFnState,
     },
     storeInUrl: !dense,
   });
@@ -639,6 +680,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     enableFacetedValues: true,
     enableColumnResizing: !dense,
     enableRowActions: !dense,
+    enableColumnFilterModes: true,
     enableStickyHeader: true,
     enableDensityToggle: false,
     enableRowSelection: true,
