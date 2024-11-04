@@ -49,7 +49,7 @@ vi.mock('./settings', () => ({
 describe('ConfigProvider', () => {
   beforeEach(() => {
     global.document.dispatchEvent = vi.fn();
-    global.CustomEvent<unknown> = vi.fn();
+    global.CustomEvent = vi.fn();
   });
 
   afterEach(() => {
