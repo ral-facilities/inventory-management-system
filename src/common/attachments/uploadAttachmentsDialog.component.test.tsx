@@ -162,7 +162,6 @@ describe('Upload attachment dialog', () => {
         return HttpResponse.json(
           {
             id: '1',
-
             title: null,
             description: null,
             upload_info: {},
