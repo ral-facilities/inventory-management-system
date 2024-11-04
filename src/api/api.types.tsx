@@ -238,3 +238,21 @@ export interface AttachmentPostMetadataResponse
   id: string;
   upload_info: AttachmentUploadInfo;
 }
+
+// ------------------------------------ IMAGES ------------------------------------------------
+
+export interface ImagePost {
+  entity_id: string;
+  file_name: string;
+  upload_file: File;
+  title?: string | null;
+  description?: string | null;
+}
+
+export interface Image
+  extends Required<Omit<ImagePost, 'upload_file'>>,
+    CreatedModifiedMixin {
+  id: string;
+  primary: boolean;
+  thumbnail_base64: string;
+}

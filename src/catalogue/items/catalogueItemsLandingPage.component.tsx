@@ -24,7 +24,7 @@ import {
 import { useGetCatalogueItem } from '../../api/catalogueItems';
 import { useGetManufacturer } from '../../api/manufacturers';
 import ActionMenu from '../../common/actionMenu.component';
-import PlaceholderImage from '../../common/placeholderImage.component';
+import PlaceholderImage from '../../common/images/placeholderImage.component';
 import TabView from '../../common/tab/tabView.component';
 import { formatDateTimeStrings } from '../../utils';
 import Breadcrumbs from '../../view/breadcrumbs.component';
@@ -42,6 +42,7 @@ const CatalogueItemsActionMenu = (props: {
     <ActionMenu
       ariaLabelPrefix="catalogue items landing page"
       uploadAttachmentsEntityId={catalogueItem.id}
+      uploadImagesEntityId={catalogueItem.id}
       printMenuItem
       editMenuItem={{
         onClick: () => setEditItemDialogOpen(true),

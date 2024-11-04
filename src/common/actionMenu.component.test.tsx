@@ -21,6 +21,7 @@ describe('ActionMenu Component', () => {
     props = {
       ariaLabelPrefix: 'catalogue items landing page',
       uploadAttachmentsEntityId: '1',
+      uploadImagesEntityId: '1',
       editMenuItem: mockEditMenuItem,
       printMenuItem: true,
     };
@@ -102,6 +103,27 @@ describe('ActionMenu Component', () => {
     await user.click(actionButton);
 
     const editButton = screen.getByText('Upload Attachments');
+    await user.click(editButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const closeButton = screen.getByRole('button', { name: 'Close Modal' });
+    await user.click(closeButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+  it('opens the upload images dialog', async () => {
+    createView();
+
+    const actionButton = screen.getByLabelText(
+      'catalogue items landing page actions menu'
+    );
+    await user.click(actionButton);
+
+    const editButton = screen.getByText('Upload Images');
     await user.click(editButton);
 
     await waitFor(() => {
