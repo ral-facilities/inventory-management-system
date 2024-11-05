@@ -433,19 +433,16 @@ export const MRT_Functions_Localisation: Record<string, string> = {
   filterArrIncludesNone: 'Excludes',
 };
 
-export type ItemPropertyFiltersTypes = {
+export type FilterVariantsByDataType = {
   boolean: 'select' | 'text' | 'range' | 'autocomplete';
   string: 'select' | 'text' | 'range';
   number: 'select' | 'text' | 'range';
   null: 'select' | 'text' | 'range';
-};
-
-export type ColumnFiltersType = ItemPropertyFiltersTypes & {
   datetime: 'datetime-range' | 'datetime';
   date: 'date-range' | 'date';
 };
 
-export const COLUMN_FILTER_VARIANTS: ColumnFiltersType = {
+export const COLUMN_FILTER_VARIANTS: FilterVariantsByDataType = {
   boolean: 'select',
   string: 'text',
   number: 'text',
