@@ -24,7 +24,7 @@ import {
 import { useGetCatalogueItem } from '../../api/catalogueItems';
 import { useGetManufacturer } from '../../api/manufacturers';
 import ActionMenu from '../../common/actionMenu.component';
-import PlaceholderImage from '../../common/placeholderImage.component';
+import PlaceholderImage from '../../common/images/placeholderImage.component';
 import TabView from '../../common/tab/tabView.component';
 import { formatDateTimeStrings } from '../../utils';
 import Breadcrumbs from '../../view/breadcrumbs.component';
@@ -42,6 +42,7 @@ const CatalogueItemsActionMenu = (props: {
     <ActionMenu
       ariaLabelPrefix="catalogue items landing page"
       uploadAttachmentsEntityId={catalogueItem.id}
+      uploadImagesEntityId={catalogueItem.id}
       printMenuItem
       editMenuItem={{
         onClick: () => setEditItemDialogOpen(true),
@@ -290,6 +291,16 @@ function CatalogueItemsLandingPage() {
 
                           <Grid item xs={12} sm={6} md={4}>
                             <Typography align="left" color="text.primary">
+                              Expected Lifetime (days)
+                            </Typography>
+                            <Typography align="left" color="text.secondary">
+                              {catalogueItemIdData.expected_lifetime_days ??
+                                'None'}
+                            </Typography>
+                          </Grid>
+
+                          <Grid item xs={12} sm={6} md={4}>
+                            <Typography align="left" color="text.primary">
                               Drawing Number
                             </Typography>
                             <Typography
@@ -323,6 +334,7 @@ function CatalogueItemsLandingPage() {
                               )}
                             </Typography>
                           </Grid>
+
                           <Grid item xs={12} sm={6} md={4}>
                             <Typography align="left" color="text.primary">
                               Model Number

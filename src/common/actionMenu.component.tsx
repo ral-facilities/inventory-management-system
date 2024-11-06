@@ -7,6 +7,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import UploadAttachmentsDialog from './attachments/uploadAttachmentsDialog.component';
+import UploadImagesDialog from './images/uploadImagesDialog.component';
 import { StyledUppyBox } from './uppy.utils';
 
 export interface ActionMenuProps {
@@ -14,6 +15,7 @@ export interface ActionMenuProps {
   editMenuItem: { onClick: () => void; dialog: React.ReactNode };
   printMenuItem?: boolean;
   uploadAttachmentsEntityId?: string;
+  uploadImagesEntityId?: string;
 }
 function ActionMenu(props: ActionMenuProps) {
   const {
@@ -21,13 +23,15 @@ function ActionMenu(props: ActionMenuProps) {
     printMenuItem,
     ariaLabelPrefix,
     uploadAttachmentsEntityId,
+    uploadImagesEntityId,
   } = props;
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const menuOpen = Boolean(anchorEl);
 
-  const [openUploadAttachmentsDialog, setOpenUploadAttachmentsDialog] =
-    React.useState(false);
+  const [openUploadDialog, setOpenUploadDialog] = React.useState<
+    'images' | 'attachments' | false
+  >(false);
 
   const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -90,10 +94,21 @@ function ActionMenu(props: ActionMenuProps) {
             <EditIcon fontSize="small" sx={{ mr: 1 }} />
             Edit
           </MenuItem>
+          {uploadImagesEntityId && (
+            <MenuItem
+              onClick={() => {
+                setOpenUploadDialog('images');
+                handleMenuClose();
+              }}
+            >
+              <UploadIcon fontSize="small" sx={{ mr: 1 }} />
+              Upload Images
+            </MenuItem>
+          )}
           {uploadAttachmentsEntityId && (
             <MenuItem
               onClick={() => {
-                setOpenUploadAttachmentsDialog(true);
+                setOpenUploadDialog('attachments');
                 handleMenuClose();
               }}
             >
@@ -101,6 +116,7 @@ function ActionMenu(props: ActionMenuProps) {
               Upload Attachments
             </MenuItem>
           )}
+
           {printMenuItem && (
             <MenuItem
               onClick={() => {
@@ -118,9 +134,16 @@ function ActionMenu(props: ActionMenuProps) {
       <StyledUppyBox>
         {uploadAttachmentsEntityId && (
           <UploadAttachmentsDialog
-            open={openUploadAttachmentsDialog}
-            onClose={() => setOpenUploadAttachmentsDialog(false)}
+            open={openUploadDialog === 'attachments'}
+            onClose={() => setOpenUploadDialog(false)}
             entityId={uploadAttachmentsEntityId}
+          />
+        )}
+        {uploadImagesEntityId && (
+          <UploadImagesDialog
+            open={openUploadDialog === 'images'}
+            onClose={() => setOpenUploadDialog(false)}
+            entityId={uploadImagesEntityId}
           />
         )}
       </StyledUppyBox>

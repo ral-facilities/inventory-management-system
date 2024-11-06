@@ -13,7 +13,7 @@ import {
   CatalogueItem,
   Manufacturer,
 } from '../../api/api.types';
-import PlaceholderImage from '../../common/placeholderImage.component';
+import PlaceholderImage from '../../common/images/placeholderImage.component';
 import { formatDateTimeStrings } from '../../utils';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -158,6 +158,15 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
+              <Grid item xs={12} sm={6} key={8}>
+                <Typography color="text.primary">
+                  Expected Lifetime (days)
+                </Typography>
+                <Typography color="text.secondary">
+                  {catalogueItemIdData.expected_lifetime_days ?? 'None'}
+                </Typography>
+              </Grid>
+
               <Grid item xs={12} sm={6} key={7}>
                 <Typography color="text.primary">Drawing Number</Typography>
                 <Typography
@@ -168,7 +177,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
-              <Grid item xs={12} sm={6} key={8}>
+              <Grid item xs={12} sm={6} key={9}>
                 <Typography color="text.primary">Model Number</Typography>
                 <Typography
                   color="text.secondary"
@@ -178,7 +187,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
-              <Grid item xs={12} sm={6} key={9}>
+              <Grid item xs={12} sm={6} key={10}>
                 <Typography color="text.primary">Last Modified</Typography>
                 <Typography color="text.secondary">
                   {formatDateTimeStrings(
@@ -188,7 +197,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
-              <Grid item xs={12} sm={6} key={10}>
+              <Grid item xs={12} sm={6} key={11}>
                 <Typography color="text.primary">Created</Typography>
                 <Typography color="text.secondary">
                   {formatDateTimeStrings(
