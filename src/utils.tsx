@@ -9,7 +9,6 @@ import {
 } from '@mui/material';
 import { format, parseISO } from 'date-fns';
 import {
-  LiteralUnion,
   MRT_Cell,
   MRT_Column,
   MRT_ColumnDef,
@@ -433,16 +432,11 @@ export const MRT_Functions_Localisation: Record<string, string> = {
   filterArrIncludesNone: 'Excludes',
 };
 
-export type FilterVariantsByDataType = {
-  boolean: 'select' | 'text' | 'range' | 'autocomplete';
-  string: 'select' | 'text' | 'range';
-  number: 'select' | 'text' | 'range';
-  null: 'select' | 'text' | 'range';
-  datetime: 'datetime-range' | 'datetime';
-  date: 'date-range' | 'date';
-};
+type DataTypes = 'boolean' | 'string' | 'number' | 'null' | 'datetime' | 'date';
 
-export const COLUMN_FILTER_VARIANTS: FilterVariantsByDataType = {
+type FilterVariantType = MRT_ColumnDef<MRT_RowData>['filterVariant'];
+
+export const COLUMN_FILTER_VARIANTS: Record<DataTypes, FilterVariantType> = {
   boolean: 'select',
   string: 'text',
   number: 'text',
@@ -450,7 +444,7 @@ export const COLUMN_FILTER_VARIANTS: FilterVariantsByDataType = {
   datetime: 'datetime-range',
   date: 'date',
 };
-export const COLUMN_FILTER_FUNCTIONS: Record<string, MRT_FilterOption> = {
+export const COLUMN_FILTER_FUNCTIONS: Record<DataTypes, MRT_FilterOption> = {
   boolean: 'fuzzy',
   date: 'betweenInclusive',
   datetime: 'betweenInclusive',
@@ -458,24 +452,29 @@ export const COLUMN_FILTER_FUNCTIONS: Record<string, MRT_FilterOption> = {
   number: 'betweenInclusive',
   null: 'fuzzy',
 };
-export const COLUMN_FILTER_MODE_OPTIONS: Record<
-  string,
-  LiteralUnion<string & MRT_FilterOption>[]
-> = {
-  boolean: ['fuzzy'],
-  date: ['between', 'betweenInclusive', 'equals', 'notEquals'],
-  dateTime: ['between', 'betweenInclusive'],
-  string: [
-    'fuzzy',
-    'contains',
-    'startsWith',
-    'endsWith',
-    'equals',
-    'notEquals',
-  ],
-  number: ['between', 'betweenInclusive', 'equals', 'notEquals'],
-  null: ['fuzzy', 'contains', 'startsWith', 'endsWith', 'equals', 'notEquals'],
-};
+export const COLUMN_FILTER_MODE_OPTIONS: Record<DataTypes, MRT_FilterOption[]> =
+  {
+    boolean: ['fuzzy'],
+    date: ['between', 'betweenInclusive', 'equals', 'notEquals'],
+    datetime: ['between', 'betweenInclusive'],
+    string: [
+      'fuzzy',
+      'contains',
+      'startsWith',
+      'endsWith',
+      'equals',
+      'notEquals',
+    ],
+    number: ['between', 'betweenInclusive', 'equals', 'notEquals'],
+    null: [
+      'fuzzy',
+      'contains',
+      'startsWith',
+      'endsWith',
+      'equals',
+      'notEquals',
+    ],
+  };
 
 export const OPTIONAL_FILTER_MODE_OPTIONS: MRT_FilterOption[] = [
   'empty',

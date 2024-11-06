@@ -238,6 +238,20 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
+                        Expected Lifetime (days)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        1080
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      >
                         Drawing Number
                       </p>
                       <p
@@ -780,6 +794,20 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                         class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
                         None
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      >
+                        Expected Lifetime (days)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        1080
                       </p>
                     </div>
                     <div
@@ -1344,6 +1372,20 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
+                        Expected Lifetime (days)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        647
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      >
                         Drawing Number
                       </p>
                       <p
@@ -1846,6 +1888,20 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                         class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
                         None
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      >
+                        Expected Lifetime (days)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        3124
                       </p>
                     </div>
                     <div
@@ -2374,6 +2430,20 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
+                        Expected Lifetime (days)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        3124
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      >
                         Drawing Number
                       </p>
                       <p
@@ -2893,6 +2963,20 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
+                        Expected Lifetime (days)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        3124
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      >
                         Drawing Number
                       </p>
                       <p
@@ -3404,6 +3488,20 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                         class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
                         None
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      >
+                        Expected Lifetime (days)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        3124
                       </p>
                     </div>
                     <div

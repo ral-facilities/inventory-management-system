@@ -451,6 +451,20 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         GroupedCell: TableGroupedCell,
       },
       {
+        header: 'Expected Lifetime (Days)',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => row.catalogueItem.expected_lifetime_days ?? '',
+        id: 'catalogueItem.expected_lifetime_days',
+        size: 300,
+        filterVariant: COLUMN_FILTER_VARIANTS.number,
+        filterFn: COLUMN_FILTER_FUNCTIONS.number,
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS.number,
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
+        ],
+        GroupedCell: TableGroupedCell,
+      },
+      {
         header: 'Drawing Number',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem.drawing_number ?? '',
@@ -763,6 +777,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         'catalogueItem.days_to_rework',
         'catalogueItem.drawing_number',
         'catalogueItem.drawing_link',
+        'catalogueItem.expected_lifetime_days',
         'catalogueItem.item_model_number',
         'manufacturer.url',
       ];

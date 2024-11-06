@@ -174,6 +174,7 @@ export interface CatalogueItemPost {
   cost_to_rework_gbp?: number | null;
   days_to_replace: number;
   days_to_rework?: number | null;
+  expected_lifetime_days?: number | null;
   drawing_number?: string | null;
   drawing_link?: string | null;
   item_model_number?: string | null;
@@ -237,4 +238,22 @@ export interface AttachmentPostMetadataResponse
     CreatedModifiedMixin {
   id: string;
   upload_info: AttachmentUploadInfo;
+}
+
+// ------------------------------------ IMAGES ------------------------------------------------
+
+export interface ImagePost {
+  entity_id: string;
+  file_name: string;
+  upload_file: File;
+  title?: string | null;
+  description?: string | null;
+}
+
+export interface Image
+  extends Required<Omit<ImagePost, 'upload_file'>>,
+    CreatedModifiedMixin {
+  id: string;
+  primary: boolean;
+  thumbnail_base64: string;
 }

@@ -21,7 +21,7 @@ import { useGetManufacturer } from '../api/manufacturers';
 import { useGetSystem } from '../api/systems';
 import { useNavigateToCatalogue } from '../catalogue/catalogue.component';
 import ActionMenu from '../common/actionMenu.component';
-import PlaceholderImage from '../common/placeholderImage.component';
+import PlaceholderImage from '../common/images/placeholderImage.component';
 import TabView from '../common/tab/tabView.component';
 import { formatDateTimeStrings } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
@@ -40,6 +40,7 @@ const ItemsActionMenu = (props: {
       ariaLabelPrefix="items landing page"
       printMenuItem
       uploadAttachmentsEntityId={item.id}
+      uploadImagesEntityId={item.id}
       editMenuItem={{
         onClick: () => setEditItemDialogOpen(true),
         dialog: (
