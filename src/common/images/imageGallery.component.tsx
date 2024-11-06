@@ -151,11 +151,9 @@ const ImageGallery = (props: ImageGalleryProps) => {
                   component={Grid}
                   item
                   container
-                  xs={12} // 12 columns on extra-small screens
-                  sm={6} // 12 columns on small screens
-                  md={4} // 6 columns on medium screens (2 items per row)
-                  lg={2.9} // 4 columns on large screens (3 items per row)
-                  key={index}
+                  xs
+                  key={`thumbnail-displayed-${index}`}
+                  minWidth={'350px'}
                 >
                   <Grid
                     display="flex"
@@ -182,7 +180,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
                     alignItems="center"
                     item
                     minHeight={`${MAX_HEIGHT_THUMBNAIL}px`}
-                    xs={12}
+                    xs
                   >
                     <Item
                       thumbnail={`data:image/webp;base64,${image.thumbnail_base64}`}
