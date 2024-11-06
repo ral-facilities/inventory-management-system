@@ -701,40 +701,13 @@ describe('Items', () => {
     });
 
     it('falls back to placeholder thumbnail', () => {
-      cy.window().its('msw').should('not.equal', undefined);
-      cy.window().then((window) => {
-        const { worker, http } = window.msw;
-
-        worker.use(
-          http.get('/images', async () => {
-            return HttpResponse.json(
-              [
-                {
-                  id: '1',
-                  thumbnail_base64: 'test',
-                  file_name: 'test.png',
-                },
-              ],
-              { status: 200 }
-            );
-          })
-        );
-      });
-
       cy.findByText('5YUQDDjKpz2z').click();
       cy.findByText(
         'High-resolution cameras for beam characterization. 1'
       ).should('exist');
 
       cy.findByText('Gallery').click();
-
-      cy.findByRole('progressbar', { timeout: 10000 }).should('not.exist');
-
-      cy.findByRole('img', { timeout: 10000 }).should(
-        'have.attr',
-        'src',
-        'http://localhost:3000/images/thumbnail-not-available.png'
-      );
+      cy.findByText('The image cannot be loaded').should('exist');
     });
 
     it('opens full-size image when thumbnail is clicked and navigates to the next image', () => {
@@ -745,10 +718,10 @@ describe('Items', () => {
 
       cy.findByText('Gallery').click();
 
-      cy.findAllByAltText('Image: tetstw').first().click();
+      cy.findAllByAltText('Image: stfc-logo-blue-text').first().click();
 
       cy.findByText('File Name: stfc-logo-blue-text.png').should('exist');
-      cy.findByText('Title: tetstw').should('exist');
+      cy.findByText('Title: stfc-logo-blue-text').should('exist');
       cy.findByText('test').should('exist');
 
       cy.findByRole('dialog').within(() => {
@@ -758,7 +731,7 @@ describe('Items', () => {
       cy.findByRole('button', { name: 'Next' }).click();
 
       cy.findByText('File Name: logo1.png').should('exist');
-      cy.findByText('Title: tetstw').should('exist');
+      cy.findByText('Title: logo1').should('exist');
       cy.findByText('test').should('exist');
 
       cy.findByRole('dialog').within(() => {
@@ -768,11 +741,13 @@ describe('Items', () => {
       cy.findByRole('button', { name: 'Next' }).click();
       // Failed to render image
       cy.findByText('File Name: stfc-logo-blue-text.png').should('exist');
-      cy.findByText('Title: tetstw').should('exist');
+      cy.findByText('Title: stfc-logo-blue-text').should('exist');
       cy.findByText('test').should('exist');
 
       cy.findByRole('dialog').within(() => {
-        cy.findByRole('img', { timeout: 10000 }).should('exist');
+        cy.findByText('The image cannot be loaded', { timeout: 15000 }).should(
+          'exist'
+        );
       });
     });
   });

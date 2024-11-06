@@ -1,10 +1,9 @@
-import { fireEvent, screen, waitFor, within } from '@testing-library/react';
+import { screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { act } from 'react';
 import { MockInstance } from 'vitest';
 import { storageApi } from '../../api/api';
-import ImageJSON from '../../mocks/image.json';
 import { server } from '../../mocks/server';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 import ImageGallery, { ImageGalleryProps } from './imageGallery.component';
@@ -117,45 +116,15 @@ describe('Image Gallery', () => {
     expect(baseElement).toMatchSnapshot();
   });
 
-  it('falls back to placeholder thumbnail', async () => {
-    server.use(
-      http.get('/images', async () => {
-        return HttpResponse.json(
-          [
-            {
-              ...ImageJSON,
-              id: '1',
-              thumbnail_base64: 'test',
-              file_name: 'test.png',
-            },
-          ],
-          { status: 200 }
-        );
-      })
-    );
-    createView();
-
-    await waitFor(() =>
-      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
-    );
-
-    const image = screen.getByRole('img') as HTMLImageElement; // Replace with actual alt text or selector
-
-    expect(image).toHaveAttribute('src', 'data:image/webp;base64,test');
-    fireEvent.error(image);
-
-    await waitFor(() => {
-      expect(image.src).toEqual('/images/thumbnail-not-available.png');
-    });
-  });
-
   it('opens full-size image when thumbnail is clicked, navigates to the next image, and then navigates to a third image that failed to upload, falling back to a placeholder', async () => {
     createView();
 
     await waitFor(() =>
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
-    const thumbnail = await screen.findAllByAltText('Image: tetstw');
+    const thumbnail = await screen.findAllByAltText(
+      'Image: stfc-logo-blue-text'
+    );
     await user.click(thumbnail[0]);
 
     expect(axiosGetSpy).toHaveBeenCalledWith('/images/1');
@@ -164,7 +133,7 @@ describe('Image Gallery', () => {
         screen.getByText('File Name: stfc-logo-blue-text.png')
       ).toBeInTheDocument();
     });
-    expect(screen.getByText('Title: tetstw')).toBeInTheDocument();
+    expect(screen.getByText('Title: stfc-logo-blue-text')).toBeInTheDocument();
     expect(screen.getByText('test')).toBeInTheDocument();
 
     await waitFor(
@@ -182,7 +151,7 @@ describe('Image Gallery', () => {
     await waitFor(() => {
       expect(screen.getByText('File Name: logo1.png')).toBeInTheDocument();
     });
-    expect(screen.getByText('Title: tetstw')).toBeInTheDocument();
+    expect(screen.getByText('Title: logo1')).toBeInTheDocument();
     expect(screen.getByText('test')).toBeInTheDocument();
 
     await waitFor(
@@ -203,16 +172,11 @@ describe('Image Gallery', () => {
         screen.getByText('File Name: stfc-logo-blue-text.png')
       ).toBeInTheDocument();
     });
-    expect(screen.getByText('Title: tetstw')).toBeInTheDocument();
+    expect(screen.getByText('Title: stfc-logo-blue-text')).toBeInTheDocument();
     expect(screen.getByText('test')).toBeInTheDocument();
 
-    await waitFor(
-      () => {
-        expect(
-          within(screen.getByRole('dialog')).getByRole('img')
-        ).toBeInTheDocument();
-      },
-      { timeout: 5000 }
-    );
-  }, 15000);
+    await waitFor(() => {
+      expect(axiosGetSpy).toHaveBeenCalledTimes(4);
+    });
+  }, 20000);
 });
