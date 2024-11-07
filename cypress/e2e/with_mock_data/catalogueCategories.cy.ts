@@ -17,6 +17,7 @@ describe('Catalogue Category', () => {
         is_leaf: true,
         created_time: '2024-01-01T12:00:00.000+00:00',
         modified_time: '2024-01-02T13:10:10.000+00:00',
+        properties: [],
       });
     }
     return data;
@@ -32,6 +33,19 @@ describe('Catalogue Category', () => {
     cy.findByText('Actuators').should('exist');
     cy.findByText('Motion').should('be.visible');
     cy.url().should('include', '/catalogue/2');
+  });
+
+  it('displays and hides filters, applies and clears name filter on catalogue categories', () => {
+    cy.visit('/catalogue');
+    cy.findByText('Motion').should('exist');
+    cy.findByText('Show Filters').click();
+    cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
+    cy.findByLabelText('Filter by Name').type('beam');
+    cy.findByText('Motion').should('not.exist');
+    cy.findByRole('button', { name: 'Clear Filters' }).click();
+    cy.findByText('Motion').should('exist');
+    cy.findByText('Hide Filters').click();
+    cy.findByText('Show Filters').should('exist');
   });
 
   it('should navigate back to the root directory when the home button is pressed', () => {
@@ -65,7 +79,7 @@ describe('Catalogue Category', () => {
     cy.findByText('Test 45').should('exist');
     cy.location('search').should(
       'eq',
-      '?state=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygEYBfBoA'
+      '?state=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygAYBfBoA'
     );
 
     cy.findByText('Test 1').click();
@@ -79,7 +93,7 @@ describe('Catalogue Category', () => {
 
     cy.location('search').should(
       'eq',
-      '?state=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygEYBfBoA'
+      '?state=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygAYBfBoA'
     );
     cy.findByRole('combobox', { name: 'Categories per page' }).within(() =>
       cy.findByText('45').should('be.visible')
@@ -987,7 +1001,7 @@ describe('Catalogue Category', () => {
     cy.findByText('Add Property').should('have.length', 1);
 
     // Active waiting (test column filters) for the patch request below
-    cy.findByLabelText('Filter by Name').type('Axis');
+    cy.findAllByLabelText('Filter by Name').last().type('Axis');
     cy.findByRole('button', { name: 'Clear Filters' }).should('exist');
     cy.findByRole('button', { name: 'Clear Filters' }).should(
       'be.not.disabled'
@@ -1041,7 +1055,7 @@ describe('Catalogue Category', () => {
     cy.findByText('Add Property').should('have.length', 1);
 
     // Active waiting (test column filters) for the patch request below
-    cy.findByLabelText('Filter by Name').type('Axis');
+    cy.findAllByLabelText('Filter by Name').last().type('Axis');
     cy.findByRole('button', { name: 'Clear Filters' }).should('exist');
     cy.findByRole('button', { name: 'Clear Filters' }).should(
       'be.not.disabled'
@@ -1105,7 +1119,7 @@ describe('Catalogue Category', () => {
     cy.findByText('Add Property').should('have.length', 1);
 
     // Active waiting (test column filters) for the patch request below
-    cy.findByLabelText('Filter by Name').type('Axis');
+    cy.findAllByLabelText('Filter by Name').last().type('Axis');
     cy.findByRole('button', { name: 'Clear Filters' }).should('exist');
     cy.findByRole('button', { name: 'Clear Filters' }).should(
       'be.not.disabled'
@@ -1171,7 +1185,7 @@ describe('Catalogue Category', () => {
     cy.findByText('Add Property').should('have.length', 1);
 
     // Active waiting (test column filters) for the patch request below
-    cy.findByLabelText('Filter by Name').type('Axis');
+    cy.findAllByLabelText('Filter by Name').last().type('Axis');
     cy.findByRole('button', { name: 'Clear Filters' }).should('exist');
     cy.findByRole('button', { name: 'Clear Filters' }).should(
       'be.not.disabled'
@@ -1326,7 +1340,7 @@ describe('Catalogue Category', () => {
     cy.findByText('Add Property').should('have.length', 1);
 
     // Active waiting (test column filters) for the patch request below
-    cy.findByLabelText('Filter by Name').type('Axis');
+    cy.findAllByLabelText('Filter by Name').last().type('Axis');
     cy.findByRole('button', { name: 'Clear Filters' }).should('exist');
     cy.findByRole('button', { name: 'Clear Filters' }).should(
       'be.not.disabled'
@@ -1375,7 +1389,7 @@ describe('Catalogue Category', () => {
     cy.findByText('Add Property').should('have.length', 1);
 
     // Active waiting (test column filters) for the patch request below
-    cy.findByLabelText('Filter by Name').type('Axis');
+    cy.findAllByLabelText('Filter by Name').last().type('Axis');
     cy.findByRole('button', { name: 'Clear Filters' }).should('exist');
     cy.findByRole('button', { name: 'Clear Filters' }).should(
       'be.not.disabled'
@@ -1423,7 +1437,7 @@ describe('Catalogue Category', () => {
     cy.findByText('Add Property').should('have.length', 1);
 
     // Active waiting (test column filters) for the patch request below
-    cy.findByLabelText('Filter by Name').type('Axis');
+    cy.findAllByLabelText('Filter by Name').last().type('Axis');
     cy.findByRole('button', { name: 'Clear Filters' }).should('exist');
     cy.findByRole('button', { name: 'Clear Filters' }).should(
       'be.not.disabled'

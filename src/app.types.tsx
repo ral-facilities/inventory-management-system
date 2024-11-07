@@ -90,6 +90,7 @@ export interface CatalogueItemDetailsStep {
   cost_to_rework_gbp?: string | null;
   days_to_replace: string;
   days_to_rework?: string | null;
+  expected_lifetime_days?: string | null;
   drawing_number?: string | null;
   drawing_link?: string | null;
   item_model_number?: string | null;
@@ -104,6 +105,7 @@ export interface CatalogueItemDetailsStepPost {
   cost_to_rework_gbp?: number | null;
   days_to_replace: number;
   days_to_rework?: number | null;
+  expected_lifetime_days?: number | null;
   drawing_number?: string | null;
   drawing_link?: string | null;
   item_model_number?: string | null;

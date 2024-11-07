@@ -14,12 +14,10 @@ import 'photoswipe/dist/photoswipe.css';
 import React from 'react';
 import { Gallery, GalleryProps, Item } from 'react-photoswipe-gallery';
 import { getImage, useGetImages } from '../../api/images';
-import { InventoryManagementSystemSettingsContext } from '../../configProvider.component';
 import { OverflowTip } from '../../utils';
 import CardViewFooter from '../cardView/cardViewFooter.component';
 import { usePreservedTableState } from '../preservedTableState.component';
-import ImageNotAvailable from '/images/image-not-available.png';
-import ThumbnailNotAvailable from '/images/thumbnail-not-available.png';
+import ThumbnailImage from './thumbnailImage.component';
 
 const MAX_HEIGHT_THUMBNAIL = 300;
 
@@ -46,9 +44,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
     preservedState.pagination.pageSize;
   const endIndex = startIndex + preservedState.pagination.pageSize;
   const displayedImages = images?.slice(startIndex, endIndex);
-
-  const settings = React.useContext(InventoryManagementSystemSettingsContext);
-  const pluginHost = settings.pluginHost;
 
   const onBeforeOpen = React.useCallback(
     (pswpInstance: PhotoSwipe) => {
@@ -96,9 +91,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
           pswpInstance.refreshSlideContent(pswpInstance.currIndex);
         } catch {
           Object.assign(slide, {
-            src: pluginHost + ImageNotAvailable,
-            width: 696,
-            height: 525,
+            src: 'data:image/jpeg;base64,invalidBase64data',
           });
           pswpInstance.refreshSlideContent(pswpInstance.currIndex);
         } finally {
@@ -112,7 +105,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
         pswpInstance.off('slideInit', slideInitHandler);
       };
     },
-    [pluginHost, queryClient]
+    [queryClient]
   );
 
   const options: GalleryProps['options'] = {
@@ -247,23 +240,12 @@ const ImageGallery = (props: ImageGalleryProps) => {
                     >
                       {({ ref, open }) => {
                         return (
-                          <Box
+                          <ThumbnailImage
                             ref={ref}
-                            component="img"
-                            src={`data:image/webp;base64,${image.thumbnail_base64}`}
-                            alt={`Image: ${image.title || image.file_name || index}`}
-                            style={{
-                              maxWidth: `${MAX_HEIGHT_THUMBNAIL}px`,
-                              maxHeight: `${MAX_HEIGHT_THUMBNAIL}px`,
-                              borderRadius: '4px',
-                              cursor: 'pointer',
-                            }}
-                            onClick={open}
-                            onError={(e) => {
-                              const target = e.target as HTMLImageElement;
-                              target.onerror = null; // Prevent looping
-                              target.src = pluginHost + ThumbnailNotAvailable;
-                            }}
+                            open={open}
+                            image={image}
+                            maxHeightThumbnail={MAX_HEIGHT_THUMBNAIL}
+                            index={index}
                           />
                         );
                       }}
