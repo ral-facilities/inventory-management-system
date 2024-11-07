@@ -1,12 +1,13 @@
 import { Link } from '@mui/material';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MRT_ColumnDef } from 'material-react-table';
+import { MRT_ColumnDef, MRT_RowData } from 'material-react-table';
 import { UsageStatus } from './api/api.types';
 import { renderComponentWithRouterProvider } from './testUtils';
 import {
   OverflowTip,
   checkForDuplicates,
+  customFilterFunctions,
   generateUniqueId,
   generateUniqueName,
   generateUniqueNameUsingCode,
@@ -316,6 +317,41 @@ describe('Utility functions', () => {
 
     const actualResult = getInitialColumnFilterFnState(columns);
     expect(actualResult).toEqual(expectedResult);
+  });
+});
+
+describe('customFilterFunctions', () => {
+  describe('arrIncludesNone', () => {
+    const person: MRT_RowData = {
+      name: 'Dan',
+      age: 4,
+      status: 'unemployed',
+      getValue: (id: string) => {
+        return person[id as keyof MRT_RowData]; // Return the corresponding field from the object
+      },
+    };
+    const filterExclude: (
+      row: MRT_RowData,
+      id: string,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      filterValue: any
+    ) => boolean = customFilterFunctions['arrIncludesNone'];
+    it('should correctly exclude record', () => {
+      const result = filterExclude(person, 'status', ['unemployed']);
+      expect(result).toBe(false);
+    });
+    it('should correctly include record', () => {
+      const result = filterExclude(person, 'age', [8, 29]);
+      expect(result).toBe(true);
+    });
+    it('should correctly exclude record, when filter value is not a list', () => {
+      const result = filterExclude(person, 'status', 'unemployed');
+      expect(result).toBe(false);
+    });
+    it('should correctly include record, when filter value is not a list', () => {
+      const result = filterExclude(person, 'age', 3);
+      expect(result).toBe(true);
+    });
   });
 });
 
