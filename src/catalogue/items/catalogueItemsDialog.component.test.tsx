@@ -610,7 +610,6 @@ describe('Catalogue Items Dialog', () => {
 
     await user.click(screen.getByRole('button', { name: 'Next' }));
 
-    // there should be 4 instances of the negative number error message
     const NegativeNumberErrorText = screen.getAllByText(
       'Number must be greater than or equal to 0'
     );
