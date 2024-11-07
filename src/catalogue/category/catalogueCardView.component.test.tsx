@@ -40,7 +40,7 @@ describe('CardView', () => {
 
   beforeEach(() => {
     props = {
-      catalogueCategoryData: [],
+      catalogueCategoryData: createData(),
       onChangeOpenDeleteCategoryDialog: onChangeOpenDeleteCategoryDialog,
       onChangeOpenEditCategoryDialog: onChangeOpenEditCategoryDialog,
       onChangeOpenDuplicateDialog: onChangeOpenDuplicateDialog,
@@ -60,19 +60,37 @@ describe('CardView', () => {
   });
 
   it('renders pagination component correctly', async () => {
-    props.catalogueCategoryData = createData();
     createView();
 
     await waitFor(() => {
       expect(screen.getByText('Test 1')).toBeInTheDocument();
     });
 
-    expect(screen.getByLabelText('pagination')).toBeInTheDocument();
     expect(screen.getByText('Categories per page')).toBeInTheDocument();
   });
 
+  it('toggles filter visibility when clicking the toggle button', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Test 1')).toBeInTheDocument();
+    });
+
+    expect(screen.queryByText('Hide Filters')).not.toBeInTheDocument();
+    expect(screen.getByText('Show Filters')).toBeInTheDocument();
+
+    await user.click(screen.getByText('Show Filters'));
+
+    expect(screen.getByText('Hide Filters')).toBeInTheDocument();
+    expect(screen.getByText('Categories per page')).toBeInTheDocument();
+
+    await user.click(screen.getByText('Hide Filters'));
+
+    expect(screen.queryByText('Hide Filters')).not.toBeInTheDocument();
+    expect(screen.getByText('Show Filters')).toBeInTheDocument();
+  });
+
   it('changes page correctly and rerenders data', async () => {
-    props.catalogueCategoryData = createData();
     const { router } = createView();
 
     await waitFor(() => {
@@ -88,7 +106,7 @@ describe('CardView', () => {
     });
     expect(screen.queryByText('Test 1')).not.toBeInTheDocument();
     expect(router.state.location.search).toBe(
-      '?state=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADygCYBfBoA'
+      '?state=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADygEYBfBoA'
     );
 
     await user.click(screen.getByRole('button', { name: 'Go to page 1' }));
@@ -101,7 +119,6 @@ describe('CardView', () => {
   });
 
   it('changes max results correctly', async () => {
-    props.catalogueCategoryData = createData();
     const { router } = createView();
 
     await waitFor(() => {
@@ -116,7 +133,7 @@ describe('CardView', () => {
 
     expect(screen.getByText('Test 31')).toBeInTheDocument();
     expect(router.state.location.search).toBe(
-      '?state=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygEYBfBoA'
+      '?state=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygAYBfBoA'
     );
 
     await user.click(maxResults);
@@ -127,5 +144,29 @@ describe('CardView', () => {
     });
     expect(screen.queryByText('Test 31')).not.toBeInTheDocument();
     expect(router.state.location.search).toBe('');
+  });
+
+  it('can change the table filters and clear the table filters', async () => {
+    createView();
+
+    expect(await screen.findByText('Test 1')).toBeInTheDocument();
+
+    await user.click(screen.getByText('Show Filters'));
+
+    expect(await screen.findByText('Hide Filters')).toBeInTheDocument();
+
+    const nameInput = screen.getByLabelText('Filter by Name');
+    await user.type(nameInput, 'Test 1');
+    await waitFor(() => {
+      expect(screen.queryByText('Test 2')).not.toBeInTheDocument();
+    });
+    const clearFiltersButton = screen.getByRole('button', {
+      name: 'Clear Filters',
+    });
+
+    await user.click(clearFiltersButton);
+    expect(await screen.findByText('Test 1')).toBeInTheDocument();
+
+    expect(clearFiltersButton).toBeDisabled();
   });
 });
