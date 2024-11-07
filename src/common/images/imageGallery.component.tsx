@@ -137,7 +137,15 @@ const ImageGallery = (props: ImageGalleryProps) => {
           options={options}
           withCaption
         >
-          <Grid container mt={2} gap={2}>
+          <Grid
+            container
+            mt={2}
+            gap={2}
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+            }}
+          >
             {images.map((image, index) => {
               return (
                 <Card
