@@ -1,10 +1,10 @@
 import { Box, Typography } from '@mui/material';
 import React from 'react';
-import { Image } from '../../api/api.types';
+import { APIImage } from '../../api/api.types';
 
 export interface ThumbnailImageProps {
   open: (e: React.MouseEvent) => void;
-  image: Image;
+  image: APIImage;
   index: number;
   maxHeightThumbnail: number;
 }

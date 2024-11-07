@@ -250,7 +250,7 @@ export interface ImagePost {
   description?: string | null;
 }
 
-export interface Image
+export interface APIImage
   extends Required<Omit<ImagePost, 'upload_file'>>,
     CreatedModifiedMixin {
   id: string;
@@ -258,6 +258,6 @@ export interface Image
   thumbnail_base64: string;
 }
 
-export interface ImageGet extends Image {
+export interface ImageGet extends APIImage {
   download_url: string;
 }

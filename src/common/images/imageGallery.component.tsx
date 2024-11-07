@@ -1,23 +1,34 @@
 import { MoreHoriz } from '@mui/icons-material';
+import ClearIcon from '@mui/icons-material/Clear';
 import {
   Box,
+  Button,
   Card,
   Checkbox,
+  Collapse,
   Grid,
   IconButton,
   LinearProgress,
   Typography,
 } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
+import {
+  MRT_BottomToolbar,
+  MRT_ColumnDef,
+  useMaterialReactTable,
+} from 'material-react-table';
 import PhotoSwipe, { SlideData } from 'photoswipe';
 import 'photoswipe/dist/photoswipe.css';
 import React from 'react';
 import { Gallery, GalleryProps, Item } from 'react-photoswipe-gallery';
 import { getImage, useGetImages } from '../../api/images';
-import { OverflowTip } from '../../utils';
-import CardViewFooter from '../cardView/cardViewFooter.component';
+import { displayTableRowCountText, OverflowTip } from '../../utils';
 import { usePreservedTableState } from '../preservedTableState.component';
 import ThumbnailImage from './thumbnailImage.component';
+
+import { MRT_Localization_EN } from 'material-react-table/locales/en';
+import { APIImage } from '../../api/api.types';
+import CardViewFilters from '../cardView/cardViewFilters.component';
 
 const MAX_HEIGHT_THUMBNAIL = 300;
 
@@ -32,18 +43,12 @@ const ImageGallery = (props: ImageGalleryProps) => {
 
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
-      pagination: { pageSize: 16, pageIndex: 1 },
+      pagination: { pageSize: 16, pageIndex: 0 },
     },
     storeInUrl: true,
     paginationOnly: true,
     urlParamName: 'imageState',
   });
-
-  const startIndex =
-    (preservedState.pagination.pageIndex - 1) *
-    preservedState.pagination.pageSize;
-  const endIndex = startIndex + preservedState.pagination.pageSize;
-  const displayedImages = images?.slice(startIndex, endIndex);
 
   const onBeforeOpen = React.useCallback(
     (pswpInstance: PhotoSwipe) => {
@@ -145,6 +150,138 @@ const ImageGallery = (props: ImageGalleryProps) => {
     },
   ];
 
+  const titles = Array.from(
+    new Set(
+      images
+        ?.map((image) => image.title)
+        .filter((title): title is string => Boolean(title))
+    )
+  );
+
+  const descriptions = Array.from(
+    new Set(
+      images
+        ?.map((image) => image.description)
+        .filter((description): description is string => Boolean(description))
+    )
+  );
+  const columns = React.useMemo<MRT_ColumnDef<APIImage>[]>(() => {
+    return [
+      {
+        header: 'File name',
+        accessorFn: (row) => row.file_name,
+        id: 'name',
+        size: 300,
+      },
+      {
+        header: 'Last modified',
+        accessorFn: (row) => new Date(row.modified_time),
+        id: 'modified_time',
+        filterVariant: 'datetime-range',
+        filterFn: 'betweenInclusive',
+        size: 500,
+        enableGrouping: false,
+      },
+
+      {
+        header: 'Created',
+        accessorFn: (row) => new Date(row.modified_time),
+        id: 'created',
+        filterVariant: 'datetime-range',
+        filterFn: 'betweenInclusive',
+        size: 500,
+        enableGrouping: false,
+      },
+      {
+        header: 'Title',
+        accessorFn: (row) => row.title,
+        id: 'title',
+        size: 350,
+        filterVariant: 'autocomplete',
+        filterSelectOptions: titles,
+        enableGrouping: false,
+      },
+      {
+        header: 'Description',
+        accessorFn: (row) => row.description,
+        id: 'description',
+        size: 350,
+        filterVariant: 'autocomplete',
+        filterSelectOptions: descriptions,
+        enableGrouping: false,
+      },
+    ];
+  }, [descriptions, titles]);
+  const table = useMaterialReactTable({
+    // Data
+    columns: columns,
+    data: images ?? [],
+    // Features
+    enableColumnOrdering: false,
+    enableColumnPinning: false,
+    enableTopToolbar: true,
+    enableFacetedValues: true,
+    enableRowActions: false,
+    enableGlobalFilter: false,
+    enableStickyHeader: true,
+    enableRowSelection: false,
+    enableDensityToggle: false,
+    enableTableFooter: true,
+    enableColumnFilters: true,
+    enableHiding: false,
+    enableFullScreenToggle: false,
+    enablePagination: true,
+    // Other settings
+    paginationDisplayMode: 'pages',
+    positionToolbarAlertBanner: 'bottom',
+    autoResetPageIndex: false,
+    // Localisation
+    localization: {
+      ...MRT_Localization_EN,
+      rowsPerPage: 'Images per page',
+    },
+    // State
+    initialState: {
+      showColumnFilters: true,
+      showGlobalFilter: true,
+    },
+    state: {
+      ...preservedState,
+    },
+    muiSearchTextFieldProps: {
+      size: 'small',
+      variant: 'outlined',
+    },
+    muiPaginationProps: {
+      color: 'secondary',
+      rowsPerPageOptions: [16, 24, 32],
+      shape: 'rounded',
+      variant: 'outlined',
+    },
+    // Functions
+    ...onPreservedStatesChange,
+    renderBottomToolbarCustomActions: ({ table }) =>
+      displayTableRowCountText(table, images, 'Images', {
+        paddingLeft: '8px',
+      }),
+  });
+
+  const [isCollapsed, setIsCollapsed] = React.useState(true);
+
+  const handleToggle = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+  const data = table
+    .getSortedRowModel()
+    .rows.map(
+      (row) => row.getVisibleCells().map((cell) => cell.row.original)[0]
+    );
+  const displayedImages = table
+    .getPaginationRowModel()
+    .rows.map(
+      (row) => row.getVisibleCells().map((cell) => cell.row.original)[0]
+    );
+
   return (
     <>
       {!imageIsLoading ? (
@@ -172,126 +309,166 @@ const ImageGallery = (props: ImageGalleryProps) => {
         </Box>
       )}
       {images && images.length !== 0 && (
-        <Gallery
-          onBeforeOpen={onBeforeOpen}
-          uiElements={uiElements}
-          options={options}
-          withCaption
-        >
-          <Grid container mt={2} gap={2}>
-            {images.map((image, index) => {
-              const isUndisplayed = !displayedImages?.some(
-                (img) => img.id === image.id
-              );
-
-              return isUndisplayed ? (
-                <Item
-                  thumbnail={`data:image/webp;base64,${image.thumbnail_base64}`}
-                  id={image.id}
-                  caption={image.description ?? undefined}
-                  alt={`Image: ${image.title || image.file_name || index}`}
-                  key={`thumbnail-not-displayed-${image.id}`}
-                >
-                  {({ ref }) => {
-                    return <Box ref={ref} style={{ display: 'none' }} />;
+        <Grid container>
+          <Grid item container mt={2} direction="column" alignItems="center">
+            <Collapse in={!isCollapsed} style={{ width: '100%' }}>
+              <Grid marginTop={'auto'} direction="row" item container>
+                <Button
+                  startIcon={<ClearIcon />}
+                  sx={{ mx: 0.5, ml: 2 }}
+                  variant="outlined"
+                  disabled={preservedState.columnFilters.length === 0}
+                  onClick={() => {
+                    table.resetColumnFilters();
                   }}
-                </Item>
-              ) : (
-                <Card
-                  component={Grid}
-                  item
-                  container
-                  xs
-                  key={`thumbnail-displayed-${index}`}
-                  minWidth={'350px'}
                 >
-                  <Grid
-                    display="flex"
-                    justifyContent="flex-start"
-                    alignItems="center"
-                    item
-                    container
-                    xs={12}
-                  >
-                    <Grid item xs={2}>
-                      <Checkbox
-                        checked={false}
-                        inputProps={{
-                          'aria-label': 'controlled',
-                        }}
-                        aria-label={`${image.file_name} checkbox`}
-                      />
-                    </Grid>
-                  </Grid>
+                  Clear Filters
+                </Button>
+              </Grid>
+              <CardViewFilters table={table} />
+            </Collapse>
 
-                  <Grid
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    item
-                    minHeight={`${MAX_HEIGHT_THUMBNAIL}px`}
-                    xs
-                  >
+            <Typography
+              onClick={handleToggle}
+              variant="body2"
+              color="primary"
+              sx={{
+                cursor: 'pointer',
+                marginTop: 1,
+                textAlign: 'center',
+                textDecoration: 'underline',
+              }}
+            >
+              {isCollapsed ? 'Show Filters' : 'Hide Filters'}
+            </Typography>
+          </Grid>
+          <Grid container item>
+            <Gallery
+              onBeforeOpen={onBeforeOpen}
+              uiElements={uiElements}
+              options={options}
+              withCaption
+            >
+              <Grid
+                container
+                item
+                mt={2}
+                gap={2}
+                sx={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+                }}
+              >
+                {data.map((image, index) => {
+                  const isUndisplayed = !displayedImages?.some(
+                    (img) => img.id === image.id
+                  );
+
+                  return isUndisplayed ? (
                     <Item
                       thumbnail={`data:image/webp;base64,${image.thumbnail_base64}`}
                       id={image.id}
                       caption={image.description ?? undefined}
                       alt={`Image: ${image.title || image.file_name || index}`}
+                      key={`thumbnail-not-displayed-${image.id}`}
                     >
-                      {({ ref, open }) => {
-                        return (
-                          <ThumbnailImage
-                            ref={ref}
-                            open={open}
-                            image={image}
-                            maxHeightThumbnail={MAX_HEIGHT_THUMBNAIL}
-                            index={index}
-                          />
-                        );
+                      {({ ref }) => {
+                        return <Box ref={ref} style={{ display: 'none' }} />;
                       }}
                     </Item>
-                  </Grid>
-
-                  <Grid
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    item
-                    container
-                    xs={12}
-                  >
-                    <Grid xs={2} item>
-                      <IconButton
-                        aria-label={`actions ${image.file_name} photo button`}
+                  ) : (
+                    <Card
+                      component={Grid}
+                      item
+                      container
+                      xs
+                      key={`thumbnail-displayed-${index}`}
+                      minWidth={'350px'}
+                    >
+                      <Grid
+                        display="flex"
+                        justifyContent="flex-start"
+                        alignItems="center"
+                        item
+                        container
+                        xs={12}
                       >
-                        <MoreHoriz />
-                      </IconButton>
-                    </Grid>
-                    <Grid item xs={8}>
-                      <OverflowTip
-                        sx={{
-                          fontVariant: 'body2',
-                          textAlign: 'center',
-                        }}
-                      >
-                        {image.file_name}
-                      </OverflowTip>
-                    </Grid>
-                    <Grid item xs={2}></Grid>
-                  </Grid>
-                </Card>
-              );
-            })}
+                        <Grid item xs={2}>
+                          <Checkbox
+                            checked={false}
+                            inputProps={{
+                              'aria-label': 'controlled',
+                            }}
+                            aria-label={`${image.file_name} checkbox`}
+                          />
+                        </Grid>
+                      </Grid>
 
-            <CardViewFooter
-              label="Images"
-              dataLength={images.length}
-              pagination={preservedState.pagination}
-              onPaginationChange={onPreservedStatesChange.onPaginationChange}
-              maxResultsList={[16, 24, 32]}
-            />
+                      <Grid
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                        item
+                        minHeight={`${MAX_HEIGHT_THUMBNAIL}px`}
+                        xs
+                      >
+                        <Item
+                          thumbnail={`data:image/webp;base64,${image.thumbnail_base64}`}
+                          id={image.id}
+                          caption={image.description ?? undefined}
+                          alt={`Image: ${image.title || image.file_name || index}`}
+                        >
+                          {({ ref, open }) => {
+                            return (
+                              <ThumbnailImage
+                                ref={ref}
+                                open={open}
+                                image={image}
+                                maxHeightThumbnail={MAX_HEIGHT_THUMBNAIL}
+                                index={index}
+                              />
+                            );
+                          }}
+                        </Item>
+                      </Grid>
+
+                      <Grid
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                        item
+                        container
+                        xs={12}
+                      >
+                        <Grid xs={2} item>
+                          <IconButton
+                            aria-label={`actions ${image.file_name} photo button`}
+                          >
+                            <MoreHoriz />
+                          </IconButton>
+                        </Grid>
+                        <Grid item xs={8}>
+                          <OverflowTip
+                            sx={{
+                              fontVariant: 'body2',
+                              textAlign: 'center',
+                            }}
+                          >
+                            {image.file_name}
+                          </OverflowTip>
+                        </Grid>
+                        <Grid item xs={2}></Grid>
+                      </Grid>
+                    </Card>
+                  );
+                })}
+              </Grid>
+            </Gallery>
           </Grid>
-        </Gallery>
+          <Grid marginTop={2} direction="row" item container>
+            <MRT_BottomToolbar table={table} sx={{ width: '100%' }} />
+          </Grid>
+        </Grid>
       )}
     </>
   );

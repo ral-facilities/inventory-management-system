@@ -133,7 +133,7 @@ describe('Image Gallery', () => {
     });
 
     expect(router.state.location.search).toBe(
-      '?imageState=N4IgDiBcpghg5gUwMoEsBeioEYBsAacBRASQDsATRADygCYBfBoA'
+      '?imageState=N4IgDiBcpghg5gUwMoEsBeioEYBsAacBRASQDsATRADxwF86g'
     );
 
     await user.click(screen.getByRole('button', { name: 'Go to page 1' }));
@@ -142,6 +142,57 @@ describe('Image Gallery', () => {
       expect(screen.getAllByText('logo1.png').length).toEqual(8);
     });
     expect(router.state.location.search).toBe('');
+  });
+
+  it('can change the table filters and clear the table filters', async () => {
+    createView();
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(8);
+
+    await user.click(screen.getByText('Show Filters'));
+
+    expect(await screen.findByText('Hide Filters')).toBeInTheDocument();
+
+    const nameInput = screen.getByLabelText('Filter by File name');
+    await user.type(nameInput, 'stfc-logo-blue-text.png');
+    await waitFor(() => {
+      expect(screen.queryByText('logo1.png')).not.toBeInTheDocument();
+    });
+    const clearFiltersButton = screen.getByRole('button', {
+      name: 'Clear Filters',
+    });
+
+    await user.click(clearFiltersButton);
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(8);
+
+    expect(clearFiltersButton).toBeDisabled();
+  });
+
+  it('toggles filter visibility when clicking the toggle button', async () => {
+    createView();
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(8);
+
+    expect(screen.queryByText('Hide Filters')).not.toBeInTheDocument();
+    expect(screen.getByText('Show Filters')).toBeInTheDocument();
+
+    await user.click(screen.getByText('Show Filters'));
+
+    expect(screen.getByText('Hide Filters')).toBeInTheDocument();
+    expect(screen.getByText('Images per page')).toBeInTheDocument();
+
+    await user.click(screen.getByText('Hide Filters'));
+
+    expect(screen.queryByText('Hide Filters')).not.toBeInTheDocument();
+    expect(screen.getByText('Show Filters')).toBeInTheDocument();
   });
 
   it('opens full-size image when thumbnail is clicked, navigates to the next image, and then navigates to a third image that failed to upload, falling back to a placeholder', async () => {
@@ -206,5 +257,16 @@ describe('Image Gallery', () => {
     await waitFor(() => {
       expect(axiosGetSpy).toHaveBeenCalledTimes(4);
     });
+
+    await user.click(
+      within(screen.getByRole('dialog')).getByLabelText('Close')
+    );
+
+    await waitFor(
+      () => {
+        expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+      },
+      { timeout: 5000 }
+    );
   }, 20000);
 });

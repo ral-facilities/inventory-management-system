@@ -1,7 +1,7 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { storageApi } from './api';
-import { Image, ImageGet } from './api.types';
+import { APIImage, ImageGet } from './api.types';
 
 export const getImage = async (id: string): Promise<ImageGet> => {
   return storageApi.get(`/images/${id}`).then((response) => {
@@ -12,7 +12,7 @@ export const getImage = async (id: string): Promise<ImageGet> => {
 const getImages = async (
   entityId: string,
   primary?: boolean
-): Promise<Image[]> => {
+): Promise<APIImage[]> => {
   const queryParams = new URLSearchParams();
   queryParams.append('entity_id', entityId);
 
@@ -27,7 +27,7 @@ const getImages = async (
 export const useGetImages = (
   entityId?: string,
   primary?: boolean
-): UseQueryResult<Image[], AxiosError> => {
+): UseQueryResult<APIImage[], AxiosError> => {
   return useQuery({
     queryKey: ['Images', entityId, primary],
     queryFn: () => getImages(entityId ?? '', primary),

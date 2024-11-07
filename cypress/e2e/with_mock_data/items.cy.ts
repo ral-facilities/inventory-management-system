@@ -710,6 +710,30 @@ describe('Items', () => {
       cy.findByText('The image cannot be loaded').should('exist');
     });
 
+    it('displays and hides filters, applies and clears name filter on gallery view', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Gallery').click();
+      cy.findAllByAltText('Image: stfc-logo-blue-text').should(
+        'have.length',
+        7
+      );
+      cy.findByText('Show Filters').click();
+      cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
+      cy.findByLabelText('Filter by File name').type('logo1.png');
+      cy.findByAltText('Image: stfc-logo-blue-text').should('not.exist');
+      cy.findByRole('button', { name: 'Clear Filters' }).click();
+      cy.findAllByAltText('Image: stfc-logo-blue-text').should(
+        'have.length',
+        7
+      );
+      cy.findByText('Hide Filters').click();
+      cy.findByText('Show Filters').should('exist');
+    });
+
     it('opens full-size image when thumbnail is clicked and navigates to the next image', () => {
       cy.findByText('5YUQDDjKpz2z').click();
       cy.findByText(
