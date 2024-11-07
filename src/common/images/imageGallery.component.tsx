@@ -40,7 +40,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
   const { entityId } = props;
   const { data: images, isLoading: imageIsLoading } = useGetImages(entityId);
   const queryClient = useQueryClient();
-
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
       pagination: { pageSize: 16, pageIndex: 0 },
