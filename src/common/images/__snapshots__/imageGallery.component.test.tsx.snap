@@ -60,7 +60,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                       class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-19xfb9v-MuiTableCell-root"
                       colspan="1"
                       data-can-sort="true"
-                      data-index="0"
+                      data-index="2"
                       scope="col"
                     >
                       <div
@@ -200,7 +200,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                       class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1uhenkc-MuiTableCell-root"
                       colspan="1"
                       data-can-sort="true"
-                      data-index="1"
+                      data-index="3"
                       scope="col"
                     >
                       <div
@@ -338,7 +338,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                       class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ef8bkw-MuiTableCell-root"
                       colspan="1"
                       data-can-sort="true"
-                      data-index="2"
+                      data-index="4"
                       scope="col"
                     >
                       <div
@@ -476,7 +476,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                       class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sefeis-MuiTableCell-root"
                       colspan="1"
                       data-can-sort="true"
-                      data-index="3"
+                      data-index="5"
                       scope="col"
                     >
                       <div
@@ -622,7 +622,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                       class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1k64x5k-MuiTableCell-root"
                       colspan="1"
                       data-can-sort="true"
-                      data-index="4"
+                      data-index="6"
                       scope="col"
                     >
                       <div
@@ -791,11 +791,12 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <span
-                  aria-label="stfc-logo-blue-text.png checkbox"
-                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                  aria-label="Toggle select card"
+                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-4loxo5-MuiButtonBase-root-MuiCheckbox-root"
+                  data-mui-internal-clone-element="true"
                 >
                   <input
-                    aria-label="controlled"
+                    aria-label="Toggle select card"
                     class="PrivateSwitchBase-input css-1m9pwf3"
                     data-indeterminate="false"
                     type="checkbox"
@@ -834,8 +835,9 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <button
-                  aria-label="actions stfc-logo-blue-text.png photo button"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                  aria-label="Card Actions"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1midcpq-MuiButtonBase-root-MuiIconButton-root"
+                  data-mui-internal-clone-element="true"
                   tabindex="0"
                   type="button"
                 >
@@ -882,11 +884,12 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <span
-                  aria-label="logo1.png checkbox"
-                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                  aria-label="Toggle select card"
+                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-97q1f1-MuiButtonBase-root-MuiCheckbox-root"
+                  data-mui-internal-clone-element="true"
                 >
                   <input
-                    aria-label="controlled"
+                    aria-label="Toggle select card"
                     class="PrivateSwitchBase-input css-1m9pwf3"
                     data-indeterminate="false"
                     type="checkbox"
@@ -925,8 +928,9 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <button
-                  aria-label="actions logo1.png photo button"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                  aria-label="Card Actions"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-ppcd0m-MuiButtonBase-root-MuiIconButton-root"
+                  data-mui-internal-clone-element="true"
                   tabindex="0"
                   type="button"
                 >
@@ -973,11 +977,12 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <span
-                  aria-label="stfc-logo-blue-text.png checkbox"
-                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                  aria-label="Toggle select card"
+                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-4loxo5-MuiButtonBase-root-MuiCheckbox-root"
+                  data-mui-internal-clone-element="true"
                 >
                   <input
-                    aria-label="controlled"
+                    aria-label="Toggle select card"
                     class="PrivateSwitchBase-input css-1m9pwf3"
                     data-indeterminate="false"
                     type="checkbox"
@@ -1016,8 +1021,9 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <button
-                  aria-label="actions stfc-logo-blue-text.png photo button"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                  aria-label="Card Actions"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1midcpq-MuiButtonBase-root-MuiIconButton-root"
+                  data-mui-internal-clone-element="true"
                   tabindex="0"
                   type="button"
                 >
@@ -1064,11 +1070,12 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <span
-                  aria-label="logo1.png checkbox"
-                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                  aria-label="Toggle select card"
+                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-97q1f1-MuiButtonBase-root-MuiCheckbox-root"
+                  data-mui-internal-clone-element="true"
                 >
                   <input
-                    aria-label="controlled"
+                    aria-label="Toggle select card"
                     class="PrivateSwitchBase-input css-1m9pwf3"
                     data-indeterminate="false"
                     type="checkbox"
@@ -1107,8 +1114,9 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <button
-                  aria-label="actions logo1.png photo button"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                  aria-label="Card Actions"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-ppcd0m-MuiButtonBase-root-MuiIconButton-root"
+                  data-mui-internal-clone-element="true"
                   tabindex="0"
                   type="button"
                 >
@@ -1155,11 +1163,12 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <span
-                  aria-label="stfc-logo-blue-text.png checkbox"
-                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                  aria-label="Toggle select card"
+                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-4loxo5-MuiButtonBase-root-MuiCheckbox-root"
+                  data-mui-internal-clone-element="true"
                 >
                   <input
-                    aria-label="controlled"
+                    aria-label="Toggle select card"
                     class="PrivateSwitchBase-input css-1m9pwf3"
                     data-indeterminate="false"
                     type="checkbox"
@@ -1198,8 +1207,9 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <button
-                  aria-label="actions stfc-logo-blue-text.png photo button"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                  aria-label="Card Actions"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1midcpq-MuiButtonBase-root-MuiIconButton-root"
+                  data-mui-internal-clone-element="true"
                   tabindex="0"
                   type="button"
                 >
@@ -1246,11 +1256,12 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <span
-                  aria-label="logo1.png checkbox"
-                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                  aria-label="Toggle select card"
+                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-97q1f1-MuiButtonBase-root-MuiCheckbox-root"
+                  data-mui-internal-clone-element="true"
                 >
                   <input
-                    aria-label="controlled"
+                    aria-label="Toggle select card"
                     class="PrivateSwitchBase-input css-1m9pwf3"
                     data-indeterminate="false"
                     type="checkbox"
@@ -1289,8 +1300,9 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <button
-                  aria-label="actions logo1.png photo button"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                  aria-label="Card Actions"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-ppcd0m-MuiButtonBase-root-MuiIconButton-root"
+                  data-mui-internal-clone-element="true"
                   tabindex="0"
                   type="button"
                 >
@@ -1337,11 +1349,12 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <span
-                  aria-label="stfc-logo-blue-text.png checkbox"
-                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                  aria-label="Toggle select card"
+                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-4loxo5-MuiButtonBase-root-MuiCheckbox-root"
+                  data-mui-internal-clone-element="true"
                 >
                   <input
-                    aria-label="controlled"
+                    aria-label="Toggle select card"
                     class="PrivateSwitchBase-input css-1m9pwf3"
                     data-indeterminate="false"
                     type="checkbox"
@@ -1380,8 +1393,9 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <button
-                  aria-label="actions stfc-logo-blue-text.png photo button"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                  aria-label="Card Actions"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1midcpq-MuiButtonBase-root-MuiIconButton-root"
+                  data-mui-internal-clone-element="true"
                   tabindex="0"
                   type="button"
                 >
@@ -1428,11 +1442,12 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <span
-                  aria-label="logo1.png checkbox"
-                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                  aria-label="Toggle select card"
+                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-97q1f1-MuiButtonBase-root-MuiCheckbox-root"
+                  data-mui-internal-clone-element="true"
                 >
                   <input
-                    aria-label="controlled"
+                    aria-label="Toggle select card"
                     class="PrivateSwitchBase-input css-1m9pwf3"
                     data-indeterminate="false"
                     type="checkbox"
@@ -1471,8 +1486,9 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <button
-                  aria-label="actions logo1.png photo button"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                  aria-label="Card Actions"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-ppcd0m-MuiButtonBase-root-MuiIconButton-root"
+                  data-mui-internal-clone-element="true"
                   tabindex="0"
                   type="button"
                 >
@@ -1519,11 +1535,12 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <span
-                  aria-label="stfc-logo-blue-text.png checkbox"
-                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                  aria-label="Toggle select card"
+                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-4loxo5-MuiButtonBase-root-MuiCheckbox-root"
+                  data-mui-internal-clone-element="true"
                 >
                   <input
-                    aria-label="controlled"
+                    aria-label="Toggle select card"
                     class="PrivateSwitchBase-input css-1m9pwf3"
                     data-indeterminate="false"
                     type="checkbox"
@@ -1562,8 +1579,9 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <button
-                  aria-label="actions stfc-logo-blue-text.png photo button"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                  aria-label="Card Actions"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1midcpq-MuiButtonBase-root-MuiIconButton-root"
+                  data-mui-internal-clone-element="true"
                   tabindex="0"
                   type="button"
                 >
@@ -1610,11 +1628,12 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <span
-                  aria-label="logo1.png checkbox"
-                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                  aria-label="Toggle select card"
+                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-97q1f1-MuiButtonBase-root-MuiCheckbox-root"
+                  data-mui-internal-clone-element="true"
                 >
                   <input
-                    aria-label="controlled"
+                    aria-label="Toggle select card"
                     class="PrivateSwitchBase-input css-1m9pwf3"
                     data-indeterminate="false"
                     type="checkbox"
@@ -1653,8 +1672,9 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <button
-                  aria-label="actions logo1.png photo button"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                  aria-label="Card Actions"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-ppcd0m-MuiButtonBase-root-MuiIconButton-root"
+                  data-mui-internal-clone-element="true"
                   tabindex="0"
                   type="button"
                 >
@@ -1701,11 +1721,12 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <span
-                  aria-label="stfc-logo-blue-text.png checkbox"
-                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                  aria-label="Toggle select card"
+                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-4loxo5-MuiButtonBase-root-MuiCheckbox-root"
+                  data-mui-internal-clone-element="true"
                 >
                   <input
-                    aria-label="controlled"
+                    aria-label="Toggle select card"
                     class="PrivateSwitchBase-input css-1m9pwf3"
                     data-indeterminate="false"
                     type="checkbox"
@@ -1744,8 +1765,9 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <button
-                  aria-label="actions stfc-logo-blue-text.png photo button"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                  aria-label="Card Actions"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1midcpq-MuiButtonBase-root-MuiIconButton-root"
+                  data-mui-internal-clone-element="true"
                   tabindex="0"
                   type="button"
                 >
@@ -1792,11 +1814,12 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <span
-                  aria-label="logo1.png checkbox"
-                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                  aria-label="Toggle select card"
+                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-97q1f1-MuiButtonBase-root-MuiCheckbox-root"
+                  data-mui-internal-clone-element="true"
                 >
                   <input
-                    aria-label="controlled"
+                    aria-label="Toggle select card"
                     class="PrivateSwitchBase-input css-1m9pwf3"
                     data-indeterminate="false"
                     type="checkbox"
@@ -1835,8 +1858,9 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <button
-                  aria-label="actions logo1.png photo button"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                  aria-label="Card Actions"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-ppcd0m-MuiButtonBase-root-MuiIconButton-root"
+                  data-mui-internal-clone-element="true"
                   tabindex="0"
                   type="button"
                 >
@@ -1883,11 +1907,12 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <span
-                  aria-label="stfc-logo-blue-text.png checkbox"
-                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                  aria-label="Toggle select card"
+                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-4loxo5-MuiButtonBase-root-MuiCheckbox-root"
+                  data-mui-internal-clone-element="true"
                 >
                   <input
-                    aria-label="controlled"
+                    aria-label="Toggle select card"
                     class="PrivateSwitchBase-input css-1m9pwf3"
                     data-indeterminate="false"
                     type="checkbox"
@@ -1926,8 +1951,9 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <button
-                  aria-label="actions stfc-logo-blue-text.png photo button"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                  aria-label="Card Actions"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1midcpq-MuiButtonBase-root-MuiIconButton-root"
+                  data-mui-internal-clone-element="true"
                   tabindex="0"
                   type="button"
                 >
@@ -1974,11 +2000,12 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <span
-                  aria-label="logo1.png checkbox"
-                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                  aria-label="Toggle select card"
+                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-97q1f1-MuiButtonBase-root-MuiCheckbox-root"
+                  data-mui-internal-clone-element="true"
                 >
                   <input
-                    aria-label="controlled"
+                    aria-label="Toggle select card"
                     class="PrivateSwitchBase-input css-1m9pwf3"
                     data-indeterminate="false"
                     type="checkbox"
@@ -2017,8 +2044,9 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <button
-                  aria-label="actions logo1.png photo button"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                  aria-label="Card Actions"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-ppcd0m-MuiButtonBase-root-MuiIconButton-root"
+                  data-mui-internal-clone-element="true"
                   tabindex="0"
                   type="button"
                 >
@@ -2065,11 +2093,12 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <span
-                  aria-label="stfc-logo-blue-text.png checkbox"
-                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                  aria-label="Toggle select card"
+                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-4loxo5-MuiButtonBase-root-MuiCheckbox-root"
+                  data-mui-internal-clone-element="true"
                 >
                   <input
-                    aria-label="controlled"
+                    aria-label="Toggle select card"
                     class="PrivateSwitchBase-input css-1m9pwf3"
                     data-indeterminate="false"
                     type="checkbox"
@@ -2108,8 +2137,9 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <button
-                  aria-label="actions stfc-logo-blue-text.png photo button"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                  aria-label="Card Actions"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1midcpq-MuiButtonBase-root-MuiIconButton-root"
+                  data-mui-internal-clone-element="true"
                   tabindex="0"
                   type="button"
                 >
@@ -2156,11 +2186,12 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <span
-                  aria-label="logo1.png checkbox"
-                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                  aria-label="Toggle select card"
+                  class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-97q1f1-MuiButtonBase-root-MuiCheckbox-root"
+                  data-mui-internal-clone-element="true"
                 >
                   <input
-                    aria-label="controlled"
+                    aria-label="Toggle select card"
                     class="PrivateSwitchBase-input css-1m9pwf3"
                     data-indeterminate="false"
                     type="checkbox"
@@ -2199,8 +2230,9 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
               >
                 <button
-                  aria-label="actions logo1.png photo button"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                  aria-label="Card Actions"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-ppcd0m-MuiButtonBase-root-MuiIconButton-root"
+                  data-mui-internal-clone-element="true"
                   tabindex="0"
                   type="button"
                 >
@@ -2319,7 +2351,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                     class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                   >
                     <div
-                      aria-controls=":r1c:"
+                      aria-controls=":r2c:"
                       aria-expanded="false"
                       aria-haspopup="listbox"
                       aria-label="Images per page"

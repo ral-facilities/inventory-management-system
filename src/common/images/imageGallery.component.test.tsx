@@ -195,6 +195,32 @@ describe('Image Gallery', () => {
     expect(screen.getByText('Show Filters')).toBeInTheDocument();
   });
 
+  it('opens image information dialog and can close the dialog', async () => {
+    createView();
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(8);
+
+    const actionMenus = screen.getAllByLabelText(`Card Actions`);
+    await user.click(actionMenus[0]);
+
+    const informationButton = await screen.findByText(`Information`);
+    await user.click(informationButton);
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const closeButton = screen.getByRole('button', { name: 'Close' });
+    await user.click(closeButton);
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
   it('opens full-size image when thumbnail is clicked, navigates to the next image, and then navigates to a third image that failed to upload, falling back to a placeholder', async () => {
     createView();
 
@@ -258,15 +284,13 @@ describe('Image Gallery', () => {
       expect(axiosGetSpy).toHaveBeenCalledTimes(4);
     });
 
+    // opens action menu
+
     await user.click(
-      within(screen.getByRole('dialog')).getByLabelText('Close')
+      screen.getByRole('button', { name: 'Action menu button' })
     );
 
-    await waitFor(
-      () => {
-        expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-      },
-      { timeout: 5000 }
-    );
+    const informationButton = await screen.findByText(`Information`);
+    expect(informationButton).toBeInTheDocument();
   }, 20000);
 });

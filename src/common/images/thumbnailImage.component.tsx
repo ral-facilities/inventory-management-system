@@ -3,7 +3,7 @@ import React from 'react';
 import { APIImage } from '../../api/api.types';
 
 export interface ThumbnailImageProps {
-  open: (e: React.MouseEvent) => void;
+  open?: (e: React.MouseEvent) => void;
   image: APIImage;
   index: number;
   maxHeightThumbnail: number;
@@ -12,11 +12,13 @@ export interface ThumbnailImageProps {
 const ThumbnailImage = React.forwardRef<HTMLElement, ThumbnailImageProps>(
   (props, ref) => {
     const { open, image, index, maxHeightThumbnail } = props;
-    const [hasError, setHasError] = React.useState(false);
+    const [hasError, setHasError] = React.useState<string | undefined>(
+      undefined
+    );
 
     return (
       <>
-        {hasError ? (
+        {hasError === image.id ? (
           <Typography
             maxWidth={`${maxHeightThumbnail}px`}
             maxHeight={`${maxHeightThumbnail}px`}
@@ -25,7 +27,7 @@ const ThumbnailImage = React.forwardRef<HTMLElement, ThumbnailImageProps>(
             textAlign="center"
             onClick={open}
             ref={ref}
-            sx={{ cursor: 'pointer' }}
+            sx={{ cursor: open ? 'pointer' : undefined }}
           >
             The image cannot be loaded
           </Typography>
@@ -39,10 +41,10 @@ const ThumbnailImage = React.forwardRef<HTMLElement, ThumbnailImageProps>(
               maxWidth: `${maxHeightThumbnail}px`,
               maxHeight: `${maxHeightThumbnail}px`,
               borderRadius: '4px',
-              cursor: 'pointer',
+              cursor: open ? 'pointer' : undefined,
             }}
             onClick={open}
-            onError={() => setHasError(true)}
+            onError={() => setHasError(image.id)}
           />
         )}
       </>

@@ -1,34 +1,46 @@
-import { MoreHoriz } from '@mui/icons-material';
 import ClearIcon from '@mui/icons-material/Clear';
+import DeleteIcon from '@mui/icons-material/Delete';
+import DownloadIcon from '@mui/icons-material/Download';
+import EditIcon from '@mui/icons-material/Edit';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {
   Box,
   Button,
   Card,
-  Checkbox,
   Collapse,
   Grid,
-  IconButton,
   LinearProgress,
+  ListItemIcon,
+  ListItemText,
+  MenuItem,
   Typography,
 } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
 import {
   MRT_BottomToolbar,
+  MRT_Cell,
   MRT_ColumnDef,
+  MRT_Row,
+  MRT_RowActionMenu,
+  MRT_SelectCheckbox,
+  MRT_ToggleRowActionMenuButton,
   useMaterialReactTable,
 } from 'material-react-table';
 import PhotoSwipe, { SlideData } from 'photoswipe';
 import 'photoswipe/dist/photoswipe.css';
 import React from 'react';
+import ReactDOMServer from 'react-dom/server';
 import { Gallery, GalleryProps, Item } from 'react-photoswipe-gallery';
 import { getImage, useGetImages } from '../../api/images';
 import { displayTableRowCountText, OverflowTip } from '../../utils';
 import { usePreservedTableState } from '../preservedTableState.component';
 import ThumbnailImage from './thumbnailImage.component';
 
+import { MoreHoriz } from '@mui/icons-material';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import { APIImage } from '../../api/api.types';
 import CardViewFilters from '../cardView/cardViewFilters.component';
+import ImageInformationDialog from './imageInformationDialog.component';
 
 const MAX_HEIGHT_THUMBNAIL = 300;
 
@@ -39,6 +51,19 @@ export interface ImageGalleryProps {
 const ImageGallery = (props: ImageGalleryProps) => {
   const { entityId } = props;
   const { data: images, isLoading: imageIsLoading } = useGetImages(entityId);
+
+  const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
+  const [currentLightBoxImage, setCurrentLightBoxImage] = React.useState<
+    string | undefined
+  >(undefined);
+
+  const [selectedImage, setSelectedImage] = React.useState<
+    APIImage | undefined
+  >(undefined);
+
+  const [openMenuDialog, setOpenMenuDialog] = React.useState<
+    'download' | 'edit' | 'delete' | 'information' | false
+  >(false);
   const queryClient = useQueryClient();
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
@@ -117,6 +142,33 @@ const ImageGallery = (props: ImageGalleryProps) => {
   };
   const uiElements: GalleryProps['uiElements'] = [
     {
+      name: 'action-menu-button',
+      ariaLabel: 'Action menu button',
+      order: 9,
+      isButton: true,
+      html: ReactDOMServer.renderToStaticMarkup(
+        <MoreHoriz
+          fontSize="inherit"
+          style={{ width: '32px', height: '32px' }} // Set the size
+          aria-hidden="true"
+          className="pswp__icn"
+        />
+      ),
+      appendTo: 'bar' as const,
+      onClick: async (e, el, pswpInstance: PhotoSwipe) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        setAnchorEl(el);
+        const imageId = pswpInstance.getItemData(pswpInstance.currIndex).pid;
+        setCurrentLightBoxImage(imageId);
+        pswpInstance.on('close', () => {
+          setAnchorEl(null);
+          setCurrentLightBoxImage(undefined);
+        });
+      },
+    },
+    {
       name: 'info-title',
       ariaLabel: 'Image Title and File Name',
       order: 9,
@@ -148,6 +200,30 @@ const ImageGallery = (props: ImageGalleryProps) => {
       },
     },
   ];
+
+  const CustomActionMenu = (props: { imageId: string }) => {
+    const { imageId } = props;
+
+    const cellWithImageId = data.find(
+      (cell) => cell.row.original.id === imageId
+    );
+    if (!cellWithImageId) return null;
+
+    return (
+      <MRT_RowActionMenu
+        anchorEl={anchorEl}
+        handleEdit={() => {}}
+        row={cellWithImageId.row as MRT_Row<APIImage>}
+        setAnchorEl={setAnchorEl}
+        table={table}
+        sx={{
+          zIndex: 100000 + 1,
+          transform: 'translateX(-10px)',
+        }}
+        disableEnforceFocus
+      />
+    );
+  };
 
   const titles = Array.from(
     new Set(
@@ -220,10 +296,10 @@ const ImageGallery = (props: ImageGalleryProps) => {
     enableColumnPinning: false,
     enableTopToolbar: true,
     enableFacetedValues: true,
-    enableRowActions: false,
+    enableRowActions: true,
     enableGlobalFilter: false,
+    enableRowSelection: true,
     enableStickyHeader: true,
-    enableRowSelection: false,
     enableDensityToggle: false,
     enableTableFooter: true,
     enableColumnFilters: true,
@@ -238,6 +314,10 @@ const ImageGallery = (props: ImageGalleryProps) => {
     localization: {
       ...MRT_Localization_EN,
       rowsPerPage: 'Images per page',
+      toggleSelectRow: 'Toggle select card',
+      selectedCountOfRowCountRowsSelected:
+        '{selectedCount} of {rowCount} card(s) selected',
+      rowActions: 'Card Actions',
     },
     // State
     initialState: {
@@ -263,6 +343,56 @@ const ImageGallery = (props: ImageGalleryProps) => {
       displayTableRowCountText(table, images, 'Images', {
         paddingLeft: '8px',
       }),
+
+    renderRowActionMenuItems: ({ closeMenu, row }) => {
+      return [
+        <MenuItem
+          key="edit"
+          aria-label={`Edit ${row.original.file_name} image`}
+          sx={{ m: 0 }}
+        >
+          <ListItemIcon>
+            <EditIcon />
+          </ListItemIcon>
+          <ListItemText>Edit</ListItemText>
+        </MenuItem>,
+        <MenuItem
+          key="download"
+          aria-label={`Download ${row.original.file_name} image`}
+          sx={{ m: 0 }}
+        >
+          <ListItemIcon>
+            <DownloadIcon />
+          </ListItemIcon>
+          <ListItemText>Download</ListItemText>
+        </MenuItem>,
+        <MenuItem
+          key="info"
+          aria-label={`Show ${row.original.file_name} image information`}
+          onClick={() => {
+            setSelectedImage(row.original);
+            setOpenMenuDialog('information');
+            closeMenu();
+          }}
+          sx={{ m: 0 }}
+        >
+          <ListItemIcon>
+            <InfoOutlinedIcon />
+          </ListItemIcon>
+          <ListItemText>Information</ListItemText>
+        </MenuItem>,
+        <MenuItem
+          key="delete"
+          aria-label={`Delete catalogue item ${row.original.file_name}`}
+          sx={{ m: 0 }}
+        >
+          <ListItemIcon>
+            <DeleteIcon />
+          </ListItemIcon>
+          <ListItemText>Delete</ListItemText>
+        </MenuItem>,
+      ];
+    },
   });
 
   const [isCollapsed, setIsCollapsed] = React.useState(true);
@@ -272,9 +402,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
   };
   const data = table
     .getSortedRowModel()
-    .rows.map(
-      (row) => row.getVisibleCells().map((cell) => cell.row.original)[0]
-    );
+    .rows.map((row) => row.getVisibleCells().map((cell) => cell)[0]);
   const displayedImages = table
     .getPaginationRowModel()
     .rows.map(
@@ -307,6 +435,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
           <LinearProgress />
         </Box>
       )}
+
       {images && images.length !== 0 && (
         <Grid container>
           <Grid item container mt={2} direction="column" alignItems="center">
@@ -358,18 +487,18 @@ const ImageGallery = (props: ImageGalleryProps) => {
                   gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
                 }}
               >
-                {data.map((image, index) => {
+                {data.map((card, index) => {
                   const isUndisplayed = !displayedImages?.some(
-                    (img) => img.id === image.id
+                    (img) => img.id === card.row.original.id
                   );
 
                   return isUndisplayed ? (
                     <Item
-                      thumbnail={`data:image/webp;base64,${image.thumbnail_base64}`}
-                      id={image.id}
-                      caption={image.description ?? undefined}
-                      alt={`Image: ${image.title || image.file_name || index}`}
-                      key={`thumbnail-not-displayed-${image.id}`}
+                      thumbnail={`data:image/webp;base64,${card.row.original.thumbnail_base64}`}
+                      id={card.row.original.id}
+                      caption={card.row.original.description ?? undefined}
+                      alt={`Image: ${card.row.original.title || card.row.original.file_name || index}`}
+                      key={`thumbnail-not-displayed-${card.row.original.id}`}
                     >
                       {({ ref }) => {
                         return <Box ref={ref} style={{ display: 'none' }} />;
@@ -393,12 +522,13 @@ const ImageGallery = (props: ImageGalleryProps) => {
                         xs={12}
                       >
                         <Grid item xs={2}>
-                          <Checkbox
-                            checked={false}
-                            inputProps={{
-                              'aria-label': 'controlled',
+                          <MRT_SelectCheckbox
+                            row={card.row as MRT_Row<APIImage>}
+                            table={table}
+                            sx={{
+                              ariaLabel: `${card.row.original.file_name} checkbox`,
+                              margin: 0.5,
                             }}
-                            aria-label={`${image.file_name} checkbox`}
                           />
                         </Grid>
                       </Grid>
@@ -412,17 +542,17 @@ const ImageGallery = (props: ImageGalleryProps) => {
                         xs
                       >
                         <Item
-                          thumbnail={`data:image/webp;base64,${image.thumbnail_base64}`}
-                          id={image.id}
-                          caption={image.description ?? undefined}
-                          alt={`Image: ${image.title || image.file_name || index}`}
+                          thumbnail={`data:image/webp;base64,${card.row.original.thumbnail_base64}`}
+                          id={card.row.original.id}
+                          caption={card.row.original.description ?? undefined}
+                          alt={`Image: ${card.row.original.title || card.row.original.file_name || index}`}
                         >
                           {({ ref, open }) => {
                             return (
                               <ThumbnailImage
                                 ref={ref}
                                 open={open}
-                                image={image}
+                                image={card.row.original}
                                 maxHeightThumbnail={MAX_HEIGHT_THUMBNAIL}
                                 index={index}
                               />
@@ -440,11 +570,15 @@ const ImageGallery = (props: ImageGalleryProps) => {
                         xs={12}
                       >
                         <Grid xs={2} item>
-                          <IconButton
-                            aria-label={`actions ${image.file_name} photo button`}
-                          >
-                            <MoreHoriz />
-                          </IconButton>
+                          <MRT_ToggleRowActionMenuButton
+                            cell={card as MRT_Cell<APIImage>}
+                            row={card.row as MRT_Row<APIImage>}
+                            table={table}
+                            sx={{
+                              ariaLabel: `actions ${card.row.original.file_name} photo button`,
+                              margin: 0.5,
+                            }}
+                          />
                         </Grid>
                         <Grid item xs={8}>
                           <OverflowTip
@@ -453,7 +587,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
                               textAlign: 'center',
                             }}
                           >
-                            {image.file_name}
+                            {card.row.original.file_name}
                           </OverflowTip>
                         </Grid>
                         <Grid item xs={2}></Grid>
@@ -467,6 +601,16 @@ const ImageGallery = (props: ImageGalleryProps) => {
           <Grid marginTop={2} direction="row" item container>
             <MRT_BottomToolbar table={table} sx={{ width: '100%' }} />
           </Grid>
+          {currentLightBoxImage && (
+            <CustomActionMenu imageId={currentLightBoxImage} />
+          )}
+          {selectedImage && (
+            <ImageInformationDialog
+              open={openMenuDialog === 'information'}
+              onClose={() => setOpenMenuDialog(false)}
+              image={selectedImage}
+            />
+          )}
         </Grid>
       )}
     </>

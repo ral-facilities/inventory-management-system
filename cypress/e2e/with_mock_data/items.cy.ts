@@ -734,6 +734,30 @@ describe('Items', () => {
       cy.findByText('Show Filters').should('exist');
     });
 
+    it('opens information dialog from card view', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Gallery').click();
+
+      cy.findAllByLabelText('Card Actions').first().click();
+      cy.findAllByText('Information').last().click();
+
+      cy.findByRole('dialog').within(() => {
+        cy.findByText('Image Information').should('exist');
+        cy.findByText('stfc-logo-blue-text').should('exist');
+        cy.findByText('stfc-logo-blue-text.png').should('exist');
+        cy.findByText('test').should('exist');
+        cy.findByText('No').should('exist');
+
+        cy.findByRole('button', { name: 'Close' }).click();
+      });
+
+      cy.findByText('Image information').should('not.exist');
+    });
+
     it('opens full-size image when thumbnail is clicked and navigates to the next image', () => {
       cy.findByText('5YUQDDjKpz2z').click();
       cy.findByText(
@@ -773,6 +797,11 @@ describe('Items', () => {
           'exist'
         );
       });
+      // opens action menu
+
+      cy.findByRole('button', { name: 'Action menu button' }).click();
+
+      cy.findAllByText('Information').should('have.length', 2);
     });
   });
 
