@@ -292,5 +292,10 @@ describe('Image Gallery', () => {
 
     const informationButton = await screen.findByText(`Information`);
     expect(informationButton).toBeInTheDocument();
-  }, 20000);
+    await user.click(screen.getByLabelText('Close'));
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  }, 50000);
 });
