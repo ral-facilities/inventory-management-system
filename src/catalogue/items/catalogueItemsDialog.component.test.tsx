@@ -618,6 +618,7 @@ describe('Catalogue Items Dialog', () => {
       description: '',
       drawingLink: 'https://example.com',
       drawingNumber: 'mk4324',
+      expectedLifetimeDays: '-5',
       itemModelNumber: 'mk4324',
       name: 'test',
       manufacturer: 'Man{arrowdown}{enter}',
@@ -629,7 +630,7 @@ describe('Catalogue Items Dialog', () => {
       'Number must be greater than or equal to 0'
     );
 
-    expect(NegativeNumberErrorText.length).toBe(4);
+    expect(NegativeNumberErrorText.length).toBe(5);
     expect(NegativeNumberErrorText[0]).toHaveTextContent(
       'Number must be greater than or equal to 0'
     );
@@ -639,6 +640,7 @@ describe('Catalogue Items Dialog', () => {
       costToReworkGbp: '5',
       daysToReplace: '5',
       daysToRework: '5',
+      expectedLifetimeDays: '5',
     });
 
     await user.click(screen.getByRole('button', { name: 'Next' }));
