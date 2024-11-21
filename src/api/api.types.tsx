@@ -259,5 +259,5 @@ export interface APIImage
 }
 
 export interface ImageGet extends APIImage {
-  download_url: string;
+  url: string;
 }
