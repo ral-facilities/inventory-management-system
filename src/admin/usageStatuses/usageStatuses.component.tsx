@@ -56,7 +56,6 @@ function UsageStatuses() {
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
-        Cell: ({ row }) => row.original.value,
       },
       {
         header: 'Last modified',

@@ -147,7 +147,6 @@ export function ItemsTable(props: ItemTableProps) {
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.datetime,
         size: 350,
         Cell: ({ row }) =>
-          row.original.item.modified_time &&
           formatDateTimeStrings(row.original.item.modified_time, true),
         enableGrouping: false,
       },
