@@ -1036,18 +1036,18 @@ export const handlers = [
       if (Number(id) % 2 === 0) {
         image = {
           ...ImagesJSON,
-          download_url: `${window.location.origin}/logo192.png?text=${encodeURIComponent(id as string)}`,
+          url: `${window.location.origin}/logo192.png?text=${encodeURIComponent(id as string)}`,
         };
       } else {
         if (Number(id) === 3) {
           image = {
             ...ImagesJSON,
-            download_url: ImagesJSON[1].file_name,
+            url: ImagesJSON[1].file_name,
           };
         } else {
           image = {
             ...ImagesJSON,
-            download_url: `${window.location.origin}/images/stfc-logo-blue-text.png?text=${encodeURIComponent(id as string)}`,
+            url: `${window.location.origin}/images/stfc-logo-blue-text.png?text=${encodeURIComponent(id as string)}`,
           };
         }
       }

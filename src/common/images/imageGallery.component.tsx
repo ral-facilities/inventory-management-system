@@ -49,7 +49,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
             queryFn: async () => {
               const image = await getImage(imageId);
               const img = new Image();
-              img.src = image.download_url;
+              img.src = image.url;
 
               await new Promise((resolve, reject) => {
                 img.onload = resolve;
