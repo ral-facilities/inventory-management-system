@@ -154,7 +154,9 @@ const ImageGallery = (props: ImageGalleryProps) => {
                   container
                   xs
                   key={`thumbnail-displayed-${index}`}
-                  minWidth={'350px'}
+                  style={{
+                    maxWidth: images.length === 1 ? '50%' : undefined,
+                  }}
                 >
                   <Grid
                     display="flex"
@@ -195,7 +197,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
                             ref={ref}
                             open={open}
                             image={image}
-                            maxHeightThumbnail={MAX_HEIGHT_THUMBNAIL}
                             index={index}
                           />
                         );
