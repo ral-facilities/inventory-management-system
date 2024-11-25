@@ -69,16 +69,15 @@ function ManufacturerComponent() {
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
         size: 400,
-        Cell: ({ row }) =>
-          row.original.name && (
-            <MuiLink
-              underline="hover"
-              component={Link}
-              to={`/manufacturers/${row.original.id}`}
-            >
-              {row.original.name}
-            </MuiLink>
-          ),
+        Cell: ({ row }) => (
+          <MuiLink
+            underline="hover"
+            component={Link}
+            to={`/manufacturers/${row.original.id}`}
+          >
+            {row.original.name}
+          </MuiLink>
+        ),
       },
       {
         header: 'Last modified',
@@ -91,7 +90,6 @@ function ManufacturerComponent() {
         size: 350,
         enableGrouping: false,
         Cell: ({ row }) =>
-          row.original.modified_time &&
           formatDateTimeStrings(row.original.modified_time, true),
       },
       {
