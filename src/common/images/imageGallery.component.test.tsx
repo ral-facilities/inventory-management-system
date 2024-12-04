@@ -173,9 +173,7 @@ describe('Image Gallery', () => {
     await waitFor(() =>
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
-    const thumbnail = await screen.findAllByAltText(
-      'Image: stfc-logo-blue-text'
-    );
+    const thumbnail = await screen.findAllByAltText('test');
     await user.click(thumbnail[0]);
 
     expect(axiosGetSpy).toHaveBeenCalledWith('/images/1');
@@ -190,9 +188,7 @@ describe('Image Gallery', () => {
     ).toBeInTheDocument();
     expect(galleryLightBox.getByText('test')).toBeInTheDocument();
 
-    const imageElement1 = await galleryLightBox.findByAltText(
-      `Image: stfc-logo-blue-text`
-    );
+    const imageElement1 = await galleryLightBox.findByAltText(`test`);
 
     expect(imageElement1).toBeInTheDocument();
 
@@ -211,7 +207,7 @@ describe('Image Gallery', () => {
     expect(screen.getByText('Title: logo1')).toBeInTheDocument();
     expect(screen.getByText('test')).toBeInTheDocument();
 
-    const imageElement2 = await galleryLightBox.findByAltText(`Image: logo1`);
+    const imageElement2 = await galleryLightBox.findByAltText(`test`);
 
     expect(imageElement2).toBeInTheDocument();
 
@@ -234,9 +230,9 @@ describe('Image Gallery', () => {
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
     const thumbnail = await screen.findAllByAltText(
-      'Image: stfc-logo-blue-text'
+      'No photo description available.'
     );
-    await user.click(thumbnail[1]);
+    await user.click(thumbnail[0]);
 
     expect(axiosGetSpy).toHaveBeenCalledWith('/images/3');
 
@@ -254,7 +250,7 @@ describe('Image Gallery', () => {
       galleryLightBox.getByText('No description available')
     ).toBeInTheDocument();
     const imageElement = galleryLightBox.getByAltText(
-      `Image: stfc-logo-blue-text`
+      `No photo description available.`
     );
     fireEvent.error(imageElement);
 
@@ -272,7 +268,7 @@ describe('Image Gallery', () => {
     expect(screen.getByText('Title: logo1')).toBeInTheDocument();
     expect(screen.getByText('test')).toBeInTheDocument();
 
-    const imageElement2 = await galleryLightBox.findByAltText(`Image: logo1`);
+    const imageElement2 = await galleryLightBox.findByAltText(`test`);
 
     expect(imageElement2).toBeInTheDocument();
 
@@ -294,10 +290,8 @@ describe('Image Gallery', () => {
     await waitFor(() =>
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
-    const thumbnail = await screen.findAllByAltText(
-      'Image: stfc-logo-blue-text'
-    );
-    await user.click(thumbnail[2]);
+    const thumbnail = await screen.findAllByAltText('test');
+    await user.click(thumbnail[3]);
 
     expect(axiosGetSpy).toHaveBeenCalledWith('/images/5');
 
@@ -322,9 +316,7 @@ describe('Image Gallery', () => {
     await waitFor(() =>
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
-    const thumbnail = await screen.findAllByAltText(
-      'Image: stfc-logo-blue-text'
-    );
+    const thumbnail = await screen.findAllByAltText('test');
     await user.click(thumbnail[0]);
 
     expect(axiosGetSpy).toHaveBeenCalledWith('/images/1');
@@ -338,9 +330,7 @@ describe('Image Gallery', () => {
 
     const galleryLightBox = within(screen.getByTestId('galleryLightBox'));
 
-    const imageElement1 = await galleryLightBox.findByAltText(
-      `Image: stfc-logo-blue-text`
-    );
+    const imageElement1 = await galleryLightBox.findByAltText(`test`);
 
     expect(imageElement1).toBeInTheDocument();
 

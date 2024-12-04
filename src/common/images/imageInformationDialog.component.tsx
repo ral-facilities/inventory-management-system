@@ -35,7 +35,7 @@ const ImageInformationDialog = (props: ImageInformationDialogProps) => {
           <Box
             sx={{ display: 'flex', justifyContent: 'center', marginBottom: 2 }}
           >
-            <ThumbnailImage image={image} index={0} />
+            <ThumbnailImage image={image} />
           </Box>
 
           <Typography variant="h6">File Name:</Typography>

@@ -717,19 +717,13 @@ describe('Items', () => {
       ).should('exist');
 
       cy.findByText('Gallery').click();
-      cy.findAllByAltText('Image: stfc-logo-blue-text').should(
-        'have.length',
-        7
-      );
+      cy.findAllByText('stfc-logo-blue-text.png').should('have.length', 8);
       cy.findByText('Show Filters').click();
       cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
       cy.findByLabelText('Filter by File name').type('logo1.png');
-      cy.findByAltText('Image: stfc-logo-blue-text').should('not.exist');
+      cy.findByAltText('test').should('not.exist');
       cy.findByRole('button', { name: 'Clear Filters' }).click();
-      cy.findAllByAltText('Image: stfc-logo-blue-text').should(
-        'have.length',
-        7
-      );
+      cy.findAllByText('stfc-logo-blue-text.png').should('have.length', 8);
       cy.findByText('Hide Filters').click();
       cy.findByText('Show Filters').should('exist');
     });
@@ -766,15 +760,15 @@ describe('Items', () => {
 
       cy.findByText('Gallery').click();
 
-      cy.findAllByAltText('Image: stfc-logo-blue-text').first().click();
+      cy.findAllByAltText('test').first().click();
       cy.findByTestId('galleryLightBox').within(() => {
         cy.findByText('File name: stfc-logo-blue-text.png').should('exist');
         cy.findByText('Title: stfc-logo-blue-text').should('exist');
         cy.findByText('test').should('exist');
 
-        cy.findByAltText('Image: stfc-logo-blue-text').should('exist');
+        cy.findByAltText('test').should('exist');
 
-        cy.findByAltText('Image: stfc-logo-blue-text')
+        cy.findByAltText('test')
           .should('have.attr', 'src')
           .and(
             'include',
@@ -787,9 +781,9 @@ describe('Items', () => {
         cy.findByText('Title: logo1').should('exist');
         cy.findByText('test').should('exist');
 
-        cy.findByAltText('Image: logo1').should('exist');
+        cy.findByAltText('test').should('exist');
 
-        cy.findByAltText('Image: logo1')
+        cy.findByAltText('test')
           .should('have.attr', 'src')
           .and('include', 'http://localhost:3000/logo192.png?text=2');
         cy.findByLabelText('Close').click();
@@ -820,9 +814,9 @@ describe('Items', () => {
         cy.findByText('Title: logo1').should('exist');
         cy.findByText('test').should('exist');
 
-        cy.findByAltText('Image: logo1').should('exist');
+        cy.findByAltText('test').should('exist');
 
-        cy.findByAltText('Image: logo1')
+        cy.findByAltText('test')
           .should('have.attr', 'src')
           .and('include', 'http://localhost:3000/logo192.png?text=2');
         cy.findByLabelText('Close').click();
@@ -839,7 +833,7 @@ describe('Items', () => {
 
       cy.findByText('Gallery').click();
 
-      cy.findAllByAltText('Image: stfc-logo-blue-text').eq(1).click();
+      cy.findAllByAltText('test').eq(3).click();
       cy.findByTestId('galleryLightBox').within(() => {
         cy.findByText('The image cannot be loaded', { timeout: 10000 }).should(
           'exist'
@@ -863,15 +857,15 @@ describe('Items', () => {
 
       cy.findByText('Gallery').click();
 
-      cy.findAllByAltText('Image: stfc-logo-blue-text').first().click();
+      cy.findAllByAltText('test').first().click();
       cy.findByTestId('galleryLightBox').within(() => {
         cy.findByText('File name: stfc-logo-blue-text.png').should('exist');
         cy.findByText('Title: stfc-logo-blue-text').should('exist');
         cy.findByText('test').should('exist');
 
-        cy.findByAltText('Image: stfc-logo-blue-text').should('exist');
+        cy.findByAltText('test').should('exist');
 
-        cy.findByAltText('Image: stfc-logo-blue-text')
+        cy.findByAltText('test')
           .should('have.attr', 'src')
           .and(
             'include',

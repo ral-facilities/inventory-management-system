@@ -368,7 +368,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
                           setCurrentLightBoxImage(card.row.original.id)
                         }
                         image={card.row.original}
-                        index={index}
                       />
                     </Grid>
 

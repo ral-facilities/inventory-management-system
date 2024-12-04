@@ -183,7 +183,7 @@ const GalleryLightBox = (props: GalleryLightBoxProps) => {
                 // refetch the image when navigating to the next image after an error.
                 key={hasError}
                 src={data.url}
-                alt={`Image: ${data.title || data.file_name}`}
+                alt={data.description ?? 'No photo description available.'}
                 style={{
                   objectFit: 'contain',
                   maxHeight: '100%',

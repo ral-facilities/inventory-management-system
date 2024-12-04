@@ -5,11 +5,10 @@ import { APIImage } from '../../api/api.types';
 export interface ThumbnailImageProps {
   onClick?: () => void;
   image: APIImage;
-  index: number;
 }
 
 const ThumbnailImage = (props: ThumbnailImageProps) => {
-  const { onClick, image, index } = props;
+  const { onClick, image } = props;
   const [hasError, setHasError] = React.useState<string | undefined>(undefined);
   return (
     <>
@@ -27,7 +26,7 @@ const ThumbnailImage = (props: ThumbnailImageProps) => {
         <Box
           component="img"
           src={`data:image/webp;base64,${image.thumbnail_base64}`}
-          alt={`Image: ${image.title || image.file_name || index}`}
+          alt={image.description ?? 'No photo description available.'}
           style={{
             borderRadius: '4px',
             cursor: onClick ? 'pointer' : undefined,
