@@ -9,6 +9,16 @@ export const getImage = async (id: string): Promise<ImageGet> => {
   });
 };
 
+export const useGetImage = (
+  id?: string
+): UseQueryResult<ImageGet, AxiosError> => {
+  return useQuery({
+    queryKey: ['Image', id],
+    queryFn: () => getImage(id ?? ''),
+    enabled: !!id,
+  });
+};
+
 const getImages = async (
   entityId: string,
   primary?: boolean

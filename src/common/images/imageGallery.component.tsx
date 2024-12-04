@@ -15,32 +15,25 @@ import {
   MenuItem,
   Typography,
 } from '@mui/material';
-import { useQueryClient } from '@tanstack/react-query';
 import {
   MRT_BottomToolbar,
   MRT_Cell,
   MRT_ColumnDef,
   MRT_Row,
-  MRT_RowActionMenu,
   MRT_SelectCheckbox,
   MRT_ToggleRowActionMenuButton,
   useMaterialReactTable,
 } from 'material-react-table';
-import PhotoSwipe, { SlideData } from 'photoswipe';
-import 'photoswipe/dist/photoswipe.css';
-import React from 'react';
-import ReactDOMServer from 'react-dom/server';
-import { Gallery, GalleryProps, Item } from 'react-photoswipe-gallery';
-import { getImage, useGetImages } from '../../api/images';
-import { displayTableRowCountText, OverflowTip } from '../../utils';
-import { usePreservedTableState } from '../preservedTableState.component';
-import ThumbnailImage from './thumbnailImage.component';
-
-import { MoreHoriz } from '@mui/icons-material';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
+import React from 'react';
 import { APIImage } from '../../api/api.types';
+import { useGetImages } from '../../api/images';
+import { displayTableRowCountText, OverflowTip } from '../../utils';
 import CardViewFilters from '../cardView/cardViewFilters.component';
+import { usePreservedTableState } from '../preservedTableState.component';
+import GalleryLightBox from './galleryLightbox.component';
 import ImageInformationDialog from './imageInformationDialog.component';
+import ThumbnailImage from './thumbnailImage.component';
 
 const MAX_HEIGHT_THUMBNAIL = 300;
 
@@ -52,7 +45,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
   const { entityId } = props;
   const { data: images, isLoading: imageIsLoading } = useGetImages(entityId);
 
-  const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
   const [currentLightBoxImage, setCurrentLightBoxImage] = React.useState<
     string | undefined
   >(undefined);
@@ -64,7 +56,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
   const [openMenuDialog, setOpenMenuDialog] = React.useState<
     'download' | 'edit' | 'delete' | 'information' | false
   >(false);
-  const queryClient = useQueryClient();
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
       pagination: { pageSize: 16, pageIndex: 0 },
@@ -73,157 +64,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
     paginationOnly: true,
     urlParamName: 'imageState',
   });
-
-  const onBeforeOpen = React.useCallback(
-    (pswpInstance: PhotoSwipe) => {
-      let isFetching = false;
-      const slideInitHandler = async () => {
-        pswpInstance.addFilter('isContentLoading', () => {
-          return true;
-        });
-        if (isFetching) return;
-        isFetching = true;
-
-        const imageId = pswpInstance.getItemData(pswpInstance.currIndex).pid;
-        const slide = (pswpInstance.options.dataSource as SlideData[])[
-          pswpInstance.currIndex
-        ];
-
-        try {
-          const imageData = await queryClient.fetchQuery({
-            queryKey: ['Image', imageId],
-            queryFn: async () => {
-              const image = await getImage(imageId);
-              const img = new Image();
-              img.src = image.url;
-
-              await new Promise((resolve, reject) => {
-                img.onload = resolve;
-                img.onerror = reject;
-              });
-
-              return {
-                ...image,
-                src: img.src,
-                width: img.naturalWidth,
-                height: img.naturalHeight,
-              };
-            },
-            staleTime: 300000, // Cache for 5 minutes
-          });
-
-          Object.assign(slide, {
-            src: imageData.src,
-            width: imageData.width,
-            height: imageData.height,
-          });
-          pswpInstance.refreshSlideContent(pswpInstance.currIndex);
-        } catch {
-          Object.assign(slide, {
-            src: 'data:image/jpeg;base64,invalidBase64data',
-          });
-          pswpInstance.refreshSlideContent(pswpInstance.currIndex);
-        } finally {
-          isFetching = false;
-          pswpInstance.addFilter('isContentLoading', () => false);
-        }
-      };
-      pswpInstance.on('slideInit', slideInitHandler);
-
-      return () => {
-        pswpInstance.off('slideInit', slideInitHandler);
-      };
-    },
-    [queryClient]
-  );
-
-  const options: GalleryProps['options'] = {
-    showHideAnimationType: 'zoom',
-  };
-  const uiElements: GalleryProps['uiElements'] = [
-    {
-      name: 'action-menu-button',
-      ariaLabel: 'Action menu button',
-      order: 9,
-      isButton: true,
-      html: ReactDOMServer.renderToStaticMarkup(
-        <MoreHoriz
-          fontSize="inherit"
-          style={{ width: '32px', height: '32px' }} // Set the size
-          aria-hidden="true"
-          className="pswp__icn"
-        />
-      ),
-      appendTo: 'bar' as const,
-      onClick: async (e, el, pswpInstance: PhotoSwipe) => {
-        e.stopPropagation();
-        e.preventDefault();
-
-        setAnchorEl(el);
-        const imageId = pswpInstance.getItemData(pswpInstance.currIndex).pid;
-        setCurrentLightBoxImage(imageId);
-        pswpInstance.on('close', () => {
-          setAnchorEl(null);
-          setCurrentLightBoxImage(undefined);
-        });
-      },
-    },
-    {
-      name: 'info-title',
-      ariaLabel: 'Image Title and File Name',
-      order: 9,
-      html: '<div class="image-title"></div>',
-      appendTo: 'wrapper' as const,
-      onInit: (el, pswpInstance) => {
-        const updateTitle = () => {
-          const currentIndex = pswpInstance.currIndex;
-
-          const slideData = (pswpInstance.options.dataSource as SlideData[])[
-            currentIndex
-          ];
-
-          const imageData = images?.find((image) => image.id === slideData.pid);
-          if (slideData) {
-            const titleElement = el.querySelector('.image-title');
-            if (titleElement) {
-              titleElement.innerHTML = `
-              <div style="text-align: center; align-items: center;">
-                ${imageData?.title ? `<h4 style="color: var(--pswp-icon-color);margin: 8px;">Title: ${imageData.title}</h4>` : ''}
-                <span style="color: var(--pswp-icon-color);">File Name: ${imageData?.file_name}</span>
-              </div>
-            `;
-            }
-          }
-        };
-
-        pswpInstance.on('slideInit', updateTitle);
-      },
-    },
-  ];
-
-  const CustomActionMenu = (props: { imageId: string }) => {
-    const { imageId } = props;
-
-    const cellWithImageId = data.find(
-      (cell) => cell.row.original.id === imageId
-    );
-    if (!cellWithImageId) return null;
-
-    return (
-      <MRT_RowActionMenu
-        anchorEl={anchorEl}
-        handleEdit={() => {}}
-        row={cellWithImageId.row as MRT_Row<APIImage>}
-        setAnchorEl={setAnchorEl}
-        table={table}
-        sx={{
-          zIndex: 100000 + 1,
-          transform: 'translateX(-10px)',
-        }}
-        disableEnforceFocus
-      />
-    );
-  };
 
   const titles = Array.from(
     new Set(
@@ -317,7 +157,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
       toggleSelectRow: 'Toggle select card',
       selectedCountOfRowCountRowsSelected:
         '{selectedCount} of {rowCount} card(s) selected',
-      rowActions: 'Card Actions',
+      rowActions: currentLightBoxImage ? 'Image Actions' : 'Card Actions',
     },
     // State
     initialState: {
@@ -471,144 +311,120 @@ const ImageGallery = (props: ImageGalleryProps) => {
             </Typography>
           </Grid>
           <Grid container item>
-            <Gallery
-              onBeforeOpen={onBeforeOpen}
-              uiElements={uiElements}
-              options={options}
-              withCaption
+            <Grid
+              container
+              item
+              mt={2}
+              gap={2}
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+              }}
             >
-              <Grid
-                container
-                item
-                mt={2}
-                gap={2}
-                sx={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-                }}
-              >
-                {data.map((card, index) => {
-                  const isUndisplayed = !displayedImages?.some(
-                    (img) => img.id === card.row.original.id
-                  );
+              {data.map((card, index) => {
+                const isUndisplayed = !displayedImages?.some(
+                  (img) => img.id === card.row.original.id
+                );
 
-                  return isUndisplayed ? (
-                    <Item
-                      thumbnail={`data:image/webp;base64,${card.row.original.thumbnail_base64}`}
-                      id={card.row.original.id}
-                      caption={card.row.original.description ?? undefined}
-                      alt={`Image: ${card.row.original.title || card.row.original.file_name || index}`}
-                      key={`thumbnail-not-displayed-${card.row.original.id}`}
-                    >
-                      {({ ref }) => {
-                        return <Box ref={ref} style={{ display: 'none' }} />;
-                      }}
-                    </Item>
-                  ) : (
-                    <Card
-                      component={Grid}
+                return isUndisplayed ? null : (
+                  <Card
+                    component={Grid}
+                    item
+                    container
+                    xs
+                    key={`thumbnail-displayed-${index}`}
+                    minWidth={'350px'}
+                  >
+                    <Grid
+                      display="flex"
+                      justifyContent="flex-start"
+                      alignItems="center"
                       item
                       container
-                      xs
-                      key={`thumbnail-displayed-${index}`}
-                      minWidth={'350px'}
+                      xs={12}
                     >
-                      <Grid
-                        display="flex"
-                        justifyContent="flex-start"
-                        alignItems="center"
-                        item
-                        container
-                        xs={12}
-                      >
-                        <Grid item xs={2}>
-                          <MRT_SelectCheckbox
-                            row={card.row as MRT_Row<APIImage>}
-                            table={table}
-                            sx={{
-                              ariaLabel: `${card.row.original.file_name} checkbox`,
-                              margin: 0.5,
-                            }}
-                          />
-                        </Grid>
-                      </Grid>
-
-                      <Grid
-                        display="flex"
-                        justifyContent="center"
-                        alignItems="center"
-                        item
-                        minHeight={`${MAX_HEIGHT_THUMBNAIL}px`}
-                        xs
-                      >
-                        <Item
-                          thumbnail={`data:image/webp;base64,${card.row.original.thumbnail_base64}`}
-                          id={card.row.original.id}
-                          caption={card.row.original.description ?? undefined}
-                          alt={`Image: ${card.row.original.title || card.row.original.file_name || index}`}
-                        >
-                          {({ ref, open }) => {
-                            return (
-                              <ThumbnailImage
-                                ref={ref}
-                                open={open}
-                                image={card.row.original}
-                                maxHeightThumbnail={MAX_HEIGHT_THUMBNAIL}
-                                index={index}
-                              />
-                            );
+                      <Grid item xs={2}>
+                        <MRT_SelectCheckbox
+                          row={card.row as MRT_Row<APIImage>}
+                          table={table}
+                          sx={{
+                            ariaLabel: `${card.row.original.file_name} checkbox`,
+                            margin: 0.5,
                           }}
-                        </Item>
+                        />
                       </Grid>
+                    </Grid>
 
-                      <Grid
-                        display="flex"
-                        justifyContent="center"
-                        alignItems="center"
-                        item
-                        container
-                        xs={12}
-                      >
-                        <Grid xs={2} item>
-                          <MRT_ToggleRowActionMenuButton
-                            cell={card as MRT_Cell<APIImage>}
-                            row={card.row as MRT_Row<APIImage>}
-                            table={table}
-                            sx={{
-                              ariaLabel: `actions ${card.row.original.file_name} photo button`,
-                              margin: 0.5,
-                            }}
-                          />
-                        </Grid>
-                        <Grid item xs={8}>
-                          <OverflowTip
-                            sx={{
-                              fontVariant: 'body2',
-                              textAlign: 'center',
-                            }}
-                          >
-                            {card.row.original.file_name}
-                          </OverflowTip>
-                        </Grid>
-                        <Grid item xs={2}></Grid>
+                    <Grid
+                      display="flex"
+                      justifyContent="center"
+                      alignItems="center"
+                      item
+                      minHeight={`${MAX_HEIGHT_THUMBNAIL}px`}
+                      xs
+                    >
+                      <ThumbnailImage
+                        onClick={() =>
+                          setCurrentLightBoxImage(card.row.original.id)
+                        }
+                        image={card.row.original}
+                        index={index}
+                      />
+                    </Grid>
+
+                    <Grid
+                      display="flex"
+                      justifyContent="center"
+                      alignItems="center"
+                      item
+                      container
+                      xs={12}
+                    >
+                      <Grid xs={2} item>
+                        <MRT_ToggleRowActionMenuButton
+                          cell={card as MRT_Cell<APIImage>}
+                          row={card.row as MRT_Row<APIImage>}
+                          table={table}
+                          sx={{
+                            ariaLabel: `actions ${card.row.original.file_name} photo button`,
+                            margin: 0.5,
+                          }}
+                        />
                       </Grid>
-                    </Card>
-                  );
-                })}
-              </Grid>
-            </Gallery>
+                      <Grid item xs={8}>
+                        <OverflowTip
+                          sx={{
+                            fontVariant: 'body2',
+                            textAlign: 'center',
+                          }}
+                        >
+                          {card.row.original.file_name}
+                        </OverflowTip>
+                      </Grid>
+                      <Grid item xs={2}></Grid>
+                    </Grid>
+                  </Card>
+                );
+              })}
+            </Grid>
           </Grid>
           <Grid marginTop={2} direction="row" item container>
             <MRT_BottomToolbar table={table} sx={{ width: '100%' }} />
           </Grid>
-          {currentLightBoxImage && (
-            <CustomActionMenu imageId={currentLightBoxImage} />
-          )}
           {selectedImage && (
             <ImageInformationDialog
               open={openMenuDialog === 'information'}
               onClose={() => setOpenMenuDialog(false)}
               image={selectedImage}
+            />
+          )}
+          {currentLightBoxImage && (
+            <GalleryLightBox
+              open={currentLightBoxImage !== undefined}
+              onClose={() => setCurrentLightBoxImage(undefined)}
+              currentImageId={currentLightBoxImage}
+              imageCardData={data as MRT_Cell<APIImage, unknown>[]}
+              table={table}
             />
           )}
         </Grid>

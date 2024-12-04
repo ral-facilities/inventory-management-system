@@ -23,7 +23,7 @@ const ImageInformationDialog = (props: ImageInformationDialogProps) => {
 
   return (
     <Dialog
-      sx={{ zIndex: 100000 + 1 }}
+      sx={{ zIndex: 1210 + 2 }}
       open={open}
       maxWidth="sm"
       disableEnforceFocus
@@ -35,7 +35,7 @@ const ImageInformationDialog = (props: ImageInformationDialogProps) => {
           <Box
             sx={{ display: 'flex', justifyContent: 'center', marginBottom: 2 }}
           >
-            <ThumbnailImage image={image} index={0} maxHeightThumbnail={300} />
+            <ThumbnailImage image={image} index={0} />
           </Box>
 
           <Typography variant="h6">File Name:</Typography>

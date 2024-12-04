@@ -1016,7 +1016,10 @@ export const handlers = [
         } else {
           image = {
             ...ImagesJSON[1],
-            ...(id === 3 && { thumbnail_base64: 'test' }),
+            ...(id === 3 && {
+              thumbnail_base64: 'test',
+              description: undefined,
+            }),
           };
         }
         return {
@@ -1032,27 +1035,28 @@ export const handlers = [
   http.get('/images/:id', ({ params }) => {
     const { id } = params;
     if (!isNaN(Number(id))) {
-      let image;
+      let image = undefined;
       if (Number(id) % 2 === 0) {
         image = {
-          ...ImagesJSON,
+          ...ImagesJSON[0],
           url: `${window.location.origin}/logo192.png?text=${encodeURIComponent(id as string)}`,
         };
       } else {
         if (Number(id) === 3) {
           image = {
-            ...ImagesJSON,
-            url: ImagesJSON[1].file_name,
+            ...ImagesJSON[1],
+            url: 'invalid url',
+            description: undefined,
           };
         } else {
           image = {
-            ...ImagesJSON,
+            ...ImagesJSON[1],
             url: `${window.location.origin}/images/stfc-logo-blue-text.png?text=${encodeURIComponent(id as string)}`,
           };
         }
       }
 
-      if (Number(id) === 3) {
+      if (Number(id) === 5) {
         return HttpResponse.error();
       }
 

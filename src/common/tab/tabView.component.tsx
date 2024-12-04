@@ -103,6 +103,8 @@ function TabView<T extends string>(props: TabViewProps<T>) {
           value={tabValue}
           onChange={handleTabChange}
           aria-label={`${ariaLabelPrefix} view tabs`}
+          variant="scrollable"
+          scrollButtons="auto"
         >
           {tabData.map(({ value, icon }) => (
             <StyledTab

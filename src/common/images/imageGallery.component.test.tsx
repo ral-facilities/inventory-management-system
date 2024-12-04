@@ -1,4 +1,4 @@
-import { screen, waitFor, within } from '@testing-library/react';
+import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { act } from 'react';
@@ -17,66 +17,12 @@ describe('Image Gallery', () => {
     return renderComponentWithRouterProvider(<ImageGallery {...props} />);
   };
 
-  beforeAll(() => {
-    let _src: string;
-
-    Object.defineProperty(global.Image.prototype, 'src', {
-      set(value) {
-        _src = value;
-
-        // Check for an invalid base64 thumbnail or URL and call onError
-        if (value.includes('test')) {
-          setTimeout(() => {
-            if (typeof this.onerror === 'function') {
-              this.onerror(new Event('error'));
-            }
-          }, 0);
-        } else {
-          setTimeout(() => {
-            if (typeof this.onload === 'function') {
-              this.onload();
-            }
-          }, 0);
-        }
-      },
-      get() {
-        return _src;
-      },
-    });
-
-    Object.defineProperty(global.Image.prototype, 'naturalWidth', {
-      get() {
-        return 100;
-      },
-    });
-
-    Object.defineProperty(global.Image.prototype, 'naturalHeight', {
-      get() {
-        return 100;
-      },
-    });
-  });
-
   beforeEach(() => {
     props = {
       entityId: '1',
     };
     user = userEvent.setup();
     axiosGetSpy = vi.spyOn(storageApi, 'get');
-
-    Object.defineProperty(window, 'matchMedia', {
-      writable: true,
-      value: vi.fn().mockImplementation((query) => ({
-        matches: false,
-        media: query,
-        onchange: null,
-        addListener: vi.fn(),
-        removeListener: vi.fn(),
-        addEventListener: vi.fn(),
-        removeEventListener: vi.fn(),
-        dispatchEvent: vi.fn(),
-      })),
-    });
   });
 
   afterEach(() => {
@@ -221,7 +167,156 @@ describe('Image Gallery', () => {
     });
   });
 
-  it('opens full-size image when thumbnail is clicked, navigates to the next image, and then navigates to a third image that failed to upload, falling back to a placeholder', async () => {
+  it('opens full-size image when thumbnail is clicked and navigates to the next image', async () => {
+    createView();
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+    const thumbnail = await screen.findAllByAltText(
+      'Image: stfc-logo-blue-text'
+    );
+    await user.click(thumbnail[0]);
+
+    expect(axiosGetSpy).toHaveBeenCalledWith('/images/1');
+    const galleryLightBox = within(screen.getByTestId('galleryLightBox'));
+    await waitFor(() => {
+      expect(
+        galleryLightBox.getByText('File name: stfc-logo-blue-text.png')
+      ).toBeInTheDocument();
+    });
+    expect(
+      galleryLightBox.getByText('Title: stfc-logo-blue-text')
+    ).toBeInTheDocument();
+    expect(galleryLightBox.getByText('test')).toBeInTheDocument();
+
+    const imageElement1 = await galleryLightBox.findByAltText(
+      `Image: stfc-logo-blue-text`
+    );
+
+    expect(imageElement1).toBeInTheDocument();
+
+    expect(imageElement1).toHaveAttribute(
+      'src',
+      `http://localhost:3000/images/stfc-logo-blue-text.png?text=1`
+    );
+
+    await user.click(galleryLightBox.getByLabelText('Next'));
+
+    expect(axiosGetSpy).toHaveBeenCalledWith('/images/2');
+
+    await waitFor(() => {
+      expect(screen.getByText('File name: logo1.png')).toBeInTheDocument();
+    });
+    expect(screen.getByText('Title: logo1')).toBeInTheDocument();
+    expect(screen.getByText('test')).toBeInTheDocument();
+
+    const imageElement2 = await galleryLightBox.findByAltText(`Image: logo1`);
+
+    expect(imageElement2).toBeInTheDocument();
+
+    expect(imageElement2).toHaveAttribute(
+      'src',
+      `http://localhost:3000/logo192.png?text=2`
+    );
+
+    await user.click(screen.getByLabelText('Close'));
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('galleryLightBox')).not.toBeInTheDocument();
+    });
+  });
+
+  it('opens corrupted image, and navigates back to previous image (invalid url)', async () => {
+    createView();
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+    const thumbnail = await screen.findAllByAltText(
+      'Image: stfc-logo-blue-text'
+    );
+    await user.click(thumbnail[1]);
+
+    expect(axiosGetSpy).toHaveBeenCalledWith('/images/3');
+
+    const galleryLightBox = within(screen.getByTestId('galleryLightBox'));
+
+    await waitFor(() => {
+      expect(
+        galleryLightBox.getByText('File name: stfc-logo-blue-text.png')
+      ).toBeInTheDocument();
+    });
+    expect(
+      galleryLightBox.getByText('Title: stfc-logo-blue-text')
+    ).toBeInTheDocument();
+    expect(
+      galleryLightBox.getByText('No description available')
+    ).toBeInTheDocument();
+    const imageElement = galleryLightBox.getByAltText(
+      `Image: stfc-logo-blue-text`
+    );
+    fireEvent.error(imageElement);
+
+    await waitFor(() => {
+      expect(
+        galleryLightBox.getByText('The image cannot be loaded')
+      ).toBeInTheDocument();
+    });
+
+    await user.click(galleryLightBox.getByLabelText('Previous'));
+
+    await waitFor(() => {
+      expect(screen.getByText('File name: logo1.png')).toBeInTheDocument();
+    });
+    expect(screen.getByText('Title: logo1')).toBeInTheDocument();
+    expect(screen.getByText('test')).toBeInTheDocument();
+
+    const imageElement2 = await galleryLightBox.findByAltText(`Image: logo1`);
+
+    expect(imageElement2).toBeInTheDocument();
+
+    expect(imageElement2).toHaveAttribute(
+      'src',
+      `http://localhost:3000/logo192.png?text=2`
+    );
+
+    await user.click(screen.getByLabelText('Close'));
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('galleryLightBox')).not.toBeInTheDocument();
+    });
+  });
+
+  it('opens corrupted image (network error)', async () => {
+    createView();
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+    const thumbnail = await screen.findAllByAltText(
+      'Image: stfc-logo-blue-text'
+    );
+    await user.click(thumbnail[2]);
+
+    expect(axiosGetSpy).toHaveBeenCalledWith('/images/5');
+
+    const galleryLightBox = within(screen.getByTestId('galleryLightBox'));
+
+    await waitFor(() => {
+      expect(
+        galleryLightBox.getByText('The image cannot be loaded')
+      ).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByLabelText('Close'));
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('galleryLightBox')).not.toBeInTheDocument();
+    });
+  });
+
+  it('opens information dialog in lightbox', async () => {
     createView();
 
     await waitFor(() =>
@@ -235,67 +330,46 @@ describe('Image Gallery', () => {
     expect(axiosGetSpy).toHaveBeenCalledWith('/images/1');
     await waitFor(() => {
       expect(
-        screen.getByText('File Name: stfc-logo-blue-text.png')
+        screen.getByText('File name: stfc-logo-blue-text.png')
       ).toBeInTheDocument();
     });
     expect(screen.getByText('Title: stfc-logo-blue-text')).toBeInTheDocument();
     expect(screen.getByText('test')).toBeInTheDocument();
 
-    await waitFor(
-      () => {
-        expect(
-          within(screen.getByRole('dialog')).getByRole('img')
-        ).toBeInTheDocument();
-      },
-      { timeout: 5000 }
+    const galleryLightBox = within(screen.getByTestId('galleryLightBox'));
+
+    const imageElement1 = await galleryLightBox.findByAltText(
+      `Image: stfc-logo-blue-text`
     );
 
-    await user.click(screen.getByRole('button', { name: 'Next' }));
+    expect(imageElement1).toBeInTheDocument();
 
-    expect(axiosGetSpy).toHaveBeenCalledWith('/images/2');
-    await waitFor(() => {
-      expect(screen.getByText('File Name: logo1.png')).toBeInTheDocument();
-    });
-    expect(screen.getByText('Title: logo1')).toBeInTheDocument();
-    expect(screen.getByText('test')).toBeInTheDocument();
-
-    await waitFor(
-      () => {
-        expect(
-          within(screen.getByRole('dialog')).getByRole('img')
-        ).toBeInTheDocument();
-      },
-      { timeout: 5000 }
+    expect(imageElement1).toHaveAttribute(
+      'src',
+      `http://localhost:3000/images/stfc-logo-blue-text.png?text=1`
     );
-    await user.click(screen.getByRole('button', { name: 'Next' }));
 
-    // Failed to render image
-    expect(axiosGetSpy).toHaveBeenCalledWith('/images/3');
-
-    await waitFor(() => {
-      expect(
-        screen.getByText('File Name: stfc-logo-blue-text.png')
-      ).toBeInTheDocument();
-    });
-    expect(screen.getByText('Title: stfc-logo-blue-text')).toBeInTheDocument();
-    expect(screen.getByText('test')).toBeInTheDocument();
-
-    await waitFor(() => {
-      expect(axiosGetSpy).toHaveBeenCalledTimes(4);
-    });
-
-    // opens action menu
-
-    await user.click(
-      screen.getByRole('button', { name: 'Action menu button' })
-    );
+    await user.click(galleryLightBox.getByLabelText('Image Actions'));
 
     const informationButton = await screen.findByText(`Information`);
-    expect(informationButton).toBeInTheDocument();
+
+    await user.click(informationButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    expect(
+      within(screen.getByRole('dialog')).getByText('Image Information')
+    ).toBeInTheDocument();
+    await user.click(
+      within(screen.getByRole('dialog')).getByRole('button', { name: 'Close' })
+    );
+
     await user.click(screen.getByLabelText('Close'));
 
     await waitFor(() => {
-      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+      expect(screen.queryByTestId('galleryLightBox')).not.toBeInTheDocument();
     });
-  }, 50000);
+  });
 });

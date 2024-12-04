@@ -1,5 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import React from 'react';
+import { fireEvent, screen } from '@testing-library/react';
 import ImagesJSON from '../../mocks/Images.json';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 import ThumbnailImage, {
@@ -8,7 +7,7 @@ import ThumbnailImage, {
 
 describe('ThumbnailImage Component', () => {
   let props: ThumbnailImageProps;
-  const mockOpen = vi.fn();
+  const onClick = vi.fn();
 
   const createView = () => {
     renderComponentWithRouterProvider(<ThumbnailImage {...props} />);
@@ -16,10 +15,9 @@ describe('ThumbnailImage Component', () => {
 
   beforeEach(() => {
     props = {
-      open: mockOpen,
+      onClick: onClick,
       image: ImagesJSON[0],
       index: 0,
-      maxHeightThumbnail: 100,
     };
   });
 
@@ -54,7 +52,7 @@ describe('ThumbnailImage Component', () => {
     const imageElement = screen.getByAltText(`Image: ${props.image.title}`);
     fireEvent.click(imageElement);
 
-    expect(mockOpen).toHaveBeenCalledTimes(1);
+    expect(onClick).toHaveBeenCalledTimes(1);
   });
 
   it('should call the open function when the fallback text is clicked', () => {
@@ -66,15 +64,6 @@ describe('ThumbnailImage Component', () => {
     const fallbackText = screen.getByText('The image cannot be loaded');
     fireEvent.click(fallbackText);
 
-    expect(mockOpen).toHaveBeenCalledTimes(1);
-  });
-
-  it('should forward the ref to the image element', () => {
-    const ref = React.createRef<HTMLElement>();
-    render(<ThumbnailImage {...props} ref={ref} />);
-
-    // Check if the ref is assigned to the image
-    const imageElement = screen.getByAltText(`Image: ${props.image.title}`);
-    expect(ref.current).toBe(imageElement);
+    expect(onClick).toHaveBeenCalledTimes(1);
   });
 });
