@@ -19,7 +19,6 @@ describe('ThumbnailImage Component', () => {
       open: mockOpen,
       image: ImagesJSON[0],
       index: 0,
-      maxHeightThumbnail: 100,
     };
   });
 

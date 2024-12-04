@@ -553,7 +553,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
                                 ref={ref}
                                 open={open}
                                 image={card.row.original}
-                                maxHeightThumbnail={MAX_HEIGHT_THUMBNAIL}
                                 index={index}
                               />
                             );
