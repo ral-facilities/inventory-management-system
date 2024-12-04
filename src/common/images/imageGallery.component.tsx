@@ -497,7 +497,10 @@ const ImageGallery = (props: ImageGalleryProps) => {
                       thumbnail={`data:image/webp;base64,${card.row.original.thumbnail_base64}`}
                       id={card.row.original.id}
                       caption={card.row.original.description ?? undefined}
-                      alt={`Image: ${card.row.original.title || card.row.original.file_name || index}`}
+                      alt={
+                        card.row.original.description ??
+                        'No photo description available.'
+                      }
                       key={`thumbnail-not-displayed-${card.row.original.id}`}
                     >
                       {({ ref }) => {
@@ -553,7 +556,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
                                 ref={ref}
                                 open={open}
                                 image={card.row.original}
-                                index={index}
                               />
                             );
                           }}

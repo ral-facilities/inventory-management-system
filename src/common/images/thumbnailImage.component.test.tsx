@@ -18,7 +18,6 @@ describe('ThumbnailImage Component', () => {
     props = {
       open: mockOpen,
       image: ImagesJSON[0],
-      index: 0,
     };
   });
 
@@ -28,7 +27,9 @@ describe('ThumbnailImage Component', () => {
   it('should render an image when the thumbnail loads successfully', () => {
     createView();
 
-    const imageElement = screen.getByAltText(`Image: ${props.image.title}`);
+    const imageElement = screen.getByAltText(
+      props.image.description ?? 'No photo description available.'
+    );
     expect(imageElement).toBeInTheDocument();
     expect(imageElement).toHaveAttribute(
       'src',
@@ -40,7 +41,9 @@ describe('ThumbnailImage Component', () => {
     props.image.thumbnail_base64 = 'test';
     createView();
 
-    const imageElement = screen.getByAltText(`Image: ${props.image.title}`);
+    const imageElement = screen.getByAltText(
+      props.image.description ?? 'No photo description available.'
+    );
     fireEvent.error(imageElement);
 
     const fallbackText = screen.getByText('The image cannot be loaded');
@@ -50,7 +53,9 @@ describe('ThumbnailImage Component', () => {
   it('should call the open function when the image is clicked', () => {
     createView();
 
-    const imageElement = screen.getByAltText(`Image: ${props.image.title}`);
+    const imageElement = screen.getByAltText(
+      props.image.description ?? 'No photo description available.'
+    );
     fireEvent.click(imageElement);
 
     expect(mockOpen).toHaveBeenCalledTimes(1);
@@ -59,7 +64,9 @@ describe('ThumbnailImage Component', () => {
   it('should call the open function when the fallback text is clicked', () => {
     createView();
 
-    const imageElement = screen.getByAltText(`Image: ${props.image.title}`);
+    const imageElement = screen.getByAltText(
+      props.image.description ?? 'No photo description available.'
+    );
     fireEvent.error(imageElement);
 
     const fallbackText = screen.getByText('The image cannot be loaded');
@@ -73,7 +80,9 @@ describe('ThumbnailImage Component', () => {
     render(<ThumbnailImage {...props} ref={ref} />);
 
     // Check if the ref is assigned to the image
-    const imageElement = screen.getByAltText(`Image: ${props.image.title}`);
+    const imageElement = screen.getByAltText(
+      props.image.description ?? 'No photo description available.'
+    );
     expect(ref.current).toBe(imageElement);
   });
 });
