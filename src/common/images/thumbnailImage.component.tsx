@@ -11,7 +11,6 @@ export interface ThumbnailImageProps {
 const ThumbnailImage = (props: ThumbnailImageProps) => {
   const { onClick, image, index } = props;
   const [hasError, setHasError] = React.useState<string | undefined>(undefined);
-
   return (
     <>
       {hasError === image.id ? (
