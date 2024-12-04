@@ -1035,7 +1035,7 @@ export const handlers = [
       let image;
       if (Number(id) % 2 === 0) {
         image = {
-          ...ImagesJSON,
+          ...ImagesJSON[0],
           url: `${window.location.origin}/logo192.png?text=${encodeURIComponent(id as string)}`,
         };
       } else {
@@ -1046,7 +1046,7 @@ export const handlers = [
           };
         } else {
           image = {
-            ...ImagesJSON,
+            ...ImagesJSON[1],
             url: `${window.location.origin}/images/stfc-logo-blue-text.png?text=${encodeURIComponent(id as string)}`,
           };
         }

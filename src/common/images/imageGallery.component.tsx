@@ -423,7 +423,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
                                 ref={ref}
                                 open={open}
                                 image={image}
-                                maxHeightThumbnail={MAX_HEIGHT_THUMBNAIL}
                                 index={index}
                               />
                             );
