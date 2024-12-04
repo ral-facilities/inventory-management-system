@@ -5,12 +5,11 @@ import { Image } from '../../api/api.types';
 export interface ThumbnailImageProps {
   open: (e: React.MouseEvent) => void;
   image: Image;
-  index: number;
 }
 
 const ThumbnailImage = React.forwardRef<HTMLElement, ThumbnailImageProps>(
   (props, ref) => {
-    const { open, image, index } = props;
+    const { open, image } = props;
     const [hasError, setHasError] = React.useState(false);
 
     return (
@@ -31,7 +30,7 @@ const ThumbnailImage = React.forwardRef<HTMLElement, ThumbnailImageProps>(
             ref={ref}
             component="img"
             src={`data:image/webp;base64,${image.thumbnail_base64}`}
-            alt={`Image: ${image.title || image.file_name || index}`}
+            alt={image.description ?? 'No photo description available.'}
             style={{
               borderRadius: '4px',
               cursor: 'pointer',

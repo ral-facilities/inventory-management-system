@@ -718,7 +718,7 @@ describe('Items', () => {
 
       cy.findByText('Gallery').click();
 
-      cy.findAllByAltText('Image: stfc-logo-blue-text').first().click();
+      cy.findAllByAltText('test').first().click();
 
       cy.findByText('File Name: stfc-logo-blue-text.png').should('exist');
       cy.findByText('Title: stfc-logo-blue-text').should('exist');

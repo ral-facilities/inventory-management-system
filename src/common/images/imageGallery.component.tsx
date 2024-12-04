@@ -146,14 +146,14 @@ const ImageGallery = (props: ImageGalleryProps) => {
               gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
             }}
           >
-            {images.map((image, index) => {
+            {images.map((image) => {
               return (
                 <Card
                   component={Grid}
                   item
                   container
                   xs
-                  key={`thumbnail-displayed-${index}`}
+                  key={`thumbnail-displayed-${image.id}`}
                   style={{
                     maxWidth: images.length === 1 ? '50%' : undefined,
                   }}
@@ -189,16 +189,13 @@ const ImageGallery = (props: ImageGalleryProps) => {
                       thumbnail={`data:image/webp;base64,${image.thumbnail_base64}`}
                       id={image.id}
                       caption={image.description ?? undefined}
-                      alt={`Image: ${image.title || image.file_name || index}`}
+                      alt={
+                        image.description ?? 'No photo description available.'
+                      }
                     >
                       {({ ref, open }) => {
                         return (
-                          <ThumbnailImage
-                            ref={ref}
-                            open={open}
-                            image={image}
-                            index={index}
-                          />
+                          <ThumbnailImage ref={ref} open={open} image={image} />
                         );
                       }}
                     </Item>
