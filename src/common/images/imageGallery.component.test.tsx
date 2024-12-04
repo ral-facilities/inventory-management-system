@@ -201,9 +201,7 @@ describe('Image Gallery', () => {
     await waitFor(() =>
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
-    const thumbnail = await screen.findAllByAltText(
-      'Image: stfc-logo-blue-text'
-    );
+    const thumbnail = await screen.findAllByAltText('test');
     await user.click(thumbnail[0]);
 
     expect(axiosGetSpy).toHaveBeenCalledWith('/images/1');
