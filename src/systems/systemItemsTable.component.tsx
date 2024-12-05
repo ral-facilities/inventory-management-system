@@ -392,7 +392,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
             Excludes
           </MenuItem>,
         ],
-        size: 200,
+        size: 350,
         AggregatedCell:
           type === 'usageStatus'
             ? ({ row }) => {
