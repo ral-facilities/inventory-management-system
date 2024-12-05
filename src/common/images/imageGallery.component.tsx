@@ -61,7 +61,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
       pagination: { pageSize: 16, pageIndex: 0 },
     },
     storeInUrl: true,
-    paginationOnly: true,
     urlParamName: 'imageState',
   });
 
@@ -326,6 +325,12 @@ const ImageGallery = (props: ImageGalleryProps) => {
                   (img) => img.id === card.row.original.id
                 );
 
+                const lastPageIndex = Math.floor(
+                  images.length / preservedState.pagination.pageSize
+                );
+                const isLastPage =
+                  preservedState.pagination.pageIndex === lastPageIndex;
+
                 return isUndisplayed ? null : (
                   <Card
                     component={Grid}
@@ -333,6 +338,15 @@ const ImageGallery = (props: ImageGalleryProps) => {
                     container
                     xs
                     key={`thumbnail-displayed-${index}`}
+                    style={{
+                      maxWidth:
+                        images.length === 1 ||
+                        (images.length % preservedState.pagination.pageSize ===
+                          1 &&
+                          isLastPage)
+                          ? '50%'
+                          : undefined,
+                    }}
                     minWidth={'350px'}
                   >
                     <Grid

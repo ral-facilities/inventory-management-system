@@ -46,7 +46,7 @@ interface StateSearchParams extends StatePartial {
 
 /* This matches the definition found in tanstack table (couldn't be directly imported
    as its a dependency of MRT) */
-export type Updater<T> = T | ((old: T) => T);
+type Updater<T> = T | ((old: T) => T);
 
 /* Returns correctly types value from an updater */
 const getValueFromUpdater = <T,>(updater: Updater<T>, currentValue: T) =>

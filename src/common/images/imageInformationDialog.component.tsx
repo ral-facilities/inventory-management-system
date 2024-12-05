@@ -23,7 +23,8 @@ const ImageInformationDialog = (props: ImageInformationDialogProps) => {
 
   return (
     <Dialog
-      sx={{ zIndex: 1210 + 2 }}
+      // SciGateway navigation drawer is 1200 and the gallery lightbox 1210
+      sx={{ zIndex: 1210 + 10 }}
       open={open}
       maxWidth="sm"
       disableEnforceFocus

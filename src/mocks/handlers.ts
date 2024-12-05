@@ -1034,6 +1034,8 @@ export const handlers = [
 
   http.get('/images/:id', ({ params }) => {
     const { id } = params;
+    // This is needed otherwise the msw would intercept the
+    // mocked image get request for the object store
     if (!isNaN(Number(id))) {
       let image = undefined;
       if (Number(id) % 2 === 0) {
@@ -1042,7 +1044,7 @@ export const handlers = [
           url: `${window.location.origin}/logo192.png?text=${encodeURIComponent(id as string)}`,
         };
       } else {
-        if (Number(id) === 3) {
+        if (id === '3') {
           image = {
             ...ImagesJSON[1],
             url: 'invalid url',
@@ -1056,7 +1058,7 @@ export const handlers = [
         }
       }
 
-      if (Number(id) === 5) {
+      if (id === '5') {
         return HttpResponse.error();
       }
 

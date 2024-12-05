@@ -707,7 +707,7 @@ describe('Items', () => {
       ).should('exist');
 
       cy.findByText('Gallery').click();
-      cy.findByText('The image cannot be loaded').should('exist');
+      cy.findByAltText('The image cannot be loaded').should('exist');
     });
 
     it('displays and hides filters, applies and clears name filter on gallery view', () => {
@@ -800,7 +800,7 @@ describe('Items', () => {
 
       cy.findByText('Gallery').click();
 
-      cy.findByText('The image cannot be loaded').click();
+      cy.findByAltText('The image cannot be loaded').click();
       cy.findByTestId('galleryLightBox').within(() => {
         cy.findByText('File name: stfc-logo-blue-text.png').should('exist');
         cy.findByText('Title: stfc-logo-blue-text').should('exist');

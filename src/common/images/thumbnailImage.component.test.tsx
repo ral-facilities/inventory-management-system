@@ -45,7 +45,7 @@ describe('ThumbnailImage Component', () => {
     );
     fireEvent.error(imageElement);
 
-    const fallbackText = screen.getByText('The image cannot be loaded');
+    const fallbackText = screen.getByAltText('The image cannot be loaded');
     expect(fallbackText).toBeInTheDocument();
   });
 
@@ -68,7 +68,7 @@ describe('ThumbnailImage Component', () => {
     );
     fireEvent.error(imageElement);
 
-    const fallbackText = screen.getByText('The image cannot be loaded');
+    const fallbackText = screen.getByAltText('The image cannot be loaded');
     fireEvent.click(fallbackText);
 
     expect(onClick).toHaveBeenCalledTimes(1);

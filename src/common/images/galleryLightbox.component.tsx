@@ -57,6 +57,7 @@ const GalleryLightBox = (props: GalleryLightBoxProps) => {
     <Backdrop
       sx={{
         color: 'white',
+        // SciGateway navigation drawer is 1200, 1201 is the gallery lightbox
         zIndex: 1210 + 1,
         display: 'flex',
         alignItems: 'center',
@@ -176,7 +177,7 @@ const GalleryLightBox = (props: GalleryLightBoxProps) => {
                 The image cannot be loaded
               </Typography>
             )}
-            {!isLoading && data?.url && !hasError && (
+            {!isLoading && data?.url && !(hasError === data?.id) && (
               <img
                 // The key forces React to remount the <img> tag when hasError changes.
                 // This is necessary because, without remounting, the <img> tag doesn't

@@ -258,6 +258,6 @@ export interface APIImage
   thumbnail_base64: string;
 }
 
-export interface ImageGet extends APIImage {
+export interface APIImageWithURL extends APIImage {
   url: string;
 }

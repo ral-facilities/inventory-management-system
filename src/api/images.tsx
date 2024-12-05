@@ -1,21 +1,20 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { storageApi } from './api';
-import { APIImage, ImageGet } from './api.types';
+import { APIImage, APIImageWithURL } from './api.types';
 
-export const getImage = async (id: string): Promise<ImageGet> => {
+export const getImage = async (id: string): Promise<APIImageWithURL> => {
   return storageApi.get(`/images/${id}`).then((response) => {
     return response.data;
   });
 };
 
 export const useGetImage = (
-  id?: string
-): UseQueryResult<ImageGet, AxiosError> => {
+  id: string
+): UseQueryResult<APIImageWithURL, AxiosError> => {
   return useQuery({
     queryKey: ['Image', id],
-    queryFn: () => getImage(id ?? ''),
-    enabled: !!id,
+    queryFn: () => getImage(id),
   });
 };
 

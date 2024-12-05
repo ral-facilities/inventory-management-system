@@ -8,7 +8,7 @@ exports[`Image Information dialog Component > renders dialog correctly 1`] = `
     aria-hidden="true"
   />
   <div
-    class="MuiDialog-root MuiModal-root css-eodhl2-MuiModal-root-MuiDialog-root"
+    class="MuiDialog-root MuiModal-root css-1r9csp7-MuiModal-root-MuiDialog-root"
     role="presentation"
   >
     <div

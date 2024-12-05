@@ -32,6 +32,18 @@ describe('images api functions', () => {
 
       expect(result.current.data?.length).toEqual(1);
     });
+
+    it('sends request to fetch primary image data and returns successful empty list response', async () => {
+      const { result } = renderHook(() => useGetImages('90', true), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+
+      expect(result.current.data?.length).toEqual(0);
+    });
   });
 
   describe('useGetImage', () => {
