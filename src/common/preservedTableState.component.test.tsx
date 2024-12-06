@@ -559,6 +559,89 @@ describe('Preserved table state functions', () => {
       );
     });
 
+    it('onColumnFiltersChange updates the state and url correctly when page index is different', async () => {
+      const { result } = renderHookWithBrowserRouterURL(
+        () =>
+          usePreservedTableState({
+            storeInUrl: true,
+          }),
+        '/'
+      );
+
+      // The first change should define the default order (MRT will call this once on page load, with the initial default
+      // state defined either inside the defaultState/the initialState given)
+      act(() =>
+        result.current.onPreservedStatesChange.onPaginationChange({
+          pageSize: 15,
+          pageIndex: 0,
+        })
+      );
+
+      await waitFor(() =>
+        expect(JSON.stringify(result.current.preservedState.pagination)).toBe(
+          JSON.stringify({
+            pageSize: 15,
+            pageIndex: 0,
+          })
+        )
+      );
+
+      // Change the page to a non-default value
+      act(() =>
+        result.current.onPreservedStatesChange.onPaginationChange({
+          pageSize: 30,
+          pageIndex: 5,
+        })
+      );
+
+      await waitFor(() =>
+        expect(JSON.stringify(result.current.preservedState.pagination)).toBe(
+          JSON.stringify({
+            pageSize: 30,
+            pageIndex: 5,
+          })
+        )
+      );
+
+      // Change the state to a non-default value
+      act(() =>
+        result.current.onPreservedStatesChange.onColumnFiltersChange([
+          { id: 'catalogueItem.name', value: 'test' },
+        ])
+      );
+
+      await waitFor(() =>
+        expect(
+          JSON.stringify(result.current.preservedState.columnFilters)
+        ).toBe(JSON.stringify([{ id: 'catalogueItem.name', value: 'test' }]))
+      );
+
+      // Change the state to a non-default value
+      act(() =>
+        result.current.onPreservedStatesChange.onColumnFiltersChange([
+          { id: 'catalogueItem.name', value: 'test' },
+        ])
+      );
+
+      await waitFor(() =>
+        expect(
+          JSON.stringify(result.current.preservedState.columnFilters)
+        ).toBe(JSON.stringify([{ id: 'catalogueItem.name', value: 'test' }]))
+      );
+
+      // Should have kept the page size but reset the index
+      expect(JSON.stringify(result.current.preservedState.pagination)).toBe(
+        JSON.stringify({
+          pageSize: 30,
+          pageIndex: 0,
+        })
+      );
+
+      expect(window.location.search).toBe(
+        '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJMoGAngA5NoIAM4YATglr4W7TkJAUxIAL4qAuq37cQ-NPmIBlBAC8hAZgAMW-WVpJiADxiW1QA'
+      );
+    });
+
     it('onColumnFilterFnsChange updates the state and url correctly', async () => {
       const { result } = renderHookWithBrowserRouterURL(
         () =>
@@ -661,6 +744,82 @@ describe('Preserved table state functions', () => {
         )
       );
       expect(window.location.search).toBe('');
+    });
+
+    it('onColumnFilterFnsChange updates the state and url correctly when page index is different', async () => {
+      const { result } = renderHookWithBrowserRouterURL(
+        () =>
+          usePreservedTableState({
+            storeInUrl: true,
+          }),
+        '/'
+      );
+
+      // The first change should define the default order (MRT will call this once on page load, with the initial default
+      // state defined either inside the defaultState/the initialState given)
+      act(() =>
+        result.current.onPreservedStatesChange.onPaginationChange({
+          pageSize: 15,
+          pageIndex: 0,
+        })
+      );
+
+      await waitFor(() =>
+        expect(JSON.stringify(result.current.preservedState.pagination)).toBe(
+          JSON.stringify({
+            pageSize: 15,
+            pageIndex: 0,
+          })
+        )
+      );
+
+      // Change the page to a non-default value
+      act(() =>
+        result.current.onPreservedStatesChange.onPaginationChange({
+          pageSize: 30,
+          pageIndex: 5,
+        })
+      );
+
+      await waitFor(() =>
+        expect(JSON.stringify(result.current.preservedState.pagination)).toBe(
+          JSON.stringify({
+            pageSize: 30,
+            pageIndex: 5,
+          })
+        )
+      );
+
+      // Change the state to a non-default value
+      act(() =>
+        result.current.onPreservedStatesChange.onColumnFilterFnsChange({
+          'catalogueItem.modified_time': 'betweenInclusive',
+          'catalogueItem.created_time': 'between',
+        })
+      );
+
+      await waitFor(() =>
+        expect(
+          JSON.stringify(result.current.preservedState.columnFilterFns)
+        ).toBe(
+          JSON.stringify({
+            'catalogueItem.modified_time': 'betweenInclusive',
+            'catalogueItem.created_time': 'between',
+          })
+        )
+      );
+
+      // Should have kept the page size but reset the index
+      expect(JSON.stringify(result.current.preservedState.pagination)).toBe(
+        JSON.stringify({
+          pageSize: 30,
+          pageIndex: 0,
+        })
+      );
+
+      expect(window.location.search).toBe(
+        '?state=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF9CBjAMTKlCdgBdYAbAPbwArqW6IAtgDoJAiqgBmqRBQD63VBKyQQAI0TcA7okRlyTPsIDOqAG5ZmPfkNElx0pgCdEPFes3aegbGpiD09EA'
+      );
     });
 
     it('onSortingChange updates the state and url correctly', async () => {
@@ -886,6 +1045,71 @@ describe('Preserved table state functions', () => {
       expect(window.location.search).toBe('');
     });
 
+    it('onGlobalFilterChange updates the state and url correctly when page index is different', async () => {
+      const { result } = renderHookWithBrowserRouterURL(
+        () => usePreservedTableState({ storeInUrl: true }),
+        '/'
+      );
+
+      // The first change should define the default order (MRT will call this once on page load, with the initial default
+      // state defined either inside the defaultState/the initialState given)
+      act(() =>
+        result.current.onPreservedStatesChange.onPaginationChange({
+          pageSize: 15,
+          pageIndex: 0,
+        })
+      );
+
+      await waitFor(() =>
+        expect(JSON.stringify(result.current.preservedState.pagination)).toBe(
+          JSON.stringify({
+            pageSize: 15,
+            pageIndex: 0,
+          })
+        )
+      );
+
+      // Change the page to a non-default value
+      act(() =>
+        result.current.onPreservedStatesChange.onPaginationChange({
+          pageSize: 30,
+          pageIndex: 5,
+        })
+      );
+
+      await waitFor(() =>
+        expect(JSON.stringify(result.current.preservedState.pagination)).toBe(
+          JSON.stringify({
+            pageSize: 30,
+            pageIndex: 5,
+          })
+        )
+      );
+
+      // Change the state to a non-default value
+      act(() =>
+        result.current.onPreservedStatesChange.onGlobalFilterChange(
+          'test filter'
+        )
+      );
+
+      await waitFor(() =>
+        expect(result.current.preservedState.globalFilter).toBe('test filter')
+      );
+
+      // Should have kept the page size but reset the index
+      expect(JSON.stringify(result.current.preservedState.pagination)).toBe(
+        JSON.stringify({
+          pageSize: 30,
+          pageIndex: 0,
+        })
+      );
+
+      expect(window.location.search).toBe(
+        '?state=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF9D4AxVAGyhABdEBnLgAQAzdjwBOIekA'
+      );
+    });
+
     it('onGroupingChange updates the state and url correctly', async () => {
       const { result } = renderHookWithBrowserRouterURL(
         () =>
@@ -963,6 +1187,76 @@ describe('Preserved table state functions', () => {
         )
       );
       expect(window.location.search).toBe('');
+    });
+
+    it('onGroupingChange updates the state and url correctly when page index is different', async () => {
+      const { result } = renderHookWithBrowserRouterURL(
+        () =>
+          usePreservedTableState({
+            storeInUrl: true,
+          }),
+        '/'
+      );
+
+      // The first change should define the default order (MRT will call this once on page load, with the initial default
+      // state defined either inside the defaultState/the initialState given)
+      act(() =>
+        result.current.onPreservedStatesChange.onPaginationChange({
+          pageSize: 15,
+          pageIndex: 0,
+        })
+      );
+
+      await waitFor(() =>
+        expect(JSON.stringify(result.current.preservedState.pagination)).toBe(
+          JSON.stringify({
+            pageSize: 15,
+            pageIndex: 0,
+          })
+        )
+      );
+
+      // Change the page to a non-default value
+      act(() =>
+        result.current.onPreservedStatesChange.onPaginationChange({
+          pageSize: 30,
+          pageIndex: 5,
+        })
+      );
+
+      await waitFor(() =>
+        expect(JSON.stringify(result.current.preservedState.pagination)).toBe(
+          JSON.stringify({
+            pageSize: 30,
+            pageIndex: 5,
+          })
+        )
+      );
+
+      // Change the state to a non-default value
+      act(() =>
+        result.current.onPreservedStatesChange.onGroupingChange([
+          'catalogueItem.is_obsolete',
+        ])
+      );
+
+      await waitFor(() =>
+        expect(JSON.stringify(result.current.preservedState.grouping)).toBe(
+          JSON.stringify(['catalogueItem.is_obsolete'])
+        )
+      );
+
+      // Should have kept the page size but reset the index
+      expect(JSON.stringify(result.current.preservedState.pagination)).toBe(
+        JSON.stringify({
+          pageSize: 30,
+          pageIndex: 0,
+        })
+      );
+
+      expect(window.location.search).toBe(
+        '?state=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF9D4oBtEAY1gBdYAbAe3gBXUl0QBbAHSoAzgH1%2BAIxn9eiMSAC69IA'
+      );
     });
 
     it('onColumnOrderChange updates the state and url correctly', async () => {
@@ -1161,7 +1455,7 @@ describe('Preserved table state functions', () => {
         '/'
       );
 
-      // The first change should define the default order (MRT will call this once on page load, with the intial default
+      // The first change should define the default order (MRT will call this once on page load, with the initial default
       // state defined either inside the defaultState/the initialState given)
       act(() =>
         result.current.onPreservedStatesChange.onPaginationChange({
