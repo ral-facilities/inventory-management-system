@@ -6,6 +6,7 @@ import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { a11yProps, StyledTab } from '../../common/tab/tab.utils';
 import TabPanel from '../../common/tab/tabPanel.component';
+import ImageGallery from '../images/imageGallery.component';
 
 type AdditionalTabValues = 'Gallery' | 'Attachments';
 
@@ -71,7 +72,7 @@ function TabView<T extends string>(props: TabViewProps<T>) {
       updatedTabData.push({
         value: 'Gallery' as AdditionalTabValues,
         icon: <CollectionsOutlinedIcon />,
-        component: <></>,
+        component: <ImageGallery entityId={galleryEntityId} />,
         order: galleryOrder ?? updatedTabData.length + 1,
       });
     }
@@ -102,6 +103,8 @@ function TabView<T extends string>(props: TabViewProps<T>) {
           value={tabValue}
           onChange={handleTabChange}
           aria-label={`${ariaLabelPrefix} view tabs`}
+          variant="scrollable"
+          scrollButtons="auto"
         >
           {tabData.map(({ value, icon }) => (
             <StyledTab
@@ -115,7 +118,7 @@ function TabView<T extends string>(props: TabViewProps<T>) {
           ))}
         </Tabs>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} minWidth="fit-content">
         {tabData.map(({ value, component }) => (
           <TabPanel key={value} value={tabValue} label={value}>
             {component}

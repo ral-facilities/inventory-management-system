@@ -699,6 +699,200 @@ describe('Items', () => {
 
       cy.findByText('Upload failed').should('exist');
     });
+
+    it('falls back to placeholder thumbnail', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Gallery').click();
+      cy.findByAltText('The image cannot be loaded').should('exist');
+    });
+
+    it('displays and hides filters, applies and clears name filter on gallery view', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Gallery').click();
+      cy.findAllByText('stfc-logo-blue-text.png').should('have.length', 8);
+      cy.findByText('Show Filters').click();
+      cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
+      cy.findByLabelText('Filter by File name').type('logo1.png');
+      cy.findByAltText('test').should('not.exist');
+      cy.findByRole('button', { name: 'Clear Filters' }).click();
+      cy.findAllByText('stfc-logo-blue-text.png').should('have.length', 8);
+      cy.findByText('Hide Filters').click();
+      cy.findByText('Show Filters').should('exist');
+    });
+
+    it('opens information dialog from card view', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Gallery').click();
+
+      cy.findAllByLabelText('Card Actions').first().click();
+      cy.findAllByText('Information').last().click();
+
+      cy.findByRole('dialog').within(() => {
+        cy.findByText('Image Information').should('exist');
+        cy.findByText('stfc-logo-blue-text').should('exist');
+        cy.findByText('stfc-logo-blue-text.png').should('exist');
+        cy.findByText('test').should('exist');
+        cy.findByText('No').should('exist');
+
+        cy.findByRole('button', { name: 'Close' }).click();
+      });
+
+      cy.findByText('Image information').should('not.exist');
+    });
+
+    it('opens full-size image when thumbnail is clicked and navigates to the next image', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Gallery').click();
+
+      cy.findAllByAltText('test').first().click();
+      cy.findByTestId('galleryLightBox').within(() => {
+        cy.findByText('File name: stfc-logo-blue-text.png').should('exist');
+        cy.findByText('Title: stfc-logo-blue-text').should('exist');
+        cy.findByText('test').should('exist');
+
+        cy.findByAltText('test').should('exist');
+
+        cy.findByAltText('test')
+          .should('have.attr', 'src')
+          .and(
+            'include',
+            'http://localhost:3000/images/stfc-logo-blue-text.png?text=1'
+          );
+
+        cy.findByLabelText('Next').click();
+
+        cy.findByText('File name: logo1.png').should('exist');
+        cy.findByText('Title: logo1').should('exist');
+        cy.findByText('test').should('exist');
+
+        cy.findByAltText('test').should('exist');
+
+        cy.findByAltText('test')
+          .should('have.attr', 'src')
+          .and('include', 'http://localhost:3000/logo192.png?text=2');
+        cy.findByLabelText('Close').click();
+      });
+
+      cy.findByTestId('galleryLightBox').should('not.exist');
+    });
+
+    it('opens corrupted image, and navigates back to previous image (invalid url)', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Gallery').click();
+
+      cy.findByAltText('The image cannot be loaded').click();
+      cy.findByTestId('galleryLightBox').within(() => {
+        cy.findByText('File name: stfc-logo-blue-text.png').should('exist');
+        cy.findByText('Title: stfc-logo-blue-text').should('exist');
+        cy.findByText('No description available').should('exist');
+
+        cy.findByText('The image cannot be loaded').should('exist');
+
+        cy.findByLabelText('Previous').click();
+
+        cy.findByText('File name: logo1.png').should('exist');
+        cy.findByText('Title: logo1').should('exist');
+        cy.findByText('test').should('exist');
+
+        cy.findByAltText('test').should('exist');
+
+        cy.findByAltText('test')
+          .should('have.attr', 'src')
+          .and('include', 'http://localhost:3000/logo192.png?text=2');
+        cy.findByLabelText('Close').click();
+      });
+
+      cy.findByTestId('galleryLightBox').should('not.exist');
+    });
+
+    it('opens corrupted image (network error)', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Gallery').click();
+
+      cy.findAllByAltText('test').eq(3).click();
+      cy.findByTestId('galleryLightBox').within(() => {
+        cy.findByText('The image cannot be loaded', { timeout: 10000 }).should(
+          'exist'
+        );
+
+        cy.findByText('File name: stfc-logo-blue-text.png').should('exist');
+        cy.findByText('Title: stfc-logo-blue-text').should('exist');
+        cy.findByText('test').should('exist');
+
+        cy.findByLabelText('Close').click();
+      });
+
+      cy.findByTestId('galleryLightBox').should('not.exist');
+    });
+
+    it('opens information dialog in lightbox', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Gallery').click();
+
+      cy.findAllByAltText('test').first().click();
+      cy.findByTestId('galleryLightBox').within(() => {
+        cy.findByText('File name: stfc-logo-blue-text.png').should('exist');
+        cy.findByText('Title: stfc-logo-blue-text').should('exist');
+        cy.findByText('test').should('exist');
+
+        cy.findByAltText('test').should('exist');
+
+        cy.findByAltText('test')
+          .should('have.attr', 'src')
+          .and(
+            'include',
+            'http://localhost:3000/images/stfc-logo-blue-text.png?text=1'
+          );
+
+        cy.findByLabelText('Image Actions').click();
+      });
+
+      cy.findAllByText('Information').last().click();
+
+      cy.findByRole('dialog', { timeout: 10000 }).should('exist');
+
+      cy.findByRole('dialog').within(() => {
+        cy.findByText('Image Information').should('exist');
+      });
+
+      cy.findByRole('dialog').within(() => {
+        cy.findByRole('button', { name: 'Close' }).click();
+      });
+
+      cy.findByRole('dialog').should('not.exist');
+
+      cy.findByLabelText('Close').click();
+
+      cy.findByTestId('galleryLightBox').should('not.exist');
+    });
   });
 
   it('delete an item', () => {

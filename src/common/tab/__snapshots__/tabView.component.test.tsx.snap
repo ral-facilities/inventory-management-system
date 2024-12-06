@@ -13,8 +13,12 @@ exports[`TabView Component > renders correctly 1`] = `
           class="MuiTabs-root css-1ujnqem-MuiTabs-root"
         >
           <div
-            class="MuiTabs-scroller MuiTabs-fixed css-jpln7h-MuiTabs-scroller"
-            style="overflow: hidden; margin-bottom: 0px;"
+            class="MuiTabs-scrollableX MuiTabs-hideScrollbar css-oqr85h"
+            style="width: 99px; height: 99px; position: absolute; top: -9999px; overflow: scroll;"
+          />
+          <div
+            class="MuiTabs-scroller MuiTabs-hideScrollbar MuiTabs-scrollableX css-69z67c-MuiTabs-scroller"
+            style="margin-bottom: 0px;"
           >
             <div
               aria-label="test view tabs"
@@ -137,7 +141,7 @@ exports[`TabView Component > renders correctly 1`] = `
         </div>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1ol5ri8-MuiGrid-root"
       >
         <div
           aria-labelledby="tab1-tab"
