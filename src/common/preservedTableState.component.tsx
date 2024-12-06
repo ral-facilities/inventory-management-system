@@ -259,14 +259,10 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
         firstUpdate.current?.p || { pageSize: 15, pageIndex: 0 },
     }),
     // Need to also update when firstUpdate.current?.x changes, for some reason it claims its not used here when it is
+    // We also need to intentionally ignore props?.initialState?.x as these may not be in a memo, and are only set
+    // once initially anyway
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [
-      props?.initialState?.columnVisibility,
-      props?.initialState?.grouping,
-      props?.initialState?.pagination,
-      firstUpdate.current?.cO,
-      firstUpdate.current?.p,
-    ]
+    [firstUpdate.current?.cO, firstUpdate.current?.p]
   );
 
   // Convert the state stored into the url to one that can be used
