@@ -25,7 +25,7 @@ interface State {
 }
 
 /* State but where undefined => should not be present in the url */
-interface StatePartial extends Partial<State> {}
+type StatePartial = Partial<State>;
 
 /* Column filter value but defined as it will be stored in URL search params (includes type information) */
 interface SearchParamsColumnFilterValue {
@@ -259,14 +259,10 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
         firstUpdate.current?.p || { pageSize: 15, pageIndex: 0 },
     }),
     // Need to also update when firstUpdate.current?.x changes, for some reason it claims its not used here when it is
+    // We also need to intentionally ignore props?.initialState?.x as these may not be in a memo, and are only set
+    // once initially anyway
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [
-      props?.initialState?.columnVisibility,
-      props?.initialState?.grouping,
-      props?.initialState?.pagination,
-      firstUpdate.current?.cO,
-      firstUpdate.current?.p,
-    ]
+    [firstUpdate.current?.cO, firstUpdate.current?.p]
   );
 
   // Convert the state stored into the url to one that can be used
@@ -315,6 +311,22 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
     []
   );
 
+  // This will return a reset pagination `p` state to the default page index. This is so that
+  // things like filtering reset the page index to avoid getting stuck on a non-existent page.
+  // This recreates similar behaviour to `autoResetPageIndex` but in a controlled way.
+  const getResetPaginationState = useCallback(
+    (prevP?: MRT_PaginationState) => {
+      const newPState: MRT_PaginationState = {
+        ...defaultState.p,
+        pageSize: prevP?.pageSize ?? defaultState.p.pageSize,
+      };
+      return JSON.stringify(newPState) === JSON.stringify(defaultState.p)
+        ? undefined
+        : newPState;
+    },
+    [defaultState.p]
+  );
+
   // Below are setters for MRT onChange events, these should obtain the value and update it in the
   // parsed search params using a value of undefined only when it is no longer needed in the url
   // (presumably because it is now the default value/no longer needed)
@@ -361,10 +373,11 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
         return {
           ...prevState,
           cF: isDefaultState ? undefined : newValue,
+          p: getResetPaginationState(prevState.p),
         };
       });
     },
-    [defaultState.cF, updateSearchParams]
+    [defaultState.cF, getResetPaginationState, updateSearchParams]
   );
 
   const setSorting = useCallback(
@@ -427,10 +440,11 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
         return {
           ...prevState,
           gFil: newValue === '' ? undefined : newValue,
+          p: getResetPaginationState(prevState.p),
         };
       });
     },
-    [defaultState.gFil, updateSearchParams]
+    [defaultState.gFil, getResetPaginationState, updateSearchParams]
   );
 
   const setGroupingState = useCallback(
@@ -446,10 +460,11 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
         return {
           ...prevState,
           g: isDefaultState ? undefined : newValue,
+          p: getResetPaginationState(prevState.p),
         };
       });
     },
-    [defaultState.g, updateSearchParams]
+    [defaultState.g, getResetPaginationState, updateSearchParams]
   );
 
   const setColumnOrder = useCallback(
