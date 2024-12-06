@@ -403,7 +403,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
         };
       });
     },
-    [defaultState.cFn, updateSearchParams]
+    [defaultState.cFn, getResetPaginationState, updateSearchParams]
   );
 
   const setSorting = useCallback(
