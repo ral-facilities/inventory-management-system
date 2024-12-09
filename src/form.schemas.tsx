@@ -489,23 +489,28 @@ export const CatalogueItemDetailsStepSchema = (requestType: RequestType) => {
     cost_gbp: MandatoryNumberSchema({
       requiredErrorMessage: 'Please enter a cost.',
       invalidTypeErrorMessage: 'Please enter a valid number.',
+      min: 0,
     }),
     cost_to_rework_gbp: OptionalOrNullableNumberSchema({
       requestType,
       invalidTypeErrorMessage: 'Please enter a valid number.',
+      min: 0,
     }),
     days_to_replace: MandatoryNumberSchema({
       requiredErrorMessage:
         'Please enter how many days it would take to replace.',
       invalidTypeErrorMessage: 'Please enter a valid number.',
+      min: 0,
     }),
     days_to_rework: OptionalOrNullableNumberSchema({
       requestType,
       invalidTypeErrorMessage: 'Please enter a valid number.',
+      min: 0,
     }),
     expected_lifetime_days: OptionalOrNullableNumberSchema({
       requestType,
       invalidTypeErrorMessage: 'Please enter a valid number.',
+      min: 0,
     }),
     description: OptionalOrNullableStringSchema({ requestType }),
     drawing_number: OptionalOrNullableStringSchema({ requestType }),

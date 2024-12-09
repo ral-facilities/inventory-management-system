@@ -602,6 +602,51 @@ describe('Catalogue Items Dialog', () => {
     );
   }, 10000);
 
+  it('display error message when a value is invalid because it is negative', async () => {
+    props = {
+      ...props,
+      parentInfo: getCatalogueCategoryById('4'),
+    };
+
+    createView();
+
+    await modifyValues({
+      costGbp: '-5',
+      costToReworkGbp: '-5',
+      daysToReplace: '-5',
+      daysToRework: '-5',
+      description: '',
+      drawingLink: 'https://example.com',
+      drawingNumber: 'mk4324',
+      expectedLifetimeDays: '-5',
+      itemModelNumber: 'mk4324',
+      name: 'test',
+      manufacturer: 'Man{arrowdown}{enter}',
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Next' }));
+
+    const NegativeNumberErrorText = screen.getAllByText(
+      'Number must be greater than or equal to 0'
+    );
+
+    expect(NegativeNumberErrorText.length).toBe(5);
+    expect(NegativeNumberErrorText[0]).toHaveTextContent(
+      'Number must be greater than or equal to 0'
+    );
+
+    await modifyValues({
+      costGbp: '5',
+      costToReworkGbp: '5',
+      daysToReplace: '5',
+      daysToRework: '5',
+      expectedLifetimeDays: '5',
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Next' }));
+    await user.click(screen.getByRole('button', { name: 'Finish' }));
+  }, 10000);
+
   it('displays warning message when an unknown error occurs', async () => {
     props = {
       ...props,

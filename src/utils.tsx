@@ -413,6 +413,74 @@ export const getInitialColumnFilterFnState = <TData extends MRT_RowData>(
   return initialState;
 };
 
+interface FilterFn {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (row: MRT_RowData, id: string, filterValue: any): boolean;
+}
+
+export const customFilterFunctions: Record<string, FilterFn> = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  arrIncludesNone: (row: MRT_RowData, id: string, filterValue: any) => {
+    if (Array.isArray(filterValue)) {
+      return !filterValue.includes(row.getValue(id));
+    }
+    return row.getValue(id) !== filterValue;
+  },
+};
+
+export const MRT_Functions_Localisation: Record<string, string> = {
+  filterArrIncludesNone: 'Excludes',
+};
+
+type DataTypes = 'boolean' | 'string' | 'number' | 'null' | 'datetime' | 'date';
+
+type FilterVariantType = MRT_ColumnDef<MRT_RowData>['filterVariant'];
+
+export const COLUMN_FILTER_VARIANTS: Record<DataTypes, FilterVariantType> = {
+  boolean: 'select',
+  string: 'text',
+  number: 'text',
+  null: 'text',
+  datetime: 'datetime-range',
+  date: 'date',
+};
+export const COLUMN_FILTER_FUNCTIONS: Record<DataTypes, MRT_FilterOption> = {
+  boolean: 'fuzzy',
+  date: 'betweenInclusive',
+  datetime: 'betweenInclusive',
+  string: 'fuzzy',
+  number: 'betweenInclusive',
+  null: 'fuzzy',
+};
+export const COLUMN_FILTER_MODE_OPTIONS: Record<DataTypes, MRT_FilterOption[]> =
+  {
+    boolean: ['fuzzy'],
+    date: ['between', 'betweenInclusive', 'equals', 'notEquals'],
+    datetime: ['between', 'betweenInclusive'],
+    string: [
+      'fuzzy',
+      'contains',
+      'startsWith',
+      'endsWith',
+      'equals',
+      'notEquals',
+    ],
+    number: ['between', 'betweenInclusive', 'equals', 'notEquals'],
+    null: [
+      'fuzzy',
+      'contains',
+      'startsWith',
+      'endsWith',
+      'equals',
+      'notEquals',
+    ],
+  };
+
+export const OPTIONAL_FILTER_MODE_OPTIONS: MRT_FilterOption[] = [
+  'empty',
+  'notEmpty',
+];
+
 export const checkForDuplicates = (props: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any[];

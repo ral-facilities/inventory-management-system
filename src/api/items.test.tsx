@@ -217,7 +217,7 @@ describe('items api functions', () => {
             name: 'Older than five years',
             unit: null,
             unit_id: null,
-            value: false,
+            value: null,
           },
         ],
         purchase_order_number: '6JYHEjwN',
