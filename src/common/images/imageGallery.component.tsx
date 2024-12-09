@@ -326,7 +326,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
                 );
 
                 const lastPageIndex = Math.floor(
-                  images.length / preservedState.pagination.pageSize
+                  data.length / preservedState.pagination.pageSize
                 );
                 const isLastPage =
                   preservedState.pagination.pageIndex === lastPageIndex;
@@ -340,7 +340,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
                     key={`thumbnail-displayed-${index}`}
                     style={{
                       maxWidth:
-                        images.length === 1 ||
+                        data.length === 1 ||
                         (images.length % preservedState.pagination.pageSize ===
                           1 &&
                           isLastPage)
