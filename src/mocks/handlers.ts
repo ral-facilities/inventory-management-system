@@ -1071,4 +1071,20 @@ export const handlers = [
       );
     }
   }),
+
+  http.delete<
+    { id: string },
+    DefaultBodyType,
+    ErrorResponse | NonNullable<unknown>
+  >('/images/:id', ({ params }) => {
+    const { id } = params;
+
+    if (id === 'Error 500')
+      return HttpResponse.json(
+        { detail: 'Something went wrong' },
+        { status: 500 }
+      );
+
+    return HttpResponse.json(undefined, { status: 204 });
+  }),
 ];
