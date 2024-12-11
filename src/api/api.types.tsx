@@ -250,6 +250,8 @@ export interface ImagePost {
   description?: string | null;
 }
 
+export type ImagePatch = Partial<ImagePost>;
+
 export interface APIImage
   extends Required<Omit<ImagePost, 'upload_file'>>,
     CreatedModifiedMixin {
