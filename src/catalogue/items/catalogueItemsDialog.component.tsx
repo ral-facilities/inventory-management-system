@@ -386,8 +386,16 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
               if (response && error.response?.status === 409) {
                 if (response.detail.includes('child elements')) {
+                  const manufacturerName = manufacturerList?.find(
+                    (manufacturer) => manufacturer.id === selectedCatalogueItem.manufacturer_id
+                  ) || null
+                  const message = response.detail.replace(
+                    "so the following fields cannot be updated: manufacturer_id, properties",
+                    ("so you cannot update the properties, and the manufacturer can't be changed from "
+                      + manufacturerName?.name)
+                  )
                   setErrorPropertiesStep('root.formError', {
-                    message: response.detail,
+                    message: message,
                   });
                 }
                 return;
