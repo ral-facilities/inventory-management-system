@@ -619,7 +619,7 @@ export const ItemDetailsStepSchema = (requestType: RequestType) => {
 
 export const ImagesSchema = (requestType: RequestType) =>
   z.object({
-    fileName: MandatoryStringSchema({
+    file_name: MandatoryStringSchema({
       errorMessage: 'Please enter a file name.',
     }),
     title: OptionalOrNullableStringSchema({ requestType }),

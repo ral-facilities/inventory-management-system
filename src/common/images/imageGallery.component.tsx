@@ -31,6 +31,7 @@ import { useGetImages } from '../../api/images';
 import { displayTableRowCountText, OverflowTip } from '../../utils';
 import CardViewFilters from '../cardView/cardViewFilters.component';
 import { usePreservedTableState } from '../preservedTableState.component';
+import EditImageDialog from './editImageDialog.component';
 import GalleryLightBox from './galleryLightbox.component';
 import ImageInformationDialog from './imageInformationDialog.component';
 import ThumbnailImage from './thumbnailImage.component';
@@ -188,6 +189,11 @@ const ImageGallery = (props: ImageGalleryProps) => {
         <MenuItem
           key="edit"
           aria-label={`Edit ${row.original.file_name} image`}
+          onClick={() => {
+            setSelectedImage(row.original);
+            setOpenMenuDialog('edit');
+            closeMenu();
+          }}
           sx={{ m: 0 }}
         >
           <ListItemIcon>
@@ -425,11 +431,18 @@ const ImageGallery = (props: ImageGalleryProps) => {
             <MRT_BottomToolbar table={table} sx={{ width: '100%' }} />
           </Grid>
           {selectedImage && (
-            <ImageInformationDialog
-              open={openMenuDialog === 'information'}
-              onClose={() => setOpenMenuDialog(false)}
-              image={selectedImage}
-            />
+            <>
+              <ImageInformationDialog
+                open={openMenuDialog === 'information'}
+                onClose={() => setOpenMenuDialog(false)}
+                image={selectedImage}
+              />
+              <EditImageDialog
+                open={openMenuDialog === 'edit'}
+                onClose={() => setOpenMenuDialog(false)}
+                selectedImage={selectedImage}
+              />
+            </>
           )}
           {currentLightBoxImage && (
             <GalleryLightBox

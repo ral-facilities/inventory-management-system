@@ -1,5 +1,6 @@
 import { DefaultBodyType, delay, http, HttpResponse, PathParams } from 'msw';
 import {
+  APIImage,
   AttachmentPostMetadata,
   AttachmentPostMetadataResponse,
   AttachmentUploadInfo,
@@ -13,6 +14,7 @@ import {
   CatalogueItem,
   CatalogueItemPatch,
   CatalogueItemPost,
+  ImagePatch,
   Item,
   ItemPatch,
   ItemPost,
@@ -1071,4 +1073,24 @@ export const handlers = [
       );
     }
   }),
+
+  http.patch<{ id: string }, ImagePatch, APIImage | ErrorResponse>(
+    '/images/:id',
+    async ({ request, params }) => {
+      const { id } = params;
+
+      const obj = ImagesJSON.find((image) => image.id === id);
+      const body = await request.json();
+
+      const fullBody = { ...obj, ...body };
+
+      if (fullBody.file_name === 'Error 500') {
+        return HttpResponse.json(
+          { detail: 'Something went wrong' },
+          { status: 500 }
+        );
+      }
+      return HttpResponse.json(fullBody as APIImage, { status: 200 });
+    }
+  ),
 ];

@@ -27,7 +27,7 @@ export interface ImageDialogProps {
   selectedImage: APIImage;
 }
 
-const editImageDialog = (props: ImageDialogProps) => {
+const EditImageDialog = (props: ImageDialogProps) => {
   const { open, onClose, selectedImage } = props;
 
   const { mutateAsync: patchImage, isPending: isEditPending } = usePatchImage();
@@ -107,10 +107,6 @@ const editImageDialog = (props: ImageDialogProps) => {
     [selectedImage, patchImage, handleClose, setError]
   );
 
-  const onSubmit = (data: ImagePatch) => {
-    handleEditImage(data);
-  };
-
   return (
     <Dialog open={open} maxWidth="lg" fullWidth>
       <DialogTitle>{`Edit Image`}</DialogTitle>
@@ -171,7 +167,7 @@ const editImageDialog = (props: ImageDialogProps) => {
           <Button
             variant="outlined"
             sx={{ width: '50%', mx: 1 }}
-            onClick={handleSubmit(onSubmit)}
+            onClick={handleSubmit(handleEditImage)}
             disabled={Object.values(errors).length !== 0 || isEditPending}
             endIcon={isEditPending ? <CircularProgress size={20} /> : null}
           >
@@ -188,4 +184,4 @@ const editImageDialog = (props: ImageDialogProps) => {
   );
 };
 
-export default editImageDialog;
+export default EditImageDialog;
