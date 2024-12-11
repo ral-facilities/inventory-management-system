@@ -614,3 +614,14 @@ export const ItemDetailsStepSchema = (requestType: RequestType) => {
     notes: OptionalOrNullableStringSchema({ requestType }),
   });
 };
+
+// ------------------------------------ IMAGES ------------------------------------
+
+export const ImagesSchema = (requestType: RequestType) =>
+  z.object({
+    fileName: MandatoryStringSchema({
+      errorMessage: 'Please enter a file name.',
+    }),
+    title: OptionalOrNullableStringSchema({ requestType }),
+    description: OptionalOrNullableStringSchema({ requestType }),
+  });

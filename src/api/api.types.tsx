@@ -250,10 +250,16 @@ export interface ImagePost {
   description?: string | null;
 }
 
-export interface Image
+export type ImagePatch = Partial<ImagePost>;
+
+export interface APIImage
   extends Required<Omit<ImagePost, 'upload_file'>>,
     CreatedModifiedMixin {
   id: string;
   primary: boolean;
   thumbnail_base64: string;
+}
+
+export interface APIImageWithURL extends APIImage {
+  url: string;
 }
