@@ -1,4 +1,5 @@
 import { useTheme } from '@mui/material';
+import { useQueryClient } from '@tanstack/react-query';
 import Uppy, { Body, Meta } from '@uppy/core';
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
@@ -25,6 +26,8 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
   const { open, onClose, entityId } = props;
 
   const theme = useTheme();
+
+  const queryClient = useQueryClient();
 
   const osApiUrl = async () => (await settings)?.osApiUrl || '';
   const [uppy] = React.useState<Uppy<Meta, Body>>(() => {
@@ -53,7 +56,8 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
   const handleClose = React.useCallback(() => {
     onClose();
     uppy.cancelAll();
-  }, [onClose, uppy]);
+    queryClient.invalidateQueries({ queryKey: ['Images', entityId] });
+  }, [entityId, onClose, queryClient, uppy]);
 
   React.useEffect(() => {
     uppy.setMeta({
