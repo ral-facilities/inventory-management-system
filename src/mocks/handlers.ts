@@ -367,7 +367,8 @@ export const handlers = [
       if (body.name === 'test_has_children_elements') {
         return HttpResponse.json(
           {
-            detail: 'Catalogue item has child elements and cannot be edited',
+            detail: 'Catalogue item has child elements, so you cannot update the properties, '
+              + 'and the manufacturer cannot be changed'
           },
           { status: 409 }
         );

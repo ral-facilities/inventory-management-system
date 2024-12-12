@@ -391,7 +391,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                   ) || null
                   const message = response.detail.replace(
                     "so the following fields cannot be updated: manufacturer_id, properties",
-                    ("so you cannot update the properties, and the manufacturer can't be changed from "
+                    ("so you cannot update the properties, and the manufacturer cannot be changed from "
                       + manufacturerName?.name)
                   )
                   setErrorPropertiesStep('root.formError', {
