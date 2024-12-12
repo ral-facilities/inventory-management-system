@@ -1,7 +1,8 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import ImagesJSON from '../mocks/Images.json';
 import { hooksWrapperWithProviders } from '../testUtils';
-import { useGetImage, useGetImages } from './images';
+import { ImagePatch } from './api.types';
+import { useGetImage, useGetImages, usePatchImage } from './images';
 
 describe('images api functions', () => {
   afterEach(() => {
@@ -59,6 +60,30 @@ describe('images api functions', () => {
       expect(result.current.data).toEqual({
         ...ImagesJSON[1],
         url: 'http://localhost:3000/images/stfc-logo-blue-text.png?text=1',
+      });
+    });
+  });
+
+  describe('usePatchImage', () => {
+    let mockDataPatch: ImagePatch;
+    beforeEach(() => {
+      mockDataPatch = {
+        file_name: 'edited_image.jpeg',
+        title: 'an edited title',
+        description: 'an edited description',
+      };
+    });
+    it('sends a patch request to edit an image and returns a successful response', async () => {
+      const { result } = renderHook(() => usePatchImage(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      result.current.mutate({ id: '1', image: mockDataPatch });
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
+
+      expect(result.current.data).toEqual({
+        ...ImagesJSON[0],
+        ...mockDataPatch,
       });
     });
   });

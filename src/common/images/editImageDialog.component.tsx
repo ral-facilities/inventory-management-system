@@ -24,7 +24,7 @@ import handleIMS_APIError from '../../handleIMS_APIError';
 export interface ImageDialogProps {
   open: boolean;
   onClose: () => void;
-  selectedImage: APIImage;
+  selectedImage?: APIImage;
 }
 
 const EditImageDialog = (props: ImageDialogProps) => {
@@ -33,7 +33,12 @@ const EditImageDialog = (props: ImageDialogProps) => {
   const { mutateAsync: patchImage, isPending: isEditPending } = usePatchImage();
 
   const initalImage: ImagePatch = React.useMemo(
-    () => selectedImage,
+    () =>
+      selectedImage ?? {
+        file_name: '',
+        title: '',
+        description: '',
+      },
     [selectedImage]
   );
 

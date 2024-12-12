@@ -893,6 +893,139 @@ describe('Items', () => {
 
       cy.findByTestId('galleryLightBox').should('not.exist');
     });
+
+    it('edits an image successfully', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Gallery').click();
+
+      cy.findAllByLabelText('Card Actions').first().click();
+      cy.findAllByText('Edit').last().click();
+
+      cy.findByRole('dialog')
+        .should('be.visible')
+        .within(() => {
+          cy.findByLabelText('File Name *').clear();
+          cy.findByLabelText('File Name *').type('test');
+
+          cy.findByLabelText('Title').clear();
+          cy.findByLabelText('Title').type('test');
+
+          cy.findByLabelText('Description').clear();
+          cy.findByLabelText('Description').type('test');
+          cy.findByLabelText('Description')
+            .invoke('val')
+            .should('equal', 'test');
+        });
+
+      cy.startSnoopingBrowserMockedRequest();
+
+      cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('dialog').should('not.exist');
+
+      cy.findBrowserMockedRequests({
+        method: 'PATCH',
+        url: '/images/:id',
+      }).should(async (patchRequests) => {
+        expect(patchRequests.length).equal(1);
+        const request = patchRequests[0];
+        expect(JSON.stringify(await request.json())).equal(
+          '{"file_name":"test","title": "test","description":"test"}'
+        );
+      });
+    });
+
+    it('not changing any fields shows error', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Gallery').click();
+
+      cy.findAllByLabelText('Card Actions').first().click();
+      cy.findAllByText('Edit').last().click();
+
+      cy.findByRole('dialog')
+        .should('be.visible')
+        .within(() => {
+          cy.findByRole('button', { name: 'Save' }).click();
+          cy.contains(
+            "There have been no changes made. Please change a field's value or press Cancel to exit."
+          );
+        });
+      cy.findByRole('button', { name: 'Save' }).should('be.disabled');
+    });
+
+    it('Required fields that are cleared are not allowed and show error message', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Gallery').click();
+
+      cy.findAllByLabelText('Card Actions').first().click();
+      cy.findAllByText('Edit').last().click();
+
+      cy.findByRole('dialog')
+        .should('be.visible')
+        .within(() => {
+          cy.findByLabelText('File Name *').clear();
+
+          cy.findByRole('button', { name: 'Save' }).click();
+          cy.contains('Please enter a file name.');
+        });
+      cy.findByRole('button', { name: 'Save' }).should('be.disabled');
+    });
+
+    it('opens edit dialog in lightbox', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Gallery').click();
+
+      cy.findAllByAltText('test').first().click();
+      cy.findByTestId('galleryLightBox').within(() => {
+        cy.findByText('File name: stfc-logo-blue-text.png').should('exist');
+        cy.findByText('Title: stfc-logo-blue-text').should('exist');
+        cy.findByText('test').should('exist');
+
+        cy.findByAltText('test').should('exist');
+
+        cy.findByAltText('test')
+          .should('have.attr', 'src')
+          .and(
+            'include',
+            'http://localhost:3000/images/stfc-logo-blue-text.png?text=1'
+          );
+
+        cy.findByLabelText('Image Actions').click();
+      });
+
+      cy.findAllByText('Edit').last().click();
+
+      cy.findByRole('dialog', { timeout: 10000 }).should('exist');
+
+      cy.findByRole('dialog').within(() => {
+        cy.findByText('Edit Image').should('exist');
+      });
+
+      cy.findByRole('dialog').within(() => {
+        cy.findByRole('button', { name: 'Cancel' }).click();
+      });
+
+      cy.findByRole('dialog').should('not.exist');
+
+      cy.findByLabelText('Close').click();
+
+      cy.findByTestId('galleryLightBox').should('not.exist');
+    });
   });
 
   it('delete an item', () => {
