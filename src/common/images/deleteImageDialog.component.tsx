@@ -24,7 +24,6 @@ export interface DeleteImageProps {
 const DeleteImageDialog = (props: DeleteImageProps) => {
   const { open, onClose, image } = props;
 
-  const [error, setError] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
     undefined
   );
@@ -34,7 +33,6 @@ const DeleteImageDialog = (props: DeleteImageProps) => {
 
   const handleClose = React.useCallback(() => {
     onClose();
-    setError(false);
     setErrorMessage(undefined);
   }, [onClose]);
 
@@ -48,7 +46,6 @@ const DeleteImageDialog = (props: DeleteImageProps) => {
           handleIMS_APIError(error);
         });
     } else {
-      setError(true);
       setErrorMessage('No data provided, Please refresh and try again');
     }
   }, [image, deleteImage, onClose]);
@@ -67,13 +64,13 @@ const DeleteImageDialog = (props: DeleteImageProps) => {
         <Button onClick={handleClose}>Cancel</Button>
         <Button
           onClick={handleDeleteImage}
-          disabled={isDeletePending || error}
+          disabled={isDeletePending || errorMessage != undefined}
           endIcon={isDeletePending ? <CircularProgress size={20} /> : null}
         >
           Continue
         </Button>
       </DialogActions>
-      {error && (
+      {errorMessage != undefined && (
         <Box
           sx={{
             mx: '24px',

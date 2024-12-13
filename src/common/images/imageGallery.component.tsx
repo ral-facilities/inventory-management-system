@@ -439,7 +439,10 @@ const ImageGallery = (props: ImageGalleryProps) => {
               />
               <DeleteImageDialog
                 open={openMenuDialog === 'delete'}
-                onClose={() => setOpenMenuDialog(false)}
+                onClose={() => {
+                  setOpenMenuDialog(false);
+                  setCurrentLightBoxImage(undefined);
+                }}
                 image={selectedImage}
               />
             </>
