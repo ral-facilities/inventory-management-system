@@ -435,8 +435,6 @@ describe('Image Gallery', () => {
       within(screen.getByRole('dialog')).getByRole('button', { name: 'Cancel' })
     );
 
-    await user.click(screen.getByLabelText('Close'));
-
     await waitFor(() => {
       expect(screen.queryByTestId('galleryLightBox')).not.toBeInTheDocument();
     });
