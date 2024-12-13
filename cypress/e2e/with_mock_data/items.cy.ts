@@ -909,16 +909,13 @@ describe('Items', () => {
         .should('be.visible')
         .within(() => {
           cy.findByLabelText('File Name *').clear();
-          cy.findByLabelText('File Name *').type('test');
+          cy.findByLabelText('File Name *').type('test file');
 
           cy.findByLabelText('Title').clear();
-          cy.findByLabelText('Title').type('test');
+          cy.findByLabelText('Title').type('test title');
 
           cy.findByLabelText('Description').clear();
-          cy.findByLabelText('Description').type('test');
-          cy.findByLabelText('Description')
-            .invoke('val')
-            .should('equal', 'test');
+          cy.findByLabelText('Description').type('test description');
         });
 
       cy.startSnoopingBrowserMockedRequest();
@@ -933,7 +930,7 @@ describe('Items', () => {
         expect(patchRequests.length).equal(1);
         const request = patchRequests[0];
         expect(JSON.stringify(await request.json())).equal(
-          '{"file_name":"test","title": "test","description":"test"}'
+          '{"file_name":"test file","description":"test description","title":"test title"}'
         );
       });
     });
