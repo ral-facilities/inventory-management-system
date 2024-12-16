@@ -45,7 +45,7 @@ const AllowedValuesListTextFields = (props: {
     name:
       typeof nestIndex === 'number' && 'properties' in propertyRHF
         ? `properties.${nestIndex}.allowed_values.values.values`
-        : `allowed_values.values.values`, // Adjust the field name according to your data structure
+        : `allowed_values.values.values`,
   });
   const allowedValuesIds = property?.allowed_values?.values.values.map(
     (val) => val.av_placement_id
