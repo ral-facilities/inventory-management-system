@@ -420,16 +420,40 @@ interface FilterFn {
 
 export const customFilterFunctions: Record<string, FilterFn> = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  arrIncludesNone: (row: MRT_RowData, id: string, filterValue: any) => {
+  arrExcludesSome: (row: MRT_RowData, id: string, filterValue: any) => {
     if (Array.isArray(filterValue)) {
       return !filterValue.includes(row.getValue(id));
     }
     return row.getValue(id) !== filterValue;
   },
+  // Custom filter to check if all filter values are included
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  arrIncludesAll: (row: MRT_RowData, id: string, filterValue: any) => {
+    if (Array.isArray(filterValue)) {
+      return filterValue.every((val) => row.getValue(id)?.includes(val));
+    }
+    return false;
+  },
+  // Custom filter to check if all filter values are excluded
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  arrExcludesAll: (row: MRT_RowData, id: string, filterValue: any) => {
+    const columnValue = row
+      .getValue(id)
+      ?.split(',')
+      .map((val: string) => val.trim());
+    if (Array.isArray(filterValue) && Array.isArray(columnValue)) {
+      // Only exclude if ALL filter values are present in the column value
+      return !filterValue.every((val) => columnValue.includes(val));
+    }
+    return false; // Default to including the row if the column value is invalid
+  },
 };
 
 export const MRT_Functions_Localisation: Record<string, string> = {
-  filterArrIncludesNone: 'Excludes',
+  filterArrIncludesSome: 'Includes any',
+  filterArrExcludesSome: 'Excludes any',
+  filterArrIncludesAll: 'Includes all',
+  filterArrExcludesAll: 'Excludes all',
 };
 
 type DataTypes = 'boolean' | 'string' | 'number' | 'null' | 'datetime' | 'date';

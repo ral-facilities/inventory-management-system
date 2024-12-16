@@ -321,7 +321,7 @@ describe('Utility functions', () => {
 });
 
 describe('customFilterFunctions', () => {
-  describe('arrIncludesNone', () => {
+  describe('arrExcludesSome', () => {
     const person: MRT_RowData = {
       name: 'Dan',
       age: 4,
@@ -335,7 +335,7 @@ describe('customFilterFunctions', () => {
       id: string,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       filterValue: any
-    ) => boolean = customFilterFunctions['arrIncludesNone'];
+    ) => boolean = customFilterFunctions['arrExcludesSome'];
     it('should correctly exclude record', () => {
       const result = filterExclude(person, 'status', ['unemployed']);
       expect(result).toBe(false);
@@ -351,6 +351,116 @@ describe('customFilterFunctions', () => {
     it('should correctly include record, when filter value is not a list', () => {
       const result = filterExclude(person, 'age', 3);
       expect(result).toBe(true);
+    });
+  });
+  describe('arrIncludesAll', () => {
+    const person: MRT_RowData = {
+      name: 'Dan',
+      age: 4,
+      hobbies: ['reading', 'coding', 'swimming'],
+      getValue: (id: string) => {
+        return person[id as keyof MRT_RowData];
+      },
+    };
+
+    const filterIncludesAll: (
+      row: MRT_RowData,
+      id: string,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      filterValue: any
+    ) => boolean = customFilterFunctions['arrIncludesAll'];
+
+    it('should return true when all filter values are included in the array', () => {
+      const result = filterIncludesAll(person, 'hobbies', [
+        'reading',
+        'coding',
+      ]);
+      expect(result).toBe(true);
+    });
+
+    it('should return false when not all filter values are included in the array', () => {
+      const result = filterIncludesAll(person, 'hobbies', [
+        'reading',
+        'dancing',
+      ]);
+      expect(result).toBe(false);
+    });
+
+    it('should return false when the filter value is not an array', () => {
+      const result = filterIncludesAll(person, 'hobbies', 'reading');
+      expect(result).toBe(false);
+    });
+
+    it('should return true when the filter value is an empty array', () => {
+      const result = filterIncludesAll(person, 'hobbies', []);
+      expect(result).toBe(true);
+    });
+
+    it('should return false when the column value is null or undefined', () => {
+      const personWithNoHobbies: MRT_RowData = {
+        ...person,
+        hobbies: null,
+        getValue: (id: string) => {
+          return personWithNoHobbies[id as keyof MRT_RowData];
+        },
+      };
+      const result = filterIncludesAll(personWithNoHobbies, 'hobbies', [
+        'reading',
+      ]);
+      expect(result).toBe(false);
+    });
+  });
+
+  describe('arrExcludesAll', () => {
+    const person: MRT_RowData = {
+      name: 'Dan',
+      age: 4,
+      hobbies: 'reading, coding, swimming',
+      getValue: (id: string) => {
+        return person[id as keyof MRT_RowData];
+      },
+    };
+
+    const filterExcludesAll: (
+      row: MRT_RowData,
+      id: string,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      filterValue: any
+    ) => boolean = customFilterFunctions['arrExcludesAll'];
+
+    it('should return true when all filter values are excluded from the column value', () => {
+      const result = filterExcludesAll(person, 'hobbies', [
+        'dancing',
+        'singing',
+      ]);
+      expect(result).toBe(true);
+    });
+
+    it('should return true when some filter values are included in the column value', () => {
+      const result = filterExcludesAll(person, 'hobbies', [
+        'coding',
+        'dancing',
+      ]);
+      expect(result).toBe(true);
+    });
+
+    it('should return false when the filter value is an empty array', () => {
+      const result = filterExcludesAll(person, 'hobbies', []);
+      expect(result).toBe(false);
+    });
+
+    it('should return false when the column value is null or undefined', () => {
+      const personWithNoHobbies: MRT_RowData = {
+        ...person,
+        hobbies: null,
+        getValue: (id: string) => {
+          return personWithNoHobbies[id as keyof MRT_RowData];
+        },
+      };
+      const result = filterExcludesAll(personWithNoHobbies, 'hobbies', [
+        'reading',
+      ]);
+      expect(result).toBe(false);
     });
   });
 });
