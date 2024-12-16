@@ -27,7 +27,7 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { APIImage } from '../../api/api.types';
-import { useGetImages } from '../../api/images';
+import { useGetImage, useGetImages } from '../../api/images';
 import { displayTableRowCountText, OverflowTip } from '../../utils';
 import CardViewFilters from '../cardView/cardViewFilters.component';
 import { usePreservedTableState } from '../preservedTableState.component';
@@ -52,6 +52,35 @@ const ImageGallery = (props: ImageGalleryProps) => {
   const [selectedImage, setSelectedImage] = React.useState<
     APIImage | undefined
   >(undefined);
+
+  // State to trigger image fetching for download
+  const [imageIdToDownload, setImageIdToDownload] = React.useState<
+    string | null
+  >(null);
+
+  // Use hook conditionally to fetch the image for download
+  const { data: imageToDownload } = useGetImage(
+    imageIdToDownload || '' // Provide a fallback empty string if no ID
+  );
+
+  // Trigger the download when image data becomes available
+  React.useEffect(() => {
+    if (imageToDownload) {
+      const link = document.createElement('a'); // Create a temporary <a> element
+      console.dir(imageToDownload, { depth: null });
+      link.href = imageToDownload.url; // Set the download URL
+      console.log(link.href);
+      link.download = imageToDownload.file_name || 'download'; // Set the file name
+      document.body.appendChild(link); // Append it to the DOM
+      link.click(); // Programmatically trigger the click
+      document.body.removeChild(link); // Clean up the DOM
+      setImageIdToDownload(null); // Reset after handling download
+    }
+  }, [imageToDownload]);
+
+  const handleDownload = (imageId: string) => {
+    setImageIdToDownload(imageId);
+  };
 
   const [openMenuDialog, setOpenMenuDialog] = React.useState<
     'download' | 'edit' | 'delete' | 'information' | false
@@ -198,6 +227,11 @@ const ImageGallery = (props: ImageGalleryProps) => {
         <MenuItem
           key="download"
           aria-label={`Download ${row.original.file_name} image`}
+          onClick={() => {
+            setSelectedImage(row.original);
+            handleDownload(row.original.id);
+            closeMenu();
+          }}
           sx={{ m: 0 }}
         >
           <ListItemIcon>
