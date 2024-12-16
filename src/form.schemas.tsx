@@ -615,9 +615,9 @@ export const ItemDetailsStepSchema = (requestType: RequestType) => {
   });
 };
 
-// ------------------------------------ IMAGES ------------------------------------
+// ------------------------------------ FILES ------------------------------------
 
-export const ImagesSchema = (requestType: RequestType) =>
+export const FileSchema = (requestType: RequestType) =>
   z.object({
     file_name: MandatoryStringSchema({
       errorMessage: 'Please enter a file name.',

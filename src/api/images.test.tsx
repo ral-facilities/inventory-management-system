@@ -1,7 +1,7 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import ImagesJSON from '../mocks/Images.json';
 import { hooksWrapperWithProviders } from '../testUtils';
-import { ImagePatch } from './api.types';
+import { ObjectFilePatch } from './api.types';
 import { useGetImage, useGetImages, usePatchImage } from './images';
 
 describe('images api functions', () => {
@@ -65,7 +65,7 @@ describe('images api functions', () => {
   });
 
   describe('usePatchImage', () => {
-    let mockDataPatch: ImagePatch;
+    let mockDataPatch: ObjectFilePatch;
     beforeEach(() => {
       mockDataPatch = {
         file_name: 'edited_image.jpeg',
@@ -78,7 +78,7 @@ describe('images api functions', () => {
         wrapper: hooksWrapperWithProviders(),
       });
 
-      result.current.mutate({ id: '1', image: mockDataPatch });
+      result.current.mutate({ id: '1', fileMetadata: mockDataPatch });
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
 
       expect(result.current.data).toEqual({

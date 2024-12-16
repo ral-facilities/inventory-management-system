@@ -7,7 +7,7 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { storageApi } from './api';
-import { APIImage, APIImageWithURL, ImagePatch } from './api.types';
+import { APIImage, APIImageWithURL, ObjectFilePatch } from './api.types';
 
 export const getImage = async (id: string): Promise<APIImageWithURL> => {
   return storageApi.get(`/images/${id}`).then((response) => {
@@ -50,20 +50,23 @@ export const useGetImages = (
   });
 };
 
-const patchImage = async (id: string, image: ImagePatch): Promise<APIImage> => {
+const patchImage = async (
+  id: string,
+  fileMetadata: ObjectFilePatch
+): Promise<APIImage> => {
   return storageApi
-    .patch<APIImage>(`/images/${id}`, image)
+    .patch<APIImage>(`/images/${id}`, fileMetadata)
     .then((response) => response.data);
 };
 
 export const usePatchImage = (): UseMutationResult<
   APIImage,
   AxiosError,
-  { id: string; image: ImagePatch }
+  { id: string; fileMetadata: ObjectFilePatch }
 > => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, image }) => patchImage(id, image),
+    mutationFn: ({ id, fileMetadata }) => patchImage(id, fileMetadata),
     onSuccess: (updatedImage: APIImage) => {
       queryClient.invalidateQueries({ queryKey: ['Images'] });
       queryClient.invalidateQueries({

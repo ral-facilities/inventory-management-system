@@ -15,31 +15,37 @@ import { useForm } from 'react-hook-form';
 
 import React from 'react';
 
+import { UseMutationResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { APIImage, ImagePatch } from '../../api/api.types';
-import { usePatchImage } from '../../api/images';
-import { ImagesSchema } from '../../form.schemas';
+import { APIImage, ObjectFilePatch } from '../../api/api.types';
+import { FileSchema } from '../../form.schemas';
 import handleIMS_APIError from '../../handleIMS_APIError';
 
-export interface ImageDialogProps {
+export interface FileDialogProps {
   open: boolean;
   onClose: () => void;
-  selectedImage?: APIImage;
+  selectedFile?: APIImage;
+  fileType: 'Image' | 'Attachment';
+  usePatchFile: () => UseMutationResult<
+    APIImage,
+    AxiosError,
+    { id: string; fileMetadata: ObjectFilePatch }
+  >;
 }
 
-const EditImageDialog = (props: ImageDialogProps) => {
-  const { open, onClose, selectedImage } = props;
+const EditFileDialog = (props: FileDialogProps) => {
+  const { open, onClose, selectedFile, fileType, usePatchFile } = props;
 
-  const { mutateAsync: patchImage, isPending: isEditPending } = usePatchImage();
+  const { mutateAsync: patchFile, isPending: isEditPending } = usePatchFile();
 
-  const initalImage: ImagePatch = React.useMemo(
+  const initialFile: ObjectFilePatch = React.useMemo(
     () =>
-      selectedImage ?? {
+      selectedFile ?? {
         file_name: '',
         title: '',
         description: '',
       },
-    [selectedImage]
+    [selectedFile]
   );
 
   const {
@@ -50,15 +56,15 @@ const EditImageDialog = (props: ImageDialogProps) => {
     setError,
     clearErrors,
     reset,
-  } = useForm<ImagePatch>({
-    resolver: zodResolver(ImagesSchema('patch')),
-    defaultValues: initalImage,
+  } = useForm<ObjectFilePatch>({
+    resolver: zodResolver(FileSchema('patch')),
+    defaultValues: initialFile,
   });
 
   // Load the values for editing
   React.useEffect(() => {
-    reset(initalImage);
-  }, [initalImage, reset]);
+    reset(initialFile);
+  }, [initialFile, reset]);
 
   // Clears form errors when a value has been changed
   React.useEffect(() => {
@@ -66,7 +72,7 @@ const EditImageDialog = (props: ImageDialogProps) => {
       const subscription = watch(() => clearErrors('root.formError'));
       return () => subscription.unsubscribe();
     }
-  }, [clearErrors, errors, selectedImage, watch]);
+  }, [clearErrors, errors, selectedFile, watch]);
 
   const handleClose = React.useCallback(() => {
     reset();
@@ -74,28 +80,26 @@ const EditImageDialog = (props: ImageDialogProps) => {
     onClose();
   }, [clearErrors, onClose, reset]);
 
-  const handleEditImage = React.useCallback(
-    (imageData: ImagePatch) => {
-      if (selectedImage) {
-        const isFileNameUpdated =
-          imageData.file_name !== selectedImage.file_name;
+  const handleEditFile = React.useCallback(
+    (fileData: ObjectFilePatch) => {
+      if (selectedFile) {
+        const isFileNameUpdated = fileData.file_name !== selectedFile.file_name;
 
         const isDescriptionUpdated =
-          imageData.description !== selectedImage.description;
+          fileData.description !== selectedFile.description;
 
-        const isTitleUpdated = imageData.title !== selectedImage.title;
+        const isTitleUpdated = fileData.title !== selectedFile.title;
 
-        let imageToEdit: ImagePatch = {};
+        let fileToEdit: ObjectFilePatch = {};
 
-        if (isFileNameUpdated) imageToEdit.file_name = imageData.file_name;
-        if (isDescriptionUpdated)
-          imageToEdit.description = imageData.description;
-        if (isTitleUpdated) imageToEdit.title = imageData.title;
+        if (isFileNameUpdated) fileToEdit.file_name = fileData.file_name;
+        if (isDescriptionUpdated) fileToEdit.description = fileData.description;
+        if (isTitleUpdated) fileToEdit.title = fileData.title;
 
         if (isFileNameUpdated || isDescriptionUpdated || isTitleUpdated) {
-          patchImage({
-            id: selectedImage.id,
-            image: imageToEdit,
+          patchFile({
+            id: selectedFile.id,
+            fileMetadata: fileToEdit,
           })
             .then(() => handleClose())
             .catch((error: AxiosError) => {
@@ -109,17 +113,17 @@ const EditImageDialog = (props: ImageDialogProps) => {
         }
       }
     },
-    [selectedImage, patchImage, handleClose, setError]
+    [selectedFile, patchFile, handleClose, setError]
   );
 
   return (
     <Dialog open={open} maxWidth="lg" fullWidth>
-      <DialogTitle>{`Edit Image`}</DialogTitle>
+      <DialogTitle>{`Edit ${fileType}`}</DialogTitle>
       <DialogContent>
         <Grid container direction="column" spacing={1} component="form">
           <Grid item sx={{ mt: 1 }}>
             <TextField
-              id="image-file-name-input"
+              id="object-file-name-input"
               label="File Name"
               required
               {...register('file_name')}
@@ -130,7 +134,7 @@ const EditImageDialog = (props: ImageDialogProps) => {
           </Grid>
           <Grid item>
             <TextField
-              id="image-description-input"
+              id="object-description-input"
               label="Description"
               {...register('description')}
               error={!!errors.description}
@@ -140,7 +144,7 @@ const EditImageDialog = (props: ImageDialogProps) => {
           </Grid>
           <Grid item>
             <TextField
-              id="image-title-input"
+              id="object-title-input"
               label="Title"
               {...register('title')}
               error={!!errors.title}
@@ -172,7 +176,7 @@ const EditImageDialog = (props: ImageDialogProps) => {
           <Button
             variant="outlined"
             sx={{ width: '50%', mx: 1 }}
-            onClick={handleSubmit(handleEditImage)}
+            onClick={handleSubmit(handleEditFile)}
             disabled={Object.values(errors).length !== 0 || isEditPending}
             endIcon={isEditPending ? <CircularProgress size={20} /> : null}
           >
@@ -189,4 +193,4 @@ const EditImageDialog = (props: ImageDialogProps) => {
   );
 };
 
-export default EditImageDialog;
+export default EditFileDialog;

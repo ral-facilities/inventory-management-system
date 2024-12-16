@@ -14,13 +14,13 @@ import {
   CatalogueItem,
   CatalogueItemPatch,
   CatalogueItemPost,
-  ImagePatch,
   Item,
   ItemPatch,
   ItemPost,
   Manufacturer,
   ManufacturerPatch,
   ManufacturerPost,
+  ObjectFilePatch,
   System,
   SystemPatch,
   SystemPost,
@@ -1074,7 +1074,7 @@ export const handlers = [
     }
   }),
 
-  http.patch<{ id: string }, ImagePatch, APIImage | ErrorResponse>(
+  http.patch<{ id: string }, ObjectFilePatch, APIImage | ErrorResponse>(
     '/images/:id',
     async ({ request, params }) => {
       const { id } = params;

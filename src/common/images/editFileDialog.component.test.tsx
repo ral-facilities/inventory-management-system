@@ -3,26 +3,29 @@ import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http } from 'msw';
 import { MockInstance } from 'vitest';
 import { storageApi } from '../../api/api';
+import { usePatchImage } from '../../api/images';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import ImagesJSON from '../../mocks/Images.json';
 import { server } from '../../mocks/server';
 import { renderComponentWithRouterProvider } from '../../testUtils';
-import EditImageDialog, { ImageDialogProps } from './editImageDialog.component';
+import EditFileDialog, { FileDialogProps } from './editFileDialog.component';
 
 vi.mock('../../handleIMS_APIError');
 
-describe('Edit image dialog', () => {
+describe('Edit file dialog', () => {
   const onClose = vi.fn();
-  let props: ImageDialogProps;
+  let props: FileDialogProps;
   let user: UserEvent;
   const createView = () => {
-    return renderComponentWithRouterProvider(<EditImageDialog {...props} />);
+    return renderComponentWithRouterProvider(<EditFileDialog {...props} />);
   };
 
   beforeEach(() => {
     props = {
       open: true,
       onClose: onClose,
+      fileType: 'Image',
+      usePatchFile: usePatchImage,
     };
     user = userEvent.setup();
   });
@@ -30,7 +33,7 @@ describe('Edit image dialog', () => {
   afterEach(() => {
     vi.clearAllMocks();
   });
-  const modifyImageValues = (values: {
+  const modifyFileValues = (values: {
     file_name?: string;
     title?: string;
     description?: string;
@@ -56,7 +59,7 @@ describe('Edit image dialog', () => {
     beforeEach(() => {
       props = {
         ...props,
-        selectedImage: ImagesJSON[0],
+        selectedFile: ImagesJSON[0],
       };
 
       axiosPatchSpy = vi.spyOn(storageApi, 'patch');
@@ -71,7 +74,7 @@ describe('Edit image dialog', () => {
 
       createView();
 
-      modifyImageValues({
+      modifyFileValues({
         file_name: 'Image A',
       });
 
@@ -84,7 +87,7 @@ describe('Edit image dialog', () => {
 
     it('Edits an image correctly', async () => {
       createView();
-      modifyImageValues({
+      modifyFileValues({
         file_name: 'test_file_name.jpeg',
         title: 'Test Title',
         description: 'Test Description',
@@ -119,7 +122,7 @@ describe('Edit image dialog', () => {
 
     it('Required fields show error if they are whitespace or current value just removed', async () => {
       createView();
-      modifyImageValues({
+      modifyFileValues({
         file_name: '',
       });
       const saveButton = screen.getByRole('button', { name: 'Save' });
@@ -132,7 +135,7 @@ describe('Edit image dialog', () => {
 
     it('CatchAllError request works correctly and displays refresh page message', async () => {
       createView();
-      modifyImageValues({
+      modifyFileValues({
         file_name: 'Error 500',
       });
       const saveButton = screen.getByRole('button', { name: 'Save' });

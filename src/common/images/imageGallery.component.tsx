@@ -27,11 +27,11 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { APIImage } from '../../api/api.types';
-import { useGetImages } from '../../api/images';
+import { useGetImages, usePatchImage } from '../../api/images';
 import { displayTableRowCountText, OverflowTip } from '../../utils';
 import CardViewFilters from '../cardView/cardViewFilters.component';
 import { usePreservedTableState } from '../preservedTableState.component';
-import EditImageDialog from './editImageDialog.component';
+import EditFileDialog from './editFileDialog.component';
 import GalleryLightBox from './galleryLightbox.component';
 import ImageInformationDialog from './imageInformationDialog.component';
 import ThumbnailImage from './thumbnailImage.component';
@@ -437,10 +437,12 @@ const ImageGallery = (props: ImageGalleryProps) => {
                 onClose={() => setOpenMenuDialog(false)}
                 image={selectedImage}
               />
-              <EditImageDialog
+              <EditFileDialog
                 open={openMenuDialog === 'edit'}
                 onClose={() => setOpenMenuDialog(false)}
-                selectedImage={selectedImage}
+                fileType="Image"
+                usePatchFile={usePatchImage}
+                selectedFile={selectedImage}
               />
             </>
           )}
