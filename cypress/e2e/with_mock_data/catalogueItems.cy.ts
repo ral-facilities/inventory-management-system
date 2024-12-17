@@ -600,6 +600,8 @@ describe('Catalogue Items', () => {
       .type('Man{upArrow}{enter}');
     cy.findByRole('button', { name: 'Next' }).click();
     cy.findByRole('button', { name: 'Finish' }).should('be.enabled');
+    cy.findAllByRole('dialog')
+      .should('not.be.visible');
 
     cy.findByLabelText('Measurement Range (Joules) *').type('0');
 
