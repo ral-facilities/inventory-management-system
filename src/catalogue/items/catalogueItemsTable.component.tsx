@@ -574,10 +574,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         id: 'manufacturer.address',
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
-        columnFilterModeOptions: [
-          ...COLUMN_FILTER_MODE_OPTIONS.string,
-          ...OPTIONAL_FILTER_MODE_OPTIONS,
-        ],
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
         size: 300,
         Cell: ({ row }) => (
           <div style={{ display: 'inline-block' }}>

@@ -334,18 +334,20 @@ describe('Catalogue Items', () => {
         // details - negative number input validation test
         cy.findByLabelText('Drawing link').clear();
         cy.findByLabelText('Cost (£) *').clear();
-        cy.findByLabelText('Cost (£) *').type('-10')
+        cy.findByLabelText('Cost (£) *').type('-10');
         cy.findByLabelText('Cost to rework (£)').clear();
-        cy.findByLabelText('Cost to rework (£)').type('-10')
+        cy.findByLabelText('Cost to rework (£)').type('-10');
+        cy.findByLabelText('Expected Lifetime (days)').clear();
+        cy.findByLabelText('Expected Lifetime (days)').type('-10');
         cy.findByLabelText('Time to replace (days) *').clear();
-        cy.findByLabelText('Time to replace (days) *').type('-10')
+        cy.findByLabelText('Time to replace (days) *').type('-10');
         cy.findByLabelText('Time to rework (days)').clear();
-        cy.findByLabelText('Time to rework (days)').type('-10')
+        cy.findByLabelText('Time to rework (days)').type('-10');
 
         cy.findAllByText('Number must be greater than or equal to 0').should(
           'have.length',
-          4
-        )
+          5
+        );
         cy.findByRole('button', { name: 'Next' }).should('be.disabled');
 
         cy.findByLabelText('Cost (£) *').clear();
