@@ -2026,7 +2026,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                         id=":r1j:-helper-text"
                       >
                         <label>
-                          Filter Mode: Includes
+                          Filter Mode: Includes any
                         </label>
                       </p>
                     </div>
