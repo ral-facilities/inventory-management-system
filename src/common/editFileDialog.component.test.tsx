@@ -10,7 +10,7 @@ import { server } from '../mocks/server';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import EditFileDialog, { FileDialogProps } from './editFileDialog.component';
 
-vi.mock('../../handleIMS_APIError');
+vi.mock('../handleIMS_APIError');
 
 describe('Edit file dialog', () => {
   const onClose = vi.fn();
