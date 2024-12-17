@@ -17,21 +17,27 @@ import React from 'react';
 
 import { UseMutationResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { APIImage, ObjectFilePatch } from '../../api/api.types';
-import { FileSchema } from '../../form.schemas';
-import handleIMS_APIError from '../../handleIMS_APIError';
+import { APIImage, ObjectFilePatch } from '../api/api.types';
+import { FileSchema } from '../form.schemas';
+import handleIMS_APIError from '../handleIMS_APIError';
 
-export interface FileDialogProps {
+export interface BaseFileDialogProps {
   open: boolean;
   onClose: () => void;
-  selectedFile?: APIImage;
   fileType: 'Image' | 'Attachment';
+}
+
+export interface ImageDialogProps extends BaseFileDialogProps {
+  fileType: 'Image';
+  selectedFile?: APIImage;
   usePatchFile: () => UseMutationResult<
     APIImage,
     AxiosError,
     { id: string; fileMetadata: ObjectFilePatch }
   >;
 }
+
+export type FileDialogProps = ImageDialogProps;
 
 const EditFileDialog = (props: FileDialogProps) => {
   const { open, onClose, selectedFile, fileType, usePatchFile } = props;

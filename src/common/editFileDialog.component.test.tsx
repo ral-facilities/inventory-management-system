@@ -2,12 +2,12 @@ import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http } from 'msw';
 import { MockInstance } from 'vitest';
-import { storageApi } from '../../api/api';
-import { usePatchImage } from '../../api/images';
-import handleIMS_APIError from '../../handleIMS_APIError';
-import ImagesJSON from '../../mocks/Images.json';
-import { server } from '../../mocks/server';
-import { renderComponentWithRouterProvider } from '../../testUtils';
+import { storageApi } from '../api/api';
+import { usePatchImage } from '../api/images';
+import handleIMS_APIError from '../handleIMS_APIError';
+import ImagesJSON from '../mocks/Images.json';
+import { server } from '../mocks/server';
+import { renderComponentWithRouterProvider } from '../testUtils';
 import EditFileDialog, { FileDialogProps } from './editFileDialog.component';
 
 vi.mock('../../handleIMS_APIError');
