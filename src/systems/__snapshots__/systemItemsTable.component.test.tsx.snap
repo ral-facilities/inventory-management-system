@@ -238,7 +238,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
     >
       <table
         class="MuiTable-root MuiTable-stickyHeader css-ts728e-MuiTable-root"
-        style="--header-catalogueItem_name-size: 250; --col-catalogueItem_name-size: 250; --header-mrt_row_expand-size: 100; --col-mrt_row_expand-size: 100; --header-mrt_row_select-size: 60; --col-mrt_row_select-size: 60; --header-item_serial_number-size: 250; --col-item_serial_number-size: 250; --header-item_modified_time-size: 350; --col-item_modified_time-size: 350; --header-item_delivered_date-size: 350; --col-item_delivered_date-size: 350; --header-item_is_defective-size: 200; --col-item_is_defective-size: 200; --header-item_usage_status-size: 200; --col-item_usage_status-size: 200; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40; --header-item_created_time-size: 350; --col-item_created_time-size: 350;"
+        style="--header-catalogueItem_name-size: 250; --col-catalogueItem_name-size: 250; --header-mrt_row_expand-size: 100; --col-mrt_row_expand-size: 100; --header-mrt_row_select-size: 60; --col-mrt_row_select-size: 60; --header-item_serial_number-size: 250; --col-item_serial_number-size: 250; --header-item_modified_time-size: 350; --col-item_modified_time-size: 350; --header-item_delivered_date-size: 350; --col-item_delivered_date-size: 350; --header-item_is_defective-size: 200; --col-item_is_defective-size: 200; --header-item_usage_status-size: 350; --col-item_usage_status-size: 350; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40; --header-item_created_time-size: 350; --col-item_created_time-size: 350;"
       >
         <thead
           class="MuiTableHead-root css-q4cnup-MuiTableHead-root"
