@@ -1,15 +1,10 @@
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Grid,
-  Typography,
-} from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 import React from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { BreadcrumbsInfo } from '../api/api.types';
 import Breadcrumbs from '../view/breadcrumbs.component';
+import AdminCard from './adminCard.component';
+import SparesDefinitionDialog from './sparesDefinitionDialog.component';
 import Units from './units/units.component';
 import UsageStatuses from './usageStatuses/usageStatuses.component';
 
@@ -55,6 +50,10 @@ function AdminPage() {
       }
     : undefined;
 
+  const [openAdminDialog, setOpenAdminDialog] = React.useState<
+    false | 'sparesDefinition'
+  >(false);
+
   return (
     <Grid container>
       <Grid container>
@@ -79,82 +78,21 @@ function AdminPage() {
         <Grid container flexDirection={'column'}>
           <Grid item container xs={12} overflow={'auto'}>
             <Grid item key={0} xs={12} sm={6}>
-              <Button
-                component={Link}
-                to={'units'}
-                fullWidth
-                sx={{
-                  display: 'flex',
-                  width: '100%',
-                  textDecoration: 'none',
-                  color: 'inherit',
-                  position: 'relative', // Make the parent container relative
-                }}
-              >
-                <Card
-                  sx={{
-                    padding: '8px',
-                    width: '100%',
-                    display: 'flex',
-                    height: '100px', // Set a fixed height for all cards
-                  }}
-                >
-                  <CardContent
-                    sx={{
-                      width: '100%',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      minWidth: 0,
-                    }}
-                  >
-                    <Grid>
-                      <Grid position={'relative'}>
-                        <Typography>Units</Typography>
-                      </Grid>
-                    </Grid>
-                  </CardContent>
-                </Card>
-              </Button>
+              <AdminCard link={'units'} label={'Units'} type="page" />
             </Grid>
             <Grid item key={1} xs={12} sm={6}>
-              <Button
-                component={Link}
-                to={'usage-statuses'}
-                fullWidth
-                sx={{
-                  display: 'flex',
-                  width: '100%',
-                  textDecoration: 'none',
-                  color: 'inherit',
-                  position: 'relative', // Make the parent container relative
-                }}
-              >
-                <Card
-                  sx={{
-                    padding: '8px',
-                    width: '100%',
-                    display: 'flex',
-                    height: '100px', // Set a fixed height for all cards
-                  }}
-                >
-                  <CardContent
-                    sx={{
-                      width: '100%',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      minWidth: 0,
-                    }}
-                  >
-                    <Grid>
-                      <Grid position={'relative'}>
-                        <Typography>Usage Statuses</Typography>
-                      </Grid>
-                    </Grid>
-                  </CardContent>
-                </Card>
-              </Button>
+              <AdminCard
+                link={'usage-statuses'}
+                label={'Usage Statuses'}
+                type="page"
+              />
+            </Grid>
+            <Grid item key={2} xs={12} sm={6}>
+              <AdminCard
+                label={'Spares definition'}
+                type="dialog"
+                onClick={() => setOpenAdminDialog('sparesDefinition')}
+              />
             </Grid>
           </Grid>
         </Grid>
@@ -179,6 +117,11 @@ function AdminPage() {
             </Typography>
           </Box>
         )}
+
+      <SparesDefinitionDialog
+        open={openAdminDialog === 'sparesDefinition'}
+        onClose={() => setOpenAdminDialog(false)}
+      />
     </Grid>
   );
 }

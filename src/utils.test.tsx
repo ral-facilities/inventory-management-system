@@ -6,6 +6,7 @@ import { UsageStatus } from './api/api.types';
 import { renderComponentWithRouterProvider } from './testUtils';
 import {
   OverflowTip,
+  areListsEqual,
   checkForDuplicates,
   customFilterFunctions,
   generateUniqueId,
@@ -419,5 +420,49 @@ describe('getNonEmptyTrimmedString', () => {
     expect(getNonEmptyTrimmedString(undefined)).toBeUndefined();
     expect(getNonEmptyTrimmedString({})).toBeUndefined();
     expect(getNonEmptyTrimmedString([])).toBeUndefined();
+  });
+});
+
+describe('areListsEqual', () => {
+  it('returns true for identical lists', () => {
+    const list1 = ['a', 'b', 'c'];
+    const list2 = ['a', 'b', 'c'];
+    expect(areListsEqual(list1, list2)).toBe(true);
+  });
+
+  it('returns true for identical lists with different order', () => {
+    const list1 = ['c', 'b', 'a'];
+    const list2 = ['a', 'b', 'c'];
+    expect(areListsEqual(list1, list2)).toBe(true);
+  });
+
+  it('returns false for lists with different lengths', () => {
+    const list1 = ['a', 'b'];
+    const list2 = ['a', 'b', 'c'];
+    expect(areListsEqual(list1, list2)).toBe(false);
+  });
+
+  it('returns false for lists with different values', () => {
+    const list1 = ['a', 'b', 'c'];
+    const list2 = ['a', 'b', 'd'];
+    expect(areListsEqual(list1, list2)).toBe(false);
+  });
+
+  it('returns true for empty lists', () => {
+    const list1: string[] = [];
+    const list2: string[] = [];
+    expect(areListsEqual(list1, list2)).toBe(true);
+  });
+
+  it('returns false for lists with duplicate elements in one list', () => {
+    const list1 = ['a', 'b', 'b'];
+    const list2 = ['a', 'b'];
+    expect(areListsEqual(list1, list2)).toBe(false);
+  });
+
+  it('returns true for lists with duplicate elements in the same quantity', () => {
+    const list1 = ['a', 'b', 'b'];
+    const list2 = ['b', 'a', 'b'];
+    expect(areListsEqual(list1, list2)).toBe(true);
   });
 });

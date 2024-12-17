@@ -36,9 +36,10 @@ import {
   AddPropertyMigration,
   EditPropertyMigration,
 } from '../../../app.types';
+import WarningMessage from '../../../common/warningMessage.component';
 import { CatalogueCategoryPropertyPatchSchema } from '../../../form.schemas';
 import { transformAllowedValues } from '../catalogueCategoryDialog.component';
-import { MigrationWarningMessage } from './addPropertyMigrationDialog.component';
+import { migrationWarningMessageText } from './addPropertyMigrationDialog.component';
 
 const AllowedValuesListTextFields = (props: {
   property: AddCatalogueCategoryPropertyWithPlacementIds;
@@ -390,9 +391,10 @@ const EditPropertyMigrationDialog = (
       <DialogActions>
         <Grid container px={1.5}>
           <Grid item sx={{ width: '100%' }}>
-            <MigrationWarningMessage
+            <WarningMessage
               isChecked={isTermsAndConditionsChecked}
               setIsChecked={setIsTermsAndConditionsChecked}
+              message={migrationWarningMessageText}
             />
           </Grid>
           <Grid

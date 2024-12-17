@@ -1,25 +1,20 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
-import WarningIcon from '@mui/icons-material/Warning';
 import {
   Autocomplete,
   Box,
   Button,
-  Checkbox,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControlLabel,
   FormHelperText,
   Grid,
   IconButton,
-  Paper,
   Stack,
   TextField,
   Tooltip,
-  Typography,
 } from '@mui/material';
 import React from 'react';
 import {
@@ -38,6 +33,7 @@ import {
 import { usePostCatalogueCategoryProperty } from '../../../api/catalogueCategories';
 import { useGetUnits } from '../../../api/units';
 import { AddPropertyMigration } from '../../../app.types';
+import WarningMessage from '../../../common/warningMessage.component';
 import { CatalogueCategoryPropertyPostSchema } from '../../../form.schemas';
 import { transformAllowedValues } from '../catalogueCategoryDialog.component';
 
@@ -172,53 +168,8 @@ const AllowedValuesListTextFields = () => {
   );
 };
 
-interface MigrationWarningMessageProps {
-  isChecked: boolean;
-  setIsChecked: (isChecked: boolean) => void;
-}
-export const MigrationWarningMessage = (
-  props: MigrationWarningMessageProps
-) => {
-  const { isChecked, setIsChecked } = props;
-  return (
-    <Paper
-      elevation={3}
-      sx={{
-        padding: 2,
-        mx: 1,
-        display: 'flex',
-        alignItems: 'center',
-      }}
-    >
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={isChecked}
-            onChange={(event) => {
-              setIsChecked(event.target.checked);
-            }}
-            color="primary"
-          />
-        }
-        label=""
-        aria-label="Confirm understanding and proceed checkbox"
-      />
-      <WarningIcon
-        sx={{
-          pr: 2,
-          fontSize: '50px',
-          color: 'warning.main',
-        }}
-      />
-      <Typography variant="body1">
-        This action will permanently alter all existing items and catalogue
-        items in this catalogue category. Please confirm that you understand the
-        consequences by checking the box to proceed.
-      </Typography>
-    </Paper>
-  );
-};
-
+export const migrationWarningMessageText =
+  'This action will permanently alter all existing items and catalogue items in this catalogue category. Please confirm that you understand the consequences by checking the box to proceed.';
 function transformAddPropertyMigrationToCatalogueCategoryPropertyPost(
   property: AddPropertyMigration
 ): CatalogueCategoryPropertyPost {
@@ -648,9 +599,10 @@ const AddPropertyMigrationDialog = (props: AddPropertyMigrationDialogProps) => {
       <DialogActions>
         <Grid container px={1.5}>
           <Grid item sx={{ width: '100%' }}>
-            <MigrationWarningMessage
+            <WarningMessage
               isChecked={isMigrationWarningChecked}
               setIsChecked={setIsMigrationWarningChecked}
+              message={migrationWarningMessageText}
             />
           </Grid>
           <Grid
