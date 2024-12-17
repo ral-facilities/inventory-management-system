@@ -8,9 +8,10 @@ import {
   addItem,
   addProperty,
   deleteItem,
+  duplicateItem,
   editItem,
   editProperty,
-  duplicateItem,
+  spareDefinition,
 } from './functions';
 
 describe('items', () => {
@@ -47,6 +48,7 @@ describe('items', () => {
       'systems',
       'units',
       'usage_statuses',
+      'settings',
     ]);
   });
 
@@ -56,6 +58,7 @@ describe('items', () => {
     duplicateItem('MX4332424', 0);
     addProperty();
     editProperty();
+    spareDefinition();
     deleteItem('MX4332424', 0);
     deleteItem('MX4332424', 0);
   });
