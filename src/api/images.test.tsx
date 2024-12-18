@@ -1,8 +1,16 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import ImagesJSON from '../mocks/Images.json';
-import { hooksWrapperWithProviders } from '../testUtils';
-import { ObjectFilePatch } from './api.types';
-import { useGetImage, useGetImages, usePatchImage } from './images';
+import {
+  CREATED_MODIFIED_TIME_VALUES,
+  hooksWrapperWithProviders,
+} from '../testUtils';
+import { APIImage, ObjectFilePatch } from './api.types';
+import {
+  useDeleteImage,
+  useGetImage,
+  useGetImages,
+  usePatchImage,
+} from './images';
 
 describe('images api functions', () => {
   afterEach(() => {
@@ -85,6 +93,34 @@ describe('images api functions', () => {
         ...ImagesJSON[0],
         ...mockDataPatch,
       });
+    });
+  });
+
+  describe('useDeleteImage', () => {
+    let mockDataView: APIImage;
+    beforeEach(() => {
+      mockDataView = {
+        id: '1',
+        file_name: 'Image A',
+        entity_id: '2',
+        title: '2',
+        description: 'a description',
+        primary: false,
+        thumbnail_base64: 'base64_thumbnail_test',
+        ...CREATED_MODIFIED_TIME_VALUES,
+      };
+    });
+
+    it('posts a request to delete a manufacturer and return a successful response', async () => {
+      const { result } = renderHook(() => useDeleteImage(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+      expect(result.current.isIdle).toBe(true);
+      result.current.mutate(mockDataView.id);
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      expect(result.current.data).toEqual('');
     });
   });
 });
