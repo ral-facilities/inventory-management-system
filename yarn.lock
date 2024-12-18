@@ -688,15 +688,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/compat@npm:1.2.0":
-  version: 1.2.0
-  resolution: "@eslint/compat@npm:1.2.0"
+"@eslint/compat@npm:1.2.4":
+  version: 1.2.4
+  resolution: "@eslint/compat@npm:1.2.4"
   peerDependencies:
     eslint: ^9.10.0
   peerDependenciesMeta:
     eslint:
       optional: true
-  checksum: 10c0/ad79bf1ef14462f829288c4e2ca8eeffdf576fa923d3f8a07e752e821bdbe5fd79360fe6254e9ddfe7eada2e4e3d22a7ee09f5d21763e67bc4fbc331efb3c3e9
+  checksum: 10c0/afea54435f0ae6b05f1b732132ae4a9d95ff106be0fc9988ac19f31037eb89b2a0e968212be4d2fbf757ff16923031825a27739d94a365559089dfd8269331e3
   languageName: node
   linkType: hard
 
@@ -5420,7 +5420,7 @@ __metadata:
     "@date-io/date-fns": "npm:3.0.0"
     "@emotion/react": "npm:^11.11.4"
     "@emotion/styled": "npm:^11.11.5"
-    "@eslint/compat": "npm:1.2.0"
+    "@eslint/compat": "npm:1.2.4"
     "@eslint/js": "npm:9.12.0"
     "@hookform/resolvers": "npm:^3.6.0"
     "@mui/icons-material": "npm:^5.15.19"
