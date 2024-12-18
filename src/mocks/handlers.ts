@@ -966,7 +966,7 @@ export const handlers = [
         modified_time: '2024-01-02T13:10:10.000+00:00',
         created_time: '2024-01-01T12:00:00.000+00:00',
       },
-      { status: 200 }
+      { status: 201 }
     );
   }),
 
@@ -974,7 +974,14 @@ export const handlers = [
 
   http.post('/object-storage', async () => {
     await delay(200);
-    return new HttpResponse(undefined, { status: 200 });
+    return new HttpResponse(undefined, {
+      status: 204,
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+        // This is need for uppy
+        ETag: '"e76fe3d21078d7a3b9ec95edf437d010"',
+      },
+    });
   }),
 
   // ------------------------------------ IMAGES ------------------------------------------------
