@@ -50,6 +50,7 @@ describe('delete Image dialogue', () => {
   afterEach(() => {
     vi.clearAllMocks();
   });
+
   it('renders correctly', async () => {
     createView();
     expect(screen.getByText('Delete Image')).toBeInTheDocument();

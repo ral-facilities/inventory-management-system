@@ -894,7 +894,7 @@ describe('Items', () => {
       cy.findByTestId('galleryLightBox').should('not.exist');
     });
 
-    it('delete an image', () => {
+    it('deletes an image', () => {
       cy.findByText('5YUQDDjKpz2z').click();
       cy.findByText(
         'High-resolution cameras for beam characterization. 1'
@@ -937,7 +937,7 @@ describe('Items', () => {
     });
   });
 
-  it('delete an item', () => {
+  it('deletes an item', () => {
     cy.findAllByLabelText('Row Actions').first().click();
     cy.findByText('Delete').click();
 
@@ -957,7 +957,7 @@ describe('Items', () => {
     });
   });
 
-  it('duplicate an item', () => {
+  it('duplicates an item', () => {
     cy.findAllByLabelText('Row Actions').first().click();
     cy.findByText('Duplicate').click();
 
