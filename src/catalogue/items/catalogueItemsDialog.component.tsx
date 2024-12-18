@@ -386,9 +386,11 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
               if (response && error.response?.status === 409) {
                 if (response.detail.includes('child elements')) {
+                  // find the name of the manufacturer, so it can be used in the error message
                   const manufacturerName = manufacturerList?.find(
                     (manufacturer) => manufacturer.id === selectedCatalogueItem.manufacturer_id
                   ) || null
+                  // add the manufacturer name into the error message
                   const message = response.detail.replace(
                     "so the following fields cannot be updated: manufacturer_id, properties",
                     ("so you cannot update the properties, and the manufacturer cannot be changed from "
@@ -415,6 +417,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       patchCatalogueItem,
       handleClose,
       setErrorPropertiesStep,
+      manufacturerList,
     ]
   );
 

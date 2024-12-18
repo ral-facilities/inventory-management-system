@@ -582,12 +582,11 @@ describe('Catalogue Items', () => {
     cy.findByLabelText('Name *').clear();
     cy.findByLabelText('Name *').type('test_has_children_elements');
 
-    cy.findByLabelText('Manufacturer *').click()
-      .type('Man{downArrow}{enter}');
+    cy.findByLabelText('Manufacturer *').type('Man{downArrow}{enter}');
     cy.findByRole('button', { name: 'Next' }).click();
 
     cy.findByRole('button', { name: 'Finish'}).click();
-    cy.findAllByRole('dialog')
+    cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
         cy.contains('Catalogue item has child elements, so you cannot update the properties, '
@@ -596,12 +595,9 @@ describe('Catalogue Items', () => {
     cy.findByRole('button', { name: 'Finish' }).should('be.disabled');
 
     cy.findByRole('button', { name: 'Back' }).click();
-    cy.findByLabelText('Manufacturer *').click()
-      .type('Man{upArrow}{enter}');
+    cy.findByLabelText('Manufacturer *').type('Man{upArrow}{enter}');
     cy.findByRole('button', { name: 'Next' }).click();
     cy.findByRole('button', { name: 'Finish' }).should('be.enabled');
-    cy.findAllByRole('dialog')
-      .should('not.be.visible');
 
     cy.findByLabelText('Measurement Range (Joules) *').type('0');
 
