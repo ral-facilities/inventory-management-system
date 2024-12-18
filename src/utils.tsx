@@ -357,6 +357,8 @@ export const TableGroupedCell = <TData extends MRT_RowData>(
         ) : (
           cellData
         )
+      ) : typeof cellData === 'number' ? (
+        cellData
       ) : (
         `No ${column.columnDef.header}`
       )}{' '}

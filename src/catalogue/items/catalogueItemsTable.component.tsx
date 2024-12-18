@@ -35,6 +35,7 @@ import {
 } from '../../api/api.types';
 import { useGetCatalogueItems } from '../../api/catalogueItems';
 import { useGetManufacturerIds } from '../../api/manufacturers';
+import NumberOfSparesClickable from '../../common/numberOfSparesClickable.component';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import {
   COLUMN_FILTER_FUNCTIONS,
@@ -291,6 +292,26 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             Click here
           </MuiLink>
         ),
+      },
+      {
+        header: 'Number of spares',
+        Header: TableHeaderOverflowTip,
+        size: 350,
+        accessorFn: (row) => row.catalogueItem.number_of_spares ?? '',
+        id: 'catalogueItem.number_of_spares',
+        filterVariant: COLUMN_FILTER_VARIANTS.number,
+        filterFn: COLUMN_FILTER_FUNCTIONS.number,
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS.number,
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
+        ],
+        Cell: ({ row }) => (
+          <NumberOfSparesClickable
+            catalogueItem={row.original.catalogueItem}
+            type="link"
+          />
+        ),
+        GroupedCell: TableGroupedCell,
       },
       {
         header: 'Description',

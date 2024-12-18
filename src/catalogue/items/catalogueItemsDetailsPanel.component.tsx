@@ -14,6 +14,7 @@ import {
   Manufacturer,
 } from '../../api/api.types';
 import PlaceholderImage from '../../common/images/placeholderImage.component';
+import NumberOfSparesClickable from '../../common/numberOfSparesClickable.component';
 import { formatDateTimeStrings } from '../../utils';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -91,13 +92,28 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
             </Grid>
             <Grid item container spacing={0}>
               <Grid item xs={12} sm={6} key={0}>
+                <Typography align="left" color="text.primary">
+                  Number of spares
+                </Typography>
+                <Typography align="left" color="text.secondary">
+                  {typeof catalogueItemIdData.number_of_spares === 'number' ? (
+                    <NumberOfSparesClickable
+                      catalogueItem={catalogueItemIdData}
+                      type="link"
+                    />
+                  ) : (
+                    'None'
+                  )}
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={6} key={1}>
                 <Typography color="text.primary">Obsolete</Typography>
                 <Typography color="text.secondary">
                   {catalogueItemIdData.is_obsolete ? 'Yes' : 'No'}
                 </Typography>
               </Grid>
 
-              <Grid item xs={12} sm={6} key={1}>
+              <Grid item xs={12} sm={6} key={2}>
                 <Typography color="text.primary">
                   Obsolete replacement link
                 </Typography>
@@ -117,7 +133,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
-              <Grid item xs={12} sm={6} key={2}>
+              <Grid item xs={12} sm={6} key={3}>
                 <Typography color="text.primary">Obsolete Reason</Typography>
                 <Typography
                   color="text.secondary"
@@ -127,20 +143,20 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
-              <Grid item xs={12} sm={6} key={3}>
+              <Grid item xs={12} sm={6} key={4}>
                 <Typography color="text.primary">Cost (£)</Typography>
                 <Typography color="text.secondary">
                   {catalogueItemIdData.cost_gbp ?? 'None'}
                 </Typography>
               </Grid>
-              <Grid item xs={12} sm={6} key={4}>
+              <Grid item xs={12} sm={6} key={5}>
                 <Typography color="text.primary">Cost to rework (£)</Typography>
                 <Typography color="text.secondary">
                   {catalogueItemIdData.cost_to_rework_gbp ?? 'None'}
                 </Typography>
               </Grid>
 
-              <Grid item xs={12} sm={6} key={5}>
+              <Grid item xs={12} sm={6} key={6}>
                 <Typography color="text.primary">
                   Time to replace (days)
                 </Typography>
@@ -149,7 +165,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
-              <Grid item xs={12} sm={6} key={6}>
+              <Grid item xs={12} sm={6} key={7}>
                 <Typography color="text.primary">
                   Time to rework (days)
                 </Typography>
@@ -167,7 +183,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
-              <Grid item xs={12} sm={6} key={7}>
+              <Grid item xs={12} sm={6} key={9}>
                 <Typography color="text.primary">Drawing Number</Typography>
                 <Typography
                   color="text.secondary"
@@ -177,7 +193,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
-              <Grid item xs={12} sm={6} key={9}>
+              <Grid item xs={12} sm={6} key={10}>
                 <Typography color="text.primary">Model Number</Typography>
                 <Typography
                   color="text.secondary"
@@ -187,7 +203,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
-              <Grid item xs={12} sm={6} key={10}>
+              <Grid item xs={12} sm={6} key={11}>
                 <Typography color="text.primary">Last Modified</Typography>
                 <Typography color="text.secondary">
                   {formatDateTimeStrings(
@@ -197,7 +213,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
-              <Grid item xs={12} sm={6} key={11}>
+              <Grid item xs={12} sm={6} key={12}>
                 <Typography color="text.primary">Created</Typography>
                 <Typography color="text.secondary">
                   {formatDateTimeStrings(

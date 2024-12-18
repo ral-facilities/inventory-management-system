@@ -191,6 +191,7 @@ export interface CatalogueItem
     Required<Omit<CatalogueItemPost, 'properties'>> {
   id: string;
   properties: Property[];
+  number_of_spares?: number;
 }
 
 // ------------------------------------ ITEMS ------------------------------------------------

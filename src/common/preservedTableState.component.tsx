@@ -15,7 +15,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 
 // State as will be stored after parsing from search params
-interface State {
+export interface State {
   cF: MRT_ColumnFiltersState;
   cFn: MRT_ColumnFilterFnsState;
   srt: MRT_SortingState;

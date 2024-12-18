@@ -20,6 +20,29 @@ describe('Items', () => {
     cy.findByText('Beam Characterization').should('be.visible');
   });
 
+  it('should be able to set and unset spares filter', () => {
+    cy.visit('/catalogue/item/1/items');
+
+    cy.findByText('5YUQDDjKpz2z').should('exist');
+    cy.findByText('vYs9Vxx6yWbn').should('exist');
+    cy.findByText('PcfCM1jp0SUV').should('exist');
+    cy.findByText('Zf7P8Qu8TD8c').should('exist');
+
+    cy.findByText('Apply spares filter').click();
+
+    cy.findByText('5YUQDDjKpz2z').should('not.exist');
+    cy.findByText('vYs9Vxx6yWbn').should('exist');
+    cy.findByText('PcfCM1jp0SUV').should('exist');
+    cy.findByText('Zf7P8Qu8TD8c').should('not.exist');
+
+    cy.findByRole('button', { name: 'Clear Filters' }).click();
+
+    cy.findByText('5YUQDDjKpz2z').should('exist');
+    cy.findByText('vYs9Vxx6yWbn').should('exist');
+    cy.findByText('PcfCM1jp0SUV').should('exist');
+    cy.findByText('Zf7P8Qu8TD8c').should('exist');
+  });
+
   it('should be able to navigate back to the catalogue home step by step', () => {
     cy.visit('/catalogue/item/1/items/KvT2Ox7n');
 

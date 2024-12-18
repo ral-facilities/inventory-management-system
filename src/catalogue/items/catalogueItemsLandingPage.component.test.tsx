@@ -260,6 +260,22 @@ describe('Catalogue Items Landing Page', () => {
     expect(url).toHaveAttribute('href', '/catalogue/item/89/items');
   });
 
+  it('navigates to items table view (spares definition)', async () => {
+    createView('/catalogue/item/89');
+    await waitFor(() => {
+      expect(screen.getByRole('link', { name: '1' })).toBeInTheDocument();
+    });
+
+    const url = screen.getByRole('link', {
+      name: '1',
+    });
+
+    expect(url).toHaveAttribute(
+      'href',
+      '/catalogue/item/89/items?state=N4IgxgYiBcDaoEsAmMQIC4FMC2A6ArgM4CGA5pgPqHrHpEgA0IAbsQDb6YzwjoCeABy7QQ1AE4IAdqUYt2nVADlMAdxABfBqH5DU4qTKasOwkAFVCmFOoC6t9UA'
+    );
+  });
+
   it('landing page renders data correctly when optional values are null', async () => {
     createView('/catalogue/item/33');
 
@@ -283,6 +299,7 @@ describe('Catalogue Items Landing Page', () => {
     });
 
     const url = await screen.findByText('Manufacturer A');
+
     expect(url).toHaveAttribute('href', '/manufacturers/1');
   });
 });
