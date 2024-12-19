@@ -110,6 +110,18 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
           id: 'name',
           name: 'File name',
           placeholder: 'Enter file name',
+          render({ value, onChange, fieldCSSClasses }, h) {
+            const point = value.lastIndexOf('.');
+            const name = value.slice(0, point);
+            const extension = value.slice(point + 1);
+            return h('input', {
+              class: fieldCSSClasses.text,
+              type: 'text',
+              value: name,
+              onChange: (event: React.FormEvent<HTMLInputElement>) =>
+                onChange(event.currentTarget?.value + '.' + extension),
+            });
+          },
         },
         {
           id: 'title',
