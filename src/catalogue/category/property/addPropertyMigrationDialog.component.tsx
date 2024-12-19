@@ -1,10 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
 import WarningIcon from '@mui/icons-material/Warning';
 import {
   Autocomplete,
-  Box,
   Button,
   Checkbox,
   Dialog,
@@ -12,23 +9,14 @@ import {
   DialogContent,
   DialogTitle,
   FormControlLabel,
-  FormHelperText,
   Grid,
-  IconButton,
   Paper,
   Stack,
   TextField,
-  Tooltip,
   Typography,
 } from '@mui/material';
 import React from 'react';
-import {
-  Controller,
-  FormProvider,
-  useFieldArray,
-  useForm,
-  useFormContext,
-} from 'react-hook-form';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
 import {
   AllowedValuesListType,
   CatalogueCategory,
@@ -40,137 +28,7 @@ import { useGetUnits } from '../../../api/units';
 import { AddPropertyMigration } from '../../../app.types';
 import { CatalogueCategoryPropertyPostSchema } from '../../../form.schemas';
 import { transformAllowedValues } from '../catalogueCategoryDialog.component';
-
-const AllowedValuesListTextFields = () => {
-  const {
-    control,
-    formState: { errors },
-    clearErrors,
-    setValue,
-    watch,
-  } = useFormContext<AddPropertyMigration>();
-
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: `allowed_values.values.values`, // Adjust the field name according to your data structure
-  });
-
-  const clearDuplicateValueErrors = React.useCallback(() => {
-    const allowedValuesErrors = errors?.allowed_values;
-    const errorIndexes =
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ((allowedValuesErrors?.values?.values as any[]) || [])
-        .map((error, index) => {
-          if (error?.value?.message === 'Duplicate value.') {
-            return index;
-          }
-          return -1;
-        })
-        .filter((index) => index !== -1);
-
-    errorIndexes.forEach((errorIndex) => {
-      clearErrors(`allowed_values.values.values.${errorIndex}`);
-    });
-  }, [clearErrors, errors]);
-  const property = watch();
-
-  const clearDefaultValue = React.useCallback(
-    (av_placement_id: string) => {
-      if (av_placement_id === property.default_value.value.av_placement_id) {
-        clearErrors('default_value.value.value');
-        setValue('default_value', {
-          valueType: `${property.type}_${property.mandatory}`,
-          value: { av_placement_id: crypto.randomUUID(), value: '' },
-        });
-      }
-    },
-    [clearErrors, property, setValue]
-  );
-
-  return (
-    <>
-      {fields.map((field, index) => {
-        return (
-          <Stack
-            key={field.av_placement_id}
-            direction="row"
-            sx={{ alignItems: 'center', justifyContent: 'center', mb: 1 }}
-            spacing={1}
-          >
-            <Controller
-              control={control}
-              name={`allowed_values.values.values.${index}`}
-              render={({ field: controllerField }) => (
-                <TextField
-                  id={`list-item-input-${controllerField.value.av_placement_id}`}
-                  label={`List item`}
-                  variant="outlined"
-                  fullWidth
-                  {...controllerField}
-                  value={controllerField.value.value}
-                  onChange={(event) => {
-                    controllerField.onChange({
-                      av_placement_id: controllerField.value.av_placement_id,
-                      value: event.target.value,
-                    });
-                    clearDefaultValue(controllerField.value.av_placement_id);
-                    clearDuplicateValueErrors();
-                  }}
-                  error={
-                    !!errors?.allowed_values?.values?.values?.[index]?.value
-                  }
-                  helperText={
-                    errors?.allowed_values?.values?.values?.[index]?.value
-                      ?.message as string
-                  }
-                />
-              )}
-            />
-            <Tooltip title="Delete Allowed Value">
-              <span>
-                <IconButton
-                  aria-label={`Delete list item`}
-                  onClick={() => {
-                    clearDefaultValue(field.av_placement_id);
-                    remove(index);
-                    clearDuplicateValueErrors();
-                  }}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </span>
-            </Tooltip>
-          </Stack>
-        );
-      })}
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <Tooltip title="Add Allowed Value">
-          <span>
-            <IconButton
-              aria-label={`Add list item`}
-              onClick={() =>
-                append({ av_placement_id: crypto.randomUUID(), value: '' })
-              }
-            >
-              <AddIcon />
-            </IconButton>
-          </span>
-        </Tooltip>
-      </Box>
-      {!!errors?.allowed_values?.values?.values && (
-        <FormHelperText error>
-          {errors?.allowed_values?.values?.values?.message}
-        </FormHelperText>
-      )}
-    </>
-  );
-};
+import AllowedValuesListTextFields from './allowedValuesListTextFields.component';
 
 interface MigrationWarningMessageProps {
   isChecked: boolean;

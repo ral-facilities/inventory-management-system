@@ -13,7 +13,6 @@ import {
   Divider,
   FormControl,
   FormControlLabel,
-  FormHelperText,
   FormLabel,
   Grid,
   IconButton,
@@ -31,7 +30,6 @@ import {
   FormProvider,
   useFieldArray,
   useForm,
-  useFormContext,
 } from 'react-hook-form';
 import {
   AllowedValues,
@@ -55,6 +53,7 @@ import {
 } from '../../app.types';
 import { CatalogueCategorySchema, RequestType } from '../../form.schemas';
 import handleIMS_APIError from '../../handleIMS_APIError';
+import AllowedValuesListTextFields from './property/allowedValuesListTextFields.component';
 import CatalogueItemsPropertiesTable from './property/catalogueItemPropertiesTable.component';
 
 // Function to convert a list of strings to a list of numbers
@@ -153,111 +152,6 @@ function transformPostPropertyToAddProperty(
 
   return modifiedCatalogueItemProperty;
 }
-
-const AllowedValuesListTextFields = (props: { nestIndex: number }) => {
-  const {
-    control,
-    formState: { errors },
-    clearErrors,
-  } = useFormContext<AddCatalogueCategoryWithPlacementIds>();
-
-  const { nestIndex } = props;
-
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: `properties.${nestIndex}.allowed_values.values.values`, // Adjust the field name according to your data structure
-  });
-
-  const clearDuplicateValueErrors = React.useCallback(() => {
-    const allowedValuesErrors = errors?.properties?.[nestIndex]?.allowed_values;
-    const errorIndexes =
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ((allowedValuesErrors?.values?.values as any[]) || [])
-        .map((error, index) => {
-          if (error?.value?.message === 'Duplicate value.') {
-            return index;
-          }
-          return -1;
-        })
-        .filter((index) => index !== -1);
-
-    errorIndexes.forEach((errorIndex) => {
-      clearErrors(
-        `properties.${nestIndex}.allowed_values.values.values.${errorIndex}`
-      );
-    });
-  }, [clearErrors, errors?.properties, nestIndex]);
-
-  return (
-    <>
-      {fields.map((field, index) => {
-        return (
-          <Stack
-            key={field.av_placement_id}
-            direction="row"
-            sx={{ alignItems: 'center', justifyContent: 'center', mb: 1 }}
-            spacing={1}
-          >
-            <Controller
-              control={control}
-              name={`properties.${nestIndex}.allowed_values.values.values.${index}`}
-              render={({ field: controllerField }) => (
-                <TextField
-                  id={`list-item-input-${controllerField.value.av_placement_id}`}
-                  label={`List item`}
-                  variant="outlined"
-                  {...controllerField}
-                  value={controllerField.value.value}
-                  onChange={(event) => {
-                    controllerField.onChange({
-                      av_placement_id: controllerField.value.av_placement_id,
-                      value: event.target.value,
-                    });
-                    clearDuplicateValueErrors();
-                  }}
-                  error={
-                    !!errors?.properties?.[nestIndex]?.allowed_values?.values
-                      ?.values?.[index]?.value
-                  }
-                  helperText={
-                    errors?.properties?.[nestIndex]?.allowed_values?.values
-                      ?.values?.[index]?.value?.message as string
-                  }
-                />
-              )}
-            />
-
-            <IconButton
-              aria-label={`Delete list item`}
-              onClick={() => {
-                remove(index);
-                clearDuplicateValueErrors();
-              }}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </Stack>
-        );
-      })}
-      <IconButton
-        aria-label={`Add list item`}
-        onClick={() =>
-          append({ av_placement_id: crypto.randomUUID(), value: '' })
-        }
-      >
-        <AddIcon />
-      </IconButton>
-      {!!errors?.properties?.[nestIndex]?.allowed_values?.values?.values && (
-        <FormHelperText error>
-          {
-            errors?.properties?.[nestIndex]?.allowed_values?.values?.values
-              ?.message
-          }
-        </FormHelperText>
-      )}
-    </>
-  );
-};
 
 export interface CatalogueCategoryDialogProps {
   open: boolean;
