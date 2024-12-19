@@ -1,7 +1,7 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { renderComponentWithRouterProvider } from '../testUtils';
-import Manufacturer from './manufacturer.component';
+import ManufacturerTable from './manufacturersTable.component';
 
 const mockedUseNavigate = vi.fn();
 
@@ -13,7 +13,7 @@ vi.mock('react-router-dom', async () => ({
 describe('Manufacturer', () => {
   let user: UserEvent;
   const createView = () => {
-    return renderComponentWithRouterProvider(<Manufacturer />);
+    return renderComponentWithRouterProvider(<ManufacturerTable />);
   };
   beforeEach(() => {
     user = userEvent.setup();
@@ -140,21 +140,4 @@ describe('Manufacturer', () => {
       expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
     });
   }, 10000);
-
-  it('navigates back to the root directory', async () => {
-    createView();
-
-    await waitFor(() => {
-      expect(screen.queryByText('Manufacturer A')).not.toBeInTheDocument();
-    });
-
-    const homeButton = screen.getByRole('button', {
-      name: 'navigate to manufacturers home',
-    });
-
-    await user.click(homeButton);
-
-    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
-    expect(mockedUseNavigate).toHaveBeenCalledWith('/manufacturers');
-  });
 });
