@@ -31,6 +31,7 @@ import { useGetImages } from '../../api/images';
 import { displayTableRowCountText, OverflowTip } from '../../utils';
 import CardViewFilters from '../cardView/cardViewFilters.component';
 import { usePreservedTableState } from '../preservedTableState.component';
+import DeleteImageDialog from './deleteImageDialog.component';
 import GalleryLightBox from './galleryLightbox.component';
 import ImageInformationDialog from './imageInformationDialog.component';
 import ThumbnailImage from './thumbnailImage.component';
@@ -222,7 +223,12 @@ const ImageGallery = (props: ImageGalleryProps) => {
         </MenuItem>,
         <MenuItem
           key="delete"
-          aria-label={`Delete catalogue item ${row.original.file_name}`}
+          aria-label={`Delete image ${row.original.file_name}`}
+          onClick={() => {
+            setSelectedImage(row.original);
+            setOpenMenuDialog('delete');
+            closeMenu();
+          }}
           sx={{ m: 0 }}
         >
           <ListItemIcon>
@@ -419,11 +425,21 @@ const ImageGallery = (props: ImageGalleryProps) => {
             <MRT_BottomToolbar table={table} sx={{ width: '100%' }} />
           </Grid>
           {selectedImage && (
-            <ImageInformationDialog
-              open={openMenuDialog === 'information'}
-              onClose={() => setOpenMenuDialog(false)}
-              image={selectedImage}
-            />
+            <>
+              <ImageInformationDialog
+                open={openMenuDialog === 'information'}
+                onClose={() => setOpenMenuDialog(false)}
+                image={selectedImage}
+              />
+              <DeleteImageDialog
+                open={openMenuDialog === 'delete'}
+                onClose={() => {
+                  setOpenMenuDialog(false);
+                  setCurrentLightBoxImage(undefined);
+                }}
+                image={selectedImage}
+              />
+            </>
           )}
           {currentLightBoxImage && (
             <GalleryLightBox

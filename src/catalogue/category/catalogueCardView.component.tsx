@@ -3,6 +3,7 @@ import {
   Button,
   Collapse,
   Grid,
+  MenuItem,
   Typography,
   useMediaQuery,
   useTheme,
@@ -17,7 +18,16 @@ import React from 'react';
 import { CatalogueCategory } from '../../api/api.types';
 import CardViewFilters from '../../common/cardView/cardViewFilters.component';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
-import { displayTableRowCountText, getPageHeightCalc } from '../../utils';
+import {
+  COLUMN_FILTER_FUNCTIONS,
+  COLUMN_FILTER_MODE_OPTIONS,
+  COLUMN_FILTER_VARIANTS,
+  customFilterFunctions,
+  displayTableRowCountText,
+  getInitialColumnFilterFnState,
+  getPageHeightCalc,
+  MRT_Functions_Localisation,
+} from '../../utils';
 import CatalogueCard from './catalogueCard.component';
 export interface CatalogueCardViewProps {
   catalogueCategoryData: CatalogueCategory[];
@@ -42,14 +52,6 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
     selectedCategories,
   } = props;
 
-  const { preservedState, onPreservedStatesChange } = usePreservedTableState({
-    initialState: {
-      pagination: { pageSize: 30, pageIndex: 0 },
-    },
-    storeInUrl: true,
-    paginationOnly: true,
-  });
-
   // Display total and pagination on separate lines if on a small screen
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -71,14 +73,18 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
         header: 'Name',
         accessorFn: (row) => row.name,
         id: 'name',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
         size: 300,
       },
       {
         header: 'Last modified',
         accessorFn: (row) => new Date(row.modified_time),
         id: 'modified_time',
-        filterVariant: 'datetime-range',
-        filterFn: 'betweenInclusive',
+        filterVariant: COLUMN_FILTER_VARIANTS.datetime,
+        filterFn: COLUMN_FILTER_FUNCTIONS.datetime,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.datetime,
         size: 500,
         enableGrouping: false,
       },
@@ -87,8 +93,9 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
         header: 'Created',
         accessorFn: (row) => new Date(row.modified_time),
         id: 'created',
-        filterVariant: 'datetime-range',
-        filterFn: 'betweenInclusive',
+        filterVariant: COLUMN_FILTER_VARIANTS.datetime,
+        filterFn: COLUMN_FILTER_FUNCTIONS.datetime,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.datetime,
         size: 500,
         enableGrouping: false,
       },
@@ -96,9 +103,43 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
         header: 'Property names',
         accessorFn: (row) =>
           row.properties.map((value) => value['name']).join(', '),
-        id: 'property-names',
+        id: 'properties',
         size: 350,
-        filterVariant: 'autocomplete',
+        filterVariant: 'multi-select',
+        filterFn: 'arrIncludesSome',
+        columnFilterModeOptions: [
+          'arrIncludesSome',
+          'arrIncludesAll',
+          'arrExcludesSome',
+          'arrExcludesAll',
+        ],
+        renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) => [
+          <MenuItem
+            key="arrIncludesSome"
+            onClick={() => onSelectFilterMode('arrIncludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrIncludesSome}
+          </MenuItem>,
+          <MenuItem
+            key="arrIncludesAll"
+            onClick={() => onSelectFilterMode('arrIncludesAll')}
+          >
+            {MRT_Functions_Localisation.filterArrIncludesAll}
+          </MenuItem>,
+          <MenuItem
+            key="arrExcludesSome"
+            onClick={() => onSelectFilterMode('arrExcludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrExcludesSome}
+          </MenuItem>,
+
+          <MenuItem
+            key="arrExcludesAll"
+            onClick={() => onSelectFilterMode('arrExcludesAll')}
+          >
+            {MRT_Functions_Localisation.filterArrExcludesAll}
+          </MenuItem>,
+        ],
         filterSelectOptions: propertyNames,
         enableGrouping: false,
       },
@@ -106,17 +147,33 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
         header: 'Is Leaf',
         accessorFn: (row) => (row.is_leaf === true ? 'Yes' : 'No'),
         id: 'is-leaf',
+        filterVariant: COLUMN_FILTER_VARIANTS.boolean,
+        enableColumnFilterModes: false,
         size: 200,
-        filterVariant: 'autocomplete',
       },
     ];
   }, [propertyNames]);
+
+  const initialColumnFilterFnState = React.useMemo(() => {
+    return getInitialColumnFilterFnState(columns);
+  }, [columns]);
+
+  const { preservedState, onPreservedStatesChange } = usePreservedTableState({
+    initialState: {
+      pagination: { pageSize: 30, pageIndex: 0 },
+      columnFilterFns: initialColumnFilterFnState,
+    },
+    storeInUrl: true,
+    paginationOnly: true,
+  });
+
   const table = useMaterialReactTable({
     // Data
     columns: columns,
     data: catalogueCategoryData ?? [],
     // Features
     enableColumnOrdering: false,
+    enableColumnFilterModes: true,
     enableColumnPinning: false,
     enableTopToolbar: true,
     enableFacetedValues: true,
@@ -130,6 +187,7 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
     enableHiding: false,
     enableFullScreenToggle: false,
     enablePagination: true,
+    filterFns: customFilterFunctions,
     // Other settings
     paginationDisplayMode: 'pages',
     positionToolbarAlertBanner: 'bottom',
@@ -137,6 +195,7 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
     // Localisation
     localization: {
       ...MRT_Localization_EN,
+      ...MRT_Functions_Localisation,
       rowsPerPage: 'Categories per page',
     },
     // State
