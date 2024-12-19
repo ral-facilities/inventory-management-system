@@ -10,7 +10,10 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 import { AxiosError } from 'axios';
 import { enGB } from 'date-fns/locale/en-GB';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import AdminPage from './admin/admin.component';
+import AdminCardView from './admin/adminCardView.component';
+import AdminContainer from './admin/adminContainer.component';
+import Units from './admin/units/units.component';
+import UsageStatuses from './admin/usageStatuses/usageStatuses.component';
 import {
   clearFailedAuthRequestsQueue,
   retryFailedAuthRequests,
@@ -41,7 +44,9 @@ import ViewTabs from './view/viewTabs.component';
 export const paths = {
   any: '*',
   root: '/',
-  admin: '/admin-ims/*',
+  admin: '/admin-ims',
+  adminUnits: '/admin-ims/units',
+  adminUsageStatuses: '/admin-ims/usage-statuses',
   homepage: '/ims',
   catalogue: '/catalogue/*',
   systems: '/systems/*',
@@ -78,7 +83,24 @@ const router = createBrowserRouter([
       { path: paths.any, Component: ViewTabs },
       { path: paths.root, Component: HomePage },
       { path: paths.homepage, Component: HomePage },
-      { path: paths.admin, Component: AdminPage },
+      {
+        path: paths.admin,
+        Component: AdminContainer,
+        children: [
+          { path: '', Component: AdminCardView },
+          { path: paths.adminUnits, Component: Units },
+          { path: paths.adminUsageStatuses, Component: UsageStatuses },
+          {
+            path: '*',
+            Component: () => (
+              <ErrorPage
+                boldErrorText="Invalid Admin Route"
+                errorText="The admin route you are trying to access doesn't exist. Please click the Home button to navigate back to the Admin Home page."
+              />
+            ),
+          },
+        ],
+      },
       { path: paths.catalogue, Component: Catalogue },
       {
         path: paths.catalogueItem,
