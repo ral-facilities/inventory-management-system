@@ -29,6 +29,7 @@ import {
   TableCellOverFlowTipProps,
   TableGroupedCell,
   TableHeaderOverflowTip,
+  customFilterFunctions,
   displayTableRowCountText,
   getInitialColumnFilterFnState,
 } from '../../../utils';
@@ -229,6 +230,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
     paginationDisplayMode: 'pages',
     positionToolbarAlertBanner: 'bottom',
     autoResetPageIndex: false,
+    filterFns: customFilterFunctions,
     //State
     initialState: {
       showColumnFilters: true,
