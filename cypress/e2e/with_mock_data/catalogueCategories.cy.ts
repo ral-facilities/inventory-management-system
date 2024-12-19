@@ -952,11 +952,14 @@ describe('Catalogue Category', () => {
 
     cy.findByText('Add Property').should('have.length', 1);
 
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100);
     cy.findBrowserMockedRequests({
       method: 'POST',
       url: '/v1/catalogue-categories/:catalogue_category_id/properties',
     }).should(async (patchRequests) => {
       expect(patchRequests.length).equal(1);
+
       const request = patchRequests[0];
       expect(JSON.stringify(await request.json())).equal(
         JSON.stringify({
