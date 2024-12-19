@@ -1681,7 +1681,7 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
                   Rows per page
                 </label>
                 <div
-                  class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
+                  class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
                   <div
                     aria-controls=":r4:"
@@ -3381,7 +3381,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                   Rows per page
                 </label>
                 <div
-                  class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
+                  class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
                   <div
                     aria-controls=":r1u:"
@@ -5455,7 +5455,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                   Rows per page
                 </label>
                 <div
-                  class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
+                  class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
                   <div
                     aria-controls=":r1n5:"

@@ -916,9 +916,51 @@ describe('Items', () => {
 
       cy.findByTestId('galleryLightBox').should('not.exist');
     });
+
+    it('deletes an image', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Gallery').click();
+
+      cy.findAllByAltText('test').first().click();
+      cy.findByTestId('galleryLightBox').within(() => {
+        cy.findByText('File name: stfc-logo-blue-text.png').should('exist');
+        cy.findByText('Title: stfc-logo-blue-text').should('exist');
+        cy.findByText('test').should('exist');
+
+        cy.findByAltText('test').should('exist');
+
+        cy.findByAltText('test')
+          .should('have.attr', 'src')
+          .and(
+            'include',
+            'http://localhost:3000/images/stfc-logo-blue-text.png?text=1'
+          );
+
+        cy.findByLabelText('Image Actions').click();
+      });
+
+      cy.findAllByText('Delete').last().click();
+
+      cy.startSnoopingBrowserMockedRequest();
+
+      cy.findByRole('button', { name: 'Continue' }).click();
+
+      cy.findBrowserMockedRequests({
+        method: 'DELETE',
+        url: '/images/:id',
+      }).should((patchRequests) => {
+        expect(patchRequests.length).equal(1);
+        const request = patchRequests[0];
+        expect(request.url.toString()).to.contain('1');
+      });
+    });
   });
 
-  it('delete an item', () => {
+  it('deletes an item', () => {
     cy.findAllByLabelText('Row Actions').first().click();
     cy.findByText('Delete').click();
 
@@ -938,7 +980,7 @@ describe('Items', () => {
     });
   });
 
-  it('duplicate an item', () => {
+  it('duplicates an item', () => {
     cy.findAllByLabelText('Row Actions').first().click();
     cy.findByText('Duplicate').click();
 

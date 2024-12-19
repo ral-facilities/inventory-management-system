@@ -7,12 +7,14 @@ import {
   Typography,
   type TableCellProps,
 } from '@mui/material';
+import { FilterFn, FilterMeta, Row } from '@tanstack/table-core';
 import { format, parseISO } from 'date-fns';
 import {
   MRT_Cell,
   MRT_Column,
   MRT_ColumnDef,
   MRT_ColumnFilterFnsState,
+  MRT_FilterFns,
   MRT_FilterOption,
   MRT_Header,
   MRT_Row,
@@ -415,23 +417,35 @@ export const getInitialColumnFilterFnState = <TData extends MRT_RowData>(
   return initialState;
 };
 
-interface FilterFn {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (row: MRT_RowData, id: string, filterValue: any): boolean;
-}
-
-export const customFilterFunctions: Record<string, FilterFn> = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  arrIncludesNone: (row: MRT_RowData, id: string, filterValue: any) => {
-    if (Array.isArray(filterValue)) {
-      return !filterValue.includes(row.getValue(id));
-    }
-    return row.getValue(id) !== filterValue;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const customFilterFunctions: Record<string, FilterFn<any>> = {
+  arrExcludesSome: (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    row: Row<any>,
+    id: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    filterValue: any,
+    addMeta: (meta: FilterMeta) => void
+  ) => {
+    return !MRT_FilterFns.arrIncludesSome(row, id, filterValue, addMeta);
+  },
+  arrExcludesAll: (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    row: Row<any>,
+    id: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    filterValue: any,
+    addMeta: (meta: FilterMeta) => void
+  ) => {
+    return !MRT_FilterFns.arrIncludesAll(row, id, filterValue, addMeta);
   },
 };
 
 export const MRT_Functions_Localisation: Record<string, string> = {
-  filterArrIncludesNone: 'Excludes',
+  filterArrIncludesSome: 'Includes any',
+  filterArrExcludesSome: 'Excludes any',
+  filterArrIncludesAll: 'Includes all',
+  filterArrExcludesAll: 'Excludes all',
 };
 
 type DataTypes = 'boolean' | 'string' | 'number' | 'null' | 'datetime' | 'date';
