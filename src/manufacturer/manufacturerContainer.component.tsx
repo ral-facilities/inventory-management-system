@@ -1,12 +1,13 @@
 import { Box } from '@mui/material';
 import React from 'react';
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { BreadcrumbsInfo } from '../api/api.types';
 import { useGetManufacturer } from '../api/manufacturers';
 import { paths } from '../App';
+import BaseContainer from '../common/baseContainer.component';
 import Breadcrumbs from '../view/breadcrumbs.component';
 
-function Manufacturer() {
+function ManufacturerContainer() {
   const { manufacturer_id: manufacturerId } = useParams();
 
   const { data: manufacturerData } = useGetManufacturer(manufacturerId);
@@ -56,8 +57,8 @@ function Manufacturer() {
           homeLocation="Manufacturers"
         />
       </Box>
-      <Outlet />
+      <BaseContainer />
     </div>
   );
 }
-export default Manufacturer;
+export default ManufacturerContainer;
