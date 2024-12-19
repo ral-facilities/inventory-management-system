@@ -581,7 +581,23 @@ describe('Catalogue Items', () => {
 
     cy.findByLabelText('Name *').clear();
     cy.findByLabelText('Name *').type('test_has_children_elements');
+
+    cy.findByLabelText('Manufacturer *').type('Man{downArrow}{enter}');
     cy.findByRole('button', { name: 'Next' }).click();
+
+    cy.findByRole('button', { name: 'Finish'}).click();
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.contains('Catalogue item has child elements, so you cannot update the properties, '
+          + 'and the manufacturer cannot be changed')
+      });
+    cy.findByRole('button', { name: 'Finish' }).should('be.disabled');
+
+    cy.findByRole('button', { name: 'Back' }).click();
+    cy.findByLabelText('Manufacturer *').type('Man{upArrow}{enter}');
+    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByRole('button', { name: 'Finish' }).should('be.enabled');
 
     cy.findByLabelText('Measurement Range (Joules) *').type('0');
 
@@ -589,7 +605,8 @@ describe('Catalogue Items', () => {
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.contains('Catalogue item has child elements and cannot be edited');
+        cy.contains('Catalogue item has child elements, so you cannot update the properties, '
+          + 'and the manufacturer cannot be changed')
       });
     cy.findByRole('button', { name: 'Finish' }).should('be.disabled');
   });
