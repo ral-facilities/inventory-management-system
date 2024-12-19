@@ -25,7 +25,7 @@ import { HomePage } from './homePage/homePage.component';
 import IMSThemeProvider from './imsThemeProvider.component';
 import Items from './items/items.component';
 import ItemsLandingPage from './items/itemsLandingPage.component';
-import Manufacturer from './manufacturer/manufacturer.component';
+import ManufacturerContainer from './manufacturer/manufacturerContainer.component';
 import ManufacturerLandingPage from './manufacturer/manufacturerLandingPage.component';
 import ManufacturerTable from './manufacturer/manufacturersTable.component';
 import Preloader from './preloader/preloader.component';
@@ -92,7 +92,7 @@ const router = createBrowserRouter([
       { path: paths.systems, Component: Systems },
       {
         path: paths.manufacturers,
-        Component: Manufacturer,
+        Component: ManufacturerContainer,
         children: [
           { path: '', Component: ManufacturerTable },
           { path: paths.manufacturer, Component: ManufacturerLandingPage },
