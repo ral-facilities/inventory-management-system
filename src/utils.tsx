@@ -7,12 +7,14 @@ import {
   Typography,
   type TableCellProps,
 } from '@mui/material';
+import { FilterFn, FilterMeta, Row } from '@tanstack/table-core';
 import { format, parseISO } from 'date-fns';
 import {
   MRT_Cell,
   MRT_Column,
   MRT_ColumnDef,
   MRT_ColumnFilterFnsState,
+  MRT_FilterFns,
   MRT_FilterOption,
   MRT_Header,
   MRT_Row,
@@ -413,39 +415,27 @@ export const getInitialColumnFilterFnState = <TData extends MRT_RowData>(
   return initialState;
 };
 
-interface FilterFn {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (row: MRT_RowData, id: string, filterValue: any): boolean;
-}
-
-export const customFilterFunctions: Record<string, FilterFn> = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  arrExcludesSome: (row: MRT_RowData, id: string, filterValue: any) => {
-    if (Array.isArray(filterValue)) {
-      return !filterValue.includes(row.getValue(id));
-    }
-    return row.getValue(id) !== filterValue;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const customFilterFunctions: Record<string, FilterFn<any>> = {
+  arrExcludesSome: (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    row: Row<any>,
+    id: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    filterValue: any,
+    addMeta: (meta: FilterMeta) => void
+  ) => {
+    return !MRT_FilterFns.arrIncludesSome(row, id, filterValue, addMeta);
   },
-  // Custom filter to check if all filter values are included
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  arrIncludesAll: (row: MRT_RowData, id: string, filterValue: any) => {
-    if (Array.isArray(filterValue)) {
-      return filterValue.every((val) => row.getValue(id)?.includes(val));
-    }
-    return false;
-  },
-  // Custom filter to check if all filter values are excluded
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  arrExcludesAll: (row: MRT_RowData, id: string, filterValue: any) => {
-    const columnValue = row
-      .getValue(id)
-      ?.split(',')
-      .map((val: string) => val.trim());
-    if (Array.isArray(filterValue) && Array.isArray(columnValue)) {
-      // Only exclude if ALL filter values are present in the column value
-      return !filterValue.every((val) => columnValue.includes(val));
-    }
-    return false; // Default to including the row if the column value is invalid
+  arrExcludesAll: (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    row: Row<any>,
+    id: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    filterValue: any,
+    addMeta: (meta: FilterMeta) => void
+  ) => {
+    return !MRT_FilterFns.arrIncludesAll(row, id, filterValue, addMeta);
   },
 };
 
