@@ -213,6 +213,22 @@ describe('Items Table', () => {
     expect(serialNum).toHaveAttribute('href', '/KvT2Ox7n');
   });
 
+  it('navigates to items table view (spares definition)', async () => {
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Apply spares filter')).toBeInTheDocument();
+    });
+
+    const button = screen.getByText('Apply spares filter');
+
+    await waitFor(() => {
+      expect(button).toHaveAttribute(
+        'href',
+        `/catalogue/item/1/items?state=N4IgxgYiBcDaoEsAmMQIC4FMC2A6ArgM4CGA5pgPqHrHpEgA0IAbsQDb6YzwjoCeABy7QQ1AE4IAdqUYt2nVADlMAdxABfBqH5DU4qTKasOwkAFVCmFOoC6t9UA`
+      );
+    });
+  });
+
   it('opens the delete catalogue item dialog and can delete an item', async () => {
     createView();
 

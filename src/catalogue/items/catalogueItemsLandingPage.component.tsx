@@ -25,6 +25,7 @@ import { useGetCatalogueItem } from '../../api/catalogueItems';
 import { useGetManufacturer } from '../../api/manufacturers';
 import ActionMenu from '../../common/actionMenu.component';
 import PlaceholderImage from '../../common/images/placeholderImage.component';
+import NumberOfSparesClickable from '../../common/numberOfSparesClickable.component';
 import TabView from '../../common/tab/tabView.component';
 import { formatDateTimeStrings } from '../../utils';
 import Breadcrumbs from '../../view/breadcrumbs.component';
@@ -215,6 +216,22 @@ function CatalogueItemsLandingPage() {
 
                       <Grid item container xs={12}>
                         <Grid item container spacing={1}>
+                          <Grid item xs={12} sm={6} md={4}>
+                            <Typography align="left" color="text.primary">
+                              Number of spares
+                            </Typography>
+                            <Typography align="left" color="text.secondary">
+                              {typeof catalogueItemIdData.number_of_spares ===
+                              'number' ? (
+                                <NumberOfSparesClickable
+                                  catalogueItem={catalogueItemIdData}
+                                  type="link"
+                                />
+                              ) : (
+                                'None'
+                              )}
+                            </Typography>
+                          </Grid>
                           <Grid item xs={12} sm={6} md={4}>
                             <Typography align="left" color="text.primary">
                               Obsolete

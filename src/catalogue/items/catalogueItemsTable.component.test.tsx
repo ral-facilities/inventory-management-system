@@ -493,6 +493,22 @@ describe('Catalogue Items Table', () => {
     expect(url[0]).toHaveAttribute('href', '/manufacturers/1');
   });
 
+  it('navigates to items table view (spares definition)', async () => {
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+
+    await ensureColumnsVisible(['Number of spares']);
+
+    const url = screen.getAllByText('1')[0];
+
+    expect(url).toHaveAttribute(
+      'href',
+      '/catalogue/item/89/items?state=N4IgxgYiBcDaoEsAmMQIC4FMC2A6ArgM4CGA5pgPqHrHpEgA0IAbsQDb6YzwjoCeABy7QQ1AE4IAdqUYt2nVADlMAdxABfBqH5DU4qTKasOwkAFVCmFOoC6t9UA'
+    );
+  });
+
   it('renders the dense table correctly', async () => {
     props.dense = true;
     window.Element.prototype.getBoundingClientRect = vi
@@ -566,10 +582,10 @@ describe('Catalogue Items Table', () => {
     );
 
     // Do max first, as it technically has no effect on the outcome of the filter
-    const maxInput = screen.getByLabelText('Max');
+    const maxInput = screen.getAllByLabelText('Max')[1];
     await user.type(maxInput, '1000');
 
-    const minInput = screen.getByLabelText('Min');
+    const minInput = screen.getAllByLabelText('Min')[1];
     await user.type(minInput, '800');
 
     await waitFor(() => {
@@ -687,7 +703,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Grouped by')).toBeInTheDocument();
     });
     expect(router.state.location.search).toBe(
-      '?state=N4Ig5iBcDaIMYEMAuCA2B7MBXApgSSRwFsA6AOwSJxAF0AaeAeSliICckBaN9Ad05wAPAA4IyAExAN2XHvwRwkAS3RkAzlJAzufTmpyocizYhQZs%2BQqQpUTyNJlwFiJIunFKAZkpziA%2Bsq2DKYOFs6kcGw4yL4BSkEgAGo%2BvAAE4RrB9uZOViTiOGqRSsLKqnZmjpYuSmp%2B6ABGauiGhBWhuS6Nza04flHCqArEOGRIfiE5fUpWfkqSWZVhed0tOIT90c1k7VPhJMI8wjgcPmokAOy7VfuH6MenhSQAHNfLLnDoauNgDcJvnQiX3GSHQm146DYAGs-L9-osOtVSOIEABPOqgzaDYYApH5NEYsFRCHQ3H7ITHRSxVBedbxPoo9FkvLiNgIXhKMhgPxkLBEBonZkuVnszncmlkKFC0gzYh%2BNwFVA8vkCtiaIhiLCeBRILBRNjkSjUaSa7WKPUnEh61Dq006i0GhDiVmFTJaO3m-UkQiGYQAC1Uxvg2RueTI6EIbu0cj0ojggpoAF8gA'
+      '?state=N4Ig5iBcDaIMYEMAuCA2B7MBXApgSSRwFsA6AOwSJxAF0AaeAeSliICckBaN9Ad05wAPAA4IyAExAN2XHvwRwkAS3RkAzlJAzufTmpyocizYhQZs%2BQqQpUTyNJlwFiJIunFKAZkpziA%2Bsq2DKYOFs6kcGw4yL4BSkEgAGo%2BvAAE4RrB9uZOVuRYRABGOGx%2B6J5%2BaqJRmfDZjpYu4jhqkUrCyqp2Zg3hJEpqZYVq6IaE3aG5LujDoziEflHCqArEOGRIfiE5OH5KVnuSWT1heTMjY7tRCCNkEzt9wjzCJcotJADs9715T%2BgvHB8ahIAA5vqcXHB0GpNmBCsJwVMItDNkh0IscLx0GwANZ%2BOEI46TRqkcQIACegzRGOWq0RJJIZMpAXRUSxuPpfSEL0UsVQXnm8V2TNq2x%2BTTYCF4SjIYD8ZAKxTYnLy4kl0tlfn5ZBxKpc%2B2IfjczVQ8sVJU0RDEWE8CiQWCibHIlGo0mttsUDpKJAdqEt7rtXqdCHEapatStCo99sdJEIhmEAAtVK66ickeR0IQIxwdPwqqtlTQAL5AA'
     );
 
     // Reset
@@ -698,7 +714,7 @@ describe('Catalogue Items Table', () => {
     });
     // Expect this to still be here as have now modified the order in some way (as MRT doesn't revert back to its original state in this case)
     expect(router.state.location.search).toBe(
-      '?state=N4Igxg8iBcDaIFsBOAXAtEg9gdzQUwA8AHAQwDsATEAGkVQx32PKtuXS1xLBQEtMyAZxp0OjQXgA2eHiLAkUJSZgDmAVzwBJFHgQA6MiQR45Cpao3bdehJgq8AZrzwUA%2Bn2OnFy9Vp36wJDwFF3deT1oANWdsAAIrBGFaeW8LP2sKPEFA3iI%2BAS9zXwS9XkFXTAAjQUxpHUKfS389Kpq6vFcgokluXTwyFFcUoo1XXn8x1nAzRvT9Vtq8HU7gmrIGtJKiLCI8VGdBPQB2DeLm7cxd-ay9AA5TpuswTEFBlUqiB7m9Z9f3TBW2EwSAA1q53p9kjNNs0KCQAJ7lFAAro9MAmKGpM4ZBFIlF4IGgr4lQi7HihSSOJbhDpwxHE2FIEjYXhkFSuMhqBCVPYMjJMlls1yUsggvn6ca6Vy2TKSDlcnlIEQIchqBzcFBqIJIAxGDGIVXqnhavZ6LWSZWGjUmnUkCgUIKCJIGzlGzXavQ6aREAAWAn1w1mJTImB0zvYDFwglI6KVAF0AL5AA'
+      '?state=N4Igxg8iBcDaIFsBOAXAtEg9gdzQUwA8AHAQwDsATEAGkVQx32PKtuXS1xLBQEtMyAZxp0OjQXgA2eHiLAkUJSZgDmAVzwBJFHgQA6MiQR45Cpao3bdehJgq8AZrzwUA%2Bn2OnFy9Vp36wJDwFF3deT1oANWdsAAIrBGFaeW8LP2syNQQAIzwkV0wHV0FSIKTwMx9Lfz0KPEFA3iI%2BAS9zXwS9XkEC7MFMaR02qvT9TD6BvB1XIKJJbl08MhRXFPaNV15-TdYK1I6a8f7BvBng-rJhtM6iLCI8vnq9AHYrg%2BtbzHvUZ0E9AA43tVrGBMIIVipskQgaM9KDwe5MGdsJgkABrVyQ6HJSrXGoUEgATx6KCRs3mYBMOP2wP0BOJiORqLRMM6hHuPFCkkcU3Cp3p5TWI06FCQJGwvDIKlcmRyeVZ%2BLFEqlrm5ZBZ1PWsK2ulctjqkhlWVySBECHIagc3BQaiCSAMRipiAtVp4tryeltkjNLut7vtJAoovq5XNmVdNrteh00iIAAsBE6hXiMpgdKH6Jw0CUFqaALoAXyAA'
     );
   });
 
@@ -747,7 +763,7 @@ describe('Catalogue Items Table', () => {
     // Get the table element (assuming it has a specific class or role)
     const table = screen.getByTestId('catalogue-items-table-container');
 
-    fireEvent.scroll(table, { target: { scrollLeft: 1500 } });
+    fireEvent.scroll(table, { target: { scrollLeft: 1700 } });
 
     // Check if the accuracy cell is visible after scrolling
     expect(await screen.findByText(accuracy)).toBeInTheDocument();
@@ -763,7 +779,7 @@ describe('Catalogue Items Table', () => {
       screen.queryByRole('tooltip', { name: 'Accuracy' })
     ).not.toBeInTheDocument();
 
-    fireEvent.scroll(table, { target: { scrollLeft: -1500 } });
+    fireEvent.scroll(table, { target: { scrollLeft: -1700 } });
 
     expect(
       await screen.findByRole('tooltip', { name: 'Accuracy' })
@@ -791,7 +807,7 @@ describe('Catalogue Items Table', () => {
     // Get the table element (assuming it has a specific class or role)
     const table = screen.getByTestId('catalogue-items-table-container');
 
-    fireEvent.scroll(table, { target: { scrollLeft: 2780 } });
+    fireEvent.scroll(table, { target: { scrollLeft: 2980 } });
 
     // Check if the drawing link cell is visible after scrolling
     expect(await screen.findByText(drawingLink)).toBeInTheDocument();
@@ -807,7 +823,7 @@ describe('Catalogue Items Table', () => {
       screen.queryByRole('tooltip', { name: 'Drawing Link' })
     ).not.toBeInTheDocument();
 
-    fireEvent.scroll(table, { target: { scrollLeft: -2780 } });
+    fireEvent.scroll(table, { target: { scrollLeft: -2980 } });
 
     expect(
       await screen.findByRole('tooltip', { name: 'Drawing Link' })
@@ -835,7 +851,7 @@ describe('Catalogue Items Table', () => {
     // Get the table element (assuming it has a specific class or role)
     const table = screen.getByTestId('catalogue-items-table-container');
 
-    fireEvent.scroll(table, { target: { scrollLeft: 3300 } });
+    fireEvent.scroll(table, { target: { scrollLeft: 3500 } });
 
     // Check if the manufacturer url cell is visible after scrolling
     expect(await screen.findByText(manufacturerUrl)).toBeInTheDocument();
