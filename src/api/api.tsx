@@ -3,6 +3,7 @@ import { MicroFrontendId } from '../app.types';
 import { readSciGatewayToken } from '../parseTokens';
 import { InventoryManagementSystemSettings, settings } from '../settings';
 import { InvalidateTokenType } from '../state/actions/actions.types';
+import { tokenRefreshed } from '../state/scigateway.actions';
 import { APIError } from './api.types';
 
 // These are for ensuring refresh request is only sent once when multiple requests
@@ -79,7 +80,7 @@ const createAuthenticatedClient = (props: {
         return new Promise((resolve, reject) => {
           failedAuthRequestQueue.push((shouldReject?: boolean) => {
             if (shouldReject) reject(error);
-            else resolve(imsApi(originalRequest));
+            else resolve(apiClient(originalRequest));
           });
         });
       }
@@ -90,6 +91,66 @@ const createAuthenticatedClient = (props: {
 
   return apiClient;
 };
+
+export function uppyOnAfterResponse(xhr: XMLHttpRequest) {
+  if (xhr.status >= 400 && xhr.status < 600) {
+    const errorMessage: string = (
+      JSON.parse(xhr.responseText) as APIError
+    ).detail.toLocaleLowerCase();
+
+    // Check if the token is invalid and needs refreshing
+    if (
+      xhr.status === 403 &&
+      errorMessage.includes('expired token') &&
+      localStorage.getItem('scigateway:token')
+    ) {
+      // Prevent other requests from also attempting to refresh while waiting for
+      // SciGateway to refresh the token
+      if (!isFetchingAccessToken) {
+        isFetchingAccessToken = true;
+
+        // Request SciGateway to refresh the token
+        document.dispatchEvent(
+          new CustomEvent(MicroFrontendId, {
+            detail: {
+              type: InvalidateTokenType,
+            },
+          })
+        );
+
+        // Create a new promise to wait for the token to be refreshed
+        const tokenRefreshedPromise = new Promise<void>((resolve, reject) => {
+          const handler = (e: Event) => {
+            const action = (e as CustomEvent).detail;
+            if (tokenRefreshed.match(action)) {
+              document.removeEventListener(MicroFrontendId, handler);
+              isFetchingAccessToken = false;
+              resolve(); // Resolve the promise when the token is refreshed
+            }
+          };
+
+          const timeoutId = setTimeout(() => {
+            // If the token isn't refreshed within a reasonable timeframe, reject the promise
+            document.removeEventListener(MicroFrontendId, handler);
+            isFetchingAccessToken = false;
+            reject();
+          }, 20 * 1000); // 20 seconds timeout
+
+          document.addEventListener(MicroFrontendId, handler);
+
+          // Cleanup timeout when resolved
+          handler.resolve = () => clearTimeout(timeoutId);
+        });
+
+        return tokenRefreshedPromise;
+      }
+    }
+  }
+}
+
+export function uppyOnBeforeRequest(xhr: XMLHttpRequest) {
+  xhr.setRequestHeader('Authorization', `Bearer ${readSciGatewayToken()}`);
+}
 
 export const imsApi = createAuthenticatedClient({
   getURL: (settings) => settings.imsApiUrl,
