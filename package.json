@@ -105,7 +105,7 @@
     "express": "4.21.2",
     "globals": "15.11.0",
     "jsdom": "25.0.1",
-    "prettier": "3.3.3",
+    "prettier": "3.4.2",
     "serve": "14.2.4",
     "serve-static": "1.16.2",
     "start-server-and-test": "2.0.9",
