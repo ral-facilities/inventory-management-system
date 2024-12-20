@@ -39,6 +39,7 @@ import {
   tokenRefreshed,
 } from './state/scigateway.actions';
 import Systems from './systems/systems.component';
+import SystemsContainer from './systems/systemsContainer.component';
 import ViewTabs from './view/viewTabs.component';
 
 export const paths = {
@@ -49,7 +50,8 @@ export const paths = {
   adminUsageStatuses: '/admin-ims/usage-statuses',
   homepage: '/ims',
   catalogue: '/catalogue/*',
-  systems: '/systems/*',
+  systems: '/systems',
+  system: '/systems/:system_id',
   manufacturers: '/manufacturers',
   manufacturer: '/manufacturers/:manufacturer_id',
   catalogueItem: '/catalogue/item/:catalogue_item_id',
@@ -80,14 +82,12 @@ const router = createBrowserRouter([
   {
     Component: Layout,
     children: [
-      { path: paths.any, Component: ViewTabs },
-      { path: paths.root, Component: HomePage },
       { path: paths.homepage, Component: HomePage },
       {
         path: paths.admin,
         Component: AdminContainer,
         children: [
-          { path: '', Component: AdminCardView },
+          { index: true, Component: AdminCardView },
           { path: paths.adminUnits, Component: Units },
           { path: paths.adminUsageStatuses, Component: UsageStatuses },
           {
@@ -111,12 +111,28 @@ const router = createBrowserRouter([
         path: paths.item,
         Component: ItemsLandingPage,
       },
-      { path: paths.systems, Component: Systems },
+      {
+        path: paths.systems,
+        Component: SystemsContainer,
+        children: [
+          { index: true, Component: Systems },
+          { path: paths.system, Component: Systems },
+          {
+            path: '*',
+            Component: () => (
+              <ErrorPage
+                boldErrorText="Invalid System Route"
+                errorText="The system route you are trying to access doesn't exist. Please click the Home button to navigate back to the System Home page."
+              />
+            ),
+          },
+        ],
+      },
       {
         path: paths.manufacturers,
         Component: ManufacturerContainer,
         children: [
-          { path: '', Component: ManufacturerTable },
+          { index: true, Component: ManufacturerTable },
           { path: paths.manufacturer, Component: ManufacturerLandingPage },
           {
             path: '*',
