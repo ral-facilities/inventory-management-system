@@ -1,8 +1,7 @@
 import { Box, Grid } from '@mui/material';
 import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { useGetSystemsBreadcrumbs } from '../api/systems';
-import BaseContainer from '../common/baseContainer.component';
 import Breadcrumbs from '../view/breadcrumbs.component';
 
 /* Returns function that navigates to a specific system id (or to the root of all systems
@@ -52,7 +51,7 @@ function SystemsContainer() {
             />
           </div>
         </Grid>
-        <BaseContainer />
+        <Outlet />
       </Box>
     </>
   );

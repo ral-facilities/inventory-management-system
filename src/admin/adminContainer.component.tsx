@@ -1,8 +1,7 @@
 import { Box, Grid } from '@mui/material';
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { BreadcrumbsInfo } from '../api/api.types';
-import BaseContainer from '../common/baseContainer.component';
 import Breadcrumbs from '../view/breadcrumbs.component';
 
 export const useNavigateToAdminFunction = () => {
@@ -64,7 +63,7 @@ function AdminContainer() {
           />
         </Box>
       </div>
-      <BaseContainer />
+      <Outlet />
     </Grid>
   );
 }
