@@ -658,7 +658,9 @@ describe('Systems', () => {
     cy.findByRole('row', { name: 'Toggle select row Pulse Laser' })
       .findByRole('checkbox')
       .click();
-    cy.findByRole('button', { name: 'Move to' }).click();
+
+    cy.findByRole('button', { name: 'Systems more options' }).click();
+    cy.findByRole('menuitem', { name: 'Copy to' }).click();
 
     cy.findByRole('dialog')
       .should('be.visible')
@@ -684,7 +686,8 @@ describe('Systems', () => {
       .findByRole('checkbox')
       .click();
 
-    cy.findByRole('button', { name: 'Move to' }).click();
+    cy.findByRole('button', { name: 'Systems more options' }).click();
+    cy.findByRole('menuitem', { name: 'Move to' }).click();
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -727,7 +730,8 @@ describe('Systems', () => {
       .findByRole('checkbox')
       .click();
 
-    cy.findByRole('button', { name: 'Copy to' }).click();
+    cy.findByRole('button', { name: 'Systems more options' }).click();
+    cy.findByRole('menuitem', { name: 'Copy to' }).click();
 
     cy.startSnoopingBrowserMockedRequest();
 
