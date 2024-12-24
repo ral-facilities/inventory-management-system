@@ -246,8 +246,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
           onClick={() => {
             setSelectedImage(row.original);
             setSelectedImages([row.original]);
-            console.dir(row.original, { depth: null });
-            console.log(`HAHAHAHA ${JSON.stringify(selectedImages)}`);
             setdownloadImagesDialogOpen(true);
             closeMenu();
           }}

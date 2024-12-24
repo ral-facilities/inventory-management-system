@@ -39,8 +39,6 @@ const DownloadFileDialog = (props: DownloadFileProps) => {
     onChangeSelectedImages,
   } = props;
 
-  console.log(selectedImages?.length);
-
   const count = selectedImages ? selectedImages.length : 0;
 
   const [formError, setFormError] = React.useState<string | undefined>(
@@ -54,7 +52,7 @@ const DownloadFileDialog = (props: DownloadFileProps) => {
   const handleClose = React.useCallback(() => {
     setFormError(undefined);
     onClose();
-  }, [onClose, onChangeSelectedImages]);
+  }, [onClose]);
 
   const downloadedImages: (APIImageWithURL | undefined)[] = useGetFileIds(
     selectedImagesIds ?? ['']
@@ -67,7 +65,6 @@ const DownloadFileDialog = (props: DownloadFileProps) => {
     if (downloadedImages) {
       downloadedImages.forEach((image: APIImageWithURL | undefined) => {
         if (image) {
-          console.log(JSON.stringify(image));
           const link = document.createElement('a');
           link.href = image.url;
           document.body.appendChild(link);
@@ -78,7 +75,7 @@ const DownloadFileDialog = (props: DownloadFileProps) => {
       onChangeSelectedImages({});
       onClose();
     }
-  }, [selectedImages, onChangeSelectedImages, onClose]);
+  }, [downloadedImages, onChangeSelectedImages, onClose]);
 
   return (
     <Dialog open={open} maxWidth="lg">
