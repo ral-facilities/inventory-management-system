@@ -1491,15 +1491,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-virtual@npm:3.10.6":
-  version: 3.10.6
-  resolution: "@tanstack/react-virtual@npm:3.10.6"
+"@tanstack/react-virtual@npm:3.10.9":
+  version: 3.10.9
+  resolution: "@tanstack/react-virtual@npm:3.10.9"
   dependencies:
-    "@tanstack/virtual-core": "npm:3.10.6"
+    "@tanstack/virtual-core": "npm:3.10.9"
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 10c0/6a162bade4ec00780405abf160cd4046e3346afcbbe07f8a64e86453f13902028d35cca417708daaf92262e3335ba72e1ec85be19f91b064173dd83bfb324cad
+  checksum: 10c0/a854b6fb2bdccec9e581442def5ed6ee568fd2b12178e70450c03d9e60a1e5794be71c4ad3f385af717872c039e569ff88c52adb11a2ddf2c02ded3f83bc851d
   languageName: node
   linkType: hard
 
@@ -1510,10 +1510,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/virtual-core@npm:3.10.6":
-  version: 3.10.6
-  resolution: "@tanstack/virtual-core@npm:3.10.6"
-  checksum: 10c0/841540cd1e616dbe8074486213ec1f2c3a20e2b0fc1b50bc704861d05a3603810e1505bbb432ef62b900e32f355d046759d22bf707d661a57d62177e5508f399
+"@tanstack/virtual-core@npm:3.10.9":
+  version: 3.10.9
+  resolution: "@tanstack/virtual-core@npm:3.10.9"
+  checksum: 10c0/960cde330235daff5403e0da23837ac30a0f95a02c8866692f8382d03b675d6802e129436b0b3e7e737d8a5347ef2cadec448ba4c0878462228c094440d0207b
   languageName: node
   linkType: hard
 
@@ -5023,10 +5023,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"highlight-words@npm:1.2.2":
-  version: 1.2.2
-  resolution: "highlight-words@npm:1.2.2"
-  checksum: 10c0/15d1498de8b82ad4f004983e77898810b0019329ffae069156df4ebb1e90d11d9236bbfa6da281825a663b62991300e54d40be45b1dcdec9437a3e35884b075c
+"highlight-words@npm:2.0.0":
+  version: 2.0.0
+  resolution: "highlight-words@npm:2.0.0"
+  checksum: 10c0/39a6a5484dc7463ad7819cc42a47d4ffd10e5278b999f28a3b6909b7267f3c97d3bab75b44663e5aae596e6c215d282cde31402387c318c66d33504c5efb6fc9
   languageName: node
   linkType: hard
 
@@ -5287,7 +5287,7 @@ __metadata:
     jsdom: "npm:25.0.1"
     loglevel: "npm:^1.9.1"
     lz-string: "npm:^1.5.0"
-    material-react-table: "npm:^2.13.0"
+    material-react-table: "npm:^3.0.0"
     msw: "npm:2.6.9"
     prettier: "npm:3.4.2"
     react: "npm:^18.3.1"
@@ -6160,23 +6160,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"material-react-table@npm:^2.13.0":
-  version: 2.13.3
-  resolution: "material-react-table@npm:2.13.3"
+"material-react-table@npm:^3.0.0":
+  version: 3.0.3
+  resolution: "material-react-table@npm:3.0.3"
   dependencies:
     "@tanstack/match-sorter-utils": "npm:8.19.4"
     "@tanstack/react-table": "npm:8.20.5"
-    "@tanstack/react-virtual": "npm:3.10.6"
-    highlight-words: "npm:1.2.2"
+    "@tanstack/react-virtual": "npm:3.10.9"
+    highlight-words: "npm:2.0.0"
   peerDependencies:
-    "@emotion/react": ">=11.11"
-    "@emotion/styled": ">=11.11"
-    "@mui/icons-material": ">=5.11"
-    "@mui/material": ">=5.13"
-    "@mui/x-date-pickers": ">=6.15.0"
-    react: ">=17.0"
-    react-dom: ">=17.0"
-  checksum: 10c0/c00a3521767e879d541ef12c425048d5bd5368ff2f30883558be49630c908a878347768397c9a902651f005f2d10a06d1e8ff6d86851df4a8cbe750c4847fa5d
+    "@emotion/react": ">=11.13"
+    "@emotion/styled": ">=11.13"
+    "@mui/icons-material": ">=6"
+    "@mui/material": ">=6"
+    "@mui/x-date-pickers": ">=7.15"
+    react: ">=18.0"
+    react-dom: ">=18.0"
+  checksum: 10c0/bbe0e2ca4d9c8a4104335fe11551b05d21dd43f5dd915320937b92d8b03384f7926479b46eb63f4992ccc71f91ab1f8fc1807d5f8654197baa9cf224c27f7fa5
   languageName: node
   linkType: hard
 
