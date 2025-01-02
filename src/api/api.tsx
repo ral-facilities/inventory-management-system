@@ -119,27 +119,17 @@ export function uppyOnAfterResponse(xhr: XMLHttpRequest) {
         );
 
         // Create a new promise to wait for the token to be refreshed
-        const tokenRefreshedPromise = new Promise<void>((resolve, reject) => {
+        const tokenRefreshedPromise = new Promise<void>((resolve) => {
           const handler = (e: Event) => {
             const action = (e as CustomEvent).detail;
             if (tokenRefreshed.match(action)) {
               document.removeEventListener(MicroFrontendId, handler);
               isFetchingAccessToken = false;
-              resolve(); // Resolve the promise when the token is refreshed
+              resolve();
             }
           };
 
-          const timeoutId = setTimeout(() => {
-            // If the token isn't refreshed within a reasonable timeframe, reject the promise
-            document.removeEventListener(MicroFrontendId, handler);
-            isFetchingAccessToken = false;
-            reject();
-          }, 20 * 1000); // 20 seconds timeout
-
           document.addEventListener(MicroFrontendId, handler);
-
-          // Cleanup timeout when resolved
-          handler.resolve = () => clearTimeout(timeoutId);
         });
 
         return tokenRefreshedPromise;
