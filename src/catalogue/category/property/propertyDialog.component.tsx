@@ -16,7 +16,14 @@ import {
   Typography,
 } from '@mui/material';
 import React from 'react';
-import { Controller, FormProvider, useForm } from 'react-hook-form';
+import {
+  Control,
+  Controller,
+  FormProvider,
+  UseFormReturn,
+  useForm,
+  useFormContext,
+} from 'react-hook-form';
 import {
   AllowedValuesListType,
   CatalogueCategory,
@@ -31,6 +38,7 @@ import {
 import { useGetUnits } from '../../../api/units';
 import {
   AddCatalogueCategoryPropertyWithPlacementIds,
+  AddCatalogueCategoryWithPlacementIds,
   AddPropertyMigration,
 } from '../../../app.types';
 import {
@@ -40,6 +48,30 @@ import {
 } from '../../../form.schemas';
 import { transformAllowedValues } from '../catalogueCategoryDialog.component';
 import AllowedValuesListTextFields from './allowedValuesListTextFields.component';
+
+// Using `any` instead of `FieldPath` to avoid circular dependencies
+function getProperty<T extends Record<string, unknown>>(
+  obj: T,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  key: any
+) {
+  if (key === undefined) {
+    return undefined;
+  }
+
+  const keys = key.toString().split('.');
+  let current: unknown = obj;
+
+  for (const part of keys) {
+    if (current && typeof current === 'object' && part in current) {
+      current = (current as Record<string, unknown>)[part];
+    } else {
+      return undefined;
+    }
+  }
+
+  return current;
+}
 
 interface MigrationWarningMessageProps {
   isChecked: boolean;
@@ -105,16 +137,57 @@ function transformAddPropertyMigrationToCatalogueCategoryPropertyPost(
   };
 }
 
-export interface PropertyMigrationDialogProps {
+export interface PropertyDialogProps {
   open: boolean;
-  onClose: () => void;
+  onClose: (removeRow?: boolean) => void;
   type: RequestType;
-  catalogueCategory: CatalogueCategory;
+  catalogueCategory?: CatalogueCategory;
   selectedProperty?: AddCatalogueCategoryPropertyWithPlacementIds;
+  isMigration: boolean;
+  index?: number;
 }
 
-const PropertyMigrationDialog = (props: PropertyMigrationDialogProps) => {
-  const { open, onClose, catalogueCategory, type, selectedProperty } = props;
+const PropertyDialog = (props: PropertyDialogProps) => {
+  const {
+    open,
+    onClose,
+    catalogueCategory,
+    type,
+    selectedProperty,
+    isMigration,
+    index = 0,
+  } = props;
+
+  const formMethodsAdd = useFormContext<AddCatalogueCategoryWithPlacementIds>();
+
+  const {
+    watch: watchAdd,
+    control: controlAdd,
+    register: registerAdd,
+    formState: { errors: errorsAdd },
+    setValue: setValueAdd,
+    resetField: resetFieldAdd,
+    trigger: triggerAdd,
+    clearErrors: clearErrorsAdd,
+  } = formMethodsAdd;
+
+  const propertyAdd = watchAdd();
+
+  // Clears form errors when a value has been changed
+  React.useEffect(() => {
+    const subscription = watchAdd((_, type) => {
+      if (type.name && !!getProperty(errorsAdd, type.name)) {
+        clearErrorsAdd(type.name);
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [clearErrorsAdd, errorsAdd, watchAdd]);
+
+  const allowedValuesTypeAdd =
+    propertyAdd.properties &&
+    propertyAdd?.properties[index]?.allowed_values?.type;
+
+  const typeAdd = propertyAdd.properties && propertyAdd.properties[index].type;
 
   const formMethods = useForm<AddPropertyMigration>({
     resolver: zodResolver(
@@ -152,13 +225,23 @@ const PropertyMigrationDialog = (props: PropertyMigrationDialogProps) => {
     reset,
   } = formMethods;
 
-  const handleClose = React.useCallback(() => {
-    reset();
-    clearErrors();
-    onClose();
-    setIsMigrationWarningChecked(false);
-  }, [clearErrors, onClose, reset]);
+  const handleClose = React.useCallback(
+    (removeRow?: boolean) => {
+      reset();
+      clearErrors();
+      onClose(removeRow);
+      setIsMigrationWarningChecked(false);
+    },
+    [clearErrors, onClose, reset]
+  );
 
+  const handleAddSubmit = React.useCallback(() => {
+    triggerAdd(`properties.${index}`).then((isValid) => {
+      if (isValid) {
+        handleClose();
+      }
+    });
+  }, [handleClose, index, triggerAdd]);
   const property = watch();
 
   const { mutate: postCatalogueCategoryProperty } =
@@ -169,6 +252,7 @@ const PropertyMigrationDialog = (props: PropertyMigrationDialogProps) => {
 
   const handleAddPropertyMigration = React.useCallback(
     (property: CatalogueCategoryPropertyPost) => {
+      if (!catalogueCategory) return;
       const propertyNames = catalogueCategory.properties.map(
         (prop) => prop.name
       );
@@ -186,12 +270,12 @@ const PropertyMigrationDialog = (props: PropertyMigrationDialogProps) => {
     [catalogueCategory, handleClose, postCatalogueCategoryProperty, setError]
   );
 
-  const propertyAPIFormat = catalogueCategory.properties.find(
-    (prop) => prop.name === selectedProperty?.name
-  );
-
   const handleEditPropertyMigration = React.useCallback(
     (property: CatalogueCategoryPropertyPatch) => {
+      if (!catalogueCategory) return;
+      const propertyAPIFormat = catalogueCategory.properties.find(
+        (prop) => prop.name === selectedProperty?.name
+      );
       const propertyNames = catalogueCategory.properties
         .map((prop) => prop.name)
         .filter((name) => name !== selectedProperty?.name);
@@ -232,7 +316,6 @@ const PropertyMigrationDialog = (props: PropertyMigrationDialogProps) => {
       catalogueCategory,
       handleClose,
       patchCatalogueCategoryProperty,
-      propertyAPIFormat,
       selectedProperty,
       setError,
     ]
@@ -262,6 +345,11 @@ const PropertyMigrationDialog = (props: PropertyMigrationDialogProps) => {
 
   const [isMigrationWarningChecked, setIsMigrationWarningChecked] =
     React.useState(false);
+  const newControl = (isMigration ? control : controlAdd) as Control<
+    AddPropertyMigration | AddCatalogueCategoryWithPlacementIds,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    any
+  >;
   return (
     <Dialog open={open} maxWidth="sm" fullWidth>
       <DialogTitle>
@@ -274,19 +362,29 @@ const PropertyMigrationDialog = (props: PropertyMigrationDialogProps) => {
             label="Property Name"
             variant="outlined"
             required
-            {...register('name')}
-            error={!!errors?.name}
-            helperText={errors?.name?.message}
+            {...(isMigration
+              ? register('name')
+              : registerAdd(`properties.${index}.name`))}
+            error={
+              isMigration
+                ? !!errors?.name
+                : !!errorsAdd?.properties?.[index]?.name
+            }
+            helperText={
+              isMigration
+                ? errors?.name?.message
+                : errorsAdd?.properties?.[index]?.name?.message
+            }
             fullWidth
           />
           <Controller
-            control={control}
-            name="type"
+            control={newControl}
+            name={isMigration ? 'type' : `properties.${index}.type`}
             render={({ field: { value, onChange } }) => (
               <Autocomplete
                 id={crypto.randomUUID()}
                 disableClearable
-                disabled={type === 'patch'}
+                disabled={type === 'patch' && isMigration}
                 value={(
                   Object.keys(CatalogueCategoryPropertyType) as Array<
                     keyof typeof CatalogueCategoryPropertyType
@@ -299,22 +397,42 @@ const PropertyMigrationDialog = (props: PropertyMigrationDialogProps) => {
                     ];
                   onChange(formattedValue);
 
-                  resetDefaultValue();
+                  if (isMigration) {
+                    resetDefaultValue();
 
-                  clearErrors('default_value.value');
-                  clearErrors('allowed_values');
+                    clearErrors('default_value.value');
+                    clearErrors('allowed_values');
 
-                  if (
-                    property.allowed_values?.type &&
-                    formattedValue !== CatalogueCategoryPropertyType.Boolean
-                  )
-                    setValue('allowed_values.values.valueType', formattedValue);
+                    if (
+                      property.allowed_values?.type &&
+                      formattedValue !== CatalogueCategoryPropertyType.Boolean
+                    )
+                      setValue(
+                        'allowed_values.values.valueType',
+                        formattedValue
+                      );
 
-                  if (
-                    formattedValue === CatalogueCategoryPropertyType.Boolean
-                  ) {
-                    resetField('allowed_values');
-                    resetField('unit_id');
+                    if (
+                      formattedValue === CatalogueCategoryPropertyType.Boolean
+                    ) {
+                      resetField('allowed_values');
+                      resetField('unit_id');
+                    }
+                  } else {
+                    if (
+                      allowedValuesTypeAdd &&
+                      formattedValue !== CatalogueCategoryPropertyType.Boolean
+                    ) {
+                      setValueAdd(
+                        `properties.${index}.allowed_values.values.valueType`,
+                        formattedValue
+                      );
+                    }
+
+                    if (formattedValue === 'boolean') {
+                      resetFieldAdd(`properties.${index}.allowed_values`);
+                      resetFieldAdd(`properties.${index}.unit_id`);
+                    }
                   }
                 }}
                 fullWidth
@@ -325,7 +443,7 @@ const PropertyMigrationDialog = (props: PropertyMigrationDialogProps) => {
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    disabled={type === 'patch'}
+                    disabled={type === 'patch' && isMigration}
                     required={true}
                     label="Select Type"
                     variant="outlined"
@@ -335,15 +453,19 @@ const PropertyMigrationDialog = (props: PropertyMigrationDialogProps) => {
             )}
           />
           <Controller
-            control={control}
-            name={`allowed_values`}
+            control={newControl}
+            name={
+              isMigration
+                ? `allowed_values`
+                : `properties.${index}.allowed_values`
+            }
             render={({ field: { value, onChange } }) => {
               return (
                 <Autocomplete
                   disableClearable
                   disabled={
                     property.type === CatalogueCategoryPropertyType.Boolean ||
-                    type === 'patch'
+                    (type === 'patch' && isMigration)
                   }
                   id={crypto.randomUUID()}
                   value={
@@ -361,14 +483,16 @@ const PropertyMigrationDialog = (props: PropertyMigrationDialogProps) => {
                         value as keyof typeof AllowedValuesListType
                       ];
 
-                    resetDefaultValue();
+                    if (isMigration) resetDefaultValue();
 
                     onChange(
                       formattedValue === 'list'
                         ? {
                             type: formattedValue,
                             values: {
-                              valueType: property.type,
+                              valueType: isMigration
+                                ? property.type
+                                : propertyAdd?.properties?.[index].type,
                               values: [],
                             },
                           }
@@ -389,7 +513,7 @@ const PropertyMigrationDialog = (props: PropertyMigrationDialogProps) => {
                       disabled={
                         property.type ===
                           CatalogueCategoryPropertyType.Boolean ||
-                        type === 'patch'
+                        (type === 'patch' && isMigration)
                       }
                     />
                   )}
@@ -397,16 +521,31 @@ const PropertyMigrationDialog = (props: PropertyMigrationDialogProps) => {
               );
             }}
           />
-          {property.allowed_values?.type === 'list' &&
-            property.type !== CatalogueCategoryPropertyType.Boolean && (
-              <Stack direction="column" spacing={1}>
-                <FormProvider {...formMethods}>
-                  <AllowedValuesListTextFields property={selectedProperty} />
-                </FormProvider>
-              </Stack>
-            )}
+          {(isMigration
+            ? property.allowed_values?.type === 'list' &&
+              property.type !== CatalogueCategoryPropertyType.Boolean
+            : allowedValuesTypeAdd &&
+              typeAdd !== CatalogueCategoryPropertyType.Boolean) && (
+            <Stack direction="column" spacing={1}>
+              <FormProvider
+                {...((isMigration
+                  ? formMethods
+                  : formMethodsAdd) as UseFormReturn<
+                  AddCatalogueCategoryWithPlacementIds | AddPropertyMigration,
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  any,
+                  undefined
+                >)}
+              >
+                <AllowedValuesListTextFields
+                  property={isMigration ? selectedProperty : undefined}
+                  nestIndex={isMigration ? undefined : index}
+                />
+              </FormProvider>
+            </Stack>
+          )}
 
-          {type === 'post' && (
+          {type === 'post' && isMigration && (
             <>
               {property.allowed_values?.type === 'list' ? (
                 <Controller
@@ -548,13 +687,13 @@ const PropertyMigrationDialog = (props: PropertyMigrationDialogProps) => {
           )}
 
           <Controller
-            control={control}
-            name={`unit_id`}
+            control={newControl}
+            name={isMigration ? `unit_id` : `properties.${index}.unit_id`}
             render={({ field: { value, onChange } }) => (
               <Autocomplete
                 disabled={
                   property.type === CatalogueCategoryPropertyType.Boolean ||
-                  type === 'patch'
+                  (type === 'patch' && isMigration)
                 }
                 id={crypto.randomUUID()}
                 options={units ?? []}
@@ -571,7 +710,7 @@ const PropertyMigrationDialog = (props: PropertyMigrationDialogProps) => {
                     variant="outlined"
                     disabled={
                       property.type === CatalogueCategoryPropertyType.Boolean ||
-                      type === 'patch'
+                      (type === 'patch' && isMigration)
                     }
                   />
                 )}
@@ -579,21 +718,23 @@ const PropertyMigrationDialog = (props: PropertyMigrationDialogProps) => {
             )}
           />
           <Controller
-            control={control}
-            name={`mandatory`}
+            control={newControl}
+            name={isMigration ? `mandatory` : `properties.${index}.mandatory`}
             render={({ field: { value, onChange } }) => (
               <Autocomplete
                 disableClearable
-                disabled={type === 'patch'}
+                disabled={type === 'patch' && isMigration}
                 id={crypto.randomUUID()}
                 value={value === 'true' ? 'Yes' : 'No'}
                 onChange={(_event, value) => {
                   const newValue = value === 'Yes' ? 'true' : 'false';
-                  setValue(
-                    'default_value.valueType',
-                    `${property.type}_${newValue}`
-                  );
-                  clearErrors('default_value.value');
+                  if (isMigration) {
+                    setValue(
+                      'default_value.valueType',
+                      `${property.type}_${newValue}`
+                    );
+                    clearErrors('default_value.value');
+                  }
                   onChange(newValue);
                 }}
                 fullWidth
@@ -603,7 +744,7 @@ const PropertyMigrationDialog = (props: PropertyMigrationDialogProps) => {
                     {...params}
                     label="Select is mandatory?"
                     variant="outlined"
-                    disabled={type === 'patch'}
+                    disabled={type === 'patch' && isMigration}
                   />
                 )}
               />
@@ -613,12 +754,14 @@ const PropertyMigrationDialog = (props: PropertyMigrationDialogProps) => {
       </DialogContent>
       <DialogActions>
         <Grid container px={1.5}>
-          <Grid item sx={{ width: '100%' }}>
-            <MigrationWarningMessage
-              isChecked={isMigrationWarningChecked}
-              setIsChecked={setIsMigrationWarningChecked}
-            />
-          </Grid>
+          {isMigration && (
+            <Grid item sx={{ width: '100%' }}>
+              <MigrationWarningMessage
+                isChecked={isMigrationWarningChecked}
+                setIsChecked={setIsMigrationWarningChecked}
+              />
+            </Grid>
+          )}
           <Grid
             item
             display="flex"
@@ -627,7 +770,7 @@ const PropertyMigrationDialog = (props: PropertyMigrationDialogProps) => {
             <Button
               variant="outlined"
               sx={{ width: '50%', mx: 1 }}
-              onClick={handleClose}
+              onClick={() => handleClose(!isMigration)}
             >
               Cancel
             </Button>
@@ -635,9 +778,12 @@ const PropertyMigrationDialog = (props: PropertyMigrationDialogProps) => {
             <Button
               variant="outlined"
               sx={{ width: '50%', mx: 1 }}
-              onClick={handleSubmit(onSubmit)}
+              onClick={isMigration ? handleSubmit(onSubmit) : handleAddSubmit}
               disabled={
-                Object.values(errors).length !== 0 || !isMigrationWarningChecked
+                isMigration
+                  ? Object.values(errors).length !== 0 ||
+                    !isMigrationWarningChecked
+                  : errorsAdd?.properties?.[index] !== undefined
               }
             >
               Save
@@ -649,4 +795,4 @@ const PropertyMigrationDialog = (props: PropertyMigrationDialogProps) => {
   );
 };
 
-export default PropertyMigrationDialog;
+export default PropertyDialog;

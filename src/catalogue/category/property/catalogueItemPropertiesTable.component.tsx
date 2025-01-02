@@ -1,3 +1,4 @@
+import DeleteIcon from '@mui/icons-material/Delete';
 import {
   Box,
   Button,
@@ -18,7 +19,10 @@ import {
   CatalogueCategory,
   CatalogueCategoryPropertyType,
 } from '../../../api/api.types';
-import { AddCatalogueCategoryPropertyWithPlacementIds } from '../../../app.types';
+import {
+  AddCatalogueCategoryPropertyWithPlacementIds,
+  AddCatalogueCategoryWithPlacementIds,
+} from '../../../app.types';
 import { usePreservedTableState } from '../../../common/preservedTableState.component';
 import {
   TableBodyCellOverFlowTip,
@@ -31,21 +35,36 @@ import {
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
+import { useFieldArray, useFormContext } from 'react-hook-form';
+import { useGetUnits } from '../../../api/units';
 import { RequestType } from '../../../form.schemas';
-import PropertyMigrationDialog from './propertyMigrationDialog.component';
+import PropertyDialog from './propertyDialog.component';
 
 export interface PropertiesTableProps {
-  properties: AddCatalogueCategoryPropertyWithPlacementIds[];
   requestType: RequestType;
-  catalogueCategory: CatalogueCategory;
+  catalogueCategory?: CatalogueCategory;
 }
 
 export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
-  const { properties, catalogueCategory } = props;
+  const { catalogueCategory, requestType } = props;
+
+  const { control, clearErrors } =
+    useFormContext<AddCatalogueCategoryWithPlacementIds>();
+  // fields doesn't get updated when textfield as changed
+  const properties = control._getFieldArray(
+    'properties'
+  ) as AddCatalogueCategoryPropertyWithPlacementIds[];
+  const { append, remove } = useFieldArray({
+    control,
+    name: 'properties',
+  });
 
   const [propertyDialogRequestType, setPropertyDialogRequestType] =
     React.useState<RequestType>('post');
 
+  const [index, setIndex] = React.useState<number | undefined>();
+
+  const { data: units } = useGetUnits();
   const columns = React.useMemo<
     MRT_ColumnDef<AddCatalogueCategoryPropertyWithPlacementIds>[]
   >(() => {
@@ -88,6 +107,16 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
         accessorFn: (row) => row.unit,
         id: 'unit',
         size: 180,
+        Cell: ({ renderedCellValue, row }) => (
+          <>
+            {requestType === 'patch'
+              ? renderedCellValue
+              : (
+                  units?.find((unit) => row.original.unit_id === unit.id) ||
+                  null
+                )?.value}
+          </>
+        ),
         GroupedCell: TableGroupedCell,
       },
       {
@@ -99,7 +128,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
         GroupedCell: TableGroupedCell,
       },
     ];
-  }, []);
+  }, [requestType, units]);
 
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
@@ -113,7 +142,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
 
   const table = useMaterialReactTable({
     columns: columns,
-    data: properties,
+    data: properties ?? [],
     // Features
     enableTopToolbar: true,
     enableFacetedValues: true,
@@ -185,14 +214,20 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
 
     renderCreateRowDialogContent: ({ table, row }) => {
       return (
-        <PropertyMigrationDialog
+        <PropertyDialog
           open
-          onClose={() => {
+          onClose={(removeRow) => {
             table.setCreatingRow(null);
+            if (removeRow) {
+              remove(index);
+              clearErrors(`properties`);
+            }
           }}
           type={propertyDialogRequestType}
           catalogueCategory={catalogueCategory}
           selectedProperty={row.original}
+          isMigration={requestType === 'patch'}
+          index={requestType === 'post' ? index : undefined}
         />
       );
     },
@@ -206,6 +241,17 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
           onClick={() => {
             setPropertyDialogRequestType('post');
             table.setCreatingRow(true);
+            if (requestType === 'post') {
+              setIndex(properties?.length);
+              append({
+                cip_placement_id: crypto.randomUUID(),
+                name: '',
+                type: CatalogueCategoryPropertyType.Text,
+                mandatory: 'false',
+                unit: null,
+                allowed_values: null,
+              });
+            }
           }}
         >
           Add Property
@@ -231,6 +277,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
           aria-label={`Edit property ${row.original.name}`}
           onClick={() => {
             setPropertyDialogRequestType('patch');
+            setIndex(row.index);
             table.setCreatingRow(row);
             closeMenu();
           }}
@@ -241,6 +288,24 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
           </ListItemIcon>
           <ListItemText>Edit</ListItemText>
         </MenuItem>,
+        ...(requestType === 'post'
+          ? [
+              <MenuItem
+                key="delete"
+                aria-label={`Delete property ${row.original.name}`}
+                onClick={() => {
+                  closeMenu();
+                  remove(row.index);
+                }}
+                sx={{ m: 0 }}
+              >
+                <ListItemIcon>
+                  <DeleteIcon />
+                </ListItemIcon>
+                <ListItemText>Delete</ListItemText>
+              </MenuItem>,
+            ]
+          : []),
       ];
     },
     // Functions
