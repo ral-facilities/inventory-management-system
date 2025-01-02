@@ -32,8 +32,7 @@ import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
 import { RequestType } from '../../../form.schemas';
-import AddPropertyMigrationDialog from './addPropertyMigrationDialog.component';
-import EditPropertyMigrationDialog from './editPropertyMigrationDialog.component';
+import PropertyMigrationDialog from './propertyMigrationDialog.component';
 
 export interface PropertiesTableProps {
   properties: AddCatalogueCategoryPropertyWithPlacementIds[];
@@ -185,20 +184,13 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
     },
 
     renderCreateRowDialogContent: ({ table, row }) => {
-      return propertyDialogRequestType === 'post' ? (
-        <AddPropertyMigrationDialog
+      return (
+        <PropertyMigrationDialog
           open
           onClose={() => {
             table.setCreatingRow(null);
           }}
-          catalogueCategory={catalogueCategory}
-        />
-      ) : (
-        <EditPropertyMigrationDialog
-          open
-          onClose={() => {
-            table.setCreatingRow(null);
-          }}
+          type={propertyDialogRequestType}
           catalogueCategory={catalogueCategory}
           selectedProperty={row.original}
         />
