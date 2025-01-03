@@ -3,7 +3,6 @@ import { MicroFrontendId } from '../app.types';
 import { readSciGatewayToken } from '../parseTokens';
 import { InventoryManagementSystemSettings, settings } from '../settings';
 import { InvalidateTokenType } from '../state/actions/actions.types';
-import { tokenRefreshed } from '../state/scigateway.actions';
 import { APIError } from './api.types';
 
 // These are for ensuring refresh request is only sent once when multiple requests
@@ -106,6 +105,7 @@ export function uppyOnAfterResponse(xhr: XMLHttpRequest) {
     ) {
       // Prevent other requests from also attempting to refresh while waiting for
       // SciGateway to refresh the token
+
       if (!isFetchingAccessToken) {
         isFetchingAccessToken = true;
 
@@ -117,23 +117,15 @@ export function uppyOnAfterResponse(xhr: XMLHttpRequest) {
             },
           })
         );
-
-        // Create a new promise to wait for the token to be refreshed
-        const tokenRefreshedPromise = new Promise<void>((resolve) => {
-          const handler = (e: Event) => {
-            const action = (e as CustomEvent).detail;
-            if (tokenRefreshed.match(action)) {
-              document.removeEventListener(MicroFrontendId, handler);
-              isFetchingAccessToken = false;
-              resolve();
-            }
-          };
-
-          document.addEventListener(MicroFrontendId, handler);
-        });
-
-        return tokenRefreshedPromise;
       }
+
+      // Create a new promise to wait for the token to be refreshed
+      return new Promise<void>((resolve, reject) => {
+        failedAuthRequestQueue.push((shouldReject?: boolean) => {
+          if (shouldReject) reject(xhr);
+          else resolve();
+        });
+      });
     }
   }
 }
