@@ -251,7 +251,7 @@ export interface ImagePost {
 }
 
 export interface APIImage
-  extends Required<Omit<ImagePost, 'upload_file'>>,
+  extends Required<Omit<ImagePost, 'upload_file' | 'entity_id'>>,
     CreatedModifiedMixin {
   id: string;
   primary: boolean;
