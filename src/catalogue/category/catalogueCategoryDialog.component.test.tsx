@@ -30,8 +30,8 @@ describe('Catalogue Category Dialog', () => {
   interface TestAddCatalogueCategoryProperty
     extends AddCatalogueCategoryProperty {
     unit?: string;
-    skipSaveValidation?: boolean;
     skipSave?: boolean;
+    skipSaveValidation?: boolean;
   }
   const createView = () => {
     return renderComponentWithRouterProvider(
@@ -134,7 +134,6 @@ describe('Catalogue Category Dialog', () => {
             });
           }
         }
-
         if (!field.skipSave) {
           await user.click(
             within(
@@ -142,7 +141,8 @@ describe('Catalogue Category Dialog', () => {
             ).getByRole('button', { name: 'Save' })
           );
         }
-        if (!field.skipSaveValidation) {
+
+        if (!field.skipSave && !field.skipSaveValidation) {
           await waitFor(() => {
             expect(
               screen.queryByRole('dialog', { name: 'Add Property' })
@@ -337,6 +337,103 @@ describe('Catalogue Category Dialog', () => {
       expect(onClose).toHaveBeenCalled();
     }, 10000);
 
+    it('create a catalogue category with content being catalogue items and deletes an catalogue item property', async () => {
+      createView();
+
+      await modifyValues({
+        name: 'test',
+        newFormFields: [
+          {
+            name: 'radius',
+            type: 'number',
+            unit: 'millimeters',
+            mandatory: 'true',
+          },
+          {
+            name: 'radius2',
+            type: 'number',
+            unit: 'millimeters',
+            mandatory: 'true',
+          },
+        ],
+      });
+
+      const rowActionsButtons = screen.getAllByLabelText('Row Actions');
+
+      await user.click(rowActionsButtons[1]);
+
+      await user.click(screen.getByText('Delete'));
+
+      expect(screen.getByText('Catalogue Item Properties')).toBeInTheDocument();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await waitFor(() => user.click(saveButton));
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
+        properties: [
+          {
+            mandatory: true,
+            name: 'radius',
+            type: 'number',
+            unit_id: '5',
+          },
+        ],
+        is_leaf: true,
+        name: 'test',
+      });
+
+      expect(onClose).toHaveBeenCalled();
+    }, 10000);
+
+    it('create a catalogue category with content being catalogue items and cancel a catalogue item property', async () => {
+      createView();
+
+      await modifyValues({
+        name: 'test',
+        newFormFields: [
+          {
+            name: 'radius',
+            type: 'number',
+            unit: 'millimeters',
+            mandatory: 'true',
+          },
+          {
+            name: 'radius2',
+            type: 'number',
+            unit: 'millimeters',
+            mandatory: 'true',
+            skipSave: true,
+          },
+        ],
+      });
+
+      const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+
+      await user.click(cancelButton);
+
+      expect(screen.getByText('Catalogue Item Properties')).toBeInTheDocument();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await user.click(saveButton);
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
+        properties: [
+          {
+            mandatory: true,
+            name: 'radius',
+            type: 'number',
+            unit_id: '5',
+          },
+        ],
+        is_leaf: true,
+        name: 'test',
+      });
+
+      expect(onClose).toHaveBeenCalled();
+    }, 10000);
+
     it('create a catalogue category with content being catalogue items (allowed_values list of numbers)', async () => {
       createView();
 
@@ -408,11 +505,20 @@ describe('Catalogue Category Dialog', () => {
               },
             },
             mandatory: 'true',
-            skipSave: true,
             skipSaveValidation: true,
           },
         ],
       });
+
+      const rowActionsButtons = screen.getAllByLabelText('Row Actions');
+
+      await user.click(rowActionsButtons[0]);
+
+      await user.click(screen.getByText('Edit'));
+
+      expect(
+        await screen.findByRole('dialog', { name: 'Edit Property' })
+      ).toBeInTheDocument();
 
       const typeAutoComplete = await screen.findAllByLabelText('Select Type *');
       await user.click(typeAutoComplete[0]);
@@ -427,7 +533,7 @@ describe('Catalogue Category Dialog', () => {
       );
 
       await user.click(
-        within(screen.getByRole('dialog', { name: 'Add Property' })).getByRole(
+        within(screen.getByRole('dialog', { name: 'Edit Property' })).getByRole(
           'button',
           { name: 'Save' }
         )
@@ -435,7 +541,7 @@ describe('Catalogue Category Dialog', () => {
 
       await waitFor(() => {
         expect(
-          screen.queryByRole('dialog', { name: 'Add Property' })
+          screen.queryByRole('dialog', { name: 'Edit Property' })
         ).not.toBeInTheDocument();
       });
 
@@ -484,11 +590,20 @@ describe('Catalogue Category Dialog', () => {
               },
             },
             mandatory: 'true',
-            skipSave: true,
             skipSaveValidation: true,
           },
         ],
       });
+
+      const rowActionsButtons = screen.getAllByLabelText('Row Actions');
+
+      await user.click(rowActionsButtons[0]);
+
+      await user.click(screen.getByText('Edit'));
+
+      expect(
+        await screen.findByRole('dialog', { name: 'Edit Property' })
+      ).toBeInTheDocument();
 
       const typeAutoComplete = await screen.findAllByLabelText('Select Type *');
       await user.click(typeAutoComplete[0]);
@@ -503,7 +618,7 @@ describe('Catalogue Category Dialog', () => {
       );
 
       await user.click(
-        within(screen.getByRole('dialog', { name: 'Add Property' })).getByRole(
+        within(screen.getByRole('dialog', { name: 'Edit Property' })).getByRole(
           'button',
           { name: 'Save' }
         )
@@ -511,7 +626,7 @@ describe('Catalogue Category Dialog', () => {
 
       await waitFor(() => {
         expect(
-          screen.queryByRole('dialog', { name: 'Add Property' })
+          screen.queryByRole('dialog', { name: 'Edit Property' })
         ).not.toBeInTheDocument();
       });
 
@@ -558,11 +673,21 @@ describe('Catalogue Category Dialog', () => {
               },
             },
             mandatory: 'true',
-            skipSave: true,
+
             skipSaveValidation: true,
           },
         ],
       });
+
+      const rowActionsButtons = screen.getAllByLabelText('Row Actions');
+
+      await user.click(rowActionsButtons[0]);
+
+      await user.click(screen.getByText('Edit'));
+
+      expect(
+        await screen.findByRole('dialog', { name: 'Edit Property' })
+      ).toBeInTheDocument();
 
       const allowedValuesAutoCompletes = await screen.findAllByLabelText(
         'Select Allowed values *'
@@ -579,7 +704,7 @@ describe('Catalogue Category Dialog', () => {
       );
 
       await user.click(
-        within(screen.getByRole('dialog', { name: 'Add Property' })).getByRole(
+        within(screen.getByRole('dialog', { name: 'Edit Property' })).getByRole(
           'button',
           { name: 'Save' }
         )
@@ -587,7 +712,7 @@ describe('Catalogue Category Dialog', () => {
 
       await waitFor(() => {
         expect(
-          screen.queryByRole('dialog', { name: 'Add Property' })
+          screen.queryByRole('dialog', { name: 'Edit Property' })
         ).not.toBeInTheDocument();
       });
 

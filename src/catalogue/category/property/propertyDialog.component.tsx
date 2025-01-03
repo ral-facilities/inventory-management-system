@@ -55,9 +55,7 @@ function getProperty<T extends Record<string, unknown>>(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   key: any
 ) {
-  if (key === undefined) {
-    return undefined;
-  }
+  if (key === undefined) return undefined;
 
   const keys = key.toString().split('.');
   let current: unknown = obj;
