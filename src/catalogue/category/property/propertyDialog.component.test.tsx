@@ -1,21 +1,25 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { FormProvider, useForm } from 'react-hook-form';
 import { MockInstance } from 'vitest';
 import { imsApi } from '../../../api/api';
 import { AllowedValues, CatalogueCategory } from '../../../api/api.types';
 import {
   AddCatalogueCategoryPropertyWithPlacementIds,
+  AddCatalogueCategoryWithPlacementIds,
   AddPropertyMigration,
   EditPropertyMigration,
 } from '../../../app.types';
+import { CatalogueCategorySchema } from '../../../form.schemas';
 import {
   getCatalogueCategoryById,
   renderComponentWithRouterProvider,
 } from '../../../testUtils';
 import { transformToAddCatalogueCategoryWithPlacementIds } from '../catalogueCategoryDialog.component';
-import PropertyMigrationDialog, {
-  PropertyMigrationDialogProps,
-} from './propertyMigrationDialog.component';
+import PropertyDialog, {
+  PropertyDialogProps,
+} from './propertyDialog.component';
 
 interface TestAddPropertyMigration
   extends Omit<AddPropertyMigration, 'default_value' | 'allowed_values'> {
@@ -29,8 +33,20 @@ interface TestEditPropertyMigration
   allowed_values?: AllowedValues;
 }
 
-describe('PropertyMigrationDialog', () => {
-  let props: PropertyMigrationDialogProps;
+const TestComponent = (props: PropertyDialogProps) => {
+  const formMethods = useForm<AddCatalogueCategoryWithPlacementIds>({
+    resolver: zodResolver(CatalogueCategorySchema),
+  });
+
+  return (
+    <FormProvider {...formMethods}>
+      <PropertyDialog {...props} />
+    </FormProvider>
+  );
+};
+
+describe('PropertyDialog', () => {
+  let props: PropertyDialogProps;
   let axiosPostSpy: MockInstance;
   let axiosPatchSpy: MockInstance;
   let user: UserEvent;
@@ -38,14 +54,13 @@ describe('PropertyMigrationDialog', () => {
   const onClose = vi.fn();
 
   const createView = () => {
-    return renderComponentWithRouterProvider(
-      <PropertyMigrationDialog {...props} />
-    );
+    return renderComponentWithRouterProvider(<TestComponent {...props} />);
   };
   beforeEach(() => {
     props = {
       open: true,
       onClose: onClose,
+      isMigration: true,
       type: 'post',
       catalogueCategory: getCatalogueCategoryById('12') as CatalogueCategory,
     };
@@ -706,6 +721,7 @@ describe('PropertyMigrationDialog', () => {
       props = {
         open: true,
         onClose: onClose,
+        isMigration: true,
         type: 'patch',
         catalogueCategory: getCatalogueCategoryById('12') as CatalogueCategory,
         selectedProperty: formattedProperties[0],

@@ -1,7 +1,10 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { FormProvider, useForm } from 'react-hook-form';
 import { CatalogueCategory } from '../../../api/api.types';
-import { AddCatalogueCategoryPropertyWithPlacementIds } from '../../../app.types';
+import { AddCatalogueCategoryWithPlacementIds } from '../../../app.types';
+import { CatalogueCategorySchema } from '../../../form.schemas';
 import {
   getCatalogueCategoryById,
   renderComponentWithRouterProvider,
@@ -11,21 +14,33 @@ import PropertiesTable, {
   PropertiesTableProps,
 } from './catalogueItemPropertiesTable.component';
 
+const TestComponent = (props: PropertiesTableProps) => {
+  const formMethods = useForm<AddCatalogueCategoryWithPlacementIds>({
+    resolver: zodResolver(CatalogueCategorySchema),
+    defaultValues: transformToAddCatalogueCategoryWithPlacementIds(
+      getCatalogueCategoryById('12') as CatalogueCategory
+    ),
+  });
+
+  return (
+    <FormProvider {...formMethods}>
+      <PropertiesTable {...props} />
+    </FormProvider>
+  );
+};
+
 describe('CatalogueItemPropertiesTable', () => {
   let props: PropertiesTableProps;
   let user: UserEvent;
 
   const createView = () => {
-    return renderComponentWithRouterProvider(<PropertiesTable {...props} />);
+    return renderComponentWithRouterProvider(<TestComponent {...props} />);
   };
 
   beforeEach(() => {
     props = {
       requestType: 'patch',
       catalogueCategory: getCatalogueCategoryById('12') as CatalogueCategory,
-      properties: transformToAddCatalogueCategoryWithPlacementIds(
-        getCatalogueCategoryById('12') as CatalogueCategory
-      ).properties as AddCatalogueCategoryPropertyWithPlacementIds[],
     };
 
     user = userEvent.setup();
