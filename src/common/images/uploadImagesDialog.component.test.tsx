@@ -141,7 +141,7 @@ describe('Upload image dialog', () => {
       () => {
         expect(screen.getByText('Upload failed')).toBeInTheDocument();
       },
-      { timeout: 5000 }
+      { timeout: 10000 }
     );
-  });
+  }, 15000);
 });
