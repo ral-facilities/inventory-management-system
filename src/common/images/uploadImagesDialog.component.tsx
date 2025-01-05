@@ -8,7 +8,7 @@ import '@uppy/image-editor/dist/style.css';
 import ProgressBar from '@uppy/progress-bar';
 import { DashboardModal } from '@uppy/react';
 import React from 'react';
-import { usePostImage } from '../../api/images';
+import { usePostUppy } from '../../api/uppy';
 import { getNonEmptyTrimmedString } from '../../utils';
 import AxiosUpload from '../UppyAxiosUpload';
 
@@ -29,7 +29,7 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
 
   const queryClient = useQueryClient();
 
-  const mutation = usePostImage();
+  const mutation = usePostUppy({ retry: 3 });
 
   const [uppy] = React.useState<Uppy<Meta, Body>>(() => {
     const newUppy = new Uppy<Meta, Body>({

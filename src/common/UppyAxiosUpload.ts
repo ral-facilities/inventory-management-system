@@ -19,7 +19,7 @@ import {
   internalRateLimitedQueue,
 } from '@uppy/utils/lib/RateLimitedQueue';
 import type { AxiosError } from 'axios';
-import { type ImageAxiosOptions, type UppyAPIImage } from '../api/images';
+import type { UppyAxiosOptions, UppyBody } from '../api/uppy';
 import UppyNetworkError from './UppyNetworkError';
 //@ts-expect-error // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export interface AxiosUploadOpts<M extends Meta, B extends Body>
@@ -30,9 +30,9 @@ export interface AxiosUploadOpts<M extends Meta, B extends Body>
   limit?: number;
   timeout?: number;
   mutation: UseMutationResult<
-    UppyAPIImage,
+    UppyBody<B>,
     AxiosError | Error | UppyNetworkError,
-    { url: string; options: ImageAxiosOptions }
+    { url: string; options: UppyAxiosOptions }
   >;
 }
 
@@ -84,14 +84,14 @@ export default class AxiosUpload<
   getFetcher;
   requests: RateLimitedQueue;
   uploaderEvents: Record<string, EventManager<M, B> | null>;
-  postImage;
+  postUppy;
 
   constructor(uppy: Uppy<M, B>, opts: AxiosUploadOpts<M, B>) {
     super(uppy, { ...defaultOptions, ...opts });
     this.id = opts.id || 'AxiosUpload';
     this.type = 'uploader';
     this.i18nInit();
-    this.postImage = this.opts.mutation.mutateAsync;
+    this.postUppy = this.opts.mutation.mutateAsync;
 
     // Simultaneous upload limiting is shared across all uploads with this plugin.
     if (internalRateLimitedQueue in this.opts) {
@@ -103,9 +103,9 @@ export default class AxiosUpload<
     this.uploaderEvents = Object.create(null);
 
     this.getFetcher = (files: UppyFile<M, B>[]) => {
-      return async (url: string, options: ImageAxiosOptions) => {
+      return async (url: string, options: UppyAxiosOptions) => {
         try {
-          const res = await this.postImage({
+          const res = await this.postUppy({
             url: url,
             options: {
               ...options,
