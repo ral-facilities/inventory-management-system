@@ -2,7 +2,7 @@ import { renderHook } from '@testing-library/react';
 import Uppy, { type Body, type Meta, type UppyFile } from '@uppy/core';
 import { delay, http, HttpResponse } from 'msw';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { usePostImage } from '../api/images';
+import { usePostUppy } from '../api/uppy';
 import { server } from '../mocks/server';
 import { hooksWrapperWithProviders } from '../testUtils';
 import AxiosUpload from './UppyAxiosUpload';
@@ -12,7 +12,7 @@ describe('AxiosUpload', () => {
   let plugin: AxiosUpload<Meta, Body>;
   let file: UppyFile<Meta, Body>;
 
-  const { result } = renderHook(() => usePostImage(), {
+  const { result } = renderHook(() => usePostUppy(), {
     wrapper: hooksWrapperWithProviders(),
   });
 
@@ -22,7 +22,7 @@ describe('AxiosUpload', () => {
     uppy.use(AxiosUpload, {
       endpoint: `/images`,
       fieldName: 'upload_file',
-      mutation: result.current,
+      postUppy: result.current.mutateAsync,
     });
 
     plugin = uppy.getPlugin('AxiosUpload') as AxiosUpload<Meta, Body>;
@@ -56,8 +56,9 @@ describe('AxiosUpload', () => {
       allowedMetaFields: true,
       fieldName: 'upload_file',
       limit: 5,
+      headers: {},
       timeout: 30000,
-      mutation: expect.anything(),
+      postUppy: expect.anything(),
     });
   });
 

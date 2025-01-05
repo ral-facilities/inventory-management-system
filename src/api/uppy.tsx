@@ -1,13 +1,10 @@
-import {
-  useMutation,
-  UseMutationResult,
-  type UseMutationOptions,
-} from '@tanstack/react-query';
+import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import { Body } from '@uppy/core';
 import ProgressTimeout from '@uppy/utils/lib/ProgressTimeout';
 import type { AxiosProgressEvent } from 'axios';
 import { AxiosError, type AxiosRequestConfig } from 'axios';
 import NetworkError from '../common/UppyNetworkError';
+import retryIMS_APIErrors from '../retryIMS_APIErrors';
 import { storageApi } from './api';
 
 export interface UppyAxiosOptions {
@@ -16,6 +13,7 @@ export interface UppyAxiosOptions {
   timeout?: number;
   body?: FormData | null;
   signal?: AbortSignal;
+  headers?: Record<string, string>;
 }
 
 export interface UppyBody<B extends Body> {
@@ -35,6 +33,7 @@ export const postUppy = async <B extends Body>(
     onTimeout = noop,
     timeout = 30000, // Default timeout of 30 seconds
     signal,
+    headers = {},
   } = options;
 
   const timer = new ProgressTimeout(timeout, onTimeout);
@@ -43,7 +42,7 @@ export const postUppy = async <B extends Body>(
     url: url,
     method: 'POST',
     data: body,
-    headers: { 'Content-Type': 'multipart/form-data' },
+    headers: headers,
     onUploadProgress: (event: AxiosProgressEvent) => {
       timer.progress();
       onUploadProgress?.(event);
@@ -83,19 +82,15 @@ export const postUppy = async <B extends Body>(
     });
 };
 
-export const usePostUppy = <B extends Body>(
-  mutationOpts?: UseMutationOptions<
-    UppyBody<B>,
-    AxiosError | Error | NetworkError,
-    { url: string; options: UppyAxiosOptions }
-  >
-): UseMutationResult<
+export const usePostUppy = <B extends Body>(): UseMutationResult<
   UppyBody<B>,
   AxiosError | Error | NetworkError,
   { url: string; options: UppyAxiosOptions }
 > => {
   return useMutation({
     mutationFn: ({ url, options }) => postUppy(url, options),
-    ...mutationOpts,
+    retry: (failureCount, error) => {
+      return retryIMS_APIErrors(failureCount, error as AxiosError);
+    },
   });
 };

@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import type { UseMutationResult } from '@tanstack/react-query';
+import type { UseMutateAsyncFunction } from '@tanstack/react-query';
 import Uppy, {
   BasePlugin,
   Body,
@@ -21,7 +20,7 @@ import {
 import type { AxiosError } from 'axios';
 import type { UppyAxiosOptions, UppyBody } from '../api/uppy';
 import UppyNetworkError from './UppyNetworkError';
-//@ts-expect-error // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 export interface AxiosUploadOpts<M extends Meta, B extends Body>
   extends PluginOpts {
   endpoint: string;
@@ -29,11 +28,20 @@ export interface AxiosUploadOpts<M extends Meta, B extends Body>
   fieldName?: string;
   limit?: number;
   timeout?: number;
-  mutation: UseMutationResult<
-    UppyBody<B>,
-    AxiosError | Error | UppyNetworkError,
-    { url: string; options: UppyAxiosOptions }
+  postUppy: UseMutateAsyncFunction<
+    UppyBody<Body>,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    AxiosError<unknown, any> | Error | UppyNetworkError,
+    {
+      url: string;
+      options: UppyAxiosOptions;
+    },
+    unknown
   >;
+  headers?:
+    | Record<string, string>
+    | ((file: UppyFile<M, B>) => Record<string, string>);
+  getResponseData?: (body: UppyBody<B>) => B | Promise<B>;
 }
 
 declare module '@uppy/utils/lib/UppyFile' {
@@ -53,6 +61,7 @@ const defaultOptions = {
   fieldName: 'file',
   limit: 5,
   timeout: 30 * 1000,
+  headers: {},
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 } satisfies Partial<AxiosUploadOpts<any, any>>;
 
@@ -60,6 +69,10 @@ type Opts<M extends Meta, B extends Body> = DefinePluginOpts<
   AxiosUploadOpts<M, B>,
   keyof typeof defaultOptions
 >;
+
+interface OptsWithHeaders<M extends Meta, B extends Body> extends Opts<M, B> {
+  headers: Record<string, string>;
+}
 
 /**
  * Set `data.type` in the blob to `file.meta.type`,
@@ -91,7 +104,7 @@ export default class AxiosUpload<
     this.id = opts.id || 'AxiosUpload';
     this.type = 'uploader';
     this.i18nInit();
-    this.postUppy = this.opts.mutation.mutateAsync;
+    this.postUppy = this.opts.postUppy;
 
     // Simultaneous upload limiting is shared across all uploads with this plugin.
     if (internalRateLimitedQueue in this.opts) {
@@ -131,6 +144,8 @@ export default class AxiosUpload<
             },
           });
 
+          await this.opts.getResponseData?.(res as UppyBody<B>);
+
           // Emit success events for each file
           for (const { id } of files) {
             const file = this.uppy.getFile(id);
@@ -160,14 +175,34 @@ export default class AxiosUpload<
     };
   }
 
-  getOptions(file: UppyFile<M, B>): Opts<M, B> {
+  getOptions(file: UppyFile<M, B>): OptsWithHeaders<M, B> {
     const overrides = this.uppy.getState().axiosUpload;
+    const { headers } = this.opts;
 
     const opts = {
       ...this.opts,
       ...(overrides || {}),
       ...(file.axiosUpload || {}),
+      headers: {},
     };
+    // Support for `headers` as a function.
+    // Options set by other plugins in Uppy state or on the files themselves are still merged in afterward.
+    //
+    // ```js
+    // headers: (file) => ({ expires: file.meta.expires })
+    // ```
+    if (typeof headers === 'function') {
+      opts.headers = headers(file);
+    } else {
+      Object.assign(opts.headers, this.opts.headers);
+    }
+
+    if (overrides) {
+      Object.assign(opts.headers, overrides.headers);
+    }
+    if (file.axiosUpload) {
+      Object.assign(opts.headers, file.axiosUpload.headers);
+    }
 
     return opts;
   }

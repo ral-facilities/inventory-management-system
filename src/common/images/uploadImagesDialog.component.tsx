@@ -29,7 +29,7 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
 
   const queryClient = useQueryClient();
 
-  const mutation = usePostUppy({ retry: 3 });
+  const { mutateAsync: postUppy } = usePostUppy();
 
   const [uppy] = React.useState<Uppy<Meta, Body>>(() => {
     const newUppy = new Uppy<Meta, Body>({
@@ -46,7 +46,8 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
     newUppy.use(AxiosUpload, {
       endpoint: `/images`,
       fieldName: 'upload_file',
-      mutation: mutation,
+      postUppy: postUppy,
+      headers: { 'Content-Type': 'multipart/form-data' },
     });
 
     return newUppy;
