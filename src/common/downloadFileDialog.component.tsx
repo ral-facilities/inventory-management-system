@@ -62,7 +62,7 @@ const DownloadFileDialog = (props: DownloadFileProps) => {
   });
 
   const handleDownloadImages = React.useCallback(() => {
-    if (downloadedImages) {
+    if (downloadedImages && downloadedImages.length > 1) {
       downloadedImages.forEach((image: APIImageWithURL | undefined) => {
         if (image) {
           const link = document.createElement('a');
@@ -74,6 +74,8 @@ const DownloadFileDialog = (props: DownloadFileProps) => {
       });
       onChangeSelectedImages({});
       onClose();
+    } else {
+      setFormError('No data provided. Please refresh and try again');
     }
   }, [downloadedImages, onChangeSelectedImages, onClose]);
 

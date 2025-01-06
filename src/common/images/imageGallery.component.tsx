@@ -114,6 +114,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
         sx={{ mx: '4px' }}
         variant="outlined"
         startIcon={<DriveFileMoveOutlinedIcon />}
+        disabled={selectedImages.length == 0}
         onClick={() => setdownloadImagesDialogOpen(true)}
       >
         Download
