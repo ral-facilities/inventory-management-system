@@ -25,9 +25,9 @@ import {
 
 const AllowedValuesListTextFields = (props: {
   property?: AddCatalogueCategoryPropertyWithPlacementIds;
-  nestIndex?: number;
+  propertyIndex?: number;
 }) => {
-  const { property, nestIndex } = props;
+  const { property, propertyIndex } = props;
   const {
     control,
     formState: { errors },
@@ -43,8 +43,8 @@ const AllowedValuesListTextFields = (props: {
   const { fields, append, remove } = useFieldArray({
     control,
     name:
-      typeof nestIndex === 'number' && 'properties' in propertyRHF
-        ? `properties.${nestIndex}.allowed_values.values.values`
+      typeof propertyIndex === 'number' && 'properties' in propertyRHF
+        ? `properties.${propertyIndex}.allowed_values.values.values`
         : `allowed_values.values.values`,
   });
   const allowedValuesIds = property?.allowed_values?.values.values.map(
@@ -71,17 +71,17 @@ const AllowedValuesListTextFields = (props: {
       errorIndexes.forEach((errorIndex) =>
         clearErrors(`allowed_values.values.values.${errorIndex}`)
       );
-    } else if ('properties' in errors && typeof nestIndex === 'number') {
+    } else if ('properties' in errors && typeof propertyIndex === 'number') {
       const errorIndexes = getErrorIndexes(
-        errors?.properties?.[nestIndex]?.allowed_values?.values?.values
+        errors?.properties?.[propertyIndex]?.allowed_values?.values?.values
       );
       errorIndexes.forEach((errorIndex) =>
         clearErrors(
-          `properties.${nestIndex}.allowed_values.values.values.${errorIndex}`
+          `properties.${propertyIndex}.allowed_values.values.values.${errorIndex}`
         )
       );
     }
-  }, [clearErrors, errors, nestIndex]);
+  }, [clearErrors, errors, propertyIndex]);
 
   const clearDefaultValue = React.useCallback(
     (av_placement_id: string) => {
@@ -117,9 +117,9 @@ const AllowedValuesListTextFields = (props: {
 
   if ('allowed_values' in errors)
     allowedValueErrors = errors?.allowed_values?.values?.values;
-  if ('properties' in errors && typeof nestIndex === 'number') {
+  if ('properties' in errors && typeof propertyIndex === 'number') {
     allowedValueErrors =
-      errors?.properties?.[nestIndex]?.allowed_values?.values?.values;
+      errors?.properties?.[propertyIndex]?.allowed_values?.values?.values;
   }
 
   return (
@@ -134,11 +134,10 @@ const AllowedValuesListTextFields = (props: {
         if ('allowed_values' in errors)
           allowedValueError =
             errors?.allowed_values?.values?.values?.[index]?.value;
-        if ('properties' in errors && typeof nestIndex === 'number')
+        if ('properties' in errors && typeof propertyIndex === 'number')
           allowedValueError =
-            errors?.properties?.[nestIndex]?.allowed_values?.values?.values?.[
-              index
-            ]?.value;
+            errors?.properties?.[propertyIndex]?.allowed_values?.values
+              ?.values?.[index]?.value;
 
         return (
           <Stack
@@ -150,8 +149,8 @@ const AllowedValuesListTextFields = (props: {
             <Controller
               control={control}
               name={
-                typeof nestIndex === 'number' && 'properties' in propertyRHF
-                  ? `properties.${nestIndex}.allowed_values.values.values.${index}`
+                typeof propertyIndex === 'number' && 'properties' in propertyRHF
+                  ? `properties.${propertyIndex}.allowed_values.values.values.${index}`
                   : `allowed_values.values.values.${index}`
               }
               render={({ field: controllerField }) => (

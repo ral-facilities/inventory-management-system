@@ -614,7 +614,7 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
                               >
                                 <FormProvider {...formMethods}>
                                   <AllowedValuesListTextFields
-                                    nestIndex={index}
+                                    propertyIndex={index}
                                   />
                                 </FormProvider>
                               </Stack>
