@@ -158,7 +158,7 @@ const AllowedValuesListTextFields = (props: {
                 <TextField
                   disabled={allowedValuesIds?.includes(field.av_placement_id)}
                   id={`list-item-input-${controllerField.value.av_placement_id}`}
-                  label={`List item`}
+                  label="List item"
                   variant="outlined"
                   fullWidth
                   {...controllerField}
