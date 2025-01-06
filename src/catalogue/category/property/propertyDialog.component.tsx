@@ -537,7 +537,7 @@ const PropertyDialog = (props: PropertyDialogProps) => {
               >
                 <AllowedValuesListTextFields
                   property={isMigration ? selectedProperty : undefined}
-                  nestIndex={isMigration ? undefined : index}
+                  propertyIndex={isMigration ? undefined : index}
                 />
               </FormProvider>
             </Stack>
