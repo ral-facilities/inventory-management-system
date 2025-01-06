@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Systems Container > renders root systems correctly 1`] = `
+exports[`Systems Layout > renders root systems correctly 1`] = `
 <DocumentFragment>
   <div
     class="MuiBox-root css-10klw3m"
@@ -56,7 +56,7 @@ exports[`Systems Container > renders root systems correctly 1`] = `
 </DocumentFragment>
 `;
 
-exports[`Systems Container > renders units breadcrumbs correctly 1`] = `
+exports[`Systems Layout > renders units breadcrumbs correctly 1`] = `
 <DocumentFragment>
   <div
     class="MuiBox-root css-10klw3m"

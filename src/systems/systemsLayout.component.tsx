@@ -17,7 +17,7 @@ export const useNavigateToSystem = () => {
   );
 };
 
-function SystemsContainer() {
+function SystemsLayout() {
   const { system_id: systemId } = useParams();
   const navigateToSystem = useNavigateToSystem();
 
@@ -57,4 +57,4 @@ function SystemsContainer() {
   );
 }
 
-export default SystemsContainer;
+export default SystemsLayout;

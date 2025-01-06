@@ -39,7 +39,7 @@ import {
   tokenRefreshed,
 } from './state/scigateway.actions';
 import Systems from './systems/systems.component';
-import SystemsContainer from './systems/systemsContainer.component';
+import SystemsLayout from './systems/systemsLayout.component';
 import ViewTabs from './view/viewTabs.component';
 
 export const paths = {
@@ -114,7 +114,7 @@ const router = createBrowserRouter([
       },
       {
         path: paths.systems,
-        Component: SystemsContainer,
+        Component: SystemsLayout,
         children: [
           { index: true, Component: Systems },
           { path: paths.system, Component: Systems },

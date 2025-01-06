@@ -49,7 +49,7 @@ import { DeleteSystemDialog } from './deleteSystemDialog.component';
 import SystemDetails from './systemDetails.component';
 import SystemDialog from './systemDialog.component';
 import { SystemDirectoryDialog } from './systemDirectoryDialog.component';
-import { useNavigateToSystem } from './systemsContainer.component';
+import { useNavigateToSystem } from './systemsLayout.component';
 
 export type SystemMenuDialogType = 'edit' | 'duplicate' | 'delete';
 

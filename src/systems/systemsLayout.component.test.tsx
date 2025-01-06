@@ -2,7 +2,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { paths } from '../App';
 import { renderComponentWithRouterProvider } from '../testUtils';
-import SystemsContainer from './systemsContainer.component';
+import SystemsLayout from './systemsLayout.component';
 
 const mockedUseNavigate = vi.fn();
 
@@ -11,7 +11,7 @@ vi.mock('react-router-dom', async () => ({
   useNavigate: () => mockedUseNavigate,
 }));
 
-describe('Systems Container', () => {
+describe('Systems Layout', () => {
   let user: UserEvent;
 
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('Systems Container', () => {
   });
   const createView = (path: string, urlPathKey: keyof typeof paths) => {
     return renderComponentWithRouterProvider(
-      <SystemsContainer />,
+      <SystemsLayout />,
       urlPathKey,
       path
     );
