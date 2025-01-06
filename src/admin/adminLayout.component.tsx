@@ -35,7 +35,7 @@ const adminBreadCrumbsTrails: { [key: string]: [string, string] } = {
   ['usage-statuses']: ['usage-statuses', 'Usage statuses'],
 };
 
-function AdminContainer() {
+function AdminLayout() {
   const navigateToAdminFunction = useNavigateToAdminFunction();
   const adminPageName = useGetAdminPageName();
 
@@ -68,4 +68,4 @@ function AdminContainer() {
   );
 }
 
-export default AdminContainer;
+export default AdminLayout;

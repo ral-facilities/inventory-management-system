@@ -11,7 +11,7 @@ import { AxiosError } from 'axios';
 import { enGB } from 'date-fns/locale/en-GB';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import AdminCardView from './admin/adminCardView.component';
-import AdminContainer from './admin/adminContainer.component';
+import AdminLayout from './admin/adminLayout.component';
 import Units from './admin/units/units.component';
 import UsageStatuses from './admin/usageStatuses/usageStatuses.component';
 import {
@@ -28,8 +28,8 @@ import { HomePage } from './homePage/homePage.component';
 import IMSThemeProvider from './imsThemeProvider.component';
 import Items from './items/items.component';
 import ItemsLandingPage from './items/itemsLandingPage.component';
-import ManufacturerContainer from './manufacturer/manufacturerContainer.component';
 import ManufacturerLandingPage from './manufacturer/manufacturerLandingPage.component';
+import ManufacturerLayout from './manufacturer/manufacturerLayout.component';
 import ManufacturerTable from './manufacturer/manufacturersTable.component';
 import Preloader from './preloader/preloader.component';
 import retryIMS_APIErrors from './retryIMS_APIErrors';
@@ -82,10 +82,11 @@ const router = createBrowserRouter([
   {
     Component: Layout,
     children: [
+      { path: paths.root, Component: HomePage },
       { path: paths.homepage, Component: HomePage },
       {
         path: paths.admin,
-        Component: AdminContainer,
+        Component: AdminLayout,
         children: [
           { index: true, Component: AdminCardView },
           { path: paths.adminUnits, Component: Units },
@@ -130,7 +131,7 @@ const router = createBrowserRouter([
       },
       {
         path: paths.manufacturers,
-        Component: ManufacturerContainer,
+        Component: ManufacturerLayout,
         children: [
           { index: true, Component: ManufacturerTable },
           { path: paths.manufacturer, Component: ManufacturerLandingPage },

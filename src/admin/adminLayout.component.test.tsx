@@ -2,7 +2,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { paths } from '../App';
 import { renderComponentWithRouterProvider } from '../testUtils';
-import AdminContainer from './adminContainer.component';
+import AdminLayout from './adminLayout.component';
 
 const mockedUseNavigate = vi.fn();
 
@@ -11,21 +11,17 @@ vi.mock('react-router-dom', async () => ({
   useNavigate: () => mockedUseNavigate,
 }));
 
-describe('AdminPage', () => {
+describe('Admin Layout', () => {
   let user: UserEvent;
 
   beforeEach(() => {
     user = userEvent.setup();
   });
   const createView = (path: string, urlPathKey: keyof typeof paths) => {
-    return renderComponentWithRouterProvider(
-      <AdminContainer />,
-      urlPathKey,
-      path
-    );
+    return renderComponentWithRouterProvider(<AdminLayout />, urlPathKey, path);
   };
 
-  it('renders admin home page correctly', async () => {
+  it('renders admin layout page correctly', async () => {
     const view = createView('/admin-ims', 'admin');
 
     await waitFor(() => {
