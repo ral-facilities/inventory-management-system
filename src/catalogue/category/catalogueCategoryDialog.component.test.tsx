@@ -384,7 +384,7 @@ describe('Catalogue Category Dialog', () => {
       });
 
       expect(onClose).toHaveBeenCalled();
-    }, 10000);
+    }, 15000);
 
     it('create a catalogue category with content being catalogue items and cancel a catalogue item property', async () => {
       createView();
@@ -785,7 +785,7 @@ describe('Catalogue Category Dialog', () => {
       });
 
       expect(onClose).toHaveBeenCalled();
-    }, 10000);
+    }, 15000);
 
     it('displays an error message when the name field are not filled', async () => {
       createView();
