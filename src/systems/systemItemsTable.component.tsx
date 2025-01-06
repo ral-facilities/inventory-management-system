@@ -220,9 +220,23 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem?.name,
         id: 'catalogueItem.name',
-        filterVariant: COLUMN_FILTER_VARIANTS.string,
-        filterFn: COLUMN_FILTER_FUNCTIONS.string,
-        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
+        filterVariant: 'multi-select',
+        filterFn: 'arrIncludesSome',
+        columnFilterModeOptions: ['arrIncludesSome', 'arrExcludesSome'],
+        renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) => [
+          <MenuItem
+            key="arrIncludesSome"
+            onClick={() => onSelectFilterMode('arrIncludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrIncludesSome}
+          </MenuItem>,
+          <MenuItem
+            key="arrExcludesSome"
+            onClick={() => onSelectFilterMode('arrExcludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrExcludesSome}
+          </MenuItem>,
+        ],
         Cell:
           type === 'normal'
             ? ({ renderedCellValue, row }) => (
@@ -237,7 +251,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                 </MuiLink>
               )
             : undefined,
-        size: 250,
+        size: 350,
         GroupedCell: ({ row }) => {
           const nameGroupedCellError = itemUsageStatusesErrorState
             ? Object.values(itemUsageStatusesErrorState).filter(

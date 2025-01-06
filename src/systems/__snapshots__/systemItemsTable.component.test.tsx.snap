@@ -238,7 +238,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
     >
       <table
         class="MuiTable-root MuiTable-stickyHeader css-ts728e-MuiTable-root"
-        style="--header-catalogueItem_name-size: 250; --col-catalogueItem_name-size: 250; --header-mrt_row_expand-size: 100; --col-mrt_row_expand-size: 100; --header-mrt_row_select-size: 60; --col-mrt_row_select-size: 60; --header-item_serial_number-size: 250; --col-item_serial_number-size: 250; --header-item_modified_time-size: 350; --col-item_modified_time-size: 350; --header-item_delivered_date-size: 350; --col-item_delivered_date-size: 350; --header-item_is_defective-size: 200; --col-item_is_defective-size: 200; --header-item_usage_status-size: 350; --col-item_usage_status-size: 350; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40; --header-item_created_time-size: 350; --col-item_created_time-size: 350;"
+        style="--header-catalogueItem_name-size: 350; --col-catalogueItem_name-size: 350; --header-mrt_row_expand-size: 100; --col-mrt_row_expand-size: 100; --header-mrt_row_select-size: 60; --col-mrt_row_select-size: 60; --header-item_serial_number-size: 250; --col-item_serial_number-size: 250; --header-item_modified_time-size: 350; --col-item_modified_time-size: 350; --header-item_delivered_date-size: 350; --col-item_delivered_date-size: 350; --header-item_is_defective-size: 200; --col-item_is_defective-size: 200; --header-item_usage_status-size: 350; --col-item_usage_status-size: 350; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40; --header-item_created_time-size: 350; --col-item_created_time-size: 350;"
       >
         <thead
           class="MuiTableHead-root css-q4cnup-MuiTableHead-root"
@@ -410,20 +410,46 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                             </button>
                           </span>
                         </div>
-                        <input
+                        <div
+                          aria-controls=":rc:"
                           aria-describedby=":ra:-helper-text"
-                          aria-invalid="false"
+                          aria-expanded="false"
+                          aria-haspopup="listbox"
                           aria-label="Filter by Catalogue Item"
-                          autocomplete="new-password"
-                          class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
+                          aria-labelledby=":ra:"
+                          class="MuiSelect-select MuiSelect-standard MuiSelect-multiple MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-2jdjhv-MuiSelect-select-MuiInputBase-input-MuiInput-input"
                           id=":ra:"
-                          placeholder="Filter by Catalogue Item"
+                          role="combobox"
+                          tabindex="0"
+                        >
+                          <div
+                            class="MuiBox-root css-1tzeee1"
+                          >
+                            Filter by Catalogue Item
+                          </div>
+                        </div>
+                        <input
+                          aria-hidden="true"
+                          aria-invalid="false"
+                          autocomplete="new-password"
+                          class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                          tabindex="-1"
                           title="Filter by Catalogue Item"
-                          type="text"
                           value=""
                         />
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon"
+                          data-testid="ArrowDropDownIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M7 10l5 5 5-5z"
+                          />
+                        </svg>
                         <div
-                          class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+                          class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-3yq2xl-MuiInputAdornment-root"
                         >
                           <span
                             aria-label="Clear filter"
@@ -457,7 +483,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                         id=":ra:-helper-text"
                       >
                         <label>
-                          Filter Mode: Fuzzy
+                          Filter Mode: Includes any
                         </label>
                       </p>
                     </div>
@@ -740,12 +766,12 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                           </span>
                         </div>
                         <input
-                          aria-describedby=":rj:-helper-text"
+                          aria-describedby=":rk:-helper-text"
                           aria-invalid="false"
                           aria-label="Filter by Serial Number"
                           autocomplete="new-password"
                           class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                          id=":rj:"
+                          id=":rk:"
                           placeholder="Filter by Serial Number"
                           title="Filter by Serial Number"
                           type="text"
@@ -783,7 +809,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                       </div>
                       <p
                         class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                        id=":rj:-helper-text"
+                        id=":rk:-helper-text"
                       >
                         <label>
                           Filter Mode: Fuzzy
@@ -962,12 +988,12 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                             </span>
                           </div>
                           <input
-                            aria-describedby=":rq:-helper-text"
+                            aria-describedby=":rr:-helper-text"
                             aria-invalid="false"
                             aria-label="Min"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":rq:"
+                            id=":rr:"
                             inputmode="text"
                             placeholder="Min"
                             title="Min"
@@ -1002,7 +1028,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                          id=":rq:-helper-text"
+                          id=":rr:-helper-text"
                         >
                           <label>
                             Filter Mode: Between Inclusive
@@ -1020,7 +1046,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                             aria-label="Max"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":rt:"
+                            id=":ru:"
                             inputmode="text"
                             placeholder="Max"
                             title="Max"
@@ -1227,12 +1253,12 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                             </span>
                           </div>
                           <input
-                            aria-describedby=":r37:-helper-text"
+                            aria-describedby=":r38:-helper-text"
                             aria-invalid="false"
                             aria-label="Min"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r37:"
+                            id=":r38:"
                             inputmode="text"
                             placeholder="Min"
                             title="Min"
@@ -1267,7 +1293,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                          id=":r37:-helper-text"
+                          id=":r38:-helper-text"
                         >
                           <label>
                             Filter Mode: Between Inclusive
@@ -1285,7 +1311,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                             aria-label="Max"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r3a:"
+                            id=":r3b:"
                             inputmode="text"
                             placeholder="Max"
                             title="Max"
@@ -1492,12 +1518,12 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                             </span>
                           </div>
                           <input
-                            aria-describedby=":r13:-helper-text"
+                            aria-describedby=":r14:-helper-text"
                             aria-invalid="false"
                             aria-label="Min"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r13:"
+                            id=":r14:"
                             inputmode="text"
                             placeholder="Min"
                             title="Min"
@@ -1532,7 +1558,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                          id=":r13:-helper-text"
+                          id=":r14:-helper-text"
                         >
                           <label>
                             Filter Mode: Between Inclusive
@@ -1550,7 +1576,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                             aria-label="Max"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r16:"
+                            id=":r17:"
                             inputmode="text"
                             placeholder="Max"
                             title="Max"
@@ -1718,13 +1744,13 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                         class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
                       >
                         <div
-                          aria-controls=":r1d:"
+                          aria-controls=":r1e:"
                           aria-expanded="false"
                           aria-haspopup="listbox"
                           aria-label="Filter by Is Defective"
-                          aria-labelledby=":r1c:"
+                          aria-labelledby=":r1d:"
                           class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-2jdjhv-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                          id=":r1c:"
+                          id=":r1d:"
                           role="combobox"
                           tabindex="0"
                         >
@@ -1954,14 +1980,14 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                           </span>
                         </div>
                         <div
-                          aria-controls=":r1l:"
-                          aria-describedby=":r1j:-helper-text"
+                          aria-controls=":r1m:"
+                          aria-describedby=":r1k:-helper-text"
                           aria-expanded="false"
                           aria-haspopup="listbox"
                           aria-label="Filter by Usage Status"
-                          aria-labelledby=":r1j:"
+                          aria-labelledby=":r1k:"
                           class="MuiSelect-select MuiSelect-standard MuiSelect-multiple MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-2jdjhv-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                          id=":r1j:"
+                          id=":r1k:"
                           role="combobox"
                           tabindex="0"
                         >
@@ -2023,7 +2049,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                       </div>
                       <p
                         class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                        id=":r1j:-helper-text"
+                        id=":r1k:-helper-text"
                       >
                         <label>
                           Filter Mode: Includes any
@@ -2759,7 +2785,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                 class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
               >
                 <div
-                  aria-controls=":r1n:"
+                  aria-controls=":r1o:"
                   aria-expanded="false"
                   aria-haspopup="listbox"
                   aria-label="Rows per page"
@@ -2947,7 +2973,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                       aria-invalid="false"
                       autocomplete="new-password"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12yjm75-MuiInputBase-input-MuiOutlinedInput-input"
-                      id=":rks:"
+                      id=":rkd:"
                       placeholder="Search"
                       type="text"
                       value=""
@@ -3179,20 +3205,46 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                             </button>
                           </span>
                         </div>
-                        <input
-                          aria-describedby=":rl2:-helper-text"
-                          aria-invalid="false"
+                        <div
+                          aria-controls=":rkl:"
+                          aria-describedby=":rkj:-helper-text"
+                          aria-expanded="false"
+                          aria-haspopup="listbox"
                           aria-label="Filter by Catalogue Item"
+                          aria-labelledby=":rkj:"
+                          class="MuiSelect-select MuiSelect-standard MuiSelect-multiple MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-2jdjhv-MuiSelect-select-MuiInputBase-input-MuiInput-input"
+                          id=":rkj:"
+                          role="combobox"
+                          tabindex="0"
+                        >
+                          <div
+                            class="MuiBox-root css-1tzeee1"
+                          >
+                            Filter by Catalogue Item
+                          </div>
+                        </div>
+                        <input
+                          aria-hidden="true"
+                          aria-invalid="false"
                           autocomplete="new-password"
-                          class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                          id=":rl2:"
-                          placeholder="Filter by Catalogue Item"
+                          class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                          tabindex="-1"
                           title="Filter by Catalogue Item"
-                          type="text"
                           value=""
                         />
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon"
+                          data-testid="ArrowDropDownIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M7 10l5 5 5-5z"
+                          />
+                        </svg>
                         <div
-                          class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+                          class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-3yq2xl-MuiInputAdornment-root"
                         >
                           <span
                             aria-label="Clear filter"
@@ -3223,10 +3275,10 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                       </div>
                       <p
                         class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                        id=":rl2:-helper-text"
+                        id=":rkj:-helper-text"
                       >
                         <label>
-                          Filter Mode: Fuzzy
+                          Filter Mode: Includes any
                         </label>
                       </p>
                     </div>
@@ -3426,12 +3478,12 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                           </span>
                         </div>
                         <input
-                          aria-describedby=":rl9:-helper-text"
+                          aria-describedby=":rkr:-helper-text"
                           aria-invalid="false"
                           aria-label="Filter by Serial Number"
                           autocomplete="new-password"
                           class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                          id=":rl9:"
+                          id=":rkr:"
                           placeholder="Filter by Serial Number"
                           title="Filter by Serial Number"
                           type="text"
@@ -3469,7 +3521,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                       </div>
                       <p
                         class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                        id=":rl9:-helper-text"
+                        id=":rkr:-helper-text"
                       >
                         <label>
                           Filter Mode: Fuzzy
@@ -3944,7 +3996,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                 class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
               >
                 <div
-                  aria-controls=":rlf:"
+                  aria-controls=":rl1:"
                   aria-expanded="false"
                   aria-haspopup="listbox"
                   aria-label="Rows per page"
