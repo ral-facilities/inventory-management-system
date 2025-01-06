@@ -6,7 +6,7 @@ import { useGetManufacturer } from '../api/manufacturers';
 import { paths } from '../App';
 import Breadcrumbs from '../view/breadcrumbs.component';
 
-function ManufacturerContainer() {
+function ManufacturerLayout() {
   const { manufacturer_id: manufacturerId } = useParams();
 
   const { data: manufacturerData } = useGetManufacturer(manufacturerId);
@@ -60,4 +60,4 @@ function ManufacturerContainer() {
     </div>
   );
 }
-export default ManufacturerContainer;
+export default ManufacturerLayout;

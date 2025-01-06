@@ -28,8 +28,8 @@ import { HomePage } from './homePage/homePage.component';
 import IMSThemeProvider from './imsThemeProvider.component';
 import Items from './items/items.component';
 import ItemsLandingPage from './items/itemsLandingPage.component';
-import ManufacturerContainer from './manufacturer/manufacturerContainer.component';
 import ManufacturerLandingPage from './manufacturer/manufacturerLandingPage.component';
+import ManufacturerLayout from './manufacturer/manufacturerLayout.component';
 import ManufacturerTable from './manufacturer/manufacturersTable.component';
 import Preloader from './preloader/preloader.component';
 import retryIMS_APIErrors from './retryIMS_APIErrors';
@@ -80,7 +80,6 @@ const router = createBrowserRouter([
   {
     Component: Layout,
     children: [
-      { path: paths.any, Component: ViewTabs },
       { path: paths.root, Component: HomePage },
       { path: paths.homepage, Component: HomePage },
       {
@@ -114,9 +113,9 @@ const router = createBrowserRouter([
       { path: paths.systems, Component: Systems },
       {
         path: paths.manufacturers,
-        Component: ManufacturerContainer,
+        Component: ManufacturerLayout,
         children: [
-          { path: '', Component: ManufacturerTable },
+          { index: true, Component: ManufacturerTable },
           { path: paths.manufacturer, Component: ManufacturerLandingPage },
           {
             path: '*',
