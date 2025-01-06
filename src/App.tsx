@@ -11,7 +11,7 @@ import { AxiosError } from 'axios';
 import { enGB } from 'date-fns/locale/en-GB';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import AdminCardView from './admin/adminCardView.component';
-import AdminContainer from './admin/adminContainer.component';
+import AdminLayout from './admin/adminLayout.component';
 import Units from './admin/units/units.component';
 import UsageStatuses from './admin/usageStatuses/usageStatuses.component';
 import {
@@ -84,9 +84,9 @@ const router = createBrowserRouter([
       { path: paths.homepage, Component: HomePage },
       {
         path: paths.admin,
-        Component: AdminContainer,
+        Component: AdminLayout,
         children: [
-          { path: '', Component: AdminCardView },
+          { index: true, Component: AdminCardView },
           { path: paths.adminUnits, Component: Units },
           { path: paths.adminUsageStatuses, Component: UsageStatuses },
           {
