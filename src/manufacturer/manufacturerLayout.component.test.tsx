@@ -27,7 +27,7 @@ describe('Manufacturer Layout', () => {
     vi.clearAllMocks();
   });
 
-  it('navigates back to the root directory', async () => {
+  it('navigates back to the root directory from root', async () => {
     createView('/manufacturers');
 
     await waitFor(() => {
@@ -43,7 +43,7 @@ describe('Manufacturer Layout', () => {
     expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
     expect(mockedUseNavigate).toHaveBeenCalledWith('/manufacturers');
   });
-  it('navigates back to the root directory', async () => {
+  it('navigates back to the root directory  from landing page', async () => {
     createView('/manufacturers/1', true);
 
     await waitFor(() => {

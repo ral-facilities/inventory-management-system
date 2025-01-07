@@ -27,7 +27,7 @@ import Items from './items/items.component';
 import ItemsLandingPage from './items/itemsLandingPage.component';
 import ManufacturerLandingPage from './manufacturer/manufacturerLandingPage.component';
 import ManufacturerLayout from './manufacturer/manufacturerLayout.component';
-import ManufacturerTable from './manufacturer/manufacturersTable.component';
+import ManufacturerTable from './manufacturer/manufacturerTable.component';
 import Preloader from './preloader/preloader.component';
 import retryIMS_APIErrors from './retryIMS_APIErrors';
 import {

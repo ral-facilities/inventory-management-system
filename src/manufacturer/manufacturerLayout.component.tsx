@@ -45,8 +45,8 @@ function ManufacturerLayout() {
     <div style={{ width: '100%', height: '100%' }}>
       <Box
         sx={{
-          py: '20px',
-          paddingLeft: '4px',
+          py: 2.5,
+          paddingLeft: 0.5,
         }}
       >
         <Breadcrumbs
