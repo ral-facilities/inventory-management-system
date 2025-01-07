@@ -25,11 +25,17 @@ import {
 } from '../../../app.types';
 import { usePreservedTableState } from '../../../common/preservedTableState.component';
 import {
+  COLUMN_FILTER_FUNCTIONS,
+  COLUMN_FILTER_MODE_OPTIONS,
+  COLUMN_FILTER_VARIANTS,
+  MRT_Functions_Localisation,
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
   TableGroupedCell,
   TableHeaderOverflowTip,
+  customFilterFunctions,
   displayTableRowCountText,
+  getInitialColumnFilterFnState,
 } from '../../../utils';
 
 import AddIcon from '@mui/icons-material/Add';
@@ -68,6 +74,12 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
   const columns = React.useMemo<
     MRT_ColumnDef<AddCatalogueCategoryPropertyWithPlacementIds>[]
   >(() => {
+    const allowedValues = catalogueCategory?.properties
+      .flatMap((prop) => prop.allowed_values?.values)
+      .filter((val) => val !== undefined);
+
+    const unitValues = units?.map((unit) => unit.value);
+
     return [
       {
         header: 'Name',
@@ -75,6 +87,9 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
         accessorFn: (row) => row.name,
         id: 'name',
         size: 220,
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
         enableGrouping: false,
       },
       {
@@ -87,7 +102,25 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
             >
           ).find((key) => CatalogueCategoryPropertyType[key] === row.type),
         id: 'type',
-        size: 180,
+        filterVariant: 'multi-select',
+        filterFn: 'arrIncludesSome',
+        columnFilterModeOptions: ['arrIncludesSome', 'arrExcludesSome'],
+        renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) => [
+          <MenuItem
+            key="arrIncludesSome"
+            onClick={() => onSelectFilterMode('arrIncludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrIncludesSome}
+          </MenuItem>,
+          <MenuItem
+            key="arrExcludesSome"
+            onClick={() => onSelectFilterMode('arrExcludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrExcludesSome}
+          </MenuItem>,
+        ],
+        filterSelectOptions: Object.keys(CatalogueCategoryPropertyType),
+        size: 250,
         GroupedCell: TableGroupedCell,
       },
       {
@@ -99,6 +132,42 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
             .join(', '),
         id: 'allowed_values',
         size: 300,
+        filterVariant: 'multi-select',
+        filterFn: 'arrIncludesSome',
+        columnFilterModeOptions: [
+          'arrIncludesSome',
+          'arrIncludesAll',
+          'arrExcludesSome',
+          'arrExcludesAll',
+        ],
+        renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) => [
+          <MenuItem
+            key="arrIncludesSome"
+            onClick={() => onSelectFilterMode('arrIncludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrIncludesSome}
+          </MenuItem>,
+          <MenuItem
+            key="arrIncludesAll"
+            onClick={() => onSelectFilterMode('arrIncludesAll')}
+          >
+            {MRT_Functions_Localisation.filterArrIncludesAll}
+          </MenuItem>,
+          <MenuItem
+            key="arrExcludesSome"
+            onClick={() => onSelectFilterMode('arrExcludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrExcludesSome}
+          </MenuItem>,
+
+          <MenuItem
+            key="arrExcludesAll"
+            onClick={() => onSelectFilterMode('arrExcludesAll')}
+          >
+            {MRT_Functions_Localisation.filterArrExcludesAll}
+          </MenuItem>,
+        ],
+        filterSelectOptions: allowedValues,
         enableGrouping: false,
       },
       {
@@ -106,7 +175,25 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.unit,
         id: 'unit',
-        size: 180,
+        filterVariant: 'multi-select',
+        filterFn: 'arrIncludesSome',
+        columnFilterModeOptions: ['arrIncludesSome', 'arrExcludesSome'],
+        renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) => [
+          <MenuItem
+            key="arrIncludesSome"
+            onClick={() => onSelectFilterMode('arrIncludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrIncludesSome}
+          </MenuItem>,
+          <MenuItem
+            key="arrExcludesSome"
+            onClick={() => onSelectFilterMode('arrExcludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrExcludesSome}
+          </MenuItem>,
+        ],
+        filterSelectOptions: unitValues,
+        size: 250,
         Cell: ({ renderedCellValue, row }) => (
           <>
             {requestType === 'patch'
@@ -124,11 +211,17 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => (row.mandatory === 'true' ? 'Yes' : 'No'),
         id: 'property.mandatory',
+        filterVariant: COLUMN_FILTER_VARIANTS.boolean,
+        enableColumnFilterModes: false,
         size: 200,
         GroupedCell: TableGroupedCell,
       },
     ];
-  }, [requestType, units]);
+  }, [catalogueCategory, units, requestType]);
+
+  const initialColumnFilterFnState = React.useMemo(() => {
+    return getInitialColumnFilterFnState(columns);
+  }, [columns]);
 
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
@@ -137,6 +230,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
         pageSize: 5,
         pageIndex: 0,
       },
+      columnFilterFns: initialColumnFilterFnState,
     },
   });
 
@@ -145,6 +239,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
     data: properties ?? [],
     // Features
     enableTopToolbar: true,
+    enableColumnFilterModes: true,
     enableFacetedValues: true,
     enableStickyHeader: true,
     enableDensityToggle: false,
@@ -160,6 +255,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
     paginationDisplayMode: 'pages',
     positionToolbarAlertBanner: 'bottom',
     autoResetPageIndex: false,
+    filterFns: customFilterFunctions,
     //State
     initialState: {
       showColumnFilters: true,
@@ -178,6 +274,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
     // Localisation
     localization: {
       ...MRT_Localization_EN,
+      ...MRT_Functions_Localisation,
       noRecordsToDisplay: 'No Catalogue Item Fields',
     },
     muiTableBodyRowProps: ({ row }) => {

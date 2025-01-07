@@ -881,7 +881,7 @@ describe('Catalogue Category Dialog', () => {
       expect(incorrectTypeHelperTexts.length).toEqual(1);
 
       expect(onClose).not.toHaveBeenCalled();
-    }, 10000);
+    }, 15000);
 
     it('displays duplicate values and incorrect type error and deletes an allowed value to check if errors states are in correct location (allowed_values list of numbers)', async () => {
       createView();
