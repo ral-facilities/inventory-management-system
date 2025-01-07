@@ -105,7 +105,6 @@ export const handlers = [
       const data = CatalogueCategoriesJSON.find(
         (catalogueCategory) => catalogueCategory.id === id
       );
-
       if (!data) {
         return HttpResponse.json(
           { detail: 'Catalogue category not found' },
@@ -335,6 +334,14 @@ export const handlers = [
         const CatalogueItemData = CatalogueItemsJSON.find(
           (catalogueItem) => catalogueItem.id === id
         );
+
+        if (!CatalogueItemData) {
+          return HttpResponse.json(
+            { detail: 'Catalogue not found' },
+            { status: 404 }
+          );
+        }
+
         return HttpResponse.json(CatalogueItemData, { status: 200 });
       }
       return HttpResponse.json({ detail: '' }, { status: 422 });
@@ -749,6 +756,10 @@ export const handlers = [
       const { id } = params;
 
       const data = ItemsJSON.find((items) => items.id === id);
+
+      if (!data) {
+        return HttpResponse.json({ detail: 'Item not found' }, { status: 404 });
+      }
 
       return HttpResponse.json(data, { status: 200 });
     }

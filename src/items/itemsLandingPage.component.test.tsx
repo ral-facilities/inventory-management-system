@@ -65,22 +65,11 @@ describe('Items Landing Page', () => {
       expect(screen.getByText('Cameras 1')).toBeInTheDocument();
     });
 
-    const systemName = screen.getByText('Giant laser');
+    const systemName = await screen.findByText('Giant laser');
     expect(systemName).toHaveAttribute(
       'href',
       '/systems/65328f34a40ff5301575a4e3'
     );
-  });
-
-  it('renders no item page correctly', async () => {
-    createView('/catalogue/4/items/1/items/KvT2');
-    await waitFor(() => {
-      expect(
-        screen.getByText(
-          `This item doesn't exist. Please click the Home button to navigate to the catalogue home`
-        )
-      ).toBeInTheDocument();
-    });
   });
 
   it('shows the loading indicator', async () => {

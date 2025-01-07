@@ -7,9 +7,15 @@ import React from 'react';
 // import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
+import type { Router } from '@remix-run/router';
 import { AxiosError } from 'axios';
 import { enGB } from 'date-fns/locale/en-GB';
-import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import {
+  Outlet,
+  RouterProvider,
+  createBrowserRouter,
+  type RouteObject,
+} from 'react-router-dom';
 import AdminCardView from './admin/adminCardView.component';
 import AdminLayout from './admin/adminLayout.component';
 import Units from './admin/units/units.component';
@@ -20,7 +26,8 @@ import {
 } from './api/api';
 import { MicroFrontendId } from './app.types';
 import CatalogueLayout, {
-  loader as catalogueLayoutLoader,
+  CatalogueLayoutErrorComponent,
+  catalogueLayoutLoader,
 } from './catalogue/catalogueLayout.component';
 import CatalogueCardView from './catalogue/category/catalogueCardView.component';
 import CatalogueItemsLandingPage from './catalogue/items/catalogueItemsLandingPage.component';
@@ -65,7 +72,7 @@ export const paths = {
   manufacturer: '/manufacturers/:manufacturer_id',
 };
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: (error) => {
       handleIMS_APIError(error as AxiosError);
@@ -84,7 +91,7 @@ const queryClient = new QueryClient({
   },
 });
 
-const router = createBrowserRouter([
+const routeObject: RouteObject[] = [
   {
     Component: Layout,
     children: [
@@ -111,18 +118,16 @@ const router = createBrowserRouter([
       {
         path: paths.catalogue,
         Component: CatalogueLayout,
+        loader: catalogueLayoutLoader(queryClient),
+        ErrorBoundary: CatalogueLayoutErrorComponent,
         children: [
-          { index: true, Component: CatalogueCardView },
+          {
+            index: true,
+            Component: CatalogueCardView,
+          },
           {
             path: paths.catalogueCategories,
             Component: Outlet,
-            loader: catalogueLayoutLoader(queryClient),
-            errorElement: (
-              <ErrorPage
-                boldErrorText="Invalid"
-                errorText="The catalogue route you are trying to access doesn't exist. Please click the Home button to navigate back to the Catalogue Home page."
-              />
-            ),
             children: [
               {
                 index: true,
@@ -160,12 +165,7 @@ const router = createBrowserRouter([
           },
           {
             path: '*',
-            Component: () => (
-              <ErrorPage
-                boldErrorText="Invalid Catalogue Route"
-                errorText="The catalogue route you are trying to access doesn't exist. Please click the Home button to navigate back to the Catalogue Home page."
-              />
-            ),
+            Component: CatalogueLayoutErrorComponent,
           },
         ],
       },
@@ -205,9 +205,21 @@ const router = createBrowserRouter([
       },
     ],
   },
-]);
+];
+
+let router: Router;
+const isUsingMSW =
+  import.meta.env.DEV || import.meta.env.VITE_APP_INCLUDE_MSW === 'true';
+
+if (!isUsingMSW) {
+  router = createBrowserRouter(routeObject);
+}
 
 export default function App() {
+  if (isUsingMSW) {
+    router = createBrowserRouter(routeObject);
+    return <RouterProvider router={router} />;
+  }
   return <RouterProvider router={router} />;
 }
 

@@ -18,6 +18,7 @@ import {
   useGetCatalogueItem,
 } from '../api/catalogueItems';
 import { getItemQuery, useGetItem } from '../api/items';
+import ErrorPage from '../common/errorPage.component';
 import Breadcrumbs from '../view/breadcrumbs.component';
 
 /* Returns function that navigates to a specific catalogue category id or catalogue path (or to the root of
@@ -33,7 +34,63 @@ export const useNavigateToCatalogue = () => {
   );
 };
 
-export const loader =
+interface CatalogueLayoutHeaderProps {
+  breadcrumbsInfo?: BreadcrumbsInfo;
+  children: React.ReactNode;
+}
+
+function CatalogueLayoutHeader(props: CatalogueLayoutHeaderProps) {
+  const { breadcrumbsInfo, children } = props;
+  const navigateToCatalogue = useNavigateToCatalogue();
+  return (
+    <Box height="100%">
+      <Grid
+        container
+        alignItems="center"
+        justifyContent="space-between"
+        sx={{
+          justifyContent: 'left',
+          paddingLeft: 0.5,
+          position: 'sticky',
+          top: 0,
+          backgroundColor: 'background.default',
+          zIndex: 1000,
+          width: '100%',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            paddingTop: '20px',
+            paddingBottom: '20px',
+          }}
+        >
+          <Breadcrumbs
+            onChangeNode={navigateToCatalogue}
+            breadcrumbsInfo={breadcrumbsInfo}
+            onChangeNavigateHome={() => navigateToCatalogue(null)}
+            homeLocation="Catalogue"
+          />
+        </div>
+      </Grid>
+      {children}
+    </Box>
+  );
+}
+
+export const CatalogueLayoutErrorComponent = () => {
+  return (
+    <CatalogueLayoutHeader>
+      <ErrorPage
+        boldErrorText="Invalid Catalogue Route"
+        errorText="The catalogue route you are trying to access doesn't exist. Please click the Home button to navigate back to the Catalogue Home page."
+      />
+    </CatalogueLayoutHeader>
+  );
+};
+
+export const catalogueLayoutLoader =
   (queryClient: QueryClient) =>
   async ({ params }: LoaderFunctionArgs) => {
     const {
@@ -41,6 +98,7 @@ export const loader =
       catalogue_item_id: catalogueItemId,
       item_id: itemId,
     } = params;
+
     if (catalogueCategoryId) {
       await queryClient.ensureQueryData(
         getCatalogueCategoryQuery(catalogueCategoryId, true)
@@ -159,42 +217,10 @@ function CatalogueLayout() {
     lastSegmentOfCataloguePath,
   ]);
 
-  const navigateToCatalogue = useNavigateToCatalogue();
-
   return (
-    <Box height="100%">
-      <Grid
-        container
-        alignItems="center"
-        justifyContent="space-between"
-        sx={{
-          justifyContent: 'left',
-          paddingLeft: 0.5,
-          position: 'sticky',
-          top: 0,
-          backgroundColor: 'background.default',
-          zIndex: 1000,
-          width: '100%',
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            paddingTop: '20px',
-            paddingBottom: '20px',
-          }}
-        >
-          <Breadcrumbs
-            onChangeNode={navigateToCatalogue}
-            breadcrumbsInfo={catalogueBreadcrumbs}
-            onChangeNavigateHome={() => navigateToCatalogue(null)}
-            homeLocation="Catalogue"
-          />
-        </div>
-      </Grid>
+    <CatalogueLayoutHeader breadcrumbsInfo={catalogueBreadcrumbs}>
       <Outlet />
-    </Box>
+    </CatalogueLayoutHeader>
   );
 }
 

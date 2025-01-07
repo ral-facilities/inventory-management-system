@@ -78,17 +78,6 @@ describe('Catalogue Items Landing Page', () => {
     expect(screen.getByText('Resolution (megapixels)')).toBeInTheDocument();
   });
 
-  it('renders no item page correctly', async () => {
-    createView('/catalogue/4/items/fds');
-    await waitFor(() => {
-      expect(
-        screen.getByText(
-          `This catalogue item doesn't exist. Please click the Home button on the top left of your screen to navigate to the catalogue home.`
-        )
-      ).toBeInTheDocument();
-    });
-  });
-
   it('shows the loading indicator', async () => {
     createView('/catalogue/4/items/1');
 

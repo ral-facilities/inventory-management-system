@@ -513,7 +513,7 @@ describe('Catalogue Items', () => {
     cy.visit('/catalogue/4/items/1fds');
 
     cy.findByText(
-      `This catalogue item doesn't exist. Please click the Home button on the top left of your screen to navigate to the catalogue home.`
+      `The catalogue route you are trying to access doesn't exist. Please click the Home button to navigate back to the Catalogue Home page.`
     ).should('exist');
 
     cy.findByRole('button', { name: 'navigate to catalogue home' }).click();

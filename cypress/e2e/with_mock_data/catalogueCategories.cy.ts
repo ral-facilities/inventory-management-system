@@ -887,7 +887,7 @@ describe('Catalogue Category', () => {
   it('category with no data displays no results found', () => {
     cy.visit('/catalogue/16');
     cy.findByText(
-      'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen'
+      'There are no catalogue categories. Please add a category using the button in the top left of your screen'
     ).should('exist');
   });
 
@@ -901,18 +901,9 @@ describe('Catalogue Category', () => {
   it('expired url displays search not found message', () => {
     cy.visit('/catalogue/not-exist');
     cy.findByText(
-      'The category you searched for does not exist. Please navigate home by pressing the home button at the top left of your screen.',
+      `The catalogue route you are trying to access doesn't exist. Please click the Home button to navigate back to the Catalogue Home page.`,
       { timeout: 10000 }
     ).should('exist');
-  });
-
-  it('add button disabled when expired url is used', () => {
-    cy.visit('/catalogue/not-exist');
-
-    cy.findByRole('button', {
-      name: 'Add Catalogue Category',
-      timeout: 10000,
-    }).should('be.disabled');
   });
 
   it('when root has no data it displays no categories error message', () => {
@@ -922,7 +913,7 @@ describe('Catalogue Category', () => {
       statusCode: 200,
     });
     cy.findByText(
-      'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen'
+      'There are no catalogue categories. Please add a category using the button in the top left of your screen'
     ).should('exist');
   });
 

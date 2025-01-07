@@ -507,28 +507,7 @@ function CatalogueItemsLandingPage() {
           </Grid>
         </Grid>
       )}
-      {!catalogueItemIdDataLoading && !catalogueCategoryDataLoading ? (
-        (!catalogueItemIdData ||
-          !catalogueCategoryData ||
-          !isParentCorrect) && (
-          <Box
-            sx={{
-              width: '100%',
-              justifyContent: 'center',
-              marginTop: 1,
-            }}
-          >
-            <Typography sx={{ fontWeight: 'bold', textAlign: 'center' }}>
-              No result found
-            </Typography>
-            <Typography sx={{ textAlign: 'center' }}>
-              This catalogue item doesn&#39;t exist. Please click the Home
-              button on the top left of your screen to navigate to the catalogue
-              home.
-            </Typography>
-          </Box>
-        )
-      ) : (
+      {!(!catalogueItemIdDataLoading && !catalogueCategoryDataLoading) && (
         <Box sx={{ width: '100%' }}>
           <LinearProgress />
         </Box>

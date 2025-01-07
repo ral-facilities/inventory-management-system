@@ -1,24 +1,5 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`CatalogueItemsPage > renders a catalogue items error page correctly 1`] = `
-<DocumentFragment>
-  <div
-    class="MuiBox-root css-5tbyhb"
-  >
-    <p
-      class="MuiTypography-root MuiTypography-body1 css-11gsi37-MuiTypography-root"
-    >
-      No results found
-    </p>
-    <p
-      class="MuiTypography-root MuiTypography-body1 css-1uwgr7b-MuiTypography-root"
-    >
-      The category you searched for does not exist. Please navigate home by pressing the home button at the top left of your screen.
-    </p>
-  </div>
-</DocumentFragment>
-`;
-
 exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
 <DocumentFragment>
   <div

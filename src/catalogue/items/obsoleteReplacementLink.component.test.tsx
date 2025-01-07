@@ -31,8 +31,9 @@ describe('ObsoleteReplacementLink', () => {
     props.catalogueItemId = 'fdsfsdfds';
     const view = createView();
 
-    await waitFor(() =>
-      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    await waitFor(
+      () => expect(screen.queryByRole('progressbar')).not.toBeInTheDocument(),
+      { timeout: 10000 }
     );
 
     await waitFor(() => {
@@ -41,4 +42,4 @@ describe('ObsoleteReplacementLink', () => {
 
     expect(view.asFragment()).toMatchSnapshot();
   });
-});
+}, 15000);

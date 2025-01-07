@@ -1,8 +1,13 @@
+import { QueryClient } from '@tanstack/react-query';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import type { LoaderFunctionArgs } from 'react-router-dom';
 import { paths } from '../App';
 import { renderComponentWithRouterProvider } from '../testUtils';
-import CatalogueLayout from './catalogueLayout.component';
+import CatalogueLayout, {
+  CatalogueLayoutErrorComponent,
+  catalogueLayoutLoader,
+} from './catalogueLayout.component';
 
 const mockedUseNavigate = vi.fn();
 
@@ -16,6 +21,10 @@ describe('Catalogue Layout', () => {
 
   beforeEach(() => {
     user = userEvent.setup();
+  });
+
+  afterEach(() => {
+    vi.clearAllMocks();
   });
   const createView = (path: string, urlPathKey: keyof typeof paths) => {
     return renderComponentWithRouterProvider(
@@ -104,5 +113,135 @@ describe('Catalogue Layout', () => {
 
     expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
     expect(mockedUseNavigate).toHaveBeenCalledWith('/catalogue');
+  });
+});
+
+describe('Catalogue Layout Error Component', () => {
+  let user: UserEvent;
+
+  beforeEach(() => {
+    user = userEvent.setup();
+  });
+  const createView = () => {
+    return renderComponentWithRouterProvider(<CatalogueLayoutErrorComponent />);
+  };
+
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('renders catalogue error page correctly', async () => {
+    const view = createView();
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', {
+          name: 'navigate to catalogue home',
+        })
+      ).toBeInTheDocument();
+    });
+
+    const homeButton = screen.getByRole('button', {
+      name: 'navigate to catalogue home',
+    });
+
+    await user.click(homeButton);
+
+    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
+    expect(mockedUseNavigate).toHaveBeenCalledWith('/catalogue');
+
+    expect(view.asFragment()).toMatchSnapshot();
+  });
+});
+
+describe('catalogueLayoutLoader', () => {
+  let queryClient: QueryClient;
+
+  beforeEach(() => {
+    queryClient = new QueryClient();
+    vi.clearAllMocks();
+  });
+  it('should fetch catalogue category data if catalogue_category_id is provided', async () => {
+    const params = { catalogue_category_id: '1' };
+    const output = await catalogueLayoutLoader(queryClient)({
+      params,
+    } as unknown as LoaderFunctionArgs);
+
+    expect(output).toEqual({
+      catalogue_category_id: '1',
+    });
+  });
+
+  it('should throw an error if an invalid catalogue_category_id is provided', async () => {
+    const params = { catalogue_category_id: '120' };
+
+    await expect(
+      catalogueLayoutLoader(queryClient)({
+        params,
+      } as unknown as LoaderFunctionArgs)
+    ).rejects.toThrow('Request failed with status code 404');
+  });
+
+  it('should throw an error if catalogue_item_id does not belong to catalogue_category_id', async () => {
+    const params = { catalogue_category_id: '1', catalogue_item_id: '2' };
+
+    await expect(
+      catalogueLayoutLoader(queryClient)({
+        params,
+      } as unknown as LoaderFunctionArgs)
+    ).rejects.toThrow('Catalogue item 2 does not belong to category 1');
+  });
+
+  it('should throw an error if an invalid catalogue_item_id is provided', async () => {
+    const params = { catalogue_item_id: 'invalid' };
+
+    await expect(
+      catalogueLayoutLoader(queryClient)({
+        params,
+      } as unknown as LoaderFunctionArgs)
+    ).rejects.toThrow('Request failed with status code 404');
+  });
+
+  it('should fetch item data if item_id is provided', async () => {
+    const params = { item_id: 'KvT2Ox7n' };
+    const output = await catalogueLayoutLoader(queryClient)({
+      params,
+    } as unknown as LoaderFunctionArgs);
+
+    expect(output).toEqual({
+      item_id: 'KvT2Ox7n',
+    });
+  });
+
+  it('should throw an error if an invalid item_id is provided', async () => {
+    const params = { item_id: '120' };
+
+    await expect(
+      catalogueLayoutLoader(queryClient)({
+        params,
+      } as unknown as LoaderFunctionArgs)
+    ).rejects.toThrow('Request failed with status code 404');
+  });
+
+  it('should fetch catalogue category data if catalogue_category_id  and catalogue_item_id is provided', async () => {
+    const params = { catalogue_category_id: '4', catalogue_item_id: '1' };
+    const output = await catalogueLayoutLoader(queryClient)({
+      params,
+    } as unknown as LoaderFunctionArgs);
+
+    expect(output).toEqual(params);
+  });
+
+  it('should fetch catalogue category data if catalogue_category_id, item_id and catalogue_item_id is provided', async () => {
+    const params = {
+      catalogue_category_id: '4',
+      catalogue_item_id: '1',
+      item_id: 'KvT2Ox7n',
+    };
+    const output = await catalogueLayoutLoader(queryClient)({
+      params,
+    } as unknown as LoaderFunctionArgs);
+
+    expect(output).toEqual(params);
   });
 });

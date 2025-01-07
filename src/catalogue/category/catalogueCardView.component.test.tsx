@@ -116,36 +116,9 @@ describe('CardView', () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen'
+          'There are no catalogue categories. Please add a category using the button in the top left of your screen'
         )
       ).toBeInTheDocument();
-    });
-  });
-
-  it('expired url opens no results page', async () => {
-    createView('/catalogue/not-category', 'catalogueCategories');
-
-    await waitFor(() => {
-      expect(
-        screen.getByText(
-          'The category you searched for does not exist. Please navigate home by pressing the home button at the top left of your screen.'
-        )
-      ).toBeInTheDocument();
-    });
-  });
-
-  it('add button disabled when expired url is used', async () => {
-    createView('/catalogue/not-category', 'catalogueCategories');
-
-    await waitFor(() =>
-      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
-    );
-
-    const addButton = screen.getByRole('button', {
-      name: 'Add Catalogue Category',
-    });
-    await waitFor(() => {
-      expect(addButton).toBeDisabled();
     });
   });
 
@@ -161,7 +134,7 @@ describe('CardView', () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen'
+          'There are no catalogue categories. Please add a category using the button in the top left of your screen'
         )
       ).toBeInTheDocument();
     });

@@ -1,4 +1,4 @@
-import { Box, Grid, LinearProgress, Typography } from '@mui/material';
+import { Box, Grid, LinearProgress } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useGetCatalogueCategory } from '../api/catalogueCategories';
 import { useGetCatalogueItem } from '../api/catalogueItems';
@@ -24,25 +24,7 @@ export function Items() {
         />
       )}
 
-      {!catalogueItemLoading ? (
-        !catalogueItem && (
-          <Box
-            sx={{
-              width: '100%',
-              justifyContent: 'center',
-              marginTop: 1,
-            }}
-          >
-            <Typography sx={{ fontWeight: 'bold', textAlign: 'center' }}>
-              No result found
-            </Typography>
-            <Typography sx={{ textAlign: 'center' }}>
-              These items don&#39;t exist. Please click the Home button on the
-              top left of your screen to navigate to the catalogue home.
-            </Typography>
-          </Box>
-        )
-      ) : (
+      {catalogueItemLoading && (
         <Box sx={{ width: '100%' }}>
           <LinearProgress />
         </Box>
