@@ -590,7 +590,7 @@ describe('Catalogue Items', () => {
       .should('be.visible')
       .within(() => {
         cy.contains('Catalogue item has child elements, so you cannot update the properties, '
-          + 'and the manufacturer cannot be changed')
+          + 'and the manufacturer cannot be changed from Manufacturer C')
       });
     cy.findByRole('button', { name: 'Finish' }).should('be.disabled');
 
@@ -606,7 +606,7 @@ describe('Catalogue Items', () => {
       .should('be.visible')
       .within(() => {
         cy.contains('Catalogue item has child elements, so you cannot update the properties, '
-          + 'and the manufacturer cannot be changed')
+          + 'and the manufacturer cannot be changed from Manufacturer C')
       });
     cy.findByRole('button', { name: 'Finish' }).should('be.disabled');
   });

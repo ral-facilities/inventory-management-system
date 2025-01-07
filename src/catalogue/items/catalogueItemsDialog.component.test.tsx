@@ -1110,7 +1110,7 @@ describe('Catalogue Items Dialog', () => {
         expect(
           screen.getByText(
             'Catalogue item has child elements, so you cannot update the properties, '
-              + 'and the manufacturer cannot be changed'
+              + 'and the manufacturer cannot be changed from Manufacturer A'
           )
         ).toBeInTheDocument();
       });
@@ -1153,7 +1153,7 @@ describe('Catalogue Items Dialog', () => {
         expect(
           screen.getByText(
             'Catalogue item has child elements, so you cannot update the properties, '
-              + 'and the manufacturer cannot be changed'
+              + 'and the manufacturer cannot be changed from Manufacturer A'
           )
         ).toBeInTheDocument();
       });
