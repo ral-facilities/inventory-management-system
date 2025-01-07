@@ -386,18 +386,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
               if (response && error.response?.status === 409) {
                 if (response.detail.includes('child elements')) {
-                  // find the name of the manufacturer, so it can be used in the error message
-                  const manufacturerName = manufacturerList?.find(
-                    (manufacturer) => manufacturer.id === selectedCatalogueItem.manufacturer_id
-                  ) || null
-                  // add the manufacturer name into the error message
-                  const message = response.detail.replace(
-                    "so the following fields cannot be updated: manufacturer_id, properties",
-                    ("so you cannot update the properties, and the manufacturer cannot be changed from "
-                      + manufacturerName?.name)
-                  )
                   setErrorPropertiesStep('root.formError', {
-                    message: message,
+                    message: response.detail,
                   });
                 }
                 return;
@@ -417,7 +407,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       patchCatalogueItem,
       handleClose,
       setErrorPropertiesStep,
-      manufacturerList,
     ]
   );
 
@@ -535,6 +524,24 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     return sortDataList(recentManufacturers, 'name')
       .reverse()
       .concat(sortDataList(classifiedManufacturers, 'name').reverse());
+  };
+
+  const errorMessage = ( message: string | undefined ) => {
+    if (message?.includes('child elements')) {
+      // find the name of the manufacturer, so it can be used in the error message
+      const manufacturerName = manufacturerList?.find(
+        (manufacturer) => manufacturer.id === selectedCatalogueItem?.manufacturer_id
+      ) || null
+      // add the manufacturer name into the error message
+      const childElementsMessage = message.replace(
+        "child elements, so the following fields cannot be updated: manufacturer_id, properties",
+        ("items, so you cannot update the properties, and the manufacturer cannot be changed from "
+          + manufacturerName?.name)
+      )
+      return (childElementsMessage)
+    } else {
+      return (message)
+    };
   };
 
   const renderStepContent = (step: number) => {
@@ -1013,7 +1020,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       >
         {errorsPropertiesStep.root?.formError && (
           <FormHelperText sx={{ marginBottom: 2, textAlign: 'center' }} error>
-            {errorsPropertiesStep.root?.formError.message}
+            {errorMessage(errorsPropertiesStep.root?.formError.message)}
           </FormHelperText>
         )}
       </Box>
