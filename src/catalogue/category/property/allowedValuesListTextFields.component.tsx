@@ -39,7 +39,6 @@ const AllowedValuesListTextFields = (props: {
   >();
 
   const propertyRHF = watch();
-
   const { fields, append, remove } = useFieldArray({
     control,
     name:
@@ -47,7 +46,8 @@ const AllowedValuesListTextFields = (props: {
         ? `properties.${propertyIndex}.allowed_values.values.values`
         : `allowed_values.values.values`,
   });
-  const allowedValuesIds = property?.allowed_values?.values.values.map(
+
+  const allowedValuesIds = property?.allowed_values?.values?.values.map(
     (val) => val.av_placement_id
   );
 
