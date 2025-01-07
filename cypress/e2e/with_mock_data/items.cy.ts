@@ -2,7 +2,7 @@ import { delay, HttpResponse } from 'msw';
 
 describe('Items', () => {
   beforeEach(() => {
-    cy.visit('/catalogue/item/1/items');
+    cy.visit('/catalogue/4/items/1/items');
   });
   afterEach(() => {
     cy.clearMocks();
@@ -21,7 +21,7 @@ describe('Items', () => {
   });
 
   it('should be able to navigate back to the catalogue home step by step', () => {
-    cy.visit('/catalogue/item/1/items/KvT2Ox7n');
+    cy.visit('/catalogue/4/items/1/items/KvT2Ox7n');
 
     cy.findByRole('link', { name: 'Items' }).click();
 
@@ -224,7 +224,7 @@ describe('Items', () => {
   });
 
   it('adds an item with only mandatory fields (allowed list of values)', () => {
-    cy.visit('/catalogue/item/17/items');
+    cy.visit('/catalogue/12/items/17/items');
     cy.findByRole('button', { name: 'Add Item' }).click();
 
     cy.findByLabelText('Usage status *').click();

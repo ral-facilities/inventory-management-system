@@ -1287,13 +1287,25 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
-                        <a
-                          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                          href="/catalogue/item/10"
-                          target="_blank"
+                        <span
+                          class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary css-18lrjg1-MuiCircularProgress-root"
+                          role="progressbar"
+                          style="width: 40px; height: 40px;"
                         >
-                          Click here
-                        </a>
+                          <svg
+                            class="MuiCircularProgress-svg css-1idz92c-MuiCircularProgress-svg"
+                            viewBox="22 22 44 44"
+                          >
+                            <circle
+                              class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-176wh8e-MuiCircularProgress-circle"
+                              cx="44"
+                              cy="44"
+                              fill="none"
+                              r="20.2"
+                              stroke-width="3.6"
+                            />
+                          </svg>
+                        </span>
                       </p>
                     </div>
                     <div
@@ -1811,13 +1823,25 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
-                        <a
-                          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                          href="/catalogue/item/6"
-                          target="_blank"
+                        <span
+                          class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary css-18lrjg1-MuiCircularProgress-root"
+                          role="progressbar"
+                          style="width: 40px; height: 40px;"
                         >
-                          Click here
-                        </a>
+                          <svg
+                            class="MuiCircularProgress-svg css-1idz92c-MuiCircularProgress-svg"
+                            viewBox="22 22 44 44"
+                          >
+                            <circle
+                              class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-176wh8e-MuiCircularProgress-circle"
+                              cx="44"
+                              cy="44"
+                              fill="none"
+                              r="20.2"
+                              stroke-width="3.6"
+                            />
+                          </svg>
+                        </span>
                       </p>
                     </div>
                     <div
@@ -2347,8 +2371,7 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                       >
                         <a
                           class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                          href="/catalogue/item/6"
-                          target="_blank"
+                          href="/catalogue/5/items/6"
                         >
                           Click here
                         </a>
@@ -2880,8 +2903,7 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                       >
                         <a
                           class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                          href="/catalogue/item/6"
-                          target="_blank"
+                          href="/catalogue/5/items/6"
                         >
                           Click here
                         </a>
@@ -3413,8 +3435,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                       >
                         <a
                           class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                          href="/catalogue/item/6"
-                          target="_blank"
+                          href="/catalogue/5/items/6"
                         >
                           Click here
                         </a>

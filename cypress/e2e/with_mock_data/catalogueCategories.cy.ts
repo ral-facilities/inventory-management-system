@@ -14,7 +14,7 @@ describe('Catalogue Category', () => {
         name: 'Test ' + index.toString(),
         parent_id: null,
         code: index.toString(),
-        is_leaf: true,
+        is_leaf: false,
         created_time: '2024-01-01T12:00:00.000+00:00',
         modified_time: '2024-01-02T13:10:10.000+00:00',
         properties: [],
@@ -129,7 +129,7 @@ describe('Catalogue Category', () => {
   });
 
   it('display error message when there is no name when adding a catalogue category', () => {
-    cy.findByRole('button', { name: 'add catalogue category' }).click();
+    cy.findByRole('button', { name: 'Add Catalogue Category' }).click();
     cy.findByRole('button', { name: 'Save' }).click();
     cy.findByRole('dialog')
       .should('be.visible')
@@ -149,7 +149,7 @@ describe('Catalogue Category', () => {
   });
 
   it('adds a catalogue category where isLeaf is false', () => {
-    cy.findByRole('button', { name: 'add catalogue category' }).click();
+    cy.findByRole('button', { name: 'Add Catalogue Category' }).click();
     cy.findByLabelText('Name *').type('test');
 
     cy.startSnoopingBrowserMockedRequest();
@@ -240,7 +240,7 @@ describe('Catalogue Category', () => {
   });
 
   it('adds a catalogue category where isLeaf is true', () => {
-    cy.findByRole('button', { name: 'add catalogue category' }).click();
+    cy.findByRole('button', { name: 'Add Catalogue Category' }).click();
     cy.findByLabelText('Name *').type('test');
 
     cy.findByLabelText('Catalogue Items').click();
@@ -296,7 +296,7 @@ describe('Catalogue Category', () => {
   });
 
   it('adds a catalogue category where isLeaf is true with a list of allowed values', () => {
-    cy.findByRole('button', { name: 'add catalogue category' }).click();
+    cy.findByRole('button', { name: 'Add Catalogue Category' }).click();
     cy.findByLabelText('Name *').type('test');
 
     cy.findByLabelText('Catalogue Items').click();
@@ -353,7 +353,7 @@ describe('Catalogue Category', () => {
   });
 
   it('displays the allowed values list error states (Text)', () => {
-    cy.findByRole('button', { name: 'add catalogue category' }).click();
+    cy.findByRole('button', { name: 'Add Catalogue Category' }).click();
     cy.findByLabelText('Name *').type('test');
 
     cy.findByLabelText('Catalogue Items').click();
@@ -402,7 +402,7 @@ describe('Catalogue Category', () => {
   });
 
   it('displays the allowed values list error states and check if the error states are in the correct location (number)', () => {
-    cy.findByRole('button', { name: 'add catalogue category' }).click();
+    cy.findByRole('button', { name: 'Add Catalogue Category' }).click();
     cy.findByLabelText('Name *').type('test');
 
     cy.findByLabelText('Catalogue Items').click();
@@ -448,7 +448,7 @@ describe('Catalogue Category', () => {
   });
 
   it('displays the allowed values list error states (number)', () => {
-    cy.findByRole('button', { name: 'add catalogue category' }).click();
+    cy.findByRole('button', { name: 'Add Catalogue Category' }).click();
     cy.findByLabelText('Name *').type('test');
 
     cy.findByLabelText('Catalogue Items').click();
@@ -518,7 +518,7 @@ describe('Catalogue Category', () => {
   });
 
   it('displays error message when duplicate names for properties are entered', () => {
-    cy.findByRole('button', { name: 'add catalogue category' }).click();
+    cy.findByRole('button', { name: 'Add Catalogue Category' }).click();
     cy.findByLabelText('Name *').type('test');
 
     cy.findByLabelText('Catalogue Items').click();
@@ -901,16 +901,18 @@ describe('Catalogue Category', () => {
   it('expired url displays search not found message', () => {
     cy.visit('/catalogue/not-exist');
     cy.findByText(
-      'The category you searched for does not exist. Please navigate home by pressing the home button at the top left of your screen.'
+      'The category you searched for does not exist. Please navigate home by pressing the home button at the top left of your screen.',
+      { timeout: 10000 }
     ).should('exist');
   });
 
   it('add button disabled when expired url is used', () => {
     cy.visit('/catalogue/not-exist');
 
-    cy.findByRole('button', { name: 'add catalogue category' }).should(
-      'be.disabled'
-    );
+    cy.findByRole('button', {
+      name: 'Add Catalogue Category',
+      timeout: 10000,
+    }).should('be.disabled');
   });
 
   it('when root has no data it displays no categories error message', () => {

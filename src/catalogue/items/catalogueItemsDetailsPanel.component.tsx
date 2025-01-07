@@ -15,6 +15,7 @@ import {
 } from '../../api/api.types';
 import PlaceholderImage from '../../common/images/placeholderImage.component';
 import { formatDateTimeStrings } from '../../utils';
+import ObsoleteReplacementLink from './obsoleteReplacementLink.component';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function TabPanel(props: any) {
@@ -103,14 +104,11 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
                 <Typography color="text.secondary">
                   {catalogueItemIdData.obsolete_replacement_catalogue_item_id ? (
-                    <MuiLink
-                      component={Link}
-                      underline="hover"
-                      target="_blank"
-                      to={`/catalogue/item/${catalogueItemIdData.obsolete_replacement_catalogue_item_id}`}
-                    >
-                      Click here
-                    </MuiLink>
+                    <ObsoleteReplacementLink
+                      catalogueItemId={
+                        catalogueItemIdData.obsolete_replacement_catalogue_item_id
+                      }
+                    />
                   ) : (
                     'None'
                   )}

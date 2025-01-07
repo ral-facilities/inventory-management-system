@@ -510,7 +510,7 @@ describe('Catalogue Items', () => {
   });
 
   it('displays the expired landing page message and navigates back to the catalogue home', () => {
-    cy.visit('/catalogue/item/1fds');
+    cy.visit('/catalogue/4/items/1fds');
 
     cy.findByText(
       `This catalogue item doesn't exist. Please click the Home button on the top left of your screen to navigate to the catalogue home.`
@@ -739,7 +739,7 @@ describe('Catalogue Items', () => {
 
   it('can load and clear date filters', () => {
     cy.visit(
-      '/catalogue/4?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0luSCAZgsUgPoYKXEgA0IANxwkY8EBgCeABx7QQSTD35DsIuQCYADOoAsAWk0BGAwGYAKps3RL1zdUuaAWiAC%2BvUJJmoAzhgBOCAB2%2BHyCwrIgrgC6LjFAA'
+      '/catalogue/4/items?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0luSCAZgsUgPoYKXEgA0IANxwkY8EBgCeABx7QQSTD35DsIuQCYADOoAsAWk0BGAwGYAKps3RL1zdUuaAWiAC%2BvUJJmoAzhgBOCAB2%2BHyCwrIgrgC6LjFAA'
     );
 
     cy.findByText('Cameras 25').should('exist');
@@ -890,7 +890,7 @@ describe('Catalogue Items', () => {
 
     cy.findAllByRole('link', { name: 'Click here' }).eq(1).click();
 
-    cy.url().should('contain', 'catalogue/item/6');
+    cy.url().should('contain', 'catalogue/5/items/6');
   });
 
   it('can navigate to an items page from the table view', () => {
@@ -898,7 +898,7 @@ describe('Catalogue Items', () => {
 
     cy.findAllByRole('link', { name: 'Click here' }).eq(0).click();
 
-    cy.url().should('contain', 'catalogue/item/89/items');
+    cy.url().should('contain', 'catalogue/5/items/89/items');
   });
 
   it('can navigate to an items page from the landing page', () => {
@@ -907,7 +907,7 @@ describe('Catalogue Items', () => {
 
     cy.findAllByRole('link', { name: 'Items' }).eq(0).click();
 
-    cy.url().should('contain', 'catalogue/item/89/items');
+    cy.url().should('contain', 'catalogue/5/items/89/items');
   });
 
   it('opens add dialog for categories in directory and has functionality of duplicate', () => {

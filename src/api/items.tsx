@@ -1,4 +1,5 @@
 import {
+  queryOptions,
   useMutation,
   UseMutationResult,
   useQuery,
@@ -131,16 +132,20 @@ const getItem = async (id: string): Promise<Item> => {
     });
 };
 
-export const useGetItem = (
-  id?: string | null
-): UseQueryResult<Item, AxiosError> => {
-  return useQuery({
+export const getItemQuery = (id?: string | null, loader?: boolean) =>
+  queryOptions<Item, AxiosError>({
     queryKey: ['Item', id],
     queryFn: () => {
       return getItem(id ?? '');
     },
     enabled: !!id,
+    retry: loader ? false : undefined,
   });
+
+export const useGetItem = (
+  id?: string | null
+): UseQueryResult<Item, AxiosError> => {
+  return useQuery(getItemQuery(id));
 };
 
 const deleteItem = async (item: Item): Promise<void> => {

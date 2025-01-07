@@ -9,7 +9,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 import { AxiosError } from 'axios';
 import { enGB } from 'date-fns/locale/en-GB';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import AdminCardView from './admin/adminCardView.component';
 import AdminLayout from './admin/adminLayout.component';
 import Units from './admin/units/units.component';
@@ -19,8 +19,12 @@ import {
   retryFailedAuthRequests,
 } from './api/api';
 import { MicroFrontendId } from './app.types';
-import Catalogue from './catalogue/catalogue.component';
+import CatalogueLayout, {
+  loader as catalogueLayoutLoader,
+} from './catalogue/catalogueLayout.component';
+import CatalogueCardView from './catalogue/category/catalogueCardView.component';
 import CatalogueItemsLandingPage from './catalogue/items/catalogueItemsLandingPage.component';
+import CatalogueItemsPage from './catalogue/items/catalogueItemsPage.component';
 import ErrorPage from './common/errorPage.component';
 import ConfigProvider from './configProvider.component';
 import handleIMS_APIError from './handleIMS_APIError';
@@ -49,14 +53,16 @@ export const paths = {
   adminUnits: '/admin-ims/units',
   adminUsageStatuses: '/admin-ims/usage-statuses',
   homepage: '/ims',
-  catalogue: '/catalogue/*',
+  catalogue: '/catalogue',
+  catalogueCategories: '/catalogue/:catalogue_category_id',
+  catalogueItems: '/catalogue/:catalogue_category_id/items',
+  catalogueItem: '/catalogue/:catalogue_category_id/items/:catalogue_item_id',
+  items: '/catalogue/:catalogue_category_id/items/:catalogue_item_id/items',
+  item: '/catalogue/:catalogue_category_id/items/:catalogue_item_id/items/:item_id',
   systems: '/systems',
   system: '/systems/:system_id',
   manufacturers: '/manufacturers',
   manufacturer: '/manufacturers/:manufacturer_id',
-  catalogueItem: '/catalogue/item/:catalogue_item_id',
-  items: '/catalogue/item/:catalogue_item_id/items',
-  item: '/catalogue/item/:catalogue_item_id/items/:item_id',
 };
 
 const queryClient = new QueryClient({
@@ -102,15 +108,66 @@ const router = createBrowserRouter([
           },
         ],
       },
-      { path: paths.catalogue, Component: Catalogue },
       {
-        path: paths.catalogueItem,
-        Component: CatalogueItemsLandingPage,
-      },
-      { path: paths.items, Component: Items },
-      {
-        path: paths.item,
-        Component: ItemsLandingPage,
+        path: paths.catalogue,
+        Component: CatalogueLayout,
+        children: [
+          { index: true, Component: CatalogueCardView },
+          {
+            path: paths.catalogueCategories,
+            Component: Outlet,
+            loader: catalogueLayoutLoader(queryClient),
+            errorElement: (
+              <ErrorPage
+                boldErrorText="Invalid"
+                errorText="The catalogue route you are trying to access doesn't exist. Please click the Home button to navigate back to the Catalogue Home page."
+              />
+            ),
+            children: [
+              {
+                index: true,
+                Component: CatalogueCardView,
+              },
+              {
+                path: paths.catalogueItems,
+                Component: Outlet,
+                children: [
+                  { index: true, Component: CatalogueItemsPage },
+                  {
+                    path: paths.catalogueItem,
+                    Component: Outlet,
+                    children: [
+                      { index: true, Component: CatalogueItemsLandingPage },
+                      {
+                        path: paths.items,
+                        Component: Outlet,
+                        children: [
+                          { index: true, Component: Items },
+                          {
+                            path: paths.item,
+                            Component: Outlet,
+                            children: [
+                              { index: true, Component: ItemsLandingPage },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            path: '*',
+            Component: () => (
+              <ErrorPage
+                boldErrorText="Invalid Catalogue Route"
+                errorText="The catalogue route you are trying to access doesn't exist. Please click the Home button to navigate back to the Catalogue Home page."
+              />
+            ),
+          },
+        ],
       },
       {
         path: paths.systems,
