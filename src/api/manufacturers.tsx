@@ -1,4 +1,5 @@
 import {
+  queryOptions,
   useMutation,
   UseMutationResult,
   useQueries,
@@ -75,15 +76,18 @@ const getManufacturer = async (id: string): Promise<Manufacturer> => {
     .get(`/v1/manufacturers/${id}`)
     .then((response) => response.data);
 };
+export const getManufacturerQuery = (id?: string | null, loader?: boolean) =>
+  queryOptions<Manufacturer, AxiosError>({
+    queryKey: ['Manufacturer', id],
+    queryFn: () => getManufacturer(id ?? ''),
+    enabled: !!id,
+    retry: loader ? false : undefined,
+  });
 
 export const useGetManufacturer = (
   id?: string | null
 ): UseQueryResult<Manufacturer, AxiosError> => {
-  return useQuery({
-    queryKey: ['Manufacturer', id],
-    queryFn: () => getManufacturer(id ?? ''),
-    enabled: !!id,
-  });
+  return useQuery(getManufacturerQuery(id));
 };
 
 export const useGetManufacturerIds = (

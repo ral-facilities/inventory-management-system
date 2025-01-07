@@ -1,30 +1,55 @@
-import { Box } from '@mui/material';
+import type { QueryClient } from '@tanstack/react-query';
 import React from 'react';
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useParams, type LoaderFunctionArgs } from 'react-router-dom';
 import { BreadcrumbsInfo } from '../api/api.types';
-import { useGetManufacturer } from '../api/manufacturers';
+import { getManufacturerQuery, useGetManufacturer } from '../api/manufacturers';
 import { paths } from '../App';
-import Breadcrumbs from '../view/breadcrumbs.component';
+import BaseLayoutHeader from '../common/baseLayoutHeader.component';
+import ErrorPage from '../common/errorPage.component';
+
+export const ManufacturerErrorComponent = () => {
+  return (
+    <ErrorPage
+      boldErrorText="Invalid Manufacturer Route"
+      errorText="The manufacturer route you are trying to access doesn't exist. Please click the Home button to navigate back to the Manufacturer Home page."
+    />
+  );
+};
+
+export const ManufacturerLayoutErrorComponent = () => {
+  return (
+    <BaseLayoutHeader homeLocation="Manufacturers">
+      <ManufacturerErrorComponent />
+    </BaseLayoutHeader>
+  );
+};
+
+export const manufacturerLayoutLoader =
+  (queryClient: QueryClient) =>
+  async ({ params }: LoaderFunctionArgs) => {
+    const { manufacturer_id: manufacturerId } = params;
+
+    if (manufacturerId) {
+      await queryClient.ensureQueryData(
+        getManufacturerQuery(manufacturerId, true)
+      );
+    }
+
+    return { ...params };
+  };
 
 function ManufacturerLayout() {
   const { manufacturer_id: manufacturerId } = useParams();
 
   const { data: manufacturerData } = useGetManufacturer(manufacturerId);
 
-  const navigate = useNavigate();
-  const onChangeNode = React.useCallback(
-    (id: string | null) => {
-      navigate(id ? `${paths.manufacturers}/${id}` : paths.manufacturers);
-    },
-    [navigate]
-  );
-
-  const [manufacturerLandingBreadcrumbs, setManufacturerLandingBreadcrumbs] =
-    React.useState<BreadcrumbsInfo | undefined>(undefined);
+  const [manufacturerBreadcrumbs, setManufacturerBreadcrumbs] = React.useState<
+    BreadcrumbsInfo | undefined
+  >(undefined);
 
   React.useEffect(() => {
     if (manufacturerData) {
-      setManufacturerLandingBreadcrumbs({
+      setManufacturerBreadcrumbs({
         full_trail: true,
         trail: [
           [
@@ -34,7 +59,7 @@ function ManufacturerLayout() {
         ],
       });
     } else {
-      setManufacturerLandingBreadcrumbs({
+      setManufacturerBreadcrumbs({
         full_trail: true,
         trail: [],
       });
@@ -42,22 +67,12 @@ function ManufacturerLayout() {
   }, [manufacturerData]);
 
   return (
-    <div style={{ width: '100%', height: '100%' }}>
-      <Box
-        sx={{
-          py: 2.5,
-          paddingLeft: 0.5,
-        }}
-      >
-        <Breadcrumbs
-          onChangeNode={onChangeNode}
-          onChangeNavigateHome={() => onChangeNode(null)}
-          breadcrumbsInfo={manufacturerLandingBreadcrumbs}
-          homeLocation="Manufacturers"
-        />
-      </Box>
+    <BaseLayoutHeader
+      homeLocation="Manufacturers"
+      breadcrumbsInfo={manufacturerBreadcrumbs}
+    >
       <Outlet />
-    </div>
+    </BaseLayoutHeader>
   );
 }
 export default ManufacturerLayout;
