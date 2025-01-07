@@ -56,7 +56,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
 
   const { control, clearErrors } =
     useFormContext<AddCatalogueCategoryWithPlacementIds>();
-  // fields doesn't get updated when textfield as changed
+  // fields don't get updated when textfield has changed
   const properties = control._getFieldArray(
     'properties'
   ) as AddCatalogueCategoryPropertyWithPlacementIds[];
@@ -315,7 +315,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
           open
           onClose={(removeRow) => {
             table.setCreatingRow(null);
-            if (removeRow) {
+            if (removeRow && propertyDialogRequestType === 'post') {
               remove(index);
               clearErrors(`properties`);
             }
