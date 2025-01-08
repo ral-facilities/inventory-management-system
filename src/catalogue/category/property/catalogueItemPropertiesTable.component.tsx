@@ -173,7 +173,10 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
       {
         header: 'Unit',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => row.unit,
+        accessorFn: (row) =>
+          requestType === 'patch'
+            ? row.unit
+            : (units?.find((unit) => row.unit_id === unit.id) || null)?.value,
         id: 'unit',
         filterVariant: 'multi-select',
         filterFn: 'arrIncludesSome',
