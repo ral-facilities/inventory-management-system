@@ -16,7 +16,9 @@ import {
   type RouteObject,
 } from 'react-router-dom';
 import AdminCardView from './admin/adminCardView.component';
-import AdminLayout from './admin/adminLayout.component';
+import AdminLayout, {
+  AdminErrorComponent,
+} from './admin/adminLayout.component';
 import Units from './admin/units/units.component';
 import UsageStatuses from './admin/usageStatuses/usageStatuses.component';
 import {
@@ -26,7 +28,6 @@ import {
 import { MicroFrontendId } from './app.types';
 import Catalogue from './catalogue/catalogue.component';
 import CatalogueItemsLandingPage from './catalogue/items/catalogueItemsLandingPage.component';
-import ErrorPage from './common/errorPage.component';
 import ConfigProvider from './configProvider.component';
 import handleIMS_APIError from './handleIMS_APIError';
 import { HomePage } from './homePage/homePage.component';
@@ -100,12 +101,7 @@ const routeObject: RouteObject[] = [
           { path: paths.adminUsageStatuses, Component: UsageStatuses },
           {
             path: '*',
-            Component: () => (
-              <ErrorPage
-                boldErrorText="Invalid Admin Route"
-                errorText="The admin route you are trying to access doesn't exist. Please click the Home button to navigate back to the Admin Home page."
-              />
-            ),
+            Component: AdminErrorComponent,
           },
         ],
       },
