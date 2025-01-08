@@ -1,6 +1,7 @@
 import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { BreadcrumbsInfo } from '../api/api.types';
+import { paths } from '../App';
 import BaseLayoutHeader from '../common/baseLayoutHeader.component';
 import ErrorPage from '../common/errorPage.component';
 
@@ -18,13 +19,11 @@ export const useGetAdminPageName = (): string | null => {
   const location = useLocation();
 
   return React.useMemo(() => {
-    let adminPageName: string | null = location.pathname.replace(
-      '/admin-ims',
+    const adminPageName: string | null = location.pathname.replace(
+      paths.admin,
       ''
     );
-    adminPageName =
-      adminPageName === '' ? null : adminPageName.replace('/', '');
-    return adminPageName;
+    return adminPageName === '' ? null : adminPageName.replace('/', '');
   }, [location.pathname]);
 };
 
