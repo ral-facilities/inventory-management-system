@@ -1,17 +1,18 @@
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
+import type { Router } from '@remix-run/router';
 import {
   QueryCache,
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
-import React from 'react';
-// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
-import type { Router } from '@remix-run/router';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AxiosError } from 'axios';
 import { enGB } from 'date-fns/locale/en-GB';
+import React from 'react';
 import {
   RouterProvider,
+  ScrollRestoration,
   createBrowserRouter,
   type RouteObject,
 } from 'react-router-dom';
@@ -119,11 +120,14 @@ const routeObject: RouteObject[] = [
       {
         path: paths.manufacturers,
         Component: ManufacturerLayout,
-        loader: manufacturerLayoutLoader(queryClient),
         ErrorBoundary: ManufacturerLayoutErrorComponent,
         children: [
           { index: true, Component: ManufacturerTable },
-          { path: paths.manufacturer, Component: ManufacturerLandingPage },
+          {
+            path: paths.manufacturer,
+            Component: ManufacturerLandingPage,
+            loader: manufacturerLayoutLoader(queryClient),
+          },
           {
             path: '*',
             Component: ManufacturerErrorComponent,
@@ -188,7 +192,8 @@ export function Layout() {
                 }
               >
                 <ViewTabs />
-                {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+                <ReactQueryDevtools initialIsOpen={false} />
+                <ScrollRestoration />
               </React.Suspense>
             </QueryClientProvider>
           </ConfigProvider>
