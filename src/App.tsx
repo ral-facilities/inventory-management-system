@@ -17,7 +17,9 @@ import {
   type RouteObject,
 } from 'react-router-dom';
 import AdminCardView from './admin/adminCardView.component';
-import AdminLayout from './admin/adminLayout.component';
+import AdminLayout, {
+  AdminErrorComponent,
+} from './admin/adminLayout.component';
 import Units from './admin/units/units.component';
 import UsageStatuses from './admin/usageStatuses/usageStatuses.component';
 import {
@@ -32,7 +34,6 @@ import CatalogueLayout, {
 import CatalogueCardView from './catalogue/category/catalogueCardView.component';
 import CatalogueItemsLandingPage from './catalogue/items/catalogueItemsLandingPage.component';
 import CatalogueItemsPage from './catalogue/items/catalogueItemsPage.component';
-import ErrorPage from './common/errorPage.component';
 import ConfigProvider from './configProvider.component';
 import handleIMS_APIError from './handleIMS_APIError';
 import { HomePage } from './homePage/homePage.component';
@@ -40,8 +41,12 @@ import IMSThemeProvider from './imsThemeProvider.component';
 import Items from './items/items.component';
 import ItemsLandingPage from './items/itemsLandingPage.component';
 import ManufacturerLandingPage from './manufacturer/manufacturerLandingPage.component';
-import ManufacturerLayout from './manufacturer/manufacturerLayout.component';
-import ManufacturerTable from './manufacturer/manufacturersTable.component';
+import ManufacturerLayout, {
+  ManufacturerErrorComponent,
+  ManufacturerLayoutErrorComponent,
+  manufacturerLayoutLoader,
+} from './manufacturer/manufacturerLayout.component';
+import ManufacturerTable from './manufacturer/manufacturerTable.component';
 import Preloader from './preloader/preloader.component';
 import retryIMS_APIErrors from './retryIMS_APIErrors';
 import {
@@ -50,7 +55,11 @@ import {
   tokenRefreshed,
 } from './state/scigateway.actions';
 import Systems from './systems/systems.component';
-import SystemsLayout from './systems/systemsLayout.component';
+import SystemsLayout, {
+  SystemsErrorComponent,
+  SystemsLayoutErrorComponent,
+  systemsLayoutLoader,
+} from './systems/systemsLayout.component';
 import ViewTabs from './view/viewTabs.component';
 
 export const paths = {
@@ -106,12 +115,7 @@ const routeObject: RouteObject[] = [
           { path: paths.adminUsageStatuses, Component: UsageStatuses },
           {
             path: '*',
-            Component: () => (
-              <ErrorPage
-                boldErrorText="Invalid Admin Route"
-                errorText="The admin route you are trying to access doesn't exist. Please click the Home button to navigate back to the Admin Home page."
-              />
-            ),
+            Component: AdminErrorComponent,
           },
         ],
       },
@@ -172,34 +176,28 @@ const routeObject: RouteObject[] = [
       {
         path: paths.systems,
         Component: SystemsLayout,
+        loader: systemsLayoutLoader(queryClient),
+        ErrorBoundary: SystemsLayoutErrorComponent,
         children: [
           { index: true, Component: Systems },
           { path: paths.system, Component: Systems },
           {
             path: '*',
-            Component: () => (
-              <ErrorPage
-                boldErrorText="Invalid System Route"
-                errorText="The system route you are trying to access doesn't exist. Please click the Home button to navigate back to the System Home page."
-              />
-            ),
+            Component: SystemsErrorComponent,
           },
         ],
       },
       {
         path: paths.manufacturers,
         Component: ManufacturerLayout,
+        loader: manufacturerLayoutLoader(queryClient),
+        ErrorBoundary: ManufacturerLayoutErrorComponent,
         children: [
           { index: true, Component: ManufacturerTable },
           { path: paths.manufacturer, Component: ManufacturerLandingPage },
           {
             path: '*',
-            Component: () => (
-              <ErrorPage
-                boldErrorText="Invalid Manufacturer Route"
-                errorText="The manufacturer route you are trying to access doesn't exist. Please click the Home button to navigate back to the Manufacturer Home page."
-              />
-            ),
+            Component: ManufacturerErrorComponent,
           },
         ],
       },
@@ -214,6 +212,11 @@ const isUsingMSW =
 if (!isUsingMSW) {
   router = createBrowserRouter(routeObject);
 }
+
+// If the application is using MSW (Mock Service Worker),
+// it creates the router using `createBrowserRouter` within the App so it can wait for MSW to load. This is necessary
+// because MSW needs to be running before the router is created to handle requests properly in the loader. In a production
+// environment, this is not needed.
 
 export default function App() {
   if (isUsingMSW) {

@@ -2,7 +2,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { paths } from '../App';
 import { renderComponentWithRouterProvider } from '../testUtils';
-import AdminLayout from './adminLayout.component';
+import AdminLayout, { AdminErrorComponent } from './adminLayout.component';
 
 const mockedUseNavigate = vi.fn();
 
@@ -70,5 +70,21 @@ describe('Admin Layout', () => {
 
     expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
     expect(mockedUseNavigate).toHaveBeenCalledWith('/admin-ims');
+  });
+});
+
+describe('Admin Error Component', () => {
+  const createView = () => {
+    return renderComponentWithRouterProvider(<AdminErrorComponent />);
+  };
+
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('renders Admin error page correctly', async () => {
+    const view = createView();
+
+    expect(view.asFragment()).toMatchSnapshot();
   });
 });

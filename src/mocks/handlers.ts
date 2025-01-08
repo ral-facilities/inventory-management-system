@@ -488,7 +488,7 @@ export const handlers = [
     }
   ),
 
-  http.get<{ id: string }, DefaultBodyType, Manufacturer>(
+  http.get<{ id: string }, DefaultBodyType, Manufacturer | ErrorResponse>(
     '/v1/manufacturers/:id',
     ({ params }) => {
       const { id } = params;
@@ -496,6 +496,13 @@ export const handlers = [
       const data = ManufacturersJSON.find(
         (manufacturer) => manufacturer.id === id
       ) as Manufacturer;
+
+      if (!data) {
+        return HttpResponse.json(
+          { detail: 'Manufacturer not found' },
+          { status: 404 }
+        );
+      }
 
       return HttpResponse.json(data, { status: 200 });
     }

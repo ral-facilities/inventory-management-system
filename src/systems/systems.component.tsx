@@ -35,7 +35,7 @@ import {
   useMaterialReactTable,
 } from 'material-react-table';
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { System } from '../api/api.types';
 import { useGetSystems } from '../api/systems';
 import { usePreservedTableState } from '../common/preservedTableState.component';
@@ -49,7 +49,19 @@ import { DeleteSystemDialog } from './deleteSystemDialog.component';
 import SystemDetails from './systemDetails.component';
 import SystemDialog from './systemDialog.component';
 import { SystemDirectoryDialog } from './systemDirectoryDialog.component';
-import { useNavigateToSystem } from './systemsLayout.component';
+
+/* Returns function that navigates to a specific system id (or to the root of all systems
+   if given null) */
+export const useNavigateToSystem = () => {
+  const navigate = useNavigate();
+
+  return React.useCallback(
+    (newId: string | null) => {
+      navigate(`/systems${newId ? `/${newId}` : ''}`);
+    },
+    [navigate]
+  );
+};
 
 export type SystemMenuDialogType = 'edit' | 'duplicate' | 'delete';
 

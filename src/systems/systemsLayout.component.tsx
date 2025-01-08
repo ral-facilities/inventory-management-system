@@ -1,59 +1,49 @@
-import { Box, Grid } from '@mui/material';
-import React from 'react';
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
-import { useGetSystemsBreadcrumbs } from '../api/systems';
-import Breadcrumbs from '../view/breadcrumbs.component';
+import type { QueryClient } from '@tanstack/react-query';
+import { Outlet, useParams, type LoaderFunctionArgs } from 'react-router-dom';
+import { getSystemQuery, useGetSystemsBreadcrumbs } from '../api/systems';
+import BaseLayoutHeader from '../common/baseLayoutHeader.component';
+import ErrorPage from '../common/errorPage.component';
 
-/* Returns function that navigates to a specific system id (or to the root of all systems
-   if given null) */
-export const useNavigateToSystem = () => {
-  const navigate = useNavigate();
-
-  return React.useCallback(
-    (newId: string | null) => {
-      navigate(`/systems${newId ? `/${newId}` : ''}`);
-    },
-    [navigate]
+export const SystemsErrorComponent = () => {
+  return (
+    <ErrorPage
+      boldErrorText="Invalid System Route"
+      errorText="The system route you are trying to access doesn't exist. Please click the Home button to navigate back to the System Home page."
+    />
   );
 };
 
+export const SystemsLayoutErrorComponent = () => {
+  return (
+    <BaseLayoutHeader homeLocation="Systems">
+      <SystemsErrorComponent />
+    </BaseLayoutHeader>
+  );
+};
+
+export const systemsLayoutLoader =
+  (queryClient: QueryClient) =>
+  async ({ params }: LoaderFunctionArgs) => {
+    const { system_id: systemId } = params;
+
+    if (systemId) {
+      await queryClient.ensureQueryData(getSystemQuery(systemId, true));
+    }
+
+    return { ...params };
+  };
+
 function SystemsLayout() {
   const { system_id: systemId } = useParams();
-  const navigateToSystem = useNavigateToSystem();
-
   const { data: systemsBreadcrumbs } = useGetSystemsBreadcrumbs(systemId);
 
   return (
-    <>
-      <Box height="100%">
-        <Grid
-          container
-          alignItems="center"
-          justifyContent="space-between"
-          sx={{
-            display: 'flex',
-            paddingLeft: '4px',
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              paddingTop: '20px',
-              paddingBottom: '20px',
-            }}
-          >
-            <Breadcrumbs
-              breadcrumbsInfo={systemsBreadcrumbs}
-              onChangeNode={navigateToSystem}
-              onChangeNavigateHome={() => navigateToSystem(null)}
-              homeLocation="Systems"
-            />
-          </div>
-        </Grid>
-        <Outlet />
-      </Box>
-    </>
+    <BaseLayoutHeader
+      homeLocation="Systems"
+      breadcrumbsInfo={systemsBreadcrumbs}
+    >
+      <Outlet />
+    </BaseLayoutHeader>
   );
 }
 
