@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Manufacturer > renders table data correctly 1`] = `
+exports[`Manufacturer Table > renders table data correctly 1`] = `
 <DocumentFragment>
   <div
     class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-1s80a98-MuiPaper-root"

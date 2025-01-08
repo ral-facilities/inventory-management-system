@@ -25,7 +25,14 @@ export interface TransferState {
   state: 'success' | 'error' | 'information';
 }
 
-// ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
+export enum RoutesHomeLocation {
+  Catalogue = 'catalogue',
+  Admin = 'admin-ims',
+  Systems = 'systems',
+  Manufacturers = 'manufacturers',
+}
+export type RoutesHomeLocationType = keyof typeof RoutesHomeLocation;
+
 export interface AllowedValuesList {
   type: 'list';
   values: {
