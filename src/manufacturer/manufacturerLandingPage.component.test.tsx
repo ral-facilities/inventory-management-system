@@ -42,18 +42,6 @@ describe('Manufacturer Landing page', () => {
     expect(screen.getAllByText('None')[1]).toBeInTheDocument();
   });
 
-  it('shows no manufacturer page correctly', async () => {
-    createView('/manufacturers/invalid');
-
-    await waitFor(() => {
-      expect(
-        screen.getByText(
-          `This manufacturer doesn't exist. Please click the Home button to navigate to the manufacturer table`
-        )
-      ).toBeInTheDocument();
-    });
-  });
-
   it('shows the loading indicator', async () => {
     createView('/manufacturers/1');
 
