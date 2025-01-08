@@ -24,7 +24,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt-get install libgconf-2-4
           yarn --immutable
 
       - name: Run linting
@@ -55,7 +54,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt-get install libgconf-2-4
           yarn --immutable
 
       - name: Run e2e tests
@@ -130,7 +128,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt-get install libgconf-2-4
           yarn --immutable
 
       - name: Run e2e tests
