@@ -41,6 +41,9 @@ export interface AllowedValuesList {
     values: { av_placement_id: string; value: any }[];
   };
 }
+
+// ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
+
 export type AllowedValues = AllowedValuesList;
 
 export interface AddCatalogueCategoryProperty {
