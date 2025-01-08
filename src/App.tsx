@@ -161,9 +161,7 @@ let router: Router;
 const isUsingMSW =
   import.meta.env.DEV || import.meta.env.VITE_APP_INCLUDE_MSW === 'true';
 
-if (!isUsingMSW) {
-  router = createBrowserRouter(routeObject);
-}
+if (!isUsingMSW) router = createBrowserRouter(routeObject);
 
 // If the application is using MSW (Mock Service Worker),
 // it creates the router using `createBrowserRouter` within the App so it can wait for MSW to load. This is necessary
@@ -171,10 +169,7 @@ if (!isUsingMSW) {
 // environment, this is not needed.
 
 export default function App() {
-  if (isUsingMSW) {
-    router = createBrowserRouter(routeObject);
-    return <RouterProvider router={router} />;
-  }
+  if (isUsingMSW) router = createBrowserRouter(routeObject);
   return <RouterProvider router={router} />;
 }
 
