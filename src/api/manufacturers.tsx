@@ -76,12 +76,12 @@ const getManufacturer = async (id: string): Promise<Manufacturer> => {
     .get(`/v1/manufacturers/${id}`)
     .then((response) => response.data);
 };
-export const getManufacturerQuery = (id?: string | null, loader?: boolean) =>
+export const getManufacturerQuery = (id?: string | null, retry?: boolean) =>
   queryOptions<Manufacturer, AxiosError>({
     queryKey: ['Manufacturer', id],
     queryFn: () => getManufacturer(id ?? ''),
     enabled: !!id,
-    retry: loader ? false : undefined,
+    retry: retry ? false : undefined,
   });
 
 export const useGetManufacturer = (
