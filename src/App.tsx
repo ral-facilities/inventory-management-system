@@ -18,14 +18,16 @@ import {
 import { MicroFrontendId } from './app.types';
 import Catalogue from './catalogue/catalogue.component';
 import CatalogueItemsLandingPage from './catalogue/items/catalogueItemsLandingPage.component';
+import ErrorPage from './common/errorPage.component';
 import ConfigProvider from './configProvider.component';
 import handleIMS_APIError from './handleIMS_APIError';
 import { HomePage } from './homePage/homePage.component';
 import IMSThemeProvider from './imsThemeProvider.component';
 import Items from './items/items.component';
 import ItemsLandingPage from './items/itemsLandingPage.component';
-import ManufacturerComponent from './manufacturer/manufacturer.component';
 import ManufacturerLandingPage from './manufacturer/manufacturerLandingPage.component';
+import ManufacturerLayout from './manufacturer/manufacturerLayout.component';
+import ManufacturerTable from './manufacturer/manufacturerTable.component';
 import Preloader from './preloader/preloader.component';
 import retryIMS_APIErrors from './retryIMS_APIErrors';
 import {
@@ -73,7 +75,6 @@ const router = createBrowserRouter([
   {
     Component: Layout,
     children: [
-      { path: paths.any, Component: ViewTabs },
       { path: paths.root, Component: HomePage },
       { path: paths.homepage, Component: HomePage },
       { path: paths.admin, Component: AdminPage },
@@ -88,10 +89,22 @@ const router = createBrowserRouter([
         Component: ItemsLandingPage,
       },
       { path: paths.systems, Component: Systems },
-      { path: paths.manufacturers, Component: ManufacturerComponent },
       {
-        path: paths.manufacturer,
-        Component: ManufacturerLandingPage,
+        path: paths.manufacturers,
+        Component: ManufacturerLayout,
+        children: [
+          { index: true, Component: ManufacturerTable },
+          { path: paths.manufacturer, Component: ManufacturerLandingPage },
+          {
+            path: '*',
+            Component: () => (
+              <ErrorPage
+                boldErrorText="Invalid Manufacturer Route"
+                errorText="The manufacturer route you are trying to access doesn't exist. Please click the Home button to navigate back to the Manufacturer Home page."
+              />
+            ),
+          },
+        ],
       },
     ],
   },
