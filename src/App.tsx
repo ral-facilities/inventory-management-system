@@ -28,6 +28,7 @@ import {
 import { MicroFrontendId } from './app.types';
 import Catalogue from './catalogue/catalogue.component';
 import CatalogueItemsLandingPage from './catalogue/items/catalogueItemsLandingPage.component';
+import ErrorPage from './common/errorPage.component';
 import ConfigProvider from './configProvider.component';
 import handleIMS_APIError from './handleIMS_APIError';
 import { HomePage } from './homePage/homePage.component';
