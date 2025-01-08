@@ -16,6 +16,10 @@ describe('Units', () => {
     const view = createView();
 
     await waitFor(() => {
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument();
+    });
+
+    await waitFor(() => {
       expect(screen.getByText('megapixels')).toBeInTheDocument();
     });
     expect(view.asFragment()).toMatchSnapshot();
