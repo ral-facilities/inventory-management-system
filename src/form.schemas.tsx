@@ -87,6 +87,7 @@ const OptionalBooleanSchema = z
 const MandatoryNumberSchema = (props: NumberZodSchemaProps) =>
   z
     .string()
+    .trim()
     .min(1, {
       message: props.requiredErrorMessage,
     })
@@ -110,6 +111,7 @@ const MandatoryNumberSchema = (props: NumberZodSchemaProps) =>
 const OptionalNumberSchema = (props: NumberZodSchemaProps) =>
   z
     .string()
+    .trim()
     .transform((val) => (!val ? undefined : val))
     .pipe(
       z.coerce
