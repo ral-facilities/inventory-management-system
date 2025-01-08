@@ -2,6 +2,7 @@ import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { MockInstance } from 'vitest';
 import { imsApi } from '../../api/api';
+import { CatalogueCategoryPropertyType } from '../../api/api.types';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 import CatalogueItemDirectoryDialog, {
   CatalogueItemDirectoryDialogProps,
@@ -39,7 +40,7 @@ describe('catalogue item directory Dialog', () => {
           {
             id: '7',
             name: 'Measurement Range',
-            type: 'number',
+            type: CatalogueCategoryPropertyType.Number,
             unit: 'Joules',
             unit_id: '3',
             mandatory: true,
@@ -48,7 +49,7 @@ describe('catalogue item directory Dialog', () => {
           {
             id: '8',
             name: 'Accuracy',
-            type: 'string',
+            type: CatalogueCategoryPropertyType.Text,
             unit: null,
             unit_id: null,
             mandatory: false,
@@ -85,6 +86,7 @@ describe('catalogue item directory Dialog', () => {
           cost_to_rework_gbp: null,
           days_to_replace: 7,
           days_to_rework: null,
+          expected_lifetime_days: 840,
           drawing_number: null,
           drawing_link: null,
           item_model_number: null,
@@ -121,6 +123,7 @@ describe('catalogue item directory Dialog', () => {
           cost_to_rework_gbp: 89,
           days_to_replace: 7,
           days_to_rework: 60,
+          expected_lifetime_days: null,
           drawing_number: null,
           drawing_link: null,
           item_model_number: null,
@@ -215,7 +218,7 @@ describe('catalogue item directory Dialog', () => {
       });
 
       await user.click(
-        screen.getByRole('link', { name: 'beam-characterization' })
+        screen.getByRole('link', { name: 'Beam Characterization' })
       );
 
       await waitFor(() => {
@@ -233,7 +236,7 @@ describe('catalogue item directory Dialog', () => {
       });
 
       await user.click(
-        screen.getByRole('link', { name: 'beam-characterization' })
+        screen.getByRole('link', { name: 'Beam Characterization' })
       );
 
       await waitFor(() => {
@@ -341,6 +344,7 @@ describe('catalogue item directory Dialog', () => {
         cost_to_rework_gbp: null,
         days_to_replace: 7,
         days_to_rework: null,
+        expected_lifetime_days: 840,
         description: 'Precision energy meters for accurate measurements. 26',
         drawing_link: null,
         drawing_number: null,
@@ -365,6 +369,7 @@ describe('catalogue item directory Dialog', () => {
         cost_to_rework_gbp: 89,
         days_to_replace: 7,
         days_to_rework: 60,
+        expected_lifetime_days: null,
         description: 'Precision energy meters for accurate measurements. 27',
         drawing_link: null,
         drawing_number: null,
@@ -406,6 +411,7 @@ describe('catalogue item directory Dialog', () => {
         cost_to_rework_gbp: null,
         days_to_replace: 7,
         days_to_rework: null,
+        expected_lifetime_days: 840,
         description: 'Precision energy meters for accurate measurements. 26',
         drawing_link: null,
         drawing_number: null,
@@ -430,6 +436,7 @@ describe('catalogue item directory Dialog', () => {
         cost_to_rework_gbp: 89,
         days_to_replace: 7,
         days_to_rework: 60,
+        expected_lifetime_days: null,
         description: 'Precision energy meters for accurate measurements. 27',
         drawing_link: null,
         drawing_number: null,

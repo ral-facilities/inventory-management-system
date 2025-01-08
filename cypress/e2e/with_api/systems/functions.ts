@@ -13,7 +13,7 @@ export const modifySystem = (
     cy.findAllByLabelText('Row Actions').eq(values.index).click();
     cy.findByText('Edit').click();
   } else {
-    cy.findByRole('button', { name: 'add system' }).click();
+    cy.findByRole('button', { name: 'Add System' }).click();
   }
   cy.findByLabelText('Name *').clear();
   cy.findByLabelText('Name *').type(values.name);

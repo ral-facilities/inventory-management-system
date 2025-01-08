@@ -1,6 +1,21 @@
-import { DefaultBodyType, http, HttpResponse, PathParams } from 'msw';
+import { DefaultBodyType, delay, http, HttpResponse, PathParams } from 'msw';
 import {
+  AttachmentPostMetadata,
+  AttachmentPostMetadataResponse,
+  AttachmentUploadInfo,
   BreadcrumbsInfo,
+  CatalogueCategory,
+  CatalogueCategoryPatch,
+  CatalogueCategoryPost,
+  CatalogueCategoryProperty,
+  CatalogueCategoryPropertyPatch,
+  CatalogueCategoryPropertyPost,
+  CatalogueItem,
+  CatalogueItemPatch,
+  CatalogueItemPost,
+  Item,
+  ItemPatch,
+  ItemPost,
   Manufacturer,
   ManufacturerPatch,
   ManufacturerPost,
@@ -12,23 +27,11 @@ import {
   UsageStatus,
   UsageStatusPost,
 } from '../api/api.types';
-import {
-  AddCatalogueCategory,
-  AddCatalogueItem,
-  AddItem,
-  CatalogueCategory,
-  CatalogueCategoryProperty,
-  CatalogueCategoryPropertyMigration,
-  CatalogueItem,
-  EditCatalogueCategory,
-  EditCatalogueItem,
-  EditItem,
-  Item,
-} from '../app.types';
 import { generateUniqueId } from '../utils';
 import CatalogueCategoriesJSON from './CatalogueCategories.json';
 import CatalogueCategoryBreadcrumbsJSON from './CatalogueCategoryBreadcrumbs.json';
 import CatalogueItemsJSON from './CatalogueItems.json';
+import ImagesJSON from './Images.json';
 import ItemsJSON from './Items.json';
 import ManufacturersJSON from './Manufacturers.json';
 import SystemBreadcrumbsJSON from './SystemBreadcrumbs.json';
@@ -47,7 +50,7 @@ export const handlers = [
 
   http.post<
     PathParams,
-    AddCatalogueCategory,
+    CatalogueCategoryPost,
     CatalogueCategory | ErrorResponse
   >('/v1/catalogue-categories', async ({ request }) => {
     let body = await request.json();
@@ -146,7 +149,7 @@ export const handlers = [
 
   http.patch<
     { id: string },
-    EditCatalogueCategory,
+    CatalogueCategoryPatch,
     CatalogueCategory | ErrorResponse
   >('/v1/catalogue-categories/:id', async ({ request, params }) => {
     const { id } = params;
@@ -196,7 +199,7 @@ export const handlers = [
           { status: 409 }
         );
       } else {
-        return HttpResponse.json({ status: 204 });
+        return HttpResponse.json(undefined, { status: 204 });
       }
     } else {
       return HttpResponse.json({ detail: '' }, { status: 400 });
@@ -205,12 +208,16 @@ export const handlers = [
 
   http.post<
     PathParams,
-    CatalogueCategoryPropertyMigration,
+    CatalogueCategoryPropertyPost,
     CatalogueCategoryProperty | ErrorResponse
   >(
     '/v1/catalogue-categories/:catalogue_category_id/properties',
     async ({ request }) => {
       const body = await request.json();
+
+      const unitValue = UnitsJSON.find(
+        (unit) => body.unit_id === unit.id
+      )?.value;
 
       if (body.name == 'Error 500') {
         return HttpResponse.json(
@@ -223,6 +230,7 @@ export const handlers = [
         {
           id: '1',
           ...body,
+          unit: unitValue ?? null,
         } as CatalogueCategoryProperty,
         { status: 200 }
       );
@@ -231,7 +239,7 @@ export const handlers = [
 
   http.patch<
     PathParams,
-    Partial<CatalogueCategoryPropertyMigration>,
+    CatalogueCategoryPropertyPatch,
     CatalogueCategoryProperty | ErrorResponse
   >(
     '/v1/catalogue-categories/:catalogue_category_id/properties/:property_id',
@@ -260,7 +268,7 @@ export const handlers = [
 
   // ------------------------------------ CATALOGUE ITEMS ------------------------------------
 
-  http.post<PathParams, AddCatalogueItem, CatalogueItem | ErrorResponse>(
+  http.post<PathParams, CatalogueItemPost, CatalogueItem | ErrorResponse>(
     '/v1/catalogue-items',
     async ({ request }) => {
       let body = await request.json();
@@ -337,7 +345,7 @@ export const handlers = [
     }
   ),
 
-  http.patch<{ id: string }, EditCatalogueItem, CatalogueItem | ErrorResponse>(
+  http.patch<{ id: string }, CatalogueItemPatch, CatalogueItem | ErrorResponse>(
     '/v1/catalogue-items/:id',
     async ({ request, params }) => {
       const body = await request.json();
@@ -402,7 +410,7 @@ export const handlers = [
           { status: 409 }
         );
       } else {
-        return HttpResponse.json({ status: 204 });
+        return HttpResponse.json(undefined, { status: 204 });
       }
     } else {
       return HttpResponse.json({ detail: '' }, { status: 400 });
@@ -531,7 +539,7 @@ export const handlers = [
           { status: 409 }
         );
       } else {
-        return HttpResponse.json({ status: 204 });
+        return HttpResponse.json(undefined, { status: 204 });
       }
     } else {
       return HttpResponse.json({ detail: '' }, { status: 400 });
@@ -662,7 +670,7 @@ export const handlers = [
           { status: 409 }
         );
       } else {
-        return HttpResponse.json({ status: 204 });
+        return HttpResponse.json(undefined, { status: 204 });
       }
     } else {
       return HttpResponse.json({ detail: '' }, { status: 404 });
@@ -671,7 +679,7 @@ export const handlers = [
 
   // ------------------------------------ ITEMS ------------------------------------------------
 
-  http.post<PathParams, AddItem, Item | ErrorResponse>(
+  http.post<PathParams, ItemPost, Item | ErrorResponse>(
     '/v1/items',
     async ({ request }) => {
       let body = await request.json();
@@ -751,7 +759,7 @@ export const handlers = [
     return HttpResponse.json(data, { status: 200 });
   }),
 
-  http.patch<{ id: string }, EditItem, Item | ErrorResponse>(
+  http.patch<{ id: string }, ItemPatch, Item | ErrorResponse>(
     '/v1/items/:id',
     async ({ request, params }) => {
       const body = await request.json();
@@ -801,7 +809,7 @@ export const handlers = [
         { status: 500 }
       );
 
-    return HttpResponse.json({ status: 204 });
+    return HttpResponse.json(undefined, { status: 204 });
   }),
 
   // ------------------------------------ UNITS ------------------------------------------------
@@ -859,7 +867,7 @@ export const handlers = [
           { status: 409 }
         );
       } else {
-        return HttpResponse.json({ status: 204 });
+        return HttpResponse.json(undefined, { status: 204 });
       }
     } else {
       return HttpResponse.json({ detail: '' }, { status: 400 });
@@ -921,10 +929,169 @@ export const handlers = [
           { status: 409 }
         );
       } else {
-        return HttpResponse.json({ status: 204 });
+        return HttpResponse.json(undefined, { status: 204 });
       }
     } else {
       return HttpResponse.json({ detail: '' }, { status: 400 });
     }
+  }),
+
+  // ------------------------------------ ATTACHMENTS ------------------------------------------------
+
+  http.post<
+    PathParams,
+    AttachmentPostMetadata,
+    AttachmentPostMetadataResponse | ErrorResponse
+  >('/attachments', async ({ request }) => {
+    const body = (await request.json()) as AttachmentPostMetadata;
+
+    const upload_info: AttachmentUploadInfo = {
+      url: `http://localhost:3000/object-storage`,
+      fields: {
+        'Content-Type': 'multipart/form-data',
+        key: `attachments/test`,
+        AWSAccessKeyId: 'root',
+        policy: 'policy-test',
+        signature: 'signature-test',
+      },
+    };
+
+    return HttpResponse.json(
+      {
+        id: '1',
+        ...body,
+        title: body.title ?? null,
+        description: body.description ?? null,
+        upload_info: upload_info,
+        modified_time: '2024-01-02T13:10:10.000+00:00',
+        created_time: '2024-01-01T12:00:00.000+00:00',
+      },
+      { status: 201 }
+    );
+  }),
+
+  // ------------------------------------ OBJECT STORAGE ------------------------------------------------
+
+  http.post('/object-storage', async () => {
+    await delay(200);
+    return new HttpResponse(undefined, {
+      status: 204,
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+        // This is need for uppy
+        ETag: '"e76fe3d21078d7a3b9ec95edf437d010"',
+      },
+    });
+  }),
+
+  // ------------------------------------ IMAGES ------------------------------------------------
+
+  http.post('/images', async () => {
+    return HttpResponse.json(ImagesJSON[0], { status: 200 });
+  }),
+  http.get('/images', ({ request }) => {
+    const url = new URL(request.url);
+    const imageParams = url.searchParams;
+    const primary = imageParams.get('primary');
+    const entityId = imageParams.get('entity_id');
+
+    if (primary === 'true') {
+      if (entityId === '90') {
+        return HttpResponse.json([], { status: 200 });
+      } else {
+        return HttpResponse.json(
+          [
+            {
+              ...ImagesJSON[0],
+              primary: true,
+              entity_id: entityId,
+              ...(entityId === '3' && { thumbnail_base64: 'test' }),
+            },
+          ],
+          { status: 200 }
+        );
+      }
+    }
+
+    const generateImages = () => {
+      return Array.from({ length: 20 }, (_, index) => {
+        const id = index + 1;
+        let image;
+
+        if (Number(id) % 2 === 0) {
+          image = ImagesJSON[0];
+        } else {
+          image = {
+            ...ImagesJSON[1],
+            ...(id === 3 && {
+              thumbnail_base64: 'test',
+              description: undefined,
+            }),
+          };
+        }
+        return {
+          ...image,
+          id: String(id),
+        };
+      });
+    };
+
+    return HttpResponse.json(generateImages(), { status: 200 });
+  }),
+
+  http.get('/images/:id', ({ params }) => {
+    const { id } = params;
+    // This is needed otherwise the msw would intercept the
+    // mocked image get request for the object store
+    if (!isNaN(Number(id))) {
+      let image = undefined;
+      if (Number(id) % 2 === 0) {
+        image = {
+          ...ImagesJSON[0],
+          url: `${window.location.origin}/logo192.png?text=${encodeURIComponent(id as string)}`,
+        };
+      } else {
+        if (id === '3') {
+          image = {
+            ...ImagesJSON[1],
+            url: 'invalid url',
+            description: undefined,
+          };
+        } else {
+          image = {
+            ...ImagesJSON[1],
+            url: `${window.location.origin}/images/stfc-logo-blue-text.png?text=${encodeURIComponent(id as string)}`,
+          };
+        }
+      }
+
+      if (id === '5') {
+        return HttpResponse.error();
+      }
+
+      return HttpResponse.json(
+        {
+          ...image,
+          id: id,
+        },
+        { status: 200 }
+      );
+    }
+  }),
+
+  http.delete<
+    { id: string },
+    DefaultBodyType,
+    ErrorResponse | NonNullable<unknown>
+  >('/images/:id', ({ params }) => {
+    const { id } = params;
+
+    if (id === 'Error 500')
+      return HttpResponse.json(
+        { detail: 'Something went wrong' },
+        { status: 500 }
+      );
+
+    return HttpResponse.json(undefined, { status: 204 });
   }),
 ];

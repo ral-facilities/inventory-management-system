@@ -3,7 +3,7 @@ import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http } from 'msw';
 import { MockInstance } from 'vitest';
 import { imsApi } from '../api/api';
-import { CatalogueCategory, CatalogueItem } from '../app.types';
+import { CatalogueCategory, CatalogueItem } from '../api/api.types';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { server } from '../mocks/server';
 import {
@@ -12,48 +12,9 @@ import {
   getItemById,
   renderComponentWithRouterProvider,
 } from '../testUtils';
-import ItemDialog, {
-  ItemDialogProps,
-  isValidDateTime,
-} from './itemDialog.component';
+import ItemDialog, { ItemDialogProps } from './itemDialog.component';
 
 vi.mock('../handleIMS_APIError');
-
-describe('isValidDateTime', () => {
-  it('should return true for a valid date string', () => {
-    const validDateString = '2022-01-17T12:00:00Z';
-    expect(isValidDateTime(validDateString)).toBe(true);
-  });
-
-  it('should return false for an invalid date string', () => {
-    const invalidDateString = 'invalid-date';
-    expect(isValidDateTime(invalidDateString)).toBe(false);
-  });
-
-  it('should return true for a valid Date object', () => {
-    const validDateObject = new Date('2022-01-17T12:00:00Z');
-    expect(isValidDateTime(validDateObject)).toBe(true);
-  });
-
-  it('should return false for an invalid Date object', () => {
-    const invalidDateObject = new Date('invalid-date');
-    expect(isValidDateTime(invalidDateObject)).toBe(false);
-  });
-
-  it('should return false for null input', () => {
-    expect(isValidDateTime(null)).toBe(false);
-  });
-
-  it('should return false if date year exceeds 2100', () => {
-    const validDateObject = new Date('2122-01-17T12:00:00Z');
-    expect(isValidDateTime(validDateObject)).toBe(false);
-  });
-
-  it('should return false if date year (string) exceeds 2100', () => {
-    const validDateObject = '2122-01-17T12:00:00Z';
-    expect(isValidDateTime(validDateObject)).toBe(false);
-  });
-});
 
 describe('ItemDialog', () => {
   let props: ItemDialogProps;
@@ -67,7 +28,7 @@ describe('ItemDialog', () => {
     props = {
       open: true,
       onClose: onClose,
-      type: 'create',
+      requestType: 'post',
       catalogueCategory: getCatalogueCategoryById('4'),
       catalogueItem: getCatalogueItemById('1'),
     };
@@ -76,7 +37,10 @@ describe('ItemDialog', () => {
 
   const modifyDetailsValues = async (values: {
     serialNumber?: string;
-    serialNumberAdvancedOptions?: { quantity?: string; startingValue?: string };
+    serialNumberAdvancedOptions?: {
+      quantity?: string;
+      starting_value?: string;
+    };
     assetNumber?: string;
     purchaseOrderNumber?: string;
     warrantyEndDate?: string;
@@ -98,9 +62,9 @@ describe('ItemDialog', () => {
         fireEvent.change(screen.getByLabelText('Quantity'), {
           target: { value: values.serialNumberAdvancedOptions.quantity },
         });
-      if (values.serialNumberAdvancedOptions?.startingValue !== undefined)
+      if (values.serialNumberAdvancedOptions?.starting_value !== undefined)
         fireEvent.change(screen.getByLabelText('Starting value'), {
-          target: { value: values.serialNumberAdvancedOptions.startingValue },
+          target: { value: values.serialNumberAdvancedOptions.starting_value },
         });
     }
 
@@ -292,7 +256,7 @@ describe('ItemDialog', () => {
 
       await modifyDetailsValues({
         serialNumber: 'test12 %s',
-        serialNumberAdvancedOptions: { quantity: '2', startingValue: '10' },
+        serialNumberAdvancedOptions: { quantity: '2', starting_value: '10' },
         usageStatus: 'U{arrowdown}{enter}',
       });
 
@@ -457,7 +421,7 @@ describe('ItemDialog', () => {
         purchaseOrderNumber: 'test21',
         notes: 'test',
         warrantyEndDate: '17/02/2035',
-        deliveredDate: '23/09/2045',
+        deliveredDate: '23/09/2024',
         isDefective: 'Y{arrowdown}{enter}',
         usageStatus: 'U{arrowdown}{enter}',
       });
@@ -484,7 +448,7 @@ describe('ItemDialog', () => {
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
         asset_number: 'test43',
         catalogue_item_id: '1',
-        delivered_date: '2045-09-23T00:00:00.000Z',
+        delivered_date: '2024-09-23T00:00:00.000Z',
         is_defective: true,
         notes: 'test',
         properties: [
@@ -546,8 +510,6 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
-      expect(screen.getByRole('button', { name: 'Finish' })).toBeDisabled();
-
       await user.click(screen.getByText('Add item details'));
       await modifyDetailsValues({
         warrantyEndDate: '17/02/2000',
@@ -562,66 +524,77 @@ describe('ItemDialog', () => {
     it('displays error messages for serial number advanced options', async () => {
       createView();
       await modifyDetailsValues({
-        serialNumberAdvancedOptions: { startingValue: '10' },
+        serialNumberAdvancedOptions: { starting_value: '10' },
       });
 
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
       expect(
-        screen.getByText('Please enter a quantity value')
+        screen.getByText('Please enter a quantity value.')
       ).toBeInTheDocument();
 
       await user.click(screen.getByText('Close advanced options'));
       await modifyDetailsValues({
-        serialNumberAdvancedOptions: { quantity: '10a', startingValue: '10a' },
+        serialNumberAdvancedOptions: { quantity: '10', starting_value: '' },
       });
 
-      expect(screen.getAllByText('Please enter a valid number').length).toEqual(
-        2
-      );
+      expect(
+        await screen.findByText('Please enter a starting value.')
+      ).toBeInTheDocument();
+
+      await user.click(screen.getByText('Close advanced options'));
+
+      await modifyDetailsValues({
+        serialNumberAdvancedOptions: { quantity: '10a', starting_value: '10a' },
+      });
+
+      expect(
+        (await screen.findAllByText('Please enter a valid number.')).length
+      ).toEqual(2);
 
       await user.click(screen.getByText('Close advanced options'));
       await modifyDetailsValues({
         serialNumberAdvancedOptions: {
           quantity: '10.5',
-          startingValue: '10.5',
+          starting_value: '10.5',
         },
       });
-
-      expect(
-        screen.getByText('Quantity must be an integer')
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText('Starting value must be an integer')
-      ).toBeInTheDocument();
+      await waitFor(() => {
+        expect(
+          screen.getAllByText('Please enter a valid integer.').length
+        ).toEqual(2);
+      });
 
       await user.click(screen.getByText('Close advanced options'));
       await modifyDetailsValues({
         serialNumberAdvancedOptions: {
           quantity: '-1',
-          startingValue: '-1',
+          starting_value: '-1',
         },
       });
 
       expect(
-        screen.getByText('Quantity must be greater than 1')
+        await screen.findByText('Number must be greater than or equal to 0')
       ).toBeInTheDocument();
       expect(
-        screen.getByText('Starting value must be greater than or equal to 0')
+        await screen.findByText('Number must be greater than or equal to 2')
       ).toBeInTheDocument();
 
       await user.click(screen.getByText('Close advanced options'));
       await modifyDetailsValues({
         serialNumberAdvancedOptions: {
           quantity: '100',
-          startingValue: '2',
+          starting_value: '2',
         },
       });
 
       expect(
-        screen.getByText('Quantity must be less than 100')
+        await screen.findByText('Number must be less than or equal to 99')
       ).toBeInTheDocument();
+
       expect(
         screen.getByText(
-          'Please use %s to specify the location you want to append the number to serial number'
+          'Please use %s to specify the location you want to append the number to serial number.'
         )
       ).toBeInTheDocument();
 
@@ -630,7 +603,7 @@ describe('ItemDialog', () => {
         serialNumber: 'test %s',
         serialNumberAdvancedOptions: {
           quantity: '4',
-          startingValue: '2',
+          starting_value: '2',
         },
       });
 
@@ -649,7 +622,7 @@ describe('ItemDialog', () => {
         purchaseOrderNumber: 'test21',
         notes: 'test',
         warrantyEndDate: '17/02/2035',
-        deliveredDate: '23/09/2045',
+        deliveredDate: '23/09/2024',
         isDefective: 'Y{arrowdown}{enter}',
         usageStatus: 'U{arrowdown}{enter}',
       });
@@ -676,7 +649,7 @@ describe('ItemDialog', () => {
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
         asset_number: 'test43',
         catalogue_item_id: '1',
-        delivered_date: '2045-09-23T00:00:00.000Z',
+        delivered_date: '2024-09-23T00:00:00.000Z',
         is_defective: true,
         notes: 'test',
         properties: [
@@ -702,8 +675,9 @@ describe('ItemDialog', () => {
 
       expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
       expect(screen.getByText('Invalid item details')).toBeInTheDocument();
+
       expect(
-        screen.getByText('Please select a Usage Status')
+        await screen.findByText('Please select a usage status.')
       ).toBeInTheDocument();
 
       await modifyDetailsValues({
@@ -715,7 +689,7 @@ describe('ItemDialog', () => {
         screen.queryByText('Invalid item details')
       ).not.toBeInTheDocument();
       expect(
-        screen.queryByText('Please select a Usage Status')
+        screen.queryByText('Please select a usage status.')
       ).not.toBeInTheDocument();
     });
 
@@ -728,7 +702,7 @@ describe('ItemDialog', () => {
         purchaseOrderNumber: 'test21',
         notes: 'test',
         warrantyEndDate: '17/02/2035',
-        deliveredDate: '23/09/2045',
+        deliveredDate: '23/09/2024',
         isDefective: 'Y{arrowdown}{enter}',
         usageStatus: 'U{arrowdown}{enter}',
       });
@@ -743,7 +717,7 @@ describe('ItemDialog', () => {
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       const mandatoryFieldHelperText = screen.getAllByText(
-        'Please enter a valid value as this field is mandatory'
+        'Please enter a valid value as this field is mandatory.'
       );
 
       expect(mandatoryFieldHelperText.length).toBe(2);
@@ -758,11 +732,13 @@ describe('ItemDialog', () => {
         sensorBrand: 'pixel',
       });
 
-      expect(
-        screen.queryByText(
-          'Please enter a valid value as this field is mandatory'
-        )
-      ).not.toBeInTheDocument();
+      await waitFor(() => {
+        expect(
+          screen.queryByText(
+            'Please enter a valid value as this field is mandatory.'
+          )
+        ).not.toBeInTheDocument();
+      });
 
       expect(screen.getByRole('button', { name: 'Next' })).not.toBeDisabled();
     }, 10000);
@@ -793,8 +769,9 @@ describe('ItemDialog', () => {
         deliveredDate: '23/09/4000',
       });
 
-      const validDateMaxHelperText = screen.getAllByText(
-        'Exceeded maximum date'
+      const validDateMaxHelperText = await screen.findAllByText(
+        'Date cannot be later than',
+        {exact: false}
       );
       expect(validDateMaxHelperText.length).toEqual(2);
 
@@ -806,11 +783,14 @@ describe('ItemDialog', () => {
       });
 
       expect(
-        screen.queryByText('Exceeded maximum date')
+        screen.queryByText(
+          'Date cannot be later than',
+          {exact: false}
+        )
       ).not.toBeInTheDocument();
       expect(
         screen.queryByText(
-          'Please enter a valid value as this field is mandatory'
+          'Please enter a valid value as this field is mandatory.'
         )
       ).not.toBeInTheDocument();
 
@@ -825,7 +805,7 @@ describe('ItemDialog', () => {
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       const validNumberHelperText = screen.getByText(
-        'Please enter a valid number'
+        'Please enter a valid number.'
       );
 
       expect(validNumberHelperText).toBeInTheDocument();
@@ -835,9 +815,12 @@ describe('ItemDialog', () => {
       await modifyPropertiesValues({
         resolution: '12',
       });
-      expect(
-        screen.queryByText('Please enter a valid number')
-      ).not.toBeInTheDocument();
+
+      await waitFor(() => {
+        expect(
+          screen.queryByText('Please enter a valid number.')
+        ).not.toBeInTheDocument();
+      });
     }, 10000);
 
     it('displays error message when mandatory property with allowed values is missing', async () => {
@@ -860,7 +843,7 @@ describe('ItemDialog', () => {
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       const mandatoryFieldHelperText = screen.getByText(
-        'Please enter a valid value as this field is mandatory'
+        'Please enter a valid value as this field is mandatory.'
       );
 
       expect(mandatoryFieldHelperText).toBeInTheDocument();
@@ -891,7 +874,8 @@ describe('ItemDialog', () => {
 
     it('duplicate an item', async () => {
       props.selectedItem = getItemById('G463gOIA');
-      props.type = 'duplicate';
+      props.requestType = 'post';
+      props.duplicate = true;
       createView();
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -967,7 +951,7 @@ describe('ItemDialog', () => {
     beforeEach(() => {
       axiosPatchSpy = vi.spyOn(imsApi, 'patch');
       props.selectedItem = getItemById('G463gOIA');
-      props.type = 'edit';
+      props.requestType = 'patch';
     });
 
     it('disables finish button and shows circular progress indicator when request is pending', async () => {
@@ -1003,7 +987,7 @@ describe('ItemDialog', () => {
         purchaseOrderNumber: 'test21',
         notes: 'test',
         warrantyEndDate: '17/02/2035',
-        deliveredDate: '23/09/2045',
+        deliveredDate: '23/09/2024',
         isDefective: 'Y{arrowdown}{enter}',
         usageStatus: 'U{enter}',
       });
@@ -1034,7 +1018,7 @@ describe('ItemDialog', () => {
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
         asset_number: 'test43',
-        delivered_date: '2045-09-23T23:00:00.000Z',
+        delivered_date: '2024-09-23T23:00:00.000Z',
         is_defective: true,
         notes: 'test',
         properties: [
@@ -1153,7 +1137,7 @@ describe('ItemDialog', () => {
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       const validNumberHelperText = screen.getByText(
-        'Please enter a valid number'
+        'Please enter a valid number.'
       );
 
       expect(validNumberHelperText).toBeInTheDocument();
@@ -1163,9 +1147,11 @@ describe('ItemDialog', () => {
       await modifyPropertiesValues({
         resolution: '12',
       });
-      expect(
-        screen.queryByText('Please enter a valid number')
-      ).not.toBeInTheDocument();
+      await waitFor(() => {
+        expect(
+          screen.queryByText('Please enter a valid number.')
+        ).not.toBeInTheDocument();
+      });
     }, 10000);
 
     it('displays error message if no fields have been changed (when they are no catalogue property fields)', async () => {
@@ -1177,7 +1163,9 @@ describe('ItemDialog', () => {
 
       await waitFor(() => {
         expect(
-          screen.getByText('Please edit a form entry before clicking save')
+          screen.getByText(
+            "There have been no changes made. Please change a field's value or press Cancel to exit."
+          )
         ).toBeInTheDocument();
       });
     });

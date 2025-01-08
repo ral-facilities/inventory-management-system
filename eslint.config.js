@@ -1,12 +1,15 @@
 import { fixupPluginRules } from '@eslint/compat';
 import eslint from '@eslint/js';
+import queryPlugin from '@tanstack/eslint-plugin-query';
+import prettierPlugin from 'eslint-config-prettier';
 import cypressPlugin from 'eslint-plugin-cypress/flat';
+import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
+import noOnlyTestsPlugin from 'eslint-plugin-no-only-tests';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import reactTestingLibraryPlugin from 'eslint-plugin-testing-library';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
-import prettierPlugin from 'eslint-config-prettier';
 
 export default tseslint.config(
   {
@@ -33,6 +36,9 @@ export default tseslint.config(
       // eslint-plugin-react-hooks doesn't support flat config properly yet
       // https://github.com/facebook/react/issues/28313
       'react-hooks': fixupPluginRules(reactHooksPlugin),
+      '@tanstack/query': queryPlugin,
+      'no-only-tests': noOnlyTestsPlugin,
+      'jsx-a11y': jsxA11yPlugin,
     },
     extends: [
       eslint.configs.recommended,
@@ -60,17 +66,14 @@ export default tseslint.config(
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       ...reactHooksPlugin.configs.recommended.rules,
+      ...queryPlugin.configs.recommended.rules,
+      'no-only-tests/no-only-tests': 'error',
+      ...jsxA11yPlugin.configs.recommended.rules,
     },
   },
-  // eslint-plugin-testing-library doesn't support flat config properly yet
-  // https://github.com/testing-library/eslint-plugin-testing-library/issues/899
   {
     files: ['**/?*test.{js,ts,jsx,tsx}'],
-    plugins: {
-      'testing-library': fixupPluginRules({
-        rules: reactTestingLibraryPlugin.rules,
-      }),
-    },
-    rules: reactTestingLibraryPlugin.configs.react.rules,
+    plugins: reactTestingLibraryPlugin.configs['flat/react'].plugins,
+    rules: reactTestingLibraryPlugin.configs['flat/react'].rules,
   }
 );

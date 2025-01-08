@@ -14,9 +14,9 @@ import {
 import { AxiosError } from 'axios';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Item } from '../api/api.types';
 import { useDeleteItem } from '../api/items';
 import { useGetSystem } from '../api/systems';
-import { Item } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
 
 export interface DeleteItemDialogProps {

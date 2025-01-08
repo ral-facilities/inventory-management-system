@@ -13,7 +13,6 @@ import {
   TableCellBaseProps,
 } from '@mui/material';
 import {
-  MRT_Row,
   MaterialReactTable,
   useMaterialReactTable,
   type MRT_ColumnDef,
@@ -21,23 +20,31 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { System } from '../api/api.types';
-import { useItems } from '../api/items';
-import { useGetSystemIds } from '../api/systems';
-import { CatalogueCategory, CatalogueItem, Item } from '../app.types';
 import {
-  PropertyFiltersType,
-  findPropertyValue,
-} from '../catalogue/items/catalogueItemsTable.component';
+  CatalogueCategory,
+  CatalogueItem,
+  Item,
+  System,
+} from '../api/api.types';
+import { useGetItems } from '../api/items';
+import { useGetSystemIds } from '../api/systems';
+import { findPropertyValue } from '../catalogue/items/catalogueItemsTable.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import {
+  COLUMN_FILTER_FUNCTIONS,
+  COLUMN_FILTER_MODE_OPTIONS,
+  COLUMN_FILTER_VARIANTS,
+  customFilterFunctions,
+  displayTableRowCountText,
+  formatDateTimeStrings,
+  getInitialColumnFilterFnState,
+  getPageHeightCalc,
+  MRT_Functions_Localisation,
+  OPTIONAL_FILTER_MODE_OPTIONS,
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
   TableGroupedCell,
   TableHeaderOverflowTip,
-  displayTableRowCountText,
-  formatDateTimeStrings,
-  getPageHeightCalc,
 } from '../utils';
 import DeleteItemDialog from './deleteItemDialog.component';
 import ItemDialog from './itemDialog.component';
@@ -61,7 +68,7 @@ export function ItemsTable(props: ItemTableProps) {
 
   const noResultsTxt =
     'No results found: Try adding an item by using the Add Item button on the top left of your screen';
-  const { data: itemsData, isLoading: isLoadingItems } = useItems(
+  const { data: itemsData, isLoading: isLoadingItems } = useGetItems(
     undefined,
     catalogueItem.id
   );
@@ -109,19 +116,19 @@ export function ItemsTable(props: ItemTableProps) {
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     const viewCatalogueItemProperties = catalogueCategory?.properties ?? [];
-    const propertyFilters: PropertyFiltersType = {
-      boolean: 'autocomplete',
-      string: 'text',
-      number: 'range',
-      null: 'text',
-    };
     return [
       {
         header: 'Serial Number',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.serial_number ?? 'No serial number',
         id: 'item.serial_number',
-        size: 250,
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS.string,
+          ...['betweenInclusive'],
+        ],
+        size: 225,
         Cell: ({ row }) => (
           <MuiLink underline="hover" component={Link} to={row.original.item.id}>
             {row.original.item.serial_number ?? 'No serial number'}
@@ -135,10 +142,11 @@ export function ItemsTable(props: ItemTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.item.modified_time),
         id: 'item.modified_time',
-        filterVariant: 'datetime-range',
+        filterVariant: COLUMN_FILTER_VARIANTS.datetime,
+        filterFn: COLUMN_FILTER_FUNCTIONS.datetime,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.datetime,
         size: 350,
         Cell: ({ row }) =>
-          row.original.item.modified_time &&
           formatDateTimeStrings(row.original.item.modified_time, true),
         enableGrouping: false,
       },
@@ -147,7 +155,9 @@ export function ItemsTable(props: ItemTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.item.created_time),
         id: 'item.created_time',
-        filterVariant: 'datetime-range',
+        filterVariant: COLUMN_FILTER_VARIANTS.datetime,
+        filterFn: COLUMN_FILTER_FUNCTIONS.datetime,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.datetime,
         size: 350,
         Cell: ({ row }) =>
           formatDateTimeStrings(row.original.item.created_time, true),
@@ -157,17 +167,29 @@ export function ItemsTable(props: ItemTableProps) {
       {
         header: 'Asset Number',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => row.item.asset_number,
+        accessorFn: (row) => row.item.asset_number ?? '',
         id: 'item.asset_number',
-        size: 250,
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS.string,
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
+        ],
+        size: 225,
         GroupedCell: TableGroupedCell,
       },
       {
         header: 'Purchase Order Number',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => row.item.purchase_order_number,
+        accessorFn: (row) => row.item.purchase_order_number ?? '',
         id: 'item.purchase_order_number',
-        size: 350,
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS.string,
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
+        ],
+        size: 275,
         GroupedCell: TableGroupedCell,
       },
       {
@@ -178,7 +200,9 @@ export function ItemsTable(props: ItemTableProps) {
             ? new Date(row.item.warranty_end_date)
             : null,
         id: 'item.warranty_end_date',
-        filterVariant: 'date-range',
+        filterVariant: COLUMN_FILTER_VARIANTS.date,
+        filterFn: COLUMN_FILTER_FUNCTIONS.date,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.date,
         size: 350,
         Cell: ({ row }) =>
           row.original.item.warranty_end_date &&
@@ -195,7 +219,9 @@ export function ItemsTable(props: ItemTableProps) {
         accessorFn: (row) =>
           row.item.delivered_date ? new Date(row.item.delivered_date) : null,
         id: 'item.delivered_date',
-        filterVariant: 'date-range',
+        filterVariant: COLUMN_FILTER_VARIANTS.date,
+        filterFn: COLUMN_FILTER_FUNCTIONS.date,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.date,
         size: 350,
         Cell: ({ row }) =>
           row.original.item.delivered_date &&
@@ -211,16 +237,33 @@ export function ItemsTable(props: ItemTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => (row.item.is_defective === true ? 'Yes' : 'No'),
         id: 'item.is_defective',
+        filterVariant: COLUMN_FILTER_VARIANTS.boolean,
+        enableColumnFilterModes: false,
         size: 200,
-        filterVariant: 'autocomplete',
       },
       {
         header: 'Usage Status',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.usage_status,
         id: 'item.usage_status',
-        size: 200,
-        filterVariant: 'autocomplete',
+        filterVariant: 'multi-select',
+        filterFn: 'arrIncludesSome',
+        columnFilterModeOptions: ['arrIncludesSome', 'arrExcludesSome'],
+        renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) => [
+          <MenuItem
+            key="arrIncludesSome"
+            onClick={() => onSelectFilterMode('arrIncludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrIncludesSome}
+          </MenuItem>,
+          <MenuItem
+            key="arrExcludesSome"
+            onClick={() => onSelectFilterMode('arrExcludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrExcludesSome}
+          </MenuItem>,
+        ],
+        size: 350,
       },
       {
         header: 'System',
@@ -228,7 +271,24 @@ export function ItemsTable(props: ItemTableProps) {
         accessorFn: (row) => row.system?.name ?? '',
         getGroupingValue: (row) => row.system?.id ?? '',
         id: 'system.name',
-        size: 250,
+        filterVariant: 'multi-select',
+        filterFn: 'arrIncludesSome',
+        columnFilterModeOptions: ['arrIncludesSome', 'arrExcludesSome'],
+        renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) => [
+          <MenuItem
+            key="arrIncludesSome"
+            onClick={() => onSelectFilterMode('arrIncludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrIncludesSome}
+          </MenuItem>,
+          <MenuItem
+            key="arrExcludesSome"
+            onClick={() => onSelectFilterMode('arrExcludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrExcludesSome}
+          </MenuItem>,
+        ],
+        size: 350,
         Cell: ({ row }) => (
           <MuiLink
             underline="hover"
@@ -246,7 +306,13 @@ export function ItemsTable(props: ItemTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.notes ?? '',
         id: 'item.notes',
-        size: 250,
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS.string,
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
+        ],
+        size: 200,
         enableGrouping: false,
       },
 
@@ -256,70 +322,62 @@ export function ItemsTable(props: ItemTableProps) {
         id: `item.properties.${property.id}`,
         GroupedCell: TableGroupedCell,
         accessorFn: (row: TableRowData) => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const propertyValue: any = findPropertyValue(
+            row.item.properties,
+            property.id
+          );
           if (property.type === 'boolean') {
-            return (findPropertyValue(
-              row.item.properties,
-              property.id
-            ) as boolean) === true
-              ? 'Yes'
-              : 'No';
+            if (typeof propertyValue === 'boolean') {
+              return propertyValue ? 'Yes' : 'No';
+            } else {
+              return '';
+            }
           } else if (property.type === 'number') {
-            return typeof findPropertyValue(
-              row.item.properties,
-              property.id
-            ) === 'number'
-              ? findPropertyValue(row.item.properties, property.id)
-              : 0;
+            return typeof propertyValue === 'number' ? propertyValue : '';
           } else {
             // if the value doesn't exist it return type "true" we need to change this
             // to '' to allow this column to be filterable
 
-            return findPropertyValue(row.item.properties, property.id);
+            return propertyValue ?? '';
           }
         },
         size: 250,
         filterVariant:
-          propertyFilters[
+          COLUMN_FILTER_VARIANTS[
             property.type as 'string' | 'boolean' | 'number' | 'null'
           ],
-
-        Cell: ({ row }: { row: MRT_Row<TableRowData> }) => {
-          if (
-            typeof findPropertyValue(
-              row.original.item.properties,
-              property.id
-            ) === 'number'
-          ) {
-            return findPropertyValue(
-              row.original.item.properties,
-              property.id
-            ) === 0
-              ? 0
-              : findPropertyValue(row.original.item.properties, property.id) !==
-                  null
-                ? findPropertyValue(row.original.item.properties, property.id)
-                : '';
-          } else if (
-            typeof findPropertyValue(
-              row.original.item.properties,
-              property.id
-            ) === 'boolean'
-          ) {
-            return findPropertyValue(row.original.item.properties, property.id)
-              ? 'Yes'
-              : 'No';
-          } else {
-            return findPropertyValue(row.original.item.properties, property.id);
-          }
-        },
+        filterFn:
+          COLUMN_FILTER_FUNCTIONS[
+            property.type as 'string' | 'boolean' | 'number' | 'null'
+          ],
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS[
+            property.type as 'string' | 'boolean' | 'number' | 'null'
+          ],
+          ...(property.mandatory ? [] : OPTIONAL_FILTER_MODE_OPTIONS),
+        ],
+        enableColumnFilterModes:
+          (property.type as 'string' | 'boolean' | 'number' | 'null') ===
+          'boolean'
+            ? property.mandatory
+              ? false
+              : true
+            : true,
+        filterSelectOptions: ['Yes', 'No'],
       })),
     ];
   }, [catalogueCategory]);
+
+  const initialColumnFilterFnState = React.useMemo(() => {
+    return getInitialColumnFilterFnState(columns);
+  }, [columns]);
 
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
       columnVisibility: { created_time: false },
       pagination: { pageSize: dense ? 5 : 15, pageIndex: 0 },
+      columnFilterFns: initialColumnFilterFnState,
     },
     storeInUrl: !dense,
   });
@@ -341,6 +399,7 @@ export function ItemsTable(props: ItemTableProps) {
     enableColumnOrdering: dense ? false : true,
     enableFacetedValues: true,
     enableColumnResizing: dense ? false : true,
+    enableColumnFilterModes: true,
     enableRowActions: dense ? false : true,
     enableStickyHeader: true,
     enableDensityToggle: false,
@@ -351,6 +410,7 @@ export function ItemsTable(props: ItemTableProps) {
     enableColumnVirtualization: dense ? false : true,
     enableGrouping: !dense,
     enablePagination: true,
+    filterFns: customFilterFunctions,
     // Other settings
     columnVirtualizerOptions: dense
       ? undefined
@@ -373,6 +433,7 @@ export function ItemsTable(props: ItemTableProps) {
     // Localisation
     localization: {
       ...MRT_Localization_EN,
+      ...MRT_Functions_Localisation,
       noRecordsToDisplay: noResultsTxt,
     },
     //State
@@ -442,7 +503,8 @@ export function ItemsTable(props: ItemTableProps) {
             onClose={() => {
               table.setCreatingRow(null);
             }}
-            type={itemDialogType}
+            duplicate={itemDialogType === 'duplicate'}
+            requestType={itemDialogType === 'edit' ? 'patch' : 'post'}
             catalogueCategory={catalogueCategory}
             catalogueItem={catalogueItem}
             selectedItem={
@@ -550,6 +612,7 @@ export function ItemsTable(props: ItemTableProps) {
         )
       : undefined,
   });
+
   return (
     <div style={{ width: '100%' }}>
       <MaterialReactTable table={table} />

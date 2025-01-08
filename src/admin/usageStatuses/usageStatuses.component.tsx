@@ -21,10 +21,14 @@ import { UsageStatus } from '../../api/api.types.tsx';
 import { useGetUsageStatuses } from '../../api/usageStatuses.tsx';
 import { usePreservedTableState } from '../../common/preservedTableState.component.tsx';
 import {
+  COLUMN_FILTER_FUNCTIONS,
+  COLUMN_FILTER_MODE_OPTIONS,
+  COLUMN_FILTER_VARIANTS,
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
   displayTableRowCountText,
   formatDateTimeStrings,
+  getInitialColumnFilterFnState,
   getPageHeightCalc,
 } from '../../utils.tsx';
 import DeleteUsageStatusDialog from './deleteUsageStatusDialog.component.tsx';
@@ -49,24 +53,29 @@ function UsageStatuses() {
         header: 'Value',
         accessorFn: (row) => row.value,
         id: 'value',
-        Cell: ({ row }) => row.original.value,
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
       },
       {
         header: 'Last modified',
         accessorFn: (row) => new Date(row.modified_time),
         id: 'modified_time',
-        filterVariant: 'datetime-range',
+        filterVariant: COLUMN_FILTER_VARIANTS.datetime,
+        filterFn: COLUMN_FILTER_FUNCTIONS.datetime,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.datetime,
         size: 350,
         enableGrouping: false,
         Cell: ({ row }) =>
-          row.original.modified_time &&
           formatDateTimeStrings(row.original.modified_time, true),
       },
       {
         header: 'Created',
         accessorFn: (row) => new Date(row.created_time),
         id: 'created_time',
-        filterVariant: 'datetime-range',
+        filterVariant: COLUMN_FILTER_VARIANTS.datetime,
+        filterFn: COLUMN_FILTER_FUNCTIONS.datetime,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.datetime,
         size: 350,
         enableGrouping: false,
         enableHiding: true,
@@ -76,12 +85,17 @@ function UsageStatuses() {
     ];
   }, []);
 
+  const initialColumnFilterFnState = React.useMemo(() => {
+    return getInitialColumnFilterFnState(columns);
+  }, [columns]);
+
   const noResultsTxt =
     'No results found: Try adding a Usage Status by using the Add Usage Status button';
 
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
       pagination: { pageSize: 15, pageIndex: 0 },
+      columnFilterFns: initialColumnFilterFnState,
     },
     storeInUrl: true,
   });
@@ -91,6 +105,7 @@ function UsageStatuses() {
     data: usageStatusData ?? [],
     // Features
     enableColumnOrdering: true,
+    enableColumnFilterModes: true,
     enableFacetedValues: true,
     enableRowActions: true,
     enableStickyHeader: true,

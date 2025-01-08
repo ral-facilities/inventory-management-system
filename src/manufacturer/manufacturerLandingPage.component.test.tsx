@@ -33,7 +33,7 @@ describe('Manufacturer Landing page', () => {
     await waitFor(() => {
       expect(
         screen.getByRole('button', {
-          name: 'navigate to manufacturer home',
+          name: 'navigate to manufacturers home',
         })
       ).toBeInTheDocument();
     });
@@ -52,7 +52,7 @@ describe('Manufacturer Landing page', () => {
     });
 
     const homeButton = screen.getByRole('button', {
-      name: 'navigate to manufacturer home',
+      name: 'navigate to manufacturers home',
     });
 
     await user.click(homeButton);

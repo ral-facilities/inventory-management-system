@@ -17,6 +17,7 @@ describe('Catalogue Items', () => {
         cy.findByLabelText('Cost to rework (£)').type('400');
         cy.findByLabelText('Time to replace (days) *').type('14');
         cy.findByLabelText('Time to rework (days)').type('5');
+        cy.findByLabelText('Expected Lifetime (days)').type('345');
         cy.findByLabelText('Drawing number').type('MX43242');
         cy.findByLabelText('Drawing link').type('https://example.com');
         cy.findByLabelText('Model number').type('MXtest');
@@ -49,20 +50,17 @@ describe('Catalogue Items', () => {
       const request = postRequests[0];
       expect(JSON.stringify(await request.json())).equal(
         JSON.stringify({
-          catalogue_category_id: '4',
+          manufacturer_id: '1',
           name: 'test',
+          description: 'test Description',
           cost_gbp: 5000,
           cost_to_rework_gbp: 400,
           days_to_replace: 14,
           days_to_rework: 5,
-          description: 'test Description',
-          item_model_number: 'MXtest',
-          is_obsolete: false,
-          obsolete_reason: null,
-          obsolete_replacement_catalogue_item_id: null,
-          drawing_link: 'https://example.com',
+          expected_lifetime_days: 345,
           drawing_number: 'MX43242',
-          manufacturer_id: '1',
+          drawing_link: 'https://example.com',
+          item_model_number: 'MXtest',
           notes: 'This is a test note',
           properties: [
             { id: '1', value: 18 },
@@ -72,6 +70,10 @@ describe('Catalogue Items', () => {
             { id: '5', value: true },
             { id: '6', value: false },
           ],
+          catalogue_category_id: '4',
+          is_obsolete: false,
+          obsolete_replacement_catalogue_item_id: null,
+          obsolete_reason: null,
         })
       );
     });
@@ -97,25 +99,26 @@ describe('Catalogue Items', () => {
       const request = postRequests[0];
       expect(JSON.stringify(await request.json())).equal(
         JSON.stringify({
-          catalogue_category_id: '5',
+          manufacturer_id: '3',
           name: 'Energy Meters 27_copy_1',
+          description: 'Precision energy meters for accurate measurements. 27',
           cost_gbp: 600,
           cost_to_rework_gbp: 89,
           days_to_replace: 7,
           days_to_rework: 60,
-          description: 'Precision energy meters for accurate measurements. 27',
-          item_model_number: null,
-          is_obsolete: false,
-          obsolete_reason: null,
-          obsolete_replacement_catalogue_item_id: null,
-          drawing_link: null,
+          expected_lifetime_days: 3635,
           drawing_number: null,
-          manufacturer_id: '3',
+          drawing_link: null,
+          item_model_number: null,
           notes: 'Need to find new manufacturer. 27',
           properties: [
             { id: '7', value: 2000 },
             { id: '8', value: null },
           ],
+          catalogue_category_id: '5',
+          is_obsolete: false,
+          obsolete_replacement_catalogue_item_id: null,
+          obsolete_reason: null,
         })
       );
     });
@@ -158,20 +161,17 @@ describe('Catalogue Items', () => {
       const request = postRequests[0];
       expect(JSON.stringify(await request.json())).equal(
         JSON.stringify({
-          catalogue_category_id: '4',
+          manufacturer_id: '1',
           name: 'test',
+          description: null,
           cost_gbp: 5000,
           cost_to_rework_gbp: null,
           days_to_replace: 14,
           days_to_rework: null,
-          description: null,
-          item_model_number: null,
-          is_obsolete: false,
-          obsolete_reason: null,
-          obsolete_replacement_catalogue_item_id: null,
-          drawing_link: null,
+          expected_lifetime_days: null,
           drawing_number: null,
-          manufacturer_id: '1',
+          drawing_link: null,
+          item_model_number: null,
           notes: null,
           properties: [
             { id: '1', value: 18 },
@@ -181,6 +181,10 @@ describe('Catalogue Items', () => {
             { id: '5', value: true },
             { id: '6', value: null },
           ],
+          catalogue_category_id: '4',
+          is_obsolete: false,
+          obsolete_replacement_catalogue_item_id: null,
+          obsolete_reason: null,
         })
       );
     });
@@ -224,26 +228,27 @@ describe('Catalogue Items', () => {
       const request = postRequests[0];
       expect(JSON.stringify(await request.json())).equal(
         JSON.stringify({
-          catalogue_category_id: '12',
+          manufacturer_id: '1',
           name: 'test',
+          description: null,
           cost_gbp: 5000,
           cost_to_rework_gbp: null,
           days_to_replace: 14,
           days_to_rework: null,
-          description: null,
-          item_model_number: null,
-          is_obsolete: false,
-          obsolete_reason: null,
-          obsolete_replacement_catalogue_item_id: null,
-          drawing_link: null,
+          expected_lifetime_days: null,
           drawing_number: null,
-          manufacturer_id: '1',
+          drawing_link: null,
+          item_model_number: null,
           notes: null,
           properties: [
             { id: '17', value: 400 },
             { id: '18', value: 0.2 },
             { id: '19', value: 'y' },
           ],
+          catalogue_category_id: '12',
+          is_obsolete: false,
+          obsolete_replacement_catalogue_item_id: null,
+          obsolete_reason: null,
         })
       );
     });
@@ -256,13 +261,13 @@ describe('Catalogue Items', () => {
       .within(() => {
         cy.findByRole('button', { name: 'Next' }).click();
 
-        cy.findByText('Please enter a name').should('exist');
-        cy.findByText('Please enter a cost').should('exist');
+        cy.findByText('Please enter a name.').should('exist');
+        cy.findByText('Please enter a cost.').should('exist');
         cy.findByText(
-          'Please enter how many days it would take to replace'
+          'Please enter how many days it would take to replace.'
         ).should('exist');
         cy.findByText(
-          'Please choose a manufacturer, or add a new manufacturer'
+          'Please choose a manufacturer or add a new manufacturer. Then select a manufacturer.'
         ).should('exist');
 
         cy.findByRole('button', { name: 'Next' }).should('be.disabled');
@@ -274,23 +279,25 @@ describe('Catalogue Items', () => {
         cy.findByLabelText('Manufacturer *').click();
         cy.findByLabelText('Manufacturer *').type('Man{downArrow}{enter}');
 
-        cy.findByText('Please enter name').should('not.exist');
-        cy.findByText('Please select either True or False').should('not.exist');
-        cy.findByText('Please enter a cost').should('not.exist');
+        cy.findByText('Please enter name.').should('not.exist');
+        cy.findByText('Please select either True or False.').should(
+          'not.exist'
+        );
+        cy.findByText('Please enter a cost.').should('not.exist');
         cy.findByText(
-          'Please enter how many days it would take to replace'
+          'Please enter how many days it would take to replace.'
         ).should('not.exist');
         cy.findByText(
-          'Please chose a manufacturer, or add a new manufacturer'
+          'Please chose a manufacturer, or add a new manufacturer.'
         ).should('not.exist');
 
         cy.findByRole('button', { name: 'Next' }).click();
         cy.findByRole('button', { name: 'Finish' }).click();
 
-        cy.findByText('Please select either True or False').should('exist');
+        cy.findByText('Please select either True or False.').should('exist');
 
         cy.findAllByText(
-          'Please enter a valid value as this field is mandatory'
+          'Please enter a valid value as this field is mandatory.'
         ).should('have.length', 2);
       });
     cy.findByLabelText('Resolution (megapixels) *').type('18');
@@ -301,44 +308,66 @@ describe('Catalogue Items', () => {
       .should('be.visible')
       .within(() => {
         cy.findAllByText(
-          'Please enter a valid value as this field is mandatory'
+          'Please enter a valid value as this field is mandatory.'
         ).should('have.length', 0);
 
-        // value error from number field
-
+        // details - invalid number input test
         cy.findByRole('button', { name: 'Back' }).click();
 
         cy.findByLabelText('Cost (£) *').clear();
         cy.findByLabelText('Time to replace (days) *').clear();
         cy.findByLabelText('Cost (£) *').type('gfdg');
         cy.findByLabelText('Time to replace (days) *').type('32gf');
+        cy.findByLabelText('Expected Lifetime (days)').clear();
         cy.findByLabelText('Drawing link').type('test.co.uk');
+        cy.findByLabelText('Expected Lifetime (days)').type('friday');
 
-        cy.findByRole('button', { name: 'Next' }).click();
-
-        cy.findAllByText('Please enter a valid number').should(
+        cy.findAllByText('Please enter a valid number.').should(
           'have.length',
-          2
+          3
         );
         cy.findAllByText(
-          'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted'
+          'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted.'
         ).should('exist');
         cy.findByRole('button', { name: 'Next' }).should('be.disabled');
+
+        // details - negative number input validation test
+        cy.findByLabelText('Drawing link').clear();
+        cy.findByLabelText('Cost (£) *').clear();
+        cy.findByLabelText('Cost (£) *').type('-10');
+        cy.findByLabelText('Cost to rework (£)').clear();
+        cy.findByLabelText('Cost to rework (£)').type('-10');
+        cy.findByLabelText('Expected Lifetime (days)').clear();
+        cy.findByLabelText('Expected Lifetime (days)').type('-10');
+        cy.findByLabelText('Time to replace (days) *').clear();
+        cy.findByLabelText('Time to replace (days) *').type('-10');
+        cy.findByLabelText('Time to rework (days)').clear();
+        cy.findByLabelText('Time to rework (days)').type('-10');
+
+        cy.findAllByText('Number must be greater than or equal to 0').should(
+          'have.length',
+          5
+        );
+        cy.findByRole('button', { name: 'Next' }).should('be.disabled');
+
         cy.findByLabelText('Cost (£) *').clear();
         cy.findByLabelText('Cost (£) *').type('5000');
         cy.findByLabelText('Time to replace (days) *').clear();
         cy.findByLabelText('Time to replace (days) *').type('14');
-        cy.findByLabelText('Drawing link').clear();
+        cy.findByLabelText('Cost to rework (£)').clear();
+        cy.findByLabelText('Time to rework (days)').clear();
         cy.findByLabelText('Drawing link').type('https://test.co.uk');
+        cy.findByLabelText('Expected Lifetime (days)').clear();
+        cy.findByLabelText('Expected Lifetime (days)').type('200');
 
         cy.findByRole('button', { name: 'Next' }).click();
 
+        // properties - invalid number input test
         cy.findByLabelText('Resolution (megapixels) *').clear();
         cy.findByLabelText('Resolution (megapixels) *').type('dsfs');
         cy.findByLabelText('Frame Rate (fps)').type('fdsfsd');
-        cy.findByRole('button', { name: 'Finish' }).click();
 
-        cy.findAllByText('Please enter a valid number').should(
+        cy.findAllByText('Please enter a valid number.').should(
           'have.length',
           2
         );
@@ -371,32 +400,13 @@ describe('Catalogue Items', () => {
     cy.findByText('Cameras 4').should('exist');
   });
 
-  it('navigates to the landing page, toggles the properties and navigates back to the table view', () => {
+  it('navigates to the landing page and navigates back to the table view', () => {
     cy.findByText('Cameras 1').click();
     cy.findByText(
       'High-resolution cameras for beam characterization. 1'
     ).should('exist');
-    cy.findByLabelText('Close catalogue item properties').should('exist');
 
-    cy.findByLabelText('Close catalogue item properties').click();
-
-    cy.findByLabelText('Close catalogue item properties').should('not.exist');
-    cy.findByLabelText('Show catalogue item properties').should('exist');
-
-    cy.findByLabelText('Close catalogue item manufacturer details').should(
-      'exist'
-    );
-
-    cy.findByLabelText('Close catalogue item manufacturer details').click();
-
-    cy.findByLabelText('Close catalogue item manufacturer details').should(
-      'not.exist'
-    );
-    cy.findByLabelText('Show catalogue item manufacturer details').should(
-      'exist'
-    );
-
-    cy.findByRole('link', { name: 'cameras' }).click();
+    cy.findByRole('link', { name: 'Cameras' }).click();
 
     cy.findByText('Cameras 1').should('exist');
     cy.findByText('Cameras 2').should('exist');
@@ -404,12 +414,37 @@ describe('Catalogue Items', () => {
     cy.findByText('Cameras 4').should('exist');
   });
 
+  describe('Recently Added Section', () => {
+    beforeEach(() => {
+      cy.clock(new Date('2024-01-09T12:00:00.000+00:00'), ['Date']);
+    });
+    afterEach(() => {
+      cy.clock().then((clock) => {
+        clock.restore();
+      });
+    });
+    it('navigates to the landing page, opens the edit dialog, and correctly shows recently added section', () => {
+      cy.findByText('Cameras 1').click();
+      cy.findByRole('button', {
+        name: 'catalogue items landing page actions menu',
+      }).click();
+      cy.findByText('Edit').click();
+      cy.findByLabelText('Manufacturer *').click({ force: true });
+      cy.contains('A-Z').should('be.visible');
+      cy.contains('Recently Added').should('be.visible');
+      cy.findAllByText('Manufacturer B').should('have.length', 2);
+    });
+  });
+
   it('navigates to the landing page, and opens the edit dialog and closes', () => {
     cy.findByText('Cameras 1').click();
     cy.findByText(
       'High-resolution cameras for beam characterization. 1'
     ).should('exist');
-    cy.findByRole('button', { name: 'Edit' }).click();
+    cy.findByRole('button', {
+      name: 'catalogue items landing page actions menu',
+    }).click();
+    cy.findByText('Edit').click();
     cy.findByLabelText('Name *').should('have.value', 'Cameras 1');
     cy.findByLabelText('Description').should(
       'have.value',
@@ -532,7 +567,9 @@ describe('Catalogue Items', () => {
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.contains('Please edit a form entry before clicking save');
+        cy.contains(
+          "There have been no changes made. Please change a field's value or press Cancel to exit."
+        );
       });
     cy.findByRole('button', { name: 'Finish' }).should('be.disabled');
   });
@@ -572,6 +609,8 @@ describe('Catalogue Items', () => {
         cy.findByLabelText('Cost to rework (£)').type('4');
         cy.findByLabelText('Time to replace (days) *').type('1');
         cy.findByLabelText('Time to rework (days)').type('5');
+        cy.findByLabelText('Expected Lifetime (days)').clear();
+        cy.findByLabelText('Expected Lifetime (days)').type('345');
         cy.findByLabelText('Drawing number').type('MX43242');
         cy.findByLabelText('Drawing link').type('https://example.com');
         cy.findByLabelText('Model number').type('MXtest');
@@ -602,6 +641,7 @@ describe('Catalogue Items', () => {
           cost_to_rework_gbp: 894,
           days_to_replace: 71,
           days_to_rework: 605,
+          expected_lifetime_days: 345,
           drawing_number: 'MX43242',
           drawing_link: 'https://example.com',
           item_model_number: 'MXtest',
@@ -878,7 +918,7 @@ describe('Catalogue Items', () => {
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.findByRole('link', { name: 'beam-characterization' }).click();
+        cy.findByRole('link', { name: 'Beam Characterization' }).click();
       });
 
     cy.findByText('Cameras').should('be.visible');
@@ -906,7 +946,7 @@ describe('Catalogue Items', () => {
       .within(() => {
         cy.findByRole('button', { name: 'Move here' }).should('be.disabled');
 
-        cy.findByRole('link', { name: 'beam-characterization' }).click();
+        cy.findByRole('link', { name: 'Beam Characterization' }).click();
         cy.findByText('Energy Meters V2').click();
 
         cy.startSnoopingBrowserMockedRequest();
@@ -938,7 +978,7 @@ describe('Catalogue Items', () => {
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.findByRole('link', { name: 'beam-characterization' }).click();
+        cy.findByRole('link', { name: 'Beam Characterization' }).click();
         cy.findByText('Cameras').click();
 
         cy.findByRole('button', { name: 'Move here' }).click();
@@ -961,7 +1001,7 @@ describe('Catalogue Items', () => {
       .should('be.visible')
       .within(() => {
         cy.findByRole('button', { name: 'Move here' }).should('be.disabled');
-        cy.findByRole('link', { name: 'beam-characterization' }).click();
+        cy.findByRole('link', { name: 'Beam Characterization' }).click();
         cy.findByRole('button', { name: 'Move here' }).should('be.disabled');
         cy.findByText('Energy Meters').click();
         cy.findByRole('button', { name: 'Move here' }).should('be.disabled');
@@ -979,7 +1019,7 @@ describe('Catalogue Items', () => {
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.findByRole('link', { name: 'beam-characterization' }).click();
+        cy.findByRole('link', { name: 'Beam Characterization' }).click();
 
         cy.findByRole('button', { name: 'Copy here' }).should('be.disabled');
 
@@ -1009,6 +1049,7 @@ describe('Catalogue Items', () => {
           cost_to_rework_gbp: null,
           days_to_replace: 7,
           days_to_rework: null,
+          expected_lifetime_days: 3124,
           drawing_number: null,
           drawing_link: 'http://example-drawing-link.com',
           item_model_number: null,
@@ -1035,6 +1076,7 @@ describe('Catalogue Items', () => {
           cost_to_rework_gbp: 89,
           days_to_replace: 7,
           days_to_rework: 60,
+          expected_lifetime_days: 3635,
           drawing_number: null,
           drawing_link: null,
           item_model_number: null,
@@ -1060,7 +1102,7 @@ describe('Catalogue Items', () => {
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.findByRole('link', { name: 'beam-characterization' }).click();
+        cy.findByRole('link', { name: 'Beam Characterization' }).click();
         cy.findByText('Cameras').click();
 
         cy.findByRole('button', { name: 'Copy here' }).click();

@@ -32,6 +32,7 @@ function UnitsDialog(props: UnitsDialogProps) {
     formState: { errors },
     setError,
     clearErrors,
+    reset,
   } = useForm<UnitPost>({
     resolver: zodResolver(UnitSchema),
   });
@@ -39,9 +40,10 @@ function UnitsDialog(props: UnitsDialogProps) {
   const { mutateAsync: postUnit, isPending: isAddPending } = usePostUnit();
 
   const handleClose = React.useCallback(() => {
+    reset();
     clearErrors();
     onClose();
-  }, [clearErrors, onClose]);
+  }, [clearErrors, onClose, reset]);
 
   const handleAddUnit = React.useCallback(
     (unitData: UnitPost) => {

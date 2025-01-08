@@ -22,6 +22,7 @@ import {
   TableCell,
   TableContainer,
   TableRow,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import {
@@ -84,14 +85,20 @@ const AddSystemButton = (props: { systemId: string | null }) => {
   const [addSystemDialogOpen, setAddSystemDialogOpen] =
     React.useState<boolean>(false);
 
+  const ariaLabelText =
+    props.systemId === null ? 'Add System' : 'Add Subsystem';
   return (
     <>
-      <IconButton
-        aria-label={props.systemId === null ? 'add system' : 'add subsystem'}
-        onClick={() => setAddSystemDialogOpen(true)}
-      >
-        <AddIcon />
-      </IconButton>
+      <Tooltip title={ariaLabelText}>
+        <span>
+          <IconButton
+            aria-label={ariaLabelText}
+            onClick={() => setAddSystemDialogOpen(true)}
+          >
+            <AddIcon />
+          </IconButton>
+        </span>
+      </Tooltip>
       <SystemDialog
         open={addSystemDialogOpen}
         onClose={() => setAddSystemDialogOpen(false)}
@@ -341,7 +348,7 @@ function Systems() {
               breadcrumbsInfo={systemsBreadcrumbs}
               onChangeNode={navigateToSystem}
               onChangeNavigateHome={() => navigateToSystem(null)}
-              navigateHomeAriaLabel={'navigate to systems home'}
+              homeLocation="Systems"
             />
             {systemsBreadcrumbs && (
               <NavigateNext

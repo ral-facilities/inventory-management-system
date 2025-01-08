@@ -91,7 +91,7 @@ describe('manufacturer api functions', () => {
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
-      expect(result.current.data).toEqual({ status: 204 });
+      expect(result.current.data).toEqual('');
     });
   });
 

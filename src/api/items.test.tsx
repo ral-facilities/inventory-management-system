@@ -1,12 +1,9 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { MockInstance } from 'vitest';
 import {
-  AddItem,
-  AddItems,
-  EditItem,
-  Item,
   MoveItemsToSystem,
   MoveItemsToSystemUsageStatus,
+  PostItems,
 } from '../app.types';
 import SystemsJSON from '../mocks/Systems.json';
 import {
@@ -16,15 +13,15 @@ import {
   hooksWrapperWithProviders,
 } from '../testUtils';
 import { imsApi } from './api';
-import { System } from './api.types';
+import { Item, ItemPatch, ItemPost, System } from './api.types';
 import {
-  useAddItem,
-  useAddItems,
   useDeleteItem,
-  useEditItem,
-  useItem,
-  useItems,
+  useGetItem,
+  useGetItems,
   useMoveItemsToSystem,
+  usePatchItem,
+  usePostItem,
+  usePostItems,
 } from './items';
 
 describe('items api functions', () => {
@@ -32,10 +29,10 @@ describe('items api functions', () => {
     vi.clearAllMocks();
   });
 
-  describe('useAddItem', () => {
-    let mockDataAdd: AddItem;
+  describe('usePostItem', () => {
+    let mockDataPost: ItemPost;
     beforeEach(() => {
-      mockDataAdd = {
+      mockDataPost = {
         catalogue_item_id: '1',
         system_id: '65328f34a40ff5301575a4e3',
         purchase_order_number: 'fdsfdfs',
@@ -71,11 +68,11 @@ describe('items api functions', () => {
       };
     });
     it('posts a request to add an item and returns successful response', async () => {
-      const { result } = renderHook(() => useAddItem(), {
+      const { result } = renderHook(() => usePostItem(), {
         wrapper: hooksWrapperWithProviders(),
       });
       expect(result.current.isIdle).toBe(true);
-      result.current.mutate(mockDataAdd);
+      result.current.mutate(mockDataPost);
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
@@ -103,9 +100,9 @@ describe('items api functions', () => {
     });
   });
 
-  describe('useItems', () => {
+  describe('useGetItems', () => {
     it('sends request to fetch items data using catalogue category id and returns successful response', async () => {
-      const { result } = renderHook(() => useItems(undefined, '2'), {
+      const { result } = renderHook(() => useGetItems(undefined, '2'), {
         wrapper: hooksWrapperWithProviders(),
       });
 
@@ -118,7 +115,7 @@ describe('items api functions', () => {
 
     it('sends request to fetch items data using system id and returns successful response', async () => {
       const { result } = renderHook(
-        () => useItems('65328f34a40ff5301575a4e4', undefined),
+        () => useGetItems('65328f34a40ff5301575a4e4', undefined),
         {
           wrapper: hooksWrapperWithProviders(),
         }
@@ -134,9 +131,9 @@ describe('items api functions', () => {
     });
   });
 
-  describe('useItem', () => {
+  describe('useGetItem', () => {
     it('sends request to fetch item data and returns successful response', async () => {
-      const { result } = renderHook(() => useItem('KvT2Ox7n'), {
+      const { result } = renderHook(() => useGetItem('KvT2Ox7n'), {
         wrapper: hooksWrapperWithProviders(),
       });
 
@@ -158,24 +155,23 @@ describe('items api functions', () => {
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
-      expect(result.current.data).toEqual({ status: 204 });
+      expect(result.current.data).toEqual('');
     });
   });
 
-  describe('useEditItem', () => {
-    let mockDataEdit: EditItem;
+  describe('usePatchItem', () => {
+    let mockDataPatch: ItemPatch;
     beforeEach(() => {
-      mockDataEdit = {
+      mockDataPatch = {
         serial_number: 'test',
-        id: 'KvT2Ox7n',
       };
     });
     it('posts a request to edit an item and returns successful response', async () => {
-      const { result } = renderHook(() => useEditItem(), {
+      const { result } = renderHook(() => usePatchItem(), {
         wrapper: hooksWrapperWithProviders(),
       });
       expect(result.current.isIdle).toBe(true);
-      result.current.mutate(mockDataEdit);
+      result.current.mutate({ id: 'KvT2Ox7n', item: mockDataPatch });
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
@@ -221,7 +217,7 @@ describe('items api functions', () => {
             name: 'Older than five years',
             unit: null,
             unit_id: null,
-            value: false,
+            value: null,
           },
         ],
         purchase_order_number: '6JYHEjwN',
@@ -351,8 +347,8 @@ describe('items api functions', () => {
     });
   });
 
-  describe('useAddItems', () => {
-    let addItems: AddItems;
+  describe('usePostItems', () => {
+    let postItems: PostItems;
 
     // Use post spy for testing since response is not actual data in this case
     // so can't test the underlying use of patchSystem otherwise
@@ -360,9 +356,9 @@ describe('items api functions', () => {
     const { id, ...item } = getItemById('KvT2Ox7n') as Item;
 
     beforeEach(() => {
-      addItems = {
+      postItems = {
         quantity: 2,
-        startingValue: 10,
+        starting_value: 10,
         item: {
           ...item,
           serial_number: item.serial_number + '_%s',
@@ -377,21 +373,21 @@ describe('items api functions', () => {
     });
 
     it('sends requests to add multiple items and returns a successful response for each', async () => {
-      const { result } = renderHook(() => useAddItems(), {
+      const { result } = renderHook(() => usePostItems(), {
         wrapper: hooksWrapperWithProviders(),
       });
 
       expect(result.current.isIdle).toBe(true);
 
-      result.current.mutate(addItems);
+      result.current.mutate(postItems);
 
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
 
       for (
-        let i = addItems.startingValue;
-        i < addItems.startingValue + addItems.quantity;
+        let i = postItems.starting_value;
+        i < postItems.starting_value + postItems.quantity;
         i++
       ) {
         expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
@@ -415,23 +411,23 @@ describe('items api functions', () => {
     });
 
     it('handles failed requests when adding multiple items correctly', async () => {
-      addItems.item.serial_number = 'Error 500';
+      postItems.item.serial_number = 'Error 500';
 
-      const { result } = renderHook(() => useAddItems(), {
+      const { result } = renderHook(() => usePostItems(), {
         wrapper: hooksWrapperWithProviders(),
       });
 
       expect(result.current.isIdle).toBe(true);
 
-      result.current.mutate(addItems);
+      result.current.mutate(postItems);
 
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
 
       for (
-        let i = addItems.startingValue;
-        i < addItems.startingValue + addItems.quantity;
+        let i = postItems.starting_value;
+        i < postItems.starting_value + postItems.quantity;
         i++
       ) {
         expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {

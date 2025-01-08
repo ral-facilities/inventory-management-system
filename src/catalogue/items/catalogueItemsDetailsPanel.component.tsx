@@ -8,8 +8,12 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Manufacturer } from '../../api/api.types';
-import { CatalogueCategory, CatalogueItem } from '../../app.types';
+import {
+  CatalogueCategory,
+  CatalogueItem,
+  Manufacturer,
+} from '../../api/api.types';
+import PlaceholderImage from '../../common/images/placeholderImage.component';
 import { formatDateTimeStrings } from '../../utils';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -67,7 +71,10 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
       <Grid item sx={{ ml: 2 }} xs={12}>
         <TabPanel value={tabValue} index={0}>
           <Grid item container spacing={0}>
-            <Grid item xs={12}>
+            <Grid item xs={12} sm={4} padding={1}>
+              <PlaceholderImage />
+            </Grid>
+            <Grid item xs={12} sm={8}>
               <Typography variant="h4" sx={{ wordWrap: 'break-word' }}>
                 {catalogueItemIdData.name}
               </Typography>
@@ -151,6 +158,15 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
+              <Grid item xs={12} sm={6} key={8}>
+                <Typography color="text.primary">
+                  Expected Lifetime (days)
+                </Typography>
+                <Typography color="text.secondary">
+                  {catalogueItemIdData.expected_lifetime_days ?? 'None'}
+                </Typography>
+              </Grid>
+
               <Grid item xs={12} sm={6} key={7}>
                 <Typography color="text.primary">Drawing Number</Typography>
                 <Typography
@@ -161,7 +177,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
-              <Grid item xs={12} sm={6} key={8}>
+              <Grid item xs={12} sm={6} key={9}>
                 <Typography color="text.primary">Model Number</Typography>
                 <Typography
                   color="text.secondary"
@@ -171,7 +187,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
-              <Grid item xs={12} sm={6} key={9}>
+              <Grid item xs={12} sm={6} key={10}>
                 <Typography color="text.primary">Last Modified</Typography>
                 <Typography color="text.secondary">
                   {formatDateTimeStrings(
@@ -181,7 +197,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
-              <Grid item xs={12} sm={6} key={10}>
+              <Grid item xs={12} sm={6} key={11}>
                 <Typography color="text.primary">Created</Typography>
                 <Typography color="text.secondary">
                   {formatDateTimeStrings(

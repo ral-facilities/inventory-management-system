@@ -36,7 +36,7 @@ describe('Catalogue Items Landing Page', () => {
     await waitFor(() => {
       expect(
         screen.getByRole('link', {
-          name: 'cameras',
+          name: 'Cameras',
         })
       ).toBeInTheDocument();
     });
@@ -47,8 +47,31 @@ describe('Catalogue Items Landing Page', () => {
     ).toBeInTheDocument();
 
     expect(screen.getByText('Resolution (megapixels)')).toBeInTheDocument();
+  });
 
-    expect(screen.getByText('Notes:')).toBeInTheDocument();
+  it('renders text correctly (notes tab)', async () => {
+    createView('/catalogue/item/1');
+
+    await waitFor(() => {
+      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('link', {
+          name: 'Cameras',
+        })
+      ).toBeInTheDocument();
+    });
+
+    expect(screen.getByText('Description:')).toBeInTheDocument();
+    expect(
+      screen.getByText('High-resolution cameras for beam characterization. 1')
+    ).toBeInTheDocument();
+
+    await user.click(screen.getByText('Notes'));
+
+    expect(screen.getByText('None')).toBeInTheDocument();
   });
 
   it('renders text correctly (extra details given)', async () => {
@@ -61,7 +84,7 @@ describe('Catalogue Items Landing Page', () => {
     await waitFor(() => {
       expect(
         screen.getByRole('link', {
-          name: 'cameras',
+          name: 'Cameras',
         })
       ).toBeInTheDocument();
     });
@@ -77,8 +100,6 @@ describe('Catalogue Items Landing Page', () => {
     );
 
     expect(screen.getByText('Resolution (megapixels)')).toBeInTheDocument();
-
-    expect(screen.getByText('Notes:')).toBeInTheDocument();
   });
 
   it('renders no item page correctly', async () => {
@@ -92,74 +113,11 @@ describe('Catalogue Items Landing Page', () => {
     });
   });
 
-  it('toggles the properties so it is either visible or hidden', async () => {
-    createView('/catalogue/item/1');
-    await waitFor(() => {
-      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
-    });
-
-    expect(
-      screen.getByLabelText('Close catalogue item properties')
-    ).toBeInTheDocument();
-
-    const toggleButton = screen.getByLabelText(
-      'Close catalogue item properties'
-    );
-
-    await user.click(toggleButton);
-    await waitFor(() => {
-      expect(
-        screen.getByLabelText('Show catalogue item properties')
-      ).toBeInTheDocument();
-    });
-  });
-
-  it('toggles the details so it is either visible or hidden', async () => {
-    createView('/catalogue/item/1');
-    await waitFor(() => {
-      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
-    });
-
-    expect(
-      screen.getByLabelText('Close catalogue item details')
-    ).toBeInTheDocument();
-
-    const toggleButton = screen.getByLabelText('Close catalogue item details');
-
-    await user.click(toggleButton);
-    await waitFor(() => {
-      expect(
-        screen.getByLabelText('Show catalogue item details')
-      ).toBeInTheDocument();
-    });
-  });
-
   it('shows the loading indicator', async () => {
     createView('/catalogue/item/1');
 
     await waitFor(() => {
       expect(screen.getByRole('progressbar')).toBeInTheDocument();
-    });
-  });
-  it('toggles the manufacturer so it is either visible or hidden', async () => {
-    createView('/catalogue/item/1');
-    await waitFor(() => {
-      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
-    });
-
-    expect(
-      screen.getByLabelText('Close catalogue item manufacturer details')
-    ).toBeInTheDocument();
-
-    const toggleButton = screen.getByLabelText(
-      'Close catalogue item manufacturer details'
-    );
-
-    await user.click(toggleButton);
-    await waitFor(() => {
-      expect(
-        screen.getByLabelText('Show catalogue item manufacturer details')
-      ).toBeInTheDocument();
     });
   });
 
@@ -170,9 +128,13 @@ describe('Catalogue Items Landing Page', () => {
       expect(screen.getByText('Cameras 1')).toBeInTheDocument();
     });
 
-    const editButton = screen.getByRole('button', {
-      name: 'Edit',
-    });
+    await user.click(
+      screen.getByRole('button', {
+        name: 'catalogue items landing page actions menu',
+      })
+    );
+
+    const editButton = screen.getByText('Edit');
     await user.click(editButton);
 
     await waitFor(() => {
@@ -193,9 +155,13 @@ describe('Catalogue Items Landing Page', () => {
       expect(screen.getByText('Energy Meters 27')).toBeInTheDocument();
     });
 
-    const editButton = screen.getByRole('button', {
-      name: 'Edit',
-    });
+    await user.click(
+      screen.getByRole('button', {
+        name: 'catalogue items landing page actions menu',
+      })
+    );
+
+    const editButton = screen.getByText('Edit');
     await user.click(editButton);
 
     await waitFor(() => {
@@ -229,7 +195,13 @@ describe('Catalogue Items Landing Page', () => {
       expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
     });
 
-    const printButton = screen.getByRole('button', { name: 'Print' });
+    await user.click(
+      screen.getByRole('button', {
+        name: 'catalogue items landing page actions menu',
+      })
+    );
+
+    const printButton = screen.getByText('Print');
 
     await user.click(printButton);
     // Assert that the window.print() function was called
@@ -243,12 +215,12 @@ describe('Catalogue Items Landing Page', () => {
     createView('/catalogue/item/89');
     await waitFor(() => {
       expect(
-        screen.getByRole('link', { name: 'energy-meters' })
+        screen.getByRole('link', { name: 'Energy Meters' })
       ).toBeInTheDocument();
     });
 
     const breadcrumb = screen.getByRole('link', {
-      name: 'energy-meters',
+      name: 'Energy Meters',
     });
 
     await user.click(breadcrumb);
@@ -262,7 +234,7 @@ describe('Catalogue Items Landing Page', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByRole('link', { name: 'energy-meters' })
+        screen.getByRole('link', { name: 'Energy Meters' })
       ).toBeInTheDocument();
     });
 
@@ -294,26 +266,6 @@ describe('Catalogue Items Landing Page', () => {
     await waitFor(() => {
       expect(screen.getByText('Cameras 14')).toBeInTheDocument();
     });
-
-    expect(
-      screen.getByLabelText('Close catalogue item details')
-    ).toBeInTheDocument();
-
-    const toggleButtonDetails = screen.getByLabelText(
-      'Close catalogue item details'
-    );
-
-    await user.click(toggleButtonDetails);
-
-    expect(
-      screen.getByLabelText('Close catalogue item properties')
-    ).toBeInTheDocument();
-
-    const toggleButtonProperties = screen.getByLabelText(
-      'Close catalogue item properties'
-    );
-
-    await user.click(toggleButtonProperties);
 
     await waitFor(() => {
       expect(screen.getByText('Manufacturer D')).toBeInTheDocument();

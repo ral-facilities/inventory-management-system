@@ -100,7 +100,20 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                   class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 css-1kq3aoa-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiBox-root css-q2z5p8"
+                    >
+                      <h5
+                        class="MuiTypography-root MuiTypography-h5 css-ag7rrr-MuiTypography-root"
+                      >
+                        No Image
+                      </h5>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-8 css-o4bg9w-MuiGrid-root"
                   >
                     <h4
                       class="MuiTypography-root MuiTypography-h4 css-dfspvj-MuiTypography-root"
@@ -217,6 +230,20 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                         class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
                         None
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      >
+                        Expected Lifetime (days)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        1080
                       </p>
                     </div>
                     <div
@@ -637,7 +664,20 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                   class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 css-1kq3aoa-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiBox-root css-q2z5p8"
+                    >
+                      <h5
+                        class="MuiTypography-root MuiTypography-h5 css-ag7rrr-MuiTypography-root"
+                      >
+                        No Image
+                      </h5>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-8 css-o4bg9w-MuiGrid-root"
                   >
                     <h4
                       class="MuiTypography-root MuiTypography-h4 css-dfspvj-MuiTypography-root"
@@ -754,6 +794,20 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                         class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
                         None
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      >
+                        Expected Lifetime (days)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        1080
                       </p>
                     </div>
                     <div
@@ -1174,7 +1228,20 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                   class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 css-1kq3aoa-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiBox-root css-q2z5p8"
+                    >
+                      <h5
+                        class="MuiTypography-root MuiTypography-h5 css-ag7rrr-MuiTypography-root"
+                      >
+                        No Image
+                      </h5>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-8 css-o4bg9w-MuiGrid-root"
                   >
                     <h4
                       class="MuiTypography-root MuiTypography-h4 css-dfspvj-MuiTypography-root"
@@ -1297,6 +1364,20 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                         class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
                         None
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      >
+                        Expected Lifetime (days)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        647
                       </p>
                     </div>
                     <div
@@ -1671,7 +1752,20 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                   class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 css-1kq3aoa-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiBox-root css-q2z5p8"
+                    >
+                      <h5
+                        class="MuiTypography-root MuiTypography-h5 css-ag7rrr-MuiTypography-root"
+                      >
+                        No Image
+                      </h5>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-8 css-o4bg9w-MuiGrid-root"
                   >
                     <h4
                       class="MuiTypography-root MuiTypography-h4 css-dfspvj-MuiTypography-root"
@@ -1794,6 +1888,20 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                         class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
                         None
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      >
+                        Expected Lifetime (days)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        3124
                       </p>
                     </div>
                     <div
@@ -2178,7 +2286,20 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                   class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 css-1kq3aoa-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiBox-root css-q2z5p8"
+                    >
+                      <h5
+                        class="MuiTypography-root MuiTypography-h5 css-ag7rrr-MuiTypography-root"
+                      >
+                        No Image
+                      </h5>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-8 css-o4bg9w-MuiGrid-root"
                   >
                     <h4
                       class="MuiTypography-root MuiTypography-h4 css-dfspvj-MuiTypography-root"
@@ -2301,6 +2422,20 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                         class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
                         None
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      >
+                        Expected Lifetime (days)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        3124
                       </p>
                     </div>
                     <div
@@ -2684,7 +2819,20 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                   class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 css-1kq3aoa-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiBox-root css-q2z5p8"
+                    >
+                      <h5
+                        class="MuiTypography-root MuiTypography-h5 css-ag7rrr-MuiTypography-root"
+                      >
+                        No Image
+                      </h5>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-8 css-o4bg9w-MuiGrid-root"
                   >
                     <h4
                       class="MuiTypography-root MuiTypography-h4 css-dfspvj-MuiTypography-root"
@@ -2807,6 +2955,20 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                         class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
                         None
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      >
+                        Expected Lifetime (days)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        3124
                       </p>
                     </div>
                     <div
@@ -3190,7 +3352,20 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                   class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 css-1kq3aoa-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiBox-root css-q2z5p8"
+                    >
+                      <h5
+                        class="MuiTypography-root MuiTypography-h5 css-ag7rrr-MuiTypography-root"
+                      >
+                        No Image
+                      </h5>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-8 css-o4bg9w-MuiGrid-root"
                   >
                     <h4
                       class="MuiTypography-root MuiTypography-h4 css-dfspvj-MuiTypography-root"
@@ -3313,6 +3488,20 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                         class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
                         None
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      >
+                        Expected Lifetime (days)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        3124
                       </p>
                     </div>
                     <div

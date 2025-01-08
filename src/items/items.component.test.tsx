@@ -30,13 +30,13 @@ describe('Items', () => {
     await waitFor(() => {
       expect(
         screen.getByRole('link', {
-          name: 'cameras',
+          name: 'Cameras',
         })
       ).toBeInTheDocument();
     });
 
     const breadcrumb = screen.getByRole('link', {
-      name: 'cameras',
+      name: 'Cameras',
     });
     await user.click(breadcrumb);
 

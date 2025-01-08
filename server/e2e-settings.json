@@ -1,5 +1,6 @@
 {
-  "apiUrl": "",
+  "imsApiUrl": "",
+  "osApiUrl": "",
   "routes": [
     {
       "section": "Inventory Management System",

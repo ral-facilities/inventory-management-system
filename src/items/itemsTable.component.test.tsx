@@ -1,6 +1,6 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import { CatalogueCategory, CatalogueItem } from '../app.types';
+import { CatalogueCategory, CatalogueItem } from '../api/api.types';
 import {
   getCatalogueCategoryById,
   getCatalogueItemById,
@@ -432,5 +432,27 @@ describe('Items Table', () => {
     );
 
     expect(view.asFragment()).toMatchSnapshot();
+  });
+
+  it('renders the multi-select filter mode dropdown correctly', async () => {
+    createView();
+
+    await ensureColumnsVisible(['Usage Status']);
+
+    const dropdownButton = await screen.findByTestId('FilterListIcon');
+
+    expect(dropdownButton).toBeInTheDocument();
+
+    await user.click(dropdownButton);
+
+    const includeText = await screen.findByRole('menuitem', {
+      name: 'Includes any',
+    });
+    const excludeText = await screen.findByRole('menuitem', {
+      name: 'Excludes any',
+    });
+
+    expect(includeText).toBeInTheDocument();
+    expect(excludeText).toBeInTheDocument();
   });
 });

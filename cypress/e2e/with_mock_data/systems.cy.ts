@@ -236,17 +236,17 @@ describe('Systems', () => {
     cy.visit('/systems/65328f34a40ff5301575a4e9');
 
     cy.findByRole('link', { name: 'Pulse Laser' }).should('be.visible');
-    cy.findByRole('link', { name: 'Giant laser' }).should('be.visible');
+    cy.findByRole('link', { name: 'Laser Tech' }).should('be.visible');
     cy.findByRole('link', { name: 'Laser Star' }).should('be.visible');
-    cy.findByRole('link', { name: 'Smaller laser' }).should('be.visible');
+    cy.findByRole('link', { name: 'Laser Xpress' }).should('be.visible');
 
     // One in title, one in breadcrumbs
     cy.findAllByText('Plasma Beam').should('have.length', 2);
 
     // Check can navigate back with breadcrumbs
-    cy.findByRole('link', { name: 'Giant laser' }).click();
+    cy.findByRole('link', { name: 'Laser Tech' }).click();
     cy.url().should('include', '/systems/65328f34a40ff5301575a4e6');
-    cy.findAllByText('Giant laser').should('have.length', 2);
+    cy.findAllByText('Laser Tech').should('have.length', 2);
 
     // Check can go back to root
     cy.findByRole('button', { name: 'navigate to systems home' }).click();
@@ -259,7 +259,7 @@ describe('Systems', () => {
 
   describe('Add', () => {
     it('adds a root system with only required parameters', () => {
-      cy.findByRole('button', { name: 'add system' }).click();
+      cy.findByRole('button', { name: 'Add System' }).click();
       cy.findByLabelText('Name *').type('System name');
 
       cy.startSnoopingBrowserMockedRequest();
@@ -282,7 +282,7 @@ describe('Systems', () => {
     });
 
     it('adds a root system with all parameters', () => {
-      cy.findByRole('button', { name: 'add system' }).click();
+      cy.findByRole('button', { name: 'Add System' }).click();
 
       cy.findByLabelText('Name *').type('System name');
       cy.findByLabelText('Description').type('System description');
@@ -316,7 +316,7 @@ describe('Systems', () => {
     it('adds a subsystem', () => {
       cy.visit('/systems/65328f34a40ff5301575a4e3');
 
-      cy.findByRole('button', { name: 'add subsystem' }).click();
+      cy.findByRole('button', { name: 'Add Subsystem' }).click();
       cy.findByLabelText('Name *').type('System name');
 
       cy.startSnoopingBrowserMockedRequest();
@@ -342,19 +342,19 @@ describe('Systems', () => {
     it('displays error message when name is not given that disappears once closed', () => {
       cy.visit('/systems');
 
-      cy.findByRole('button', { name: 'add system' }).click();
+      cy.findByRole('button', { name: 'Add System' }).click();
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByText('Please enter a name.').should('be.visible');
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
-      cy.findByRole('button', { name: 'add system' }).click();
+      cy.findByRole('button', { name: 'Add System' }).click();
       cy.findByText('Please enter a name.').should('not.exist');
     });
 
     it('displays error message if the system has a duplicate name that disappears once closed', () => {
       cy.visit('/systems');
 
-      cy.findByRole('button', { name: 'add system' }).click();
+      cy.findByRole('button', { name: 'Add System' }).click();
       cy.findByLabelText('Name *').type('Error 409');
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByText(
@@ -362,7 +362,7 @@ describe('Systems', () => {
       ).should('be.visible');
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
-      cy.findByRole('button', { name: 'add system' }).click();
+      cy.findByRole('button', { name: 'Add System' }).click();
       cy.findByText(
         'A System with the same name already exists within the same parent System. Please enter a different name.'
       ).should('not.exist');
@@ -580,7 +580,8 @@ describe('Systems', () => {
   it('edits a system from a landing page', () => {
     cy.visit('/systems/65328f34a40ff5301575a4e3');
 
-    cy.findByRole('button', { name: 'Edit System' }).click();
+    cy.findByRole('button', { name: 'systems page actions menu' }).click();
+    cy.findByText('Edit').click();
 
     cy.findByLabelText('Name *').clear();
     cy.findByLabelText('Name *').type('System name');

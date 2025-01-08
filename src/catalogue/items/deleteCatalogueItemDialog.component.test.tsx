@@ -6,7 +6,7 @@ import {
 } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http } from 'msw';
-import { CatalogueItem } from '../../app.types';
+import { CatalogueItem } from '../../api/api.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { server } from '../../mocks/server';
 import {
@@ -42,6 +42,7 @@ describe('delete Catalogue Category dialogue', () => {
       cost_to_rework_gbp: null,
       days_to_replace: 0,
       days_to_rework: null,
+      expected_lifetime_days: null,
       drawing_link: null,
       drawing_number: null,
       notes: null,

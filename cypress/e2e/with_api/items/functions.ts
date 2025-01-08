@@ -132,26 +132,25 @@ export const editProperty = () => {
   }).click();
 
   cy.findByRole('menuitem', {
-    name: `edit properties Spherical Lenses catalogue category button`,
+    name: `edit Spherical Lenses catalogue category button`,
   }).click();
 
-  cy.findByLabelText(
-    'Select Edit to edit an existing property or select Add to add a new property'
-  ).click();
-
-  cy.findByRole('option', { name: 'Edit' }).click();
-  cy.findByRole('button', { name: 'Next' }).click();
-  cy.findByLabelText('Shape radio button').click();
-
-  cy.findByRole('button', { name: 'Next' }).click();
+  cy.findAllByLabelText('Row Actions').eq(4).click();
+  cy.findByLabelText('Edit property Shape').click();
 
   cy.findByLabelText('Property Name *').clear();
   cy.findByLabelText('Property Name *').type('Type');
 
   cy.findByRole('button', { name: 'Add list item' }).click();
-  cy.findAllByLabelText('List Item').last().type('flat');
+  cy.findAllByLabelText('List item').last().type('flat');
 
-  cy.findByRole('button', { name: 'Finish' }).click();
+  cy.findByRole('checkbox', {
+    name: 'Confirm understanding and proceed checkbox',
+  }).click();
+
+  cy.findByRole('button', { name: 'Save' }).click();
+
+  cy.findByRole('button', { name: 'Close' }).click();
 
   cy.findByText('Spherical Lenses').click();
   cy.findByText('Plano-Convex Lens').click();
@@ -162,7 +161,7 @@ export const editProperty = () => {
 
   cy.findAllByText('MX4332424').first().click();
   cy.findByText('Type').should('exist');
-
+  cy.findByRole('button', { name: 'items landing page actions menu' }).click();
   cy.findByText('Edit').click();
   cy.findByRole('button', { name: 'Next' }).click();
   cy.findByLabelText('Type *').click();
@@ -181,22 +180,14 @@ export const addProperty = () => {
   }).click();
 
   cy.findByRole('menuitem', {
-    name: `edit properties Spherical Lenses catalogue category button`,
+    name: `edit Spherical Lenses catalogue category button`,
   }).click();
 
-  cy.findByLabelText(
-    'Select Edit to edit an existing property or select Add to add a new property'
-  ).click();
-
-  cy.findByRole('option', { name: 'Add' }).click();
-
-  cy.findByRole('button', { name: 'Next' }).click();
-
-  cy.findByRole('button', { name: 'Next' }).click();
+  cy.findByText('Add Property').click();
 
   cy.findByLabelText('Property Name *').type('Shape');
   cy.findByLabelText('Select Type *').click();
-  cy.findByText('Text').click();
+  cy.findByRole('option', { name: 'Text' }).click();
   cy.findAllByLabelText('Select is mandatory?').last().click();
   cy.findByRole('option', { name: 'Yes' }).click();
 
@@ -204,14 +195,20 @@ export const addProperty = () => {
   cy.findByRole('option', { name: 'List' }).click();
 
   cy.findByRole('button', { name: 'Add list item' }).click();
-  cy.findAllByLabelText('List Item').eq(0).type('convex');
+  cy.findAllByLabelText('List item').eq(0).type('convex');
 
   cy.findByRole('button', { name: 'Add list item' }).click();
-  cy.findAllByLabelText('List Item').eq(1).type('concave');
+  cy.findAllByLabelText('List item').eq(1).type('concave');
 
   cy.findByLabelText('Select Default value *').click();
+
   cy.findByRole('option', { name: 'convex' }).click();
-  cy.findByRole('button', { name: 'Finish' }).click();
+  cy.findByRole('checkbox', {
+    name: 'Confirm understanding and proceed checkbox',
+  }).click();
+
+  cy.findByRole('button', { name: 'Save' }).click();
+  cy.findByRole('button', { name: 'Close' }).click();
 
   cy.findByText('Spherical Lenses').click();
   cy.findByText('Plano-Convex Lens').click();
@@ -276,7 +273,7 @@ export const editItem = () => {
     assetNumber: 'PY42343424',
     purchaseOrderNumber: '2334',
     warrantyEndDate: '17/02/2030',
-    deliveredDate: '19/03/2026',
+    deliveredDate: '19/03/2024',
     isDefective: 'No',
     usageStatus: 'Used',
     notes: 'tests',

@@ -1,6 +1,7 @@
 import { ColumnFilter } from '@tanstack/react-table';
 import LZString from 'lz-string';
 import {
+  MRT_ColumnFilterFnsState,
   MRT_ColumnFiltersState,
   MRT_ColumnOrderState,
   MRT_GroupingState,
@@ -16,6 +17,7 @@ import { useLocation, useSearchParams } from 'react-router-dom';
 // State as will be stored after parsing from search params
 interface State {
   cF: MRT_ColumnFiltersState;
+  cFn: MRT_ColumnFilterFnsState;
   srt: MRT_SortingState;
   cVis: MRT_VisibilityState;
   gFil: string | undefined; // Global filter
@@ -247,6 +249,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
   const defaultState: State = useMemo(
     () => ({
       cF: [],
+      cFn: props?.initialState?.columnFilterFns || {},
       srt: [],
       // Use given default or {}
       cVis: props?.initialState?.columnVisibility || {},
@@ -259,14 +262,10 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
         firstUpdate.current?.p || { pageSize: 15, pageIndex: 0 },
     }),
     // Need to also update when firstUpdate.current?.x changes, for some reason it claims its not used here when it is
+    // We also need to intentionally ignore props?.initialState?.x as these may not be in a memo, and are only set
+    // once initially anyway
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [
-      props?.initialState?.columnVisibility,
-      props?.initialState?.grouping,
-      props?.initialState?.pagination,
-      firstUpdate.current?.cO,
-      firstUpdate.current?.p,
-    ]
+    [firstUpdate.current?.cO, firstUpdate.current?.p]
   );
 
   // Convert the state stored into the url to one that can be used
@@ -274,6 +273,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
   const state: State = useMemo(
     () => ({
       cF: parsedState.cF || defaultState.cF,
+      cFn: parsedState.cFn || defaultState.cFn,
       srt: parsedState.srt || defaultState.srt,
       cVis: parsedState.cVis || defaultState.cVis,
       gFil: parsedState.gFil || defaultState.gFil,
@@ -285,6 +285,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
     }),
     [
       defaultState.cF,
+      defaultState.cFn,
       defaultState.cO,
       defaultState.cVis,
       defaultState.g,
@@ -292,6 +293,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       defaultState.p,
       defaultState.srt,
       parsedState.cF,
+      parsedState.cFn,
       parsedState.cO,
       parsedState.cVis,
       parsedState.g,
@@ -313,6 +315,22 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       });
     },
     []
+  );
+
+  // This will return a reset pagination `p` state to the default page index. This is so that
+  // things like filtering reset the page index to avoid getting stuck on a non-existent page.
+  // This recreates similar behaviour to `autoResetPageIndex` but in a controlled way.
+  const getResetPaginationState = useCallback(
+    (prevP?: MRT_PaginationState) => {
+      const newPState: MRT_PaginationState = {
+        ...defaultState.p,
+        pageSize: prevP?.pageSize ?? defaultState.p.pageSize,
+      };
+      return JSON.stringify(newPState) === JSON.stringify(defaultState.p)
+        ? undefined
+        : newPState;
+    },
+    [defaultState.p]
   );
 
   // Below are setters for MRT onChange events, these should obtain the value and update it in the
@@ -361,10 +379,31 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
         return {
           ...prevState,
           cF: isDefaultState ? undefined : newValue,
+          p: getResetPaginationState(prevState.p),
         };
       });
     },
-    [defaultState.cF, updateSearchParams]
+    [defaultState.cF, getResetPaginationState, updateSearchParams]
+  );
+
+  const setColumnFilterFns = useCallback(
+    (updaterOrValue: Updater<MRT_ColumnFilterFnsState>) => {
+      updateSearchParams((prevState: StatePartial) => {
+        const newValue = getValueFromUpdater(
+          updaterOrValue,
+          prevState.cFn || defaultState.cFn
+        );
+        const initialValue = defaultState.cFn;
+        const isDefaultState =
+          JSON.stringify(initialValue) === JSON.stringify(newValue);
+        return {
+          ...prevState,
+          cFn: isDefaultState ? undefined : newValue,
+          p: getResetPaginationState(prevState.p),
+        };
+      });
+    },
+    [defaultState.cFn, getResetPaginationState, updateSearchParams]
   );
 
   const setSorting = useCallback(
@@ -427,10 +466,11 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
         return {
           ...prevState,
           gFil: newValue === '' ? undefined : newValue,
+          p: getResetPaginationState(prevState.p),
         };
       });
     },
-    [defaultState.gFil, updateSearchParams]
+    [defaultState.gFil, getResetPaginationState, updateSearchParams]
   );
 
   const setGroupingState = useCallback(
@@ -446,10 +486,11 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
         return {
           ...prevState,
           g: isDefaultState ? undefined : newValue,
+          p: getResetPaginationState(prevState.p),
         };
       });
     },
-    [defaultState.g, updateSearchParams]
+    [defaultState.g, getResetPaginationState, updateSearchParams]
   );
 
   const setColumnOrder = useCallback(
@@ -514,6 +555,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
   return {
     preservedState: {
       columnFilters: state.cF,
+      columnFilterFns: state.cFn,
       sorting: state.srt,
       columnVisibility: state.cVis,
       globalFilter: state.gFil,
@@ -523,6 +565,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
     },
     onPreservedStatesChange: {
       onColumnFiltersChange: setColumnFilters,
+      onColumnFilterFnsChange: setColumnFilterFns,
       onSortingChange: setSorting,
       onColumnVisibilityChange: setColumnVisibility,
       onGlobalFilterChange: setGlobalFilter,

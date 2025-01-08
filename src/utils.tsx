@@ -7,10 +7,15 @@ import {
   Typography,
   type TableCellProps,
 } from '@mui/material';
+import { FilterFn, FilterMeta, Row } from '@tanstack/table-core';
 import { format, parseISO } from 'date-fns';
 import {
   MRT_Cell,
   MRT_Column,
+  MRT_ColumnDef,
+  MRT_ColumnFilterFnsState,
+  MRT_FilterFns,
+  MRT_FilterOption,
   MRT_Header,
   MRT_Row,
   MRT_RowData,
@@ -394,3 +399,131 @@ export const displayTableRowCountText = <TData extends MRT_RowData>(
 
   return <Typography sx={{ ...sx }}>{tableRowCountText}</Typography>;
 };
+
+export const getInitialColumnFilterFnState = <TData extends MRT_RowData>(
+  columns: MRT_ColumnDef<TData>[]
+): MRT_ColumnFilterFnsState => {
+  const initialState = columns.reduce<MRT_ColumnFilterFnsState>(
+    (result, column) => {
+      if (column.id) {
+        result[column.id] = column.filterFn as MRT_FilterOption;
+      }
+      return result;
+    },
+    {}
+  );
+  return initialState;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const customFilterFunctions: Record<string, FilterFn<any>> = {
+  arrExcludesSome: (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    row: Row<any>,
+    id: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    filterValue: any,
+    addMeta: (meta: FilterMeta) => void
+  ) => {
+    return !MRT_FilterFns.arrIncludesSome(row, id, filterValue, addMeta);
+  },
+  arrExcludesAll: (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    row: Row<any>,
+    id: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    filterValue: any,
+    addMeta: (meta: FilterMeta) => void
+  ) => {
+    return !MRT_FilterFns.arrIncludesAll(row, id, filterValue, addMeta);
+  },
+};
+
+export const MRT_Functions_Localisation: Record<string, string> = {
+  filterArrIncludesSome: 'Includes any',
+  filterArrExcludesSome: 'Excludes any',
+  filterArrIncludesAll: 'Includes all',
+  filterArrExcludesAll: 'Excludes all',
+};
+
+type DataTypes = 'boolean' | 'string' | 'number' | 'null' | 'datetime' | 'date';
+
+type FilterVariantType = MRT_ColumnDef<MRT_RowData>['filterVariant'];
+
+export const COLUMN_FILTER_VARIANTS: Record<DataTypes, FilterVariantType> = {
+  boolean: 'select',
+  string: 'text',
+  number: 'text',
+  null: 'text',
+  datetime: 'datetime-range',
+  date: 'date',
+};
+export const COLUMN_FILTER_FUNCTIONS: Record<DataTypes, MRT_FilterOption> = {
+  boolean: 'fuzzy',
+  date: 'betweenInclusive',
+  datetime: 'betweenInclusive',
+  string: 'fuzzy',
+  number: 'betweenInclusive',
+  null: 'fuzzy',
+};
+export const COLUMN_FILTER_MODE_OPTIONS: Record<DataTypes, MRT_FilterOption[]> =
+  {
+    boolean: ['fuzzy'],
+    date: ['between', 'betweenInclusive', 'equals', 'notEquals'],
+    datetime: ['between', 'betweenInclusive'],
+    string: [
+      'fuzzy',
+      'contains',
+      'startsWith',
+      'endsWith',
+      'equals',
+      'notEquals',
+    ],
+    number: ['between', 'betweenInclusive', 'equals', 'notEquals'],
+    null: [
+      'fuzzy',
+      'contains',
+      'startsWith',
+      'endsWith',
+      'equals',
+      'notEquals',
+    ],
+  };
+
+export const OPTIONAL_FILTER_MODE_OPTIONS: MRT_FilterOption[] = [
+  'empty',
+  'notEmpty',
+];
+
+export const checkForDuplicates = (props: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any[];
+  idName: string;
+  field: string;
+}) => {
+  const { data, idName, field } = props;
+  const duplicateIds: Set<string> = new Set();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const seenValues: { [key: string]: { [key: string]: string; value: any } } =
+    {};
+
+  data.forEach((value) => {
+    const currentValue = value[field];
+    if (currentValue) {
+      if (seenValues[currentValue]) {
+        duplicateIds.add(value[idName]);
+        duplicateIds.add(seenValues[currentValue][idName]);
+      } else {
+        seenValues[currentValue] = value;
+      }
+    }
+  });
+
+  return Array.from(duplicateIds);
+};
+
+export function getNonEmptyTrimmedString(value: unknown): string | undefined {
+  return typeof value === 'string' && value.trim() !== ''
+    ? value.trim()
+    : undefined;
+}

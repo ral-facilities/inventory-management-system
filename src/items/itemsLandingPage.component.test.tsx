@@ -38,7 +38,7 @@ describe('Items Landing Page', () => {
     await waitFor(() => {
       expect(
         screen.getByRole('link', {
-          name: 'beam-characterization',
+          name: 'Beam Characterization',
         })
       ).toBeInTheDocument();
     });
@@ -53,6 +53,26 @@ describe('Items Landing Page', () => {
     expect(screen.getByText('Asset Number')).toBeInTheDocument();
 
     expect(screen.getByText('System')).toBeInTheDocument();
+  });
+
+  it('renders text correctly (Notes)', async () => {
+    createView('/catalogue/item/1/items/KvT2Ox7n');
+
+    await waitFor(() => {
+      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('link', {
+          name: 'Beam Characterization',
+        })
+      ).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByText('Notes'));
+
+    expect(screen.getByText('6Y5XTJfBrNNx8oltI9HE')).toBeInTheDocument();
   });
 
   it('navigates to the system when the system id is clicked', async () => {
@@ -84,64 +104,11 @@ describe('Items Landing Page', () => {
     expect(homeButton).toBeInTheDocument();
   });
 
-  it('toggles the properties so it is either visible or hidden', async () => {
-    createView('/catalogue/item/1/items/pZT8K0aP');
-    await waitFor(() => {
-      expect(screen.getByText('Wavefront Sensors 31')).toBeInTheDocument();
-    });
-
-    expect(screen.getByLabelText('Close item properties')).toBeInTheDocument();
-
-    const toggleButton = screen.getByLabelText('Close item properties');
-
-    await user.click(toggleButton);
-    await waitFor(() => {
-      expect(screen.getByLabelText('Show item properties')).toBeInTheDocument();
-    });
-  });
-
-  it('toggles the details so it is either visible or hidden', async () => {
-    createView('/catalogue/item/1/items/KvT2Ox7n');
-    await waitFor(() => {
-      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
-    });
-
-    expect(screen.getByLabelText('Close item details')).toBeInTheDocument();
-
-    const toggleButton = screen.getByLabelText('Close item details');
-
-    await user.click(toggleButton);
-    await waitFor(() => {
-      expect(screen.getByLabelText('Show item details')).toBeInTheDocument();
-    });
-  });
-
   it('shows the loading indicator', async () => {
     createView('/catalogue/item/1/items/KvT2Ox7n');
 
     await waitFor(() => {
       expect(screen.getByRole('progressbar')).toBeInTheDocument();
-    });
-  });
-  it('toggles the manufacturer so it is either visible or hidden', async () => {
-    createView('/catalogue/item/1/items/KvT2Ox7n');
-    await waitFor(() => {
-      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
-    });
-
-    expect(
-      screen.getByLabelText('Close item manufacturer details')
-    ).toBeInTheDocument();
-
-    const toggleButton = screen.getByLabelText(
-      'Close item manufacturer details'
-    );
-
-    await user.click(toggleButton);
-    await waitFor(() => {
-      expect(
-        screen.getByLabelText('Show item manufacturer details')
-      ).toBeInTheDocument();
     });
   });
 
@@ -153,7 +120,11 @@ describe('Items Landing Page', () => {
       expect(screen.getByText('Cameras 1')).toBeInTheDocument();
     });
 
-    const printButton = screen.getByRole('button', { name: 'Print' });
+    await user.click(
+      screen.getByRole('button', { name: 'items landing page actions menu' })
+    );
+
+    const printButton = screen.getByText('Print');
 
     await user.click(printButton);
     // Assert that the window.print() function was called
@@ -204,20 +175,6 @@ describe('Items Landing Page', () => {
       expect(screen.getByText('Cameras 14')).toBeInTheDocument();
     });
 
-    expect(screen.getByLabelText('Close item details')).toBeInTheDocument();
-
-    const toggleButtonDetails = screen.getByLabelText('Close item details');
-
-    await user.click(toggleButtonDetails);
-
-    expect(screen.getByLabelText('Close item properties')).toBeInTheDocument();
-
-    const toggleButtonProperties = screen.getByLabelText(
-      'Close item properties'
-    );
-
-    await user.click(toggleButtonProperties);
-
     await waitFor(() => {
       expect(screen.getByText('Manufacturer D')).toBeInTheDocument();
     });
@@ -234,6 +191,10 @@ describe('Items Landing Page', () => {
     await waitFor(() => {
       expect(screen.getByText(serialNumber)).toBeInTheDocument();
     });
+
+    await user.click(
+      screen.getByRole('button', { name: 'items landing page actions menu' })
+    );
 
     const editButton = screen.getByText('Edit');
     await user.click(editButton);

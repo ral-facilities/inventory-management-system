@@ -348,7 +348,7 @@ describe('Manufacturer', () => {
     cy.findByText('Manufacturer A').click();
     cy.findByText('Telephone number:').should('exist');
 
-    cy.findByRole('button', { name: 'navigate to manufacturer home' }).click();
+    cy.findByRole('button', { name: 'navigate to manufacturers home' }).click();
 
     cy.findByText('Manufacturer A').should('exist');
     cy.findByText('Manufacturer B').should('exist');
@@ -382,7 +382,7 @@ describe('Manufacturer', () => {
       `This manufacturer doesn't exist. Please click the Home button to navigate to the manufacturer table`
     ).should('exist');
 
-    cy.findByRole('button', { name: 'navigate to manufacturer home' }).click();
+    cy.findByRole('button', { name: 'navigate to manufacturers home' }).click();
 
     cy.findByText('Manufacturer A').should('exist');
     cy.findByText('Manufacturer B').should('exist');

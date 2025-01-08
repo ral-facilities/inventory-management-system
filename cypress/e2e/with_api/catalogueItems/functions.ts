@@ -7,6 +7,7 @@ const modifyCatalogueItem = (
     costToReworkGbp?: string;
     daysToReplace: string;
     daysToRework?: string;
+    expectedLifetimeDays?: string;
     drawingNumber?: string;
     drawingLink?: string;
     itemModelNumber?: string;
@@ -62,6 +63,15 @@ const modifyCatalogueItem = (
         cy.findByLabelText('Time to rework (days)').clear();
       }
 
+      if (values.expectedLifetimeDays) {
+        cy.findByLabelText('Expected Lifetime (days)').clear();
+        cy.findByLabelText('Expected Lifetime (days)').type(
+          values.expectedLifetimeDays
+        );
+      } else {
+        cy.findByLabelText('Expected Lifetime (days)').clear();
+      }
+
       if (values.drawingNumber) {
         cy.findByLabelText('Drawing number').clear();
         cy.findByLabelText('Drawing number').type(values.drawingNumber);
@@ -91,8 +101,14 @@ const modifyCatalogueItem = (
       }
     });
 
-  cy.findByLabelText('Manufacturer *').click();
-  cy.findByRole('option', { name: values.manufacturer }).click();
+  cy.findAllByLabelText('Manufacturer *').first().click();
+  cy.contains('Recently Added').should('be.visible');
+  cy.contains('A-Z').should('be.visible');
+  cy.findAllByRole('option', { name: values.manufacturer }).should(
+    'have.length',
+    2
+  );
+  cy.findAllByRole('option', { name: values.manufacturer }).first().click();
 
   cy.findByRole('button', { name: 'Next' }).click();
 
@@ -133,6 +149,9 @@ const modifyCatalogueItem = (
 
     if (values.daysToRework) cy.findByText(values.daysToRework).should('exist');
 
+    if (values.expectedLifetimeDays)
+      cy.findByText(values.expectedLifetimeDays).should('exist');
+
     if (values.drawingNumber)
       cy.findByText(values.drawingNumber).should('exist');
 
@@ -140,8 +159,6 @@ const modifyCatalogueItem = (
 
     if (values.itemModelNumber)
       cy.findByText(values.itemModelNumber).should('exist');
-
-    if (values.notes) cy.findByText(values.notes).should('exist');
 
     cy.findByText(values.manufacturer).should('exist');
 
@@ -162,10 +179,10 @@ const modifyCatalogueItem = (
     }
 
     if (values.notes) {
-      cy.findByText(values.notes).scrollIntoView();
-
+      cy.findByText('Notes').click();
       cy.findByText(values.notes).should('exist');
     }
+    cy.go('back');
     cy.go('back');
   }
 };
@@ -293,6 +310,7 @@ export const addCatalogueItem = (ignoreChecks?: boolean) => {
       costToReworkGbp: '20',
       daysToReplace: '5',
       daysToRework: '1',
+      expectedLifetimeDays: '365',
       drawingLink: 'https://example.com/',
       drawingNumber: 'GH45235324',
       itemModelNumber: 'rew5435453',
@@ -315,6 +333,7 @@ export const editCatalogueItem = () => {
     costGbp: '43.95',
     costToReworkGbp: '20',
     daysToReplace: '5',
+    expectedLifetimeDays: '365',
     drawingLink: 'https://example.com/',
     drawingNumber: 'GH4523566324',
     itemModelNumber: 'rew54359453',

@@ -26,11 +26,16 @@ import { useGetManufacturers } from '../api/manufacturers';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import { RequestType } from '../form.schemas';
 import {
+  COLUMN_FILTER_FUNCTIONS,
+  COLUMN_FILTER_MODE_OPTIONS,
+  COLUMN_FILTER_VARIANTS,
+  OPTIONAL_FILTER_MODE_OPTIONS,
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
   TableHeaderOverflowTip,
   displayTableRowCountText,
   formatDateTimeStrings,
+  getInitialColumnFilterFnState,
   getPageHeightCalc,
 } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
@@ -60,28 +65,31 @@ function ManufacturerComponent() {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.name,
         id: 'name',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
         size: 400,
-        Cell: ({ row }) =>
-          row.original.name && (
-            <MuiLink
-              underline="hover"
-              component={Link}
-              to={`/manufacturers/${row.original.id}`}
-            >
-              {row.original.name}
-            </MuiLink>
-          ),
+        Cell: ({ row }) => (
+          <MuiLink
+            underline="hover"
+            component={Link}
+            to={`/manufacturers/${row.original.id}`}
+          >
+            {row.original.name}
+          </MuiLink>
+        ),
       },
       {
         header: 'Last modified',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.modified_time),
         id: 'modified_time',
-        filterVariant: 'datetime-range',
+        filterVariant: COLUMN_FILTER_VARIANTS.datetime,
+        filterFn: COLUMN_FILTER_FUNCTIONS.datetime,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.datetime,
         size: 350,
         enableGrouping: false,
         Cell: ({ row }) =>
-          row.original.modified_time &&
           formatDateTimeStrings(row.original.modified_time, true),
       },
       {
@@ -89,7 +97,9 @@ function ManufacturerComponent() {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.created_time),
         id: 'created_time',
-        filterVariant: 'datetime-range',
+        filterVariant: COLUMN_FILTER_VARIANTS.datetime,
+        filterFn: COLUMN_FILTER_FUNCTIONS.datetime,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.datetime,
         size: 350,
         enableGrouping: false,
         enableHiding: true,
@@ -101,6 +111,12 @@ function ManufacturerComponent() {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.url ?? '',
         id: 'url',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS.string,
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
+        ],
         size: 500,
         Cell: ({ row }) =>
           row.original.url && (
@@ -116,6 +132,10 @@ function ManufacturerComponent() {
         accessorFn: (row) =>
           `${row.address.address_line} ${row.address.town} ${row.address.county} ${row.address.postcode} ${row.address.country}`,
         id: 'address',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
+
         size: 650,
         Cell: ({ row }) => (
           <div style={{ display: 'inline-block' }}>
@@ -142,6 +162,12 @@ function ManufacturerComponent() {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.telephone,
         id: 'telephone',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS.string,
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
+        ],
         size: 250,
       },
     ];
@@ -150,10 +176,15 @@ function ManufacturerComponent() {
   const noResultsTxt =
     'No results found: Try adding an Manufacturer by using the Add Manufacturer button on the top left of your screen';
 
+  const initialColumnFilterFnState = React.useMemo(() => {
+    return getInitialColumnFilterFnState(columns);
+  }, [columns]);
+
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
       columnVisibility: { created_time: false },
       pagination: { pageSize: 15, pageIndex: 0 },
+      columnFilterFns: initialColumnFilterFnState,
     },
     storeInUrl: true,
   });
@@ -164,6 +195,7 @@ function ManufacturerComponent() {
     data: manufacturerData ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     // Features
     enableColumnOrdering: true,
+    enableColumnFilterModes: true,
     enableColumnResizing: true,
     enableFacetedValues: true,
     enableRowActions: true,
@@ -324,7 +356,7 @@ function ManufacturerComponent() {
           onChangeNode={onChangeNode}
           onChangeNavigateHome={onChangeNode}
           breadcrumbsInfo={undefined}
-          navigateHomeAriaLabel="navigate to manufacturer home"
+          homeLocation="Manufacturers"
         />
       </Box>
       <MaterialReactTable table={table} />
