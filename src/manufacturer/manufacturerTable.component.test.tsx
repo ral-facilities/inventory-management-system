@@ -1,16 +1,9 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { renderComponentWithRouterProvider } from '../testUtils';
-import ManufacturerTable from './manufacturersTable.component';
+import ManufacturerTable from './manufacturerTable.component';
 
-const mockedUseNavigate = vi.fn();
-
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')),
-  useNavigate: () => mockedUseNavigate,
-}));
-
-describe('Manufacturer', () => {
+describe('Manufacturer Table', () => {
   let user: UserEvent;
   const createView = () => {
     return renderComponentWithRouterProvider(<ManufacturerTable />);

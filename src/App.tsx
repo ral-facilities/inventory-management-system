@@ -7,9 +7,14 @@ import React from 'react';
 // import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
+import type { Router } from '@remix-run/router';
 import { AxiosError } from 'axios';
 import { enGB } from 'date-fns/locale/en-GB';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import {
+  RouterProvider,
+  createBrowserRouter,
+  type RouteObject,
+} from 'react-router-dom';
 import AdminCardView from './admin/adminCardView.component';
 import AdminLayout from './admin/adminLayout.component';
 import Units from './admin/units/units.component';
@@ -29,8 +34,12 @@ import IMSThemeProvider from './imsThemeProvider.component';
 import Items from './items/items.component';
 import ItemsLandingPage from './items/itemsLandingPage.component';
 import ManufacturerLandingPage from './manufacturer/manufacturerLandingPage.component';
-import ManufacturerLayout from './manufacturer/manufacturerLayout.component';
-import ManufacturerTable from './manufacturer/manufacturersTable.component';
+import ManufacturerLayout, {
+  ManufacturerErrorComponent,
+  ManufacturerLayoutErrorComponent,
+  manufacturerLayoutLoader,
+} from './manufacturer/manufacturerLayout.component';
+import ManufacturerTable from './manufacturer/manufacturerTable.component';
 import Preloader from './preloader/preloader.component';
 import retryIMS_APIErrors from './retryIMS_APIErrors';
 import {
@@ -76,7 +85,7 @@ const queryClient = new QueryClient({
   },
 });
 
-const router = createBrowserRouter([
+const routeObject: RouteObject[] = [
   {
     Component: Layout,
     children: [
@@ -114,25 +123,39 @@ const router = createBrowserRouter([
       {
         path: paths.manufacturers,
         Component: ManufacturerLayout,
+        loader: manufacturerLayoutLoader(queryClient),
+        ErrorBoundary: ManufacturerLayoutErrorComponent,
         children: [
           { index: true, Component: ManufacturerTable },
           { path: paths.manufacturer, Component: ManufacturerLandingPage },
           {
             path: '*',
-            Component: () => (
-              <ErrorPage
-                boldErrorText="Invalid Manufacturer Route"
-                errorText="The manufacturer route you are trying to access doesn't exist. Please click the Home button to navigate back to the Manufacturer Home page."
-              />
-            ),
+            Component: ManufacturerErrorComponent,
           },
         ],
       },
     ],
   },
-]);
+];
+
+let router: Router;
+const isUsingMSW =
+  import.meta.env.DEV || import.meta.env.VITE_APP_INCLUDE_MSW === 'true';
+
+if (!isUsingMSW) {
+  router = createBrowserRouter(routeObject);
+}
+
+// If the application is using MSW (Mock Service Worker),
+// it creates the router using `createBrowserRouter` within the App so it can wait for MSW to load. This is necessary
+// because MSW needs to be running before the router is created to handle requests properly in the loader. In a production
+// environment, this is not needed.
 
 export default function App() {
+  if (isUsingMSW) {
+    router = createBrowserRouter(routeObject);
+    return <RouterProvider router={router} />;
+  }
   return <RouterProvider router={router} />;
 }
 
