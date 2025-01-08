@@ -84,11 +84,7 @@ function SystemDetails(props: SystemDetailsProps) {
               fontWeight: 'bold',
             }}
           >
-            {system === undefined
-              ? !systemLoading && props.id !== null
-                ? 'System not found'
-                : 'No system selected'
-              : system.name}
+            {system === undefined ? 'No system selected' : system.name}
           </OverflowTip>
         </Grid>
         {system !== undefined && <SystemDetailsActionMenu system={system} />}
@@ -102,14 +98,7 @@ function SystemDetails(props: SystemDetailsProps) {
             margin: 1,
           }}
         >
-          {!systemLoading && props.id !== null ? (
-            <Typography>
-              The system you searched for does not exist. Please navigate home
-              by pressing the home button at the top left of your screen.
-            </Typography>
-          ) : (
-            <Typography variant="h3">Please select a system</Typography>
-          )}
+          <Typography variant="h3">Please select a system</Typography>
         </Box>
       ) : (
         <Grid container item direction="column" wrap="nowrap" spacing={1}>
