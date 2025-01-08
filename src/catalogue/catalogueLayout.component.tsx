@@ -1,10 +1,8 @@
-import { Box, Grid } from '@mui/material';
 import type { QueryClient } from '@tanstack/react-query';
 import React from 'react';
 import {
   Outlet,
   useLocation,
-  useNavigate,
   useParams,
   type LoaderFunctionArgs,
 } from 'react-router-dom';
@@ -18,75 +16,21 @@ import {
   useGetCatalogueItem,
 } from '../api/catalogueItems';
 import { getItemQuery, useGetItem } from '../api/items';
+import BaseLayoutHeader from '../common/baseLayoutHeader.component';
 import ErrorPage from '../common/errorPage.component';
-import Breadcrumbs from '../view/breadcrumbs.component';
 
-/* Returns function that navigates to a specific catalogue category id or catalogue path (or to the root of
-   all categories if given null) */
-export const useNavigateToCatalogue = () => {
-  const navigate = useNavigate();
-
-  return React.useCallback(
-    (newIdPath: string | null) => {
-      navigate(`/catalogue${newIdPath ? `/${newIdPath}` : ''}`);
-    },
-    [navigate]
-  );
-};
-
-interface CatalogueLayoutHeaderProps {
-  breadcrumbsInfo?: BreadcrumbsInfo;
-  children: React.ReactNode;
-}
-
-function CatalogueLayoutHeader(props: CatalogueLayoutHeaderProps) {
-  const { breadcrumbsInfo, children } = props;
-  const navigateToCatalogue = useNavigateToCatalogue();
-  return (
-    <Box height="100%">
-      <Grid
-        container
-        alignItems="center"
-        justifyContent="space-between"
-        sx={{
-          justifyContent: 'left',
-          paddingLeft: 0.5,
-          position: 'sticky',
-          top: 0,
-          backgroundColor: 'background.default',
-          zIndex: 1000,
-          width: '100%',
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            paddingTop: '20px',
-            paddingBottom: '20px',
-          }}
-        >
-          <Breadcrumbs
-            onChangeNode={navigateToCatalogue}
-            breadcrumbsInfo={breadcrumbsInfo}
-            onChangeNavigateHome={() => navigateToCatalogue(null)}
-            homeLocation="Catalogue"
-          />
-        </div>
-      </Grid>
-      {children}
-    </Box>
-  );
-}
+export const CatalogueErrorComponent = () => (
+  <ErrorPage
+    boldErrorText="Invalid Catalogue Route"
+    errorText="The catalogue route you are trying to access doesn't exist. Please click the Home button to navigate back to the Catalogue Home page."
+  />
+);
 
 export const CatalogueLayoutErrorComponent = () => {
   return (
-    <CatalogueLayoutHeader>
-      <ErrorPage
-        boldErrorText="Invalid Catalogue Route"
-        errorText="The catalogue route you are trying to access doesn't exist. Please click the Home button to navigate back to the Catalogue Home page."
-      />
-    </CatalogueLayoutHeader>
+    <BaseLayoutHeader homeLocation="Catalogue">
+      <CatalogueErrorComponent />
+    </BaseLayoutHeader>
   );
 };
 
@@ -218,9 +162,12 @@ function CatalogueLayout() {
   ]);
 
   return (
-    <CatalogueLayoutHeader breadcrumbsInfo={catalogueBreadcrumbs}>
+    <BaseLayoutHeader
+      homeLocation="Catalogue"
+      breadcrumbsInfo={catalogueBreadcrumbs}
+    >
       <Outlet />
-    </CatalogueLayoutHeader>
+    </BaseLayoutHeader>
   );
 }
 

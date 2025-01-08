@@ -28,6 +28,7 @@ import {
 } from './api/api';
 import { MicroFrontendId } from './app.types';
 import CatalogueLayout, {
+  CatalogueErrorComponent,
   CatalogueLayoutErrorComponent,
   catalogueLayoutLoader,
 } from './catalogue/catalogueLayout.component';
@@ -169,7 +170,7 @@ const routeObject: RouteObject[] = [
           },
           {
             path: '*',
-            Component: CatalogueLayoutErrorComponent,
+            Component: CatalogueErrorComponent,
           },
         ],
       },
