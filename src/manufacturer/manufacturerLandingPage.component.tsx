@@ -11,7 +11,6 @@ import {
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetManufacturer } from '../api/manufacturers';
-import ErrorPage from '../common/errorPage.component';
 import { formatDateTimeStrings } from '../utils';
 import ManufacturerDialog from './manufacturerDialog.component';
 
@@ -201,14 +200,7 @@ function ManufacturerLandingPage() {
           </Grid>
         </Grid>
       )}
-      {!manufacturerDataLoading ? (
-        !manufacturerData && (
-          <ErrorPage
-            boldErrorText="No result found"
-            errorText={`This manufacturer doesn't exist. Please click the Home button to navigate to the manufacturer table`}
-          />
-        )
-      ) : (
+      {manufacturerDataLoading && (
         <Box sx={{ width: '100%' }}>
           <LinearProgress />
         </Box>

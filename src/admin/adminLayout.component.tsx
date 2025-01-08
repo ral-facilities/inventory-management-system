@@ -1,17 +1,15 @@
-import { Box, Grid } from '@mui/material';
 import React from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { BreadcrumbsInfo } from '../api/api.types';
-import Breadcrumbs from '../view/breadcrumbs.component';
+import BaseLayoutHeader from '../common/baseLayoutHeader.component';
+import ErrorPage from '../common/errorPage.component';
 
-export const useNavigateToAdminFunction = () => {
-  const navigate = useNavigate();
-
-  return React.useCallback(
-    (newPath: string | null) => {
-      navigate(`/admin-ims${newPath ? `/${newPath}` : ''}`);
-    },
-    [navigate]
+export const AdminErrorComponent = () => {
+  return (
+    <ErrorPage
+      boldErrorText="Invalid Admin Route"
+      errorText="The admin route you are trying to access doesn't exist. Please click the Home button to navigate back to the Admin Home page."
+    />
   );
 };
 
@@ -36,7 +34,6 @@ const adminBreadCrumbsTrails: { [key: string]: [string, string] } = {
 };
 
 function AdminLayout() {
-  const navigateToAdminFunction = useNavigateToAdminFunction();
   const adminPageName = useGetAdminPageName();
 
   const adminBreadCrumbs: BreadcrumbsInfo | undefined = adminPageName
@@ -47,24 +44,9 @@ function AdminLayout() {
     : undefined;
 
   return (
-    <Grid container>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <Box
-          sx={{
-            py: '20px',
-            paddingLeft: '4px',
-          }}
-        >
-          <Breadcrumbs
-            onChangeNode={navigateToAdminFunction}
-            breadcrumbsInfo={adminBreadCrumbs}
-            onChangeNavigateHome={() => navigateToAdminFunction(null)}
-            homeLocation="Admin"
-          />
-        </Box>
-      </div>
+    <BaseLayoutHeader homeLocation="Admin" breadcrumbsInfo={adminBreadCrumbs}>
       <Outlet />
-    </Grid>
+    </BaseLayoutHeader>
   );
 }
 

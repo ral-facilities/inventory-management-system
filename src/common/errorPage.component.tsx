@@ -11,7 +11,7 @@ const ErrorPage = (props: ErrorPageProps) => {
       sx={{
         width: '100%',
         justifyContent: 'center',
-        marginTop: '8px',
+        marginTop: 1,
       }}
     >
       {boldErrorText && (

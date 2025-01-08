@@ -379,7 +379,7 @@ describe('Manufacturer', () => {
     cy.visit('/manufacturers/invalid');
 
     cy.findByText(
-      `This manufacturer doesn't exist. Please click the Home button to navigate to the manufacturer table`
+      `The manufacturer route you are trying to access doesn't exist. Please click the Home button to navigate back to the Manufacturer Home page.`
     ).should('exist');
 
     cy.findByRole('button', { name: 'navigate to manufacturers home' }).click();
