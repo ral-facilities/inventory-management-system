@@ -9,7 +9,7 @@ function AdminCardView() {
           <Grid item key={0} xs={12} sm={6}>
             <Button
               component={Link}
-              to={'units'}
+              to="units"
               fullWidth
               sx={{
                 display: 'flex',
@@ -21,7 +21,7 @@ function AdminCardView() {
             >
               <Card
                 sx={{
-                  padding: '8px',
+                  padding: 1,
                   width: '100%',
                   display: 'flex',
                   height: '100px', // Set a fixed height for all cards
@@ -37,7 +37,7 @@ function AdminCardView() {
                   }}
                 >
                   <Grid>
-                    <Grid position={'relative'}>
+                    <Grid position="relative">
                       <Typography>Units</Typography>
                     </Grid>
                   </Grid>
@@ -60,7 +60,7 @@ function AdminCardView() {
             >
               <Card
                 sx={{
-                  padding: '8px',
+                  padding: 1,
                   width: '100%',
                   display: 'flex',
                   height: '100px',
@@ -76,7 +76,7 @@ function AdminCardView() {
                   }}
                 >
                   <Grid>
-                    <Grid position={'relative'}>
+                    <Grid position="relative">
                       <Typography>Usage Statuses</Typography>
                     </Grid>
                   </Grid>
