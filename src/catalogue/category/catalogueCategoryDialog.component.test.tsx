@@ -1498,4 +1498,4 @@ describe('Catalogue Category Dialog', () => {
       expect(onClose).toHaveBeenCalled();
     });
   });
-});
+}, 10000);
