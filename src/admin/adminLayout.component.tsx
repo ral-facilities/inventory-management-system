@@ -3,15 +3,10 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { BreadcrumbsInfo } from '../api/api.types';
 import { paths } from '../App';
 import BaseLayoutHeader from '../common/baseLayoutHeader.component';
-import ErrorPage from '../common/errorPage.component';
+import PageNotFoundComponent from '../common/pageNotFound/pageNotFound.component';
 
 export const AdminErrorComponent = () => {
-  return (
-    <ErrorPage
-      boldErrorText="Invalid Admin Route"
-      errorText="The admin route you are trying to access doesn't exist. Please click the Home button to navigate back to the Admin Home page."
-    />
-  );
+  return <PageNotFoundComponent homeLocation="Admin" />;
 };
 
 // returns the admin function from the path (null when just on adminPage)
@@ -37,7 +32,9 @@ function AdminLayout() {
 
   const adminBreadCrumbs: BreadcrumbsInfo | undefined = adminPageName
     ? {
-        trail: [adminBreadCrumbsTrails[adminPageName] ?? ['', '']],
+        trail: adminBreadCrumbsTrails[adminPageName]
+          ? [adminBreadCrumbsTrails[adminPageName]]
+          : [],
         full_trail: true,
       }
     : undefined;

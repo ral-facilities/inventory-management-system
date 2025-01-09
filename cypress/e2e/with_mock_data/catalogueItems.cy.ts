@@ -513,8 +513,11 @@ describe('Catalogue Items', () => {
     cy.visit('/catalogue/4/items/1fds');
 
     cy.findByText(
-      `The catalogue route you are trying to access doesn't exist. Please click the Home button to navigate back to the Catalogue Home page.`
+      `We're sorry, the page you requested was not found on the server. If you entered the URL manually please check your spelling and try again. Otherwise, return to the`,
+      { exact: false }
     ).should('exist');
+
+    cy.findByRole('link', { name: 'catalogue home page' }).should('exist');
 
     cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
 
@@ -525,8 +528,11 @@ describe('Catalogue Items', () => {
     cy.visit('/catalogue/4/items/89');
 
     cy.findByText(
-      `The catalogue route you are trying to access doesn't exist. Please click the Home button to navigate back to the Catalogue Home page.`
+      `We're sorry, the page you requested was not found on the server. If you entered the URL manually please check your spelling and try again. Otherwise, return to the`,
+      { exact: false }
     ).should('exist');
+
+    cy.findByRole('link', { name: 'catalogue home page' }).should('exist');
   });
 
   it('displays error message when user tries to delete a catalogue item that has children elements', () => {

@@ -830,9 +830,11 @@ describe('Catalogue Category', () => {
   it('expired url displays search not found message', () => {
     cy.visit('/catalogue/not_exist');
     cy.findByText(
-      `The catalogue route you are trying to access doesn't exist. Please click the Home button to navigate back to the Catalogue Home page.`,
-      { timeout: 10000 }
+      `We're sorry, the page you requested was not found on the server. If you entered the URL manually please check your spelling and try again. Otherwise, return to the`,
+      { exact: false }
     ).should('exist');
+
+    cy.findByRole('link', { name: 'catalogue home page' }).should('exist');
   });
 
   it('when root has no data it displays no categories error message', () => {
