@@ -899,7 +899,7 @@ describe('Catalogue Category', () => {
   });
 
   it('expired url displays search not found message', () => {
-    cy.visit('/catalogue/not-exist');
+    cy.visit('/catalogue/not_exist');
     cy.findByText(
       `The catalogue route you are trying to access doesn't exist. Please click the Home button to navigate back to the Catalogue Home page.`,
       { timeout: 10000 }

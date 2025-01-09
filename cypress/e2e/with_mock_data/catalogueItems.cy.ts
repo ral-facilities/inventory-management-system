@@ -521,6 +521,14 @@ describe('Catalogue Items', () => {
     cy.findByText('Motion').should('exist');
   });
 
+  it('displays the expired landing page message if the catalogue_category_id does not match the catalogue_item_id ', () => {
+    cy.visit('/catalogue/4/items/89');
+
+    cy.findByText(
+      `The catalogue route you are trying to access doesn't exist. Please click the Home button to navigate back to the Catalogue Home page.`
+    ).should('exist');
+  });
+
   it('displays error message when user tries to delete a catalogue item that has children elements', () => {
     cy.visit('/catalogue/5');
     cy.findAllByLabelText('Row Actions').eq(1).click();
