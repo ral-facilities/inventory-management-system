@@ -8,11 +8,11 @@ import {
   addSystems,
   copyToSystems,
   deleteSystem,
+  duplicateSystem,
   editSystems,
   modifySystem,
   moveItemToSystem,
   moveToSystems,
-  duplicateSystem,
 } from './functions';
 
 describe('systems', () => {

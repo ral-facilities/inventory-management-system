@@ -1,3 +1,4 @@
+import DeleteIcon from '@mui/icons-material/Delete';
 import {
   Box,
   Button,
@@ -18,38 +19,67 @@ import {
   CatalogueCategory,
   CatalogueCategoryPropertyType,
 } from '../../../api/api.types';
-import { AddCatalogueCategoryPropertyWithPlacementIds } from '../../../app.types';
+import {
+  AddCatalogueCategoryPropertyWithPlacementIds,
+  AddCatalogueCategoryWithPlacementIds,
+} from '../../../app.types';
 import { usePreservedTableState } from '../../../common/preservedTableState.component';
 import {
+  COLUMN_FILTER_FUNCTIONS,
+  COLUMN_FILTER_MODE_OPTIONS,
+  COLUMN_FILTER_VARIANTS,
+  MRT_Functions_Localisation,
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
   TableGroupedCell,
   TableHeaderOverflowTip,
+  customFilterFunctions,
   displayTableRowCountText,
+  getInitialColumnFilterFnState,
 } from '../../../utils';
 
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
+import { useFieldArray, useFormContext } from 'react-hook-form';
+import { useGetUnits } from '../../../api/units';
 import { RequestType } from '../../../form.schemas';
-import AddPropertyMigrationDialog from './addPropertyMigrationDialog.component';
-import EditPropertyMigrationDialog from './editPropertyMigrationDialog.component';
+import PropertyDialog from './propertyDialog.component';
 
 export interface PropertiesTableProps {
-  properties: AddCatalogueCategoryPropertyWithPlacementIds[];
   requestType: RequestType;
-  catalogueCategory: CatalogueCategory;
+  catalogueCategory?: CatalogueCategory;
 }
 
 export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
-  const { properties, catalogueCategory } = props;
+  const { catalogueCategory, requestType } = props;
+
+  const { control, clearErrors } =
+    useFormContext<AddCatalogueCategoryWithPlacementIds>();
+  // fields don't get updated when textfield has changed
+  const properties = control._getFieldArray(
+    'properties'
+  ) as AddCatalogueCategoryPropertyWithPlacementIds[];
+  const { append, remove } = useFieldArray({
+    control,
+    name: 'properties',
+  });
 
   const [propertyDialogRequestType, setPropertyDialogRequestType] =
     React.useState<RequestType>('post');
 
+  const [index, setIndex] = React.useState<number | undefined>();
+
+  const { data: units } = useGetUnits();
   const columns = React.useMemo<
     MRT_ColumnDef<AddCatalogueCategoryPropertyWithPlacementIds>[]
   >(() => {
+    const allowedValues = catalogueCategory?.properties
+      .flatMap((prop) => prop.allowed_values?.values)
+      .filter((val) => val !== undefined);
+
+    const unitValues = units?.map((unit) => unit.value);
+
     return [
       {
         header: 'Name',
@@ -57,6 +87,9 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
         accessorFn: (row) => row.name,
         id: 'name',
         size: 220,
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
         enableGrouping: false,
       },
       {
@@ -69,7 +102,25 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
             >
           ).find((key) => CatalogueCategoryPropertyType[key] === row.type),
         id: 'type',
-        size: 180,
+        filterVariant: 'multi-select',
+        filterFn: 'arrIncludesSome',
+        columnFilterModeOptions: ['arrIncludesSome', 'arrExcludesSome'],
+        renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) => [
+          <MenuItem
+            key="arrIncludesSome"
+            onClick={() => onSelectFilterMode('arrIncludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrIncludesSome}
+          </MenuItem>,
+          <MenuItem
+            key="arrExcludesSome"
+            onClick={() => onSelectFilterMode('arrExcludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrExcludesSome}
+          </MenuItem>,
+        ],
+        filterSelectOptions: Object.keys(CatalogueCategoryPropertyType),
+        size: 250,
         GroupedCell: TableGroupedCell,
       },
       {
@@ -81,14 +132,82 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
             .join(', '),
         id: 'allowed_values',
         size: 300,
+        filterVariant: 'multi-select',
+        filterFn: 'arrIncludesSome',
+        columnFilterModeOptions: [
+          'arrIncludesSome',
+          'arrIncludesAll',
+          'arrExcludesSome',
+          'arrExcludesAll',
+        ],
+        renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) => [
+          <MenuItem
+            key="arrIncludesSome"
+            onClick={() => onSelectFilterMode('arrIncludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrIncludesSome}
+          </MenuItem>,
+          <MenuItem
+            key="arrIncludesAll"
+            onClick={() => onSelectFilterMode('arrIncludesAll')}
+          >
+            {MRT_Functions_Localisation.filterArrIncludesAll}
+          </MenuItem>,
+          <MenuItem
+            key="arrExcludesSome"
+            onClick={() => onSelectFilterMode('arrExcludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrExcludesSome}
+          </MenuItem>,
+
+          <MenuItem
+            key="arrExcludesAll"
+            onClick={() => onSelectFilterMode('arrExcludesAll')}
+          >
+            {MRT_Functions_Localisation.filterArrExcludesAll}
+          </MenuItem>,
+        ],
+        filterSelectOptions: allowedValues,
         enableGrouping: false,
       },
       {
         header: 'Unit',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => row.unit,
+        accessorFn: (row) =>
+          // Request type 'post' is storing the unit_id only, so it needs to find the unit value
+          requestType === 'patch'
+            ? row.unit
+            : (units?.find((unit) => row.unit_id === unit.id) || null)?.value,
         id: 'unit',
-        size: 180,
+        filterVariant: 'multi-select',
+        filterFn: 'arrIncludesSome',
+        columnFilterModeOptions: ['arrIncludesSome', 'arrExcludesSome'],
+        renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) => [
+          <MenuItem
+            key="arrIncludesSome"
+            onClick={() => onSelectFilterMode('arrIncludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrIncludesSome}
+          </MenuItem>,
+          <MenuItem
+            key="arrExcludesSome"
+            onClick={() => onSelectFilterMode('arrExcludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrExcludesSome}
+          </MenuItem>,
+        ],
+        filterSelectOptions: unitValues,
+        size: 250,
+        Cell: ({ renderedCellValue, row }) => (
+          <>
+            {requestType === 'patch'
+              ? renderedCellValue
+              : (
+                  units?.find((unit) => row.original.unit_id === unit.id) ||
+                  null
+                )?.value}
+          </>
+        ),
         GroupedCell: TableGroupedCell,
       },
       {
@@ -96,11 +215,17 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => (row.mandatory === 'true' ? 'Yes' : 'No'),
         id: 'property.mandatory',
+        filterVariant: COLUMN_FILTER_VARIANTS.boolean,
+        enableColumnFilterModes: false,
         size: 200,
         GroupedCell: TableGroupedCell,
       },
     ];
-  }, []);
+  }, [catalogueCategory, units, requestType]);
+
+  const initialColumnFilterFnState = React.useMemo(() => {
+    return getInitialColumnFilterFnState(columns);
+  }, [columns]);
 
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
@@ -109,14 +234,16 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
         pageSize: 5,
         pageIndex: 0,
       },
+      columnFilterFns: initialColumnFilterFnState,
     },
   });
 
   const table = useMaterialReactTable({
     columns: columns,
-    data: properties,
+    data: properties ?? [],
     // Features
     enableTopToolbar: true,
+    enableColumnFilterModes: true,
     enableFacetedValues: true,
     enableStickyHeader: true,
     enableDensityToggle: false,
@@ -132,6 +259,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
     paginationDisplayMode: 'pages',
     positionToolbarAlertBanner: 'bottom',
     autoResetPageIndex: false,
+    filterFns: customFilterFunctions,
     //State
     initialState: {
       showColumnFilters: true,
@@ -150,6 +278,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
     // Localisation
     localization: {
       ...MRT_Localization_EN,
+      ...MRT_Functions_Localisation,
       noRecordsToDisplay: 'No Catalogue Item Fields',
     },
     muiTableBodyRowProps: ({ row }) => {
@@ -185,22 +314,21 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
     },
 
     renderCreateRowDialogContent: ({ table, row }) => {
-      return propertyDialogRequestType === 'post' ? (
-        <AddPropertyMigrationDialog
+      return (
+        <PropertyDialog
           open
-          onClose={() => {
+          onClose={(removeRow) => {
             table.setCreatingRow(null);
+            if (removeRow && propertyDialogRequestType === 'post') {
+              remove(index);
+              clearErrors(`properties`);
+            }
           }}
-          catalogueCategory={catalogueCategory}
-        />
-      ) : (
-        <EditPropertyMigrationDialog
-          open
-          onClose={() => {
-            table.setCreatingRow(null);
-          }}
+          type={propertyDialogRequestType}
           catalogueCategory={catalogueCategory}
           selectedProperty={row.original}
+          isMigration={requestType === 'patch'}
+          index={requestType === 'post' ? index : undefined}
         />
       );
     },
@@ -214,6 +342,17 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
           onClick={() => {
             setPropertyDialogRequestType('post');
             table.setCreatingRow(true);
+            if (requestType === 'post') {
+              setIndex(properties?.length);
+              append({
+                cip_placement_id: crypto.randomUUID(),
+                name: '',
+                type: CatalogueCategoryPropertyType.Text,
+                mandatory: 'false',
+                unit: null,
+                allowed_values: null,
+              });
+            }
           }}
         >
           Add Property
@@ -239,6 +378,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
           aria-label={`Edit property ${row.original.name}`}
           onClick={() => {
             setPropertyDialogRequestType('patch');
+            setIndex(row.index);
             table.setCreatingRow(row);
             closeMenu();
           }}
@@ -249,6 +389,24 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
           </ListItemIcon>
           <ListItemText>Edit</ListItemText>
         </MenuItem>,
+        ...(requestType === 'post'
+          ? [
+              <MenuItem
+                key="delete"
+                aria-label={`Delete property ${row.original.name}`}
+                onClick={() => {
+                  closeMenu();
+                  remove(row.index);
+                }}
+                sx={{ m: 0 }}
+              >
+                <ListItemIcon>
+                  <DeleteIcon />
+                </ListItemIcon>
+                <ListItemText>Delete</ListItemText>
+              </MenuItem>,
+            ]
+          : []),
       ];
     },
     // Functions

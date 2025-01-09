@@ -87,6 +87,7 @@ const OptionalBooleanSchema = z
 const MandatoryNumberSchema = (props: NumberZodSchemaProps) =>
   z
     .string()
+    .trim()
     .min(1, {
       message: props.requiredErrorMessage,
     })
@@ -110,6 +111,7 @@ const MandatoryNumberSchema = (props: NumberZodSchemaProps) =>
 const OptionalNumberSchema = (props: NumberZodSchemaProps) =>
   z
     .string()
+    .trim()
     .transform((val) => (!val ? undefined : val))
     .pipe(
       z.coerce
@@ -449,7 +451,7 @@ export const CatalogueCategoryPropertyPatchSchema = z.object({
   name: MandatoryStringSchema({
     errorMessage: 'Please enter a property name.',
   }),
-  allowed_values: AllowedValuesListSchema.optional(),
+  allowed_values: AllowedValuesListSchema.nullable().optional(),
 });
 
 export const CatalogueCategoryPostPropertySchema =

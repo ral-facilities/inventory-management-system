@@ -169,4 +169,35 @@ describe('CardView', () => {
 
     expect(clearFiltersButton).toBeDisabled();
   });
+
+  it('renders the multi-select filter mode dropdown correctly', async () => {
+    createView();
+
+    await user.click(screen.getByText('Show Filters'));
+
+    const dropdownButtons = await screen.findAllByTestId('FilterListIcon');
+
+    expect(dropdownButtons[3]).toBeInTheDocument();
+
+    await user.click(dropdownButtons[3]);
+
+    const includeAnyText = await screen.findByRole('menuitem', {
+      name: 'Includes any',
+    });
+    const excludeAnyText = await screen.findByRole('menuitem', {
+      name: 'Excludes any',
+    });
+
+    const includeAllText = await screen.findByRole('menuitem', {
+      name: 'Includes all',
+    });
+    const excludeAllText = await screen.findByRole('menuitem', {
+      name: 'Excludes all',
+    });
+
+    expect(includeAnyText).toBeInTheDocument();
+    expect(excludeAnyText).toBeInTheDocument();
+    expect(includeAllText).toBeInTheDocument();
+    expect(excludeAllText).toBeInTheDocument();
+  });
 });

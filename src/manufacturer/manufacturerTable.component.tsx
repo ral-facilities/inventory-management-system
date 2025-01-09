@@ -20,7 +20,7 @@ import {
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Manufacturer } from '../api/api.types';
 import { useGetManufacturers } from '../api/manufacturers';
 import { usePreservedTableState } from '../common/preservedTableState.component';
@@ -38,11 +38,10 @@ import {
   getInitialColumnFilterFnState,
   getPageHeightCalc,
 } from '../utils';
-import Breadcrumbs from '../view/breadcrumbs.component';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 import ManufacturerDialog from './manufacturerDialog.component';
 
-function ManufacturerComponent() {
+function ManufacturerTable() {
   const { data: manufacturerData, isLoading: manufacturerDataLoading } =
     useGetManufacturers();
 
@@ -339,33 +338,15 @@ function ManufacturerComponent() {
       }),
   });
 
-  const navigate = useNavigate();
-  const onChangeNode = React.useCallback(() => {
-    navigate('/manufacturers');
-  }, [navigate]);
-
   return (
-    <div style={{ width: '100%', height: '100%' }}>
-      <Box
-        sx={{
-          py: '20px',
-          paddingLeft: '4px',
-        }}
-      >
-        <Breadcrumbs
-          onChangeNode={onChangeNode}
-          onChangeNavigateHome={onChangeNode}
-          breadcrumbsInfo={undefined}
-          homeLocation="Manufacturers"
-        />
-      </Box>
+    <>
       <MaterialReactTable table={table} />
       <DeleteManufacturerDialog
         open={deleteManufacturerDialog}
         onClose={() => setDeleteManufacturerDialog(false)}
         manufacturer={selectedManufacturer}
       />
-    </div>
+    </>
   );
 }
-export default ManufacturerComponent;
+export default ManufacturerTable;

@@ -471,7 +471,7 @@ export const handlers = [
     }
   ),
 
-  http.get<{ id: string }, DefaultBodyType, Manufacturer>(
+  http.get<{ id: string }, DefaultBodyType, Manufacturer | ErrorResponse>(
     '/v1/manufacturers/:id',
     ({ params }) => {
       const { id } = params;
@@ -479,6 +479,13 @@ export const handlers = [
       const data = ManufacturersJSON.find(
         (manufacturer) => manufacturer.id === id
       ) as Manufacturer;
+
+      if (!data) {
+        return HttpResponse.json(
+          { detail: 'Manufacturer not found' },
+          { status: 404 }
+        );
+      }
 
       return HttpResponse.json(data, { status: 200 });
     }
@@ -971,7 +978,7 @@ export const handlers = [
         modified_time: '2024-01-02T13:10:10.000+00:00',
         created_time: '2024-01-01T12:00:00.000+00:00',
       },
-      { status: 200 }
+      { status: 201 }
     );
   }),
 
@@ -979,7 +986,14 @@ export const handlers = [
 
   http.post('/object-storage', async () => {
     await delay(200);
-    return new HttpResponse(undefined, { status: 200 });
+    return new HttpResponse(undefined, {
+      status: 204,
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+        // This is need for uppy
+        ETag: '"e76fe3d21078d7a3b9ec95edf437d010"',
+      },
+    });
   }),
 
   // ------------------------------------ IMAGES ------------------------------------------------
@@ -1075,5 +1089,21 @@ export const handlers = [
         { status: 200 }
       );
     }
+  }),
+
+  http.delete<
+    { id: string },
+    DefaultBodyType,
+    ErrorResponse | NonNullable<unknown>
+  >('/images/:id', ({ params }) => {
+    const { id } = params;
+
+    if (id === 'Error 500')
+      return HttpResponse.json(
+        { detail: 'Something went wrong' },
+        { status: 500 }
+      );
+
+    return HttpResponse.json(undefined, { status: 204 });
   }),
 ];
