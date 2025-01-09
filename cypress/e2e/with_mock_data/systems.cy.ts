@@ -16,9 +16,9 @@ describe('Systems', () => {
     cy.visit('/systems/invalid_id');
 
     // Can take a moment to load due to react-query retries
-    cy.findByText('System not found', { timeout: 10000 }).should('exist');
+    cy.findByText('Invalid System Route', { timeout: 10000 }).should('exist');
     cy.findByText(
-      'The system you searched for does not exist. Please navigate home by pressing the home button at the top left of your screen.'
+      `The system route you are trying to access doesn't exist. Please click the Home button to navigate back to the System Home page.`
     ).should('exist');
   });
 

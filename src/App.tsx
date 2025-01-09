@@ -28,7 +28,6 @@ import {
 import { MicroFrontendId } from './app.types';
 import Catalogue from './catalogue/catalogue.component';
 import CatalogueItemsLandingPage from './catalogue/items/catalogueItemsLandingPage.component';
-import ErrorPage from './common/errorPage.component';
 import ConfigProvider from './configProvider.component';
 import handleIMS_APIError from './handleIMS_APIError';
 import { HomePage } from './homePage/homePage.component';
@@ -50,7 +49,11 @@ import {
   tokenRefreshed,
 } from './state/scigateway.actions';
 import Systems from './systems/systems.component';
-import SystemsLayout from './systems/systemsLayout.component';
+import SystemsLayout, {
+  SystemsErrorComponent,
+  SystemsLayoutErrorComponent,
+  systemsLayoutLoader,
+} from './systems/systemsLayout.component';
 import ViewTabs from './view/viewTabs.component';
 
 export const paths = {
@@ -90,6 +93,11 @@ const queryClient = new QueryClient({
 });
 
 const routeObject: RouteObject[] = [
+  // The error boundary is placed at the root of the specified route's layout to prevent
+  // the layout from making repeated fetch requests that are known to be invalid for the breadcrumbs.
+  // This helps maintain the integrity of the breadcrumbs and avoids unnecessary network calls.
+  // Additionally, the loader function should be defined on the RouteObject that utilises the route
+  // parameters within the component to fetch the necessary data dynamically.
   {
     Component: Layout,
     children: [
@@ -121,17 +129,17 @@ const routeObject: RouteObject[] = [
       {
         path: paths.systems,
         Component: SystemsLayout,
+        ErrorBoundary: SystemsLayoutErrorComponent,
         children: [
           { index: true, Component: Systems },
-          { path: paths.system, Component: Systems },
+          {
+            path: paths.system,
+            Component: Systems,
+            loader: systemsLayoutLoader(queryClient),
+          },
           {
             path: '*',
-            Component: () => (
-              <ErrorPage
-                boldErrorText="Invalid System Route"
-                errorText="The system route you are trying to access doesn't exist. Please click the Home button to navigate back to the System Home page."
-              />
-            ),
+            Component: SystemsErrorComponent,
           },
         ],
       },
