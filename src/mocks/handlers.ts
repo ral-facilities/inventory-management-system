@@ -371,8 +371,8 @@ export const handlers = [
         ) as Manufacturer;
         return HttpResponse.json(
           {
-            detail: 'Catalogue item has child elements, so you cannot update the properties, '
-              + 'and the manufacturer cannot be changed from ' + manufacturerName?.name
+            detail: 'Unable to update catalogue item properties and manufacturer ('
+              + manufacturerName?.name + '), as the catalogue item has child elements.'
           },
           { status: 409 }
         );

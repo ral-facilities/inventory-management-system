@@ -533,11 +533,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         (manufacturer) => manufacturer.id === selectedCatalogueItem?.manufacturer_id
       ) || null;
       // add the manufacturer name into the error message
-      const childElementsMessage = message.replace(
-        "child elements, so the following fields cannot be updated: manufacturer_id, properties",
-        ("items, so you cannot update the properties, and the manufacturer cannot be changed from "
-          + manufacturerName?.name)
-      );
+      const childElementsMessage = "Unable to update catalogue item properties and manufacturer ("
+        + manufacturerName?.name + "), as the catalogue item has associated items.";
       return (childElementsMessage);
     } else {
       return (message);

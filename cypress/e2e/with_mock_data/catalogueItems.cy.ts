@@ -589,8 +589,8 @@ describe('Catalogue Items', () => {
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.contains('Catalogue item has child elements, so you cannot update the properties, '
-          + 'and the manufacturer cannot be changed from Manufacturer C')
+        cy.contains('Unable to update catalogue item properties and manufacturer '
+          + '(Manufacturer C), as the catalogue item has associated items.')
       });
     cy.findByRole('button', { name: 'Finish' }).should('be.disabled');
 
@@ -605,8 +605,8 @@ describe('Catalogue Items', () => {
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.contains('Catalogue item has child elements, so you cannot update the properties, '
-          + 'and the manufacturer cannot be changed from Manufacturer C')
+        cy.contains('Unable to update catalogue item properties and manufacturer '
+          + '(Manufacturer C), as the catalogue item has associated items.')
       });
     cy.findByRole('button', { name: 'Finish' }).should('be.disabled');
   });
