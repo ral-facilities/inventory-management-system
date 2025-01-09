@@ -24,4 +24,11 @@ describe('IMS HomePage', () => {
         'https://www.clf.stfc.ac.uk/Pages/EPAC-Applications.aspx'
       );
   });
+  it('displays error message for invalid homepage route', () => {
+    cy.visit('/ims/fdsf');
+
+    cy.findByText(
+      `The route you are trying to access doesn't exist. Please click the Scigateway logo button in the header to navigate back to the Home page.`
+    ).should('exist');
+  });
 });

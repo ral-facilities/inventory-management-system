@@ -2,6 +2,7 @@ import { Box, Button, Grid, Paper, alpha, styled } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ErrorPage from '../common/errorPage.component';
 import { InventoryManagementSystemSettingsContext } from '../configProvider.component';
 import BackgroundImage from '/images/background.jpg';
 import Decal1Image from '/images/decal1.svg';
@@ -12,6 +13,15 @@ import FacilityImage from '/images/facility.jpg';
 import GreenSwirl1Image from '/images/green-swirl1.png';
 import GreenSwirl2Image from '/images/green-swirl2.png';
 import DGLogo from '/images/scigateway-white-text-blue-mark-logo.svg';
+
+export const HomePageErrorComponent = () => {
+  return (
+    <ErrorPage
+      boldErrorText="Invalid Route"
+      errorText="The route you are trying to access doesn't exist. Please click the Scigateway logo button in the header to navigate back to the Home page."
+    />
+  );
+};
 
 export interface BaseHomePageProps {
   logo: string;
