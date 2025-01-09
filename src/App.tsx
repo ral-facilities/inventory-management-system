@@ -28,6 +28,7 @@ import {
 import { MicroFrontendId } from './app.types';
 import Catalogue from './catalogue/catalogue.component';
 import CatalogueItemsLandingPage from './catalogue/items/catalogueItemsLandingPage.component';
+import ErrorPage from './common/errorPage.component';
 import ConfigProvider from './configProvider.component';
 import handleIMS_APIError from './handleIMS_APIError';
 import { HomePage } from './homePage/homePage.component';
@@ -49,6 +50,7 @@ import {
   tokenRefreshed,
 } from './state/scigateway.actions';
 import Systems from './systems/systems.component';
+import SystemsLayout from './systems/systemsLayout.component';
 import ViewTabs from './view/viewTabs.component';
 
 export const paths = {
@@ -59,7 +61,8 @@ export const paths = {
   adminUsageStatuses: '/admin-ims/usage-statuses',
   homepage: '/ims',
   catalogue: '/catalogue/*',
-  systems: '/systems/*',
+  systems: '/systems',
+  system: '/systems/:system_id',
   manufacturers: '/manufacturers',
   manufacturer: '/manufacturers/:manufacturer_id',
   catalogueItem: '/catalogue/item/:catalogue_item_id',
@@ -115,7 +118,23 @@ const routeObject: RouteObject[] = [
         path: paths.item,
         Component: ItemsLandingPage,
       },
-      { path: paths.systems, Component: Systems },
+      {
+        path: paths.systems,
+        Component: SystemsLayout,
+        children: [
+          { index: true, Component: Systems },
+          { path: paths.system, Component: Systems },
+          {
+            path: '*',
+            Component: () => (
+              <ErrorPage
+                boldErrorText="Invalid System Route"
+                errorText="The system route you are trying to access doesn't exist. Please click the Home button to navigate back to the System Home page."
+              />
+            ),
+          },
+        ],
+      },
       {
         path: paths.manufacturers,
         Component: ManufacturerLayout,
