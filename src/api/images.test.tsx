@@ -1,7 +1,16 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import ImagesJSON from '../mocks/Images.json';
-import { hooksWrapperWithProviders } from '../testUtils';
-import { useGetImage, useGetImages, useGetImagesIds } from './images';
+import {
+  CREATED_MODIFIED_TIME_VALUES,
+  hooksWrapperWithProviders,
+} from '../testUtils';
+import { APIImage } from './api.types';
+import {
+  useDeleteImage,
+  useGetImage,
+  useGetImages,
+  useGetImagesIds,
+} from './images';
 
 describe('images api functions', () => {
   afterEach(() => {
@@ -82,6 +91,33 @@ describe('images api functions', () => {
         ...ImagesJSON.filter((image) => image.id === '1')[1],
         url: 'http://localhost:3000/images/stfc-logo-blue-text.png?text=1',
       });
+    });
+  });
+
+  describe('useDeleteImage', () => {
+    let mockDataView: APIImage;
+    beforeEach(() => {
+      mockDataView = {
+        id: '1',
+        file_name: 'Image A',
+        title: '2',
+        description: 'a description',
+        primary: false,
+        thumbnail_base64: 'base64_thumbnail_test',
+        ...CREATED_MODIFIED_TIME_VALUES,
+      };
+    });
+
+    it('posts a request to delete an image and return a successful response', async () => {
+      const { result } = renderHook(() => useDeleteImage(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+      expect(result.current.isIdle).toBe(true);
+      result.current.mutate(mockDataView.id);
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      expect(result.current.data).toEqual('');
     });
   });
 });

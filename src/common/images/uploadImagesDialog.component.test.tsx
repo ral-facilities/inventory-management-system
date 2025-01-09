@@ -91,7 +91,7 @@ describe('Upload image dialog', () => {
 
     //Checks if file extension is not rendered in field
     await waitFor(() => {
-      expect(screen.getByText('image.png')).not.toBeInTheDocument();
+      expect(screen.queryByText('image.png')).not.toBeInTheDocument();
     });
 
     await waitFor(() => {

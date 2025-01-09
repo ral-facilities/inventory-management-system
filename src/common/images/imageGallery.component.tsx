@@ -34,6 +34,7 @@ import { displayTableRowCountText, OverflowTip } from '../../utils';
 import CardViewFilters from '../cardView/cardViewFilters.component';
 import DownloadFileDialog from '../downloadFileDialog.component';
 import { usePreservedTableState } from '../preservedTableState.component';
+import DeleteImageDialog from './deleteImageDialog.component';
 import GalleryLightBox from './galleryLightbox.component';
 import ImageInformationDialog from './imageInformationDialog.component';
 import ThumbnailImage from './thumbnailImage.component';
@@ -99,7 +100,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
     setSelectedImages(
       images?.filter((image) => selectedRowIds.includes(image.id)) ?? []
     );
-  }, [selectedRowIds]);
+  }, [selectedRowIds, images]);
 
   React.useEffect(() => {
     setRowSelection({});
@@ -274,7 +275,12 @@ const ImageGallery = (props: ImageGalleryProps) => {
         </MenuItem>,
         <MenuItem
           key="delete"
-          aria-label={`Delete catalogue item ${row.original.file_name}`}
+          aria-label={`Delete image ${row.original.file_name}`}
+          onClick={() => {
+            setSelectedImage(row.original);
+            setOpenMenuDialog('delete');
+            closeMenu();
+          }}
           sx={{ m: 0 }}
         >
           <ListItemIcon>
@@ -295,10 +301,8 @@ const ImageGallery = (props: ImageGalleryProps) => {
     .getSortedRowModel()
     .rows.map((row) => row.getVisibleCells().map((cell) => cell)[0]);
   const displayedImages = table
-    .getPaginationRowModel()
-    .rows.map(
-      (row) => row.getVisibleCells().map((cell) => cell.row.original)[0]
-    );
+    .getRowModel()
+    .rows.map((row) => row.getVisibleCells().map((cell) => cell)[0]);
 
   return (
     <>
@@ -329,205 +333,194 @@ const ImageGallery = (props: ImageGalleryProps) => {
 
       {images && images.length !== 0 && (
         <Grid container>
-          <Grid container>
-            <Grid
-              item
-              container
-              alignItems="center"
-              justifyContent="space-between" // Align items and distribute space along the main axis
+          <Grid item container mt={2} direction="column" alignItems="center">
+            <Collapse in={!isCollapsed} style={{ width: '100%' }}>
+              <Grid marginTop={'auto'} direction="row" item container>
+                <Button
+                  startIcon={<ClearIcon />}
+                  sx={{ mx: 0.5, ml: 2 }}
+                  variant="outlined"
+                  disabled={preservedState.columnFilters.length === 0}
+                  onClick={() => {
+                    table.resetColumnFilters();
+                  }}
+                >
+                  Clear Filters
+                </Button>
+                <DownloadImagesButton />
+                <Button
+                  sx={{ mx: '4px' }}
+                  variant="outlined"
+                  startIcon={<ClearIcon />}
+                  onClick={() => setRowSelection({})}
+                >
+                  {selectedImages.length} selected
+                </Button>
+              </Grid>
+              <CardViewFilters table={table} />
+            </Collapse>
+
+            <Typography
+              onClick={handleToggle}
+              variant="body2"
+              color="primary"
               sx={{
-                display: 'flex',
-                height: '100%',
-                width: '100%',
-                padding: '4px', // Add some padding for spacing
+                cursor: 'pointer',
+                marginTop: 1,
+                textAlign: 'center',
+                textDecoration: 'underline',
               }}
-            ></Grid>
+            >
+              {isCollapsed ? 'Show Filters' : 'Hide Filters'}
+            </Typography>
           </Grid>
-          <Grid container>
-            <Grid item container mt={2} direction="column" alignItems="center">
-              <Collapse in={!isCollapsed} style={{ width: '100%' }}>
-                <Grid marginTop={'auto'} direction="row" item container>
-                  <Button
-                    startIcon={<ClearIcon />}
-                    sx={{ mx: 0.5, ml: 2 }}
-                    variant="outlined"
-                    disabled={preservedState.columnFilters.length === 0}
-                    onClick={() => {
-                      table.resetColumnFilters();
+          <Grid container item>
+            <Grid
+              container
+              item
+              mt={2}
+              gap={2}
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+              }}
+            >
+              {displayedImages.map((card, index) => {
+                const lastPageIndex = Math.floor(
+                  displayedImages.length / preservedState.pagination.pageSize
+                );
+                const isLastPage =
+                  preservedState.pagination.pageIndex === lastPageIndex;
+
+                return (
+                  <Card
+                    component={Grid}
+                    item
+                    container
+                    xs
+                    key={`thumbnail-displayed-${index}`}
+                    style={{
+                      maxWidth:
+                        data.length === 1 ||
+                        (images.length % preservedState.pagination.pageSize ===
+                          1 &&
+                          isLastPage)
+                          ? '50%'
+                          : undefined,
                     }}
+                    minWidth={'350px'}
                   >
-                    Clear Filters
-                  </Button>
-                  <DownloadImagesButton />
-                  <Button
-                    sx={{ mx: '4px' }}
-                    variant="outlined"
-                    startIcon={<ClearIcon />}
-                    onClick={() => setRowSelection({})}
-                  >
-                    {selectedImages.length} selected
-                  </Button>
-                </Grid>
-                <CardViewFilters table={table} />
-              </Collapse>
-
-              <Typography
-                onClick={handleToggle}
-                variant="body2"
-                color="primary"
-                sx={{
-                  cursor: 'pointer',
-                  marginTop: 1,
-                  textAlign: 'center',
-                  textDecoration: 'underline',
-                }}
-              >
-                {isCollapsed ? 'Show Filters' : 'Hide Filters'}
-              </Typography>
-            </Grid>
-            <Grid container item>
-              <Grid
-                container
-                item
-                mt={2}
-                gap={2}
-                sx={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-                }}
-              >
-                {data.map((card, index) => {
-                  const isUndisplayed = !displayedImages?.some(
-                    (img) => img.id === card.row.original.id
-                  );
-
-                  const lastPageIndex = Math.floor(
-                    data.length / preservedState.pagination.pageSize
-                  );
-                  const isLastPage =
-                    preservedState.pagination.pageIndex === lastPageIndex;
-
-                  return isUndisplayed ? null : (
-                    <Card
-                      component={Grid}
+                    <Grid
+                      display="flex"
+                      justifyContent="flex-start"
+                      alignItems="center"
                       item
                       container
-                      xs
-                      key={`thumbnail-displayed-${index}`}
-                      style={{
-                        maxWidth:
-                          data.length === 1 ||
-                          (images.length %
-                            preservedState.pagination.pageSize ===
-                            1 &&
-                            isLastPage)
-                            ? '50%'
-                            : undefined,
-                      }}
-                      minWidth={'350px'}
+                      xs={12}
                     >
-                      <Grid
-                        display="flex"
-                        justifyContent="flex-start"
-                        alignItems="center"
-                        item
-                        container
-                        xs={12}
-                      >
-                        <Grid item xs={2}>
-                          <MRT_SelectCheckbox
-                            row={card.row as MRT_Row<APIImage>}
-                            table={table}
-                            sx={{
-                              ariaLabel: `${card.row.original.file_name} checkbox`,
-                              margin: 0.5,
-                            }}
-                          />
-                        </Grid>
-                      </Grid>
-
-                      <Grid
-                        display="flex"
-                        justifyContent="center"
-                        alignItems="center"
-                        item
-                        minHeight={`${MAX_HEIGHT_THUMBNAIL}px`}
-                        xs
-                      >
-                        <ThumbnailImage
-                          onClick={() =>
-                            setCurrentLightBoxImage(card.row.original.id)
-                          }
-                          image={card.row.original}
+                      <Grid item xs={2}>
+                        <MRT_SelectCheckbox
+                          row={card.row as MRT_Row<APIImage>}
+                          table={table}
+                          sx={{
+                            ariaLabel: `${card.row.original.file_name} checkbox`,
+                            margin: 0.5,
+                          }}
                         />
                       </Grid>
+                    </Grid>
 
-                      <Grid
-                        display="flex"
-                        justifyContent="center"
-                        alignItems="center"
-                        item
-                        container
-                        xs={12}
-                      >
-                        <Grid xs={2} item>
-                          <MRT_ToggleRowActionMenuButton
-                            cell={card as MRT_Cell<APIImage>}
-                            row={card.row as MRT_Row<APIImage>}
-                            table={table}
-                            sx={{
-                              ariaLabel: `actions ${card.row.original.file_name} photo button`,
-                              margin: 0.5,
-                            }}
-                          />
-                        </Grid>
-                        <Grid item xs={8}>
-                          <OverflowTip
-                            sx={{
-                              fontVariant: 'body2',
-                              textAlign: 'center',
-                            }}
-                          >
-                            {card.row.original.file_name}
-                          </OverflowTip>
-                        </Grid>
-                        <Grid item xs={2}></Grid>
+                    <Grid
+                      display="flex"
+                      justifyContent="center"
+                      alignItems="center"
+                      item
+                      minHeight={`${MAX_HEIGHT_THUMBNAIL}px`}
+                      xs
+                    >
+                      <ThumbnailImage
+                        onClick={() =>
+                          setCurrentLightBoxImage(card.row.original.id)
+                        }
+                        image={card.row.original}
+                      />
+                    </Grid>
+
+                    <Grid
+                      display="flex"
+                      justifyContent="center"
+                      alignItems="center"
+                      item
+                      container
+                      xs={12}
+                    >
+                      <Grid xs={2} item>
+                        <MRT_ToggleRowActionMenuButton
+                          cell={card as MRT_Cell<APIImage>}
+                          row={card.row as MRT_Row<APIImage>}
+                          table={table}
+                          sx={{
+                            ariaLabel: `actions ${card.row.original.file_name} photo button`,
+                            margin: 0.5,
+                          }}
+                        />
                       </Grid>
-                    </Card>
-                  );
-                })}
-              </Grid>
+                      <Grid item xs={8}>
+                        <OverflowTip
+                          sx={{
+                            fontVariant: 'body2',
+                            textAlign: 'center',
+                          }}
+                        >
+                          {card.row.original.file_name}
+                        </OverflowTip>
+                      </Grid>
+                      <Grid item xs={2}></Grid>
+                    </Grid>
+                  </Card>
+                );
+              })}
             </Grid>
-            <Grid marginTop={2} direction="row" item container>
-              <MRT_BottomToolbar table={table} sx={{ width: '100%' }} />
-            </Grid>
-            {selectedImage && (
+          </Grid>
+          <Grid marginTop={2} direction="row" item container>
+            <MRT_BottomToolbar table={table} sx={{ width: '100%' }} />
+          </Grid>
+          {selectedImage && (
+            <>
               <ImageInformationDialog
                 open={openMenuDialog === 'information'}
                 onClose={() => setOpenMenuDialog(false)}
                 image={selectedImage}
               />
-            )}
-            {currentLightBoxImage && (
-              <GalleryLightBox
-                open={currentLightBoxImage !== undefined}
-                onClose={() => setCurrentLightBoxImage(undefined)}
-                currentImageId={currentLightBoxImage}
-                imageCardData={data as MRT_Cell<APIImage, unknown>[]}
-                table={table}
+              <DeleteImageDialog
+                open={openMenuDialog === 'delete'}
+                onClose={() => {
+                  setOpenMenuDialog(false);
+                  setCurrentLightBoxImage(undefined);
+                }}
+                image={selectedImage}
               />
-            )}
-            {downloadImagesDialogOpen && (
-              <DownloadFileDialog
-                open={downloadImagesDialogOpen}
-                onClose={() => setdownloadImagesDialogOpen(false)}
-                selectedImages={selectedImages}
-                onChangeSelectedImages={setRowSelection}
-                fileType="Image"
-                useGetFileIds={useGetImagesIds}
-              />
-            )}
-          </Grid>
+            </>
+          )}
+          {currentLightBoxImage && (
+            <GalleryLightBox
+              open={currentLightBoxImage !== undefined}
+              onClose={() => setCurrentLightBoxImage(undefined)}
+              currentImageId={currentLightBoxImage}
+              imageCardData={data as MRT_Cell<APIImage, unknown>[]}
+              table={table}
+            />
+          )}
+          {downloadImagesDialogOpen && (
+            <DownloadFileDialog
+              open={downloadImagesDialogOpen}
+              onClose={() => setdownloadImagesDialogOpen(false)}
+              selectedImages={selectedImages}
+              onChangeSelectedImages={setRowSelection}
+              fileType="Image"
+              useGetFileIds={useGetImagesIds}
+            />
+          )}
         </Grid>
       )}
     </>

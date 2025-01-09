@@ -446,10 +446,10 @@ describe('Items Table', () => {
     await user.click(dropdownButton);
 
     const includeText = await screen.findByRole('menuitem', {
-      name: 'Includes',
+      name: 'Includes any',
     });
     const excludeText = await screen.findByRole('menuitem', {
-      name: 'Excludes',
+      name: 'Excludes any',
     });
 
     expect(includeText).toBeInTheDocument();

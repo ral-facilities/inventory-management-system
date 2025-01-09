@@ -241,7 +241,6 @@ export interface AttachmentPostMetadataResponse
 }
 
 // ------------------------------------ IMAGES ------------------------------------------------
-
 export interface ImagePost {
   entity_id: string;
   file_name: string;

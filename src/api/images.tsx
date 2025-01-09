@@ -1,4 +1,12 @@
-import { useQueries, useQuery, UseQueryResult } from '@tanstack/react-query';
+import {
+  useMutation,
+  UseMutationResult,
+  useQueries,
+  useQuery,
+  useQueryClient,
+  UseQueryResult,
+} from '@tanstack/react-query';
+
 import { AxiosError } from 'axios';
 import { storageApi } from './api';
 import { APIImage, APIImageWithURL } from './api.types';
@@ -54,5 +62,26 @@ export const useGetImages = (
     queryKey: ['Images', entityId, primary],
     queryFn: () => getImages(entityId ?? '', primary),
     enabled: !!entityId,
+  });
+};
+
+const deleteImage = async (id: string): Promise<void> => {
+  return storageApi
+    .delete(`/images/${id}`, {})
+    .then((response) => response.data);
+};
+
+export const useDeleteImage = (): UseMutationResult<
+  void,
+  AxiosError,
+  string
+> => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => deleteImage(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [`Images`] });
+      queryClient.removeQueries({ queryKey: [`Image`] });
+    },
   });
 };
