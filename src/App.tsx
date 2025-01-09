@@ -1,21 +1,26 @@
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
+import type { Router } from '@remix-run/router';
 import {
   QueryCache,
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
-import React from 'react';
-// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
-import type { Router } from '@remix-run/router';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AxiosError } from 'axios';
 import { enGB } from 'date-fns/locale/en-GB';
+import React from 'react';
 import {
   RouterProvider,
   createBrowserRouter,
   type RouteObject,
 } from 'react-router-dom';
-import AdminPage from './admin/admin.component';
+import AdminCardView from './admin/adminCardView.component';
+import AdminLayout, {
+  AdminErrorComponent,
+} from './admin/adminLayout.component';
+import Units from './admin/units/units.component';
+import UsageStatuses from './admin/usageStatuses/usageStatuses.component';
 import {
   clearFailedAuthRequestsQueue,
   retryFailedAuthRequests,
@@ -49,7 +54,9 @@ import ViewTabs from './view/viewTabs.component';
 export const paths = {
   any: '*',
   root: '/',
-  admin: '/admin-ims/*',
+  admin: '/admin-ims',
+  adminUnits: '/admin-ims/units',
+  adminUsageStatuses: '/admin-ims/usage-statuses',
   homepage: '/ims',
   catalogue: '/catalogue/*',
   systems: '/systems/*',
@@ -85,7 +92,19 @@ const routeObject: RouteObject[] = [
     children: [
       { path: paths.root, Component: HomePage },
       { path: paths.homepage, Component: HomePage },
-      { path: paths.admin, Component: AdminPage },
+      {
+        path: paths.admin,
+        Component: AdminLayout,
+        children: [
+          { index: true, Component: AdminCardView },
+          { path: paths.adminUnits, Component: Units },
+          { path: paths.adminUsageStatuses, Component: UsageStatuses },
+          {
+            path: '*',
+            Component: AdminErrorComponent,
+          },
+        ],
+      },
       { path: paths.catalogue, Component: Catalogue },
       {
         path: paths.catalogueItem,
@@ -100,11 +119,14 @@ const routeObject: RouteObject[] = [
       {
         path: paths.manufacturers,
         Component: ManufacturerLayout,
-        loader: manufacturerLayoutLoader(queryClient),
         ErrorBoundary: ManufacturerLayoutErrorComponent,
         children: [
           { index: true, Component: ManufacturerTable },
-          { path: paths.manufacturer, Component: ManufacturerLandingPage },
+          {
+            path: paths.manufacturer,
+            Component: ManufacturerLandingPage,
+            loader: manufacturerLayoutLoader(queryClient),
+          },
           {
             path: '*',
             Component: ManufacturerErrorComponent,
@@ -164,7 +186,7 @@ export function Layout() {
                 }
               >
                 <ViewTabs />
-                {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+                <ReactQueryDevtools initialIsOpen={false} />
               </React.Suspense>
             </QueryClientProvider>
           </ConfigProvider>
