@@ -174,6 +174,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
         header: 'Unit',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) =>
+          // Request type 'post' is storing the unit_id only, so it needs to find the unit value
           requestType === 'patch'
             ? row.unit
             : (units?.find((unit) => row.unit_id === unit.id) || null)?.value,
