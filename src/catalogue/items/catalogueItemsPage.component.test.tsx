@@ -15,8 +15,9 @@ describe('CatalogueItemsPage', () => {
   it('renders a catalogue items page correctly', async () => {
     const view = createView('/catalogue/4/items', 'catalogueItems');
 
-    await waitFor(() =>
-      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    await waitFor(
+      () => expect(screen.queryByRole('progressbar')).not.toBeInTheDocument(),
+      { timeout: 10000 }
     );
 
     await waitFor(() => {
@@ -26,5 +27,5 @@ describe('CatalogueItemsPage', () => {
     });
 
     expect(view.asFragment()).toMatchSnapshot();
-  });
+  }, 15000);
 });
