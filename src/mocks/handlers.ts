@@ -149,6 +149,7 @@ export const handlers = [
       ) as unknown as BreadcrumbsInfo;
 
       if (!data) {
+        console.log('here');
         return HttpResponse.json(
           { detail: 'Catalogue category not found' },
           { status: 404 }
@@ -344,7 +345,6 @@ export const handlers = [
 
         return HttpResponse.json(CatalogueItemData, { status: 200 });
       }
-      return HttpResponse.json({ detail: '' }, { status: 422 });
     }
   ),
 
