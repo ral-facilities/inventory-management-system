@@ -12,7 +12,6 @@ import { enGB } from 'date-fns/locale/en-GB';
 import React from 'react';
 import {
   RouterProvider,
-  ScrollRestoration,
   createBrowserRouter,
   type RouteObject,
 } from 'react-router-dom';
@@ -207,7 +206,6 @@ export function Layout() {
               >
                 <ViewTabs />
                 <ReactQueryDevtools initialIsOpen={false} />
-                <ScrollRestoration />
               </React.Suspense>
             </QueryClientProvider>
           </ConfigProvider>
