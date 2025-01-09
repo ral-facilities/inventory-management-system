@@ -386,8 +386,15 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
               if (response && error.response?.status === 409) {
                 if (response.detail.includes('child elements')) {
+                  // find the name of the manufacturer, so it can be used in the error message
+                  const manufacturerName = manufacturerList?.find(
+                    (manufacturer) => manufacturer.id === selectedCatalogueItem?.manufacturer_id
+                  ) || null;
+                  // add the manufacturer name into the error message
+                  const childElementsMessage = "Unable to update catalogue item properties and manufacturer ("
+                    + manufacturerName?.name + "), as the catalogue item has associated items.";
                   setErrorPropertiesStep('root.formError', {
-                    message: response.detail,
+                    message: childElementsMessage,
                   });
                 }
                 return;
@@ -407,6 +414,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       patchCatalogueItem,
       handleClose,
       setErrorPropertiesStep,
+      manufacturerList,
     ]
   );
 
@@ -524,21 +532,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     return sortDataList(recentManufacturers, 'name')
       .reverse()
       .concat(sortDataList(classifiedManufacturers, 'name').reverse());
-  };
-
-  const errorMessage = ( message: string | undefined ) => {
-    if (message?.includes('child elements')) {
-      // find the name of the manufacturer, so it can be used in the error message
-      const manufacturerName = manufacturerList?.find(
-        (manufacturer) => manufacturer.id === selectedCatalogueItem?.manufacturer_id
-      ) || null;
-      // add the manufacturer name into the error message
-      const childElementsMessage = "Unable to update catalogue item properties and manufacturer ("
-        + manufacturerName?.name + "), as the catalogue item has associated items.";
-      return (childElementsMessage);
-    } else {
-      return (message);
-    };
   };
 
   const renderStepContent = (step: number) => {
@@ -1017,7 +1010,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       >
         {errorsPropertiesStep.root?.formError && (
           <FormHelperText sx={{ marginBottom: 2, textAlign: 'center' }} error>
-            {errorMessage(errorsPropertiesStep.root?.formError.message)}
+            {errorsPropertiesStep.root?.formError.message}
           </FormHelperText>
         )}
       </Box>
