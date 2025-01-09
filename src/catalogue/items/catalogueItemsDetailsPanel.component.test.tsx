@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import {
   getCatalogueCategoryById,
   getCatalogueItemById,
@@ -33,6 +33,9 @@ describe('Catalogue Items details panel', () => {
 
   it('renders details panel correctly', async () => {
     const view = createView();
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
 
     expect(view.asFragment()).toMatchSnapshot();
   });
@@ -46,6 +49,10 @@ describe('Catalogue Items details panel', () => {
     props.manufacturerData = getManufacturerById('3');
     const view = createView();
 
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
     expect(view.asFragment()).toMatchSnapshot();
   });
 
@@ -57,6 +64,10 @@ describe('Catalogue Items details panel', () => {
     props.manufacturerData = getManufacturerById('4');
     const view = createView();
 
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
     expect(view.asFragment()).toMatchSnapshot();
   });
 
@@ -65,6 +76,10 @@ describe('Catalogue Items details panel', () => {
 
     await user.click(screen.getByText('Properties'));
 
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
     expect(view.asFragment()).toMatchSnapshot();
   });
 
@@ -72,12 +87,19 @@ describe('Catalogue Items details panel', () => {
     const view = createView();
     await user.click(screen.getByText('Manufacturer'));
 
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
     expect(view.asFragment()).toMatchSnapshot();
   });
 
   it('renders notes panel correctly', async () => {
     const view = createView();
     await user.click(screen.getByText('Notes'));
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
 
     expect(view.asFragment()).toMatchSnapshot();
   });
@@ -90,6 +112,10 @@ describe('Catalogue Items details panel', () => {
     props.manufacturerData = getManufacturerById('4');
 
     const view = createView();
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
 
     expect(view.asFragment()).toMatchSnapshot();
   });

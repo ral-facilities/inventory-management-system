@@ -17,7 +17,7 @@ describe('App', () => {
     cy.visit('/catalogue');
     cy.wait('@getCatalogueCategoryDataRoot', { timeout: 10000 });
     cy.findByText(
-      'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen'
+      'There are no catalogue categories. Please add a category using the button in the top left of your screen'
     ).should('exist');
   });
 });

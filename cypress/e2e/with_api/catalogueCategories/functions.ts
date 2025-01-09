@@ -27,7 +27,7 @@ const modifyCatalogueCategory = (
       cy.findByLabelText('Catalogue Items').click();
     }
   } else {
-    cy.findByRole('button', { name: 'add catalogue category' }).click();
+    cy.findByRole('button', { name: 'Add Catalogue Category' }).click();
   }
 
   if (values.name !== undefined) {
@@ -40,55 +40,44 @@ const modifyCatalogueCategory = (
     if (!values.editCatalogueCategoryName)
       cy.findByLabelText('Catalogue Items').click();
 
-    // Add any required fields
-    for (let i = 0; i < values.newFormFields.length; i++) {
-      cy.findByRole('button', {
-        name: 'Add catalogue category field entry',
-      }).click();
-    }
-
-    cy.findAllByLabelText('Property Name *').should(
-      'have.length',
-      values.newFormFields.length
-    );
-
     for (let i = 0; i < values.newFormFields.length; i++) {
       const field = values.newFormFields[i];
 
+      cy.findByText('Add Property').click();
+      cy.findByRole('dialog', { name: 'Add Property' }).should('exist');
+
       if (field.name) {
-        cy.findAllByLabelText('Property Name *').eq(i).type(field.name);
+        cy.findByLabelText('Property Name *').type(field.name);
       }
 
       if (field.type) {
-        cy.findAllByLabelText('Select Type *').eq(i).click();
+        cy.findByLabelText('Select Type *').click();
         cy.findByRole('option', {
           name: field.type.charAt(0).toUpperCase() + field.type.slice(1),
         }).click();
       }
 
       if (field.unit) {
-        cy.findAllByLabelText('Select Unit').eq(i).click();
+        cy.findByLabelText('Select Unit').click();
         cy.findByRole('option', { name: field.unit }).click();
       }
 
-      cy.findAllByLabelText('Select is mandatory?').eq(i).click();
+      cy.findByLabelText('Select is mandatory?').click();
       cy.findByRole('option', {
         name: field.mandatory ? 'Yes' : 'No',
       }).click();
 
       if (field.allowed_values) {
-        cy.findAllByLabelText('Select Allowed values *').eq(i).click();
+        cy.findByLabelText('Select Allowed values *').click();
         cy.findByRole('option', {
           name: field.allowed_values.type === 'list' ? 'List' : 'Any',
         }).click();
 
         if (field.allowed_values.type === 'list') {
           for (let j = 0; j < field.allowed_values.values.length; j++) {
-            cy.findAllByRole('button', {
+            cy.findByRole('button', {
               name: `Add list item`,
-            })
-              .eq(i)
-              .click();
+            }).click();
 
             cy.findAllByLabelText('List item')
               .eq(j)
@@ -96,6 +85,9 @@ const modifyCatalogueCategory = (
           }
         }
       }
+
+      cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('dialog', { name: 'Add Property' }).should('not.exist');
     }
   }
 
