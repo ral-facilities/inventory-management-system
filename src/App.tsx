@@ -124,11 +124,14 @@ const routeObject: RouteObject[] = [
       {
         path: paths.systems,
         Component: SystemsLayout,
-        loader: systemsLayoutLoader(queryClient),
         ErrorBoundary: SystemsLayoutErrorComponent,
         children: [
           { index: true, Component: Systems },
-          { path: paths.system, Component: Systems },
+          {
+            path: paths.system,
+            Component: Systems,
+            loader: systemsLayoutLoader(queryClient),
+          },
           {
             path: '*',
             Component: SystemsErrorComponent,
