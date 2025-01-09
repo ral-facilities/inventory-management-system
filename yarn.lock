@@ -1823,13 +1823,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/uuid@npm:^10.0.0":
-  version: 10.0.0
-  resolution: "@types/uuid@npm:10.0.0"
-  checksum: 10c0/9a1404bf287164481cb9b97f6bb638f78f955be57c40c6513b7655160beb29df6f84c915aaf4089a1559c216557dc4d2f79b48d978742d3ae10b937420ddac60
-  languageName: node
-  linkType: hard
-
 "@types/yauzl@npm:^2.9.1":
   version: 2.10.3
   resolution: "@types/yauzl@npm:2.10.3"
@@ -5193,7 +5186,6 @@ __metadata:
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.3.0"
     "@types/react-router-dom": "npm:5.3.3"
-    "@types/uuid": "npm:^10.0.0"
     "@uppy/aws-s3": "npm:^4.1.0"
     "@uppy/core": "npm:^4.2.2"
     "@uppy/dashboard": "npm:^4.1.0"
@@ -5241,7 +5233,6 @@ __metadata:
     start-server-and-test: "npm:2.0.9"
     typescript: "npm:^5.4.5"
     typescript-eslint: "npm:8.19.0"
-    uuid: "npm:^11.0.0"
     vite: "npm:^5.2.12"
     vite-plugin-css-injected-by-js: "npm:^3.5.2"
     vitest: "npm:2.1.8"
@@ -8625,15 +8616,6 @@ __metadata:
   version: 1.0.1
   resolution: "utils-merge@npm:1.0.1"
   checksum: 10c0/02ba649de1b7ca8854bfe20a82f1dfbdda3fb57a22ab4a8972a63a34553cf7aa51bc9081cf7e001b035b88186d23689d69e71b510e610a09a4c66f68aa95b672
-  languageName: node
-  linkType: hard
-
-"uuid@npm:^11.0.0":
-  version: 11.0.3
-  resolution: "uuid@npm:11.0.3"
-  bin:
-    uuid: dist/esm/bin/uuid
-  checksum: 10c0/cee762fc76d949a2ff9205770334699e0043d52bb766472593a25f150077c9deed821230251ea3d6ab3943a5ea137d2826678797f1d5f6754c7ce5ce27e9f7a6
   languageName: node
   linkType: hard
 
