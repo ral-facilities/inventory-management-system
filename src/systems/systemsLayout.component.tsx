@@ -35,6 +35,7 @@ export const systemsLayoutLoader =
 
 function SystemsLayout() {
   const { system_id: systemId } = useParams();
+
   const { data: systemsBreadcrumbs } = useGetSystemsBreadcrumbs(systemId);
 
   return (
