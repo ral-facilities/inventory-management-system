@@ -189,11 +189,13 @@ describe('catalogueLayoutLoader', () => {
       catalogueLayoutLoader(queryClient)({
         params,
       } as unknown as LoaderFunctionArgs)
-    ).rejects.toThrow('Catalogue item 2 does not belong to category 1');
+    ).rejects.toThrow(
+      'Catalogue item 2 does not belong to catalogue category 1'
+    );
   });
 
   it('should throw an error if an invalid catalogue_item_id is provided', async () => {
-    const params = { catalogue_item_id: 'invalid' };
+    const params = { catalogue_category_id: '1', catalogue_item_id: 'invalid' };
 
     await expect(
       catalogueLayoutLoader(queryClient)({
@@ -214,7 +216,11 @@ describe('catalogueLayoutLoader', () => {
   });
 
   it('should throw an error if an invalid item_id is provided', async () => {
-    const params = { item_id: '120' };
+    const params = {
+      catalogue_category_id: '4',
+      catalogue_item_id: '1',
+      item_id: 'invalid',
+    };
 
     await expect(
       catalogueLayoutLoader(queryClient)({
@@ -243,5 +249,19 @@ describe('catalogueLayoutLoader', () => {
     } as unknown as LoaderFunctionArgs);
 
     expect(output).toEqual(params);
+  });
+
+  it('should throw an error if item_id does not belong to catalogue_item_id', async () => {
+    const params = {
+      catalogue_category_id: '4',
+      catalogue_item_id: '2',
+      item_id: 'KvT2Ox7n',
+    };
+
+    await expect(
+      catalogueLayoutLoader(queryClient)({
+        params,
+      } as unknown as LoaderFunctionArgs)
+    ).rejects.toThrow('Item KvT2Ox7n does not belong to catalogue item 2');
   });
 });

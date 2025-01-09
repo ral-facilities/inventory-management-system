@@ -48,19 +48,26 @@ export const catalogueLayoutLoader =
         getCatalogueCategoryQuery(catalogueCategoryId, true)
       );
     }
-    if (catalogueItemId) {
+    if (catalogueItemId && catalogueCategoryId) {
       const catalogueItem = await queryClient.ensureQueryData(
         getCatalogueItemQuery(catalogueItemId, true)
       );
 
       if (catalogueItem.catalogue_category_id !== catalogueCategoryId) {
         throw new Error(
-          `Catalogue item ${catalogueItemId} does not belong to category ${catalogueCategoryId}`
+          `Catalogue item ${catalogueItemId} does not belong to catalogue category ${catalogueCategoryId}`
         );
       }
     }
-    if (itemId) {
-      await queryClient.ensureQueryData(getItemQuery(itemId, true));
+    if (catalogueItemId && catalogueCategoryId && itemId) {
+      const item = await queryClient.ensureQueryData(
+        getItemQuery(itemId, true)
+      );
+      if (item.catalogue_item_id !== catalogueItemId) {
+        throw new Error(
+          `Item ${itemId} does not belong to catalogue item ${catalogueItemId}`
+        );
+      }
     }
 
     return { ...params };

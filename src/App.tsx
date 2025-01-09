@@ -128,7 +128,6 @@ const routeObject: RouteObject[] = [
       {
         path: paths.catalogue,
         Component: CatalogueLayout,
-        loader: catalogueLayoutLoader(queryClient),
         ErrorBoundary: CatalogueLayoutErrorComponent,
         children: [
           {
@@ -142,27 +141,44 @@ const routeObject: RouteObject[] = [
               {
                 index: true,
                 Component: CatalogueCardView,
+                loader: catalogueLayoutLoader(queryClient),
               },
               {
                 path: paths.catalogueItems,
                 Component: Outlet,
                 children: [
-                  { index: true, Component: CatalogueItemsPage },
+                  {
+                    index: true,
+                    Component: CatalogueItemsPage,
+                    loader: catalogueLayoutLoader(queryClient),
+                  },
                   {
                     path: paths.catalogueItem,
                     Component: Outlet,
                     children: [
-                      { index: true, Component: CatalogueItemsLandingPage },
+                      {
+                        index: true,
+                        Component: CatalogueItemsLandingPage,
+                        loader: catalogueLayoutLoader(queryClient),
+                      },
                       {
                         path: paths.items,
                         Component: Outlet,
                         children: [
-                          { index: true, Component: Items },
+                          {
+                            index: true,
+                            Component: Items,
+                            loader: catalogueLayoutLoader(queryClient),
+                          },
                           {
                             path: paths.item,
                             Component: Outlet,
                             children: [
-                              { index: true, Component: ItemsLandingPage },
+                              {
+                                index: true,
+                                Component: ItemsLandingPage,
+                                loader: catalogueLayoutLoader(queryClient),
+                              },
                             ],
                           },
                         ],
