@@ -10,6 +10,7 @@ import { BreadcrumbsInfo } from '../api/api.types';
 import {
   getCatalogueCategoryQuery,
   useGetCatalogueBreadcrumbs,
+  useGetCatalogueCategory,
 } from '../api/catalogueCategories';
 import {
   getCatalogueItemQuery,
@@ -91,6 +92,10 @@ function CatalogueLayout() {
   const lastSegmentOfCataloguePath = cataloguePath[cataloguePath.length - 1];
 
   const { data: breadcrumbs } = useGetCatalogueBreadcrumbs(catalogueCategoryId);
+
+  const { data: catalogueCategory } =
+    useGetCatalogueCategory(catalogueCategoryId);
+
   const { data: catalogueItem } = useGetCatalogueItem(catalogueItemId);
 
   const { data: item } = useGetItem(itemId);
@@ -100,22 +105,31 @@ function CatalogueLayout() {
   >(breadcrumbs);
   React.useEffect(() => {
     if (breadcrumbs) {
+      const catalogueItemBreadcrumbTrail: BreadcrumbsInfo['trail'] =
+        breadcrumbs.trail.map((breadcrumb) => {
+          if (breadcrumb[0] === catalogueCategory?.id) {
+            return [`${breadcrumb[0]}/items`, breadcrumb[1]];
+          }
+          return breadcrumb;
+        });
       setCatalogueBreadcrumbs({
         ...breadcrumbs,
         trail: [
           // Catalogue categories
-          ...(lastSegmentOfCataloguePath === catalogueCategoryId
+          ...(lastSegmentOfCataloguePath === catalogueCategory?.id &&
+          !catalogueCategory?.is_leaf
             ? [...breadcrumbs.trail]
             : []),
           // Catalogue items
           ...(lastSegmentOfCataloguePath === 'items' &&
-          cataloguePath.length === 4
-            ? [...breadcrumbs.trail]
+          cataloguePath.length === 4 &&
+          catalogueCategory?.is_leaf
+            ? [...catalogueItemBreadcrumbTrail]
             : []),
           // Catalogue item landing page
           ...((catalogueItem && lastSegmentOfCataloguePath === catalogueItem.id
             ? [
-                ...breadcrumbs.trail,
+                ...catalogueItemBreadcrumbTrail,
                 [
                   `${catalogueItem.catalogue_category_id}/items/${catalogueItem.id}`,
                   catalogueItem.name,
@@ -125,7 +139,7 @@ function CatalogueLayout() {
           // Items table
           ...((catalogueItem && lastSegmentOfCataloguePath === 'items'
             ? [
-                ...breadcrumbs.trail,
+                ...catalogueItemBreadcrumbTrail,
                 [
                   `${catalogueItem.catalogue_category_id}/items/${catalogueItem.id}`,
                   `${catalogueItem.name}`,
@@ -139,7 +153,7 @@ function CatalogueLayout() {
           // Item landing page
           ...((catalogueItem && item && lastSegmentOfCataloguePath === item.id
             ? [
-                ...breadcrumbs.trail,
+                ...catalogueItemBreadcrumbTrail,
                 [
                   `${catalogueItem.catalogue_category_id}/items/${catalogueItem.id}`,
                   `${catalogueItem.name}`,
@@ -161,7 +175,7 @@ function CatalogueLayout() {
     }
   }, [
     breadcrumbs,
-    catalogueCategoryId,
+    catalogueCategory,
     catalogueItem,
     cataloguePath.length,
     item,

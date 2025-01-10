@@ -58,6 +58,24 @@ describe('Catalogue Layout', () => {
     expect(view.asFragment()).toMatchSnapshot();
   });
 
+  it('navigates to catalogue category table view', async () => {
+    createView('/catalogue/5/items/89', 'catalogueItem');
+    await waitFor(() => {
+      expect(
+        screen.getByRole('link', { name: 'Energy Meters' })
+      ).toBeInTheDocument();
+    });
+
+    const breadcrumb = screen.getByRole('link', {
+      name: 'Energy Meters',
+    });
+
+    await user.click(breadcrumb);
+
+    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
+    expect(mockedUseNavigate).toHaveBeenCalledWith('/catalogue/5/items');
+  });
+
   it('renders a catalogue items page correctly', async () => {
     const view = createView('/catalogue/4/items', 'catalogueItems');
 
@@ -229,7 +247,7 @@ describe('catalogueLayoutLoader', () => {
     ).rejects.toThrow('Request failed with status code 404');
   });
 
-  it('should fetch catalogue category data if catalogue_category_id  and catalogue_item_id is provided', async () => {
+  it('should fetch catalogue category data if catalogue_category_id and catalogue_item_id is provided', async () => {
     const params = { catalogue_category_id: '4', catalogue_item_id: '1' };
     const output = await catalogueLayoutLoader(queryClient)({
       params,

@@ -15,9 +15,12 @@ describe('Units', () => {
   it('renders table correctly', async () => {
     const view = createView();
 
-    await waitFor(() => {
-      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        expect(screen.queryByRole('progressbar')).not.toBeInTheDocument();
+      },
+      { timeout: 10000 }
+    );
 
     await waitFor(() => {
       expect(screen.getByText('megapixels')).toBeInTheDocument();

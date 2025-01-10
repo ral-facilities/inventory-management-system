@@ -116,7 +116,7 @@ describe('CardView', () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          'There are no catalogue categories. Please add a category using the button in the top left of your screen'
+          'There are no catalogue categories. Please add a category using the button in the top left of your screen.'
         )
       ).toBeInTheDocument();
     });
@@ -134,7 +134,7 @@ describe('CardView', () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          'There are no catalogue categories. Please add a category using the button in the top left of your screen'
+          'There are no catalogue categories. Please add a category using the button in the top left of your screen.'
         )
       ).toBeInTheDocument();
     });

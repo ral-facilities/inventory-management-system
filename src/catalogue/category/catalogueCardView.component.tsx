@@ -159,7 +159,6 @@ function CatalogueCardView() {
   const isLeafNode = parentInfo ? parentInfo.is_leaf : false;
 
   const navigate = useNavigate();
-
   React.useEffect(() => {
     // If it's a leaf node, redirect to catalogue items page
     if (isLeafNode) {
@@ -541,7 +540,7 @@ function CatalogueCardView() {
                   sx={{ marginTop: 2 }}
                   boldErrorText="No results found"
                   errorText={
-                    'There are no catalogue categories. Please add a category using the button in the top left of your screen'
+                    'There are no catalogue categories. Please add a category using the button in the top left of your screen.'
                   }
                 />
               )}
