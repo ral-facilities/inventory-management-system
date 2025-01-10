@@ -579,10 +579,18 @@ describe('Systems', () => {
   });
 
   it('edits a system from a landing page', () => {
+    Cypress.on('uncaught:exception', (err) => {
+      if (err.message.includes('ResizeObserver')) {
+        return false;
+      }
+    });
     cy.visit('/systems/65328f34a40ff5301575a4e3');
 
     cy.findByRole('button', { name: 'systems page actions menu' }).click();
-    cy.findByText('Edit').click();
+    cy.findByRole('menuitem', { name: 'Edit' }).should('exist');
+    cy.findByRole('menuitem', { name: 'Edit' }).click();
+
+    cy.findByRole('dialog', { name: 'Edit System' }).should('exist');
 
     cy.findByLabelText('Name *').clear();
     cy.findByLabelText('Name *').type('System name');

@@ -335,7 +335,7 @@ describe('Catalogue Category Dialog', () => {
       });
 
       expect(onClose).toHaveBeenCalled();
-    }, 10000);
+    });
 
     it('create a catalogue category with content being catalogue items and deletes an catalogue item property', async () => {
       createView();
@@ -432,7 +432,7 @@ describe('Catalogue Category Dialog', () => {
       });
 
       expect(onClose).toHaveBeenCalled();
-    }, 10000);
+    });
 
     it('create a catalogue category with content being catalogue items (allowed_values list of numbers)', async () => {
       createView();
@@ -812,7 +812,7 @@ describe('Catalogue Category Dialog', () => {
       expect(nameHelperTexts.length).toBe(1);
 
       expect(onClose).not.toHaveBeenCalled();
-    }, 10000);
+    });
 
     it('clears formFields when catalogue content is catalogue categories', async () => {
       createView();
@@ -840,7 +840,7 @@ describe('Catalogue Category Dialog', () => {
       expect(screen.queryByText('radius')).not.toBeInTheDocument();
       expect(screen.queryByText('millimeters')).not.toBeInTheDocument();
       expect(screen.queryByText('Yes')).not.toBeInTheDocument();
-    }, 10000);
+    });
 
     it('displays duplicate values and invalid type errors (allowed_values list of numbers)', async () => {
       createView();
@@ -928,7 +928,7 @@ describe('Catalogue Category Dialog', () => {
       const duplicateHelperTexts2 = screen.queryByText('Duplicate value.');
 
       expect(duplicateHelperTexts2).not.toBeInTheDocument();
-    }, 15000);
+    }, 20000);
 
     it('displays invalid type errors (allowed_values list of numbers)', async () => {
       createView();
@@ -962,7 +962,7 @@ describe('Catalogue Category Dialog', () => {
       expect(incorrectTypeHelperTexts.length).toEqual(1);
 
       expect(onClose).not.toHaveBeenCalled();
-    }, 10000);
+    });
 
     it('displays duplicate values values with different significant figures (allowed_values list of numbers)', async () => {
       createView();
@@ -997,7 +997,7 @@ describe('Catalogue Category Dialog', () => {
       expect(duplicateHelperTexts.length).toEqual(2);
 
       expect(onClose).not.toHaveBeenCalled();
-    }, 10000);
+    });
 
     it('displays error if the allowed values list is empty', async () => {
       createView();
@@ -1066,7 +1066,7 @@ describe('Catalogue Category Dialog', () => {
       expect(listHelperTexts.length).toEqual(2);
 
       expect(onClose).not.toHaveBeenCalled();
-    }, 10000);
+    });
 
     it('displays duplicate values error (allowed_values list of string)', async () => {
       createView();

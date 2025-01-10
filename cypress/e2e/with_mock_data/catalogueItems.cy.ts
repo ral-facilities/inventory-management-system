@@ -5,6 +5,14 @@ describe('Catalogue Items', () => {
   afterEach(() => {
     cy.clearMocks();
   });
+
+  it('should navigate back to the catalogue items table from the landing page using the breadcrumbs', () => {
+    cy.visit('/catalogue/5/items/89');
+
+    cy.findByRole('link', { name: 'Energy Meters' }).click();
+
+    cy.findByRole('button', { name: 'Add Catalogue Item' }).should('exist');
+  });
   it('adds a catalogue item', () => {
     cy.findByRole('button', { name: 'Add Catalogue Item' }).click();
 

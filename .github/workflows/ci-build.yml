@@ -30,13 +30,42 @@ jobs:
         run: yarn lint
 
       - name: Run unit tests
-        run: yarn test
+        run: yarn test --reporter=default --reporter=junit --outputFile=test-report.junit.xml
 
       - name: Upload coverage reports to Codecov
         if: success()
         uses: codecov/codecov-action@1e68e06f1dbfde0e4cefc87efeba9e4643565303 # v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/test-results-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+  bundle_analysis:
+    name: Bundle Analysis
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4
+        with:
+          node-version: 20
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: |
+          yarn --immutable
+
+      - name: Build app for production
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        run: yarn build
 
   e2e-tests:
     name: End-to-End (with mock data) Tests

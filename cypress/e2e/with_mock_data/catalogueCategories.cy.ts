@@ -816,7 +816,7 @@ describe('Catalogue Category', () => {
   it('category with no data displays no results found', () => {
     cy.visit('/catalogue/16');
     cy.findByText(
-      'There are no catalogue categories. Please add a category using the button in the top left of your screen'
+      'There are no catalogue categories. Please add a category using the button in the top left of your screen.'
     ).should('exist');
   });
 
@@ -844,7 +844,7 @@ describe('Catalogue Category', () => {
       statusCode: 200,
     });
     cy.findByText(
-      'There are no catalogue categories. Please add a category using the button in the top left of your screen'
+      'There are no catalogue categories. Please add a category using the button in the top left of your screen.'
     ).should('exist');
   });
 

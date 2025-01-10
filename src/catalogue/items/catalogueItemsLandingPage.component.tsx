@@ -507,7 +507,7 @@ function CatalogueItemsLandingPage() {
           </Grid>
         </Grid>
       )}
-      {!(!catalogueItemIdDataLoading && !catalogueCategoryDataLoading) && (
+      {(catalogueItemIdDataLoading || catalogueCategoryDataLoading) && (
         <Box sx={{ width: '100%' }}>
           <LinearProgress />
         </Box>
