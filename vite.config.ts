@@ -1,3 +1,4 @@
+import { codecovVitePlugin } from '@codecov/vite-plugin';
 import react from '@vitejs/plugin-react';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
 import fs from 'node:fs';
@@ -63,6 +64,7 @@ export default defineConfig(({ mode }) => {
   // Allow hot reloading of json files in public folder when in development
   if (env.NODE_ENV === 'development') plugins.push(jsonHMR());
 
+  // Allow codecov bundle analysis
   if (env.VITE_APP_INCLUDE_CODECOV === 'true')
     plugins.push(
       codecovVitePlugin({
@@ -159,6 +161,8 @@ export default defineConfig(({ mode }) => {
           'json',
           // Extra for VSCode extension
           ['lcov', { outputFile: 'lcov.info', silent: true }],
+          // Extra for codecov test analysis
+          ['junit', { outputFile: 'test-report.junit.xml', silent: true }],
         ],
         exclude: [
           ...vitestCoverageConfigDefaultsExclude,
