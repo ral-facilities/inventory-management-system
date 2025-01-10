@@ -77,7 +77,7 @@
   "packageManager": "yarn@4.6.0",
   "devDependencies": {
     "@babel/eslint-parser": "7.25.9",
-    "@codecov/vite-plugin": "^1.7.0",
+    "@codecov/vite-plugin": "1.7.0",
     "@eslint/compat": "1.2.4",
     "@eslint/js": "9.17.0",
     "@tanstack/eslint-plugin-query": "5.62.1",
@@ -104,6 +104,7 @@
     "express": "4.21.2",
     "globals": "15.13.0",
     "jsdom": "25.0.1",
+    "junit": "1.4.9",
     "prettier": "3.4.2",
     "serve": "14.2.4",
     "serve-static": "1.16.2",
