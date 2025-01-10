@@ -63,6 +63,15 @@ export default defineConfig(({ mode }) => {
   // Allow hot reloading of json files in public folder when in development
   if (env.NODE_ENV === 'development') plugins.push(jsonHMR());
 
+  if (env.VITE_APP_INCLUDE_CODECOV === 'true')
+    plugins.push(
+      codecovVitePlugin({
+        enableBundleAnalysis: env.CODECOV_TOKEN !== undefined,
+        bundleName: 'inventory-management-system',
+        uploadToken: env.CODECOV_TOKEN,
+      })
+    );
+
   const config: UserConfig = {
     plugins: plugins,
     server: {
