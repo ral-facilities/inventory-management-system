@@ -62,9 +62,9 @@ export default defineConfig(({ mode }) => {
   const plugins: PluginOption[] = [
     react(),
     codecovVitePlugin({
-      enableBundleAnalysis: env.CODECOV_TOKEN !== undefined,
+      enableBundleAnalysis: env.BUNDLE_ANALYZER_UPLOAD_TOKEN !== undefined,
       bundleName: 'inventory-management-system',
-      uploadToken: env.CODECOV_TOKEN,
+      uploadToken: env.BUNDLE_ANALYZER_UPLOAD_TOKEN,
     }),
   ];
 
