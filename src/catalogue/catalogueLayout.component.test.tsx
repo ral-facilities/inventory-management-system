@@ -58,6 +58,24 @@ describe('Catalogue Layout', () => {
     expect(view.asFragment()).toMatchSnapshot();
   });
 
+  it('navigates to catalogue category table view', async () => {
+    createView('/catalogue/5/items/89', 'catalogueItem');
+    await waitFor(() => {
+      expect(
+        screen.getByRole('link', { name: 'Energy Meters' })
+      ).toBeInTheDocument();
+    });
+
+    const breadcrumb = screen.getByRole('link', {
+      name: 'Energy Meters',
+    });
+
+    await user.click(breadcrumb);
+
+    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
+    expect(mockedUseNavigate).toHaveBeenCalledWith('/catalogue/5/items');
+  });
+
   it('renders a catalogue items page correctly', async () => {
     const view = createView('/catalogue/4/items', 'catalogueItems');
 
