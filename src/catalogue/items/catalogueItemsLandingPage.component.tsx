@@ -21,7 +21,7 @@ import PlaceholderImage from '../../common/images/placeholderImage.component';
 import TabView from '../../common/tab/tabView.component';
 import { formatDateTimeStrings } from '../../utils';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
-import ObsoleteReplacementLink from './obsoleteReplacementLink.component';
+import CatalogueLink from './catalogueLink.component';
 
 const CatalogueItemsActionMenu = (props: {
   catalogueItem: CatalogueItem;
@@ -185,11 +185,13 @@ function CatalogueItemsLandingPage() {
                             </Typography>
                             <Typography align="left" color="text.secondary">
                               {catalogueItemIdData.obsolete_replacement_catalogue_item_id ? (
-                                <ObsoleteReplacementLink
+                                <CatalogueLink
                                   catalogueItemId={
                                     catalogueItemIdData.obsolete_replacement_catalogue_item_id
                                   }
-                                />
+                                >
+                                  Click here
+                                </CatalogueLink>
                               ) : (
                                 'None'
                               )}
