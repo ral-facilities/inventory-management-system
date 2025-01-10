@@ -339,7 +339,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codecov/vite-plugin@npm:^1.7.0":
+"@codecov/vite-plugin@npm:1.7.0":
   version: 1.7.0
   resolution: "@codecov/vite-plugin@npm:1.7.0"
   dependencies:
@@ -5377,7 +5377,7 @@ __metadata:
   resolution: "inventory-management-system@workspace:."
   dependencies:
     "@babel/eslint-parser": "npm:7.25.9"
-    "@codecov/vite-plugin": "npm:^1.7.0"
+    "@codecov/vite-plugin": "npm:1.7.0"
     "@date-io/date-fns": "npm:3.0.0"
     "@emotion/react": "npm:^11.11.4"
     "@emotion/styled": "npm:^11.11.5"

@@ -578,6 +578,7 @@ describe('Systems', () => {
   });
 
   it('edits a system from a landing page', () => {
+    // Catch error to avoid the CI failing unnecessarily
     Cypress.on('uncaught:exception', (err) => {
       if (err.message.includes('ResizeObserver')) {
         return false;
