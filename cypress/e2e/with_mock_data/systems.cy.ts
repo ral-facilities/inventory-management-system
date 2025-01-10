@@ -219,7 +219,7 @@ describe('Systems', () => {
     cy.findAllByRole('link', { name: 'Cameras 8' }).first().click();
 
     // Check now on landing page for the catalogue item
-    cy.url().should('include', '/catalogue/item/27');
+    cy.url().should('include', '/catalogue/4/items/27');
     cy.findByText('Properties').should('be.visible');
   });
 
@@ -229,7 +229,7 @@ describe('Systems', () => {
     cy.findByRole('link', { name: 'QnfSKahnQuze' }).click();
 
     // Check now on landing page for the item
-    cy.url().should('include', '/catalogue/item/28/items/z1hJvV8Z');
+    cy.url().should('include', '/catalogue/4/items/28/items/z1hJvV8Z');
     cy.findByText('Properties').should('be.visible');
   });
 
@@ -579,6 +579,7 @@ describe('Systems', () => {
   });
 
   it('edits a system from a landing page', () => {
+    // Catch error to avoid the CI failing unnecessarily
     Cypress.on('uncaught:exception', (err) => {
       if (err.message.includes('ResizeObserver')) {
         return false;
