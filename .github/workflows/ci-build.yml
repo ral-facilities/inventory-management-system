@@ -64,7 +64,7 @@ jobs:
 
       - name: Build app for production
         env:
-          BUNDLE_ANALYZER_UPLOAD_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         run: yarn build
 
   e2e-tests:

@@ -27,14 +27,14 @@ comment:
 # Post informational status (never fails) with threshold of 5%
 # This is the default configuration
 bundle_analysis:
-	warning_threshold: "5%"
-  status: "informational"
+     warning_threshold: "5%"
+     status: "informational"
   
 # Disable commit status
 bundle_analysis:
-  status: False
+     status: False
   
 # Post commit status that will fail if change is larger than threshold of 10MB
 bundle_analysis:
-  warning_threshold: "10MB"
-  status: True
+     warning_threshold: "10MB"
+     status: True

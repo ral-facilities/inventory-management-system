@@ -1,4 +1,3 @@
-import { codecovVitePlugin } from '@codecov/vite-plugin';
 import react from '@vitejs/plugin-react';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
 import fs from 'node:fs';
@@ -59,17 +58,19 @@ export default defineConfig(({ mode }) => {
   // Whether to exclude MSW from the build
   const excludeMSW = env.VITE_APP_INCLUDE_MSW !== 'true';
 
-  const plugins: PluginOption[] = [
-    react(),
-    codecovVitePlugin({
-      enableBundleAnalysis: env.BUNDLE_ANALYZER_UPLOAD_TOKEN !== undefined,
-      bundleName: 'inventory-management-system',
-      uploadToken: env.BUNDLE_ANALYZER_UPLOAD_TOKEN,
-    }),
-  ];
+  const plugins: PluginOption[] = [react()];
 
   // Allow hot reloading of json files in public folder when in development
   if (env.NODE_ENV === 'development') plugins.push(jsonHMR());
+
+  if (env.VITE_APP_INCLUDE_CODECOV === 'true')
+    plugins.push(
+      codecovVitePlugin({
+        enableBundleAnalysis: env.CODECOV_TOKEN !== undefined,
+        bundleName: 'inventory-management-system',
+        uploadToken: env.CODECOV_TOKEN,
+      })
+    );
 
   const config: UserConfig = {
     plugins: plugins,
