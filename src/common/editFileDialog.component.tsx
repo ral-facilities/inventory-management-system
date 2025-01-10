@@ -9,6 +9,7 @@ import {
   DialogTitle,
   FormHelperText,
   Grid,
+  InputAdornment,
   TextField,
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
@@ -44,9 +45,17 @@ const EditFileDialog = (props: FileDialogProps) => {
 
   const { mutateAsync: patchFile, isPending: isEditPending } = usePatchFile();
 
+  const point = selectedFile?.file_name?.lastIndexOf('.') ?? 0;
+  const extension = selectedFile?.file_name?.slice(point) ?? '';
+  const initialName = selectedFile?.file_name?.slice(0, point) ?? '';
+
+  console.log(extension);
+
+  const selectedFileCopy = { ...selectedFile, file_name: initialName };
+
   const initialFile: ObjectFilePatch = React.useMemo(
     () =>
-      selectedFile ?? {
+      selectedFileCopy ?? {
         file_name: '',
         title: '',
         description: '',
@@ -89,16 +98,18 @@ const EditFileDialog = (props: FileDialogProps) => {
   const handleEditFile = React.useCallback(
     (fileData: ObjectFilePatch) => {
       if (selectedFile) {
-        const isFileNameUpdated = fileData.file_name !== selectedFile.file_name;
+        const isFileNameUpdated =
+          fileData.file_name !== selectedFileCopy.file_name;
 
         const isDescriptionUpdated =
-          fileData.description !== selectedFile.description;
+          fileData.description !== selectedFileCopy.description;
 
-        const isTitleUpdated = fileData.title !== selectedFile.title;
+        const isTitleUpdated = fileData.title !== selectedFileCopy.title;
 
         let fileToEdit: ObjectFilePatch = {};
 
-        if (isFileNameUpdated) fileToEdit.file_name = fileData.file_name;
+        if (isFileNameUpdated)
+          fileToEdit.file_name = fileData.file_name + extension;
         if (isDescriptionUpdated) fileToEdit.description = fileData.description;
         if (isTitleUpdated) fileToEdit.title = fileData.title;
 
@@ -135,6 +146,11 @@ const EditFileDialog = (props: FileDialogProps) => {
               {...register('file_name')}
               error={!!errors.file_name}
               helperText={errors.file_name?.message}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">{extension}</InputAdornment>
+                ),
+              }}
               fullWidth
             />
           </Grid>
