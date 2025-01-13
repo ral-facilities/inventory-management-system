@@ -9,12 +9,9 @@ import {
   Typography,
 } from '@mui/material';
 import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { paths } from '../App';
-import { BreadcrumbsInfo } from '../api/api.types';
+import { useParams } from 'react-router-dom';
 import { useGetManufacturer } from '../api/manufacturers';
 import { formatDateTimeStrings } from '../utils';
-import Breadcrumbs from '../view/breadcrumbs.component';
 import ManufacturerDialog from './manufacturerDialog.component';
 
 function ManufacturerLandingPage() {
@@ -25,30 +22,6 @@ function ManufacturerLandingPage() {
 
   const [editManufacturerDialogOpen, setEditManufacturerDialogOpen] =
     React.useState<boolean>(false);
-
-  const navigate = useNavigate();
-  const onChangeNode = React.useCallback(
-    (id: string | null) => {
-      navigate(id ? `${paths.manufacturers}/${id}` : paths.manufacturers);
-    },
-    [navigate]
-  );
-
-  const [manufacturerLandingBreadcrumbs, setManufacturerLandingBreadcrumbs] =
-    React.useState<BreadcrumbsInfo | undefined>(undefined);
-
-  React.useEffect(() => {
-    if (manufacturerData)
-      setManufacturerLandingBreadcrumbs({
-        full_trail: true,
-        trail: [
-          [
-            `${paths.manufacturer}/${manufacturerData.id}`,
-            manufacturerData.name,
-          ],
-        ],
-      });
-  }, [manufacturerData]);
 
   return (
     <Grid container>
@@ -62,14 +35,6 @@ function ManufacturerLandingPage() {
         item
         container
       >
-        <Grid item sx={{ py: '20px' }}>
-          <Breadcrumbs
-            onChangeNode={onChangeNode}
-            onChangeNavigateHome={() => onChangeNode(null)}
-            breadcrumbsInfo={manufacturerLandingBreadcrumbs}
-            homeLocation="Manufacturers"
-          />
-        </Grid>
         {manufacturerData && (
           <Grid item container sx={{ display: 'flex', py: 2 }}>
             <Button
@@ -235,25 +200,7 @@ function ManufacturerLandingPage() {
           </Grid>
         </Grid>
       )}
-      {!manufacturerDataLoading ? (
-        !manufacturerData && (
-          <Box
-            sx={{
-              width: '100%',
-              justifyContent: 'center',
-              marginTop: '8px',
-            }}
-          >
-            <Typography sx={{ fontWeight: 'bold', textAlign: 'center' }}>
-              No result found
-            </Typography>
-            <Typography sx={{ textAlign: 'center' }}>
-              This manufacturer doesn&#39;t exist. Please click the Home button
-              to navigate to the manufacturer table
-            </Typography>
-          </Box>
-        )
-      ) : (
+      {manufacturerDataLoading && (
         <Box sx={{ width: '100%' }}>
           <LinearProgress />
         </Box>

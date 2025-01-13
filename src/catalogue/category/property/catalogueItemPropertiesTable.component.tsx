@@ -1,3 +1,4 @@
+import DeleteIcon from '@mui/icons-material/Delete';
 import {
   Box,
   Button,
@@ -18,7 +19,10 @@ import {
   CatalogueCategory,
   CatalogueCategoryPropertyType,
 } from '../../../api/api.types';
-import { AddCatalogueCategoryPropertyWithPlacementIds } from '../../../app.types';
+import {
+  AddCatalogueCategoryPropertyWithPlacementIds,
+  AddCatalogueCategoryWithPlacementIds,
+} from '../../../app.types';
 import { usePreservedTableState } from '../../../common/preservedTableState.component';
 import {
   COLUMN_FILTER_FUNCTIONS,
@@ -37,28 +41,40 @@ import {
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import { useGetUnits } from '../../../api/units';
 import { RequestType } from '../../../form.schemas';
-import PropertyMigrationDialog from './propertyMigrationDialog.component';
+import PropertyDialog from './propertyDialog.component';
 
 export interface PropertiesTableProps {
-  properties: AddCatalogueCategoryPropertyWithPlacementIds[];
   requestType: RequestType;
-  catalogueCategory: CatalogueCategory;
+  catalogueCategory?: CatalogueCategory;
 }
 
 export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
-  const { properties, catalogueCategory } = props;
+  const { catalogueCategory, requestType } = props;
+
+  const { control, clearErrors } =
+    useFormContext<AddCatalogueCategoryWithPlacementIds>();
+  // fields don't get updated when textfield has changed
+  const properties = control._getFieldArray(
+    'properties'
+  ) as AddCatalogueCategoryPropertyWithPlacementIds[];
+  const { append, remove } = useFieldArray({
+    control,
+    name: 'properties',
+  });
 
   const [propertyDialogRequestType, setPropertyDialogRequestType] =
     React.useState<RequestType>('post');
 
-  const { data: units } = useGetUnits();
+  const [index, setIndex] = React.useState<number | undefined>();
 
+  const { data: units } = useGetUnits();
   const columns = React.useMemo<
     MRT_ColumnDef<AddCatalogueCategoryPropertyWithPlacementIds>[]
   >(() => {
-    const allowedValues = catalogueCategory.properties
+    const allowedValues = catalogueCategory?.properties
       .flatMap((prop) => prop.allowed_values?.values)
       .filter((val) => val !== undefined);
 
@@ -157,7 +173,11 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
       {
         header: 'Unit',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => row.unit,
+        accessorFn: (row) =>
+          // Request type 'post' is storing the unit_id only, so it needs to find the unit value
+          requestType === 'patch'
+            ? row.unit
+            : (units?.find((unit) => row.unit_id === unit.id) || null)?.value,
         id: 'unit',
         filterVariant: 'multi-select',
         filterFn: 'arrIncludesSome',
@@ -178,6 +198,16 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
         ],
         filterSelectOptions: unitValues,
         size: 250,
+        Cell: ({ renderedCellValue, row }) => (
+          <>
+            {requestType === 'patch'
+              ? renderedCellValue
+              : (
+                  units?.find((unit) => row.original.unit_id === unit.id) ||
+                  null
+                )?.value}
+          </>
+        ),
         GroupedCell: TableGroupedCell,
       },
       {
@@ -191,7 +221,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
         GroupedCell: TableGroupedCell,
       },
     ];
-  }, [catalogueCategory, units]);
+  }, [catalogueCategory, units, requestType]);
 
   const initialColumnFilterFnState = React.useMemo(() => {
     return getInitialColumnFilterFnState(columns);
@@ -210,7 +240,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
 
   const table = useMaterialReactTable({
     columns: columns,
-    data: properties,
+    data: properties ?? [],
     // Features
     enableTopToolbar: true,
     enableColumnFilterModes: true,
@@ -285,14 +315,20 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
 
     renderCreateRowDialogContent: ({ table, row }) => {
       return (
-        <PropertyMigrationDialog
+        <PropertyDialog
           open
-          onClose={() => {
+          onClose={(removeRow) => {
             table.setCreatingRow(null);
+            if (removeRow && propertyDialogRequestType === 'post') {
+              remove(index);
+              clearErrors(`properties`);
+            }
           }}
           type={propertyDialogRequestType}
           catalogueCategory={catalogueCategory}
           selectedProperty={row.original}
+          isMigration={requestType === 'patch'}
+          index={requestType === 'post' ? index : undefined}
         />
       );
     },
@@ -306,6 +342,17 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
           onClick={() => {
             setPropertyDialogRequestType('post');
             table.setCreatingRow(true);
+            if (requestType === 'post') {
+              setIndex(properties?.length);
+              append({
+                cip_placement_id: crypto.randomUUID(),
+                name: '',
+                type: CatalogueCategoryPropertyType.Text,
+                mandatory: 'false',
+                unit: null,
+                allowed_values: null,
+              });
+            }
           }}
         >
           Add Property
@@ -331,6 +378,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
           aria-label={`Edit property ${row.original.name}`}
           onClick={() => {
             setPropertyDialogRequestType('patch');
+            setIndex(row.index);
             table.setCreatingRow(row);
             closeMenu();
           }}
@@ -341,6 +389,24 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
           </ListItemIcon>
           <ListItemText>Edit</ListItemText>
         </MenuItem>,
+        ...(requestType === 'post'
+          ? [
+              <MenuItem
+                key="delete"
+                aria-label={`Delete property ${row.original.name}`}
+                onClick={() => {
+                  closeMenu();
+                  remove(row.index);
+                }}
+                sx={{ m: 0 }}
+              >
+                <ListItemIcon>
+                  <DeleteIcon />
+                </ListItemIcon>
+                <ListItemText>Delete</ListItemText>
+              </MenuItem>,
+            ]
+          : []),
       ];
     },
     // Functions
