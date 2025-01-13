@@ -37,7 +37,10 @@ import CatalogueItemsLandingPage from './catalogue/items/catalogueItemsLandingPa
 import CatalogueItemsPage from './catalogue/items/catalogueItemsPage.component';
 import ConfigProvider from './configProvider.component';
 import handleIMS_APIError from './handleIMS_APIError';
-import { HomePage } from './homePage/homePage.component';
+import {
+  HomePage,
+  HomePageErrorComponent,
+} from './homePage/homePage.component';
 import IMSThemeProvider from './imsThemeProvider.component';
 import Items from './items/items.component';
 import ItemsLandingPage from './items/itemsLandingPage.component';
@@ -111,7 +114,14 @@ const routeObject: RouteObject[] = [
     Component: Layout,
     children: [
       { path: paths.root, Component: HomePage },
-      { path: paths.homepage, Component: HomePage },
+      {
+        path: paths.homepage,
+        Component: Outlet,
+        children: [
+          { Component: HomePage, index: true },
+          { path: '*', Component: HomePageErrorComponent },
+        ],
+      },
       {
         path: paths.admin,
         Component: AdminLayout,

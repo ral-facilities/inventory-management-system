@@ -1,5 +1,24 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`Home Page Error Component > renders catalogue error page correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-7gabc3"
+  >
+    <p
+      class="MuiTypography-root MuiTypography-body1 css-11gsi37-MuiTypography-root"
+    >
+      Invalid Route
+    </p>
+    <p
+      class="MuiTypography-root MuiTypography-body1 css-1uwgr7b-MuiTypography-root"
+    >
+      The route you are trying to access doesn't exist. Please click the Scigateway logo button in the header to navigate back to the Home page.
+    </p>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`Home page component > homepage renders correctly 1`] = `
 <DocumentFragment>
   <div
