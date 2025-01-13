@@ -134,7 +134,7 @@ const EditFileDialog = (props: FileDialogProps) => {
   );
 
   return (
-    <Dialog open={open} maxWidth="lg" fullWidth>
+    <Dialog open={open} maxWidth="sm" fullWidth>
       <DialogTitle>{`Edit ${fileType}`}</DialogTitle>
       <DialogContent>
         <Grid container direction="column" spacing={1} component="form">

@@ -106,7 +106,7 @@ describe('Edit file dialog', () => {
       expect(onClose).toHaveBeenCalled();
     });
 
-    it('No values changed shows correct error message', async () => {
+    it('shows correct error message when no values are changed', async () => {
       createView();
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
@@ -120,7 +120,7 @@ describe('Edit file dialog', () => {
       ).toBeInTheDocument();
     });
 
-    it('Required fields show error if they are whitespace or current value just removed', async () => {
+    it('shows error message if required fields are whitespace or their current value was removed', async () => {
       createView();
       modifyFileValues({
         file_name: '',
@@ -133,7 +133,7 @@ describe('Edit file dialog', () => {
       expect(onClose).not.toHaveBeenCalled();
     });
 
-    it('CatchAllError request works correctly and displays refresh page message', async () => {
+    it('displays refresh page message and a CatchAllError request works correctly', async () => {
       createView();
       modifyFileValues({
         file_name: 'Error 500',
