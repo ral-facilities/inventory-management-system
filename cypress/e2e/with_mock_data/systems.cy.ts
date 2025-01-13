@@ -15,11 +15,12 @@ describe('Systems', () => {
   it('should eventually load displaying system not found when system does not exist', () => {
     cy.visit('/systems/invalid_id');
 
-    // Can take a moment to load due to react-query retries
-    cy.findByText('Invalid System Route', { timeout: 10000 }).should('exist');
     cy.findByText(
-      `The system route you are trying to access doesn't exist. Please click the Home button to navigate back to the System Home page.`
+      `We're sorry, the page you requested was not found on the server. If you entered the URL manually please check your spelling and try again. Otherwise, return to the`,
+      { exact: false }
     ).should('exist');
+
+    cy.findByRole('link', { name: 'systems home page' }).should('exist');
   });
 
   it('should be able to navigate through subsystems', () => {
@@ -218,7 +219,7 @@ describe('Systems', () => {
     cy.findAllByRole('link', { name: 'Cameras 8' }).first().click();
 
     // Check now on landing page for the catalogue item
-    cy.url().should('include', '/catalogue/item/27');
+    cy.url().should('include', '/catalogue/4/items/27');
     cy.findByText('Properties').should('be.visible');
   });
 
@@ -228,7 +229,7 @@ describe('Systems', () => {
     cy.findByRole('link', { name: 'QnfSKahnQuze' }).click();
 
     // Check now on landing page for the item
-    cy.url().should('include', '/catalogue/item/28/items/z1hJvV8Z');
+    cy.url().should('include', '/catalogue/4/items/28/items/z1hJvV8Z');
     cy.findByText('Properties').should('be.visible');
   });
 
@@ -578,10 +579,19 @@ describe('Systems', () => {
   });
 
   it('edits a system from a landing page', () => {
+    // Catch error to avoid the CI failing unnecessarily
+    Cypress.on('uncaught:exception', (err) => {
+      if (err.message.includes('ResizeObserver')) {
+        return false;
+      }
+    });
     cy.visit('/systems/65328f34a40ff5301575a4e3');
 
     cy.findByRole('button', { name: 'systems page actions menu' }).click();
-    cy.findByText('Edit').click();
+    cy.findByRole('menuitem', { name: 'Edit' }).should('exist');
+    cy.findByRole('menuitem', { name: 'Edit' }).click();
+
+    cy.findByRole('dialog', { name: 'Edit System' }).should('exist');
 
     cy.findByLabelText('Name *').clear();
     cy.findByLabelText('Name *').type('System name');

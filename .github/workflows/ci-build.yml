@@ -38,6 +38,12 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/test-results-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
   e2e-tests:
     name: End-to-End (with mock data) Tests
     runs-on: ubuntu-latest
@@ -147,6 +153,30 @@ jobs:
         with:
           name: Inventory management system (with api) Screenshots
           path: cypress/screenshots
+  bundle_analysis:
+    # This job triggers only if all the other jobs succeed.
+    needs: [lint-and-unit-test, e2e-tests, e2e-tests-api]
+    name: Bundle Analysis
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4
+        with:
+          node-version: 20
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: |
+          yarn --immutable
+
+      - name: Build app for production
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        run: yarn build
 
   docker:
     # This job triggers only if all the other jobs succeed. It builds the Docker image and if successful,
@@ -172,7 +202,7 @@ jobs:
           images: ${{ secrets.HARBOR_URL }}/ims
 
       - name: Build and push Docker image to Harbor
-        uses: docker/build-push-action@48aba3b46d1b1fec4febb7c5d0c644b249a11355 # v6.10.0
+        uses: docker/build-push-action@b32b51a8eda65d6793cd0494a773d4f6bcef32dc # v6.11.0
         with:
           context: .
           file: ./Dockerfile.prod

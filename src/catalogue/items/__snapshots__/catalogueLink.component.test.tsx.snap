@@ -1,0 +1,43 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ObsoleteReplacementLink > renders a link correctly (catalogue item) 1`] = `
+<body>
+  <div>
+    <a
+      class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+      href="/catalogue/4/items/1"
+    >
+      Click here
+    </a>
+  </div>
+</body>
+`;
+
+exports[`ObsoleteReplacementLink > renders a link correctly (item) 1`] = `
+<body>
+  <div>
+    <a
+      class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+      href="/catalogue/4/items/1/items/KvT2Ox7n"
+    >
+      Click here
+    </a>
+  </div>
+</body>
+`;
+
+exports[`ObsoleteReplacementLink > renders nothing when data is undefined correctly (catalogue item) 1`] = `
+<body>
+  <div>
+    test
+  </div>
+</body>
+`;
+
+exports[`ObsoleteReplacementLink > renders nothing when data is undefined correctly (item) 1`] = `
+<body>
+  <div>
+    test
+  </div>
+</body>
+`;

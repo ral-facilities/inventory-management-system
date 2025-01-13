@@ -11,6 +11,7 @@ import { AxiosError } from 'axios';
 import { enGB } from 'date-fns/locale/en-GB';
 import React from 'react';
 import {
+  Outlet,
   RouterProvider,
   createBrowserRouter,
   type RouteObject,
@@ -26,11 +27,20 @@ import {
   retryFailedAuthRequests,
 } from './api/api';
 import { MicroFrontendId } from './app.types';
-import Catalogue from './catalogue/catalogue.component';
+import CatalogueLayout, {
+  CatalogueErrorComponent,
+  CatalogueLayoutErrorComponent,
+  catalogueLayoutLoader,
+} from './catalogue/catalogueLayout.component';
+import CatalogueCardView from './catalogue/category/catalogueCardView.component';
 import CatalogueItemsLandingPage from './catalogue/items/catalogueItemsLandingPage.component';
+import CatalogueItemsPage from './catalogue/items/catalogueItemsPage.component';
 import ConfigProvider from './configProvider.component';
 import handleIMS_APIError from './handleIMS_APIError';
-import { HomePage } from './homePage/homePage.component';
+import {
+  HomePage,
+  HomePageErrorComponent,
+} from './homePage/homePage.component';
 import IMSThemeProvider from './imsThemeProvider.component';
 import Items from './items/items.component';
 import ItemsLandingPage from './items/itemsLandingPage.component';
@@ -63,17 +73,19 @@ export const paths = {
   adminUnits: '/admin-ims/units',
   adminUsageStatuses: '/admin-ims/usage-statuses',
   homepage: '/ims',
-  catalogue: '/catalogue/*',
+  catalogue: '/catalogue',
+  catalogueCategories: '/catalogue/:catalogue_category_id',
+  catalogueItems: '/catalogue/:catalogue_category_id/items',
+  catalogueItem: '/catalogue/:catalogue_category_id/items/:catalogue_item_id',
+  items: '/catalogue/:catalogue_category_id/items/:catalogue_item_id/items',
+  item: '/catalogue/:catalogue_category_id/items/:catalogue_item_id/items/:item_id',
   systems: '/systems',
   system: '/systems/:system_id',
   manufacturers: '/manufacturers',
   manufacturer: '/manufacturers/:manufacturer_id',
-  catalogueItem: '/catalogue/item/:catalogue_item_id',
-  items: '/catalogue/item/:catalogue_item_id/items',
-  item: '/catalogue/item/:catalogue_item_id/items/:item_id',
 };
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: (error) => {
       handleIMS_APIError(error as AxiosError);
@@ -102,7 +114,14 @@ const routeObject: RouteObject[] = [
     Component: Layout,
     children: [
       { path: paths.root, Component: HomePage },
-      { path: paths.homepage, Component: HomePage },
+      {
+        path: paths.homepage,
+        Component: Outlet,
+        children: [
+          { Component: HomePage, index: true },
+          { path: '*', Component: HomePageErrorComponent },
+        ],
+      },
       {
         path: paths.admin,
         Component: AdminLayout,
@@ -116,15 +135,75 @@ const routeObject: RouteObject[] = [
           },
         ],
       },
-      { path: paths.catalogue, Component: Catalogue },
       {
-        path: paths.catalogueItem,
-        Component: CatalogueItemsLandingPage,
-      },
-      { path: paths.items, Component: Items },
-      {
-        path: paths.item,
-        Component: ItemsLandingPage,
+        path: paths.catalogue,
+        Component: CatalogueLayout,
+        ErrorBoundary: CatalogueLayoutErrorComponent,
+        children: [
+          {
+            index: true,
+            Component: CatalogueCardView,
+          },
+          {
+            path: paths.catalogueCategories,
+            Component: Outlet,
+            children: [
+              {
+                index: true,
+                Component: CatalogueCardView,
+                loader: catalogueLayoutLoader(queryClient),
+              },
+              {
+                path: paths.catalogueItems,
+                Component: Outlet,
+                children: [
+                  {
+                    index: true,
+                    Component: CatalogueItemsPage,
+                    loader: catalogueLayoutLoader(queryClient),
+                  },
+                  {
+                    path: paths.catalogueItem,
+                    Component: Outlet,
+                    children: [
+                      {
+                        index: true,
+                        Component: CatalogueItemsLandingPage,
+                        loader: catalogueLayoutLoader(queryClient),
+                      },
+                      {
+                        path: paths.items,
+                        Component: Outlet,
+                        children: [
+                          {
+                            index: true,
+                            Component: Items,
+                            loader: catalogueLayoutLoader(queryClient),
+                          },
+                          {
+                            path: paths.item,
+                            Component: Outlet,
+                            children: [
+                              {
+                                index: true,
+                                Component: ItemsLandingPage,
+                                loader: catalogueLayoutLoader(queryClient),
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            path: '*',
+            Component: CatalogueErrorComponent,
+          },
+        ],
       },
       {
         path: paths.systems,

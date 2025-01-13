@@ -12,8 +12,8 @@ import {
   ListItemIcon,
   Menu,
   MenuItem,
-  Typography,
   Tooltip,
+  Typography,
 } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -51,7 +51,7 @@ function CatalogueCard(props: CatalogueCardProps) {
   return (
     <Button
       component={Link}
-      to={catalogueCategory.id}
+      to={`/catalogue/${catalogueCategory.id}${catalogueCategory.is_leaf ? '/items' : ''}`}
       fullWidth
       sx={{
         display: 'flex',
@@ -70,7 +70,7 @@ function CatalogueCard(props: CatalogueCardProps) {
         }}
       >
         <CardActions>
-          <Tooltip title = "Toggle Select">
+          <Tooltip title="Toggle Select">
             <span>
               <Checkbox
                 onClick={(event) => {
@@ -98,7 +98,7 @@ function CatalogueCard(props: CatalogueCardProps) {
           <OverflowTip>{catalogueCategory.name}</OverflowTip>
         </CardContent>
         <CardActions>
-          <Tooltip title = "Actions">
+          <Tooltip title="Actions">
             <span>
               <IconButton
                 onClick={(event) => {
@@ -110,7 +110,7 @@ function CatalogueCard(props: CatalogueCardProps) {
               >
                 <MoreHorizIcon />
               </IconButton>
-            </span>  
+            </span>
           </Tooltip>
           <Menu
             anchorEl={anchorEl}

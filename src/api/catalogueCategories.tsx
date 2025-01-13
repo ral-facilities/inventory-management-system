@@ -1,4 +1,5 @@
 import {
+  queryOptions,
   useMutation,
   UseMutationResult,
   useQuery,
@@ -472,14 +473,21 @@ const getCatalogueCategory = async (
   });
 };
 
-export const useGetCatalogueCategory = (
-  id?: string | null
-): UseQueryResult<CatalogueCategory, AxiosError> => {
-  return useQuery({
+export const getCatalogueCategoryQuery = (
+  id?: string | null,
+  loader?: boolean
+) =>
+  queryOptions<CatalogueCategory, AxiosError>({
     queryKey: ['CatalogueCategory', id],
     queryFn: () => {
       return getCatalogueCategory(id ?? '');
     },
     enabled: !!id,
+    retry: loader ? false : undefined,
   });
+
+export const useGetCatalogueCategory = (
+  id?: string | null
+): UseQueryResult<CatalogueCategory, AxiosError> => {
+  return useQuery(getCatalogueCategoryQuery(id));
 };

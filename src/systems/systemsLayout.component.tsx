@@ -2,15 +2,10 @@ import type { QueryClient } from '@tanstack/react-query';
 import { Outlet, useParams, type LoaderFunctionArgs } from 'react-router-dom';
 import { getSystemQuery, useGetSystemsBreadcrumbs } from '../api/systems';
 import BaseLayoutHeader from '../common/baseLayoutHeader.component';
-import ErrorPage from '../common/errorPage.component';
+import PageNotFoundComponent from '../common/pageNotFound/pageNotFound.component';
 
 export const SystemsErrorComponent = () => {
-  return (
-    <ErrorPage
-      boldErrorText="Invalid System Route"
-      errorText="The system route you are trying to access doesn't exist. Please click the Home button to navigate back to the System Home page."
-    />
-  );
+  return <PageNotFoundComponent homeLocation="Systems" />;
 };
 
 export const SystemsLayoutErrorComponent = () => {

@@ -20,7 +20,7 @@ exports[`ErrorPage Component > renders both boldErrorText and errorText when bot
 <body>
   <div>
     <div
-      class="MuiBox-root css-7gabc3"
+      class="MuiBox-root css-9rkie5"
     >
       <p
         class="MuiTypography-root MuiTypography-body1 css-11gsi37-MuiTypography-root"

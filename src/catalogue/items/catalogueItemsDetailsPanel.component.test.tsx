@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import {
   getCatalogueCategoryById,
   getCatalogueItemById,
@@ -33,6 +33,11 @@ describe('Catalogue Items details panel', () => {
 
   it('renders details panel correctly', async () => {
     const view = createView();
+    await waitFor(() => {
+      expect(
+        screen.getByRole('link', { name: 'Click here' })
+      ).toBeInTheDocument();
+    });
 
     expect(view.asFragment()).toMatchSnapshot();
   });
@@ -45,6 +50,12 @@ describe('Catalogue Items details panel', () => {
 
     props.manufacturerData = getManufacturerById('3');
     const view = createView();
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('link', { name: 'Click here' })
+      ).toBeInTheDocument();
+    });
 
     expect(view.asFragment()).toMatchSnapshot();
   });
