@@ -1,0 +1,54 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ErrorPage Component > renders boldErrorText when provided 1`] = `
+<body>
+  <div>
+    <div
+      class="MuiBox-root css-7gabc3"
+    >
+      <p
+        class="MuiTypography-root MuiTypography-body1 css-11gsi37-MuiTypography-root"
+      >
+        Error occurred!
+      </p>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`ErrorPage Component > renders both boldErrorText and errorText when both are provided 1`] = `
+<body>
+  <div>
+    <div
+      class="MuiBox-root css-7gabc3"
+    >
+      <p
+        class="MuiTypography-root MuiTypography-body1 css-11gsi37-MuiTypography-root"
+      >
+        Critical Error!
+      </p>
+      <p
+        class="MuiTypography-root MuiTypography-body1 css-1uwgr7b-MuiTypography-root"
+      >
+        Please contact support.
+      </p>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`ErrorPage Component > renders errorText when provided 1`] = `
+<body>
+  <div>
+    <div
+      class="MuiBox-root css-7gabc3"
+    >
+      <p
+        class="MuiTypography-root MuiTypography-body1 css-1uwgr7b-MuiTypography-root"
+      >
+        Something went wrong.
+      </p>
+    </div>
+  </div>
+</body>
+`;

@@ -486,7 +486,7 @@ describe('SystemItemsTable', () => {
         { timeout: 4000 }
       );
 
-      expect(screen.getAllByRole('combobox')[0]).toHaveValue('New');
+      expect((await screen.findAllByRole('combobox'))[0]).toHaveValue('New');
       expect(screen.getAllByRole('combobox')[1]).toHaveValue('In Use');
     });
 
