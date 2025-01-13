@@ -22,22 +22,21 @@ export const useGetAdminPageName = (): string | null => {
   }, [location.pathname]);
 };
 
-const adminBreadCrumbsTrails: { [key: string]: [string, string] } = {
-  ['units']: ['units', 'Units'],
-  ['usage-statuses']: ['usage-statuses', 'Usage statuses'],
+const adminBreadCrumbsTrails: { [key: string]: BreadcrumbsInfo['trail'] } = {
+  ['units']: [['units', 'Units']],
+  ['usage-statuses']: [['usage-statuses', 'Usage statuses']],
 };
 
 function AdminLayout() {
   const adminPageName = useGetAdminPageName();
 
-  const adminBreadCrumbs: BreadcrumbsInfo | undefined = adminPageName
-    ? {
-        trail: adminBreadCrumbsTrails[adminPageName]
-          ? [adminBreadCrumbsTrails[adminPageName]]
-          : [],
-        full_trail: true,
-      }
-    : undefined;
+  const adminBreadCrumbs: BreadcrumbsInfo | undefined =
+    adminPageName && adminPageName in adminBreadCrumbsTrails
+      ? {
+          trail: adminBreadCrumbsTrails[adminPageName],
+          full_trail: true,
+        }
+      : undefined;
 
   return (
     <BaseLayoutHeader homeLocation="Admin" breadcrumbsInfo={adminBreadCrumbs}>
