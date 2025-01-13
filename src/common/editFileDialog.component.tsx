@@ -51,7 +51,10 @@ const EditFileDialog = (props: FileDialogProps) => {
 
   console.log(extension);
 
-  const selectedFileCopy = { ...selectedFile, file_name: initialName };
+  const selectedFileCopy: ObjectFilePatch = React.useMemo(
+    () => (selectedFile ? { ...selectedFile, file_name: initialName } : {}),
+    [selectedFile]
+  );
 
   const initialFile: ObjectFilePatch = React.useMemo(
     () =>
@@ -60,7 +63,7 @@ const EditFileDialog = (props: FileDialogProps) => {
         title: '',
         description: '',
       },
-    [selectedFile, selectedFileCopy]
+    [selectedFileCopy]
   );
 
   const {
@@ -141,7 +144,7 @@ const EditFileDialog = (props: FileDialogProps) => {
   );
 
   return (
-    <Dialog open={open} maxWidth="lg" fullWidth>
+    <Dialog open={open} maxWidth="sm" fullWidth>
       <DialogTitle>{`Edit ${fileType}`}</DialogTitle>
       <DialogContent>
         <Grid container direction="column" spacing={1} component="form">

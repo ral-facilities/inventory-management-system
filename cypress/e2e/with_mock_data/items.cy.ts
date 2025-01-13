@@ -935,7 +935,7 @@ describe('Items', () => {
       });
     });
 
-    it('not changing any fields shows error', () => {
+    it('shows error when no fields have been changed', () => {
       cy.findByText('5YUQDDjKpz2z').click();
       cy.findByText(
         'High-resolution cameras for beam characterization. 1'
@@ -957,7 +957,7 @@ describe('Items', () => {
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
     });
 
-    it('Required fields that are cleared are not allowed and show error message', () => {
+    it('shows error message when required fields are cleared', () => {
       cy.findByText('5YUQDDjKpz2z').click();
       cy.findByText(
         'High-resolution cameras for beam characterization. 1'
