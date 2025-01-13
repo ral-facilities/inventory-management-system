@@ -243,11 +243,22 @@ const routeObject: RouteObject[] = [
   },
 ];
 
+const reactRouterFutureFlags = {
+  future: {
+    v7_relativeSplatPath: true,
+    v7_fetcherPersist: true,
+    v7_normalizeFormMethod: true,
+    v7_partialHydration: true,
+    v7_skipActionErrorRevalidation: true,
+  },
+};
+
 let router: Router;
 const isUsingMSW =
   import.meta.env.DEV || import.meta.env.VITE_APP_INCLUDE_MSW === 'true';
 
-if (!isUsingMSW) router = createBrowserRouter(routeObject);
+if (!isUsingMSW)
+  router = createBrowserRouter(routeObject, reactRouterFutureFlags);
 
 // If the application is using MSW (Mock Service Worker),
 // it creates the router using `createBrowserRouter` within the App so it can wait for MSW to load. This is necessary
@@ -255,8 +266,16 @@ if (!isUsingMSW) router = createBrowserRouter(routeObject);
 // environment, this is not needed.
 
 export default function App() {
-  if (isUsingMSW) router = createBrowserRouter(routeObject);
-  return <RouterProvider router={router} />;
+  if (isUsingMSW)
+    router = createBrowserRouter(routeObject, reactRouterFutureFlags);
+  return (
+    <RouterProvider
+      router={router}
+      future={{
+        v7_startTransition: true,
+      }}
+    />
+  );
 }
 
 export function Layout() {
