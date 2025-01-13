@@ -4,6 +4,7 @@
   "type": "module",
   "private": true,
   "dependencies": {
+    "@codecov/vite-plugin": "1.7.0",
     "@date-io/date-fns": "3.0.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",

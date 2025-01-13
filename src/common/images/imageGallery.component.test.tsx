@@ -39,7 +39,8 @@ describe('Image Gallery', () => {
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
 
-    expect(screen.getAllByText('logo1.png').length).toEqual(8);
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(8);
+
     expect(baseElement).toMatchSnapshot();
   });
 

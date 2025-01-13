@@ -1,3 +1,4 @@
+import { codecovVitePlugin } from '@codecov/vite-plugin';
 import react from '@vitejs/plugin-react';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
 import fs from 'node:fs';
@@ -62,6 +63,16 @@ export default defineConfig(({ mode }) => {
 
   // Allow hot reloading of json files in public folder when in development
   if (env.NODE_ENV === 'development') plugins.push(jsonHMR());
+
+  // Allow codecov bundle analysis
+  if (env.VITE_APP_INCLUDE_CODECOV === 'true')
+    plugins.push(
+      codecovVitePlugin({
+        enableBundleAnalysis: env.CODECOV_TOKEN !== undefined,
+        bundleName: 'inventory-management-system',
+        uploadToken: env.CODECOV_TOKEN,
+      })
+    );
 
   const config: UserConfig = {
     plugins: plugins,
@@ -162,6 +173,12 @@ export default defineConfig(({ mode }) => {
           'src/main.tsx',
         ],
       },
+      reporters: [
+        'default',
+        // Extra for codecov test analysis
+        ...(env.CI ? ['junit'] : []),
+      ],
+      outputFile: env.CI ? { junit: 'test-report.junit.xml' } : undefined,
     },
   };
 });
