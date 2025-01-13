@@ -28,7 +28,10 @@ describe('IMS HomePage', () => {
     cy.visit('/ims/fdsf');
 
     cy.findByText(
-      `The route you are trying to access doesn't exist. Please click the Scigateway logo button in the header to navigate back to the Home page.`
+      `We're sorry, the page you requested was not found on the server. If you entered the URL manually please check your spelling and try again. Otherwise, return to the`,
+      { exact: false }
     ).should('exist');
+
+    cy.findByRole('link', { name: 'home page' }).should('exist');
   });
 });

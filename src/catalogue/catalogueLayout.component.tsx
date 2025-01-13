@@ -18,13 +18,10 @@ import {
 } from '../api/catalogueItems';
 import { getItemQuery, useGetItem } from '../api/items';
 import BaseLayoutHeader from '../common/baseLayoutHeader.component';
-import ErrorPage from '../common/errorPage.component';
+import PageNotFoundComponent from '../common/pageNotFound/pageNotFound.component';
 
 export const CatalogueErrorComponent = () => (
-  <ErrorPage
-    boldErrorText="Invalid Catalogue Route"
-    errorText="The catalogue route you are trying to access doesn't exist. Please click the Home button to navigate back to the Catalogue Home page."
-  />
+  <PageNotFoundComponent homeLocation="Catalogue" />
 );
 
 export const CatalogueLayoutErrorComponent = () => {

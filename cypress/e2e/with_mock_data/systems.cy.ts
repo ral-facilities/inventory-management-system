@@ -15,11 +15,12 @@ describe('Systems', () => {
   it('should eventually load displaying system not found when system does not exist', () => {
     cy.visit('/systems/invalid_id');
 
-    // Can take a moment to load due to react-query retries
-    cy.findByText('Invalid System Route', { timeout: 10000 }).should('exist');
     cy.findByText(
-      `The system route you are trying to access doesn't exist. Please click the Home button to navigate back to the System Home page.`
+      `We're sorry, the page you requested was not found on the server. If you entered the URL manually please check your spelling and try again. Otherwise, return to the`,
+      { exact: false }
     ).should('exist');
+
+    cy.findByRole('link', { name: 'systems home page' }).should('exist');
   });
 
   it('should be able to navigate through subsystems', () => {

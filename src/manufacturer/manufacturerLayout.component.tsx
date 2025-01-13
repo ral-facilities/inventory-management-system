@@ -5,15 +5,10 @@ import { BreadcrumbsInfo } from '../api/api.types';
 import { getManufacturerQuery, useGetManufacturer } from '../api/manufacturers';
 import { paths } from '../App';
 import BaseLayoutHeader from '../common/baseLayoutHeader.component';
-import ErrorPage from '../common/errorPage.component';
+import PageNotFoundComponent from '../common/pageNotFound/pageNotFound.component';
 
 export const ManufacturerErrorComponent = () => {
-  return (
-    <ErrorPage
-      boldErrorText="Invalid Manufacturer Route"
-      errorText="The manufacturer route you are trying to access doesn't exist. Please click the Home button to navigate back to the Manufacturer Home page."
-    />
-  );
+  return <PageNotFoundComponent homeLocation="Manufacturers" />;
 };
 
 export const ManufacturerLayoutErrorComponent = () => {

@@ -12,9 +12,11 @@ describe('Items', () => {
     cy.visit('/catalogue/4/items/1/items/1fds');
 
     cy.findByText(
-      `The catalogue route you are trying to access doesn't exist. Please click the Home button to navigate back to the Catalogue Home page.`
+      `We're sorry, the page you requested was not found on the server. If you entered the URL manually please check your spelling and try again. Otherwise, return to the`,
+      { exact: false }
     ).should('exist');
 
+    cy.findByRole('link', { name: 'catalogue home page' }).should('exist');
     cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
 
     cy.findByText('Motion').should('exist');
@@ -24,16 +26,22 @@ describe('Items', () => {
     cy.visit('/catalogue/5/items/1/items/KvT2Ox7n');
 
     cy.findByText(
-      `The catalogue route you are trying to access doesn't exist. Please click the Home button to navigate back to the Catalogue Home page.`
+      `We're sorry, the page you requested was not found on the server. If you entered the URL manually please check your spelling and try again. Otherwise, return to the`,
+      { exact: false }
     ).should('exist');
+
+    cy.findByRole('link', { name: 'catalogue home page' }).should('exist');
   });
 
   it('displays the expired landing page message if the catalogue_item_id does not match the item_id ', () => {
     cy.visit('/catalogue/4/items/89/items/G463gOIA');
 
     cy.findByText(
-      `The catalogue route you are trying to access doesn't exist. Please click the Home button to navigate back to the Catalogue Home page.`
+      `We're sorry, the page you requested was not found on the server. If you entered the URL manually please check your spelling and try again. Otherwise, return to the`,
+      { exact: false }
     ).should('exist');
+
+    cy.findByRole('link', { name: 'catalogue home page' }).should('exist');
   });
   it('should be able to navigate back to the catalogue catalogue item table view', () => {
     cy.findByRole('link', { name: 'Cameras' }).click();
