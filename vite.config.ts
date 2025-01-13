@@ -161,8 +161,6 @@ export default defineConfig(({ mode }) => {
           'json',
           // Extra for VSCode extension
           ['lcov', { outputFile: 'lcov.info', silent: true }],
-          // Extra for codecov test analysis
-          ['junit', { outputFile: 'test-report.junit.xml', silent: true }],
         ],
         exclude: [
           ...vitestCoverageConfigDefaultsExclude,
@@ -175,6 +173,13 @@ export default defineConfig(({ mode }) => {
           'src/main.tsx',
         ],
       },
+      reporters: [
+        'default',
+        // Extra for codecov test analysis
+        ...(env.CI
+          ? [['junit', { outputFile: 'test-report.junit.xml', silent: true }]]
+          : []),
+      ],
     },
   };
 });
