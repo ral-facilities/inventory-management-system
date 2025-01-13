@@ -176,10 +176,9 @@ export default defineConfig(({ mode }) => {
       reporters: [
         'default',
         // Extra for codecov test analysis
-        ...(env.CI
-          ? [['junit', { outputFile: 'test-report.junit.xml', silent: true }]]
-          : []),
+        ...(env.CI ? ['junit'] : []),
       ],
+      outputFile: env.CI ? { junit: 'test-report.junit.xml' } : undefined,
     },
   };
 });
