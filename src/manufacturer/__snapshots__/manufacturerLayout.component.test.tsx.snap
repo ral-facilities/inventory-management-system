@@ -1,0 +1,76 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Manufacturer Layout Error Component > renders manufacturer error page correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-v2kfba"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container css-1r501zp-MuiGrid-root"
+    >
+      <div
+        class="MuiBox-root css-70qvj9"
+      >
+        <span
+          aria-label="Manufacturers Home"
+          class=""
+          data-mui-internal-clone-element="true"
+        >
+          <button
+            aria-label="navigate to manufacturers home"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+            tabindex="0"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="HomeIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+              />
+            </svg>
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            >
+              <span
+                class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible"
+                style="width: 1px; height: 1px; top: -0.5px; left: -0.5px;"
+              >
+                <span
+                  class="MuiTouchRipple-child MuiTouchRipple-childLeaving"
+                />
+              </span>
+            </span>
+          </button>
+        </span>
+        <nav
+          aria-label="breadcrumb"
+          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1mc59t7-MuiTypography-root-MuiBreadcrumbs-root"
+        >
+          <ol
+            class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+          />
+        </nav>
+      </div>
+    </div>
+    <div
+      class="MuiBox-root css-7gabc3"
+    >
+      <p
+        class="MuiTypography-root MuiTypography-body1 css-11gsi37-MuiTypography-root"
+      >
+        Invalid Manufacturer Route
+      </p>
+      <p
+        class="MuiTypography-root MuiTypography-body1 css-1uwgr7b-MuiTypography-root"
+      >
+        The manufacturer route you are trying to access doesn't exist. Please click the Home button to navigate back to the Manufacturer Home page.
+      </p>
+    </div>
+  </div>
+</DocumentFragment>
+`;

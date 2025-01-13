@@ -1,0 +1,248 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Admin Error Component > renders Admin error page correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-7gabc3"
+  >
+    <p
+      class="MuiTypography-root MuiTypography-body1 css-11gsi37-MuiTypography-root"
+    >
+      Invalid Admin Route
+    </p>
+    <p
+      class="MuiTypography-root MuiTypography-body1 css-1uwgr7b-MuiTypography-root"
+    >
+      The admin route you are trying to access doesn't exist. Please click the Home button to navigate back to the Admin Home page.
+    </p>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Admin Layout > renders admin layout page correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-v2kfba"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container css-1r501zp-MuiGrid-root"
+    >
+      <div
+        class="MuiBox-root css-70qvj9"
+      >
+        <span
+          aria-label="Admin Home"
+          class=""
+          data-mui-internal-clone-element="true"
+        >
+          <button
+            aria-label="navigate to admin home"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+            tabindex="0"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="HomeIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+              />
+            </svg>
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
+        </span>
+        <nav
+          aria-label="breadcrumb"
+          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1mc59t7-MuiTypography-root-MuiBreadcrumbs-root"
+        >
+          <ol
+            class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+          />
+        </nav>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Admin Layout > renders units breadcrumbs correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-v2kfba"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container css-1r501zp-MuiGrid-root"
+    >
+      <div
+        class="MuiBox-root css-70qvj9"
+      >
+        <span
+          aria-label="Admin Home"
+          class=""
+          data-mui-internal-clone-element="true"
+        >
+          <button
+            aria-label="navigate to admin home"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+            tabindex="0"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="HomeIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+              />
+            </svg>
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
+        </span>
+        <nav
+          aria-label="breadcrumb"
+          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1mc59t7-MuiTypography-root-MuiBreadcrumbs-root"
+        >
+          <ol
+            class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+          >
+            <li
+              class="MuiBreadcrumbs-li"
+            >
+              <div
+                class="MuiBox-root css-8zy5qf"
+              />
+            </li>
+            <li
+              aria-hidden="true"
+              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                data-testid="NavigateNextIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                />
+              </svg>
+            </li>
+            <li
+              class="MuiBreadcrumbs-li"
+            >
+              <p
+                aria-label="Units"
+                class="MuiTypography-root MuiTypography-body1 css-1qs6ojv-MuiTypography-root"
+                data-mui-internal-clone-element="true"
+                role="tooltip"
+              >
+                Units
+              </p>
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Admin Layout > renders usage statuses breadcrumbs correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-v2kfba"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container css-1r501zp-MuiGrid-root"
+    >
+      <div
+        class="MuiBox-root css-70qvj9"
+      >
+        <span
+          aria-label="Admin Home"
+          class=""
+          data-mui-internal-clone-element="true"
+        >
+          <button
+            aria-label="navigate to admin home"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+            tabindex="0"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="HomeIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+              />
+            </svg>
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
+        </span>
+        <nav
+          aria-label="breadcrumb"
+          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1mc59t7-MuiTypography-root-MuiBreadcrumbs-root"
+        >
+          <ol
+            class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+          >
+            <li
+              class="MuiBreadcrumbs-li"
+            >
+              <div
+                class="MuiBox-root css-8zy5qf"
+              />
+            </li>
+            <li
+              aria-hidden="true"
+              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                data-testid="NavigateNextIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                />
+              </svg>
+            </li>
+            <li
+              class="MuiBreadcrumbs-li"
+            >
+              <p
+                aria-label="Usage statuses"
+                class="MuiTypography-root MuiTypography-body1 css-1qs6ojv-MuiTypography-root"
+                data-mui-internal-clone-element="true"
+                role="tooltip"
+              >
+                Usage statuses
+              </p>
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

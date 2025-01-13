@@ -16,9 +16,9 @@ describe('Systems', () => {
     cy.visit('/systems/invalid_id');
 
     // Can take a moment to load due to react-query retries
-    cy.findByText('System not found', { timeout: 10000 }).should('exist');
+    cy.findByText('Invalid System Route', { timeout: 10000 }).should('exist');
     cy.findByText(
-      'The system you searched for does not exist. Please navigate home by pressing the home button at the top left of your screen.'
+      `The system route you are trying to access doesn't exist. Please click the Home button to navigate back to the System Home page.`
     ).should('exist');
   });
 
@@ -578,10 +578,19 @@ describe('Systems', () => {
   });
 
   it('edits a system from a landing page', () => {
+    // Catch error to avoid the CI failing unnecessarily
+    Cypress.on('uncaught:exception', (err) => {
+      if (err.message.includes('ResizeObserver')) {
+        return false;
+      }
+    });
     cy.visit('/systems/65328f34a40ff5301575a4e3');
 
     cy.findByRole('button', { name: 'systems page actions menu' }).click();
-    cy.findByText('Edit').click();
+    cy.findByRole('menuitem', { name: 'Edit' }).should('exist');
+    cy.findByRole('menuitem', { name: 'Edit' }).click();
+
+    cy.findByRole('dialog', { name: 'Edit System' }).should('exist');
 
     cy.findByLabelText('Name *').clear();
     cy.findByLabelText('Name *').type('System name');
@@ -658,7 +667,9 @@ describe('Systems', () => {
     cy.findByRole('row', { name: 'Toggle select row Pulse Laser' })
       .findByRole('checkbox')
       .click();
-    cy.findByRole('button', { name: 'Move to' }).click();
+
+    cy.findByRole('button', { name: 'Systems more options' }).click();
+    cy.findByRole('menuitem', { name: 'Copy to' }).click();
 
     cy.findByRole('dialog')
       .should('be.visible')
@@ -684,7 +695,8 @@ describe('Systems', () => {
       .findByRole('checkbox')
       .click();
 
-    cy.findByRole('button', { name: 'Move to' }).click();
+    cy.findByRole('button', { name: 'Systems more options' }).click();
+    cy.findByRole('menuitem', { name: 'Move to' }).click();
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -727,7 +739,8 @@ describe('Systems', () => {
       .findByRole('checkbox')
       .click();
 
-    cy.findByRole('button', { name: 'Copy to' }).click();
+    cy.findByRole('button', { name: 'Systems more options' }).click();
+    cy.findByRole('menuitem', { name: 'Copy to' }).click();
 
     cy.startSnoopingBrowserMockedRequest();
 
