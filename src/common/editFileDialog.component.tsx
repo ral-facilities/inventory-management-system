@@ -60,7 +60,7 @@ const EditFileDialog = (props: FileDialogProps) => {
         title: '',
         description: '',
       },
-    [selectedFile]
+    [selectedFile, selectedFileCopy]
   );
 
   const {
@@ -130,7 +130,14 @@ const EditFileDialog = (props: FileDialogProps) => {
         }
       }
     },
-    [selectedFile, patchFile, handleClose, setError]
+    [
+      selectedFile,
+      selectedFileCopy,
+      extension,
+      patchFile,
+      handleClose,
+      setError,
+    ]
   );
 
   return (
