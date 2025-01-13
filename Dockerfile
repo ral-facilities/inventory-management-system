@@ -1,5 +1,5 @@
 # Specify a base image
-FROM node:22.12.0-alpine3.20@sha256:027911463b296bdaf6df82b5ccf2c6b290fee725d5fba6513a037ed019400625
+FROM node:22.13.0-alpine3.20@sha256:db8dcb90326a0116375414e9a7c068a6b87a4422b7da37b5c6cd026f7c7835d3
 
 # Set the working directory
 WORKDIR /inventory-management-system-run
