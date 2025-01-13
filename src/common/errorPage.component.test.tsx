@@ -1,9 +1,10 @@
+import { SxProps, Theme } from '@mui/material';
 import { act } from 'react';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import ErrorPage, { ErrorPageProps } from './errorPage.component';
 
 describe('ErrorPage Component', () => {
-  let props: ErrorPageProps;
+  let props: ErrorPageProps & { sx?: SxProps<Theme> };
 
   const createView = () => {
     return renderComponentWithRouterProvider(<ErrorPage {...props} />);
@@ -34,6 +35,7 @@ describe('ErrorPage Component', () => {
     props = {
       boldErrorText: 'Critical Error!',
       errorText: 'Please contact support.',
+      sx: { margin: 1 },
     };
     let baseElement;
     await act(async () => {

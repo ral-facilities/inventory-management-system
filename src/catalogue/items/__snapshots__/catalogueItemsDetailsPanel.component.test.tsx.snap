@@ -1289,8 +1289,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                       >
                         <a
                           class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                          href="/catalogue/item/10"
-                          target="_blank"
+                          href="/catalogue/6/items/10"
                         >
                           Click here
                         </a>
@@ -1813,8 +1812,7 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                       >
                         <a
                           class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                          href="/catalogue/item/6"
-                          target="_blank"
+                          href="/catalogue/5/items/6"
                         >
                           Click here
                         </a>
@@ -2347,8 +2345,7 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                       >
                         <a
                           class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                          href="/catalogue/item/6"
-                          target="_blank"
+                          href="/catalogue/5/items/6"
                         >
                           Click here
                         </a>
@@ -2880,8 +2877,7 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                       >
                         <a
                           class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                          href="/catalogue/item/6"
-                          target="_blank"
+                          href="/catalogue/5/items/6"
                         >
                           Click here
                         </a>
@@ -3413,8 +3409,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                       >
                         <a
                           class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                          href="/catalogue/item/6"
-                          target="_blank"
+                          href="/catalogue/5/items/6"
                         >
                           Click here
                         </a>

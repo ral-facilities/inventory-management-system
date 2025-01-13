@@ -1,0 +1,908 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Catalogue Layout > renders a catalogue categories page correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-v2kfba"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container css-1r501zp-MuiGrid-root"
+    >
+      <div
+        class="MuiBox-root css-70qvj9"
+      >
+        <span
+          aria-label="Catalogue Home"
+          class=""
+          data-mui-internal-clone-element="true"
+        >
+          <button
+            aria-label="navigate to catalogue home"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+            tabindex="0"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="HomeIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+              />
+            </svg>
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
+        </span>
+        <nav
+          aria-label="breadcrumb"
+          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1mc59t7-MuiTypography-root-MuiBreadcrumbs-root"
+        >
+          <ol
+            class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+          >
+            <li
+              class="MuiBreadcrumbs-li"
+            >
+              <div
+                class="MuiBox-root css-8zy5qf"
+              />
+            </li>
+            <li
+              aria-hidden="true"
+              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                data-testid="NavigateNextIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                />
+              </svg>
+            </li>
+            <li
+              class="MuiBreadcrumbs-li"
+            >
+              <p
+                aria-label="Beam Characterization"
+                class="MuiTypography-root MuiTypography-body1 css-1qs6ojv-MuiTypography-root"
+                data-mui-internal-clone-element="true"
+                role="tooltip"
+              >
+                Beam Characterization
+              </p>
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Catalogue Layout > renders a catalogue items landing page correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-v2kfba"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container css-1r501zp-MuiGrid-root"
+    >
+      <div
+        class="MuiBox-root css-70qvj9"
+      >
+        <span
+          aria-label="Catalogue Home"
+          class=""
+          data-mui-internal-clone-element="true"
+        >
+          <button
+            aria-label="navigate to catalogue home"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+            tabindex="0"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="HomeIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+              />
+            </svg>
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
+        </span>
+        <nav
+          aria-label="breadcrumb"
+          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1mc59t7-MuiTypography-root-MuiBreadcrumbs-root"
+        >
+          <ol
+            class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+          >
+            <li
+              class="MuiBreadcrumbs-li"
+            >
+              <div
+                class="MuiBox-root css-8zy5qf"
+              />
+            </li>
+            <li
+              aria-hidden="true"
+              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                data-testid="NavigateNextIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                />
+              </svg>
+            </li>
+            <li
+              class="MuiBreadcrumbs-li"
+            >
+              <a
+                aria-label="Beam Characterization"
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+                href="#"
+              >
+                <p
+                  aria-label="Beam Characterization"
+                  class="MuiTypography-root MuiTypography-body1 css-gh1g71-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Beam Characterization
+                </p>
+              </a>
+            </li>
+            <li
+              aria-hidden="true"
+              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                data-testid="NavigateNextIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                />
+              </svg>
+            </li>
+            <li
+              class="MuiBreadcrumbs-li"
+            >
+              <a
+                aria-label="Cameras"
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+                href="#"
+              >
+                <p
+                  aria-label="Cameras"
+                  class="MuiTypography-root MuiTypography-body1 css-gh1g71-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Cameras
+                </p>
+              </a>
+            </li>
+            <li
+              aria-hidden="true"
+              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                data-testid="NavigateNextIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                />
+              </svg>
+            </li>
+            <li
+              class="MuiBreadcrumbs-li"
+            >
+              <p
+                aria-label="Cameras 1"
+                class="MuiTypography-root MuiTypography-body1 css-m2j0y4-MuiTypography-root"
+                data-mui-internal-clone-element="true"
+                role="tooltip"
+              >
+                Cameras 1
+              </p>
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Catalogue Layout > renders a catalogue items page correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-v2kfba"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container css-1r501zp-MuiGrid-root"
+    >
+      <div
+        class="MuiBox-root css-70qvj9"
+      >
+        <span
+          aria-label="Catalogue Home"
+          class=""
+          data-mui-internal-clone-element="true"
+        >
+          <button
+            aria-label="navigate to catalogue home"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+            tabindex="0"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="HomeIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+              />
+            </svg>
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
+        </span>
+        <nav
+          aria-label="breadcrumb"
+          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1mc59t7-MuiTypography-root-MuiBreadcrumbs-root"
+        >
+          <ol
+            class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+          >
+            <li
+              class="MuiBreadcrumbs-li"
+            >
+              <div
+                class="MuiBox-root css-8zy5qf"
+              />
+            </li>
+            <li
+              aria-hidden="true"
+              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                data-testid="NavigateNextIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                />
+              </svg>
+            </li>
+            <li
+              class="MuiBreadcrumbs-li"
+            >
+              <a
+                aria-label="Beam Characterization"
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+                href="#"
+              >
+                <p
+                  aria-label="Beam Characterization"
+                  class="MuiTypography-root MuiTypography-body1 css-52u7fi-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Beam Characterization
+                </p>
+              </a>
+            </li>
+            <li
+              aria-hidden="true"
+              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                data-testid="NavigateNextIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                />
+              </svg>
+            </li>
+            <li
+              class="MuiBreadcrumbs-li"
+            >
+              <p
+                aria-label="Cameras"
+                class="MuiTypography-root MuiTypography-body1 css-jqbzo8-MuiTypography-root"
+                data-mui-internal-clone-element="true"
+                role="tooltip"
+              >
+                Cameras
+              </p>
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Catalogue Layout > renders catalogue home page correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-v2kfba"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container css-1r501zp-MuiGrid-root"
+    >
+      <div
+        class="MuiBox-root css-70qvj9"
+      >
+        <span
+          aria-label="Catalogue Home"
+          class=""
+          data-mui-internal-clone-element="true"
+        >
+          <button
+            aria-label="navigate to catalogue home"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+            tabindex="0"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="HomeIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+              />
+            </svg>
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
+        </span>
+        <nav
+          aria-label="breadcrumb"
+          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1mc59t7-MuiTypography-root-MuiBreadcrumbs-root"
+        >
+          <ol
+            class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+          />
+        </nav>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Catalogue Layout > renders the item landing page page correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-v2kfba"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container css-1r501zp-MuiGrid-root"
+    >
+      <div
+        class="MuiBox-root css-70qvj9"
+      >
+        <span
+          aria-label="Catalogue Home"
+          class=""
+          data-mui-internal-clone-element="true"
+        >
+          <button
+            aria-label="navigate to catalogue home"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+            tabindex="0"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="HomeIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+              />
+            </svg>
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
+        </span>
+        <nav
+          aria-label="breadcrumb"
+          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1mc59t7-MuiTypography-root-MuiBreadcrumbs-root"
+        >
+          <ol
+            class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+          >
+            <li
+              class="MuiBreadcrumbs-li"
+            >
+              <div
+                class="MuiBox-root css-8zy5qf"
+              />
+            </li>
+            <li
+              aria-hidden="true"
+              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                data-testid="NavigateNextIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                />
+              </svg>
+            </li>
+            <li
+              class="MuiBreadcrumbs-li"
+            >
+              <a
+                aria-label="Beam Characterization"
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+                href="#"
+              >
+                <p
+                  aria-label="Beam Characterization"
+                  class="MuiTypography-root MuiTypography-body1 css-hv4cj6-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Beam Characterization
+                </p>
+              </a>
+            </li>
+            <li
+              aria-hidden="true"
+              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                data-testid="NavigateNextIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                />
+              </svg>
+            </li>
+            <li
+              class="MuiBreadcrumbs-li"
+            >
+              <a
+                aria-label="Cameras"
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+                href="#"
+              >
+                <p
+                  aria-label="Cameras"
+                  class="MuiTypography-root MuiTypography-body1 css-hv4cj6-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Cameras
+                </p>
+              </a>
+            </li>
+            <li
+              aria-hidden="true"
+              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                data-testid="NavigateNextIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                />
+              </svg>
+            </li>
+            <li
+              class="MuiBreadcrumbs-li"
+            >
+              <a
+                aria-label="Cameras 1"
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+                href="#"
+              >
+                <p
+                  aria-label="Cameras 1"
+                  class="MuiTypography-root MuiTypography-body1 css-hv4cj6-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Cameras 1
+                </p>
+              </a>
+            </li>
+            <li
+              aria-hidden="true"
+              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                data-testid="NavigateNextIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                />
+              </svg>
+            </li>
+            <li
+              class="MuiBreadcrumbs-li"
+            >
+              <a
+                aria-label="Items"
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+                href="#"
+              >
+                <p
+                  aria-label="Items"
+                  class="MuiTypography-root MuiTypography-body1 css-hv4cj6-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Items
+                </p>
+              </a>
+            </li>
+            <li
+              aria-hidden="true"
+              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                data-testid="NavigateNextIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                />
+              </svg>
+            </li>
+            <li
+              class="MuiBreadcrumbs-li"
+            >
+              <p
+                aria-label="5YUQDDjKpz2z"
+                class="MuiTypography-root MuiTypography-body1 css-okeztt-MuiTypography-root"
+                data-mui-internal-clone-element="true"
+                role="tooltip"
+              >
+                5YUQDDjKpz2z
+              </p>
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Catalogue Layout > renders the items page correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-v2kfba"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container css-1r501zp-MuiGrid-root"
+    >
+      <div
+        class="MuiBox-root css-70qvj9"
+      >
+        <span
+          aria-label="Catalogue Home"
+          class=""
+          data-mui-internal-clone-element="true"
+        >
+          <button
+            aria-label="navigate to catalogue home"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+            tabindex="0"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="HomeIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+              />
+            </svg>
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
+        </span>
+        <nav
+          aria-label="breadcrumb"
+          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1mc59t7-MuiTypography-root-MuiBreadcrumbs-root"
+        >
+          <ol
+            class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+          >
+            <li
+              class="MuiBreadcrumbs-li"
+            >
+              <div
+                class="MuiBox-root css-8zy5qf"
+              />
+            </li>
+            <li
+              aria-hidden="true"
+              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                data-testid="NavigateNextIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                />
+              </svg>
+            </li>
+            <li
+              class="MuiBreadcrumbs-li"
+            >
+              <a
+                aria-label="Beam Characterization"
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+                href="#"
+              >
+                <p
+                  aria-label="Beam Characterization"
+                  class="MuiTypography-root MuiTypography-body1 css-iwxmy2-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Beam Characterization
+                </p>
+              </a>
+            </li>
+            <li
+              aria-hidden="true"
+              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                data-testid="NavigateNextIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                />
+              </svg>
+            </li>
+            <li
+              class="MuiBreadcrumbs-li"
+            >
+              <a
+                aria-label="Cameras"
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+                href="#"
+              >
+                <p
+                  aria-label="Cameras"
+                  class="MuiTypography-root MuiTypography-body1 css-iwxmy2-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Cameras
+                </p>
+              </a>
+            </li>
+            <li
+              aria-hidden="true"
+              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                data-testid="NavigateNextIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                />
+              </svg>
+            </li>
+            <li
+              class="MuiBreadcrumbs-li"
+            >
+              <a
+                aria-label="Cameras 1"
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+                href="#"
+              >
+                <p
+                  aria-label="Cameras 1"
+                  class="MuiTypography-root MuiTypography-body1 css-iwxmy2-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Cameras 1
+                </p>
+              </a>
+            </li>
+            <li
+              aria-hidden="true"
+              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                data-testid="NavigateNextIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                />
+              </svg>
+            </li>
+            <li
+              class="MuiBreadcrumbs-li"
+            >
+              <p
+                aria-label="Items"
+                class="MuiTypography-root MuiTypography-body1 css-1vfwmmq-MuiTypography-root"
+                data-mui-internal-clone-element="true"
+                role="tooltip"
+              >
+                Items
+              </p>
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Catalogue Layout Error Component > renders catalogue error page correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-v2kfba"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container css-1r501zp-MuiGrid-root"
+    >
+      <div
+        class="MuiBox-root css-70qvj9"
+      >
+        <span
+          aria-label="Catalogue Home"
+          class=""
+          data-mui-internal-clone-element="true"
+        >
+          <button
+            aria-label="navigate to catalogue home"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+            tabindex="0"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="HomeIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+              />
+            </svg>
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            >
+              <span
+                class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible"
+                style="width: 1px; height: 1px; top: -0.5px; left: -0.5px;"
+              >
+                <span
+                  class="MuiTouchRipple-child MuiTouchRipple-childLeaving"
+                />
+              </span>
+            </span>
+          </button>
+        </span>
+        <nav
+          aria-label="breadcrumb"
+          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1mc59t7-MuiTypography-root-MuiBreadcrumbs-root"
+        >
+          <ol
+            class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+          />
+        </nav>
+      </div>
+    </div>
+    <div
+      class="MuiBox-root css-7gabc3"
+    >
+      <p
+        class="MuiTypography-root MuiTypography-body1 css-11gsi37-MuiTypography-root"
+      >
+        Invalid Catalogue Route
+      </p>
+      <p
+        class="MuiTypography-root MuiTypography-body1 css-1uwgr7b-MuiTypography-root"
+      >
+        The catalogue route you are trying to access doesn't exist. Please click the Home button to navigate back to the Catalogue Home page.
+      </p>
+    </div>
+  </div>
+</DocumentFragment>
+`;
