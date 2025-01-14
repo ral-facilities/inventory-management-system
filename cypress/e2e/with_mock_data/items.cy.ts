@@ -909,6 +909,7 @@ describe('Items', () => {
         .should('be.visible')
         .within(() => {
           cy.findByLabelText('File Name *').clear();
+          cy.findByText('.png').should('exist');
           cy.findByLabelText('File Name *').type('test file');
 
           cy.findByLabelText('Title').clear();
@@ -930,7 +931,7 @@ describe('Items', () => {
         expect(patchRequests.length).equal(1);
         const request = patchRequests[0];
         expect(JSON.stringify(await request.json())).equal(
-          '{"file_name":"test file","description":"test description","title":"test title"}'
+          '{"file_name":"test file.png","description":"test description","title":"test title"}'
         );
       });
     });

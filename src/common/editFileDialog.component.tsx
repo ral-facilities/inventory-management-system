@@ -53,7 +53,7 @@ const EditFileDialog = (props: FileDialogProps) => {
 
   const selectedFileCopy: ObjectFilePatch = React.useMemo(
     () => (selectedFile ? { ...selectedFile, file_name: initialName } : {}),
-    [selectedFile]
+    [selectedFile, initialName]
   );
 
   const initialFile: ObjectFilePatch = React.useMemo(
@@ -109,7 +109,7 @@ const EditFileDialog = (props: FileDialogProps) => {
 
         const isTitleUpdated = fileData.title !== selectedFileCopy.title;
 
-        let fileToEdit: ObjectFilePatch = {};
+        const fileToEdit: ObjectFilePatch = {};
 
         if (isFileNameUpdated)
           fileToEdit.file_name = fileData.file_name + extension;

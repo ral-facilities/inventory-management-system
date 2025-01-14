@@ -87,6 +87,10 @@ describe('Edit file dialog', () => {
 
     it('Edits an image correctly', async () => {
       createView();
+
+      //Checks if file extension is displayed. If it's editable, actual value will not match expected.
+      expect(screen.getByText('.png')).toBeInTheDocument();
+
       modifyFileValues({
         file_name: 'test_file_name.jpeg',
         title: 'Test Title',
@@ -98,7 +102,7 @@ describe('Edit file dialog', () => {
       await user.click(saveButton);
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/images/1', {
-        file_name: 'test_file_name.jpeg',
+        file_name: 'test_file_name.jpeg.png',
         title: 'Test Title',
         description: 'Test Description',
       });
