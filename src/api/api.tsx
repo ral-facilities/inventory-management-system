@@ -79,7 +79,7 @@ const createAuthenticatedClient = (props: {
         return new Promise((resolve, reject) => {
           failedAuthRequestQueue.push((shouldReject?: boolean) => {
             if (shouldReject) reject(error);
-            else resolve(imsApi(originalRequest));
+            else resolve(apiClient(originalRequest));
           });
         });
       }
@@ -90,6 +90,49 @@ const createAuthenticatedClient = (props: {
 
   return apiClient;
 };
+
+export function uppyOnAfterResponse(xhr: XMLHttpRequest) {
+  if (xhr.status >= 400 && xhr.status < 600) {
+    const errorMessage: string = (
+      JSON.parse(xhr.responseText) as APIError
+    ).detail.toLocaleLowerCase();
+
+    // Check if the token is invalid and needs refreshing
+    if (
+      xhr.status === 403 &&
+      errorMessage.includes('expired token') &&
+      localStorage.getItem('scigateway:token')
+    ) {
+      // Prevent other requests from also attempting to refresh while waiting for
+      // SciGateway to refresh the token
+
+      if (!isFetchingAccessToken) {
+        isFetchingAccessToken = true;
+
+        // Request SciGateway to refresh the token
+        document.dispatchEvent(
+          new CustomEvent(MicroFrontendId, {
+            detail: {
+              type: InvalidateTokenType,
+            },
+          })
+        );
+      }
+
+      // Create a new promise to wait for the token to be refreshed
+      return new Promise<void>((resolve, reject) => {
+        failedAuthRequestQueue.push((shouldReject?: boolean) => {
+          if (shouldReject) reject(xhr);
+          else resolve();
+        });
+      });
+    }
+  }
+}
+
+export function uppyOnBeforeRequest(xhr: XMLHttpRequest) {
+  xhr.setRequestHeader('Authorization', `Bearer ${readSciGatewayToken()}`);
+}
 
 export const imsApi = createAuthenticatedClient({
   getURL: (settings) => settings.imsApiUrl,
