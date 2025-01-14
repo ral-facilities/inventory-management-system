@@ -63,14 +63,18 @@ const DownloadFileDialog = (props: DownloadFileProps) => {
 
   const handleDownloadImages = React.useCallback(() => {
     if (downloadedImages && downloadedImages.length >= 1) {
-      downloadedImages.forEach((image: APIImageWithURL | undefined) => {
+      downloadedImages.forEach(async (image: APIImageWithURL | undefined) => {
         if (image) {
-          const link = document.createElement('iframe');
-          link.src = image.url;
-          link.setAttribute('sandbox', 'allow-scripts allow-downloads');
-          link.setAttribute('display', 'inline: none');
+          const response = await fetch(image.url);
+          const blob = await response.blob();
+
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = image.file_name;
           document.body.appendChild(link);
           link.click();
+          URL.revokeObjectURL(link.href);
+          document.body.removeChild(link);
         }
       });
       onChangeSelectedImages({});
