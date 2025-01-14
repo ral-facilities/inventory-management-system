@@ -515,8 +515,8 @@ const ImageGallery = (props: ImageGalleryProps) => {
             <DownloadFileDialog
               open={downloadImagesDialogOpen}
               onClose={() => setdownloadImagesDialogOpen(false)}
-              selectedImages={selectedImages}
-              onChangeSelectedImages={setRowSelection}
+              selectedFiles={selectedImages}
+              onChangeSelectedFiles={setRowSelection}
               fileType="Image"
               useGetFileIds={useGetImagesIds}
             />

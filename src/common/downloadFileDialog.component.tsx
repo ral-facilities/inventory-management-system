@@ -22,9 +22,9 @@ export interface BaseDownloadFileProps {
 
 export interface ImageDownloadDialogProps extends BaseDownloadFileProps {
   fileType: 'Image';
-  selectedImages?: APIImage[];
+  selectedFiles?: APIImage[];
   useGetFileIds: (ids: string[]) => UseQueryResult<APIImageWithURL>[];
-  onChangeSelectedImages: (selectedImages: MRT_RowSelectionState) => void;
+  onChangeSelectedFiles: (selectedFiles: MRT_RowSelectionState) => void;
 }
 
 export type DownloadFileProps = ImageDownloadDialogProps;
@@ -34,12 +34,16 @@ const DownloadFileDialog = (props: DownloadFileProps) => {
     open,
     onClose,
     fileType,
-    selectedImages,
+    selectedFiles,
     useGetFileIds,
-    onChangeSelectedImages,
+    onChangeSelectedFiles,
   } = props;
 
-  const count = selectedImages ? selectedImages.length : 0;
+  type fileInterface<T extends typeof fileType> = T extends 'Image'
+    ? APIImageWithURL
+    : APIImageWithURL;
+
+  const count = selectedFiles ? selectedFiles.length : 0;
 
   const [formError, setFormError] = React.useState<string | undefined>(
     undefined
@@ -47,42 +51,44 @@ const DownloadFileDialog = (props: DownloadFileProps) => {
 
   let isLoading = false;
 
-  const selectedImagesIds = selectedImages?.map((image) => image.id);
+  const selectedFilesIds = selectedFiles?.map((file) => file.id);
 
   const handleClose = React.useCallback(() => {
     setFormError(undefined);
     onClose();
   }, [onClose]);
 
-  const downloadedImages: (APIImageWithURL | undefined)[] = useGetFileIds(
-    selectedImagesIds ?? ['']
-  ).map((query) => {
-    isLoading = isLoading || query.isLoading;
-    return query.data;
-  });
+  const downloadedFiles: (fileInterface<typeof fileType> | undefined)[] =
+    useGetFileIds(selectedFilesIds ?? ['']).map((query) => {
+      isLoading = isLoading || query.isLoading;
+      return query.data;
+    });
 
-  const handleDownloadImages = React.useCallback(() => {
-    if (downloadedImages && downloadedImages.length >= 1) {
-      downloadedImages.forEach(async (image: APIImageWithURL | undefined) => {
-        if (image) {
-          const response = await fetch(image.url);
-          const blob = await response.blob();
+  const handleDownloadFiles = React.useCallback(() => {
+    if (downloadedFiles && downloadedFiles.length >= 1) {
+      downloadedFiles.forEach(
+        async (file: fileInterface<typeof fileType> | undefined) => {
+          if (file) {
+            const response = await fetch(file.url);
+            const blob = await response.blob();
+            const link = document.createElement('a');
 
-          const link = document.createElement('a');
-          link.href = URL.createObjectURL(blob);
-          link.download = image.file_name;
-          document.body.appendChild(link);
-          link.click();
-          URL.revokeObjectURL(link.href);
-          document.body.removeChild(link);
+            link.href = URL.createObjectURL(blob);
+            link.download = file.file_name;
+
+            document.body.appendChild(link);
+            link.click();
+            URL.revokeObjectURL(link.href);
+            document.body.removeChild(link);
+          }
         }
-      });
-      onChangeSelectedImages({});
+      );
+      onChangeSelectedFiles({});
       onClose();
     } else {
       setFormError('No data provided. Please refresh and try again');
     }
-  }, [downloadedImages, onChangeSelectedImages, onClose]);
+  }, [downloadedFiles, onChangeSelectedFiles, onClose]);
 
   return (
     <Dialog open={open} maxWidth="lg">
@@ -94,7 +100,7 @@ const DownloadFileDialog = (props: DownloadFileProps) => {
       <DialogContent>
         Are you sure you want to download{' '}
         <strong data-testid="delete-usage-status-value">
-          {selectedImages?.length + ' '}
+          {selectedFiles?.length + ' '}
         </strong>
         {fileType}
         {count > 1 ? 's' : ''}?
@@ -102,7 +108,7 @@ const DownloadFileDialog = (props: DownloadFileProps) => {
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
         <Button
-          onClick={handleDownloadImages}
+          onClick={handleDownloadFiles}
           disabled={isLoading || formError != undefined}
           endIcon={isLoading ? <CircularProgress size={20} /> : null}
         >

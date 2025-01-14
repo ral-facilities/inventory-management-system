@@ -17,20 +17,20 @@ describe('Download File dialog', () => {
   let user: UserEvent;
   const onClose = vi.fn();
   const setRowSelection = vi.fn();
-  let selectedImages: APIImage[];
+  let selectedFiles: APIImage[];
   const createView = (): RenderResult => {
     return renderComponentWithRouterProvider(<DownloadFileDialog {...props} />);
   };
 
   beforeEach(() => {
-    selectedImages = ImagesJSON;
+    selectedFiles = ImagesJSON;
     props = {
       open: true,
       onClose: onClose,
       fileType: 'Image',
-      selectedImages: selectedImages,
+      selectedFiles: selectedFiles,
       useGetFileIds: useGetImagesIds,
-      onChangeSelectedImages: setRowSelection,
+      onChangeSelectedFiles: setRowSelection,
     };
     user = userEvent.setup();
   });
@@ -42,7 +42,7 @@ describe('Download File dialog', () => {
   it('displays warning message when session data is not loaded', async () => {
     props = {
       ...props,
-      selectedImages: [],
+      selectedFiles: [],
     };
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
