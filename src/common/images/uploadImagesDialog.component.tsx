@@ -48,10 +48,6 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
         endpoint: `${url}/images`,
         method: 'POST',
         fieldName: 'upload_file',
-        limit: 1, // Limit uploads to one file at a time
-        // Reason 1: To avoid overloading the memory of the object-store API.
-        // Reason 2: To prevent multiple simultaneous uploads from triggering
-        // the token refresh process multiple times, which could lead to race conditions.
         async onBeforeRequest(xhr) {
           uppyOnBeforeRequest(xhr);
         },
