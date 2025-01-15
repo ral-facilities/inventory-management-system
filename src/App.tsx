@@ -272,8 +272,7 @@ export default function App() {
     <RouterProvider
       router={router}
       future={{
-        // Disabled for now and will be addressed in #1259
-        v7_startTransition: false,
+        v7_startTransition: true,
       }}
     />
   );

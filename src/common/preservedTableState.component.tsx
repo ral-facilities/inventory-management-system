@@ -185,18 +185,29 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
   // Keeps track of the last location state update to occur (for detecting browser changes e.g. back button being clicked)
   const lastLocationUpdate = useRef(location);
 
+  const searchParamsFromWindow = new URLSearchParams(window.location.search);
   const urlParamName = props?.urlParamName || 'state';
+  const log = (value: unknown) => console.log(value + `[${urlParamName}]`);
   const compressedState = props?.storeInUrl
-    ? searchParams.get(urlParamName)
+    ? searchParamsFromWindow.get(urlParamName)
     : null;
   const unparsedState = decompressState(compressedState);
 
   const [parsedState, setParsedState] = useState<StatePartial>(
     getParsedState(unparsedState)
   );
+  log('---------- NEW RENDER ---------');
+  log('Search params: ' + searchParams.toString());
+  log('Search params 2: ' + searchParamsFromWindow.toString());
+  log(window.location.search);
+  log('Unparsed state ' + unparsedState + ' (render)');
+  log('Parsed state ' + Object.entries(parsedState) + ' (render)');
 
   // Update the search params only if necessary
   useEffect(() => {
+    log('HERE');
+    log(window.location.search);
+    log(location.search);
     if (props?.storeInUrl) {
       // Get the expected unparsed state in the URL for the current internal state
       const parsedStateSearchParams = convertInternalState(parsedState);
@@ -212,14 +223,48 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
         ) {
           // Clear search params if state is no longer needed
           if (newUnparsedState !== '{}') {
-            searchParams.set(
+            log('Updating search params (useEffect)');
+            log('New state: ' + newUnparsedState);
+            log('Existing search params: ' + searchParamsFromWindow.toString());
+            searchParamsFromWindow.set(
               urlParamName,
               LZString.compressToEncodedURIComponent(newUnparsedState)
             );
-            setSearchParams(searchParams, { replace: false });
+            log('New search params: ' + searchParamsFromWindow.toString());
+            setSearchParams(searchParamsFromWindow, { replace: false });
+
+            // setSearchParams(
+            //   (prev) => {
+            //     console.log(prev.entries());
+            //     const next = new URLSearchParams(
+            //       Object.fromEntries(prev.entries())
+            //     );
+            //     console.log(next.entries());
+            //     next.set(
+            //       urlParamName,
+            //       LZString.compressToEncodedURIComponent(newUnparsedState)
+            //     );
+            //     console.log(newUnparsedState);
+            //     console.log(next.toString());
+            //     return next;
+            //   },
+            //   { replace: false }
+            // );
           } else {
+            log('Clearing search params (useEffect)');
             searchParams.delete(urlParamName);
             setSearchParams(searchParams, { replace: false });
+
+            // setSearchParams(
+            //   (prev) => {
+            //     const next = new URLSearchParams(
+            //       Object.fromEntries(prev.entries())
+            //     );
+            //     next.delete(urlParamName);
+            //     return next;
+            //   },
+            //   { replace: false }
+            // );
           }
         } else {
           // Update the internal state to reflect the browser level change
@@ -228,6 +273,10 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
           // slightly differently to column order as it doesn't appear to have the same issue
           if (lastLocationUpdate.current.pathname !== location.pathname)
             firstUpdate.current.p = undefined;
+
+          log(
+            'Updating internal state to reflect browser level change (useEffect)'
+          );
 
           setParsedState(getParsedState(unparsedState));
         }
@@ -239,7 +288,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
     location,
     parsedState,
     props?.storeInUrl,
-    searchParams,
+    searchParamsFromWindow,
     setSearchParams,
     unparsedState,
     urlParamName,
@@ -539,6 +588,12 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
         const newValue = getValueFromUpdater(
           updaterOrValue,
           prevState.p || defaultState.p
+        );
+        log(
+          'Updating internal params: ' +
+            newValue.pageIndex +
+            ' ' +
+            newValue.pageSize
         );
         return {
           ...prevState,
