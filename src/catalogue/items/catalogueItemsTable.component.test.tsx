@@ -321,7 +321,7 @@ describe('Catalogue Items Table', () => {
     await ensureColumnsVisible(['Obsolete replacement link']);
 
     const url = screen.queryAllByText('Click here');
-    expect(url[0]).toHaveAttribute('href', '/item/6');
+    expect(url[0]).toHaveAttribute('href', '/catalogue/5/items/6');
   });
 
   it('navigates to catalogue item landing page', async () => {
@@ -332,7 +332,7 @@ describe('Catalogue Items Table', () => {
     await ensureColumnsVisible(['Name']);
 
     const url = screen.getByText('Energy Meters 26');
-    expect(url).toHaveAttribute('href', '/item/89');
+    expect(url).toHaveAttribute('href', '/89');
   });
 
   it('navigates to items table', async () => {
@@ -343,7 +343,7 @@ describe('Catalogue Items Table', () => {
     await ensureColumnsVisible(['View Items']);
 
     const url = screen.queryAllByText('Click here');
-    expect(url[0]).toHaveAttribute('href', '/item/89/items');
+    expect(url[0]).toHaveAttribute('href', '/89/items');
   });
 
   it('navigates to drawing link', async () => {

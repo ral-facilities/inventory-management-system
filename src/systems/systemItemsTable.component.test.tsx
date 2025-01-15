@@ -104,7 +104,7 @@ describe('SystemItemsTable', () => {
         screen.getByRole('link', {
           name: `Turbomolecular Pumps 42`,
         })
-      ).toHaveAttribute('href', '/catalogue/item/21');
+      ).toHaveAttribute('href', '/catalogue/13/items/21');
     });
 
     it('can set a table filter and clear them again', async () => {
