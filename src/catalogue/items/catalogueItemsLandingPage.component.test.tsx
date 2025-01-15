@@ -27,18 +27,10 @@ describe('Catalogue Items Landing Page', () => {
   });
 
   it('renders text correctly (only basic details given)', async () => {
-    createView('/catalogue/item/1');
+    createView('/catalogue/4/items/1');
 
     await waitFor(() => {
       expect(screen.getByText('Cameras 1')).toBeInTheDocument();
-    });
-
-    await waitFor(() => {
-      expect(
-        screen.getByRole('link', {
-          name: 'Cameras',
-        })
-      ).toBeInTheDocument();
     });
 
     expect(screen.getByText('Description:')).toBeInTheDocument();
@@ -50,18 +42,10 @@ describe('Catalogue Items Landing Page', () => {
   });
 
   it('renders text correctly (notes tab)', async () => {
-    createView('/catalogue/item/1');
+    createView('/catalogue/4/items/1');
 
     await waitFor(() => {
       expect(screen.getByText('Cameras 1')).toBeInTheDocument();
-    });
-
-    await waitFor(() => {
-      expect(
-        screen.getByRole('link', {
-          name: 'Cameras',
-        })
-      ).toBeInTheDocument();
     });
 
     expect(screen.getByText('Description:')).toBeInTheDocument();
@@ -75,18 +59,10 @@ describe('Catalogue Items Landing Page', () => {
   });
 
   it('renders text correctly (extra details given)', async () => {
-    createView('/catalogue/item/2');
+    createView('/catalogue/4/items/2');
 
     await waitFor(() => {
       expect(screen.getByText('Cameras 2')).toBeInTheDocument();
-    });
-
-    await waitFor(() => {
-      expect(
-        screen.getByRole('link', {
-          name: 'Cameras',
-        })
-      ).toBeInTheDocument();
     });
 
     expect(screen.getByText('Description:')).toBeInTheDocument();
@@ -102,19 +78,8 @@ describe('Catalogue Items Landing Page', () => {
     expect(screen.getByText('Resolution (megapixels)')).toBeInTheDocument();
   });
 
-  it('renders no item page correctly', async () => {
-    createView('/catalogue/item/1fds');
-    await waitFor(() => {
-      expect(
-        screen.getByText(
-          `This catalogue item doesn't exist. Please click the Home button on the top left of your screen to navigate to the catalogue home.`
-        )
-      ).toBeInTheDocument();
-    });
-  });
-
   it('shows the loading indicator', async () => {
-    createView('/catalogue/item/1');
+    createView('/catalogue/4/items/1');
 
     await waitFor(() => {
       expect(screen.getByRole('progressbar')).toBeInTheDocument();
@@ -122,7 +87,7 @@ describe('Catalogue Items Landing Page', () => {
   });
 
   it('opens and closes the edit catalogue item dialog', async () => {
-    createView('/catalogue/item/1');
+    createView('/catalogue/4/items/1');
 
     await waitFor(() => {
       expect(screen.getByText('Cameras 1')).toBeInTheDocument();
@@ -149,7 +114,7 @@ describe('Catalogue Items Landing Page', () => {
   });
 
   it('opens and closes the edit catalogue item dialog (more catalogue item details filled in)', async () => {
-    createView('/catalogue/item/6');
+    createView('/catalogue/5/items/6');
 
     await waitFor(() => {
       expect(screen.getByText('Energy Meters 27')).toBeInTheDocument();
@@ -176,20 +141,22 @@ describe('Catalogue Items Landing Page', () => {
   });
 
   it('renders obsolete replace id link', async () => {
-    createView('/catalogue/item/89');
+    createView('/catalogue/5/items/89');
 
     await waitFor(() => {
       expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
     });
 
-    expect(
-      screen.getByRole('link', { name: 'Click here' })
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByRole('link', { name: 'Click here' })
+      ).toBeInTheDocument();
+    });
   });
 
   it('prints when the button is clicked', async () => {
     const spy = vi.spyOn(window, 'print').mockImplementation(() => {});
-    createView('/catalogue/item/89');
+    createView('/catalogue/5/items/89');
 
     await waitFor(() => {
       expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
@@ -211,45 +178,8 @@ describe('Catalogue Items Landing Page', () => {
     spy.mockRestore();
   });
 
-  it('navigates to catalogue category table view', async () => {
-    createView('/catalogue/item/89');
-    await waitFor(() => {
-      expect(
-        screen.getByRole('link', { name: 'Energy Meters' })
-      ).toBeInTheDocument();
-    });
-
-    const breadcrumb = screen.getByRole('link', {
-      name: 'Energy Meters',
-    });
-
-    await user.click(breadcrumb);
-
-    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
-    expect(mockedUseNavigate).toHaveBeenCalledWith('/catalogue/5');
-  });
-
-  it('navigates back to the root directory', async () => {
-    createView('/catalogue/item/89');
-
-    await waitFor(() => {
-      expect(
-        screen.getByRole('link', { name: 'Energy Meters' })
-      ).toBeInTheDocument();
-    });
-
-    const homeButton = screen.getByRole('button', {
-      name: 'navigate to catalogue home',
-    });
-
-    await user.click(homeButton);
-
-    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
-    expect(mockedUseNavigate).toHaveBeenCalledWith('/catalogue');
-  });
-
   it('navigates to items table view', async () => {
-    createView('/catalogue/item/89');
+    createView('/catalogue/5/items/89');
     await waitFor(() => {
       expect(screen.getByRole('link', { name: 'Items' })).toBeInTheDocument();
     });
@@ -257,11 +187,11 @@ describe('Catalogue Items Landing Page', () => {
     const url = screen.getByRole('link', {
       name: 'Items',
     });
-    expect(url).toHaveAttribute('href', '/catalogue/item/89/items');
+    expect(url).toHaveAttribute('href', '/catalogue/5/items/89/items');
   });
 
   it('landing page renders data correctly when optional values are null', async () => {
-    createView('/catalogue/item/33');
+    createView('/catalogue/4/items/33');
 
     await waitFor(() => {
       expect(screen.getByText('Cameras 14')).toBeInTheDocument();
@@ -277,7 +207,7 @@ describe('Catalogue Items Landing Page', () => {
   });
 
   it('navigates to manufacturer landing page', async () => {
-    createView('/catalogue/item/1');
+    createView('/catalogue/4/items/1');
     await waitFor(() => {
       expect(screen.getByText('Cameras 1')).toBeInTheDocument();
     });

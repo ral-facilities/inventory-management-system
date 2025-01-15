@@ -218,7 +218,29 @@ describe('catalogue categories api functions', () => {
         trail: [['2', 'Motion']],
       });
     });
-  });
+
+    it('sends request to fetch catalogue breadcrumbs data and returns 404 error', async () => {
+      const { result } = renderHook(
+        () => useGetCatalogueBreadcrumbs('invalid'),
+        {
+          wrapper: hooksWrapperWithProviders(),
+        }
+      );
+
+      await waitFor(
+        () => {
+          expect(result.current.isError).toBeTruthy();
+        },
+        { timeout: 10000 }
+      );
+
+      expect(result.current.error?.response?.status).toBe(404);
+
+      expect(result.current.error?.response?.data).toEqual({
+        detail: 'Catalogue category not found',
+      });
+    });
+  }, 20000);
 
   describe('useGetCatalogueCategory', () => {
     it('sends request to fetch a single catalogue category data and returns successful response', async () => {

@@ -3,15 +3,10 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { BreadcrumbsInfo } from '../api/api.types';
 import { paths } from '../App';
 import BaseLayoutHeader from '../common/baseLayoutHeader.component';
-import ErrorPage from '../common/errorPage.component';
+import PageNotFoundComponent from '../common/pageNotFound/pageNotFound.component';
 
 export const AdminErrorComponent = () => {
-  return (
-    <ErrorPage
-      boldErrorText="Invalid Admin Route"
-      errorText="The admin route you are trying to access doesn't exist. Please click the Home button to navigate back to the Admin Home page."
-    />
-  );
+  return <PageNotFoundComponent homeLocation="Admin" />;
 };
 
 // returns the admin function from the path (null when just on adminPage)
@@ -27,20 +22,21 @@ export const useGetAdminPageName = (): string | null => {
   }, [location.pathname]);
 };
 
-const adminBreadCrumbsTrails: { [key: string]: [string, string] } = {
-  ['units']: ['units', 'Units'],
-  ['usage-statuses']: ['usage-statuses', 'Usage statuses'],
+const adminBreadCrumbsTrails: { [key: string]: BreadcrumbsInfo['trail'] } = {
+  ['units']: [['units', 'Units']],
+  ['usage-statuses']: [['usage-statuses', 'Usage statuses']],
 };
 
 function AdminLayout() {
   const adminPageName = useGetAdminPageName();
 
-  const adminBreadCrumbs: BreadcrumbsInfo | undefined = adminPageName
-    ? {
-        trail: [adminBreadCrumbsTrails[adminPageName] ?? ['', '']],
-        full_trail: true,
-      }
-    : undefined;
+  const adminBreadCrumbs: BreadcrumbsInfo | undefined =
+    adminPageName && adminPageName in adminBreadCrumbsTrails
+      ? {
+          trail: adminBreadCrumbsTrails[adminPageName],
+          full_trail: true,
+        }
+      : undefined;
 
   return (
     <BaseLayoutHeader homeLocation="Admin" breadcrumbsInfo={adminBreadCrumbs}>
