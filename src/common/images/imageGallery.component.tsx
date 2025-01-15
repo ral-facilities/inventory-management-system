@@ -116,6 +116,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
         variant="outlined"
         startIcon={<DriveFileMoveOutlinedIcon />}
         disabled={selectedImages.length == 0}
+        data-testid="download-all-button"
         onClick={() => setdownloadImagesDialogOpen(true)}
       >
         Download

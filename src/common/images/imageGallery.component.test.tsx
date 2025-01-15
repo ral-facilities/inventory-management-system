@@ -203,19 +203,22 @@ describe('Image Gallery', () => {
     expect((await screen.findAllByText('logo1.png')).length).toEqual(8);
 
     const selectBoxes = screen.getAllByLabelText(`Toggle select card`);
-    await user.click(selectBoxes[0]);
     await user.click(selectBoxes[1]);
-    await user.click(selectBoxes[2]);
+    await user.click(selectBoxes[3]);
+    await user.click(selectBoxes[5]);
+    expect(selectBoxes.length).toBe(32);
 
-    const downloadButton = await screen.findAllByText(`Download`);
-    await user.click(downloadButton[0]);
+    const downloadButton = await screen.findByTestId('download-all-button');
+    await user.click(downloadButton);
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
     });
 
     expect(
-      await screen.findByText('Are you sure you want to download 3 Images?')
-    ).toBeInTheDocument();
+      await within(screen.getByRole('dialog')).findByTestId(
+        'download-images-message'
+      )
+    ).toHaveTextContent('Are you sure you want to download 3 Images?');
 
     const cancelButton = screen.getByRole('button', { name: 'Cancel' });
     await user.click(cancelButton);

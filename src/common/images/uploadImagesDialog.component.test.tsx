@@ -89,16 +89,10 @@ describe('Upload image dialog', () => {
 
     expect(await screen.findByText('File name')).toBeInTheDocument();
 
+    const [filename, title, description] = screen.getAllByRole('textbox');
+
     //Checks if file extension is not rendered in field
-    await waitFor(() => {
-      expect(screen.queryByText('image.png')).not.toBeInTheDocument();
-    });
-
-    await waitFor(() => {
-      expect(screen.getByText('image')).toBeInTheDocument();
-    });
-
-    const [_, title, description] = screen.getAllByRole('textbox');
+    expect((filename as HTMLInputElement).value).toBe('image');
 
     await user.type(title, 'test');
     await user.type(description, 'test');

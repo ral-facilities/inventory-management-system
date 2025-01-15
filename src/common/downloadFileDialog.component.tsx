@@ -69,17 +69,26 @@ const DownloadFileDialog = (props: DownloadFileProps) => {
       downloadedFiles.forEach(
         async (file: fileInterface<typeof fileType> | undefined) => {
           if (file) {
-            const response = await fetch(file.url);
-            const blob = await response.blob();
-            const link = document.createElement('a');
+            try {
+              const response = await fetch(file.url);
+              if (!response.ok) {
+                throw new Error(
+                  `Failed to fetch image: ${response.statusText}`
+                );
+              }
+              const blob = await response.blob();
+              const link = document.createElement('a');
 
-            link.href = URL.createObjectURL(blob);
-            link.download = file.file_name;
+              link.href = URL.createObjectURL(blob);
+              link.download = file.file_name;
 
-            document.body.appendChild(link);
-            link.click();
-            URL.revokeObjectURL(link.href);
-            document.body.removeChild(link);
+              document.body.appendChild(link);
+              link.click();
+              URL.revokeObjectURL(link.href);
+              document.body.removeChild(link);
+            } catch (error) {
+              console.error('Error downloading image:', error);
+            }
           }
         }
       );
@@ -97,9 +106,9 @@ const DownloadFileDialog = (props: DownloadFileProps) => {
         Download {fileType}
         {count ? 's' : ''}
       </DialogTitle>
-      <DialogContent>
+      <DialogContent data-testid="download-images-message">
         Are you sure you want to download{' '}
-        <strong data-testid="delete-usage-status-value">
+        <strong data-testid="download-images-value">
           {selectedFiles?.length + ' '}
         </strong>
         {fileType}

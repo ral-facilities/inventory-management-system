@@ -47,6 +47,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                 </button>
                 <button
                   class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary Mui-disabled MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1owl11-MuiButtonBase-root-MuiButton-root"
+                  data-testid="download-all-button"
                   disabled=""
                   tabindex="-1"
                   type="button"
