@@ -616,3 +616,11 @@ export const ItemDetailsStepSchema = (requestType: RequestType) => {
     notes: OptionalOrNullableStringSchema({ requestType }),
   });
 };
+
+// ------------------------------------ SPARES ------------------------------------
+
+export const SparesDefinitionSchema = z.object({
+  usage_statuses: z.array(z.object({ id: z.string() })).min(1, {
+    message: 'The list must have at least one item. Please add a usage status.',
+  }),
+});

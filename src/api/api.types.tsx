@@ -260,3 +260,13 @@ export interface APIImage
 export interface APIImageWithURL extends APIImage {
   url: string;
 }
+
+// ------------------------------------ SPARES ------------------------------------------------
+
+export interface SparesDefinition {
+  usage_statuses: UsageStatus[];
+}
+
+export interface SparesDefinitionPut {
+  usage_statuses: { id: string }[];
+}
