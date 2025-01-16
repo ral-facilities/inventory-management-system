@@ -68,7 +68,7 @@ export default defineConfig(({ mode }) => {
   if (env.VITE_APP_INCLUDE_CODECOV === 'true')
     plugins.push(
       codecovVitePlugin({
-        enableBundleAnalysis: env.CODECOV_TOKEN !== undefined,
+        enableBundleAnalysis: true,
         bundleName: 'inventory_management_system',
         uploadToken: env.CODECOV_TOKEN,
       })
