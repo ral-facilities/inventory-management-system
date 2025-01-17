@@ -1084,7 +1084,39 @@ describe('Catalogue Items Dialog', () => {
       });
     });
 
-    it('displays error message if catalogue item has children elements', async () => {
+    it('displays error message when editing manufacturer_id if catalogue item has child elements', async () => {
+      props = {
+        ...props,
+        parentInfo: getCatalogueCategoryById('4'),
+        selectedCatalogueItem: getCatalogueItemById('1'),
+      };
+
+      createView();
+
+      await modifyValues({
+        name: 'test_has_children_elements',
+        manufacturer: 'Man{arrowdown}{arrowdown}{enter}',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/1', {
+        name: 'test_has_children_elements',
+        manufacturer_id: '3',
+      });
+
+      await waitFor(() => {
+        expect(
+          screen.getByText(
+            'Unable to update catalogue item properties and manufacturer '
+              + '(Manufacturer A), as the catalogue item has associated items.'
+          )
+        ).toBeInTheDocument();
+      });
+    });
+
+    it('displays error message when editing properties if catalogue item has child elements', async () => {
       props = {
         ...props,
         parentInfo: getCatalogueCategoryById('4'),
@@ -1098,16 +1130,30 @@ describe('Catalogue Items Dialog', () => {
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await modifyValues({
+        resolution: '24',
+      });
+
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/1', {
         name: 'test_has_children_elements',
+        properties: [
+          { id: '1', value: 24 },
+          { id: '2', value: 30 },
+          { id: '3', value: 'CMOS' },
+          { id: '4', value: null },
+          { id: '5', value: true },
+          { id: '6', value: false },
+        ],
       });
 
       await waitFor(() => {
         expect(
           screen.getByText(
-            'Catalogue item has child elements and cannot be edited'
+            'Unable to update catalogue item properties and manufacturer '
+              + '(Manufacturer A), as the catalogue item has associated items.'
           )
         ).toBeInTheDocument();
       });

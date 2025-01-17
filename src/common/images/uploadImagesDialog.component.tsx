@@ -9,6 +9,7 @@ import ProgressBar from '@uppy/progress-bar'; // Import the ProgressBar plugin
 import { DashboardModal } from '@uppy/react';
 import XHR from '@uppy/xhr-upload';
 import React, { useRef } from 'react';
+import { uppyOnAfterResponse, uppyOnBeforeRequest } from '../../api/api';
 import { settings } from '../../settings';
 import { getNonEmptyTrimmedString } from '../../utils';
 
@@ -47,6 +48,12 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
         endpoint: `${url}/images`,
         method: 'POST',
         fieldName: 'upload_file',
+        async onBeforeRequest(xhr) {
+          uppyOnBeforeRequest(xhr);
+        },
+        async onAfterResponse(xhr) {
+          await uppyOnAfterResponse(xhr);
+        },
       });
     });
 
@@ -83,14 +90,6 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
           meta: updatedFileData,
         },
       });
-    }
-  });
-
-  uppy.on('upload-error', (_file, _error, response) => {
-    if (response?.body?.id) {
-      // TODO: Implement logic to delete metadata using id
-      // If metadata exists for the given id, remove it from the api
-      // If not, do nothing and exit the function
     }
   });
 

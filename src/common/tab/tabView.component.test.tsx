@@ -49,18 +49,18 @@ describe('TabView Component', () => {
   it('renders correctly', async () => {
     let baseElement;
     await act(async () => {
-      baseElement = createView('/catalogue/item/1').baseElement;
+      baseElement = createView('/catalogue/4/items/1').baseElement;
     });
     expect(baseElement).toMatchSnapshot();
   });
 
   it('renders correctly with default tab', () => {
-    createView('/catalogue/item/1');
+    createView('/catalogue/4/items/1');
     expect(screen.getByText('Content for Tab 1')).toBeInTheDocument();
   });
 
   it('changes tabs', async () => {
-    const { router } = createView('/catalogue/item/1');
+    const { router } = createView('/catalogue/4/items/1');
 
     // Click on the second tab
     await userEvent.click(screen.getByText('tab2'));
@@ -80,12 +80,12 @@ describe('TabView Component', () => {
   });
 
   it('loads tab from URL', () => {
-    createView('/catalogue/item/1?tab=tab2');
+    createView('/catalogue/4/items/1?tab=tab2');
     expect(screen.getByText('Content for Tab 2')).toBeInTheDocument();
   });
 
   it('renders tabs in correct order', () => {
-    createView('/catalogue/item/1');
+    createView('/catalogue/4/items/1');
 
     const tabs = screen.getAllByRole('tab');
     const tabLabels = tabs.map((tab) => tab.textContent);

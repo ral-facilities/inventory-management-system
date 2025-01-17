@@ -1770,7 +1770,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                 >
                   <a
                     class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-depzd6-MuiTypography-root-MuiLink-root"
-                    href="/catalogue/item/21"
+                    href="/catalogue/13/items/21"
                   >
                     Turbomolecular Pumps 42
                   </a>
@@ -1976,7 +1976,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
               >
                 <a
                   class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                  href="/catalogue/item/21/items/13h6TOX6"
+                  href="/catalogue/13/items/21/items/13h6TOX6"
                 >
                   5xE1KSraISvu
                 </a>
@@ -2142,7 +2142,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
               >
                 <a
                   class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                  href="/catalogue/item/21/items/13h6TOX7"
+                  href="/catalogue/13/items/21/items/13h6TOX7"
                 >
                   5xE1KSraISvu
                 </a>
@@ -2235,7 +2235,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                 >
                   <a
                     class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-depzd6-MuiTypography-root-MuiLink-root"
-                    href="/catalogue/item/22"
+                    href="/catalogue/13/items/22"
                   >
                     Turbomolecular Pumps 43
                   </a>
@@ -2446,7 +2446,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                 Rows per page
               </label>
               <div
-                class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
+                class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
               >
                 <div
                   aria-controls=":r1g:"
@@ -3541,7 +3541,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                 Rows per page
               </label>
               <div
-                class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
+                class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
               >
                 <div
                   aria-controls=":rjr:"

@@ -14,7 +14,7 @@ describe('Catalogue Category', () => {
         name: 'Test ' + index.toString(),
         parent_id: null,
         code: index.toString(),
-        is_leaf: true,
+        is_leaf: false,
         created_time: '2024-01-01T12:00:00.000+00:00',
         modified_time: '2024-01-02T13:10:10.000+00:00',
         properties: [],
@@ -129,7 +129,7 @@ describe('Catalogue Category', () => {
   });
 
   it('display error message when there is no name when adding a catalogue category', () => {
-    cy.findByRole('button', { name: 'add catalogue category' }).click();
+    cy.findByRole('button', { name: 'Add Catalogue Category' }).click();
     cy.findByRole('button', { name: 'Save' }).click();
     cy.findByRole('dialog')
       .should('be.visible')
@@ -149,7 +149,7 @@ describe('Catalogue Category', () => {
   });
 
   it('adds a catalogue category where isLeaf is false', () => {
-    cy.findByRole('button', { name: 'add catalogue category' }).click();
+    cy.findByRole('button', { name: 'Add Catalogue Category' }).click();
     cy.findByLabelText('Name *').type('test');
 
     cy.startSnoopingBrowserMockedRequest();
@@ -240,7 +240,7 @@ describe('Catalogue Category', () => {
   });
 
   it('adds a catalogue category where isLeaf is true', () => {
-    cy.findByRole('button', { name: 'add catalogue category' }).click();
+    cy.findByRole('button', { name: 'Add Catalogue Category' }).click();
     cy.findByLabelText('Name *').type('test');
 
     cy.findByLabelText('Catalogue Items').click();
@@ -248,25 +248,25 @@ describe('Catalogue Category', () => {
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', {
-      name: 'Add catalogue category field entry',
+      name: 'Add Property',
     }).click();
     cy.findByLabelText('Property Name *').type('Updated Field 1');
     cy.findByLabelText('Select Type *').click();
     cy.findByText('Boolean').click();
 
-    cy.findByRole('button', {
-      name: 'Add catalogue category field entry',
-    }).click();
-
     cy.findByRole('button', { name: 'Save' }).click();
 
-    cy.findByText('Please enter a property name.').should('exist');
+    cy.findByRole('button', {
+      name: 'Add Property',
+    }).click();
 
     cy.findAllByLabelText('Property Name *').last().type('Updated Field 2');
     cy.findAllByLabelText('Select Type *').last().click();
     cy.findByText('Number').click();
     cy.findAllByLabelText('Select Unit').last().click();
     cy.findByRole('option', { name: 'millimeters' }).click();
+
+    cy.findByRole('button', { name: 'Save' }).click();
 
     cy.findByRole('button', { name: 'Save' }).click();
     cy.findByRole('dialog').should('not.exist');
@@ -296,7 +296,7 @@ describe('Catalogue Category', () => {
   });
 
   it('adds a catalogue category where isLeaf is true with a list of allowed values', () => {
-    cy.findByRole('button', { name: 'add catalogue category' }).click();
+    cy.findByRole('button', { name: 'Add Catalogue Category' }).click();
     cy.findByLabelText('Name *').type('test');
 
     cy.findByLabelText('Catalogue Items').click();
@@ -304,19 +304,17 @@ describe('Catalogue Category', () => {
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', {
-      name: 'Add catalogue category field entry',
+      name: 'Add Property',
     }).click();
     cy.findByLabelText('Property Name *').type('Updated Field 1');
     cy.findByLabelText('Select Type *').click();
     cy.findByText('Boolean').click();
 
-    cy.findByRole('button', {
-      name: 'Add catalogue category field entry',
-    }).click();
-
     cy.findByRole('button', { name: 'Save' }).click();
 
-    cy.findByText('Please enter a property name.').should('exist');
+    cy.findByRole('button', {
+      name: 'Add Property',
+    }).click();
 
     cy.findAllByLabelText('Property Name *').last().type('Updated Field 2');
     cy.findAllByLabelText('Select Type *').last().click();
@@ -325,6 +323,8 @@ describe('Catalogue Category', () => {
     cy.findByRole('option', { name: 'List' }).click();
     cy.findByRole('button', { name: 'Add list item' }).click();
     cy.findAllByLabelText('List item').eq(0).type('10');
+
+    cy.findByRole('button', { name: 'Save' }).click();
     cy.findByRole('button', { name: 'Save' }).click();
     cy.findByRole('dialog').should('not.exist');
 
@@ -352,8 +352,8 @@ describe('Catalogue Category', () => {
     });
   });
 
-  it('displays the allowed values list error states (Text)', () => {
-    cy.findByRole('button', { name: 'add catalogue category' }).click();
+  it('displays the allowed values list error states missing values (Text)', () => {
+    cy.findByRole('button', { name: 'Add Catalogue Category' }).click();
     cy.findByLabelText('Name *').type('test');
 
     cy.findByLabelText('Catalogue Items').click();
@@ -361,48 +361,29 @@ describe('Catalogue Category', () => {
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', {
-      name: 'Add catalogue category field entry',
+      name: 'Add Property',
     }).click();
     cy.findByLabelText('Property Name *').type('Updated Field 1');
     cy.findByLabelText('Select Type *').click();
-    cy.findByText('Text').click();
-    cy.findAllByLabelText('Select Allowed values *').last().click();
-    cy.findByRole('option', { name: 'List' }).click();
-    cy.findByRole('button', { name: 'Add list item' }).click();
-    cy.findByRole('button', { name: 'Add list item' }).click();
-
-    cy.findByRole('button', {
-      name: 'Add catalogue category field entry',
-    }).click();
-
-    cy.findAllByLabelText('Property Name *').last().type('Updated Field 2');
-    cy.findAllByLabelText('Select Type *').last().click();
     cy.findByRole('option', { name: 'Text' }).click();
     cy.findAllByLabelText('Select Allowed values *').last().click();
     cy.findByRole('option', { name: 'List' }).click();
-    cy.findAllByRole('button', { name: 'Add list item' }).eq(1).click();
-    cy.findAllByRole('button', { name: 'Add list item' }).eq(1).click();
-    cy.findAllByLabelText('List item').eq(2).type('10');
-    cy.findAllByLabelText('List item').eq(3).type('10');
+    cy.findByRole('button', { name: 'Add list item' }).click();
+    cy.findByRole('button', { name: 'Add list item' }).click();
 
     cy.findByRole('button', { name: 'Save' }).click();
 
     cy.findAllByText('Please enter a value.').should('have.length', 2);
-    cy.findAllByText('Duplicate value.').should('have.length', 2);
 
     // Clearing the errors
 
-    cy.findAllByLabelText('List item').eq(3).clear();
-    cy.findAllByLabelText('List item').eq(3).type('11');
-    cy.findAllByText('Duplicate value').should('have.length', 0);
-
     cy.findAllByLabelText('List item').eq(0).type('10');
     cy.findAllByLabelText('List item').eq(1).type('11');
-    cy.findAllByText('Please enter a value').should('have.length', 0);
+    cy.findAllByText('Please enter a value.').should('have.length', 0);
   });
 
-  it('displays the allowed values list error states and check if the error states are in the correct location (number)', () => {
-    cy.findByRole('button', { name: 'add catalogue category' }).click();
+  it('displays the allowed values list error states duplicate values (Text)', () => {
+    cy.findByRole('button', { name: 'Add Catalogue Category' }).click();
     cy.findByLabelText('Name *').type('test');
 
     cy.findByLabelText('Catalogue Items').click();
@@ -410,7 +391,38 @@ describe('Catalogue Category', () => {
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', {
-      name: 'Add catalogue category field entry',
+      name: 'Add Property',
+    }).click();
+    cy.findByLabelText('Property Name *').type('Updated Field 2');
+    cy.findByLabelText('Select Type *').click();
+    cy.findByRole('option', { name: 'Text' }).click();
+    cy.findByLabelText('Select Allowed values *').click();
+    cy.findByRole('option', { name: 'List' }).click();
+    cy.findByRole('button', { name: 'Add list item' }).click();
+    cy.findByRole('button', { name: 'Add list item' }).click();
+    cy.findAllByLabelText('List item').first().type('10');
+    cy.findAllByLabelText('List item').last().type('10');
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findAllByText('Duplicate value.').should('have.length', 2);
+
+    // Clearing the errors
+
+    cy.findAllByLabelText('List item').last().clear();
+    cy.findAllByLabelText('List item').last().type('11');
+    cy.findAllByText('Duplicate value').should('have.length', 0);
+  });
+
+  it('displays the allowed values list error states and check if the error states are in the correct location (number)', () => {
+    cy.findByRole('button', { name: 'Add Catalogue Category' }).click();
+    cy.findByLabelText('Name *').type('test');
+
+    cy.findByLabelText('Catalogue Items').click();
+
+    cy.startSnoopingBrowserMockedRequest();
+    cy.findByRole('button', {
+      name: 'Add Property',
     }).click();
     cy.findByLabelText('Property Name *').type('Updated Field 1');
     cy.findByLabelText('Select Type *').click();
@@ -422,103 +434,18 @@ describe('Catalogue Category', () => {
     cy.findAllByLabelText('List item').eq(0).type('dsadd');
     cy.findAllByLabelText('List item').eq(1).type('10');
 
-    cy.findByRole('button', {
-      name: 'Add catalogue category field entry',
-    }).click();
-
-    cy.findAllByLabelText('Property Name *').eq(1).type('Updated Field 2');
-    cy.findAllByLabelText('Select Type *').eq(1).click();
-    cy.findByRole('option', { name: 'Number' }).click();
-    cy.findAllByLabelText('Select Allowed values *').eq(1).click();
-    cy.findByRole('option', { name: 'List' }).click();
-    cy.findAllByRole('button', { name: 'Add list item' }).eq(1).click();
-    cy.findAllByRole('button', { name: 'Add list item' }).eq(1).click();
-    cy.findAllByLabelText('List item').eq(2).type('dsadd');
-    cy.findAllByLabelText('List item').eq(3).type('10');
-
     cy.findByRole('button', { name: 'Save' }).click();
 
-    cy.findAllByText('Please enter a valid number.').should('have.length', 2);
+    cy.findAllByText('Please enter a valid number.').should('have.length', 1);
 
     // Clearing the errors
 
     cy.findAllByLabelText('Delete list item').eq(0).click();
-    cy.findAllByLabelText('Delete list item').eq(1).click();
     cy.findAllByText('Please enter a valid number.').should('have.length', 0);
-  });
-
-  it('displays the allowed values list error states (number)', () => {
-    cy.findByRole('button', { name: 'add catalogue category' }).click();
-    cy.findByLabelText('Name *').type('test');
-
-    cy.findByLabelText('Catalogue Items').click();
-
-    cy.startSnoopingBrowserMockedRequest();
-
-    cy.findByRole('button', {
-      name: 'Add catalogue category field entry',
-    }).click();
-    cy.findByLabelText('Property Name *').type('Updated Field 1');
-    cy.findByLabelText('Select Type *').click();
-    cy.findByText('Number').click();
-    cy.findAllByLabelText('Select Allowed values *').last().click();
-    cy.findByRole('option', { name: 'List' }).click();
-    cy.findByRole('button', { name: 'Add list item' }).click();
-    cy.findByRole('button', { name: 'Add list item' }).click();
-
-    cy.findByRole('button', {
-      name: 'Add catalogue category field entry',
-    }).click();
-
-    cy.findAllByLabelText('Property Name *').eq(1).type('Updated Field 2');
-    cy.findAllByLabelText('Select Type *').eq(1).click();
-    cy.findByRole('option', { name: 'Number' }).click();
-    cy.findAllByLabelText('Select Allowed values *').eq(1).click();
-    cy.findByRole('option', { name: 'List' }).click();
-    cy.findAllByRole('button', { name: 'Add list item' }).eq(1).click();
-    cy.findAllByRole('button', { name: 'Add list item' }).eq(1).click();
-    cy.findAllByLabelText('List item').eq(2).type('10');
-    cy.findAllByLabelText('List item').eq(3).type('10');
-
-    cy.findByRole('button', {
-      name: 'Add catalogue category field entry',
-    }).click();
-
-    cy.findAllByLabelText('Property Name *').last().type('Updated Field 3');
-    cy.findAllByLabelText('Select Type *').last().click();
-    cy.findByRole('option', { name: 'Number' }).click();
-    cy.findAllByLabelText('Select Allowed values *').last().click();
-    cy.findByRole('option', { name: 'List' }).click();
-    cy.findAllByRole('button', { name: 'Add list item' }).eq(2).click();
-    cy.findAllByRole('button', { name: 'Add list item' }).eq(2).click();
-    cy.findAllByLabelText('List item').eq(4).type('10b');
-    cy.findAllByLabelText('List item').eq(5).type('10c');
-
-    cy.findByRole('button', { name: 'Save' }).click();
-
-    cy.findAllByText('Please enter a value.').should('have.length', 2);
-    cy.findAllByText('Duplicate value.').should('have.length', 2);
-    cy.findAllByText('Please enter a valid number.').should('have.length', 2);
-
-    // Clearing the errors
-
-    cy.findAllByLabelText('List item').eq(4).clear();
-    cy.findAllByLabelText('List item').eq(4).type('11');
-    cy.findAllByLabelText('List item').eq(5).clear();
-    cy.findAllByLabelText('List item').eq(5).type('12');
-    cy.findAllByText('Please enter a valid number.').should('have.length', 0);
-
-    cy.findAllByLabelText('List item').eq(3).clear();
-    cy.findAllByLabelText('List item').eq(3).type('11');
-    cy.findAllByText('Duplicate value.').should('have.length', 0);
-
-    cy.findAllByLabelText('List item').eq(0).first().type('10');
-    cy.findAllByLabelText('List item').eq(1).first().type('11');
-    cy.findAllByText('Please enter a value.').should('have.length', 0);
   });
 
   it('displays error message when duplicate names for properties are entered', () => {
-    cy.findByRole('button', { name: 'add catalogue category' }).click();
+    cy.findByRole('button', { name: 'Add Catalogue Category' }).click();
     cy.findByLabelText('Name *').type('test');
 
     cy.findByLabelText('Catalogue Items').click();
@@ -526,15 +453,17 @@ describe('Catalogue Category', () => {
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', {
-      name: 'Add catalogue category field entry',
+      name: 'Add Property',
     }).click();
 
     cy.findByLabelText('Property Name *').type('Duplicate');
     cy.findByLabelText('Select Type *').click();
     cy.findByText('Boolean').click();
 
+    cy.findByRole('button', { name: 'Save' }).click();
+
     cy.findByRole('button', {
-      name: 'Add catalogue category field entry',
+      name: 'Add Property',
     }).click();
 
     cy.findAllByLabelText('Property Name *').last().type('Duplicate');
@@ -887,7 +816,7 @@ describe('Catalogue Category', () => {
   it('category with no data displays no results found', () => {
     cy.visit('/catalogue/16');
     cy.findByText(
-      'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen'
+      'There are no catalogue categories. Please add a category using the button in the top left of your screen.'
     ).should('exist');
   });
 
@@ -899,18 +828,13 @@ describe('Catalogue Category', () => {
   });
 
   it('expired url displays search not found message', () => {
-    cy.visit('/catalogue/not-exist');
+    cy.visit('/catalogue/not_exist');
     cy.findByText(
-      'The category you searched for does not exist. Please navigate home by pressing the home button at the top left of your screen.'
+      `We're sorry, the page you requested was not found on the server. If you entered the URL manually please check your spelling and try again. Otherwise, return to the`,
+      { exact: false }
     ).should('exist');
-  });
 
-  it('add button disabled when expired url is used', () => {
-    cy.visit('/catalogue/not-exist');
-
-    cy.findByRole('button', { name: 'add catalogue category' }).should(
-      'be.disabled'
-    );
+    cy.findByRole('link', { name: 'catalogue home page' }).should('exist');
   });
 
   it('when root has no data it displays no categories error message', () => {
@@ -920,7 +844,7 @@ describe('Catalogue Category', () => {
       statusCode: 200,
     });
     cy.findByText(
-      'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen'
+      'There are no catalogue categories. Please add a category using the button in the top left of your screen.'
     ).should('exist');
   });
 
@@ -952,11 +876,14 @@ describe('Catalogue Category', () => {
 
     cy.findByText('Add Property').should('have.length', 1);
 
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100);
     cy.findBrowserMockedRequests({
       method: 'POST',
       url: '/v1/catalogue-categories/:catalogue_category_id/properties',
     }).should(async (patchRequests) => {
       expect(patchRequests.length).equal(1);
+
       const request = patchRequests[0];
       expect(JSON.stringify(await request.json())).equal(
         JSON.stringify({

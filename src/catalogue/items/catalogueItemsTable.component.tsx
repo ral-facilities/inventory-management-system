@@ -54,6 +54,7 @@ import {
 import CatalogueItemDirectoryDialog from './catalogueItemDirectoryDialog.component';
 import CatalogueItemsDetailsPanel from './catalogueItemsDetailsPanel.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
+import CatalogueLink from './catalogueLink.component';
 import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
 import ObsoleteCatalogueItemDialog from './obsoleteCatalogueItemDialog.component';
 
@@ -243,7 +244,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             <MuiLink
               underline="hover"
               component={Link}
-              to={`item/${row.original.catalogueItem.id}`}
+              to={`${row.original.catalogueItem.id}`}
             >
               {renderedCellValue}
             </MuiLink>
@@ -286,7 +287,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           <MuiLink
             underline="hover"
             component={Link}
-            to={`item/${row.original.catalogueItem.id}/items`}
+            to={`${row.original.catalogueItem.id}/items`}
           >
             Click here
           </MuiLink>
@@ -329,13 +330,14 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         enableGrouping: false,
         Cell: ({ row }) =>
           row.original.catalogueItem.obsolete_replacement_catalogue_item_id && (
-            <MuiLink
-              underline="hover"
-              component={Link}
-              to={`item/${row.original.catalogueItem.obsolete_replacement_catalogue_item_id}`}
+            <CatalogueLink
+              catalogueItemId={
+                row.original.catalogueItem
+                  .obsolete_replacement_catalogue_item_id
+              }
             >
               Click here
-            </MuiLink>
+            </CatalogueLink>
           ),
       },
       {

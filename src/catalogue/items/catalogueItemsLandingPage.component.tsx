@@ -12,24 +12,16 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
-import {
-  BreadcrumbsInfo,
-  CatalogueCategory,
-  CatalogueItem,
-} from '../../api/api.types';
-import {
-  useGetCatalogueBreadcrumbs,
-  useGetCatalogueCategory,
-} from '../../api/catalogueCategories';
+import { CatalogueCategory, CatalogueItem } from '../../api/api.types';
+import { useGetCatalogueCategory } from '../../api/catalogueCategories';
 import { useGetCatalogueItem } from '../../api/catalogueItems';
 import { useGetManufacturer } from '../../api/manufacturers';
 import ActionMenu from '../../common/actionMenu.component';
 import PlaceholderImage from '../../common/images/placeholderImage.component';
 import TabView from '../../common/tab/tabView.component';
 import { formatDateTimeStrings } from '../../utils';
-import Breadcrumbs from '../../view/breadcrumbs.component';
-import { useNavigateToCatalogue } from '../catalogue.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
+import CatalogueLink from './catalogueLink.component';
 
 const CatalogueItemsActionMenu = (props: {
   catalogueItem: CatalogueItem;
@@ -61,32 +53,21 @@ const CatalogueItemsActionMenu = (props: {
 };
 
 function CatalogueItemsLandingPage() {
-  const { catalogue_item_id: catalogueItemId } = useParams();
-  const navigateToCatalogue = useNavigateToCatalogue();
+  const {
+    catalogue_category_id: catalogueCategoryId,
+    catalogue_item_id: catalogueItemId,
+  } = useParams();
 
   const { data: catalogueItemIdData, isLoading: catalogueItemIdDataLoading } =
     useGetCatalogueItem(catalogueItemId);
 
-  const { data: catalogueBreadcrumbs } = useGetCatalogueBreadcrumbs(
-    catalogueItemIdData?.catalogue_category_id
-  );
-  const { data: catalogueCategoryData } = useGetCatalogueCategory(
-    catalogueItemIdData?.catalogue_category_id
-  );
+  const {
+    data: catalogueCategoryData,
+    isLoading: catalogueCategoryDataLoading,
+  } = useGetCatalogueCategory(catalogueCategoryId);
 
-  const [catalogueLandingBreadcrumbs, setCatalogueLandingBreadcrumbs] =
-    React.useState<BreadcrumbsInfo | undefined>(catalogueBreadcrumbs);
-
-  React.useEffect(() => {
-    if (catalogueBreadcrumbs && catalogueItemIdData)
-      setCatalogueLandingBreadcrumbs({
-        ...catalogueBreadcrumbs,
-        trail: [
-          ...catalogueBreadcrumbs.trail,
-          [`item/${catalogueItemIdData.id}`, catalogueItemIdData.name],
-        ],
-      });
-  }, [catalogueBreadcrumbs, catalogueItemIdData]);
+  const isParentCorrect =
+    catalogueItemIdData?.catalogue_category_id === catalogueCategoryId;
 
   const { data: manufacturer } = useGetManufacturer(
     catalogueItemIdData?.manufacturer_id
@@ -94,32 +75,7 @@ function CatalogueItemsLandingPage() {
 
   return (
     <Grid container flexDirection="column">
-      <Grid
-        sx={{
-          justifyContent: 'left',
-          paddingLeft: 0.5,
-          position: 'sticky',
-          top: 0,
-          backgroundColor: 'background.default',
-          zIndex: 1000,
-          width: '100%',
-          '@media print': {
-            display: 'none',
-          },
-        }}
-        item
-        container
-      >
-        <Grid item sx={{ py: 2.5 }}>
-          <Breadcrumbs
-            onChangeNode={navigateToCatalogue}
-            breadcrumbsInfo={catalogueLandingBreadcrumbs}
-            onChangeNavigateHome={() => navigateToCatalogue(null)}
-            homeLocation="Catalogue"
-          />
-        </Grid>
-      </Grid>
-      {catalogueItemIdData && catalogueCategoryData && (
+      {catalogueItemIdData && catalogueCategoryData && isParentCorrect && (
         <Grid item container justifyContent="center" xs={12}>
           <Grid
             item
@@ -229,14 +185,13 @@ function CatalogueItemsLandingPage() {
                             </Typography>
                             <Typography align="left" color="text.secondary">
                               {catalogueItemIdData.obsolete_replacement_catalogue_item_id ? (
-                                <MuiLink
-                                  component={Link}
-                                  underline="hover"
-                                  target="_blank"
-                                  to={`/catalogue/item/${catalogueItemIdData.obsolete_replacement_catalogue_item_id}`}
+                                <CatalogueLink
+                                  catalogueItemId={
+                                    catalogueItemIdData.obsolete_replacement_catalogue_item_id
+                                  }
                                 >
                                   Click here
-                                </MuiLink>
+                                </CatalogueLink>
                               ) : (
                                 'None'
                               )}
@@ -554,26 +509,7 @@ function CatalogueItemsLandingPage() {
           </Grid>
         </Grid>
       )}
-      {!catalogueItemIdDataLoading ? (
-        !catalogueItemIdData && (
-          <Box
-            sx={{
-              width: '100%',
-              justifyContent: 'center',
-              marginTop: 1,
-            }}
-          >
-            <Typography sx={{ fontWeight: 'bold', textAlign: 'center' }}>
-              No result found
-            </Typography>
-            <Typography sx={{ textAlign: 'center' }}>
-              This catalogue item doesn&#39;t exist. Please click the Home
-              button on the top left of your screen to navigate to the catalogue
-              home.
-            </Typography>
-          </Box>
-        )
-      ) : (
+      {(catalogueItemIdDataLoading || catalogueCategoryDataLoading) && (
         <Box sx={{ width: '100%' }}>
           <LinearProgress />
         </Box>

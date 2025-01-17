@@ -255,10 +255,8 @@ const ImageGallery = (props: ImageGalleryProps) => {
     .getSortedRowModel()
     .rows.map((row) => row.getVisibleCells().map((cell) => cell)[0]);
   const displayedImages = table
-    .getPaginationRowModel()
-    .rows.map(
-      (row) => row.getVisibleCells().map((cell) => cell.row.original)[0]
-    );
+    .getRowModel()
+    .rows.map((row) => row.getVisibleCells().map((cell) => cell)[0]);
 
   return (
     <>
@@ -332,18 +330,14 @@ const ImageGallery = (props: ImageGalleryProps) => {
                 gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
               }}
             >
-              {data.map((card, index) => {
-                const isUndisplayed = !displayedImages?.some(
-                  (img) => img.id === card.row.original.id
-                );
-
+              {displayedImages.map((card, index) => {
                 const lastPageIndex = Math.floor(
-                  data.length / preservedState.pagination.pageSize
+                  displayedImages.length / preservedState.pagination.pageSize
                 );
                 const isLastPage =
                   preservedState.pagination.pageIndex === lastPageIndex;
 
-                return isUndisplayed ? null : (
+                return (
                   <Card
                     component={Grid}
                     item

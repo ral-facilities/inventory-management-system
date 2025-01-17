@@ -3,13 +3,6 @@ import userEvent, { UserEvent } from '@testing-library/user-event';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import ManufacturerLandingPage from './manufacturerLandingPage.component';
 
-const mockedUseNavigate = vi.fn();
-
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')),
-  useNavigate: () => mockedUseNavigate,
-}));
-
 describe('Manufacturer Landing page', () => {
   let user: UserEvent;
   const createView = (path: string) => {
@@ -30,13 +23,6 @@ describe('Manufacturer Landing page', () => {
       expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
     });
 
-    await waitFor(() => {
-      expect(
-        screen.getByRole('button', {
-          name: 'navigate to manufacturers home',
-        })
-      ).toBeInTheDocument();
-    });
     expect(screen.getByText('URL:')).toBeInTheDocument();
     expect(screen.getByText('http://example.com')).toBeInTheDocument();
     expect(screen.getByText('Telephone number:')).toBeInTheDocument();
@@ -44,22 +30,6 @@ describe('Manufacturer Landing page', () => {
     expect(screen.getByText('Address:')).toBeInTheDocument();
   });
 
-  it('navigates back to the root directory', async () => {
-    createView('/manufacturers/1');
-
-    await waitFor(() => {
-      expect(screen.queryByText('Manufacturer A')).not.toBeInTheDocument();
-    });
-
-    const homeButton = screen.getByRole('button', {
-      name: 'navigate to manufacturers home',
-    });
-
-    await user.click(homeButton);
-
-    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
-    expect(mockedUseNavigate).toHaveBeenCalledWith('/manufacturers');
-  });
   it('landing page renders data correctly when optional values are null', async () => {
     createView('/manufacturers/4');
 
@@ -70,18 +40,6 @@ describe('Manufacturer Landing page', () => {
     expect(screen.getAllByText('None')[0]).toBeInTheDocument();
     expect(screen.getByText('Telephone number:')).toBeInTheDocument();
     expect(screen.getAllByText('None')[1]).toBeInTheDocument();
-  });
-
-  it('shows no manufacturer page correctly', async () => {
-    createView('/manufacturers/invalid');
-
-    await waitFor(() => {
-      expect(
-        screen.getByText(
-          `This manufacturer doesn't exist. Please click the Home button to navigate to the manufacturer table`
-        )
-      ).toBeInTheDocument();
-    });
   });
 
   it('shows the loading indicator', async () => {

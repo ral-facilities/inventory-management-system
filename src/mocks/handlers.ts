@@ -99,7 +99,7 @@ export const handlers = [
     );
   }),
 
-  http.get<{ id: string }, DefaultBodyType, CatalogueCategory>(
+  http.get<{ id: string }, DefaultBodyType, CatalogueCategory | ErrorResponse>(
     '/v1/catalogue-categories/:id',
     ({ params }) => {
       const { id } = params;
@@ -107,6 +107,12 @@ export const handlers = [
       const data = CatalogueCategoriesJSON.find(
         (catalogueCategory) => catalogueCategory.id === id
       );
+      if (!data) {
+        return HttpResponse.json(
+          { detail: 'Catalogue category not found' },
+          { status: 404 }
+        );
+      }
 
       return HttpResponse.json(data as CatalogueCategory, { status: 200 });
     }
@@ -136,13 +142,21 @@ export const handlers = [
     }
   ),
 
-  http.get<{ id: string }, DefaultBodyType, BreadcrumbsInfo>(
+  http.get<{ id: string }, DefaultBodyType, BreadcrumbsInfo | ErrorResponse>(
     '/v1/catalogue-categories/:id/breadcrumbs',
     ({ params }) => {
       const { id } = params;
       const data = CatalogueCategoryBreadcrumbsJSON.find(
         (catalogueBreadcrumbs) => catalogueBreadcrumbs.id === id
       ) as unknown as BreadcrumbsInfo;
+
+      if (!data) {
+        return HttpResponse.json(
+          { detail: 'Catalogue category not found' },
+          { status: 404 }
+        );
+      }
+
       return HttpResponse.json(data, {
         status: 200,
       });
@@ -322,9 +336,16 @@ export const handlers = [
         const CatalogueItemData = CatalogueItemsJSON.find(
           (catalogueItem) => catalogueItem.id === id
         );
+
+        if (!CatalogueItemData) {
+          return HttpResponse.json(
+            { detail: 'Catalogue not found' },
+            { status: 404 }
+          );
+        }
+
         return HttpResponse.json(CatalogueItemData, { status: 200 });
       }
-      return HttpResponse.json({ detail: '' }, { status: 422 });
     }
   ),
 
@@ -367,9 +388,14 @@ export const handlers = [
       };
 
       if (body.name === 'test_has_children_elements') {
+        // find the name of the manufacturer, so it can be used in the error message
+        const manufacturerName = ManufacturersJSON?.find(
+          (manufacturer) => manufacturer.id === validCatalogueItem?.manufacturer_id
+        ) as Manufacturer;
         return HttpResponse.json(
           {
-            detail: 'Catalogue item has child elements and cannot be edited',
+            detail: 'Unable to update catalogue item properties and manufacturer ('
+              + manufacturerName?.name + '), as the catalogue item has child elements.'
           },
           { status: 409 }
         );
@@ -468,7 +494,7 @@ export const handlers = [
     }
   ),
 
-  http.get<{ id: string }, DefaultBodyType, Manufacturer>(
+  http.get<{ id: string }, DefaultBodyType, Manufacturer | ErrorResponse>(
     '/v1/manufacturers/:id',
     ({ params }) => {
       const { id } = params;
@@ -476,6 +502,13 @@ export const handlers = [
       const data = ManufacturersJSON.find(
         (manufacturer) => manufacturer.id === id
       ) as Manufacturer;
+
+      if (!data) {
+        return HttpResponse.json(
+          { detail: 'Manufacturer not found' },
+          { status: 404 }
+        );
+      }
 
       return HttpResponse.json(data, { status: 200 });
     }
@@ -737,6 +770,10 @@ export const handlers = [
 
       const data = ItemsJSON.find((items) => items.id === id);
 
+      if (!data) {
+        return HttpResponse.json({ detail: 'Item not found' }, { status: 404 });
+      }
+
       return HttpResponse.json(data, { status: 200 });
     }
   ),
@@ -968,7 +1005,7 @@ export const handlers = [
         modified_time: '2024-01-02T13:10:10.000+00:00',
         created_time: '2024-01-01T12:00:00.000+00:00',
       },
-      { status: 200 }
+      { status: 201 }
     );
   }),
 
@@ -976,7 +1013,14 @@ export const handlers = [
 
   http.post('/object-storage', async () => {
     await delay(200);
-    return new HttpResponse(undefined, { status: 200 });
+    return new HttpResponse(undefined, {
+      status: 204,
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+        // This is need for uppy
+        ETag: '"e76fe3d21078d7a3b9ec95edf437d010"',
+      },
+    });
   }),
 
   // ------------------------------------ IMAGES ------------------------------------------------
