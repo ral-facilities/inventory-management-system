@@ -88,7 +88,7 @@ describe('Edit file dialog', () => {
     it('Edits an image correctly', async () => {
       createView();
 
-      //Checks if file extension is displayed. If it's editable, actual value will not match expected.
+      // Checks if file extension is displayed. If it's editable, actual value will not match expected.
       expect(screen.getByText('.png')).toBeInTheDocument();
 
       modifyFileValues({

@@ -539,7 +539,7 @@ describe('Items', () => {
 
       cy.findByRole('button', { name: 'Remove file' }).click();
 
-      //TODO: Assert axios delete request was called
+      // TODO: Assert axios delete request was called
 
       cy.findByText('Upload 1 file').should('not.exist');
     });
@@ -936,7 +936,7 @@ describe('Items', () => {
       });
     });
 
-    it('shows error when no fields have been changed', () => {
+    it('shows error message when no fields have been changed', () => {
       cy.findByText('5YUQDDjKpz2z').click();
       cy.findByText(
         'High-resolution cameras for beam characterization. 1'
