@@ -146,6 +146,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
     enableRowSelection: true,
     enableStickyHeader: true,
     enableDensityToggle: false,
+    enableMultiRowSelection: !dense,
     enableTableFooter: true,
     enableColumnFilters: true,
     enableHiding: false,
