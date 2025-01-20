@@ -34,16 +34,20 @@ import { usePreservedTableState } from '../preservedTableState.component';
 import DeleteImageDialog from './deleteImageDialog.component';
 import GalleryLightBox from './galleryLightbox.component';
 import ImageInformationDialog from './imageInformationDialog.component';
+import PrimaryImageDialog from './primaryImageDialog.component';
 import ThumbnailImage from './thumbnailImage.component';
-
-const MAX_HEIGHT_THUMBNAIL = 300;
 
 export interface ImageGalleryProps {
   entityId?: string;
+  dense: boolean;
 }
 
 const ImageGallery = (props: ImageGalleryProps) => {
-  const { entityId } = props;
+  const { entityId, dense } = props;
+
+  const MAX_HEIGHT_THUMBNAIL = dense ? 150 : 300;
+  console.log(MAX_HEIGHT_THUMBNAIL);
+
   const { data: images, isLoading: imageIsLoading } = useGetImages(entityId);
 
   const [currentLightBoxImage, setCurrentLightBoxImage] = React.useState<
@@ -57,12 +61,13 @@ const ImageGallery = (props: ImageGalleryProps) => {
   const [openMenuDialog, setOpenMenuDialog] = React.useState<
     'download' | 'edit' | 'delete' | 'information' | false
   >(false);
+
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
       pagination: { pageSize: 16, pageIndex: 0 },
     },
     storeInUrl: true,
-    urlParamName: 'imageState',
+    urlParamName: dense ? 'primaryImageState' : 'imageState',
   });
 
   const titles = Array.from(
@@ -136,7 +141,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
     enableColumnPinning: false,
     enableTopToolbar: true,
     enableFacetedValues: true,
-    enableRowActions: true,
+    enableRowActions: !dense,
     enableGlobalFilter: false,
     enableRowSelection: true,
     enableStickyHeader: true,
@@ -199,6 +204,11 @@ const ImageGallery = (props: ImageGalleryProps) => {
         <MenuItem
           key="download"
           aria-label={`Download ${row.original.file_name} image`}
+          onClick={() => {
+            setSelectedImage(row.original);
+            setOpenMenuDialog('download');
+            closeMenu();
+          }}
           sx={{ m: 0 }}
         >
           <ListItemIcon>
@@ -268,8 +278,8 @@ const ImageGallery = (props: ImageGalleryProps) => {
               No images available
             </Typography>
             <Typography variant="body1">
-              Please add an image by opening the Action Menu and clicking the
-              Upload Images menu item.
+              Please add an image by{dense && ' opening the Action Menu and'}{' '}
+              clicking the Upload Images menu item.
             </Typography>
           </Box>
         )
@@ -321,7 +331,9 @@ const ImageGallery = (props: ImageGalleryProps) => {
               gap={2}
               sx={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+                gridTemplateColumns: dense
+                  ? 'repeat(auto-fit, minmax(200px, 1fr))'
+                  : 'repeat(auto-fit, minmax(350px, 1fr))',
               }}
             >
               {displayedImages.map((card, index) => {
@@ -347,7 +359,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
                           ? '50%'
                           : undefined,
                     }}
-                    minWidth={'350px'}
+                    minWidth={dense ? '175px' : '350px'}
                   >
                     <Grid
                       display="flex"
@@ -382,6 +394,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
                           setCurrentLightBoxImage(card.row.original.id)
                         }
                         image={card.row.original}
+                        dense={dense}
                       />
                     </Grid>
 
@@ -393,17 +406,19 @@ const ImageGallery = (props: ImageGalleryProps) => {
                       container
                       xs={12}
                     >
-                      <Grid xs={2} item>
-                        <MRT_ToggleRowActionMenuButton
-                          cell={card as MRT_Cell<APIImage>}
-                          row={card.row as MRT_Row<APIImage>}
-                          table={table}
-                          sx={{
-                            ariaLabel: `actions ${card.row.original.file_name} photo button`,
-                            margin: 0.5,
-                          }}
-                        />
-                      </Grid>
+                      {!dense && (
+                        <Grid xs={2} item>
+                          <MRT_ToggleRowActionMenuButton
+                            cell={card as MRT_Cell<APIImage>}
+                            row={card.row as MRT_Row<APIImage>}
+                            table={table}
+                            sx={{
+                              ariaLabel: `actions ${card.row.original.file_name} photo button`,
+                              margin: 0.5,
+                            }}
+                          />
+                        </Grid>
+                      )}
                       <Grid item xs={8}>
                         <OverflowTip
                           sx={{
@@ -424,12 +439,20 @@ const ImageGallery = (props: ImageGalleryProps) => {
           <Grid marginTop={2} direction="row" item container>
             <MRT_BottomToolbar table={table} sx={{ width: '100%' }} />
           </Grid>
-          {selectedImage && (
+          {selectedImage && !dense && (
             <>
               <ImageInformationDialog
                 open={openMenuDialog === 'information'}
                 onClose={() => setOpenMenuDialog(false)}
                 image={selectedImage}
+              />
+              <PrimaryImageDialog
+                open={openMenuDialog === 'download'}
+                onClose={() => {
+                  setOpenMenuDialog(false);
+                  setCurrentLightBoxImage(undefined);
+                }}
+                entityID={entityId ?? ''}
               />
               <DeleteImageDialog
                 open={openMenuDialog === 'delete'}

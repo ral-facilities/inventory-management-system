@@ -72,7 +72,7 @@ function TabView<T extends string>(props: TabViewProps<T>) {
       updatedTabData.push({
         value: 'Gallery' as AdditionalTabValues,
         icon: <CollectionsOutlinedIcon />,
-        component: <ImageGallery entityId={galleryEntityId} />,
+        component: <ImageGallery entityId={galleryEntityId} dense={false} />,
         order: galleryOrder ?? updatedTabData.length + 1,
       });
     }
