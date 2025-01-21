@@ -1,4 +1,3 @@
-import WarningIcon from '@mui/icons-material/Warning';
 import {
   Box,
   Button,
@@ -10,6 +9,7 @@ import {
 } from '@mui/material';
 import React from 'react';
 import ImageGallery from './imageGallery.component';
+import UploadImagesDialog from './uploadImagesDialog.component';
 
 export interface DeleteImageProps {
   open: boolean;
@@ -19,6 +19,9 @@ export interface DeleteImageProps {
 
 const PrimaryImageDialog = (props: DeleteImageProps) => {
   const { open, onClose, entityID } = props;
+
+  const [openUploadDialog, setOpenUploadDialog] =
+    React.useState<boolean>(false);
 
   const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
     undefined
@@ -30,33 +33,55 @@ const PrimaryImageDialog = (props: DeleteImageProps) => {
   }, [onClose]);
 
   return (
-    <Dialog open={open} maxWidth="xl">
-      <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
-        <WarningIcon sx={{ marginRight: 1 }} />
-        Primary Image
-      </DialogTitle>
-      <DialogContent>
-        <ImageGallery entityId={entityID} dense={true} />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-      </DialogActions>
-      {errorMessage != undefined && (
-        <Box
+    <>
+      <UploadImagesDialog
+        open={openUploadDialog}
+        onClose={() => setOpenUploadDialog(false)}
+        entityId={entityID}
+      />
+      <Dialog open={open} maxWidth="xl">
+        <DialogTitle
           sx={{
-            mx: '24px',
-            marginBottom: '24px',
-            display: 'flex',
+            display: 'inline-flex',
             alignItems: 'center',
-            justifyContent: 'center',
+            justifyContent: 'space-between',
           }}
         >
-          <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
-            {errorMessage}
-          </FormHelperText>
-        </Box>
-      )}
-    </Dialog>
+          Select Primary Image
+          <Button
+            onClick={() => {
+              setOpenUploadDialog(true);
+            }}
+          >
+            Upload Image
+          </Button>
+        </DialogTitle>
+        <DialogContent>
+          <ImageGallery entityId={entityID} dense={true} />
+        </DialogContent>
+        <DialogActions
+          sx={{ display: 'inline-flex', justifyContent: 'space-between' }}
+        >
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Save</Button>
+        </DialogActions>
+        {errorMessage != undefined && (
+          <Box
+            sx={{
+              mx: '24px',
+              marginBottom: '24px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
+              {errorMessage}
+            </FormHelperText>
+          </Box>
+        )}
+      </Dialog>
+    </>
   );
 };
 

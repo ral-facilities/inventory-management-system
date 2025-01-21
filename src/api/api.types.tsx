@@ -257,6 +257,12 @@ export interface APIImage
   thumbnail_base64: string;
 }
 
+export interface ObjectFilePatch {
+  file_name?: string;
+  title?: string | null;
+  description?: string | null;
+  primary?: boolean | null;
+}
 export interface APIImageWithURL extends APIImage {
   url: string;
 }

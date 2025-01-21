@@ -1,3 +1,4 @@
+import EditIcon from '@mui/icons-material/Edit';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
 import NotesIcon from '@mui/icons-material/Notes';
@@ -18,6 +19,7 @@ import { useGetCatalogueItem } from '../../api/catalogueItems';
 import { useGetManufacturer } from '../../api/manufacturers';
 import ActionMenu from '../../common/actionMenu.component';
 import PlaceholderImage from '../../common/images/placeholderImage.component';
+import PrimaryImageDialog from '../../common/images/primaryImageDialog.component';
 import TabView from '../../common/tab/tabView.component';
 import { formatDateTimeStrings } from '../../utils';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
@@ -73,6 +75,9 @@ function CatalogueItemsLandingPage() {
     catalogueItemIdData?.manufacturer_id
   );
 
+  const [openPrimaryDialog, setOpenPrimaryDialog] =
+    React.useState<boolean>(false);
+
   return (
     <Grid container flexDirection="column">
       {catalogueItemIdData && catalogueCategoryData && isParentCorrect && (
@@ -88,7 +93,30 @@ function CatalogueItemsLandingPage() {
             <Grid item container xs={12}>
               <Grid item xs={12} sm={4}>
                 <PlaceholderImage />
+                <Button
+                  startIcon={<EditIcon />}
+                  sx={{
+                    mx: 0.5,
+                    ml: 2,
+                    position: 'absolute',
+                    top: '18%',
+                    left: '9.2%',
+                  }}
+                  variant="outlined"
+                  onClick={() => {
+                    setOpenPrimaryDialog(true);
+                  }}
+                >
+                  Primary
+                </Button>
               </Grid>
+              <PrimaryImageDialog
+                open={openPrimaryDialog}
+                onClose={() => {
+                  setOpenPrimaryDialog(false);
+                }}
+                entityID={catalogueItemId ?? ''}
+              />
               {/* Title and Description Section */}
               <Grid
                 item

@@ -1,6 +1,13 @@
+import EditIcon from '@mui/icons-material/Edit';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import NotesIcon from '@mui/icons-material/Notes';
-import { Box, Divider, LinearProgress, Link as MuiLink } from '@mui/material';
+import {
+  Box,
+  Button,
+  Divider,
+  LinearProgress,
+  Link as MuiLink,
+} from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import React from 'react';
@@ -13,6 +20,7 @@ import { useGetManufacturer } from '../api/manufacturers';
 import { useGetSystem } from '../api/systems';
 import ActionMenu from '../common/actionMenu.component';
 import PlaceholderImage from '../common/images/placeholderImage.component';
+import PrimaryImageDialog from '../common/images/primaryImageDialog.component';
 import TabView from '../common/tab/tabView.component';
 import { formatDateTimeStrings } from '../utils';
 import ItemDialog from './itemDialog.component';
@@ -23,8 +31,7 @@ const ItemsActionMenu = (props: {
   item: Item;
 }) => {
   const { catalogueItem, catalogueCategory, item } = props;
-  const [editItemDialogOpen, setEditItemDialogOpen] =
-    React.useState<boolean>(false);
+  const [openEditDialog, setOpenEditDialog] = React.useState<boolean>(false);
   return (
     <ActionMenu
       ariaLabelPrefix="items landing page"
@@ -32,14 +39,14 @@ const ItemsActionMenu = (props: {
       uploadAttachmentsEntityId={item.id}
       uploadImagesEntityId={item.id}
       editMenuItem={{
-        onClick: () => setEditItemDialogOpen(true),
+        onClick: () => setOpenEditDialog(true),
         dialog: (
           <>
-            {editItemDialogOpen && (
+            {openEditDialog && (
               <ItemDialog
-                open={editItemDialogOpen}
+                open={openEditDialog}
                 onClose={() => {
-                  setEditItemDialogOpen(false);
+                  setOpenEditDialog(false);
                 }}
                 requestType="patch"
                 catalogueCategory={catalogueCategory}
@@ -77,6 +84,9 @@ function ItemsLandingPage() {
     catalogueItemData?.manufacturer_id
   );
 
+  const [openPrimaryDialog, setOpenPrimaryDialog] =
+    React.useState<boolean>(false);
+
   return (
     <Grid container flexDirection="column">
       {(!itemDataIsLoading ||
@@ -97,7 +107,30 @@ function ItemsLandingPage() {
               <Grid item container xs={12}>
                 <Grid item xs={12} sm={4}>
                   <PlaceholderImage />
+                  <Button
+                    startIcon={<EditIcon />}
+                    sx={{
+                      mx: 0.5,
+                      ml: 2,
+                      position: 'absolute',
+                      top: '18%',
+                      left: '9.2%',
+                    }}
+                    variant="outlined"
+                    onClick={() => {
+                      setOpenPrimaryDialog(true);
+                    }}
+                  >
+                    Primary
+                  </Button>
                 </Grid>
+                <PrimaryImageDialog
+                  open={openPrimaryDialog}
+                  onClose={() => {
+                    setOpenPrimaryDialog(false);
+                  }}
+                  entityID={itemData.id ?? ''}
+                />
                 {/* Title and Description Section */}
                 <Grid
                   item

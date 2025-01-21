@@ -1,6 +1,8 @@
+import EditIcon from '@mui/icons-material/Edit';
 import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
 import {
   Box,
+  Button,
   Chip,
   CircularProgress,
   Divider,
@@ -12,6 +14,7 @@ import { System } from '../api/api.types';
 import { getSystemImportanceColour, useGetSystem } from '../api/systems';
 import ActionMenu from '../common/actionMenu.component';
 import PlaceholderImage from '../common/images/placeholderImage.component';
+import PrimaryImageDialog from '../common/images/primaryImageDialog.component';
 import TabView from '../common/tab/tabView.component';
 import { formatDateTimeStrings, OverflowTip } from '../utils';
 import SystemDialog from './systemDialog.component';
@@ -51,6 +54,9 @@ export interface SystemDetailsProps {
 
 function SystemDetails(props: SystemDetailsProps) {
   const { data: system, isLoading: systemLoading } = useGetSystem(props.id);
+
+  const [openPrimaryDialog, setOpenPrimaryDialog] =
+    React.useState<boolean>(false);
 
   return systemLoading && props.id !== null ? (
     <Box
@@ -112,7 +118,30 @@ function SystemDetails(props: SystemDetailsProps) {
             <Grid item container spacing={2}>
               <Grid item xs={12} sm={4}>
                 <PlaceholderImage />
+                <Button
+                  startIcon={<EditIcon />}
+                  sx={{
+                    mx: 0.5,
+                    ml: 2,
+                    position: 'absolute',
+                    top: '28.3%',
+                    left: '21%',
+                  }}
+                  variant="outlined"
+                  onClick={() => {
+                    setOpenPrimaryDialog(true);
+                  }}
+                >
+                  Primary
+                </Button>
               </Grid>
+              <PrimaryImageDialog
+                open={openPrimaryDialog}
+                onClose={() => {
+                  setOpenPrimaryDialog(false);
+                }}
+                entityID={system.id ?? ''}
+              />
               <Grid item container spacing={1} xs={12} sm={8}>
                 <Grid item xs={12} sm={6}>
                   <Typography color="text.primary">Location</Typography>

@@ -34,7 +34,6 @@ import { usePreservedTableState } from '../preservedTableState.component';
 import DeleteImageDialog from './deleteImageDialog.component';
 import GalleryLightBox from './galleryLightbox.component';
 import ImageInformationDialog from './imageInformationDialog.component';
-import PrimaryImageDialog from './primaryImageDialog.component';
 import ThumbnailImage from './thumbnailImage.component';
 
 export interface ImageGalleryProps {
@@ -446,14 +445,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
                 open={openMenuDialog === 'information'}
                 onClose={() => setOpenMenuDialog(false)}
                 image={selectedImage}
-              />
-              <PrimaryImageDialog
-                open={openMenuDialog === 'download'}
-                onClose={() => {
-                  setOpenMenuDialog(false);
-                  setCurrentLightBoxImage(undefined);
-                }}
-                entityID={entityId ?? ''}
               />
               <DeleteImageDialog
                 open={openMenuDialog === 'delete'}
