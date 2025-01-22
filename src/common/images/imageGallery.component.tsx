@@ -31,10 +31,12 @@ import { useGetImages } from '../../api/images';
 import { displayTableRowCountText, OverflowTip } from '../../utils';
 import CardViewFilters from '../cardView/cardViewFilters.component';
 import { usePreservedTableState } from '../preservedTableState.component';
+import { StyledUppyBox } from '../uppy.utils';
 import DeleteImageDialog from './deleteImageDialog.component';
 import GalleryLightBox from './galleryLightbox.component';
 import ImageInformationDialog from './imageInformationDialog.component';
 import ThumbnailImage from './thumbnailImage.component';
+import UploadImagesDialog from './uploadImagesDialog.component';
 
 export interface ImageGalleryProps {
   entityId?: string;
@@ -271,6 +273,9 @@ const ImageGallery = (props: ImageGalleryProps) => {
     .getRowModel()
     .rows.map((row) => row.getVisibleCells().map((cell) => cell)[0]);
 
+  const [openUploadDialog, setOpenUploadDialog] =
+    React.useState<boolean>(false);
+
   return (
     <>
       {!imageIsLoading ? (
@@ -330,6 +335,16 @@ const ImageGallery = (props: ImageGalleryProps) => {
           >
             Clear Filters
           </Button>
+          {dense && (
+            <Button
+              onClick={() => {
+                setOpenUploadDialog(true);
+              }}
+              variant="outlined"
+            >
+              Upload Image
+            </Button>
+          )}
           <Grid container item>
             <Grid
               container
@@ -446,6 +461,15 @@ const ImageGallery = (props: ImageGalleryProps) => {
           <Grid marginTop={2} direction="row" item container>
             <MRT_BottomToolbar table={table} sx={{ width: '100%' }} />
           </Grid>
+          {dense && (
+            <StyledUppyBox>
+              <UploadImagesDialog
+                open={openUploadDialog}
+                onClose={() => setOpenUploadDialog(false)}
+                entityId={entityId ?? ''}
+              />
+            </StyledUppyBox>
+          )}
           {selectedImage && !dense && (
             <>
               <ImageInformationDialog

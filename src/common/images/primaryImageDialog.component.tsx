@@ -13,9 +13,7 @@ import React from 'react';
 import { ObjectFilePatch } from '../../api/api.types';
 import { usePatchImage } from '../../api/images';
 import handleIMS_APIError from '../../handleIMS_APIError';
-import { StyledUppyBox } from '../uppy.utils';
 import ImageGallery from './imageGallery.component';
-import UploadImagesDialog from './uploadImagesDialog.component';
 
 export interface DeleteImageProps {
   open: boolean;
@@ -25,9 +23,6 @@ export interface DeleteImageProps {
 
 const PrimaryImageDialog = (props: DeleteImageProps) => {
   const { open, onClose, entityID } = props;
-
-  const [openUploadDialog, setOpenUploadDialog] =
-    React.useState<boolean>(false);
 
   const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
     undefined
@@ -62,13 +57,6 @@ const PrimaryImageDialog = (props: DeleteImageProps) => {
 
   return (
     <>
-      <StyledUppyBox>
-        <UploadImagesDialog
-          open={openUploadDialog}
-          onClose={() => setOpenUploadDialog(false)}
-          entityId={entityID}
-        />
-      </StyledUppyBox>
       <Dialog open={open} maxWidth="xl">
         <DialogTitle
           sx={{
@@ -78,14 +66,6 @@ const PrimaryImageDialog = (props: DeleteImageProps) => {
           }}
         >
           Select Primary Image
-          <Button
-            onClick={() => {
-              setOpenUploadDialog(true);
-            }}
-            variant="outlined"
-          >
-            Upload Image
-          </Button>
         </DialogTitle>
         <DialogContent>
           <ImageGallery
