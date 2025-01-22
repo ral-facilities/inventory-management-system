@@ -31,7 +31,7 @@ describe('NumberOfSparesClickable Snapshot Tests', () => {
   describe('link', () => {
     it('renders correctly as a link with label', async () => {
       const view = createView(
-        `/catalogue/item/${props.catalogueItem.id}/items`
+        `/catalogue/${props.catalogueItem.catalogue_category_id}/items/${props.catalogueItem.id}/items`
       );
 
       const link = screen.getByRole('link', { name: 'View Spares' });
@@ -40,7 +40,7 @@ describe('NumberOfSparesClickable Snapshot Tests', () => {
       await waitFor(() => {
         expect(link).toHaveAttribute(
           'href',
-          `/catalogue/item/1/items?state=N4IgxgYiBcDaoEsAmMQIC4FMC2A6ArgM4CGA5pgPqHrHpEgA0IAbsQDb6YzwjoCeABy7QQ1AE4IAdqUYt2nVADlMAdxABfBqH5DU4qTKasOwkAFVCmFOoC6t9UA`
+          `/catalogue/4/items/1/items?state=N4IgxgYiBcDaoEsAmMQIC4FMC2A6ArgM4CGA5pgPqHrHpEgA0IAbsQDb6YzwjoCeABy7QQ1AE4IAdqUYt2nVADlMAdxABfBqH5DU4qTKasOwkAFVCmFOoC6t9UA`
         );
       });
 
@@ -50,7 +50,7 @@ describe('NumberOfSparesClickable Snapshot Tests', () => {
     it('renders correctly as a link without label', async () => {
       props.label = undefined;
       const view = createView(
-        `/catalogue/item/${props.catalogueItem.id}/items`
+        `/catalogue/${props.catalogueItem.catalogue_category_id}/items/${props.catalogueItem.id}/items`
       );
 
       const link = screen.getByRole('link', { name: '2' });
@@ -59,7 +59,7 @@ describe('NumberOfSparesClickable Snapshot Tests', () => {
       await waitFor(() => {
         expect(link).toHaveAttribute(
           'href',
-          `/catalogue/item/1/items?state=N4IgxgYiBcDaoEsAmMQIC4FMC2A6ArgM4CGA5pgPqHrHpEgA0IAbsQDb6YzwjoCeABy7QQ1AE4IAdqUYt2nVADlMAdxABfBqH5DU4qTKasOwkAFVCmFOoC6t9UA`
+          `/catalogue/4/items/1/items?state=N4IgxgYiBcDaoEsAmMQIC4FMC2A6ArgM4CGA5pgPqHrHpEgA0IAbsQDb6YzwjoCeABy7QQ1AE4IAdqUYt2nVADlMAdxABfBqH5DU4qTKasOwkAFVCmFOoC6t9UA`
         );
       });
 
@@ -73,7 +73,7 @@ describe('NumberOfSparesClickable Snapshot Tests', () => {
     });
     it('renders correctly as a button with label', async () => {
       const view = createView(
-        `/catalogue/item/${props.catalogueItem.id}/items`
+        `/catalogue/${props.catalogueItem.catalogue_category_id}/items/${props.catalogueItem.id}/items`
       );
 
       const link = screen.getByRole('link', { name: 'View Spares' });
@@ -82,7 +82,7 @@ describe('NumberOfSparesClickable Snapshot Tests', () => {
       await waitFor(() => {
         expect(link).toHaveAttribute(
           'href',
-          `/catalogue/item/1/items?state=N4IgxgYiBcDaoEsAmMQIC4FMC2A6ArgM4CGA5pgPqHrHpEgA0IAbsQDb6YzwjoCeABy7QQ1AE4IAdqUYt2nVADlMAdxABfBqH5DU4qTKasOwkAFVCmFOoC6t9UA`
+          `/catalogue/4/items/1/items?state=N4IgxgYiBcDaoEsAmMQIC4FMC2A6ArgM4CGA5pgPqHrHpEgA0IAbsQDb6YzwjoCeABy7QQ1AE4IAdqUYt2nVADlMAdxABfBqH5DU4qTKasOwkAFVCmFOoC6t9UA`
         );
       });
 
@@ -92,7 +92,7 @@ describe('NumberOfSparesClickable Snapshot Tests', () => {
     it('renders correctly as a button without label', async () => {
       props.label = undefined;
       const view = createView(
-        `/catalogue/item/${props.catalogueItem.id}/items`
+        `/catalogue/${props.catalogueItem.catalogue_category_id}/items/${props.catalogueItem.id}/items`
       );
 
       const link = screen.getByRole('link', { name: '2' });
@@ -101,7 +101,7 @@ describe('NumberOfSparesClickable Snapshot Tests', () => {
       await waitFor(() => {
         expect(link).toHaveAttribute(
           'href',
-          `/catalogue/item/1/items?state=N4IgxgYiBcDaoEsAmMQIC4FMC2A6ArgM4CGA5pgPqHrHpEgA0IAbsQDb6YzwjoCeABy7QQ1AE4IAdqUYt2nVADlMAdxABfBqH5DU4qTKasOwkAFVCmFOoC6t9UA`
+          `/catalogue/4/items/1/items?state=N4IgxgYiBcDaoEsAmMQIC4FMC2A6ArgM4CGA5pgPqHrHpEgA0IAbsQDb6YzwjoCeABy7QQ1AE4IAdqUYt2nVADlMAdxABfBqH5DU4qTKasOwkAFVCmFOoC6t9UA`
         );
       });
 
@@ -111,7 +111,7 @@ describe('NumberOfSparesClickable Snapshot Tests', () => {
     it('renders correctly as a button without label (disabled)', async () => {
       props.label = undefined;
       const view = createView(
-        `/catalogue/item/${props.catalogueItem.id}/items?state=N4IgxgYiBcDaoEsAmMQIC4FMC2A6ArgM4CGA5pgPqHrHpEgA0IAbsQDb6YzwjoCeABy7QQ1AE4IAdqUYt2nVADlMAdxABfBqH5DU4qTKasOwkAFVCmFOoC6t9UA`
+        `/catalogue/${props.catalogueItem.catalogue_category_id}/items/${props.catalogueItem.id}/items?state=N4IgxgYiBcDaoEsAmMQIC4FMC2A6ArgM4CGA5pgPqHrHpEgA0IAbsQDb6YzwjoCeABy7QQ1AE4IAdqUYt2nVADlMAdxABfBqH5DU4qTKasOwkAFVCmFOoC6t9UA`
       );
 
       const link = screen.getByRole('link', { name: '2' });
@@ -120,7 +120,7 @@ describe('NumberOfSparesClickable Snapshot Tests', () => {
       await waitFor(() => {
         expect(link).toHaveAttribute(
           'href',
-          `/catalogue/item/1/items?state=N4IgxgYiBcDaoEsAmMQIC4FMC2A6ArgM4CGA5pgPqHrHpEgA0IAbsQDb6YzwjoCeABy7QQ1AE4IAdqUYt2nVADlMAdxABfBqH5DU4qTKasOwkAFVCmFOoC6t9UA`
+          `/catalogue/4/items/1/items?state=N4IgxgYiBcDaoEsAmMQIC4FMC2A6ArgM4CGA5pgPqHrHpEgA0IAbsQDb6YzwjoCeABy7QQ1AE4IAdqUYt2nVADlMAdxABfBqH5DU4qTKasOwkAFVCmFOoC6t9UA`
         );
       });
 

@@ -44,10 +44,11 @@ const NumberOfSparesClickable = (props: NumberOfSparesClickableProps) => {
     ? `?state=${LZString.compressToEncodedURIComponent(stringSparesColumnsFilters)}`
     : '';
 
-  const sparesLink = `/catalogue/item/${catalogueItem.id}/items${sparesFilterState}`;
+  const sparesLink = `/catalogue/${catalogueItem.catalogue_category_id}/items/${catalogueItem.id}/items${sparesFilterState}`;
 
   const [isCurrentState, setIsCurrentState] = React.useState<boolean>(false);
 
+  // This is only used to compare the spares filters state to the actual filter state to disable the apply spares filter button
   const currentSearchParams = searchParams.get('state');
 
   React.useEffect(() => {
@@ -57,7 +58,8 @@ const NumberOfSparesClickable = (props: NumberOfSparesClickableProps) => {
       );
 
       const isUrlMatching =
-        location.pathname === `/catalogue/item/${catalogueItem.id}/items`;
+        location.pathname ===
+        `/catalogue/${catalogueItem.catalogue_category_id}/items/${catalogueItem.id}/items`;
 
       const isOnlyCF =
         JSON.stringify(Object.keys(decodedCurrentState)) ===
@@ -74,7 +76,7 @@ const NumberOfSparesClickable = (props: NumberOfSparesClickableProps) => {
     } else {
       setIsCurrentState(false);
     }
-  }, [catalogueItem.id, currentSearchParams, location, sparesColumnsFilters]);
+  }, [catalogueItem, currentSearchParams, location, sparesColumnsFilters]);
 
   const displayValue = label?.trim() || catalogueItem.number_of_spares;
   return type === 'link' ? (

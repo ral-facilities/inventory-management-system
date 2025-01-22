@@ -147,7 +147,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                       >
                         <a
                           class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                          href="/catalogue/item/33/items"
+                          href="/catalogue/4/items/33/items"
                         >
                           2
                         </a>
@@ -730,7 +730,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                       >
                         <a
                           class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                          href="/catalogue/item/33/items"
+                          href="/catalogue/4/items/33/items"
                         >
                           2
                         </a>
@@ -1313,7 +1313,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                       >
                         <a
                           class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                          href="/catalogue/item/11/items"
+                          href="/catalogue/9/items/11/items?state=N4IgxgYiBcDaoEsAmMQIC4FMC2A6ArgM4CGA5pgPqHrHpEgA0IAbsQDb6YzwjoCeABy7QQ1AE4IAdqUYt2nVADlMAdxABfBqH5DU4qTKasOwkAFVCmFOoC6t9UA"
                         >
                           2
                         </a>
@@ -1855,7 +1855,7 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                       >
                         <a
                           class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                          href="/catalogue/item/89/items"
+                          href="/catalogue/5/items/89/items?state=N4IgxgYiBcDaoEsAmMQIC4FMC2A6ArgM4CGA5pgPqHrHpEgA0IAbsQDb6YzwjoCeABy7QQ1AE4IAdqUYt2nVADlMAdxABfBqH5DU4qTKasOwkAFVCmFOoC6t9UA"
                         >
                           1
                         </a>
@@ -2407,7 +2407,7 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                       >
                         <a
                           class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                          href="/catalogue/item/89/items?state=N4IgxgYiBcDaoEsAmMQIC4FMC2A6ArgM4CGA5pgPqHrHpEgA0IAbsQDb6YzwjoCeABy7QQ1AE4IAdqUYt2nVADlMAdxABfBqH5DU4qTKasOwkAFVCmFOoC6t9UA"
+                          href="/catalogue/5/items/89/items?state=N4IgxgYiBcDaoEsAmMQIC4FMC2A6ArgM4CGA5pgPqHrHpEgA0IAbsQDb6YzwjoCeABy7QQ1AE4IAdqUYt2nVADlMAdxABfBqH5DU4qTKasOwkAFVCmFOoC6t9UA"
                         >
                           1
                         </a>
@@ -2958,7 +2958,7 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                       >
                         <a
                           class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                          href="/catalogue/item/89/items?state=N4IgxgYiBcDaoEsAmMQIC4FMC2A6ArgM4CGA5pgPqHrHpEgA0IAbsQDb6YzwjoCeABy7QQ1AE4IAdqUYt2nVADlMAdxABfBqH5DU4qTKasOwkAFVCmFOoC6t9UA"
+                          href="/catalogue/5/items/89/items?state=N4IgxgYiBcDaoEsAmMQIC4FMC2A6ArgM4CGA5pgPqHrHpEgA0IAbsQDb6YzwjoCeABy7QQ1AE4IAdqUYt2nVADlMAdxABfBqH5DU4qTKasOwkAFVCmFOoC6t9UA"
                         >
                           1
                         </a>
@@ -3509,7 +3509,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                       >
                         <a
                           class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                          href="/catalogue/item/89/items?state=N4IgxgYiBcDaoEsAmMQIC4FMC2A6ArgM4CGA5pgPqHrHpEgA0IAbsQDb6YzwjoCeABy7QQ1AE4IAdqUYt2nVADlMAdxABfBqH5DU4qTKasOwkAFVCmFOoC6t9UA"
+                          href="/catalogue/5/items/89/items?state=N4IgxgYiBcDaoEsAmMQIC4FMC2A6ArgM4CGA5pgPqHrHpEgA0IAbsQDb6YzwjoCeABy7QQ1AE4IAdqUYt2nVADlMAdxABfBqH5DU4qTKasOwkAFVCmFOoC6t9UA"
                         >
                           1
                         </a>

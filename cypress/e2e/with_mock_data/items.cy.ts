@@ -57,7 +57,7 @@ describe('Items', () => {
   });
 
   it('should be able to set and unset spares filter', () => {
-    cy.visit('/catalogue/item/1/items');
+    cy.visit('/catalogue/4/items/1/items');
 
     cy.findByText('5YUQDDjKpz2z').should('exist');
     cy.findByText('vYs9Vxx6yWbn').should('exist');

@@ -191,7 +191,7 @@ describe('Catalogue Items Landing Page', () => {
   });
 
   it('navigates to items table view (spares definition)', async () => {
-    createView('/catalogue/item/89');
+    createView('/catalogue/5/items/89');
     await waitFor(() => {
       expect(screen.getByRole('link', { name: '1' })).toBeInTheDocument();
     });
@@ -199,11 +199,12 @@ describe('Catalogue Items Landing Page', () => {
     const url = screen.getByRole('link', {
       name: '1',
     });
-
-    expect(url).toHaveAttribute(
-      'href',
-      '/catalogue/item/89/items?state=N4IgxgYiBcDaoEsAmMQIC4FMC2A6ArgM4CGA5pgPqHrHpEgA0IAbsQDb6YzwjoCeABy7QQ1AE4IAdqUYt2nVADlMAdxABfBqH5DU4qTKasOwkAFVCmFOoC6t9UA'
-    );
+    await waitFor(() => {
+      expect(url).toHaveAttribute(
+        'href',
+        '/catalogue/5/items/89/items?state=N4IgxgYiBcDaoEsAmMQIC4FMC2A6ArgM4CGA5pgPqHrHpEgA0IAbsQDb6YzwjoCeABy7QQ1AE4IAdqUYt2nVADlMAdxABfBqH5DU4qTKasOwkAFVCmFOoC6t9UA'
+      );
+    });
   });
 
   it('landing page renders data correctly when optional values are null', async () => {
