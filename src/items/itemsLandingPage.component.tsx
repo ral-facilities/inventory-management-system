@@ -1,13 +1,6 @@
-import EditIcon from '@mui/icons-material/Edit';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import NotesIcon from '@mui/icons-material/Notes';
-import {
-  Box,
-  Button,
-  Divider,
-  LinearProgress,
-  Link as MuiLink,
-} from '@mui/material';
+import { Box, Divider, LinearProgress, Link as MuiLink } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import React from 'react';
@@ -106,23 +99,7 @@ function ItemsLandingPage() {
               {/* Image Section */}
               <Grid item container xs={12}>
                 <Grid item xs={12} sm={4}>
-                  <PlaceholderImage />
-                  <Button
-                    startIcon={<EditIcon />}
-                    sx={{
-                      mx: 0.5,
-                      ml: 2,
-                      position: 'absolute',
-                      top: '18%',
-                      left: '9.2%',
-                    }}
-                    variant="outlined"
-                    onClick={() => {
-                      setOpenPrimaryDialog(true);
-                    }}
-                  >
-                    Primary
-                  </Button>
+                  <PlaceholderImage setDialog={setOpenPrimaryDialog} />
                 </Grid>
                 <PrimaryImageDialog
                   open={openPrimaryDialog}

@@ -39,13 +39,13 @@ import ThumbnailImage from './thumbnailImage.component';
 export interface ImageGalleryProps {
   entityId?: string;
   dense: boolean;
+  setSelectedPrimaryID: (value: React.SetStateAction<string>) => void;
 }
 
 const ImageGallery = (props: ImageGalleryProps) => {
-  const { entityId, dense } = props;
+  const { entityId, dense, setSelectedPrimaryID } = props;
 
   const MAX_HEIGHT_THUMBNAIL = dense ? 150 : 300;
-  console.log(MAX_HEIGHT_THUMBNAIL);
 
   const { data: images, isLoading: imageIsLoading } = useGetImages(entityId);
 
@@ -176,6 +176,15 @@ const ImageGallery = (props: ImageGalleryProps) => {
       size: 'small',
       variant: 'outlined',
     },
+    muiSelectCheckboxProps: dense
+      ? ({ row }) => {
+          return {
+            onClick: () => {
+              setSelectedPrimaryID(row.original.id);
+            },
+          };
+        }
+      : undefined,
     muiPaginationProps: {
       color: 'secondary',
       rowsPerPageOptions: [16, 24, 32],
@@ -293,19 +302,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
         <Grid container>
           <Grid item container mt={2} direction="column" alignItems="center">
             <Collapse in={!isCollapsed} style={{ width: '100%' }}>
-              <Grid marginTop={'auto'} direction="row" item container>
-                <Button
-                  startIcon={<ClearIcon />}
-                  sx={{ mx: 0.5, ml: 2 }}
-                  variant="outlined"
-                  disabled={preservedState.columnFilters.length === 0}
-                  onClick={() => {
-                    table.resetColumnFilters();
-                  }}
-                >
-                  Clear Filters
-                </Button>
-              </Grid>
               <CardViewFilters table={table} />
             </Collapse>
 
@@ -323,6 +319,17 @@ const ImageGallery = (props: ImageGalleryProps) => {
               {isCollapsed ? 'Show Filters' : 'Hide Filters'}
             </Typography>
           </Grid>
+          <Button
+            startIcon={<ClearIcon />}
+            sx={{ mx: 0.5, ml: 2 }}
+            variant="outlined"
+            disabled={preservedState.columnFilters.length === 0}
+            onClick={() => {
+              table.resetColumnFilters();
+            }}
+          >
+            Clear Filters
+          </Button>
           <Grid container item>
             <Grid
               container

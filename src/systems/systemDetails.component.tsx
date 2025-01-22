@@ -1,8 +1,6 @@
-import EditIcon from '@mui/icons-material/Edit';
 import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
 import {
   Box,
-  Button,
   Chip,
   CircularProgress,
   Divider,
@@ -108,6 +106,13 @@ function SystemDetails(props: SystemDetailsProps) {
         </Box>
       ) : (
         <Grid container item direction="column" wrap="nowrap" spacing={1}>
+          <PrimaryImageDialog
+            open={openPrimaryDialog}
+            onClose={() => {
+              setOpenPrimaryDialog(false);
+            }}
+            entityID={system.id ?? ''}
+          />
           <Grid
             container
             item
@@ -117,31 +122,8 @@ function SystemDetails(props: SystemDetailsProps) {
           >
             <Grid item container spacing={2}>
               <Grid item xs={12} sm={4}>
-                <PlaceholderImage />
-                <Button
-                  startIcon={<EditIcon />}
-                  sx={{
-                    mx: 0.5,
-                    ml: 2,
-                    position: 'absolute',
-                    top: '28.3%',
-                    left: '21%',
-                  }}
-                  variant="outlined"
-                  onClick={() => {
-                    setOpenPrimaryDialog(true);
-                  }}
-                >
-                  Primary
-                </Button>
+                <PlaceholderImage setDialog={setOpenPrimaryDialog} />
               </Grid>
-              <PrimaryImageDialog
-                open={openPrimaryDialog}
-                onClose={() => {
-                  setOpenPrimaryDialog(false);
-                }}
-                entityID={system.id ?? ''}
-              />
               <Grid item container spacing={1} xs={12} sm={8}>
                 <Grid item xs={12} sm={6}>
                   <Typography color="text.primary">Location</Typography>
@@ -196,7 +178,7 @@ function SystemDetails(props: SystemDetailsProps) {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item mt={2}>
+          <Grid item>
             <Typography color="text.primary">Description</Typography>
             <Typography
               variant="body1"
