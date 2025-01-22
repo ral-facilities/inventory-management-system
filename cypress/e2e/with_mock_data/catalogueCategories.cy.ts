@@ -173,9 +173,11 @@ describe('Catalogue Category', () => {
   });
 
   it('"duplicate" a catalogue category', () => {
-    cy.findByRole('button', {
-      name: 'actions Motion catalogue category button',
-    }).click();
+    cy.findAllByRole('button', {
+      name: 'Card Actions',
+    })
+      .eq(1)
+      .click();
     cy.findByText('Duplicate').click();
 
     cy.startSnoopingBrowserMockedRequest();
@@ -196,9 +198,11 @@ describe('Catalogue Category', () => {
   });
 
   it('displays error message when user tries to delete a catalogue category that has children elements', () => {
-    cy.findByRole('button', {
-      name: 'actions Motion catalogue category button',
-    }).click();
+    cy.findAllByRole('button', {
+      name: 'Card Actions',
+    })
+      .eq(1)
+      .click();
 
     cy.findByRole('menuitem', {
       name: 'delete Motion catalogue category button',
@@ -217,9 +221,11 @@ describe('Catalogue Category', () => {
   });
 
   it('delete a catalogue category', () => {
-    cy.findByRole('button', {
-      name: 'actions Beam Characterization catalogue category button',
-    }).click();
+    cy.findAllByRole('button', {
+      name: 'Card Actions',
+    })
+      .eq(0)
+      .click();
 
     cy.findByRole('menuitem', {
       name: 'delete Beam Characterization catalogue category button',
@@ -479,9 +485,11 @@ describe('Catalogue Category', () => {
 
   it('edits a catalogue category (non leaf node)', () => {
     cy.visit('/catalogue/1');
-    cy.findByRole('button', {
-      name: 'actions Amp Meters catalogue category button',
-    }).click();
+    cy.findAllByRole('button', {
+      name: 'Card Actions',
+    })
+      .eq(6)
+      .click();
 
     cy.findByRole('menuitem', {
       name: 'edit Amp Meters catalogue category button',
@@ -506,9 +514,11 @@ describe('Catalogue Category', () => {
   });
 
   it('displays error message if none of the fields have changed', () => {
-    cy.findByRole('button', {
-      name: 'actions Beam Characterization catalogue category button',
-    }).click();
+    cy.findAllByRole('button', {
+      name: 'Card Actions',
+    })
+      .eq(0)
+      .click();
 
     cy.findByRole('menuitem', {
       name: 'edit Beam Characterization catalogue category button',
@@ -528,7 +538,11 @@ describe('Catalogue Category', () => {
 
   it('opens add dialog from directory and then closes it', () => {
     cy.visit('/catalogue/1');
-    cy.findByLabelText('Cameras checkbox').click();
+    cy.findAllByRole('checkbox', {
+      name: 'Toggle select card',
+    })
+      .eq(1)
+      .click();
     cy.findByRole('button', { name: 'Move to' }).click();
 
     cy.findByRole('dialog')
@@ -547,9 +561,22 @@ describe('Catalogue Category', () => {
 
   it('can move multiple catalogue categories', () => {
     cy.visit('/catalogue/1');
-    cy.findByLabelText('Cameras checkbox').click();
-    cy.findByLabelText('test_dup checkbox').click();
-    cy.findByLabelText('Amp Meters checkbox').click();
+
+    cy.findAllByRole('checkbox', {
+      name: 'Toggle select card',
+    })
+      .eq(1)
+      .click();
+    cy.findAllByRole('checkbox', {
+      name: 'Toggle select card',
+    })
+      .eq(0)
+      .click();
+    cy.findAllByRole('checkbox', {
+      name: 'Toggle select card',
+    })
+      .eq(6)
+      .click();
     cy.findByRole('button', { name: 'Move to' }).click();
 
     cy.findByRole('dialog')
@@ -570,11 +597,11 @@ describe('Catalogue Category', () => {
       expect(JSON.stringify(await patchRequests[0].json())).equal(
         JSON.stringify({ parent_id: '2' })
       );
-      expect(patchRequests[0].url.toString()).to.contain('/4');
+      expect(patchRequests[0].url.toString()).to.contain('/79');
       expect(JSON.stringify(await patchRequests[1].json())).equal(
         JSON.stringify({ parent_id: '2' })
       );
-      expect(patchRequests[1].url.toString()).to.contain('/79');
+      expect(patchRequests[1].url.toString()).to.contain('/4');
       expect(JSON.stringify(await patchRequests[2].json())).equal(
         JSON.stringify({ parent_id: '2' })
       );
@@ -584,9 +611,21 @@ describe('Catalogue Category', () => {
 
   it('copies multiple catalogue category (at root)', () => {
     cy.visit('/catalogue/1');
-    cy.findByLabelText('Cameras checkbox').click();
-    cy.findByLabelText('test_dup checkbox').click();
-    cy.findByLabelText('Amp Meters checkbox').click();
+    cy.findAllByRole('checkbox', {
+      name: 'Toggle select card',
+    })
+      .eq(1)
+      .click();
+    cy.findAllByRole('checkbox', {
+      name: 'Toggle select card',
+    })
+      .eq(0)
+      .click();
+    cy.findAllByRole('checkbox', {
+      name: 'Toggle select card',
+    })
+      .eq(6)
+      .click();
     cy.findByRole('button', { name: 'Copy to' }).click();
 
     cy.findByRole('dialog')
@@ -603,7 +642,20 @@ describe('Catalogue Category', () => {
       url: '/v1/catalogue-categories',
     }).should(async (patchRequests) => {
       expect(patchRequests.length).equal(3);
+
       expect(JSON.stringify(await patchRequests[0].json())).equal(
+        JSON.stringify({
+          id: '79',
+          name: 'test_dup',
+          parent_id: null,
+          code: 'test_dup',
+          is_leaf: false,
+          properties: [],
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
+        })
+      );
+      expect(JSON.stringify(await patchRequests[1].json())).equal(
         JSON.stringify({
           id: '4',
           name: 'Cameras',
@@ -666,18 +718,6 @@ describe('Catalogue Category', () => {
               id: '6',
             },
           ],
-          created_time: '2024-01-01T12:00:00.000+00:00',
-          modified_time: '2024-01-02T13:10:10.000+00:00',
-        })
-      );
-      expect(JSON.stringify(await patchRequests[1].json())).equal(
-        JSON.stringify({
-          id: '79',
-          name: 'test_dup',
-          parent_id: null,
-          code: 'test_dup',
-          is_leaf: false,
-          properties: [],
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
         })
@@ -699,9 +739,21 @@ describe('Catalogue Category', () => {
 
   it('copies multiple catalogue categories', () => {
     cy.visit('/catalogue/1');
-    cy.findByLabelText('Cameras checkbox').click();
-    cy.findByLabelText('test_dup checkbox').click();
-    cy.findByLabelText('Amp Meters checkbox').click();
+    cy.findAllByRole('checkbox', {
+      name: 'Toggle select card',
+    })
+      .eq(1)
+      .click();
+    cy.findAllByRole('checkbox', {
+      name: 'Toggle select card',
+    })
+      .eq(0)
+      .click();
+    cy.findAllByRole('checkbox', {
+      name: 'Toggle select card',
+    })
+      .eq(6)
+      .click();
     cy.findByRole('button', { name: 'Copy to' }).click();
 
     cy.findByRole('dialog')
@@ -720,6 +772,18 @@ describe('Catalogue Category', () => {
     }).should(async (patchRequests) => {
       expect(patchRequests.length).equal(3);
       expect(JSON.stringify(await patchRequests[0].json())).equal(
+        JSON.stringify({
+          id: '79',
+          name: 'test_dup',
+          parent_id: '2',
+          code: 'test_dup',
+          is_leaf: false,
+          properties: [],
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
+        })
+      );
+      expect(JSON.stringify(await patchRequests[1].json())).equal(
         JSON.stringify({
           id: '4',
           name: 'Cameras',
@@ -782,18 +846,6 @@ describe('Catalogue Category', () => {
               id: '6',
             },
           ],
-          created_time: '2024-01-01T12:00:00.000+00:00',
-          modified_time: '2024-01-02T13:10:10.000+00:00',
-        })
-      );
-      expect(JSON.stringify(await patchRequests[1].json())).equal(
-        JSON.stringify({
-          id: '79',
-          name: 'test_dup',
-          parent_id: '2',
-          code: 'test_dup',
-          is_leaf: false,
-          properties: [],
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
         })
@@ -850,10 +902,11 @@ describe('Catalogue Category', () => {
 
   it('add a new property (type string)', () => {
     cy.visit('/catalogue/10');
-
-    cy.findByRole('button', {
-      name: 'actions Dry Vacuum Pumps catalogue category button',
-    }).click();
+    cy.findAllByRole('button', {
+      name: 'Card Actions',
+    })
+      .eq(1)
+      .click();
 
     cy.findByRole('menuitem', {
       name: 'edit Dry Vacuum Pumps catalogue category button',
@@ -898,9 +951,11 @@ describe('Catalogue Category', () => {
   it('add a new property (type number)', () => {
     cy.visit('/catalogue/10');
 
-    cy.findByRole('button', {
-      name: 'actions Dry Vacuum Pumps catalogue category button',
-    }).click();
+    cy.findAllByRole('button', {
+      name: 'Card Actions',
+    })
+      .eq(1)
+      .click();
 
     cy.findByRole('menuitem', {
       name: 'edit Dry Vacuum Pumps catalogue category button',
@@ -955,9 +1010,11 @@ describe('Catalogue Category', () => {
   it('add a new property (type boolean)', () => {
     cy.visit('/catalogue/10');
 
-    cy.findByRole('button', {
-      name: 'actions Dry Vacuum Pumps catalogue category button',
-    }).click();
+    cy.findAllByRole('button', {
+      name: 'Card Actions',
+    })
+      .eq(1)
+      .click();
 
     cy.findByRole('menuitem', {
       name: 'edit Dry Vacuum Pumps catalogue category button',
@@ -1008,9 +1065,11 @@ describe('Catalogue Category', () => {
   it('add a new property (type string and with allowed values )', () => {
     cy.visit('/catalogue/10');
 
-    cy.findByRole('button', {
-      name: 'actions Dry Vacuum Pumps catalogue category button',
-    }).click();
+    cy.findAllByRole('button', {
+      name: 'Card Actions',
+    })
+      .eq(1)
+      .click();
 
     cy.findByRole('menuitem', {
       name: 'edit Dry Vacuum Pumps catalogue category button',
@@ -1073,9 +1132,11 @@ describe('Catalogue Category', () => {
   it('add a new property (type number and with allowed values)', () => {
     cy.visit('/catalogue/10');
 
-    cy.findByRole('button', {
-      name: 'actions Dry Vacuum Pumps catalogue category button',
-    }).click();
+    cy.findAllByRole('button', {
+      name: 'Card Actions',
+    })
+      .eq(1)
+      .click();
 
     cy.findByRole('menuitem', {
       name: 'edit Dry Vacuum Pumps catalogue category button',
@@ -1139,9 +1200,11 @@ describe('Catalogue Category', () => {
   it('display add form errors on property dialog', () => {
     cy.visit('/catalogue/10');
 
-    cy.findByRole('button', {
-      name: 'actions Dry Vacuum Pumps catalogue category button',
-    }).click();
+    cy.findAllByRole('button', {
+      name: 'Card Actions',
+    })
+      .eq(1)
+      .click();
 
     cy.findByRole('menuitem', {
       name: 'edit Dry Vacuum Pumps catalogue category button',
@@ -1239,9 +1302,11 @@ describe('Catalogue Category', () => {
   it('edits an existing property', () => {
     cy.visit('/catalogue/10');
 
-    cy.findByRole('button', {
-      name: 'actions Dry Vacuum Pumps catalogue category button',
-    }).click();
+    cy.findAllByRole('button', {
+      name: 'Card Actions',
+    })
+      .eq(1)
+      .click();
 
     cy.findByRole('menuitem', {
       name: 'edit Dry Vacuum Pumps catalogue category button',
@@ -1291,9 +1356,11 @@ describe('Catalogue Category', () => {
   it('edits an existing property name', () => {
     cy.visit('/catalogue/10');
 
-    cy.findByRole('button', {
-      name: 'actions Dry Vacuum Pumps catalogue category button',
-    }).click();
+    cy.findAllByRole('button', {
+      name: 'Card Actions',
+    })
+      .eq(1)
+      .click();
 
     cy.findByRole('menuitem', {
       name: 'edit Dry Vacuum Pumps catalogue category button',
@@ -1339,9 +1406,11 @@ describe('Catalogue Category', () => {
   it('edits an existing property allowed values', () => {
     cy.visit('/catalogue/10');
 
-    cy.findByRole('button', {
-      name: 'actions Dry Vacuum Pumps catalogue category button',
-    }).click();
+    cy.findAllByRole('button', {
+      name: 'Card Actions',
+    })
+      .eq(1)
+      .click();
 
     cy.findByRole('menuitem', {
       name: 'edit Dry Vacuum Pumps catalogue category button',
@@ -1387,9 +1456,11 @@ describe('Catalogue Category', () => {
   it('display edit form errors on property dialog (mandatory errors)', () => {
     cy.visit('/catalogue/10');
 
-    cy.findByRole('button', {
-      name: 'actions Dry Vacuum Pumps catalogue category button',
-    }).click();
+    cy.findAllByRole('button', {
+      name: 'Card Actions',
+    })
+      .eq(1)
+      .click();
 
     cy.findByRole('menuitem', {
       name: 'edit Dry Vacuum Pumps catalogue category button',
@@ -1419,9 +1490,11 @@ describe('Catalogue Category', () => {
   it('display edit form errors on property dialog', () => {
     cy.visit('/catalogue/10');
 
-    cy.findByRole('button', {
-      name: 'actions Dry Vacuum Pumps catalogue category button',
-    }).click();
+    cy.findAllByRole('button', {
+      name: 'Card Actions',
+    })
+      .eq(1)
+      .click();
 
     cy.findByRole('menuitem', {
       name: 'edit Dry Vacuum Pumps catalogue category button',

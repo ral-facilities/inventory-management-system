@@ -1,13 +1,17 @@
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
+import DeleteIcon from '@mui/icons-material/Delete';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
+import EditIcon from '@mui/icons-material/Edit';
 import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
+import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   Box,
   Button,
   Collapse,
   Grid,
   LinearProgress,
+  ListItemIcon,
   MenuItem,
   Typography,
   useMediaQuery,
@@ -17,6 +21,7 @@ import {
   MRT_BottomToolbar,
   MRT_ColumnDef,
   useMaterialReactTable,
+  type MRT_Cell,
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
@@ -85,7 +90,7 @@ const AddCategoryButton = (props: AddCatalogueButtonProps) => {
 
 const MoveCategoriesButton = (props: {
   selectedCategories: CatalogueCategory[];
-  onChangeSelectedCategories: (selectedCategories: CatalogueCategory[]) => void;
+  resetSelectedCategories: () => void;
   parentCategoryId: string | null;
 }) => {
   const [moveToCategoryDialogOpen, setMoveToCategoryDialogOpen] =
@@ -105,7 +110,7 @@ const MoveCategoriesButton = (props: {
         open={moveToCategoryDialogOpen}
         onClose={() => setMoveToCategoryDialogOpen(false)}
         selectedCategories={props.selectedCategories}
-        onChangeSelectedCategories={props.onChangeSelectedCategories}
+        resetSelectedCategories={props.resetSelectedCategories}
         parentCategoryId={props.parentCategoryId}
         requestType="moveTo"
       />
@@ -115,7 +120,7 @@ const MoveCategoriesButton = (props: {
 
 const CopyCategoriesButton = (props: {
   selectedCategories: CatalogueCategory[];
-  onChangeSelectedCategories: (selectedCategories: CatalogueCategory[]) => void;
+  resetSelectedCategories: () => void;
   parentCategoryId: string | null;
 }) => {
   const [copyToCategoryDialogOpen, setCopyToCategoryDialogOpen] =
@@ -135,7 +140,7 @@ const CopyCategoriesButton = (props: {
         open={copyToCategoryDialogOpen}
         onClose={() => setCopyToCategoryDialogOpen(false)}
         selectedCategories={props.selectedCategories}
-        onChangeSelectedCategories={props.onChangeSelectedCategories}
+        resetSelectedCategories={props.resetSelectedCategories}
         parentCategoryId={props.parentCategoryId}
         requestType="copyTo"
       />
@@ -206,54 +211,6 @@ function CatalogueCardView() {
     }
     // Dependencies for this effect: it will re-run when either catalogueCategoryData or selectedCatalogueCategory changes
   }, [catalogueCategoryData, selectedCatalogueCategory]);
-
-  const onChangeOpenDeleteCategoryDialog = (
-    catalogueCategory: CatalogueCategory
-  ) => {
-    setMenuDialogOpen('delete');
-    setSelectedCatalogueCategory(catalogueCategory);
-  };
-
-  const onChangeOpenEditCategoryDialog = (
-    catalogueCategory: CatalogueCategory
-  ) => {
-    setMenuDialogOpen('edit');
-    setSelectedCatalogueCategory(catalogueCategory);
-  };
-
-  const onChangeOpenDuplicateDialog = (
-    catalogueCategory: CatalogueCategory
-  ) => {
-    setMenuDialogOpen('duplicate');
-    setSelectedCatalogueCategory(catalogueCategory);
-  };
-
-  const [selectedCategories, setSelectedCategories] = React.useState<
-    CatalogueCategory[]
-  >([]);
-
-  const handleToggleSelect = (catalogueCategory: CatalogueCategory) => {
-    if (
-      selectedCategories.some(
-        (category: CatalogueCategory) => category.id === catalogueCategory.id
-      )
-    ) {
-      // If the category is already selected, remove it
-      setSelectedCategories(
-        selectedCategories.filter(
-          (category: CatalogueCategory) => category.id !== catalogueCategory.id
-        )
-      );
-    } else {
-      // If the category is not selected, add it
-      setSelectedCategories([...selectedCategories, catalogueCategory]);
-    }
-  };
-
-  // Clears the selected categories when the user navigates to a different page
-  React.useEffect(() => {
-    setSelectedCategories([]);
-  }, [parentId]);
 
   // Display total and pagination on separate lines if on a small screen
   const theme = useTheme();
@@ -380,10 +337,11 @@ function CatalogueCardView() {
     enableColumnPinning: false,
     enableTopToolbar: true,
     enableFacetedValues: true,
-    enableRowActions: false,
+    enableRowActions: true,
     enableGlobalFilter: false,
     enableStickyHeader: true,
-    enableRowSelection: false,
+    enableRowSelection: true,
+    enableMultiRowSelection: true,
     enableDensityToggle: false,
     enableTableFooter: true,
     enableColumnFilters: true,
@@ -400,6 +358,10 @@ function CatalogueCardView() {
       ...MRT_Localization_EN,
       ...MRT_Functions_Localisation,
       rowsPerPage: 'Categories per page',
+      toggleSelectRow: 'Toggle select card',
+      selectedCountOfRowCountRowsSelected:
+        '{selectedCount} of {rowCount} card(s) selected',
+      rowActions: 'Card Actions',
     },
     // State
     initialState: {
@@ -421,17 +383,68 @@ function CatalogueCardView() {
     },
     // Functions
     ...onPreservedStatesChange,
+
+    renderRowActionMenuItems: ({ closeMenu, row }) => {
+      return [
+        <MenuItem
+          key={0}
+          onClick={() => {
+            setMenuDialogOpen('edit');
+            setSelectedCatalogueCategory(row.original);
+            closeMenu();
+          }}
+          aria-label={`edit ${row.original.name} catalogue category button`}
+          sx={{ m: 0 }}
+        >
+          <ListItemIcon>
+            <EditIcon />
+          </ListItemIcon>
+          Edit
+        </MenuItem>,
+        <MenuItem
+          key={2}
+          aria-label={`duplicate ${row.original.name} catalogue category button`}
+          onClick={() => {
+            setMenuDialogOpen('duplicate');
+            setSelectedCatalogueCategory(row.original);
+            closeMenu();
+          }}
+          sx={{ m: 0 }}
+        >
+          <ListItemIcon>
+            <SaveAsIcon />
+          </ListItemIcon>
+          Duplicate
+        </MenuItem>,
+        <MenuItem
+          key={3}
+          onClick={() => {
+            setMenuDialogOpen('delete');
+            setSelectedCatalogueCategory(row.original);
+            closeMenu();
+          }}
+          aria-label={`delete ${row.original.name} catalogue category button`}
+          sx={{ m: 0 }}
+        >
+          <ListItemIcon>
+            <DeleteIcon />
+          </ListItemIcon>
+          Delete
+        </MenuItem>,
+      ];
+    },
     renderBottomToolbarCustomActions: ({ table }) =>
       displayTableRowCountText(table, catalogueCategoryData, 'Categories', {
         paddingLeft: '8px',
       }),
   });
+
   const data = table
     .getRowModel()
-    .rows.map(
-      (row) => row.getVisibleCells().map((cell) => cell.row.original)[0]
-    );
-
+    .rows.map((row) => row.getVisibleCells().map((cell) => cell)[0]);
+  const selectedCategories = table
+    .getSelectedRowModel()
+    .rows.map((row) => row.original);
   const [isCollapsed, setIsCollapsed] = React.useState(true);
 
   const handleToggle = () => {
@@ -466,12 +479,12 @@ function CatalogueCardView() {
                 <Box>
                   <MoveCategoriesButton
                     selectedCategories={selectedCategories}
-                    onChangeSelectedCategories={setSelectedCategories}
+                    resetSelectedCategories={table.resetRowSelection}
                     parentCategoryId={catalogueCategoryId}
                   />
                   <CopyCategoriesButton
                     selectedCategories={selectedCategories}
-                    onChangeSelectedCategories={setSelectedCategories}
+                    resetSelectedCategories={table.resetRowSelection}
                     parentCategoryId={catalogueCategoryId}
                   />
 
@@ -479,7 +492,7 @@ function CatalogueCardView() {
                     sx={{ mx: '4px' }}
                     variant="outlined"
                     startIcon={<ClearIcon />}
-                    onClick={() => setSelectedCategories([])}
+                    onClick={() => table.resetRowSelection()}
                   >
                     {selectedCategories.length} selected
                   </Button>
@@ -518,20 +531,11 @@ function CatalogueCardView() {
             </Grid>
             <Grid item container>
               {data.length !== 0 ? (
-                data.map((item, index) => (
+                data.map((card, index) => (
                   <Grid item key={index} sm={6} md={4} width={'100%'}>
                     <CatalogueCard
-                      {...item}
-                      onChangeOpenDeleteDialog={
-                        onChangeOpenDeleteCategoryDialog
-                      }
-                      onChangeOpenEditDialog={onChangeOpenEditCategoryDialog}
-                      onChangeOpenDuplicateDialog={onChangeOpenDuplicateDialog}
-                      onToggleSelect={handleToggleSelect}
-                      isSelected={selectedCategories.some(
-                        (selectedCategory: CatalogueCategory) =>
-                          selectedCategory.id === item.id
-                      )}
+                      card={card as MRT_Cell<CatalogueCategory>}
+                      table={table}
                     />
                   </Grid>
                 ))
