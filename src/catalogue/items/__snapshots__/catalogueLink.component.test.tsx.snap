@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ObsoleteReplacementLink > renders a link correctly (catalogue item) 1`] = `
+exports[`CatalogueLink > renders a link correctly (catalogue item) 1`] = `
 <body>
   <div>
     <a
@@ -13,7 +13,7 @@ exports[`ObsoleteReplacementLink > renders a link correctly (catalogue item) 1`]
 </body>
 `;
 
-exports[`ObsoleteReplacementLink > renders a link correctly (item) 1`] = `
+exports[`CatalogueLink > renders a link correctly (item) 1`] = `
 <body>
   <div>
     <a
@@ -26,7 +26,7 @@ exports[`ObsoleteReplacementLink > renders a link correctly (item) 1`] = `
 </body>
 `;
 
-exports[`ObsoleteReplacementLink > renders nothing when data is undefined correctly (catalogue item) 1`] = `
+exports[`CatalogueLink > renders nothing when data is undefined correctly (catalogue item) 1`] = `
 <body>
   <div>
     test
@@ -34,7 +34,7 @@ exports[`ObsoleteReplacementLink > renders nothing when data is undefined correc
 </body>
 `;
 
-exports[`ObsoleteReplacementLink > renders nothing when data is undefined correctly (item) 1`] = `
+exports[`CatalogueLink > renders nothing when data is undefined correctly (item) 1`] = `
 <body>
   <div>
     test
