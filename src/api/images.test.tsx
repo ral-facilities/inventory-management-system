@@ -62,7 +62,9 @@ describe('images api functions', () => {
 
       expect(result.current.data).toEqual({
         ...ImagesJSON[1],
-        url: 'http://localhost:3000/images/stfc-logo-blue-text.png?text=1',
+        view_url: 'http://localhost:3000/images/stfc-logo-blue-text.png?text=1',
+        download_url:
+          'http://localhost:3000/images/stfc-logo-blue-text.png?text=1',
       });
     });
   });

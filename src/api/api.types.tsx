@@ -258,5 +258,6 @@ export interface APIImage
 }
 
 export interface APIImageWithURL extends APIImage {
-  url: string;
+  view_url: string;
+  download_url: string;
 }

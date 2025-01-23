@@ -2,7 +2,7 @@ import { RenderResult, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http } from 'msw';
 import { APIImage } from '../api/api.types';
-import { useGetImagesIds } from '../api/images';
+import { useGetImage } from '../api/images';
 import ImagesJSON from '../mocks/Images.json';
 import { server } from '../mocks/server';
 import { renderComponentWithRouterProvider } from '../testUtils';
@@ -16,42 +16,25 @@ describe('Download File dialog', () => {
   let props: DownloadFileProps;
   let user: UserEvent;
   const onClose = vi.fn();
-  const setRowSelection = vi.fn();
-  let selectedFiles: APIImage[];
+  let file: APIImage;
   const createView = (): RenderResult => {
     return renderComponentWithRouterProvider(<DownloadFileDialog {...props} />);
   };
 
   beforeEach(() => {
-    selectedFiles = ImagesJSON;
+    file = ImagesJSON[0];
     props = {
       open: true,
       onClose: onClose,
       fileType: 'Image',
-      selectedFiles: selectedFiles,
-      useGetFileIds: useGetImagesIds,
-      onChangeSelectedFiles: setRowSelection,
+      file: file,
+      useGetFile: useGetImage,
     };
     user = userEvent.setup();
   });
 
   afterEach(() => {
     vi.clearAllMocks();
-  });
-
-  it('displays warning message when session data is not loaded', async () => {
-    props = {
-      ...props,
-      selectedFiles: [],
-    };
-    createView();
-    const continueButton = screen.getByRole('button', { name: 'Continue' });
-    await user.click(continueButton);
-    const helperTexts = screen.getByText(
-      'No data provided. Please refresh and try again'
-    );
-    expect(helperTexts).toBeInTheDocument();
-    expect(onClose).not.toHaveBeenCalled();
   });
 
   it('calls handleDownloadImages when the continue button is clicked', async () => {

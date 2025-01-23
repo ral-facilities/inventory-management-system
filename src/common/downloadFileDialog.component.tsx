@@ -31,10 +31,6 @@ export type DownloadFileProps = ImageDownloadDialogProps;
 const DownloadFileDialog = (props: DownloadFileProps) => {
   const { open, onClose, fileType, file, useGetFile } = props;
 
-  /* type fileInterface<T extends typeof fileType> = T extends 'Image'
-    ? APIImageWithURL
-    : APIImageWithURL; */
-
   const [formError, setFormError] = React.useState<string | undefined>(
     undefined
   );
@@ -51,7 +47,8 @@ const DownloadFileDialog = (props: DownloadFileProps) => {
   const handleDownloadFile = React.useCallback(() => {
     if (downloadedFile) {
       const link = document.createElement('a');
-      link.href = downloadedFile.url;
+      link.href = downloadedFile.download_url;
+      link.download = downloadedFile.file_name;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
