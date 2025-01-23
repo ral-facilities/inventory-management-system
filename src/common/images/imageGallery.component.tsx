@@ -1,7 +1,6 @@
 import ClearIcon from '@mui/icons-material/Clear';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
-import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {
@@ -21,7 +20,6 @@ import {
   MRT_Cell,
   MRT_ColumnDef,
   MRT_Row,
-  MRT_RowSelectionState,
   MRT_SelectCheckbox,
   MRT_ToggleRowActionMenuButton,
   useMaterialReactTable,
@@ -29,7 +27,7 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { APIImage } from '../../api/api.types';
-import { useGetImages, useGetImagesIds } from '../../api/images';
+import { useGetImage, useGetImages } from '../../api/images';
 import { displayTableRowCountText, OverflowTip } from '../../utils';
 import CardViewFilters from '../cardView/cardViewFilters.component';
 import DownloadFileDialog from '../downloadFileDialog.component';
@@ -85,44 +83,8 @@ const ImageGallery = (props: ImageGalleryProps) => {
     )
   );
 
-  const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
-    {}
-  );
-  const [selectedRowIds, setSelectedRowIds] = React.useState<string[]>([]);
-
-  React.useEffect(() => {
-    setSelectedRowIds(Object.keys(rowSelection));
-  }, [rowSelection]);
-
-  const [selectedImages, setSelectedImages] = React.useState<APIImage[]>([]);
-
-  React.useEffect(() => {
-    setSelectedImages(
-      images?.filter((image) => selectedRowIds.includes(image.id)) ?? []
-    );
-  }, [selectedRowIds, images]);
-
-  React.useEffect(() => {
-    setRowSelection({});
-  }, [entityId]);
-
   const [downloadImagesDialogOpen, setdownloadImagesDialogOpen] =
     React.useState<boolean>(false);
-
-  const DownloadImagesButton = () => {
-    return (
-      <Button
-        sx={{ mx: '4px' }}
-        variant="outlined"
-        startIcon={<DriveFileMoveOutlinedIcon />}
-        disabled={selectedImages.length == 0}
-        data-testid="download-all-button"
-        onClick={() => setdownloadImagesDialogOpen(true)}
-      >
-        Download
-      </Button>
-    );
-  };
 
   const columns = React.useMemo<MRT_ColumnDef<APIImage>[]>(() => {
     return [
@@ -210,7 +172,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
     },
     state: {
       ...preservedState,
-      rowSelection: rowSelection,
     },
     muiSearchTextFieldProps: {
       size: 'small',
@@ -224,7 +185,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
     },
     // Functions
     ...onPreservedStatesChange,
-    onRowSelectionChange: setRowSelection,
     getRowId: (image) => image.id,
     renderBottomToolbarCustomActions: ({ table }) =>
       displayTableRowCountText(table, images, 'Images', {
@@ -248,7 +208,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
           aria-label={`Download ${row.original.file_name} image`}
           onClick={() => {
             setSelectedImage(row.original);
-            setSelectedImages([row.original]);
             setdownloadImagesDialogOpen(true);
             closeMenu();
           }}
@@ -347,15 +306,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
                   }}
                 >
                   Clear Filters
-                </Button>
-                <DownloadImagesButton />
-                <Button
-                  sx={{ mx: '4px' }}
-                  variant="outlined"
-                  startIcon={<ClearIcon />}
-                  onClick={() => setRowSelection({})}
-                >
-                  {selectedImages.length} selected
                 </Button>
               </Grid>
               <CardViewFilters table={table} />
@@ -501,6 +451,13 @@ const ImageGallery = (props: ImageGalleryProps) => {
                 }}
                 image={selectedImage}
               />
+              <DownloadFileDialog
+                open={downloadImagesDialogOpen}
+                onClose={() => setdownloadImagesDialogOpen(false)}
+                fileType="Image"
+                useGetFile={useGetImage}
+                file={selectedImage}
+              />
             </>
           )}
           {currentLightBoxImage && (
@@ -510,16 +467,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
               currentImageId={currentLightBoxImage}
               imageCardData={data as MRT_Cell<APIImage, unknown>[]}
               table={table}
-            />
-          )}
-          {downloadImagesDialogOpen && (
-            <DownloadFileDialog
-              open={downloadImagesDialogOpen}
-              onClose={() => setdownloadImagesDialogOpen(false)}
-              selectedFiles={selectedImages}
-              onChangeSelectedFiles={setRowSelection}
-              fileType="Image"
-              useGetFileIds={useGetImagesIds}
             />
           )}
         </Grid>

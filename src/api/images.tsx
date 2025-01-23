@@ -1,7 +1,6 @@
 import {
   useMutation,
   UseMutationResult,
-  useQueries,
   useQuery,
   useQueryClient,
   UseQueryResult,
@@ -24,18 +23,6 @@ export const useGetImage = (
     queryKey: ['Image', id],
     queryFn: () => getImage(id),
     enabled: !!id,
-  });
-};
-
-export const useGetImagesIds = (
-  ids: string[]
-): UseQueryResult<APIImageWithURL>[] => {
-  return useQueries({
-    queries: ids.map((id) => ({
-      queryKey: ['Image', id],
-      queryFn: () => getImage(id),
-      enabled: !!id,
-    })),
   });
 };
 

@@ -180,7 +180,7 @@ describe('Image Gallery', () => {
     await user.click(actionMenus[0]);
 
     const downloadButton = await screen.findAllByText(`Download`);
-    await user.click(downloadButton[1]);
+    await user.click(downloadButton[0]);
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
     });
@@ -191,54 +191,6 @@ describe('Image Gallery', () => {
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
-  });
-
-  it('selects multiple images and opens download dialog with correct number', async () => {
-    createView();
-
-    await waitFor(() =>
-      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
-    );
-
-    expect((await screen.findAllByText('logo1.png')).length).toEqual(8);
-
-    const selectBoxes = screen.getAllByLabelText(`Toggle select card`);
-    await user.click(selectBoxes[1]);
-    await user.click(selectBoxes[3]);
-    await user.click(selectBoxes[5]);
-    expect(selectBoxes.length).toBe(32);
-
-    const downloadButton = await screen.findByTestId('download-all-button');
-    await user.click(downloadButton);
-    await waitFor(() => {
-      expect(screen.getByRole('dialog')).toBeInTheDocument();
-    });
-
-    expect(
-      await within(screen.getByRole('dialog')).findByTestId(
-        'download-images-message'
-      )
-    ).toHaveTextContent('Are you sure you want to download 3 Images?');
-
-    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
-    await user.click(cancelButton);
-
-    await waitFor(() => {
-      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-    });
-  });
-
-  it('download selected button is disabled when no images are selected', async () => {
-    createView();
-
-    await waitFor(() =>
-      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
-    );
-
-    expect((await screen.findAllByText('logo1.png')).length).toEqual(8);
-
-    const downloadButton = await screen.findAllByText(`Download`);
-    expect(downloadButton[0]).toBeDisabled();
   });
 
   it('opens image delete dialog and can close the dialog', async () => {
@@ -547,7 +499,7 @@ describe('Image Gallery', () => {
 
     const downloadButton = await screen.findAllByText(`Download`);
 
-    await user.click(downloadButton[1]);
+    await user.click(downloadButton[0]);
 
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
