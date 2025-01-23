@@ -87,6 +87,34 @@ export const useGetSystem = (
   return useQuery(getSystemQuery(id));
 };
 
+export interface SystemTree extends System {
+  subsystems?: SystemTree[];
+}
+
+const getSystemTree = async (parent_id?: string): Promise<SystemTree[]> => {
+  // Fetch the systems at the current level
+  const systems = await getSystems(parent_id || 'null');
+
+  // Fetch subsystems for each system recursively
+  const systemsWithTree = await Promise.all(
+    systems.map(async (system) => {
+      const subsystems = await getSystemTree(system.id); // Fetch subsystems
+      return { ...system, subsystems }; // Attach subsystems
+    })
+  );
+
+  return systemsWithTree;
+};
+
+export const useGetSystemsTree = (
+  parent_id?: string | null
+): UseQueryResult<SystemTree[], AxiosError> => {
+  return useQuery({
+    queryKey: ['SystemsTree', parent_id],
+    queryFn: () => getSystemTree(parent_id ?? ''),
+  });
+};
+
 const getSystemsBreadcrumbs = async (id: string): Promise<BreadcrumbsInfo> => {
   return imsApi.get(`/v1/systems/${id}/breadcrumbs`, {}).then((response) => {
     return response.data;

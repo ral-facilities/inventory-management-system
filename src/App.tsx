@@ -64,6 +64,7 @@ import SystemsLayout, {
   SystemsLayoutErrorComponent,
   systemsLayoutLoader,
 } from './systems/systemsLayout.component';
+import SystemsTree from './systems/systemsTree.component';
 import ViewTabs from './view/viewTabs.component';
 
 export const paths = {
@@ -81,6 +82,8 @@ export const paths = {
   item: '/catalogue/:catalogue_category_id/items/:catalogue_item_id/items/:item_id',
   systems: '/systems',
   system: '/systems/:system_id',
+  systemTree: '/systems/:system_id/tree',
+  systemRootTree: '/systems/tree',
   manufacturers: '/manufacturers',
   manufacturer: '/manufacturers/:manufacturer_id',
 };
@@ -214,6 +217,15 @@ const routeObject: RouteObject[] = [
           {
             path: paths.system,
             Component: Systems,
+            loader: systemsLayoutLoader(queryClient),
+          },
+          {
+            path: 'tree',
+            Component: SystemsTree,
+          },
+          {
+            path: paths.systemTree,
+            Component: SystemsTree,
             loader: systemsLayoutLoader(queryClient),
           },
           {
