@@ -1,4 +1,7 @@
 import { Box, styled } from '@mui/material';
+import type { VNode } from 'preact';
+import { useRef } from 'react';
+import { getSeparatedFilename } from '../utils';
 
 export const StyledUppyBox = styled(Box)(({ theme }) => ({
   '& .uppy-Dashboard-inner': {
@@ -10,3 +13,98 @@ export const StyledUppyBox = styled(Box)(({ theme }) => ({
   },
   '& .uppy-Dashboard--modal .uppy-Dashboard-inner': { zIndex: 1300 },
 }));
+
+type PreactRender = (
+  node: any,
+  params: Record<string, unknown> | null,
+  ...children: any[]
+) => VNode<any>;
+
+type FieldRenderOptions = {
+  value: string;
+  onChange: (newVal: string) => void;
+  fieldCSSClasses: { text: string };
+  required: boolean;
+  form: string;
+};
+
+export const renderFilenameField = (
+  field: FieldRenderOptions,
+  h: PreactRender
+) => {
+  const { value, onChange, fieldCSSClasses, required } = field;
+  const [name, extension] = getSeparatedFilename(value);
+  const inputEl = useRef<HTMLInputElement>(null);
+  const divEl = useRef<HTMLDivElement>(null);
+  const initialModeIsDark = localStorage.getItem('darkMode') == 'true';
+  return h(
+    'div',
+    {
+      class: fieldCSSClasses.text,
+      // Input field takes up 3/4 of textfield, the rest is div. This redirects the focus from div to input.
+      onClick: () => inputEl.current && inputEl.current.focus(),
+      tabIndex: 0, // Makes div clickable
+      ref: divEl,
+      style: {
+        // Styles Div to arrange label + input field
+        padding: 0,
+        display: 'inline-flex',
+        colorScheme: 'light dark',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      },
+    },
+    [
+      h('input', {
+        type: 'text',
+        id: 'uppy-Dashboard-FileCard-input-name',
+        value: name,
+        ref: inputEl,
+        class: fieldCSSClasses.text,
+        placeholder: 'Enter file name',
+        style: {
+          // Style to make input field invisible.
+          border: 0,
+          'box-shadow': 'none',
+          outline: 'none',
+        },
+        required: required,
+        onFocus: () => {
+          // Styles the whole div element (TextField) to look focussed, when input is focussed.
+          if (divEl.current) {
+            if (localStorage.getItem('darkMode') == 'true') {
+              // Toggles dark/light mode colouring
+              divEl.current.style['boxShadow'] = 'none';
+              divEl.current.style['borderColor'] = 'rgb(82, 82, 82)';
+            } else {
+              divEl.current.style['boxShadow'] =
+                'rgba(18, 105, 207, 0.15) 0px 0px 0px 3px';
+              divEl.current.style['borderColor'] = 'rgba(18, 105, 207, 0.6)';
+            }
+          }
+        },
+        onBlur: () => {
+          if (divEl.current) {
+            // Remove div "focus styling" when input is blurred.
+            divEl.current.style['boxShadow'] = '';
+            divEl.current.style['borderColor'] = '';
+          }
+        },
+        onChange: (event: { currentTarget: { value: string } }) =>
+          onChange(event.currentTarget.value + extension),
+      }),
+      h(
+        'label',
+        {
+          for: 'uppy-Dashboard-FileCard-input-name',
+          style: {
+            color: initialModeIsDark ? 'rgb(117, 117, 117)' : 'rgb(82, 82, 82)',
+            height: '31px',
+            padding: '5px',
+          },
+        },
+        extension
+      ),
+    ]
+  );
+};

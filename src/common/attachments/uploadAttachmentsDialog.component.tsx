@@ -7,7 +7,7 @@ import ProgressBar from '@uppy/progress-bar';
 import { DashboardModal } from '@uppy/react';
 import React, { useRef } from 'react';
 import { usePostAttachmentMetadata } from '../../api/attachments';
-import { getNonEmptyTrimmedString } from '../../utils';
+import { getNonEmptyTrimmedString, getSeparatedFilename } from '../../utils';
 
 // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000, so here the former is expected despite them really being GiB, MiB and KiB.
 const MAX_FILE_SIZE_MB = 100;
@@ -110,10 +110,7 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
           name: 'File name',
           placeholder: 'Enter file name',
           render({ value, onChange, fieldCSSClasses, required }, h) {
-            const point = value.lastIndexOf('.');
-            const name = value.slice(0, point);
-            const extension = value.slice(point + 1);
-            console.log(fieldCSSClasses.text);
+            const [name, extension] = getSeparatedFilename(value);
             return h(
               'div',
               {
@@ -154,7 +151,7 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
                     }
                   },
                   onChange: (event: { currentTarget: { value: string } }) =>
-                    onChange(event.currentTarget.value + '.' + extension),
+                    onChange(event.currentTarget.value + extension),
                 }),
                 h(
                   'label',
@@ -162,12 +159,11 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
                     for: 'uppy-Dashboard-FileCard-input-name',
                     style: {
                       color: 'rgb(82, 82, 82)',
-                      colorScheme: 'light',
                       height: '31px',
                       padding: '5px',
                     },
                   },
-                  '.' + extension
+                  extension
                 ),
               ]
             );

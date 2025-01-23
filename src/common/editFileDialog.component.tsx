@@ -21,6 +21,7 @@ import { AxiosError } from 'axios';
 import { APIImage, ObjectFilePatch } from '../api/api.types';
 import { FileSchema } from '../form.schemas';
 import handleIMS_APIError from '../handleIMS_APIError';
+import { getSeparatedFilename } from '../utils';
 
 export interface BaseFileDialogProps {
   open: boolean;
@@ -45,11 +46,9 @@ const EditFileDialog = (props: FileDialogProps) => {
 
   const { mutateAsync: patchFile, isPending: isEditPending } = usePatchFile();
 
-  const point = selectedFile?.file_name?.lastIndexOf('.') ?? 0;
-  const extension = selectedFile?.file_name?.slice(point) ?? '';
-  const initialName = selectedFile?.file_name?.slice(0, point) ?? '';
-
-  console.log(extension);
+  const [initialName, extension] = getSeparatedFilename(
+    selectedFile?.file_name ?? ''
+  );
 
   const selectedFileCopy: ObjectFilePatch = React.useMemo(
     () => (selectedFile ? { ...selectedFile, file_name: initialName } : {}),

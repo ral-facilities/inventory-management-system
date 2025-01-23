@@ -8,10 +8,11 @@ import '@uppy/image-editor/dist/style.css';
 import ProgressBar from '@uppy/progress-bar'; // Import the ProgressBar plugin
 import { DashboardModal } from '@uppy/react';
 import XHR from '@uppy/xhr-upload';
-import React, { useRef } from 'react';
+import React from 'react';
 import { uppyOnAfterResponse, uppyOnBeforeRequest } from '../../api/api';
 import { settings } from '../../settings';
 import { getNonEmptyTrimmedString } from '../../utils';
+import { renderFilenameField } from '../uppy.utils';
 
 // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000, so here the former is expected despite them really being GiB, MiB and KiB.
 const MAX_FILE_SIZE_MB = 50;
@@ -93,9 +94,6 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
     }
   });
 
-  const inputEl = useRef<HTMLInputElement>(null);
-  const divEl = useRef<HTMLDivElement>(null);
-
   return (
     <DashboardModal
       open={open}
@@ -112,69 +110,7 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
           id: 'name',
           name: 'File name',
           placeholder: 'Enter file name',
-          render({ value, onChange, fieldCSSClasses, required }, h) {
-            const point = value.lastIndexOf('.');
-            const name = value.slice(0, point);
-            const extension = value.slice(point + 1);
-            console.log(fieldCSSClasses.text);
-            return h(
-              'div',
-              {
-                class: fieldCSSClasses.text,
-                onClick: () => inputEl.current && inputEl.current.focus(),
-                tabIndex: 0,
-                ref: divEl,
-                style: {
-                  padding: 0,
-                  display: 'inline-flex',
-                  flexDirection: 'row',
-                  flexWrap: 'nowrap',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                },
-              },
-              [
-                h('input', {
-                  type: 'text',
-                  id: 'uppy-Dashboard-FileCard-input-name',
-                  value: name,
-                  ref: inputEl,
-                  class: fieldCSSClasses.text,
-                  style: { border: 0, 'box-shadow': 'none', outline: 'none' },
-                  required: required,
-                  onFocus: () => {
-                    if (divEl.current) {
-                      divEl.current.style['boxShadow'] =
-                        'rgba(18, 105, 207, 0.15) 0px 0px 0px 3px ';
-                      divEl.current.style['borderColor'] =
-                        'rgba(18, 105, 207, 0.6)';
-                    }
-                  },
-                  onBlur: () => {
-                    if (divEl.current) {
-                      divEl.current.style['boxShadow'] = '';
-                      divEl.current.style['borderColor'] = '';
-                    }
-                  },
-                  onChange: (event: { currentTarget: { value: string } }) =>
-                    onChange(event.currentTarget.value + '.' + extension),
-                }),
-                h(
-                  'label',
-                  {
-                    for: 'uppy-Dashboard-FileCard-input-name',
-                    style: {
-                      color: 'rgb(82, 82, 82)',
-                      colorScheme: 'light',
-                      height: '31px',
-                      padding: '5px',
-                    },
-                  },
-                  '.' + extension
-                ),
-              ]
-            );
-          },
+          render: renderFilenameField,
         },
         {
           id: 'title',

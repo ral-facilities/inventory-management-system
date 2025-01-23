@@ -140,7 +140,7 @@ describe('Edit file dialog', () => {
     it('displays refresh page message and a CatchAllError request works correctly', async () => {
       createView();
       modifyFileValues({
-        file_name: 'Error 500',
+        file_name: 'Error_500',
       });
       const saveButton = screen.getByRole('button', { name: 'Save' });
 

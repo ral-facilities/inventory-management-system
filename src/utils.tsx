@@ -527,3 +527,11 @@ export function getNonEmptyTrimmedString(value: unknown): string | undefined {
     ? value.trim()
     : undefined;
 }
+
+export const getSeparatedFilename = (filename: string): [string, string] => {
+  const point = filename.lastIndexOf('.') ?? 0;
+  const extension = filename.slice(point) ?? '';
+  const name = filename.slice(0, point) ?? '';
+
+  return [name, extension];
+};
