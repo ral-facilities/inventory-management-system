@@ -1,6 +1,5 @@
 import { Box, styled } from '@mui/material';
 import type { VNode } from 'preact';
-import { useRef } from 'react';
 import { getSeparatedFilename } from '../utils';
 
 export const StyledUppyBox = styled(Box)(({ theme }) => ({
@@ -15,9 +14,12 @@ export const StyledUppyBox = styled(Box)(({ theme }) => ({
 }));
 
 type PreactRender = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   node: any,
   params: Record<string, unknown> | null,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ...children: any[]
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ) => VNode<any>;
 
 type FieldRenderOptions = {
@@ -28,14 +30,15 @@ type FieldRenderOptions = {
   form: string;
 };
 
-export const renderFilenameField = (
+export function RenderFields(
   field: FieldRenderOptions,
-  h: PreactRender
-) => {
+  h: PreactRender,
+  inputEl: React.RefObject<HTMLInputElement>,
+  divEl: React.RefObject<HTMLDivElement>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): VNode<any> {
   const { value, onChange, fieldCSSClasses, required } = field;
   const [name, extension] = getSeparatedFilename(value);
-  const inputEl = useRef<HTMLInputElement>(null);
-  const divEl = useRef<HTMLDivElement>(null);
   const initialModeIsDark = localStorage.getItem('darkMode') == 'true';
   return h(
     'div',
@@ -107,4 +110,4 @@ export const renderFilenameField = (
       ),
     ]
   );
-};
+}

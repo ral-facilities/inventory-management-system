@@ -8,11 +8,12 @@ import '@uppy/image-editor/dist/style.css';
 import ProgressBar from '@uppy/progress-bar'; // Import the ProgressBar plugin
 import { DashboardModal } from '@uppy/react';
 import XHR from '@uppy/xhr-upload';
+import type { VNode } from 'preact';
 import React from 'react';
 import { uppyOnAfterResponse, uppyOnBeforeRequest } from '../../api/api';
 import { settings } from '../../settings';
 import { getNonEmptyTrimmedString } from '../../utils';
-import { renderFilenameField } from '../uppy.utils';
+import { RenderFields } from '../uppy.utils';
 
 // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000, so here the former is expected despite them really being GiB, MiB and KiB.
 const MAX_FILE_SIZE_MB = 50;
@@ -94,6 +95,9 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
     }
   });
 
+  const inputEl = React.useRef<HTMLInputElement>(null);
+  const divEl = React.useRef<HTMLDivElement>(null);
+
   return (
     <DashboardModal
       open={open}
@@ -110,7 +114,10 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
           id: 'name',
           name: 'File name',
           placeholder: 'Enter file name',
-          render: renderFilenameField,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          render: (field, h): VNode<any> => {
+            return RenderFields(field, h, inputEl, divEl);
+          },
         },
         {
           id: 'title',

@@ -5,9 +5,11 @@ import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 import ProgressBar from '@uppy/progress-bar';
 import { DashboardModal } from '@uppy/react';
+import { VNode } from 'preact';
 import React, { useRef } from 'react';
 import { usePostAttachmentMetadata } from '../../api/attachments';
-import { getNonEmptyTrimmedString, getSeparatedFilename } from '../../utils';
+import { getNonEmptyTrimmedString } from '../../utils';
+import { RenderFields } from '../uppy.utils';
 
 // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000, so here the former is expected despite them really being GiB, MiB and KiB.
 const MAX_FILE_SIZE_MB = 100;
@@ -109,64 +111,9 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
           id: 'name',
           name: 'File name',
           placeholder: 'Enter file name',
-          render({ value, onChange, fieldCSSClasses, required }, h) {
-            const [name, extension] = getSeparatedFilename(value);
-            return h(
-              'div',
-              {
-                class: fieldCSSClasses.text,
-                onClick: () => inputEl.current && inputEl.current.focus(),
-                tabIndex: 0,
-                ref: divEl,
-                style: {
-                  padding: 0,
-                  display: 'inline-flex',
-                  flexDirection: 'row',
-                  flexWrap: 'nowrap',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                },
-              },
-              [
-                h('input', {
-                  type: 'text',
-                  id: 'uppy-Dashboard-FileCard-input-name',
-                  value: name,
-                  ref: inputEl,
-                  class: fieldCSSClasses.text,
-                  style: { border: 0, 'box-shadow': 'none', outline: 'none' },
-                  required: required,
-                  onFocus: () => {
-                    if (divEl.current) {
-                      divEl.current.style['boxShadow'] =
-                        'rgba(18, 105, 207, 0.15) 0px 0px 0px 3px ';
-                      divEl.current.style['borderColor'] =
-                        'rgba(18, 105, 207, 0.6)';
-                    }
-                  },
-                  onBlur: () => {
-                    if (divEl.current) {
-                      divEl.current.style['boxShadow'] = '';
-                      divEl.current.style['borderColor'] = '';
-                    }
-                  },
-                  onChange: (event: { currentTarget: { value: string } }) =>
-                    onChange(event.currentTarget.value + extension),
-                }),
-                h(
-                  'label',
-                  {
-                    for: 'uppy-Dashboard-FileCard-input-name',
-                    style: {
-                      color: 'rgb(82, 82, 82)',
-                      height: '31px',
-                      padding: '5px',
-                    },
-                  },
-                  extension
-                ),
-              ]
-            );
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          render: (field, h): VNode<any> => {
+            return RenderFields(field, h, inputEl, divEl);
           },
         },
         {
