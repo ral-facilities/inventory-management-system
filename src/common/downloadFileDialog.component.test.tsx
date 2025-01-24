@@ -40,6 +40,11 @@ describe('Download File dialog', () => {
   it('calls handleDownloadImages when the continue button is clicked', async () => {
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
+
+    await waitFor(() => {
+      expect(continueButton).not.toBeDisabled();
+    });
+
     await user.click(continueButton);
 
     await waitFor(() => {

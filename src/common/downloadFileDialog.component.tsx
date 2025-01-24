@@ -60,7 +60,10 @@ const DownloadFileDialog = (props: DownloadFileProps) => {
 
   return (
     <Dialog open={open} maxWidth="lg">
-      <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
+      <DialogTitle
+        sx={{ display: 'inline-flex', alignItems: 'center' }}
+        data-testid="download-file-dialog-title"
+      >
         <WarningIcon sx={{ marginRight: 1 }} />
         Download {fileType}?
       </DialogTitle>

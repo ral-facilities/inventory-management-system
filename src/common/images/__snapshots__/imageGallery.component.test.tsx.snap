@@ -45,56 +45,6 @@ exports[`Image Gallery > renders correctly 1`] = `
                   </span>
                   Clear Filters
                 </button>
-                <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary Mui-disabled MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1owl11-MuiButtonBase-root-MuiButton-root"
-                  data-testid="download-all-button"
-                  disabled=""
-                  tabindex="-1"
-                  type="button"
-                >
-                  <span
-                    class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1d6wzja-MuiButton-startIcon"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                      data-testid="DriveFileMoveOutlinedIcon"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2m0 12H4V6h5.17l1.41 1.41.59.59H20zm-7.84-6H8v2h4.16l-1.59 1.59L11.99 17 16 13.01 11.99 9l-1.41 1.41z"
-                      />
-                    </svg>
-                  </span>
-                  Download
-                </button>
-                <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1owl11-MuiButtonBase-root-MuiButton-root"
-                  tabindex="0"
-                  type="button"
-                >
-                  <span
-                    class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1d6wzja-MuiButton-startIcon"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                      data-testid="ClearIcon"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                      />
-                    </svg>
-                  </span>
-                  0
-                   selected
-                  <span
-                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                  />
-                </button>
               </div>
               <table
                 class="MuiTable-root MuiGrid-root MuiGrid-container MuiGrid-item css-1uc6v0-MuiTable-root-MuiGrid-root"
