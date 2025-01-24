@@ -32,6 +32,7 @@ describe('delete Image dialogue', () => {
     image = {
       id: '1',
       file_name: 'Image A',
+      entity_id: '2',
       title: 'a title',
       description: 'a description',
       primary: false,

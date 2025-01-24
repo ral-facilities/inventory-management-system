@@ -107,7 +107,7 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
       doneButtonHandler={handleClose}
       metaFields={[
         {
-          id: 'filename',
+          id: 'name',
           name: 'File name',
           placeholder: 'Enter file name',
         },

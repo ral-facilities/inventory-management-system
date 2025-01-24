@@ -250,7 +250,7 @@ export interface ImagePost {
 }
 
 export interface APIImage
-  extends Required<Omit<ImagePost, 'upload_file' | 'entity_id'>>,
+  extends Required<Omit<ImagePost, 'upload_file'>>,
     CreatedModifiedMixin {
   id: string;
   primary: boolean;
@@ -258,6 +258,8 @@ export interface APIImage
 }
 
 export interface APIImageWithURL extends APIImage {
+  /* Each url has a different `ResponseContentDisposition` set in the url, for viewing images inline and downloading respectively.
+   Allows links to be downloaded directly to the user's computer and not to their client first. */
   view_url: string;
   download_url: string;
 }

@@ -88,7 +88,6 @@ describe('Upload image dialog', () => {
     );
 
     expect(await screen.findByText('File name')).toBeInTheDocument();
-
     const [_, title, description] = screen.getAllByRole('textbox');
 
     await user.type(title, 'test');

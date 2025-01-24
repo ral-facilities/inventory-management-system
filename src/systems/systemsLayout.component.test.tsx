@@ -22,7 +22,6 @@ describe('Systems Layout', () => {
   beforeEach(() => {
     user = userEvent.setup();
   });
-
   afterEach(() => {
     vi.clearAllMocks();
   });

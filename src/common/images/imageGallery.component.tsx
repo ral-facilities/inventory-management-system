@@ -83,9 +83,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
     )
   );
 
-  const [downloadImagesDialogOpen, setdownloadImagesDialogOpen] =
-    React.useState<boolean>(false);
-
   const columns = React.useMemo<MRT_ColumnDef<APIImage>[]>(() => {
     return [
       {
@@ -208,7 +205,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
           aria-label={`Download ${row.original.file_name} image`}
           onClick={() => {
             setSelectedImage(row.original);
-            setdownloadImagesDialogOpen(true);
+            setOpenMenuDialog('download');
             closeMenu();
           }}
           sx={{ m: 0 }}
@@ -452,8 +449,8 @@ const ImageGallery = (props: ImageGalleryProps) => {
                 image={selectedImage}
               />
               <DownloadFileDialog
-                open={downloadImagesDialogOpen}
-                onClose={() => setdownloadImagesDialogOpen(false)}
+                open={openMenuDialog == 'download'}
+                onClose={() => setOpenMenuDialog(false)}
                 fileType="Image"
                 useGetFile={useGetImage}
                 file={selectedImage}

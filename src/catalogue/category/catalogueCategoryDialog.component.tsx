@@ -21,8 +21,8 @@ import { AxiosError } from 'axios';
 import React from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import {
-  AllowedValues,
   APIError,
+  AllowedValues,
   CatalogueCategory,
   CatalogueCategoryPost,
   CatalogueCategoryPostProperty,
