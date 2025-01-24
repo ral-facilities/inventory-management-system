@@ -15,15 +15,11 @@ function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
   const { breadcrumbsInfo, children, homeLocation } = props;
   const navigate = useNavigate();
 
-  // Check if we are in Tree View or Normal View by looking for '/tree' in the URL
-  const isTreeView = location.pathname.includes('tree');
   const onChangeNode = React.useCallback(
     (id: string | null) => {
-      navigate(
-        `/${RoutesHomeLocation[homeLocation]}${id ? `/${id}` : ''}${isTreeView && !id && homeLocation == 'Systems' ? '/tree' : ''}`
-      );
+      navigate(`/${RoutesHomeLocation[homeLocation]}${id ? `/${id}` : ''}`);
     },
-    [homeLocation, isTreeView, navigate]
+    [homeLocation, navigate]
   );
   return (
     <Box height="100%" width="100%">

@@ -73,23 +73,25 @@ function SystemsLayout() {
           ]) ?? [],
       }}
     >
-      <ToggleButtonGroup
-        value={isTreeView ? 'tree' : 'normal'}
-        exclusive
-        onChange={handleViewChange}
-        aria-label="view mode toggle"
-        size="small"
-        sx={{ margin: 1 }}
-      >
-        <ToggleButton value="normal" aria-label="normal view">
-          <ViewModuleIcon sx={{ marginRight: 1 }} fontSize="small" />
-          Normal View
-        </ToggleButton>
-        <ToggleButton value="tree" aria-label="tree view">
-          <AccountTreeIcon sx={{ marginRight: 1 }} fontSize="small" />
-          Tree View
-        </ToggleButton>
-      </ToggleButtonGroup>
+      {location.pathname !== '/systems' && (
+        <ToggleButtonGroup
+          value={isTreeView ? 'tree' : 'normal'}
+          exclusive
+          onChange={handleViewChange}
+          aria-label="view mode toggle"
+          size="small"
+          sx={{ margin: 1 }}
+        >
+          <ToggleButton value="normal" aria-label="normal view">
+            <ViewModuleIcon sx={{ marginRight: 1 }} fontSize="small" />
+            Normal View
+          </ToggleButton>
+          <ToggleButton value="tree" aria-label="tree view">
+            <AccountTreeIcon sx={{ marginRight: 1 }} fontSize="small" />
+            Tree View
+          </ToggleButton>
+        </ToggleButtonGroup>
+      )}
       <Outlet />
     </BaseLayoutHeader>
   );

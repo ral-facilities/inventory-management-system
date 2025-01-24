@@ -1,6 +1,7 @@
 import {
   Box,
   LinearProgress,
+  Link as MuiLink,
   ToggleButton,
   ToggleButtonGroup,
   Typography,
@@ -9,6 +10,7 @@ import {
   Background,
   ConnectionLineType,
   Controls,
+  MiniMap,
   Panel,
   Position,
   ReactFlow,
@@ -20,16 +22,13 @@ import {
 import '@xyflow/react/dist/style.css';
 import dagre from 'dagre';
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import {
-  useGetSystem,
-  useGetSystemsTree,
-  type SystemTree,
-} from '../api/systems';
+import { Link, useParams } from 'react-router-dom';
+import { useGetSystemsTree, type SystemTree } from '../api/systems';
 import { getPageHeightCalc } from '../utils';
+import SystemsNodeHeader from './systemsNodeHeader.component';
 
-const nodeWidth = 172;
-const nodeHeight = 36;
+const nodeWidth = 250;
+const nodeHeight = 250;
 
 // Function to apply the Dagre layout
 const getLayoutedElements = (
@@ -40,10 +39,12 @@ const getLayoutedElements = (
   const isHorizontal = direction === 'LR';
   const dagreGraph = new dagre.graphlib.Graph().setDefaultEdgeLabel(() => ({}));
 
-  dagreGraph.setGraph({ rankdir: direction });
+  dagreGraph.setGraph({
+    rankdir: direction,
+  });
 
   nodes.forEach((node) => {
-    dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
+    dagreGraph.setNode(node.id, { width: node.width, height: node.height });
   });
 
   edges.forEach((edge) => {
@@ -54,13 +55,30 @@ const getLayoutedElements = (
 
   const layoutedNodes = nodes.map((node) => {
     const nodeWithPosition = dagreGraph.node(node.id);
+    // This is done to prevent overlapping nodes when a system only has one subsystem
+    const sourceIds = edges.map((val) => val.source);
+    const idCount = sourceIds.reduce(
+      (acc, id) => {
+        acc[id] = (acc[id] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>
+    );
+    const hasMoreThanOneChild = Object.values(idCount).some(
+      (count) => count > 1
+    );
+
     return {
       ...node,
       targetPosition: isHorizontal ? Position.Left : Position.Top,
       sourcePosition: isHorizontal ? Position.Right : Position.Bottom,
       position: {
-        x: nodeWithPosition.x - nodeWidth / 2,
-        y: nodeWithPosition.y - nodeHeight / 2,
+        x: nodeWithPosition.x - nodeWithPosition.width / 2,
+        y: isHorizontal
+          ? nodeWithPosition.y
+          : hasMoreThanOneChild
+            ? nodeWithPosition.y
+            : nodeWithPosition.y - nodeWithPosition.height / 2,
       },
     };
   });
@@ -75,20 +93,36 @@ interface SystemFlowProps {
 const SystemsTree: React.FC<SystemFlowProps> = () => {
   const { system_id: systemId } = useParams();
   const { data: systemsTree, isLoading } = useGetSystemsTree(systemId);
-  const { data: rootSystem } = useGetSystem(systemId);
 
   const [layoutDirection, setLayoutDirection] = React.useState<'TB' | 'LR'>(
     'TB'
   );
+  const [nodeDimensionsReady, setNodeDimensionsReady] = React.useState(false);
 
-  const xSpacing = 300;
-  const ySpacing = 200;
+  const nodeDimensions = React.useRef<
+    Record<string, { width: number; height: number }>
+  >({});
+  const totalNodes = React.useRef(0); // To keep track of the total nodes.
 
-  const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
+  const setNodeDimensions = React.useCallback(
+    (nodeId: string, width: number, height: number) => {
+      nodeDimensions.current[nodeId] = { width, height };
+      if (Object.keys(nodeDimensions.current).length === totalNodes.current) {
+        setNodeDimensionsReady(true); // Mark dimensions as ready when all are set.
+      }
+    },
+    []
+  );
+
+  const xSpacing = 800;
+  const ySpacing = 500;
+
+  const [nodes, setNodes, _onNodesChange] = useNodesState<Node>([]);
+  const [edges, setEdges, _onEdgesChange] = useEdgesState<Edge>([]);
 
   useEffect(() => {
     if (systemsTree) {
+      let systemIndex = 0;
       const transformToFlowData = (
         systems: SystemTree[],
         parentId?: string
@@ -98,46 +132,84 @@ const SystemsTree: React.FC<SystemFlowProps> = () => {
 
         systems.forEach((system, index) => {
           nodes.push({
-            id: system.id,
-            data: { label: system.name },
+            id: system.id ?? '',
+            type: 'systems',
+            data: {
+              title:
+                systemIndex === 0 ? (
+                  system.name
+                ) : (
+                  <MuiLink component={Link} to={`/systems/${system.id}/tree`}>
+                    {system.name}
+                  </MuiLink>
+                ),
+              label: (
+                <Box>
+                  {/* Items Heading */}
+                  <Typography variant="h6" sx={{ marginBottom: 1 }}>
+                    Items:
+                  </Typography>
+                  {/* List of Catalogue Items */}
+                  {system.catalogueItems.length > 0 ? (
+                    system.catalogueItems.map((catalogueItem) => (
+                      <Typography
+                        key={catalogueItem.id}
+                        variant="body2"
+                        sx={{ marginBottom: 0.5 }}
+                      >
+                        {catalogueItem.name}: {catalogueItem.itemsQuantity}
+                      </Typography>
+                    ))
+                  ) : (
+                    <Typography variant="body2" sx={{ marginBottom: 0.5 }}>
+                      No Items
+                    </Typography>
+                  )}
+                </Box>
+              ),
+              direction: layoutDirection,
+              setNodeDimensions,
+              nodeId: system.id ?? '',
+            },
             position: { x: index * xSpacing, y: index * ySpacing },
           });
-
-          if (parentId) {
+          // only have the edges for nodes that connect to other nodes
+          if (parentId && system.id !== parentId) {
             edges.push({
               id: `e-${parentId}-${system.id}`,
               source: parentId,
-              target: system.id,
+              target: system.id ?? '',
               type: 'smoothstep',
             });
           }
 
+          // Handle subsystems recursively
           if (system.subsystems && system.subsystems.length > 0) {
+            systemIndex++;
             const { nodes: childNodes, edges: childEdges } =
               transformToFlowData(system.subsystems, system.id);
+
             nodes = [...nodes, ...childNodes];
             edges = [...edges, ...childEdges];
           }
         });
-
-        return { nodes, edges };
+        // Ensure unique nodes
+        const uniqueNodes = Array.from(
+          new Map(nodes.map((node) => [node.id, node])).values()
+        );
+        totalNodes.current = uniqueNodes.length;
+        return { nodes: uniqueNodes, edges: edges };
       };
 
       const generateTreeWithRoot = (
         systems: SystemTree[]
       ): { nodes: Node[]; edges: Edge[] } => {
-        const rootNode = {
-          id: systemId || 'root',
-          data: { label: rootSystem?.name || 'Root' },
-          position: { x: (xSpacing * systems.length) / 2, y: 0 },
-        };
-
         const { nodes, edges } = transformToFlowData(
           systems,
           systemId || 'root'
         );
         return {
-          nodes: [rootNode, ...nodes],
+          nodes: [...nodes],
           edges,
         };
       };
@@ -146,10 +218,21 @@ const SystemsTree: React.FC<SystemFlowProps> = () => {
         generateTreeWithRoot(systemsTree);
 
       const { nodes: layoutedNodes, edges: layoutedEdges } =
-        getLayoutedElements(rawNodes, rawEdges, layoutDirection);
+        getLayoutedElements(
+          rawNodes.map((node) => ({
+            ...node,
+            width: nodeDimensions.current[node.id]?.width || nodeWidth,
+            height: nodeDimensions.current[node.id]?.height || nodeHeight,
+          })),
+          rawEdges,
+          layoutDirection
+        );
 
       setNodes(layoutedNodes);
       setEdges(layoutedEdges);
+    } else {
+      setNodes([]);
+      setEdges([]);
     }
   }, [
     systemsTree,
@@ -157,10 +240,10 @@ const SystemsTree: React.FC<SystemFlowProps> = () => {
     systemId,
     setNodes,
     setEdges,
-    rootSystem?.name,
+    nodeDimensions,
+    nodeDimensionsReady,
+    setNodeDimensions,
   ]);
-
-  console.log(nodes);
 
   const handleToggleLayout = (
     _event: React.MouseEvent<HTMLElement>,
@@ -202,9 +285,8 @@ const SystemsTree: React.FC<SystemFlowProps> = () => {
       <ReactFlow
         nodes={nodes}
         edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
         connectionLineType={ConnectionLineType.SmoothStep}
+        nodeTypes={{ systems: SystemsNodeHeader }}
         fitView
       >
         <Panel position="top-right">
@@ -218,6 +300,7 @@ const SystemsTree: React.FC<SystemFlowProps> = () => {
             <ToggleButton value="LR">Horizontal</ToggleButton>
           </ToggleButtonGroup>
         </Panel>
+        <MiniMap />
         <Background />
         <Controls />
       </ReactFlow>

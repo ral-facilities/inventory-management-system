@@ -18,7 +18,10 @@ import {
   SystemImportanceType,
   SystemPatch,
   SystemPost,
+  type CatalogueItem,
 } from './api.types';
+import { getCatalogueItem } from './catalogueItems';
+import { getItems } from './items';
 
 /** Utility for turning an importance into an MUI palette colour to display */
 export const getSystemImportanceColour = (
@@ -87,23 +90,66 @@ export const useGetSystem = (
   return useQuery(getSystemQuery(id));
 };
 
-export interface SystemTree extends System {
+export interface SystemTree extends Partial<System> {
+  catalogueItems: (CatalogueItem & { itemsQuantity: number })[];
   subsystems?: SystemTree[];
 }
 
-const getSystemTree = async (parent_id?: string): Promise<SystemTree[]> => {
+const getSystemTree = async (parent_id: string): Promise<SystemTree[]> => {
   // Fetch the systems at the current level
+
+  const rootSystem = await getSystem(parent_id);
+
   const systems = await getSystems(parent_id || 'null');
 
-  // Fetch subsystems for each system recursively
-  const systemsWithTree = await Promise.all(
+  // Fetch subsystems and catalogue items for each system recursively
+  const systemsWithTree: SystemTree[] = await Promise.all(
     systems.map(async (system) => {
-      const subsystems = await getSystemTree(system.id); // Fetch subsystems
-      return { ...system, subsystems }; // Attach subsystems
+      // Fetch subsystems recursively
+      const subsystems = await getSystemTree(system.id);
+
+      // Fetch all items for the current system
+      const items = await getItems(system.id);
+
+      // Group items into catalogue categories and fetch catalogue item details
+      const catalogueItemIdSet = new Set<string>(
+        items.map((item) => item.catalogue_item_id)
+      );
+
+      const catalogueItems: SystemTree['catalogueItems'] = await Promise.all(
+        Array.from(catalogueItemIdSet).map(async (id) => {
+          const catalogueItem = await getCatalogueItem(id);
+          const categoryItems = items.filter(
+            (item) => item.catalogue_item_id === id
+          );
+          return { ...catalogueItem, itemsQuantity: categoryItems.length };
+        })
+      );
+
+      return { ...system, subsystems, catalogueItems };
     })
   );
 
-  return systemsWithTree;
+  // Handle the case when there are no systems (leaf nodes or empty levels)
+
+  const items = await getItems(parent_id);
+
+  // Group items into catalogue categories and fetch catalogue item details
+  const catalogueItemIdSet = new Set<string>(
+    items.map((item) => item.catalogue_item_id)
+  );
+
+  const catalogueItems: SystemTree['catalogueItems'] = await Promise.all(
+    Array.from(catalogueItemIdSet).map(async (id) => {
+      const catalogueItem = await getCatalogueItem(id);
+      const categoryItems = items.filter(
+        (item) => item.catalogue_item_id === id
+      );
+      return { ...catalogueItem, itemsQuantity: categoryItems.length };
+    })
+  );
+
+  return [{ ...rootSystem, catalogueItems, subsystems: systemsWithTree }];
 };
 
 export const useGetSystemsTree = (
