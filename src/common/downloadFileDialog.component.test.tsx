@@ -1,4 +1,9 @@
-import { RenderResult, screen, waitFor } from '@testing-library/react';
+import {
+  fireEvent,
+  RenderResult,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http } from 'msw';
 import { APIImage } from '../api/api.types';
@@ -63,5 +68,30 @@ describe('Download File dialog', () => {
     const continueButton = screen.getByRole('button', { name: 'Continue' });
     expect(continueButton).toBeDisabled();
     expect(await screen.findByRole('progressbar')).toBeInTheDocument();
+  });
+
+  it('calls onClose when cancel button is clicked', async () => {
+    createView();
+
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+
+    expect(props.onClose).toHaveBeenCalled();
+  });
+
+  it('does not close dialog on background click, or on escape key press', async () => {
+    createView();
+
+    await userEvent.click(document.body);
+
+    expect(props.onClose).not.toHaveBeenCalled();
+
+    fireEvent.keyDown(screen.getByRole('dialog'), {
+      key: 'Escape',
+      code: 'Escape',
+      keyCode: 27,
+      charCode: 27,
+    });
+
+    expect(props.onClose).not.toHaveBeenCalled();
   });
 });
