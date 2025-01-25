@@ -1,3 +1,4 @@
+import dagre from '@dagrejs/dagre';
 import {
   Box,
   LinearProgress,
@@ -5,6 +6,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   Typography,
+  useTheme,
 } from '@mui/material';
 import {
   Background,
@@ -14,37 +16,64 @@ import {
   Panel,
   Position,
   ReactFlow,
+  ReactFlowProvider,
   useEdgesState,
   useNodesState,
+  useReactFlow,
+  useStore,
   type Edge,
+  type InternalNode,
   type Node,
+  type ReactFlowState,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import dagre from 'dagre';
-import React, { useEffect } from 'react';
+import type { NodeLookup } from '@xyflow/system';
+import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useGetSystemsTree, type SystemTree } from '../api/systems';
 import { getPageHeightCalc } from '../utils';
 import SystemsNodeHeader from './systemsNodeHeader.component';
 
-const nodeWidth = 250;
+interface SystemFlowProps {
+  rawEdges: Edge[];
+  rawNodes: Node[];
+  layoutDirection: 'TB' | 'LR';
+  handleToggleLayout: (
+    _event: React.MouseEvent<HTMLElement>,
+    newDirection: 'TB' | 'LR'
+  ) => void;
+}
+
+const nodeWidth = 300;
 const nodeHeight = 250;
 
-// Function to apply the Dagre layout
+const calculateRanksep = (nodes: Node[]): number => {
+  const maxHeight = Math.max(...nodes.map((node) => node.height || nodeHeight));
+  return maxHeight; // Add extra space to avoid overlap
+};
+
 const getLayoutedElements = (
   nodes: Node[],
   edges: Edge[],
-  direction = 'TB'
+  direction = 'TB',
+  nodeInternals: NodeLookup<InternalNode<Node>>
 ) => {
   const isHorizontal = direction === 'LR';
+
   const dagreGraph = new dagre.graphlib.Graph().setDefaultEdgeLabel(() => ({}));
 
   dagreGraph.setGraph({
     rankdir: direction,
+    nodesep: 50,
+    ranksep: isHorizontal ? 150 : calculateRanksep(nodes),
   });
 
   nodes.forEach((node) => {
-    dagreGraph.setNode(node.id, { width: node.width, height: node.height });
+    const nodeInternal = nodeInternals.get(node.id);
+    dagreGraph.setNode(node.id, {
+      width: nodeWidth,
+      height: nodeInternal?.measured.height || nodeHeight,
+    });
   });
 
   edges.forEach((edge) => {
@@ -55,7 +84,7 @@ const getLayoutedElements = (
 
   const layoutedNodes = nodes.map((node) => {
     const nodeWithPosition = dagreGraph.node(node.id);
-    // This is done to prevent overlapping nodes when a system only has one subsystem
+    // This prevents overlapping nodes when a system has only one subsystem
     const sourceIds = edges.map((val) => val.source);
     const idCount = sourceIds.reduce(
       (acc, id) => {
@@ -75,7 +104,9 @@ const getLayoutedElements = (
       position: {
         x: nodeWithPosition.x - nodeWithPosition.width / 2,
         y: isHorizontal
-          ? nodeWithPosition.y
+          ? hasMoreThanOneChild
+            ? nodeWithPosition.y
+            : nodeWithPosition.y - nodeWithPosition.height / 2
           : hasMoreThanOneChild
             ? nodeWithPosition.y
             : nodeWithPosition.y - nodeWithPosition.height / 2,
@@ -86,164 +117,172 @@ const getLayoutedElements = (
   return { nodes: layoutedNodes, edges };
 };
 
-interface SystemFlowProps {
-  parentId?: string | null;
-}
+const SystemsFlow = (props: SystemFlowProps) => {
+  const { rawEdges, rawNodes, layoutDirection, handleToggleLayout } = props;
 
-const SystemsTree: React.FC<SystemFlowProps> = () => {
+  const [nodes, setNodes, _onNodesChange] = useNodesState<Node>(rawNodes);
+  const [edges, setEdges, _onEdgesChange] = useEdgesState<Edge>(rawEdges);
+  const { fitView } = useReactFlow();
+  const theme = useTheme();
+
+  const nodeInternals = useStore((state: ReactFlowState) => state.nodeLookup);
+
+  const flattenedNodes = Array.from(nodeInternals.values());
+
+  const [firstNodeHeight, setFirstNodeHeight] = React.useState<
+    number | undefined
+  >(flattenedNodes[0]?.measured?.height);
+
+  // Triggers a refresh for the Layout when the nodes have been measured
+  React.useEffect(() => {
+    if (flattenedNodes[0]?.measured?.height) {
+      setFirstNodeHeight(flattenedNodes[0]?.measured?.height);
+    }
+  }, [flattenedNodes]);
+
+  // Sets the new node edges positions using dagre layouting
+  React.useEffect(() => {
+    const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
+      rawNodes,
+      rawEdges,
+      layoutDirection,
+      nodeInternals
+    );
+    setNodes(layoutedNodes);
+    setEdges(layoutedEdges);
+  }, [
+    layoutDirection,
+    nodeInternals,
+    rawEdges,
+    rawNodes,
+    setEdges,
+    setNodes,
+    firstNodeHeight,
+  ]);
+
+  React.useEffect(() => {
+    window.requestAnimationFrame(() => fitView());
+  }, [fitView, layoutDirection, nodes]);
+  return (
+    <Box sx={{ width: '100%', height: getPageHeightCalc('96px + 40px') }}>
+      <ReactFlow
+        nodes={nodes}
+        edges={edges}
+        colorMode={theme.palette.mode}
+        connectionLineType={ConnectionLineType.SmoothStep}
+        nodeTypes={{ systems: SystemsNodeHeader }}
+        fitView
+      >
+        <Panel position="top-right">
+          <ToggleButtonGroup
+            value={layoutDirection}
+            exclusive
+            onChange={handleToggleLayout}
+            size="small"
+          >
+            <ToggleButton value="TB">Vertical</ToggleButton>
+            <ToggleButton value="LR">Horizontal</ToggleButton>
+          </ToggleButtonGroup>
+        </Panel>
+        <MiniMap />
+        <Background />
+        <Controls />
+      </ReactFlow>
+    </Box>
+  );
+};
+
+const SystemsTree = () => {
   const { system_id: systemId } = useParams();
   const { data: systemsTree, isLoading } = useGetSystemsTree(systemId);
 
   const [layoutDirection, setLayoutDirection] = React.useState<'TB' | 'LR'>(
     'TB'
   );
-  const [nodeDimensionsReady, setNodeDimensionsReady] = React.useState(false);
 
-  const nodeDimensions = React.useRef<
-    Record<string, { width: number; height: number }>
-  >({});
-  const totalNodes = React.useRef(0); // To keep track of the total nodes.
+  let systemIndex = 0;
+  const transformToFlowData = React.useCallback(
+    (
+      systems: SystemTree[],
+      parentId?: string
+    ): { nodes: Node[]; edges: Edge[] } => {
+      let nodes: Node[] = [];
+      let edges: Edge[] = [];
 
-  const setNodeDimensions = React.useCallback(
-    (nodeId: string, width: number, height: number) => {
-      nodeDimensions.current[nodeId] = { width, height };
-      if (Object.keys(nodeDimensions.current).length === totalNodes.current) {
-        setNodeDimensionsReady(true); // Mark dimensions as ready when all are set.
-      }
-    },
-    []
-  );
-
-  const xSpacing = 800;
-  const ySpacing = 500;
-
-  const [nodes, setNodes, _onNodesChange] = useNodesState<Node>([]);
-  const [edges, setEdges, _onEdgesChange] = useEdgesState<Edge>([]);
-
-  useEffect(() => {
-    if (systemsTree) {
-      let systemIndex = 0;
-      const transformToFlowData = (
-        systems: SystemTree[],
-        parentId?: string
-      ): { nodes: Node[]; edges: Edge[] } => {
-        let nodes: Node[] = [];
-        let edges: Edge[] = [];
-
-        systems.forEach((system, index) => {
-          nodes.push({
-            id: system.id ?? '',
-            type: 'systems',
-            data: {
-              title:
-                systemIndex === 0 ? (
-                  system.name
-                ) : (
-                  <MuiLink component={Link} to={`/systems/${system.id}/tree`}>
-                    {system.name}
-                  </MuiLink>
-                ),
-              label: (
-                <Box>
-                  {/* Items Heading */}
-                  <Typography variant="h6" sx={{ marginBottom: 1 }}>
-                    Items:
-                  </Typography>
-                  {/* List of Catalogue Items */}
-                  {system.catalogueItems.length > 0 ? (
-                    system.catalogueItems.map((catalogueItem) => (
-                      <Typography
-                        key={catalogueItem.id}
-                        variant="body2"
-                        sx={{ marginBottom: 0.5 }}
-                      >
-                        {catalogueItem.name}: {catalogueItem.itemsQuantity}
-                      </Typography>
-                    ))
-                  ) : (
-                    <Typography variant="body2" sx={{ marginBottom: 0.5 }}>
-                      No Items
-                    </Typography>
-                  )}
-                </Box>
+      systems.forEach((system) => {
+        nodes.push({
+          id: system.id ?? '',
+          type: 'systems',
+          style: { width: '300px' },
+          data: {
+            title:
+              systemIndex === 0 ? (
+                system.name
+              ) : (
+                <MuiLink component={Link} to={`/systems/${system.id}/tree`}>
+                  {system.name}
+                </MuiLink>
               ),
-              direction: layoutDirection,
-              setNodeDimensions,
-              nodeId: system.id ?? '',
-            },
-            position: { x: index * xSpacing, y: index * ySpacing },
-          });
-          // only have the edges for nodes that connect to other nodes
-          if (parentId && system.id !== parentId) {
-            edges.push({
-              id: `e-${parentId}-${system.id}`,
-              source: parentId,
-              target: system.id ?? '',
-              type: 'smoothstep',
-            });
-          }
-
-          // Handle subsystems recursively
-          if (system.subsystems && system.subsystems.length > 0) {
-            systemIndex++;
-            const { nodes: childNodes, edges: childEdges } =
-              transformToFlowData(system.subsystems, system.id);
-
-            nodes = [...nodes, ...childNodes];
-            edges = [...edges, ...childEdges];
-          }
+            label: (
+              <Box>
+                {/* Items Heading */}
+                <Typography variant="h6" sx={{ marginBottom: 1 }}>
+                  Items:
+                </Typography>
+                {/* List of Catalogue Items */}
+                {system.catalogueItems.length > 0 ? (
+                  system.catalogueItems.map((catalogueItem) => (
+                    <Typography
+                      key={catalogueItem.id}
+                      variant="body2"
+                      sx={{ marginBottom: 0.5 }}
+                    >
+                      {catalogueItem.name}: {catalogueItem.itemsQuantity}
+                    </Typography>
+                  ))
+                ) : (
+                  <Typography variant="body2" sx={{ marginBottom: 0.5 }}>
+                    No Items
+                  </Typography>
+                )}
+              </Box>
+            ),
+            direction: layoutDirection,
+            id: system.id ?? '',
+          },
+          // position will be set by dagre
+          position: { x: 0, y: 0 },
         });
-        // Ensure unique nodes
-        const uniqueNodes = Array.from(
-          new Map(nodes.map((node) => [node.id, node])).values()
-        );
-        totalNodes.current = uniqueNodes.length;
-        return { nodes: uniqueNodes, edges: edges };
-      };
+        // only have the edges for nodes that connect to other nodes
+        if (parentId && system.id !== parentId) {
+          edges.push({
+            id: `e-${parentId}-${system.id}`,
+            source: parentId,
+            target: system.id ?? '',
+            type: 'smoothstep',
+          });
+        }
 
-      const generateTreeWithRoot = (
-        systems: SystemTree[]
-      ): { nodes: Node[]; edges: Edge[] } => {
-        const { nodes, edges } = transformToFlowData(
-          systems,
-          systemId || 'root'
-        );
-        return {
-          nodes: [...nodes],
-          edges,
-        };
-      };
+        // Handle subsystems recursively
+        if (system.subsystems && system.subsystems.length > 0) {
+          systemIndex++;
+          const { nodes: childNodes, edges: childEdges } = transformToFlowData(
+            system.subsystems,
+            system.id
+          );
 
-      const { nodes: rawNodes, edges: rawEdges } =
-        generateTreeWithRoot(systemsTree);
-
-      const { nodes: layoutedNodes, edges: layoutedEdges } =
-        getLayoutedElements(
-          rawNodes.map((node) => ({
-            ...node,
-            width: nodeDimensions.current[node.id]?.width || nodeWidth,
-            height: nodeDimensions.current[node.id]?.height || nodeHeight,
-          })),
-          rawEdges,
-          layoutDirection
-        );
-
-      setNodes(layoutedNodes);
-      setEdges(layoutedEdges);
-    } else {
-      setNodes([]);
-      setEdges([]);
-    }
-  }, [
-    systemsTree,
-    layoutDirection,
-    systemId,
-    setNodes,
-    setEdges,
-    nodeDimensions,
-    nodeDimensionsReady,
-    setNodeDimensions,
-  ]);
+          nodes = [...nodes, ...childNodes];
+          edges = [...edges, ...childEdges];
+        }
+      });
+      // Ensure unique nodes
+      const uniqueNodes = Array.from(
+        new Map(nodes.map((node) => [node.id, node])).values()
+      );
+      return { nodes: uniqueNodes, edges: edges };
+    },
+    [layoutDirection, systemIndex]
+  );
 
   const handleToggleLayout = (
     _event: React.MouseEvent<HTMLElement>,
@@ -254,7 +293,7 @@ const SystemsTree: React.FC<SystemFlowProps> = () => {
     }
   };
 
-  if (isLoading) {
+  if (isLoading || !systemsTree) {
     return (
       <Box height={getPageHeightCalc('96px + 45px')}>
         <LinearProgress />
@@ -280,31 +319,19 @@ const SystemsTree: React.FC<SystemFlowProps> = () => {
     );
   }
 
+  const { nodes: rawNodes, edges: rawEdges } = transformToFlowData(
+    systemsTree,
+    systemId
+  );
   return (
-    <Box sx={{ width: '100%', height: getPageHeightCalc('96px + 40px') }}>
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        connectionLineType={ConnectionLineType.SmoothStep}
-        nodeTypes={{ systems: SystemsNodeHeader }}
-        fitView
-      >
-        <Panel position="top-right">
-          <ToggleButtonGroup
-            value={layoutDirection}
-            exclusive
-            onChange={handleToggleLayout}
-            size="small"
-          >
-            <ToggleButton value="TB">Vertical</ToggleButton>
-            <ToggleButton value="LR">Horizontal</ToggleButton>
-          </ToggleButtonGroup>
-        </Panel>
-        <MiniMap />
-        <Background />
-        <Controls />
-      </ReactFlow>
-    </Box>
+    <ReactFlowProvider>
+      <SystemsFlow
+        rawEdges={rawEdges}
+        rawNodes={rawNodes}
+        handleToggleLayout={handleToggleLayout}
+        layoutDirection={layoutDirection}
+      />
+    </ReactFlowProvider>
   );
 };
 
