@@ -72,4 +72,21 @@ describe('Download File dialog', () => {
 
     expect(props.onClose).toHaveBeenCalled();
   });
+
+  it('displays warning message when session data is not loaded', async () => {
+    file.id = '5';
+    createView();
+
+    const continueButton = screen.getByRole('button', { name: 'Continue' });
+
+    await waitFor(() => {
+      expect(continueButton).not.toBeDisabled();
+    });
+
+    await user.click(continueButton);
+
+    expect(
+      await screen.findByText('No data provided. Please refresh and try again')
+    ).toBeInTheDocument();
+  });
 });
