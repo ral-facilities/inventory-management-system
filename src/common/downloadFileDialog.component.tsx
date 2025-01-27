@@ -13,6 +13,7 @@ import { UseQueryResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import React from 'react';
 import { APIImage, APIImageWithURL } from '../api/api.types';
+import { downloadFileByLink } from '../utils';
 
 export interface BaseDownloadFileProps {
   open: boolean;
@@ -46,12 +47,7 @@ const DownloadFileDialog = (props: DownloadFileProps) => {
 
   const handleDownloadFile = React.useCallback(() => {
     if (downloadedFile) {
-      const link = document.createElement('a');
-      link.href = downloadedFile.download_url;
-      link.download = downloadedFile.file_name;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      downloadFileByLink(document, downloadedFile);
       onClose();
     } else {
       setFormError('No data provided. Please refresh and try again');

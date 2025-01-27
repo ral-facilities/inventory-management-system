@@ -75,6 +75,7 @@ describe('images api functions', () => {
       mockDataView = {
         id: '1',
         file_name: 'Image A',
+        entity_id: '2',
         title: '2',
         description: 'a description',
         primary: false,
