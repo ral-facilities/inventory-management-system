@@ -8,7 +8,6 @@ import '@uppy/image-editor/dist/style.css';
 import ProgressBar from '@uppy/progress-bar'; // Import the ProgressBar plugin
 import { DashboardModal } from '@uppy/react';
 import XHR from '@uppy/xhr-upload';
-import type { VNode } from 'preact';
 import React from 'react';
 import { uppyOnAfterResponse, uppyOnBeforeRequest } from '../../api/api';
 import { settings } from '../../settings';
@@ -29,6 +28,11 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
   const { open, onClose, entityId } = props;
 
   const theme = useTheme();
+  const themeRef = React.useRef(theme);
+
+  React.useEffect(() => {
+    themeRef.current = theme;
+  }, [theme]);
 
   const queryClient = useQueryClient();
 
@@ -115,8 +119,8 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
           name: 'File name',
           placeholder: 'Enter file name',
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          render: (field, h): VNode<any> => {
-            return RenderFields(field, h, inputEl, divEl);
+          render: (field, h) => {
+            return RenderFields(field, h, inputEl, divEl, themeRef.current);
           },
         },
         {

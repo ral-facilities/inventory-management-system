@@ -24,6 +24,12 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
   const { open, onClose, entityId } = props;
   const theme = useTheme();
 
+  const themeRef = React.useRef(theme);
+
+  React.useEffect(() => {
+    themeRef.current = theme;
+  }, [theme]);
+
   const { mutateAsync: postAttachmentMetadata } = usePostAttachmentMetadata();
   const [fileMetadataMap, setFileMetadataMap] = React.useState<
     Record<string, string>
@@ -113,7 +119,7 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
           placeholder: 'Enter file name',
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           render: (field, h): VNode<any> => {
-            return RenderFields(field, h, inputEl, divEl);
+            return RenderFields(field, h, inputEl, divEl, themeRef.current);
           },
         },
         {

@@ -1,5 +1,6 @@
-import { Box, styled } from '@mui/material';
+import { Box, styled, Theme } from '@mui/material';
 import type { VNode } from 'preact';
+import React from 'react';
 import { getSeparatedFilename } from '../utils';
 
 export const StyledUppyBox = styled(Box)(({ theme }) => ({
@@ -13,7 +14,7 @@ export const StyledUppyBox = styled(Box)(({ theme }) => ({
   '& .uppy-Dashboard--modal .uppy-Dashboard-inner': { zIndex: 1300 },
 }));
 
-type PreactRender = (
+export type PreactRender = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   node: any,
   params: Record<string, unknown> | null,
@@ -22,7 +23,7 @@ type PreactRender = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ) => VNode<any>;
 
-type FieldRenderOptions = {
+export type FieldRenderOptions = {
   value: string;
   onChange: (newVal: string) => void;
   fieldCSSClasses: { text: string };
@@ -34,12 +35,13 @@ export function RenderFields(
   field: FieldRenderOptions,
   h: PreactRender,
   inputEl: React.RefObject<HTMLInputElement>,
-  divEl: React.RefObject<HTMLDivElement>
+  divEl: React.RefObject<HTMLDivElement>,
+  themeRef: Theme
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): VNode<any> {
   const { value, onChange, fieldCSSClasses, required } = field;
   const [name, extension] = getSeparatedFilename(value);
-  const initialModeIsDark = localStorage.getItem('darkMode') == 'true';
+  const initialModeIsDark = themeRef.palette.mode === 'dark';
   return h(
     'div',
     {
@@ -75,7 +77,7 @@ export function RenderFields(
         onFocus: () => {
           // Styles the whole div element (TextField) to look focussed, when input is focussed.
           if (divEl.current) {
-            if (localStorage.getItem('darkMode') == 'true') {
+            if (initialModeIsDark) {
               // Toggles dark/light mode colouring
               divEl.current.style['boxShadow'] = 'none';
               divEl.current.style['borderColor'] = 'rgb(82, 82, 82)';
