@@ -1,6 +1,6 @@
 import { Box, styled, Theme } from '@mui/material';
 import type { VNode } from 'preact';
-import React from 'react';
+import React, { MutableRefObject } from 'react';
 import { getSeparatedFilename } from '../utils';
 
 export const StyledUppyBox = styled(Box)(({ theme }) => ({
@@ -14,7 +14,7 @@ export const StyledUppyBox = styled(Box)(({ theme }) => ({
   '& .uppy-Dashboard--modal .uppy-Dashboard-inner': { zIndex: 1300 },
 }));
 
-export type PreactRender = (
+type PreactRender = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   node: any,
   params: Record<string, unknown> | null,
@@ -23,7 +23,7 @@ export type PreactRender = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ) => VNode<any>;
 
-export type FieldRenderOptions = {
+type FieldRenderOptions = {
   value: string;
   onChange: (newVal: string) => void;
   fieldCSSClasses: { text: string };
@@ -31,7 +31,7 @@ export type FieldRenderOptions = {
   form: string;
 };
 
-export function RenderFields(
+function RenderFields(
   field: FieldRenderOptions,
   h: PreactRender,
   inputEl: React.RefObject<HTMLInputElement>,
@@ -41,7 +41,7 @@ export function RenderFields(
 ): VNode<any> {
   const { value, onChange, fieldCSSClasses, required } = field;
   const [name, extension] = getSeparatedFilename(value);
-  const initialModeIsDark = themeRef.palette.mode === 'dark';
+  const modeIsDark = themeRef.palette.mode === 'dark';
   return h(
     'div',
     {
@@ -78,7 +78,7 @@ export function RenderFields(
         onFocus: () => {
           // Styles the whole div element (TextField) to look focussed, when input is focussed.
           if (divEl.current) {
-            if (initialModeIsDark) {
+            if (modeIsDark) {
               // Toggles dark/light mode colouring
               divEl.current.style['boxShadow'] = 'none';
               divEl.current.style['borderColor'] = 'rgb(82, 82, 82)';
@@ -104,7 +104,7 @@ export function RenderFields(
         {
           for: 'uppy-Dashboard-FileCard-input-name',
           style: {
-            color: initialModeIsDark ? 'rgb(117, 117, 117)' : 'rgb(82, 82, 82)',
+            color: modeIsDark ? 'rgb(117, 117, 117)' : 'rgb(82, 82, 82)',
             height: '31px',
             padding: '5px',
           },
@@ -113,4 +113,36 @@ export function RenderFields(
       ),
     ]
   );
+}
+
+interface MetaField {
+  id: string;
+  name: string;
+  placeholder?: string;
+  render?: (field: FieldRenderOptions, h: PreactRender) => VNode<any>;
+}
+
+export function useMetaFields(
+  inputEl: React.RefObject<HTMLInputElement>,
+  divEl: React.RefObject<HTMLDivElement>,
+  themeRef: MutableRefObject<Theme>
+): MetaField[] {
+  const metaFieldsData: MetaField[] = [
+    {
+      id: 'name',
+      name: 'File name',
+      placeholder: 'Enter file name',
+      render: (field, h) => {
+        return RenderFields(field, h, inputEl, divEl, themeRef.current);
+      },
+    },
+    { id: 'title', name: 'Title', placeholder: 'Enter file title' },
+    {
+      id: 'description',
+      name: 'Description',
+      placeholder: 'Enter file description',
+    },
+  ];
+
+  return metaFieldsData;
 }

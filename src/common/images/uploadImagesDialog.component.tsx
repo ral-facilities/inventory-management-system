@@ -12,7 +12,7 @@ import React from 'react';
 import { uppyOnAfterResponse, uppyOnBeforeRequest } from '../../api/api';
 import { settings } from '../../settings';
 import { getNonEmptyTrimmedString } from '../../utils';
-import { RenderFields } from '../uppy.utils';
+import { useMetaFields } from '../uppy.utils';
 
 // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000, so here the former is expected despite them really being GiB, MiB and KiB.
 const MAX_FILE_SIZE_MB = 50;
@@ -113,27 +113,7 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
       proudlyDisplayPoweredByUppy={false}
       theme={theme.palette.mode}
       doneButtonHandler={handleClose}
-      metaFields={[
-        {
-          id: 'name',
-          name: 'File name',
-          placeholder: 'Enter file name',
-           
-          render: (field, h) => {
-            return RenderFields(field, h, inputEl, divEl, themeRef.current);
-          },
-        },
-        {
-          id: 'title',
-          name: 'Title',
-          placeholder: 'Enter file title',
-        },
-        {
-          id: 'description',
-          name: 'Description',
-          placeholder: 'Enter file description',
-        },
-      ]}
+      metaFields={useMetaFields(inputEl, divEl, themeRef)}
     />
   );
 };
