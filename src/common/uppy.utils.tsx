@@ -50,6 +50,7 @@ export function RenderFields(
       onClick: () => inputEl.current && inputEl.current.focus(),
       tabIndex: 0, // Makes div clickable
       ref: divEl,
+      'data-testid': 'filename-input-div-element',
       style: {
         // Styles Div to arrange label + input field
         padding: 0,
