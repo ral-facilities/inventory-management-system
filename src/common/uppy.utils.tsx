@@ -119,6 +119,7 @@ interface MetaField {
   id: string;
   name: string;
   placeholder?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   render?: (field: FieldRenderOptions, h: PreactRender) => VNode<any>;
 }
 
