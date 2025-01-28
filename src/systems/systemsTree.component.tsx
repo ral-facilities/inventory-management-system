@@ -1,10 +1,13 @@
 import dagre from '@dagrejs/dagre';
+import { Warning } from '@mui/icons-material';
 import {
   Box,
+  IconButton,
   LinearProgress,
   Link as MuiLink,
   ToggleButton,
   ToggleButtonGroup,
+  Tooltip,
   Typography,
   useTheme,
 } from '@mui/material';
@@ -13,7 +16,6 @@ import {
   ConnectionLineType,
   Controls,
   MiniMap,
-  Panel,
   Position,
   ReactFlow,
   ReactFlowProvider,
@@ -38,10 +40,6 @@ interface SystemFlowProps {
   rawEdges: Edge[];
   rawNodes: Node[];
   layoutDirection: 'TB' | 'LR';
-  handleToggleLayout: (
-    _event: React.MouseEvent<HTMLElement>,
-    newDirection: 'TB' | 'LR'
-  ) => void;
 }
 
 const nodeWidth = 300;
@@ -118,7 +116,7 @@ const getLayoutedElements = (
 };
 
 const SystemsFlow = (props: SystemFlowProps) => {
-  const { rawEdges, rawNodes, layoutDirection, handleToggleLayout } = props;
+  const { rawEdges, rawNodes, layoutDirection } = props;
 
   const [nodes, setNodes, _onNodesChange] = useNodesState<Node>(rawNodes);
   const [edges, setEdges, _onEdgesChange] = useEdgesState<Edge>(rawEdges);
@@ -173,17 +171,6 @@ const SystemsFlow = (props: SystemFlowProps) => {
         nodeTypes={{ systems: SystemsNodeHeader }}
         fitView
       >
-        <Panel position="top-right">
-          <ToggleButtonGroup
-            value={layoutDirection}
-            exclusive
-            onChange={handleToggleLayout}
-            size="small"
-          >
-            <ToggleButton value="TB">Vertical</ToggleButton>
-            <ToggleButton value="LR">Horizontal</ToggleButton>
-          </ToggleButtonGroup>
-        </Panel>
         <MiniMap />
         <Background />
         <Controls />
@@ -194,12 +181,26 @@ const SystemsFlow = (props: SystemFlowProps) => {
 
 const SystemsTree = () => {
   const { system_id: systemId } = useParams();
-  const { data: systemsTree, isLoading } = useGetSystemsTree(systemId);
 
   const [layoutDirection, setLayoutDirection] = React.useState<'TB' | 'LR'>(
     'TB'
   );
 
+  const [maxDepth, setMaxDepth] = React.useState<-1 | 1 | 2 | 3>(1);
+
+  const maxSubsystems = 150;
+  const subsystemsCutOff = 100;
+
+  const {
+    data: systemsTree,
+    isLoading,
+    error,
+  } = useGetSystemsTree(
+    systemId,
+    maxDepth === -1 ? undefined : maxDepth,
+    subsystemsCutOff,
+    maxSubsystems
+  );
   let systemIndex = 0;
   const transformToFlowData = React.useCallback(
     (
@@ -233,7 +234,7 @@ const SystemsTree = () => {
                 {system.catalogueItems.length > 0 ? (
                   system.catalogueItems.map((catalogueItem) => (
                     <Typography
-                      key={catalogueItem.id}
+                      key={`${catalogueItem.id}-${system.id}`}
                       variant="body2"
                       sx={{ marginBottom: 0.5 }}
                     >
@@ -293,44 +294,126 @@ const SystemsTree = () => {
     }
   };
 
-  if (isLoading || !systemsTree) {
-    return (
-      <Box height={getPageHeightCalc('96px + 45px')}>
-        <LinearProgress />
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: '100%',
-            textAlign: 'center',
-          }}
-        >
-          <Typography variant="h6">
-            Taking time to gather data... This may take a couple of minutes.
-          </Typography>
-          <Typography variant="body2" color="warning.main" sx={{ mt: 2 }}>
-            Note: If this system is high up the tree with many subsystems and
-            items, this process might take significantly longer.
-          </Typography>
-        </Box>
-      </Box>
-    );
-  }
+  const handleToggleMaxDepth = (
+    _event: React.MouseEvent<HTMLElement>,
+    newDepth: -1 | 1 | 2 | 3
+  ) => {
+    if (newDepth !== null) {
+      setMaxDepth(newDepth);
+    }
+  };
+  const isLimitedReached =
+    (error?.response?.data as { message?: string })?.message?.includes(
+      'Subsystem limit exceeded'
+    ) ?? false;
 
   const { nodes: rawNodes, edges: rawEdges } = transformToFlowData(
-    systemsTree,
+    systemsTree ?? [],
     systemId
   );
   return (
     <ReactFlowProvider>
-      <SystemsFlow
-        rawEdges={rawEdges}
-        rawNodes={rawNodes}
-        handleToggleLayout={handleToggleLayout}
-        layoutDirection={layoutDirection}
-      />
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          width: '100%',
+          px: 1,
+        }}
+      >
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Typography color="text.secondary" variant="h6" mr={1}>
+            Depth:
+          </Typography>
+
+          <ToggleButtonGroup
+            value={maxDepth}
+            exclusive
+            onChange={handleToggleMaxDepth}
+            size="small"
+          >
+            <ToggleButton value={1}>1</ToggleButton>
+            <ToggleButton value={2}>2</ToggleButton>
+            <ToggleButton value={3}>3</ToggleButton>
+            <ToggleButton value={-1}>unlimited</ToggleButton>
+          </ToggleButtonGroup>
+
+          <Tooltip
+            sx={{ ml: 1 }}
+            aria-label={`Systems tree warning message`}
+            title={
+              <Typography variant="body2" color="warning" sx={{ mt: 1 }}>
+                The larger the depth, the longer the query may take. If the
+                number of subsystems exceeds {maxSubsystems}, the tree will not
+                load.
+              </Typography>
+            }
+            placement="right"
+            enterTouchDelay={0}
+          >
+            <IconButton size="small">
+              <Warning />
+            </IconButton>
+          </Tooltip>
+        </Box>
+
+        <ToggleButtonGroup
+          value={layoutDirection}
+          exclusive
+          onChange={handleToggleLayout}
+          size="small"
+        >
+          <ToggleButton value="TB">Vertical</ToggleButton>
+          <ToggleButton value="LR">Horizontal</ToggleButton>
+        </ToggleButtonGroup>
+      </Box>
+
+      {isLoading || !systemsTree ? (
+        <Box pt={1} height={getPageHeightCalc('96px + 45px')}>
+          {!isLimitedReached && <LinearProgress />}
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '100%',
+              textAlign: 'center',
+            }}
+          >
+            {!isLimitedReached ? (
+              <>
+                <Typography variant="h6">
+                  Taking time to gather data... This may take a couple of
+                  minutes.
+                </Typography>
+                <Typography variant="body2" color="warning.main" sx={{ mt: 2 }}>
+                  Note: If this system is high up the tree with many subsystems
+                  and items, this process might take significantly longer.
+                </Typography>
+              </>
+            ) : (
+              <>
+                <Typography variant="h6" color="error.main" sx={{ mt: 2 }}>
+                  The maximum number of subsystems has been reached.
+                </Typography>
+                <Typography variant="body2" sx={{ mt: 2 }}>
+                  To view more data, consider decreasing the depth of the tree,
+                  navigating down to a subtree with fewer subsystems, or try
+                  looking at the normal view for more limited results.
+                </Typography>
+              </>
+            )}
+          </Box>
+        </Box>
+      ) : (
+        <SystemsFlow
+          rawEdges={rawEdges}
+          rawNodes={rawNodes}
+          layoutDirection={layoutDirection}
+        />
+      )}
     </ReactFlowProvider>
   );
 };
