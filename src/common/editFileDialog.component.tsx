@@ -31,7 +31,7 @@ export interface BaseFileDialogProps {
 
 export interface ImageDialogProps extends BaseFileDialogProps {
   fileType: 'Image';
-  selectedFile?: APIImage;
+  selectedFile: APIImage;
   usePatchFile: () => UseMutationResult<
     APIImage,
     AxiosError,
@@ -46,24 +46,20 @@ const EditFileDialog = (props: FileDialogProps) => {
 
   const { mutateAsync: patchFile, isPending: isEditPending } = usePatchFile();
 
-  const [initialName, extension] = getSeparatedFilename(
-    selectedFile?.file_name ?? ''
-  );
+  const [initialName, extension] = getSeparatedFilename(selectedFile.file_name);
 
-  const selectedFileCopy: ObjectFilePatch = React.useMemo(
-    () => (selectedFile ? { ...selectedFile, file_name: initialName } : {}),
-    [selectedFile, initialName]
-  );
+  const selectedFileCopy = React.useMemo<ObjectFilePatch>(() => {
+    return {
+      ...selectedFile,
+      file_name: initialName,
+    };
+  }, [selectedFile, initialName]);
 
-  const initialFile: ObjectFilePatch = React.useMemo(
-    () =>
-      selectedFileCopy ?? {
-        file_name: '',
-        title: '',
-        description: '',
-      },
-    [selectedFileCopy]
-  );
+  const initialFile = React.useMemo<ObjectFilePatch>(() => {
+    return {
+      ...selectedFileCopy,
+    };
+  }, [selectedFileCopy]);
 
   const {
     handleSubmit,
@@ -99,42 +95,40 @@ const EditFileDialog = (props: FileDialogProps) => {
 
   const handleEditFile = React.useCallback(
     (fileData: ObjectFilePatch) => {
-      if (selectedFile) {
-        const isFileNameUpdated =
-          fileData.file_name !== selectedFileCopy.file_name;
+      const isFileNameUpdated =
+        fileData.file_name !== selectedFileCopy.file_name;
 
-        const isDescriptionUpdated =
-          fileData.description !== selectedFileCopy.description;
+      const isDescriptionUpdated =
+        fileData.description !== selectedFileCopy.description;
 
-        const isTitleUpdated = fileData.title !== selectedFileCopy.title;
+      const isTitleUpdated = fileData.title !== selectedFileCopy.title;
 
-        const fileToEdit: ObjectFilePatch = {};
+      const fileToEdit: ObjectFilePatch = {};
 
-        if (isFileNameUpdated)
-          fileToEdit.file_name = fileData.file_name + extension;
-        if (isDescriptionUpdated) fileToEdit.description = fileData.description;
-        if (isTitleUpdated) fileToEdit.title = fileData.title;
+      if (isFileNameUpdated)
+        fileToEdit.file_name = fileData.file_name + extension;
+      if (isDescriptionUpdated) fileToEdit.description = fileData.description;
+      if (isTitleUpdated) fileToEdit.title = fileData.title;
 
-        if (isFileNameUpdated || isDescriptionUpdated || isTitleUpdated) {
-          patchFile({
-            id: selectedFile.id,
-            fileMetadata: fileToEdit,
-          })
-            .then(() => handleClose())
-            .catch((error: AxiosError) => {
-              handleIMS_APIError(error);
-            });
-        } else {
-          setError('root.formError', {
-            message:
-              "There have been no changes made. Please change a field's value or press Cancel to exit.",
+      if (isFileNameUpdated || isDescriptionUpdated || isTitleUpdated) {
+        patchFile({
+          id: selectedFile.id,
+          fileMetadata: fileToEdit,
+        })
+          .then(() => handleClose())
+          .catch((error: AxiosError) => {
+            handleIMS_APIError(error);
           });
-        }
+      } else {
+        setError('root.formError', {
+          message:
+            "There have been no changes made. Please change a field's value or press Cancel to exit.",
+        });
       }
     },
     [
-      selectedFile,
       selectedFileCopy,
+      selectedFile,
       extension,
       patchFile,
       handleClose,

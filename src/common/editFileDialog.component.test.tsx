@@ -26,6 +26,7 @@ describe('Edit file dialog', () => {
       onClose: onClose,
       fileType: 'Image',
       usePatchFile: usePatchImage,
+      selectedFile: ImagesJSON[0],
     };
     user = userEvent.setup();
   });

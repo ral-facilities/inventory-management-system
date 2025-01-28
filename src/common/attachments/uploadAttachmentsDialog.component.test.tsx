@@ -87,11 +87,25 @@ describe('Upload attachment dialog', () => {
       expect(screen.getByText('test1.txt')).toBeInTheDocument();
     });
 
+    await user.click(
+      await screen.findByRole('button', { name: 'Edit file test1.txt' })
+    );
+
+    expect(await screen.findByText('File name')).toBeInTheDocument();
+    const [_, title, description] = screen.getAllByRole('textbox');
+
+    await user.type(title, 'test title');
+    await user.type(description, 'test description');
+
+    await user.click(await screen.findByText('Save changes'));
+
     await user.click(await screen.findByText('Upload 1 file'));
 
     expect(axiosPostSpy).toHaveBeenCalledWith('/attachments', {
+      description: 'test description',
       entity_id: '1',
       file_name: 'test1.txt',
+      title: 'test title',
     });
 
     expect(xhrPostSpy).toHaveBeenCalledWith(

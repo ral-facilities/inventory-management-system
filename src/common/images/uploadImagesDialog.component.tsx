@@ -118,7 +118,7 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
           id: 'name',
           name: 'File name',
           placeholder: 'Enter file name',
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+           
           render: (field, h) => {
             return RenderFields(field, h, inputEl, divEl, themeRef.current);
           },
