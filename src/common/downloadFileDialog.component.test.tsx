@@ -61,7 +61,9 @@ describe('Download File dialog', () => {
 
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
-    expect(continueButton).toBeDisabled();
+    // Request is only enabled when id is set (which happens when continue is clicked)
+    continueButton.click();
+    await waitFor(() => expect(continueButton).toBeDisabled());
     expect(await screen.findByRole('progressbar')).toBeInTheDocument();
   });
 

@@ -167,7 +167,7 @@ describe('Image Gallery', () => {
     });
   });
 
-  it('opens download dialog and can close the dialog', async () => {
+  it('opens image download dialog and can close the dialog', async () => {
     createView();
 
     await waitFor(() =>
