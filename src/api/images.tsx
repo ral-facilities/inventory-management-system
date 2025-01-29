@@ -22,6 +22,7 @@ export const useGetImage = (
   return useQuery({
     queryKey: ['Image', id],
     queryFn: () => getImage(id),
+    enabled: !!id,
   });
 };
 

@@ -22,7 +22,6 @@ import {
   MRT_TableInstance,
 } from 'material-react-table';
 import React from 'react';
-import { APIImageWithURL } from './api/api.types';
 
 /* Returns a name avoiding duplicates by appending _copy_n for nth copy */
 export const generateUniqueName = (
@@ -529,14 +528,14 @@ export function getNonEmptyTrimmedString(value: unknown): string | undefined {
     : undefined;
 }
 
-// TODO: Needs to be generalised for attachments, depending on Back End download_url PR
 export function downloadFileByLink(
   document: Document,
-  file: APIImageWithURL
+  url: string,
+  filename: string
 ): void {
   const link = document.createElement('a');
-  link.href = file.download_url;
-  link.download = file.file_name;
+  link.href = url;
+  link.download = filename;
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);

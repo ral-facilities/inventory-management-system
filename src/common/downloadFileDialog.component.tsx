@@ -36,23 +36,44 @@ const DownloadFileDialog = (props: DownloadFileProps) => {
     undefined
   );
 
-  const { data: downloadedFile, isLoading: downloadIsLoading } = useGetFile(
-    file.id
-  );
+  const [downloadId, setDownloadId] = React.useState<string>('');
+
+  const {
+    data: downloadFile,
+    isLoading: downloadIsLoading,
+    error,
+    isPending: downloadIsPending,
+  } = useGetFile(downloadId);
 
   const handleClose = React.useCallback(() => {
     setFormError(undefined);
+    setDownloadId('');
     onClose();
   }, [onClose]);
 
+  const handleClick = React.useCallback(() => {
+    setDownloadId(file.id);
+  }, [file]);
+
   const handleDownloadFile = React.useCallback(() => {
-    if (downloadedFile) {
-      downloadFileByLink(document, downloadedFile);
+    if (!error && downloadFile) {
+      downloadFileByLink(
+        document,
+        downloadFile.download_url,
+        downloadFile.file_name
+      );
+      setDownloadId('');
       onClose();
     } else {
       setFormError('No data provided. Please refresh and try again');
     }
-  }, [downloadedFile, onClose]);
+  }, [downloadFile, onClose, error]);
+
+  React.useEffect(() => {
+    if (!downloadIsPending) {
+      handleDownloadFile();
+    }
+  }, [downloadFile, error, handleDownloadFile, downloadIsPending]);
 
   return (
     <Dialog open={open} maxWidth="lg">
@@ -70,7 +91,7 @@ const DownloadFileDialog = (props: DownloadFileProps) => {
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
         <Button
-          onClick={handleDownloadFile}
+          onClick={handleClick}
           disabled={downloadIsLoading || formError != undefined}
           endIcon={downloadIsLoading ? <CircularProgress size={20} /> : null}
         >
