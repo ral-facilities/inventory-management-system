@@ -179,8 +179,8 @@ describe('Image Gallery', () => {
     const actionMenus = screen.getAllByLabelText(`Card Actions`);
     await user.click(actionMenus[0]);
 
-    const downloadButton = await screen.findAllByText(`Download`);
-    await user.click(downloadButton[0]);
+    const downloadButton = await screen.findByText(`Download`);
+    await user.click(downloadButton);
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
     });
@@ -518,6 +518,49 @@ describe('Image Gallery', () => {
 
     await waitFor(() => {
       expect(screen.queryByTestId('galleryLightBox')).not.toBeInTheDocument();
+    });
+  });
+
+  it('does not display error when cancelling a download request and reopening a download dialog', async () => {
+    createView();
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(8);
+
+    const actionMenus = screen.getAllByLabelText(`Card Actions`);
+    await user.click(actionMenus[0]);
+
+    let downloadButton = await screen.findByText(`Download`);
+    await user.click(downloadButton);
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const continueButton = screen.getByRole('button', { name: 'Continue' });
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+
+    await waitFor(() => {
+      expect(continueButton).not.toBeDisabled();
+    });
+
+    await user.click(continueButton);
+    await user.click(cancelButton);
+
+    await user.click(actionMenus[0]);
+
+    downloadButton = await screen.findByText(`Download`);
+    await user.click(downloadButton);
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.queryByText('No data provided. Please refresh and try again')
+      ).not.toBeInTheDocument();
     });
   });
 });

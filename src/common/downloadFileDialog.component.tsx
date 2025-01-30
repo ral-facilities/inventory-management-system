@@ -9,10 +9,11 @@ import {
   DialogTitle,
   FormHelperText,
 } from '@mui/material';
-import { UseQueryResult } from '@tanstack/react-query';
+import { CancelledError, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import React from 'react';
 import { APIImage, APIImageWithURL } from '../api/api.types';
+import handleIMS_APIError from '../handleIMS_APIError';
 import { downloadFileByLink } from '../utils';
 
 export interface BaseDownloadFileProps {
@@ -23,57 +24,63 @@ export interface BaseDownloadFileProps {
 
 export interface ImageDownloadDialogProps extends BaseDownloadFileProps {
   fileType: 'Image';
-  useGetFile: (id: string) => UseQueryResult<APIImageWithURL, AxiosError>;
+  getFile: (id: string) => Promise<APIImageWithURL>;
   file: APIImage;
 }
 
 export type DownloadFileProps = ImageDownloadDialogProps;
 
 const DownloadFileDialog = (props: DownloadFileProps) => {
-  const { open, onClose, fileType, file, useGetFile } = props;
+  const { open, onClose, fileType, file, getFile } = props;
 
   const [formError, setFormError] = React.useState<string | undefined>(
     undefined
   );
 
-  const [downloadId, setDownloadId] = React.useState<string>('');
+  const [isLoading, setIsLoading] = React.useState(false);
 
-  const {
-    data: downloadFile,
-    isLoading: downloadIsLoading,
-    error,
-    isPending: downloadIsPending,
-  } = useGetFile(downloadId);
+  const queryClient = useQueryClient();
 
   const handleClose = React.useCallback(() => {
+    queryClient.removeQueries({
+      queryKey: ['Image', file.id],
+    });
     setFormError(undefined);
-    setDownloadId('');
+    setIsLoading(false);
     onClose();
-  }, [onClose]);
+  }, [onClose, file, queryClient]);
 
-  const handleClick = React.useCallback(() => {
-    setDownloadId(file.id);
-  }, [file]);
+  const handleDownloadFile = React.useCallback(
+    (data: APIImageWithURL | undefined) => {
+      if (data) {
+        downloadFileByLink(document, data.download_url, data.file_name);
+        onClose();
+      } else {
+        setFormError('No data provided. Please refresh and try again');
+      }
+    },
+    [onClose]
+  );
 
-  const handleDownloadFile = React.useCallback(() => {
-    if (!error && downloadFile) {
-      downloadFileByLink(
-        document,
-        downloadFile.download_url,
-        downloadFile.file_name
-      );
-      setDownloadId('');
-      onClose();
-    } else {
-      setFormError('No data provided. Please refresh and try again');
+  const handleClick = React.useCallback(async () => {
+    setIsLoading(true);
+
+    let data: APIImageWithURL | undefined = undefined;
+    let closing: boolean = false;
+    try {
+      const fetchedData = await queryClient.fetchQuery({
+        queryKey: ['Image', file.id],
+        queryFn: () => getFile(file.id),
+      });
+      data = fetchedData;
+    } catch (error) {
+      if (error instanceof CancelledError) closing = true;
+      else if (error instanceof AxiosError) handleIMS_APIError(error);
+    } finally {
+      setIsLoading(false);
+      if (!closing) handleDownloadFile(data);
     }
-  }, [downloadFile, onClose, error]);
-
-  React.useEffect(() => {
-    if (!downloadIsPending) {
-      handleDownloadFile();
-    }
-  }, [downloadFile, error, handleDownloadFile, downloadIsPending]);
+  }, [file, getFile, handleDownloadFile, queryClient]);
 
   return (
     <Dialog open={open} maxWidth="lg">
@@ -92,8 +99,8 @@ const DownloadFileDialog = (props: DownloadFileProps) => {
         <Button onClick={handleClose}>Cancel</Button>
         <Button
           onClick={handleClick}
-          disabled={downloadIsLoading || formError != undefined}
-          endIcon={downloadIsLoading ? <CircularProgress size={20} /> : null}
+          disabled={isLoading || formError != undefined}
+          endIcon={isLoading ? <CircularProgress size={20} /> : null}
         >
           Continue
         </Button>
