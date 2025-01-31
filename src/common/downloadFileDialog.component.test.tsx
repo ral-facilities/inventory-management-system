@@ -2,7 +2,6 @@ import { RenderResult, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http } from 'msw';
 import { APIImage } from '../api/api.types';
-import { getImage } from '../api/images';
 import ImagesJSON from '../mocks/Images.json';
 import { server } from '../mocks/server';
 import { renderComponentWithRouterProvider } from '../testUtils';
@@ -28,7 +27,6 @@ describe('Download File dialog', () => {
       onClose: onClose,
       fileType: 'Image',
       file: file,
-      getFile: getImage,
     };
     user = userEvent.setup();
   });

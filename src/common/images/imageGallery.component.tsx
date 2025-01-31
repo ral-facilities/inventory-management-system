@@ -27,7 +27,7 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { APIImage } from '../../api/api.types';
-import { getImage, useGetImages } from '../../api/images';
+import { useGetImages } from '../../api/images';
 import { displayTableRowCountText, OverflowTip } from '../../utils';
 import CardViewFilters from '../cardView/cardViewFilters.component';
 import DownloadFileDialog from '../downloadFileDialog.component';
@@ -448,10 +448,9 @@ const ImageGallery = (props: ImageGalleryProps) => {
                 image={selectedImage}
               />
               <DownloadFileDialog
-                open={openMenuDialog == 'download'}
+                open={openMenuDialog === 'download'}
                 onClose={() => setOpenMenuDialog(false)}
                 fileType="Image"
-                getFile={getImage}
                 file={selectedImage}
               />
             </>

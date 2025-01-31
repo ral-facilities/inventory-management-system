@@ -9,10 +9,11 @@ import {
   DialogTitle,
   FormHelperText,
 } from '@mui/material';
-import { CancelledError, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import React from 'react';
 import { APIImage, APIImageWithURL } from '../api/api.types';
+import { getImageQuery } from '../api/images';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { downloadFileByLink } from '../utils';
 
@@ -24,14 +25,15 @@ export interface BaseDownloadFileProps {
 
 export interface ImageDownloadDialogProps extends BaseDownloadFileProps {
   fileType: 'Image';
-  getFile: (id: string) => Promise<APIImageWithURL>;
   file: APIImage;
 }
 
 export type DownloadFileProps = ImageDownloadDialogProps;
 
 const DownloadFileDialog = (props: DownloadFileProps) => {
-  const { open, onClose, fileType, file, getFile } = props;
+  const { open, onClose, fileType, file } = props;
+
+  const getFile = fileType === 'Image' ? getImageQuery : getImageQuery;
 
   const [formError, setFormError] = React.useState<string | undefined>(
     undefined
@@ -42,45 +44,26 @@ const DownloadFileDialog = (props: DownloadFileProps) => {
   const queryClient = useQueryClient();
 
   const handleClose = React.useCallback(() => {
-    queryClient.removeQueries({
-      queryKey: ['Image', file.id],
-    });
     setFormError(undefined);
     setIsLoading(false);
     onClose();
-  }, [onClose, file, queryClient]);
-
-  const handleDownloadFile = React.useCallback(
-    (data: APIImageWithURL | undefined) => {
-      if (data) {
-        downloadFileByLink(document, data.download_url, data.file_name);
-        onClose();
-      } else {
-        setFormError('No data provided. Please refresh and try again');
-      }
-    },
-    [onClose]
-  );
+  }, [onClose]);
 
   const handleClick = React.useCallback(async () => {
     setIsLoading(true);
-
-    let data: APIImageWithURL | undefined = undefined;
-    let closing: boolean = false;
-    try {
-      const fetchedData = await queryClient.fetchQuery({
-        queryKey: ['Image', file.id],
-        queryFn: () => getFile(file.id),
+    queryClient
+      .fetchQuery(getFile(file.id))
+      .then((data: APIImageWithURL) => {
+        setIsLoading(false);
+        downloadFileByLink(document, data.download_url, data.file_name);
+        onClose();
+      })
+      .catch((error: AxiosError) => {
+        setIsLoading(false);
+        handleIMS_APIError(error);
+        setFormError('No data provided. Please refresh and try again');
       });
-      data = fetchedData;
-    } catch (error) {
-      if (error instanceof CancelledError) closing = true;
-      else if (error instanceof AxiosError) handleIMS_APIError(error);
-    } finally {
-      setIsLoading(false);
-      if (!closing) handleDownloadFile(data);
-    }
-  }, [file, getFile, handleDownloadFile, queryClient]);
+  }, [file, queryClient, onClose, getFile]);
 
   return (
     <Dialog open={open} maxWidth="lg">
