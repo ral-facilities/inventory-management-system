@@ -5,7 +5,7 @@ import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 import ProgressBar from '@uppy/progress-bar';
 import { DashboardModal } from '@uppy/react';
-import React, { useRef } from 'react';
+import React from 'react';
 import { usePostAttachmentMetadata } from '../../api/attachments';
 import { getNonEmptyTrimmedString } from '../../utils';
 import { useMetaFields } from '../uppy.utils';
@@ -22,12 +22,6 @@ export interface UploadAttachmentsDialogProps {
 const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
   const { open, onClose, entityId } = props;
   const theme = useTheme();
-
-  const themeRef = React.useRef(theme);
-
-  React.useEffect(() => {
-    themeRef.current = theme;
-  }, [theme]);
 
   const { mutateAsync: postAttachmentMetadata } = usePostAttachmentMetadata();
   const [fileMetadataMap, setFileMetadataMap] = React.useState<
@@ -97,8 +91,7 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
   uppy.on('file-removed', (file) => updateFileMetadata(file, true));
   uppy.on('upload-success', (file) => updateFileMetadata(file));
 
-  const inputEl = useRef<HTMLInputElement>(null);
-  const divEl = useRef<HTMLDivElement>(null);
+  const metaFields = useMetaFields();
 
   return (
     <DashboardModal
@@ -111,7 +104,7 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
       proudlyDisplayPoweredByUppy={false}
       theme={theme.palette.mode}
       doneButtonHandler={handleClose}
-      metaFields={useMetaFields(inputEl, divEl, themeRef)}
+      metaFields={metaFields}
     />
   );
 };

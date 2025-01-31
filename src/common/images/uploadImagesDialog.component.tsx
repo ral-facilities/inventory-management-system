@@ -28,11 +28,6 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
   const { open, onClose, entityId } = props;
 
   const theme = useTheme();
-  const themeRef = React.useRef(theme);
-
-  React.useEffect(() => {
-    themeRef.current = theme;
-  }, [theme]);
 
   const queryClient = useQueryClient();
 
@@ -99,8 +94,7 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
     }
   });
 
-  const inputEl = React.useRef<HTMLInputElement>(null);
-  const divEl = React.useRef<HTMLDivElement>(null);
+  const metaFields = useMetaFields();
 
   return (
     <DashboardModal
@@ -113,7 +107,7 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
       proudlyDisplayPoweredByUppy={false}
       theme={theme.palette.mode}
       doneButtonHandler={handleClose}
-      metaFields={useMetaFields(inputEl, divEl, themeRef)}
+      metaFields={metaFields}
     />
   );
 };
