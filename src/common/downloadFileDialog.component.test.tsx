@@ -50,6 +50,6 @@ describe('Download File dialog', () => {
 
     await user.click(screen.getByRole('button', { name: 'Cancel' }));
 
-    expect(props.onClose).toHaveBeenCalled();
+    expect(onClose).toHaveBeenCalled();
   });
 });

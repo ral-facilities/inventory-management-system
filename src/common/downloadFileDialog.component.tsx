@@ -48,9 +48,7 @@ const DownloadFileDialog = (props: DownloadFileProps) => {
 
   return (
     <Dialog open={open} maxWidth="lg">
-      <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
-        Download {fileType}?
-      </DialogTitle>
+      <DialogTitle>Download {fileType}?</DialogTitle>
       <DialogContent>
         Are you sure you want to download <strong>{file.file_name}</strong>?
       </DialogContent>
