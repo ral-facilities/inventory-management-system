@@ -52,7 +52,7 @@ const DownloadFileDialog = (props: DownloadFileProps) => {
   const handleClick = React.useCallback(async () => {
     setIsLoading(true);
     queryClient
-      .fetchQuery(getFile(file.id))
+      .fetchQuery(getFile(file.id, false))
       .then((data: APIImageWithURL) => {
         setIsLoading(false);
         downloadFileByLink(document, data.download_url, data.file_name);

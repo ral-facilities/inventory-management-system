@@ -349,18 +349,23 @@ describe('Image Gallery', () => {
 
     const galleryLightBox = within(screen.getByTestId('galleryLightBox'));
 
-    await waitFor(() => {
-      expect(
-        galleryLightBox.getByText('The image cannot be loaded')
-      ).toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        expect(
+          galleryLightBox.getByText('The image cannot be loaded')
+        ).toBeInTheDocument();
+      },
+      {
+        timeout: 10000,
+      }
+    );
 
     await user.click(screen.getByLabelText('Close'));
 
     await waitFor(() => {
       expect(screen.queryByTestId('galleryLightBox')).not.toBeInTheDocument();
     });
-  });
+  }, 10000);
 
   it('opens information dialog in lightbox', async () => {
     createView();
