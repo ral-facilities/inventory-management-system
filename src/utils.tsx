@@ -528,11 +528,7 @@ export function getNonEmptyTrimmedString(value: unknown): string | undefined {
     : undefined;
 }
 
-export function downloadFileByLink(
-  document: Document,
-  url: string,
-  filename: string
-): void {
+export function downloadFileByLink(url: string, filename: string): void {
   const link = document.createElement('a');
   link.href = url;
   link.download = filename;

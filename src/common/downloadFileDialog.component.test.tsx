@@ -1,6 +1,5 @@
 import { RenderResult, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import { APIImage } from '../api/api.types';
 import ImagesJSON from '../mocks/Images.json';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import DownloadFileDialog, {
@@ -13,18 +12,16 @@ describe('Download File dialog', () => {
   let props: DownloadFileProps;
   let user: UserEvent;
   const onClose = vi.fn();
-  let file: APIImage;
   const createView = (): RenderResult => {
     return renderComponentWithRouterProvider(<DownloadFileDialog {...props} />);
   };
 
   beforeEach(() => {
-    file = ImagesJSON[0];
     props = {
       open: true,
       onClose: onClose,
       fileType: 'Image',
-      file: file,
+      file: ImagesJSON[0],
     };
     user = userEvent.setup();
   });

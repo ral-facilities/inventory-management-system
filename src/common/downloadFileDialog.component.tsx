@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Dialog,
   DialogActions,
@@ -38,7 +37,7 @@ const DownloadFileDialog = (props: DownloadFileProps) => {
     queryClient
       .fetchQuery(getDownloadFileQuery(file.id, false))
       .then((data: APIImageWithURL) => {
-        downloadFileByLink(document, data.download_url, data.file_name);
+        downloadFileByLink(data.download_url, data.file_name);
         onClose();
       })
       .catch((error: AxiosError) => {
@@ -59,15 +58,6 @@ const DownloadFileDialog = (props: DownloadFileProps) => {
         <Button onClick={onClose}>Cancel</Button>
         <Button onClick={handleClick}>Continue</Button>
       </DialogActions>
-      <Box
-        sx={{
-          mx: '24px',
-          marginBottom: '24px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      ></Box>
     </Dialog>
   );
 };
