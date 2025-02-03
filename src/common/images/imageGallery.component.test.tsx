@@ -511,10 +511,8 @@ describe('Image Gallery', () => {
     });
 
     expect(
-      within(screen.getByRole('dialog')).getByTestId(
-        'download-file-dialog-title'
-      ).textContent == 'Download Image?'
-    );
+      await within(screen.getByRole('dialog')).findByText('Download Image?')
+    ).toBeInTheDocument();
     await user.click(
       within(screen.getByRole('dialog')).getByRole('button', { name: 'Cancel' })
     );
