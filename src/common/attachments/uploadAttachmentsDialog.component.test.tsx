@@ -92,10 +92,17 @@ describe('Upload attachment dialog', () => {
     );
 
     expect(await screen.findByText('File name')).toBeInTheDocument();
-    const [_, title, description] = screen.getAllByRole('textbox');
 
+    // Checks if file extension is displayed. If it's editable, actual value will disappear after editing.
+    expect(await screen.findByText('.txt')).toBeInTheDocument();
+
+    const [name, title, description] = screen.getAllByRole('textbox');
+
+    await user.type(name, 'test.pdf');
     await user.type(title, 'test title');
     await user.type(description, 'test description');
+
+    expect(await screen.findByText('.txt')).toBeInTheDocument();
 
     await user.click(await screen.findByText('Save changes'));
 
@@ -104,7 +111,7 @@ describe('Upload attachment dialog', () => {
     expect(axiosPostSpy).toHaveBeenCalledWith('/attachments', {
       description: 'test description',
       entity_id: '1',
-      file_name: 'test1.txt',
+      file_name: 'test1.pdf.txt',
       title: 'test title',
     });
 

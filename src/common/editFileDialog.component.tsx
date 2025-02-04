@@ -19,9 +19,9 @@ import React from 'react';
 import { UseMutationResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { APIImage, ObjectFilePatch } from '../api/api.types';
-import { FileSchema } from '../form.schemas';
+import { FileSchemaPatch } from '../form.schemas';
 import handleIMS_APIError from '../handleIMS_APIError';
-import { splitFilename } from '../utils';
+import { getNameAndExtension } from '../utils';
 
 export interface BaseFileDialogProps {
   open: boolean;
@@ -46,20 +46,14 @@ const EditFileDialog = (props: FileDialogProps) => {
 
   const { mutateAsync: patchFile, isPending: isEditPending } = usePatchFile();
 
-  const [initialName, extension] = splitFilename(selectedFile.file_name);
+  const [initialName, extension] = getNameAndExtension(selectedFile.file_name);
 
-  const selectedFileCopy = React.useMemo<ObjectFilePatch>(() => {
+  const initialFile = React.useMemo<ObjectFilePatch>(() => {
     return {
       ...selectedFile,
       file_name: initialName,
     };
   }, [selectedFile, initialName]);
-
-  const initialFile = React.useMemo<ObjectFilePatch>(() => {
-    return {
-      ...selectedFileCopy,
-    };
-  }, [selectedFileCopy]);
 
   const {
     handleSubmit,
@@ -70,7 +64,7 @@ const EditFileDialog = (props: FileDialogProps) => {
     clearErrors,
     reset,
   } = useForm<ObjectFilePatch>({
-    resolver: zodResolver(FileSchema('patch')),
+    resolver: zodResolver(FileSchemaPatch()),
     defaultValues: initialFile,
   });
 
@@ -95,13 +89,12 @@ const EditFileDialog = (props: FileDialogProps) => {
 
   const handleEditFile = React.useCallback(
     (fileData: ObjectFilePatch) => {
-      const isFileNameUpdated =
-        fileData.file_name !== selectedFileCopy.file_name;
+      const isFileNameUpdated = fileData.file_name !== initialFile.file_name;
 
       const isDescriptionUpdated =
-        fileData.description !== selectedFileCopy.description;
+        fileData.description !== initialFile.description;
 
-      const isTitleUpdated = fileData.title !== selectedFileCopy.title;
+      const isTitleUpdated = fileData.title !== initialFile.title;
 
       const fileToEdit: ObjectFilePatch = {};
 
@@ -126,14 +119,7 @@ const EditFileDialog = (props: FileDialogProps) => {
         });
       }
     },
-    [
-      selectedFileCopy,
-      selectedFile,
-      extension,
-      patchFile,
-      handleClose,
-      setError,
-    ]
+    [initialFile, selectedFile, extension, patchFile, handleClose, setError]
   );
 
   return (

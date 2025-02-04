@@ -528,7 +528,7 @@ export function getNonEmptyTrimmedString(value: unknown): string | undefined {
     : undefined;
 }
 
-export const splitFilename = (
+export const getNameAndExtension = (
   filename: string
 ): [name: string, extension: string] => {
   const point = filename.lastIndexOf('.') ?? 0;

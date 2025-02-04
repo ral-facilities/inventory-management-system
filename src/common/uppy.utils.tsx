@@ -3,7 +3,7 @@ import { Body, Meta } from '@uppy/core';
 import { DashboardState } from '@uppy/dashboard/lib/Dashboard';
 import type { VNode } from 'preact';
 import React from 'react';
-import { splitFilename } from '../utils';
+import { getNameAndExtension } from '../utils';
 
 export const StyledUppyBox = styled(Box)(({ theme }) => ({
   '& .uppy-Dashboard-inner': {
@@ -19,20 +19,20 @@ export const StyledUppyBox = styled(Box)(({ theme }) => ({
   // The input focus styles are adapted from Uppy core styles:
   // https://github.com/transloadit/uppy/blob/3aa8d688ff4a94b52287dbf737eb5b3f10b29dda/packages/%40uppy/core/src/_common.scss#L49
   '.custom-div-focus': {
-    '&:focus-within':
-      theme.palette.mode === 'dark'
-        ? {
-            // Dark mode: gray border color from Uppy variables:
-            // https://github.com/transloadit/uppy/blob/3aa8d688ff4a94b52287dbf737eb5b3f10b29dda/packages/%40uppy/core/src/_variables.scss#L32
-            boxShadow: 'none !important',
-            borderColor: 'rgb(82, 82, 82)',
-          }
-        : {
-            // Light mode: blue border color from Uppy variables:
-            // https://github.com/transloadit/uppy/blob/3aa8d688ff4a94b52287dbf737eb5b3f10b29dda/packages/%40uppy/core/src/_variables.scss#L19
-            boxShadow: 'rgba(18, 105, 207, 0.15) 0px 0px 0px 3px',
-            borderColor: 'rgba(18, 105, 207, 0.6)',
-          },
+    '&:focus-within': {
+      // Light mode: blue border color from Uppy variables:
+      // https://github.com/transloadit/uppy/blob/3aa8d688ff4a94b52287dbf737eb5b3f10b29dda/packages/%40uppy/core/src/_variables.scss#L19
+      boxShadow: 'rgba(18, 105, 207, 0.15) 0px 0px 0px 3px',
+      borderColor: 'rgba(18, 105, 207, 0.6)',
+    },
+  },
+  "[data-uppy-theme='dark'] .custom-div-focus": {
+    '&:focus-within': {
+      // Dark mode: gray border color from Uppy variables:
+      // https://github.com/transloadit/uppy/blob/3aa8d688ff4a94b52287dbf737eb5b3f10b29dda/packages/%40uppy/core/src/_variables.scss#L32
+      boxShadow: 'none',
+      borderColor: 'rgb(82, 82, 82)',
+    },
   },
 }));
 
@@ -65,7 +65,7 @@ function renderFields(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): VNode<any> {
   const { value, onChange, fieldCSSClasses, required } = field;
-  const [name, extension] = splitFilename(value);
+  const [name, extension] = getNameAndExtension(value);
   return h(
     'div',
     {

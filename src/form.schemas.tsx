@@ -619,11 +619,11 @@ export const ItemDetailsStepSchema = (requestType: RequestType) => {
 
 // ------------------------------------ FILES ------------------------------------
 
-export const FileSchema = (requestType: RequestType) =>
+export const FileSchemaPatch = () =>
   z.object({
     file_name: MandatoryStringSchema({
       errorMessage: 'Please enter a file name.',
     }),
-    title: OptionalOrNullableStringSchema({ requestType }),
-    description: OptionalOrNullableStringSchema({ requestType }),
+    title: NullableStringSchema,
+    description: NullableStringSchema,
   });
