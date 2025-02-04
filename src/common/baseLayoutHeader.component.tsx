@@ -14,6 +14,7 @@ export interface BaseLayoutHeaderProps {
 function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
   const { breadcrumbsInfo, children, homeLocation } = props;
   const navigate = useNavigate();
+
   const onChangeNode = React.useCallback(
     (id: string | null) => {
       navigate(`/${RoutesHomeLocation[homeLocation]}${id ? `/${id}` : ''}`);

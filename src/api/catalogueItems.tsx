@@ -68,7 +68,7 @@ export const useGetCatalogueItems = (
   });
 };
 
-const getCatalogueItem = async (
+export const getCatalogueItem = async (
   catalogueCategoryId: string | undefined
 ): Promise<CatalogueItem> => {
   const queryParams = new URLSearchParams();

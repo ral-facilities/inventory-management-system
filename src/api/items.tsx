@@ -89,7 +89,7 @@ export const usePostItems = (): UseMutationResult<
   });
 };
 
-const getItems = async (
+export const getItems = async (
   system_id?: string,
   catalogue_item_id?: string
 ): Promise<Item[]> => {

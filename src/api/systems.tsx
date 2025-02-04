@@ -18,7 +18,10 @@ import {
   SystemImportanceType,
   SystemPatch,
   SystemPost,
+  type CatalogueItem,
 } from './api.types';
+import { getCatalogueItem } from './catalogueItems';
+import { getItems } from './items';
 
 /** Utility for turning an importance into an MUI palette colour to display */
 export const getSystemImportanceColour = (
@@ -85,6 +88,171 @@ export const useGetSystem = (
   id?: string | null
 ): UseQueryResult<System, AxiosError> => {
   return useQuery(getSystemQuery(id));
+};
+
+export interface SystemTree extends Partial<System> {
+  catalogueItems: (CatalogueItem & { itemsQuantity: number })[];
+  subsystems?: SystemTree[];
+}
+
+const getSystemTree = async (
+  parent_id: string,
+  maxSubsystems: number, // Total max subsystems allowed
+  maxDepth?: number,
+  currentDepth: number = 0, // Default value
+  subsystemsCutOffPoint?: number, // Total cutoff point
+  totalSubsystems: { count: number } = { count: 0 }, // Shared counter object
+  catalogueItemCache: Map<string, CatalogueItem> = new Map() // Shared cache for catalogue items
+): Promise<SystemTree[]> => {
+  // Stop recursion if currentDepth exceeds maxDepth
+  if (maxDepth !== undefined && currentDepth >= maxDepth) {
+    return [];
+  }
+
+  // Fetch the root system
+  const rootSystem = await getSystem(parent_id);
+
+  // Fetch systems at the current level
+  const systems = await getSystems(parent_id || 'null');
+
+  // Increment the total count of subsystems
+  totalSubsystems.count += systems.length;
+
+  // Throw an AxiosError if the total count exceeds maxSubsystems
+  if (maxSubsystems !== undefined && totalSubsystems.count > maxSubsystems) {
+    throw new AxiosError(
+      `Total subsystems exceeded the maximum allowed limit of ${maxSubsystems}. Current count: ${totalSubsystems.count}`,
+      'SubsystemLimitExceeded',
+      undefined,
+      null,
+      {
+        status: 400,
+        statusText: 'Bad Request',
+        headers: {},
+        // @ts-expect-error: not needed
+        config: {},
+        data: {
+          message: `Subsystem limit exceeded. Max: ${maxSubsystems}, Current: ${totalSubsystems.count}`,
+        },
+      }
+    );
+  }
+
+  // Stop recursion if totalSubsystems count exceeds the cutoff point
+  if (
+    subsystemsCutOffPoint !== undefined &&
+    totalSubsystems.count > subsystemsCutOffPoint
+  ) {
+    return systems.map((system) => ({
+      ...system,
+      subsystems: [],
+      catalogueItems: [],
+    }));
+  }
+
+  // Fetch subsystems and catalogue items for each system recursively
+  const systemsWithTree: SystemTree[] = await Promise.all(
+    systems.map(async (system) => {
+      // Fetch subsystems recursively, increasing the depth
+      const subsystems = await getSystemTree(
+        system.id,
+        maxSubsystems,
+        maxDepth,
+        currentDepth + 1,
+        subsystemsCutOffPoint,
+        totalSubsystems,
+        catalogueItemCache
+      );
+
+      // Fetch all items for the current system
+      const items = await getItems(system.id);
+
+      // Group items into catalogue categories and fetch catalogue item details
+      const catalogueItemIdSet = new Set<string>(
+        items.map((item) => item.catalogue_item_id)
+      );
+
+      const catalogueItems: SystemTree['catalogueItems'] = await Promise.all(
+        Array.from(catalogueItemIdSet).map(async (id) => {
+          // Check if the item exists in the cache
+          if (!catalogueItemCache.has(id)) {
+            // If not, fetch and store it in the cache
+            const fetchedCatalogueItem = await getCatalogueItem(id);
+            catalogueItemCache.set(id, fetchedCatalogueItem);
+          }
+
+          // Retrieve the item from the cache
+          const catalogueItem = catalogueItemCache.get(id)!;
+          const categoryItems = items.filter(
+            (item) => item.catalogue_item_id === id
+          );
+          return { ...catalogueItem, itemsQuantity: categoryItems.length };
+        })
+      );
+
+      return { ...system, subsystems, catalogueItems };
+    })
+  );
+
+  // Handle the case when there are no systems (leaf nodes or empty levels)
+  const items = await getItems(parent_id);
+
+  // Group items into catalogue categories and fetch catalogue item details
+  const catalogueItemIdSet = new Set<string>(
+    items.map((item) => item.catalogue_item_id)
+  );
+
+  const catalogueItems: SystemTree['catalogueItems'] = await Promise.all(
+    Array.from(catalogueItemIdSet).map(async (id) => {
+      // Check if the item exists in the cache
+      if (!catalogueItemCache.has(id)) {
+        // If not, fetch and store it in the cache
+        const fetchedCatalogueItem = await getCatalogueItem(id);
+        catalogueItemCache.set(id, fetchedCatalogueItem);
+      }
+
+      // Retrieve the item from the cache
+      const catalogueItem = catalogueItemCache.get(id)!;
+      const categoryItems = items.filter(
+        (item) => item.catalogue_item_id === id
+      );
+      return { ...catalogueItem, itemsQuantity: categoryItems.length };
+    })
+  );
+
+  return [
+    {
+      ...rootSystem,
+      catalogueItems,
+      subsystems: systemsWithTree,
+    },
+  ];
+};
+
+export const useGetSystemsTree = (
+  parent_id?: string | null,
+  maxDepth?: number,
+  subsystemsCutOffPoint?: number, // Add cutoff point as a parameter
+  maxSubsystems?: number
+): UseQueryResult<SystemTree[], AxiosError> => {
+  return useQuery({
+    queryKey: [
+      'SystemsTree',
+      parent_id,
+      maxSubsystems,
+      maxDepth,
+      subsystemsCutOffPoint,
+    ],
+    queryFn: () =>
+      getSystemTree(
+        parent_id ?? '',
+        maxSubsystems ?? 150,
+        maxDepth,
+        0,
+        subsystemsCutOffPoint
+      ),
+    staleTime: 1000 * 60 * 5,
+  });
 };
 
 const getSystemsBreadcrumbs = async (id: string): Promise<BreadcrumbsInfo> => {

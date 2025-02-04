@@ -211,6 +211,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         header: 'Catalogue Item',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem?.name,
+        getGroupingValue: (row) => row.catalogueItem?.id ?? '',
         id: 'catalogueItem.name',
         Cell:
           type === 'normal'
