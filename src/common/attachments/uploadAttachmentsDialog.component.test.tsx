@@ -87,11 +87,40 @@ describe('Upload attachment dialog', () => {
       expect(screen.getByText('test1.txt')).toBeInTheDocument();
     });
 
+    await user.click(
+      await screen.findByRole('button', { name: 'Edit file test1.txt' })
+    );
+
+    expect(await screen.findByText('File name')).toBeInTheDocument();
+
+    // Checks if file extension is displayed. If it's editable, actual value will disappear after editing.
+    expect(await screen.findByText('.txt')).toBeInTheDocument();
+
+    const title = screen.getByRole('textbox', { name: 'Title' });
+    const description = screen.getByRole('textbox', { name: 'Description' });
+
+    expect(await screen.findByDisplayValue('test1')).toBeInTheDocument();
+    expect(await screen.findByText('.txt')).toBeInTheDocument();
+
+    await user.type(title, 'test title');
+
+    expect(await screen.findByDisplayValue('test title')).toBeInTheDocument();
+    await user.click(description);
+
+    await user.type(description, 'test description');
+    expect(
+      await screen.findByDisplayValue('test description')
+    ).toBeInTheDocument();
+
+    await user.click(await screen.findByText('Save changes'));
+
     await user.click(await screen.findByText('Upload 1 file'));
 
     expect(axiosPostSpy).toHaveBeenCalledWith('/attachments', {
+      description: 'test description',
       entity_id: '1',
       file_name: 'test1.txt',
+      title: 'test title',
     });
 
     expect(xhrPostSpy).toHaveBeenCalledWith(

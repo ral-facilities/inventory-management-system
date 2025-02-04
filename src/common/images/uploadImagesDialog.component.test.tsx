@@ -48,6 +48,34 @@ describe('Upload image dialog', () => {
       screen.getByText('Files cannot be larger than', { exact: false })
     ).toBeInTheDocument();
     expect(baseElement).toMatchSnapshot();
+
+    const file1 = new File(['hello world'], 'image.png', {
+      type: 'image/png',
+    });
+
+    const dropZone = screen.getByText('files cannot be larger than', {
+      exact: false,
+    });
+
+    Object.defineProperty(dropZone, 'files', {
+      value: [file1],
+    });
+
+    fireEvent.drop(dropZone, {
+      dataTransfer: {
+        files: [file1],
+      },
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('image.png')).toBeInTheDocument();
+    });
+
+    await user.click(
+      await screen.findByRole('button', { name: 'Edit file image.png' })
+    );
+
+    expect(await screen.findByText('File name')).toBeInTheDocument();
   });
 
   it('calls onclose when close button is clicked', async () => {
@@ -88,10 +116,19 @@ describe('Upload image dialog', () => {
     );
 
     expect(await screen.findByText('File name')).toBeInTheDocument();
-    const [_, title, description] = screen.getAllByRole('textbox');
 
+    // Checks if file extension is displayed. If it's editable, actual value will disappear after editing.
+    expect(screen.getByText('.png')).toBeInTheDocument();
+
+    const name = screen.getByRole('textbox', { name: 'File name .png' });
+    const title = screen.getByRole('textbox', { name: 'Title' });
+    const description = screen.getByRole('textbox', { name: 'Description' });
+
+    await user.type(name, 'test.jpeg');
     await user.type(title, 'test');
     await user.type(description, 'test');
+
+    expect(screen.getByText('.png')).toBeInTheDocument();
 
     await user.click(await screen.findByText('Save changes'));
 

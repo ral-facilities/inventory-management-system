@@ -27,10 +27,11 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { APIImage } from '../../api/api.types';
-import { useGetImages } from '../../api/images';
+import { useGetImages, usePatchImage } from '../../api/images';
 import { displayTableRowCountText, OverflowTip } from '../../utils';
 import CardViewFilters from '../cardView/cardViewFilters.component';
 import DownloadFileDialog from '../downloadFileDialog.component';
+import EditFileDialog from '../editFileDialog.component';
 import { usePreservedTableState } from '../preservedTableState.component';
 import DeleteImageDialog from './deleteImageDialog.component';
 import GalleryLightBox from './galleryLightbox.component';
@@ -192,6 +193,11 @@ const ImageGallery = (props: ImageGalleryProps) => {
         <MenuItem
           key="edit"
           aria-label={`Edit ${row.original.file_name} image`}
+          onClick={() => {
+            setSelectedImage(row.original);
+            setOpenMenuDialog('edit');
+            closeMenu();
+          }}
           sx={{ m: 0 }}
         >
           <ListItemIcon>
@@ -438,6 +444,13 @@ const ImageGallery = (props: ImageGalleryProps) => {
                 open={openMenuDialog === 'information'}
                 onClose={() => setOpenMenuDialog(false)}
                 image={selectedImage}
+              />
+              <EditFileDialog
+                open={openMenuDialog === 'edit'}
+                onClose={() => setOpenMenuDialog(false)}
+                fileType="Image"
+                usePatchFile={usePatchImage}
+                selectedFile={selectedImage}
               />
               <DeleteImageDialog
                 open={openMenuDialog === 'delete'}

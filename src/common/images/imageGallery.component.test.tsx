@@ -194,6 +194,33 @@ describe('Image Gallery', () => {
     });
   });
 
+  it('opens image edit dialog and can close the dialog', async () => {
+    createView();
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(8);
+
+    const actionMenus = screen.getAllByLabelText(`Card Actions`);
+    await user.click(actionMenus[0]);
+
+    const editButton = await screen.findByText(`Edit`);
+    await user.click(editButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
   it('opens image delete dialog and can close the dialog', async () => {
     createView();
 
@@ -208,12 +235,13 @@ describe('Image Gallery', () => {
 
     const deleteButton = await screen.findByText(`Delete`);
     await user.click(deleteButton);
+
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
     });
 
-    const closeButton = screen.getByRole('button', { name: 'Cancel' });
-    await user.click(closeButton);
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
 
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
@@ -412,6 +440,59 @@ describe('Image Gallery', () => {
     ).toBeInTheDocument();
     await user.click(
       within(screen.getByRole('dialog')).getByRole('button', { name: 'Close' })
+    );
+
+    await user.click(screen.getByLabelText('Close'));
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('galleryLightBox')).not.toBeInTheDocument();
+    });
+  });
+
+  it('opens edit dialog in lightbox', async () => {
+    createView();
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+    const thumbnail = await screen.findAllByAltText('test');
+    await user.click(thumbnail[0]);
+
+    expect(axiosGetSpy).toHaveBeenCalledWith('/images/1');
+    await waitFor(() => {
+      expect(
+        screen.getByText('File name: stfc-logo-blue-text.png')
+      ).toBeInTheDocument();
+    });
+    expect(screen.getByText('Title: stfc-logo-blue-text')).toBeInTheDocument();
+    expect(screen.getByText('test')).toBeInTheDocument();
+
+    const galleryLightBox = within(screen.getByTestId('galleryLightBox'));
+
+    const imageElement1 = await galleryLightBox.findByAltText(`test`);
+
+    expect(imageElement1).toBeInTheDocument();
+
+    expect(imageElement1).toHaveAttribute(
+      'src',
+      `http://localhost:3000/images/stfc-logo-blue-text.png?text=1`
+    );
+
+    await user.click(galleryLightBox.getByLabelText('Image Actions'));
+
+    const editButton = await screen.findByText(`Edit`);
+
+    await user.click(editButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    expect(
+      within(screen.getByRole('dialog')).getByText('Edit Image')
+    ).toBeInTheDocument();
+    await user.click(
+      within(screen.getByRole('dialog')).getByRole('button', { name: 'Cancel' })
     );
 
     await user.click(screen.getByLabelText('Close'));
