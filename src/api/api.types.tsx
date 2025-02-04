@@ -1,3 +1,5 @@
+import type { Body, Meta } from '@uppy/core';
+
 interface CreatedModifiedMixin {
   created_time: string;
   modified_time: string;
@@ -227,12 +229,8 @@ export interface ObjectFileUploadMetadata {
   description?: string | null;
 }
 
-export interface UppyUploadMetadata extends ObjectFileUploadMetadata {
-  // The index signature is required to avoid a TypeScript error, as Uppy expects
-  // metadata to allow arbitrary string keys.
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any;
-}
+export interface UppyUploadMetadata extends ObjectFileUploadMetadata, Meta {}
+
 // ------------------------------------ ATTACHMENTS ------------------------------------------------
 
 // This is AttachmentPost on the object-store-api
@@ -261,12 +259,9 @@ export interface APIImage
   primary: boolean;
   thumbnail_base64: string;
 }
-export interface UppyImageUploadResponse extends APIImage {
-  // The index signature is required to avoid a TypeScript error, as Uppy expects
-  // metadata to allow arbitrary string keys.
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any;
-}
+
+export interface UppyImageUploadResponse extends APIImage, Body {}
+
 export interface APIImageWithURL extends APIImage {
   /* Each url has a different `ResponseContentDisposition` set in the url, for viewing images inline and downloading respectively.
    Allows links to be downloaded directly to the user's computer and not to their client first. */
