@@ -18,7 +18,7 @@ export const StyledUppyBox = styled(Box)(({ theme }) => ({
   // Therefore, all CSS that depends on the theme mode is handled here.
   // The input focus styles are adapted from Uppy core styles:
   // https://github.com/transloadit/uppy/blob/3aa8d688ff4a94b52287dbf737eb5b3f10b29dda/packages/%40uppy/core/src/_common.scss#L49
-  '.custom-div-focus': {
+  '.ims-uppy-input-div-focused-within': {
     '&:focus-within': {
       // Light mode: blue border color from Uppy variables:
       // https://github.com/transloadit/uppy/blob/3aa8d688ff4a94b52287dbf737eb5b3f10b29dda/packages/%40uppy/core/src/_variables.scss#L19
@@ -26,7 +26,7 @@ export const StyledUppyBox = styled(Box)(({ theme }) => ({
       borderColor: 'rgba(18, 105, 207, 0.6)',
     },
   },
-  "[data-uppy-theme='dark'] .custom-div-focus": {
+  "[data-uppy-theme='dark'] .ims-uppy-input-div-focused-within": {
     '&:focus-within': {
       // Dark mode: gray border color from Uppy variables:
       // https://github.com/transloadit/uppy/blob/3aa8d688ff4a94b52287dbf737eb5b3f10b29dda/packages/%40uppy/core/src/_variables.scss#L32
@@ -69,7 +69,7 @@ function renderFields(
   return h(
     'div',
     {
-      class: 'custom-div-focus ' + fieldCSSClasses.text,
+      class: 'ims-uppy-input-div-focused-within ' + fieldCSSClasses.text,
       // Input field takes up 3/4 of textfield, the rest is div. This redirects the focus from div to input.
       onClick: () => inputEl.current && inputEl.current.focus(),
       tabIndex: 0, // Makes div clickable
@@ -79,7 +79,6 @@ function renderFields(
         // Styles Div to arrange label + input field
         padding: 0,
         display: 'inline-flex',
-        colorScheme: 'light dark',
         justifyContent: 'space-between',
         alignItems: 'center',
       },
@@ -117,7 +116,6 @@ function renderFields(
   );
 }
 
-//Uppy custom type: MetaField[] type imported from node modules:
 export type Metafields = DashboardState<Meta, Body>['metaFields'];
 
 export function useMetaFields(): Metafields {

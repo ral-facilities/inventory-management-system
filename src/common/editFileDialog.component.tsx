@@ -64,7 +64,7 @@ const EditFileDialog = (props: FileDialogProps) => {
     clearErrors,
     reset,
   } = useForm<ObjectFilePatch>({
-    resolver: zodResolver(FileSchemaPatch()),
+    resolver: zodResolver(FileSchemaPatch),
     defaultValues: initialFile,
   });
 

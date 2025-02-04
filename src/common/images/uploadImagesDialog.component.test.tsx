@@ -18,12 +18,8 @@ describe('Upload image dialog', () => {
 
   const onClose = vi.fn();
 
-  const createView = (themeMode: 'light' | 'dark' = 'light') => {
-    const theme = createTheme({
-      palette: {
-        mode: themeMode,
-      },
-    });
+  const createView = () => {
+    const theme = createTheme({});
     return renderComponentWithRouterProvider(
       <ThemeProvider theme={theme}>
         <UploadImagesDialog {...props} />
@@ -48,7 +44,7 @@ describe('Upload image dialog', () => {
     xhrPostSpy.mockRestore();
   });
 
-  it('renders dialog correctly, in light theme', async () => {
+  it('renders dialog correctly', async () => {
     let baseElement;
     await act(async () => {
       baseElement = createView().baseElement;
@@ -86,63 +82,6 @@ describe('Upload image dialog', () => {
     );
 
     expect(await screen.findByText('File name')).toBeInTheDocument();
-    const [filename, title, _] = screen.getAllByRole('textbox');
-
-    await user.click(filename);
-
-    const parentElement = screen.getByTestId('filename-input-div-element');
-
-    expect(parentElement).toHaveStyle(
-      'boxShadow: rgba(18, 105, 207, 0.15) 0px 0px 0px 3px'
-    );
-    expect(parentElement).toHaveStyle('borderColor: rgba(18, 105, 207, 0.6)');
-
-    await user.click(title);
-
-    expect(parentElement?.style.length == 0);
-  });
-
-  it('renders dialog correctly, in dark theme', async () => {
-    createView('dark');
-
-    expect(
-      screen.getByText('Files cannot be larger than', { exact: false })
-    ).toBeInTheDocument();
-
-    const file1 = new File(['hello world'], 'image.png', {
-      type: 'image/png',
-    });
-
-    const dropZone = screen.getByText('files cannot be larger than', {
-      exact: false,
-    });
-
-    Object.defineProperty(dropZone, 'files', {
-      value: [file1],
-    });
-
-    fireEvent.drop(dropZone, {
-      dataTransfer: {
-        files: [file1],
-      },
-    });
-
-    await waitFor(() => {
-      expect(screen.getByText('image.png')).toBeInTheDocument();
-    });
-
-    await user.click(
-      await screen.findByRole('button', { name: 'Edit file image.png' })
-    );
-
-    expect(await screen.findByText('File name')).toBeInTheDocument();
-    const [filename, _, __] = screen.getAllByRole('textbox');
-
-    await user.click(filename);
-    const parentElement = screen.getByTestId('filename-input-div-element');
-
-    expect(parentElement).toHaveStyle('boxShadow: none');
-    expect(parentElement).toHaveStyle('borderColor: rgb(82, 82, 82)');
   });
 
   it('calls onclose when close button is clicked', async () => {

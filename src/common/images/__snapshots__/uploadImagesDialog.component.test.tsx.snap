@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Upload image dialog > renders dialog correctly, in light theme 1`] = `
+exports[`Upload image dialog > renders dialog correctly 1`] = `
 <body
   class="uppy-Dashboard-isFixed"
 >
