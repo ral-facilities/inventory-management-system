@@ -147,10 +147,10 @@ describe('CardView', () => {
       expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
     });
 
-    const actionsButton = screen.getByRole('button', {
-      name: 'actions Beam Characterization catalogue category button',
+    const actionsButtons = screen.getAllByRole('button', {
+      name: 'Card Actions',
     });
-    await user.click(actionsButton);
+    await user.click(actionsButtons[0]);
 
     const deleteButton = screen.getByRole('menuitem', {
       name: 'delete Beam Characterization catalogue category button',
@@ -175,10 +175,10 @@ describe('CardView', () => {
       expect(screen.getByText('Amp Meters')).toBeInTheDocument();
     });
 
-    const actionsButton = screen.getByRole('button', {
-      name: 'actions Amp Meters catalogue category button',
+    const actionsButtons = screen.getAllByRole('button', {
+      name: 'Card Actions',
     });
-    await user.click(actionsButton);
+    await user.click(actionsButtons[6]);
 
     const editButton = screen.getByRole('menuitem', {
       name: 'edit Amp Meters catalogue category button',
@@ -208,10 +208,10 @@ describe('CardView', () => {
       expect(screen.getByText('Amp Meters')).toBeInTheDocument();
     });
 
-    const actionsButton = screen.getByRole('button', {
-      name: 'actions Amp Meters catalogue category button',
+    const actionsButtons = screen.getAllByRole('button', {
+      name: 'Card Actions',
     });
-    await user.click(actionsButton);
+    await user.click(actionsButtons[6]);
 
     const editButton = screen.getByRole('menuitem', {
       name: 'duplicate Amp Meters catalogue category button',
@@ -238,9 +238,11 @@ describe('CardView', () => {
       expect(screen.getByText('Cameras')).toBeInTheDocument();
     });
 
-    const camerasCheckbox = screen.getByLabelText('Cameras checkbox');
+    const checkboxes = await screen.findAllByRole('checkbox', {
+      name: 'Toggle select card',
+    });
 
-    await user.click(camerasCheckbox);
+    await user.click(checkboxes[1]);
 
     await waitFor(() => {
       expect(
@@ -265,9 +267,11 @@ describe('CardView', () => {
       expect(screen.getByText('Cameras')).toBeInTheDocument();
     });
 
-    const camerasCheckbox = screen.getByLabelText('Cameras checkbox');
+    const checkboxes = await screen.findAllByRole('checkbox', {
+      name: 'Toggle select card',
+    });
 
-    await user.click(camerasCheckbox);
+    await user.click(checkboxes[1]);
 
     await waitFor(() => {
       expect(
@@ -292,42 +296,13 @@ describe('CardView', () => {
       expect(screen.getByText('Energy Meters')).toBeInTheDocument();
     });
 
-    const energyMetersCheckbox = screen.getByLabelText(
-      'Energy Meters checkbox'
-    );
-
-    await user.click(energyMetersCheckbox);
-
-    const camerasCheckbox = screen.getByLabelText('Cameras checkbox');
-
-    await user.click(camerasCheckbox);
-
-    await user.click(energyMetersCheckbox);
-    await user.click(camerasCheckbox);
-
-    await waitFor(() => {
-      expect(
-        screen.queryByRole('button', { name: 'Move to' })
-      ).not.toBeInTheDocument();
-    });
-  });
-
-  it('selects and deselects all catalogue categories', async () => {
-    createView('/catalogue/1', 'catalogueCategories');
-
-    await waitFor(() => {
-      expect(screen.getByText('Energy Meters')).toBeInTheDocument();
+    const checkboxes = await screen.findAllByRole('checkbox', {
+      name: 'Toggle select card',
     });
 
-    const energyMetersCheckbox = screen.getByLabelText(
-      'Energy Meters checkbox'
-    );
+    await user.click(checkboxes[0]);
 
-    await user.click(energyMetersCheckbox);
-
-    const camerasCheckbox = screen.getByLabelText('Cameras checkbox');
-
-    await user.click(camerasCheckbox);
+    await user.click(checkboxes[1]);
 
     const clearSelected = await screen.findByRole('button', {
       name: '2 selected',

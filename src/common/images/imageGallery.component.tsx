@@ -259,6 +259,9 @@ const ImageGallery = (props: ImageGalleryProps) => {
   const displayedImages = table
     .getRowModel()
     .rows.map((row) => row.getVisibleCells().map((cell) => cell)[0]);
+  const selectedImages = table
+    .getSelectedRowModel()
+    .rows.map((row) => row.original);
 
   return (
     <>
@@ -338,7 +341,9 @@ const ImageGallery = (props: ImageGalleryProps) => {
                 );
                 const isLastPage =
                   preservedState.pagination.pageIndex === lastPageIndex;
-
+                const isSelected = selectedImages.some(
+                  (image) => image.id === card.row.original.id
+                );
                 return (
                   <Card
                     component={Grid}
@@ -354,6 +359,9 @@ const ImageGallery = (props: ImageGalleryProps) => {
                           isLastPage)
                           ? '50%'
                           : undefined,
+                      backgroundColor: isSelected
+                        ? table.options.mrtTheme.selectedRowBackgroundColor
+                        : undefined,
                     }}
                     minWidth={'350px'}
                   >
@@ -370,7 +378,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
                           row={card.row as MRT_Row<APIImage>}
                           table={table}
                           sx={{
-                            ariaLabel: `${card.row.original.file_name} checkbox`,
                             margin: 0.5,
                           }}
                         />
@@ -407,7 +414,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
                           row={card.row as MRT_Row<APIImage>}
                           table={table}
                           sx={{
-                            ariaLabel: `actions ${card.row.original.file_name} photo button`,
                             margin: 0.5,
                           }}
                         />

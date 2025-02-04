@@ -26,7 +26,7 @@ export interface CatalogueCategoryDirectoryDialogProps {
   open: boolean;
   onClose: () => void;
   selectedCategories: CatalogueCategory[];
-  onChangeSelectedCategories: (selectedCategories: CatalogueCategory[]) => void;
+  resetSelectedCategories: () => void;
   parentCategoryId: string | null;
   requestType: 'moveTo' | 'copyTo';
 }
@@ -38,7 +38,7 @@ const CatalogueCategoryDirectoryDialog = (
     open,
     onClose,
     selectedCategories,
-    onChangeSelectedCategories,
+    resetSelectedCategories,
     requestType,
   } = props;
 
@@ -83,7 +83,7 @@ const CatalogueCategoryDirectoryDialog = (
         targetCategory: targetCategory || null,
       }).then((response) => {
         handleTransferState(response);
-        onChangeSelectedCategories([]);
+        resetSelectedCategories();
         handleClose();
       });
     }
@@ -93,7 +93,7 @@ const CatalogueCategoryDirectoryDialog = (
     moveToCatalogueCategory,
     selectedCategories,
     targetCategory,
-    onChangeSelectedCategories,
+    resetSelectedCategories,
     handleClose,
   ]);
 
@@ -114,7 +114,7 @@ const CatalogueCategoryDirectoryDialog = (
         existingCategoryCodes: existingCategoryCodes,
       }).then((response) => {
         handleTransferState(response);
-        onChangeSelectedCategories([]);
+        resetSelectedCategories();
         handleClose();
       });
     }
@@ -125,7 +125,7 @@ const CatalogueCategoryDirectoryDialog = (
     copyToCatalogueCategory,
     selectedCategories,
     targetCategory,
-    onChangeSelectedCategories,
+    resetSelectedCategories,
     handleClose,
   ]);
 
