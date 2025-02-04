@@ -1,4 +1,5 @@
 import {
+  queryOptions,
   useMutation,
   UseMutationResult,
   useQuery,
@@ -16,13 +17,19 @@ export const getImage = async (id: string): Promise<APIImageWithURL> => {
   });
 };
 
+export const getImageQuery = (id: string, retry?: boolean) =>
+  queryOptions<APIImageWithURL, AxiosError>({
+    queryKey: ['Image', id],
+    queryFn: () => {
+      return getImage(id);
+    },
+    retry: retry ? false : undefined,
+  });
+
 export const useGetImage = (
   id: string
 ): UseQueryResult<APIImageWithURL, AxiosError> => {
-  return useQuery({
-    queryKey: ['Image', id],
-    queryFn: () => getImage(id),
-  });
+  return useQuery(getImageQuery(id));
 };
 
 const getImages = async (

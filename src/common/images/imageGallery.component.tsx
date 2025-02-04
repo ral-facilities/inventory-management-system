@@ -30,6 +30,7 @@ import { APIImage } from '../../api/api.types';
 import { useGetImages, usePatchImage } from '../../api/images';
 import { displayTableRowCountText, OverflowTip } from '../../utils';
 import CardViewFilters from '../cardView/cardViewFilters.component';
+import DownloadFileDialog from '../downloadFileDialog.component';
 import EditFileDialog from '../editFileDialog.component';
 import { usePreservedTableState } from '../preservedTableState.component';
 import DeleteImageDialog from './deleteImageDialog.component';
@@ -58,6 +59,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
   const [openMenuDialog, setOpenMenuDialog] = React.useState<
     'download' | 'edit' | 'delete' | 'information' | false
   >(false);
+
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
       pagination: { pageSize: 16, pageIndex: 0 },
@@ -81,6 +83,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
         .filter((description): description is string => Boolean(description))
     )
   );
+
   const columns = React.useMemo<MRT_ColumnDef<APIImage>[]>(() => {
     return [
       {
@@ -205,6 +208,11 @@ const ImageGallery = (props: ImageGalleryProps) => {
         <MenuItem
           key="download"
           aria-label={`Download ${row.original.file_name} image`}
+          onClick={() => {
+            setSelectedImage(row.original);
+            setOpenMenuDialog('download');
+            closeMenu();
+          }}
           sx={{ m: 0 }}
         >
           <ListItemIcon>
@@ -451,6 +459,12 @@ const ImageGallery = (props: ImageGalleryProps) => {
                   setCurrentLightBoxImage(undefined);
                 }}
                 image={selectedImage}
+              />
+              <DownloadFileDialog
+                open={openMenuDialog === 'download'}
+                onClose={() => setOpenMenuDialog(false)}
+                fileType="Image"
+                file={selectedImage}
               />
             </>
           )}

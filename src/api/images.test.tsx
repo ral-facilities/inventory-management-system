@@ -67,7 +67,9 @@ describe('images api functions', () => {
 
       expect(result.current.data).toEqual({
         ...ImagesJSON[1],
-        url: 'http://localhost:3000/images/stfc-logo-blue-text.png?text=1',
+        view_url: 'http://localhost:3000/images/stfc-logo-blue-text.png?text=1',
+        download_url:
+          'http://localhost:3000/images/stfc-logo-blue-text.png?text=1',
       });
     });
   });
@@ -111,7 +113,7 @@ describe('images api functions', () => {
       };
     });
 
-    it('posts a request to delete a manufacturer and return a successful response', async () => {
+    it('posts a request to delete an image and return a successful response', async () => {
       const { result } = renderHook(() => useDeleteImage(), {
         wrapper: hooksWrapperWithProviders(),
       });

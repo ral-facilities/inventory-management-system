@@ -177,13 +177,13 @@ const GalleryLightBox = (props: GalleryLightBoxProps) => {
                 The image cannot be loaded
               </Typography>
             )}
-            {!isLoading && data?.url && !(hasError === data?.id) && (
+            {!isLoading && data?.view_url && !(hasError === data?.id) && (
               <img
                 // The key forces React to remount the <img> tag when hasError changes.
                 // This is necessary because, without remounting, the <img> tag doesn't
                 // refetch the image when navigating to the next image after an error.
                 key={hasError}
-                src={data.url}
+                src={data.view_url}
                 alt={data.description ?? 'No photo description available.'}
                 style={{
                   objectFit: 'contain',
