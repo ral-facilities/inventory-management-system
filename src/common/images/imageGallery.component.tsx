@@ -32,19 +32,24 @@ import { displayTableRowCountText, OverflowTip } from '../../utils';
 import CardViewFilters from '../cardView/cardViewFilters.component';
 import DownloadFileDialog from '../downloadFileDialog.component';
 import { usePreservedTableState } from '../preservedTableState.component';
+import { StyledUppyBox } from '../uppy.utils';
 import DeleteImageDialog from './deleteImageDialog.component';
 import GalleryLightBox from './galleryLightbox.component';
 import ImageInformationDialog from './imageInformationDialog.component';
 import ThumbnailImage from './thumbnailImage.component';
-
-const MAX_HEIGHT_THUMBNAIL = 300;
+import UploadImagesDialog from './uploadImagesDialog.component';
 
 export interface ImageGalleryProps {
   entityId?: string;
+  dense: boolean;
+  setSelectedPrimaryID: (value: React.SetStateAction<string>) => void;
 }
 
 const ImageGallery = (props: ImageGalleryProps) => {
-  const { entityId } = props;
+  const { entityId, dense, setSelectedPrimaryID } = props;
+
+  const MAX_HEIGHT_THUMBNAIL = dense ? 150 : 300;
+
   const { data: images, isLoading: imageIsLoading } = useGetImages(entityId);
 
   const [currentLightBoxImage, setCurrentLightBoxImage] = React.useState<
@@ -64,7 +69,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
       pagination: { pageSize: 16, pageIndex: 0 },
     },
     storeInUrl: true,
-    urlParamName: 'imageState',
+    urlParamName: dense ? 'primaryImageState' : 'imageState',
   });
 
   const titles = Array.from(
@@ -139,11 +144,12 @@ const ImageGallery = (props: ImageGalleryProps) => {
     enableColumnPinning: false,
     enableTopToolbar: true,
     enableFacetedValues: true,
-    enableRowActions: true,
+    enableRowActions: !dense,
     enableGlobalFilter: false,
     enableRowSelection: true,
     enableStickyHeader: true,
     enableDensityToggle: false,
+    enableMultiRowSelection: !dense,
     enableTableFooter: true,
     enableColumnFilters: true,
     enableHiding: false,
@@ -174,6 +180,15 @@ const ImageGallery = (props: ImageGalleryProps) => {
       size: 'small',
       variant: 'outlined',
     },
+    muiSelectCheckboxProps: dense
+      ? ({ row }) => {
+          return {
+            onClick: () => {
+              setSelectedPrimaryID(row.original.id);
+            },
+          };
+        }
+      : undefined,
     muiPaginationProps: {
       color: 'secondary',
       rowsPerPageOptions: [16, 24, 32],
@@ -260,6 +275,9 @@ const ImageGallery = (props: ImageGalleryProps) => {
     .getRowModel()
     .rows.map((row) => row.getVisibleCells().map((cell) => cell)[0]);
 
+  const [openUploadDialog, setOpenUploadDialog] =
+    React.useState<boolean>(false);
+
   return (
     <>
       {!imageIsLoading ? (
@@ -276,8 +294,8 @@ const ImageGallery = (props: ImageGalleryProps) => {
               No images available
             </Typography>
             <Typography variant="body1">
-              Please add an image by opening the Action Menu and clicking the
-              Upload Images menu item.
+              Please add an image by{dense && ' opening the Action Menu and'}{' '}
+              clicking the Upload Images menu item.
             </Typography>
           </Box>
         )
@@ -291,19 +309,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
         <Grid container>
           <Grid item container mt={2} direction="column" alignItems="center">
             <Collapse in={!isCollapsed} style={{ width: '100%' }}>
-              <Grid marginTop={'auto'} direction="row" item container>
-                <Button
-                  startIcon={<ClearIcon />}
-                  sx={{ mx: 0.5, ml: 2 }}
-                  variant="outlined"
-                  disabled={preservedState.columnFilters.length === 0}
-                  onClick={() => {
-                    table.resetColumnFilters();
-                  }}
-                >
-                  Clear Filters
-                </Button>
-              </Grid>
               <CardViewFilters table={table} />
             </Collapse>
 
@@ -321,6 +326,27 @@ const ImageGallery = (props: ImageGalleryProps) => {
               {isCollapsed ? 'Show Filters' : 'Hide Filters'}
             </Typography>
           </Grid>
+          <Button
+            startIcon={<ClearIcon />}
+            sx={{ mx: 0.5, ml: 2 }}
+            variant="outlined"
+            disabled={preservedState.columnFilters.length === 0}
+            onClick={() => {
+              table.resetColumnFilters();
+            }}
+          >
+            Clear Filters
+          </Button>
+          {dense && (
+            <Button
+              onClick={() => {
+                setOpenUploadDialog(true);
+              }}
+              variant="outlined"
+            >
+              Upload Image
+            </Button>
+          )}
           <Grid container item>
             <Grid
               container
@@ -329,7 +355,9 @@ const ImageGallery = (props: ImageGalleryProps) => {
               gap={2}
               sx={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+                gridTemplateColumns: dense
+                  ? 'repeat(auto-fit, minmax(200px, 1fr))'
+                  : 'repeat(auto-fit, minmax(350px, 1fr))',
               }}
             >
               {displayedImages.map((card, index) => {
@@ -355,7 +383,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
                           ? '50%'
                           : undefined,
                     }}
-                    minWidth={'350px'}
+                    minWidth={dense ? '175px' : '350px'}
                   >
                     <Grid
                       display="flex"
@@ -390,6 +418,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
                           setCurrentLightBoxImage(card.row.original.id)
                         }
                         image={card.row.original}
+                        dense={dense}
                       />
                     </Grid>
 
@@ -401,17 +430,19 @@ const ImageGallery = (props: ImageGalleryProps) => {
                       container
                       xs={12}
                     >
-                      <Grid xs={2} item>
-                        <MRT_ToggleRowActionMenuButton
-                          cell={card as MRT_Cell<APIImage>}
-                          row={card.row as MRT_Row<APIImage>}
-                          table={table}
-                          sx={{
-                            ariaLabel: `actions ${card.row.original.file_name} photo button`,
-                            margin: 0.5,
-                          }}
-                        />
-                      </Grid>
+                      {!dense && (
+                        <Grid xs={2} item>
+                          <MRT_ToggleRowActionMenuButton
+                            cell={card as MRT_Cell<APIImage>}
+                            row={card.row as MRT_Row<APIImage>}
+                            table={table}
+                            sx={{
+                              ariaLabel: `actions ${card.row.original.file_name} photo button`,
+                              margin: 0.5,
+                            }}
+                          />
+                        </Grid>
+                      )}
                       <Grid item xs={8}>
                         <OverflowTip
                           sx={{
@@ -432,7 +463,16 @@ const ImageGallery = (props: ImageGalleryProps) => {
           <Grid marginTop={2} direction="row" item container>
             <MRT_BottomToolbar table={table} sx={{ width: '100%' }} />
           </Grid>
-          {selectedImage && (
+          {dense && (
+            <StyledUppyBox>
+              <UploadImagesDialog
+                open={openUploadDialog}
+                onClose={() => setOpenUploadDialog(false)}
+                entityId={entityId ?? ''}
+              />
+            </StyledUppyBox>
+          )}
+          {selectedImage && !dense && (
             <>
               <ImageInformationDialog
                 open={openMenuDialog === 'information'}

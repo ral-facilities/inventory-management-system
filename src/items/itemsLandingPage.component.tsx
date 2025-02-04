@@ -13,6 +13,7 @@ import { useGetManufacturer } from '../api/manufacturers';
 import { useGetSystem } from '../api/systems';
 import ActionMenu from '../common/actionMenu.component';
 import PlaceholderImage from '../common/images/placeholderImage.component';
+import PrimaryImageDialog from '../common/images/primaryImageDialog.component';
 import TabView from '../common/tab/tabView.component';
 import { formatDateTimeStrings } from '../utils';
 import ItemDialog from './itemDialog.component';
@@ -23,8 +24,7 @@ const ItemsActionMenu = (props: {
   item: Item;
 }) => {
   const { catalogueItem, catalogueCategory, item } = props;
-  const [editItemDialogOpen, setEditItemDialogOpen] =
-    React.useState<boolean>(false);
+  const [openEditDialog, setOpenEditDialog] = React.useState<boolean>(false);
   return (
     <ActionMenu
       ariaLabelPrefix="items landing page"
@@ -32,14 +32,14 @@ const ItemsActionMenu = (props: {
       uploadAttachmentsEntityId={item.id}
       uploadImagesEntityId={item.id}
       editMenuItem={{
-        onClick: () => setEditItemDialogOpen(true),
+        onClick: () => setOpenEditDialog(true),
         dialog: (
           <>
-            {editItemDialogOpen && (
+            {openEditDialog && (
               <ItemDialog
-                open={editItemDialogOpen}
+                open={openEditDialog}
                 onClose={() => {
-                  setEditItemDialogOpen(false);
+                  setOpenEditDialog(false);
                 }}
                 requestType="patch"
                 catalogueCategory={catalogueCategory}
@@ -77,6 +77,9 @@ function ItemsLandingPage() {
     catalogueItemData?.manufacturer_id
   );
 
+  const [openPrimaryDialog, setOpenPrimaryDialog] =
+    React.useState<boolean>(false);
+
   return (
     <Grid container flexDirection="column">
       {(!itemDataIsLoading ||
@@ -96,8 +99,15 @@ function ItemsLandingPage() {
               {/* Image Section */}
               <Grid item container xs={12}>
                 <Grid item xs={12} sm={4}>
-                  <PlaceholderImage />
+                  <PlaceholderImage setDialog={setOpenPrimaryDialog} />
                 </Grid>
+                <PrimaryImageDialog
+                  open={openPrimaryDialog}
+                  onClose={() => {
+                    setOpenPrimaryDialog(false);
+                  }}
+                  entityID={itemData.id ?? ''}
+                />
                 {/* Title and Description Section */}
                 <Grid
                   item

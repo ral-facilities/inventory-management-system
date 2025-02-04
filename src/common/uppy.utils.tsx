@@ -8,5 +8,5 @@ export const StyledUppyBox = styled(Box)(({ theme }) => ({
     maxHeight: 'calc(100% - 64px)',
     width: 'calc(100% - 64px)',
   },
-  '& .uppy-Dashboard--modal .uppy-Dashboard-inner': { zIndex: 1300 },
+  '& .uppy-Dashboard--modal .uppy-Dashboard-inner': { zIndex: 1300 + 1 },
 }));

@@ -18,6 +18,7 @@ import { useGetCatalogueItem } from '../../api/catalogueItems';
 import { useGetManufacturer } from '../../api/manufacturers';
 import ActionMenu from '../../common/actionMenu.component';
 import PlaceholderImage from '../../common/images/placeholderImage.component';
+import PrimaryImageDialog from '../../common/images/primaryImageDialog.component';
 import TabView from '../../common/tab/tabView.component';
 import { formatDateTimeStrings } from '../../utils';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
@@ -73,6 +74,9 @@ function CatalogueItemsLandingPage() {
     catalogueItemIdData?.manufacturer_id
   );
 
+  const [openPrimaryDialog, setOpenPrimaryDialog] =
+    React.useState<boolean>(false);
+
   return (
     <Grid container flexDirection="column">
       {catalogueItemIdData && catalogueCategoryData && isParentCorrect && (
@@ -87,8 +91,15 @@ function CatalogueItemsLandingPage() {
             {/* Image Section */}
             <Grid item container xs={12}>
               <Grid item xs={12} sm={4}>
-                <PlaceholderImage />
+                <PlaceholderImage setDialog={setOpenPrimaryDialog} />
               </Grid>
+              <PrimaryImageDialog
+                open={openPrimaryDialog}
+                onClose={() => {
+                  setOpenPrimaryDialog(false);
+                }}
+                entityID={catalogueItemId ?? ''}
+              />
               {/* Title and Description Section */}
               <Grid
                 item
