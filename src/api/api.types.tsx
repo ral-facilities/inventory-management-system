@@ -218,16 +218,25 @@ export interface Item
   usage_status: string;
   properties: Property[];
 }
+// ------------------------------------ OBJECT STORAGE API -----------------------------------------
 
-// ------------------------------------ ATTACHMENTS ------------------------------------------------
-
-// This is AttachmentPost on the object-store-api
-export interface AttachmentPostMetadata {
+export interface ObjectFileUploadMetadata {
   entity_id: string;
   file_name: string;
   title?: string | null;
   description?: string | null;
 }
+
+export interface UppyUploadMetadata extends ObjectFileUploadMetadata {
+  // The index signature is required to avoid a TypeScript error, as Uppy expects
+  // metadata to allow arbitrary string keys.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any;
+}
+// ------------------------------------ ATTACHMENTS ------------------------------------------------
+
+// This is AttachmentPost on the object-store-api
+export type AttachmentPostMetadata = ObjectFileUploadMetadata;
 
 export interface AttachmentUploadInfo {
   url: string;
@@ -241,12 +250,8 @@ export interface AttachmentPostMetadataResponse
 }
 
 // ------------------------------------ IMAGES ------------------------------------------------
-export interface ImagePost {
-  entity_id: string;
-  file_name: string;
+export interface ImagePost extends ObjectFileUploadMetadata {
   upload_file: File;
-  title?: string | null;
-  description?: string | null;
 }
 
 export interface APIImage
@@ -256,7 +261,12 @@ export interface APIImage
   primary: boolean;
   thumbnail_base64: string;
 }
-
+export interface UppyImageUploadResponse extends APIImage {
+  // The index signature is required to avoid a TypeScript error, as Uppy expects
+  // metadata to allow arbitrary string keys.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any;
+}
 export interface APIImageWithURL extends APIImage {
   /* Each url has a different `ResponseContentDisposition` set in the url, for viewing images inline and downloading respectively.
    Allows links to be downloaded directly to the user's computer and not to their client first. */

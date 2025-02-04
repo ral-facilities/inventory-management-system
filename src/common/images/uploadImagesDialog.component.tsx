@@ -1,6 +1,6 @@
 import { useTheme } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
-import Uppy, { Body, Meta } from '@uppy/core';
+import Uppy from '@uppy/core';
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 import ImageEditor from '@uppy/image-editor';
@@ -10,6 +10,10 @@ import { DashboardModal } from '@uppy/react';
 import XHR from '@uppy/xhr-upload';
 import React from 'react';
 import { uppyOnAfterResponse, uppyOnBeforeRequest } from '../../api/api';
+import type {
+  UppyImageUploadResponse,
+  UppyUploadMetadata,
+} from '../../api/api.types';
 import { settings } from '../../settings';
 import { getNonEmptyTrimmedString } from '../../utils';
 
@@ -31,8 +35,10 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
   const queryClient = useQueryClient();
 
   const osApiUrl = async () => (await settings)?.osApiUrl || '';
-  const [uppy] = React.useState<Uppy<Meta, Body>>(() => {
-    const newUppy = new Uppy<Meta, Body>({
+  const [uppy] = React.useState<
+    Uppy<UppyUploadMetadata, UppyImageUploadResponse>
+  >(() => {
+    const newUppy = new Uppy<UppyUploadMetadata, UppyImageUploadResponse>({
       autoProceed: false,
       restrictions: {
         maxFileSize: MAX_FILE_SIZE_B,
