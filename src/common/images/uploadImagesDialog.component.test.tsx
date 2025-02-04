@@ -1,4 +1,3 @@
-import { createTheme, ThemeProvider } from '@mui/material';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
@@ -19,12 +18,7 @@ describe('Upload image dialog', () => {
   const onClose = vi.fn();
 
   const createView = () => {
-    const theme = createTheme({});
-    return renderComponentWithRouterProvider(
-      <ThemeProvider theme={theme}>
-        <UploadImagesDialog {...props} />
-      </ThemeProvider>
-    );
+    return renderComponentWithRouterProvider(<UploadImagesDialog {...props} />);
   };
 
   beforeEach(() => {
