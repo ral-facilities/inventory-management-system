@@ -126,7 +126,9 @@ describe('Upload image dialog', () => {
     // Checks if file extension is displayed. If it's editable, actual value will disappear after editing.
     expect(screen.getByText('.png')).toBeInTheDocument();
 
-    const [name, title, description] = screen.getAllByRole('textbox');
+    const name = screen.getByRole('textbox', { name: 'File name .png' });
+    const title = screen.getByRole('textbox', { name: 'Title' });
+    const description = screen.getByRole('textbox', { name: 'Description' });
 
     await user.type(name, 'test.jpeg');
     await user.type(title, 'test');
