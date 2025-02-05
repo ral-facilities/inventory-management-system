@@ -1,6 +1,7 @@
 import {
   UseMutationResult,
   UseQueryResult,
+  queryOptions,
   useMutation,
   useQueries,
   useQuery,
@@ -69,17 +70,21 @@ const getSystem = async (id: string): Promise<System> => {
   });
 };
 
-// Allows a value of undefined or null to disable
-export const useGetSystem = (
-  id?: string | null
-): UseQueryResult<System, AxiosError> => {
-  return useQuery({
+export const getSystemQuery = (id?: string | null, loader?: boolean) =>
+  queryOptions<System, AxiosError>({
     queryKey: ['System', id],
     queryFn: () => {
       return getSystem(id ?? '');
     },
     enabled: !!id,
+    retry: loader ? false : undefined,
   });
+
+// Allows a value of undefined or null to disable
+export const useGetSystem = (
+  id?: string | null
+): UseQueryResult<System, AxiosError> => {
+  return useQuery(getSystemQuery(id));
 };
 
 const getSystemsBreadcrumbs = async (id: string): Promise<BreadcrumbsInfo> => {

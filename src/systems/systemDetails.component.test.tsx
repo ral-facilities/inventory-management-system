@@ -63,22 +63,6 @@ describe('SystemDetails', () => {
     expect(screen.getByRole('table')).toBeInTheDocument();
   });
 
-  it('renders correctly when a system is not found', async () => {
-    props.id = 'invalid_id';
-
-    createView();
-
-    await waitFor(() => {
-      expect(screen.getByText('System not found')).toBeInTheDocument();
-    });
-
-    expect(
-      screen.getByText(
-        'The system you searched for does not exist. Please navigate home by pressing the home button at the top left of your screen.'
-      )
-    ).toBeInTheDocument();
-  });
-
   it('renders correctly when a system with only required values is selected', async () => {
     props.id = '65328f34a40ff5301575a4e5';
     createView();

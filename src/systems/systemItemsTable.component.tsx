@@ -7,7 +7,6 @@ import {
   Button,
   FormControl,
   MenuItem,
-  Link as MuiLink,
   TableCellBaseProps,
   TextField,
   Typography,
@@ -20,11 +19,11 @@ import {
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { CatalogueItem, Item, System, UsageStatus } from '../api/api.types';
 import { useGetCatalogueItemIds } from '../api/catalogueItems';
 import { useGetItems } from '../api/items';
 import { useGetUsageStatuses } from '../api/usageStatuses';
+import CatalogueLink from '../catalogue/items/catalogueLink.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
 import {
@@ -239,16 +238,13 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         ],
         Cell:
           type === 'normal'
-            ? ({ renderedCellValue, row }) => (
-                <MuiLink
-                  underline="hover"
-                  component={Link}
-                  to={`/catalogue/item/${row.original.item.catalogue_item_id}`}
-                  // For ensuring space when grouping
+            ? ({ row }) => (
+                <CatalogueLink
+                  catalogueItemId={row.original.item.catalogue_item_id}
                   sx={{ marginRight: 0.5 }}
                 >
-                  {renderedCellValue}
-                </MuiLink>
+                  {row.original.catalogueItem?.name}
+                </CatalogueLink>
               )
             : undefined,
         size: 350,
@@ -282,15 +278,12 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                 }}
               >
                 {type === 'normal' ? (
-                  <MuiLink
-                    underline="hover"
-                    component={Link}
-                    to={`/catalogue/item/${row.original.item.catalogue_item_id}`}
-                    // For ensuring space when grouping
+                  <CatalogueLink
+                    catalogueItemId={row.original.item.catalogue_item_id}
                     sx={{ mx: 0.5, fontSize: 'inherit' }}
                   >
-                    {row.original?.catalogueItem?.name}
-                  </MuiLink>
+                    {row.original.catalogueItem?.name}
+                  </CatalogueLink>
                 ) : (
                   row.original?.catalogueItem?.name
                 )}
@@ -316,13 +309,9 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         Cell:
           type === 'normal'
             ? ({ row }) => (
-                <MuiLink
-                  underline="hover"
-                  component={Link}
-                  to={`/catalogue/item/${row.original.item.catalogue_item_id}/items/${row.original.item.id}`}
-                >
+                <CatalogueLink itemId={row.original.item.id}>
                   {row.original.item.serial_number ?? 'No serial number'}
-                </MuiLink>
+                </CatalogueLink>
               )
             : undefined,
         enableGrouping: false,

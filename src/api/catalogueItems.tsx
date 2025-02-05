@@ -1,6 +1,7 @@
 import {
   UseMutationResult,
   UseQueryResult,
+  queryOptions,
   useMutation,
   useQueries,
   useQuery,
@@ -81,16 +82,23 @@ const getCatalogueItem = async (
     });
 };
 
-export const useGetCatalogueItem = (
-  catalogueCategoryId: string | undefined
-): UseQueryResult<CatalogueItem, AxiosError> => {
-  return useQuery({
+export const getCatalogueItemQuery = (
+  catalogueCategoryId: string | undefined,
+  loader?: boolean
+) =>
+  queryOptions<CatalogueItem, AxiosError>({
     queryKey: ['CatalogueItem', catalogueCategoryId],
     queryFn: () => {
       return getCatalogueItem(catalogueCategoryId);
     },
     enabled: catalogueCategoryId !== undefined,
+    retry: loader ? false : undefined,
   });
+
+export const useGetCatalogueItem = (
+  catalogueCategoryId: string | undefined
+): UseQueryResult<CatalogueItem, AxiosError> => {
+  return useQuery(getCatalogueItemQuery(catalogueCategoryId));
 };
 
 export const useGetCatalogueItemIds = (

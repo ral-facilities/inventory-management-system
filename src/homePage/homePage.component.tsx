@@ -2,6 +2,7 @@ import { Box, Button, Grid, Paper, alpha, styled } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PageNotFoundComponent from '../common/pageNotFound/pageNotFound.component';
 import { InventoryManagementSystemSettingsContext } from '../configProvider.component';
 import BackgroundImage from '/images/background.jpg';
 import Decal1Image from '/images/decal1.svg';
@@ -12,6 +13,10 @@ import FacilityImage from '/images/facility.jpg';
 import GreenSwirl1Image from '/images/green-swirl1.png';
 import GreenSwirl2Image from '/images/green-swirl2.png';
 import DGLogo from '/images/scigateway-white-text-blue-mark-logo.svg';
+
+export const HomePageErrorComponent = () => {
+  return <PageNotFoundComponent />;
+};
 
 export interface BaseHomePageProps {
   logo: string;

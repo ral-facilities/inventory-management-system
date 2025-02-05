@@ -2,10 +2,46 @@ import { delay, HttpResponse } from 'msw';
 
 describe('Items', () => {
   beforeEach(() => {
-    cy.visit('/catalogue/item/1/items');
+    cy.visit('/catalogue/4/items/1/items');
   });
   afterEach(() => {
     cy.clearMocks();
+  });
+
+  it('displays the expired landing page message and navigates back to the catalogue home', () => {
+    cy.visit('/catalogue/4/items/1/items/1fds');
+
+    cy.findByText(
+      `We're sorry, the page you requested was not found on the server. If you entered the URL manually please check your spelling and try again. Otherwise, return to the`,
+      { exact: false }
+    ).should('exist');
+
+    cy.findByRole('link', { name: 'catalogue home page' }).should('exist');
+    cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
+
+    cy.findByText('Motion').should('exist');
+  });
+
+  it('displays the expired landing page message if the catalogue_category_id does not match the catalogue_item_id ', () => {
+    cy.visit('/catalogue/5/items/1/items/KvT2Ox7n');
+
+    cy.findByText(
+      `We're sorry, the page you requested was not found on the server. If you entered the URL manually please check your spelling and try again. Otherwise, return to the`,
+      { exact: false }
+    ).should('exist');
+
+    cy.findByRole('link', { name: 'catalogue home page' }).should('exist');
+  });
+
+  it('displays the expired landing page message if the catalogue_item_id does not match the item_id ', () => {
+    cy.visit('/catalogue/4/items/89/items/G463gOIA');
+
+    cy.findByText(
+      `We're sorry, the page you requested was not found on the server. If you entered the URL manually please check your spelling and try again. Otherwise, return to the`,
+      { exact: false }
+    ).should('exist');
+
+    cy.findByRole('link', { name: 'catalogue home page' }).should('exist');
   });
   it('should be able to navigate back to the catalogue catalogue item table view', () => {
     cy.findByRole('link', { name: 'Cameras' }).click();
@@ -21,7 +57,7 @@ describe('Items', () => {
   });
 
   it('should be able to navigate back to the catalogue home step by step', () => {
-    cy.visit('/catalogue/item/1/items/KvT2Ox7n');
+    cy.visit('/catalogue/4/items/1/items/KvT2Ox7n');
 
     cy.findByRole('link', { name: 'Items' }).click();
 
@@ -224,7 +260,7 @@ describe('Items', () => {
   });
 
   it('adds an item with only mandatory fields (allowed list of values)', () => {
-    cy.visit('/catalogue/item/17/items');
+    cy.visit('/catalogue/12/items/17/items');
     cy.findByRole('button', { name: 'Add Item' }).click();
 
     cy.findByLabelText('Usage status *').click();
@@ -893,9 +929,51 @@ describe('Items', () => {
 
       cy.findByTestId('galleryLightBox').should('not.exist');
     });
+
+    it('deletes an image', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Gallery').click();
+
+      cy.findAllByAltText('test').first().click();
+      cy.findByTestId('galleryLightBox').within(() => {
+        cy.findByText('File name: stfc-logo-blue-text.png').should('exist');
+        cy.findByText('Title: stfc-logo-blue-text').should('exist');
+        cy.findByText('test').should('exist');
+
+        cy.findByAltText('test').should('exist');
+
+        cy.findByAltText('test')
+          .should('have.attr', 'src')
+          .and(
+            'include',
+            'http://localhost:3000/images/stfc-logo-blue-text.png?text=1'
+          );
+
+        cy.findByLabelText('Image Actions').click();
+      });
+
+      cy.findAllByText('Delete').last().click();
+
+      cy.startSnoopingBrowserMockedRequest();
+
+      cy.findByRole('button', { name: 'Continue' }).click();
+
+      cy.findBrowserMockedRequests({
+        method: 'DELETE',
+        url: '/images/:id',
+      }).should((patchRequests) => {
+        expect(patchRequests.length).equal(1);
+        const request = patchRequests[0];
+        expect(request.url.toString()).to.contain('1');
+      });
+    });
   });
 
-  it('delete an item', () => {
+  it('deletes an item', () => {
     cy.findAllByLabelText('Row Actions').first().click();
     cy.findByText('Delete').click();
 
@@ -915,7 +993,7 @@ describe('Items', () => {
     });
   });
 
-  it('duplicate an item', () => {
+  it('duplicates an item', () => {
     cy.findAllByLabelText('Row Actions').first().click();
     cy.findByText('Duplicate').click();
 

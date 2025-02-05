@@ -241,7 +241,6 @@ export interface AttachmentPostMetadataResponse
 }
 
 // ------------------------------------ IMAGES ------------------------------------------------
-
 export interface ImagePost {
   entity_id: string;
   file_name: string;
@@ -259,5 +258,8 @@ export interface APIImage
 }
 
 export interface APIImageWithURL extends APIImage {
-  url: string;
+  /* Each url has a different `ResponseContentDisposition` set in the url, for viewing images inline and downloading respectively.
+   Allows links to be downloaded directly to the user's computer and not to their client first. */
+  view_url: string;
+  download_url: string;
 }

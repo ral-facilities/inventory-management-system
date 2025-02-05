@@ -5,6 +5,14 @@ describe('Catalogue Items', () => {
   afterEach(() => {
     cy.clearMocks();
   });
+
+  it('should navigate back to the catalogue items table from the landing page using the breadcrumbs', () => {
+    cy.visit('/catalogue/5/items/89');
+
+    cy.findByRole('link', { name: 'Energy Meters' }).click();
+
+    cy.findByRole('button', { name: 'Add Catalogue Item' }).should('exist');
+  });
   it('adds a catalogue item', () => {
     cy.findByRole('button', { name: 'Add Catalogue Item' }).click();
 
@@ -510,15 +518,29 @@ describe('Catalogue Items', () => {
   });
 
   it('displays the expired landing page message and navigates back to the catalogue home', () => {
-    cy.visit('/catalogue/item/1fds');
+    cy.visit('/catalogue/4/items/1fds');
 
     cy.findByText(
-      `This catalogue item doesn't exist. Please click the Home button on the top left of your screen to navigate to the catalogue home.`
+      `We're sorry, the page you requested was not found on the server. If you entered the URL manually please check your spelling and try again. Otherwise, return to the`,
+      { exact: false }
     ).should('exist');
+
+    cy.findByRole('link', { name: 'catalogue home page' }).should('exist');
 
     cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
 
     cy.findByText('Motion').should('exist');
+  });
+
+  it('displays the expired landing page message if the catalogue_category_id does not match the catalogue_item_id ', () => {
+    cy.visit('/catalogue/4/items/89');
+
+    cy.findByText(
+      `We're sorry, the page you requested was not found on the server. If you entered the URL manually please check your spelling and try again. Otherwise, return to the`,
+      { exact: false }
+    ).should('exist');
+
+    cy.findByRole('link', { name: 'catalogue home page' }).should('exist');
   });
 
   it('displays error message when user tries to delete a catalogue item that has children elements', () => {
@@ -581,7 +603,23 @@ describe('Catalogue Items', () => {
 
     cy.findByLabelText('Name *').clear();
     cy.findByLabelText('Name *').type('test_has_children_elements');
+
+    cy.findByLabelText('Manufacturer *').type('Man{downArrow}{enter}');
     cy.findByRole('button', { name: 'Next' }).click();
+
+    cy.findByRole('button', { name: 'Finish'}).click();
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.contains('Unable to update catalogue item properties and manufacturer '
+          + '(Manufacturer C), as the catalogue item has associated items.')
+      });
+    cy.findByRole('button', { name: 'Finish' }).should('be.disabled');
+
+    cy.findByRole('button', { name: 'Back' }).click();
+    cy.findByLabelText('Manufacturer *').type('Man{upArrow}{enter}');
+    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByRole('button', { name: 'Finish' }).should('be.enabled');
 
     cy.findByLabelText('Measurement Range (Joules) *').type('0');
 
@@ -589,7 +627,8 @@ describe('Catalogue Items', () => {
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.contains('Catalogue item has child elements and cannot be edited');
+        cy.contains('Unable to update catalogue item properties and manufacturer '
+          + '(Manufacturer C), as the catalogue item has associated items.')
       });
     cy.findByRole('button', { name: 'Finish' }).should('be.disabled');
   });
@@ -739,7 +778,7 @@ describe('Catalogue Items', () => {
 
   it('can load and clear date filters', () => {
     cy.visit(
-      '/catalogue/4?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0luSCAZgsUgPoYKXEgA0IANxwkY8EBgCeABx7QQSTD35DsIuQCYADOoAsAWk0BGAwGYAKps3RL1zdUuaAWiAC%2BvUJJmoAzhgBOCAB2%2BHyCwrIgrgC6LjFAA'
+      '/catalogue/4/items?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0luSCAZgsUgPoYKXEgA0IANxwkY8EBgCeABx7QQSTD35DsIuQCYADOoAsAWk0BGAwGYAKps3RL1zdUuaAWiAC%2BvUJJmoAzhgBOCAB2%2BHyCwrIgrgC6LjFAA'
     );
 
     cy.findByText('Cameras 25').should('exist');
@@ -890,7 +929,7 @@ describe('Catalogue Items', () => {
 
     cy.findAllByRole('link', { name: 'Click here' }).eq(1).click();
 
-    cy.url().should('contain', 'catalogue/item/6');
+    cy.url().should('contain', 'catalogue/5/items/6');
   });
 
   it('can navigate to an items page from the table view', () => {
@@ -898,7 +937,7 @@ describe('Catalogue Items', () => {
 
     cy.findAllByRole('link', { name: 'Click here' }).eq(0).click();
 
-    cy.url().should('contain', 'catalogue/item/89/items');
+    cy.url().should('contain', 'catalogue/5/items/89/items');
   });
 
   it('can navigate to an items page from the landing page', () => {
@@ -907,7 +946,7 @@ describe('Catalogue Items', () => {
 
     cy.findAllByRole('link', { name: 'Items' }).eq(0).click();
 
-    cy.url().should('contain', 'catalogue/item/89/items');
+    cy.url().should('contain', 'catalogue/5/items/89/items');
   });
 
   it('opens add dialog for categories in directory and has functionality of duplicate', () => {

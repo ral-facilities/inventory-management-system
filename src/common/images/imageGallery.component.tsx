@@ -30,7 +30,9 @@ import { APIImage } from '../../api/api.types';
 import { useGetImages } from '../../api/images';
 import { displayTableRowCountText, OverflowTip } from '../../utils';
 import CardViewFilters from '../cardView/cardViewFilters.component';
+import DownloadFileDialog from '../downloadFileDialog.component';
 import { usePreservedTableState } from '../preservedTableState.component';
+import DeleteImageDialog from './deleteImageDialog.component';
 import GalleryLightBox from './galleryLightbox.component';
 import ImageInformationDialog from './imageInformationDialog.component';
 import ThumbnailImage from './thumbnailImage.component';
@@ -56,6 +58,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
   const [openMenuDialog, setOpenMenuDialog] = React.useState<
     'download' | 'edit' | 'delete' | 'information' | false
   >(false);
+
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
       pagination: { pageSize: 16, pageIndex: 0 },
@@ -79,6 +82,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
         .filter((description): description is string => Boolean(description))
     )
   );
+
   const columns = React.useMemo<MRT_ColumnDef<APIImage>[]>(() => {
     return [
       {
@@ -198,6 +202,11 @@ const ImageGallery = (props: ImageGalleryProps) => {
         <MenuItem
           key="download"
           aria-label={`Download ${row.original.file_name} image`}
+          onClick={() => {
+            setSelectedImage(row.original);
+            setOpenMenuDialog('download');
+            closeMenu();
+          }}
           sx={{ m: 0 }}
         >
           <ListItemIcon>
@@ -222,7 +231,12 @@ const ImageGallery = (props: ImageGalleryProps) => {
         </MenuItem>,
         <MenuItem
           key="delete"
-          aria-label={`Delete catalogue item ${row.original.file_name}`}
+          aria-label={`Delete image ${row.original.file_name}`}
+          onClick={() => {
+            setSelectedImage(row.original);
+            setOpenMenuDialog('delete');
+            closeMenu();
+          }}
           sx={{ m: 0 }}
         >
           <ListItemIcon>
@@ -243,10 +257,8 @@ const ImageGallery = (props: ImageGalleryProps) => {
     .getSortedRowModel()
     .rows.map((row) => row.getVisibleCells().map((cell) => cell)[0]);
   const displayedImages = table
-    .getPaginationRowModel()
-    .rows.map(
-      (row) => row.getVisibleCells().map((cell) => cell.row.original)[0]
-    );
+    .getRowModel()
+    .rows.map((row) => row.getVisibleCells().map((cell) => cell)[0]);
 
   return (
     <>
@@ -320,18 +332,14 @@ const ImageGallery = (props: ImageGalleryProps) => {
                 gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
               }}
             >
-              {data.map((card, index) => {
-                const isUndisplayed = !displayedImages?.some(
-                  (img) => img.id === card.row.original.id
-                );
-
+              {displayedImages.map((card, index) => {
                 const lastPageIndex = Math.floor(
-                  data.length / preservedState.pagination.pageSize
+                  displayedImages.length / preservedState.pagination.pageSize
                 );
                 const isLastPage =
                   preservedState.pagination.pageIndex === lastPageIndex;
 
-                return isUndisplayed ? null : (
+                return (
                   <Card
                     component={Grid}
                     item
@@ -425,11 +433,27 @@ const ImageGallery = (props: ImageGalleryProps) => {
             <MRT_BottomToolbar table={table} sx={{ width: '100%' }} />
           </Grid>
           {selectedImage && (
-            <ImageInformationDialog
-              open={openMenuDialog === 'information'}
-              onClose={() => setOpenMenuDialog(false)}
-              image={selectedImage}
-            />
+            <>
+              <ImageInformationDialog
+                open={openMenuDialog === 'information'}
+                onClose={() => setOpenMenuDialog(false)}
+                image={selectedImage}
+              />
+              <DeleteImageDialog
+                open={openMenuDialog === 'delete'}
+                onClose={() => {
+                  setOpenMenuDialog(false);
+                  setCurrentLightBoxImage(undefined);
+                }}
+                image={selectedImage}
+              />
+              <DownloadFileDialog
+                open={openMenuDialog === 'download'}
+                onClose={() => setOpenMenuDialog(false)}
+                fileType="Image"
+                file={selectedImage}
+              />
+            </>
           )}
           {currentLightBoxImage && (
             <GalleryLightBox

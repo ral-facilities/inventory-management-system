@@ -1,8 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
 import {
-  Autocomplete,
   Box,
   Button,
   CircularProgress,
@@ -13,30 +10,19 @@ import {
   Divider,
   FormControl,
   FormControlLabel,
-  FormHelperText,
   FormLabel,
   Grid,
-  IconButton,
   Radio,
   RadioGroup,
-  Stack,
   TextField,
-  Tooltip,
   Typography,
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
 import {
-  Controller,
-  FormProvider,
-  useFieldArray,
-  useForm,
-  useFormContext,
-} from 'react-hook-form';
-import {
-  AllowedValues,
-  AllowedValuesListType,
   APIError,
+  AllowedValues,
   CatalogueCategory,
   CatalogueCategoryPost,
   CatalogueCategoryPostProperty,
@@ -47,7 +33,6 @@ import {
   usePatchCatalogueCategory,
   usePostCatalogueCategory,
 } from '../../api/catalogueCategories';
-import { useGetUnits } from '../../api/units';
 import {
   AddCatalogueCategoryPropertyWithPlacementIds,
   AddCatalogueCategoryWithPlacementIds,
@@ -154,111 +139,6 @@ function transformPostPropertyToAddProperty(
   return modifiedCatalogueItemProperty;
 }
 
-const AllowedValuesListTextFields = (props: { nestIndex: number }) => {
-  const {
-    control,
-    formState: { errors },
-    clearErrors,
-  } = useFormContext<AddCatalogueCategoryWithPlacementIds>();
-
-  const { nestIndex } = props;
-
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: `properties.${nestIndex}.allowed_values.values.values`, // Adjust the field name according to your data structure
-  });
-
-  const clearDuplicateValueErrors = React.useCallback(() => {
-    const allowedValuesErrors = errors?.properties?.[nestIndex]?.allowed_values;
-    const errorIndexes =
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ((allowedValuesErrors?.values?.values as any[]) || [])
-        .map((error, index) => {
-          if (error?.value?.message === 'Duplicate value.') {
-            return index;
-          }
-          return -1;
-        })
-        .filter((index) => index !== -1);
-
-    errorIndexes.forEach((errorIndex) => {
-      clearErrors(
-        `properties.${nestIndex}.allowed_values.values.values.${errorIndex}`
-      );
-    });
-  }, [clearErrors, errors?.properties, nestIndex]);
-
-  return (
-    <>
-      {fields.map((field, index) => {
-        return (
-          <Stack
-            key={field.av_placement_id}
-            direction="row"
-            sx={{ alignItems: 'center', justifyContent: 'center', mb: 1 }}
-            spacing={1}
-          >
-            <Controller
-              control={control}
-              name={`properties.${nestIndex}.allowed_values.values.values.${index}`}
-              render={({ field: controllerField }) => (
-                <TextField
-                  id={`list-item-input-${controllerField.value.av_placement_id}`}
-                  label={`List item`}
-                  variant="outlined"
-                  {...controllerField}
-                  value={controllerField.value.value}
-                  onChange={(event) => {
-                    controllerField.onChange({
-                      av_placement_id: controllerField.value.av_placement_id,
-                      value: event.target.value,
-                    });
-                    clearDuplicateValueErrors();
-                  }}
-                  error={
-                    !!errors?.properties?.[nestIndex]?.allowed_values?.values
-                      ?.values?.[index]?.value
-                  }
-                  helperText={
-                    errors?.properties?.[nestIndex]?.allowed_values?.values
-                      ?.values?.[index]?.value?.message as string
-                  }
-                />
-              )}
-            />
-
-            <IconButton
-              aria-label={`Delete list item`}
-              onClick={() => {
-                remove(index);
-                clearDuplicateValueErrors();
-              }}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </Stack>
-        );
-      })}
-      <IconButton
-        aria-label={`Add list item`}
-        onClick={() =>
-          append({ av_placement_id: crypto.randomUUID(), value: '' })
-        }
-      >
-        <AddIcon />
-      </IconButton>
-      {!!errors?.properties?.[nestIndex]?.allowed_values?.values?.values && (
-        <FormHelperText error>
-          {
-            errors?.properties?.[nestIndex]?.allowed_values?.values?.values
-              ?.message
-          }
-        </FormHelperText>
-      )}
-    </>
-  );
-};
-
 export interface CatalogueCategoryDialogProps {
   open: boolean;
   onClose: () => void;
@@ -320,14 +200,8 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
     setError,
     clearErrors,
     reset,
-    resetField,
     setValue,
   } = formMethods;
-
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: 'properties',
-  });
 
   const isLeaf = watch(`is_leaf`);
 
@@ -408,7 +282,6 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
       ...data,
       ...(requestType === 'post' && parentId && { parent_id: parentId }),
     });
-
     if (requestType === 'patch') {
       handleEditCatalogueCategory(transformedData);
     } else {
@@ -417,27 +290,6 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
       });
     }
   };
-
-  const { data: units } = useGetUnits();
-  const clearDuplicateNameErrors = React.useCallback(() => {
-    const errorIndexes =
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ((errors?.properties as any[]) || [])
-        .map((error, index) => {
-          if (
-            error?.name?.message ===
-            'Duplicate property name. Please change the name or remove the property.'
-          ) {
-            return index;
-          }
-          return -1;
-        })
-        .filter((index) => index !== -1);
-
-    errorIndexes.forEach((errorIndex) => {
-      clearErrors(`properties.${errorIndex}.name`);
-    });
-  }, [clearErrors, errors?.properties]);
 
   return (
     <Dialog open={open} maxWidth="lg" fullWidth>
@@ -540,311 +392,14 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
               </Grid>
               <Grid item sx={{ paddingLeft: 1, paddingTop: 3 }}>
                 <Typography variant="h6">Catalogue Item Properties</Typography>
-                {requestType === 'post' ? (
-                  <>
-                    {fields.map((field, index) => {
-                      const properties = watch(`properties`);
-
-                      const allowedValuesType =
-                        properties &&
-                        properties?.length > 0 &&
-                        properties[index]?.allowed_values?.type;
-
-                      const type =
-                        properties &&
-                        properties?.length > 0 &&
-                        properties[index].type;
-
-                      return (
-                        <Stack
-                          direction="row"
-                          key={field.cip_placement_id}
-                          spacing={1}
-                          px={0.5}
-                          py={1}
-                        >
-                          <TextField
-                            id={crypto.randomUUID()}
-                            label="Property Name"
-                            variant="outlined"
-                            required
-                            {...register(`properties.${index}.name`)}
-                            onChange={(event) => {
-                              clearDuplicateNameErrors();
-                              register(`properties.${index}.name`).onChange(
-                                event
-                              );
-                            }}
-                            error={!!errors?.properties?.[index]?.name}
-                            helperText={
-                              errors?.properties?.[index]?.name?.message
-                            }
-                            sx={{ minWidth: '150px', width: '150px' }}
-                          />
-                          <Controller
-                            control={control}
-                            name={`properties.${index}.type`}
-                            render={({ field: { value, onChange } }) => (
-                              <Autocomplete
-                                id={crypto.randomUUID()}
-                                disableClearable
-                                value={(
-                                  Object.keys(
-                                    CatalogueCategoryPropertyType
-                                  ) as Array<
-                                    keyof typeof CatalogueCategoryPropertyType
-                                  >
-                                ).find(
-                                  (key) =>
-                                    CatalogueCategoryPropertyType[key] === value
-                                )}
-                                onChange={(_event, value) => {
-                                  const formattedValue =
-                                    CatalogueCategoryPropertyType[
-                                      value as keyof typeof CatalogueCategoryPropertyType
-                                    ];
-                                  onChange(formattedValue);
-
-                                  if (
-                                    allowedValuesType &&
-                                    formattedValue !== 'boolean'
-                                  )
-                                    setValue(
-                                      `properties.${index}.allowed_values.values.valueType`,
-                                      formattedValue
-                                    );
-
-                                  if (formattedValue === 'boolean') {
-                                    resetField(
-                                      `properties.${index}.allowed_values`
-                                    );
-                                    resetField(`properties.${index}.unit_id`);
-                                  }
-                                }}
-                                sx={{
-                                  minWidth: '150px',
-                                  width: '150px',
-                                }}
-                                fullWidth
-                                options={Object.keys(
-                                  CatalogueCategoryPropertyType
-                                )}
-                                isOptionEqualToValue={(option, value) =>
-                                  option == value || value == ''
-                                }
-                                renderInput={(params) => (
-                                  <TextField
-                                    {...params}
-                                    required={true}
-                                    label="Select Type"
-                                    variant="outlined"
-                                  />
-                                )}
-                              />
-                            )}
-                          />
-                          <Controller
-                            control={control}
-                            name={`properties.${index}.allowed_values`}
-                            render={({ field: { value, onChange } }) => {
-                              return (
-                                <Autocomplete
-                                  disableClearable
-                                  disabled={type === 'boolean'}
-                                  id={crypto.randomUUID()}
-                                  value={
-                                    (
-                                      Object.keys(
-                                        AllowedValuesListType
-                                      ) as Array<
-                                        keyof typeof AllowedValuesListType
-                                      >
-                                    ).find(
-                                      (key) =>
-                                        AllowedValuesListType[key] ===
-                                        value?.type
-                                    ) ?? 'Any'
-                                  }
-                                  onChange={(_event, value) => {
-                                    const formattedValue =
-                                      AllowedValuesListType[
-                                        value as keyof typeof AllowedValuesListType
-                                      ];
-
-                                    onChange(
-                                      formattedValue === 'list'
-                                        ? {
-                                            type: formattedValue,
-                                            values: {
-                                              valueType: type,
-                                              values: [],
-                                            },
-                                          }
-                                        : undefined
-                                    );
-                                  }}
-                                  sx={{
-                                    width: '200px',
-                                    minWidth: '200px',
-                                  }}
-                                  fullWidth
-                                  options={Object.keys(AllowedValuesListType)}
-                                  isOptionEqualToValue={(option, value) =>
-                                    option.toLowerCase() ==
-                                      value.toLowerCase() || value == ''
-                                  }
-                                  renderInput={(params) => (
-                                    <TextField
-                                      {...params}
-                                      required={true}
-                                      label="Select Allowed values"
-                                      variant="outlined"
-                                      disabled={type === 'boolean'}
-                                    />
-                                  )}
-                                />
-                              );
-                            }}
-                          />
-                          {allowedValuesType === 'list' &&
-                            type !== 'boolean' && (
-                              <Stack
-                                direction="column"
-                                sx={{
-                                  width: '200px',
-                                  minWidth: '200px',
-                                  alignItems: 'center',
-                                  display: 'flex',
-                                  justifyContent: 'center',
-                                }}
-                              >
-                                <FormProvider {...formMethods}>
-                                  <AllowedValuesListTextFields
-                                    nestIndex={index}
-                                  />
-                                </FormProvider>
-                              </Stack>
-                            )}
-                          <Controller
-                            control={control}
-                            name={`properties.${index}.unit_id`}
-                            render={({ field: { value, onChange } }) => (
-                              <Autocomplete
-                                disabled={type === 'boolean'}
-                                options={units ?? []}
-                                getOptionLabel={(option) => option.value}
-                                value={
-                                  units?.find((unit) => unit.id === value) ||
-                                  null
-                                }
-                                sx={{
-                                  width: '200px',
-                                  minWidth: '200px',
-                                }}
-                                onChange={(_event, unit) => {
-                                  onChange(unit?.id ?? null);
-                                }}
-                                renderInput={(params) => (
-                                  <TextField
-                                    {...params}
-                                    label="Select Unit"
-                                    variant="outlined"
-                                    disabled={type === 'boolean'}
-                                  />
-                                )}
-                              />
-                            )}
-                          />
-
-                          <Controller
-                            control={control}
-                            name={`properties.${index}.mandatory`}
-                            render={({ field: { value, onChange } }) => (
-                              <Autocomplete
-                                disableClearable
-                                id={crypto.randomUUID()}
-                                value={value === 'true' ? 'Yes' : 'No'}
-                                onChange={(_event, value) => {
-                                  onChange(value === 'Yes' ? 'true' : 'false');
-                                }}
-                                sx={{
-                                  width: '150px',
-                                  minWidth: '150px',
-                                }}
-                                fullWidth
-                                options={['Yes', 'No']}
-                                renderInput={(params) => (
-                                  <TextField
-                                    {...params}
-                                    label="Select is mandatory?"
-                                    variant="outlined"
-                                  />
-                                )}
-                              />
-                            )}
-                          />
-                          <Box
-                            sx={{
-                              display: 'flex',
-                              alignItems: 'center',
-                            }}
-                          >
-                            <Tooltip title="Delete Property">
-                              <span>
-                                <IconButton
-                                  aria-label={
-                                    'Delete catalogue category property entry'
-                                  }
-                                  onClick={() => {
-                                    remove(index);
-                                    clearDuplicateNameErrors();
-                                  }}
-                                >
-                                  <DeleteIcon />
-                                </IconButton>
-                              </span>
-                            </Tooltip>
-                          </Box>
-                        </Stack>
-                      );
-                    })}
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                      }}
-                    >
-                      <Tooltip title="Add Property">
-                        <span>
-                          <IconButton
-                            sx={{ margin: '8px' }}
-                            onClick={() => {
-                              append({
-                                cip_placement_id: crypto.randomUUID(),
-                                name: '',
-                                type: CatalogueCategoryPropertyType.Text,
-                                mandatory: 'false',
-                              });
-                            }}
-                            aria-label={'Add catalogue category field entry'}
-                          >
-                            <AddIcon />
-                          </IconButton>
-                        </span>
-                      </Tooltip>
-                    </Box>
-                  </>
-                ) : (
-                  selectedCatalogueCategory && (
-                    <Box mt={1}>
-                      <CatalogueItemsPropertiesTable
-                        properties={fields}
-                        requestType={requestType}
-                        catalogueCategory={selectedCatalogueCategory}
-                      />
-                    </Box>
-                  )
-                )}
+                <Box mt={1}>
+                  <FormProvider {...formMethods}>
+                    <CatalogueItemsPropertiesTable
+                      requestType={requestType}
+                      catalogueCategory={selectedCatalogueCategory}
+                    />
+                  </FormProvider>
+                </Box>
               </Grid>
             </>
           )}

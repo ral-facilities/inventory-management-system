@@ -104,7 +104,7 @@ describe('SystemItemsTable', () => {
         screen.getByRole('link', {
           name: `Turbomolecular Pumps 42`,
         })
-      ).toHaveAttribute('href', '/catalogue/item/21');
+      ).toHaveAttribute('href', '/catalogue/13/items/21');
     });
 
     it('can set a table filter and clear them again', async () => {
@@ -486,7 +486,7 @@ describe('SystemItemsTable', () => {
         { timeout: 4000 }
       );
 
-      expect(screen.getAllByRole('combobox')[0]).toHaveValue('New');
+      expect((await screen.findAllByRole('combobox'))[0]).toHaveValue('New');
       expect(screen.getAllByRole('combobox')[1]).toHaveValue('In Use');
     });
 

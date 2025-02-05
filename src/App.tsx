@@ -1,31 +1,56 @@
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
+import type { Router } from '@remix-run/router';
 import {
   QueryCache,
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
-import React from 'react';
-// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AxiosError } from 'axios';
 import { enGB } from 'date-fns/locale/en-GB';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import AdminPage from './admin/admin.component';
+import React from 'react';
+import {
+  Outlet,
+  RouterProvider,
+  createBrowserRouter,
+  type RouteObject,
+} from 'react-router-dom';
+import AdminCardView from './admin/adminCardView.component';
+import AdminLayout, {
+  AdminErrorComponent,
+} from './admin/adminLayout.component';
+import Units from './admin/units/units.component';
+import UsageStatuses from './admin/usageStatuses/usageStatuses.component';
 import {
   clearFailedAuthRequestsQueue,
   retryFailedAuthRequests,
 } from './api/api';
 import { MicroFrontendId } from './app.types';
-import Catalogue from './catalogue/catalogue.component';
+import CatalogueLayout, {
+  CatalogueErrorComponent,
+  CatalogueLayoutErrorComponent,
+  catalogueLayoutLoader,
+} from './catalogue/catalogueLayout.component';
+import CatalogueCardView from './catalogue/category/catalogueCardView.component';
 import CatalogueItemsLandingPage from './catalogue/items/catalogueItemsLandingPage.component';
+import CatalogueItemsPage from './catalogue/items/catalogueItemsPage.component';
 import ConfigProvider from './configProvider.component';
 import handleIMS_APIError from './handleIMS_APIError';
-import { HomePage } from './homePage/homePage.component';
+import {
+  HomePage,
+  HomePageErrorComponent,
+} from './homePage/homePage.component';
 import IMSThemeProvider from './imsThemeProvider.component';
 import Items from './items/items.component';
 import ItemsLandingPage from './items/itemsLandingPage.component';
-import ManufacturerComponent from './manufacturer/manufacturer.component';
 import ManufacturerLandingPage from './manufacturer/manufacturerLandingPage.component';
+import ManufacturerLayout, {
+  ManufacturerErrorComponent,
+  ManufacturerLayoutErrorComponent,
+  manufacturerLayoutLoader,
+} from './manufacturer/manufacturerLayout.component';
+import ManufacturerTable from './manufacturer/manufacturerTable.component';
 import Preloader from './preloader/preloader.component';
 import retryIMS_APIErrors from './retryIMS_APIErrors';
 import {
@@ -34,23 +59,33 @@ import {
   tokenRefreshed,
 } from './state/scigateway.actions';
 import Systems from './systems/systems.component';
+import SystemsLayout, {
+  SystemsErrorComponent,
+  SystemsLayoutErrorComponent,
+  systemsLayoutLoader,
+} from './systems/systemsLayout.component';
 import ViewTabs from './view/viewTabs.component';
 
 export const paths = {
   any: '*',
   root: '/',
-  admin: '/admin-ims/*',
+  admin: '/admin-ims',
+  adminUnits: '/admin-ims/units',
+  adminUsageStatuses: '/admin-ims/usage-statuses',
   homepage: '/ims',
-  catalogue: '/catalogue/*',
-  systems: '/systems/*',
+  catalogue: '/catalogue',
+  catalogueCategories: '/catalogue/:catalogue_category_id',
+  catalogueItems: '/catalogue/:catalogue_category_id/items',
+  catalogueItem: '/catalogue/:catalogue_category_id/items/:catalogue_item_id',
+  items: '/catalogue/:catalogue_category_id/items/:catalogue_item_id/items',
+  item: '/catalogue/:catalogue_category_id/items/:catalogue_item_id/items/:item_id',
+  systems: '/systems',
+  system: '/systems/:system_id',
   manufacturers: '/manufacturers',
   manufacturer: '/manufacturers/:manufacturer_id',
-  catalogueItem: '/catalogue/item/:catalogue_item_id',
-  items: '/catalogue/item/:catalogue_item_id/items',
-  item: '/catalogue/item/:catalogue_item_id/items/:item_id',
 };
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: (error) => {
       handleIMS_APIError(error as AxiosError);
@@ -69,36 +104,179 @@ const queryClient = new QueryClient({
   },
 });
 
-const router = createBrowserRouter([
+const routeObject: RouteObject[] = [
+  // The error boundary is placed at the root of the specified route's layout to prevent
+  // the layout from making repeated fetch requests that are known to be invalid for the breadcrumbs.
+  // This helps maintain the integrity of the breadcrumbs and avoids unnecessary network calls.
+  // Additionally, the loader function should be defined on the RouteObject that utilises the route
+  // parameters within the component to fetch the necessary data dynamically.
   {
     Component: Layout,
     children: [
-      { path: paths.any, Component: ViewTabs },
       { path: paths.root, Component: HomePage },
-      { path: paths.homepage, Component: HomePage },
-      { path: paths.admin, Component: AdminPage },
-      { path: paths.catalogue, Component: Catalogue },
       {
-        path: paths.catalogueItem,
-        Component: CatalogueItemsLandingPage,
+        path: paths.homepage,
+        Component: Outlet,
+        children: [
+          { Component: HomePage, index: true },
+          { path: '*', Component: HomePageErrorComponent },
+        ],
       },
-      { path: paths.items, Component: Items },
       {
-        path: paths.item,
-        Component: ItemsLandingPage,
+        path: paths.admin,
+        Component: AdminLayout,
+        children: [
+          { index: true, Component: AdminCardView },
+          { path: paths.adminUnits, Component: Units },
+          { path: paths.adminUsageStatuses, Component: UsageStatuses },
+          {
+            path: '*',
+            Component: AdminErrorComponent,
+          },
+        ],
       },
-      { path: paths.systems, Component: Systems },
-      { path: paths.manufacturers, Component: ManufacturerComponent },
       {
-        path: paths.manufacturer,
-        Component: ManufacturerLandingPage,
+        path: paths.catalogue,
+        Component: CatalogueLayout,
+        ErrorBoundary: CatalogueLayoutErrorComponent,
+        children: [
+          {
+            index: true,
+            Component: CatalogueCardView,
+          },
+          {
+            path: paths.catalogueCategories,
+            Component: Outlet,
+            children: [
+              {
+                index: true,
+                Component: CatalogueCardView,
+                loader: catalogueLayoutLoader(queryClient),
+              },
+              {
+                path: paths.catalogueItems,
+                Component: Outlet,
+                children: [
+                  {
+                    index: true,
+                    Component: CatalogueItemsPage,
+                    loader: catalogueLayoutLoader(queryClient),
+                  },
+                  {
+                    path: paths.catalogueItem,
+                    Component: Outlet,
+                    children: [
+                      {
+                        index: true,
+                        Component: CatalogueItemsLandingPage,
+                        loader: catalogueLayoutLoader(queryClient),
+                      },
+                      {
+                        path: paths.items,
+                        Component: Outlet,
+                        children: [
+                          {
+                            index: true,
+                            Component: Items,
+                            loader: catalogueLayoutLoader(queryClient),
+                          },
+                          {
+                            path: paths.item,
+                            Component: Outlet,
+                            children: [
+                              {
+                                index: true,
+                                Component: ItemsLandingPage,
+                                loader: catalogueLayoutLoader(queryClient),
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            path: '*',
+            Component: CatalogueErrorComponent,
+          },
+        ],
+      },
+      {
+        path: paths.systems,
+        Component: SystemsLayout,
+        ErrorBoundary: SystemsLayoutErrorComponent,
+        children: [
+          { index: true, Component: Systems },
+          {
+            path: paths.system,
+            Component: Systems,
+            loader: systemsLayoutLoader(queryClient),
+          },
+          {
+            path: '*',
+            Component: SystemsErrorComponent,
+          },
+        ],
+      },
+      {
+        path: paths.manufacturers,
+        Component: ManufacturerLayout,
+        ErrorBoundary: ManufacturerLayoutErrorComponent,
+        children: [
+          { index: true, Component: ManufacturerTable },
+          {
+            path: paths.manufacturer,
+            Component: ManufacturerLandingPage,
+            loader: manufacturerLayoutLoader(queryClient),
+          },
+          {
+            path: '*',
+            Component: ManufacturerErrorComponent,
+          },
+        ],
       },
     ],
   },
-]);
+];
+
+const reactRouterFutureFlags = {
+  future: {
+    v7_relativeSplatPath: true,
+    v7_fetcherPersist: true,
+    v7_normalizeFormMethod: true,
+    v7_partialHydration: true,
+    v7_skipActionErrorRevalidation: true,
+  },
+};
+
+let router: Router;
+const isUsingMSW =
+  import.meta.env.DEV || import.meta.env.VITE_APP_INCLUDE_MSW === 'true';
+
+if (!isUsingMSW)
+  router = createBrowserRouter(routeObject, reactRouterFutureFlags);
+
+// If the application is using MSW (Mock Service Worker),
+// it creates the router using `createBrowserRouter` within the App so it can wait for MSW to load. This is necessary
+// because MSW needs to be running before the router is created to handle requests properly in the loader. In a production
+// environment, this is not needed.
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  if (isUsingMSW)
+    router = createBrowserRouter(routeObject, reactRouterFutureFlags);
+  return (
+    <RouterProvider
+      router={router}
+      future={{
+        // Disabled for now and will be addressed in #1259
+        v7_startTransition: false,
+      }}
+    />
+  );
 }
 
 export function Layout() {
@@ -134,7 +312,7 @@ export function Layout() {
                 }
               >
                 <ViewTabs />
-                {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+                <ReactQueryDevtools initialIsOpen={false} />
               </React.Suspense>
             </QueryClientProvider>
           </ConfigProvider>
