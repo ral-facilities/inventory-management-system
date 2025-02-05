@@ -2973,7 +2973,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                       aria-invalid="false"
                       autocomplete="new-password"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12yjm75-MuiInputBase-input-MuiOutlinedInput-input"
-                      id=":rkd:"
+                      id=":rks:"
                       placeholder="Search"
                       type="text"
                       value=""
@@ -3206,14 +3206,14 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                           </span>
                         </div>
                         <div
-                          aria-controls=":rkl:"
-                          aria-describedby=":rkj:-helper-text"
+                          aria-controls=":rl4:"
+                          aria-describedby=":rl2:-helper-text"
                           aria-expanded="false"
                           aria-haspopup="listbox"
                           aria-label="Filter by Catalogue Item"
-                          aria-labelledby=":rkj:"
+                          aria-labelledby=":rl2:"
                           class="MuiSelect-select MuiSelect-standard MuiSelect-multiple MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-2jdjhv-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                          id=":rkj:"
+                          id=":rl2:"
                           role="combobox"
                           tabindex="0"
                         >
@@ -3275,7 +3275,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                       </div>
                       <p
                         class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                        id=":rkj:-helper-text"
+                        id=":rl2:-helper-text"
                       >
                         <label>
                           Filter Mode: Includes any
@@ -3478,12 +3478,12 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                           </span>
                         </div>
                         <input
-                          aria-describedby=":rkr:-helper-text"
+                          aria-describedby=":rla:-helper-text"
                           aria-invalid="false"
                           aria-label="Filter by Serial Number"
                           autocomplete="new-password"
                           class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                          id=":rkr:"
+                          id=":rla:"
                           placeholder="Filter by Serial Number"
                           title="Filter by Serial Number"
                           type="text"
@@ -3521,7 +3521,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                       </div>
                       <p
                         class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                        id=":rkr:-helper-text"
+                        id=":rla:-helper-text"
                       >
                         <label>
                           Filter Mode: Fuzzy
@@ -3996,7 +3996,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                 class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
               >
                 <div
-                  aria-controls=":rl1:"
+                  aria-controls=":rlg:"
                   aria-expanded="false"
                   aria-haspopup="listbox"
                   aria-label="Rows per page"
