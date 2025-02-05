@@ -10,13 +10,13 @@ import { DashboardModal } from '@uppy/react';
 import XHR from '@uppy/xhr-upload';
 import React from 'react';
 import { uppyOnAfterResponse, uppyOnBeforeRequest } from '../../api/api';
-import type { APIImage } from '../../api/api.types';
 import type {
   UppyImageUploadResponse,
   UppyUploadMetadata,
 } from '../../app.types';
 import { settings } from '../../settings';
 import { getNonEmptyTrimmedString } from '../../utils';
+import { useMetaFields } from '../uppy.utils';
 
 // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000, so here the former is expected despite them really being GiB, MiB and KiB.
 const MAX_FILE_SIZE_MB = 50;
@@ -36,7 +36,9 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
   const queryClient = useQueryClient();
 
   const osApiUrl = async () => (await settings)?.osApiUrl || '';
-  const [uppy] = React.useState<Uppy<UppyUploadMetadata, APIImage>>(() => {
+  const [uppy] = React.useState<
+    Uppy<UppyUploadMetadata, UppyImageUploadResponse>
+  >(() => {
     const newUppy = new Uppy<UppyUploadMetadata, UppyImageUploadResponse>({
       autoProceed: false,
       restrictions: {
@@ -98,6 +100,11 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
     }
   });
 
+  const metaFields = useMetaFields<
+    UppyUploadMetadata,
+    UppyImageUploadResponse
+  >();
+
   return (
     <DashboardModal
       open={open}
@@ -109,23 +116,7 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
       proudlyDisplayPoweredByUppy={false}
       theme={theme.palette.mode}
       doneButtonHandler={handleClose}
-      metaFields={[
-        {
-          id: 'name',
-          name: 'File name',
-          placeholder: 'Enter file name',
-        },
-        {
-          id: 'title',
-          name: 'Title',
-          placeholder: 'Enter file title',
-        },
-        {
-          id: 'description',
-          name: 'Description',
-          placeholder: 'Enter file description',
-        },
-      ]}
+      metaFields={metaFields}
     />
   );
 };
