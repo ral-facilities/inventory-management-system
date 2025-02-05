@@ -249,6 +249,12 @@ export interface ImagePost {
   description?: string | null;
 }
 
+export interface ObjectFilePatch {
+  file_name?: string;
+  title?: string | null;
+  description?: string | null;
+}
+
 export interface APIImage
   extends Required<Omit<ImagePost, 'upload_file'>>,
     CreatedModifiedMixin {
