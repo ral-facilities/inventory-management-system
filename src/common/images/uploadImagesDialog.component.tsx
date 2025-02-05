@@ -10,10 +10,11 @@ import { DashboardModal } from '@uppy/react';
 import XHR from '@uppy/xhr-upload';
 import React from 'react';
 import { uppyOnAfterResponse, uppyOnBeforeRequest } from '../../api/api';
+import type { APIImage } from '../../api/api.types';
 import type {
   UppyImageUploadResponse,
   UppyUploadMetadata,
-} from '../../api/api.types';
+} from '../../app.types';
 import { settings } from '../../settings';
 import { getNonEmptyTrimmedString } from '../../utils';
 
@@ -35,9 +36,7 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
   const queryClient = useQueryClient();
 
   const osApiUrl = async () => (await settings)?.osApiUrl || '';
-  const [uppy] = React.useState<
-    Uppy<UppyUploadMetadata, UppyImageUploadResponse>
-  >(() => {
+  const [uppy] = React.useState<Uppy<UppyUploadMetadata, APIImage>>(() => {
     const newUppy = new Uppy<UppyUploadMetadata, UppyImageUploadResponse>({
       autoProceed: false,
       restrictions: {

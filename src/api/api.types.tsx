@@ -1,5 +1,3 @@
-import type { Body, Meta } from '@uppy/core';
-
 interface CreatedModifiedMixin {
   created_time: string;
   modified_time: string;
@@ -229,8 +227,6 @@ export interface ObjectFileUploadMetadata {
   description?: string | null;
 }
 
-export interface UppyUploadMetadata extends ObjectFileUploadMetadata, Meta {}
-
 // ------------------------------------ ATTACHMENTS ------------------------------------------------
 
 // This is AttachmentPost on the object-store-api
@@ -259,8 +255,6 @@ export interface APIImage
   primary: boolean;
   thumbnail_base64: string;
 }
-
-export interface UppyImageUploadResponse extends APIImage, Body {}
 
 export interface APIImageWithURL extends APIImage {
   /* Each url has a different `ResponseContentDisposition` set in the url, for viewing images inline and downloading respectively.

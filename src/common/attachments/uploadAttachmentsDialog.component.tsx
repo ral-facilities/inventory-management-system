@@ -6,8 +6,8 @@ import '@uppy/dashboard/dist/style.css';
 import ProgressBar from '@uppy/progress-bar';
 import { DashboardModal } from '@uppy/react';
 import React from 'react';
-import type { UppyUploadMetadata } from '../../api/api.types';
 import { usePostAttachmentMetadata } from '../../api/attachments';
+import type { UppyUploadMetadata } from '../../app.types';
 import { getNonEmptyTrimmedString } from '../../utils';
 
 // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000, so here the former is expected despite them really being GiB, MiB and KiB.
