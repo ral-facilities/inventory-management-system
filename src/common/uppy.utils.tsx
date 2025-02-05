@@ -116,12 +116,18 @@ function renderFields(
   );
 }
 
-export type Metafields = DashboardState<Meta, Body>['metaFields'];
+export type MetaFields<M extends Meta, B extends Body> = DashboardState<
+  M,
+  B
+>['metaFields'];
 
-export function useMetaFields(): Metafields {
+export function useMetaFields<M extends Meta, B extends Body>(): MetaFields<
+  M,
+  B
+> {
   const inputEl = React.useRef<HTMLInputElement>(null);
   const divEl = React.useRef<HTMLDivElement>(null);
-  const metaFieldsData: Metafields = [
+  const metaFieldsData: MetaFields<M, B> = [
     {
       id: 'name',
       name: 'File name',

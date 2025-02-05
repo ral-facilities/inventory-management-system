@@ -1,12 +1,13 @@
 import { useTheme } from '@mui/material';
-import AwsS3 from '@uppy/aws-s3';
-import Uppy, { Body, Meta, UppyFile } from '@uppy/core';
+import AwsS3, { type AwsBody } from '@uppy/aws-s3';
+import Uppy, { UppyFile } from '@uppy/core';
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 import ProgressBar from '@uppy/progress-bar';
 import { DashboardModal } from '@uppy/react';
 import React from 'react';
 import { usePostAttachmentMetadata } from '../../api/attachments';
+import type { UppyUploadMetadata } from '../../app.types';
 import { getNonEmptyTrimmedString } from '../../utils';
 import { useMetaFields } from '../uppy.utils';
 
@@ -28,20 +29,20 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
     Record<string, string>
   >({});
 
-  const [uppy] = React.useState<Uppy<Meta, Body>>(
-    new Uppy<Meta, Body>({
+  const [uppy] = React.useState<Uppy<UppyUploadMetadata, AwsBody>>(
+    new Uppy<UppyUploadMetadata, AwsBody>({
       autoProceed: false,
       restrictions: {
         maxFileSize: MAX_FILE_SIZE_B,
         requiredMetaFields: ['name'],
       },
     })
-      .use(AwsS3, {
+      .use(AwsS3<UppyUploadMetadata, AwsBody>, {
         shouldUseMultipart: false,
         getUploadParameters: async (file) => {
           const response = await postAttachmentMetadata({
             entity_id: entityId,
-            file_name: (file.meta.name as string) || '',
+            file_name: file.meta.name,
             title: getNonEmptyTrimmedString(file.meta.title),
             description: getNonEmptyTrimmedString(file.meta.description),
           });
@@ -62,7 +63,10 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
   );
 
   const updateFileMetadata = React.useCallback(
-    (file?: UppyFile<Meta, Body>, deleteMetadata?: boolean) => {
+    (
+      file?: UppyFile<UppyUploadMetadata, AwsBody>,
+      deleteMetadata?: boolean
+    ) => {
       const id = fileMetadataMap[file?.id ?? ''];
       if (id) {
         if (deleteMetadata) {
@@ -91,7 +95,7 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
   uppy.on('file-removed', (file) => updateFileMetadata(file, true));
   uppy.on('upload-success', (file) => updateFileMetadata(file));
 
-  const metaFields = useMetaFields();
+  const metaFields = useMetaFields<UppyUploadMetadata, AwsBody>();
 
   return (
     <DashboardModal

@@ -1,9 +1,12 @@
+import type { Body, Meta } from '@uppy/core';
 import {
   CatalogueCategory,
   CatalogueItem,
   Item,
   ItemPost,
   System,
+  type APIImage,
+  type ObjectFileUploadMetadata,
 } from './api/api.types';
 
 export const MicroFrontendId = 'scigateway';
@@ -211,3 +214,14 @@ export interface AdvancedSerialNumberOptionsType {
   quantity: string | null;
   starting_value: string | null;
 }
+
+// ------------------------------------ UPPY --------------------------------------------------------
+
+// These interfaces are extended to ensure compatibility with Uppy’s internal type constraints.
+// Uppy enforces that Meta and Body types conform to Record<string, unknown>. When using interfaces,
+// they don't automatically satisfy this constraint, which can cause TypeScript errors. By explicitly
+// extending Meta or Body, we ensure the types adhere to Uppy's expected structure while maintaining
+// the necessary specific properties for metadata and responses.
+export interface UppyImageUploadResponse extends APIImage, Body {}
+
+export interface UppyUploadMetadata extends ObjectFileUploadMetadata, Meta {}
