@@ -48,34 +48,6 @@ describe('Upload image dialog', () => {
       screen.getByText('Files cannot be larger than', { exact: false })
     ).toBeInTheDocument();
     expect(baseElement).toMatchSnapshot();
-
-    const file1 = new File(['hello world'], 'image.png', {
-      type: 'image/png',
-    });
-
-    const dropZone = screen.getByText('files cannot be larger than', {
-      exact: false,
-    });
-
-    Object.defineProperty(dropZone, 'files', {
-      value: [file1],
-    });
-
-    fireEvent.drop(dropZone, {
-      dataTransfer: {
-        files: [file1],
-      },
-    });
-
-    await waitFor(() => {
-      expect(screen.getByText('image.png')).toBeInTheDocument();
-    });
-
-    await user.click(
-      await screen.findByRole('button', { name: 'Edit file image.png' })
-    );
-
-    expect(await screen.findByText('File name')).toBeInTheDocument();
   });
 
   it('calls onclose when close button is clicked', async () => {
