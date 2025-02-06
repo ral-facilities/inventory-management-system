@@ -1090,19 +1090,22 @@ export const handlers = [
       if (Number(id) % 2 === 0) {
         image = {
           ...ImagesJSON[0],
-          url: `${window.location.origin}/logo192.png?text=${encodeURIComponent(id as string)}`,
+          view_url: `${window.location.origin}/logo192.png?text=${encodeURIComponent(id as string)}`,
+          download_url: `${window.location.origin}/logo192.png?text=${encodeURIComponent(id as string)}`,
         };
       } else {
         if (id === '3') {
           image = {
             ...ImagesJSON[1],
-            url: 'invalid url',
+            view_url: 'invalid url',
+            download_url: 'invalid url',
             description: undefined,
           };
         } else {
           image = {
             ...ImagesJSON[1],
-            url: `${window.location.origin}/images/stfc-logo-blue-text.png?text=${encodeURIComponent(id as string)}`,
+            view_url: `${window.location.origin}/images/stfc-logo-blue-text.png?text=${encodeURIComponent(id as string)}`,
+            download_url: `${window.location.origin}/images/stfc-logo-blue-text.png?text=${encodeURIComponent(id as string)}`,
           };
         }
       }
