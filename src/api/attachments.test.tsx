@@ -1,7 +1,8 @@
 import { renderHook, waitFor } from '@testing-library/react';
+import AttachmentsJSON from '../mocks/Attachments.json';
 import { hooksWrapperWithProviders } from '../testUtils';
 import { AttachmentPostMetadata } from './api.types';
-import { usePostAttachmentMetadata } from './attachments';
+import { useGetAttachment, useGetAttachments, usePostAttachmentMetadata } from './attachments';
 
 describe('attachments api functions', () => {
   afterEach(() => {
@@ -12,10 +13,10 @@ describe('attachments api functions', () => {
     let mockDataPost: AttachmentPostMetadata;
     beforeEach(() => {
       mockDataPost = {
-        file_name: 'test.doc',
+        file_name: 'laser-calibration.txt',
         entity_id: '1',
-        title: 'test',
-        description: 'test',
+        title: 'laser-calibration',
+        description: 'Detailed report on the calibration of high-precision lasers used in experiments.',
       };
     });
 
@@ -43,6 +44,37 @@ describe('attachments api functions', () => {
         },
         modified_time: '2024-01-02T13:10:10.000+00:00',
         created_time: '2024-01-01T12:00:00.000+00:00',
+      });
+    });
+  });
+
+  describe('useGetAttachments', () => {
+    it('sends request to fetch attachment data and returns successful response', async () => {
+      const { result } = renderHook(() => useGetAttachments('1'), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+
+      expect(result.current.data?.length).toEqual(20);
+    });
+  });
+
+  describe('useGetAttachment', () => {
+    it('sends request to fetch attachment data and returns successful reponse', async () => {
+      const { result } = renderHook(() => useGetAttachment('1'), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+
+      expect(result.current.data).toEqual({
+        ...AttachmentsJSON[1],
+        url: 'http://localhost:3000/attachments/safety-protocols.pdf?text=1',
       });
     });
   });
