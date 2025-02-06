@@ -52,9 +52,6 @@ export interface SystemDetailsProps {
 function SystemDetails(props: SystemDetailsProps) {
   const { data: system, isLoading: systemLoading } = useGetSystem(props.id);
 
-  const [openPrimaryDialog, setOpenPrimaryDialog] =
-    React.useState<boolean>(false);
-
   return systemLoading && props.id !== null ? (
     <Box
       sx={{
@@ -114,11 +111,7 @@ function SystemDetails(props: SystemDetailsProps) {
           >
             <Grid item container spacing={2}>
               <Grid item xs={12} sm={4}>
-                <PlaceholderImage
-                  entityId={system.id ?? ''}
-                  onChangePrimaryDialogOpen={setOpenPrimaryDialog}
-                  primaryDialogOpen={openPrimaryDialog}
-                />
+                <PlaceholderImage entityId={system.id} />
               </Grid>
               <Grid item container spacing={1} xs={12} sm={8}>
                 <Grid item xs={12} sm={6}>

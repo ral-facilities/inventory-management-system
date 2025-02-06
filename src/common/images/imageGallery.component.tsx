@@ -20,6 +20,8 @@ import {
   MRT_Cell,
   MRT_ColumnDef,
   MRT_Row,
+  MRT_RowData,
+  MRT_RowSelectionState,
   MRT_SelectCheckbox,
   MRT_ToggleRowActionMenuButton,
   useMaterialReactTable,
@@ -48,6 +50,25 @@ export interface ImageGalleryProps {
 
 const ImageGallery = (props: ImageGalleryProps) => {
   const { entityId, dense, setSelectedPrimaryID } = props;
+
+  const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
+    {}
+  );
+
+  const selectedRowIds = React.useMemo(
+    () => Object.keys(rowSelection),
+    [rowSelection]
+  );
+
+  const handleRowSelection = React.useCallback(
+    (row: MRT_RowData) => {
+      setRowSelection((prev) => ({
+        [row.id]: !prev[row.id],
+      }));
+    },
+
+    [selectedRowIds]
+  );
 
   const maxHeightThumbnail = dense ? 150 : 300;
 
@@ -176,6 +197,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
     },
     state: {
       ...preservedState,
+      rowSelection,
     },
     muiSearchTextFieldProps: {
       size: 'small',
@@ -187,6 +209,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
             return {
               onClick: () => {
                 setSelectedPrimaryID(row.original.id);
+                handleRowSelection(row);
               },
             };
           }
@@ -199,6 +222,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
     },
     // Functions
     ...onPreservedStatesChange,
+    onRowSelectionChange: setRowSelection,
     renderBottomToolbarCustomActions: ({ table }) =>
       displayTableRowCountText(table, images, 'Images', {
         paddingLeft: '8px',
@@ -382,6 +406,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
                     xs
                     key={`thumbnail-displayed-${index}`}
                     style={{
+                      cursor: dense ? 'pointer' : undefined,
                       maxWidth:
                         data.length === 1 ||
                         (images.length % preservedState.pagination.pageSize ===
@@ -391,6 +416,14 @@ const ImageGallery = (props: ImageGalleryProps) => {
                           : undefined,
                     }}
                     minWidth={dense ? '175px' : '350px'}
+                    onClick={
+                      dense && setSelectedPrimaryID
+                        ? () => {
+                            setSelectedPrimaryID(card.row.original.id);
+                            handleRowSelection(card.row);
+                          }
+                        : undefined
+                    }
                   >
                     <Grid
                       display="flex"

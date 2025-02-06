@@ -76,9 +76,6 @@ function ItemsLandingPage() {
     catalogueItemData?.manufacturer_id
   );
 
-  const [openPrimaryDialog, setOpenPrimaryDialog] =
-    React.useState<boolean>(false);
-
   return (
     <Grid container flexDirection="column">
       {(!itemDataIsLoading ||
@@ -98,11 +95,7 @@ function ItemsLandingPage() {
               {/* Image Section */}
               <Grid item container xs={12}>
                 <Grid item xs={12} sm={4}>
-                  <PlaceholderImage
-                    entityId={itemData.id ?? ''}
-                    onChangePrimaryDialogOpen={setOpenPrimaryDialog}
-                    primaryDialogOpen={openPrimaryDialog}
-                  />
+                  <PlaceholderImage entityId={itemData.id} />
                 </Grid>
                 {/* Title and Description Section */}
                 <Grid

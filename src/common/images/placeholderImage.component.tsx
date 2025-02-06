@@ -72,13 +72,13 @@ const PrimaryOptionsMenu = (props: PrimaryOptionsMenuInterface) => {
 
 export interface PlaceholderImageProps {
   sx?: SxProps<Theme>;
-  entityId: string;
-  onChangePrimaryDialogOpen: (dialogOpen: boolean) => void;
-  primaryDialogOpen: boolean;
+  entityId?: string;
 }
 
 const PlaceholderImage = (props: PlaceholderImageProps) => {
-  const { sx, entityId, onChangePrimaryDialogOpen, primaryDialogOpen } = props;
+  const { sx, entityId } = props;
+  const [primaryDialogOpen, setPrimaryDialogOpen] =
+    React.useState<boolean>(false);
   return (
     <Grid sx={{ height: '100%', width: '100%' }}>
       <Box
@@ -98,15 +98,13 @@ const PlaceholderImage = (props: PlaceholderImageProps) => {
       >
         <Typography variant="h5">No Image</Typography>
       </Box>
-      <PrimaryOptionsMenu
-        onChangePrimaryDialogOpen={onChangePrimaryDialogOpen}
-      />
+      <PrimaryOptionsMenu onChangePrimaryDialogOpen={setPrimaryDialogOpen} />
       <PrimaryImageDialog
         open={primaryDialogOpen}
         onClose={() => {
-          onChangePrimaryDialogOpen(false);
+          setPrimaryDialogOpen(false);
         }}
-        entityID={entityId}
+        entityID={entityId ?? ''}
       />
     </Grid>
   );
