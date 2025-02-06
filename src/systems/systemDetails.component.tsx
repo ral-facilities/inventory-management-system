@@ -12,7 +12,6 @@ import { System } from '../api/api.types';
 import { getSystemImportanceColour, useGetSystem } from '../api/systems';
 import ActionMenu from '../common/actionMenu.component';
 import PlaceholderImage from '../common/images/placeholderImage.component';
-import PrimaryImageDialog from '../common/images/primaryImageDialog.component';
 import TabView from '../common/tab/tabView.component';
 import { formatDateTimeStrings, OverflowTip } from '../utils';
 import SystemDialog from './systemDialog.component';
@@ -106,13 +105,6 @@ function SystemDetails(props: SystemDetailsProps) {
         </Box>
       ) : (
         <Grid container item direction="column" wrap="nowrap" spacing={1}>
-          <PrimaryImageDialog
-            open={openPrimaryDialog}
-            onClose={() => {
-              setOpenPrimaryDialog(false);
-            }}
-            entityID={system.id ?? ''}
-          />
           <Grid
             container
             item
@@ -122,7 +114,11 @@ function SystemDetails(props: SystemDetailsProps) {
           >
             <Grid item container spacing={2}>
               <Grid item xs={12} sm={4}>
-                <PlaceholderImage setDialog={setOpenPrimaryDialog} />
+                <PlaceholderImage
+                  entityId={system.id ?? ''}
+                  onChangePrimaryDialogOpen={setOpenPrimaryDialog}
+                  primaryDialogOpen={openPrimaryDialog}
+                />
               </Grid>
               <Grid item container spacing={1} xs={12} sm={8}>
                 <Grid item xs={12} sm={6}>

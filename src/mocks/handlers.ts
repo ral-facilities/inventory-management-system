@@ -1131,7 +1131,7 @@ export const handlers = [
 
       const fullBody = { ...obj, ...body };
 
-      if (fullBody.file_name === 'Error 500.png') {
+      if (fullBody.file_name === 'Error_500.png') {
         return HttpResponse.json(
           { detail: 'Something went wrong' },
           { status: 500 }

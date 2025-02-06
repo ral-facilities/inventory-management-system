@@ -1,13 +1,84 @@
-import { Box, Grid, SxProps, Theme, Typography } from '@mui/material';
-import PrimaryOptionsMenu from './primaryOptionsButton.component';
+import EditIcon from '@mui/icons-material/Edit';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import {
+  Box,
+  Grid,
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+  SxProps,
+  Theme,
+  Typography,
+} from '@mui/material';
+import React from 'react';
+import PrimaryImageDialog from './primaryImageDialog.component';
+
+interface PrimaryOptionsMenuInterface {
+  onChangePrimaryDialogOpen: (dialogOpen: boolean) => void;
+}
+
+const PrimaryOptionsMenu = (props: PrimaryOptionsMenuInterface) => {
+  const { onChangePrimaryDialogOpen } = props;
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
+
+  const handleOpenPrimary = () => {
+    onChangePrimaryDialogOpen(true);
+    setAnchorEl(null);
+  };
+
+  return (
+    <div>
+      <IconButton
+        id="basic-button"
+        aria-controls={open ? 'basic-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleOpenMenu}
+      >
+        <ListItemIcon>
+          <MoreHorizIcon />
+        </ListItemIcon>
+      </IconButton>
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleCloseMenu}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem onClick={handleOpenPrimary}>
+          <ListItemIcon>
+            <EditIcon />
+          </ListItemIcon>
+          <ListItemText>Set Primary Image</ListItemText>
+        </MenuItem>
+      </Menu>
+    </div>
+  );
+};
 
 export interface PlaceholderImageProps {
   sx?: SxProps<Theme>;
-  setDialog: (arg: boolean) => void;
+  entityId: string;
+  onChangePrimaryDialogOpen: (dialogOpen: boolean) => void;
+  primaryDialogOpen: boolean;
 }
 
 const PlaceholderImage = (props: PlaceholderImageProps) => {
-  const { sx, setDialog } = props;
+  const { sx, entityId, onChangePrimaryDialogOpen, primaryDialogOpen } = props;
   return (
     <Grid sx={{ height: '100%', width: '100%' }}>
       <Box
@@ -27,7 +98,16 @@ const PlaceholderImage = (props: PlaceholderImageProps) => {
       >
         <Typography variant="h5">No Image</Typography>
       </Box>
-      <PrimaryOptionsMenu setDialog={setDialog} />
+      <PrimaryOptionsMenu
+        onChangePrimaryDialogOpen={onChangePrimaryDialogOpen}
+      />
+      <PrimaryImageDialog
+        open={primaryDialogOpen}
+        onClose={() => {
+          onChangePrimaryDialogOpen(false);
+        }}
+        entityID={entityId}
+      />
     </Grid>
   );
 };

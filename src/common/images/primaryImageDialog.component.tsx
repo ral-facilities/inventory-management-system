@@ -57,7 +57,7 @@ const PrimaryImageDialog = (props: DeleteImageProps) => {
 
   return (
     <>
-      <Dialog open={open} maxWidth="xl">
+      <Dialog open={open} maxWidth="xl" fullWidth>
         <DialogTitle
           sx={{
             display: 'inline-flex',

@@ -13,7 +13,6 @@ import { useGetManufacturer } from '../api/manufacturers';
 import { useGetSystem } from '../api/systems';
 import ActionMenu from '../common/actionMenu.component';
 import PlaceholderImage from '../common/images/placeholderImage.component';
-import PrimaryImageDialog from '../common/images/primaryImageDialog.component';
 import TabView from '../common/tab/tabView.component';
 import { formatDateTimeStrings } from '../utils';
 import ItemDialog from './itemDialog.component';
@@ -99,15 +98,12 @@ function ItemsLandingPage() {
               {/* Image Section */}
               <Grid item container xs={12}>
                 <Grid item xs={12} sm={4}>
-                  <PlaceholderImage setDialog={setOpenPrimaryDialog} />
+                  <PlaceholderImage
+                    entityId={itemData.id ?? ''}
+                    onChangePrimaryDialogOpen={setOpenPrimaryDialog}
+                    primaryDialogOpen={openPrimaryDialog}
+                  />
                 </Grid>
-                <PrimaryImageDialog
-                  open={openPrimaryDialog}
-                  onClose={() => {
-                    setOpenPrimaryDialog(false);
-                  }}
-                  entityID={itemData.id ?? ''}
-                />
                 {/* Title and Description Section */}
                 <Grid
                   item
