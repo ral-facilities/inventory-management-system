@@ -17,17 +17,17 @@
 
     {
         "entity_id": "1",
-        "file_name": "laser-experiment-results.docx",
-        "title": "laser-experiment-results",
-        "description": "Compilation of results from laser experiments conducted, including data analysis and graphs",
+        "file_name": "camera-setup-guide.docx",
+        "title": "camera-setup-guide",
+        "description": "Guide providing instructions for setting up and configuring cameras used in experiments.",
         "id": "1"
     },
 
     {
         "entity_id": "1",
-        "file_name": "camera-setup-guide.rtf",
-        "title": "camera-setup-guide",
-        "description": "Guide providing instructions for setting up and configuring cameras used in experiments.",
+        "file_name": "experiment-results.rtf",
+        "title": "experiment-results",
+        "description": "Compilation of results from various experiments conducted, including data analysis and graphs",
         "id": "1"
     }
 ]

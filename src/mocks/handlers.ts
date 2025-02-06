@@ -1064,31 +1064,39 @@ export const handlers = [
       if (Number(id) % 4 === 0) {
         attachment = {
           ...AttachmentsJSON[0],
-          url: `${window.location.origin}/attachments/laser-calibration.txt?text=${encodeURIComponent(id as string)}`,
+          url: `${window.location.origin}/attachments/laser-calibration.txt?text=${
+            encodeURIComponent(id as string)
+          }`,
         };
       } else {
         if (Number(id) % 4 === 1) {
           attachment = {
             ...AttachmentsJSON[1],
-            url: `${window.location.origin}/attachments/safety-protocols.pdf?text=${encodeURIComponent(id as string)}`,
+            url: `${window.location.origin}/attachments/safety-protocols.pdf?text=${
+              encodeURIComponent(id as string)
+            }`,
           };
         } else {
-          if (id === '3') {
+          if (Number(id) % 4 === 2) {
             attachment = {
               ...AttachmentsJSON[2],
-              url: 'invalid url',
-              description: undefined,
+              url: `${window.location.origin}/attachments/camera-setup-guide.docx?text=${
+                encodeURIComponent(id as string)
+              }`,
             };
           } else {
-            if (Number(id) % 4 === 2) {
+            if (id === '3') {
               attachment = {
-                ...AttachmentsJSON[2],
-                url: `${window.location.origin}/attachments/laser-experiment-results?text=${encodeURIComponent(id as string)}`,
+                ...AttachmentsJSON[3],
+                url: 'invalid url',
+                description: undefined,
               };
             } else {
               attachment = {
                 ...AttachmentsJSON[3],
-                url: `${window.location.origin}/attachments/camera-setup-guide.rtf?text=${encodeURIComponent(id as string)}`,
+                url: `${window.location.origin}/attachments/experiment-results.rtf?text=${
+                  encodeURIComponent(id as string)
+                }`,
               };
             }
           }
