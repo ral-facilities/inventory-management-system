@@ -55,11 +55,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
     {}
   );
 
-  const selectedRowIds = React.useMemo(
-    () => Object.keys(rowSelection),
-    [rowSelection]
-  );
-
   const handleRowSelection = React.useCallback(
     (row: MRT_RowData) => {
       setRowSelection((prev) => ({
@@ -67,7 +62,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
       }));
     },
 
-    [selectedRowIds]
+    []
   );
 
   const maxHeightThumbnail = dense ? 150 : 300;

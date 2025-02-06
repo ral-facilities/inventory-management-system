@@ -20,6 +20,7 @@ describe('Image Gallery', () => {
   beforeEach(() => {
     props = {
       entityId: '1',
+      dense: false,
     };
     user = userEvent.setup();
     axiosGetSpy = vi.spyOn(storageApi, 'get');

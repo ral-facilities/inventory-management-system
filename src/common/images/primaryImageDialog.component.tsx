@@ -53,7 +53,7 @@ const PrimaryImageDialog = (props: DeleteImageProps) => {
         'No image selected, Please select an image and try again'
       );
     }
-  }, [selectedPrimaryID, editImage]);
+  }, [selectedPrimaryID, editImage, onClose]);
 
   return (
     <>
