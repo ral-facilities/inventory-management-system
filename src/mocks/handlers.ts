@@ -390,15 +390,12 @@ export const handlers = [
       if (body.name === 'test_has_children_elements') {
         // find the name of the manufacturer, so it can be used in the error message
         const manufacturerName = ManufacturersJSON?.find(
-          (manufacturer) =>
-            manufacturer.id === validCatalogueItem?.manufacturer_id
+          (manufacturer) => manufacturer.id === validCatalogueItem?.manufacturer_id
         ) as Manufacturer;
         return HttpResponse.json(
           {
-            detail:
-              'Unable to update catalogue item properties and manufacturer (' +
-              manufacturerName?.name +
-              '), as the catalogue item has child elements.',
+            detail: 'Unable to update catalogue item properties and manufacturer ('
+              + manufacturerName?.name + '), as the catalogue item has child elements.'
           },
           { status: 409 }
         );
