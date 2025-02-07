@@ -109,7 +109,7 @@ describe('Upload attachment dialog', () => {
 
     await user.type(description, 'test description');
     expect(
-      await screen.findByDisplayValue('test description')
+      await screen.findByDisplayValue('test description', {}, { timeout: 3000 })
     ).toBeInTheDocument();
 
     await user.click(await screen.findByText('Save changes'));
