@@ -103,10 +103,12 @@ describe('Upload attachment dialog', () => {
 
     await user.type(title, 'test title');
 
-    await user.click(description);
     await user.clear(description);
-    await user.type(description, 'test description');
+    await user.click(description);
+    await user.keyboard('test description');
+
     await user.click(title);
+    await user.click(description);
 
     expect(await screen.findByText('.txt')).toBeInTheDocument();
 
