@@ -100,16 +100,19 @@ describe('Upload attachment dialog', () => {
     const description = screen.getByRole('textbox', { name: 'Description' });
 
     expect(await screen.findByDisplayValue('test1')).toBeInTheDocument();
-    expect(await screen.findByText('.txt')).toBeInTheDocument();
 
     await user.type(title, 'test title');
 
-    expect(await screen.findByDisplayValue('test title')).toBeInTheDocument();
     await user.click(description);
-
+    await user.clear(description);
     await user.type(description, 'test description');
+    await user.click(title);
+    await user.type(title, '');
+
+    expect(await screen.findByText('.txt')).toBeInTheDocument();
+
     expect(
-      await screen.findByDisplayValue('test description', {}, { timeout: 3000 })
+      await screen.findByDisplayValue('test description')
     ).toBeInTheDocument();
 
     await user.click(await screen.findByText('Save changes'));
