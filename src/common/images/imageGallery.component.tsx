@@ -306,24 +306,46 @@ const ImageGallery = (props: ImageGalleryProps) => {
 
   return (
     <>
+      {dense && (
+        <StyledUppyBox>
+          <UploadImagesDialog
+            open={openUploadDialog}
+            onClose={() => setOpenUploadDialog(false)}
+            entityId={entityId ?? ''}
+          />
+        </StyledUppyBox>
+      )}
       {!imageIsLoading
         ? (!images || images.length === 0) && (
-            <Box
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              height="300px"
-              flexDirection="column"
-              textAlign="center"
-            >
-              <Typography variant="h6" fontWeight="bold">
-                No images available
-              </Typography>
-              <Typography variant="body1">
-                Please add an image by{!dense && ' opening the Action Menu and'}{' '}
-                clicking the Upload Images {!dense ? 'menu item' : 'button'}.
-              </Typography>
-            </Box>
+            <>
+              {dense && (
+                <Button
+                  onClick={() => {
+                    setOpenUploadDialog(true);
+                  }}
+                  variant="outlined"
+                >
+                  Upload Image
+                </Button>
+              )}
+              <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                height="300px"
+                flexDirection="column"
+                textAlign="center"
+              >
+                <Typography variant="h6" fontWeight="bold">
+                  No images available
+                </Typography>
+                <Typography variant="body1">
+                  Please add an image by
+                  {!dense && ' opening the Action Menu and'} clicking the Upload
+                  Images {!dense ? 'menu item' : 'button'}.
+                </Typography>
+              </Box>
+            </>
           )
         : !dense && (
             <Box sx={{ width: '100%' }}>
@@ -501,15 +523,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
           <Grid marginTop={2} direction="row" item container>
             <MRT_BottomToolbar table={table} sx={{ width: '100%' }} />
           </Grid>
-          {dense && (
-            <StyledUppyBox>
-              <UploadImagesDialog
-                open={openUploadDialog}
-                onClose={() => setOpenUploadDialog(false)}
-                entityId={entityId ?? ''}
-              />
-            </StyledUppyBox>
-          )}
           {selectedImage && !dense && (
             <>
               <ImageInformationDialog

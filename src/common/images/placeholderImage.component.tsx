@@ -46,9 +46,7 @@ const PrimaryOptionsMenu = (props: PrimaryOptionsMenuInterface) => {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleOpenMenu}
       >
-        <ListItemIcon>
-          <MoreHorizIcon />
-        </ListItemIcon>
+        <MoreHorizIcon />
       </IconButton>
       <Menu
         id="basic-menu"
