@@ -2,11 +2,14 @@ import {
   Box,
   Button,
   CircularProgress,
+  createTheme,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   FormHelperText,
+  ThemeProvider,
+  useTheme,
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
@@ -23,6 +26,19 @@ export interface DeleteImageProps {
 
 const PrimaryImageDialog = (props: DeleteImageProps) => {
   const { open, onClose, entityID } = props;
+  const theme = useTheme();
+  console.dir(theme, { depth: null });
+
+  const modifiedTheme = createTheme({
+    ...theme,
+    palette: {
+      ...theme.palette,
+      background: {
+        ...theme.palette.background,
+        paper: theme.palette.mode === 'dark' ? '#1B1B1B' : 'white', // Override dialog background
+      },
+    },
+  });
 
   const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
     undefined
@@ -56,7 +72,7 @@ const PrimaryImageDialog = (props: DeleteImageProps) => {
   }, [selectedPrimaryID, editImage, onClose]);
 
   return (
-    <>
+    <ThemeProvider theme={modifiedTheme}>
       <Dialog open={open} maxWidth="xl" fullWidth>
         <DialogTitle
           sx={{
@@ -67,15 +83,20 @@ const PrimaryImageDialog = (props: DeleteImageProps) => {
         >
           Select Primary Image
         </DialogTitle>
-        <DialogContent>
-          <ImageGallery
-            entityId={entityID}
-            dense={true}
-            setSelectedPrimaryID={setSelectedPrimaryID}
-          />
-        </DialogContent>
+        <ThemeProvider theme={theme}>
+          <DialogContent>
+            <ImageGallery
+              entityId={entityID}
+              dense={true}
+              setSelectedPrimaryID={setSelectedPrimaryID}
+            />
+          </DialogContent>
+        </ThemeProvider>
         <DialogActions
-          sx={{ display: 'inline-flex', justifyContent: 'space-between' }}
+          sx={{
+            display: 'inline-flex',
+            justifyContent: 'space-between',
+          }}
         >
           <Button onClick={handleClose}>Cancel</Button>
           <Button
@@ -102,7 +123,7 @@ const PrimaryImageDialog = (props: DeleteImageProps) => {
           </Box>
         )}
       </Dialog>
-    </>
+    </ThemeProvider>
   );
 };
 

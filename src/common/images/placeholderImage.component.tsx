@@ -38,13 +38,14 @@ const PrimaryOptionsMenu = (props: PrimaryOptionsMenuInterface) => {
   };
 
   return (
-    <div>
+    <Box sx={{ height: '100%' }}>
       <IconButton
         id="basic-button"
         aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleOpenMenu}
+        sx={{ padding: { xs: '0px', sm: '8px' } }}
       >
         <MoreHorizIcon />
       </IconButton>
@@ -64,7 +65,7 @@ const PrimaryOptionsMenu = (props: PrimaryOptionsMenuInterface) => {
           <ListItemText>Set Primary Image</ListItemText>
         </MenuItem>
       </Menu>
-    </div>
+    </Box>
   );
 };
 
@@ -96,7 +97,9 @@ const PlaceholderImage = (props: PlaceholderImageProps) => {
       >
         <Typography variant="h5">No Image</Typography>
       </Box>
-      <PrimaryOptionsMenu onChangePrimaryDialogOpen={setPrimaryDialogOpen} />
+      <Box sx={{ height: '20%' }}>
+        <PrimaryOptionsMenu onChangePrimaryDialogOpen={setPrimaryDialogOpen} />
+      </Box>
       <PrimaryImageDialog
         open={primaryDialogOpen}
         onClose={() => {
