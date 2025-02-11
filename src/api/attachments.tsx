@@ -51,6 +51,8 @@ const getAttachments = async (
 ): Promise<AttachmentPostMetadata[]> => {
   const queryParams = new URLSearchParams();
   queryParams.append('entity_id', entityId);
+  queryParams.append('modified_time', '2024-01-02T13:10:10.000+00:00')
+  queryParams.append('created_time', '2024-01-01T12:00:00.000+00:00')
 
   return storageApi
     .get(`/attachments`, {
