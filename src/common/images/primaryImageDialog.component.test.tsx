@@ -133,16 +133,23 @@ describe('Primary Image Dialog', () => {
 
     expect((await screen.findAllByText('logo1.png')).length).toEqual(9);
 
-    const imageCard = screen.getAllByRole('tooltip', { name: 'logo1.png' })[0];
+    const imageCard = screen.getAllByRole('radio', {
+      name: 'Toggle select card',
+    })[0];
     user.click(imageCard);
 
-    const saveButton = screen.getByRole('button', { name: 'Save' });
-    user.click(saveButton);
-
-    expect(axiosPatchSpy).toHaveBeenCalledWith('/images/2', {
-      primary: 'true',
+    const saveButton: HTMLButtonElement = screen.getByRole('button', {
+      name: 'Save',
     });
 
-    expect(onClose).toHaveBeenCalled();
+    await waitFor(() => expect(saveButton.disabled).toBe(false));
+
+    user.click(saveButton);
+
+    await waitFor(() => expect(onClose).toHaveBeenCalled());
+
+    expect(axiosPatchSpy).toHaveBeenCalledWith('/images/1', {
+      primary: true,
+    });
   });
 });
