@@ -44,6 +44,7 @@ const PrimaryOptionsMenu = (props: PrimaryOptionsMenuInterface) => {
         aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
+        aria-label="primary images action menu"
         onClick={handleOpenMenu}
         sx={{ padding: { xs: '0px', sm: '8px' } }}
       >

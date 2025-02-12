@@ -18,16 +18,15 @@ import { usePatchImage } from '../../api/images';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import ImageGallery from './imageGallery.component';
 
-export interface DeleteImageProps {
+export interface PrimaryImageProps {
   open: boolean;
   onClose: () => void;
   entityID: string;
 }
 
-const PrimaryImageDialog = (props: DeleteImageProps) => {
+const PrimaryImageDialog = (props: PrimaryImageProps) => {
   const { open, onClose, entityID } = props;
   const theme = useTheme();
-  console.dir(theme, { depth: null });
 
   const modifiedTheme = createTheme({
     ...theme,

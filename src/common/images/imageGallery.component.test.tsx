@@ -606,4 +606,104 @@ describe('Image Gallery', () => {
       expect(screen.queryByTestId('galleryLightBox')).not.toBeInTheDocument();
     });
   });
+
+  it('renders correctly in dense view', async () => {
+    props.dense = true;
+    let baseElement;
+    await act(async () => {
+      baseElement = createView().baseElement;
+    });
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(9);
+
+    expect(baseElement).toMatchSnapshot();
+  });
+
+  it('does not store filters in url when dense', async () => {
+    props.dense = true;
+
+    const { router } = createView();
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(9);
+
+    const initialURL = router.state.location.search;
+    await user.click(screen.getByText('Show Filters'));
+    expect(await screen.findByText('Hide Filters')).toBeInTheDocument();
+
+    const nameInput = screen.getByLabelText('Filter by File name');
+    await user.type(nameInput, 'stfc-logo-blue-text.png');
+    await waitFor(() => {
+      expect(screen.queryByText('logo1.png')).not.toBeInTheDocument();
+    });
+
+    expect(router.state.location.search).toBe(initialURL);
+  });
+
+  it('can open and close upload dialog when dense', async () => {
+    props.dense = true;
+    createView();
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(9);
+
+    const uploadImageButton = screen.getByRole('button', {
+      name: 'Upload Image',
+    });
+
+    await user.click(uploadImageButton);
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const closeButton = screen.getByRole('button', { name: 'Close Modal' });
+    await user.click(closeButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('displays no images message and can open and close upload dialog when dense', async () => {
+    props.dense = true;
+    server.use(
+      http.get('/images', async () => {
+        return HttpResponse.json([], { status: 200 });
+      })
+    );
+    let baseElement;
+    await act(async () => {
+      baseElement = createView().baseElement;
+    });
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+    expect(screen.queryByText('logo1.png')).not.toBeInTheDocument();
+    expect(baseElement).toMatchSnapshot();
+
+    const uploadImageButton = screen.getByRole('button', {
+      name: 'Upload Image',
+    });
+
+    await user.click(uploadImageButton);
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const closeButton = screen.getByRole('button', { name: 'Close Modal' });
+    await user.click(closeButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
 });

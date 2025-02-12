@@ -3,13 +3,48 @@
 exports[`PlaceholderImage Component > matches the snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-q2z5p8"
+    class="MuiGrid-root css-hwh2b0-MuiGrid-root"
   >
-    <h5
-      class="MuiTypography-root MuiTypography-h5 css-ag7rrr-MuiTypography-root"
+    <div
+      class="MuiBox-root css-p1nkk5"
     >
-      No Image
-    </h5>
+      <h5
+        class="MuiTypography-root MuiTypography-h5 css-ag7rrr-MuiTypography-root"
+      >
+        No Image
+      </h5>
+    </div>
+    <div
+      class="MuiBox-root css-nnlis0"
+    >
+      <div
+        class="MuiBox-root css-10klw3m"
+      >
+        <button
+          aria-haspopup="true"
+          aria-label="primary images action menu"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-1t9jaav-MuiButtonBase-root-MuiIconButton-root"
+          id="basic-button"
+          tabindex="0"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+            data-testid="MoreHorizIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
+            />
+          </svg>
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
+        </button>
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;
