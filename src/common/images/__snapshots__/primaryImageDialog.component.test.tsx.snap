@@ -2715,6 +2715,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
 
 exports[`Primary Image Dialog > renders no results page correctly, and can still open and close the upload dialog 1`] = `
 <body
+  class=""
   style="padding-right: 1024px; overflow: hidden;"
 >
   <div
@@ -2740,13 +2741,13 @@ exports[`Primary Image Dialog > renders no results page correctly, and can still
       tabindex="-1"
     >
       <div
-        aria-labelledby=":r0:"
+        aria-labelledby=":r3s:"
         class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthXl MuiDialog-paperFullWidth css-p5um9v-MuiPaper-root-MuiDialog-paper"
         role="dialog"
       >
         <h2
           class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-do9pww-MuiTypography-root-MuiDialogTitle-root"
-          id=":r0:"
+          id=":r3s:"
         >
           Select Primary Image
         </h2>
