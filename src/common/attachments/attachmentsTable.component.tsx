@@ -2,7 +2,6 @@ import ClearIcon from '@mui/icons-material/Clear';
 import {
   Box,
   Button,
-  Link as MuiLink,
   TableCellBaseProps,
   TableRow,
 } from '@mui/material';
@@ -13,7 +12,6 @@ import {
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { AttachmentPostMetadataResponse } from '../../api/api.types';
 import { useGetAttachments } from '../../api/attachments';
 import {
@@ -51,15 +49,6 @@ function AttachmentsTable(props: AttachmentTableProps) {
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
         size: 300,
-        Cell: ({ row }) => (
-          <MuiLink
-            underline="hover"
-            component={Link}
-            to={`/attachments/${row.original.id}`}
-          >
-            {row.original.file_name}
-          </MuiLink>
-        ),
       },
       {
         header: 'Title',

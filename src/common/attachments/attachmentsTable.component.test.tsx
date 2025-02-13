@@ -1,0 +1,122 @@
+import { screen, waitFor } from '@testing-library/react';
+import userEvent, { UserEvent } from '@testing-library/user-event';
+import { http, HttpResponse } from 'msw';
+import { act } from 'react';
+import { MockInstance } from 'vitest';
+import { storageApi } from '../../api/api';
+import { server } from '../../mocks/server';
+import { renderComponentWithRouterProvider } from '../../testUtils';
+import AttachmentsTable, { AttachmentTableProps } from './attachmentsTable.component';
+
+describe('Attachments Table', () => {
+  let props: AttachmentTableProps;
+  let user: UserEvent;
+  let axiosGetSpy: MockInstance;
+
+  const createView = () => {
+    return renderComponentWithRouterProvider(<AttachmentsTable {...props} />);
+  };
+
+  beforeEach(() => {
+    props = {
+      entityId: '1',
+    };
+    user = userEvent.setup();
+    axiosGetSpy = vi.spyOn(storageApi, 'get');
+  });
+
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('renders table correctly', async () => {
+    let baseElement;
+    await act(async () => {
+      baseElement = createView().baseElement;
+    });
+
+    expect((await screen.findAllByText('laser-calibration.txt')).length).toEqual(3);
+
+    expect(baseElement).toMatchSnapshot();
+  });
+
+  it('renders no results page correctly', async () => {
+    server.use(
+      http.get('/attachments', async () => {
+        return HttpResponse.json([], { status: 200 });
+      })
+    );
+
+    let baseElement;
+    await act(async () => {
+        baseElement = createView().baseElement;
+    });
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
+    expect(screen.queryByText('laser-calibration.txt')).not.toBeInTheDocument();
+
+    expect(baseElement).toMatchSnapshot();
+  });
+
+  it('changes page correctly and rerenders data', async () => {
+    const { router } = createView();
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
+    expect(screen.getAllByText('laser-calibration.txt').length).toEqual(3);
+    expect(router.state.location.search).toBe('');
+
+    await user.click(screen.getByRole('button', { name: 'Go to page 2' }));
+
+    await waitFor(() => {
+      expect(screen.getAllByText('laser-calibration.txt').length).toEqual(2);
+    });
+
+    expect(router.state.location.search).toBe(
+      '?state=N4IgDiBcpghg5gUwMoEsBeioEYCsAacBRASQDsATRADxwF86g'
+    );
+
+    await user.click(screen.getByRole('button', { name: 'Go to page 1' }));
+
+    await waitFor(() => {
+      expect(screen.getAllByText('laser-calibration.txt').length).toEqual(3);
+    });
+
+    expect(router.state.location.search).toBe('');
+  });
+
+  it('sets the table filters and clears the table filters', async () => {
+    createView();
+
+    await waitFor(() => {
+        expect(screen.getAllByText('laser-calibration.txt').length).toEqual(3);
+    });
+
+    const clearFiltersButton = screen.getByRole('button', {
+      name: 'Clear Filters',
+    });
+
+    expect(clearFiltersButton).toBeDisabled();
+
+    const nameInput = screen.getByLabelText('Filter by Filename');
+
+    await user.type(nameInput, 'camera');
+
+    await waitFor(() => {
+      expect(screen.queryByText('laser-calibration.txt')).not.toBeInTheDocument();
+    });
+
+    await user.click(clearFiltersButton);
+
+    await waitFor(() => {
+        expect(screen.getAllByText('laser-calibration.txt').length).toEqual(3);
+    });
+
+    expect(clearFiltersButton).toBeDisabled();
+  }, 10000);
+});

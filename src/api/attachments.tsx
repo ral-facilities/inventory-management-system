@@ -48,7 +48,7 @@ export const useGetAttachment = (
 
 const getAttachments = async (
   entityId: string
-): Promise<AttachmentPostMetadata[]> => {
+): Promise<AttachmentPostMetadataResponse[]> => {
   const queryParams = new URLSearchParams();
   queryParams.append('entity_id', entityId);
   queryParams.append('modified_time', '2024-01-02T13:10:10.000+00:00')
@@ -63,7 +63,7 @@ const getAttachments = async (
 
 export const useGetAttachments = (
   entityId?: string
-): UseQueryResult<AttachmentPostMetadata[], AxiosError> => {
+): UseQueryResult<AttachmentPostMetadataResponse[], AxiosError> => {
   return useQuery({
     queryKey: ['Attachments', entityId],
     queryFn: () => getAttachments(entityId ?? ''),

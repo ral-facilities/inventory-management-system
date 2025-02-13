@@ -132,5 +132,7 @@ describe('Manufacturer Table', () => {
     await waitFor(() => {
       expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
     });
+
+    expect(clearFiltersButton).toBeDisabled();
   }, 10000);
 });
