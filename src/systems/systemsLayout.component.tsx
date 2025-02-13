@@ -31,7 +31,9 @@ export const systemsLayoutLoader =
     const { system_id: systemId } = params;
 
     if (systemId) {
-      await queryClient.ensureQueryData(getSystemQuery(systemId, true));
+      await queryClient.ensureQueryData(
+        getSystemQuery(systemId, { retry: false })
+      );
     }
 
     return { ...params };

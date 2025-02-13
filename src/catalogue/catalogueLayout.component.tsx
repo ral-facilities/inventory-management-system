@@ -43,12 +43,12 @@ export const catalogueLayoutLoader =
 
     if (catalogueCategoryId) {
       await queryClient.ensureQueryData(
-        getCatalogueCategoryQuery(catalogueCategoryId, true)
+        getCatalogueCategoryQuery(catalogueCategoryId, { retry: false })
       );
     }
     if (catalogueItemId && catalogueCategoryId) {
       const catalogueItem = await queryClient.ensureQueryData(
-        getCatalogueItemQuery(catalogueItemId, true)
+        getCatalogueItemQuery(catalogueItemId, { retry: false })
       );
 
       if (catalogueItem.catalogue_category_id !== catalogueCategoryId) {
@@ -59,7 +59,7 @@ export const catalogueLayoutLoader =
     }
     if (catalogueItemId && catalogueCategoryId && itemId) {
       const item = await queryClient.ensureQueryData(
-        getItemQuery(itemId, true)
+        getItemQuery(itemId, { retry: false })
       );
       if (item.catalogue_item_id !== catalogueItemId) {
         throw new Error(

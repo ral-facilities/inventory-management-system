@@ -8,7 +8,11 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { TransferState, TransferToCatalogueItem } from '../app.types';
+import {
+  TransferState,
+  TransferToCatalogueItem,
+  type GetQueryOptionsType,
+} from '../app.types';
 import { imsApi } from './api';
 import {
   APIError,
@@ -68,7 +72,7 @@ export const useGetCatalogueItems = (
   });
 };
 
-export const getCatalogueItem = async (
+const getCatalogueItem = async (
   catalogueCategoryId: string | undefined
 ): Promise<CatalogueItem> => {
   const queryParams = new URLSearchParams();
@@ -84,7 +88,7 @@ export const getCatalogueItem = async (
 
 export const getCatalogueItemQuery = (
   catalogueCategoryId: string | undefined,
-  loader?: boolean
+  extraOptions?: GetQueryOptionsType<CatalogueItem>
 ) =>
   queryOptions<CatalogueItem, AxiosError>({
     queryKey: ['CatalogueItem', catalogueCategoryId],
@@ -92,7 +96,7 @@ export const getCatalogueItemQuery = (
       return getCatalogueItem(catalogueCategoryId);
     },
     enabled: catalogueCategoryId !== undefined,
-    retry: loader ? false : undefined,
+    ...extraOptions,
   });
 
 export const useGetCatalogueItem = (

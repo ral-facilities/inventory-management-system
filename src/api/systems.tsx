@@ -6,9 +6,15 @@ import {
   useQueries,
   useQuery,
   useQueryClient,
+  type QueryClient,
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { CopyToSystem, MoveToSystem, TransferState } from '../app.types';
+import {
+  CopyToSystem,
+  MoveToSystem,
+  TransferState,
+  type GetQueryOptionsType,
+} from '../app.types';
 import { generateUniqueNameUsingCode } from '../utils';
 import { imsApi } from './api';
 import {
@@ -20,8 +26,8 @@ import {
   SystemPost,
   type CatalogueItem,
 } from './api.types';
-import { getCatalogueItem } from './catalogueItems';
-import { getItems } from './items';
+import { getCatalogueItemQuery } from './catalogueItems';
+import { getItemsQuery } from './items';
 
 /** Utility for turning an importance into an MUI palette colour to display */
 export const getSystemImportanceColour = (
@@ -56,15 +62,22 @@ export const useGetSystemIds = (ids: string[]): UseQueryResult<System>[] => {
   });
 };
 
+export const getSystemsQuery = (
+  id?: string,
+  extraOptions?: GetQueryOptionsType<System[]>
+) =>
+  queryOptions<System[], AxiosError>({
+    queryKey: ['Systems', id],
+    queryFn: () => {
+      return getSystems(id);
+    },
+    ...extraOptions,
+  });
+
 export const useGetSystems = (
   parent_id?: string
 ): UseQueryResult<System[], AxiosError> => {
-  return useQuery({
-    queryKey: ['Systems', parent_id],
-    queryFn: () => {
-      return getSystems(parent_id);
-    },
-  });
+  return useQuery(getSystemsQuery(parent_id));
 };
 
 const getSystem = async (id: string): Promise<System> => {
@@ -73,14 +86,17 @@ const getSystem = async (id: string): Promise<System> => {
   });
 };
 
-export const getSystemQuery = (id?: string | null, loader?: boolean) =>
+export const getSystemQuery = (
+  id?: string | null,
+  extraOptions?: GetQueryOptionsType<System>
+) =>
   queryOptions<System, AxiosError>({
     queryKey: ['System', id],
     queryFn: () => {
       return getSystem(id ?? '');
     },
     enabled: !!id,
-    retry: loader ? false : undefined,
+    ...extraOptions,
   });
 
 // Allows a value of undefined or null to disable
@@ -95,7 +111,12 @@ export interface SystemTree extends Partial<System> {
   subsystems?: SystemTree[];
 }
 
+const GET_SYSTEM_TREE_QUERY_OPTIONS = {
+  staleTime: 1000 * 60 * 5,
+};
+
 const getSystemTree = async (
+  queryClient: QueryClient,
   parent_id: string,
   maxSubsystems: number, // Total max subsystems allowed
   maxDepth?: number,
@@ -110,31 +131,22 @@ const getSystemTree = async (
   }
 
   // Fetch the root system
-  const rootSystem = await getSystem(parent_id);
+  const rootSystem = await queryClient.fetchQuery(
+    getSystemQuery(parent_id, GET_SYSTEM_TREE_QUERY_OPTIONS)
+  );
 
   // Fetch systems at the current level
-  const systems = await getSystems(parent_id || 'null');
+  const systems = await queryClient.fetchQuery(
+    getSystemsQuery(parent_id ?? 'null', GET_SYSTEM_TREE_QUERY_OPTIONS)
+  );
 
   // Increment the total count of subsystems
   totalSubsystems.count += systems.length;
 
   // Throw an AxiosError if the total count exceeds maxSubsystems
   if (maxSubsystems !== undefined && totalSubsystems.count > maxSubsystems) {
-    throw new AxiosError(
-      `Total subsystems exceeded the maximum allowed limit of ${maxSubsystems}. Current count: ${totalSubsystems.count}`,
-      'SubsystemLimitExceeded',
-      undefined,
-      null,
-      {
-        status: 400,
-        statusText: 'Bad Request',
-        headers: {},
-        // @ts-expect-error: not needed
-        config: {},
-        data: {
-          message: `Subsystem limit exceeded. Max: ${maxSubsystems}, Current: ${totalSubsystems.count}`,
-        },
-      }
+    throw new Error(
+      `Total subsystems exceeded the maximum allowed limit of ${maxSubsystems}. Current count: ${totalSubsystems.count}`
     );
   }
 
@@ -155,6 +167,7 @@ const getSystemTree = async (
     systems.map(async (system) => {
       // Fetch subsystems recursively, increasing the depth
       const subsystems = await getSystemTree(
+        queryClient,
         system.id,
         maxSubsystems,
         maxDepth,
@@ -165,7 +178,9 @@ const getSystemTree = async (
       );
 
       // Fetch all items for the current system
-      const items = await getItems(system.id);
+      const items = await queryClient.fetchQuery(
+        getItemsQuery(system.id, undefined, GET_SYSTEM_TREE_QUERY_OPTIONS)
+      );
 
       // Group items into catalogue categories and fetch catalogue item details
       const catalogueItemIdSet = new Set<string>(
@@ -177,7 +192,9 @@ const getSystemTree = async (
           // Check if the item exists in the cache
           if (!catalogueItemCache.has(id)) {
             // If not, fetch and store it in the cache
-            const fetchedCatalogueItem = await getCatalogueItem(id);
+            const fetchedCatalogueItem = await queryClient.fetchQuery(
+              getCatalogueItemQuery(id, GET_SYSTEM_TREE_QUERY_OPTIONS)
+            );
             catalogueItemCache.set(id, fetchedCatalogueItem);
           }
 
@@ -195,7 +212,9 @@ const getSystemTree = async (
   );
 
   // Handle the case when there are no systems (leaf nodes or empty levels)
-  const items = await getItems(parent_id);
+  const items = await queryClient.fetchQuery(
+    getItemsQuery(parent_id, undefined, GET_SYSTEM_TREE_QUERY_OPTIONS)
+  );
 
   // Group items into catalogue categories and fetch catalogue item details
   const catalogueItemIdSet = new Set<string>(
@@ -207,7 +226,9 @@ const getSystemTree = async (
       // Check if the item exists in the cache
       if (!catalogueItemCache.has(id)) {
         // If not, fetch and store it in the cache
-        const fetchedCatalogueItem = await getCatalogueItem(id);
+        const fetchedCatalogueItem = await queryClient.fetchQuery(
+          getCatalogueItemQuery(id, GET_SYSTEM_TREE_QUERY_OPTIONS)
+        );
         catalogueItemCache.set(id, fetchedCatalogueItem);
       }
 
@@ -235,6 +256,7 @@ export const useGetSystemsTree = (
   subsystemsCutOffPoint?: number, // Add cutoff point as a parameter
   maxSubsystems?: number
 ): UseQueryResult<SystemTree[], AxiosError> => {
+  const queryClient = useQueryClient();
   return useQuery({
     queryKey: [
       'SystemsTree',
@@ -245,13 +267,14 @@ export const useGetSystemsTree = (
     ],
     queryFn: () =>
       getSystemTree(
+        queryClient,
         parent_id ?? '',
         maxSubsystems ?? 150,
         maxDepth,
         0,
         subsystemsCutOffPoint
       ),
-    staleTime: 1000 * 60 * 5,
+    ...GET_SYSTEM_TREE_QUERY_OPTIONS,
   });
 };
 

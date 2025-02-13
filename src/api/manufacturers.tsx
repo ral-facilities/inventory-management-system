@@ -9,6 +9,7 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
+import type { GetQueryOptionsType } from '../app.types';
 import { imsApi } from './api';
 import { Manufacturer, ManufacturerPatch, ManufacturerPost } from './api.types';
 
@@ -76,12 +77,15 @@ const getManufacturer = async (id: string): Promise<Manufacturer> => {
     .get(`/v1/manufacturers/${id}`)
     .then((response) => response.data);
 };
-export const getManufacturerQuery = (id?: string | null, retry?: boolean) =>
+export const getManufacturerQuery = (
+  id?: string | null,
+  extraOptions?: GetQueryOptionsType<Manufacturer>
+) =>
   queryOptions<Manufacturer, AxiosError>({
     queryKey: ['Manufacturer', id],
     queryFn: () => getManufacturer(id ?? ''),
     enabled: !!id,
-    retry: retry ? false : undefined,
+    ...extraOptions,
   });
 
 export const useGetManufacturer = (

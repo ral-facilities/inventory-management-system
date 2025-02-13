@@ -7,7 +7,12 @@ import {
   UseQueryResult,
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { MoveItemsToSystem, PostItems, TransferState } from '../app.types';
+import {
+  MoveItemsToSystem,
+  PostItems,
+  TransferState,
+  type GetQueryOptionsType,
+} from '../app.types';
 import { imsApi } from './api';
 import { APIError, Item, ItemPatch, ItemPost } from './api.types';
 
@@ -89,7 +94,7 @@ export const usePostItems = (): UseMutationResult<
   });
 };
 
-export const getItems = async (
+const getItems = async (
   system_id?: string,
   catalogue_item_id?: string
 ): Promise<Item[]> => {
@@ -107,17 +112,25 @@ export const getItems = async (
     });
 };
 
-export const useGetItems = (
+export const getItemsQuery = (
   system_id?: string,
-  catalogue_item_id?: string
-): UseQueryResult<Item[], AxiosError> => {
-  return useQuery({
+  catalogue_item_id?: string,
+  extraOptions?: GetQueryOptionsType<Item[]>
+) =>
+  queryOptions<Item[], AxiosError>({
     queryKey: ['Items', system_id, catalogue_item_id],
     queryFn: () => {
       return getItems(system_id, catalogue_item_id);
     },
     enabled: system_id !== undefined || catalogue_item_id !== undefined,
+    ...extraOptions,
   });
+
+export const useGetItems = (
+  system_id?: string,
+  catalogue_item_id?: string
+): UseQueryResult<Item[], AxiosError> => {
+  return useQuery(getItemsQuery(system_id, catalogue_item_id));
 };
 
 const getItem = async (id: string): Promise<Item> => {
@@ -132,14 +145,17 @@ const getItem = async (id: string): Promise<Item> => {
     });
 };
 
-export const getItemQuery = (id?: string | null, loader?: boolean) =>
+export const getItemQuery = (
+  id?: string | null,
+  extraOptions?: GetQueryOptionsType<Item>
+) =>
   queryOptions<Item, AxiosError>({
     queryKey: ['Item', id],
     queryFn: () => {
       return getItem(id ?? '');
     },
     enabled: !!id,
-    retry: loader ? false : undefined,
+    ...extraOptions,
   });
 
 export const useGetItem = (

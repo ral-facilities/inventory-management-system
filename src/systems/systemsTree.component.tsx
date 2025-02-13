@@ -31,15 +31,22 @@ import {
 import '@xyflow/react/dist/style.css';
 import type { NodeLookup } from '@xyflow/system';
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { useGetSystemsTree, type SystemTree } from '../api/systems';
 import { getPageHeightCalc } from '../utils';
 import SystemsNodeHeader from './systemsNodeHeader.component';
 
+type LayoutDirectionType = 'TB' | 'LR';
+type MaxDepthType = -1 | 1 | 2 | 3;
+const DEFAULT_LAYOUT_DIRECTION: LayoutDirectionType = 'TB';
+const DEFAULT_MAX_DEPTH: MaxDepthType = 1;
+const LAYOUT_DIRECTION_STATE = 'layoutDirection';
+const MAX_DEPTH_STATE = 'maxDepth';
+
 interface SystemFlowProps {
   rawEdges: Edge[];
   rawNodes: Node[];
-  layoutDirection: 'TB' | 'LR';
+  layoutDirection: LayoutDirectionType;
 }
 
 const nodeWidth = 300;
@@ -62,7 +69,7 @@ const getLayoutedElements = (
 
   dagreGraph.setGraph({
     rankdir: direction,
-    nodesep: 50,
+    nodesep: isHorizontal ? calculateRanksep(nodes) : 50,
     ranksep: isHorizontal ? 150 : calculateRanksep(nodes),
   });
 
@@ -102,9 +109,7 @@ const getLayoutedElements = (
       position: {
         x: nodeWithPosition.x - nodeWithPosition.width / 2,
         y: isHorizontal
-          ? hasMoreThanOneChild
-            ? nodeWithPosition.y
-            : nodeWithPosition.y - nodeWithPosition.height / 2
+          ? nodeWithPosition.y - nodeWithPosition.height / 2
           : hasMoreThanOneChild
             ? nodeWithPosition.y
             : nodeWithPosition.y - nodeWithPosition.height / 2,
@@ -160,7 +165,7 @@ const SystemsFlow = (props: SystemFlowProps) => {
 
   React.useEffect(() => {
     window.requestAnimationFrame(() => fitView());
-  }, [fitView, layoutDirection, nodes]);
+  }, [fitView, nodes]);
   return (
     <Box sx={{ width: '100%', height: getPageHeightCalc('96px + 40px') }}>
       <ReactFlow
@@ -181,15 +186,23 @@ const SystemsFlow = (props: SystemFlowProps) => {
 
 const SystemsTree = () => {
   const { system_id: systemId } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const [layoutDirection, setLayoutDirection] = React.useState<'TB' | 'LR'>(
-    'TB'
+  const layoutDirection = React.useMemo(
+    () =>
+      (searchParams.get(LAYOUT_DIRECTION_STATE) as LayoutDirectionType) ||
+      DEFAULT_LAYOUT_DIRECTION,
+    [searchParams]
   );
 
-  const [maxDepth, setMaxDepth] = React.useState<-1 | 1 | 2 | 3>(1);
-
-  const maxSubsystems = 150;
-  const subsystemsCutOff = 100;
+  const maxDepth = React.useMemo(
+    () =>
+      (Number(searchParams.get(MAX_DEPTH_STATE)) ||
+        DEFAULT_MAX_DEPTH) as MaxDepthType,
+    [searchParams]
+  );
+  const maxSubsystems = 100;
+  const subsystemsCutOff = 75;
 
   const {
     data: systemsTree,
@@ -285,27 +298,38 @@ const SystemsTree = () => {
     [layoutDirection, systemIndex]
   );
 
-  const handleToggleLayout = (
-    _event: React.MouseEvent<HTMLElement>,
-    newDirection: 'TB' | 'LR'
-  ) => {
-    if (newDirection !== null) {
-      setLayoutDirection(newDirection);
-    }
-  };
+  const handleToggleLayout = React.useCallback(
+    (
+      _event: React.MouseEvent<HTMLElement>,
+      newDirection: LayoutDirectionType
+    ) => {
+      if (newDirection !== null) {
+        if (newDirection === DEFAULT_LAYOUT_DIRECTION) {
+          searchParams.delete(LAYOUT_DIRECTION_STATE);
+        } else {
+          searchParams.set(LAYOUT_DIRECTION_STATE, newDirection);
+        }
+        setSearchParams(searchParams, { replace: false });
+      }
+    },
+    [searchParams, setSearchParams]
+  );
 
-  const handleToggleMaxDepth = (
-    _event: React.MouseEvent<HTMLElement>,
-    newDepth: -1 | 1 | 2 | 3
-  ) => {
-    if (newDepth !== null) {
-      setMaxDepth(newDepth);
-    }
-  };
+  const handleToggleMaxDepth = React.useCallback(
+    (_event: React.MouseEvent<HTMLElement>, newDepth: MaxDepthType) => {
+      if (newDepth !== null) {
+        if (newDepth === DEFAULT_MAX_DEPTH) {
+          searchParams.delete(MAX_DEPTH_STATE);
+        } else {
+          searchParams.set(MAX_DEPTH_STATE, newDepth.toString());
+        }
+        setSearchParams(searchParams, { replace: false });
+      }
+    },
+    [searchParams, setSearchParams]
+  );
   const isLimitedReached =
-    (error?.response?.data as { message?: string })?.message?.includes(
-      'Subsystem limit exceeded'
-    ) ?? false;
+    error?.message?.includes('exceeded the maximum allowed limit') ?? false;
 
   const { nodes: rawNodes, edges: rawEdges } = transformToFlowData(
     systemsTree ?? [],
@@ -409,6 +433,8 @@ const SystemsTree = () => {
         </Box>
       ) : (
         <SystemsFlow
+          // Need to unmount when the maxDepth has been changed to fitView correctly
+          key={maxDepth}
           rawEdges={rawEdges}
           rawNodes={rawNodes}
           layoutDirection={layoutDirection}

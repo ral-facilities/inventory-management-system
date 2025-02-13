@@ -1,3 +1,5 @@
+import type { UndefinedInitialDataOptions } from '@tanstack/react-query';
+import type { AxiosError } from 'axios';
 import {
   CatalogueCategory,
   CatalogueItem,
@@ -42,6 +44,15 @@ export interface AllowedValuesList {
   };
 }
 
+export type GetQueryOptionsType<T> = Omit<
+  UndefinedInitialDataOptions<
+    T,
+    AxiosError<unknown, unknown>,
+    T,
+    readonly unknown[]
+  >,
+  'queryKey'
+>;
 // ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
 
 export type AllowedValues = AllowedValuesList;
