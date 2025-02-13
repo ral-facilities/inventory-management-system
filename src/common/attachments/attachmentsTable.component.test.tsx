@@ -2,8 +2,6 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { act } from 'react';
-import { MockInstance } from 'vitest';
-import { storageApi } from '../../api/api';
 import { server } from '../../mocks/server';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 import AttachmentsTable, { AttachmentTableProps } from './attachmentsTable.component';
@@ -11,7 +9,6 @@ import AttachmentsTable, { AttachmentTableProps } from './attachmentsTable.compo
 describe('Attachments Table', () => {
   let props: AttachmentTableProps;
   let user: UserEvent;
-  let axiosGetSpy: MockInstance;
 
   const createView = () => {
     return renderComponentWithRouterProvider(<AttachmentsTable {...props} />);
@@ -22,7 +19,6 @@ describe('Attachments Table', () => {
       entityId: '1',
     };
     user = userEvent.setup();
-    axiosGetSpy = vi.spyOn(storageApi, 'get');
   });
 
   afterEach(() => {
