@@ -1,7 +1,8 @@
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import ViewModuleIcon from '@mui/icons-material/ViewModule';
-import { ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material';
 import type { QueryClient } from '@tanstack/react-query';
+import React from 'react';
 import {
   Outlet,
   useLocation,
@@ -82,16 +83,22 @@ function SystemsLayout() {
           onChange={handleViewChange}
           aria-label="view mode toggle"
           size="small"
-          sx={{ margin: 1 }}
+          sx={{ ml: 1, mb: 1 }}
         >
-          <ToggleButton value="normal" aria-label="normal view">
-            <ViewModuleIcon sx={{ marginRight: 1 }} fontSize="small" />
-            Normal View
-          </ToggleButton>
-          <ToggleButton value="tree" aria-label="tree view">
-            <AccountTreeIcon sx={{ marginRight: 1 }} fontSize="small" />
-            Tree View
-          </ToggleButton>
+          <Tooltip title={'Normal view'}>
+            <span>
+              <ToggleButton value="normal" aria-label="normal view">
+                <ViewModuleIcon fontSize="small" />
+              </ToggleButton>
+            </span>
+          </Tooltip>
+          <Tooltip title={'Tree view'}>
+            <span>
+              <ToggleButton value="tree" aria-label="tree view">
+                <AccountTreeIcon fontSize="small" />
+              </ToggleButton>
+            </span>
+          </Tooltip>
         </ToggleButtonGroup>
       )}
       <Outlet />

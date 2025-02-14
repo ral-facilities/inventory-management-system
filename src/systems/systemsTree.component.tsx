@@ -42,6 +42,8 @@ const DEFAULT_LAYOUT_DIRECTION: LayoutDirectionType = 'TB';
 const DEFAULT_MAX_DEPTH: MaxDepthType = 1;
 const LAYOUT_DIRECTION_STATE = 'layoutDirection';
 const MAX_DEPTH_STATE = 'maxDepth';
+const MAX_SUBSYSTEMS = 100;
+const SUBSYSTEMS_CUT_OFF = 75;
 
 interface SystemFlowProps {
   rawEdges: Edge[];
@@ -201,8 +203,6 @@ const SystemsTree = () => {
         DEFAULT_MAX_DEPTH) as MaxDepthType,
     [searchParams]
   );
-  const maxSubsystems = 100;
-  const subsystemsCutOff = 75;
 
   const {
     data: systemsTree,
@@ -211,8 +211,8 @@ const SystemsTree = () => {
   } = useGetSystemsTree(
     systemId,
     maxDepth === -1 ? undefined : maxDepth,
-    subsystemsCutOff,
-    maxSubsystems
+    SUBSYSTEMS_CUT_OFF,
+    MAX_SUBSYSTEMS
   );
   let systemIndex = 0;
   const transformToFlowData = React.useCallback(
@@ -229,14 +229,11 @@ const SystemsTree = () => {
           type: 'systems',
           style: { width: '300px' },
           data: {
-            title:
-              systemIndex === 0 ? (
-                system.name
-              ) : (
-                <MuiLink component={Link} to={`/systems/${system.id}/tree`}>
-                  {system.name}
-                </MuiLink>
-              ),
+            title: (
+              <MuiLink component={Link} to={`/systems/${system.id}/tree`}>
+                {system.name}
+              </MuiLink>
+            ),
             label: (
               <Box>
                 {/* Items Heading */}
@@ -261,8 +258,8 @@ const SystemsTree = () => {
                 )}
               </Box>
             ),
+            system: system,
             direction: layoutDirection,
-            id: system.id ?? '',
           },
           // position will be set by dagre
           position: { x: 0, y: 0 },
@@ -369,7 +366,7 @@ const SystemsTree = () => {
             title={
               <Typography variant="body2" color="warning" sx={{ mt: 1 }}>
                 The larger the depth, the longer the query may take. If the
-                number of subsystems exceeds {maxSubsystems}, the tree will not
+                number of subsystems exceeds {MAX_SUBSYSTEMS}, the tree will not
                 load.
               </Typography>
             }
