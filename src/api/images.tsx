@@ -17,13 +17,14 @@ export const getImage = async (id: string): Promise<APIImageWithURL> => {
   });
 };
 
-export const getImageQuery = (id: string, retry?: boolean) =>
+export const getImageQuery = (id: string, retry?: boolean, enabled?: boolean) =>
   queryOptions<APIImageWithURL, AxiosError>({
     queryKey: ['Image', id],
     queryFn: () => {
       return getImage(id);
     },
     retry: retry ? false : undefined,
+    enabled: enabled ?? true,
   });
 
 export const useGetImage = (
