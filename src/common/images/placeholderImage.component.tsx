@@ -50,8 +50,6 @@ const PrimaryOptionsMenu = (props: PrimaryOptionsMenuInterface) => {
     setAnchorEl(null);
   };
 
-  console.log(`disabled ${disableRemovePrimary}`);
-
   return (
     <Box sx={{ height: '100%' }}>
       <IconButton
@@ -108,20 +106,26 @@ const PlaceholderImage = (props: PlaceholderImageProps) => {
 
   const primaryImageExists = imagesData && imagesData.length > 0;
 
-  queryClient
-    .fetchQuery(
-      getImageQuery(
-        primaryImageExists ? imagesData[0].id : '',
-        false,
-        primaryImageExists
-      )
-    )
-    .then((data: APIImageWithURL) => {
-      setImageData(data);
-    })
-    .catch((error: AxiosError) => {
-      handleIMS_APIError(error);
-    });
+  React.useEffect(() => {
+    if (primaryImageExists) {
+      queryClient
+        .fetchQuery(
+          getImageQuery(
+            primaryImageExists ? imagesData[0].id : '',
+            false,
+            primaryImageExists
+          )
+        )
+        .then((data: APIImageWithURL) => {
+          setImageData(data);
+        })
+        .catch((error: AxiosError) => {
+          handleIMS_APIError(error);
+        });
+    } else {
+      setImageData(undefined);
+    }
+  }, [primaryImageExists, imagesData, setImageData]);
 
   const [primaryDialogOpen, setPrimaryDialogOpen] = React.useState<
     false | 'set' | 'remove'

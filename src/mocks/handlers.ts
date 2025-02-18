@@ -390,12 +390,15 @@ export const handlers = [
       if (body.name === 'test_has_children_elements') {
         // find the name of the manufacturer, so it can be used in the error message
         const manufacturerName = ManufacturersJSON?.find(
-          (manufacturer) => manufacturer.id === validCatalogueItem?.manufacturer_id
+          (manufacturer) =>
+            manufacturer.id === validCatalogueItem?.manufacturer_id
         ) as Manufacturer;
         return HttpResponse.json(
           {
-            detail: 'Unable to update catalogue item properties and manufacturer ('
-              + manufacturerName?.name + '), as the catalogue item has child elements.'
+            detail:
+              'Unable to update catalogue item properties and manufacturer (' +
+              manufacturerName?.name +
+              '), as the catalogue item has child elements.',
           },
           { status: 409 }
         );
@@ -1037,6 +1040,18 @@ export const handlers = [
     if (primary === 'true') {
       if (entityId === '90') {
         return HttpResponse.json([], { status: 200 });
+      } else if (entityId === 'error_500') {
+        return HttpResponse.json(
+          [
+            {
+              ...ImagesJSON[0],
+              primary: true,
+              entity_id: entityId,
+              id: '5',
+            },
+          ],
+          { status: 200 }
+        );
       } else {
         return HttpResponse.json(
           [

@@ -37,7 +37,10 @@ const RemovePrimaryImageDialog = (props: RemovePrimaryImageProps) => {
 
   const handlePatchImage = React.useCallback(() => {
     if (image) {
-      const fileToEdit: ObjectFilePatch = { primary: false };
+      const fileToEdit: ObjectFilePatch = {
+        primary: false,
+        file_name: image.file_name,
+      };
       patchImage({ id: image.id, fileMetadata: fileToEdit })
         .then(() => {
           onClose();
@@ -58,7 +61,7 @@ const RemovePrimaryImageDialog = (props: RemovePrimaryImageProps) => {
       </DialogTitle>
       <DialogContent>
         Are you sure you want to remove{' '}
-        <strong data-testid="delete-image-name">{image?.file_name}</strong> as
+        <strong data-testid="remove-image-name">{image?.file_name}</strong> as
         primary image?
       </DialogContent>
       <DialogActions>
