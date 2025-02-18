@@ -28,7 +28,14 @@ import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { APIImage } from '../../api/api.types';
 import { useGetImages, usePatchImage } from '../../api/images';
-import { displayTableRowCountText, OverflowTip } from '../../utils';
+import {
+  COLUMN_FILTER_FUNCTIONS,
+  COLUMN_FILTER_MODE_OPTIONS,
+  COLUMN_FILTER_VARIANTS,
+  displayTableRowCountText,
+  getInitialColumnFilterFnState,
+  OverflowTip,
+} from '../../utils';
 import CardViewFilters from '../cardView/cardViewFilters.component';
 import DownloadFileDialog from '../downloadFileDialog.component';
 import EditFileDialog from '../editFileDialog.component';
@@ -60,14 +67,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
     'download' | 'edit' | 'delete' | 'information' | false
   >(false);
 
-  const { preservedState, onPreservedStatesChange } = usePreservedTableState({
-    initialState: {
-      pagination: { pageSize: 16, pageIndex: 0 },
-    },
-    storeInUrl: true,
-    urlParamName: 'imageState',
-  });
-
   const titles = Array.from(
     new Set(
       images
@@ -91,13 +90,17 @@ const ImageGallery = (props: ImageGalleryProps) => {
         accessorFn: (row) => row.file_name,
         id: 'name',
         size: 300,
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
       },
       {
         header: 'Last modified',
         accessorFn: (row) => new Date(row.modified_time),
         id: 'modified_time',
-        filterVariant: 'datetime-range',
-        filterFn: 'betweenInclusive',
+        filterVariant: COLUMN_FILTER_VARIANTS.datetime,
+        filterFn: COLUMN_FILTER_FUNCTIONS.datetime,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.datetime,
         size: 500,
         enableGrouping: false,
       },
@@ -106,8 +109,9 @@ const ImageGallery = (props: ImageGalleryProps) => {
         header: 'Created',
         accessorFn: (row) => new Date(row.modified_time),
         id: 'created',
-        filterVariant: 'datetime-range',
-        filterFn: 'betweenInclusive',
+        filterVariant: COLUMN_FILTER_VARIANTS.datetime,
+        filterFn: COLUMN_FILTER_FUNCTIONS.datetime,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.datetime,
         size: 500,
         enableGrouping: false,
       },
@@ -117,6 +121,8 @@ const ImageGallery = (props: ImageGalleryProps) => {
         id: 'title',
         size: 350,
         filterVariant: 'autocomplete',
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
         filterSelectOptions: titles,
         enableGrouping: false,
       },
@@ -126,11 +132,27 @@ const ImageGallery = (props: ImageGalleryProps) => {
         id: 'description',
         size: 350,
         filterVariant: 'autocomplete',
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
         filterSelectOptions: descriptions,
         enableGrouping: false,
       },
     ];
   }, [descriptions, titles]);
+
+  const initialColumnFilterFnState = React.useMemo(() => {
+    return getInitialColumnFilterFnState(columns);
+  }, [columns]);
+
+  const { preservedState, onPreservedStatesChange } = usePreservedTableState({
+    initialState: {
+      pagination: { pageSize: 16, pageIndex: 0 },
+      columnFilterFns: initialColumnFilterFnState,
+    },
+    storeInUrl: true,
+    urlParamName: 'imageState',
+  });
+
   const table = useMaterialReactTable({
     // Data
     columns: columns,
@@ -139,6 +161,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
     enableColumnOrdering: false,
     enableColumnPinning: false,
     enableTopToolbar: true,
+    enableColumnFilterModes: true,
     enableFacetedValues: true,
     enableRowActions: true,
     enableGlobalFilter: false,
