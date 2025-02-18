@@ -998,8 +998,6 @@ export const handlers = [
       {
         ...body,
         upload_info: upload_info,
-        modified_time: '2024-01-02T13:10:10.000+00:00',
-        created_time: '2024-01-01T12:00:00.000+00:00',
       },
       { status: 201 }
     );
@@ -1009,8 +1007,6 @@ export const handlers = [
     const url = new URL(request.url);
     const attachmentParams = url.searchParams;
     const entityId = attachmentParams.get('entity_id');
-    const modified_time = attachmentParams.get('modified_time')
-    const created_time = attachmentParams.get('created_time')
 
     if (entityId === '90') {
       return HttpResponse.json([], { status: 200 });
@@ -1020,8 +1016,6 @@ export const handlers = [
           {
             ...AttachmentsJSON[0],
             entity_id: entityId,
-            modified_time: modified_time,
-            created_time: created_time,
             ...(entityId === '3' && { file_name: 'test '}),
           },
         ],
@@ -1051,8 +1045,6 @@ export const handlers = [
         }
         return {
           ...attachment,
-          modified_time: modified_time,
-          created_time: created_time,
           id: String(id),
         };
       });
@@ -1062,7 +1054,7 @@ export const handlers = [
   }),
 
   http.get('/attachments/:id', ({ params }) => {
-    const { id, modified_time, created_time } = params;
+    const { id } = params;
     // This is needed otherwise the msw would intercept the
     // mocked attachment get request for the object store
     if (!isNaN(Number(id))) {
@@ -1116,8 +1108,6 @@ export const handlers = [
       return HttpResponse.json(
         {
           ...attachment,
-          modified_time: modified_time,
-          created_time: created_time,
           id: id,
         },
         { status: 200 }

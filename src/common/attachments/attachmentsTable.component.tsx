@@ -36,8 +36,6 @@ function AttachmentsTable(props: AttachmentTableProps) {
   const { entityId } = props;
   const { data: attachments, isLoading: attachmentIsLoading } = useGetAttachments(entityId);
 
-  const tableHeight = getPageHeightCalc('50px + 110px + 48px');
-
   const columns = React.useMemo<MRT_ColumnDef<AttachmentPostMetadataResponse>[]>(() => {
     return [
       {
@@ -154,7 +152,13 @@ function AttachmentsTable(props: AttachmentTableProps) {
       return { component: TableRow, 'aria-label': `${row.original.file_name} row` };
     },
     muiTablePaperProps: { sx: { maxHeight: '100%' } },
-    muiTableContainerProps: { sx: { height: tableHeight } },
+    muiTableContainerProps: ({ table }) => ({
+      sx: {
+        minHeight: '360.4px',
+        height: table.getState().isFullScreen ? '100%' : undefined,
+        maxHeight: '670px',
+      },
+    }),
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',
