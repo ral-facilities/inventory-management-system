@@ -86,8 +86,15 @@ function CatalogueItemsLandingPage() {
           >
             {/* Image Section */}
             <Grid item container xs={12}>
-              <Grid item xs={12} sm={4}>
-                <PlaceholderImage />
+              <Grid
+                item
+                xs={12}
+                sm={4}
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <PlaceholderImage entityId={catalogueItemId} />
               </Grid>
               {/* Title and Description Section */}
               <Grid

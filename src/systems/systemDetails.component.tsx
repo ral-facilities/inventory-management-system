@@ -110,8 +110,15 @@ function SystemDetails(props: SystemDetailsProps) {
             sx={{ margin: 0, mt: 1 }}
           >
             <Grid item container spacing={2}>
-              <Grid item xs={12} sm={4}>
-                <PlaceholderImage />
+              <Grid
+                item
+                xs={12}
+                sm={4}
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <PlaceholderImage entityId={system.id} />
               </Grid>
               <Grid item container spacing={1} xs={12} sm={8}>
                 <Grid item xs={12} sm={6}>

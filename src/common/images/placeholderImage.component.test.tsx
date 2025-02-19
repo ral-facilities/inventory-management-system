@@ -1,9 +1,13 @@
-import { render } from '@testing-library/react';
+import { renderComponentWithRouterProvider } from '../../testUtils';
 import PlaceholderImage from './placeholderImage.component'; // Adjust the import path as necessary
 
 describe('PlaceholderImage Component', () => {
+  const createView = () => {
+    return renderComponentWithRouterProvider(<PlaceholderImage />);
+  };
+
   it('matches the snapshot', () => {
-    const { asFragment } = render(<PlaceholderImage />);
-    expect(asFragment()).toMatchSnapshot();
+    const view = createView();
+    expect(view.asFragment()).toMatchSnapshot();
   });
 });
