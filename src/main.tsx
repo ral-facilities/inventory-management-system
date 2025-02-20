@@ -127,6 +127,11 @@ export const fetchSettings =
           throw new Error('osApiUrl is undefined in settings');
         }
 
+        // Ensure the maxImageSizeMB value exists.
+        if (!('maxImageSizeMB' in settings)) {
+          throw new Error('maxImageSizeMB is undefined in settings');
+        }
+
         if (Array.isArray(settings['routes']) && settings['routes'].length) {
           settings['routes'].forEach((route: PluginRoute, index: number) => {
             if (

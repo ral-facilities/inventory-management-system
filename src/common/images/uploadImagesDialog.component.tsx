@@ -18,10 +18,6 @@ import { settings } from '../../settings';
 import { getNonEmptyTrimmedString } from '../../utils';
 import { useMetaFields } from '../uppy.utils';
 
-// Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000, so here the former is expected despite them really being GiB, MiB and KiB.
-const MAX_FILE_SIZE_MB = 50;
-const MAX_FILE_SIZE_B = MAX_FILE_SIZE_MB * 1024 * 1024;
-
 export interface UploadImagesDialogProps {
   open: boolean;
   onClose: () => void;
@@ -36,13 +32,18 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
   const queryClient = useQueryClient();
 
   const osApiUrl = async () => (await settings)?.osApiUrl || '';
+
+  // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000, so here the former is expected despite them really being GiB, MiB and KiB.
+  const [maxFileSizeMB, setMaxFileSizeMB] = React.useState<number>(50);
+  let maxFileSizeB = maxFileSizeMB * 1024 * 1024;
+
   const [uppy] = React.useState<
     Uppy<UppyUploadMetadata, UppyImageUploadResponse>
   >(() => {
     const newUppy = new Uppy<UppyUploadMetadata, UppyImageUploadResponse>({
       autoProceed: false,
       restrictions: {
-        maxFileSize: MAX_FILE_SIZE_B,
+        maxFileSize: maxFileSizeB,
         requiredMetaFields: ['name'],
         allowedFileTypes: ['image/*'],
       },
@@ -66,6 +67,22 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
 
     return newUppy;
   });
+
+  React.useEffect(() => {
+    const fetchSettings = async () => {
+      setMaxFileSizeMB((await settings)?.maxImageSizeMB || 50);
+    };
+    fetchSettings();
+  }, []);
+
+  React.useEffect(() => {
+    maxFileSizeB = maxFileSizeMB * 1024 * 1024;
+    uppy.setOptions({
+      restrictions: {
+        maxFileSize: maxFileSizeB,
+      },
+    });
+  }, [maxFileSizeMB]);
 
   const handleClose = React.useCallback(() => {
     onClose();
@@ -112,7 +129,7 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
       closeModalOnClickOutside={false}
       animateOpenClose={false}
       uppy={uppy}
-      note={`Files cannot be larger than ${MAX_FILE_SIZE_MB}MB. Only images are allowed.`}
+      note={`Files cannot be larger than ${maxFileSizeMB}MB. Only images are allowed.`}
       proudlyDisplayPoweredByUppy={false}
       theme={theme.palette.mode}
       doneButtonHandler={handleClose}

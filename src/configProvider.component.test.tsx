@@ -16,6 +16,7 @@ vi.mock('./settings', () => ({
   settings: Promise.resolve({
     imsApiUrl: '',
     osApiUrl: '',
+    maxImageSizeMB: 50,
     routes: [
       {
         section: 'homepage',
@@ -79,6 +80,7 @@ describe('ConfigProvider', () => {
       JSON.stringify({
         imsApiUrl: '',
         osApiUrl: '',
+        maxImageSizeMB: 50,
         routes: [
           {
             section: 'homepage',

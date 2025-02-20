@@ -1,6 +1,7 @@
 {
   "imsApiUrl": "http://127.0.0.1:8000",
   "osApiUrl": "",
+  "maxImageSizeMB": 50,
   "routes": [
     {
       "section": "Inventory Management System",

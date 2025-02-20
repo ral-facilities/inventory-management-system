@@ -1,6 +1,7 @@
 {
   "imsApiUrl": "",
   "osApiUrl": "",
+  "maxImageSizeMB": 50,
   "routes": [
     {
       "section": "homepage",
