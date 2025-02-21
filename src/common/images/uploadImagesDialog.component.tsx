@@ -35,7 +35,7 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
 
   // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000, so here the former is expected despite them really being GiB, MiB and KiB.
   const [maxFileSizeMB, setMaxFileSizeMB] = React.useState<number>(50);
-  let maxFileSizeB = maxFileSizeMB * 1024 * 1024;
+  const maxFileSizeB = maxFileSizeMB * 1024 * 1024;
 
   const [uppy] = React.useState<
     Uppy<UppyUploadMetadata, UppyImageUploadResponse>
@@ -76,13 +76,13 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
   }, []);
 
   React.useEffect(() => {
-    maxFileSizeB = maxFileSizeMB * 1024 * 1024;
+    const maxFileSizeB = maxFileSizeMB * 1024 * 1024;
     uppy.setOptions({
       restrictions: {
         maxFileSize: maxFileSizeB,
       },
     });
-  }, [maxFileSizeMB]);
+  }, [maxFileSizeMB, uppy]);
 
   const handleClose = React.useCallback(() => {
     onClose();
