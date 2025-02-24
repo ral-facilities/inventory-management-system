@@ -24,7 +24,6 @@ import {
   displayTableRowCountText,
   formatDateTimeStrings,
   getInitialColumnFilterFnState,
-  getPageHeightCalc,
 } from '../../utils';
 import { usePreservedTableState } from '../preservedTableState.component';
 
