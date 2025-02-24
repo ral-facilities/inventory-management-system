@@ -23,7 +23,8 @@ const ItemsActionMenu = (props: {
   item: Item;
 }) => {
   const { catalogueItem, catalogueCategory, item } = props;
-  const [openEditDialog, setOpenEditDialog] = React.useState<boolean>(false);
+  const [editItemDialogOpen, setEditItemDialogOpen] =
+    React.useState<boolean>(false);
   return (
     <ActionMenu
       ariaLabelPrefix="items landing page"
@@ -31,14 +32,14 @@ const ItemsActionMenu = (props: {
       uploadAttachmentsEntityId={item.id}
       uploadImagesEntityId={item.id}
       editMenuItem={{
-        onClick: () => setOpenEditDialog(true),
+        onClick: () => setEditItemDialogOpen(true),
         dialog: (
           <>
-            {openEditDialog && (
+            {editItemDialogOpen && (
               <ItemDialog
-                open={openEditDialog}
+                open={editItemDialogOpen}
                 onClose={() => {
-                  setOpenEditDialog(false);
+                  setEditItemDialogOpen(false);
                 }}
                 requestType="patch"
                 catalogueCategory={catalogueCategory}

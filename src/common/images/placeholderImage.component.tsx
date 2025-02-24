@@ -33,8 +33,8 @@ const PrimaryOptionsMenu = (props: PrimaryOptionsMenuInterface) => {
   };
 
   const handleOpenPrimary = () => {
+    handleCloseMenu();
     onChangePrimaryDialogOpen(true);
-    setAnchorEl(null);
   };
 
   return (

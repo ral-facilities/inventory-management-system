@@ -4,11 +4,14 @@ import { http, HttpResponse } from 'msw';
 import { act } from 'react';
 import { MockInstance } from 'vitest';
 import { storageApi } from '../../api/api';
+import handleIMS_APIError from '../../handleIMS_APIError';
 import { server } from '../../mocks/server';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 import PrimaryImageDialog, {
   PrimaryImageProps,
 } from './primaryImageDialog.component';
+
+vi.mock('../../handleIMS_APIError');
 
 describe('Primary Image Dialog', () => {
   let props: PrimaryImageProps;
@@ -148,8 +151,33 @@ describe('Primary Image Dialog', () => {
 
     await waitFor(() => expect(onClose).toHaveBeenCalled());
 
-    expect(axiosPatchSpy).toHaveBeenCalledWith('/images/1', {
+    expect(axiosPatchSpy).toHaveBeenCalledWith('/images/0', {
       primary: true,
     });
+  });
+
+  it('displays error message if an unknown error occurs', async () => {
+    createView();
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(9);
+
+    const imageCard = screen.getAllByRole('radio', {
+      name: 'Toggle select card',
+    })[17];
+
+    user.click(imageCard);
+
+    const saveButton: HTMLButtonElement = screen.getByRole('button', {
+      name: 'Save',
+    });
+
+    await waitFor(() => expect(saveButton.disabled).toBe(false));
+
+    user.click(saveButton);
+
+    await waitFor(() => expect(handleIMS_APIError).toHaveBeenCalled());
   });
 });

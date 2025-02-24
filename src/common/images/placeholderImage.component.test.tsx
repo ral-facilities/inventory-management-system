@@ -29,7 +29,7 @@ describe('PlaceholderImage Component', () => {
     expect(view.asFragment()).toMatchSnapshot();
   });
 
-  it('can open and close the primary images dialog', async () => {
+  it('can open and close the set primary images dialog', async () => {
     createView();
 
     const actionButton = screen.getByLabelText('primary images action menu');
@@ -56,6 +56,31 @@ describe('PlaceholderImage Component', () => {
     await user.click(cancelButton);
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('can open and close the primary images menu', async () => {
+    createView();
+
+    const actionButton = screen.getByLabelText('primary images action menu');
+    user.click(actionButton);
+
+    await waitFor(() => {
+      expect(screen.getByText('Set Primary Image')).toBeInTheDocument();
+    });
+
+    const dialogButton = screen.getByRole('menuitem', {
+      name: 'Set Primary Image',
+    });
+
+    await waitFor(() => {
+      expect(dialogButton).toBeInTheDocument();
+    });
+
+    await user.keyboard('{Escape}');
+
+    await waitFor(() => {
+      expect(screen.queryByText('Set Primary Image')).not.toBeInTheDocument();
     });
   });
 });

@@ -57,12 +57,18 @@ const ImageGallery = (props: ImageGalleryProps) => {
 
   const handleRowSelection = React.useCallback(
     (row: MRT_RowData) => {
+      if (setSelectedPrimaryID) {
+        if (rowSelection[row.id]) {
+          setSelectedPrimaryID('');
+        } else {
+          setSelectedPrimaryID(row.id);
+        }
+      }
       setRowSelection((prev) => ({
         [row.id]: !prev[row.id],
       }));
     },
-
-    []
+    [setSelectedPrimaryID, setRowSelection, rowSelection]
   );
 
   const maxHeightThumbnail = dense ? 150 : 300;
@@ -198,17 +204,15 @@ const ImageGallery = (props: ImageGalleryProps) => {
       size: 'small',
       variant: 'outlined',
     },
-    muiSelectCheckboxProps:
-      dense && setSelectedPrimaryID
-        ? ({ row }) => {
-            return {
-              onClick: () => {
-                setSelectedPrimaryID(row.original.id);
-                handleRowSelection(row);
-              },
-            };
-          }
-        : undefined,
+    muiSelectCheckboxProps: dense
+      ? ({ row }) => {
+          return {
+            onClick: () => {
+              handleRowSelection(row);
+            },
+          };
+        }
+      : undefined,
     muiPaginationProps: {
       color: 'secondary',
       rowsPerPageOptions: dense ? [18, 24, 30] : [16, 24, 32],
@@ -357,7 +361,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
         <Grid container>
           <Button
             startIcon={<ClearIcon />}
-            sx={{ mx: 0.5, ml: 2 }}
+            sx={{ mx: 0.5, ml: 2, mt: 2 }}
             variant="outlined"
             disabled={preservedState.columnFilters.length === 0}
             onClick={() => {
@@ -434,9 +438,8 @@ const ImageGallery = (props: ImageGalleryProps) => {
                     }}
                     minWidth={dense ? '175px' : '350px'}
                     onClick={
-                      dense && setSelectedPrimaryID
+                      dense
                         ? () => {
-                            setSelectedPrimaryID(card.row.original.id);
                             handleRowSelection(card.row);
                           }
                         : undefined

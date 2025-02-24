@@ -243,15 +243,15 @@ export interface AttachmentPostMetadataResponse
   upload_info: AttachmentUploadInfo;
 }
 
-// ------------------------------------ IMAGES ------------------------------------------------
-export interface ImagePost extends ObjectFileUploadMetadata {
-  upload_file: File;
-}
-
-export interface ObjectFilePatch {
+export interface AttachmentMetadataPatch {
   file_name?: string;
   title?: string | null;
   description?: string | null;
+}
+
+// ------------------------------------ IMAGES ------------------------------------------------
+export interface ImagePost extends ObjectFileUploadMetadata {
+  upload_file: File;
 }
 
 export interface APIImage
@@ -262,10 +262,7 @@ export interface APIImage
   thumbnail_base64: string;
 }
 
-export interface ObjectFilePatch {
-  file_name?: string;
-  title?: string | null;
-  description?: string | null;
+export interface ImageMetadataPatch extends AttachmentMetadataPatch {
   primary?: boolean | null;
 }
 export interface APIImageWithURL extends APIImage {

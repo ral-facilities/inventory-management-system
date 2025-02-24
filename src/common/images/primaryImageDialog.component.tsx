@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   CircularProgress,
   createTheme,
@@ -7,13 +6,12 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormHelperText,
   ThemeProvider,
   useTheme,
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { ObjectFilePatch } from '../../api/api.types';
+import { ImageMetadataPatch } from '../../api/api.types';
 import { usePatchImage } from '../../api/images';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import ImageGallery from './imageGallery.component';
@@ -34,14 +32,10 @@ const PrimaryImageDialog = (props: PrimaryImageProps) => {
       ...theme.palette,
       background: {
         ...theme.palette.background,
-        paper: theme.palette.mode === 'dark' ? '#1B1B1B' : 'white', // Override dialog background
+        paper: theme.palette.mode === 'dark' ? '#1B1B1B' : 'white',
       },
     },
   });
-
-  const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
-    undefined
-  );
 
   const [selectedPrimaryID, setSelectedPrimaryID] = React.useState<string>('');
 
@@ -50,24 +44,17 @@ const PrimaryImageDialog = (props: PrimaryImageProps) => {
   const handleClose = React.useCallback(() => {
     onClose();
     setSelectedPrimaryID('');
-    setErrorMessage(undefined);
   }, [onClose]);
 
   const handleEditImage = React.useCallback(() => {
-    if (selectedPrimaryID) {
-      const fileToEdit: ObjectFilePatch = { primary: true };
-      editImage({ id: selectedPrimaryID, fileMetadata: fileToEdit })
-        .then(() => {
-          onClose();
-        })
-        .catch((error: AxiosError) => {
-          handleIMS_APIError(error);
-        });
-    } else {
-      setErrorMessage(
-        'No image selected, Please select an image and try again'
-      );
-    }
+    const fileToEdit: ImageMetadataPatch = { primary: true };
+    editImage({ id: selectedPrimaryID, fileMetadata: fileToEdit })
+      .then(() => {
+        handleClose();
+      })
+      .catch((error: AxiosError) => {
+        handleIMS_APIError(error);
+      });
   }, [selectedPrimaryID, editImage, onClose]);
 
   return (
@@ -106,21 +93,6 @@ const PrimaryImageDialog = (props: PrimaryImageProps) => {
             Save
           </Button>
         </DialogActions>
-        {errorMessage != undefined && (
-          <Box
-            sx={{
-              mx: '24px',
-              marginBottom: '24px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
-              {errorMessage}
-            </FormHelperText>
-          </Box>
-        )}
       </Dialog>
     </ThemeProvider>
   );

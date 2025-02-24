@@ -14,13 +14,13 @@ import {
   CatalogueItem,
   CatalogueItemPatch,
   CatalogueItemPost,
+  ImageMetadataPatch,
   Item,
   ItemPatch,
   ItemPost,
   Manufacturer,
   ManufacturerPatch,
   ManufacturerPost,
-  ObjectFilePatch,
   System,
   SystemPatch,
   SystemPost,
@@ -1121,7 +1121,7 @@ export const handlers = [
     }
   }),
 
-  http.patch<{ id: string }, ObjectFilePatch, APIImage | ErrorResponse>(
+  http.patch<{ id: string }, ImageMetadataPatch, APIImage | ErrorResponse>(
     '/images/:id',
     async ({ request, params }) => {
       const { id } = params;
@@ -1131,7 +1131,10 @@ export const handlers = [
 
       const fullBody = { ...obj, ...body };
 
-      if (fullBody.file_name === 'Error_500.png') {
+      if (
+        fullBody.file_name === 'Error_500.png' ||
+        (id === '17' && fullBody.primary === true)
+      ) {
         return HttpResponse.json(
           { detail: 'Something went wrong' },
           { status: 500 }
