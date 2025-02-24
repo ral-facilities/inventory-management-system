@@ -647,8 +647,9 @@ describe('Items', () => {
       cy.findByText('Filename').should('be.visible');
       cy.findByText('Title').should('be.visible');
       cy.findByText('Description').should('be.visible');
-      cy.findByText('Last modified').scrollIntoView();
+      cy.findByText('Created').scrollIntoView();
       cy.findByText('Created').should('be.visible');
+      cy.findByText('Last modified').scrollIntoView();
       cy.findByText('Last modified').should('be.visible');
     });
 
