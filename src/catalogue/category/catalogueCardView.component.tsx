@@ -53,7 +53,7 @@ import DeleteCatalogueCategoryDialog from './deleteCatalogueCategoryDialog.compo
 
 export interface AddCatalogueButtonProps {
   parentId: string | null;
-  disabled: boolean;
+  disabled?: boolean;
   type: 'add' | 'edit';
   selectedCatalogueCategory?: CatalogueCategory;
   resetSelectedCatalogueCategory: () => void;
@@ -370,6 +370,8 @@ function CatalogueCardView() {
     },
     state: {
       ...preservedState,
+      showProgressBars:
+        catalogueCategoryDataLoading || catalogueCategoryDetailLoading,
     },
     muiSearchTextFieldProps: {
       size: 'small',
@@ -447,13 +449,15 @@ function CatalogueCardView() {
     .rows.map((row) => row.original);
   const [isCollapsed, setIsCollapsed] = React.useState(true);
 
+  const isCardViewLoading = table.getState().showProgressBars;
+
   const handleToggle = () => {
     setIsCollapsed(!isCollapsed);
   };
 
   return (
     <>
-      {!catalogueCategoryDataLoading && catalogueCategoryData ? (
+      {!catalogueCategoryDetailLoading ? (
         <Grid
           container
           flexDirection={'column'}
@@ -470,7 +474,6 @@ function CatalogueCardView() {
               <AddCategoryButton
                 parentId={parentId}
                 type="add"
-                disabled={catalogueCategoryDetailLoading}
                 resetSelectedCatalogueCategory={() =>
                   setSelectedCatalogueCategory(undefined)
                 }
@@ -530,7 +533,11 @@ function CatalogueCardView() {
               </Typography>
             </Grid>
             <Grid item container>
-              {data.length !== 0 ? (
+              {isCardViewLoading ? (
+                <Grid item width="100%">
+                  <LinearProgress />
+                </Grid>
+              ) : data.length !== 0 ? (
                 data.map((card, index) => (
                   <Grid item key={index} sm={6} md={4} width={'100%'}>
                     <CatalogueCard
