@@ -65,7 +65,7 @@ const PrimaryOptionsMenu = (props: PrimaryOptionsMenuInterface) => {
 
 export interface PrimaryImageProps {
   sx?: SxProps<Theme>;
-  entityId?: string;
+  entityId: string;
 }
 
 const PrimaryImage = (props: PrimaryImageProps) => {
@@ -99,7 +99,7 @@ const PrimaryImage = (props: PrimaryImageProps) => {
         onClose={() => {
           setPrimaryDialogOpen(false);
         }}
-        entityID={entityId ?? ''}
+        entityID={entityId}
       />
     </Grid>
   );

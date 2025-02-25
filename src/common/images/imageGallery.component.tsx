@@ -43,7 +43,7 @@ import ThumbnailImage from './thumbnailImage.component';
 import UploadImagesDialog from './uploadImagesDialog.component';
 
 export interface ImageGalleryProps {
-  entityId?: string;
+  entityId: string;
   dense: boolean;
   setSelectedPrimaryID?: (selectedPrimaryId: string) => void;
 }
@@ -315,7 +315,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
           <UploadImagesDialog
             open={openUploadDialog}
             onClose={() => setOpenUploadDialog(false)}
-            entityId={entityId ?? ''}
+            entityId={entityId}
           />
         </StyledUppyBox>
       )}

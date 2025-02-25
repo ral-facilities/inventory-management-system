@@ -87,7 +87,7 @@ function CatalogueItemsLandingPage() {
             {/* Image Section */}
             <Grid item container xs={12}>
               <Grid item xs={12} sm={4}>
-                <PrimaryImage entityId={catalogueItemId} />
+                <PrimaryImage entityId={catalogueItemId ?? ''} />
               </Grid>
               {/* Title and Description Section */}
               <Grid

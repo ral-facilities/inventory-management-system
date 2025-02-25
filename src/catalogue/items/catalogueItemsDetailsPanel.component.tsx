@@ -73,7 +73,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
         <TabPanel value={tabValue} index={0}>
           <Grid item container spacing={0}>
             <Grid item xs={12} sm={4} padding={1}>
-              <PrimaryImage />
+              <PrimaryImage entityId={catalogueItemIdData.id} />
             </Grid>
             <Grid item xs={12} sm={8}>
               <Typography variant="h4" sx={{ wordWrap: 'break-word' }}>
