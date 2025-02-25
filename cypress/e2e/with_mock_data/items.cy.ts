@@ -647,9 +647,10 @@ describe('Items', () => {
       cy.findByText('Filename').should('be.visible');
       cy.findByText('Title').should('be.visible');
       cy.findByText('Description').should('be.visible');
-      cy.findByText('Created').scrollIntoView();
+      // Scroll 750 pixels to the right, so created and last modifed headers are visible.
+      // scrollIntoView() wasn't working in headless mode.
+      cy.scrollTo(750, 0)
       cy.findByText('Created').should('be.visible');
-      cy.findByText('Last modified').scrollIntoView();
       cy.findByText('Last modified').should('be.visible');
     });
 
