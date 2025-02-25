@@ -13,6 +13,7 @@ import {
   LinearProgress,
   ListItemIcon,
   MenuItem,
+  Paper,
   Typography,
   useMediaQuery,
   useTheme,
@@ -43,6 +44,7 @@ import {
   getInitialColumnFilterFnState,
   getPageHeightCalc,
   MRT_Functions_Localisation,
+  mrtTheme,
 } from '../../utils';
 import CatalogueCard from './catalogueCard.component';
 import CatalogueCategoryDialog from './catalogueCategoryDialog.component';
@@ -363,6 +365,7 @@ function CatalogueCardView() {
         '{selectedCount} of {rowCount} card(s) selected',
       rowActions: 'Card Actions',
     },
+
     // State
     initialState: {
       showColumnFilters: true,
@@ -373,6 +376,9 @@ function CatalogueCardView() {
       showProgressBars:
         catalogueCategoryDataLoading || catalogueCategoryDetailLoading,
     },
+    //MRT
+    mrtTheme,
+    //MUI
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',
@@ -451,12 +457,18 @@ function CatalogueCardView() {
 
   const isCardViewLoading = table.getState().showProgressBars;
 
+  const {
+    options: {
+      mrtTheme: { baseBackgroundColor },
+    },
+  } = table;
+
   const handleToggle = () => {
     setIsCollapsed(!isCollapsed);
   };
 
   return (
-    <>
+    <Paper sx={{ backgroundColor: baseBackgroundColor }}>
       {!catalogueCategoryDetailLoading ? (
         <Grid
           container
@@ -470,7 +482,14 @@ function CatalogueCardView() {
             item
             overflow={'auto'}
           >
-            <Grid marginTop={'auto'} direction="row" item container>
+            <Grid
+              marginTop="auto"
+              direction="row"
+              item
+              container
+              alignItems="center"
+              sx={{ pt: '8px' }}
+            >
               <AddCategoryButton
                 parentId={parentId}
                 type="add"
@@ -558,10 +577,7 @@ function CatalogueCardView() {
             </Grid>
           </Grid>
           <Grid marginTop={'auto'} direction="row" item container>
-            <MRT_BottomToolbar
-              table={table}
-              sx={{ width: '100%', backgroundColor: 'background.default' }}
-            />
+            <MRT_BottomToolbar table={table} sx={{ width: '100%' }} />
           </Grid>
 
           <CatalogueCategoryDialog
@@ -596,7 +612,7 @@ function CatalogueCardView() {
           <LinearProgress />
         </Box>
       )}
-    </>
+    </Paper>
   );
 }
 

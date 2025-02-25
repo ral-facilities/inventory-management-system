@@ -28,7 +28,7 @@ import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { APIImage } from '../../api/api.types';
 import { useGetImages, usePatchImage } from '../../api/images';
-import { displayTableRowCountText, OverflowTip } from '../../utils';
+import { displayTableRowCountText, mrtTheme, OverflowTip } from '../../utils';
 import CardViewFilters from '../cardView/cardViewFilters.component';
 import DownloadFileDialog from '../downloadFileDialog.component';
 import EditFileDialog from '../editFileDialog.component';
@@ -171,6 +171,9 @@ const ImageGallery = (props: ImageGalleryProps) => {
     state: {
       ...preservedState,
     },
+    //MRT
+    mrtTheme,
+    //MUI
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',
