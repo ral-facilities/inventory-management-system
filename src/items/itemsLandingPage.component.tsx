@@ -12,7 +12,7 @@ import { useGetItem } from '../api/items';
 import { useGetManufacturer } from '../api/manufacturers';
 import { useGetSystem } from '../api/systems';
 import ActionMenu from '../common/actionMenu.component';
-import PlaceholderImage from '../common/images/placeholderImage.component';
+import PrimaryImage from '../common/images/primaryImage.component';
 import TabView from '../common/tab/tabView.component';
 import { formatDateTimeStrings } from '../utils';
 import ItemDialog from './itemDialog.component';
@@ -96,7 +96,7 @@ function ItemsLandingPage() {
               {/* Image Section */}
               <Grid item container xs={12}>
                 <Grid item xs={12} sm={4}>
-                  <PlaceholderImage entityId={itemData.id} />
+                  <PrimaryImage entityId={itemData.id} />
                 </Grid>
                 {/* Title and Description Section */}
                 <Grid

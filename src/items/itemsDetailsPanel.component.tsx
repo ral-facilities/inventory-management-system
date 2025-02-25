@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 import { CatalogueItem, Item } from '../api/api.types';
 import { useGetManufacturer } from '../api/manufacturers';
 import { useGetSystem } from '../api/systems';
-import PlaceholderImage from '../common/images/placeholderImage.component';
+import PrimaryImage from '../common/images/primaryImage.component';
 import { formatDateTimeStrings } from '../utils';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -73,7 +73,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
         <TabPanel value={tabValue} index={0}>
           <Grid item container spacing={0}>
             <Grid item xs={12} sm={4} padding={1}>
-              <PlaceholderImage />
+              <PrimaryImage />
             </Grid>
             <Grid item xs={12} sm={8}>
               <Typography variant="h4" sx={{ wordWrap: 'break-word' }}>

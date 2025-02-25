@@ -10,6 +10,7 @@ import {
   MenuItem,
   SxProps,
   Theme,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import React from 'react';
@@ -39,26 +40,18 @@ const PrimaryOptionsMenu = (props: PrimaryOptionsMenuInterface) => {
 
   return (
     <Box sx={{ height: '100%' }}>
-      <IconButton
-        id="basic-button"
-        aria-controls={open ? 'basic-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        aria-label="primary images action menu"
-        onClick={handleOpenMenu}
-        sx={{ padding: { xs: '0px', sm: '8px' } }}
-      >
-        <MoreHorizIcon />
-      </IconButton>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleCloseMenu}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-      >
+      <Tooltip title="Primary Image Actions">
+        <span>
+          <IconButton
+            aria-label="primary images action menu"
+            onClick={handleOpenMenu}
+            sx={{ padding: { xs: '0px', sm: '8px' } }}
+          >
+            <MoreHorizIcon />
+          </IconButton>
+        </span>
+      </Tooltip>
+      <Menu anchorEl={anchorEl} open={open} onClose={handleCloseMenu}>
         <MenuItem onClick={handleOpenPrimary}>
           <ListItemIcon>
             <EditIcon />
@@ -70,12 +63,12 @@ const PrimaryOptionsMenu = (props: PrimaryOptionsMenuInterface) => {
   );
 };
 
-export interface PlaceholderImageProps {
+export interface PrimaryImageProps {
   sx?: SxProps<Theme>;
   entityId?: string;
 }
 
-const PlaceholderImage = (props: PlaceholderImageProps) => {
+const PrimaryImage = (props: PrimaryImageProps) => {
   const { sx, entityId } = props;
   const [primaryDialogOpen, setPrimaryDialogOpen] =
     React.useState<boolean>(false);
@@ -112,4 +105,4 @@ const PlaceholderImage = (props: PlaceholderImageProps) => {
   );
 };
 
-export default PlaceholderImage;
+export default PrimaryImage;

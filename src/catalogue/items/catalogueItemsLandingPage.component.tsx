@@ -17,7 +17,7 @@ import { useGetCatalogueCategory } from '../../api/catalogueCategories';
 import { useGetCatalogueItem } from '../../api/catalogueItems';
 import { useGetManufacturer } from '../../api/manufacturers';
 import ActionMenu from '../../common/actionMenu.component';
-import PlaceholderImage from '../../common/images/placeholderImage.component';
+import PrimaryImage from '../../common/images/primaryImage.component';
 import TabView from '../../common/tab/tabView.component';
 import { formatDateTimeStrings } from '../../utils';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
@@ -87,7 +87,7 @@ function CatalogueItemsLandingPage() {
             {/* Image Section */}
             <Grid item container xs={12}>
               <Grid item xs={12} sm={4}>
-                <PlaceholderImage entityId={catalogueItemId} />
+                <PrimaryImage entityId={catalogueItemId} />
               </Grid>
               {/* Title and Description Section */}
               <Grid

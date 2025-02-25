@@ -13,7 +13,7 @@ import {
   CatalogueItem,
   Manufacturer,
 } from '../../api/api.types';
-import PlaceholderImage from '../../common/images/placeholderImage.component';
+import PrimaryImage from '../../common/images/primaryImage.component';
 import { formatDateTimeStrings } from '../../utils';
 import CatalogueLink from './catalogueLink.component';
 
@@ -73,7 +73,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
         <TabPanel value={tabValue} index={0}>
           <Grid item container spacing={0}>
             <Grid item xs={12} sm={4} padding={1}>
-              <PlaceholderImage />
+              <PrimaryImage />
             </Grid>
             <Grid item xs={12} sm={8}>
               <Typography variant="h4" sx={{ wordWrap: 'break-word' }}>
