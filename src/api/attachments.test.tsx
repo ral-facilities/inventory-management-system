@@ -1,8 +1,8 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import AttachmentsJSON from '../mocks/Attachments.json';
 import { hooksWrapperWithProviders } from '../testUtils';
-import { AttachmentPostMetadata } from './api.types';
-import { useGetAttachment, useGetAttachments, usePostAttachmentMetadata } from './attachments';
+import { AttachmentPostMetadata, ObjectFilePatch } from './api.types';
+import { useGetAttachment, useGetAttachments, usePatchAttachment, usePostAttachmentMetadata } from './attachments';
 
 describe('attachments api functions', () => {
   afterEach(() => {
@@ -75,6 +75,32 @@ describe('attachments api functions', () => {
       expect(result.current.data).toEqual({
         ...AttachmentsJSON[1],
         url: 'http://localhost:3000/attachments/safety-protocols.pdf?text=1',
+      });
+    });
+  });
+
+  describe('usePatchAttachment', () => {
+    let mockDataPatch: ObjectFilePatch;
+
+    beforeEach(() => {
+      mockDataPatch = {
+        file_name: 'edited_attachment.txt',
+        title: 'an edited title',
+        description: 'an edited description',
+      };
+    });
+
+    it('sends a patch request to edit an attachment and returns a successful response', async () => {
+      const { result } = renderHook(() => usePatchAttachment(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      result.current.mutate({ id: '1', fileMetadata: mockDataPatch });
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
+
+      expect(result.current.data).toEqual({
+        ...AttachmentsJSON[0],
+        ...mockDataPatch,
       });
     });
   });

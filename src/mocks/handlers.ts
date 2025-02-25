@@ -1120,6 +1120,26 @@ export const handlers = [
     }
   }),
 
+  http.patch<{ id: string }, ObjectFilePatch, AttachmentPostMetadataResponse | ErrorResponse>(
+    '/attachments/:id',
+    async ({ request, params }) => {
+      const { id } = params;
+
+      const obj = AttachmentsJSON.find((attachment) => attachment.id === id);
+      const body = await request.json();
+
+      const fullBody = { ...obj, ...body };
+
+      if (fullBody.file_name === 'test') {
+        return HttpResponse.json(
+          { detail: 'Something went wrong' },
+          { status: 500 }
+        );
+      }
+      return HttpResponse.json(fullBody as AttachmentPostMetadataResponse, { status: 200 });
+    }
+  ),
+
   // ------------------------------------ OBJECT STORAGE ------------------------------------------------
 
   http.post('/object-storage', async () => {
