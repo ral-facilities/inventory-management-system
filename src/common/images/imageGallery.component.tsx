@@ -13,6 +13,7 @@ import {
   ListItemIcon,
   ListItemText,
   MenuItem,
+  Paper,
   Typography,
 } from '@mui/material';
 import {
@@ -309,7 +310,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
     React.useState<boolean>(false);
 
   return (
-    <>
+    <Paper sx={{ backgroundColor: 'background.default' }}>
       {dense && (
         <StyledUppyBox>
           <UploadImagesDialog
@@ -381,7 +382,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
             </Button>
           )}
           <Grid item container mt={2} direction="column" alignItems="center">
-            <Collapse in={!isCollapsed} style={{ width: '100%' }}>
+            <Collapse in={!isCollapsed} sx={{ width: '100%' }}>
               <CardViewFilters table={table} />
             </Collapse>
 
@@ -524,7 +525,10 @@ const ImageGallery = (props: ImageGalleryProps) => {
             </Grid>
           </Grid>
           <Grid marginTop={2} direction="row" item container>
-            <MRT_BottomToolbar table={table} sx={{ width: '100%' }} />
+            <MRT_BottomToolbar
+              table={table}
+              sx={{ width: '100%', backgroundColor: 'background.default' }}
+            />
           </Grid>
           {selectedImage && !dense && (
             <>
@@ -567,7 +571,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
           )}
         </Grid>
       )}
-    </>
+    </Paper>
   );
 };
 
