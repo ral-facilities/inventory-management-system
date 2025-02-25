@@ -55,7 +55,7 @@ const PrimaryImageDialog = (props: PrimaryImageProps) => {
       .catch((error: AxiosError) => {
         handleIMS_APIError(error);
       });
-  }, [selectedPrimaryID, editImage, onClose]);
+  }, [selectedPrimaryID, editImage, handleClose]);
 
   return (
     <ThemeProvider theme={modifiedTheme}>
