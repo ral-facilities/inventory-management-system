@@ -218,16 +218,19 @@ export interface Item
   usage_status: string;
   properties: Property[];
 }
+// ------------------------------------ OBJECT STORAGE API -----------------------------------------
 
-// ------------------------------------ ATTACHMENTS ------------------------------------------------
-
-// This is AttachmentPost on the object-store-api
-export interface AttachmentPostMetadata {
+export interface ObjectFileUploadMetadata {
   entity_id: string;
   file_name: string;
   title?: string | null;
   description?: string | null;
 }
+
+// ------------------------------------ ATTACHMENTS ------------------------------------------------
+
+// This is AttachmentPost on the object-store-api
+export type AttachmentPostMetadata = ObjectFileUploadMetadata;
 
 export interface AttachmentUploadInfo {
   url: string;
@@ -241,10 +244,12 @@ export interface AttachmentPostMetadataResponse
 }
 
 // ------------------------------------ IMAGES ------------------------------------------------
-export interface ImagePost {
-  entity_id: string;
-  file_name: string;
+export interface ImagePost extends ObjectFileUploadMetadata {
   upload_file: File;
+}
+
+export interface ObjectFilePatch {
+  file_name?: string;
   title?: string | null;
   description?: string | null;
 }
@@ -258,5 +263,8 @@ export interface APIImage
 }
 
 export interface APIImageWithURL extends APIImage {
-  url: string;
+  /* Each url has a different `ResponseContentDisposition` set in the url, for viewing images inline and downloading respectively.
+   Allows links to be downloaded directly to the user's computer and not to their client first. */
+  view_url: string;
+  download_url: string;
 }

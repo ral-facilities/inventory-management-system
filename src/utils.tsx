@@ -527,3 +527,22 @@ export function getNonEmptyTrimmedString(value: unknown): string | undefined {
     ? value.trim()
     : undefined;
 }
+
+export const getNameAndExtension = (
+  filename: string
+): [name: string, extension: string] => {
+  const point = filename.lastIndexOf('.') ?? 0;
+  const extension = filename.slice(point) ?? '';
+  const name = filename.slice(0, point) ?? '';
+
+  return [name, extension];
+};
+
+export function downloadFileByLink(url: string, filename: string): void {
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
