@@ -20,8 +20,8 @@ import { UseMutationResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import {
   APIImage,
-  AttachmentMetadataPatch,
   ImageMetadataPatch,
+  ObjectFilePatchBase,
 } from '../api/api.types';
 import { FileSchemaPatch } from '../form.schemas';
 import handleIMS_APIError from '../handleIMS_APIError';
@@ -52,9 +52,7 @@ const EditFileDialog = (props: FileDialogProps) => {
 
   const [initialName, extension] = getNameAndExtension(selectedFile.file_name);
 
-  const initialFile = React.useMemo<
-    ImageMetadataPatch | AttachmentMetadataPatch
-  >(() => {
+  const initialFile = React.useMemo<ObjectFilePatchBase>(() => {
     return {
       ...selectedFile,
       file_name: initialName,
@@ -69,7 +67,7 @@ const EditFileDialog = (props: FileDialogProps) => {
     setError,
     clearErrors,
     reset,
-  } = useForm<ImageMetadataPatch | AttachmentMetadataPatch>({
+  } = useForm<ObjectFilePatchBase>({
     resolver: zodResolver(FileSchemaPatch),
     defaultValues: initialFile,
   });
@@ -94,7 +92,7 @@ const EditFileDialog = (props: FileDialogProps) => {
   }, [clearErrors, onClose, reset]);
 
   const handleEditFile = React.useCallback(
-    (fileData: ImageMetadataPatch | AttachmentMetadataPatch) => {
+    (fileData: ObjectFilePatchBase) => {
       const isFileNameUpdated = fileData.file_name !== initialFile.file_name;
 
       const isDescriptionUpdated =
@@ -102,7 +100,7 @@ const EditFileDialog = (props: FileDialogProps) => {
 
       const isTitleUpdated = fileData.title !== initialFile.title;
 
-      const fileToEdit: ImageMetadataPatch | AttachmentMetadataPatch = {};
+      const fileToEdit: ObjectFilePatchBase = {};
 
       if (isFileNameUpdated)
         fileToEdit.file_name = fileData.file_name + extension;
@@ -112,10 +110,7 @@ const EditFileDialog = (props: FileDialogProps) => {
       if (isFileNameUpdated || isDescriptionUpdated || isTitleUpdated) {
         patchFile({
           id: selectedFile.id,
-          fileMetadata:
-            fileType === 'Image'
-              ? (fileToEdit as ImageMetadataPatch)
-              : (fileToEdit as AttachmentMetadataPatch),
+          fileMetadata: fileToEdit,
         })
           .then(() => handleClose())
           .catch((error: AxiosError) => {
@@ -128,15 +123,7 @@ const EditFileDialog = (props: FileDialogProps) => {
         });
       }
     },
-    [
-      initialFile,
-      selectedFile,
-      extension,
-      patchFile,
-      handleClose,
-      setError,
-      fileType,
-    ]
+    [initialFile, selectedFile, extension, patchFile, handleClose, setError]
   );
 
   return (
