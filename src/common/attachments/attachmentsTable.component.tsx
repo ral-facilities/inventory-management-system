@@ -1,7 +1,11 @@
 import ClearIcon from '@mui/icons-material/Clear';
+import EditIcon from '@mui/icons-material/Edit';
 import {
   Box,
   Button,
+  ListItemIcon,
+  ListItemText,
+  MenuItem,
   TableCellBaseProps,
   TableRow,
 } from '@mui/material';
@@ -13,7 +17,8 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { AttachmentPostMetadataResponse } from '../../api/api.types';
-import { useGetAttachments } from '../../api/attachments';
+import { useGetAttachments, usePatchAttachment } from '../../api/attachments';
+import EditFileDialog from '../editFileDialog.component';
 import {
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
@@ -34,6 +39,14 @@ export interface AttachmentTableProps {
 function AttachmentsTable(props: AttachmentTableProps) {
   const { entityId } = props;
   const { data: attachments, isLoading: attachmentIsLoading } = useGetAttachments(entityId);
+
+  const [selectedAttachment, setSelectedAttachment] = React.useState<
+    AttachmentPostMetadataResponse | undefined
+  >(undefined);
+
+  const [openMenuDialog, setOpenMenuDialog] = React.useState<
+    'edit' | false
+  >(false);
 
   const columns = React.useMemo<MRT_ColumnDef<AttachmentPostMetadataResponse>[]>(() => {
     return [
@@ -202,6 +215,27 @@ function AttachmentsTable(props: AttachmentTableProps) {
         </Button>
       </Box>
     ),
+
+    renderRowActionMenuItems: ({ closeMenu, row }) => {
+      return [
+        <MenuItem
+          key="edit"
+          aria-label={`Edit ${row.original.file_name} attachment`}
+          onClick={() => {
+            setSelectedAttachment(row.original);
+            setOpenMenuDialog('edit');
+            closeMenu();
+          }}
+          sx={{ m: 0 }}
+        >
+          <ListItemIcon>
+            <EditIcon />
+          </ListItemIcon>
+          <ListItemText>Edit</ListItemText>
+        </MenuItem>
+      ];
+    },
+
     renderBottomToolbarCustomActions: ({ table }) =>
       displayTableRowCountText(table, attachments, 'Attachments', {
         paddingLeft: '8px',
@@ -211,6 +245,17 @@ function AttachmentsTable(props: AttachmentTableProps) {
   return (
     <>
       <MaterialReactTable table={table} />
+      {selectedAttachment && (
+        <>
+          <EditFileDialog
+            open={openMenuDialog === 'edit'}
+            onClose={() => setOpenMenuDialog(false)}
+            fileType="Attachment"
+            usePatchFile={usePatchAttachment}
+            selectedFile={selectedAttachment}
+          />
+        </>
+      )}
     </>
   );
 }

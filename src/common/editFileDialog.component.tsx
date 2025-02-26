@@ -18,7 +18,7 @@ import React from 'react';
 
 import { UseMutationResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { APIImage, ObjectFilePatch } from '../api/api.types';
+import { APIImage, AttachmentPostMetadataResponse, ObjectFilePatch } from '../api/api.types';
 import { FileSchemaPatch } from '../form.schemas';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { getNameAndExtension } from '../utils';
@@ -39,7 +39,17 @@ export interface ImageDialogProps extends BaseFileDialogProps {
   >;
 }
 
-export type FileDialogProps = ImageDialogProps;
+export interface AttachmentDialogProps extends BaseFileDialogProps {
+  fileType: 'Attachment';
+  selectedFile: AttachmentPostMetadataResponse;
+  usePatchFile: () => UseMutationResult<
+    AttachmentPostMetadataResponse,
+    AxiosError,
+    { id: string; fileMetadata: ObjectFilePatch }
+  >;
+}
+
+export type FileDialogProps = ImageDialogProps | AttachmentDialogProps;
 
 const EditFileDialog = (props: FileDialogProps) => {
   const { open, onClose, selectedFile, fileType, usePatchFile } = props;
