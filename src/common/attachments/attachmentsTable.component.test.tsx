@@ -115,4 +115,28 @@ describe('Attachments Table', () => {
 
     expect(clearFiltersButton).toBeDisabled();
   }, 10000);
+
+  it('opens edit dialog and closes it correctly', async () => {
+    createView();
+
+    expect((await screen.findAllByText('safety-protocols.pdf')).length).toEqual(4);
+
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Edit')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByText('Edit'));
+
+    expect(screen.getByText('Edit Attachment')).toBeInTheDocument();
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+
+    await waitFor(() => {
+      expect(screen.queryByText('Edit Attachment')).not.toBeInTheDocument();
+    });
+  });
 });

@@ -87,8 +87,8 @@ describe('Manufacturer Table', () => {
 
     expect(screen.getByText('Edit Manufacturer')).toBeInTheDocument();
 
-    const closeButton = screen.getByRole('button', { name: 'Cancel' });
-    await user.click(closeButton);
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
 
     await waitFor(() => {
       expect(screen.queryByText('Edit Manufacturer')).not.toBeInTheDocument();
