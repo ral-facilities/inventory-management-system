@@ -1130,7 +1130,7 @@ export const handlers = [
 
       const fullBody = { ...obj, ...body };
 
-      if (fullBody.file_name === 'test') {
+      if (fullBody.file_name === 'Error_500.txt') {
         return HttpResponse.json(
           { detail: 'Something went wrong' },
           { status: 500 }
