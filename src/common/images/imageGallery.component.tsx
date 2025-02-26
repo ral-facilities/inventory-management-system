@@ -12,6 +12,7 @@ import {
   ListItemIcon,
   ListItemText,
   MenuItem,
+  Paper,
   Typography,
 } from '@mui/material';
 import {
@@ -275,23 +276,33 @@ const ImageGallery = (props: ImageGalleryProps) => {
 
   const isCardViewLoading = table.getState().showProgressBars;
 
+  const {
+    options: {
+      mrtTheme: { baseBackgroundColor },
+    },
+  } = table;
+
   return (
-    <Grid container>
+    <Paper
+      component={Grid}
+      sx={{ backgroundColor: baseBackgroundColor }}
+      container
+    >
+      <Grid marginTop={1} item>
+        <Button
+          startIcon={<ClearIcon />}
+          sx={{ ml: 1.5 }}
+          variant="outlined"
+          disabled={preservedState.columnFilters.length === 0}
+          onClick={() => {
+            table.resetColumnFilters();
+          }}
+        >
+          Clear Filters
+        </Button>
+      </Grid>
       <Grid item container mt={2} direction="column" alignItems="center">
         <Collapse in={!isCollapsed} style={{ width: '100%' }}>
-          <Grid marginTop={'auto'} direction="row" item container>
-            <Button
-              startIcon={<ClearIcon />}
-              sx={{ mx: 0.5, ml: 2 }}
-              variant="outlined"
-              disabled={preservedState.columnFilters.length === 0}
-              onClick={() => {
-                table.resetColumnFilters();
-              }}
-            >
-              Clear Filters
-            </Button>
-          </Grid>
           <CardViewFilters table={table} />
         </Collapse>
 
@@ -479,7 +490,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
           table={table}
         />
       )}
-    </Grid>
+    </Paper>
   );
 };
 
