@@ -3,6 +3,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
 import EditIcon from '@mui/icons-material/Edit';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import UploadIcon from '@mui/icons-material/Upload';
 import {
   Box,
   Button,
@@ -311,7 +312,206 @@ const ImageGallery = (props: ImageGalleryProps) => {
 
   return (
     <Paper sx={{ backgroundColor: 'background.default' }}>
-      {dense && (
+      {imageIsLoading && !dense && (
+        <Box sx={{ width: '100%' }}>
+          <LinearProgress />
+        </Box>
+      )}
+      <Grid container>
+        <Button
+          startIcon={<UploadIcon />}
+          sx={{ mx: 0.5, ml: 2, mt: 1 }}
+          variant="outlined"
+          onClick={() => {
+            setOpenUploadDialog(true);
+          }}
+        >
+          Upload Image
+        </Button>
+
+        <Button
+          startIcon={<ClearIcon />}
+          sx={{ mx: 0.5, mt: 1 }}
+          variant="outlined"
+          disabled={preservedState.columnFilters.length === 0}
+          onClick={() => {
+            table.resetColumnFilters();
+          }}
+        >
+          Clear Filters
+        </Button>
+        <Grid item container direction="column" alignItems="center">
+          <Collapse in={!isCollapsed} style={{ width: '100%' }}>
+            <CardViewFilters table={table} />
+          </Collapse>
+          <Typography
+            onClick={handleToggle}
+            variant="body2"
+            color="primary"
+            sx={{
+              cursor: 'pointer',
+              marginTop: 1,
+              textAlign: 'center',
+              textDecoration: 'underline',
+            }}
+          >
+            {isCollapsed ? 'Show Filters' : 'Hide Filters'}
+          </Typography>
+        </Grid>
+        {images && images.length !== 0 ? (
+          <>
+            <Grid container item>
+              <Grid
+                container
+                item
+                mt={'6px'}
+                gap={2}
+                sx={{
+                  display: 'grid',
+                  gridTemplateColumns: dense
+                    ? 'repeat(auto-fit, minmax(200px, 1fr))'
+                    : 'repeat(auto-fit, minmax(350px, 1fr))',
+                }}
+              >
+                {displayedImages.map((card, index) => {
+                  const lastPageIndex = Math.floor(
+                    displayedImages.length / preservedState.pagination.pageSize
+                  );
+                  const isLastPage =
+                    preservedState.pagination.pageIndex === lastPageIndex;
+
+                  return (
+                    <Card
+                      component={Grid}
+                      item
+                      container
+                      xs
+                      key={`thumbnail-displayed-${index}`}
+                      style={{
+                        cursor: dense ? 'pointer' : undefined,
+                        maxWidth:
+                          data.length === 1 ||
+                          (images.length %
+                            preservedState.pagination.pageSize ===
+                            1 &&
+                            isLastPage)
+                            ? '50%'
+                            : undefined,
+                      }}
+                      minWidth={dense ? '175px' : '350px'}
+                      onClick={
+                        dense
+                          ? () => {
+                              handleRowSelection(card.row);
+                            }
+                          : undefined
+                      }
+                    >
+                      <Grid
+                        display="flex"
+                        justifyContent="flex-start"
+                        alignItems="center"
+                        item
+                        container
+                        xs={12}
+                      >
+                        <Grid item xs={2}>
+                          <MRT_SelectCheckbox
+                            row={card.row as MRT_Row<APIImage>}
+                            table={table}
+                            sx={{
+                              ariaLabel: `${card.row.original.file_name} checkbox`,
+                              margin: 0.5,
+                            }}
+                          />
+                        </Grid>
+                      </Grid>
+
+                      <Grid
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                        item
+                        minHeight={`${maxHeightThumbnail}px`}
+                        xs
+                      >
+                        <ThumbnailImage
+                          onClick={
+                            !dense
+                              ? () =>
+                                  setCurrentLightBoxImage(card.row.original.id)
+                              : undefined
+                          }
+                          image={card.row.original}
+                          dense={dense}
+                        />
+                      </Grid>
+
+                      <Grid
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                        item
+                        container
+                        xs={12}
+                      >
+                        {!dense && (
+                          <Grid xs={2} item>
+                            <MRT_ToggleRowActionMenuButton
+                              cell={card as MRT_Cell<APIImage>}
+                              row={card.row as MRT_Row<APIImage>}
+                              table={table}
+                              sx={{
+                                ariaLabel: `actions ${card.row.original.file_name} photo button`,
+                                margin: 0.5,
+                              }}
+                            />
+                          </Grid>
+                        )}
+                        <Grid item xs={dense ? 12 : 8}>
+                          <OverflowTip
+                            sx={{
+                              fontVariant: 'body2',
+                              textAlign: 'center',
+                              pb: dense ? 1 : undefined,
+                            }}
+                          >
+                            {card.row.original.file_name}
+                          </OverflowTip>
+                        </Grid>
+                        {/*Adds an item for spacing, to centre the file name in the card. */}
+                        {!dense && <Grid item xs={2}></Grid>}
+                      </Grid>
+                    </Card>
+                  );
+                })}
+              </Grid>
+            </Grid>
+          </>
+        ) : (
+          <Grid
+            item
+            height="300px"
+            width="100%"
+            flexDirection="column"
+            textAlign="center"
+          >
+            <Typography variant="h6" fontWeight="bold" textAlign="center">
+              No images available
+            </Typography>
+            <Typography variant="body1" textAlign="center">
+              Please add an image by
+              {!dense && ' opening the Action Menu and'} clicking the Upload
+              Images {!dense ? 'menu item' : 'button'}.
+            </Typography>
+          </Grid>
+        )}
+        <Grid marginTop={2} direction="row" item container>
+          <MRT_BottomToolbar
+            table={table}
+            sx={{ width: '100%', backgroundColor: 'background.default' }}
+          />
+        </Grid>
         <StyledUppyBox>
           <UploadImagesDialog
             open={openUploadDialog}
@@ -319,258 +519,46 @@ const ImageGallery = (props: ImageGalleryProps) => {
             entityId={entityId}
           />
         </StyledUppyBox>
-      )}
-      {!imageIsLoading
-        ? (!images || images.length === 0) && (
-            <>
-              {dense && (
-                <Button
-                  onClick={() => {
-                    setOpenUploadDialog(true);
-                  }}
-                  variant="outlined"
-                >
-                  Upload Image
-                </Button>
-              )}
-              <Box
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                height="300px"
-                flexDirection="column"
-                textAlign="center"
-              >
-                <Typography variant="h6" fontWeight="bold">
-                  No images available
-                </Typography>
-                <Typography variant="body1">
-                  Please add an image by
-                  {!dense && ' opening the Action Menu and'} clicking the Upload
-                  Images {!dense ? 'menu item' : 'button'}.
-                </Typography>
-              </Box>
-            </>
-          )
-        : !dense && (
-            <Box sx={{ width: '100%' }}>
-              <LinearProgress />
-            </Box>
-          )}
-
-      {images && images.length !== 0 && (
-        <Grid container>
-          <Button
-            startIcon={<ClearIcon />}
-            sx={{ mx: 0.5, ml: 2, mt: 2 }}
-            variant="outlined"
-            disabled={preservedState.columnFilters.length === 0}
-            onClick={() => {
-              table.resetColumnFilters();
-            }}
-          >
-            Clear Filters
-          </Button>
-          {dense && (
-            <Button
-              onClick={() => {
-                setOpenUploadDialog(true);
-              }}
-              variant="outlined"
-            >
-              Upload Image
-            </Button>
-          )}
-          <Grid item container mt={2} direction="column" alignItems="center">
-            <Collapse in={!isCollapsed} sx={{ width: '100%' }}>
-              <CardViewFilters table={table} />
-            </Collapse>
-
-            <Typography
-              onClick={handleToggle}
-              variant="body2"
-              color="primary"
-              sx={{
-                cursor: 'pointer',
-                marginTop: 1,
-                textAlign: 'center',
-                textDecoration: 'underline',
-              }}
-            >
-              {isCollapsed ? 'Show Filters' : 'Hide Filters'}
-            </Typography>
-          </Grid>
-          <Grid container item>
-            <Grid
-              container
-              item
-              mt={2}
-              gap={2}
-              sx={{
-                display: 'grid',
-                gridTemplateColumns: dense
-                  ? 'repeat(auto-fit, minmax(200px, 1fr))'
-                  : 'repeat(auto-fit, minmax(350px, 1fr))',
-              }}
-            >
-              {displayedImages.map((card, index) => {
-                const lastPageIndex = Math.floor(
-                  displayedImages.length / preservedState.pagination.pageSize
-                );
-                const isLastPage =
-                  preservedState.pagination.pageIndex === lastPageIndex;
-
-                return (
-                  <Card
-                    component={Grid}
-                    item
-                    container
-                    xs
-                    key={`thumbnail-displayed-${index}`}
-                    style={{
-                      cursor: dense ? 'pointer' : undefined,
-                      maxWidth:
-                        data.length === 1 ||
-                        (images.length % preservedState.pagination.pageSize ===
-                          1 &&
-                          isLastPage)
-                          ? '50%'
-                          : undefined,
-                    }}
-                    minWidth={dense ? '175px' : '350px'}
-                    onClick={
-                      dense
-                        ? () => {
-                            handleRowSelection(card.row);
-                          }
-                        : undefined
-                    }
-                  >
-                    <Grid
-                      display="flex"
-                      justifyContent="flex-start"
-                      alignItems="center"
-                      item
-                      container
-                      xs={12}
-                    >
-                      <Grid item xs={2}>
-                        <MRT_SelectCheckbox
-                          row={card.row as MRT_Row<APIImage>}
-                          table={table}
-                          sx={{
-                            ariaLabel: `${card.row.original.file_name} checkbox`,
-                            margin: 0.5,
-                          }}
-                        />
-                      </Grid>
-                    </Grid>
-
-                    <Grid
-                      display="flex"
-                      justifyContent="center"
-                      alignItems="center"
-                      item
-                      minHeight={`${maxHeightThumbnail}px`}
-                      xs
-                    >
-                      <ThumbnailImage
-                        onClick={
-                          !dense
-                            ? () =>
-                                setCurrentLightBoxImage(card.row.original.id)
-                            : undefined
-                        }
-                        image={card.row.original}
-                        dense={dense}
-                      />
-                    </Grid>
-
-                    <Grid
-                      display="flex"
-                      justifyContent="center"
-                      alignItems="center"
-                      item
-                      container
-                      xs={12}
-                    >
-                      {!dense && (
-                        <Grid xs={2} item>
-                          <MRT_ToggleRowActionMenuButton
-                            cell={card as MRT_Cell<APIImage>}
-                            row={card.row as MRT_Row<APIImage>}
-                            table={table}
-                            sx={{
-                              ariaLabel: `actions ${card.row.original.file_name} photo button`,
-                              margin: 0.5,
-                            }}
-                          />
-                        </Grid>
-                      )}
-                      <Grid item xs={dense ? 12 : 8}>
-                        <OverflowTip
-                          sx={{
-                            fontVariant: 'body2',
-                            textAlign: 'center',
-                          }}
-                        >
-                          {card.row.original.file_name}
-                        </OverflowTip>
-                      </Grid>
-                      {!dense && <Grid item xs={2}></Grid>}
-                    </Grid>
-                  </Card>
-                );
-              })}
-            </Grid>
-          </Grid>
-          <Grid marginTop={2} direction="row" item container>
-            <MRT_BottomToolbar
-              table={table}
-              sx={{ width: '100%', backgroundColor: 'background.default' }}
+        {selectedImage && !dense && (
+          <>
+            <ImageInformationDialog
+              open={openMenuDialog === 'information'}
+              onClose={() => setOpenMenuDialog(false)}
+              image={selectedImage}
             />
-          </Grid>
-          {selectedImage && !dense && (
-            <>
-              <ImageInformationDialog
-                open={openMenuDialog === 'information'}
-                onClose={() => setOpenMenuDialog(false)}
-                image={selectedImage}
-              />
-              <EditFileDialog
-                open={openMenuDialog === 'edit'}
-                onClose={() => setOpenMenuDialog(false)}
-                fileType="Image"
-                usePatchFile={usePatchImage}
-                selectedFile={selectedImage}
-              />
-              <DeleteImageDialog
-                open={openMenuDialog === 'delete'}
-                onClose={() => {
-                  setOpenMenuDialog(false);
-                  setCurrentLightBoxImage(undefined);
-                }}
-                image={selectedImage}
-              />
-              <DownloadFileDialog
-                open={openMenuDialog === 'download'}
-                onClose={() => setOpenMenuDialog(false)}
-                fileType="Image"
-                file={selectedImage}
-              />
-            </>
-          )}
-          {currentLightBoxImage && (
-            <GalleryLightBox
-              open={currentLightBoxImage !== undefined}
-              onClose={() => setCurrentLightBoxImage(undefined)}
-              currentImageId={currentLightBoxImage}
-              imageCardData={data as MRT_Cell<APIImage, unknown>[]}
-              table={table}
+            <EditFileDialog
+              open={openMenuDialog === 'edit'}
+              onClose={() => setOpenMenuDialog(false)}
+              fileType="Image"
+              usePatchFile={usePatchImage}
+              selectedFile={selectedImage}
             />
-          )}
-        </Grid>
-      )}
+            <DeleteImageDialog
+              open={openMenuDialog === 'delete'}
+              onClose={() => {
+                setOpenMenuDialog(false);
+                setCurrentLightBoxImage(undefined);
+              }}
+              image={selectedImage}
+            />
+            <DownloadFileDialog
+              open={openMenuDialog === 'download'}
+              onClose={() => setOpenMenuDialog(false)}
+              fileType="Image"
+              file={selectedImage}
+            />
+          </>
+        )}
+        {currentLightBoxImage && (
+          <GalleryLightBox
+            open={currentLightBoxImage !== undefined}
+            onClose={() => setCurrentLightBoxImage(undefined)}
+            currentImageId={currentLightBoxImage}
+            imageCardData={data as MRT_Cell<APIImage, unknown>[]}
+            table={table}
+          />
+        )}
+      </Grid>
     </Paper>
   );
 };
