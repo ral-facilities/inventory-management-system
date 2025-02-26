@@ -4,7 +4,6 @@ import DownloadIcon from '@mui/icons-material/Download';
 import EditIcon from '@mui/icons-material/Edit';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {
-  Box,
   Button,
   Card,
   Collapse,
@@ -32,6 +31,7 @@ import { displayTableRowCountText, mrtTheme, OverflowTip } from '../../utils';
 import CardViewFilters from '../cardView/cardViewFilters.component';
 import DownloadFileDialog from '../downloadFileDialog.component';
 import EditFileDialog from '../editFileDialog.component';
+import ErrorPage from '../errorPage.component';
 import { usePreservedTableState } from '../preservedTableState.component';
 import DeleteImageDialog from './deleteImageDialog.component';
 import GalleryLightBox from './galleryLightbox.component';
@@ -170,6 +170,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
     },
     state: {
       ...preservedState,
+      showProgressBars: imageIsLoading,
     },
     //MRT
     mrtTheme,
@@ -272,68 +273,58 @@ const ImageGallery = (props: ImageGalleryProps) => {
     .getSelectedRowModel()
     .rows.map((row) => row.original);
 
+  const isCardViewLoading = table.getState().showProgressBars;
+
   return (
-    <>
-      {!imageIsLoading ? (
-        (!images || images.length === 0) && (
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            height="300px"
-            flexDirection="column"
-            textAlign="center"
-          >
-            <Typography variant="h6" fontWeight="bold">
-              No images available
-            </Typography>
-            <Typography variant="body1">
-              Please add an image by opening the Action Menu and clicking the
-              Upload Images menu item.
-            </Typography>
-          </Box>
-        )
-      ) : (
-        <Box sx={{ width: '100%' }}>
-          <LinearProgress />
-        </Box>
-      )}
-
-      {images && images.length !== 0 && (
-        <Grid container>
-          <Grid item container mt={2} direction="column" alignItems="center">
-            <Collapse in={!isCollapsed} style={{ width: '100%' }}>
-              <Grid marginTop={'auto'} direction="row" item container>
-                <Button
-                  startIcon={<ClearIcon />}
-                  sx={{ mx: 0.5, ml: 2 }}
-                  variant="outlined"
-                  disabled={preservedState.columnFilters.length === 0}
-                  onClick={() => {
-                    table.resetColumnFilters();
-                  }}
-                >
-                  Clear Filters
-                </Button>
-              </Grid>
-              <CardViewFilters table={table} />
-            </Collapse>
-
-            <Typography
-              onClick={handleToggle}
-              variant="body2"
-              color="primary"
-              sx={{
-                cursor: 'pointer',
-                marginTop: 1,
-                textAlign: 'center',
-                textDecoration: 'underline',
+    <Grid container>
+      <Grid item container mt={2} direction="column" alignItems="center">
+        <Collapse in={!isCollapsed} style={{ width: '100%' }}>
+          <Grid marginTop={'auto'} direction="row" item container>
+            <Button
+              startIcon={<ClearIcon />}
+              sx={{ mx: 0.5, ml: 2 }}
+              variant="outlined"
+              disabled={preservedState.columnFilters.length === 0}
+              onClick={() => {
+                table.resetColumnFilters();
               }}
             >
-              {isCollapsed ? 'Show Filters' : 'Hide Filters'}
-            </Typography>
+              Clear Filters
+            </Button>
           </Grid>
-          <Grid container item>
+          <CardViewFilters table={table} />
+        </Collapse>
+
+        <Typography
+          onClick={handleToggle}
+          variant="body2"
+          color="primary"
+          sx={{
+            cursor: 'pointer',
+            marginTop: 1,
+            textAlign: 'center',
+            textDecoration: 'underline',
+          }}
+        >
+          {isCollapsed ? 'Show Filters' : 'Hide Filters'}
+        </Typography>
+      </Grid>
+      <Grid container item sx={{ height: '670px', overflow: 'auto' }}>
+        {isCardViewLoading ? (
+          <Grid item sx={{ width: '100%' }}>
+            <LinearProgress />
+          </Grid>
+        ) : (
+          images &&
+          (images.length === 0 ? (
+            <ErrorPage
+              sx={{ marginTop: 2 }}
+              boldErrorText="No images available"
+              errorText={
+                'Please add an image by opening the Action Menu and clicking the Upload Images menu item.'
+              }
+            />
+          ) : (
             <Grid
               container
               item
@@ -443,52 +434,52 @@ const ImageGallery = (props: ImageGalleryProps) => {
                 );
               })}
             </Grid>
-          </Grid>
-          <Grid marginTop={2} direction="row" item container>
-            <MRT_BottomToolbar table={table} sx={{ width: '100%' }} />
-          </Grid>
-          {selectedImage && (
-            <>
-              <ImageInformationDialog
-                open={openMenuDialog === 'information'}
-                onClose={() => setOpenMenuDialog(false)}
-                image={selectedImage}
-              />
-              <EditFileDialog
-                open={openMenuDialog === 'edit'}
-                onClose={() => setOpenMenuDialog(false)}
-                fileType="Image"
-                usePatchFile={usePatchImage}
-                selectedFile={selectedImage}
-              />
-              <DeleteImageDialog
-                open={openMenuDialog === 'delete'}
-                onClose={() => {
-                  setOpenMenuDialog(false);
-                  setCurrentLightBoxImage(undefined);
-                }}
-                image={selectedImage}
-              />
-              <DownloadFileDialog
-                open={openMenuDialog === 'download'}
-                onClose={() => setOpenMenuDialog(false)}
-                fileType="Image"
-                file={selectedImage}
-              />
-            </>
-          )}
-          {currentLightBoxImage && (
-            <GalleryLightBox
-              open={currentLightBoxImage !== undefined}
-              onClose={() => setCurrentLightBoxImage(undefined)}
-              currentImageId={currentLightBoxImage}
-              imageCardData={data as MRT_Cell<APIImage, unknown>[]}
-              table={table}
-            />
-          )}
-        </Grid>
+          ))
+        )}
+      </Grid>
+      <Grid direction="row" item container>
+        <MRT_BottomToolbar table={table} sx={{ width: '100%' }} />
+      </Grid>
+      {selectedImage && (
+        <>
+          <ImageInformationDialog
+            open={openMenuDialog === 'information'}
+            onClose={() => setOpenMenuDialog(false)}
+            image={selectedImage}
+          />
+          <EditFileDialog
+            open={openMenuDialog === 'edit'}
+            onClose={() => setOpenMenuDialog(false)}
+            fileType="Image"
+            usePatchFile={usePatchImage}
+            selectedFile={selectedImage}
+          />
+          <DeleteImageDialog
+            open={openMenuDialog === 'delete'}
+            onClose={() => {
+              setOpenMenuDialog(false);
+              setCurrentLightBoxImage(undefined);
+            }}
+            image={selectedImage}
+          />
+          <DownloadFileDialog
+            open={openMenuDialog === 'download'}
+            onClose={() => setOpenMenuDialog(false)}
+            fileType="Image"
+            file={selectedImage}
+          />
+        </>
       )}
-    </>
+      {currentLightBoxImage && (
+        <GalleryLightBox
+          open={currentLightBoxImage !== undefined}
+          onClose={() => setCurrentLightBoxImage(undefined)}
+          currentImageId={currentLightBoxImage}
+          imageCardData={data as MRT_Cell<APIImage, unknown>[]}
+          table={table}
+        />
+      )}
+    </Grid>
   );
 };
 
