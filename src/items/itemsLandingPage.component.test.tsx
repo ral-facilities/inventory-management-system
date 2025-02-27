@@ -1,5 +1,8 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { http, HttpResponse } from 'msw';
+import ItemsJSON from '../mocks/Items.json';
+import { server } from '../mocks/server';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import ItemsLandingPage from './itemsLandingPage.component';
 
@@ -103,6 +106,23 @@ describe('Items Landing Page', () => {
   });
 
   it('landing page renders data correctly when optional values are null', async () => {
+    server.use(
+      http.get('/v1/items/:id', async ({ params }) => {
+        const { id } = params;
+
+        const data = ItemsJSON.find((items) => items.id === id);
+
+        if (!data) {
+          return HttpResponse.json(
+            { detail: 'Item not found' },
+            { status: 404 }
+          );
+        }
+
+        return HttpResponse.json({ ...data, properties: [] }, { status: 200 });
+      })
+    );
+
     createView('/catalogue/4/items/33/items/I26EJNJ0');
 
     await waitFor(() => {
@@ -113,9 +133,8 @@ describe('Items Landing Page', () => {
       expect(screen.getByText('Manufacturer D')).toBeInTheDocument();
     });
     expect(screen.getByText('URL')).toBeInTheDocument();
-    expect(screen.getAllByText('None')[0]).toBeInTheDocument();
+    expect(screen.getAllByText('None').length).toEqual(3);
     expect(screen.getByText('Telephone number')).toBeInTheDocument();
-    expect(screen.getAllByText('None')[1]).toBeInTheDocument();
   });
 
   it('opens the edit item dialog', async () => {
