@@ -4,16 +4,15 @@ import DownloadIcon from '@mui/icons-material/Download';
 import EditIcon from '@mui/icons-material/Edit';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {
+  Box,
   Button,
   Card,
   Collapse,
   Grid,
-  LinearProgress,
   ListItemIcon,
   ListItemText,
   MenuItem,
   Paper,
-  Typography,
 } from '@mui/material';
 import {
   MRT_BottomToolbar,
@@ -22,6 +21,7 @@ import {
   MRT_Row,
   MRT_SelectCheckbox,
   MRT_ToggleRowActionMenuButton,
+  MRT_TopToolbar,
   useMaterialReactTable,
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
@@ -142,7 +142,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
     enableTopToolbar: true,
     enableFacetedValues: true,
     enableRowActions: true,
-    enableGlobalFilter: false,
+    enableGlobalFilter: true,
     enableRowSelection: true,
     enableStickyHeader: true,
     enableDensityToggle: false,
@@ -166,7 +166,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
     },
     // State
     initialState: {
-      showColumnFilters: true,
+      showColumnFilters: false,
       showGlobalFilter: true,
     },
     state: {
@@ -188,6 +188,21 @@ const ImageGallery = (props: ImageGalleryProps) => {
     },
     // Functions
     ...onPreservedStatesChange,
+    renderTopToolbarCustomActions: ({ table }) => (
+      <Box sx={{ display: 'flex' }}>
+        <Button
+          startIcon={<ClearIcon />}
+          sx={{ mx: 0.5 }}
+          variant="outlined"
+          disabled={preservedState.columnFilters.length === 0}
+          onClick={() => {
+            table.resetColumnFilters();
+          }}
+        >
+          Clear Filters
+        </Button>
+      </Box>
+    ),
     renderBottomToolbarCustomActions: ({ table }) =>
       displayTableRowCountText(table, images, 'Images', {
         paddingLeft: '8px',
@@ -259,11 +274,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
     },
   });
 
-  const [isCollapsed, setIsCollapsed] = React.useState(true);
-
-  const handleToggle = () => {
-    setIsCollapsed(!isCollapsed);
-  };
   const data = table
     .getSortedRowModel()
     .rows.map((row) => row.getVisibleCells().map((cell) => cell)[0]);
@@ -274,13 +284,13 @@ const ImageGallery = (props: ImageGalleryProps) => {
     .getSelectedRowModel()
     .rows.map((row) => row.original);
 
-  const isCardViewLoading = table.getState().showProgressBars;
-
   const {
     options: {
-      mrtTheme: { baseBackgroundColor },
+      mrtTheme: { baseBackgroundColor, selectedRowBackgroundColor },
     },
   } = table;
+
+  const isCollapsed = table.getState().showColumnFilters;
 
   return (
     <Paper
@@ -288,45 +298,16 @@ const ImageGallery = (props: ImageGalleryProps) => {
       sx={{ backgroundColor: baseBackgroundColor }}
       container
     >
-      <Grid marginTop={1} item>
-        <Button
-          startIcon={<ClearIcon />}
-          sx={{ ml: 1.5 }}
-          variant="outlined"
-          disabled={preservedState.columnFilters.length === 0}
-          onClick={() => {
-            table.resetColumnFilters();
-          }}
-        >
-          Clear Filters
-        </Button>
+      <Grid item width={'100%'}>
+        <MRT_TopToolbar table={table} />
       </Grid>
       <Grid item container mt={2} direction="column" alignItems="center">
-        <Collapse in={!isCollapsed} style={{ width: '100%' }}>
+        <Collapse in={isCollapsed} style={{ width: '100%' }}>
           <CardViewFilters table={table} />
         </Collapse>
-
-        <Typography
-          onClick={handleToggle}
-          variant="body2"
-          color="primary"
-          sx={{
-            cursor: 'pointer',
-            marginTop: 1,
-            textAlign: 'center',
-            textDecoration: 'underline',
-          }}
-        >
-          {isCollapsed ? 'Show Filters' : 'Hide Filters'}
-        </Typography>
       </Grid>
       <Grid container item sx={{ height: '670px', overflow: 'auto' }}>
-        {isCardViewLoading ? (
-          <Grid item sx={{ width: '100%' }}>
-            <LinearProgress />
-          </Grid>
-        ) : (
-          images &&
+        {images &&
           (images.length === 0 ? (
             <ErrorPage
               sx={{ marginTop: 2 }}
@@ -371,7 +352,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
                           ? '50%'
                           : undefined,
                       backgroundColor: isSelected
-                        ? table.options.mrtTheme.selectedRowBackgroundColor
+                        ? selectedRowBackgroundColor
                         : undefined,
                     }}
                     minWidth={'350px'}
@@ -445,8 +426,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
                 );
               })}
             </Grid>
-          ))
-        )}
+          ))}
       </Grid>
       <Grid direction="row" item container>
         <MRT_BottomToolbar table={table} sx={{ width: '100%' }} />

@@ -38,14 +38,14 @@ describe('Catalogue Category', () => {
   it('displays and hides filters, applies and clears name filter on catalogue categories', () => {
     cy.visit('/catalogue');
     cy.findByText('Motion').should('exist');
-    cy.findByText('Show Filters').click();
+    cy.findByRole('button', { name: 'Show/Hide filters' }).click();
     cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
     cy.findByLabelText('Filter by Name').type('beam');
     cy.findByText('Motion').should('not.exist');
     cy.findByRole('button', { name: 'Clear Filters' }).click();
     cy.findByText('Motion').should('exist');
-    cy.findByText('Hide Filters').click();
-    cy.findByText('Show Filters').should('exist');
+    cy.findByRole('button', { name: 'Show/Hide filters' }).click();
+    cy.findByLabelText('Filter by Name').should('not.visible');
   });
 
   it('should navigate back to the root directory when the home button is pressed', () => {

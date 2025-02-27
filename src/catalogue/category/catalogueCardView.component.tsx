@@ -14,13 +14,13 @@ import {
   ListItemIcon,
   MenuItem,
   Paper,
-  Typography,
   useMediaQuery,
   useTheme,
 } from '@mui/material';
 import {
   MRT_BottomToolbar,
   MRT_ColumnDef,
+  MRT_TopToolbar,
   useMaterialReactTable,
   type MRT_Cell,
 } from 'material-react-table';
@@ -70,7 +70,7 @@ const AddCategoryButton = (props: AddCatalogueButtonProps) => {
       <Button
         startIcon={<AddIcon />}
         disabled={props.disabled}
-        sx={{ mx: 0.5, ml: 2 }}
+        sx={{ mx: 0.5 }}
         variant="outlined"
         onClick={() => {
           setAddCategoryDialogOpen(true);
@@ -340,7 +340,7 @@ function CatalogueCardView() {
     enableTopToolbar: true,
     enableFacetedValues: true,
     enableRowActions: true,
-    enableGlobalFilter: false,
+    enableGlobalFilter: true,
     enableStickyHeader: true,
     enableRowSelection: true,
     enableMultiRowSelection: true,
@@ -368,7 +368,7 @@ function CatalogueCardView() {
 
     // State
     initialState: {
-      showColumnFilters: true,
+      showColumnFilters: false,
       showGlobalFilter: true,
     },
     state: {
@@ -391,6 +391,51 @@ function CatalogueCardView() {
     },
     // Functions
     ...onPreservedStatesChange,
+    renderTopToolbarCustomActions: ({ table }) => (
+      <Box sx={{ display: 'flex' }}>
+        <AddCategoryButton
+          parentId={parentId}
+          type="add"
+          resetSelectedCatalogueCategory={() =>
+            setSelectedCatalogueCategory(undefined)
+          }
+        />
+        {selectedCategories.length >= 1 && (
+          <>
+            <MoveCategoriesButton
+              selectedCategories={selectedCategories}
+              resetSelectedCategories={table.resetRowSelection}
+              parentCategoryId={catalogueCategoryId}
+            />
+            <CopyCategoriesButton
+              selectedCategories={selectedCategories}
+              resetSelectedCategories={table.resetRowSelection}
+              parentCategoryId={catalogueCategoryId}
+            />
+
+            <Button
+              sx={{ mx: '4px' }}
+              variant="outlined"
+              startIcon={<ClearIcon />}
+              onClick={() => table.resetRowSelection()}
+            >
+              {selectedCategories.length} selected
+            </Button>
+          </>
+        )}
+        <Button
+          startIcon={<ClearIcon />}
+          sx={{ mx: 0.5 }}
+          variant="outlined"
+          disabled={preservedState.columnFilters.length === 0}
+          onClick={() => {
+            table.resetColumnFilters();
+          }}
+        >
+          Clear Filters
+        </Button>
+      </Box>
+    ),
 
     renderRowActionMenuItems: ({ closeMenu, row }) => {
       return [
@@ -453,9 +498,6 @@ function CatalogueCardView() {
   const selectedCategories = table
     .getSelectedRowModel()
     .rows.map((row) => row.original);
-  const [isCollapsed, setIsCollapsed] = React.useState(true);
-
-  const isCardViewLoading = table.getState().showProgressBars;
 
   const {
     options: {
@@ -463,12 +505,14 @@ function CatalogueCardView() {
     },
   } = table;
 
-  const handleToggle = () => {
-    setIsCollapsed(!isCollapsed);
-  };
+  const isCollapsed = table.getState().showColumnFilters;
 
   return (
-    <Paper sx={{ backgroundColor: baseBackgroundColor }}>
+    <Paper
+      component={Grid}
+      sx={{ backgroundColor: baseBackgroundColor }}
+      container
+    >
       {!catalogueCategoryDetailLoading ? (
         <Grid
           container
@@ -482,81 +526,16 @@ function CatalogueCardView() {
             item
             overflow={'auto'}
           >
-            <Grid
-              marginTop="auto"
-              direction="row"
-              item
-              container
-              alignItems="center"
-              sx={{ pt: '8px' }}
-            >
-              <AddCategoryButton
-                parentId={parentId}
-                type="add"
-                resetSelectedCatalogueCategory={() =>
-                  setSelectedCatalogueCategory(undefined)
-                }
-              />
-              {selectedCategories.length >= 1 && (
-                <Box>
-                  <MoveCategoriesButton
-                    selectedCategories={selectedCategories}
-                    resetSelectedCategories={table.resetRowSelection}
-                    parentCategoryId={catalogueCategoryId}
-                  />
-                  <CopyCategoriesButton
-                    selectedCategories={selectedCategories}
-                    resetSelectedCategories={table.resetRowSelection}
-                    parentCategoryId={catalogueCategoryId}
-                  />
-
-                  <Button
-                    sx={{ mx: '4px' }}
-                    variant="outlined"
-                    startIcon={<ClearIcon />}
-                    onClick={() => table.resetRowSelection()}
-                  >
-                    {selectedCategories.length} selected
-                  </Button>
-                </Box>
-              )}
-              <Button
-                startIcon={<ClearIcon />}
-                sx={{ mx: 0.5 }}
-                variant="outlined"
-                disabled={preservedState.columnFilters.length === 0}
-                onClick={() => {
-                  table.resetColumnFilters();
-                }}
-              >
-                Clear Filters
-              </Button>
+            <Grid item width={'100%'}>
+              <MRT_TopToolbar table={table} />
             </Grid>
             <Grid item container direction="column" alignItems="center">
-              <Collapse in={!isCollapsed} style={{ width: '100%' }}>
+              <Collapse in={isCollapsed} style={{ width: '100%' }}>
                 <CardViewFilters table={table} />
               </Collapse>
-
-              <Typography
-                onClick={handleToggle}
-                variant="body2"
-                color="primary"
-                sx={{
-                  cursor: 'pointer',
-                  marginTop: 1,
-                  textAlign: 'center',
-                  textDecoration: 'underline',
-                }}
-              >
-                {isCollapsed ? 'Show Filters' : 'Hide Filters'}
-              </Typography>
             </Grid>
             <Grid item container>
-              {isCardViewLoading ? (
-                <Grid item width="100%">
-                  <LinearProgress />
-                </Grid>
-              ) : data.length !== 0 ? (
+              {data.length !== 0 ? (
                 data.map((card, index) => (
                   <Grid item key={index} sm={6} md={4} width={'100%'}>
                     <CatalogueCard

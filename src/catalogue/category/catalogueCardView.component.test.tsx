@@ -47,14 +47,6 @@ describe('CardView', () => {
     vi.clearAllMocks();
   });
 
-  it('progress bar renders correctly', async () => {
-    createView('/catalogue');
-
-    await waitFor(() => {
-      expect(screen.getByRole('progressbar')).toBeInTheDocument();
-    });
-  });
-
   it('redirects to catalogue items if isLeaf is true ', async () => {
     const consoleErrorSpy = vi
       .spyOn(console, 'error')
@@ -335,27 +327,6 @@ describe('CardView', () => {
       expect(screen.getByText('Categories per page')).toBeInTheDocument();
     });
 
-    it('toggles filter visibility when clicking the toggle button', async () => {
-      createView();
-
-      await waitFor(() => {
-        expect(screen.getByText('Test 1')).toBeInTheDocument();
-      });
-
-      expect(screen.queryByText('Hide Filters')).not.toBeInTheDocument();
-      expect(screen.getByText('Show Filters')).toBeInTheDocument();
-
-      await user.click(screen.getByText('Show Filters'));
-
-      expect(screen.getByText('Hide Filters')).toBeInTheDocument();
-      expect(screen.getByText('Categories per page')).toBeInTheDocument();
-
-      await user.click(screen.getByText('Hide Filters'));
-
-      expect(screen.queryByText('Hide Filters')).not.toBeInTheDocument();
-      expect(screen.getByText('Show Filters')).toBeInTheDocument();
-    });
-
     it('changes page correctly and rerenders data', async () => {
       const { router } = createView();
 
@@ -417,11 +388,11 @@ describe('CardView', () => {
 
       expect(await screen.findByText('Test 1')).toBeInTheDocument();
 
-      await user.click(screen.getByText('Show Filters'));
+      await user.click(
+        screen.getByRole('button', { name: 'Show/Hide filters' })
+      );
 
-      expect(await screen.findByText('Hide Filters')).toBeInTheDocument();
-
-      const nameInput = screen.getByLabelText('Filter by Name');
+      const nameInput = await screen.findByLabelText('Filter by Name');
       await user.type(nameInput, 'Test 1');
       await waitFor(() => {
         expect(screen.queryByText('Test 2')).not.toBeInTheDocument();
@@ -443,7 +414,9 @@ describe('CardView', () => {
         expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
       );
 
-      await user.click(screen.getByText('Show Filters'));
+      await user.click(
+        screen.getByRole('button', { name: 'Show/Hide filters' })
+      );
 
       const dropdownButtons = await screen.findAllByTestId('FilterListIcon');
 
