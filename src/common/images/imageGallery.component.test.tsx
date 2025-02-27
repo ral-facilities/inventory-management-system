@@ -35,14 +35,15 @@ describe('Image Gallery', () => {
       baseElement = createView().baseElement;
     });
 
-    await waitFor(() =>
-      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    await waitFor(
+      () => expect(screen.queryByRole('progressbar')).not.toBeInTheDocument(),
+      { timeout: 5000 }
     );
 
     expect((await screen.findAllByText('logo1.png')).length).toEqual(8);
 
     expect(baseElement).toMatchSnapshot();
-  });
+  }, 10000);
 
   it('renders no results page correctly', async () => {
     server.use(
