@@ -546,6 +546,24 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
               }
             : undefined,
       },
+      {
+        header: 'Expected Lifetime (Days)',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => row.catalogueItem?.expected_lifetime_days ?? '',
+        id: 'catalogueItem.expected_lifetime_days',
+        size: 300,
+        AggregatedCell: ({ cell, table }) => {
+          const isCatalogueGrouped = table
+            .getState()
+            .grouping.includes('catalogueItem.name');
+          const isCatalogueItemRow =
+            cell.row.groupingColumnId === 'catalogueItem.name';
+          return (
+            isCatalogueGrouped &&
+            isCatalogueItemRow && <>{cell.getValue<number>()}</>
+          );
+        },
+      },
     ];
   }, [
     aggregatedCellUsageStatus,

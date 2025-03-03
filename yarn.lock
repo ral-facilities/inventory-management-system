@@ -2567,7 +2567,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uppy/aws-s3@npm:^4.1.0":
+"@uppy/aws-s3@npm:4.1.3":
   version: 4.1.3
   resolution: "@uppy/aws-s3@npm:4.1.3"
   dependencies:
@@ -2576,6 +2576,18 @@ __metadata:
   peerDependencies:
     "@uppy/core": ^4.3.0
   checksum: 10c0/08607d19474712f912bc5a8a5f488e1b1df32bbdaa82846d75c4dc7cd47f008171b8dbdf165710b72311937586d80b2dd0b8ab73ce34f0a5b690114c32aae1b0
+  languageName: node
+  linkType: hard
+
+"@uppy/aws-s3@patch:@uppy/aws-s3@npm%3A4.1.3#~/.yarn/patches/@uppy-aws-s3-npm-4.1.3-4c4ba3e640.patch":
+  version: 4.1.3
+  resolution: "@uppy/aws-s3@patch:@uppy/aws-s3@npm%3A4.1.3#~/.yarn/patches/@uppy-aws-s3-npm-4.1.3-4c4ba3e640.patch::version=4.1.3&hash=c9e936"
+  dependencies:
+    "@uppy/companion-client": "npm:^4.2.0"
+    "@uppy/utils": "npm:^6.0.5"
+  peerDependencies:
+    "@uppy/core": ^4.3.0
+  checksum: 10c0/9607e38d77fca0ca5f7e80474b8d854c717d6fee6e343d62c8a77d245569a4335e9df3e3bbe8ba885a475c9e18d81105206477b34051ef81c3ed84483546389e
   languageName: node
   linkType: hard
 
@@ -5945,7 +5957,7 @@ __metadata:
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.3.0"
     "@types/react-router-dom": "npm:5.3.3"
-    "@uppy/aws-s3": "npm:^4.1.0"
+    "@uppy/aws-s3": "patch:@uppy/aws-s3@npm%3A4.1.3#~/.yarn/patches/@uppy-aws-s3-npm-4.1.3-4c4ba3e640.patch"
     "@uppy/core": "npm:^4.2.2"
     "@uppy/dashboard": "npm:^4.1.0"
     "@uppy/drag-drop": "npm:^4.0.2"
@@ -9480,8 +9492,8 @@ __metadata:
   linkType: hard
 
 "vite@npm:^5.0.0, vite@npm:^5.2.12":
-  version: 5.4.11
-  resolution: "vite@npm:5.4.11"
+  version: 5.4.14
+  resolution: "vite@npm:5.4.14"
   dependencies:
     esbuild: "npm:^0.21.3"
     fsevents: "npm:~2.3.3"
@@ -9518,7 +9530,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10c0/d536bb7af57dd0eca2a808f95f5ff1d7b7ffb8d86e17c6893087680a0448bd0d15e07475270c8a6de65cb5115592d037130a1dd979dc76bcef8c1dda202a1874
+  checksum: 10c0/8842933bd70ca6a98489a0bb9c8464bec373de00f9a97c8c7a4e64b24d15c88bfaa8c1acb38a68c3e5eb49072ffbccb146842c2d4edcdd036a9802964cffe3d1
   languageName: node
   linkType: hard
 
