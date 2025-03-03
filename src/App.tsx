@@ -220,6 +220,10 @@ const routeObject: RouteObject[] = [
             loader: systemsLayoutLoader(queryClient),
           },
           {
+            path: paths.systemRootTree,
+            Component: SystemsTree,
+          },
+          {
             path: paths.systemTree,
             Component: SystemsTree,
             loader: systemsLayoutLoader(queryClient),

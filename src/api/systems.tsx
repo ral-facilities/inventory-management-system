@@ -131,13 +131,28 @@ const getSystemTree = async (
   }
 
   // Fetch the root system
-  const rootSystem = await queryClient.fetchQuery(
-    getSystemQuery(parent_id, GET_SYSTEM_TREE_QUERY_OPTIONS)
-  );
+
+  let rootSystem: System = {
+    name: 'Root',
+    code: 'root',
+    id: 'root',
+    created_time: '',
+    modified_time: '',
+    description: null,
+    location: null,
+    owner: null,
+    importance: SystemImportanceType.LOW,
+    parent_id: null,
+  };
+
+  if (parent_id !== 'null')
+    rootSystem = await queryClient.fetchQuery(
+      getSystemQuery(parent_id, GET_SYSTEM_TREE_QUERY_OPTIONS)
+    );
 
   // Fetch systems at the current level
   const systems = await queryClient.fetchQuery(
-    getSystemsQuery(parent_id ?? 'null', GET_SYSTEM_TREE_QUERY_OPTIONS)
+    getSystemsQuery(parent_id, GET_SYSTEM_TREE_QUERY_OPTIONS)
   );
 
   // Increment the total count of subsystems
@@ -257,6 +272,7 @@ export const useGetSystemsTree = (
   maxSubsystems?: number
 ): UseQueryResult<SystemTree[], AxiosError> => {
   const queryClient = useQueryClient();
+
   return useQuery({
     queryKey: [
       'SystemsTree',
@@ -268,7 +284,7 @@ export const useGetSystemsTree = (
     queryFn: () =>
       getSystemTree(
         queryClient,
-        parent_id ?? '',
+        parent_id ?? 'null',
         maxSubsystems ?? 150,
         maxDepth,
         0,

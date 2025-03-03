@@ -66,41 +66,32 @@ function SystemsLayout() {
   return (
     <BaseLayoutHeader
       homeLocation="Systems"
-      breadcrumbsInfo={{
-        ...systemsBreadcrumbs,
-        full_trail: systemsBreadcrumbs?.full_trail ?? true,
-        trail:
-          systemsBreadcrumbs?.trail.map(([id, name]) => [
-            isTreeView ? id + '/tree' : id,
-            name,
-          ]) ?? [],
-      }}
+      breadcrumbsInfo={systemsBreadcrumbs}
     >
-      {location.pathname !== '/systems' && (
-        <ToggleButtonGroup
-          value={isTreeView ? 'tree' : 'normal'}
-          exclusive
-          onChange={handleViewChange}
-          aria-label="view mode toggle"
-          size="small"
-          sx={{ ml: 1, mb: 1 }}
-        >
-          <Tooltip title={'Normal view'}>
-            <span>
-              <ToggleButton value="normal" aria-label="normal view">
-                <ViewModuleIcon fontSize="small" />
-              </ToggleButton>
-            </span>
-          </Tooltip>
-          <Tooltip title={'Tree view'}>
-            <span>
-              <ToggleButton value="tree" aria-label="tree view">
-                <AccountTreeIcon fontSize="small" />
-              </ToggleButton>
-            </span>
-          </Tooltip>
-        </ToggleButtonGroup>
-      )}
+      <ToggleButtonGroup
+        value={isTreeView ? 'tree' : 'normal'}
+        exclusive
+        onChange={handleViewChange}
+        aria-label="view mode toggle"
+        size="small"
+        sx={{ ml: 1, mb: 1 }}
+      >
+        <Tooltip title={'Normal view'}>
+          <span>
+            <ToggleButton value="normal" aria-label="normal view">
+              <ViewModuleIcon fontSize="small" />
+            </ToggleButton>
+          </span>
+        </Tooltip>
+        <Tooltip title={'Tree view'}>
+          <span>
+            <ToggleButton value="tree" aria-label="tree view">
+              <AccountTreeIcon fontSize="small" />
+            </ToggleButton>
+          </span>
+        </Tooltip>
+      </ToggleButtonGroup>
+
       <Outlet />
     </BaseLayoutHeader>
   );

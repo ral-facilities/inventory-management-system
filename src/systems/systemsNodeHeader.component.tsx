@@ -99,7 +99,11 @@ const SystemsNodeHeader = (props: SystemsNodeHeaderProps) => {
             >
               <MenuItem
                 onClick={() => {
-                  navigate(`/systems/${data.system.id}`);
+                  navigate(
+                    data.system.id !== 'root'
+                      ? `/systems/${data.system.id}`
+                      : '/systems'
+                  );
                   handleMenuClose();
                 }}
               >

@@ -230,34 +230,42 @@ const SystemsTree = () => {
           style: { width: '300px' },
           data: {
             title: (
-              <MuiLink component={Link} to={`/systems/${system.id}/tree`}>
+              <MuiLink
+                component={Link}
+                to={
+                  system.id === 'root'
+                    ? `/systems/tree`
+                    : `/systems/${system.id}/tree`
+                }
+              >
                 {system.name}
               </MuiLink>
             ),
-            label: (
-              <Box>
-                {/* Items Heading */}
-                <Typography variant="h6" sx={{ marginBottom: 1 }}>
-                  Items:
-                </Typography>
-                {/* List of Catalogue Items */}
-                {system.catalogueItems.length > 0 ? (
-                  system.catalogueItems.map((catalogueItem) => (
-                    <Typography
-                      key={`${catalogueItem.id}-${system.id}`}
-                      variant="body2"
-                      sx={{ marginBottom: 0.5 }}
-                    >
-                      {catalogueItem.name}: {catalogueItem.itemsQuantity}
-                    </Typography>
-                  ))
-                ) : (
-                  <Typography variant="body2" sx={{ marginBottom: 0.5 }}>
-                    No Items
+            label:
+              system.id === 'root' ? undefined : (
+                <Box>
+                  {/* Items Heading */}
+                  <Typography variant="h6" sx={{ marginBottom: 1 }}>
+                    Items:
                   </Typography>
-                )}
-              </Box>
-            ),
+                  {/* List of Catalogue Items */}
+                  {system.catalogueItems.length > 0 ? (
+                    system.catalogueItems.map((catalogueItem) => (
+                      <Typography
+                        key={`${catalogueItem.id}-${system.id}`}
+                        variant="body2"
+                        sx={{ marginBottom: 0.5 }}
+                      >
+                        {catalogueItem.name}: {catalogueItem.itemsQuantity}
+                      </Typography>
+                    ))
+                  ) : (
+                    <Typography variant="body2" sx={{ marginBottom: 0.5 }}>
+                      No Items
+                    </Typography>
+                  )}
+                </Box>
+              ),
             system: system,
             direction: layoutDirection,
           },
