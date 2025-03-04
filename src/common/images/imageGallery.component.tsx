@@ -360,7 +360,14 @@ const ImageGallery = (props: ImageGalleryProps) => {
           <CardViewFilters table={table} />
         </Collapse>
       </Grid>
-      <Grid container item sx={{ height: '670px', overflow: 'auto' }}>
+      <Grid
+        container
+        item
+        sx={{
+          height: dense ? (isCollapsed ? '230px' : '385px') : '670px',
+          overflow: 'auto',
+        }}
+      >
         {images &&
           (images.length === 0 ? (
             <ErrorPage
