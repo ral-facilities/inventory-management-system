@@ -47,8 +47,9 @@ const PrimaryImageDialog = (props: PrimaryImageProps) => {
       open={open}
       maxWidth="xl"
       fullWidth
-      sx={{ maxHeight: '692px' }}
-      PaperProps={{ sx: { backgroundColor: 'background.default' } }}
+      PaperProps={{
+        sx: { backgroundColor: 'background.default', height: '880px' },
+      }}
     >
       <DialogTitle
         sx={{

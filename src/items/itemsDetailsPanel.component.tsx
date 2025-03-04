@@ -193,7 +193,9 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
 
         <TabPanel value={tabValue} index={1}>
           <Grid item container spacing={0}>
-            {itemData.properties &&
+            {itemData.properties.length === 0 ? (
+              <Typography color="text.secondary">None</Typography>
+            ) : (
               itemData.properties.map((property, index) => {
                 return (
                   <Grid item xs={12} sm={6} key={index}>
@@ -217,7 +219,8 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                     </Box>
                   </Grid>
                 );
-              })}
+              })
+            )}
           </Grid>
         </TabPanel>
 

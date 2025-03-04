@@ -212,7 +212,9 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
 
         <TabPanel value={tabValue} index={1}>
           <Grid item container justifyContent="space-between">
-            {catalogueItemIdData.properties &&
+            {catalogueItemIdData.properties.length === 0 ? (
+              <Typography color="text.secondary">None</Typography>
+            ) : (
               catalogueItemIdData.properties.map((property, index) => (
                 <Grid item xs={12} sm={6} key={index}>
                   <Typography
@@ -228,7 +230,8 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                     {property.value !== null ? String(property.value) : 'None'}
                   </Typography>
                 </Grid>
-              ))}
+              ))
+            )}
           </Grid>
         </TabPanel>
 

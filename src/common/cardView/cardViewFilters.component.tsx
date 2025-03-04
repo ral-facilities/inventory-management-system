@@ -15,6 +15,12 @@ const CardViewFilters = <TData extends MRT_RowData>(
 ) => {
   const { table } = props;
 
+  const {
+    options: {
+      mrtTheme: { baseBackgroundColor },
+    },
+  } = table;
+
   const theme = useTheme();
   return (
     <Grid
@@ -23,7 +29,7 @@ const CardViewFilters = <TData extends MRT_RowData>(
         position: 'sticky',
         top: 0,
         zIndex: 1,
-        backgroundColor: 'background.default',
+        backgroundColor: baseBackgroundColor,
       }}
       item
       container

@@ -342,7 +342,16 @@ function CatalogueItemsLandingPage() {
                       </Grid>
                       <Grid container item xs={12}>
                         <Grid container item spacing={1}>
-                          {catalogueItemIdData.properties &&
+                          {catalogueItemIdData.properties.length === 0 ? (
+                            <Grid item>
+                              <Typography
+                                variant="body1"
+                                color="text.secondary"
+                              >
+                                None
+                              </Typography>
+                            </Grid>
+                          ) : (
                             catalogueItemIdData.properties.map(
                               (property, index) => (
                                 <Grid item xs={12} sm={6} md={4} key={index}>
@@ -364,7 +373,8 @@ function CatalogueItemsLandingPage() {
                                   </Typography>
                                 </Grid>
                               )
-                            )}
+                            )
+                          )}
                         </Grid>
                       </Grid>
 
