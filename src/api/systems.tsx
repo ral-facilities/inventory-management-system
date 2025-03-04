@@ -118,54 +118,62 @@ const GET_SYSTEM_TREE_QUERY_OPTIONS = {
 const getSystemTree = async (
   queryClient: QueryClient,
   parent_id: string,
-  maxSubsystems: number, // Total max subsystems allowed
+  maxSubsystems: number,
   maxDepth?: number,
-  currentDepth: number = 0, // Default value
-  subsystemsCutOffPoint?: number, // Total cutoff point
-  totalSubsystems: { count: number } = { count: 0 }, // Shared counter object
-  catalogueItemCache: Map<string, CatalogueItem> = new Map() // Shared cache for catalogue items
+  currentDepth: number = 0,
+  subsystemsCutOffPoint?: number,
+  totalSubsystems: { count: number } = { count: 0 },
+  catalogueItemCache: Map<string, CatalogueItem> = new Map(),
+  systemsCache: Map<string, System> = new Map() // Cache for systems
 ): Promise<SystemTree[]> => {
-  // Stop recursion if currentDepth exceeds maxDepth
-  if (maxDepth !== undefined && currentDepth >= maxDepth) {
-    return [];
+  if (maxDepth !== undefined && currentDepth >= maxDepth) return [];
+
+  // Determine the root system from cache
+  let rootSystem: System;
+
+  if (parent_id === 'null') {
+    rootSystem = {
+      name: 'Root',
+      code: 'root',
+      id: 'root',
+      created_time: '',
+      modified_time: '',
+      description: null,
+      location: null,
+      owner: null,
+      importance: SystemImportanceType.LOW,
+      parent_id: null,
+    };
+  } else {
+    // Check cache for the parent system
+    if (!systemsCache.has(parent_id)) {
+      const fetchedSystem = await queryClient.fetchQuery(
+        getSystemQuery(parent_id, GET_SYSTEM_TREE_QUERY_OPTIONS)
+      );
+      systemsCache.set(parent_id, fetchedSystem); // Cache only the parent system
+    }
+    rootSystem = systemsCache.get(parent_id)!;
   }
-
-  // Fetch the root system
-
-  let rootSystem: System = {
-    name: 'Root',
-    code: 'root',
-    id: 'root',
-    created_time: '',
-    modified_time: '',
-    description: null,
-    location: null,
-    owner: null,
-    importance: SystemImportanceType.LOW,
-    parent_id: null,
-  };
-
-  if (parent_id !== 'null')
-    rootSystem = await queryClient.fetchQuery(
-      getSystemQuery(parent_id, GET_SYSTEM_TREE_QUERY_OPTIONS)
-    );
 
   // Fetch systems at the current level
   const systems = await queryClient.fetchQuery(
     getSystemsQuery(parent_id, GET_SYSTEM_TREE_QUERY_OPTIONS)
   );
 
-  // Increment the total count of subsystems
-  totalSubsystems.count += systems.length;
+  // Store all fetched systems in cache
+  systems.forEach((system) => {
+    if (!systemsCache.has(system.id)) {
+      systemsCache.set(system.id, system);
+    }
+  });
 
-  // Throw an AxiosError if the total count exceeds maxSubsystems
+  totalSubsystems.count += systems.length;
   if (maxSubsystems !== undefined && totalSubsystems.count > maxSubsystems) {
     throw new Error(
       `Total subsystems exceeded the maximum allowed limit of ${maxSubsystems}. Current count: ${totalSubsystems.count}`
     );
   }
 
-  // Stop recursion if totalSubsystems count exceeds the cutoff point
   if (
     subsystemsCutOffPoint !== undefined &&
     totalSubsystems.count > subsystemsCutOffPoint
@@ -177,11 +185,11 @@ const getSystemTree = async (
     }));
   }
 
-  // Fetch subsystems and catalogue items for each system recursively
-  const systemsWithTree: SystemTree[] = await Promise.all(
-    systems.map(async (system) => {
-      // Fetch subsystems recursively, increasing the depth
-      const subsystems = await getSystemTree(
+  // Fetch subsystems recursively
+  const systemsWithTree = await Promise.all(
+    systems.map(async (system) => ({
+      ...system,
+      subsystems: await getSystemTree(
         queryClient,
         system.id,
         maxSubsystems,
@@ -189,80 +197,61 @@ const getSystemTree = async (
         currentDepth + 1,
         subsystemsCutOffPoint,
         totalSubsystems,
+        catalogueItemCache,
+        systemsCache
+      ),
+      catalogueItems: await fetchCatalogueItems(
+        queryClient,
+        system.id,
         catalogueItemCache
-      );
-
-      // Fetch all items for the current system
-      const items = await queryClient.fetchQuery(
-        getItemsQuery(system.id, undefined, GET_SYSTEM_TREE_QUERY_OPTIONS)
-      );
-
-      // Group items into catalogue categories and fetch catalogue item details
-      const catalogueItemIdSet = new Set<string>(
-        items.map((item) => item.catalogue_item_id)
-      );
-
-      const catalogueItems: SystemTree['catalogueItems'] = await Promise.all(
-        Array.from(catalogueItemIdSet).map(async (id) => {
-          // Check if the item exists in the cache
-          if (!catalogueItemCache.has(id)) {
-            // If not, fetch and store it in the cache
-            const fetchedCatalogueItem = await queryClient.fetchQuery(
-              getCatalogueItemQuery(id, GET_SYSTEM_TREE_QUERY_OPTIONS)
-            );
-            catalogueItemCache.set(id, fetchedCatalogueItem);
-          }
-
-          // Retrieve the item from the cache
-          const catalogueItem = catalogueItemCache.get(id)!;
-          const categoryItems = items.filter(
-            (item) => item.catalogue_item_id === id
-          );
-          return { ...catalogueItem, itemsQuantity: categoryItems.length };
-        })
-      );
-
-      return { ...system, subsystems, catalogueItems };
-    })
-  );
-
-  // Handle the case when there are no systems (leaf nodes or empty levels)
-  const items = await queryClient.fetchQuery(
-    getItemsQuery(parent_id, undefined, GET_SYSTEM_TREE_QUERY_OPTIONS)
-  );
-
-  // Group items into catalogue categories and fetch catalogue item details
-  const catalogueItemIdSet = new Set<string>(
-    items.map((item) => item.catalogue_item_id)
-  );
-
-  const catalogueItems: SystemTree['catalogueItems'] = await Promise.all(
-    Array.from(catalogueItemIdSet).map(async (id) => {
-      // Check if the item exists in the cache
-      if (!catalogueItemCache.has(id)) {
-        // If not, fetch and store it in the cache
-        const fetchedCatalogueItem = await queryClient.fetchQuery(
-          getCatalogueItemQuery(id, GET_SYSTEM_TREE_QUERY_OPTIONS)
-        );
-        catalogueItemCache.set(id, fetchedCatalogueItem);
-      }
-
-      // Retrieve the item from the cache
-      const catalogueItem = catalogueItemCache.get(id)!;
-      const categoryItems = items.filter(
-        (item) => item.catalogue_item_id === id
-      );
-      return { ...catalogueItem, itemsQuantity: categoryItems.length };
-    })
+      ),
+    }))
   );
 
   return [
     {
       ...rootSystem,
-      catalogueItems,
+      catalogueItems: await fetchCatalogueItems(
+        queryClient,
+        parent_id,
+        catalogueItemCache
+      ),
       subsystems: systemsWithTree,
     },
   ];
+};
+
+// Helper function for fetching and caching catalogue items
+const fetchCatalogueItems = async (
+  queryClient: QueryClient,
+  systemId: string,
+  catalogueItemCache: Map<string, CatalogueItem>
+): Promise<SystemTree['catalogueItems']> => {
+  const items = await queryClient.fetchQuery(
+    getItemsQuery(systemId, undefined, GET_SYSTEM_TREE_QUERY_OPTIONS)
+  );
+
+  const catalogueItems: SystemTree['catalogueItems'] = [];
+  const catalogueItemIdSet = new Set(
+    items.map((item) => item.catalogue_item_id)
+  );
+
+  for (const id of Array.from(catalogueItemIdSet)) {
+    catalogueItemCache.set(
+      id,
+      catalogueItemCache.get(id) ||
+        (await queryClient.fetchQuery(
+          getCatalogueItemQuery(id, GET_SYSTEM_TREE_QUERY_OPTIONS)
+        ))
+    );
+    catalogueItems.push({
+      ...catalogueItemCache.get(id)!,
+      itemsQuantity: items.filter((item) => item.catalogue_item_id === id)
+        .length,
+    });
+  }
+
+  return catalogueItems;
 };
 
 export const useGetSystemsTree = (
