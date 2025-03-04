@@ -14,7 +14,7 @@ import type {
   UppyImageUploadResponse,
   UppyUploadMetadata,
 } from '../../app.types';
-import { settings } from '../../settings';
+import { InventoryManagementSystemSettingsContext } from '../../configProvider.component';
 import { getNonEmptyTrimmedString } from '../../utils';
 import { useMetaFields } from '../uppy.utils';
 
@@ -33,9 +33,11 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
 
   const osApiUrl = async () => (await settings)?.osApiUrl || '';
 
+  const settings = React.useContext(InventoryManagementSystemSettingsContext);
+  const maxFileSizeB = settings.maxImageSizeBytes;
+
   // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000, so here the former is expected despite them really being GiB, MiB and KiB.
-  const [maxFileSizeMB, setMaxFileSizeMB] = React.useState<number>(50);
-  const maxFileSizeB = maxFileSizeMB * 1024 * 1024;
+  const maxFileSizeMB = maxFileSizeB / 1024 ** 2;
 
   const [uppy] = React.useState<
     Uppy<UppyUploadMetadata, UppyImageUploadResponse>
@@ -67,22 +69,6 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
 
     return newUppy;
   });
-
-  React.useEffect(() => {
-    const fetchSettings = async () => {
-      setMaxFileSizeMB((await settings)?.maxImageSizeMB || 50);
-    };
-    fetchSettings();
-  }, []);
-
-  React.useEffect(() => {
-    const maxFileSizeB = maxFileSizeMB * 1024 * 1024;
-    uppy.setOptions({
-      restrictions: {
-        maxFileSize: maxFileSizeB,
-      },
-    });
-  }, [maxFileSizeMB, uppy]);
 
   const handleClose = React.useCallback(() => {
     onClose();

@@ -128,8 +128,8 @@ export const fetchSettings =
         }
 
         // Ensure the maxImageSizeMB value exists.
-        if (!('maxImageSizeMB' in settings)) {
-          throw new Error('maxImageSizeMB is undefined in settings');
+        if (!('maxImageSizeBytes' in settings)) {
+          throw new Error('maxImageSizeBytes is undefined in settings');
         }
 
         if (Array.isArray(settings['routes']) && settings['routes'].length) {

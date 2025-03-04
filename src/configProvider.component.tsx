@@ -8,7 +8,7 @@ import {
 const initialConfiguration: InventoryManagementSystemSettings = {
   imsApiUrl: '',
   osApiUrl: '',
-  maxImageSizeMB: 50,
+  maxImageSizeBytes: 52428800,
   routes: [],
   pluginHost: '',
 };
