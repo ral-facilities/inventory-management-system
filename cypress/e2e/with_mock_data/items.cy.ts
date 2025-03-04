@@ -701,7 +701,7 @@ describe('Items', () => {
       cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
     });
 
-    it.only('edits an attachment successfully', () => {
+    it('edits an attachment successfully', () => {
       cy.findByText('5YUQDDjKpz2z').click();
       cy.findByText(
         'High-resolution cameras for beam characterization. 1'
@@ -743,7 +743,7 @@ describe('Items', () => {
       });
     });
 
-    it.only('shows error message when no fields have been changed', () => {
+    it('shows error message when no fields have been changed', () => {
       cy.findByText('5YUQDDjKpz2z').click();
       cy.findByText(
         'High-resolution cameras for beam characterization. 1'
@@ -765,7 +765,7 @@ describe('Items', () => {
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
     });
 
-    it.only('shows error message when required fields are cleared', () => {
+    it('shows error message when required fields are cleared', () => {
       cy.findByText('5YUQDDjKpz2z').click();
       cy.findByText(
         'High-resolution cameras for beam characterization. 1'
