@@ -1,8 +1,14 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import AttachmentsJSON from '../mocks/Attachments.json';
-import { hooksWrapperWithProviders } from '../testUtils';
-import { AttachmentPostMetadata, ObjectFilePatch } from './api.types';
-import { useGetAttachment, useGetAttachments, usePatchAttachment, usePostAttachmentMetadata } from './attachments';
+import { CREATED_MODIFIED_TIME_VALUES, hooksWrapperWithProviders } from '../testUtils';
+import { AttachmentPostMetadata, AttachmentPostMetadataResponse, ObjectFilePatch } from './api.types';
+import {
+  useDeleteAttachment,
+  useGetAttachment,
+  useGetAttachments,
+  usePatchAttachment,
+  usePostAttachmentMetadata,
+} from './attachments';
 
 describe('attachments api functions', () => {
   afterEach(() => {
@@ -102,6 +108,42 @@ describe('attachments api functions', () => {
         ...AttachmentsJSON[0],
         ...mockDataPatch,
       });
+    });
+  });
+
+  describe('useDeleteAttachment', () => {
+    let mockDataView: AttachmentPostMetadataResponse;
+    beforeEach(() => {
+      mockDataView = {
+        id: '1',
+        file_name: 'Attachment A',
+        entity_id: '2',
+        title: '2',
+        description: 'a description',
+        ...CREATED_MODIFIED_TIME_VALUES,
+        upload_info: {
+          url: 'http://localhost:3000/object-storage',
+          fields: {
+            'Content-Type': 'multipart/form-data',
+            key: 'attachments/test',
+            AWSAccessKeyId: 'root',
+            policy: 'policy-test',
+            signature: 'signature-test',
+          },
+        },
+      };
+    });
+
+    it('posts a request to delete an attachment and return a successful response', async () => {
+      const { result } = renderHook(() => useDeleteAttachment(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+      expect(result.current.isIdle).toBe(true);
+      result.current.mutate(mockDataView.id);
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      expect(result.current.data).toEqual('');
     });
   });
 });
