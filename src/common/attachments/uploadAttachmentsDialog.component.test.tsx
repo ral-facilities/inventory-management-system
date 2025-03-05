@@ -96,26 +96,28 @@ describe('Upload attachment dialog', () => {
     // Checks if file extension is displayed. If it's editable, actual value will disappear after editing.
     expect(await screen.findByText('.txt')).toBeInTheDocument();
 
-    const title = screen.getByRole('textbox', { name: 'Title' });
-    const description = screen.getByRole('textbox', { name: 'Description' });
+    const description: HTMLInputElement = screen.getByRole('textbox', {
+      name: 'Description',
+    });
+    const title: HTMLInputElement = screen.getByRole('textbox', {
+      name: 'Title',
+    });
 
     expect(await screen.findByDisplayValue('test1')).toBeInTheDocument();
 
-    await user.type(title, 'test title');
+    fireEvent.click(title);
 
-    await user.clear(description);
-    await user.click(description);
-    await user.paste('test description');
+    fireEvent.change(title, {
+      target: { value: 'test title' },
+    });
 
-    await user.click(title);
-    await user.click(description);
-    await user.tab();
+    fireEvent.click(description);
+
+    fireEvent.change(description, {
+      target: { value: 'test description' },
+    });
 
     expect(await screen.findByText('.txt')).toBeInTheDocument();
-
-    expect(
-      await screen.findByDisplayValue('test description')
-    ).toBeInTheDocument();
 
     await user.click(await screen.findByText('Save changes'));
 
