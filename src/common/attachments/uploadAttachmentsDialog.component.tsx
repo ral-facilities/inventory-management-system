@@ -28,7 +28,6 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
   const [fileMetadataMap, setFileMetadataMap] = React.useState<
     Record<string, string>
   >({});
-  console.log(`INITIAL FileMetadataMap: ${JSON.stringify(fileMetadataMap)}`);
 
   const [uppy] = React.useState<Uppy<UppyUploadMetadata, AwsBody>>(
     new Uppy<UppyUploadMetadata, AwsBody>({
@@ -41,32 +40,18 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
       .use(AwsS3<UppyUploadMetadata, AwsBody>, {
         shouldUseMultipart: false,
         getUploadParameters: async (file) => {
-          console.log(
-            `#1: The Retrieved meta description - ${file.meta.description}`
-          );
-          console.log(
-            `#2: The trimmed description - ${getNonEmptyTrimmedString(file.meta.description)}`
-          );
           const response = await postAttachmentMetadata({
             entity_id: entityId,
             file_name: file.meta.name,
             title: getNonEmptyTrimmedString(file.meta.title),
             description: getNonEmptyTrimmedString(file.meta.description),
           });
-          console.log(
-            `#2.5 The actual trimmed description string - ${response.description}`
-          );
-          console.log(`The response.id: ${response.id}`);
 
           setFileMetadataMap((prev) => ({
             ...prev,
             [file.id]: response.id,
           }));
 
-          console.log(`the upload info url: ${response.upload_info.url}`);
-          console.log(
-            `the upload info fields: ${JSON.stringify(response.upload_info.fields)}`
-          );
           return {
             method: 'POST',
             url: response.upload_info.url,
@@ -83,7 +68,6 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
       deleteMetadata?: boolean
     ) => {
       const id = fileMetadataMap[file?.id ?? ''];
-      console.log(`Update response id? ${id}`);
       if (id) {
         if (deleteMetadata) {
           // TODO: Implement logic to delete metadata using id
@@ -94,7 +78,6 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
         const newMap = Object.fromEntries(
           Object.entries(fileMetadataMap).filter(([key]) => key !== file?.id)
         );
-        console.log(`NEW MAP: ${JSON.stringify(newMap)}`);
         setFileMetadataMap(newMap);
       }
     },
