@@ -687,17 +687,17 @@ describe('Items', () => {
       ).should('exist');
 
       cy.findByText('Attachments').click();
-      cy.findAllByText('safety-protocols').should('have.length', 4);
-      cy.findAllByText('camera-setup-guide').should('have.length', 4);
+      cy.findAllByText('Safety Protocols').should('have.length', 4);
+      cy.findAllByText('Camera Setup Guide').should('have.length', 4);
 
       cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
       cy.findByLabelText('Filter by Filename').type('camera');
-      cy.findAllByText('safety-protocols').should('not.exist');
-      cy.findAllByText('camera-setup-guide').should('have.length', 5);
+      cy.findAllByText('Safety Protocols').should('not.exist');
+      cy.findAllByText('Camera Setup Guide').should('have.length', 5);
 
       cy.findByRole('button', { name: 'Clear Filters' }).click();
-      cy.findAllByText('safety-protocols').should('have.length', 4);
-      cy.findAllByText('camera-setup-guide').should('have.length', 4);
+      cy.findAllByText('Safety Protocols').should('have.length', 4);
+      cy.findAllByText('Camera Setup Guide').should('have.length', 4);
       cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
     });
 

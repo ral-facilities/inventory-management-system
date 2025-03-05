@@ -220,6 +220,12 @@ export interface Item
 }
 // ------------------------------------ OBJECT STORAGE API -----------------------------------------
 
+export interface ObjectFilePatch {
+  file_name?: string;
+  title?: string | null;
+  description?: string | null;
+}
+
 export interface ObjectFileUploadMetadata {
   entity_id: string;
   file_name: string;
@@ -244,15 +250,15 @@ export interface AttachmentPostMetadataResponse
   upload_info: AttachmentUploadInfo;
 }
 
+export interface AttachmentListMetadata
+  extends Required<AttachmentPostMetadata>,
+    CreatedModifiedMixin {
+  id: string;
+}
+
 // ------------------------------------ IMAGES ------------------------------------------------
 export interface ImagePost extends ObjectFileUploadMetadata {
   upload_file: File;
-}
-
-export interface ObjectFilePatch {
-  file_name?: string;
-  title?: string | null;
-  description?: string | null;
 }
 
 export interface APIImage

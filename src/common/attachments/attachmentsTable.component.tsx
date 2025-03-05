@@ -16,7 +16,7 @@ import {
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { AttachmentPostMetadataResponse } from '../../api/api.types';
+import { AttachmentListMetadata, AttachmentPostMetadataResponse } from '../../api/api.types';
 import { useGetAttachments, usePatchAttachment } from '../../api/attachments';
 import EditFileDialog from '../editFileDialog.component';
 import {
@@ -38,7 +38,7 @@ export interface AttachmentTableProps {
 
 function AttachmentsTable(props: AttachmentTableProps) {
   const { entityId } = props;
-  const { data: attachments, isLoading: attachmentIsLoading } = useGetAttachments(entityId);
+  const { data: attachments, isLoading: attachmentIsLoading } = useGetAttachments(entityId ?? '');
 
   const [selectedAttachment, setSelectedAttachment] = React.useState<
     AttachmentPostMetadataResponse | undefined
@@ -48,7 +48,8 @@ function AttachmentsTable(props: AttachmentTableProps) {
     'edit' | false
   >(false);
 
-  const columns = React.useMemo<MRT_ColumnDef<AttachmentPostMetadataResponse>[]>(() => {
+  const columns = React.useMemo<MRT_ColumnDef<AttachmentListMetadata>[]>(() => {
+
     return [
       {
         header: 'Filename',
