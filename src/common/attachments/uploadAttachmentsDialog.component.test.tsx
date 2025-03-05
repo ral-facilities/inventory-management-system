@@ -99,25 +99,39 @@ describe('Upload attachment dialog', () => {
     const description: HTMLInputElement = screen.getByRole('textbox', {
       name: 'Description',
     });
+
     const title: HTMLInputElement = screen.getByRole('textbox', {
       name: 'Title',
     });
 
     expect(await screen.findByDisplayValue('test1')).toBeInTheDocument();
 
-    fireEvent.click(title);
-
     fireEvent.change(title, {
       target: { value: 'test title' },
     });
 
-    fireEvent.click(description);
+    await waitFor(() => {
+      expect(title).toHaveValue('test title');
+    });
+
+    title.dispatchEvent(new Event('input'));
 
     fireEvent.change(description, {
       target: { value: 'test description' },
     });
 
+    await waitFor(() => {
+      expect(description).toHaveValue('test description');
+    });
+
+    description.dispatchEvent(new Event('input'));
+
+    user.click(title);
+    user.tab();
+
     expect(await screen.findByText('.txt')).toBeInTheDocument();
+
+    console.log(description.value);
 
     await user.click(await screen.findByText('Save changes'));
 
