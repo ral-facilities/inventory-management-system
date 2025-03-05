@@ -611,8 +611,11 @@ describe('Image Gallery', () => {
     expect((await screen.findAllByText('logo1.png')).length).toEqual(9);
 
     const initialURL = router.state.location.search;
-    await user.click(screen.getByText('Show Filters'));
-    expect(await screen.findByText('Hide Filters')).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'Show/Hide filters' }));
+
+    expect(
+      await screen.findByLabelText('Filter by File name')
+    ).toBeInTheDocument();
 
     const nameInput = screen.getByLabelText('Filter by File name');
     await user.type(nameInput, 'stfc-logo-blue-text.png');

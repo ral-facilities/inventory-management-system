@@ -115,7 +115,7 @@ exports[`Image Gallery > displays no images message and can open and close uploa
                           aria-invalid="false"
                           autocomplete="new-password"
                           class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12yjm75-MuiInputBase-input-MuiOutlinedInput-input"
-                          id=":r14j:"
+                          id=":r152:"
                           placeholder="Search"
                           type="text"
                           value=""
@@ -623,7 +623,7 @@ exports[`Image Gallery > displays no images message and can open and close uploa
         </div>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item css-1gq3f8p-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container MuiGrid-item css-19amxl4-MuiGrid-root"
       >
         <div
           class="MuiBox-root css-5tbyhb"
@@ -636,7 +636,7 @@ exports[`Image Gallery > displays no images message and can open and close uploa
           <p
             class="MuiTypography-root MuiTypography-body1 css-1uwgr7b-MuiTypography-root"
           >
-            Please add an image by false clicking the Upload Images {!dense ? 'menu item' : 'button'}.
+            Please add an image by  clicking the Upload Images button.
           </p>
         </div>
       </div>
@@ -704,7 +704,7 @@ exports[`Image Gallery > displays no images message and can open and close uploa
                     class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                   >
                     <div
-                      aria-controls=":r150:"
+                      aria-controls=":r15f:"
                       aria-expanded="false"
                       aria-haspopup="listbox"
                       aria-label="Images per page"
@@ -3992,7 +3992,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
         </div>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item css-1gq3f8p-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container MuiGrid-item css-19amxl4-MuiGrid-root"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item css-owgjh-MuiGrid-root"
@@ -6394,7 +6394,7 @@ exports[`Image Gallery > renders no results page correctly 1`] = `
           <p
             class="MuiTypography-root MuiTypography-body1 css-1uwgr7b-MuiTypography-root"
           >
-            Please add an image by  opening the Action Menu and clicking the Upload Images {!dense ? 'menu item' : 'button'}.
+            Please add an image by  opening the Action Menu and clicking the Upload Images menu item.
           </p>
         </div>
       </div>

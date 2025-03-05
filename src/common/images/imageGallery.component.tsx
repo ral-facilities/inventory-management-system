@@ -373,7 +373,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
             <ErrorPage
               sx={{ marginTop: 2 }}
               boldErrorText="No images available"
-              errorText={`Please add an image by ${!dense && ' opening the Action Menu and'} clicking the Upload Images {!dense ? 'menu item' : 'button'}.`}
+              errorText={`Please add an image by ${!dense ? ' opening the Action Menu and' : ''} clicking the Upload Images ${!dense ? 'menu item' : 'button'}.`}
             />
           ) : (
             <Grid
