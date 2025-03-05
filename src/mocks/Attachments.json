@@ -2,7 +2,7 @@
     {
         "entity_id": "1",
         "file_name": "laser-calibration.txt",
-        "title": "laser-calibration",
+        "title": "Laser Calibration",
         "description": "Detailed report on the calibration of high-precision lasers used in experiments.",
         "id": "1",
         "modified_time": "2024-01-02T13:10:10.000+00:00",
@@ -12,7 +12,7 @@
     {
         "entity_id": "1",
         "file_name": "safety-protocols.pdf",
-        "title": "safety-protocols",
+        "title": "Safety Protocols",
         "description": "Comprehensive guide outlining safety protocols and procedures for conducting experiments.",
         "id": "1",
         "modified_time": "2024-01-02T13:10:10.000+00:00",
@@ -22,7 +22,7 @@
     {
         "entity_id": "1",
         "file_name": "camera-setup-guide.docx",
-        "title": "camera-setup-guide",
+        "title": "Camera Setup Guide",
         "description": "Guide providing instructions for setting up and configuring cameras used in experiments.",
         "id": "1",
         "modified_time": "2024-01-02T13:10:10.000+00:00",
@@ -32,7 +32,7 @@
     {
         "entity_id": "1",
         "file_name": "experiment-results.rtf",
-        "title": "experiment-results",
+        "title": "Experiment Results",
         "description": "Compilation of results from various experiments conducted, including data analysis and graphs",
         "id": "1",
         "modified_time": "2024-01-02T13:10:10.000+00:00",

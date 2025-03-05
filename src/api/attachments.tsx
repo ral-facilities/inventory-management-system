@@ -9,6 +9,7 @@ import {
 import { AxiosError } from 'axios';
 import { storageApi } from './api';
 import {
+  AttachmentListMetadata,
   AttachmentPostMetadata,
   AttachmentPostMetadataResponse,
 } from './api.types';
@@ -21,7 +22,7 @@ const postAttachmentMetadata = async (
     .then((response) => response.data);
 };
 
-export const usePostAttachmentMetadata = (): UseMutationResult<
+export const usePostAttachmentMetadata = (entityId: string): UseMutationResult<
   AttachmentPostMetadataResponse,
   AxiosError,
   AttachmentPostMetadata
@@ -32,13 +33,13 @@ export const usePostAttachmentMetadata = (): UseMutationResult<
       postAttachmentMetadata(attachmentMetadata),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['Attachments'],
+        queryKey: ['Attachments', entityId],
       });
     },
   });
 };
 
-export const getAttachment = async (id: string): Promise<AttachmentPostMetadataResponse> => {
+export const getAttachment = async (id: string): Promise<AttachmentListMetadata> => {
   return storageApi.get(`/attachments/${id}`).then((response) => {
     return response.data;
   });
@@ -46,7 +47,7 @@ export const getAttachment = async (id: string): Promise<AttachmentPostMetadataR
 
 export const useGetAttachment = (
   id: string
-): UseQueryResult<AttachmentPostMetadataResponse, AxiosError> => {
+): UseQueryResult<AttachmentListMetadata, AxiosError> => {
   return useQuery({
     queryKey: ['Attachment', id],
     queryFn: () => getAttachment(id),
@@ -55,7 +56,7 @@ export const useGetAttachment = (
 
 const getAttachments = async (
   entityId: string
-): Promise<AttachmentPostMetadataResponse[]> => {
+): Promise<AttachmentListMetadata[]> => {
   const queryParams = new URLSearchParams();
   queryParams.append('entity_id', entityId);
 
@@ -67,11 +68,10 @@ const getAttachments = async (
 };
 
 export const useGetAttachments = (
-  entityId?: string
-): UseQueryResult<AttachmentPostMetadataResponse[], AxiosError> => {
+  entityId: string
+): UseQueryResult<AttachmentListMetadata[], AxiosError> => {
   return useQuery({
     queryKey: ['Attachments', entityId],
-    queryFn: () => getAttachments(entityId ?? ''),
-    enabled: !!entityId,
+    queryFn: () => getAttachments(entityId),
   });
 };

@@ -15,13 +15,13 @@ describe('attachments api functions', () => {
       mockDataPost = {
         file_name: 'laser-calibration.txt',
         entity_id: '1',
-        title: 'laser-calibration',
+        title: 'Laser Calibration',
         description: 'Detailed report on the calibration of high-precision lasers used in experiments.',
       };
     });
 
     it('should post attachment metadata and return a success response', async () => {
-      const { result } = renderHook(() => usePostAttachmentMetadata(), {
+      const { result } = renderHook(() => usePostAttachmentMetadata('1'), {
         wrapper: hooksWrapperWithProviders(),
       });
       expect(result.current.isIdle).toBe(true);

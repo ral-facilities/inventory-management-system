@@ -3104,12 +3104,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="2"
               >
                 <div
-                  aria-label="safety-protocols"
+                  aria-label="Safety Protocols"
                   class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  safety-protocols
+                  Safety Protocols
                 </div>
               </td>
               <td
@@ -3182,12 +3182,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="2"
               >
                 <div
-                  aria-label="camera-setup-guide"
+                  aria-label="Camera Setup Guide"
                   class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  camera-setup-guide
+                  Camera Setup Guide
                 </div>
               </td>
               <td
@@ -3260,12 +3260,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="2"
               >
                 <div
-                  aria-label="experiment-results"
+                  aria-label="Experiment Results"
                   class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  experiment-results
+                  Experiment Results
                 </div>
               </td>
               <td
@@ -3338,12 +3338,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="2"
               >
                 <div
-                  aria-label="laser-calibration"
+                  aria-label="Laser Calibration"
                   class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  laser-calibration
+                  Laser Calibration
                 </div>
               </td>
               <td
@@ -3416,12 +3416,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="2"
               >
                 <div
-                  aria-label="safety-protocols"
+                  aria-label="Safety Protocols"
                   class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  safety-protocols
+                  Safety Protocols
                 </div>
               </td>
               <td
@@ -3494,12 +3494,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="2"
               >
                 <div
-                  aria-label="camera-setup-guide"
+                  aria-label="Camera Setup Guide"
                   class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  camera-setup-guide
+                  Camera Setup Guide
                 </div>
               </td>
               <td
@@ -3572,12 +3572,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="2"
               >
                 <div
-                  aria-label="experiment-results"
+                  aria-label="Experiment Results"
                   class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  experiment-results
+                  Experiment Results
                 </div>
               </td>
               <td
@@ -3650,12 +3650,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="2"
               >
                 <div
-                  aria-label="laser-calibration"
+                  aria-label="Laser Calibration"
                   class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  laser-calibration
+                  Laser Calibration
                 </div>
               </td>
               <td
@@ -3728,12 +3728,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="2"
               >
                 <div
-                  aria-label="safety-protocols"
+                  aria-label="Safety Protocols"
                   class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  safety-protocols
+                  Safety Protocols
                 </div>
               </td>
               <td
@@ -3806,12 +3806,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="2"
               >
                 <div
-                  aria-label="camera-setup-guide"
+                  aria-label="Camera Setup Guide"
                   class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  camera-setup-guide
+                  Camera Setup Guide
                 </div>
               </td>
               <td
@@ -3884,12 +3884,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="2"
               >
                 <div
-                  aria-label="experiment-results"
+                  aria-label="Experiment Results"
                   class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  experiment-results
+                  Experiment Results
                 </div>
               </td>
               <td
@@ -3962,12 +3962,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="2"
               >
                 <div
-                  aria-label="laser-calibration"
+                  aria-label="Laser Calibration"
                   class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  laser-calibration
+                  Laser Calibration
                 </div>
               </td>
               <td
@@ -4040,12 +4040,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="2"
               >
                 <div
-                  aria-label="safety-protocols"
+                  aria-label="Safety Protocols"
                   class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  safety-protocols
+                  Safety Protocols
                 </div>
               </td>
               <td
@@ -4118,12 +4118,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="2"
               >
                 <div
-                  aria-label="camera-setup-guide"
+                  aria-label="Camera Setup Guide"
                   class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  camera-setup-guide
+                  Camera Setup Guide
                 </div>
               </td>
               <td
@@ -4196,12 +4196,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="2"
               >
                 <div
-                  aria-label="experiment-results"
+                  aria-label="Experiment Results"
                   class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  experiment-results
+                  Experiment Results
                 </div>
               </td>
               <td
