@@ -15,6 +15,7 @@ import {
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
   formatDateTimeStrings,
+  mrtTheme,
 } from '../utils';
 import SystemDialog from './systemDialog.component';
 
@@ -106,7 +107,9 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
     state: {
       showProgressBars: systemsDataLoading,
     },
-    // MUI
+    //MRT
+    mrtTheme,
+    //MUI
     muiTableBodyRowProps: ({ row }) => {
       const canPlaceHere =
         type === 'copyTo' || !selectedSystemIds.includes(row.original.id);
