@@ -24,7 +24,7 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
   const { open, onClose, entityId } = props;
   const theme = useTheme();
 
-  const { mutateAsync: postAttachmentMetadata } = usePostAttachmentMetadata(entityId);
+  const { mutateAsync: postAttachmentMetadata } = usePostAttachmentMetadata();
   const [fileMetadataMap, setFileMetadataMap] = React.useState<
     Record<string, string>
   >({});

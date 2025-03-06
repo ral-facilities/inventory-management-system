@@ -9,7 +9,7 @@ import {
 import { AxiosError } from 'axios';
 import { storageApi } from './api';
 import {
-  AttachmentListMetadata,
+  AttachmentMetadata,
   AttachmentPostMetadata,
   AttachmentPostMetadataResponse,
 } from './api.types';
@@ -22,7 +22,7 @@ const postAttachmentMetadata = async (
     .then((response) => response.data);
 };
 
-export const usePostAttachmentMetadata = (entityId: string): UseMutationResult<
+export const usePostAttachmentMetadata = (): UseMutationResult<
   AttachmentPostMetadataResponse,
   AxiosError,
   AttachmentPostMetadata
@@ -31,7 +31,7 @@ export const usePostAttachmentMetadata = (entityId: string): UseMutationResult<
   return useMutation({
     mutationFn: (attachmentMetadata: AttachmentPostMetadata) =>
       postAttachmentMetadata(attachmentMetadata),
-    onSuccess: () => {
+    onSuccess: (entityId) => {
       queryClient.invalidateQueries({
         queryKey: ['Attachments', entityId],
       });
@@ -39,24 +39,9 @@ export const usePostAttachmentMetadata = (entityId: string): UseMutationResult<
   });
 };
 
-export const getAttachment = async (id: string): Promise<AttachmentListMetadata> => {
-  return storageApi.get(`/attachments/${id}`).then((response) => {
-    return response.data;
-  });
-};
-
-export const useGetAttachment = (
-  id: string
-): UseQueryResult<AttachmentListMetadata, AxiosError> => {
-  return useQuery({
-    queryKey: ['Attachment', id],
-    queryFn: () => getAttachment(id),
-  });
-};
-
 const getAttachments = async (
   entityId: string
-): Promise<AttachmentListMetadata[]> => {
+): Promise<AttachmentMetadata[]> => {
   const queryParams = new URLSearchParams();
   queryParams.append('entity_id', entityId);
 
@@ -69,7 +54,7 @@ const getAttachments = async (
 
 export const useGetAttachments = (
   entityId: string
-): UseQueryResult<AttachmentListMetadata[], AxiosError> => {
+): UseQueryResult<AttachmentMetadata[], AxiosError> => {
   return useQuery({
     queryKey: ['Attachments', entityId],
     queryFn: () => getAttachments(entityId),

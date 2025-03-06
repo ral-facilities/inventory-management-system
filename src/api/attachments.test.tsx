@@ -1,8 +1,7 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import AttachmentsJSON from '../mocks/Attachments.json';
 import { hooksWrapperWithProviders } from '../testUtils';
 import { AttachmentPostMetadata } from './api.types';
-import { useGetAttachment, useGetAttachments, usePostAttachmentMetadata } from './attachments';
+import { useGetAttachments, usePostAttachmentMetadata } from './attachments';
 
 describe('attachments api functions', () => {
   afterEach(() => {
@@ -21,7 +20,7 @@ describe('attachments api functions', () => {
     });
 
     it('should post attachment metadata and return a success response', async () => {
-      const { result } = renderHook(() => usePostAttachmentMetadata('1'), {
+      const { result } = renderHook(() => usePostAttachmentMetadata(), {
         wrapper: hooksWrapperWithProviders(),
       });
       expect(result.current.isIdle).toBe(true);
@@ -59,23 +58,6 @@ describe('attachments api functions', () => {
       });
 
       expect(result.current.data?.length).toEqual(20);
-    });
-  });
-
-  describe('useGetAttachment', () => {
-    it('sends request to fetch attachment data and returns successful reponse', async () => {
-      const { result } = renderHook(() => useGetAttachment('1'), {
-        wrapper: hooksWrapperWithProviders(),
-      });
-
-      await waitFor(() => {
-        expect(result.current.isSuccess).toBeTruthy();
-      });
-
-      expect(result.current.data).toEqual({
-        ...AttachmentsJSON[1],
-        url: 'http://localhost:3000/attachments/safety-protocols.pdf?text=1',
-      });
     });
   });
 });

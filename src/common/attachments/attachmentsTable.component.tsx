@@ -12,7 +12,7 @@ import {
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { AttachmentListMetadata } from '../../api/api.types';
+import { AttachmentMetadata } from '../../api/api.types';
 import { useGetAttachments } from '../../api/attachments';
 import {
   COLUMN_FILTER_FUNCTIONS,
@@ -28,14 +28,14 @@ import {
 import { usePreservedTableState } from '../preservedTableState.component';
 
 export interface AttachmentTableProps {
-  entityId?: string;
+  entityId: string;
 }
 
 function AttachmentsTable(props: AttachmentTableProps) {
   const { entityId } = props;
-  const { data: attachments, isLoading: attachmentIsLoading } = useGetAttachments(entityId ?? '');
+  const { data: attachments, isLoading: attachmentIsLoading } = useGetAttachments(entityId);
 
-  const columns = React.useMemo<MRT_ColumnDef<AttachmentListMetadata>[]>(() => {
+  const columns = React.useMemo<MRT_ColumnDef<AttachmentMetadata>[]>(() => {
     return [
       {
         header: 'Filename',
@@ -209,9 +209,7 @@ function AttachmentsTable(props: AttachmentTableProps) {
   });
 
   return (
-    <>
-      <MaterialReactTable table={table} />
-    </>
+    <MaterialReactTable table={table} />
   );
 }
 

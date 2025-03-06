@@ -1058,68 +1058,6 @@ export const handlers = [
     return HttpResponse.json(generateAttachments(), { status: 200 });
   }),
 
-  http.get('/attachments/:id', ({ params }) => {
-    const { id } = params;
-    // This is needed otherwise the msw would intercept the
-    // mocked attachment get request for the object store
-    if (!isNaN(Number(id))) {
-      let attachment = undefined;
-      if (Number(id) % 4 === 0) {
-        attachment = {
-          ...AttachmentsJSON[0],
-          url: `${window.location.origin}/attachments/laser-calibration.txt?text=${
-            encodeURIComponent(id as string)
-          }`,
-        };
-      } else {
-        if (Number(id) % 4 === 1) {
-          attachment = {
-            ...AttachmentsJSON[1],
-            url: `${window.location.origin}/attachments/safety-protocols.pdf?text=${
-              encodeURIComponent(id as string)
-            }`,
-          };
-        } else {
-          if (Number(id) % 4 === 2) {
-            attachment = {
-              ...AttachmentsJSON[2],
-              url: `${window.location.origin}/attachments/camera-setup-guide.docx?text=${
-                encodeURIComponent(id as string)
-              }`,
-            };
-          } else {
-            if (id === '3') {
-              attachment = {
-                ...AttachmentsJSON[3],
-                url: 'invalid url',
-                description: undefined,
-              };
-            } else {
-              attachment = {
-                ...AttachmentsJSON[3],
-                url: `${window.location.origin}/attachments/experiment-results.rtf?text=${
-                  encodeURIComponent(id as string)
-                }`,
-              };
-            }
-          }
-        }
-      }
-
-      if (id === '5') {
-        return HttpResponse.error();
-      }
-
-      return HttpResponse.json(
-        {
-          ...attachment,
-          id: id,
-        },
-        { status: 200 }
-      );
-    }
-  }),
-
   // ------------------------------------ OBJECT STORAGE ------------------------------------------------
 
   http.post('/object-storage', async () => {
