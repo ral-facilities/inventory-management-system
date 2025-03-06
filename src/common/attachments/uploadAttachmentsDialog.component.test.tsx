@@ -106,6 +106,10 @@ describe('Upload attachment dialog', () => {
 
     expect(await screen.findByDisplayValue('test1')).toBeInTheDocument();
 
+    // The input elements would be upto date, but the last form attribute would be missing a word/letter,
+    // likely caused by the automated typing and submission being too fast for the form to update.
+    // Adding a typing delay fixed this issue, ensuring enough time for the form to update.
+
     const delayedUser = userEvent.setup({ delay: 20 });
 
     await delayedUser.type(title, 'test title');
