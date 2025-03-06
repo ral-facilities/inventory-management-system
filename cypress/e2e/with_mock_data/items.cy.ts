@@ -818,14 +818,14 @@ describe('Items', () => {
 
       cy.findByText('Gallery').click();
       cy.findAllByText('stfc-logo-blue-text.png').should('have.length', 8);
-      cy.findByText('Show Filters').click();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).click();
       cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
       cy.findByLabelText('Filter by File name').type('logo1.png');
       cy.findByAltText('test').should('not.exist');
       cy.findByRole('button', { name: 'Clear Filters' }).click();
       cy.findAllByText('stfc-logo-blue-text.png').should('have.length', 8);
-      cy.findByText('Hide Filters').click();
-      cy.findByText('Show Filters').should('exist');
+      cy.findByRole('button', { name: 'Show/Hide filters' }).click();
+      cy.findByLabelText('Filter by File name').should('not.visible');
     });
 
     it('opens information dialog from card view', () => {

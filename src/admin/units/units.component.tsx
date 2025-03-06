@@ -26,6 +26,7 @@ import {
   displayTableRowCountText,
   formatDateTimeStrings,
   getPageHeightCalc,
+  mrtTheme,
 } from '../../utils';
 import DeleteUnitDialog from './deleteUnitsDialog.component.tsx';
 import UnitsDialog from './unitsDialog.component.tsx';
@@ -118,6 +119,9 @@ function Units() {
       ...preservedState,
       showProgressBars: unitDataLoading, //or showSkeletons
     },
+    //MRT
+    mrtTheme,
+    //MUI
     muiTableBodyRowProps: ({ row }) => {
       return { component: TableRow, 'aria-label': `${row.original.value} row` };
     },
