@@ -106,7 +106,7 @@ describe('Upload attachment dialog', () => {
 
     expect(await screen.findByDisplayValue('test1')).toBeInTheDocument();
 
-    let delayedUser = userEvent.setup({ delay: 100 });
+    const delayedUser = userEvent.setup({ delay: 20 });
 
     await delayedUser.type(title, 'test title');
 
