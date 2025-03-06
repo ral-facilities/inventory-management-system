@@ -106,32 +106,17 @@ describe('Upload attachment dialog', () => {
 
     expect(await screen.findByDisplayValue('test1')).toBeInTheDocument();
 
-    fireEvent.change(title, {
-      target: { value: 'test title' },
-    });
+    let delayedUser = userEvent.setup({ delay: 100 });
 
-    await waitFor(() => {
-      expect(title).toHaveValue('test title');
-    });
+    await delayedUser.type(title, 'test title');
 
-    title.dispatchEvent(new Event('input'));
-
-    fireEvent.change(description, {
-      target: { value: 'test description' },
-    });
-
-    await waitFor(() => {
-      expect(description).toHaveValue('test description');
-    });
-
-    description.dispatchEvent(new Event('input'));
-
-    user.click(title);
-    user.tab();
+    await delayedUser.type(description, 'test description');
 
     expect(await screen.findByText('.txt')).toBeInTheDocument();
 
-    console.log(description.value);
+    expect(
+      await screen.findByDisplayValue('test description')
+    ).toBeInTheDocument();
 
     await user.click(await screen.findByText('Save changes'));
 
