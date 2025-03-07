@@ -7,10 +7,10 @@ import { addUnits } from '../units/functions';
 import {
   addCatalogueItem,
   copyToCatalogueItems,
+  duplicateCatalogueItem,
   editCatalogueItem,
   moveToCatalogueItems,
   obsoleteCatalogueItem,
-  duplicateCatalogueItem,
 } from './functions';
 
 describe('catalogue items', () => {
@@ -28,7 +28,7 @@ describe('catalogue items', () => {
     addUnits(['mm', 'nm'], true);
     cy.visit('/catalogue');
     addCatalogueCategories(true);
-    duplicateCatalogueCategory('Spherical Lenses');
+    duplicateCatalogueCategory('Spherical Lenses', 0);
   });
   afterEach(() => {
     cy.clearMocks();

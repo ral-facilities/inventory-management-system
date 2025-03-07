@@ -2,17 +2,15 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { renderComponentWithRouterProvider } from '../../testUtils';
-import PlaceholderImage, {
-  PlaceholderImageProps,
-} from './placeholderImage.component'; // Adjust the import path as necessary
+import PrimaryImage, { PrimaryImageProps } from './primaryImage.component'; // Adjust the import path as necessary
 
 vi.mock('../../handleIMS_APIError');
 
-let props: PlaceholderImageProps;
+let props: PrimaryImageProps;
 let user: UserEvent;
 
 const createView = () => {
-  return renderComponentWithRouterProvider(<PlaceholderImage {...props} />);
+  return renderComponentWithRouterProvider(<PrimaryImage {...props} />);
 };
 
 beforeEach(() => {
@@ -26,7 +24,7 @@ afterEach(() => {
   vi.clearAllMocks();
 });
 
-describe('PlaceholderImage Component', () => {
+describe('PrimaryImage Component', () => {
   it('matches the snapshot', async () => {
     const view = createView();
     expect(view.asFragment()).toMatchSnapshot();

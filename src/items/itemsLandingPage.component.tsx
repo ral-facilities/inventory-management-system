@@ -12,7 +12,7 @@ import { useGetItem } from '../api/items';
 import { useGetManufacturer } from '../api/manufacturers';
 import { useGetSystem } from '../api/systems';
 import ActionMenu from '../common/actionMenu.component';
-import PlaceholderImage from '../common/images/placeholderImage.component';
+import PrimaryImage from '../common/images/primaryImage.component';
 import TabView from '../common/tab/tabView.component';
 import { formatDateTimeStrings } from '../utils';
 import ItemDialog from './itemDialog.component';
@@ -23,7 +23,8 @@ const ItemsActionMenu = (props: {
   item: Item;
 }) => {
   const { catalogueItem, catalogueCategory, item } = props;
-  const [openEditDialog, setOpenEditDialog] = React.useState<boolean>(false);
+  const [editItemDialogOpen, setEditItemDialogOpen] =
+    React.useState<boolean>(false);
   return (
     <ActionMenu
       ariaLabelPrefix="items landing page"
@@ -31,14 +32,14 @@ const ItemsActionMenu = (props: {
       uploadAttachmentsEntityId={item.id}
       uploadImagesEntityId={item.id}
       editMenuItem={{
-        onClick: () => setOpenEditDialog(true),
+        onClick: () => setEditItemDialogOpen(true),
         dialog: (
           <>
-            {openEditDialog && (
+            {editItemDialogOpen && (
               <ItemDialog
-                open={openEditDialog}
+                open={editItemDialogOpen}
                 onClose={() => {
-                  setOpenEditDialog(false);
+                  setEditItemDialogOpen(false);
                 }}
                 requestType="patch"
                 catalogueCategory={catalogueCategory}
@@ -95,7 +96,7 @@ function ItemsLandingPage() {
               {/* Image Section */}
               <Grid item container xs={12}>
                 <Grid item xs={12} sm={4}>
-                  <PlaceholderImage entityId={itemData.id} />
+                  <PrimaryImage entityId={itemData.id} />
                 </Grid>
                 {/* Title and Description Section */}
                 <Grid
@@ -314,7 +315,16 @@ function ItemsLandingPage() {
                         </Grid>
                         <Grid container item xs={12}>
                           <Grid container item spacing={1}>
-                            {itemData.properties &&
+                            {itemData.properties.length === 0 ? (
+                              <Grid item>
+                                <Typography
+                                  variant="body1"
+                                  color="text.secondary"
+                                >
+                                  None
+                                </Typography>
+                              </Grid>
+                            ) : (
                               itemData.properties.map((property, index) => (
                                 <Grid item xs={12} sm={6} md={4} key={index}>
                                   <Typography
@@ -334,7 +344,8 @@ function ItemsLandingPage() {
                                       : 'None'}
                                   </Typography>
                                 </Grid>
-                              ))}
+                              ))
+                            )}
                           </Grid>
                         </Grid>
 

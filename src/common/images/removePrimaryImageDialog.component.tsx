@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { APIImageWithURL, ObjectFilePatch } from '../../api/api.types';
+import { APIImageWithURL, ImageMetadataPatch } from '../../api/api.types';
 import { usePatchImage } from '../../api/images';
 import handleIMS_APIError from '../../handleIMS_APIError';
 
@@ -37,7 +37,7 @@ const RemovePrimaryImageDialog = (props: RemovePrimaryImageProps) => {
 
   const handlePatchImage = React.useCallback(() => {
     if (image) {
-      const fileToEdit: ObjectFilePatch = {
+      const fileToEdit: ImageMetadataPatch = {
         primary: false,
         file_name: image.file_name,
       };

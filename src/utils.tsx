@@ -20,6 +20,7 @@ import {
   MRT_Row,
   MRT_RowData,
   MRT_TableInstance,
+  type MRT_Theme,
 } from 'material-react-table';
 import React from 'react';
 
@@ -546,3 +547,7 @@ export function downloadFileByLink(url: string, filename: string): void {
   link.click();
   document.body.removeChild(link);
 }
+
+export const mrtTheme = (theme: Theme): Partial<MRT_Theme> => ({
+  baseBackgroundColor: theme.palette.background.default,
+});

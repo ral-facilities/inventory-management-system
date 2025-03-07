@@ -11,6 +11,7 @@ import {
   MenuItem,
   SxProps,
   Theme,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import { AxiosError } from 'axios';
@@ -42,36 +43,28 @@ const PrimaryOptionsMenu = (props: PrimaryOptionsMenuInterface) => {
 
   const handleOpenSetPrimary = () => {
     onChangePrimaryDialogOpen('set');
-    setAnchorEl(null);
+    handleCloseMenu();
   };
 
   const handleOpenRemovePrimary = () => {
     onChangePrimaryDialogOpen('remove');
-    setAnchorEl(null);
+    handleCloseMenu();
   };
 
   return (
     <Box sx={{ height: '100%' }}>
-      <IconButton
-        id="basic-button"
-        aria-controls={open ? 'basic-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        aria-label="primary images action menu"
-        onClick={handleOpenMenu}
-        sx={{ padding: { xs: '0px', sm: '8px' } }}
-      >
-        <MoreHorizIcon />
-      </IconButton>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleCloseMenu}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-      >
+      <Tooltip title="Primary Image Actions">
+        <span>
+          <IconButton
+            aria-label="primary images action menu"
+            onClick={handleOpenMenu}
+            sx={{ padding: { xs: '0px', sm: '8px' } }}
+          >
+            <MoreHorizIcon />
+          </IconButton>
+        </span>
+      </Tooltip>
+      <Menu anchorEl={anchorEl} open={open} onClose={handleCloseMenu}>
         <MenuItem onClick={handleOpenSetPrimary}>
           <ListItemIcon>
             <EditIcon />
@@ -92,12 +85,12 @@ const PrimaryOptionsMenu = (props: PrimaryOptionsMenuInterface) => {
   );
 };
 
-export interface PlaceholderImageProps {
+export interface PrimaryImageProps {
   sx?: SxProps<Theme>;
-  entityId?: string;
+  entityId: string;
 }
 
-const PlaceholderImage = (props: PlaceholderImageProps) => {
+const PrimaryImage = (props: PrimaryImageProps) => {
   const { sx, entityId } = props;
 
   const { data: imagesData } = useGetImages(entityId, true);
@@ -160,7 +153,7 @@ const PlaceholderImage = (props: PlaceholderImageProps) => {
         onClose={() => {
           setPrimaryDialogOpen(false);
         }}
-        entityID={entityId ?? ''}
+        entityID={entityId}
       />
       <RemovePrimaryImageDialog
         open={primaryDialogOpen == 'remove'}
@@ -173,4 +166,4 @@ const PlaceholderImage = (props: PlaceholderImageProps) => {
   );
 };
 
-export default PlaceholderImage;
+export default PrimaryImage;
