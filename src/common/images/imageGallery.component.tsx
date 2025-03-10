@@ -384,93 +384,95 @@ const ImageGallery = (props: ImageGalleryProps) => {
                     (image) => image.id === card.row.original.id
                   );
                   return (
-                    <Card
-                      component={Grid}
-                      item
-                      container
-                      xs
-                      key={`thumbnail-displayed-${index}`}
-                      style={{
-                        maxWidth:
-                          data.length === 1 ||
-                          (images.length %
-                            preservedState.pagination.pageSize ===
-                            1 &&
-                            isLastPage)
-                            ? '50%'
-                            : undefined,
-                        backgroundColor: isSelected
-                          ? selectedRowBackgroundColor
-                          : undefined,
-                      }}
-                      minWidth={'350px'}
-                    >
-                      <Grid
-                        display="flex"
-                        justifyContent="flex-start"
-                        alignItems="center"
-                        item
+                    <Grid key={`thumbnail-displayed-${index}`} item>
+                      <Card
+                        component={Grid}
                         container
-                        xs={12}
-                      >
-                        <Grid item xs={2}>
-                          <MRT_SelectCheckbox
-                            row={card.row as MRT_Row<APIImage>}
-                            table={table}
-                            sx={{
-                              margin: 0.5,
-                            }}
-                          />
-                        </Grid>
-                      </Grid>
-
-                      <Grid
-                        display="flex"
-                        justifyContent="center"
-                        alignItems="center"
-                        item
-                        minHeight={`${MAX_HEIGHT_THUMBNAIL}px`}
                         xs
+                        style={{
+                          maxWidth:
+                            data.length === 1 ||
+                            (images.length %
+                              preservedState.pagination.pageSize ===
+                              1 &&
+                              isLastPage)
+                              ? '50%'
+                              : undefined,
+                          backgroundColor: isSelected
+                            ? selectedRowBackgroundColor
+                            : undefined,
+                        }}
+                        minWidth={'350px'}
                       >
-                        <ThumbnailImage
-                          onClick={() =>
-                            setCurrentLightBoxImage(card.row.original.id)
-                          }
-                          image={card.row.original}
-                        />
-                      </Grid>
+                        <Grid
+                          display="flex"
+                          justifyContent="flex-start"
+                          alignItems="center"
+                          item
+                          container
+                          height="fit-content"
+                          xs={12}
+                        >
+                          <Grid item xs={2}>
+                            <MRT_SelectCheckbox
+                              row={card.row as MRT_Row<APIImage>}
+                              table={table}
+                              sx={{
+                                margin: 0.5,
+                              }}
+                            />
+                          </Grid>
+                        </Grid>
 
-                      <Grid
-                        display="flex"
-                        justifyContent="center"
-                        alignItems="center"
-                        item
-                        container
-                        xs={12}
-                      >
-                        <Grid xs={2} item>
-                          <MRT_ToggleRowActionMenuButton
-                            cell={card as MRT_Cell<APIImage>}
-                            row={card.row as MRT_Row<APIImage>}
-                            table={table}
-                            sx={{
-                              margin: 0.5,
-                            }}
+                        <Grid
+                          display="flex"
+                          justifyContent="center"
+                          alignItems="center"
+                          item
+                          minHeight={`${MAX_HEIGHT_THUMBNAIL}px`}
+                          xs
+                        >
+                          <ThumbnailImage
+                            onClick={() =>
+                              setCurrentLightBoxImage(card.row.original.id)
+                            }
+                            image={card.row.original}
                           />
                         </Grid>
-                        <Grid item xs={8}>
-                          <OverflowTip
-                            sx={{
-                              fontVariant: 'body2',
-                              textAlign: 'center',
-                            }}
-                          >
-                            {card.row.original.file_name}
-                          </OverflowTip>
+
+                        <Grid
+                          display="flex"
+                          justifyContent="center"
+                          alignItems="center"
+                          item
+                          height="fit-content"
+                          container
+                          xs={12}
+                        >
+                          <Grid xs={2} item>
+                            <MRT_ToggleRowActionMenuButton
+                              cell={card as MRT_Cell<APIImage>}
+                              row={card.row as MRT_Row<APIImage>}
+                              table={table}
+                              sx={{
+                                margin: 0.5,
+                              }}
+                            />
+                          </Grid>
+                          <Grid item xs={8}>
+                            <OverflowTip
+                              sx={{
+                                fontVariant: 'body2',
+                                textAlign: 'center',
+                              }}
+                            >
+                              {card.row.original.file_name}
+                            </OverflowTip>
+                          </Grid>
+                          <Grid item xs={2}></Grid>
                         </Grid>
-                        <Grid item xs={2}></Grid>
-                      </Grid>
-                    </Card>
+                      </Card>
+                    </Grid>
                   );
                 })}
               </Grid>
