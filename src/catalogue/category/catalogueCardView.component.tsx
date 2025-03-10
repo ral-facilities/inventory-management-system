@@ -14,8 +14,6 @@ import {
   ListItemIcon,
   MenuItem,
   Paper,
-  useMediaQuery,
-  useTheme,
 } from '@mui/material';
 import {
   MRT_BottomToolbar,
@@ -213,14 +211,6 @@ function CatalogueCardView() {
     }
     // Dependencies for this effect: it will re-run when either catalogueCategoryData or selectedCatalogueCategory changes
   }, [catalogueCategoryData, selectedCatalogueCategory]);
-
-  // Display total and pagination on separate lines if on a small screen
-  const theme = useTheme();
-  const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const cardViewHeight = getPageHeightCalc('80px');
-  const cardViewCardsHeight = getPageHeightCalc(
-    `100px + ${smallScreen ? '128px' : '72px'}`
-  );
 
   const propertyNames = Array.from(
     new Set(
@@ -499,6 +489,7 @@ function CatalogueCardView() {
     .getSelectedRowModel()
     .rows.map((row) => row.original);
 
+  const isLoading = table.getState().showProgressBars;
   const {
     options: {
       mrtTheme: { baseBackgroundColor },
@@ -506,6 +497,8 @@ function CatalogueCardView() {
   } = table;
 
   const isCollapsed = table.getState().showColumnFilters;
+
+  const cardViewHeight = getPageHeightCalc('80px');
 
   return (
     <Paper
@@ -516,49 +509,64 @@ function CatalogueCardView() {
       {!catalogueCategoryDetailLoading ? (
         <Grid
           container
-          flexDirection={'column'}
+          flexDirection="column"
           height={cardViewHeight}
           maxHeight={cardViewHeight}
         >
-          <Grid
-            container
-            maxHeight={cardViewCardsHeight}
-            item
-            overflow={'auto'}
-          >
-            <Grid item width={'100%'}>
-              <MRT_TopToolbar table={table} />
-            </Grid>
-            <Grid item container direction="column" alignItems="center">
+          <Grid item width="100%" sx={{ flexShrink: 0 }}>
+            <MRT_TopToolbar table={table} />
+          </Grid>
+
+          <Grid container item sx={{ flex: 1, overflow: 'auto' }}>
+            <Grid
+              item
+              container
+              direction="column"
+              alignItems="center"
+              display={!isCollapsed ? 'none' : undefined}
+              sx={{
+                justifyContent: 'left',
+                paddingLeft: 0.5,
+                position: 'sticky',
+                top: 0,
+                backgroundColor: 'background.default',
+                zIndex: 1000,
+                width: '100%',
+                paddingTop: 2.5,
+                paddingBottom: 2.5,
+              }}
+            >
               <Collapse in={isCollapsed} style={{ width: '100%' }}>
                 <CardViewFilters table={table} />
               </Collapse>
             </Grid>
-            <Grid item container>
-              {data.length !== 0 ? (
-                data.map((card, index) => (
-                  <Grid item key={index} sm={6} md={4} width={'100%'}>
-                    <CatalogueCard
-                      card={card as MRT_Cell<CatalogueCategory>}
-                      table={table}
+            <Grid item width="100%">
+              <Grid container width="100%">
+                {!isLoading &&
+                  (data.length !== 0 ? (
+                    data.map((card, index) => (
+                      <Grid item key={index} sm={6} md={4} width={'100%'}>
+                        <CatalogueCard
+                          card={card as MRT_Cell<CatalogueCategory>}
+                          table={table}
+                        />
+                      </Grid>
+                    ))
+                  ) : (
+                    <ErrorPage
+                      sx={{ marginTop: 2 }}
+                      boldErrorText="No results found"
+                      errorText={
+                        'There are no catalogue categories. Please add a category using the button in the top left of your screen.'
+                      }
                     />
-                  </Grid>
-                ))
-              ) : (
-                <ErrorPage
-                  sx={{ marginTop: 2 }}
-                  boldErrorText="No results found"
-                  errorText={
-                    'There are no catalogue categories. Please add a category using the button in the top left of your screen.'
-                  }
-                />
-              )}
+                  ))}
+              </Grid>
             </Grid>
           </Grid>
-          <Grid marginTop={'auto'} direction="row" item container>
-            <MRT_BottomToolbar table={table} sx={{ width: '100%' }} />
+          <Grid item width="100%" sx={{ flexShrink: 0 }}>
+            <MRT_BottomToolbar table={table} />
           </Grid>
-
           <CatalogueCategoryDialog
             open={menuDialogOpen === 'edit' || menuDialogOpen === 'duplicate'}
             onClose={() => setMenuDialogOpen(false)}
