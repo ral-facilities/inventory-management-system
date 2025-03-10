@@ -63,7 +63,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
         if (rowSelection[row.id]) {
           setSelectedPrimaryID('');
         } else {
-          setSelectedPrimaryID(row.id);
+          setSelectedPrimaryID(row.original.id);
         }
       }
       setRowSelection((prev) => ({
