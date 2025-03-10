@@ -90,16 +90,18 @@ const GalleryLightBox = (props: GalleryLightBoxProps) => {
             {currentIndex + 1} / {images.length}
           </Typography>
           <Box>
-            <MRT_ToggleRowActionMenuButton
-              cell={currentImageCardData as MRT_Cell<APIImage>}
-              row={currentImageCardData?.row as MRT_Row<APIImage>}
-              table={table}
-              sx={{
-                ariaLabel: `actions ${currentImageCardData?.row.original.file_name} photo button`,
-                margin: 0.5,
-                color: 'inherit',
-              }}
-            />
+            {currentImageCardData && (
+              <MRT_ToggleRowActionMenuButton
+                cell={currentImageCardData as MRT_Cell<APIImage>}
+                row={currentImageCardData?.row as MRT_Row<APIImage>}
+                table={table}
+                sx={{
+                  ariaLabel: `actions ${currentImageCardData?.row.original.file_name} photo button`,
+                  margin: 0.5,
+                  color: 'inherit',
+                }}
+              />
+            )}
             <IconButton
               onClick={onClose}
               aria-label="Close"
