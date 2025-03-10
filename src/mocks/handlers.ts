@@ -1031,26 +1031,12 @@ export const handlers = [
     const generateAttachments = () => {
       return Array.from({ length: 20 }, (_, index) => {
         const id = index + 1;
-        let attachment;
+        const attachment = { ...AttachmentsJSON[id % 4] };
 
-        if (Number(id) % 4 === 0) {
-          attachment = AttachmentsJSON[0];
-        } else if (Number(id) % 4 === 1) {
-          attachment = AttachmentsJSON[1];
-        } else if (Number(id) % 4 === 2) {
-          attachment = {
-            ...AttachmentsJSON[2],
-            ...(id === 3 && {
-              file_name: 'test',
-              description: undefined,
-            }),
-          };
-        } else if (Number(id) % 4 === 3) {
-          attachment = AttachmentsJSON[3];
-        }
         return {
           ...attachment,
-          id: String(id),
+          id: String(id), // Ensure the id is a string
+          entity_id: entityId,
         };
       });
     };

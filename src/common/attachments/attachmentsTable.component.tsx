@@ -38,10 +38,10 @@ function AttachmentsTable(props: AttachmentTableProps) {
   const columns = React.useMemo<MRT_ColumnDef<AttachmentMetadata>[]>(() => {
     return [
       {
-        header: 'Filename',
+        header: 'File name',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.file_name,
-        id: 'filename',
+        id: 'name',
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,

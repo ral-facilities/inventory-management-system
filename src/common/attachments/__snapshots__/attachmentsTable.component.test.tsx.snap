@@ -193,7 +193,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
       >
         <table
           class="MuiTable-root MuiTable-stickyHeader css-ts728e-MuiTable-root"
-          style="--header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-filename-size: 300; --col-filename-size: 300; --header-title-size: 300; --col-title-size: 300; --header-description-size: 400; --col-description-size: 400; --header-created_time-size: 350; --col-created_time-size: 350; --header-modified_time-size: 350; --col-modified_time-size: 350; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
+          style="--header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-name-size: 300; --col-name-size: 300; --header-title-size: 300; --col-title-size: 300; --header-description-size: 400; --col-description-size: 400; --header-created_time-size: 350; --col-created_time-size: 350; --header-modified_time-size: 350; --col-modified_time-size: 350; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
         >
           <thead
             class="MuiTableHead-root css-q4cnup-MuiTableHead-root"
@@ -227,7 +227,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
               </th>
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-y89vim-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1vee8kb-MuiTableCell-root"
                 colspan="1"
                 data-can-sort="true"
                 data-index="1"
@@ -243,21 +243,21 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                       class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                     >
                       <p
-                        aria-label="Filename"
+                        aria-label="File name"
                         class="MuiTypography-root MuiTypography-body1 css-1jmsoko-MuiTypography-root"
                         data-mui-internal-clone-element="true"
                         role="tooltip"
                       >
-                        Filename
+                        File name
                       </p>
                     </div>
                     <span
-                      aria-label="Sort by Filename descending"
+                      aria-label="Sort by File name descending"
                       class="MuiBadge-root css-1c32n2y-MuiBadge-root"
                       data-mui-internal-clone-element="true"
                     >
                       <span
-                        aria-label="Sort by Filename descending"
+                        aria-label="Sort by File name descending"
                         class="MuiButtonBase-root MuiTableSortLabel-root Mui-active css-118d58w-MuiButtonBase-root-MuiTableSortLabel-root"
                         role="button"
                         tabindex="0"
@@ -392,12 +392,12 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                           <input
                             aria-describedby=":r3v:-helper-text"
                             aria-invalid="false"
-                            aria-label="Filter by Filename"
+                            aria-label="Filter by File name"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
                             id=":r3v:"
-                            placeholder="Filter by Filename"
-                            title="Filter by Filename"
+                            placeholder="Filter by File name"
+                            title="Filter by File name"
                             type="text"
                             value=""
                           />
@@ -1830,7 +1830,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
       >
         <table
           class="MuiTable-root MuiTable-stickyHeader css-ts728e-MuiTable-root"
-          style="--header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-filename-size: 300; --col-filename-size: 300; --header-title-size: 300; --col-title-size: 300; --header-description-size: 400; --col-description-size: 400; --header-created_time-size: 350; --col-created_time-size: 350; --header-modified_time-size: 350; --col-modified_time-size: 350; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
+          style="--header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-name-size: 300; --col-name-size: 300; --header-title-size: 300; --col-title-size: 300; --header-description-size: 400; --col-description-size: 400; --header-created_time-size: 350; --col-created_time-size: 350; --header-modified_time-size: 350; --col-modified_time-size: 350; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
         >
           <thead
             class="MuiTableHead-root css-q4cnup-MuiTableHead-root"
@@ -1864,7 +1864,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
               </th>
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-y89vim-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1vee8kb-MuiTableCell-root"
                 colspan="1"
                 data-can-sort="true"
                 data-index="1"
@@ -1880,21 +1880,21 @@ exports[`Attachments Table > renders table correctly 1`] = `
                       class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                     >
                       <p
-                        aria-label="Filename"
+                        aria-label="File name"
                         class="MuiTypography-root MuiTypography-body1 css-1jmsoko-MuiTypography-root"
                         data-mui-internal-clone-element="true"
                         role="tooltip"
                       >
-                        Filename
+                        File name
                       </p>
                     </div>
                     <span
-                      aria-label="Sort by Filename ascending"
+                      aria-label="Sort by File name ascending"
                       class="MuiBadge-root css-1c32n2y-MuiBadge-root"
                       data-mui-internal-clone-element="true"
                     >
                       <span
-                        aria-label="Sort by Filename ascending"
+                        aria-label="Sort by File name ascending"
                         class="MuiButtonBase-root MuiTableSortLabel-root Mui-active css-118d58w-MuiButtonBase-root-MuiTableSortLabel-root"
                         role="button"
                         tabindex="0"
@@ -2029,12 +2029,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                           <input
                             aria-describedby=":r8:-helper-text"
                             aria-invalid="false"
-                            aria-label="Filter by Filename"
+                            aria-label="Filter by File name"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
                             id=":r8:"
-                            placeholder="Filter by Filename"
-                            title="Filter by Filename"
+                            placeholder="Filter by File name"
+                            title="Filter by File name"
                             type="text"
                             value=""
                           />
@@ -3087,7 +3087,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="0"
               />
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-16f6n56-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
@@ -3165,7 +3165,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="0"
               />
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-16f6n56-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
@@ -3243,7 +3243,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="0"
               />
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-16f6n56-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
@@ -3321,7 +3321,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="0"
               />
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-16f6n56-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
@@ -3399,7 +3399,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="0"
               />
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-16f6n56-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
@@ -3477,7 +3477,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="0"
               />
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-16f6n56-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
@@ -3555,7 +3555,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="0"
               />
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-16f6n56-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
@@ -3633,7 +3633,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="0"
               />
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-16f6n56-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
@@ -3711,7 +3711,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="0"
               />
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-16f6n56-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
@@ -3789,7 +3789,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="0"
               />
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-16f6n56-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
@@ -3867,7 +3867,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="0"
               />
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-16f6n56-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
@@ -3945,7 +3945,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="0"
               />
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-16f6n56-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
@@ -4023,7 +4023,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="0"
               />
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-16f6n56-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
@@ -4101,7 +4101,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="0"
               />
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-16f6n56-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
@@ -4179,7 +4179,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="0"
               />
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-16f6n56-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div

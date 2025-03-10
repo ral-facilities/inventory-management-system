@@ -2,7 +2,6 @@ import {
   useMutation,
   UseMutationResult,
   useQuery,
-  useQueryClient,
   UseQueryResult,
 } from '@tanstack/react-query';
 
@@ -27,15 +26,9 @@ export const usePostAttachmentMetadata = (): UseMutationResult<
   AxiosError,
   AttachmentPostMetadata
 > => {
-  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (attachmentMetadata: AttachmentPostMetadata) =>
       postAttachmentMetadata(attachmentMetadata),
-    onSuccess: (entityId) => {
-      queryClient.invalidateQueries({
-        queryKey: ['Attachments', entityId],
-      });
-    },
   });
 };
 

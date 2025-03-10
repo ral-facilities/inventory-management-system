@@ -644,12 +644,10 @@ describe('Items', () => {
       ).should('exist');
 
       cy.findByText('Attachments').click();
-      cy.findByText('Filename').should('be.visible');
+      cy.findByText('File name').should('be.visible');
       cy.findByText('Title').should('be.visible');
       cy.findByText('Description').should('be.visible');
-      // Scroll 750 pixels to the right, so created and last modifed headers are visible.
-      // scrollIntoView() wasn't working in headless mode.
-      cy.scrollTo(750, 0)
+      cy.findByText('Last modified').scrollIntoView();
       cy.findByText('Created').should('be.visible');
       cy.findByText('Last modified').should('be.visible');
     });
@@ -691,7 +689,7 @@ describe('Items', () => {
       cy.findAllByText('Camera Setup Guide').should('have.length', 4);
 
       cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
-      cy.findByLabelText('Filter by Filename').type('camera');
+      cy.findByLabelText('Filter by File name').type('camera');
       cy.findAllByText('Safety Protocols').should('not.exist');
       cy.findAllByText('Camera Setup Guide').should('have.length', 5);
 
