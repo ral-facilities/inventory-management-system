@@ -516,51 +516,54 @@ function CatalogueCardView() {
           <Grid item width="100%" sx={{ flexShrink: 0 }}>
             <MRT_TopToolbar table={table} />
           </Grid>
-
-          <Grid container item sx={{ flex: 1, overflow: 'auto' }}>
-            <Grid
-              item
-              container
-              direction="column"
-              alignItems="center"
-              display={!isCollapsed ? 'none' : undefined}
-              sx={{
-                justifyContent: 'left',
-                paddingLeft: 0.5,
-                position: 'sticky',
-                top: 0,
-                backgroundColor: 'background.default',
-                zIndex: 1000,
-                width: '100%',
-                paddingTop: 2.5,
-                paddingBottom: 2.5,
-              }}
-            >
-              <Collapse in={isCollapsed} style={{ width: '100%' }}>
-                <CardViewFilters table={table} />
-              </Collapse>
-            </Grid>
-            <Grid item width="100%">
-              <Grid container width="100%">
-                {!isLoading &&
-                  (data.length !== 0 ? (
-                    data.map((card, index) => (
-                      <Grid item key={index} sm={6} md={4} width={'100%'}>
-                        <CatalogueCard
-                          card={card as MRT_Cell<CatalogueCategory>}
-                          table={table}
-                        />
-                      </Grid>
-                    ))
-                  ) : (
-                    <ErrorPage
-                      sx={{ marginTop: 2 }}
-                      boldErrorText="No results found"
-                      errorText={
-                        'There are no catalogue categories. Please add a category using the button in the top left of your screen.'
-                      }
-                    />
-                  ))}
+          <Grid item sx={{ flex: 1, overflow: 'auto' }}>
+            <Grid container>
+              <Grid
+                item
+                container
+                alignItems="top"
+                display={!isCollapsed ? 'none' : undefined}
+                sx={{
+                  paddingLeft: 0.5,
+                  position: 'sticky',
+                  top: 0,
+                  backgroundColor: 'background.default',
+                  zIndex: 1000,
+                  width: '100%',
+                  paddingTop: 2.5,
+                  paddingBottom: 2.5,
+                  height: 'fit-content',
+                }}
+              >
+                <Collapse
+                  in={isCollapsed}
+                  style={{ width: '100%', height: 'fit-content' }}
+                >
+                  <CardViewFilters table={table} />
+                </Collapse>
+              </Grid>
+              <Grid item width="100%">
+                <Grid container width="100%">
+                  {!isLoading &&
+                    (data.length !== 0 ? (
+                      data.map((card, index) => (
+                        <Grid item key={index} sm={6} md={4} width={'100%'}>
+                          <CatalogueCard
+                            card={card as MRT_Cell<CatalogueCategory>}
+                            table={table}
+                          />
+                        </Grid>
+                      ))
+                    ) : (
+                      <ErrorPage
+                        sx={{ marginTop: 2 }}
+                        boldErrorText="No results found"
+                        errorText={
+                          'There are no catalogue categories. Please add a category using the button in the top left of your screen.'
+                        }
+                      />
+                    ))}
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
