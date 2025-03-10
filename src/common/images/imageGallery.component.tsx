@@ -76,7 +76,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
     [searchParams]
   );
 
-  const setCurrentLightBoxImage = React.useCallback(
+  const onChangeCurrentLightBoxImage = React.useCallback(
     (imageId: string | null) => {
       setSearchParams((prev) => {
         const newParams = new URLSearchParams(prev);
@@ -452,7 +452,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
                       >
                         <ThumbnailImage
                           onClick={() =>
-                            setCurrentLightBoxImage(card.row.original.id)
+                            onChangeCurrentLightBoxImage(card.row.original.id)
                           }
                           image={card.row.original}
                         />
@@ -519,7 +519,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
             open={openMenuDialog === 'delete'}
             onClose={() => {
               setOpenMenuDialog(false);
-              setCurrentLightBoxImage(null);
+              onChangeCurrentLightBoxImage(null);
             }}
             image={selectedImage}
           />
@@ -534,7 +534,9 @@ const ImageGallery = (props: ImageGalleryProps) => {
       {currentLightBoxImage && !imageIsLoading && (
         <GalleryLightBox
           open={currentLightBoxImage !== undefined}
-          onClose={() => setCurrentLightBoxImage(null)}
+          onClose={() => onChangeCurrentLightBoxImage(null)}
+          currentImageId={currentLightBoxImage}
+          onChangeCurrentLightBoxImage={onChangeCurrentLightBoxImage}
           imageCardData={data as MRT_Cell<APIImage, unknown>[]}
           table={table}
         />

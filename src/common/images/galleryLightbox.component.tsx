@@ -7,7 +7,6 @@ import {
   MRT_ToggleRowActionMenuButton,
 } from 'material-react-table';
 import React from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { APIImage } from '../../api/api.types';
 import { useGetImage } from '../../api/images';
 import { OverflowTip } from '../../utils';
@@ -16,35 +15,27 @@ import DelayedLoader from '../delayedLoader.component';
 interface GalleryLightBoxProps {
   open: boolean;
   onClose: () => void;
+  currentImageId: string;
+  onChangeCurrentLightBoxImage: (imageId: string) => void;
   imageCardData: MRT_Cell<APIImage, unknown>[];
   table: MRT_TableInstance<APIImage>;
 }
 
 const GalleryLightBox = (props: GalleryLightBoxProps) => {
-  const { open, onClose, imageCardData, table } = props;
+  const {
+    open,
+    onClose,
+    imageCardData,
+    table,
+    currentImageId,
+    onChangeCurrentLightBoxImage,
+  } = props;
 
   const [hasError, setHasError] = React.useState<string | undefined>(undefined);
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const currentImageId = React.useMemo(
-    () => searchParams.get('image'),
-    [searchParams]
-  );
-
-  const updateSearchParams = React.useCallback(
-    (imageId: string) => {
-      setSearchParams((prev) => {
-        const newParams = new URLSearchParams(prev);
-        newParams.set('image', imageId);
-        return newParams;
-      });
-    },
-    [setSearchParams]
-  );
 
   const images = imageCardData.map((val) => val.row.original);
 
-  const { data, isLoading } = useGetImage(currentImageId ?? '');
+  const { data, isLoading } = useGetImage(currentImageId);
 
   const currentImageCardData = imageCardData.find(
     (cell) => cell.row.original.id === currentImageId
@@ -54,15 +45,15 @@ const GalleryLightBox = (props: GalleryLightBoxProps) => {
 
   const handleNext = React.useCallback(() => {
     const nextIndex = (currentIndex + 1) % images.length;
-    updateSearchParams(images[nextIndex].id);
+    onChangeCurrentLightBoxImage(images[nextIndex].id);
     if (hasError) setHasError(undefined);
-  }, [currentIndex, hasError, images, updateSearchParams]);
+  }, [currentIndex, hasError, images, onChangeCurrentLightBoxImage]);
 
   const handlePrevious = React.useCallback(() => {
     const prevIndex = (currentIndex - 1 + images.length) % images.length;
-    updateSearchParams(images[prevIndex].id);
+    onChangeCurrentLightBoxImage(images[prevIndex].id);
     if (hasError) setHasError(undefined);
-  }, [currentIndex, hasError, images, updateSearchParams]);
+  }, [currentIndex, hasError, images, onChangeCurrentLightBoxImage]);
 
   return (
     <Backdrop
