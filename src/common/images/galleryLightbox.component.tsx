@@ -7,6 +7,7 @@ import {
   MRT_ToggleRowActionMenuButton,
 } from 'material-react-table';
 import React from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { APIImage } from '../../api/api.types';
 import { useGetImage } from '../../api/images';
 import { OverflowTip } from '../../utils';
@@ -15,25 +16,35 @@ import DelayedLoader from '../delayedLoader.component';
 interface GalleryLightBoxProps {
   open: boolean;
   onClose: () => void;
-  currentImageId: string;
   imageCardData: MRT_Cell<APIImage, unknown>[];
   table: MRT_TableInstance<APIImage>;
 }
 
 const GalleryLightBox = (props: GalleryLightBoxProps) => {
-  const {
-    open,
-    onClose,
-    currentImageId: initialImageId,
-    imageCardData,
-    table,
-  } = props;
-  const [currentImageId, setCurrentImageId] = React.useState(initialImageId);
+  const { open, onClose, imageCardData, table } = props;
+
   const [hasError, setHasError] = React.useState<string | undefined>(undefined);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const currentImageId = React.useMemo(
+    () => searchParams.get('image'),
+    [searchParams]
+  );
+
+  const updateSearchParams = React.useCallback(
+    (imageId: string) => {
+      setSearchParams((prev) => {
+        const newParams = new URLSearchParams(prev);
+        newParams.set('image', imageId);
+        return newParams;
+      });
+    },
+    [setSearchParams]
+  );
 
   const images = imageCardData.map((val) => val.row.original);
 
-  const { data, isLoading } = useGetImage(currentImageId);
+  const { data, isLoading } = useGetImage(currentImageId ?? '');
 
   const currentImageCardData = imageCardData.find(
     (cell) => cell.row.original.id === currentImageId
@@ -43,15 +54,15 @@ const GalleryLightBox = (props: GalleryLightBoxProps) => {
 
   const handleNext = React.useCallback(() => {
     const nextIndex = (currentIndex + 1) % images.length;
-    setCurrentImageId(images[nextIndex].id);
+    updateSearchParams(images[nextIndex].id);
     if (hasError) setHasError(undefined);
-  }, [currentIndex, hasError, images]);
+  }, [currentIndex, hasError, images, updateSearchParams]);
 
   const handlePrevious = React.useCallback(() => {
     const prevIndex = (currentIndex - 1 + images.length) % images.length;
-    setCurrentImageId(images[prevIndex].id);
+    updateSearchParams(images[prevIndex].id);
     if (hasError) setHasError(undefined);
-  }, [currentIndex, hasError, images]);
+  }, [currentIndex, hasError, images, updateSearchParams]);
 
   return (
     <Backdrop
@@ -165,13 +176,11 @@ const GalleryLightBox = (props: GalleryLightBoxProps) => {
               width: '100%',
             }}
           >
-            {isLoading && (
-              <DelayedLoader
-                isLoading={isLoading}
-                timeMS={1000}
-                sx={{ color: 'inherit', fontSize: 'large' }}
-              />
-            )}
+            <DelayedLoader
+              isLoading={isLoading}
+              timeMS={1000}
+              sx={{ color: 'inherit', fontSize: 'large' }}
+            />
             {(hasError === data?.id || !data) && !isLoading && (
               <Typography variant="h6" color="inherit">
                 The image cannot be loaded

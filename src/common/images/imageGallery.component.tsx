@@ -26,6 +26,7 @@ import {
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { APIImage } from '../../api/api.types';
 import { useGetImages, usePatchImage } from '../../api/images';
 import {
@@ -68,10 +69,27 @@ export interface ImageGalleryProps {
 const ImageGallery = (props: ImageGalleryProps) => {
   const { entityId } = props;
   const { data: images, isLoading: imageIsLoading } = useGetImages(entityId);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const [currentLightBoxImage, setCurrentLightBoxImage] = React.useState<
-    string | undefined
-  >(undefined);
+  const currentLightBoxImage = React.useMemo(
+    () => searchParams.get('image'),
+    [searchParams]
+  );
+
+  const setCurrentLightBoxImage = React.useCallback(
+    (imageId: string | null) => {
+      setSearchParams((prev) => {
+        const newParams = new URLSearchParams(prev);
+        if (imageId) {
+          newParams.set('image', imageId);
+        } else {
+          newParams.delete('image');
+        }
+        return newParams;
+      });
+    },
+    [setSearchParams]
+  );
 
   const [selectedImage, setSelectedImage] = React.useState<
     APIImage | undefined
@@ -501,7 +519,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
             open={openMenuDialog === 'delete'}
             onClose={() => {
               setOpenMenuDialog(false);
-              setCurrentLightBoxImage(undefined);
+              setCurrentLightBoxImage(null);
             }}
             image={selectedImage}
           />
@@ -513,11 +531,10 @@ const ImageGallery = (props: ImageGalleryProps) => {
           />
         </>
       )}
-      {currentLightBoxImage && (
+      {currentLightBoxImage && !imageIsLoading && (
         <GalleryLightBox
           open={currentLightBoxImage !== undefined}
-          onClose={() => setCurrentLightBoxImage(undefined)}
-          currentImageId={currentLightBoxImage}
+          onClose={() => setCurrentLightBoxImage(null)}
           imageCardData={data as MRT_Cell<APIImage, unknown>[]}
           table={table}
         />
