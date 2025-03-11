@@ -11,7 +11,7 @@ import React from 'react';
 import { System } from '../api/api.types';
 import { getSystemImportanceColour, useGetSystem } from '../api/systems';
 import ActionMenu from '../common/actionMenu.component';
-import PlaceholderImage from '../common/images/placeholderImage.component';
+import PrimaryImage from '../common/images/primaryImage.component';
 import TabView from '../common/tab/tabView.component';
 import { formatDateTimeStrings, OverflowTip } from '../utils';
 import SystemDialog from './systemDialog.component';
@@ -111,7 +111,7 @@ function SystemDetails(props: SystemDetailsProps) {
           >
             <Grid item container spacing={2}>
               <Grid item xs={12} sm={4}>
-                <PlaceholderImage />
+                <PrimaryImage entityId={system.id} />
               </Grid>
               <Grid item container spacing={1} xs={12} sm={8}>
                 <Grid item xs={12} sm={6}>
@@ -167,7 +167,7 @@ function SystemDetails(props: SystemDetailsProps) {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item mt={2}>
+          <Grid item>
             <Typography color="text.primary">Description</Typography>
             <Typography
               variant="body1"
