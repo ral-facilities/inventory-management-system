@@ -30,7 +30,7 @@ import {
   formatDateTimeStrings,
   getInitialColumnFilterFnState,
   getPageHeightCalc,
-  mrtTheme
+  mrtTheme,
 } from '../../utils';
 import { usePreservedTableState } from '../preservedTableState.component';
 
@@ -40,7 +40,8 @@ export interface AttachmentTableProps {
 
 function AttachmentsTable(props: AttachmentTableProps) {
   const { entityId } = props;
-  const { data: attachments, isLoading: attachmentIsLoading } = useGetAttachments(entityId);
+  const { data: attachments, isLoading: attachmentIsLoading } =
+    useGetAttachments(entityId);
 
   const [selectedAttachment, setSelectedAttachment] = React.useState<
     AttachmentPostMetadataResponse | undefined
@@ -70,7 +71,7 @@ function AttachmentsTable(props: AttachmentTableProps) {
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
-        size:300,
+        size: 300,
       },
       {
         header: 'Description',
@@ -139,7 +140,7 @@ function AttachmentsTable(props: AttachmentTableProps) {
     enableStickyHeader: true,
     enableRowSelection: false,
     enableDensityToggle: false,
-    enableFullScreenToggle: false,
+    enableFullScreenToggle: true,
     enablePagination: true,
     // Other settings
     manualFiltering: false,
@@ -148,17 +149,17 @@ function AttachmentsTable(props: AttachmentTableProps) {
     autoResetPageIndex: false,
     // Localisation
     localization: {
-        ...MRT_Localization_EN,
-        noRecordsToDisplay: noResultsTxt,
+      ...MRT_Localization_EN,
+      noRecordsToDisplay: noResultsTxt,
     },
     // State
     initialState: {
-        showColumnFilters: true,
-        showGlobalFilter: true,
+      showColumnFilters: true,
+      showGlobalFilter: true,
     },
     state: {
-        ...preservedState,
-        showProgressBars: attachmentIsLoading, // or showSkeletons
+      ...preservedState,
+      showProgressBars: attachmentIsLoading, // or showSkeletons
     },
 
     // MRT
@@ -166,7 +167,10 @@ function AttachmentsTable(props: AttachmentTableProps) {
 
     // MUI
     muiTableBodyRowProps: ({ row }) => {
-      return { component: TableRow, 'aria-label': `${row.original.file_name} row` };
+      return {
+        component: TableRow,
+        'aria-label': `${row.original.file_name} row`,
+      };
     },
     muiTablePaperProps: { sx: { maxHeight: '100%' } },
     muiTableContainerProps: ({ table }) => {
@@ -176,11 +180,9 @@ function AttachmentsTable(props: AttachmentTableProps) {
         table.getState().grouping.length > 0;
       return {
         sx: {
-          minHeight: '360.4px',
           height: table.getState().isFullScreen
             ? '100%'
             : getPageHeightCalc(`272px  ${showAlert ? '+ 72px' : ''}`),
-          maxHeight: '670px',
         },
       };
     },
@@ -256,18 +258,20 @@ function AttachmentsTable(props: AttachmentTableProps) {
   });
 
   return (
-    <MaterialReactTable table={table} />
-    {selectedAttachment && (
-      <>
-        <EditFileDialog
-          open={openMenuDialog === 'edit'}
-          onClose={() => setOpenMenuDialog(false)}
-          fileType="Attachment"
-          usePatchFile={usePatchAttachment}
-          selectedFile={selectedAttachment}
-        />
-      </>
-    )}
+    <>
+      <MaterialReactTable table={table} />
+      {selectedAttachment && (
+        <>
+          <EditFileDialog
+            open={openMenuDialog === 'edit'}
+            onClose={() => setOpenMenuDialog(false)}
+            fileType="Attachment"
+            usePatchFile={usePatchAttachment}
+            selectedFile={selectedAttachment}
+          />
+        </>
+      )};
+    </>
   );
 }
 
