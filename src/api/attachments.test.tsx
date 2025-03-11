@@ -1,8 +1,7 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import AttachmentsJSON from '../mocks/Attachments.json';
 import { hooksWrapperWithProviders } from '../testUtils';
 import { AttachmentPostMetadata, ObjectFilePatch } from './api.types';
-import { useGetAttachment, useGetAttachments, usePatchAttachment, usePostAttachmentMetadata } from './attachments';
+import { useGetAttachments, usePatchAttachment, usePostAttachmentMetadata } from './attachments';
 
 describe('attachments api functions', () => {
   afterEach(() => {
@@ -21,7 +20,7 @@ describe('attachments api functions', () => {
     });
 
     it('should post attachment metadata and return a success response', async () => {
-      const { result } = renderHook(() => usePostAttachmentMetadata('1'), {
+      const { result } = renderHook(() => usePostAttachmentMetadata(), {
         wrapper: hooksWrapperWithProviders(),
       });
       expect(result.current.isIdle).toBe(true);

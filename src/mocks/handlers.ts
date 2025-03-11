@@ -1013,111 +1013,20 @@ export const handlers = [
     const attachmentParams = url.searchParams;
     const entityId = attachmentParams.get('entity_id');
 
-    if (entityId === '90') {
-      return HttpResponse.json([], { status: 200 });
-    } else if (entityId === '3') {
-      return HttpResponse.json(
-        [
-          {
-            ...AttachmentsJSON[0],
-            entity_id: entityId,
-            ...(entityId === '3' && { file_name: 'test '}),
-          },
-        ],
-        { status: 200 }
-      );
-    }
-
     const generateAttachments = () => {
       return Array.from({ length: 20 }, (_, index) => {
         const id = index + 1;
-        let attachment;
+        const attachment = { ...AttachmentsJSON[id % 4] };
 
-        if (Number(id) % 4 === 0) {
-          attachment = AttachmentsJSON[0];
-        } else if (Number(id) % 4 === 1) {
-          attachment = AttachmentsJSON[1];
-        } else if (Number(id) % 4 === 2) {
-          attachment = {
-            ...AttachmentsJSON[2],
-            ...(id === 3 && {
-              file_name: 'test',
-              description: undefined,
-            }),
-          };
-        } else if (Number(id) % 4 === 3) {
-          attachment = AttachmentsJSON[3];
-        }
         return {
           ...attachment,
-          id: String(id),
+          id: String(id), // Ensure the id is a string
+          entity_id: entityId,
         };
       });
     };
 
     return HttpResponse.json(generateAttachments(), { status: 200 });
-  }),
-
-  http.get('/attachments/:id', ({ params }) => {
-    const { id } = params;
-    // This is needed otherwise the msw would intercept the
-    // mocked attachment get request for the object store
-    if (!isNaN(Number(id))) {
-      let attachment = undefined;
-      if (Number(id) % 4 === 0) {
-        attachment = {
-          ...AttachmentsJSON[0],
-          url: `${window.location.origin}/attachments/laser-calibration.txt?text=${
-            encodeURIComponent(id as string)
-          }`,
-        };
-      } else {
-        if (Number(id) % 4 === 1) {
-          attachment = {
-            ...AttachmentsJSON[1],
-            url: `${window.location.origin}/attachments/safety-protocols.pdf?text=${
-              encodeURIComponent(id as string)
-            }`,
-          };
-        } else {
-          if (Number(id) % 4 === 2) {
-            attachment = {
-              ...AttachmentsJSON[2],
-              url: `${window.location.origin}/attachments/camera-setup-guide.docx?text=${
-                encodeURIComponent(id as string)
-              }`,
-            };
-          } else {
-            if (id === '3') {
-              attachment = {
-                ...AttachmentsJSON[3],
-                url: 'invalid url',
-                description: undefined,
-              };
-            } else {
-              attachment = {
-                ...AttachmentsJSON[3],
-                url: `${window.location.origin}/attachments/experiment-results.rtf?text=${
-                  encodeURIComponent(id as string)
-                }`,
-              };
-            }
-          }
-        }
-      }
-
-      if (id === '5') {
-        return HttpResponse.error();
-      }
-
-      return HttpResponse.json(
-        {
-          ...attachment,
-          id: id,
-        },
-        { status: 200 }
-      );
-    }
   }),
 
   http.patch<{ id: string }, ObjectFilePatch, AttachmentPostMetadataResponse | ErrorResponse>(
