@@ -11,14 +11,14 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { APIImageWithURL, ImageMetadataPatch } from '../../api/api.types';
+import { APIImage, ImageMetadataPatch } from '../../api/api.types';
 import { usePatchImage } from '../../api/images';
 import handleIMS_APIError from '../../handleIMS_APIError';
 
 export interface RemovePrimaryImageProps {
   open: boolean;
   onClose: () => void;
-  image: APIImageWithURL | undefined;
+  image: APIImage;
 }
 
 const RemovePrimaryImageDialog = (props: RemovePrimaryImageProps) => {

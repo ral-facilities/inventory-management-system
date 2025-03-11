@@ -14,22 +14,18 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import { AxiosError } from 'axios';
 import React from 'react';
-import { APIImageWithURL } from '../../api/api.types';
-import { getImageQuery, useGetImages } from '../../api/images';
-import { queryClient } from '../../App';
-import handleIMS_APIError from '../../handleIMS_APIError';
+import { useGetImages } from '../../api/images';
 import PrimaryImageDialog from './primaryImageDialog.component';
 import RemovePrimaryImageDialog from './removePrimaryImageDialog.component';
 
 interface PrimaryOptionsMenuInterface {
   onChangePrimaryDialogOpen: (dialogOpen: false | 'set' | 'remove') => void;
-  disableRemovePrimary: boolean;
+  primaryImageExists: boolean;
 }
 
 const PrimaryOptionsMenu = (props: PrimaryOptionsMenuInterface) => {
-  const { onChangePrimaryDialogOpen, disableRemovePrimary } = props;
+  const { onChangePrimaryDialogOpen, primaryImageExists } = props;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -71,15 +67,14 @@ const PrimaryOptionsMenu = (props: PrimaryOptionsMenuInterface) => {
           </ListItemIcon>
           <ListItemText>Set Primary Image</ListItemText>
         </MenuItem>
-        <MenuItem
-          onClick={handleOpenRemovePrimary}
-          disabled={disableRemovePrimary}
-        >
-          <ListItemIcon>
-            <DeleteIcon />
-          </ListItemIcon>
-          <ListItemText>Remove Primary Image</ListItemText>
-        </MenuItem>
+        {primaryImageExists && (
+          <MenuItem onClick={handleOpenRemovePrimary}>
+            <ListItemIcon>
+              <DeleteIcon />
+            </ListItemIcon>
+            <ListItemText>Remove Primary Image</ListItemText>
+          </MenuItem>
+        )}
       </Menu>
     </Box>
   );
@@ -95,30 +90,7 @@ const PrimaryImage = (props: PrimaryImageProps) => {
 
   const { data: imagesData } = useGetImages(entityId, true);
 
-  const [imageData, setImageData] = React.useState<APIImageWithURL>();
-
-  const primaryImageExists = imagesData && imagesData.length > 0;
-
-  React.useEffect(() => {
-    if (primaryImageExists) {
-      queryClient
-        .fetchQuery(
-          getImageQuery(
-            primaryImageExists ? imagesData[0].id : '',
-            false,
-            primaryImageExists
-          )
-        )
-        .then((data: APIImageWithURL) => {
-          setImageData(data);
-        })
-        .catch((error: AxiosError) => {
-          handleIMS_APIError(error);
-        });
-    } else {
-      setImageData(undefined);
-    }
-  }, [primaryImageExists, imagesData, setImageData]);
+  const primaryImageExists = !!imagesData && imagesData.length > 0;
 
   const [primaryDialogOpen, setPrimaryDialogOpen] = React.useState<
     false | 'set' | 'remove'
@@ -145,7 +117,7 @@ const PrimaryImage = (props: PrimaryImageProps) => {
       <Box sx={{ height: '20%' }}>
         <PrimaryOptionsMenu
           onChangePrimaryDialogOpen={setPrimaryDialogOpen}
-          disableRemovePrimary={!primaryImageExists}
+          primaryImageExists={primaryImageExists}
         />
       </Box>
       <PrimaryImageDialog
@@ -155,13 +127,15 @@ const PrimaryImage = (props: PrimaryImageProps) => {
         }}
         entityID={entityId}
       />
-      <RemovePrimaryImageDialog
-        open={primaryDialogOpen == 'remove'}
-        onClose={() => {
-          setPrimaryDialogOpen(false);
-        }}
-        image={imageData ?? undefined}
-      />
+      {primaryImageExists && (
+        <RemovePrimaryImageDialog
+          open={primaryDialogOpen == 'remove'}
+          onClose={() => {
+            setPrimaryDialogOpen(false);
+          }}
+          image={imagesData[0]}
+        />
+      )}
     </Grid>
   );
 };
