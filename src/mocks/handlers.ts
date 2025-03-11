@@ -30,6 +30,7 @@ import {
   UsageStatusPost,
 } from '../api/api.types';
 import { generateUniqueId } from '../utils';
+import AttachmentsJSON from './Attachments.json';
 import CatalogueCategoriesJSON from './CatalogueCategories.json';
 import CatalogueCategoryBreadcrumbsJSON from './CatalogueCategoryBreadcrumbs.json';
 import CatalogueItemsJSON from './CatalogueItems.json';
@@ -984,8 +985,8 @@ export const handlers = [
     PathParams,
     AttachmentPostMetadata,
     AttachmentPostMetadataResponse | ErrorResponse
-  >('/attachments', async ({ request }) => {
-    const body = (await request.json()) as AttachmentPostMetadata;
+  >('/attachments', async () => {
+    const body = AttachmentsJSON[0];
 
     const upload_info: AttachmentUploadInfo = {
       url: `http://localhost:3000/object-storage`,
@@ -1000,16 +1001,32 @@ export const handlers = [
 
     return HttpResponse.json(
       {
-        id: '1',
         ...body,
-        title: body.title ?? null,
-        description: body.description ?? null,
         upload_info: upload_info,
-        modified_time: '2024-01-02T13:10:10.000+00:00',
-        created_time: '2024-01-01T12:00:00.000+00:00',
       },
       { status: 201 }
     );
+  }),
+
+  http.get('/attachments', ({ request }) => {
+    const url = new URL(request.url);
+    const attachmentParams = url.searchParams;
+    const entityId = attachmentParams.get('entity_id');
+
+    const generateAttachments = () => {
+      return Array.from({ length: 20 }, (_, index) => {
+        const id = index + 1;
+        const attachment = { ...AttachmentsJSON[id % 4] };
+
+        return {
+          ...attachment,
+          id: String(id), // Ensure the id is a string
+          entity_id: entityId,
+        };
+      });
+    };
+
+    return HttpResponse.json(generateAttachments(), { status: 200 });
   }),
 
   // ------------------------------------ OBJECT STORAGE ------------------------------------------------
@@ -1029,8 +1046,9 @@ export const handlers = [
   // ------------------------------------ IMAGES ------------------------------------------------
 
   http.post('/images', async () => {
-    return HttpResponse.json(ImagesJSON[0], { status: 200 });
+    return HttpResponse.json(ImagesJSON[0], { status: 201 });
   }),
+
   http.get('/images', ({ request }) => {
     const url = new URL(request.url);
     const imageParams = url.searchParams;

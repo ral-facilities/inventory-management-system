@@ -241,10 +241,14 @@ export interface AttachmentUploadInfo {
   url: string;
   fields: Record<string, string>;
 }
-export interface AttachmentPostMetadataResponse
+
+export interface AttachmentMetadata
   extends Required<AttachmentPostMetadata>,
     CreatedModifiedMixin {
   id: string;
+}
+
+export interface AttachmentPostMetadataResponse extends AttachmentMetadata {
   upload_info: AttachmentUploadInfo;
 }
 
