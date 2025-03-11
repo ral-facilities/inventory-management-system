@@ -438,86 +438,45 @@ const ImageGallery = (props: ImageGalleryProps) => {
                     (image) => image.id === card.row.original.id
                   );
                   return (
-                    <Card
-                      component={Grid}
-                      item
-                      container
-                      xs
-                      key={`thumbnail-displayed-${index}`}
-                      style={{
-                        maxWidth:
-                          data.length === 1 ||
-                          (images.length %
-                            preservedState.pagination.pageSize ===
-                            1 &&
-                            isLastPage)
-                            ? '50%'
-                            : undefined,
-                        backgroundColor: isSelected
-                          ? selectedRowBackgroundColor
-                          : undefined,
-                        cursor: dense ? 'pointer' : undefined,
-                      }}
-                      minWidth={dense ? '175px' : '350px'}
-                      onClick={
-                        dense
-                          ? () => {
-                              handleRowSelection(card.row);
-                            }
-                          : undefined
-                      }
-                    >
-                      <Grid
-                        display="flex"
-                        justifyContent="flex-start"
-                        alignItems="center"
-                        item
+                    <Grid key={`thumbnail-displayed-${index}`} item>
+                      <Card
+                        component={Grid}
                         container
-                        xs={12}
-                      >
-                        <Grid item xs={2}>
-                          <MRT_SelectCheckbox
-                            row={card.row as MRT_Row<APIImage>}
-                            table={table}
-                            sx={{
-                              margin: 0.5,
-                            }}
-                          />
-                        </Grid>
-                      </Grid>
-
-                      <Grid
-                        display="flex"
-                        justifyContent="center"
-                        alignItems="center"
-                        item
-                        minHeight={`${maxHeightThumbnail}px`}
                         xs
+                        style={{
+                          maxWidth:
+                            data.length === 1 ||
+                            (images.length %
+                              preservedState.pagination.pageSize ===
+                              1 &&
+                              isLastPage)
+                              ? '50%'
+                              : undefined,
+                          backgroundColor: isSelected
+                            ? selectedRowBackgroundColor
+                            : undefined,
+                          cursor: dense ? 'pointer' : undefined,
+                        }}
+                        minWidth={dense ? '175px' : '350px'}
+                        onClick={
+                          dense
+                            ? () => {
+                                handleRowSelection(card.row);
+                              }
+                            : undefined
+                        }
                       >
-                        <ThumbnailImage
-                          onClick={
-                            !dense
-                              ? () =>
-                                  setCurrentLightBoxImage(card.row.original.id)
-                              : undefined
-                          }
-                          image={card.row.original}
-                          dense={dense}
-                        />
-                      </Grid>
-
-                      <Grid
-                        display="flex"
-                        justifyContent="center"
-                        alignItems="center"
-                        item
-                        container
-                        xs={12}
-                      >
-                        {!dense && (
-                          <Grid xs={2} item>
-                            <MRT_ToggleRowActionMenuButton
-                              cell={card as MRT_Cell<APIImage>}
+                        <Grid
+                          display="flex"
+                          justifyContent="flex-start"
+                          alignItems="center"
+                          item
+                          container
+                          height="fit-content"
+                          xs={12}
+                        >
+                          <Grid item xs={2}>
+                            <MRT_SelectCheckbox
                               row={card.row as MRT_Row<APIImage>}
                               table={table}
                               sx={{
@@ -525,22 +484,67 @@ const ImageGallery = (props: ImageGalleryProps) => {
                               }}
                             />
                           </Grid>
-                        )}
-                        <Grid item xs={dense ? 12 : 8}>
-                          <OverflowTip
-                            sx={{
-                              fontVariant: 'body2',
-                              textAlign: 'center',
-                              pb: dense ? 1 : undefined,
-                            }}
-                          >
-                            {card.row.original.file_name}
-                          </OverflowTip>
                         </Grid>
-                        {/*Adds an item for spacing, to centre the file name in the card. */}
-                        {!dense && <Grid item xs={2}></Grid>}
-                      </Grid>
-                    </Card>
+
+                        <Grid
+                          display="flex"
+                          justifyContent="center"
+                          alignItems="center"
+                          item
+                          minHeight={`${maxHeightThumbnail}px`}
+                          xs
+                        >
+                          <ThumbnailImage
+                            onClick={
+                              !dense
+                                ? () =>
+                                    setCurrentLightBoxImage(
+                                      card.row.original.id
+                                    )
+                                : undefined
+                            }
+                            image={card.row.original}
+                            dense={dense}
+                          />
+                        </Grid>
+
+                        <Grid
+                          display="flex"
+                          justifyContent="center"
+                          alignItems="center"
+                          item
+                          height="fit-content"
+                          container
+                          xs={12}
+                        >
+                          {!dense && (
+                            <Grid xs={2} item>
+                              <MRT_ToggleRowActionMenuButton
+                                cell={card as MRT_Cell<APIImage>}
+                                row={card.row as MRT_Row<APIImage>}
+                                table={table}
+                                sx={{
+                                  margin: 0.5,
+                                }}
+                              />
+                            </Grid>
+                          )}
+                          <Grid item xs={dense ? 12 : 8}>
+                            <OverflowTip
+                              sx={{
+                                fontVariant: 'body2',
+                                textAlign: 'center',
+                                pb: dense ? 1 : undefined,
+                              }}
+                            >
+                              {card.row.original.file_name}
+                            </OverflowTip>
+                          </Grid>
+                          {/*Adds an item for spacing, to centre the file name in the card. */}
+                          {!dense && <Grid item xs={2}></Grid>}
+                        </Grid>
+                      </Card>
+                    </Grid>
                   );
                 })}
               </Grid>
