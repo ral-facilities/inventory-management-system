@@ -23,7 +23,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
           class="MuiBox-root css-wsew38"
         >
           <div
-            class="MuiBox-root css-0"
+            class="MuiBox-root css-k008qs"
           >
             <button
               class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary Mui-disabled MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1owl11-MuiButtonBase-root-MuiButton-root"
@@ -189,7 +189,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
         </div>
       </div>
       <div
-        class="MuiTableContainer-root css-yx8aw7-MuiTableContainer-root"
+        class="MuiTableContainer-root css-1quaapl-MuiTableContainer-root"
       >
         <table
           class="MuiTable-root MuiTable-stickyHeader css-ts728e-MuiTable-root"
@@ -1634,7 +1634,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
           class="MuiBox-root css-wsew38"
         >
           <div
-            class="MuiBox-root css-0"
+            class="MuiBox-root css-k008qs"
           >
             <button
               class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary Mui-disabled MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1owl11-MuiButtonBase-root-MuiButton-root"
@@ -1826,7 +1826,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
         </div>
       </div>
       <div
-        class="MuiTableContainer-root css-yx8aw7-MuiTableContainer-root"
+        class="MuiTableContainer-root css-1quaapl-MuiTableContainer-root"
       >
         <table
           class="MuiTable-root MuiTable-stickyHeader css-ts728e-MuiTable-root"

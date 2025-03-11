@@ -1013,21 +1013,6 @@ export const handlers = [
     const attachmentParams = url.searchParams;
     const entityId = attachmentParams.get('entity_id');
 
-    if (entityId === '90') {
-      return HttpResponse.json([], { status: 200 });
-    } else if (entityId === '3') {
-      return HttpResponse.json(
-        [
-          {
-            ...AttachmentsJSON[0],
-            entity_id: entityId,
-            ...(entityId === '3' && { file_name: 'test '}),
-          },
-        ],
-        { status: 200 }
-      );
-    }
-
     const generateAttachments = () => {
       return Array.from({ length: 20 }, (_, index) => {
         const id = index + 1;
