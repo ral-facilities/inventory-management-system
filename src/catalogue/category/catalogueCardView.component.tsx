@@ -516,7 +516,7 @@ function CatalogueCardView() {
           <Grid item width="100%" sx={{ flexShrink: 0 }}>
             <MRT_TopToolbar table={table} />
           </Grid>
-          <Grid item sx={{ flex: 1, overflow: 'auto' }}>
+          <Grid item width="100%" sx={{ flex: 1, overflow: 'auto' }}>
             <Grid container>
               <Grid
                 item
