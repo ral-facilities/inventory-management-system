@@ -1,4 +1,5 @@
 import { useTheme } from '@mui/material';
+import { useQueryClient } from '@tanstack/react-query';
 import AwsS3, { type AwsBody } from '@uppy/aws-s3';
 import Uppy, { UppyFile } from '@uppy/core';
 import '@uppy/core/dist/style.css';
@@ -22,9 +23,13 @@ export interface UploadAttachmentsDialogProps {
 
 const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
   const { open, onClose, entityId } = props;
+
   const theme = useTheme();
 
+  const queryClient = useQueryClient();
+
   const { mutateAsync: postAttachmentMetadata } = usePostAttachmentMetadata();
+
   const [fileMetadataMap, setFileMetadataMap] = React.useState<
     Record<string, string>
   >({});
@@ -88,7 +93,8 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
     onClose();
     setFileMetadataMap({});
     uppy.cancelAll();
-  }, [onClose, uppy]);
+    queryClient.invalidateQueries({ queryKey: ['Attachments', entityId] });
+  }, [entityId, onClose, queryClient, uppy]);
 
   // Track the start and completion of uploads
   uppy.on('upload-error', (file) => updateFileMetadata(file, true));

@@ -636,6 +636,68 @@ describe('Items', () => {
       cy.findByLabelText('Show error details').should('exist');
       cy.findByText('Upload failed').should('exist');
     });
+
+    it('should render in table headers', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Attachments').click();
+      cy.findByText('File name').should('be.visible');
+      cy.findByText('Title').should('be.visible');
+      cy.findByText('Description').should('be.visible');
+      cy.findByText('Last modified').scrollIntoView();
+      cy.findByText('Created').should('be.visible');
+      cy.findByText('Last modified').should('be.visible');
+    });
+
+    it('should render attachments data and paginate as expected', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Attachments').click();
+      cy.findByText('Total Attachments: 20').should('be.visible');
+
+      cy.findAllByText('safety-protocols.pdf').should('have.length', 4);
+      cy.findAllByText('camera-setup-guide.docx').should('have.length', 4);
+      cy.findAllByText('experiment-results.rtf').should('have.length', 4);
+      cy.findAllByText('laser-calibration.txt').should('have.length', 3);
+      cy.findByText('Last modified').scrollIntoView();
+      cy.findAllByText('02 Jan 2024 13:10').should('have.length', 15);
+
+      cy.findByRole('button', { name: 'Go to page 2' }).scrollIntoView();
+      cy.findByRole('button', { name: 'Go to page 2' }).click();
+      cy.findAllByText('safety-protocols.pdf').should('have.length', 1);
+      cy.findAllByText('camera-setup-guide.docx').should('have.length', 1);
+      cy.findAllByText('experiment-results.rtf').should('have.length', 1);
+      cy.findAllByText('laser-calibration.txt').should('have.length', 2);
+      cy.findByText('Last modified').scrollIntoView();
+      cy.findAllByText('02 Jan 2024 13:10').should('have.length', 5);
+    });
+
+    it('sets and clears the table filters', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Attachments').click();
+      cy.findAllByText('Safety Protocols').should('have.length', 4);
+      cy.findAllByText('Camera Setup Guide').should('have.length', 4);
+
+      cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
+      cy.findByLabelText('Filter by File name').type('camera');
+      cy.findAllByText('Safety Protocols').should('not.exist');
+      cy.findAllByText('Camera Setup Guide').should('have.length', 5);
+
+      cy.findByRole('button', { name: 'Clear Filters' }).click();
+      cy.findAllByText('Safety Protocols').should('have.length', 4);
+      cy.findAllByText('Camera Setup Guide').should('have.length', 4);
+      cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
+    });
   });
 
   describe('Images', () => {
