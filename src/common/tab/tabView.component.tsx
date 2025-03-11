@@ -6,6 +6,7 @@ import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { a11yProps, StyledTab } from '../../common/tab/tab.utils';
 import TabPanel from '../../common/tab/tabPanel.component';
+import AttachmentsTable from '../attachments/attachmentsTable.component';
 import ImageGallery from '../images/imageGallery.component';
 
 type AdditionalTabValues = 'Gallery' | 'Attachments';
@@ -81,7 +82,7 @@ function TabView<T extends string>(props: TabViewProps<T>) {
       updatedTabData.push({
         value: 'Attachments' as AdditionalTabValues,
         icon: <AttachmentOutlinedIcon />,
-        component: <></>,
+        component: <AttachmentsTable entityId={attachmentsEntityId} />,
         order: attachmentsOrder ?? updatedTabData.length + 2,
       });
     }
