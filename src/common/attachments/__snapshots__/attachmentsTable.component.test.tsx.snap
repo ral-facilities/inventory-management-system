@@ -84,7 +84,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                         aria-invalid="false"
                         autocomplete="new-password"
                         class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12yjm75-MuiInputBase-input-MuiOutlinedInput-input"
-                        id=":r3n:"
+                        id=":r3o:"
                         placeholder="Search"
                         type="text"
                         value=""
@@ -184,12 +184,34 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                   class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                 />
               </button>
+              <button
+                aria-label="Toggle full screen"
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                data-mui-internal-clone-element="true"
+                tabindex="0"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                  data-testid="FullscreenIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M7 14H5v5h5v-2H7zm-2-4h2V7h3V5H5zm12 7h-3v2h5v-5h-2zM14 5v2h3v3h2V5z"
+                  />
+                </svg>
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
             </div>
           </div>
         </div>
       </div>
       <div
-        class="MuiTableContainer-root css-1quaapl-MuiTableContainer-root"
+        class="MuiTableContainer-root css-1rzq0kp-MuiTableContainer-root"
       >
         <table
           class="MuiTable-root MuiTable-stickyHeader css-ts728e-MuiTable-root"
@@ -390,12 +412,12 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                             </span>
                           </div>
                           <input
-                            aria-describedby=":r3v:-helper-text"
+                            aria-describedby=":r41:-helper-text"
                             aria-invalid="false"
                             aria-label="Filter by File name"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r3v:"
+                            id=":r41:"
                             placeholder="Filter by File name"
                             title="Filter by File name"
                             type="text"
@@ -433,7 +455,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                          id=":r3v:-helper-text"
+                          id=":r41:-helper-text"
                         >
                           <label>
                             Filter Mode: Fuzzy
@@ -609,12 +631,12 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                             </span>
                           </div>
                           <input
-                            aria-describedby=":r46:-helper-text"
+                            aria-describedby=":r48:-helper-text"
                             aria-invalid="false"
                             aria-label="Filter by Title"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r46:"
+                            id=":r48:"
                             placeholder="Filter by Title"
                             title="Filter by Title"
                             type="text"
@@ -652,7 +674,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                          id=":r46:-helper-text"
+                          id=":r48:-helper-text"
                         >
                           <label>
                             Filter Mode: Fuzzy
@@ -828,12 +850,12 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                             </span>
                           </div>
                           <input
-                            aria-describedby=":r4d:-helper-text"
+                            aria-describedby=":r4f:-helper-text"
                             aria-invalid="false"
                             aria-label="Filter by Description"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r4d:"
+                            id=":r4f:"
                             placeholder="Filter by Description"
                             title="Filter by Description"
                             type="text"
@@ -871,7 +893,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                          id=":r4d:-helper-text"
+                          id=":r4f:-helper-text"
                         >
                           <label>
                             Filter Mode: Fuzzy
@@ -1050,12 +1072,12 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                               </span>
                             </div>
                             <input
-                              aria-describedby=":r4k:-helper-text"
+                              aria-describedby=":r4m:-helper-text"
                               aria-invalid="false"
                               aria-label="Min"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r4k:"
+                              id=":r4m:"
                               inputmode="text"
                               placeholder="Min"
                               title="Min"
@@ -1090,7 +1112,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                           </div>
                           <p
                             class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                            id=":r4k:-helper-text"
+                            id=":r4m:-helper-text"
                           >
                             <label>
                               Filter Mode: Between Inclusive
@@ -1108,7 +1130,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                               aria-label="Max"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r4n:"
+                              id=":r4p:"
                               inputmode="text"
                               placeholder="Max"
                               title="Max"
@@ -1315,12 +1337,12 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                               </span>
                             </div>
                             <input
-                              aria-describedby=":r4t:-helper-text"
+                              aria-describedby=":r4v:-helper-text"
                               aria-invalid="false"
                               aria-label="Min"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r4t:"
+                              id=":r4v:"
                               inputmode="text"
                               placeholder="Min"
                               title="Min"
@@ -1355,7 +1377,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                           </div>
                           <p
                             class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                            id=":r4t:-helper-text"
+                            id=":r4v:-helper-text"
                           >
                             <label>
                               Filter Mode: Between Inclusive
@@ -1373,7 +1395,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                               aria-label="Max"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r50:"
+                              id=":r52:"
                               inputmode="text"
                               placeholder="Max"
                               title="Max"
@@ -1520,7 +1542,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                   class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
                   <div
-                    aria-controls=":r52:"
+                    aria-controls=":r54:"
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-label="Rows per page"
@@ -1795,6 +1817,28 @@ exports[`Attachments Table > renders table correctly 1`] = `
                   class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                 />
               </button>
+              <button
+                aria-label="Toggle full screen"
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                data-mui-internal-clone-element="true"
+                tabindex="0"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                  data-testid="FullscreenIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M7 14H5v5h5v-2H7zm-2-4h2V7h3V5H5zm12 7h-3v2h5v-5h-2zM14 5v2h3v3h2V5z"
+                  />
+                </svg>
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
             </div>
           </div>
         </div>
@@ -1826,7 +1870,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
         </div>
       </div>
       <div
-        class="MuiTableContainer-root css-1quaapl-MuiTableContainer-root"
+        class="MuiTableContainer-root css-1rzq0kp-MuiTableContainer-root"
       >
         <table
           class="MuiTable-root MuiTable-stickyHeader css-ts728e-MuiTable-root"
@@ -2027,12 +2071,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                             </span>
                           </div>
                           <input
-                            aria-describedby=":r8:-helper-text"
+                            aria-describedby=":r9:-helper-text"
                             aria-invalid="false"
                             aria-label="Filter by File name"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r8:"
+                            id=":r9:"
                             placeholder="Filter by File name"
                             title="Filter by File name"
                             type="text"
@@ -2070,7 +2114,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                          id=":r8:-helper-text"
+                          id=":r9:-helper-text"
                         >
                           <label>
                             Filter Mode: Fuzzy
@@ -2246,12 +2290,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                             </span>
                           </div>
                           <input
-                            aria-describedby=":rf:-helper-text"
+                            aria-describedby=":rg:-helper-text"
                             aria-invalid="false"
                             aria-label="Filter by Title"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":rf:"
+                            id=":rg:"
                             placeholder="Filter by Title"
                             title="Filter by Title"
                             type="text"
@@ -2289,7 +2333,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                          id=":rf:-helper-text"
+                          id=":rg:-helper-text"
                         >
                           <label>
                             Filter Mode: Fuzzy
@@ -2465,12 +2509,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                             </span>
                           </div>
                           <input
-                            aria-describedby=":rm:-helper-text"
+                            aria-describedby=":rn:-helper-text"
                             aria-invalid="false"
                             aria-label="Filter by Description"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":rm:"
+                            id=":rn:"
                             placeholder="Filter by Description"
                             title="Filter by Description"
                             type="text"
@@ -2508,7 +2552,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                          id=":rm:-helper-text"
+                          id=":rn:-helper-text"
                         >
                           <label>
                             Filter Mode: Fuzzy
@@ -2687,12 +2731,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                               </span>
                             </div>
                             <input
-                              aria-describedby=":rt:-helper-text"
+                              aria-describedby=":ru:-helper-text"
                               aria-invalid="false"
                               aria-label="Min"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":rt:"
+                              id=":ru:"
                               inputmode="text"
                               placeholder="Min"
                               title="Min"
@@ -2727,7 +2771,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                           </div>
                           <p
                             class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                            id=":rt:-helper-text"
+                            id=":ru:-helper-text"
                           >
                             <label>
                               Filter Mode: Between Inclusive
@@ -2745,7 +2789,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                               aria-label="Max"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r10:"
+                              id=":r11:"
                               inputmode="text"
                               placeholder="Max"
                               title="Max"
@@ -2952,12 +2996,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                               </span>
                             </div>
                             <input
-                              aria-describedby=":r16:-helper-text"
+                              aria-describedby=":r17:-helper-text"
                               aria-invalid="false"
                               aria-label="Min"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r16:"
+                              id=":r17:"
                               inputmode="text"
                               placeholder="Min"
                               title="Min"
@@ -2992,7 +3036,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                           </div>
                           <p
                             class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                            id=":r16:-helper-text"
+                            id=":r17:-helper-text"
                           >
                             <label>
                               Filter Mode: Between Inclusive
@@ -3010,7 +3054,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                               aria-label="Max"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r19:"
+                              id=":r1a:"
                               inputmode="text"
                               placeholder="Max"
                               title="Max"
@@ -4339,7 +4383,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                   class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
                   <div
-                    aria-controls=":r1b:"
+                    aria-controls=":r1c:"
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-label="Rows per page"

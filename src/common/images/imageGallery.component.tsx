@@ -3,6 +3,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
 import EditIcon from '@mui/icons-material/Edit';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import UploadIcon from '@mui/icons-material/Upload';
 import {
   Box,
   Button,
@@ -19,6 +20,8 @@ import {
   MRT_Cell,
   MRT_ColumnDef,
   MRT_Row,
+  MRT_RowData,
+  MRT_RowSelectionState,
   MRT_SelectCheckbox,
   MRT_ToggleRowActionMenuButton,
   MRT_TopToolbar,
@@ -28,25 +31,70 @@ import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { APIImage } from '../../api/api.types';
 import { useGetImages, usePatchImage } from '../../api/images';
-import { displayTableRowCountText, mrtTheme, OverflowTip } from '../../utils';
+import {
+  displayTableRowCountText,
+  getPageHeightCalc,
+  mrtTheme,
+  OverflowTip,
+} from '../../utils';
 import CardViewFilters from '../cardView/cardViewFilters.component';
 import DownloadFileDialog from '../downloadFileDialog.component';
 import EditFileDialog from '../editFileDialog.component';
 import ErrorPage from '../errorPage.component';
 import { usePreservedTableState } from '../preservedTableState.component';
+import { StyledUppyBox } from '../uppy.utils';
 import DeleteImageDialog from './deleteImageDialog.component';
 import GalleryLightBox from './galleryLightbox.component';
 import ImageInformationDialog from './imageInformationDialog.component';
 import ThumbnailImage from './thumbnailImage.component';
+import UploadImagesDialog from './uploadImagesDialog.component';
 
-const MAX_HEIGHT_THUMBNAIL = 300;
+const MRT_FULL_SCREEN_STYLES = {
+  bottom: 0,
+  height: '100dvh',
+  left: 0,
+  margin: 0,
+  maxHeight: '100dvh',
+  maxWidth: '100dvw',
+  padding: 0,
+  position: 'fixed',
+  right: 0,
+  top: 0,
+  width: '100dvw',
+  zIndex: 1210,
+};
 
 export interface ImageGalleryProps {
-  entityId?: string;
+  entityId: string;
+  dense: boolean;
+  setSelectedPrimaryID?: (selectedPrimaryId: string) => void;
 }
 
 const ImageGallery = (props: ImageGalleryProps) => {
-  const { entityId } = props;
+  const { entityId, dense, setSelectedPrimaryID } = props;
+
+  const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
+    {}
+  );
+
+  const handleRowSelection = React.useCallback(
+    (row: MRT_RowData) => {
+      if (setSelectedPrimaryID) {
+        if (rowSelection[row.id]) {
+          setSelectedPrimaryID('');
+        } else {
+          setSelectedPrimaryID(row.id);
+        }
+      }
+      setRowSelection((prev) => ({
+        [row.id]: !prev[row.id],
+      }));
+    },
+    [setSelectedPrimaryID, setRowSelection, rowSelection]
+  );
+
+  const maxHeightThumbnail = dense ? 150 : 300;
+
   const { data: images, isLoading: imageIsLoading } = useGetImages(entityId);
 
   const [currentLightBoxImage, setCurrentLightBoxImage] = React.useState<
@@ -63,9 +111,9 @@ const ImageGallery = (props: ImageGalleryProps) => {
 
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
-      pagination: { pageSize: 16, pageIndex: 0 },
+      pagination: { pageSize: dense ? 18 : 16, pageIndex: 0 },
     },
-    storeInUrl: true,
+    storeInUrl: dense ? false : true,
     urlParamName: 'imageState',
   });
 
@@ -141,15 +189,16 @@ const ImageGallery = (props: ImageGalleryProps) => {
     enableColumnPinning: false,
     enableTopToolbar: true,
     enableFacetedValues: true,
-    enableRowActions: true,
+    enableRowActions: !dense,
     enableGlobalFilter: true,
     enableRowSelection: true,
     enableStickyHeader: true,
     enableDensityToggle: false,
+    enableMultiRowSelection: !dense,
     enableTableFooter: true,
     enableColumnFilters: true,
     enableHiding: false,
-    enableFullScreenToggle: false,
+    enableFullScreenToggle: !dense,
     enablePagination: true,
     // Other settings
     paginationDisplayMode: 'pages',
@@ -171,6 +220,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
     },
     state: {
       ...preservedState,
+      rowSelection,
       showProgressBars: imageIsLoading,
     },
     //MRT
@@ -180,16 +230,38 @@ const ImageGallery = (props: ImageGalleryProps) => {
       size: 'small',
       variant: 'outlined',
     },
+    muiSelectCheckboxProps: dense
+      ? ({ row }) => {
+          return {
+            onClick: () => {
+              handleRowSelection(row);
+            },
+          };
+        }
+      : undefined,
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: [16, 24, 32],
+      rowsPerPageOptions: dense ? [18, 24, 30] : [16, 24, 32],
       shape: 'rounded',
       variant: 'outlined',
     },
     // Functions
     ...onPreservedStatesChange,
+    getRowId: (row) => row.id,
+    onRowSelectionChange: setRowSelection,
     renderTopToolbarCustomActions: ({ table }) => (
       <Box sx={{ display: 'flex' }}>
+        <Button
+          startIcon={<UploadIcon />}
+          sx={{ mx: 0.5 }}
+          variant="outlined"
+          onClick={() => {
+            setOpenUploadDialog(true);
+          }}
+        >
+          Upload Image
+        </Button>
+
         <Button
           startIcon={<ClearIcon />}
           sx={{ mx: 0.5 }}
@@ -292,146 +364,217 @@ const ImageGallery = (props: ImageGalleryProps) => {
 
   const isCollapsed = table.getState().showColumnFilters;
 
+  const [openUploadDialog, setOpenUploadDialog] =
+    React.useState<boolean>(false);
+
+  const cardViewHeight = getPageHeightCalc('150px');
+
   return (
     <Paper
       component={Grid}
-      sx={{ backgroundColor: baseBackgroundColor }}
       container
+      flexDirection={'column'}
+      height={dense ? '100%' : cardViewHeight}
+      maxHeight={dense ? '100%' : cardViewHeight}
+      sx={{
+        backgroundColor: baseBackgroundColor,
+        ...(table.getState().isFullScreen && MRT_FULL_SCREEN_STYLES),
+      }}
     >
-      <Grid item width={'100%'}>
+      <Grid item width="100%" sx={{ flexShrink: 0 }}>
         <MRT_TopToolbar table={table} />
       </Grid>
-      <Grid item container mt={2} direction="column" alignItems="center">
-        <Collapse in={isCollapsed} style={{ width: '100%' }}>
-          <CardViewFilters table={table} />
-        </Collapse>
-      </Grid>
-      <Grid container item sx={{ height: '670px', overflow: 'auto' }}>
-        {images &&
-          (images.length === 0 ? (
-            <ErrorPage
-              sx={{ marginTop: 2 }}
-              boldErrorText="No images available"
-              errorText={
-                'Please add an image by opening the Action Menu and clicking the Upload Images menu item.'
-              }
-            />
-          ) : (
-            <Grid
-              container
-              item
-              mt={2}
-              gap={2}
-              sx={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-              }}
+      <Grid item width="100%" sx={{ flex: 1, overflow: 'auto' }}>
+        <Grid container>
+          <Grid
+            item
+            container
+            display={!isCollapsed ? 'none' : undefined}
+            direction="column"
+            alignItems="center"
+            sx={{
+              justifyContent: 'left',
+              paddingLeft: 0.5,
+              position: 'sticky',
+              top: 0,
+              backgroundColor: 'background.default',
+              zIndex: 1000,
+              width: '100%',
+              paddingTop: 2.5,
+              height: 'fit-content',
+            }}
+          >
+            <Collapse
+              in={isCollapsed}
+              style={{ width: '100%', height: 'fit-content' }}
             >
-              {displayedImages.map((card, index) => {
-                const lastPageIndex = Math.floor(
-                  displayedImages.length / preservedState.pagination.pageSize
-                );
-                const isLastPage =
-                  preservedState.pagination.pageIndex === lastPageIndex;
-                const isSelected = selectedImages.some(
-                  (image) => image.id === card.row.original.id
-                );
-                return (
-                  <Card
-                    component={Grid}
-                    item
-                    container
-                    xs
-                    key={`thumbnail-displayed-${index}`}
-                    style={{
-                      maxWidth:
-                        data.length === 1 ||
-                        (images.length % preservedState.pagination.pageSize ===
-                          1 &&
-                          isLastPage)
-                          ? '50%'
-                          : undefined,
-                      backgroundColor: isSelected
-                        ? selectedRowBackgroundColor
-                        : undefined,
-                    }}
-                    minWidth={'350px'}
-                  >
-                    <Grid
-                      display="flex"
-                      justifyContent="flex-start"
-                      alignItems="center"
-                      item
-                      container
-                      xs={12}
-                    >
-                      <Grid item xs={2}>
-                        <MRT_SelectCheckbox
-                          row={card.row as MRT_Row<APIImage>}
-                          table={table}
-                          sx={{
-                            margin: 0.5,
+              <CardViewFilters table={table} />
+            </Collapse>
+          </Grid>
+          <Grid container item padding={1}>
+            {images &&
+              (images.length === 0 ? (
+                <ErrorPage
+                  sx={{ marginTop: 2 }}
+                  boldErrorText="No images available"
+                  errorText={`Please add an image by  clicking the Upload Images button.`}
+                />
+              ) : (
+                <Grid
+                  container
+                  item
+                  mt={2}
+                  gap={2}
+                  sx={{
+                    display: 'grid',
+                    gridTemplateColumns: dense
+                      ? 'repeat(auto-fit, minmax(200px, 1fr))'
+                      : 'repeat(auto-fit, minmax(350px, 1fr))',
+                  }}
+                >
+                  {displayedImages.map((card, index) => {
+                    const lastPageIndex = Math.floor(
+                      displayedImages.length /
+                        preservedState.pagination.pageSize
+                    );
+                    const isLastPage =
+                      preservedState.pagination.pageIndex === lastPageIndex;
+                    const isSelected = selectedImages.some(
+                      (image) => image.id === card.row.original.id
+                    );
+                    return (
+                      <Grid key={`thumbnail-displayed-${index}`} item>
+                        <Card
+                          component={Grid}
+                          container
+                          xs
+                          style={{
+                            maxWidth:
+                              data.length === 1 ||
+                              (images.length %
+                                preservedState.pagination.pageSize ===
+                                1 &&
+                                isLastPage)
+                                ? '50%'
+                                : undefined,
+                            backgroundColor: isSelected
+                              ? selectedRowBackgroundColor
+                              : undefined,
+                            cursor: dense ? 'pointer' : undefined,
                           }}
-                        />
-                      </Grid>
-                    </Grid>
-
-                    <Grid
-                      display="flex"
-                      justifyContent="center"
-                      alignItems="center"
-                      item
-                      minHeight={`${MAX_HEIGHT_THUMBNAIL}px`}
-                      xs
-                    >
-                      <ThumbnailImage
-                        onClick={() =>
-                          setCurrentLightBoxImage(card.row.original.id)
-                        }
-                        image={card.row.original}
-                      />
-                    </Grid>
-
-                    <Grid
-                      display="flex"
-                      justifyContent="center"
-                      alignItems="center"
-                      item
-                      container
-                      xs={12}
-                    >
-                      <Grid xs={2} item>
-                        <MRT_ToggleRowActionMenuButton
-                          cell={card as MRT_Cell<APIImage>}
-                          row={card.row as MRT_Row<APIImage>}
-                          table={table}
-                          sx={{
-                            margin: 0.5,
-                          }}
-                        />
-                      </Grid>
-                      <Grid item xs={8}>
-                        <OverflowTip
-                          sx={{
-                            fontVariant: 'body2',
-                            textAlign: 'center',
-                          }}
+                          minWidth={dense ? '175px' : '350px'}
+                          onClick={
+                            dense
+                              ? () => {
+                                  handleRowSelection(card.row);
+                                }
+                              : undefined
+                          }
                         >
-                          {card.row.original.file_name}
-                        </OverflowTip>
+                          <Grid
+                            display="flex"
+                            justifyContent="flex-start"
+                            alignItems="center"
+                            item
+                            container
+                            height="fit-content"
+                            pt={!dense ? 5.25 : undefined}
+                            xs={12}
+                          >
+                            <Grid item xs={2}>
+                              {dense && (
+                                <MRT_SelectCheckbox
+                                  row={card.row as MRT_Row<APIImage>}
+                                  table={table}
+                                  sx={{
+                                    margin: 0.5,
+                                  }}
+                                />
+                              )}
+                            </Grid>
+                          </Grid>
+
+                          <Grid
+                            display="flex"
+                            justifyContent="center"
+                            alignItems="center"
+                            item
+                            minHeight={`${maxHeightThumbnail}px`}
+                            xs
+                          >
+                            <ThumbnailImage
+                              onClick={
+                                !dense
+                                  ? () =>
+                                      setCurrentLightBoxImage(
+                                        card.row.original.id
+                                      )
+                                  : undefined
+                              }
+                              image={card.row.original}
+                              dense={dense}
+                            />
+                          </Grid>
+
+                          <Grid
+                            display="flex"
+                            justifyContent="center"
+                            alignItems="center"
+                            item
+                            height="fit-content"
+                            container
+                            xs={12}
+                          >
+                            {!dense && (
+                              <Grid xs={2} item>
+                                <MRT_ToggleRowActionMenuButton
+                                  cell={card as MRT_Cell<APIImage>}
+                                  row={card.row as MRT_Row<APIImage>}
+                                  table={table}
+                                  sx={{
+                                    margin: 0.5,
+                                  }}
+                                />
+                              </Grid>
+                            )}
+                            <Grid item xs={dense ? 12 : 8}>
+                              <OverflowTip
+                                sx={{
+                                  fontVariant: 'body2',
+                                  textAlign: 'center',
+                                  pb: dense ? 1 : undefined,
+                                  px: dense ? 1 : undefined,
+                                }}
+                              >
+                                {card.row.original.file_name}
+                              </OverflowTip>
+                            </Grid>
+                            {/*Adds an item for spacing, to centre the file name in the card. */}
+                            {!dense && <Grid item xs={2}></Grid>}
+                          </Grid>
+                        </Card>
                       </Grid>
-                      <Grid item xs={2}></Grid>
-                    </Grid>
-                  </Card>
-                );
-              })}
-            </Grid>
-          ))}
+                    );
+                  })}
+                </Grid>
+              ))}
+          </Grid>
+        </Grid>
       </Grid>
-      <Grid direction="row" item container>
-        <MRT_BottomToolbar table={table} sx={{ width: '100%' }} />
+      <Grid item width="100%" sx={{ flexShrink: 0 }}>
+        <MRT_BottomToolbar
+          table={table}
+          sx={{ width: '100%', bottom: undefined, position: 'relative' }}
+        />
       </Grid>
-      {selectedImage && (
+      <StyledUppyBox>
+        <UploadImagesDialog
+          open={openUploadDialog}
+          onClose={() => setOpenUploadDialog(false)}
+          entityId={entityId}
+        />
+      </StyledUppyBox>
+      {selectedImage && !dense && (
         <>
           <ImageInformationDialog
             open={openMenuDialog === 'information'}
