@@ -32,6 +32,7 @@ import {
   TableGroupedCell,
   TableHeaderOverflowTip,
   formatDateTimeStrings,
+  mrtTheme,
 } from '../utils';
 import SystemItemsDialog, {
   ItemUsageStatusesErrorStateType,
@@ -637,7 +638,9 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       showProgressBars: isLoading,
       rowSelection: rowSelection,
     },
-
+    //MRT
+    mrtTheme,
+    //MUI
     muiTableBodyCellProps: ({ column }) =>
       //Ignore the usages statuses cell in the dialog as this is a
       // select component and does not need to overflow

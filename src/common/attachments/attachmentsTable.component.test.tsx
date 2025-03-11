@@ -99,7 +99,7 @@ describe('Attachments Table', () => {
 
     expect(clearFiltersButton).toBeDisabled();
 
-    const nameInput = screen.getByLabelText('Filter by Filename');
+    const nameInput = screen.getByLabelText('Filter by File name');
 
     await user.type(nameInput, 'camera');
 

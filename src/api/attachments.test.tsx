@@ -1,8 +1,7 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import AttachmentsJSON from '../mocks/Attachments.json';
 import { hooksWrapperWithProviders } from '../testUtils';
 import { AttachmentPostMetadata, ObjectFilePatch } from './api.types';
-import { useGetAttachment, useGetAttachments, usePatchAttachment, usePostAttachmentMetadata } from './attachments';
+import { useGetAttachments, usePatchAttachment, usePostAttachmentMetadata } from './attachments';
 
 describe('attachments api functions', () => {
   afterEach(() => {
@@ -15,7 +14,7 @@ describe('attachments api functions', () => {
       mockDataPost = {
         file_name: 'laser-calibration.txt',
         entity_id: '1',
-        title: 'laser-calibration',
+        title: 'Laser Calibration',
         description: 'Detailed report on the calibration of high-precision lasers used in experiments.',
       };
     });

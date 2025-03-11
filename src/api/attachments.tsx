@@ -2,13 +2,13 @@ import {
   useMutation,
   UseMutationResult,
   useQuery,
-  useQueryClient,
   UseQueryResult,
 } from '@tanstack/react-query';
 
 import { AxiosError } from 'axios';
 import { storageApi } from './api';
 import {
+  AttachmentMetadata,
   AttachmentPostMetadata,
   AttachmentPostMetadataResponse,
   ObjectFilePatch,
@@ -27,36 +27,15 @@ export const usePostAttachmentMetadata = (): UseMutationResult<
   AxiosError,
   AttachmentPostMetadata
 > => {
-  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (attachmentMetadata: AttachmentPostMetadata) =>
       postAttachmentMetadata(attachmentMetadata),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['Attachments'],
-      });
-    },
-  });
-};
-
-export const getAttachment = async (id: string): Promise<AttachmentPostMetadataResponse> => {
-  return storageApi.get(`/attachments/${id}`).then((response) => {
-    return response.data;
-  });
-};
-
-export const useGetAttachment = (
-  id: string
-): UseQueryResult<AttachmentPostMetadataResponse, AxiosError> => {
-  return useQuery({
-    queryKey: ['Attachment', id],
-    queryFn: () => getAttachment(id),
   });
 };
 
 const getAttachments = async (
   entityId: string
-): Promise<AttachmentPostMetadataResponse[]> => {
+): Promise<AttachmentMetadata[]> => {
   const queryParams = new URLSearchParams();
   queryParams.append('entity_id', entityId);
 
@@ -68,12 +47,11 @@ const getAttachments = async (
 };
 
 export const useGetAttachments = (
-  entityId?: string
-): UseQueryResult<AttachmentPostMetadataResponse[], AxiosError> => {
+  entityId: string
+): UseQueryResult<AttachmentMetadata[], AxiosError> => {
   return useQuery({
     queryKey: ['Attachments', entityId],
-    queryFn: () => getAttachments(entityId ?? ''),
-    enabled: !!entityId,
+    queryFn: () => getAttachments(entityId),
   });
 };
 
