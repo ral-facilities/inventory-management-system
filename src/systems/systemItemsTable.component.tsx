@@ -32,6 +32,7 @@ import {
   TableGroupedCell,
   TableHeaderOverflowTip,
   formatDateTimeStrings,
+  getPageHeightCalc,
   mrtTheme,
 } from '../utils';
 import SystemItemsDialog, {
@@ -676,13 +677,22 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         zIndex: table.getState().isFullScreen ? 1210 : undefined,
       },
     }),
-    muiTableContainerProps: ({ table }) => ({
-      sx: {
-        minHeight: '360.4px',
-        height: table.getState().isFullScreen ? '100%' : undefined,
-        maxHeight: type === 'usageStatus' ? '670px' : undefined,
-      },
-    }),
+    muiTableContainerProps: ({ table }) => {
+      const showAlert =
+        table.getState().showAlertBanner ||
+        table.getFilteredSelectedRowModel().rows.length > 0 ||
+        table.getState().grouping.length > 0;
+      return {
+        sx: {
+          height: table.getState().isFullScreen
+            ? '100%'
+            : type === 'usageStatus'
+              ? undefined
+              : getPageHeightCalc(`272px  ${showAlert ? '+ 72px' : ''}`),
+          maxHeight: type === 'usageStatus' ? '670px' : undefined,
+        },
+      };
+    },
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',
