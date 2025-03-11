@@ -193,7 +193,7 @@ exports[`Image Gallery > renders correctly 1`] = `
         </div>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-item css-7uqkbk-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-item css-jpsoni-MuiGrid-root"
       >
         <div
           class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
@@ -2562,7 +2562,7 @@ exports[`Image Gallery > renders no results page correctly 1`] = `
         </div>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-item css-7uqkbk-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-item css-jpsoni-MuiGrid-root"
       >
         <div
           class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
