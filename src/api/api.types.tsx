@@ -220,17 +220,16 @@ export interface Item
 }
 // ------------------------------------ OBJECT STORAGE API -----------------------------------------
 
-export interface ObjectFilePatch {
-  file_name?: string;
+export interface ObjectFilePostBase {
+  file_name: string;
   title?: string | null;
   description?: string | null;
 }
 
-export interface ObjectFileUploadMetadata {
+export type ObjectFilePatchBase = Partial<ObjectFilePostBase>;
+
+export interface ObjectFileUploadMetadata extends ObjectFilePostBase {
   entity_id: string;
-  file_name: string;
-  title?: string | null;
-  description?: string | null;
 }
 
 // ------------------------------------ ATTACHMENTS ------------------------------------------------
@@ -253,6 +252,8 @@ export interface AttachmentPostMetadataResponse extends AttachmentMetadata {
   upload_info: AttachmentUploadInfo;
 }
 
+export type AttachmentMetadataPatch = ObjectFilePatchBase;
+
 // ------------------------------------ IMAGES ------------------------------------------------
 export interface ImagePost extends ObjectFileUploadMetadata {
   upload_file: File;
@@ -266,6 +267,9 @@ export interface APIImage
   thumbnail_base64: string;
 }
 
+export interface ImageMetadataPatch extends ObjectFilePatchBase {
+  primary?: boolean | null;
+}
 export interface APIImageWithURL extends APIImage {
   /* Each url has a different `ResponseContentDisposition` set in the url, for viewing images inline and downloading respectively.
    Allows links to be downloaded directly to the user's computer and not to their client first. */
