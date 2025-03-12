@@ -4,7 +4,7 @@ import {
   CREATED_MODIFIED_TIME_VALUES,
   hooksWrapperWithProviders,
 } from '../testUtils';
-import { APIImage, ObjectFilePatch } from './api.types';
+import { APIImage, ImageMetadataPatch } from './api.types';
 import {
   useDeleteImage,
   useGetImage,
@@ -75,7 +75,7 @@ describe('images api functions', () => {
   });
 
   describe('usePatchImage', () => {
-    let mockDataPatch: ObjectFilePatch;
+    let mockDataPatch: ImageMetadataPatch;
     beforeEach(() => {
       mockDataPatch = {
         file_name: 'edited_image.jpeg',

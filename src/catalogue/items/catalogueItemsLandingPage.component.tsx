@@ -17,7 +17,7 @@ import { useGetCatalogueCategory } from '../../api/catalogueCategories';
 import { useGetCatalogueItem } from '../../api/catalogueItems';
 import { useGetManufacturer } from '../../api/manufacturers';
 import ActionMenu from '../../common/actionMenu.component';
-import PlaceholderImage from '../../common/images/placeholderImage.component';
+import PrimaryImage from '../../common/images/primaryImage.component';
 import TabView from '../../common/tab/tabView.component';
 import { formatDateTimeStrings } from '../../utils';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
@@ -86,15 +86,8 @@ function CatalogueItemsLandingPage() {
           >
             {/* Image Section */}
             <Grid item container xs={12}>
-              <Grid
-                item
-                xs={12}
-                sm={4}
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-              >
-                <PlaceholderImage entityId={catalogueItemId} />
+              <Grid item xs={12} sm={4}>
+                <PrimaryImage entityId={catalogueItemId ?? ''} />
               </Grid>
               {/* Title and Description Section */}
               <Grid
@@ -349,7 +342,16 @@ function CatalogueItemsLandingPage() {
                       </Grid>
                       <Grid container item xs={12}>
                         <Grid container item spacing={1}>
-                          {catalogueItemIdData.properties &&
+                          {catalogueItemIdData.properties.length === 0 ? (
+                            <Grid item>
+                              <Typography
+                                variant="body1"
+                                color="text.secondary"
+                              >
+                                None
+                              </Typography>
+                            </Grid>
+                          ) : (
                             catalogueItemIdData.properties.map(
                               (property, index) => (
                                 <Grid item xs={12} sm={6} md={4} key={index}>
@@ -371,7 +373,8 @@ function CatalogueItemsLandingPage() {
                                   </Typography>
                                 </Grid>
                               )
-                            )}
+                            )
+                          )}
                         </Grid>
                       </Grid>
 

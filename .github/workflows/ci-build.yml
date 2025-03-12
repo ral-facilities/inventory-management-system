@@ -121,6 +121,9 @@ jobs:
           --env API__ALLOWED_CORS_HEADERS='["*"]' \
           --env API__ALLOWED_CORS_ORIGINS='["*"]' \
           --env API__ALLOWED_CORS_METHODS='["*"]' \
+          --env OBJECT_STORAGE__ENABLED=false \
+          --env OBJECT_STORAGE__API_REQUEST_TIMEOUT_SECONDS=10 \
+          --env OBJECT_STORAGE__API_URL=http://localhost:8002 \
           harbor.stfc.ac.uk/inventory-management-system/ims-api:develop
 
       - name: Checkout repo

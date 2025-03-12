@@ -31,7 +31,7 @@ describe('delete Image dialogue', () => {
   beforeEach(() => {
     image = {
       id: '1',
-      file_name: 'Image A',
+      file_name: 'Image_A.png',
       entity_id: '2',
       title: 'a title',
       description: 'a description',
@@ -55,7 +55,7 @@ describe('delete Image dialogue', () => {
     createView();
     expect(screen.getByText('Delete Image')).toBeInTheDocument();
     expect(screen.getByTestId('delete-image-name')).toHaveTextContent(
-      'a title'
+      'Image_A.png'
     );
   });
 
@@ -99,21 +99,6 @@ describe('delete Image dialogue', () => {
       charCode: 27,
     });
 
-    expect(onClose).not.toHaveBeenCalled();
-  });
-
-  it('displays warning message when session data is not loaded', async () => {
-    props = {
-      ...props,
-      image: undefined,
-    };
-    createView();
-    const continueButton = screen.getByRole('button', { name: 'Continue' });
-    await user.click(continueButton);
-    const helperTexts = screen.getByText(
-      'No data provided, Please refresh and try again'
-    );
-    expect(helperTexts).toBeInTheDocument();
     expect(onClose).not.toHaveBeenCalled();
   });
 

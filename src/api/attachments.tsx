@@ -1,7 +1,14 @@
-import { useMutation, UseMutationResult } from '@tanstack/react-query';
+import {
+  useMutation,
+  UseMutationResult,
+  useQuery,
+  UseQueryResult,
+} from '@tanstack/react-query';
+
 import { AxiosError } from 'axios';
 import { storageApi } from './api';
 import {
+  AttachmentMetadata,
   AttachmentPostMetadata,
   AttachmentPostMetadataResponse,
 } from './api.types';
@@ -22,5 +29,27 @@ export const usePostAttachmentMetadata = (): UseMutationResult<
   return useMutation({
     mutationFn: (attachmentMetadata: AttachmentPostMetadata) =>
       postAttachmentMetadata(attachmentMetadata),
+  });
+};
+
+const getAttachments = async (
+  entityId: string
+): Promise<AttachmentMetadata[]> => {
+  const queryParams = new URLSearchParams();
+  queryParams.append('entity_id', entityId);
+
+  return storageApi
+    .get(`/attachments`, {
+      params: queryParams,
+    })
+    .then((response) => response.data);
+};
+
+export const useGetAttachments = (
+  entityId: string
+): UseQueryResult<AttachmentMetadata[], AxiosError> => {
+  return useQuery({
+    queryKey: ['Attachments', entityId],
+    queryFn: () => getAttachments(entityId),
   });
 };

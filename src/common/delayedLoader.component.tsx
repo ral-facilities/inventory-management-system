@@ -28,7 +28,11 @@ const DelayedLoader = (props: DelayedLoaderProps) => {
     };
   }, [isLoading, timeMS]);
 
-  return <>{showLoader && <CircularProgress sx={sx} />}</>;
+  if (showLoader) {
+    return <CircularProgress sx={sx} />;
+  } else {
+    return null;
+  }
 };
 
 export default DelayedLoader;

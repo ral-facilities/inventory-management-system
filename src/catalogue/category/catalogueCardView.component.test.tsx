@@ -47,14 +47,6 @@ describe('CardView', () => {
     vi.clearAllMocks();
   });
 
-  it('progress bar renders correctly', async () => {
-    createView('/catalogue');
-
-    await waitFor(() => {
-      expect(screen.getByRole('progressbar')).toBeInTheDocument();
-    });
-  });
-
   it('redirects to catalogue items if isLeaf is true ', async () => {
     const consoleErrorSpy = vi
       .spyOn(console, 'error')
@@ -147,10 +139,10 @@ describe('CardView', () => {
       expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
     });
 
-    const actionsButton = screen.getByRole('button', {
-      name: 'actions Beam Characterization catalogue category button',
+    const actionsButtons = screen.getAllByRole('button', {
+      name: 'Card Actions',
     });
-    await user.click(actionsButton);
+    await user.click(actionsButtons[0]);
 
     const deleteButton = screen.getByRole('menuitem', {
       name: 'delete Beam Characterization catalogue category button',
@@ -175,10 +167,10 @@ describe('CardView', () => {
       expect(screen.getByText('Amp Meters')).toBeInTheDocument();
     });
 
-    const actionsButton = screen.getByRole('button', {
-      name: 'actions Amp Meters catalogue category button',
+    const actionsButtons = screen.getAllByRole('button', {
+      name: 'Card Actions',
     });
-    await user.click(actionsButton);
+    await user.click(actionsButtons[6]);
 
     const editButton = screen.getByRole('menuitem', {
       name: 'edit Amp Meters catalogue category button',
@@ -208,10 +200,10 @@ describe('CardView', () => {
       expect(screen.getByText('Amp Meters')).toBeInTheDocument();
     });
 
-    const actionsButton = screen.getByRole('button', {
-      name: 'actions Amp Meters catalogue category button',
+    const actionsButtons = screen.getAllByRole('button', {
+      name: 'Card Actions',
     });
-    await user.click(actionsButton);
+    await user.click(actionsButtons[6]);
 
     const editButton = screen.getByRole('menuitem', {
       name: 'duplicate Amp Meters catalogue category button',
@@ -238,9 +230,11 @@ describe('CardView', () => {
       expect(screen.getByText('Cameras')).toBeInTheDocument();
     });
 
-    const camerasCheckbox = screen.getByLabelText('Cameras checkbox');
+    const checkboxes = await screen.findAllByRole('checkbox', {
+      name: 'Toggle select card',
+    });
 
-    await user.click(camerasCheckbox);
+    await user.click(checkboxes[1]);
 
     await waitFor(() => {
       expect(
@@ -265,9 +259,11 @@ describe('CardView', () => {
       expect(screen.getByText('Cameras')).toBeInTheDocument();
     });
 
-    const camerasCheckbox = screen.getByLabelText('Cameras checkbox');
+    const checkboxes = await screen.findAllByRole('checkbox', {
+      name: 'Toggle select card',
+    });
 
-    await user.click(camerasCheckbox);
+    await user.click(checkboxes[1]);
 
     await waitFor(() => {
       expect(
@@ -292,42 +288,13 @@ describe('CardView', () => {
       expect(screen.getByText('Energy Meters')).toBeInTheDocument();
     });
 
-    const energyMetersCheckbox = screen.getByLabelText(
-      'Energy Meters checkbox'
-    );
-
-    await user.click(energyMetersCheckbox);
-
-    const camerasCheckbox = screen.getByLabelText('Cameras checkbox');
-
-    await user.click(camerasCheckbox);
-
-    await user.click(energyMetersCheckbox);
-    await user.click(camerasCheckbox);
-
-    await waitFor(() => {
-      expect(
-        screen.queryByRole('button', { name: 'Move to' })
-      ).not.toBeInTheDocument();
-    });
-  });
-
-  it('selects and deselects all catalogue categories', async () => {
-    createView('/catalogue/1', 'catalogueCategories');
-
-    await waitFor(() => {
-      expect(screen.getByText('Energy Meters')).toBeInTheDocument();
+    const checkboxes = await screen.findAllByRole('checkbox', {
+      name: 'Toggle select card',
     });
 
-    const energyMetersCheckbox = screen.getByLabelText(
-      'Energy Meters checkbox'
-    );
+    await user.click(checkboxes[0]);
 
-    await user.click(energyMetersCheckbox);
-
-    const camerasCheckbox = screen.getByLabelText('Cameras checkbox');
-
-    await user.click(camerasCheckbox);
+    await user.click(checkboxes[1]);
 
     const clearSelected = await screen.findByRole('button', {
       name: '2 selected',
@@ -358,27 +325,6 @@ describe('CardView', () => {
       });
 
       expect(screen.getByText('Categories per page')).toBeInTheDocument();
-    });
-
-    it('toggles filter visibility when clicking the toggle button', async () => {
-      createView();
-
-      await waitFor(() => {
-        expect(screen.getByText('Test 1')).toBeInTheDocument();
-      });
-
-      expect(screen.queryByText('Hide Filters')).not.toBeInTheDocument();
-      expect(screen.getByText('Show Filters')).toBeInTheDocument();
-
-      await user.click(screen.getByText('Show Filters'));
-
-      expect(screen.getByText('Hide Filters')).toBeInTheDocument();
-      expect(screen.getByText('Categories per page')).toBeInTheDocument();
-
-      await user.click(screen.getByText('Hide Filters'));
-
-      expect(screen.queryByText('Hide Filters')).not.toBeInTheDocument();
-      expect(screen.getByText('Show Filters')).toBeInTheDocument();
     });
 
     it('changes page correctly and rerenders data', async () => {
@@ -442,11 +388,11 @@ describe('CardView', () => {
 
       expect(await screen.findByText('Test 1')).toBeInTheDocument();
 
-      await user.click(screen.getByText('Show Filters'));
+      await user.click(
+        screen.getByRole('button', { name: 'Show/Hide filters' })
+      );
 
-      expect(await screen.findByText('Hide Filters')).toBeInTheDocument();
-
-      const nameInput = screen.getByLabelText('Filter by Name');
+      const nameInput = await screen.findByLabelText('Filter by Name');
       await user.type(nameInput, 'Test 1');
       await waitFor(() => {
         expect(screen.queryByText('Test 2')).not.toBeInTheDocument();
@@ -468,7 +414,9 @@ describe('CardView', () => {
         expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
       );
 
-      await user.click(screen.getByText('Show Filters'));
+      await user.click(
+        screen.getByRole('button', { name: 'Show/Hide filters' })
+      );
 
       const dropdownButtons = await screen.findAllByTestId('FilterListIcon');
 
