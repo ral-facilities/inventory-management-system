@@ -31,7 +31,12 @@ import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { APIImage } from '../../api/api.types';
 import { useGetImages, usePatchImage } from '../../api/images';
-import { displayTableRowCountText, mrtTheme, OverflowTip } from '../../utils';
+import {
+  displayTableRowCountText,
+  getPageHeightCalc,
+  mrtTheme,
+  OverflowTip,
+} from '../../utils';
 import CardViewFilters from '../cardView/cardViewFilters.component';
 import DownloadFileDialog from '../downloadFileDialog.component';
 import EditFileDialog from '../editFileDialog.component';
@@ -43,6 +48,21 @@ import GalleryLightBox from './galleryLightbox.component';
 import ImageInformationDialog from './imageInformationDialog.component';
 import ThumbnailImage from './thumbnailImage.component';
 import UploadImagesDialog from './uploadImagesDialog.component';
+
+const MRT_FULL_SCREEN_STYLES = {
+  bottom: 0,
+  height: '100dvh',
+  left: 0,
+  margin: 0,
+  maxHeight: '100dvh',
+  maxWidth: '100dvw',
+  padding: 0,
+  position: 'fixed',
+  right: 0,
+  top: 0,
+  width: '100dvw',
+  zIndex: 1210,
+};
 
 export interface ImageGalleryProps {
   entityId: string;
@@ -178,7 +198,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
     enableTableFooter: true,
     enableColumnFilters: true,
     enableHiding: false,
-    enableFullScreenToggle: false,
+    enableFullScreenToggle: !dense,
     enablePagination: true,
     // Other settings
     paginationDisplayMode: 'pages',
@@ -227,6 +247,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
     },
     // Functions
     ...onPreservedStatesChange,
+    getRowId: (row) => row.id,
     onRowSelectionChange: setRowSelection,
     renderTopToolbarCustomActions: ({ table }) => (
       <Box sx={{ display: 'flex' }}>
@@ -346,167 +367,205 @@ const ImageGallery = (props: ImageGalleryProps) => {
   const [openUploadDialog, setOpenUploadDialog] =
     React.useState<boolean>(false);
 
+  const cardViewHeight = getPageHeightCalc('150px');
+
   return (
     <Paper
       component={Grid}
-      sx={{ backgroundColor: baseBackgroundColor }}
       container
+      flexDirection={'column'}
+      height={dense ? '100%' : cardViewHeight}
+      maxHeight={dense ? '100%' : cardViewHeight}
+      sx={{
+        backgroundColor: baseBackgroundColor,
+        ...(table.getState().isFullScreen && MRT_FULL_SCREEN_STYLES),
+      }}
     >
-      <Grid item width={'100%'}>
+      <Grid item width="100%" sx={{ flexShrink: 0 }}>
         <MRT_TopToolbar table={table} />
       </Grid>
-      <Grid item container mt={2} direction="column" alignItems="center">
-        <Collapse in={isCollapsed} style={{ width: '100%' }}>
-          <CardViewFilters table={table} />
-        </Collapse>
-      </Grid>
-      <Grid
-        container
-        item
-        sx={{
-          height: dense ? (isCollapsed ? '230px' : '385px') : '670px',
-          overflow: 'auto',
-        }}
-      >
-        {images &&
-          (images.length === 0 ? (
-            <ErrorPage
-              sx={{ marginTop: 2 }}
-              boldErrorText="No images available"
-              errorText={`Please add an image by ${!dense ? ' opening the Action Menu and' : ''} clicking the Upload Images ${!dense ? 'menu item' : 'button'}.`}
-            />
-          ) : (
-            <Grid
-              container
-              item
-              mt={2}
-              gap={2}
-              sx={{
-                display: 'grid',
-                gridTemplateColumns: dense
-                  ? 'repeat(auto-fit, minmax(200px, 1fr))'
-                  : 'repeat(auto-fit, minmax(350px, 1fr))',
-              }}
+      <Grid item width="100%" sx={{ flex: 1, overflow: 'auto' }}>
+        <Grid container>
+          <Grid
+            item
+            container
+            display={!isCollapsed ? 'none' : undefined}
+            direction="column"
+            alignItems="center"
+            sx={{
+              justifyContent: 'left',
+              paddingLeft: 0.5,
+              position: 'sticky',
+              top: 0,
+              backgroundColor: 'background.default',
+              zIndex: 1000,
+              width: '100%',
+              paddingTop: 2.5,
+              height: 'fit-content',
+            }}
+          >
+            <Collapse
+              in={isCollapsed}
+              style={{ width: '100%', height: 'fit-content' }}
             >
-              {displayedImages.map((card, index) => {
-                const lastPageIndex = Math.floor(
-                  displayedImages.length / preservedState.pagination.pageSize
-                );
-                const isLastPage =
-                  preservedState.pagination.pageIndex === lastPageIndex;
-                const isSelected = selectedImages.some(
-                  (image) => image.id === card.row.original.id
-                );
-                return (
-                  <Card
-                    component={Grid}
-                    item
-                    container
-                    xs
-                    key={`thumbnail-displayed-${index}`}
-                    style={{
-                      cursor: dense ? 'pointer' : undefined,
-                      maxWidth:
-                        data.length === 1 ||
-                        (images.length % preservedState.pagination.pageSize ===
-                          1 &&
-                          isLastPage)
-                          ? '50%'
-                          : undefined,
-                      backgroundColor: isSelected
-                        ? selectedRowBackgroundColor
-                        : undefined,
-                    }}
-                    minWidth={dense ? '175px' : '350px'}
-                    onClick={
-                      dense
-                        ? () => {
-                            handleRowSelection(card.row);
+              <CardViewFilters table={table} />
+            </Collapse>
+          </Grid>
+          <Grid container item padding={1}>
+            {images &&
+              (images.length === 0 ? (
+                <ErrorPage
+                  sx={{ marginTop: 2 }}
+                  boldErrorText="No images available"
+                  errorText={`Please add an image by  clicking the Upload Images button.`}
+                />
+              ) : (
+                <Grid
+                  container
+                  item
+                  mt={2}
+                  gap={2}
+                  sx={{
+                    display: 'grid',
+                    gridTemplateColumns: dense
+                      ? 'repeat(auto-fit, minmax(200px, 1fr))'
+                      : 'repeat(auto-fit, minmax(350px, 1fr))',
+                  }}
+                >
+                  {displayedImages.map((card, index) => {
+                    const lastPageIndex = Math.floor(
+                      displayedImages.length /
+                        preservedState.pagination.pageSize
+                    );
+                    const isLastPage =
+                      preservedState.pagination.pageIndex === lastPageIndex;
+                    const isSelected = selectedImages.some(
+                      (image) => image.id === card.row.original.id
+                    );
+                    return (
+                      <Grid key={`thumbnail-displayed-${index}`} item>
+                        <Card
+                          component={Grid}
+                          container
+                          xs
+                          style={{
+                            maxWidth:
+                              data.length === 1 ||
+                              (images.length %
+                                preservedState.pagination.pageSize ===
+                                1 &&
+                                isLastPage)
+                                ? '50%'
+                                : undefined,
+                            backgroundColor: isSelected
+                              ? selectedRowBackgroundColor
+                              : undefined,
+                            cursor: dense ? 'pointer' : undefined,
+                          }}
+                          minWidth={dense ? '175px' : '350px'}
+                          onClick={
+                            dense
+                              ? () => {
+                                  handleRowSelection(card.row);
+                                }
+                              : undefined
                           }
-                        : undefined
-                    }
-                  >
-                    <Grid
-                      display="flex"
-                      justifyContent="flex-start"
-                      alignItems="center"
-                      item
-                      container
-                      xs={12}
-                    >
-                      <Grid item xs={2}>
-                        <MRT_SelectCheckbox
-                          row={card.row as MRT_Row<APIImage>}
-                          table={table}
-                          sx={{
-                            margin: 0.5,
-                          }}
-                        />
-                      </Grid>
-                    </Grid>
-
-                    <Grid
-                      display="flex"
-                      justifyContent="center"
-                      alignItems="center"
-                      item
-                      minHeight={`${maxHeightThumbnail}px`}
-                      xs
-                    >
-                      <ThumbnailImage
-                        onClick={
-                          !dense
-                            ? () =>
-                                setCurrentLightBoxImage(card.row.original.id)
-                            : undefined
-                        }
-                        image={card.row.original}
-                        dense={dense}
-                      />
-                    </Grid>
-
-                    <Grid
-                      display="flex"
-                      justifyContent="center"
-                      alignItems="center"
-                      item
-                      container
-                      xs={12}
-                    >
-                      {!dense && (
-                        <Grid xs={2} item>
-                          <MRT_ToggleRowActionMenuButton
-                            cell={card as MRT_Cell<APIImage>}
-                            row={card.row as MRT_Row<APIImage>}
-                            table={table}
-                            sx={{
-                              margin: 0.5,
-                            }}
-                          />
-                        </Grid>
-                      )}
-                      <Grid item xs={dense ? 12 : 8}>
-                        <OverflowTip
-                          sx={{
-                            fontVariant: 'body2',
-                            textAlign: 'center',
-                            pb: dense ? 1 : undefined,
-                          }}
                         >
-                          {card.row.original.file_name}
-                        </OverflowTip>
+                          <Grid
+                            display="flex"
+                            justifyContent="flex-start"
+                            alignItems="center"
+                            item
+                            container
+                            height="fit-content"
+                            pt={!dense ? 5.25 : undefined}
+                            xs={12}
+                          >
+                            <Grid item xs={2}>
+                              {dense && (
+                                <MRT_SelectCheckbox
+                                  row={card.row as MRT_Row<APIImage>}
+                                  table={table}
+                                  sx={{
+                                    margin: 0.5,
+                                  }}
+                                />
+                              )}
+                            </Grid>
+                          </Grid>
+
+                          <Grid
+                            display="flex"
+                            justifyContent="center"
+                            alignItems="center"
+                            item
+                            minHeight={`${maxHeightThumbnail}px`}
+                            xs
+                          >
+                            <ThumbnailImage
+                              onClick={
+                                !dense
+                                  ? () =>
+                                      setCurrentLightBoxImage(
+                                        card.row.original.id
+                                      )
+                                  : undefined
+                              }
+                              image={card.row.original}
+                              dense={dense}
+                            />
+                          </Grid>
+
+                          <Grid
+                            display="flex"
+                            justifyContent="center"
+                            alignItems="center"
+                            item
+                            height="fit-content"
+                            container
+                            xs={12}
+                          >
+                            {!dense && (
+                              <Grid xs={2} item>
+                                <MRT_ToggleRowActionMenuButton
+                                  cell={card as MRT_Cell<APIImage>}
+                                  row={card.row as MRT_Row<APIImage>}
+                                  table={table}
+                                  sx={{
+                                    margin: 0.5,
+                                  }}
+                                />
+                              </Grid>
+                            )}
+                            <Grid item xs={dense ? 12 : 8}>
+                              <OverflowTip
+                                sx={{
+                                  fontVariant: 'body2',
+                                  textAlign: 'center',
+                                  pb: dense ? 1 : undefined,
+                                  px: dense ? 1 : undefined,
+                                }}
+                              >
+                                {card.row.original.file_name}
+                              </OverflowTip>
+                            </Grid>
+                            {/*Adds an item for spacing, to centre the file name in the card. */}
+                            {!dense && <Grid item xs={2}></Grid>}
+                          </Grid>
+                        </Card>
                       </Grid>
-                      {/*Adds an item for spacing, to centre the file name in the card. */}
-                      {!dense && <Grid item xs={2}></Grid>}
-                    </Grid>
-                  </Card>
-                );
-              })}
-            </Grid>
-          ))}
+                    );
+                  })}
+                </Grid>
+              ))}
+          </Grid>
+        </Grid>
       </Grid>
-      <Grid direction="row" item container>
-        <MRT_BottomToolbar table={table} sx={{ width: '100%' }} />
+      <Grid item width="100%" sx={{ flexShrink: 0 }}>
+        <MRT_BottomToolbar
+          table={table}
+          sx={{ width: '100%', bottom: undefined, position: 'relative' }}
+        />
       </Grid>
       <StyledUppyBox>
         <UploadImagesDialog

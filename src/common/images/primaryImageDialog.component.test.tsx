@@ -151,7 +151,7 @@ describe('Primary Image Dialog', () => {
 
     await waitFor(() => expect(onClose).toHaveBeenCalled());
 
-    expect(axiosPatchSpy).toHaveBeenCalledWith('/images/0', {
+    expect(axiosPatchSpy).toHaveBeenCalledWith('/images/1', {
       primary: true,
     });
   });
@@ -166,7 +166,7 @@ describe('Primary Image Dialog', () => {
 
     const imageCard = screen.getAllByRole('radio', {
       name: 'Toggle select card',
-    })[17];
+    })[16];
 
     user.click(imageCard);
 
