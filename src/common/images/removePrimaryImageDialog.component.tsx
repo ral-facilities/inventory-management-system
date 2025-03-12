@@ -1,13 +1,11 @@
 import WarningIcon from '@mui/icons-material/Warning';
 import {
-  Box,
   Button,
   CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormHelperText,
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
@@ -24,33 +22,24 @@ export interface RemovePrimaryImageProps {
 const RemovePrimaryImageDialog = (props: RemovePrimaryImageProps) => {
   const { open, onClose, image } = props;
 
-  const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
-    undefined
-  );
-
   const { mutateAsync: patchImage, isPending: isEditPending } = usePatchImage();
 
   const handleClose = React.useCallback(() => {
     onClose();
-    setErrorMessage(undefined);
   }, [onClose]);
 
   const handlePatchImage = React.useCallback(() => {
-    if (image) {
-      const fileToEdit: ImageMetadataPatch = {
-        primary: false,
-        file_name: image.file_name,
-      };
-      patchImage({ id: image.id, fileMetadata: fileToEdit })
-        .then(() => {
-          onClose();
-        })
-        .catch((error: AxiosError) => {
-          handleIMS_APIError(error);
-        });
-    } else {
-      setErrorMessage('No data provided, Please refresh and try again');
-    }
+    const fileToEdit: ImageMetadataPatch = {
+      primary: false,
+      file_name: image.file_name,
+    };
+    patchImage({ id: image.id, fileMetadata: fileToEdit })
+      .then(() => {
+        onClose();
+      })
+      .catch((error: AxiosError) => {
+        handleIMS_APIError(error);
+      });
   }, [image, patchImage, onClose]);
 
   return (
@@ -68,27 +57,12 @@ const RemovePrimaryImageDialog = (props: RemovePrimaryImageProps) => {
         <Button onClick={handleClose}>Cancel</Button>
         <Button
           onClick={handlePatchImage}
-          disabled={isEditPending || errorMessage != undefined}
+          disabled={isEditPending}
           endIcon={isEditPending ? <CircularProgress size={20} /> : null}
         >
           Continue
         </Button>
       </DialogActions>
-      {errorMessage != undefined && (
-        <Box
-          sx={{
-            mx: '24px',
-            marginBottom: '24px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
-            {errorMessage}
-          </FormHelperText>
-        </Box>
-      )}
     </Dialog>
   );
 };

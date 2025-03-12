@@ -31,7 +31,7 @@ describe('delete Image dialogue', () => {
   beforeEach(() => {
     image = {
       id: '1',
-      file_name: 'Image A',
+      file_name: 'Image_A.png',
       entity_id: '2',
       title: 'a title',
       description: 'a description',
@@ -55,7 +55,7 @@ describe('delete Image dialogue', () => {
     createView();
     expect(screen.getByText('Delete Image')).toBeInTheDocument();
     expect(screen.getByTestId('delete-image-name')).toHaveTextContent(
-      'Image A'
+      'Image_A.png'
     );
   });
 
