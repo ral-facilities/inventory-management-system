@@ -16,6 +16,7 @@ describe('ThumbnailImage Component', () => {
   beforeEach(() => {
     props = {
       onClick: onClick,
+      dense: false,
       image: ImagesJSON[0],
     };
   });

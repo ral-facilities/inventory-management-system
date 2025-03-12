@@ -9,7 +9,7 @@ import {
 
 import { AxiosError } from 'axios';
 import { storageApi } from './api';
-import { APIImage, APIImageWithURL, ObjectFilePatch } from './api.types';
+import { APIImage, APIImageWithURL, ImageMetadataPatch } from './api.types';
 
 export const getImage = async (id: string): Promise<APIImageWithURL> => {
   return storageApi.get(`/images/${id}`).then((response) => {
@@ -60,7 +60,7 @@ export const useGetImages = (
 
 const patchImage = async (
   id: string,
-  fileMetadata: ObjectFilePatch
+  fileMetadata: ImageMetadataPatch
 ): Promise<APIImage> => {
   return storageApi
     .patch<APIImage>(`/images/${id}`, fileMetadata)
@@ -70,7 +70,7 @@ const patchImage = async (
 export const usePatchImage = (): UseMutationResult<
   APIImage,
   AxiosError,
-  { id: string; fileMetadata: ObjectFilePatch }
+  { id: string; fileMetadata: ImageMetadataPatch }
 > => {
   const queryClient = useQueryClient();
   return useMutation({
