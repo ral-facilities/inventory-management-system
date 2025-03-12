@@ -44,7 +44,7 @@ describe('Primary Image Dialog', () => {
     });
 
     await waitFor(() =>
-      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+      expect(screen.queryAllByRole('progressbar')).toHaveLength(0)
     );
 
     expect((await screen.findAllByText('logo1.png')).length).toEqual(9);

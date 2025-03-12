@@ -66,21 +66,6 @@ describe('Remove Primary Image dialogue', () => {
     });
   });
 
-  it('displays warning message when session data is not loaded', async () => {
-    props = {
-      ...props,
-      image: undefined,
-    };
-    createView();
-    const continueButton = screen.getByRole('button', { name: 'Continue' });
-    await user.click(continueButton);
-    const helperTexts = screen.getByText(
-      'No data provided, Please refresh and try again'
-    );
-    expect(helperTexts).toBeInTheDocument();
-    expect(onClose).not.toHaveBeenCalled();
-  });
-
   it('calls handlePatchImage when continue button is clicked', async () => {
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });

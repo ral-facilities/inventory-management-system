@@ -1040,18 +1040,6 @@ export const handlers = [
     if (primary === 'true') {
       if (entityId === '90') {
         return HttpResponse.json([], { status: 200 });
-      } else if (entityId === 'error_500') {
-        return HttpResponse.json(
-          [
-            {
-              ...ImagesJSON[0],
-              primary: true,
-              entity_id: entityId,
-              id: '5',
-            },
-          ],
-          { status: 200 }
-        );
       } else {
         return HttpResponse.json(
           [

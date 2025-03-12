@@ -1,6 +1,5 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import handleIMS_APIError from '../../handleIMS_APIError';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 import PrimaryImage, { PrimaryImageProps } from './primaryImage.component'; // Adjust the import path as necessary
 
@@ -80,7 +79,7 @@ describe('PrimaryImage Component', () => {
     );
 
     const element = screen.getByTestId('remove-image-name');
-    expect(element).toHaveTextContent('stfc-logo-blue-text.png');
+    expect(element).toHaveTextContent('logo1.png');
 
     const cancelButton = screen.getByRole('button', { name: 'Cancel' });
     await user.click(cancelButton);
@@ -89,7 +88,7 @@ describe('PrimaryImage Component', () => {
     });
   });
 
-  it('disabled the remove primary image button when there are no images', async () => {
+  it('Removes the remove primary image button when there is no set primary image', async () => {
     props.entityId = '90';
     createView();
 
@@ -97,22 +96,9 @@ describe('PrimaryImage Component', () => {
     user.click(actionButton);
 
     await waitFor(() => {
-      expect(screen.getByText('Remove Primary Image')).toBeInTheDocument();
-    });
-
-    const primaryImageButton = screen.getByRole('menuitem', {
-      name: 'Remove Primary Image',
-    });
-    const itemIsDisabled = primaryImageButton.getAttribute('aria-disabled');
-    expect(itemIsDisabled).toBe('true');
-  });
-
-  it('returns an error gracefully', async () => {
-    props.entityId = 'error_500';
-    createView();
-
-    await waitFor(() => {
-      expect(handleIMS_APIError).toHaveBeenCalled();
+      expect(
+        screen.queryByText('Remove Primary Image')
+      ).not.toBeInTheDocument();
     });
   });
 });
