@@ -48,6 +48,70 @@ exports[`Systems Layout > renders root systems correctly 1`] = `
         </nav>
       </div>
     </div>
+    <div
+      aria-label="view mode toggle"
+      class="MuiToggleButtonGroup-root css-f4nwhq-MuiToggleButtonGroup-root"
+      role="group"
+    >
+      <span
+        aria-label="Normal view"
+        class=""
+        data-mui-internal-clone-element="true"
+      >
+        <button
+          aria-label="normal view"
+          aria-pressed="true"
+          class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root Mui-selected MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-firstButton css-1x4vipr-MuiButtonBase-root-MuiToggleButton-root"
+          tabindex="0"
+          type="button"
+          value="normal"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+            data-testid="ViewModuleIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M14.67 5v6.5H9.33V5zm1 6.5H21V5h-5.33zm-1 7.5v-6.5H9.33V19zm1-6.5V19H21v-6.5zm-7.34 0H3V19h5.33zm0-1V5H3v6.5z"
+            />
+          </svg>
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
+        </button>
+      </span>
+      <span
+        aria-label="Tree view"
+        class=""
+        data-mui-internal-clone-element="true"
+      >
+        <button
+          aria-label="tree view"
+          aria-pressed="false"
+          class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-lastButton css-1x4vipr-MuiButtonBase-root-MuiToggleButton-root"
+          tabindex="0"
+          type="button"
+          value="tree"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+            data-testid="AccountTreeIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M22 11V3h-7v3H9V3H2v8h7V8h2v10h4v3h7v-8h-7v3h-2V8h2v3z"
+            />
+          </svg>
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
+        </button>
+      </span>
+    </div>
   </div>
 </DocumentFragment>
 `;
@@ -135,6 +199,70 @@ exports[`Systems Layout > renders units breadcrumbs correctly 1`] = `
           </ol>
         </nav>
       </div>
+    </div>
+    <div
+      aria-label="view mode toggle"
+      class="MuiToggleButtonGroup-root css-f4nwhq-MuiToggleButtonGroup-root"
+      role="group"
+    >
+      <span
+        aria-label="Normal view"
+        class=""
+        data-mui-internal-clone-element="true"
+      >
+        <button
+          aria-label="normal view"
+          aria-pressed="true"
+          class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root Mui-selected MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-firstButton css-1x4vipr-MuiButtonBase-root-MuiToggleButton-root"
+          tabindex="0"
+          type="button"
+          value="normal"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+            data-testid="ViewModuleIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M14.67 5v6.5H9.33V5zm1 6.5H21V5h-5.33zm-1 7.5v-6.5H9.33V19zm1-6.5V19H21v-6.5zm-7.34 0H3V19h5.33zm0-1V5H3v6.5z"
+            />
+          </svg>
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
+        </button>
+      </span>
+      <span
+        aria-label="Tree view"
+        class=""
+        data-mui-internal-clone-element="true"
+      >
+        <button
+          aria-label="tree view"
+          aria-pressed="false"
+          class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-lastButton css-1x4vipr-MuiButtonBase-root-MuiToggleButton-root"
+          tabindex="0"
+          type="button"
+          value="tree"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+            data-testid="AccountTreeIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M22 11V3h-7v3H9V3H2v8h7V8h2v10h4v3h7v-8h-7v3h-2V8h2v3z"
+            />
+          </svg>
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
+        </button>
+      </span>
     </div>
   </div>
 </DocumentFragment>
