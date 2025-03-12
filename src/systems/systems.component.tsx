@@ -44,6 +44,7 @@ import {
   displayTableRowCountText,
   generateUniqueName,
   getPageHeightCalc,
+  mrtTheme,
 } from '../utils';
 import { DeleteSystemDialog } from './deleteSystemDialog.component';
 import SystemDetails from './systemDetails.component';
@@ -261,7 +262,9 @@ function Systems() {
       showGlobalFilter: true,
     },
     state: { ...preservedState, rowSelection: rowSelection },
-    // MUI
+    //MRT
+    mrtTheme,
+    //MUI
     muiPaginationProps: {
       color: 'secondary',
       shape: 'rounded',
