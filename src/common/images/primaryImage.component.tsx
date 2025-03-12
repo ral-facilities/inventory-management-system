@@ -1,3 +1,4 @@
+import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import {
@@ -14,14 +15,17 @@ import {
   Typography,
 } from '@mui/material';
 import React from 'react';
+import { useGetImages } from '../../api/images';
 import PrimaryImageDialog from './primaryImageDialog.component';
+import RemovePrimaryImageDialog from './removePrimaryImageDialog.component';
 
 interface PrimaryOptionsMenuInterface {
-  onChangePrimaryDialogOpen: (dialogOpen: boolean) => void;
+  onChangePrimaryDialogOpen: (dialogOpen: false | 'set' | 'remove') => void;
+  primaryImageExists: boolean;
 }
 
 const PrimaryOptionsMenu = (props: PrimaryOptionsMenuInterface) => {
-  const { onChangePrimaryDialogOpen } = props;
+  const { onChangePrimaryDialogOpen, primaryImageExists } = props;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -33,9 +37,14 @@ const PrimaryOptionsMenu = (props: PrimaryOptionsMenuInterface) => {
     setAnchorEl(null);
   };
 
-  const handleOpenPrimary = () => {
+  const handleOpenSetPrimary = () => {
+    onChangePrimaryDialogOpen('set');
     handleCloseMenu();
-    onChangePrimaryDialogOpen(true);
+  };
+
+  const handleOpenRemovePrimary = () => {
+    onChangePrimaryDialogOpen('remove');
+    handleCloseMenu();
   };
 
   return (
@@ -52,12 +61,20 @@ const PrimaryOptionsMenu = (props: PrimaryOptionsMenuInterface) => {
         </span>
       </Tooltip>
       <Menu anchorEl={anchorEl} open={open} onClose={handleCloseMenu}>
-        <MenuItem onClick={handleOpenPrimary}>
+        <MenuItem onClick={handleOpenSetPrimary}>
           <ListItemIcon>
             <EditIcon />
           </ListItemIcon>
           <ListItemText>Set Primary Image</ListItemText>
         </MenuItem>
+        {primaryImageExists && (
+          <MenuItem onClick={handleOpenRemovePrimary}>
+            <ListItemIcon>
+              <DeleteIcon />
+            </ListItemIcon>
+            <ListItemText>Remove Primary Image</ListItemText>
+          </MenuItem>
+        )}
       </Menu>
     </Box>
   );
@@ -70,8 +87,14 @@ export interface PrimaryImageProps {
 
 const PrimaryImage = (props: PrimaryImageProps) => {
   const { sx, entityId } = props;
-  const [primaryDialogOpen, setPrimaryDialogOpen] =
-    React.useState<boolean>(false);
+
+  const { data: imagesData } = useGetImages(entityId, true);
+
+  const primaryImageExists = !!imagesData && imagesData.length > 0;
+
+  const [primaryDialogOpen, setPrimaryDialogOpen] = React.useState<
+    false | 'set' | 'remove'
+  >(false);
   return (
     <Grid sx={{ height: '100%', width: '100%' }}>
       <Box
@@ -92,15 +115,27 @@ const PrimaryImage = (props: PrimaryImageProps) => {
         <Typography variant="h5">No Image</Typography>
       </Box>
       <Box sx={{ height: '20%' }}>
-        <PrimaryOptionsMenu onChangePrimaryDialogOpen={setPrimaryDialogOpen} />
+        <PrimaryOptionsMenu
+          onChangePrimaryDialogOpen={setPrimaryDialogOpen}
+          primaryImageExists={primaryImageExists}
+        />
       </Box>
       <PrimaryImageDialog
-        open={primaryDialogOpen}
+        open={primaryDialogOpen == 'set'}
         onClose={() => {
           setPrimaryDialogOpen(false);
         }}
         entityID={entityId}
       />
+      {primaryImageExists && (
+        <RemovePrimaryImageDialog
+          open={primaryDialogOpen == 'remove'}
+          onClose={() => {
+            setPrimaryDialogOpen(false);
+          }}
+          image={imagesData[0]}
+        />
+      )}
     </Grid>
   );
 };
