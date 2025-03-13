@@ -86,7 +86,10 @@ export interface PrimaryImageProps {
 const PrimaryImage = (props: PrimaryImageProps) => {
   const { entityId, isDetailsPanel = false } = props;
 
-  const { data: imagesData } = useGetImages(entityId, true);
+  const { data: imagesData, isLoading: imageLoading } = useGetImages(
+    entityId,
+    true
+  );
 
   const primaryImageExists = !!imagesData && imagesData.length > 0;
 
@@ -95,12 +98,15 @@ const PrimaryImage = (props: PrimaryImageProps) => {
   >(false);
 
   return (
-    <Grid /* sx={{ height: '100%', width: '100%' }} */>
-      <ThumbnailImage
-        image={imagesData?.[0]}
-        dense={isDetailsPanel}
-        isPrimaryThumbnail
-      ></ThumbnailImage>
+    <Grid>
+      {!imageLoading && (
+        <ThumbnailImage
+          image={imagesData?.[0]}
+          dense={isDetailsPanel}
+          isPrimaryThumbnail
+          imageLoading={imageLoading}
+        ></ThumbnailImage>
+      )}
       <Box sx={{ height: '20%' }}>
         <PrimaryOptionsMenu
           onChangePrimaryDialogOpen={setPrimaryDialogOpen}

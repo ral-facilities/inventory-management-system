@@ -8,10 +8,17 @@ export interface ThumbnailImageProps {
   image?: APIImage;
   dense: boolean;
   isPrimaryThumbnail?: boolean;
+  imageLoading?: boolean;
 }
 
 const ThumbnailImage = (props: ThumbnailImageProps) => {
-  const { onClick, image, dense, isPrimaryThumbnail = false } = props;
+  const {
+    onClick,
+    image,
+    dense,
+    isPrimaryThumbnail = false,
+    imageLoading = false,
+  } = props;
   const [hasError, setHasError] = React.useState<string | undefined>(undefined);
   const imageError = !image || !!hasError;
 
@@ -33,8 +40,14 @@ const ThumbnailImage = (props: ThumbnailImageProps) => {
       display="flex"
       alignItems="center"
       justifyContent="center"
-      border={isPrimaryThumbnail && imageError ? '1px dashed' : undefined}
-      borderRadius={isPrimaryThumbnail && imageError ? '8px' : undefined}
+      border={
+        isPrimaryThumbnail && imageError && !imageLoading
+          ? '1px dashed'
+          : undefined
+      }
+      borderRadius={
+        isPrimaryThumbnail && imageError && !imageLoading ? '8px' : undefined
+      }
       sx={{ cursor: isPrimaryThumbnail && !imageError ? 'pointer' : undefined }}
       onClick={handleViewPrimary}
     >
@@ -56,8 +69,6 @@ const ThumbnailImage = (props: ThumbnailImageProps) => {
         }}
         onClick={onClick}
         onError={() => setHasError(image?.id)}
-        /*   minHeight={!image || hasError ? '300px' : undefined}
-      minWidth={!image || hasError ? '300px' : undefined} */
       />
     </Box>
   );
