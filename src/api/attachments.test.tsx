@@ -1,6 +1,7 @@
 import { renderHook, waitFor } from '@testing-library/react';
+import AttachmentsJSON from '../mocks/Attachments.json'
 import { hooksWrapperWithProviders } from '../testUtils';
-import { AttachmentPostMetadata, ObjectFilePatch } from './api.types';
+import { AttachmentMetadataPatch, AttachmentPostMetadata } from './api.types';
 import { useGetAttachments, usePatchAttachment, usePostAttachmentMetadata } from './attachments';
 
 describe('attachments api functions', () => {
@@ -61,25 +62,8 @@ describe('attachments api functions', () => {
     });
   });
 
-  describe('useGetAttachment', () => {
-    it('sends request to fetch attachment data and returns successful reponse', async () => {
-      const { result } = renderHook(() => useGetAttachment('1'), {
-        wrapper: hooksWrapperWithProviders(),
-      });
-
-      await waitFor(() => {
-        expect(result.current.isSuccess).toBeTruthy();
-      });
-
-      expect(result.current.data).toEqual({
-        ...AttachmentsJSON[1],
-        url: 'http://localhost:3000/attachments/safety-protocols.pdf?text=1',
-      });
-    });
-  });
-
   describe('usePatchAttachment', () => {
-    let mockDataPatch: ObjectFilePatch;
+    let mockDataPatch: AttachmentMetadataPatch;
 
     beforeEach(() => {
       mockDataPatch = {

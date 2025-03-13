@@ -20,6 +20,8 @@ import { UseMutationResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import {
   APIImage,
+  AttachmentMetadata,
+  AttachmentMetadataPatch,
   ImageMetadataPatch,
   ObjectFilePatchBase,
 } from '../api/api.types';
@@ -45,11 +47,11 @@ export interface ImageDialogProps extends BaseFileDialogProps {
 
 export interface AttachmentDialogProps extends BaseFileDialogProps {
   fileType: 'Attachment';
-  selectedFile: AttachmentPostMetadataResponse;
+  selectedFile: AttachmentMetadata;
   usePatchFile: () => UseMutationResult<
-    AttachmentPostMetadataResponse,
+    AttachmentMetadata,
     AxiosError,
-    { id: string; fileMetadata: ObjectFilePatch }
+    { id: string; fileMetadata: AttachmentMetadataPatch }
   >;
 }
 
@@ -164,7 +166,9 @@ const EditFileDialog = (props: FileDialogProps) => {
               {...register('description')}
               error={!!errors.description}
               helperText={errors.description?.message}
+              size="small"
               fullWidth
+              multiline
             />
           </Grid>
           <Grid item>

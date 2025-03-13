@@ -1,6 +1,8 @@
 import { DefaultBodyType, delay, http, HttpResponse, PathParams } from 'msw';
 import {
   APIImage,
+  AttachmentMetadata,
+  AttachmentMetadataPatch,
   AttachmentPostMetadata,
   AttachmentPostMetadataResponse,
   AttachmentUploadInfo,
@@ -1029,7 +1031,7 @@ export const handlers = [
     return HttpResponse.json(generateAttachments(), { status: 200 });
   }),
 
-  http.patch<{ id: string }, ObjectFilePatch, AttachmentPostMetadataResponse | ErrorResponse>(
+  http.patch<{ id: string }, AttachmentMetadataPatch, AttachmentMetadata | ErrorResponse>(
     '/attachments/:id',
     async ({ request, params }) => {
       const { id } = params;
@@ -1045,7 +1047,7 @@ export const handlers = [
           { status: 500 }
         );
       }
-      return HttpResponse.json(fullBody as AttachmentPostMetadataResponse, { status: 200 });
+      return HttpResponse.json(fullBody as AttachmentMetadata, { status: 200 });
     }
   ),
 
