@@ -59,7 +59,7 @@ const ThumbnailImage = (props: ThumbnailImageProps) => {
             ? 'No Image'
             : hasError
               ? 'The image cannot be loaded'
-              : (image?.description ?? 'No photo description available.')
+              : (image.description ?? 'No photo description available.')
         }
         style={{
           borderRadius: '4px',

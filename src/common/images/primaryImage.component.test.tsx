@@ -79,7 +79,7 @@ describe('PrimaryImage Component', () => {
     );
 
     const element = screen.getByTestId('remove-image-name');
-    expect(element).toHaveTextContent('logo1.png');
+    expect(element).toHaveTextContent('stfc-logo-blue-text.png');
 
     const cancelButton = screen.getByRole('button', { name: 'Cancel' });
     await user.click(cancelButton);

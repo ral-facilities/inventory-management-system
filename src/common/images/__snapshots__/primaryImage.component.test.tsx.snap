@@ -3,17 +3,8 @@
 exports[`PrimaryImage Component > matches the snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="MuiGrid-root css-hwh2b0-MuiGrid-root"
+    class="MuiGrid-root css-vj1n65-MuiGrid-root"
   >
-    <div
-      class="MuiBox-root css-p1nkk5"
-    >
-      <h5
-        class="MuiTypography-root MuiTypography-h5 css-ag7rrr-MuiTypography-root"
-      >
-        No Image
-      </h5>
-    </div>
     <div
       class="MuiBox-root css-nnlis0"
     >

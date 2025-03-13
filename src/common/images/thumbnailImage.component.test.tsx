@@ -28,21 +28,23 @@ describe('ThumbnailImage Component', () => {
     createView();
 
     const imageElement = screen.getByAltText(
-      props.image.description ?? 'No photo description available.'
+      props.image?.description ?? 'No photo description available.'
     );
     expect(imageElement).toBeInTheDocument();
     expect(imageElement).toHaveAttribute(
       'src',
-      `data:image/webp;base64,${props.image.thumbnail_base64}`
+      `data:image/webp;base64,${props?.image?.thumbnail_base64}`
     );
   });
 
   it('should render fallback text when the image fails to load', () => {
-    props.image.thumbnail_base64 = 'test';
+    if (props?.image?.thumbnail_base64) {
+      props.image.thumbnail_base64 = 'test';
+    }
     createView();
 
     const imageElement = screen.getByAltText(
-      props.image.description ?? 'No photo description available.'
+      props.image?.description ?? 'No photo description available.'
     );
     fireEvent.error(imageElement);
 
@@ -54,7 +56,7 @@ describe('ThumbnailImage Component', () => {
     createView();
 
     const imageElement = screen.getByAltText(
-      props.image.description ?? 'No photo description available.'
+      props.image?.description ?? 'No photo description available.'
     );
     fireEvent.click(imageElement);
 
@@ -65,7 +67,7 @@ describe('ThumbnailImage Component', () => {
     createView();
 
     const imageElement = screen.getByAltText(
-      props.image.description ?? 'No photo description available.'
+      props.image?.description ?? 'No photo description available.'
     );
     fireEvent.error(imageElement);
 
