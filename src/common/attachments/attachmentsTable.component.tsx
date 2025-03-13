@@ -43,7 +43,6 @@ function AttachmentsTable(props: AttachmentTableProps) {
   const { data: attachments, isLoading: attachmentIsLoading } =
     useGetAttachments(entityId);
 
-  const [selectedAttachment, setSelectedAttachment] = React.useState<AttachmentMetadata>();
 
   const columns = React.useMemo<MRT_ColumnDef<AttachmentMetadata>[]>(() => {
     return [
@@ -210,21 +209,15 @@ function AttachmentsTable(props: AttachmentTableProps) {
     // Functions
     ...onPreservedStatesChange,
 
-    renderEditRowDialogContent: ({ table }) => {
-      return (
-        <>
-          {selectedAttachment && (
-            <EditFileDialog
-              open={true}
-              onClose={() => table.setEditingRow(null)}
-              fileType="Attachment"
-              usePatchFile={usePatchAttachment}
-              selectedFile={selectedAttachment}
-            />
-          )};
-        </>
-      );
-    },
+    renderEditRowDialogContent: ({ table, row }) => (
+      <EditFileDialog
+        open={true}
+        onClose={() => table.setEditingRow(null)}
+        fileType="Attachment"
+        usePatchFile={usePatchAttachment}
+        selectedFile={row.original}
+      />
+    ),
 
     renderTopToolbarCustomActions: ({ table }) => (
       <Box sx={{ display: 'flex' }}>
@@ -248,7 +241,6 @@ function AttachmentsTable(props: AttachmentTableProps) {
           key="edit"
           aria-label={`Edit ${row.original.file_name} attachment`}
           onClick={() => {
-            setSelectedAttachment(row.original);
             table.setEditingRow(row);
             closeMenu();
           }}

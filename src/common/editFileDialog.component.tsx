@@ -166,7 +166,6 @@ const EditFileDialog = (props: FileDialogProps) => {
               {...register('description')}
               error={!!errors.description}
               helperText={errors.description?.message}
-              size="small"
               fullWidth
               multiline
             />
