@@ -31,7 +31,7 @@ const ThumbnailImage = (props: ThumbnailImageProps) => {
       updatedParams.set('image', image.id);
       setSearchParams(updatedParams);
     }
-  }, [isPrimaryThumbnail, imageError, searchParams, setSearchParams]);
+  }, [isPrimaryThumbnail, imageError, searchParams, setSearchParams, image]);
 
   return (
     <Box
