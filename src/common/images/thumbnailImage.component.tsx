@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { APIImage } from '../../api/api.types';
@@ -25,13 +25,13 @@ const ThumbnailImage = (props: ThumbnailImageProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleViewPrimary = React.useCallback(() => {
-    if (isPrimaryThumbnail && !imageError) {
+    if (isPrimaryThumbnail && image) {
       const updatedParams = new URLSearchParams(searchParams);
       updatedParams.set('tab', 'Gallery');
       updatedParams.set('image', image.id);
       setSearchParams(updatedParams);
     }
-  }, [isPrimaryThumbnail, imageError, searchParams, setSearchParams, image]);
+  }, [isPrimaryThumbnail, searchParams, setSearchParams, image]);
 
   return (
     <Box
@@ -51,25 +51,30 @@ const ThumbnailImage = (props: ThumbnailImageProps) => {
       sx={{ cursor: isPrimaryThumbnail && !imageError ? 'pointer' : undefined }}
       onClick={handleViewPrimary}
     >
-      <Box
-        component="img"
-        src={`data:image/webp;base64,${image?.thumbnail_base64}`}
-        alt={
-          !image
-            ? 'No Image'
-            : hasError
-              ? 'The image cannot be loaded'
-              : (image.description ?? 'No photo description available.')
-        }
-        style={{
-          borderRadius: '4px',
-          cursor: onClick ? 'pointer' : undefined,
-          maxWidth: dense ? '200px' : undefined,
-          maxHeight: dense ? '150px' : undefined,
-        }}
-        onClick={onClick}
-        onError={() => setHasError(image?.id)}
-      />
+      {imageLoading && isPrimaryThumbnail ? (
+        <CircularProgress />
+      ) : (
+        <Box
+          component="img"
+          key={image?.id}
+          src={`data:image/webp;base64,${image?.thumbnail_base64}`}
+          alt={
+            !image
+              ? 'No Image'
+              : hasError
+                ? 'The image cannot be loaded'
+                : (image.description ?? 'No photo description available.')
+          }
+          style={{
+            borderRadius: '4px',
+            cursor: onClick ? 'pointer' : undefined,
+            maxWidth: dense ? '200px' : undefined,
+            maxHeight: dense ? '150px' : undefined,
+          }}
+          onClick={onClick}
+          onError={() => setHasError(image?.id)}
+        />
+      )}
     </Box>
   );
 };
