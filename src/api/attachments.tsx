@@ -73,8 +73,10 @@ export const usePatchAttachment = (): UseMutationResult<
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ id, fileMetadata }) => patchAttachment(id, fileMetadata),
-    onSuccess: (updatedAttachment: AttachmentMetadata, entityId) => {
-      queryClient.invalidateQueries({ queryKey: ['Attachments', entityId] });
+    onSuccess: (updatedAttachment: AttachmentMetadata) => {
+      queryClient.invalidateQueries({
+        queryKey: ['Attachments', updatedAttachment.entity_id],
+      });
       queryClient.invalidateQueries({
         queryKey: ['Attachment', updatedAttachment.id],
       });
