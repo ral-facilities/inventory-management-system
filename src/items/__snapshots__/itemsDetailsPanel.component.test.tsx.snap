@@ -2479,7 +2479,7 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                         class="MuiGrid-root css-vj1n65-MuiGrid-root"
                       >
                         <div
-                          class="MuiBox-root css-k4h52c"
+                          class="MuiBox-root css-ylfz9d"
                         >
                           <img
                             alt="test"
@@ -3108,7 +3108,7 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                         class="MuiGrid-root css-vj1n65-MuiGrid-root"
                       >
                         <div
-                          class="MuiBox-root css-k4h52c"
+                          class="MuiBox-root css-ylfz9d"
                         >
                           <img
                             alt="test"
@@ -3737,7 +3737,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly (emp
                         class="MuiGrid-root css-vj1n65-MuiGrid-root"
                       >
                         <div
-                          class="MuiBox-root css-k4h52c"
+                          class="MuiBox-root css-ylfz9d"
                         >
                           <img
                             alt="test"
@@ -4263,7 +4263,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                         class="MuiGrid-root css-vj1n65-MuiGrid-root"
                       >
                         <div
-                          class="MuiBox-root css-k4h52c"
+                          class="MuiBox-root css-ylfz9d"
                         >
                           <img
                             alt="test"
