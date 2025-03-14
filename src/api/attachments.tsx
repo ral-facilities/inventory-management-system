@@ -2,6 +2,7 @@ import {
   useMutation,
   UseMutationResult,
   useQuery,
+  useQueryClient,
   UseQueryResult,
 } from '@tanstack/react-query';
 
@@ -9,6 +10,7 @@ import { AxiosError } from 'axios';
 import { storageApi } from './api';
 import {
   AttachmentMetadata,
+  AttachmentMetadataPatch,
   AttachmentPostMetadata,
   AttachmentPostMetadataResponse,
 } from './api.types';
@@ -51,5 +53,33 @@ export const useGetAttachments = (
   return useQuery({
     queryKey: ['Attachments', entityId],
     queryFn: () => getAttachments(entityId),
+  });
+};
+
+const patchAttachment = async (
+  id: string,
+  fileMetadata: AttachmentMetadataPatch
+): Promise<AttachmentMetadata> => {
+  return storageApi
+    .patch<AttachmentMetadata>(`/attachments/${id}`, fileMetadata)
+    .then((response) => response.data);
+};
+
+export const usePatchAttachment = (): UseMutationResult<
+  AttachmentMetadata,
+  AxiosError,
+  { id: string; fileMetadata: AttachmentMetadataPatch }
+> => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, fileMetadata }) => patchAttachment(id, fileMetadata),
+    onSuccess: (updatedAttachment: AttachmentMetadata) => {
+      queryClient.invalidateQueries({
+        queryKey: ['Attachments', updatedAttachment.entity_id],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['Attachment', updatedAttachment.id],
+      });
+    },
   });
 };

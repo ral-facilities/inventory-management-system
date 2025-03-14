@@ -1,5 +1,14 @@
 import ClearIcon from '@mui/icons-material/Clear';
-import { Box, Button, TableCellBaseProps, TableRow } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import {
+  Box,
+  Button,
+  ListItemIcon,
+  ListItemText,
+  MenuItem,
+  TableCellBaseProps,
+  TableRow,
+} from '@mui/material';
 import {
   MaterialReactTable,
   useMaterialReactTable,
@@ -8,7 +17,8 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { AttachmentMetadata } from '../../api/api.types';
-import { useGetAttachments } from '../../api/attachments';
+import { useGetAttachments, usePatchAttachment } from '../../api/attachments';
+import EditFileDialog from '../editFileDialog.component';
 import {
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
@@ -32,6 +42,7 @@ function AttachmentsTable(props: AttachmentTableProps) {
   const { entityId } = props;
   const { data: attachments, isLoading: attachmentIsLoading } =
     useGetAttachments(entityId);
+
 
   const columns = React.useMemo<MRT_ColumnDef<AttachmentMetadata>[]>(() => {
     return [
@@ -197,6 +208,17 @@ function AttachmentsTable(props: AttachmentTableProps) {
 
     // Functions
     ...onPreservedStatesChange,
+
+    renderEditRowDialogContent: ({ table, row }) => (
+      <EditFileDialog
+        open={true}
+        onClose={() => table.setEditingRow(null)}
+        fileType="Attachment"
+        usePatchFile={usePatchAttachment}
+        selectedFile={row.original}
+      />
+    ),
+
     renderTopToolbarCustomActions: ({ table }) => (
       <Box sx={{ display: 'flex' }}>
         <Button
@@ -212,13 +234,35 @@ function AttachmentsTable(props: AttachmentTableProps) {
         </Button>
       </Box>
     ),
+
+    renderRowActionMenuItems: ({ closeMenu, row, table }) => {
+      return [
+        <MenuItem
+          key="edit"
+          aria-label={`Edit ${row.original.file_name} attachment`}
+          onClick={() => {
+            table.setEditingRow(row);
+            closeMenu();
+          }}
+          sx={{ m: 0 }}
+        >
+          <ListItemIcon>
+            <EditIcon />
+          </ListItemIcon>
+          <ListItemText>Edit</ListItemText>
+        </MenuItem>
+      ];
+    },
+
     renderBottomToolbarCustomActions: ({ table }) =>
       displayTableRowCountText(table, attachments, 'Attachments', {
         paddingLeft: '8px',
       }),
   });
 
-  return <MaterialReactTable table={table} />;
+  return (
+    <MaterialReactTable table={table} />
+  );
 }
 
 export default AttachmentsTable;

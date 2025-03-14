@@ -1,6 +1,8 @@
 import { DefaultBodyType, delay, http, HttpResponse, PathParams } from 'msw';
 import {
   APIImage,
+  AttachmentMetadata,
+  AttachmentMetadataPatch,
   AttachmentPostMetadata,
   AttachmentPostMetadataResponse,
   AttachmentUploadInfo,
@@ -1028,6 +1030,26 @@ export const handlers = [
 
     return HttpResponse.json(generateAttachments(), { status: 200 });
   }),
+
+  http.patch<{ id: string }, AttachmentMetadataPatch, AttachmentMetadata | ErrorResponse>(
+    '/attachments/:id',
+    async ({ request, params }) => {
+      const { id } = params;
+
+      const obj = AttachmentsJSON.find((attachment) => attachment.id === id);
+      const body = await request.json();
+
+      const fullBody = { ...obj, ...body };
+
+      if (fullBody.file_name === 'Error_500.txt') {
+        return HttpResponse.json(
+          { detail: 'Something went wrong' },
+          { status: 500 }
+        );
+      }
+      return HttpResponse.json(fullBody as AttachmentMetadata, { status: 200 });
+    }
+  ),
 
   // ------------------------------------ OBJECT STORAGE ------------------------------------------------
 
