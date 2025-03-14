@@ -14,13 +14,9 @@ import type {
   UppyImageUploadResponse,
   UppyUploadMetadata,
 } from '../../app.types';
-import { settings } from '../../settings';
+import { InventoryManagementSystemSettingsContext } from '../../configProvider.component';
 import { getNonEmptyTrimmedString } from '../../utils';
 import { useMetaFields } from '../uppy.utils';
-
-// Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000, so here the former is expected despite them really being GiB, MiB and KiB.
-const MAX_FILE_SIZE_MB = 50;
-const MAX_FILE_SIZE_B = MAX_FILE_SIZE_MB * 1024 * 1024;
 
 export interface UploadImagesDialogProps {
   open: boolean;
@@ -36,13 +32,20 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
   const queryClient = useQueryClient();
 
   const osApiUrl = async () => (await settings)?.osApiUrl || '';
+
+  const settings = React.useContext(InventoryManagementSystemSettingsContext);
+  const maxFileSizeB = settings.maxImageSizeBytes;
+
+  // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000, so here the former is expected despite them really being GiB, MiB and KiB.
+  const maxFileSizeMB = maxFileSizeB / 1024 ** 2;
+
   const [uppy] = React.useState<
     Uppy<UppyUploadMetadata, UppyImageUploadResponse>
   >(() => {
     const newUppy = new Uppy<UppyUploadMetadata, UppyImageUploadResponse>({
       autoProceed: false,
       restrictions: {
-        maxFileSize: MAX_FILE_SIZE_B,
+        maxFileSize: maxFileSizeB,
         requiredMetaFields: ['name'],
         allowedFileTypes: ['image/*'],
       },
@@ -112,7 +115,7 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
       closeModalOnClickOutside={false}
       animateOpenClose={false}
       uppy={uppy}
-      note={`Files cannot be larger than ${MAX_FILE_SIZE_MB}MB. Only images are allowed.`}
+      note={`Files cannot be larger than ${maxFileSizeMB}MB. Only images are allowed.`}
       proudlyDisplayPoweredByUppy={false}
       theme={theme.palette.mode}
       doneButtonHandler={handleClose}
