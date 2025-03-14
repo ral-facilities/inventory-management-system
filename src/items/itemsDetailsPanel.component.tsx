@@ -71,7 +71,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
       </Grid>
       <Grid item sx={{ ml: 2 }} xs={12}>
         <TabPanel value={tabValue} index={0}>
-          <Grid item spacing={0}>
+          <Grid item>
             <Grid container spacing={0}>
               <Grid item xs={12} sm={6} padding={1}>
                 <PrimaryImage entityId={catalogueItemIdData.id} />

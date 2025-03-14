@@ -101,8 +101,8 @@ function SystemDetails(props: SystemDetailsProps) {
           <Typography variant="h3">Please select a system</Typography>
         </Box>
       ) : (
-        <Grid item direction="column" wrap="nowrap" spacing={1}>
-          <Grid container>
+        <Grid item>
+          <Grid container direction="column" wrap="nowrap" spacing={1}>
             <Grid
               container
               item

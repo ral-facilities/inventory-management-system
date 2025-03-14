@@ -95,7 +95,7 @@ function ItemsLandingPage() {
             >
               {/* Image Section */}
               <Grid item>
-                <Grid container xs={12}>
+                <Grid container>
                   <Grid item xs="auto">
                     <PrimaryImage entityId={itemData.id} />
                   </Grid>

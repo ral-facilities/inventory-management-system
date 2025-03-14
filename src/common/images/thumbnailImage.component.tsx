@@ -35,8 +35,8 @@ const ThumbnailImage = (props: ThumbnailImageProps) => {
 
   return (
     <Box
-      height={!image || hasError ? '300px' : undefined}
-      width={!image || hasError ? '300px' : undefined}
+      height={isPrimaryThumbnail ? '300px' : undefined}
+      width={isPrimaryThumbnail ? '300px' : undefined}
       display="flex"
       alignItems="center"
       justifyContent="center"
@@ -48,7 +48,7 @@ const ThumbnailImage = (props: ThumbnailImageProps) => {
       borderRadius={
         isPrimaryThumbnail && imageError && !imageLoading ? '8px' : undefined
       }
-      sx={{ cursor: isPrimaryThumbnail && !imageError ? 'pointer' : undefined }}
+      sx={{ cursor: isPrimaryThumbnail && image ? 'pointer' : undefined }}
       onClick={handleViewPrimary}
     >
       {imageLoading && isPrimaryThumbnail ? (
@@ -56,7 +56,7 @@ const ThumbnailImage = (props: ThumbnailImageProps) => {
       ) : (
         <Box
           component="img"
-          key={image?.id}
+          key={image?.id} // Force remount when the image changes
           src={`data:image/webp;base64,${image?.thumbnail_base64}`}
           alt={
             !image
