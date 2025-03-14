@@ -1034,8 +1034,8 @@ describe('Items', () => {
       ).should('exist');
 
       cy.findByText('Gallery').click();
+      cy.findAllByAltText('test').eq(4).click();
 
-      cy.findAllByAltText('test').eq(3).click();
       cy.findByTestId('galleryLightBox').within(() => {
         cy.findByText('The image cannot be loaded', { timeout: 10000 }).should(
           'exist'

@@ -1084,7 +1084,7 @@ export const handlers = [
         return HttpResponse.json(
           [
             {
-              ...ImagesJSON[0],
+              ...ImagesJSON[1],
               primary: true,
               entity_id: entityId,
               ...(entityId === '3' && { thumbnail_base64: 'test' }),

@@ -85,60 +85,63 @@ function CatalogueItemsLandingPage() {
             style={{ maxWidth: '80%' }}
           >
             {/* Image Section */}
-            <Grid item container xs={12}>
-              <Grid item xs={12} sm={4}>
-                <PrimaryImage entityId={catalogueItemId ?? ''} />
-              </Grid>
-              {/* Title and Description Section */}
-              <Grid
-                item
-                container
-                xs={12}
-                sm={6}
-                sx={{ alignItems: 'flex-start', pl: 2 }}
-              >
-                <Grid item xs={12}>
-                  <Typography
-                    variant="h4"
-                    gutterBottom
-                    sx={{
-                      fontWeight: 'bold',
-                      wordWrap: 'break-word',
-                    }}
-                  >
-                    {catalogueItemIdData.name}
-                  </Typography>
+            <Grid item>
+              <Grid container>
+                <Grid item xs="auto">
+                  <PrimaryImage entityId={catalogueItemId ?? ''} />
+                </Grid>
+                {/* Title and Description Section */}
+                <Grid
+                  item
+                  container
+                  xs
+                  sx={{ alignItems: 'flex-start', pl: 2 }}
+                >
+                  <Grid item xs={12}>
+                    <Typography
+                      variant="h4"
+                      gutterBottom
+                      sx={{
+                        fontWeight: 'bold',
+                        wordWrap: 'break-word',
+                      }}
+                    >
+                      {catalogueItemIdData.name}
+                    </Typography>
 
-                  <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
-                    Description:
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    sx={{ whiteSpace: 'pre-line', wordWrap: 'break-word' }}
-                    color="text.secondary"
-                  >
-                    {catalogueItemIdData.description ?? 'None'}
-                  </Typography>
+                    <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
+                      Description:
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      sx={{ whiteSpace: 'pre-line', wordWrap: 'break-word' }}
+                      color="text.secondary"
+                    >
+                      {catalogueItemIdData.description ?? 'None'}
+                    </Typography>
+                  </Grid>
                 </Grid>
-              </Grid>
-              <Grid item container justifyContent={'flex-end'} xs={12} sm={2}>
-                {/* Actions Section */}
-                <Grid item>
-                  <CatalogueItemsActionMenu
-                    catalogueItem={catalogueItemIdData}
-                    catalogueCategory={catalogueCategoryData}
-                  />
-                </Grid>
-                <Grid item>
-                  <Button
-                    sx={{ ml: 0.5, py: '5.75px' }}
-                    variant="outlined"
-                    component={Link}
-                    to={'items'}
-                    startIcon={<InventoryOutlinedIcon />}
-                  >
-                    Items
-                  </Button>
+                <Grid item xs>
+                  <Grid container justifyContent={'flex-end'}>
+                    {/* Actions Section */}
+                    <Grid item>
+                      <CatalogueItemsActionMenu
+                        catalogueItem={catalogueItemIdData}
+                        catalogueCategory={catalogueCategoryData}
+                      />
+                    </Grid>
+                    <Grid item>
+                      <Button
+                        sx={{ ml: 0.5, py: '5.75px' }}
+                        variant="outlined"
+                        component={Link}
+                        to={'items'}
+                        startIcon={<InventoryOutlinedIcon />}
+                      >
+                        Items
+                      </Button>
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
