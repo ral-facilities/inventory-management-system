@@ -74,7 +74,10 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
           <Grid item>
             <Grid container spacing={0}>
               <Grid item xs="auto" padding={1}>
-                <PrimaryImage entityId={catalogueItemIdData.id} />
+                <PrimaryImage
+                  entityId={catalogueItemIdData.id}
+                  isDetailsPanel
+                />
               </Grid>
               <Grid item xs>
                 <Typography variant="h4" sx={{ wordWrap: 'break-word' }}>

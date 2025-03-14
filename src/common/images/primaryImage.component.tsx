@@ -105,29 +105,33 @@ const PrimaryImage = (props: PrimaryImageProps) => {
           dense={isDetailsPanel}
           isPrimaryThumbnail
           imageLoading={imageLoading}
-        ></ThumbnailImage>
+        />
       )}
-      <Box sx={{ height: '20%' }}>
-        <PrimaryOptionsMenu
-          onChangePrimaryDialogOpen={setPrimaryDialogOpen}
-          primaryImageExists={primaryImageExists}
-        />
-      </Box>
-      <PrimaryImageDialog
-        open={primaryDialogOpen == 'set'}
-        onClose={() => {
-          setPrimaryDialogOpen(false);
-        }}
-        entityID={entityId}
-      />
-      {primaryImageExists && (
-        <RemovePrimaryImageDialog
-          open={primaryDialogOpen == 'remove'}
-          onClose={() => {
-            setPrimaryDialogOpen(false);
-          }}
-          image={imagesData[0]}
-        />
+      {!isDetailsPanel && (
+        <>
+          <Box sx={{ height: '20%' }}>
+            <PrimaryOptionsMenu
+              onChangePrimaryDialogOpen={setPrimaryDialogOpen}
+              primaryImageExists={primaryImageExists}
+            />
+          </Box>
+          <PrimaryImageDialog
+            open={primaryDialogOpen == 'set'}
+            onClose={() => {
+              setPrimaryDialogOpen(false);
+            }}
+            entityID={entityId}
+          />
+          {primaryImageExists && (
+            <RemovePrimaryImageDialog
+              open={primaryDialogOpen == 'remove'}
+              onClose={() => {
+                setPrimaryDialogOpen(false);
+              }}
+              image={imagesData[0]}
+            />
+          )}
+        </>
       )}
     </Grid>
   );
