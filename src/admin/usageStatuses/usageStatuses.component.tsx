@@ -30,6 +30,7 @@ import {
   formatDateTimeStrings,
   getInitialColumnFilterFnState,
   getPageHeightCalc,
+  mrtTheme,
 } from '../../utils.tsx';
 import DeleteUsageStatusDialog from './deleteUsageStatusDialog.component.tsx';
 import UsageStatusDialog from './usageStatusDialog.component.tsx';
@@ -132,6 +133,9 @@ function UsageStatuses() {
       ...preservedState,
       showProgressBars: usageStatusDataLoading, //or showSkeletons
     },
+    //MRT
+    mrtTheme,
+    //MUI
     muiTableBodyRowProps: ({ row }) => {
       return { component: TableRow, 'aria-label': `${row.original.value} row` };
     },

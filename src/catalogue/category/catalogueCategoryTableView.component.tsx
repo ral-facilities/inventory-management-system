@@ -16,6 +16,7 @@ import {
   TableCellOverFlowTipProps,
   formatDateTimeStrings,
   generateUniqueName,
+  mrtTheme,
 } from '../../utils';
 import CatalogueCategoryDialog from './catalogueCategoryDialog.component';
 
@@ -113,6 +114,8 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
     state: {
       showProgressBars: catalogueCategoryDataLoading, //or showSkeletons
     },
+    //MRT
+    mrtTheme,
     // MUI
     muiTableBodyRowProps: ({ row }) => {
       const canPlaceHere =

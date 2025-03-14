@@ -1,7 +1,16 @@
-import { useMutation, UseMutationResult } from '@tanstack/react-query';
+import {
+  useMutation,
+  UseMutationResult,
+  useQuery,
+  useQueryClient,
+  UseQueryResult,
+} from '@tanstack/react-query';
+
 import { AxiosError } from 'axios';
 import { storageApi } from './api';
 import {
+  AttachmentMetadata,
+  AttachmentMetadataPatch,
   AttachmentPostMetadata,
   AttachmentPostMetadataResponse,
 } from './api.types';
@@ -22,5 +31,55 @@ export const usePostAttachmentMetadata = (): UseMutationResult<
   return useMutation({
     mutationFn: (attachmentMetadata: AttachmentPostMetadata) =>
       postAttachmentMetadata(attachmentMetadata),
+  });
+};
+
+const getAttachments = async (
+  entityId: string
+): Promise<AttachmentMetadata[]> => {
+  const queryParams = new URLSearchParams();
+  queryParams.append('entity_id', entityId);
+
+  return storageApi
+    .get(`/attachments`, {
+      params: queryParams,
+    })
+    .then((response) => response.data);
+};
+
+export const useGetAttachments = (
+  entityId: string
+): UseQueryResult<AttachmentMetadata[], AxiosError> => {
+  return useQuery({
+    queryKey: ['Attachments', entityId],
+    queryFn: () => getAttachments(entityId),
+  });
+};
+
+const patchAttachment = async (
+  id: string,
+  fileMetadata: AttachmentMetadataPatch
+): Promise<AttachmentMetadata> => {
+  return storageApi
+    .patch<AttachmentMetadata>(`/attachments/${id}`, fileMetadata)
+    .then((response) => response.data);
+};
+
+export const usePatchAttachment = (): UseMutationResult<
+  AttachmentMetadata,
+  AxiosError,
+  { id: string; fileMetadata: AttachmentMetadataPatch }
+> => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, fileMetadata }) => patchAttachment(id, fileMetadata),
+    onSuccess: (updatedAttachment: AttachmentMetadata) => {
+      queryClient.invalidateQueries({
+        queryKey: ['Attachments', updatedAttachment.entity_id],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['Attachment', updatedAttachment.id],
+      });
+    },
   });
 };
