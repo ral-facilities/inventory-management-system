@@ -20,6 +20,7 @@ import {
   MRT_Row,
   MRT_RowData,
   MRT_TableInstance,
+  type MRT_Theme,
 } from 'material-react-table';
 import React from 'react';
 
@@ -528,6 +529,16 @@ export function getNonEmptyTrimmedString(value: unknown): string | undefined {
     : undefined;
 }
 
+export const getNameAndExtension = (
+  filename: string
+): [name: string, extension: string] => {
+  const point = filename.lastIndexOf('.') ?? 0;
+  const extension = filename.slice(point) ?? '';
+  const name = filename.slice(0, point) ?? '';
+
+  return [name, extension];
+};
+
 export function downloadFileByLink(url: string, filename: string): void {
   const link = document.createElement('a');
   link.href = url;
@@ -536,3 +547,7 @@ export function downloadFileByLink(url: string, filename: string): void {
   link.click();
   document.body.removeChild(link);
 }
+
+export const mrtTheme = (theme: Theme): Partial<MRT_Theme> => ({
+  baseBackgroundColor: theme.palette.background.default,
+});

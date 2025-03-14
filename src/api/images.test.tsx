@@ -4,8 +4,13 @@ import {
   CREATED_MODIFIED_TIME_VALUES,
   hooksWrapperWithProviders,
 } from '../testUtils';
-import { APIImage } from './api.types';
-import { useDeleteImage, useGetImage, useGetImages } from './images';
+import { APIImage, ImageMetadataPatch } from './api.types';
+import {
+  useDeleteImage,
+  useGetImage,
+  useGetImages,
+  usePatchImage,
+} from './images';
 
 describe('images api functions', () => {
   afterEach(() => {
@@ -65,6 +70,30 @@ describe('images api functions', () => {
         view_url: 'http://localhost:3000/images/stfc-logo-blue-text.png?text=1',
         download_url:
           'http://localhost:3000/images/stfc-logo-blue-text.png?text=1',
+      });
+    });
+  });
+
+  describe('usePatchImage', () => {
+    let mockDataPatch: ImageMetadataPatch;
+    beforeEach(() => {
+      mockDataPatch = {
+        file_name: 'edited_image.jpeg',
+        title: 'an edited title',
+        description: 'an edited description',
+      };
+    });
+    it('sends a patch request to edit an image and returns a successful response', async () => {
+      const { result } = renderHook(() => usePatchImage(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      result.current.mutate({ id: '1', fileMetadata: mockDataPatch });
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
+
+      expect(result.current.data).toEqual({
+        ...ImagesJSON[0],
+        ...mockDataPatch,
       });
     });
   });

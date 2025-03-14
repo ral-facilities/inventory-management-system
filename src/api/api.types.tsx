@@ -218,35 +218,45 @@ export interface Item
   usage_status: string;
   properties: Property[];
 }
+// ------------------------------------ OBJECT STORAGE API -----------------------------------------
 
-// ------------------------------------ ATTACHMENTS ------------------------------------------------
-
-// This is AttachmentPost on the object-store-api
-export interface AttachmentPostMetadata {
-  entity_id: string;
+export interface ObjectFilePostBase {
   file_name: string;
   title?: string | null;
   description?: string | null;
 }
+
+export type ObjectFilePatchBase = Partial<ObjectFilePostBase>;
+
+export interface ObjectFileUploadMetadata extends ObjectFilePostBase {
+  entity_id: string;
+}
+
+// ------------------------------------ ATTACHMENTS ------------------------------------------------
+
+// This is AttachmentPost on the object-store-api
+export type AttachmentPostMetadata = ObjectFileUploadMetadata;
 
 export interface AttachmentUploadInfo {
   url: string;
   fields: Record<string, string>;
 }
-export interface AttachmentPostMetadataResponse
+
+export interface AttachmentMetadata
   extends Required<AttachmentPostMetadata>,
     CreatedModifiedMixin {
   id: string;
+}
+
+export interface AttachmentPostMetadataResponse extends AttachmentMetadata {
   upload_info: AttachmentUploadInfo;
 }
 
+export type AttachmentMetadataPatch = ObjectFilePatchBase;
+
 // ------------------------------------ IMAGES ------------------------------------------------
-export interface ImagePost {
-  entity_id: string;
-  file_name: string;
+export interface ImagePost extends ObjectFileUploadMetadata {
   upload_file: File;
-  title?: string | null;
-  description?: string | null;
 }
 
 export interface APIImage
@@ -257,6 +267,9 @@ export interface APIImage
   thumbnail_base64: string;
 }
 
+export interface ImageMetadataPatch extends ObjectFilePatchBase {
+  primary?: boolean | null;
+}
 export interface APIImageWithURL extends APIImage {
   /* Each url has a different `ResponseContentDisposition` set in the url, for viewing images inline and downloading respectively.
    Allows links to be downloaded directly to the user's computer and not to their client first. */
