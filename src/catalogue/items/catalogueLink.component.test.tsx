@@ -5,7 +5,7 @@ import CatalogueLink, {
   type CatalogueLinkProps,
 } from './catalogueLink.component';
 
-describe('ObsoleteReplacementLink', () => {
+describe('CatalogueLink', () => {
   let props: CatalogueLinkProps;
 
   const createView = () => {

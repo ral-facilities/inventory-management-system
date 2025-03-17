@@ -28,7 +28,9 @@ import {
 } from '../api/api.types';
 import { useGetItems } from '../api/items';
 import { useGetSystemIds } from '../api/systems';
+import { useGetUsageStatuses } from '../api/usageStatuses';
 import { findPropertyValue } from '../catalogue/items/catalogueItemsTable.component';
+import NumberOfSparesClickable from '../common/numberOfSparesClickable.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import {
   COLUMN_FILTER_FUNCTIONS,
@@ -93,6 +95,8 @@ export function ItemsTable(props: ItemTableProps) {
     return query.data;
   });
 
+  const { data: usageStatuses } = useGetUsageStatuses();
+
   //Once loading finished - use same logic as catalogueItemsTable to pair up data
   React.useEffect(() => {
     if (!isLoading && itemsData) {
@@ -117,6 +121,8 @@ export function ItemsTable(props: ItemTableProps) {
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     const viewCatalogueItemProperties = catalogueCategory?.properties ?? [];
+    const usageStatusesNames =
+      usageStatuses?.map((status) => status.value) || [];
     return [
       {
         header: 'Serial Number',
@@ -265,6 +271,7 @@ export function ItemsTable(props: ItemTableProps) {
           </MenuItem>,
         ],
         size: 350,
+        filterSelectOptions: usageStatusesNames,
       },
       {
         header: 'System',
@@ -368,7 +375,7 @@ export function ItemsTable(props: ItemTableProps) {
         filterSelectOptions: ['Yes', 'No'],
       })),
     ];
-  }, [catalogueCategory]);
+  }, [catalogueCategory, usageStatuses]);
 
   const initialColumnFilterFnState = React.useMemo(() => {
     return getInitialColumnFilterFnState(columns);
@@ -550,6 +557,11 @@ export function ItemsTable(props: ItemTableProps) {
         >
           Clear Filters
         </Button>
+        <NumberOfSparesClickable
+          catalogueItem={catalogueItem}
+          type="button"
+          label="Apply spares filter"
+        />
       </Box>
     ),
     renderRowActionMenuItems: ({ closeMenu, row, table }) => {
