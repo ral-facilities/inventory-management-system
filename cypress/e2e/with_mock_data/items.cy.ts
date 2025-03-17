@@ -598,7 +598,7 @@ describe('Items', () => {
 
       cy.findByRole('button', { name: 'Remove file' }).click();
 
-      //TODO: Assert axios delete request was called
+      // TODO: Assert axios delete request was called
 
       cy.findByText('Upload 1 file').should('not.exist');
     });
@@ -658,6 +658,172 @@ describe('Items', () => {
 
       cy.findByLabelText('Show error details').should('exist');
       cy.findByText('Upload failed').should('exist');
+    });
+
+    it('should render in table headers', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Attachments').click();
+      cy.findByText('File name').should('be.visible');
+      cy.findByText('Title').should('be.visible');
+      cy.findByText('Description').should('be.visible');
+      cy.findByText('Last modified').scrollIntoView();
+      cy.findByText('Created').should('be.visible');
+      cy.findByText('Last modified').should('be.visible');
+    });
+
+    it('should render attachments data and paginate as expected', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Attachments').click();
+      cy.findByText('Total Attachments: 20').should('be.visible');
+
+      cy.findAllByText('safety-protocols.pdf').should('have.length', 4);
+      cy.findAllByText('camera-setup-guide.docx').should('have.length', 4);
+      cy.findAllByText('experiment-results.rtf').should('have.length', 4);
+      cy.findAllByText('laser-calibration.txt').should('have.length', 3);
+      cy.findByText('Last modified').scrollIntoView();
+      cy.findAllByText('02 Jan 2024 13:10').should('have.length', 15);
+
+      cy.findByRole('button', { name: 'Go to page 2' }).scrollIntoView();
+      cy.findByRole('button', { name: 'Go to page 2' }).click();
+      cy.findAllByText('safety-protocols.pdf').should('have.length', 1);
+      cy.findAllByText('camera-setup-guide.docx').should('have.length', 1);
+      cy.findAllByText('experiment-results.rtf').should('have.length', 1);
+      cy.findAllByText('laser-calibration.txt').should('have.length', 2);
+      cy.findByText('Last modified').scrollIntoView();
+      cy.findAllByText('02 Jan 2024 13:10').should('have.length', 5);
+    });
+
+    it('sets and clears the table filters', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Attachments').click();
+      cy.findAllByText('Safety Protocols').should('have.length', 4);
+      cy.findAllByText('Camera Setup Guide').should('have.length', 4);
+
+      cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
+      cy.findByLabelText('Filter by File name').type('camera');
+      cy.findAllByText('Safety Protocols').should('not.exist');
+      cy.findAllByText('Camera Setup Guide').should('have.length', 5);
+
+      cy.findByRole('button', { name: 'Clear Filters' }).click();
+      cy.findAllByText('Safety Protocols').should('have.length', 4);
+      cy.findAllByText('Camera Setup Guide').should('have.length', 4);
+      cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
+    });
+
+    it('edits an attachment successfully', () => {
+      // Catch error to avoid the CI failing unnecessarily
+      Cypress.on('uncaught:exception', (err) => {
+        if (err.message.includes('ResizeObserver')) {
+          return false;
+        }
+      });
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Attachments').click();
+
+      cy.findAllByLabelText('Row Actions').first().click();
+      cy.findByText('Edit').click();
+
+      cy.findByRole('dialog')
+        .should('be.visible')
+        .within(() => {
+          cy.findByLabelText('File Name *').clear();
+          cy.findByText('.pdf').should('exist');
+          cy.findByLabelText('File Name *').type('test file');
+
+          cy.findByLabelText('Title').clear();
+          cy.findByLabelText('Title').type('test title');
+
+          cy.findByLabelText('Description').clear();
+          cy.findByLabelText('Description').type('test description');
+        });
+
+      cy.startSnoopingBrowserMockedRequest();
+
+      cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('dialog').should('not.exist');
+
+      cy.findBrowserMockedRequests({
+        method: 'PATCH',
+        url: '/attachments/:id',
+      }).should(async (patchRequests) => {
+        expect(patchRequests.length).equal(1);
+        const request = patchRequests[0];
+        expect(JSON.stringify(await request.json())).equal(
+          '{"file_name":"test file.pdf","description":"test description","title":"test title"}'
+        );
+      });
+    });
+
+    it('shows error message when no fields have been changed', () => {
+      // Catch error to avoid the CI failing unnecessarily
+      Cypress.on('uncaught:exception', (err) => {
+        if (err.message.includes('ResizeObserver')) {
+          return false;
+        }
+      });
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Attachments').click();
+
+      cy.findAllByLabelText('Row Actions').first().click();
+      cy.findByText('Edit').click();
+
+      cy.findByRole('dialog')
+        .should('be.visible')
+        .within(() => {
+          cy.findByRole('button', { name: 'Save' }).click();
+          cy.contains(
+            "There have been no changes made. Please change a field's value or press Cancel to exit."
+          );
+        });
+      cy.findByRole('button', { name: 'Save' }).should('be.disabled');
+    });
+
+    it('shows error message when required fields are cleared', () => {
+      // Catch error to avoid the CI failing unnecessarily
+      Cypress.on('uncaught:exception', (err) => {
+        if (err.message.includes('ResizeObserver')) {
+          return false;
+        }
+      });
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Attachments').click();
+
+      cy.findAllByLabelText('Row Actions').first().click();
+      cy.findByText('Edit').click();
+
+      cy.findByRole('dialog')
+        .should('be.visible')
+        .within(() => {
+          cy.findByLabelText('File Name *').clear();
+
+          cy.findByRole('button', { name: 'Save' }).click();
+          cy.contains('Please enter a file name.');
+        });
+      cy.findByRole('button', { name: 'Save' }).should('be.disabled');
     });
   });
 
@@ -777,14 +943,14 @@ describe('Items', () => {
 
       cy.findByText('Gallery').click();
       cy.findAllByText('stfc-logo-blue-text.png').should('have.length', 8);
-      cy.findByText('Show Filters').click();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).click();
       cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
       cy.findByLabelText('Filter by File name').type('logo1.png');
       cy.findByAltText('test').should('not.exist');
       cy.findByRole('button', { name: 'Clear Filters' }).click();
       cy.findAllByText('stfc-logo-blue-text.png').should('have.length', 8);
-      cy.findByText('Hide Filters').click();
-      cy.findByText('Show Filters').should('exist');
+      cy.findByRole('button', { name: 'Show/Hide filters' }).click();
+      cy.findByLabelText('Filter by File name').should('not.visible');
     });
 
     it('opens information dialog from card view', () => {
@@ -953,7 +1119,93 @@ describe('Items', () => {
       cy.findByTestId('galleryLightBox').should('not.exist');
     });
 
-    it('deletes an image', () => {
+    it('edits an image successfully', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Gallery').click();
+
+      cy.findAllByLabelText('Card Actions').first().click();
+      cy.findAllByText('Edit').last().click();
+
+      cy.findByRole('dialog')
+        .should('be.visible')
+        .within(() => {
+          cy.findByLabelText('File Name *').clear();
+          cy.findByText('.png').should('exist');
+          cy.findByLabelText('File Name *').type('test file');
+
+          cy.findByLabelText('Title').clear();
+          cy.findByLabelText('Title').type('test title');
+
+          cy.findByLabelText('Description').clear();
+          cy.findByLabelText('Description').type('test description');
+        });
+
+      cy.startSnoopingBrowserMockedRequest();
+
+      cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('dialog').should('not.exist');
+
+      cy.findBrowserMockedRequests({
+        method: 'PATCH',
+        url: '/images/:id',
+      }).should(async (patchRequests) => {
+        expect(patchRequests.length).equal(1);
+        const request = patchRequests[0];
+        expect(JSON.stringify(await request.json())).equal(
+          '{"file_name":"test file.png","description":"test description","title":"test title"}'
+        );
+      });
+    });
+
+    it('shows error message when no fields have been changed', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Gallery').click();
+
+      cy.findAllByLabelText('Card Actions').first().click();
+      cy.findAllByText('Edit').last().click();
+
+      cy.findByRole('dialog')
+        .should('be.visible')
+        .within(() => {
+          cy.findByRole('button', { name: 'Save' }).click();
+          cy.contains(
+            "There have been no changes made. Please change a field's value or press Cancel to exit."
+          );
+        });
+      cy.findByRole('button', { name: 'Save' }).should('be.disabled');
+    });
+
+    it('shows error message when required fields are cleared', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Gallery').click();
+
+      cy.findAllByLabelText('Card Actions').first().click();
+      cy.findAllByText('Edit').last().click();
+
+      cy.findByRole('dialog')
+        .should('be.visible')
+        .within(() => {
+          cy.findByLabelText('File Name *').clear();
+
+          cy.findByRole('button', { name: 'Save' }).click();
+          cy.contains('Please enter a file name.');
+        });
+      cy.findByRole('button', { name: 'Save' }).should('be.disabled');
+    });
+
+    it('opens edit dialog in lightbox', () => {
       cy.findByText('5YUQDDjKpz2z').click();
       cy.findByText(
         'High-resolution cameras for beam characterization. 1'
@@ -978,8 +1230,72 @@ describe('Items', () => {
 
         cy.findByLabelText('Image Actions').click();
       });
+      cy.findAllByText('Edit').last().click();
 
-      cy.findAllByText('Delete').last().click();
+      cy.findByRole('dialog', { timeout: 10000 }).should('exist');
+
+      cy.findByRole('dialog').within(() => {
+        cy.findByText('Edit Image').should('exist');
+      });
+
+      cy.findByRole('dialog').within(() => {
+        cy.findByRole('button', { name: 'Cancel' }).click();
+      });
+
+      cy.findByRole('dialog').should('not.exist');
+
+      cy.findByLabelText('Close').click();
+
+      cy.findByTestId('galleryLightBox').should('not.exist');
+
+      it('deletes an image', () => {
+        cy.findByText('5YUQDDjKpz2z').click();
+        cy.findByText(
+          'High-resolution cameras for beam characterization. 1'
+        ).should('exist');
+
+        cy.findByText('Gallery').click();
+
+        cy.findAllByAltText('test').first().click();
+        cy.findByTestId('galleryLightBox').within(() => {
+          cy.findByText('File name: stfc-logo-blue-text.png').should('exist');
+          cy.findByText('Title: stfc-logo-blue-text').should('exist');
+          cy.findByText('test').should('exist');
+
+          cy.findByAltText('test').should('exist');
+
+          cy.findByAltText('test')
+            .should('have.attr', 'src')
+            .and(
+              'include',
+              'http://localhost:3000/images/stfc-logo-blue-text.png?text=1'
+            );
+
+          cy.findByLabelText('Image Actions').click();
+        });
+
+        cy.findAllByText('Delete').last().click();
+
+        cy.startSnoopingBrowserMockedRequest();
+
+        cy.findByRole('button', { name: 'Continue' }).click();
+
+        cy.findBrowserMockedRequests({
+          method: 'DELETE',
+          url: '/images/:id',
+        }).should((patchRequests) => {
+          expect(patchRequests.length).equal(1);
+          const request = patchRequests[0];
+          expect(request.url.toString()).to.contain('1');
+        });
+      });
+    });
+
+    it('deletes an item', () => {
+      cy.findAllByLabelText('Row Actions').first().click();
+      cy.findByText('Delete').click();
+
+      cy.findByText('Serial Number: 5YUQDDjKpz2z').should('exist');
 
       cy.startSnoopingBrowserMockedRequest();
 
@@ -987,225 +1303,205 @@ describe('Items', () => {
 
       cy.findBrowserMockedRequests({
         method: 'DELETE',
-        url: '/images/:id',
+        url: '/v1/items/:id',
       }).should((patchRequests) => {
         expect(patchRequests.length).equal(1);
         const request = patchRequests[0];
-        expect(request.url.toString()).to.contain('1');
+        expect(request.url.toString()).to.contain('KvT2Ox7n');
       });
     });
-  });
 
-  it('deletes an item', () => {
-    cy.findAllByLabelText('Row Actions').first().click();
-    cy.findByText('Delete').click();
+    it('duplicates an item', () => {
+      cy.findAllByLabelText('Row Actions').first().click();
+      cy.findByText('Duplicate').click();
 
-    cy.findByText('Serial Number: 5YUQDDjKpz2z').should('exist');
+      cy.startSnoopingBrowserMockedRequest();
 
-    cy.startSnoopingBrowserMockedRequest();
+      cy.findByRole('button', { name: 'Next' }).click();
+      cy.findByRole('button', { name: 'Next' }).click();
+      cy.findByRole('button', { name: 'Finish' }).click();
+      cy.findByRole('dialog').should('not.exist');
 
-    cy.findByRole('button', { name: 'Continue' }).click();
-
-    cy.findBrowserMockedRequests({
-      method: 'DELETE',
-      url: '/v1/items/:id',
-    }).should((patchRequests) => {
-      expect(patchRequests.length).equal(1);
-      const request = patchRequests[0];
-      expect(request.url.toString()).to.contain('KvT2Ox7n');
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: '/v1/items',
+      }).should(async (postRequests) => {
+        expect(postRequests.length).eq(1);
+        expect(JSON.stringify(await postRequests[0].json())).equal(
+          JSON.stringify({
+            purchase_order_number: '6JYHEjwN',
+            is_defective: false,
+            usage_status_id: '1',
+            warranty_end_date: '2023-04-04T23:00:00.000Z',
+            asset_number: 'LyH8yp1FHf',
+            serial_number: '5YUQDDjKpz2z',
+            delivered_date: '2023-03-17T00:00:00.000Z',
+            notes:
+              '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this Serial Number: 5YUQDDjKpz2z',
+            properties: [
+              { id: '1', value: 0 },
+              { id: '2', value: null },
+              { id: '3', value: 'CMOS' },
+              { id: '4', value: null },
+              { id: '5', value: true },
+              { id: '6', value: null },
+            ],
+            catalogue_item_id: '1',
+            system_id: '65328f34a40ff5301575a4e3',
+          })
+        );
+      });
     });
-  });
 
-  it('duplicates an item', () => {
-    cy.findAllByLabelText('Row Actions').first().click();
-    cy.findByText('Duplicate').click();
+    it('should display a link a system in the delete dialog when the item has a system id', () => {
+      cy.findAllByLabelText('Row Actions').last().click();
+      cy.findByText('Delete').click();
 
-    cy.startSnoopingBrowserMockedRequest();
-
-    cy.findByRole('button', { name: 'Next' }).click();
-    cy.findByRole('button', { name: 'Next' }).click();
-    cy.findByRole('button', { name: 'Finish' }).click();
-    cy.findByRole('dialog').should('not.exist');
-
-    cy.findBrowserMockedRequests({
-      method: 'POST',
-      url: '/v1/items',
-    }).should(async (postRequests) => {
-      expect(postRequests.length).eq(1);
-      expect(JSON.stringify(await postRequests[0].json())).equal(
-        JSON.stringify({
-          purchase_order_number: '6JYHEjwN',
-          is_defective: false,
-          usage_status_id: '1',
-          warranty_end_date: '2023-04-04T23:00:00.000Z',
-          asset_number: 'LyH8yp1FHf',
-          serial_number: '5YUQDDjKpz2z',
-          delivered_date: '2023-03-17T00:00:00.000Z',
-          notes:
-            '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this Serial Number: 5YUQDDjKpz2z',
-          properties: [
-            { id: '1', value: 0 },
-            { id: '2', value: null },
-            { id: '3', value: 'CMOS' },
-            { id: '4', value: null },
-            { id: '5', value: true },
-            { id: '6', value: null },
-          ],
-          catalogue_item_id: '1',
-          system_id: '65328f34a40ff5301575a4e3',
-        })
-      );
+      cy.findByRole('link', { name: 'Pico Laser' }).should('exist');
     });
-  });
 
-  it('should display a link a system in the delete dialog when the item has a system id', () => {
-    cy.findAllByLabelText('Row Actions').last().click();
-    cy.findByText('Delete').click();
+    it('edits an item with all fields altered', () => {
+      cy.findAllByLabelText('Row Actions').last().click();
+      cy.findByText('Edit').click();
 
-    cy.findByRole('link', { name: 'Pico Laser' }).should('exist');
-  });
+      cy.findByLabelText('Serial number').type('test1234');
+      cy.findByLabelText('Asset number').type('test13221');
+      cy.findByLabelText('Purchase order number').type('test23');
+      cy.findByLabelText('Warranty end date').type('12/02/2028');
+      cy.findByLabelText('Delivered date').type('12/02/2024');
+      cy.findByLabelText('Is defective *').click();
+      cy.findByRole('option', { name: 'Yes' }).click();
+      cy.findByLabelText('Usage status *').click();
+      cy.findByText('Scrapped').click();
+      cy.findByLabelText('Notes').type('test');
 
-  it('edits an item with all fields altered', () => {
-    cy.findAllByLabelText('Row Actions').last().click();
-    cy.findByText('Edit').click();
+      cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.findByLabelText('Serial number').type('test1234');
-    cy.findByLabelText('Asset number').type('test13221');
-    cy.findByLabelText('Purchase order number').type('test23');
-    cy.findByLabelText('Warranty end date').type('12/02/2028');
-    cy.findByLabelText('Delivered date').type('12/02/2024');
-    cy.findByLabelText('Is defective *').click();
-    cy.findByRole('option', { name: 'Yes' }).click();
-    cy.findByLabelText('Usage status *').click();
-    cy.findByText('Scrapped').click();
-    cy.findByLabelText('Notes').type('test');
+      cy.findByLabelText('Resolution (megapixels) *').type('18');
+      cy.findByLabelText('Frame Rate (fps)').type('60');
+      cy.findByLabelText('Sensor Type *').type('IO');
+      cy.findByLabelText('Sensor brand').type('pixel');
+      cy.findByLabelText('Broken *').click();
+      cy.findByRole('option', { name: 'False' }).click();
+      cy.findByLabelText('Older than five years').click();
+      cy.findByRole('option', { name: 'True' }).click();
 
-    cy.findByRole('button', { name: 'Next' }).click();
+      cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.findByLabelText('Resolution (megapixels) *').type('18');
-    cy.findByLabelText('Frame Rate (fps)').type('60');
-    cy.findByLabelText('Sensor Type *').type('IO');
-    cy.findByLabelText('Sensor brand').type('pixel');
-    cy.findByLabelText('Broken *').click();
-    cy.findByRole('option', { name: 'False' }).click();
-    cy.findByLabelText('Older than five years').click();
-    cy.findByRole('option', { name: 'True' }).click();
+      cy.findByRole('button', { name: 'navigate to systems home' }).click();
+      cy.findByText('Giant laser').click();
 
-    cy.findByRole('button', { name: 'Next' }).click();
+      cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'navigate to systems home' }).click();
-    cy.findByText('Giant laser').click();
+      cy.findByRole('button', { name: 'Finish' }).click();
+      cy.findByRole('dialog').should('not.exist');
 
-    cy.startSnoopingBrowserMockedRequest();
-
-    cy.findByRole('button', { name: 'Finish' }).click();
-    cy.findByRole('dialog').should('not.exist');
-
-    cy.findBrowserMockedRequests({
-      method: 'PATCH',
-      url: '/v1/items/:id',
-    }).should(async (postRequests) => {
-      expect(postRequests.length).eq(1);
-      expect(JSON.stringify(await postRequests[0].json())).equal(
-        JSON.stringify({
-          serial_number: 'Zf7P8Qu8TD8ctest1234',
-          purchase_order_number: 'hpGBgi0dtest23',
-          usage_status_id: '3',
-          warranty_end_date: '2028-02-12T23:00:00.000Z',
-          asset_number: '75YWiLwy54test13221',
-          delivered_date: '2024-02-12T00:00:00.000Z',
-          notes: 'zolZDKKuvAoTFRUWeZNAtest',
-          system_id: '65328f34a40ff5301575a4e3',
-          properties: [
-            { id: '1', value: 1218 },
-            { id: '2', value: 3060 },
-            { id: '3', value: 'CMOSIO' },
-            { id: '4', value: 'pixel' },
-            { id: '5', value: false },
-            { id: '6', value: true },
-          ],
-        })
-      );
+      cy.findBrowserMockedRequests({
+        method: 'PATCH',
+        url: '/v1/items/:id',
+      }).should(async (postRequests) => {
+        expect(postRequests.length).eq(1);
+        expect(JSON.stringify(await postRequests[0].json())).equal(
+          JSON.stringify({
+            serial_number: 'Zf7P8Qu8TD8ctest1234',
+            purchase_order_number: 'hpGBgi0dtest23',
+            usage_status_id: '3',
+            warranty_end_date: '2028-02-12T23:00:00.000Z',
+            asset_number: '75YWiLwy54test13221',
+            delivered_date: '2024-02-12T00:00:00.000Z',
+            notes: 'zolZDKKuvAoTFRUWeZNAtest',
+            system_id: '65328f34a40ff5301575a4e3',
+            properties: [
+              { id: '1', value: 1218 },
+              { id: '2', value: 3060 },
+              { id: '3', value: 'CMOSIO' },
+              { id: '4', value: 'pixel' },
+              { id: '5', value: false },
+              { id: '6', value: true },
+            ],
+          })
+        );
+      });
     });
-  });
 
-  it('edits an item (just the serial number)', () => {
-    cy.findAllByLabelText('Row Actions').last().click();
-    cy.findByText('Edit').click();
+    it('edits an item (just the serial number)', () => {
+      cy.findAllByLabelText('Row Actions').last().click();
+      cy.findByText('Edit').click();
 
-    cy.findByLabelText('Serial number').type('test1234');
+      cy.findByLabelText('Serial number').type('test1234');
 
-    cy.findByRole('button', { name: 'Next' }).click();
-    cy.findByRole('button', { name: 'Next' }).click();
+      cy.findByRole('button', { name: 'Next' }).click();
+      cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.startSnoopingBrowserMockedRequest();
+      cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
-    cy.findByRole('dialog').should('not.exist');
+      cy.findByRole('button', { name: 'Finish' }).click();
+      cy.findByRole('dialog').should('not.exist');
 
-    cy.findBrowserMockedRequests({
-      method: 'PATCH',
-      url: '/v1/items/:id',
-    }).should(async (postRequests) => {
-      expect(postRequests.length).eq(1);
-      expect(JSON.stringify(await postRequests[0].json())).equal(
-        JSON.stringify({ serial_number: 'Zf7P8Qu8TD8ctest1234' })
-      );
+      cy.findBrowserMockedRequests({
+        method: 'PATCH',
+        url: '/v1/items/:id',
+      }).should(async (postRequests) => {
+        expect(postRequests.length).eq(1);
+        expect(JSON.stringify(await postRequests[0].json())).equal(
+          JSON.stringify({ serial_number: 'Zf7P8Qu8TD8ctest1234' })
+        );
+      });
     });
-  });
 
-  it('edits an item (just the properties)', () => {
-    cy.findAllByLabelText('Row Actions').last().click();
-    cy.findByText('Edit').click();
+    it('edits an item (just the properties)', () => {
+      cy.findAllByLabelText('Row Actions').last().click();
+      cy.findByText('Edit').click();
 
-    cy.findByRole('button', { name: 'Next' }).click();
+      cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.findByLabelText('Resolution (megapixels) *').type('18');
-    cy.findByLabelText('Frame Rate (fps)').type('60');
-    cy.findByLabelText('Sensor Type *').type('IO');
-    cy.findByLabelText('Sensor brand').type('pixel');
-    cy.findByLabelText('Broken *').click();
-    cy.findByRole('option', { name: 'False' }).click();
-    cy.findByLabelText('Older than five years').click();
-    cy.findByRole('option', { name: 'True' }).click();
+      cy.findByLabelText('Resolution (megapixels) *').type('18');
+      cy.findByLabelText('Frame Rate (fps)').type('60');
+      cy.findByLabelText('Sensor Type *').type('IO');
+      cy.findByLabelText('Sensor brand').type('pixel');
+      cy.findByLabelText('Broken *').click();
+      cy.findByRole('option', { name: 'False' }).click();
+      cy.findByLabelText('Older than five years').click();
+      cy.findByRole('option', { name: 'True' }).click();
 
-    cy.findByRole('button', { name: 'Next' }).click();
+      cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.startSnoopingBrowserMockedRequest();
+      cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
-    cy.findByRole('dialog').should('not.exist');
+      cy.findByRole('button', { name: 'Finish' }).click();
+      cy.findByRole('dialog').should('not.exist');
 
-    cy.findBrowserMockedRequests({
-      method: 'PATCH',
-      url: '/v1/items/:id',
-    }).should(async (postRequests) => {
-      expect(postRequests.length).eq(1);
-      expect(JSON.stringify(await postRequests[0].json())).equal(
-        JSON.stringify({
-          properties: [
-            { id: '1', value: 1218 },
-            { id: '2', value: 3060 },
-            { id: '3', value: 'CMOSIO' },
-            { id: '4', value: 'pixel' },
-            { id: '5', value: false },
-            { id: '6', value: true },
-          ],
-        })
-      );
+      cy.findBrowserMockedRequests({
+        method: 'PATCH',
+        url: '/v1/items/:id',
+      }).should(async (postRequests) => {
+        expect(postRequests.length).eq(1);
+        expect(JSON.stringify(await postRequests[0].json())).equal(
+          JSON.stringify({
+            properties: [
+              { id: '1', value: 1218 },
+              { id: '2', value: 3060 },
+              { id: '3', value: 'CMOSIO' },
+              { id: '4', value: 'pixel' },
+              { id: '5', value: false },
+              { id: '6', value: true },
+            ],
+          })
+        );
+      });
     });
-  });
 
-  it('should display an error message if values have not been updated', () => {
-    cy.findAllByLabelText('Row Actions').last().click();
-    cy.findByText('Edit').click();
+    it('should display an error message if values have not been updated', () => {
+      cy.findAllByLabelText('Row Actions').last().click();
+      cy.findByText('Edit').click();
 
-    cy.findByRole('button', { name: 'Next' }).click();
-    cy.findByRole('button', { name: 'Next' }).click();
-    cy.findByRole('button', { name: 'Finish' }).click();
+      cy.findByRole('button', { name: 'Next' }).click();
+      cy.findByRole('button', { name: 'Next' }).click();
+      cy.findByRole('button', { name: 'Finish' }).click();
 
-    cy.findByText(
-      "There have been no changes made. Please change a field's value or press Cancel to exit."
-    ).should('exist');
+      cy.findByText(
+        "There have been no changes made. Please change a field's value or press Cancel to exit."
+      ).should('exist');
+    });
   });
 });

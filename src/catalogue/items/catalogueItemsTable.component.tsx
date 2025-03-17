@@ -51,6 +51,7 @@ import {
   generateUniqueName,
   getInitialColumnFilterFnState,
   getPageHeightCalc,
+  mrtTheme,
 } from '../../utils';
 import CatalogueItemDirectoryDialog from './catalogueItemDirectoryDialog.component';
 import CatalogueItemsDetailsPanel from './catalogueItemsDetailsPanel.component';
@@ -761,6 +762,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       showProgressBars: isLoading, //or showSkeletons
       rowSelection,
     },
+    //MRT
+    mrtTheme,
     // MUI
     muiTableBodyRowProps: dense
       ? ({ row }) => {

@@ -87,11 +87,50 @@ describe('Upload attachment dialog', () => {
       expect(screen.getByText('test1.txt')).toBeInTheDocument();
     });
 
+    await user.click(
+      await screen.findByRole('button', { name: 'Edit file test1.txt' })
+    );
+
+    expect(await screen.findByText('File name')).toBeInTheDocument();
+
+    // Checks if file extension is displayed. If it's editable, actual value will disappear after editing.
+    expect(await screen.findByText('.txt')).toBeInTheDocument();
+
+    const description: HTMLInputElement = screen.getByRole('textbox', {
+      name: 'Description',
+    });
+
+    const title: HTMLInputElement = screen.getByRole('textbox', {
+      name: 'Title',
+    });
+
+    expect(await screen.findByDisplayValue('test1')).toBeInTheDocument();
+
+    // The input elements would be upto date, but the last form attribute would be missing a word/letter,
+    // likely caused by the automated typing and submission being too fast for the form to update.
+    // Adding a typing delay fixed this issue, ensuring enough time for the form to update.
+
+    const delayedUser = userEvent.setup({ delay: 20 });
+
+    await delayedUser.type(title, 'test title');
+
+    await delayedUser.type(description, 'test description');
+
+    expect(await screen.findByText('.txt')).toBeInTheDocument();
+
+    expect(
+      await screen.findByDisplayValue('test description')
+    ).toBeInTheDocument();
+
+    await user.click(await screen.findByText('Save changes'));
+
     await user.click(await screen.findByText('Upload 1 file'));
 
     expect(axiosPostSpy).toHaveBeenCalledWith('/attachments', {
+      description: 'test description',
       entity_id: '1',
       file_name: 'test1.txt',
+      title: 'test title',
     });
 
     expect(xhrPostSpy).toHaveBeenCalledWith(

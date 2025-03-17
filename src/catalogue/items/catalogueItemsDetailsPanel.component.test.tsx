@@ -79,6 +79,18 @@ describe('Catalogue Items details panel', () => {
     expect(view.asFragment()).toMatchSnapshot();
   });
 
+  it('renders properties panel correctly (empty property list)', async () => {
+    props.catalogueItemIdData = {
+      ...getCatalogueItemById('33'),
+      properties: [],
+    } as CatalogueItem;
+    const view = createView();
+
+    await user.click(screen.getByText('Properties'));
+
+    expect(view.asFragment()).toMatchSnapshot();
+  });
+
   it('renders manufacturer panel correctly', async () => {
     const view = createView();
     await user.click(screen.getByText('Manufacturer'));

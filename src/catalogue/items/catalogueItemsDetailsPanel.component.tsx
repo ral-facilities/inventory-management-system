@@ -13,7 +13,7 @@ import {
   CatalogueItem,
   Manufacturer,
 } from '../../api/api.types';
-import PlaceholderImage from '../../common/images/placeholderImage.component';
+import PrimaryImage from '../../common/images/primaryImage.component';
 import NumberOfSparesClickable from '../../common/numberOfSparesClickable.component';
 import { formatDateTimeStrings } from '../../utils';
 import CatalogueLink from './catalogueLink.component';
@@ -74,7 +74,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
         <TabPanel value={tabValue} index={0}>
           <Grid item container spacing={0}>
             <Grid item xs={12} sm={4} padding={1}>
-              <PlaceholderImage />
+              <PrimaryImage entityId={catalogueItemIdData.id} />
             </Grid>
             <Grid item xs={12} sm={8}>
               <Typography variant="h4" sx={{ wordWrap: 'break-word' }}>
@@ -228,7 +228,9 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
 
         <TabPanel value={tabValue} index={1}>
           <Grid item container justifyContent="space-between">
-            {catalogueItemIdData.properties &&
+            {catalogueItemIdData.properties.length === 0 ? (
+              <Typography color="text.secondary">None</Typography>
+            ) : (
               catalogueItemIdData.properties.map((property, index) => (
                 <Grid item xs={12} sm={6} key={index}>
                   <Typography
@@ -244,7 +246,8 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                     {property.value !== null ? String(property.value) : 'None'}
                   </Typography>
                 </Grid>
-              ))}
+              ))
+            )}
           </Grid>
         </TabPanel>
 

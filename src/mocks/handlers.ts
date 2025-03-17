@@ -1,6 +1,8 @@
 import { DefaultBodyType, delay, http, HttpResponse, PathParams } from 'msw';
 import {
   APIImage,
+  AttachmentMetadata,
+  AttachmentMetadataPatch,
   AttachmentPostMetadata,
   AttachmentPostMetadataResponse,
   AttachmentUploadInfo,
@@ -14,6 +16,7 @@ import {
   CatalogueItem,
   CatalogueItemPatch,
   CatalogueItemPost,
+  ImageMetadataPatch,
   ImagePost,
   Item,
   ItemPatch,
@@ -32,6 +35,7 @@ import {
   UsageStatusPost,
 } from '../api/api.types';
 import { generateUniqueId } from '../utils';
+import AttachmentsJSON from './Attachments.json';
 import CatalogueCategoriesJSON from './CatalogueCategories.json';
 import CatalogueCategoryBreadcrumbsJSON from './CatalogueCategoryBreadcrumbs.json';
 import CatalogueItemsJSON from './CatalogueItems.json';
@@ -390,9 +394,17 @@ export const handlers = [
       };
 
       if (body.name === 'test_has_children_elements') {
+        // find the name of the manufacturer, so it can be used in the error message
+        const manufacturerName = ManufacturersJSON?.find(
+          (manufacturer) =>
+            manufacturer.id === validCatalogueItem?.manufacturer_id
+        ) as Manufacturer;
         return HttpResponse.json(
           {
-            detail: 'Catalogue item has child elements and cannot be edited',
+            detail:
+              'Unable to update catalogue item properties and manufacturer (' +
+              manufacturerName?.name +
+              '), as the catalogue item has child elements.',
           },
           { status: 409 }
         );
@@ -981,8 +993,8 @@ export const handlers = [
     PathParams,
     AttachmentPostMetadata,
     AttachmentPostMetadataResponse | ErrorResponse
-  >('/attachments', async ({ request }) => {
-    const body = (await request.json()) as AttachmentPostMetadata;
+  >('/attachments', async () => {
+    const body = AttachmentsJSON[0];
 
     const upload_info: AttachmentUploadInfo = {
       url: `http://localhost:3000/object-storage`,
@@ -997,16 +1009,53 @@ export const handlers = [
 
     return HttpResponse.json(
       {
-        id: '1',
         ...body,
-        title: body.title ?? null,
-        description: body.description ?? null,
         upload_info: upload_info,
-        modified_time: '2024-01-02T13:10:10.000+00:00',
-        created_time: '2024-01-01T12:00:00.000+00:00',
       },
       { status: 201 }
     );
+  }),
+
+  http.get('/attachments', ({ request }) => {
+    const url = new URL(request.url);
+    const attachmentParams = url.searchParams;
+    const entityId = attachmentParams.get('entity_id');
+
+    const generateAttachments = () => {
+      return Array.from({ length: 20 }, (_, index) => {
+        const id = index + 1;
+        const attachment = { ...AttachmentsJSON[id % 4] };
+
+        return {
+          ...attachment,
+          id: String(id), // Ensure the id is a string
+          entity_id: entityId,
+        };
+      });
+    };
+
+    return HttpResponse.json(generateAttachments(), { status: 200 });
+  }),
+
+  http.patch<
+    { id: string },
+    AttachmentMetadataPatch,
+    AttachmentMetadata | ErrorResponse
+  >('/attachments/:id', async ({ request, params }) => {
+    const { id } = params;
+
+    const obj = AttachmentsJSON.find((attachment) => attachment.id === id);
+    const body = await request.json();
+
+    const fullBody = { ...obj, ...body };
+
+    if (fullBody.file_name === 'Error_500.txt') {
+      return HttpResponse.json(
+        { detail: 'Something went wrong' },
+        { status: 500 }
+      );
+    }
+    return HttpResponse.json(fullBody as AttachmentMetadata, { status: 200 });
   }),
 
   // ------------------------------------ OBJECT STORAGE ------------------------------------------------
@@ -1028,9 +1077,33 @@ export const handlers = [
   http.post<PathParams, ImagePost, APIImage | ErrorResponse>(
     '/images',
     async () => {
-      return HttpResponse.json(ImagesJSON[0], { status: 200 });
+      return HttpResponse.json(ImagesJSON[0], { status: 201 });
     }
   ),
+  http.get('/images', ({ request }) => {
+    const url = new URL(request.url);
+    const imageParams = url.searchParams;
+    const primary = imageParams.get('primary');
+    const entityId = imageParams.get('entity_id');
+
+    if (primary === 'true') {
+      if (entityId === '90') {
+        return HttpResponse.json([], { status: 200 });
+      } else {
+        return HttpResponse.json(
+          [
+            {
+              ...ImagesJSON[0],
+              primary: true,
+              entity_id: entityId,
+              ...(entityId === '3' && { thumbnail_base64: 'test' }),
+            },
+          ],
+          { status: 200 }
+        );
+      }
+    }
+  }),
   http.get<PathParams, DefaultBodyType, APIImage[]>(
     '/images',
     ({ request }) => {
@@ -1093,19 +1166,22 @@ export const handlers = [
       if (Number(id) % 2 === 0) {
         image = {
           ...ImagesJSON[0],
-          url: `${window.location.origin}/logo192.png?text=${encodeURIComponent(id as string)}`,
+          view_url: `${window.location.origin}/logo192.png?text=${encodeURIComponent(id as string)}`,
+          download_url: `${window.location.origin}/logo192.png?text=${encodeURIComponent(id as string)}`,
         };
       } else {
         if (id === '3') {
           image = {
             ...ImagesJSON[1],
-            url: 'invalid url',
-            description: null,
+            view_url: 'invalid url',
+            download_url: 'invalid url',
+            description: undefined,
           };
         } else {
           image = {
             ...ImagesJSON[1],
-            url: `${window.location.origin}/images/stfc-logo-blue-text.png?text=${encodeURIComponent(id as string)}`,
+            view_url: `${window.location.origin}/images/stfc-logo-blue-text.png?text=${encodeURIComponent(id as string)}`,
+            download_url: `${window.location.origin}/images/stfc-logo-blue-text.png?text=${encodeURIComponent(id as string)}`,
           };
         }
       }
@@ -1123,6 +1199,31 @@ export const handlers = [
       );
     }
   }),
+
+  http.patch<{ id: string }, ImageMetadataPatch, APIImage | ErrorResponse>(
+    '/images/:id',
+    async ({ request, params }) => {
+      const { id } = params;
+
+      const obj = ImagesJSON.find((image) => image.id === id);
+      const body = await request.json();
+
+      const fullBody = { ...obj, ...body };
+
+      if (
+        // Test case for editing an image's metadata
+        fullBody.file_name === 'Error_500.png' ||
+        // Test case for setting an image to primary
+        (id === '17' && fullBody.primary === true)
+      ) {
+        return HttpResponse.json(
+          { detail: 'Something went wrong' },
+          { status: 500 }
+        );
+      }
+      return HttpResponse.json(fullBody as APIImage, { status: 200 });
+    }
+  ),
 
   http.delete<
     { id: string },

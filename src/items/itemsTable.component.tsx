@@ -42,6 +42,7 @@ import {
   getInitialColumnFilterFnState,
   getPageHeightCalc,
   MRT_Functions_Localisation,
+  mrtTheme,
   OPTIONAL_FILTER_MODE_OPTIONS,
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
@@ -452,7 +453,9 @@ export function ItemsTable(props: ItemTableProps) {
       ...preservedState,
       showProgressBars: isLoading, //or showSkeletons
     },
-    // MUI
+    //MRT
+    mrtTheme,
+    //MUI
     muiTableContainerProps: {
       sx: { height: dense ? '360.4px' : tableHeight },
       // @ts-expect-error: MRT Table Container props does not have data-testid

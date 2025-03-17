@@ -51,6 +51,15 @@ describe('Catalogue Items details panel', () => {
     expect(view.asFragment()).toMatchSnapshot();
   });
 
+  it('renders properties panel correctly (empty property list)', async () => {
+    props.itemData = { ...getItemById('I26EJNJ0'), properties: [] } as Item;
+    const view = createView();
+
+    await user.click(screen.getByRole('tab', { name: 'Properties' }));
+
+    expect(view.asFragment()).toMatchSnapshot();
+  });
+
   it('renders details panel correctly (None values for telephone and url)', async () => {
     props.itemData = getItemById('I26EJNJ0') as Item;
 

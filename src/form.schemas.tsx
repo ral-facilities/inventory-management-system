@@ -624,3 +624,13 @@ export const SparesDefinitionSchema = z.object({
     message: 'The list must have at least one item. Please add a usage status.',
   }),
 });
+
+// ------------------------------------ FILES ------------------------------------
+
+export const FileSchemaPatch = z.object({
+  file_name: MandatoryStringSchema({
+    errorMessage: 'Please enter a file name.',
+  }),
+  title: NullableStringSchema,
+  description: NullableStringSchema,
+});

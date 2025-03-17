@@ -33,6 +33,8 @@ import {
   TableGroupedCell,
   TableHeaderOverflowTip,
   formatDateTimeStrings,
+  getPageHeightCalc,
+  mrtTheme,
 } from '../utils';
 import SystemItemsDialog, {
   ItemUsageStatusesErrorStateType,
@@ -212,6 +214,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         header: 'Catalogue Item',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem?.name,
+        getGroupingValue: (row) => row.catalogueItem?.id ?? '',
         id: 'catalogueItem.name',
         Cell:
           type === 'normal'
@@ -554,6 +557,24 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
               }
             : undefined,
       },
+      {
+        header: 'Expected Lifetime (Days)',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => row.catalogueItem?.expected_lifetime_days ?? '',
+        id: 'catalogueItem.expected_lifetime_days',
+        size: 300,
+        AggregatedCell: ({ cell, table }) => {
+          const isCatalogueGrouped = table
+            .getState()
+            .grouping.includes('catalogueItem.name');
+          const isCatalogueItemRow =
+            cell.row.groupingColumnId === 'catalogueItem.name';
+          return (
+            isCatalogueGrouped &&
+            isCatalogueItemRow && <>{cell.getValue<number>()}</>
+          );
+        },
+      },
     ];
   }, [
     aggregatedCellUsageStatus,
@@ -627,7 +648,9 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       showProgressBars: isLoading,
       rowSelection: rowSelection,
     },
-
+    //MRT
+    mrtTheme,
+    //MUI
     muiTableBodyCellProps: ({ column }) =>
       //Ignore the usages statuses cell in the dialog as this is a
       // select component and does not need to overflow
@@ -663,13 +686,22 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         zIndex: table.getState().isFullScreen ? 1210 : undefined,
       },
     }),
-    muiTableContainerProps: ({ table }) => ({
-      sx: {
-        minHeight: '360.4px',
-        height: table.getState().isFullScreen ? '100%' : undefined,
-        maxHeight: type === 'usageStatus' ? '670px' : undefined,
-      },
-    }),
+    muiTableContainerProps: ({ table }) => {
+      const showAlert =
+        table.getState().showAlertBanner ||
+        table.getFilteredSelectedRowModel().rows.length > 0 ||
+        table.getState().grouping.length > 0;
+      return {
+        sx: {
+          height: table.getState().isFullScreen
+            ? '100%'
+            : type === 'usageStatus'
+              ? undefined
+              : getPageHeightCalc(`272px  ${showAlert ? '+ 72px' : ''}`),
+          maxHeight: type === 'usageStatus' ? '670px' : undefined,
+        },
+      };
+    },
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',
