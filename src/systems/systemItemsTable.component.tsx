@@ -24,9 +24,14 @@ import { CatalogueItem, Item, System, UsageStatus } from '../api/api.types';
 import { useGetCatalogueItemIds } from '../api/catalogueItems';
 import { useGetItems } from '../api/items';
 import { useGetUsageStatuses } from '../api/usageStatuses';
+import NumberOfSparesClickable from '../common/numberOfSparesClickable.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
 import {
+  COLUMN_FILTER_FUNCTIONS,
+  COLUMN_FILTER_MODE_OPTIONS,
+  COLUMN_FILTER_VARIANTS,
+  OPTIONAL_FILTER_MODE_OPTIONS,
   OverflowTip,
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
@@ -563,17 +568,40 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         accessorFn: (row) => row.catalogueItem?.expected_lifetime_days ?? '',
         id: 'catalogueItem.expected_lifetime_days',
         size: 300,
-        AggregatedCell: ({ cell, table }) => {
-          const isCatalogueGrouped = table
-            .getState()
-            .grouping.includes('catalogueItem.name');
-          const isCatalogueItemRow =
-            cell.row.groupingColumnId === 'catalogueItem.name';
+        AggregatedCell: ({ row }) => {
+          return <>{row.original.catalogueItem?.expected_lifetime_days}</>;
+        },
+      },
+      {
+        header: 'Number of spares',
+        Header: TableHeaderOverflowTip,
+        size: 350,
+        accessorFn: (row) => row.catalogueItem?.number_of_spares ?? '',
+        id: 'catalogueItem.number_of_spares',
+        filterVariant: COLUMN_FILTER_VARIANTS.number,
+        filterFn: COLUMN_FILTER_FUNCTIONS.number,
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS.number,
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
+        ],
+        Cell: ({ row }) =>
+          row.original.catalogueItem && (
+            <NumberOfSparesClickable
+              catalogueItem={row.original.catalogueItem}
+              type="link"
+            />
+          ),
+        AggregatedCell: ({ row }) => {
           return (
-            isCatalogueGrouped &&
-            isCatalogueItemRow && <>{cell.getValue<number>()}</>
+            row.original.catalogueItem && (
+              <NumberOfSparesClickable
+                catalogueItem={row.original.catalogueItem}
+                type="link"
+              />
+            )
           );
         },
+        GroupedCell: TableGroupedCell,
       },
     ];
   }, [
