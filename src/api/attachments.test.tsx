@@ -1,10 +1,9 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import AttachmentsJSON from '../mocks/Attachments.json';
 import { CREATED_MODIFIED_TIME_VALUES, hooksWrapperWithProviders } from '../testUtils';
-import { AttachmentPostMetadata, AttachmentPostMetadataResponse, ObjectFilePatch } from './api.types';
+import { AttachmentMetadataPatch, AttachmentPostMetadata, AttachmentPostMetadataResponse } from './api.types';
 import {
   useDeleteAttachment,
-  useGetAttachment,
   useGetAttachments,
   usePatchAttachment,
   usePostAttachmentMetadata,
@@ -21,7 +20,7 @@ describe('attachments api functions', () => {
       mockDataPost = {
         file_name: 'laser-calibration.txt',
         entity_id: '1',
-        title: 'laser-calibration',
+        title: 'Laser Calibration',
         description: 'Detailed report on the calibration of high-precision lasers used in experiments.',
       };
     });
@@ -68,25 +67,8 @@ describe('attachments api functions', () => {
     });
   });
 
-  describe('useGetAttachment', () => {
-    it('sends request to fetch attachment data and returns successful reponse', async () => {
-      const { result } = renderHook(() => useGetAttachment('1'), {
-        wrapper: hooksWrapperWithProviders(),
-      });
-
-      await waitFor(() => {
-        expect(result.current.isSuccess).toBeTruthy();
-      });
-
-      expect(result.current.data).toEqual({
-        ...AttachmentsJSON[1],
-        url: 'http://localhost:3000/attachments/safety-protocols.pdf?text=1',
-      });
-    });
-  });
-
   describe('usePatchAttachment', () => {
-    let mockDataPatch: ObjectFilePatch;
+    let mockDataPatch: AttachmentMetadataPatch;
 
     beforeEach(() => {
       mockDataPatch = {

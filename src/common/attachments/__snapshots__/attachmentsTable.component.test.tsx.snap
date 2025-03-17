@@ -23,7 +23,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
           class="MuiBox-root css-wsew38"
         >
           <div
-            class="MuiBox-root css-0"
+            class="MuiBox-root css-k008qs"
           >
             <button
               class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary Mui-disabled MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1owl11-MuiButtonBase-root-MuiButton-root"
@@ -84,7 +84,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                         aria-invalid="false"
                         autocomplete="new-password"
                         class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12yjm75-MuiInputBase-input-MuiOutlinedInput-input"
-                        id=":r46:"
+                        id=":r47:"
                         placeholder="Search"
                         type="text"
                         value=""
@@ -184,16 +184,38 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                   class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                 />
               </button>
+              <button
+                aria-label="Toggle full screen"
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                data-mui-internal-clone-element="true"
+                tabindex="0"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                  data-testid="FullscreenIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M7 14H5v5h5v-2H7zm-2-4h2V7h3V5H5zm12 7h-3v2h5v-5h-2zM14 5v2h3v3h2V5z"
+                  />
+                </svg>
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
             </div>
           </div>
         </div>
       </div>
       <div
-        class="MuiTableContainer-root css-yx8aw7-MuiTableContainer-root"
+        class="MuiTableContainer-root css-1rzq0kp-MuiTableContainer-root"
       >
         <table
           class="MuiTable-root MuiTable-stickyHeader css-ts728e-MuiTable-root"
-          style="--header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-filename-size: 300; --col-filename-size: 300; --header-title-size: 300; --col-title-size: 300; --header-description-size: 400; --col-description-size: 400; --header-created_time-size: 350; --col-created_time-size: 350; --header-modified_time-size: 350; --col-modified_time-size: 350; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
+          style="--header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-name-size: 300; --col-name-size: 300; --header-title-size: 300; --col-title-size: 300; --header-description-size: 400; --col-description-size: 400; --header-created_time-size: 350; --col-created_time-size: 350; --header-modified_time-size: 350; --col-modified_time-size: 350; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
         >
           <thead
             class="MuiTableHead-root css-q4cnup-MuiTableHead-root"
@@ -227,7 +249,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
               </th>
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-y89vim-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1vee8kb-MuiTableCell-root"
                 colspan="1"
                 data-can-sort="true"
                 data-index="1"
@@ -243,21 +265,21 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                       class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                     >
                       <p
-                        aria-label="Filename"
+                        aria-label="File name"
                         class="MuiTypography-root MuiTypography-body1 css-1jmsoko-MuiTypography-root"
                         data-mui-internal-clone-element="true"
                         role="tooltip"
                       >
-                        Filename
+                        File name
                       </p>
                     </div>
                     <span
-                      aria-label="Sort by Filename descending"
+                      aria-label="Sort by File name descending"
                       class="MuiBadge-root css-1c32n2y-MuiBadge-root"
                       data-mui-internal-clone-element="true"
                     >
                       <span
-                        aria-label="Sort by Filename descending"
+                        aria-label="Sort by File name descending"
                         class="MuiButtonBase-root MuiTableSortLabel-root Mui-active css-118d58w-MuiButtonBase-root-MuiTableSortLabel-root"
                         role="button"
                         tabindex="0"
@@ -390,14 +412,14 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                             </span>
                           </div>
                           <input
-                            aria-describedby=":r4e:-helper-text"
+                            aria-describedby=":r4g:-helper-text"
                             aria-invalid="false"
-                            aria-label="Filter by Filename"
+                            aria-label="Filter by File name"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r4e:"
-                            placeholder="Filter by Filename"
-                            title="Filter by Filename"
+                            id=":r4g:"
+                            placeholder="Filter by File name"
+                            title="Filter by File name"
                             type="text"
                             value=""
                           />
@@ -433,7 +455,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                          id=":r4e:-helper-text"
+                          id=":r4g:-helper-text"
                         >
                           <label>
                             Filter Mode: Fuzzy
@@ -609,12 +631,12 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                             </span>
                           </div>
                           <input
-                            aria-describedby=":r4l:-helper-text"
+                            aria-describedby=":r4n:-helper-text"
                             aria-invalid="false"
                             aria-label="Filter by Title"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r4l:"
+                            id=":r4n:"
                             placeholder="Filter by Title"
                             title="Filter by Title"
                             type="text"
@@ -652,7 +674,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                          id=":r4l:-helper-text"
+                          id=":r4n:-helper-text"
                         >
                           <label>
                             Filter Mode: Fuzzy
@@ -828,12 +850,12 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                             </span>
                           </div>
                           <input
-                            aria-describedby=":r4s:-helper-text"
+                            aria-describedby=":r4u:-helper-text"
                             aria-invalid="false"
                             aria-label="Filter by Description"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r4s:"
+                            id=":r4u:"
                             placeholder="Filter by Description"
                             title="Filter by Description"
                             type="text"
@@ -871,7 +893,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                          id=":r4s:-helper-text"
+                          id=":r4u:-helper-text"
                         >
                           <label>
                             Filter Mode: Fuzzy
@@ -1050,12 +1072,12 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                               </span>
                             </div>
                             <input
-                              aria-describedby=":r53:-helper-text"
+                              aria-describedby=":r55:-helper-text"
                               aria-invalid="false"
                               aria-label="Min"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r53:"
+                              id=":r55:"
                               inputmode="text"
                               placeholder="Min"
                               title="Min"
@@ -1090,7 +1112,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                           </div>
                           <p
                             class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                            id=":r53:-helper-text"
+                            id=":r55:-helper-text"
                           >
                             <label>
                               Filter Mode: Between Inclusive
@@ -1108,7 +1130,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                               aria-label="Max"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r56:"
+                              id=":r58:"
                               inputmode="text"
                               placeholder="Max"
                               title="Max"
@@ -1315,12 +1337,12 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                               </span>
                             </div>
                             <input
-                              aria-describedby=":r5c:-helper-text"
+                              aria-describedby=":r5e:-helper-text"
                               aria-invalid="false"
                               aria-label="Min"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r5c:"
+                              id=":r5e:"
                               inputmode="text"
                               placeholder="Min"
                               title="Min"
@@ -1355,7 +1377,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                           </div>
                           <p
                             class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                            id=":r5c:-helper-text"
+                            id=":r5e:-helper-text"
                           >
                             <label>
                               Filter Mode: Between Inclusive
@@ -1373,7 +1395,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                               aria-label="Max"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r5f:"
+                              id=":r5h:"
                               inputmode="text"
                               placeholder="Max"
                               title="Max"
@@ -1520,7 +1542,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                   class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
                   <div
-                    aria-controls=":r5h:"
+                    aria-controls=":r5j:"
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-label="Rows per page"
@@ -1634,7 +1656,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
           class="MuiBox-root css-wsew38"
         >
           <div
-            class="MuiBox-root css-0"
+            class="MuiBox-root css-k008qs"
           >
             <button
               class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary Mui-disabled MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1owl11-MuiButtonBase-root-MuiButton-root"
@@ -1795,6 +1817,28 @@ exports[`Attachments Table > renders table correctly 1`] = `
                   class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                 />
               </button>
+              <button
+                aria-label="Toggle full screen"
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                data-mui-internal-clone-element="true"
+                tabindex="0"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                  data-testid="FullscreenIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M7 14H5v5h5v-2H7zm-2-4h2V7h3V5H5zm12 7h-3v2h5v-5h-2zM14 5v2h3v3h2V5z"
+                  />
+                </svg>
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
             </div>
           </div>
         </div>
@@ -1826,11 +1870,11 @@ exports[`Attachments Table > renders table correctly 1`] = `
         </div>
       </div>
       <div
-        class="MuiTableContainer-root css-yx8aw7-MuiTableContainer-root"
+        class="MuiTableContainer-root css-1rzq0kp-MuiTableContainer-root"
       >
         <table
           class="MuiTable-root MuiTable-stickyHeader css-ts728e-MuiTable-root"
-          style="--header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-filename-size: 300; --col-filename-size: 300; --header-title-size: 300; --col-title-size: 300; --header-description-size: 400; --col-description-size: 400; --header-created_time-size: 350; --col-created_time-size: 350; --header-modified_time-size: 350; --col-modified_time-size: 350; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
+          style="--header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-name-size: 300; --col-name-size: 300; --header-title-size: 300; --col-title-size: 300; --header-description-size: 400; --col-description-size: 400; --header-created_time-size: 350; --col-created_time-size: 350; --header-modified_time-size: 350; --col-modified_time-size: 350; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
         >
           <thead
             class="MuiTableHead-root css-q4cnup-MuiTableHead-root"
@@ -1864,7 +1908,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
               </th>
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-y89vim-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1vee8kb-MuiTableCell-root"
                 colspan="1"
                 data-can-sort="true"
                 data-index="1"
@@ -1880,21 +1924,21 @@ exports[`Attachments Table > renders table correctly 1`] = `
                       class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                     >
                       <p
-                        aria-label="Filename"
+                        aria-label="File name"
                         class="MuiTypography-root MuiTypography-body1 css-1jmsoko-MuiTypography-root"
                         data-mui-internal-clone-element="true"
                         role="tooltip"
                       >
-                        Filename
+                        File name
                       </p>
                     </div>
                     <span
-                      aria-label="Sort by Filename ascending"
+                      aria-label="Sort by File name ascending"
                       class="MuiBadge-root css-1c32n2y-MuiBadge-root"
                       data-mui-internal-clone-element="true"
                     >
                       <span
-                        aria-label="Sort by Filename ascending"
+                        aria-label="Sort by File name ascending"
                         class="MuiButtonBase-root MuiTableSortLabel-root Mui-active css-118d58w-MuiButtonBase-root-MuiTableSortLabel-root"
                         role="button"
                         tabindex="0"
@@ -2027,14 +2071,14 @@ exports[`Attachments Table > renders table correctly 1`] = `
                             </span>
                           </div>
                           <input
-                            aria-describedby=":r8:-helper-text"
+                            aria-describedby=":r9:-helper-text"
                             aria-invalid="false"
-                            aria-label="Filter by Filename"
+                            aria-label="Filter by File name"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r8:"
-                            placeholder="Filter by Filename"
-                            title="Filter by Filename"
+                            id=":r9:"
+                            placeholder="Filter by File name"
+                            title="Filter by File name"
                             type="text"
                             value=""
                           />
@@ -2070,7 +2114,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                          id=":r8:-helper-text"
+                          id=":r9:-helper-text"
                         >
                           <label>
                             Filter Mode: Fuzzy
@@ -2246,12 +2290,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                             </span>
                           </div>
                           <input
-                            aria-describedby=":rf:-helper-text"
+                            aria-describedby=":rg:-helper-text"
                             aria-invalid="false"
                             aria-label="Filter by Title"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":rf:"
+                            id=":rg:"
                             placeholder="Filter by Title"
                             title="Filter by Title"
                             type="text"
@@ -2289,7 +2333,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                          id=":rf:-helper-text"
+                          id=":rg:-helper-text"
                         >
                           <label>
                             Filter Mode: Fuzzy
@@ -2465,12 +2509,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                             </span>
                           </div>
                           <input
-                            aria-describedby=":rm:-helper-text"
+                            aria-describedby=":rn:-helper-text"
                             aria-invalid="false"
                             aria-label="Filter by Description"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":rm:"
+                            id=":rn:"
                             placeholder="Filter by Description"
                             title="Filter by Description"
                             type="text"
@@ -2508,7 +2552,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                          id=":rm:-helper-text"
+                          id=":rn:-helper-text"
                         >
                           <label>
                             Filter Mode: Fuzzy
@@ -2687,12 +2731,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                               </span>
                             </div>
                             <input
-                              aria-describedby=":rt:-helper-text"
+                              aria-describedby=":ru:-helper-text"
                               aria-invalid="false"
                               aria-label="Min"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":rt:"
+                              id=":ru:"
                               inputmode="text"
                               placeholder="Min"
                               title="Min"
@@ -2727,7 +2771,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                           </div>
                           <p
                             class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                            id=":rt:-helper-text"
+                            id=":ru:-helper-text"
                           >
                             <label>
                               Filter Mode: Between Inclusive
@@ -2745,7 +2789,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                               aria-label="Max"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r10:"
+                              id=":r11:"
                               inputmode="text"
                               placeholder="Max"
                               title="Max"
@@ -2952,12 +2996,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                               </span>
                             </div>
                             <input
-                              aria-describedby=":r16:-helper-text"
+                              aria-describedby=":r17:-helper-text"
                               aria-invalid="false"
                               aria-label="Min"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r16:"
+                              id=":r17:"
                               inputmode="text"
                               placeholder="Min"
                               title="Min"
@@ -2992,7 +3036,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                           </div>
                           <p
                             class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                            id=":r16:-helper-text"
+                            id=":r17:-helper-text"
                           >
                             <label>
                               Filter Mode: Between Inclusive
@@ -3010,7 +3054,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                               aria-label="Max"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r19:"
+                              id=":r1a:"
                               inputmode="text"
                               placeholder="Max"
                               title="Max"
@@ -3110,7 +3154,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-16f6n56-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
@@ -3127,12 +3171,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="2"
               >
                 <div
-                  aria-label="safety-protocols"
+                  aria-label="Safety Protocols"
                   class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  safety-protocols
+                  Safety Protocols
                 </div>
               </td>
               <td
@@ -3211,7 +3255,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-16f6n56-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
@@ -3228,12 +3272,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="2"
               >
                 <div
-                  aria-label="camera-setup-guide"
+                  aria-label="Camera Setup Guide"
                   class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  camera-setup-guide
+                  Camera Setup Guide
                 </div>
               </td>
               <td
@@ -3312,7 +3356,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-16f6n56-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
@@ -3329,12 +3373,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="2"
               >
                 <div
-                  aria-label="experiment-results"
+                  aria-label="Experiment Results"
                   class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  experiment-results
+                  Experiment Results
                 </div>
               </td>
               <td
@@ -3413,7 +3457,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-16f6n56-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
@@ -3430,12 +3474,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="2"
               >
                 <div
-                  aria-label="laser-calibration"
+                  aria-label="Laser Calibration"
                   class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  laser-calibration
+                  Laser Calibration
                 </div>
               </td>
               <td
@@ -3514,7 +3558,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-16f6n56-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
@@ -3531,12 +3575,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="2"
               >
                 <div
-                  aria-label="safety-protocols"
+                  aria-label="Safety Protocols"
                   class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  safety-protocols
+                  Safety Protocols
                 </div>
               </td>
               <td
@@ -3615,7 +3659,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-16f6n56-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
@@ -3632,12 +3676,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="2"
               >
                 <div
-                  aria-label="camera-setup-guide"
+                  aria-label="Camera Setup Guide"
                   class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  camera-setup-guide
+                  Camera Setup Guide
                 </div>
               </td>
               <td
@@ -3716,7 +3760,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-16f6n56-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
@@ -3733,12 +3777,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="2"
               >
                 <div
-                  aria-label="experiment-results"
+                  aria-label="Experiment Results"
                   class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  experiment-results
+                  Experiment Results
                 </div>
               </td>
               <td
@@ -3817,7 +3861,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-16f6n56-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
@@ -3834,12 +3878,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="2"
               >
                 <div
-                  aria-label="laser-calibration"
+                  aria-label="Laser Calibration"
                   class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  laser-calibration
+                  Laser Calibration
                 </div>
               </td>
               <td
@@ -3918,7 +3962,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-16f6n56-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
@@ -3935,12 +3979,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="2"
               >
                 <div
-                  aria-label="safety-protocols"
+                  aria-label="Safety Protocols"
                   class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  safety-protocols
+                  Safety Protocols
                 </div>
               </td>
               <td
@@ -4019,7 +4063,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-16f6n56-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
@@ -4036,12 +4080,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="2"
               >
                 <div
-                  aria-label="camera-setup-guide"
+                  aria-label="Camera Setup Guide"
                   class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  camera-setup-guide
+                  Camera Setup Guide
                 </div>
               </td>
               <td
@@ -4120,7 +4164,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-16f6n56-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
@@ -4137,12 +4181,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="2"
               >
                 <div
-                  aria-label="experiment-results"
+                  aria-label="Experiment Results"
                   class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  experiment-results
+                  Experiment Results
                 </div>
               </td>
               <td
@@ -4221,7 +4265,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-16f6n56-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
@@ -4238,12 +4282,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="2"
               >
                 <div
-                  aria-label="laser-calibration"
+                  aria-label="Laser Calibration"
                   class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  laser-calibration
+                  Laser Calibration
                 </div>
               </td>
               <td
@@ -4322,7 +4366,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-16f6n56-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
@@ -4339,12 +4383,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="2"
               >
                 <div
-                  aria-label="safety-protocols"
+                  aria-label="Safety Protocols"
                   class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  safety-protocols
+                  Safety Protocols
                 </div>
               </td>
               <td
@@ -4423,7 +4467,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-16f6n56-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
@@ -4440,12 +4484,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="2"
               >
                 <div
-                  aria-label="camera-setup-guide"
+                  aria-label="Camera Setup Guide"
                   class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  camera-setup-guide
+                  Camera Setup Guide
                 </div>
               </td>
               <td
@@ -4524,7 +4568,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-16f6n56-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
@@ -4541,12 +4585,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 data-index="2"
               >
                 <div
-                  aria-label="experiment-results"
+                  aria-label="Experiment Results"
                   class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  experiment-results
+                  Experiment Results
                 </div>
               </td>
               <td
@@ -4684,7 +4728,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                   class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
                   <div
-                    aria-controls=":r1b:"
+                    aria-controls=":r1c:"
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-label="Rows per page"

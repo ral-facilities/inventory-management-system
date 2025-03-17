@@ -128,7 +128,7 @@ export const editProperty = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
   cy.findByText('Lenses').click();
   cy.findByRole('button', {
-    name: `actions Spherical Lenses catalogue category button`,
+    name: `Card Actions`,
   }).click();
 
   cy.findByRole('menuitem', {
@@ -176,7 +176,7 @@ export const addProperty = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
   cy.findByText('Lenses').click();
   cy.findByRole('button', {
-    name: `actions Spherical Lenses catalogue category button`,
+    name: `Card Actions`,
   }).click();
 
   cy.findByRole('menuitem', {

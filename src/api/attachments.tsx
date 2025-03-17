@@ -9,9 +9,10 @@ import {
 import { AxiosError } from 'axios';
 import { storageApi } from './api';
 import {
+  AttachmentMetadata,
+  AttachmentMetadataPatch,
   AttachmentPostMetadata,
   AttachmentPostMetadataResponse,
-  ObjectFilePatch,
 } from './api.types';
 
 const postAttachmentMetadata = async (
@@ -27,36 +28,15 @@ export const usePostAttachmentMetadata = (): UseMutationResult<
   AxiosError,
   AttachmentPostMetadata
 > => {
-  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (attachmentMetadata: AttachmentPostMetadata) =>
       postAttachmentMetadata(attachmentMetadata),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['Attachments'],
-      });
-    },
-  });
-};
-
-export const getAttachment = async (id: string): Promise<AttachmentPostMetadataResponse> => {
-  return storageApi.get(`/attachments/${id}`).then((response) => {
-    return response.data;
-  });
-};
-
-export const useGetAttachment = (
-  id: string
-): UseQueryResult<AttachmentPostMetadataResponse, AxiosError> => {
-  return useQuery({
-    queryKey: ['Attachment', id],
-    queryFn: () => getAttachment(id),
   });
 };
 
 const getAttachments = async (
   entityId: string
-): Promise<AttachmentPostMetadataResponse[]> => {
+): Promise<AttachmentMetadata[]> => {
   const queryParams = new URLSearchParams();
   queryParams.append('entity_id', entityId);
 
@@ -68,34 +48,35 @@ const getAttachments = async (
 };
 
 export const useGetAttachments = (
-  entityId?: string
-): UseQueryResult<AttachmentPostMetadataResponse[], AxiosError> => {
+  entityId: string
+): UseQueryResult<AttachmentMetadata[], AxiosError> => {
   return useQuery({
     queryKey: ['Attachments', entityId],
-    queryFn: () => getAttachments(entityId ?? ''),
-    enabled: !!entityId,
+    queryFn: () => getAttachments(entityId),
   });
 };
 
 const patchAttachment = async (
   id: string,
-  fileMetadata: ObjectFilePatch
-): Promise<AttachmentPostMetadataResponse> => {
+  fileMetadata: AttachmentMetadataPatch
+): Promise<AttachmentMetadata> => {
   return storageApi
-    .patch<AttachmentPostMetadataResponse>(`/attachments/${id}`, fileMetadata)
+    .patch<AttachmentMetadata>(`/attachments/${id}`, fileMetadata)
     .then((response) => response.data);
 };
 
 export const usePatchAttachment = (): UseMutationResult<
-  AttachmentPostMetadataResponse,
+  AttachmentMetadata,
   AxiosError,
-  { id: string; fileMetadata: ObjectFilePatch }
+  { id: string; fileMetadata: AttachmentMetadataPatch }
 > => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ id, fileMetadata }) => patchAttachment(id, fileMetadata),
-    onSuccess: (updatedAttachment: AttachmentPostMetadataResponse) => {
-      queryClient.invalidateQueries({ queryKey: ['Attachments'] });
+    onSuccess: (updatedAttachment: AttachmentMetadata) => {
+      queryClient.invalidateQueries({
+        queryKey: ['Attachments', updatedAttachment.entity_id],
+      });
       queryClient.invalidateQueries({
         queryKey: ['Attachment', updatedAttachment.id],
       });

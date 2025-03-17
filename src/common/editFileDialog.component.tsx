@@ -18,7 +18,13 @@ import React from 'react';
 
 import { UseMutationResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { APIImage, AttachmentPostMetadataResponse, ObjectFilePatch } from '../api/api.types';
+import {
+  APIImage,
+  AttachmentMetadata,
+  AttachmentMetadataPatch,
+  ImageMetadataPatch,
+  ObjectFilePatchBase,
+} from '../api/api.types';
 import { FileSchemaPatch } from '../form.schemas';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { getNameAndExtension } from '../utils';
@@ -35,17 +41,17 @@ export interface ImageDialogProps extends BaseFileDialogProps {
   usePatchFile: () => UseMutationResult<
     APIImage,
     AxiosError,
-    { id: string; fileMetadata: ObjectFilePatch }
+    { id: string; fileMetadata: ImageMetadataPatch }
   >;
 }
 
 export interface AttachmentDialogProps extends BaseFileDialogProps {
   fileType: 'Attachment';
-  selectedFile: AttachmentPostMetadataResponse;
+  selectedFile: AttachmentMetadata;
   usePatchFile: () => UseMutationResult<
-    AttachmentPostMetadataResponse,
+    AttachmentMetadata,
     AxiosError,
-    { id: string; fileMetadata: ObjectFilePatch }
+    { id: string; fileMetadata: AttachmentMetadataPatch }
   >;
 }
 
@@ -58,7 +64,7 @@ const EditFileDialog = (props: FileDialogProps) => {
 
   const [initialName, extension] = getNameAndExtension(selectedFile.file_name);
 
-  const initialFile = React.useMemo<ObjectFilePatch>(() => {
+  const initialFile = React.useMemo<ObjectFilePatchBase>(() => {
     return {
       ...selectedFile,
       file_name: initialName,
@@ -73,7 +79,7 @@ const EditFileDialog = (props: FileDialogProps) => {
     setError,
     clearErrors,
     reset,
-  } = useForm<ObjectFilePatch>({
+  } = useForm<ObjectFilePatchBase>({
     resolver: zodResolver(FileSchemaPatch),
     defaultValues: initialFile,
   });
@@ -98,7 +104,7 @@ const EditFileDialog = (props: FileDialogProps) => {
   }, [clearErrors, onClose, reset]);
 
   const handleEditFile = React.useCallback(
-    (fileData: ObjectFilePatch) => {
+    (fileData: ObjectFilePatchBase) => {
       const isFileNameUpdated = fileData.file_name !== initialFile.file_name;
 
       const isDescriptionUpdated =
@@ -106,7 +112,7 @@ const EditFileDialog = (props: FileDialogProps) => {
 
       const isTitleUpdated = fileData.title !== initialFile.title;
 
-      const fileToEdit: ObjectFilePatch = {};
+      const fileToEdit: ObjectFilePatchBase = {};
 
       if (isFileNameUpdated)
         fileToEdit.file_name = fileData.file_name + extension;
@@ -161,6 +167,7 @@ const EditFileDialog = (props: FileDialogProps) => {
               error={!!errors.description}
               helperText={errors.description?.message}
               fullWidth
+              multiline
             />
           </Grid>
           <Grid item>

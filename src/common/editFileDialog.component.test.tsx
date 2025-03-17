@@ -3,7 +3,6 @@ import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http } from 'msw';
 import { MockInstance } from 'vitest';
 import { storageApi } from '../api/api';
-import { AttachmentUploadInfo } from '../api/api.types';
 import { usePatchAttachment } from '../api/attachments';
 import { usePatchImage } from '../api/images';
 import handleIMS_APIError from '../handleIMS_APIError';
@@ -165,26 +164,12 @@ describe('Edit file dialog', () => {
     let axiosPatchSpy: MockInstance;
 
     beforeEach(() => {
-      const upload_info: AttachmentUploadInfo = {
-        url: `http://localhost:3000/object-storage`,
-        fields: {
-          'Content-Type': 'multipart/form-data',
-          key: `attachments/test`,
-          AWSAccessKeyId: 'root',
-          policy: 'policy-test',
-          signature: 'signature-test',
-        },
-      };
-
       props = {
         open: true,
         onClose: onClose,
         fileType: 'Attachment',
         usePatchFile: usePatchAttachment,
-        selectedFile: {
-          ...AttachmentsJSON[0],
-          upload_info: upload_info,
-        },
+        selectedFile: AttachmentsJSON[0],
       };
 
       axiosPatchSpy = vi.spyOn(storageApi, 'patch');

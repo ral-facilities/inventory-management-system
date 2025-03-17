@@ -73,7 +73,7 @@ function TabView<T extends string>(props: TabViewProps<T>) {
       updatedTabData.push({
         value: 'Gallery' as AdditionalTabValues,
         icon: <CollectionsOutlinedIcon />,
-        component: <ImageGallery entityId={galleryEntityId} />,
+        component: <ImageGallery entityId={galleryEntityId} dense={false} />,
         order: galleryOrder ?? updatedTabData.length + 1,
       });
     }
@@ -119,7 +119,7 @@ function TabView<T extends string>(props: TabViewProps<T>) {
           ))}
         </Tabs>
       </Grid>
-      <Grid item xs={12} minWidth="fit-content">
+      <Grid item xs={12}>
         {tabData.map(({ value, component }) => (
           <TabPanel key={value} value={tabValue} label={value}>
             {component}

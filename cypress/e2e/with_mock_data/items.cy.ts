@@ -644,12 +644,10 @@ describe('Items', () => {
       ).should('exist');
 
       cy.findByText('Attachments').click();
-      cy.findByText('Filename').should('be.visible');
+      cy.findByText('File name').should('be.visible');
       cy.findByText('Title').should('be.visible');
       cy.findByText('Description').should('be.visible');
-      // Scroll 750 pixels to the right, so created and last modifed headers are visible.
-      // scrollIntoView() wasn't working in headless mode.
-      cy.scrollTo(750, 0)
+      cy.findByText('Last modified').scrollIntoView();
       cy.findByText('Created').should('be.visible');
       cy.findByText('Last modified').should('be.visible');
     });
@@ -687,21 +685,27 @@ describe('Items', () => {
       ).should('exist');
 
       cy.findByText('Attachments').click();
-      cy.findAllByText('safety-protocols').should('have.length', 4);
-      cy.findAllByText('camera-setup-guide').should('have.length', 4);
+      cy.findAllByText('Safety Protocols').should('have.length', 4);
+      cy.findAllByText('Camera Setup Guide').should('have.length', 4);
 
       cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
-      cy.findByLabelText('Filter by Filename').type('camera');
-      cy.findAllByText('safety-protocols').should('not.exist');
-      cy.findAllByText('camera-setup-guide').should('have.length', 5);
+      cy.findByLabelText('Filter by File name').type('camera');
+      cy.findAllByText('Safety Protocols').should('not.exist');
+      cy.findAllByText('Camera Setup Guide').should('have.length', 5);
 
       cy.findByRole('button', { name: 'Clear Filters' }).click();
-      cy.findAllByText('safety-protocols').should('have.length', 4);
-      cy.findAllByText('camera-setup-guide').should('have.length', 4);
+      cy.findAllByText('Safety Protocols').should('have.length', 4);
+      cy.findAllByText('Camera Setup Guide').should('have.length', 4);
       cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
     });
 
-    it.only('edits an attachment successfully', () => {
+    it('edits an attachment successfully', () => {
+      // Catch error to avoid the CI failing unnecessarily
+      Cypress.on('uncaught:exception', (err) => {
+        if (err.message.includes('ResizeObserver')) {
+          return false;
+        }
+      });
       cy.findByText('5YUQDDjKpz2z').click();
       cy.findByText(
         'High-resolution cameras for beam characterization. 1'
@@ -743,7 +747,13 @@ describe('Items', () => {
       });
     });
 
-    it.only('shows error message when no fields have been changed', () => {
+    it('shows error message when no fields have been changed', () => {
+      // Catch error to avoid the CI failing unnecessarily
+      Cypress.on('uncaught:exception', (err) => {
+        if (err.message.includes('ResizeObserver')) {
+          return false;
+        }
+      });
       cy.findByText('5YUQDDjKpz2z').click();
       cy.findByText(
         'High-resolution cameras for beam characterization. 1'
@@ -765,7 +775,13 @@ describe('Items', () => {
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
     });
 
-    it.only('shows error message when required fields are cleared', () => {
+    it('shows error message when required fields are cleared', () => {
+      // Catch error to avoid the CI failing unnecessarily
+      Cypress.on('uncaught:exception', (err) => {
+        if (err.message.includes('ResizeObserver')) {
+          return false;
+        }
+      });
       cy.findByText('5YUQDDjKpz2z').click();
       cy.findByText(
         'High-resolution cameras for beam characterization. 1'
@@ -904,14 +920,14 @@ describe('Items', () => {
 
       cy.findByText('Gallery').click();
       cy.findAllByText('stfc-logo-blue-text.png').should('have.length', 8);
-      cy.findByText('Show Filters').click();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).click();
       cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
       cy.findByLabelText('Filter by File name').type('logo1.png');
       cy.findByAltText('test').should('not.exist');
       cy.findByRole('button', { name: 'Clear Filters' }).click();
       cy.findAllByText('stfc-logo-blue-text.png').should('have.length', 8);
-      cy.findByText('Hide Filters').click();
-      cy.findByText('Show Filters').should('exist');
+      cy.findByRole('button', { name: 'Show/Hide filters' }).click();
+      cy.findByLabelText('Filter by File name').should('not.visible');
     });
 
     it('opens information dialog from card view', () => {

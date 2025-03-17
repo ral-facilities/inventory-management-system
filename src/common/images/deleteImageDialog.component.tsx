@@ -18,7 +18,7 @@ import handleIMS_APIError from '../../handleIMS_APIError';
 export interface DeleteImageProps {
   open: boolean;
   onClose: () => void;
-  image: APIImage | undefined;
+  image: APIImage;
 }
 
 const DeleteImageDialog = (props: DeleteImageProps) => {
@@ -58,7 +58,7 @@ const DeleteImageDialog = (props: DeleteImageProps) => {
       </DialogTitle>
       <DialogContent>
         Are you sure you want to permanently delete{' '}
-        <strong data-testid="delete-image-name">{image?.title}</strong>?
+        <strong data-testid="delete-image-name">{image.file_name}</strong>?
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
