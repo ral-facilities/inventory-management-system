@@ -36,6 +36,7 @@ import {
   customFilterFunctions,
   displayTableRowCountText,
   getInitialColumnFilterFnState,
+  mrtTheme,
 } from '../../../utils';
 
 import AddIcon from '@mui/icons-material/Add';
@@ -268,6 +269,8 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
     state: {
       ...preservedState,
     },
+    //MRT
+    mrtTheme,
     // MUI
     muiTableContainerProps: {
       sx: { height: '350px', width: '1152px' },

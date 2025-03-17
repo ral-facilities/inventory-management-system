@@ -1,6 +1,6 @@
 import { useTheme } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
-import Uppy, { Body, Meta } from '@uppy/core';
+import Uppy from '@uppy/core';
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 import ImageEditor from '@uppy/image-editor';
@@ -10,8 +10,13 @@ import { DashboardModal } from '@uppy/react';
 import XHR from '@uppy/xhr-upload';
 import React from 'react';
 import { uppyOnAfterResponse, uppyOnBeforeRequest } from '../../api/api';
+import type {
+  UppyImageUploadResponse,
+  UppyUploadMetadata,
+} from '../../app.types';
 import { settings } from '../../settings';
 import { getNonEmptyTrimmedString } from '../../utils';
+import { useMetaFields } from '../uppy.utils';
 
 // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000, so here the former is expected despite them really being GiB, MiB and KiB.
 const MAX_FILE_SIZE_MB = 50;
@@ -31,8 +36,10 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
   const queryClient = useQueryClient();
 
   const osApiUrl = async () => (await settings)?.osApiUrl || '';
-  const [uppy] = React.useState<Uppy<Meta, Body>>(() => {
-    const newUppy = new Uppy<Meta, Body>({
+  const [uppy] = React.useState<
+    Uppy<UppyUploadMetadata, UppyImageUploadResponse>
+  >(() => {
+    const newUppy = new Uppy<UppyUploadMetadata, UppyImageUploadResponse>({
       autoProceed: false,
       restrictions: {
         maxFileSize: MAX_FILE_SIZE_B,
@@ -48,10 +55,6 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
         endpoint: `${url}/images`,
         method: 'POST',
         fieldName: 'upload_file',
-        limit: 1, // Limit uploads to one file at a time
-        // Reason 1: To avoid overloading the memory of the object-store API.
-        // Reason 2: To prevent multiple simultaneous uploads from triggering
-        // the token refresh process multiple times, which could lead to race conditions.
         async onBeforeRequest(xhr) {
           uppyOnBeforeRequest(xhr);
         },
@@ -97,6 +100,11 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
     }
   });
 
+  const metaFields = useMetaFields<
+    UppyUploadMetadata,
+    UppyImageUploadResponse
+  >();
+
   return (
     <DashboardModal
       open={open}
@@ -108,23 +116,7 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
       proudlyDisplayPoweredByUppy={false}
       theme={theme.palette.mode}
       doneButtonHandler={handleClose}
-      metaFields={[
-        {
-          id: 'name',
-          name: 'File name',
-          placeholder: 'Enter file name',
-        },
-        {
-          id: 'title',
-          name: 'Title',
-          placeholder: 'Enter file title',
-        },
-        {
-          id: 'description',
-          name: 'Description',
-          placeholder: 'Enter file description',
-        },
-      ]}
+      metaFields={metaFields}
     />
   );
 };

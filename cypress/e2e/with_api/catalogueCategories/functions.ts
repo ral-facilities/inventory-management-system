@@ -1,6 +1,7 @@
 const modifyCatalogueCategory = (
   values: {
     editCatalogueCategoryName?: string;
+    actionsIndex?: number;
     name: string;
     newFormFields?: {
       name: string;
@@ -13,10 +14,15 @@ const modifyCatalogueCategory = (
   },
   ignoreChecks?: boolean
 ) => {
-  if (values.editCatalogueCategoryName) {
-    cy.findByRole('button', {
-      name: `actions ${values.editCatalogueCategoryName} catalogue category button`,
-    }).click();
+  if (
+    values.editCatalogueCategoryName &&
+    typeof values.actionsIndex === 'number'
+  ) {
+    cy.findAllByRole('button', {
+      name: 'Card Actions',
+    })
+      .eq(values.actionsIndex)
+      .click();
 
     cy.findByRole('menuitem', {
       name: `edit ${values.editCatalogueCategoryName} catalogue category button`,
@@ -92,7 +98,10 @@ const modifyCatalogueCategory = (
   }
 
   cy.findByRole('button', { name: 'Save' }).click();
-  if (values.editCatalogueCategoryName)
+  if (
+    values.editCatalogueCategoryName &&
+    typeof values.actionsIndex === 'number'
+  )
     cy.findByRole('button', { name: 'Close' }).click();
   if (!ignoreChecks) {
     cy.findByText(values.name).should('exist');
@@ -116,10 +125,12 @@ const modifyCatalogueCategory = (
   }
 };
 
-const deleteCatalogueCategory = (name: string) => {
-  cy.findByRole('button', {
-    name: `actions ${name} catalogue category button`,
-  }).click();
+const deleteCatalogueCategory = (name: string, actionsIndex: number) => {
+  cy.findAllByRole('button', {
+    name: 'Card Actions',
+  })
+    .eq(actionsIndex)
+    .click();
 
   cy.findByRole('menuitem', {
     name: `delete ${name} catalogue category button`,
@@ -128,10 +139,15 @@ const deleteCatalogueCategory = (name: string) => {
   cy.findByRole('button', { name: 'Continue' }).click();
 };
 
-export const duplicateCatalogueCategory = (name: string) => {
-  cy.findByRole('button', {
-    name: `actions ${name} catalogue category button`,
-  }).click();
+export const duplicateCatalogueCategory = (
+  name: string,
+  actionsIndex: number
+) => {
+  cy.findAllByRole('button', {
+    name: 'Card Actions',
+  })
+    .eq(actionsIndex)
+    .click();
 
   cy.findByRole('menuitem', {
     name: `duplicate ${name} catalogue category button`,
@@ -141,9 +157,11 @@ export const duplicateCatalogueCategory = (name: string) => {
   cy.findByText(`${name}_copy_1`).should('exist');
 };
 
-const copyToCatalogueCategory = (values: { checkedCategories: string[] }) => {
+const copyToCatalogueCategory = (values: {
+  checkedCategories: { name: string; index: number }[];
+}) => {
   for (let i = 0; i < values.checkedCategories.length; i++) {
-    cy.findByLabelText(`${values.checkedCategories[i]} checkbox`).click();
+    cy.findAllByRole('checkbox', { name: 'Toggle select card' }).eq(i).click();
   }
   cy.findByRole('button', { name: 'Copy to' }).click();
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
@@ -153,14 +171,17 @@ const copyToCatalogueCategory = (values: { checkedCategories: string[] }) => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
 
   for (let i = 0; i < values.checkedCategories.length; i++) {
-    cy.findByText(`${values.checkedCategories[i]}`).should('exist');
-    deleteCatalogueCategory(`${values.checkedCategories[i]}`);
+    cy.findByText(`${values.checkedCategories[i].name}`).should('exist');
+    deleteCatalogueCategory(
+      `${values.checkedCategories[i].name}`,
+      values.checkedCategories[i].index
+    );
   }
 };
 
 const moveToCatalogueCategory = (values: { checkedCategories: string[] }) => {
   for (let i = 0; i < values.checkedCategories.length; i++) {
-    cy.findByLabelText(`${values.checkedCategories[i]} checkbox`).click();
+    cy.findAllByRole('checkbox', { name: 'Toggle select card' }).eq(i).click();
   }
   cy.findByRole('button', { name: 'Move to' }).click();
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
@@ -224,6 +245,7 @@ export const editCatalogueCategories = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
   modifyCatalogueCategory({
     editCatalogueCategoryName: 'Lenses',
+    actionsIndex: 0,
     name: 'Lenses 2',
   });
 
@@ -231,20 +253,24 @@ export const editCatalogueCategories = () => {
 
   modifyCatalogueCategory({
     editCatalogueCategoryName: 'Spherical Lenses',
+    actionsIndex: 0,
     name: 'Spherical Lenses 2',
   });
 };
 
 export const duplicateCatalogueCategories = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
-  duplicateCatalogueCategory('Lenses 2');
+  duplicateCatalogueCategory('Lenses 2', 0);
   cy.findByText('Lenses 2').click();
-  duplicateCatalogueCategory('Spherical Lenses 2');
+  duplicateCatalogueCategory('Spherical Lenses 2', 0);
 };
 
 export const copyToCatalogueCategories = () => {
   copyToCatalogueCategory({
-    checkedCategories: ['Spherical Lenses 2', 'Spherical Lenses 2_copy_1'],
+    checkedCategories: [
+      { name: 'Spherical Lenses 2', index: 2 },
+      { name: 'Spherical Lenses 2_copy_1', index: 2 },
+    ],
   });
 };
 
@@ -258,8 +284,8 @@ export const moveToCatalogueCategories = () => {
 
 export const deleteCatalogueCategories = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
-  deleteCatalogueCategory('Spherical Lenses 2');
-  deleteCatalogueCategory('Spherical Lenses 2_copy_1');
-  deleteCatalogueCategory('Lenses 2');
-  deleteCatalogueCategory('Lenses 2_copy_1');
+  deleteCatalogueCategory('Lenses 2', 0);
+  deleteCatalogueCategory('Spherical Lenses 2', 0);
+  deleteCatalogueCategory('Lenses 2_copy_1', 0);
+  deleteCatalogueCategory('Spherical Lenses 2_copy_1', 0);
 };

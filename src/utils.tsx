@@ -20,6 +20,7 @@ import {
   MRT_Row,
   MRT_RowData,
   MRT_TableInstance,
+  type MRT_Theme,
 } from 'material-react-table';
 import React from 'react';
 
@@ -538,3 +539,25 @@ export function areListsEqual(list1: string[], list2: string[]): boolean {
 
   return sortedList1.every((value, index) => value === sortedList2[index]);
 }
+export const getNameAndExtension = (
+  filename: string
+): [name: string, extension: string] => {
+  const point = filename.lastIndexOf('.') ?? 0;
+  const extension = filename.slice(point) ?? '';
+  const name = filename.slice(0, point) ?? '';
+
+  return [name, extension];
+};
+
+export function downloadFileByLink(url: string, filename: string): void {
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+export const mrtTheme = (theme: Theme): Partial<MRT_Theme> => ({
+  baseBackgroundColor: theme.palette.background.default,
+});
