@@ -18,7 +18,7 @@ import handleIMS_APIError from '../../handleIMS_APIError';
 export interface DeleteAttachmentProps {
   open: boolean;
   onClose: () => void;
-  attachment: AttachmentMetadata;
+  attachment: AttachmentMetadata | undefined;
 }
 
 const DeleteAttachmentDialog = (props: DeleteAttachmentProps) => {
@@ -58,7 +58,7 @@ const DeleteAttachmentDialog = (props: DeleteAttachmentProps) => {
       </DialogTitle>
       <DialogContent>
         Are you sure you want to permanently delete{' '}
-        <strong data-testid="delete-attachment-name">{attachment.file_name}</strong>?
+        <strong data-testid="delete-attachment-name">{attachment?.file_name}</strong>?
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
