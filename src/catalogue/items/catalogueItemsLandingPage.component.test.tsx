@@ -252,4 +252,25 @@ describe('Catalogue Items Landing Page', () => {
     const url = await screen.findByText('Manufacturer A');
     expect(url).toHaveAttribute('href', '/manufacturers/1');
   });
+
+  it('opens lightbox when clicking on primary image thumbnail', async () => {
+    createView('/catalogue/4/items/1');
+
+    await waitFor(() => {
+      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
+    });
+
+    expect(await screen.findByAltText('test')).toBeInTheDocument();
+
+    const primaryImageElement = screen.getAllByAltText('test')[0];
+
+    primaryImageElement.click();
+
+    expect(
+      await screen.findByText('Title: stfc-logo-blue-text')
+    ).toBeInTheDocument();
+    expect(
+      await screen.findByText('File name: stfc-logo-blue-text.png')
+    ).toBeInTheDocument();
+  });
 });
