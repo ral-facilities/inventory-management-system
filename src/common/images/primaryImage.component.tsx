@@ -12,6 +12,7 @@ import {
   Tooltip,
 } from '@mui/material';
 import React from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useGetImages } from '../../api/images';
 import PrimaryImageDialog from './primaryImageDialog.component';
 import RemovePrimaryImageDialog from './removePrimaryImageDialog.component';
@@ -93,6 +94,17 @@ const PrimaryImage = (props: PrimaryImageProps) => {
 
   const primaryImageExists = !!imagesData && imagesData.length > 0;
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const handleViewPrimary = React.useCallback(() => {
+    if (imagesData?.[0]) {
+      const updatedParams = new URLSearchParams(searchParams);
+      updatedParams.set('tab', 'Gallery');
+      updatedParams.set('image', imagesData?.[0].id);
+      setSearchParams(updatedParams);
+    }
+  }, [searchParams, setSearchParams, imagesData]);
+
   const [primaryDialogOpen, setPrimaryDialogOpen] = React.useState<
     false | 'set' | 'remove'
   >(false);
@@ -105,6 +117,7 @@ const PrimaryImage = (props: PrimaryImageProps) => {
           dense={isDetailsPanel}
           isPrimaryThumbnail
           imageLoading={imageLoading}
+          onClick={handleViewPrimary}
         />
       )}
       {!isDetailsPanel && (

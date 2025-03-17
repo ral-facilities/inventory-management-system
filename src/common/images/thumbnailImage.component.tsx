@@ -1,6 +1,5 @@
 import { Box, CircularProgress } from '@mui/material';
 import React from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { APIImage } from '../../api/api.types';
 
 export interface ThumbnailImageProps {
@@ -22,17 +21,6 @@ const ThumbnailImage = (props: ThumbnailImageProps) => {
   const [hasError, setHasError] = React.useState<string | undefined>(undefined);
   const imageError = !image || !!hasError;
 
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const handleViewPrimary = React.useCallback(() => {
-    if (isPrimaryThumbnail && image) {
-      const updatedParams = new URLSearchParams(searchParams);
-      updatedParams.set('tab', 'Gallery');
-      updatedParams.set('image', image.id);
-      setSearchParams(updatedParams);
-    }
-  }, [isPrimaryThumbnail, searchParams, setSearchParams, image]);
-
   return (
     <Box
       height={isPrimaryThumbnail ? '300px' : undefined}
@@ -48,8 +36,6 @@ const ThumbnailImage = (props: ThumbnailImageProps) => {
       borderRadius={
         isPrimaryThumbnail && imageError && !imageLoading ? '8px' : undefined
       }
-      sx={{ cursor: isPrimaryThumbnail && image ? 'pointer' : undefined }}
-      onClick={handleViewPrimary}
     >
       {imageLoading && isPrimaryThumbnail ? (
         <CircularProgress />

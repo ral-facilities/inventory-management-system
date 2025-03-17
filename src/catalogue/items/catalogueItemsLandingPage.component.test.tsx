@@ -262,7 +262,9 @@ describe('Catalogue Items Landing Page', () => {
 
     expect(await screen.findByAltText('test')).toBeInTheDocument();
 
-    const primaryImageElement = screen.getAllByAltText('test')[0];
+    const primaryImageElement = screen.getByAltText('test');
+
+    expect(primaryImageElement).not.toHaveAttribute('disabled');
 
     primaryImageElement.click();
 
