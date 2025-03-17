@@ -603,6 +603,9 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem?.expected_lifetime_days ?? '',
         id: 'catalogueItem.expected_lifetime_days',
+        filterVariant: COLUMN_FILTER_VARIANTS.number,
+        filterFn: COLUMN_FILTER_FUNCTIONS.number,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.number,
         size: 300,
         AggregatedCell: ({ cell, table }) => {
           const isCatalogueGrouped = table
