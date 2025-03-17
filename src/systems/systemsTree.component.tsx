@@ -169,7 +169,9 @@ const SystemsFlow = (props: SystemFlowProps) => {
     window.requestAnimationFrame(() => fitView());
   }, [fitView, nodes]);
   return (
-    <Box sx={{ width: '100%', height: getPageHeightCalc('96px + 40px') }}>
+    <Box
+      sx={{ width: '100%', height: getPageHeightCalc('96px + 40px + 30px') }}
+    >
       <ReactFlow
         nodes={nodes}
         edges={edges}
