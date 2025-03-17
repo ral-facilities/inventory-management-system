@@ -1,7 +1,7 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import AttachmentsJSON from '../mocks/Attachments.json';
 import { CREATED_MODIFIED_TIME_VALUES, hooksWrapperWithProviders } from '../testUtils';
-import { AttachmentMetadataPatch, AttachmentPostMetadata, AttachmentPostMetadataResponse } from './api.types';
+import { AttachmentMetadata, AttachmentMetadataPatch, AttachmentPostMetadata } from './api.types';
 import {
   useDeleteAttachment,
   useGetAttachments,
@@ -94,7 +94,7 @@ describe('attachments api functions', () => {
   });
 
   describe('useDeleteAttachment', () => {
-    let mockDataView: AttachmentPostMetadataResponse;
+    let mockDataView: AttachmentMetadata;
     beforeEach(() => {
       mockDataView = {
         id: '1',
@@ -103,16 +103,6 @@ describe('attachments api functions', () => {
         title: '2',
         description: 'a description',
         ...CREATED_MODIFIED_TIME_VALUES,
-        upload_info: {
-          url: 'http://localhost:3000/object-storage',
-          fields: {
-            'Content-Type': 'multipart/form-data',
-            key: 'attachments/test',
-            AWSAccessKeyId: 'root',
-            policy: 'policy-test',
-            signature: 'signature-test',
-          },
-        },
       };
     });
 
