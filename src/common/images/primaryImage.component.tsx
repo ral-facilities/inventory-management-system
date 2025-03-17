@@ -117,7 +117,7 @@ const PrimaryImage = (props: PrimaryImageProps) => {
           dense={isDetailsPanel}
           isPrimaryThumbnail
           imageLoading={imageLoading}
-          onClick={handleViewPrimary}
+          onClick={isDetailsPanel ? undefined : handleViewPrimary}
         />
       )}
       {!isDetailsPanel && (
