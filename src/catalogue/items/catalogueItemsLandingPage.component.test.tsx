@@ -266,7 +266,7 @@ describe('Catalogue Items Landing Page', () => {
 
     expect(primaryImageElement).not.toHaveAttribute('disabled');
 
-    primaryImageElement.click();
+    await user.click(primaryImageElement);
 
     await waitFor(() => {
       within(screen.getByTestId('galleryLightBox'));

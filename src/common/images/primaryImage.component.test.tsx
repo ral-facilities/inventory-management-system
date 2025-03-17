@@ -37,7 +37,7 @@ describe('PrimaryImage Component', () => {
       ).toBeInTheDocument();
     });
     const actionButton = screen.getByLabelText('primary images action menu');
-    user.click(actionButton);
+    await user.click(actionButton);
     await waitFor(() => {
       expect(screen.getByText('Set Primary Image')).toBeInTheDocument();
     });
@@ -61,14 +61,14 @@ describe('PrimaryImage Component', () => {
     createView();
 
     const actionButton = screen.getByLabelText('primary images action menu');
-    user.click(actionButton);
+    await user.click(actionButton);
 
     await waitFor(() => {
       expect(screen.getByText('Remove Primary Image')).toBeInTheDocument();
     });
 
     const primaryImageButton = screen.getByText('Remove Primary Image');
-    user.click(primaryImageButton);
+    await user.click(primaryImageButton);
 
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
@@ -93,7 +93,7 @@ describe('PrimaryImage Component', () => {
     createView();
 
     const actionButton = screen.getByLabelText('primary images action menu');
-    user.click(actionButton);
+    await user.click(actionButton);
 
     await waitFor(() => {
       expect(
