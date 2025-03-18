@@ -69,7 +69,7 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
 
   const handleClose = React.useCallback(() => {
     onClose();
-    uppy.cancelAll();
+    uppy.clear();
     queryClient.invalidateQueries({ queryKey: ['Images', entityId] });
   }, [entityId, onClose, queryClient, uppy]);
 

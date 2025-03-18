@@ -13,6 +13,7 @@ import UploadAttachmentsDialog, {
 describe('Upload attachment dialog', () => {
   let props: UploadAttachmentsDialogProps;
   let user: UserEvent;
+  let axiosDeleteSpy: MockInstance;
   let axiosPostSpy: MockInstance;
   let xhrPostSpy: MockInstance;
 
@@ -31,6 +32,7 @@ describe('Upload attachment dialog', () => {
       entityId: '1',
     };
     user = userEvent.setup();
+    axiosDeleteSpy = vi.spyOn(storageApi, 'delete');
     axiosPostSpy = vi.spyOn(storageApi, 'post');
     xhrPostSpy = vi.spyOn(window.XMLHttpRequest.prototype, 'open');
     vi.spyOn(console, 'error').mockImplementation(() => {});
@@ -38,6 +40,7 @@ describe('Upload attachment dialog', () => {
 
   afterEach(() => {
     vi.clearAllMocks();
+    axiosDeleteSpy.mockRestore();
     axiosPostSpy.mockRestore();
     xhrPostSpy.mockRestore();
   });
@@ -247,7 +250,7 @@ describe('Upload attachment dialog', () => {
       await screen.findByRole('button', { name: 'Remove file' })
     );
 
-    //TODO: Assert axios delete request was called
+    expect(axiosDeleteSpy).toHaveBeenCalledWith('/attachments/1', {});
 
     expect(screen.queryByText('Upload 1 file')).not.toBeInTheDocument();
   });

@@ -7,7 +7,7 @@ import '@uppy/dashboard/dist/style.css';
 import ProgressBar from '@uppy/progress-bar';
 import { DashboardModal } from '@uppy/react';
 import React from 'react';
-import { usePostAttachmentMetadata } from '../../api/attachments';
+import { useDeleteAttachment, usePostAttachmentMetadata } from '../../api/attachments';
 import type { UppyUploadMetadata } from '../../app.types';
 import { getNonEmptyTrimmedString } from '../../utils';
 import { useMetaFields } from '../uppy.utils';
@@ -29,6 +29,8 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
   const queryClient = useQueryClient();
 
   const { mutateAsync: postAttachmentMetadata } = usePostAttachmentMetadata();
+
+  const { mutateAsync: deleteAttachment } = useDeleteAttachment();
 
   const [fileMetadataMap, setFileMetadataMap] = React.useState<
     Record<string, string>
@@ -68,16 +70,14 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
   );
 
   const updateFileMetadata = React.useCallback(
-    (
+    async (
       file?: UppyFile<UppyUploadMetadata, AwsBody>,
-      deleteMetadata?: boolean
+      deleteMetadata: boolean = false
     ) => {
       const id = fileMetadataMap[file?.id ?? ''];
       if (id) {
         if (deleteMetadata) {
-          // TODO: Implement logic to delete metadata using id
-          // If metadata exists for the given id, remove it from the api
-          // If not, do nothing and exit the function
+          await deleteAttachment(id)
         }
 
         const newMap = Object.fromEntries(
@@ -86,13 +86,13 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
         setFileMetadataMap(newMap);
       }
     },
-    [fileMetadataMap]
+    [deleteAttachment, fileMetadataMap]
   );
 
   const handleClose = React.useCallback(() => {
     onClose();
     setFileMetadataMap({});
-    uppy.cancelAll();
+    uppy.clear();
     queryClient.invalidateQueries({ queryKey: ['Attachments', entityId] });
   }, [entityId, onClose, queryClient, uppy]);
 
