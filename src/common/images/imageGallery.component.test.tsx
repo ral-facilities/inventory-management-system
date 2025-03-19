@@ -255,7 +255,7 @@ describe('Image Gallery', () => {
       `http://localhost:3000/images/stfc-logo-blue-text.png?text=1`
     );
 
-    await user.click(galleryLightBox.getByLabelText('Next'));
+    await user.click(galleryLightBox.getAllByLabelText('Next')[1]);
 
     expect(axiosGetSpy).toHaveBeenCalledWith('/images/2');
 
@@ -274,7 +274,7 @@ describe('Image Gallery', () => {
       `http://localhost:3000/logo192.png?text=2`
     );
 
-    await user.click(screen.getByLabelText('Close'));
+    await user.click(galleryLightBox.getAllByLabelText('Close')[1]);
 
     await waitFor(() => {
       expect(screen.queryByTestId('galleryLightBox')).not.toBeInTheDocument();
@@ -318,7 +318,7 @@ describe('Image Gallery', () => {
       ).toBeInTheDocument();
     });
 
-    await user.click(galleryLightBox.getByLabelText('Previous'));
+    await user.click(galleryLightBox.getAllByLabelText('Previous')[1]);
 
     await waitFor(() => {
       expect(screen.getByText('File name: logo1.png')).toBeInTheDocument();
@@ -335,7 +335,7 @@ describe('Image Gallery', () => {
       `http://localhost:3000/logo192.png?text=2`
     );
 
-    await user.click(screen.getByLabelText('Close'));
+    await user.click(galleryLightBox.getAllByLabelText('Close')[1]);
 
     await waitFor(() => {
       expect(screen.queryByTestId('galleryLightBox')).not.toBeInTheDocument();
@@ -366,7 +366,7 @@ describe('Image Gallery', () => {
       }
     );
 
-    await user.click(screen.getByLabelText('Close'));
+    await user.click(galleryLightBox.getAllByLabelText('Close')[1]);
 
     await waitFor(() => {
       expect(screen.queryByTestId('galleryLightBox')).not.toBeInTheDocument();
@@ -419,7 +419,7 @@ describe('Image Gallery', () => {
       within(screen.getByRole('dialog')).getByRole('button', { name: 'Close' })
     );
 
-    await user.click(screen.getByLabelText('Close'));
+    await user.click(galleryLightBox.getAllByLabelText('Close')[1]);
 
     await waitFor(() => {
       expect(screen.queryByTestId('galleryLightBox')).not.toBeInTheDocument();
@@ -472,7 +472,7 @@ describe('Image Gallery', () => {
       within(screen.getByRole('dialog')).getByRole('button', { name: 'Cancel' })
     );
 
-    await user.click(screen.getByLabelText('Close'));
+    await user.click(galleryLightBox.getAllByLabelText('Close')[1]);
 
     await waitFor(() => {
       expect(screen.queryByTestId('galleryLightBox')).not.toBeInTheDocument();
@@ -573,10 +573,13 @@ describe('Image Gallery', () => {
       await within(screen.getByRole('dialog')).findByText('Download Image?')
     ).toBeInTheDocument();
     await user.click(
-      within(screen.getByRole('dialog')).getByRole('button', { name: 'Cancel' })
+      within(screen.getByRole('dialog')).getByRole('button', {
+        name: 'Cancel',
+        hidden: true,
+      })
     );
 
-    await user.click(screen.getByLabelText('Close'));
+    await user.click(galleryLightBox.getAllByLabelText('Close')[1]);
 
     await waitFor(() => {
       expect(screen.queryByTestId('galleryLightBox')).not.toBeInTheDocument();
