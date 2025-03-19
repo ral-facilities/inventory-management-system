@@ -35,7 +35,7 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
 
   const { mutateAsync: deleteAttachment } = useDeleteAttachment();
 
-  const [fileMetadataMap, setFileMetadataMap] = React.useState<
+  const [_fileMetadataMap, setFileMetadataMap] = React.useState<
     Record<string, string>
   >({});
 
@@ -72,40 +72,33 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
       .use(ProgressBar)
   );
 
-  // This is necessary to prevent multiple calls of the delete endpoint
-  const deletedFileIds = React.useRef(new Set<string>());
-
   const updateFileMetadata = React.useCallback(
-    async (
+    (
       file?: UppyFile<UppyUploadMetadata, AwsBody>,
       deleteMetadata: boolean = false
     ) => {
       const fileId = file?.id;
       if (!fileId) return;
 
-      const id = fileMetadataMap[fileId];
+      setFileMetadataMap((prev) => {
+        const id = prev[fileId];
+        if (id) {
+          (async () => {
+            if (deleteMetadata) {
+              await deleteAttachment(id);
+            }
+          })();
 
-      if (id) {
-        if (deleteMetadata && !deletedFileIds.current.has(fileId)) {
-          deletedFileIds.current.add(fileId);
-          await deleteAttachment(id);
-        }
-
-        setFileMetadataMap((prev) => {
           const newMap = Object.fromEntries(
             Object.entries(prev).filter(([key]) => key !== fileId)
           );
 
-          // Reset deletedFileIds if newMap is empty
-          if (Object.keys(newMap).length === 0) {
-            deletedFileIds.current.clear();
-          }
-
           return newMap;
-        });
-      }
+        }
+        return prev;
+      });
     },
-    [deleteAttachment, deletedFileIds, fileMetadataMap]
+    [deleteAttachment]
   );
 
   const { files = {} } = uppy.getState();
@@ -120,9 +113,9 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
   }, [entityId, files, onClose, queryClient, uppy]);
 
   // Track the start and completion of uploads
-  uppy.on('upload-error', async (file) => await updateFileMetadata(file, true));
-  uppy.on('file-removed', async (file) => await updateFileMetadata(file, true));
-  uppy.on('upload-success', async (file) => await updateFileMetadata(file));
+  uppy.on('upload-error', (file) => updateFileMetadata(file, true));
+  uppy.on('file-removed', (file) => updateFileMetadata(file, true));
+  uppy.on('upload-success', (file) => updateFileMetadata(file));
 
   const metaFields = useMetaFields<UppyUploadMetadata, AwsBody>();
 
