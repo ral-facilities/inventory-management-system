@@ -238,7 +238,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
     >
       <table
         class="MuiTable-root MuiTable-stickyHeader css-ts728e-MuiTable-root"
-        style="--header-catalogueItem_name-size: 250; --col-catalogueItem_name-size: 250; --header-mrt_row_expand-size: 100; --col-mrt_row_expand-size: 100; --header-mrt_row_select-size: 60; --col-mrt_row_select-size: 60; --header-item_serial_number-size: 250; --col-item_serial_number-size: 250; --header-item_modified_time-size: 350; --col-item_modified_time-size: 350; --header-item_delivered_date-size: 350; --col-item_delivered_date-size: 350; --header-item_is_defective-size: 200; --col-item_is_defective-size: 200; --header-item_usage_status-size: 200; --col-item_usage_status-size: 200; --header-catalogueItem_expected_lifetime_days-size: 300; --col-catalogueItem_expected_lifetime_days-size: 300; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40; --header-item_created_time-size: 350; --col-item_created_time-size: 350;"
+        style="--header-catalogueItem_name-size: 350; --col-catalogueItem_name-size: 350; --header-mrt_row_expand-size: 100; --col-mrt_row_expand-size: 100; --header-mrt_row_select-size: 60; --col-mrt_row_select-size: 60; --header-item_serial_number-size: 250; --col-item_serial_number-size: 250; --header-item_modified_time-size: 350; --col-item_modified_time-size: 350; --header-item_delivered_date-size: 350; --col-item_delivered_date-size: 350; --header-item_is_defective-size: 200; --col-item_is_defective-size: 200; --header-item_usage_status-size: 350; --col-item_usage_status-size: 350; --header-catalogueItem_expected_lifetime_days-size: 300; --col-catalogueItem_expected_lifetime_days-size: 300; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40; --header-item_created_time-size: 350; --col-item_created_time-size: 350;"
       >
         <thead
           class="MuiTableHead-root css-q4cnup-MuiTableHead-root"
@@ -372,21 +372,84 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                       class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-jk1t0h-MuiFormControl-root-MuiTextField-root"
                     >
                       <div
-                        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
+                        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
                       >
-                        <input
-                          aria-invalid="false"
+                        <div
+                          class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-ittuaa-MuiInputAdornment-root"
+                        >
+                          <span
+                            class="notranslate"
+                          >
+                            ​
+                          </span>
+                          <span
+                            aria-label="Change filter mode"
+                            class=""
+                            data-mui-internal-clone-element="true"
+                          >
+                            <button
+                              aria-label="Change filter mode"
+                              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1cyhbc3-MuiButtonBase-root-MuiIconButton-root"
+                              tabindex="0"
+                              type="button"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                data-testid="FilterListIcon"
+                                focusable="false"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  d="M10 18h4v-2h-4zM3 6v2h18V6zm3 7h12v-2H6z"
+                                />
+                              </svg>
+                              <span
+                                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                              />
+                            </button>
+                          </span>
+                        </div>
+                        <div
+                          aria-controls=":rc:"
+                          aria-describedby=":ra:-helper-text"
+                          aria-expanded="false"
+                          aria-haspopup="listbox"
                           aria-label="Filter by Catalogue Item"
-                          autocomplete="new-password"
-                          class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
+                          aria-labelledby=":ra:"
+                          class="MuiSelect-select MuiSelect-standard MuiSelect-multiple MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-2jdjhv-MuiSelect-select-MuiInputBase-input-MuiInput-input"
                           id=":ra:"
-                          placeholder="Filter by Catalogue Item"
+                          role="combobox"
+                          tabindex="0"
+                        >
+                          <div
+                            class="MuiBox-root css-1tzeee1"
+                          >
+                            Filter by Catalogue Item
+                          </div>
+                        </div>
+                        <input
+                          aria-hidden="true"
+                          aria-invalid="false"
+                          autocomplete="new-password"
+                          class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                          tabindex="-1"
                           title="Filter by Catalogue Item"
-                          type="text"
                           value=""
                         />
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon"
+                          data-testid="ArrowDropDownIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M7 10l5 5 5-5z"
+                          />
+                        </svg>
                         <div
-                          class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+                          class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-3yq2xl-MuiInputAdornment-root"
                         >
                           <span
                             aria-label="Clear filter"
@@ -415,6 +478,14 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                           </span>
                         </div>
                       </div>
+                      <p
+                        class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
+                        id=":ra:-helper-text"
+                      >
+                        <label>
+                          Filter Mode: Includes any
+                        </label>
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -656,14 +727,51 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                       class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-jk1t0h-MuiFormControl-root-MuiTextField-root"
                     >
                       <div
-                        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
+                        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
                       >
+                        <div
+                          class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-ittuaa-MuiInputAdornment-root"
+                        >
+                          <span
+                            class="notranslate"
+                          >
+                            ​
+                          </span>
+                          <span
+                            aria-label="Change filter mode"
+                            class=""
+                            data-mui-internal-clone-element="true"
+                          >
+                            <button
+                              aria-label="Change filter mode"
+                              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1cyhbc3-MuiButtonBase-root-MuiIconButton-root"
+                              tabindex="0"
+                              type="button"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                data-testid="FilterListIcon"
+                                focusable="false"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  d="M10 18h4v-2h-4zM3 6v2h18V6zm3 7h12v-2H6z"
+                                />
+                              </svg>
+                              <span
+                                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                              />
+                            </button>
+                          </span>
+                        </div>
                         <input
+                          aria-describedby=":rk:-helper-text"
                           aria-invalid="false"
                           aria-label="Filter by Serial Number"
                           autocomplete="new-password"
-                          class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                          id=":ri:"
+                          class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
+                          id=":rk:"
                           placeholder="Filter by Serial Number"
                           title="Filter by Serial Number"
                           type="text"
@@ -699,6 +807,14 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                           </span>
                         </div>
                       </div>
+                      <p
+                        class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
+                        id=":rk:-helper-text"
+                      >
+                        <label>
+                          Filter Mode: Fuzzy
+                        </label>
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -833,14 +949,51 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1blq8rz-MuiFormControl-root-MuiTextField-root"
                       >
                         <div
-                          class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
+                          class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
                         >
+                          <div
+                            class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-ittuaa-MuiInputAdornment-root"
+                          >
+                            <span
+                              class="notranslate"
+                            >
+                              ​
+                            </span>
+                            <span
+                              aria-label="Change filter mode"
+                              class=""
+                              data-mui-internal-clone-element="true"
+                            >
+                              <button
+                                aria-label="Change filter mode"
+                                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1cyhbc3-MuiButtonBase-root-MuiIconButton-root"
+                                tabindex="0"
+                                type="button"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                  data-testid="FilterListIcon"
+                                  focusable="false"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    d="M10 18h4v-2h-4zM3 6v2h18V6zm3 7h12v-2H6z"
+                                  />
+                                </svg>
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                            </span>
+                          </div>
                           <input
+                            aria-describedby=":rr:-helper-text"
                             aria-invalid="false"
                             aria-label="Min"
                             autocomplete="new-password"
-                            class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":ro:"
+                            class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
+                            id=":rr:"
                             inputmode="text"
                             placeholder="Min"
                             title="Min"
@@ -873,6 +1026,14 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                             </button>
                           </div>
                         </div>
+                        <p
+                          class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
+                          id=":rr:-helper-text"
+                        >
+                          <label>
+                            Filter Mode: Between Inclusive
+                          </label>
+                        </p>
                       </div>
                       <div
                         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1blq8rz-MuiFormControl-root-MuiTextField-root"
@@ -885,7 +1046,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                             aria-label="Max"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":rq:"
+                            id=":ru:"
                             inputmode="text"
                             placeholder="Max"
                             title="Max"
@@ -1053,14 +1214,51 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1blq8rz-MuiFormControl-root-MuiTextField-root"
                       >
                         <div
-                          class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
+                          class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
                         >
+                          <div
+                            class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-ittuaa-MuiInputAdornment-root"
+                          >
+                            <span
+                              class="notranslate"
+                            >
+                              ​
+                            </span>
+                            <span
+                              aria-label="Change filter mode"
+                              class=""
+                              data-mui-internal-clone-element="true"
+                            >
+                              <button
+                                aria-label="Change filter mode"
+                                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1cyhbc3-MuiButtonBase-root-MuiIconButton-root"
+                                tabindex="0"
+                                type="button"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                  data-testid="FilterListIcon"
+                                  focusable="false"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    d="M10 18h4v-2h-4zM3 6v2h18V6zm3 7h12v-2H6z"
+                                  />
+                                </svg>
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                            </span>
+                          </div>
                           <input
+                            aria-describedby=":r3p:-helper-text"
                             aria-invalid="false"
                             aria-label="Min"
                             autocomplete="new-password"
-                            class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r3e:"
+                            class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
+                            id=":r3p:"
                             inputmode="text"
                             placeholder="Min"
                             title="Min"
@@ -1093,6 +1291,14 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                             </button>
                           </div>
                         </div>
+                        <p
+                          class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
+                          id=":r3p:-helper-text"
+                        >
+                          <label>
+                            Filter Mode: Between Inclusive
+                          </label>
+                        </p>
                       </div>
                       <div
                         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1blq8rz-MuiFormControl-root-MuiTextField-root"
@@ -1105,7 +1311,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                             aria-label="Max"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r3g:"
+                            id=":r3s:"
                             inputmode="text"
                             placeholder="Max"
                             title="Max"
@@ -1273,14 +1479,51 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1blq8rz-MuiFormControl-root-MuiTextField-root"
                       >
                         <div
-                          class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
+                          class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
                         >
+                          <div
+                            class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-ittuaa-MuiInputAdornment-root"
+                          >
+                            <span
+                              class="notranslate"
+                            >
+                              ​
+                            </span>
+                            <span
+                              aria-label="Change filter mode"
+                              class=""
+                              data-mui-internal-clone-element="true"
+                            >
+                              <button
+                                aria-label="Change filter mode"
+                                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1cyhbc3-MuiButtonBase-root-MuiIconButton-root"
+                                tabindex="0"
+                                type="button"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                  data-testid="FilterListIcon"
+                                  focusable="false"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    d="M10 18h4v-2h-4zM3 6v2h18V6zm3 7h12v-2H6z"
+                                  />
+                                </svg>
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                            </span>
+                          </div>
                           <input
+                            aria-describedby=":r14:-helper-text"
                             aria-invalid="false"
                             aria-label="Min"
                             autocomplete="new-password"
-                            class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r10:"
+                            class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
+                            id=":r14:"
                             inputmode="text"
                             placeholder="Min"
                             title="Min"
@@ -1313,6 +1556,14 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                             </button>
                           </div>
                         </div>
+                        <p
+                          class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
+                          id=":r14:-helper-text"
+                        >
+                          <label>
+                            Filter Mode: Between Inclusive
+                          </label>
+                        </p>
                       </div>
                       <div
                         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1blq8rz-MuiFormControl-root-MuiTextField-root"
@@ -1325,7 +1576,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                             aria-label="Max"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r12:"
+                            id=":r17:"
                             inputmode="text"
                             placeholder="Max"
                             title="Max"
@@ -1487,56 +1738,76 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                     class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
                   >
                     <div
-                      class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon css-ka7ti6-MuiAutocomplete-root"
+                      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-jk1t0h-MuiFormControl-root-MuiTextField-root"
                     >
                       <div
-                        class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-jk1t0h-MuiFormControl-root-MuiTextField-root"
+                        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
                       >
                         <div
-                          class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-953pxc-MuiInputBase-root-MuiInput-root"
+                          aria-controls=":r1e:"
+                          aria-expanded="false"
+                          aria-haspopup="listbox"
+                          aria-label="Filter by Is Defective"
+                          aria-labelledby=":r1d:"
+                          class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-2jdjhv-MuiSelect-select-MuiInputBase-input-MuiInput-input"
+                          id=":r1d:"
+                          role="combobox"
+                          tabindex="0"
                         >
-                          <input
-                            aria-autocomplete="list"
-                            aria-expanded="false"
-                            aria-invalid="false"
-                            aria-label="Filter by Is Defective"
-                            autocapitalize="none"
-                            autocomplete="new-password"
-                            class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r18:"
-                            placeholder="Filter by Is Defective"
-                            role="combobox"
-                            spellcheck="false"
-                            title="Filter by Is Defective"
-                            type="text"
-                            value=""
-                          />
                           <div
-                            class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
+                            class="MuiBox-root css-1tzeee1"
+                          >
+                            Filter by Is Defective
+                          </div>
+                        </div>
+                        <input
+                          aria-hidden="true"
+                          aria-invalid="false"
+                          autocomplete="new-password"
+                          class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                          tabindex="-1"
+                          title="Filter by Is Defective"
+                          value=""
+                        />
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon"
+                          data-testid="ArrowDropDownIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M7 10l5 5 5-5z"
+                          />
+                        </svg>
+                        <div
+                          class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-3yq2xl-MuiInputAdornment-root"
+                        >
+                          <span
+                            aria-label="Clear filter"
+                            class=""
+                            data-mui-internal-clone-element="true"
                           >
                             <button
-                              aria-label="Clear"
-                              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-clearIndicator css-1glvl0p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator"
+                              aria-label="Clear filter"
+                              class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeSmall css-1so9ih7-MuiButtonBase-root-MuiIconButton-root"
+                              disabled=""
                               tabindex="-1"
-                              title="Clear"
                               type="button"
                             >
                               <svg
                                 aria-hidden="true"
-                                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
                                 data-testid="CloseIcon"
                                 focusable="false"
                                 viewBox="0 0 24 24"
                               >
                                 <path
-                                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                                  d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                                 />
                               </svg>
-                              <span
-                                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                              />
                             </button>
-                          </div>
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -1667,58 +1938,123 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                     class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
                   >
                     <div
-                      class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon css-ka7ti6-MuiAutocomplete-root"
+                      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-jk1t0h-MuiFormControl-root-MuiTextField-root"
                     >
                       <div
-                        class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-jk1t0h-MuiFormControl-root-MuiTextField-root"
+                        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
                       >
                         <div
-                          class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-953pxc-MuiInputBase-root-MuiInput-root"
+                          class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-ittuaa-MuiInputAdornment-root"
                         >
-                          <input
-                            aria-autocomplete="list"
-                            aria-expanded="false"
-                            aria-invalid="false"
-                            aria-label="Filter by Usage Status"
-                            autocapitalize="none"
-                            autocomplete="new-password"
-                            class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r1e:"
-                            placeholder="Filter by Usage Status"
-                            role="combobox"
-                            spellcheck="false"
-                            title="Filter by Usage Status"
-                            type="text"
-                            value=""
-                          />
-                          <div
-                            class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
+                          <span
+                            class="notranslate"
+                          >
+                            ​
+                          </span>
+                          <span
+                            aria-label="Change filter mode"
+                            class=""
+                            data-mui-internal-clone-element="true"
                           >
                             <button
-                              aria-label="Clear"
-                              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-clearIndicator css-1glvl0p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator"
-                              tabindex="-1"
-                              title="Clear"
+                              aria-label="Change filter mode"
+                              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1cyhbc3-MuiButtonBase-root-MuiIconButton-root"
+                              tabindex="0"
                               type="button"
                             >
                               <svg
                                 aria-hidden="true"
-                                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
-                                data-testid="CloseIcon"
+                                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                data-testid="FilterListIcon"
                                 focusable="false"
                                 viewBox="0 0 24 24"
                               >
                                 <path
-                                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                                  d="M10 18h4v-2h-4zM3 6v2h18V6zm3 7h12v-2H6z"
                                 />
                               </svg>
                               <span
                                 class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                               />
                             </button>
+                          </span>
+                        </div>
+                        <div
+                          aria-controls=":r1m:"
+                          aria-describedby=":r1k:-helper-text"
+                          aria-expanded="false"
+                          aria-haspopup="listbox"
+                          aria-label="Filter by Usage Status"
+                          aria-labelledby=":r1k:"
+                          class="MuiSelect-select MuiSelect-standard MuiSelect-multiple MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-2jdjhv-MuiSelect-select-MuiInputBase-input-MuiInput-input"
+                          id=":r1k:"
+                          role="combobox"
+                          tabindex="0"
+                        >
+                          <div
+                            class="MuiBox-root css-1tzeee1"
+                          >
+                            Filter by Usage Status
                           </div>
                         </div>
+                        <input
+                          aria-hidden="true"
+                          aria-invalid="false"
+                          autocomplete="new-password"
+                          class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                          tabindex="-1"
+                          title="Filter by Usage Status"
+                          value=""
+                        />
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon"
+                          data-testid="ArrowDropDownIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M7 10l5 5 5-5z"
+                          />
+                        </svg>
+                        <div
+                          class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-3yq2xl-MuiInputAdornment-root"
+                        >
+                          <span
+                            aria-label="Clear filter"
+                            class=""
+                            data-mui-internal-clone-element="true"
+                          >
+                            <button
+                              aria-label="Clear filter"
+                              class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeSmall css-1so9ih7-MuiButtonBase-root-MuiIconButton-root"
+                              disabled=""
+                              tabindex="-1"
+                              type="button"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                data-testid="CloseIcon"
+                                focusable="false"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                                />
+                              </svg>
+                            </button>
+                          </span>
+                        </div>
                       </div>
+                      <p
+                        class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
+                        id=":r1k:-helper-text"
+                      >
+                        <label>
+                          Filter Mode: Includes any
+                        </label>
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -1847,50 +2183,147 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                     class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
                   >
                     <div
-                      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-jk1t0h-MuiFormControl-root-MuiTextField-root"
+                      class="MuiBox-root css-8yqbvs"
                     >
                       <div
-                        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
+                        class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-6fo67r-MuiFormControl-root-MuiTextField-root"
                       >
-                        <input
-                          aria-invalid="false"
-                          aria-label="Filter by Expected Lifetime (Days)"
-                          autocomplete="new-password"
-                          class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                          id=":r1k:"
-                          placeholder="Filter by Expected Lifetime (Days)"
-                          title="Filter by Expected Lifetime (Days)"
-                          type="text"
-                          value=""
-                        />
                         <div
-                          class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+                          class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
                         >
-                          <span
-                            aria-label="Clear filter"
-                            class=""
-                            data-mui-internal-clone-element="true"
+                          <div
+                            class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-ittuaa-MuiInputAdornment-root"
                           >
-                            <button
-                              aria-label="Clear filter"
-                              class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeSmall css-1so9ih7-MuiButtonBase-root-MuiIconButton-root"
-                              disabled=""
-                              tabindex="-1"
-                              type="button"
+                            <span
+                              class="notranslate"
                             >
-                              <svg
-                                aria-hidden="true"
-                                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                                data-testid="CloseIcon"
-                                focusable="false"
-                                viewBox="0 0 24 24"
+                              ​
+                            </span>
+                            <span
+                              aria-label="Change filter mode"
+                              class=""
+                              data-mui-internal-clone-element="true"
+                            >
+                              <button
+                                aria-label="Change filter mode"
+                                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1cyhbc3-MuiButtonBase-root-MuiIconButton-root"
+                                tabindex="0"
+                                type="button"
                               >
-                                <path
-                                  d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                                <svg
+                                  aria-hidden="true"
+                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                  data-testid="FilterListIcon"
+                                  focusable="false"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    d="M10 18h4v-2h-4zM3 6v2h18V6zm3 7h12v-2H6z"
+                                  />
+                                </svg>
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                                 />
-                              </svg>
-                            </button>
-                          </span>
+                              </button>
+                            </span>
+                          </div>
+                          <input
+                            aria-describedby=":r1s:-helper-text"
+                            aria-invalid="false"
+                            aria-label="Min"
+                            autocomplete="new-password"
+                            class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
+                            id=":r1s:"
+                            placeholder="Min"
+                            title="Min"
+                            type="text"
+                            value=""
+                          />
+                          <div
+                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+                          >
+                            <span
+                              aria-label="Clear filter"
+                              class=""
+                              data-mui-internal-clone-element="true"
+                            >
+                              <button
+                                aria-label="Clear filter"
+                                class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeSmall css-1so9ih7-MuiButtonBase-root-MuiIconButton-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                  data-testid="CloseIcon"
+                                  focusable="false"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                                  />
+                                </svg>
+                              </button>
+                            </span>
+                          </div>
+                        </div>
+                        <p
+                          class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
+                          id=":r1s:-helper-text"
+                        >
+                          <label>
+                            Filter Mode: Between Inclusive
+                          </label>
+                        </p>
+                      </div>
+                      <div
+                        class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-14txccq-MuiFormControl-root-MuiTextField-root"
+                      >
+                        <div
+                          class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
+                        >
+                          <input
+                            aria-invalid="false"
+                            aria-label="Max"
+                            autocomplete="new-password"
+                            class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
+                            id=":r1v:"
+                            placeholder="Max"
+                            title="Max"
+                            type="text"
+                            value=""
+                          />
+                          <div
+                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+                          >
+                            <span
+                              aria-label="Clear filter"
+                              class=""
+                              data-mui-internal-clone-element="true"
+                            >
+                              <button
+                                aria-label="Clear filter"
+                                class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeSmall css-1so9ih7-MuiButtonBase-root-MuiIconButton-root"
+                                disabled=""
+                                tabindex="-1"
+                                type="button"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                  data-testid="CloseIcon"
+                                  focusable="false"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                                  />
+                                </svg>
+                              </button>
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -2047,7 +2480,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
               data-index="6"
             >
               <div
-                aria-label="Tue Sep 05 2023 23:00:00 GMT+0000 (Coordinated Universal Time),Tue Sep 05 2023 23:00:00 GMT+0000 (Coordinated Universal Time)"
+                aria-label=",Tue Sep 05 2023 23:00:00 GMT+0000 (Coordinated Universal Time)"
                 class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                 data-mui-internal-clone-element="true"
                 role="tooltip"
@@ -2675,7 +3108,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                 class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
               >
                 <div
-                  aria-controls=":r1m:"
+                  aria-controls=":r21:"
                   aria-expanded="false"
                   aria-haspopup="listbox"
                   aria-label="Rows per page"
@@ -2863,7 +3296,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                       aria-invalid="false"
                       autocomplete="new-password"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12yjm75-MuiInputBase-input-MuiOutlinedInput-input"
-                      id=":rme:"
+                      id=":roj:"
                       placeholder="Search"
                       type="text"
                       value=""
@@ -3057,21 +3490,84 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                       class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-jk1t0h-MuiFormControl-root-MuiTextField-root"
                     >
                       <div
-                        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
+                        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
                       >
-                        <input
-                          aria-invalid="false"
+                        <div
+                          class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-ittuaa-MuiInputAdornment-root"
+                        >
+                          <span
+                            class="notranslate"
+                          >
+                            ​
+                          </span>
+                          <span
+                            aria-label="Change filter mode"
+                            class=""
+                            data-mui-internal-clone-element="true"
+                          >
+                            <button
+                              aria-label="Change filter mode"
+                              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1cyhbc3-MuiButtonBase-root-MuiIconButton-root"
+                              tabindex="0"
+                              type="button"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                data-testid="FilterListIcon"
+                                focusable="false"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  d="M10 18h4v-2h-4zM3 6v2h18V6zm3 7h12v-2H6z"
+                                />
+                              </svg>
+                              <span
+                                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                              />
+                            </button>
+                          </span>
+                        </div>
+                        <div
+                          aria-controls=":ror:"
+                          aria-describedby=":rop:-helper-text"
+                          aria-expanded="false"
+                          aria-haspopup="listbox"
                           aria-label="Filter by Catalogue Item"
+                          aria-labelledby=":rop:"
+                          class="MuiSelect-select MuiSelect-standard MuiSelect-multiple MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-2jdjhv-MuiSelect-select-MuiInputBase-input-MuiInput-input"
+                          id=":rop:"
+                          role="combobox"
+                          tabindex="0"
+                        >
+                          <div
+                            class="MuiBox-root css-1tzeee1"
+                          >
+                            Filter by Catalogue Item
+                          </div>
+                        </div>
+                        <input
+                          aria-hidden="true"
+                          aria-invalid="false"
                           autocomplete="new-password"
-                          class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                          id=":rmk:"
-                          placeholder="Filter by Catalogue Item"
+                          class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                          tabindex="-1"
                           title="Filter by Catalogue Item"
-                          type="text"
                           value=""
                         />
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon"
+                          data-testid="ArrowDropDownIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M7 10l5 5 5-5z"
+                          />
+                        </svg>
                         <div
-                          class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+                          class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-3yq2xl-MuiInputAdornment-root"
                         >
                           <span
                             aria-label="Clear filter"
@@ -3100,6 +3596,14 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                           </span>
                         </div>
                       </div>
+                      <p
+                        class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
+                        id=":rop:-helper-text"
+                      >
+                        <label>
+                          Filter Mode: Includes any
+                        </label>
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -3258,14 +3762,51 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                       class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-jk1t0h-MuiFormControl-root-MuiTextField-root"
                     >
                       <div
-                        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
+                        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
                       >
+                        <div
+                          class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-ittuaa-MuiInputAdornment-root"
+                        >
+                          <span
+                            class="notranslate"
+                          >
+                            ​
+                          </span>
+                          <span
+                            aria-label="Change filter mode"
+                            class=""
+                            data-mui-internal-clone-element="true"
+                          >
+                            <button
+                              aria-label="Change filter mode"
+                              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1cyhbc3-MuiButtonBase-root-MuiIconButton-root"
+                              tabindex="0"
+                              type="button"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                data-testid="FilterListIcon"
+                                focusable="false"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  d="M10 18h4v-2h-4zM3 6v2h18V6zm3 7h12v-2H6z"
+                                />
+                              </svg>
+                              <span
+                                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                              />
+                            </button>
+                          </span>
+                        </div>
                         <input
+                          aria-describedby=":rp1:-helper-text"
                           aria-invalid="false"
                           aria-label="Filter by Serial Number"
                           autocomplete="new-password"
-                          class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                          id=":rmq:"
+                          class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
+                          id=":rp1:"
                           placeholder="Filter by Serial Number"
                           title="Filter by Serial Number"
                           type="text"
@@ -3301,6 +3842,14 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                           </span>
                         </div>
                       </div>
+                      <p
+                        class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
+                        id=":rp1:-helper-text"
+                      >
+                        <label>
+                          Filter Mode: Fuzzy
+                        </label>
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -3770,7 +4319,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                 class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
               >
                 <div
-                  aria-controls=":rmv:"
+                  aria-controls=":rp7:"
                   aria-expanded="false"
                   aria-haspopup="listbox"
                   aria-label="Rows per page"
