@@ -17,12 +17,15 @@ import {
   CatalogueItemPatch,
   CatalogueItemPost,
   ImageMetadataPatch,
+  ImagePost,
   Item,
   ItemPatch,
   ItemPost,
   Manufacturer,
   ManufacturerPatch,
   ManufacturerPost,
+  SparesDefinition,
+  SparesDefinitionPut,
   System,
   SystemPatch,
   SystemPost,
@@ -859,7 +862,7 @@ export const handlers = [
 
   // ------------------------------------ UNITS ------------------------------------------------
 
-  http.get('/v1/units', () => {
+  http.get<PathParams, DefaultBodyType, Unit[]>('/v1/units', () => {
     return HttpResponse.json(UnitsJSON, { status: 200 });
   }),
 
@@ -921,9 +924,12 @@ export const handlers = [
 
   // ------------------------------------ USAGE STATUSES ------------------------------------------------
 
-  http.get('/v1/usage-statuses', () => {
-    return HttpResponse.json(UsageStatusJSON, { status: 200 });
-  }),
+  http.get<PathParams, DefaultBodyType, UsageStatus[]>(
+    '/v1/usage-statuses',
+    () => {
+      return HttpResponse.json(UsageStatusJSON, { status: 200 });
+    }
+  ),
 
   http.post<PathParams, UsageStatusPost, UsageStatus | ErrorResponse>(
     '/v1/usage-statuses',
@@ -1031,25 +1037,26 @@ export const handlers = [
     return HttpResponse.json(generateAttachments(), { status: 200 });
   }),
 
-  http.patch<{ id: string }, AttachmentMetadataPatch, AttachmentMetadata | ErrorResponse>(
-    '/attachments/:id',
-    async ({ request, params }) => {
-      const { id } = params;
+  http.patch<
+    { id: string },
+    AttachmentMetadataPatch,
+    AttachmentMetadata | ErrorResponse
+  >('/attachments/:id', async ({ request, params }) => {
+    const { id } = params;
 
-      const obj = AttachmentsJSON.find((attachment) => attachment.id === id);
-      const body = await request.json();
+    const obj = AttachmentsJSON.find((attachment) => attachment.id === id);
+    const body = await request.json();
 
-      const fullBody = { ...obj, ...body };
+    const fullBody = { ...obj, ...body };
 
-      if (fullBody.file_name === 'Error_500.txt') {
-        return HttpResponse.json(
-          { detail: 'Something went wrong' },
-          { status: 500 }
-        );
-      }
-      return HttpResponse.json(fullBody as AttachmentMetadata, { status: 200 });
+    if (fullBody.file_name === 'Error_500.txt') {
+      return HttpResponse.json(
+        { detail: 'Something went wrong' },
+        { status: 500 }
+      );
     }
-  ),
+    return HttpResponse.json(fullBody as AttachmentMetadata, { status: 200 });
+  }),
 
   // ------------------------------------ OBJECT STORAGE ------------------------------------------------
 
@@ -1067,10 +1074,12 @@ export const handlers = [
 
   // ------------------------------------ IMAGES ------------------------------------------------
 
-  http.post('/images', async () => {
-    return HttpResponse.json(ImagesJSON[0], { status: 201 });
-  }),
-
+  http.post<PathParams, ImagePost, APIImage | ErrorResponse>(
+    '/images',
+    async () => {
+      return HttpResponse.json(ImagesJSON[0], { status: 201 });
+    }
+  ),
   http.get('/images', ({ request }) => {
     const url = new URL(request.url);
     const imageParams = url.searchParams;
@@ -1094,34 +1103,61 @@ export const handlers = [
         );
       }
     }
-
-    const generateImages = () => {
-      return Array.from({ length: 20 }, (_, index) => {
-        const id = index + 1;
-        let image;
-
-        if (Number(id) % 2 === 0) {
-          image = ImagesJSON[0];
-        } else {
-          image = {
-            ...ImagesJSON[1],
-            ...(id === 3 && {
-              thumbnail_base64: 'test',
-              description: undefined,
-            }),
-          };
-        }
-        return {
-          ...image,
-          id: String(id),
-        };
-      });
-    };
-
-    return HttpResponse.json(generateImages(), { status: 200 });
   }),
+  http.get<PathParams, DefaultBodyType, APIImage[]>(
+    '/images',
+    ({ request }) => {
+      const url = new URL(request.url);
+      const imageParams = url.searchParams;
+      const primary = imageParams.get('primary');
+      const entityId = imageParams.get('entity_id');
 
-  http.get('/images/:id', ({ params }) => {
+      if (primary === 'true') {
+        if (entityId === '90') {
+          return HttpResponse.json([], { status: 200 });
+        } else {
+          return HttpResponse.json(
+            [
+              {
+                ...ImagesJSON[0],
+                primary: true,
+                entity_id: entityId ?? '',
+                ...(entityId === '3' && { thumbnail_base64: 'test' }),
+              },
+            ],
+            { status: 200 }
+          );
+        }
+      }
+
+      const generateImages = () => {
+        return Array.from({ length: 20 }, (_, index) => {
+          const id = index + 1;
+          let image;
+
+          if (Number(id) % 2 === 0) {
+            image = ImagesJSON[0];
+          } else {
+            image = {
+              ...ImagesJSON[1],
+              ...(id === 3 && {
+                thumbnail_base64: 'test',
+                description: undefined,
+              }),
+            };
+          }
+          return {
+            ...image,
+            id: String(id),
+          };
+        });
+      };
+
+      return HttpResponse.json(generateImages(), { status: 200 });
+    }
+  ),
+
+  http.get<{ id: string }, DefaultBodyType>('/images/:id', ({ params }) => {
     const { id } = params;
     // This is needed otherwise the msw would intercept the
     // mocked image get request for the object store
@@ -1204,4 +1240,33 @@ export const handlers = [
 
     return HttpResponse.json(undefined, { status: 204 });
   }),
+
+  // ------------------------------------ SPARES ------------------------------------------------
+  http.put<PathParams, SparesDefinitionPut, SparesDefinition | ErrorResponse>(
+    '/v1/settings/spares_definition',
+    async ({ request }) => {
+      const sparesDef = await request.json();
+
+      return HttpResponse.json(
+        {
+          usage_statuses: sparesDef.usage_statuses
+            .map(
+              ({ id }) =>
+                UsageStatusJSON?.find((status) => status.id === id) || null
+            )
+            .filter((status): status is UsageStatus => status !== null),
+        },
+        { status: 200 }
+      );
+    }
+  ),
+  http.get<PathParams, DefaultBodyType, SparesDefinition>(
+    '/v1/settings/spares_definition',
+    () => {
+      return HttpResponse.json(
+        { usage_statuses: [UsageStatusJSON[0], UsageStatusJSON[2]] },
+        { status: 200 }
+      );
+    }
+  ),
 ];

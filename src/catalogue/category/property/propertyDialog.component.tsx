@@ -1,19 +1,14 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import WarningIcon from '@mui/icons-material/Warning';
 import {
   Autocomplete,
   Button,
-  Checkbox,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControlLabel,
   Grid,
-  Paper,
   Stack,
   TextField,
-  Typography,
 } from '@mui/material';
 import React from 'react';
 import {
@@ -41,6 +36,7 @@ import {
   AddCatalogueCategoryWithPlacementIds,
   AddPropertyMigration,
 } from '../../../app.types';
+import WarningMessage from '../../../common/warningMessage.component';
 import {
   CatalogueCategoryPropertyPatchSchema,
   CatalogueCategoryPropertyPostSchema,
@@ -48,6 +44,9 @@ import {
 } from '../../../form.schemas';
 import { transformAllowedValues } from '../catalogueCategoryDialog.component';
 import AllowedValuesListTextFields from './allowedValuesListTextFields.component';
+
+export const migrationWarningMessageText =
+  'This action will permanently alter all existing items and catalogue items in this catalogue category. Please confirm that you understand the consequences by checking the box to proceed.';
 
 // Using `any` instead of `FieldPath` to avoid circular dependencies
 function getProperty<T extends Record<string, unknown>>(
@@ -70,53 +69,6 @@ function getProperty<T extends Record<string, unknown>>(
 
   return current;
 }
-
-interface MigrationWarningMessageProps {
-  isChecked: boolean;
-  setIsChecked: (isChecked: boolean) => void;
-}
-export const MigrationWarningMessage = (
-  props: MigrationWarningMessageProps
-) => {
-  const { isChecked, setIsChecked } = props;
-  return (
-    <Paper
-      elevation={3}
-      sx={{
-        padding: 2,
-        mx: 1,
-        display: 'flex',
-        alignItems: 'center',
-      }}
-    >
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={isChecked}
-            onChange={(event) => {
-              setIsChecked(event.target.checked);
-            }}
-            color="primary"
-          />
-        }
-        label=""
-        aria-label="Confirm understanding and proceed checkbox"
-      />
-      <WarningIcon
-        sx={{
-          pr: 2,
-          fontSize: '50px',
-          color: 'warning.main',
-        }}
-      />
-      <Typography variant="body1">
-        This action will permanently alter all existing items and catalogue
-        items in this catalogue category. Please confirm that you understand the
-        consequences by checking the box to proceed.
-      </Typography>
-    </Paper>
-  );
-};
 
 function transformAddPropertyMigrationToCatalogueCategoryPropertyPost(
   property: AddPropertyMigration
@@ -754,10 +706,13 @@ const PropertyDialog = (props: PropertyDialogProps) => {
         <Grid container px={1.5}>
           {isMigration && (
             <Grid item sx={{ width: '100%' }}>
-              <MigrationWarningMessage
-                isChecked={isMigrationWarningChecked}
-                setIsChecked={setIsMigrationWarningChecked}
-              />
+              <Grid item sx={{ width: '100%' }}>
+                <WarningMessage
+                  isChecked={isMigrationWarningChecked}
+                  setIsChecked={setIsMigrationWarningChecked}
+                  message={migrationWarningMessageText}
+                />
+              </Grid>
             </Grid>
           )}
           <Grid

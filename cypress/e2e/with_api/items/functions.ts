@@ -284,3 +284,27 @@ export const editItem = () => {
     system: 'optics 1',
   });
 };
+
+export const spareDefinition = () => {
+  cy.visit('/admin-ims');
+
+  cy.findByText('Spares definition').click();
+
+  cy.findByRole('combobox').click();
+  cy.findByRole('option', { name: 'Used' }).click();
+  cy.findByRole('combobox').click();
+  cy.findByRole('option', { name: 'New' }).click();
+
+  cy.findByLabelText('Confirm understanding and proceed checkbox').click();
+
+  cy.findByRole('button', { name: 'Save' }).click();
+
+  cy.findByRole('dialog').should('not.exist');
+
+  cy.findByText('Spares definition').click();
+
+  cy.findByText('New').should('exist');
+  cy.findByText('Used').should('exist');
+
+  cy.go('back');
+};
