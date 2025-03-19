@@ -540,9 +540,9 @@ describe('Items', () => {
       }).click();
       cy.findByText('Upload Attachments').click();
 
-      cy.findAllByText('Files cannot be larger than', { exact: false }).should(
-        'exist'
-      );
+      cy.findAllByText('Files cannot be larger than', {
+        exact: false,
+      }).should('exist');
       cy.get('.uppy-Dashboard-input').as('fileInput');
 
       cy.get('@fileInput')
@@ -575,9 +575,14 @@ describe('Items', () => {
 
       cy.findByRole('button', { name: 'Remove file' }).click();
 
-      // TODO: Assert axios delete request was called
-
       cy.findByText('Upload 1 file').should('not.exist');
+
+      cy.findBrowserMockedRequests({
+        method: 'DELETE',
+        url: '/attachments/:id',
+      }).should(async (deleteRequests) => {
+        expect(deleteRequests.length).eq(1);
+      });
     });
 
     it('errors when presigned url fails', () => {
@@ -635,6 +640,13 @@ describe('Items', () => {
 
       cy.findByLabelText('Show error details').should('exist');
       cy.findByText('Upload failed').should('exist');
+
+      cy.findBrowserMockedRequests({
+        method: 'DELETE',
+        url: '/attachments/:id',
+      }).should(async (deleteRequests) => {
+        expect(deleteRequests.length).eq(1);
+      });
     });
 
     it('should render in table headers', () => {

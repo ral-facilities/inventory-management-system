@@ -7,10 +7,13 @@ import '@uppy/dashboard/dist/style.css';
 import ProgressBar from '@uppy/progress-bar';
 import { DashboardModal } from '@uppy/react';
 import React from 'react';
-import { useDeleteAttachment, usePostAttachmentMetadata } from '../../api/attachments';
+import {
+  useDeleteAttachment,
+  usePostAttachmentMetadata,
+} from '../../api/attachments';
 import type { UppyUploadMetadata } from '../../app.types';
 import { getNonEmptyTrimmedString } from '../../utils';
-import { useMetaFields } from '../uppy.utils';
+import { isAnyFileWaiting, useMetaFields } from '../uppy.utils';
 
 // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000, so here the former is expected despite them really being GiB, MiB and KiB.
 const MAX_FILE_SIZE_MB = 100;
@@ -69,37 +72,57 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
       .use(ProgressBar)
   );
 
+  // This is need to prevent multiple calls of the delete endpoint
+  const deletedFileIds = React.useRef(new Set<string>());
+
   const updateFileMetadata = React.useCallback(
     async (
       file?: UppyFile<UppyUploadMetadata, AwsBody>,
       deleteMetadata: boolean = false
     ) => {
-      const id = fileMetadataMap[file?.id ?? ''];
+      const fileId = file?.id;
+      if (!fileId) return;
+
+      const id = fileMetadataMap[fileId];
+
       if (id) {
-        if (deleteMetadata) {
-          await deleteAttachment(id)
+        if (deleteMetadata && !deletedFileIds.current.has(fileId)) {
+          deletedFileIds.current.add(fileId);
+          await deleteAttachment(id);
         }
 
-        const newMap = Object.fromEntries(
-          Object.entries(fileMetadataMap).filter(([key]) => key !== file?.id)
-        );
-        setFileMetadataMap(newMap);
+        setFileMetadataMap((prev) => {
+          const newMap = Object.fromEntries(
+            Object.entries(prev).filter(([key]) => key !== fileId)
+          );
+
+          // Reset deletedFileIds if newMap is empty
+          if (Object.keys(newMap).length === 0) {
+            deletedFileIds.current.clear();
+          }
+
+          return newMap;
+        });
       }
     },
     [deleteAttachment, fileMetadataMap]
   );
 
+  const { files = {} } = uppy.getState();
+
   const handleClose = React.useCallback(() => {
+    // prevent users from closing the dialog while the download is in progress
+    if (isAnyFileWaiting(files)) return;
     onClose();
     setFileMetadataMap({});
     uppy.clear();
     queryClient.invalidateQueries({ queryKey: ['Attachments', entityId] });
-  }, [entityId, onClose, queryClient, uppy]);
+  }, [entityId, files, onClose, queryClient, uppy]);
 
   // Track the start and completion of uploads
-  uppy.on('upload-error', (file) => updateFileMetadata(file, true));
-  uppy.on('file-removed', (file) => updateFileMetadata(file, true));
-  uppy.on('upload-success', (file) => updateFileMetadata(file));
+  uppy.on('upload-error', async (file) => await updateFileMetadata(file, true));
+  uppy.on('file-removed', async (file) => await updateFileMetadata(file, true));
+  uppy.on('upload-success', async (file) => await updateFileMetadata(file));
 
   const metaFields = useMetaFields<UppyUploadMetadata, AwsBody>();
 
