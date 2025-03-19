@@ -31,6 +31,7 @@ import {
   COLUMN_FILTER_MODE_OPTIONS,
   COLUMN_FILTER_VARIANTS,
   MRT_Functions_Localisation,
+  OPTIONAL_FILTER_MODE_OPTIONS,
   OverflowTip,
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
@@ -605,7 +606,10 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         id: 'catalogueItem.expected_lifetime_days',
         filterVariant: COLUMN_FILTER_VARIANTS.number,
         filterFn: COLUMN_FILTER_FUNCTIONS.number,
-        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.number,
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS.number,
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
+        ],
         size: 300,
         AggregatedCell: ({ cell, table }) => {
           const isCatalogueGrouped = table
