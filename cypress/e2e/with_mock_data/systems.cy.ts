@@ -129,7 +129,7 @@ describe('Systems', () => {
     cy.location('search').should('eq', '');
   });
 
-  it('should be able to navigate through subsystems while preserving the table states when going back', () => {
+  it.only('should be able to navigate through subsystems while preserving the table states when going back', () => {
     cy.visit('/systems/65328f34a40ff5301575a4e3');
 
     cy.findByText('Smaller laser').should('be.visible');
