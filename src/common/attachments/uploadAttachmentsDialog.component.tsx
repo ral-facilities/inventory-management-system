@@ -72,7 +72,7 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
       .use(ProgressBar)
   );
 
-  // This is need to prevent multiple calls of the delete endpoint
+  // This is necessary to prevent multiple calls of the delete endpoint
   const deletedFileIds = React.useRef(new Set<string>());
 
   const updateFileMetadata = React.useCallback(
@@ -105,7 +105,7 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
         });
       }
     },
-    [deleteAttachment, fileMetadataMap]
+    [deleteAttachment, deletedFileIds, fileMetadataMap]
   );
 
   const { files = {} } = uppy.getState();

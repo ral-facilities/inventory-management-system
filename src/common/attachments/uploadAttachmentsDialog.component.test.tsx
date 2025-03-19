@@ -267,7 +267,9 @@ describe('Upload attachment dialog', () => {
       await screen.findByRole('button', { name: 'Remove file' })
     );
 
-    expect(axiosDeleteSpy).toHaveBeenCalledWith('/attachments/1', {});
+    await waitFor(() =>
+      expect(axiosDeleteSpy).toHaveBeenCalledWith('/attachments/1', {})
+    );
 
     expect(screen.queryByText('Upload 1 file')).not.toBeInTheDocument();
   });
