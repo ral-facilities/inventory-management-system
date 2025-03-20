@@ -4,6 +4,7 @@ import { CREATED_MODIFIED_TIME_VALUES, hooksWrapperWithProviders } from '../test
 import { AttachmentMetadata, AttachmentMetadataPatch, AttachmentPostMetadata } from './api.types';
 import {
   useDeleteAttachment,
+  useGetAttachment,
   useGetAttachments,
   usePatchAttachment,
   usePostAttachmentMetadata,
@@ -64,6 +65,23 @@ describe('attachments api functions', () => {
       });
 
       expect(result.current.data?.length).toEqual(20);
+    });
+  });
+
+  describe('useGetAttachment', () => {
+    it('sends request to fetch attachment data and returns a successful response', async () => {
+      const { result } = renderHook(() => useGetAttachment('1'), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+
+      expect(result.current.data).toEqual({
+        ...AttachmentsJSON[1],
+        download_url: 'http://localhost:3000/attachments/safety-protocols.pdf?text=1',
+      });
     });
   });
 

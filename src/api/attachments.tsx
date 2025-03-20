@@ -1,4 +1,5 @@
 import {
+  queryOptions,
   useMutation,
   UseMutationResult,
   useQuery,
@@ -11,6 +12,7 @@ import { storageApi } from './api';
 import {
   AttachmentMetadata,
   AttachmentMetadataPatch,
+  AttachmentMetadataWithURL,
   AttachmentPostMetadata,
   AttachmentPostMetadataResponse,
 } from './api.types';
@@ -32,6 +34,27 @@ export const usePostAttachmentMetadata = (): UseMutationResult<
     mutationFn: (attachmentMetadata: AttachmentPostMetadata) =>
       postAttachmentMetadata(attachmentMetadata),
   });
+};
+
+export const getAttachment = async (id: string): Promise<AttachmentMetadataWithURL> => {
+  return storageApi.get(`/attachments/${id}`).then((response) => {
+    return response.data;
+  });
+};
+
+export const getAttachmentQuery = (id: string, retry?: boolean) =>
+  queryOptions<AttachmentMetadataWithURL, AxiosError>({
+    queryKey: ['Attachment', id],
+    queryFn: () => {
+      return getAttachment(id);
+    },
+    retry: retry ? false : undefined,
+  });
+
+export const useGetAttachment = (
+  id: string
+): UseQueryResult<AttachmentMetadataWithURL, AxiosError> => {
+  return useQuery(getAttachmentQuery(id));
 };
 
 const getAttachments = async (
