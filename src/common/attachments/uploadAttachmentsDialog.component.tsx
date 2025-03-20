@@ -12,10 +12,12 @@ import {
   usePostAttachmentMetadata,
 } from '../../api/attachments';
 import type { UppyUploadMetadata } from '../../app.types';
+import handleIMS_APIError from '../../handleIMS_APIError';
 import { getNonEmptyTrimmedString } from '../../utils';
 import { isAnyFileWaiting, useMetaFields } from '../uppy.utils';
 
-// Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000, so here the former is expected despite them really being GiB, MiB and KiB.
+// Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000,
+// so here the former is expected despite them really being GiB, MiB and KiB.
 const MAX_FILE_SIZE_MB = 100;
 const MAX_FILE_SIZE_B = MAX_FILE_SIZE_MB * 1024 * 1024;
 export interface UploadAttachmentsDialogProps {
@@ -72,7 +74,7 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
       .use(ProgressBar)
   );
 
-  // This is necessary to prevent multiple calls of the delete endpoint
+  // This is necessary to prevent multiple calls of the delete endpoint.
   const deletedFileIds = React.useRef(new Set<string>());
 
   const updateFileMetadata = React.useCallback(
@@ -88,7 +90,11 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
       if (id) {
         if (deleteMetadata && !deletedFileIds.current.has(fileId)) {
           deletedFileIds.current.add(fileId);
-          await deleteAttachment(id);
+          try {
+            await deleteAttachment(id);
+          } catch (error: any) {
+            handleIMS_APIError(error);
+          };
         }
 
         setFileMetadataMap((prev) => {
@@ -105,7 +111,7 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
         });
       }
     },
-    [deleteAttachment, deletedFileIds, fileMetadataMap]
+    [deleteAttachment, deletedFileIds, fileMetadataMap, handleIMS_APIError]
   );
 
   const { files = {} } = uppy.getState();
