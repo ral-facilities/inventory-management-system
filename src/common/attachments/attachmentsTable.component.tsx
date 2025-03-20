@@ -1,4 +1,5 @@
 import ClearIcon from '@mui/icons-material/Clear';
+import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit';
 import {
   Box,
@@ -18,6 +19,7 @@ import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { AttachmentMetadata } from '../../api/api.types';
 import { useGetAttachments, usePatchAttachment } from '../../api/attachments';
+import DeleteAttachmentDialog from './deleteAttachmentDialog.component';
 import EditFileDialog from '../editFileDialog.component';
 import {
   COLUMN_FILTER_FUNCTIONS,
@@ -43,6 +45,10 @@ function AttachmentsTable(props: AttachmentTableProps) {
   const { data: attachments, isLoading: attachmentIsLoading } =
     useGetAttachments(entityId);
 
+  const [deleteAttachmentDialog, setDeleteAttachmentDialog] =
+    React.useState<boolean>(false);
+
+  const [selectedAttachment, setSelectedAttachment] = React.useState<AttachmentMetadata>();
 
   const columns = React.useMemo<MRT_ColumnDef<AttachmentMetadata>[]>(() => {
     return [
@@ -250,6 +256,21 @@ function AttachmentsTable(props: AttachmentTableProps) {
             <EditIcon />
           </ListItemIcon>
           <ListItemText>Edit</ListItemText>
+        </MenuItem>,
+        <MenuItem
+          key="delete"
+          aria-label={`Delete attachment ${row.original.file_name}`}
+          onClick={() => {
+            setSelectedAttachment(row.original);
+            setDeleteAttachmentDialog(true);
+            closeMenu();
+          }}
+          sx={{ m: 0 }}
+        >
+          <ListItemIcon>
+            <DeleteIcon />
+          </ListItemIcon>
+          <ListItemText>Delete</ListItemText>
         </MenuItem>
       ];
     },
@@ -261,7 +282,14 @@ function AttachmentsTable(props: AttachmentTableProps) {
   });
 
   return (
-    <MaterialReactTable table={table} />
+    <>
+      <MaterialReactTable table={table} />
+      <DeleteAttachmentDialog
+        open={deleteAttachmentDialog}
+        onClose={() => setDeleteAttachmentDialog(false)}
+        attachment={selectedAttachment}
+      />
+    </>
   );
 }
 

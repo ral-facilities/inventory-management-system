@@ -139,4 +139,28 @@ describe('Attachments Table', () => {
       expect(screen.queryByText('Edit Attachment')).not.toBeInTheDocument();
     });
   });
+
+  it('opens delete dialog and closes it correctly', async () => {
+    createView();
+
+    expect((await screen.findAllByText('safety-protocols.pdf')).length).toEqual(4);
+
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0])
+
+    await waitFor(() => {
+      expect(screen.getByText('Delete')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByText('Delete'));
+
+    expect(screen.getByText('Delete Attachment')).toBeInTheDocument();
+
+    const closeButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(closeButton);
+
+    await waitFor(() => {
+      expect(screen.queryByText('Delete Attachment')).not.toBeInTheDocument();
+    });
+  });
 });
