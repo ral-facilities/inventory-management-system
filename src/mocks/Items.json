@@ -11,6 +11,7 @@
     "asset_number": "LyH8yp1FHf",
     "serial_number": "5YUQDDjKpz2z",
     "delivered_date": "2023-03-17T00:00:00.000Z",
+    "expected_lifetime_days": 3225,
     "notes": "6Y5XTJfBrNNx8oltI9HE",
     "properties": [
       {
@@ -71,6 +72,7 @@
     "asset_number": "03MXnOfP5C",
     "serial_number": "vYs9Vxx6yWbn",
     "delivered_date": "2023-05-11T23:00:00.000Z",
+    "expected_lifetime_days": 2070,
     "notes": "rRXBHQFbF3zts6XS279k",
     "properties": [
       {
@@ -131,6 +133,7 @@
     "asset_number": "dvI4GyEsFt",
     "serial_number": "PcfCM1jp0SUV",
     "delivered_date": "2023-06-16T23:00:00.000Z",
+    "expected_lifetime_days": 400,
     "notes": "9Jgm0xJKSkmYG5fOdw6k",
     "properties": [
       {
@@ -191,6 +194,7 @@
     "asset_number": "75YWiLwy54",
     "serial_number": "Zf7P8Qu8TD8c",
     "delivered_date": "2023-12-05T00:00:00.000Z",
+    "expected_lifetime_days": 322,
     "notes": "zolZDKKuvAoTFRUWeZNA",
     "properties": [
       {
@@ -251,6 +255,7 @@
     "asset_number": "045BVMjNkV",
     "serial_number": "EUDhuOGj1J2J",
     "delivered_date": "2023-09-26T23:00:00.000Z",
+    "expected_lifetime_days": 1609,
     "notes": "NhACTn8uL9XgJiHznswD",
     "properties": [
       {
@@ -311,6 +316,7 @@
     "asset_number": "2878dadh74",
     "serial_number": "pTsW7MM5nek5",
     "delivered_date": "2023-02-17T00:00:00.000Z",
+    "expected_lifetime_days": 3501,
     "notes": "10MmJLdgSGSKaQpbz4TZ",
     "properties": [
       {
@@ -371,6 +377,7 @@
     "asset_number": "Mnfg5bvySA",
     "serial_number": "uuInZCcJbBOJ",
     "delivered_date": "2023-08-12T23:00:00.000Z",
+    "expected_lifetime_days": 936,
     "notes": "emGGfSii3gp2rRsmWomw",
     "properties": [
       {
@@ -431,6 +438,7 @@
     "asset_number": "v8aXoBxIDq",
     "serial_number": "XFcaJJZUzBUD",
     "delivered_date": "2023-01-01T00:00:00.000Z",
+    "expected_lifetime_days": 1029,
     "notes": "k2ctVPtLuVoo3zc9OqFL",
     "properties": [
       {
@@ -491,6 +499,7 @@
     "asset_number": "9xOLIfl27X",
     "serial_number": "fBfU9b3ySyKc",
     "delivered_date": "2023-10-08T23:00:00.000Z",
+    "expected_lifetime_days": 1309,
     "notes": "5HET2kx8Q5LtJ0eGyHdU",
     "properties": [
       {
@@ -551,6 +560,7 @@
     "asset_number": "Ri9R3gfzbs",
     "serial_number": "LxYMBk8Mtemi",
     "delivered_date": "2023-05-26T23:00:00.000Z",
+    "expected_lifetime_days": null,
     "notes": "ovANeVeiBr1uouSsEjmz",
     "properties": [
       {
@@ -611,6 +621,7 @@
     "asset_number": "8hDOiGiper",
     "serial_number": "ptqLlWg9zOdS",
     "delivered_date": "2023-04-22T23:00:00.000Z",
+    "expected_lifetime_days": 3335,
     "notes": "59AoR9rHnRPvwP2zuv1D",
     "properties": [
       {
@@ -671,6 +682,7 @@
     "asset_number": "rSPQyUaSSO",
     "serial_number": "6LXwzWIBJxcK",
     "delivered_date": null,
+    "expected_lifetime_days": 1387,
     "notes": "JoXWN9tt0v0qRtJtmOeo",
     "properties": [
       {
@@ -731,6 +743,7 @@
     "asset_number": "DuxdXfxKnV",
     "serial_number": "YLCc1mu6zPj8",
     "delivered_date": "2023-03-10T00:00:00.000Z",
+    "expected_lifetime_days": 2857,
     "notes": "tNtA8pJ8sU25DJWYsUz8",
     "properties": [
       {
@@ -791,6 +804,7 @@
     "asset_number": "v2X1u0Zjgo",
     "serial_number": "WdCHWLvdep9x",
     "delivered_date": "2023-04-12T23:00:00.000Z",
+    "expected_lifetime_days": 1050,
     "notes": "otmHgRQXhqoXaw4nAXZu",
     "properties": [
       {
@@ -851,6 +865,7 @@
     "asset_number": "TxzQrqxU4A",
     "serial_number": "3svhB7xk9a3c",
     "delivered_date": "2023-05-12T23:00:00.000Z",
+    "expected_lifetime_days": 1080,
     "notes": "59MxciONt7Hc34WQR1Ta",
     "properties": [
       {
@@ -911,6 +926,7 @@
     "asset_number": "t4CkRDfRQl",
     "serial_number": "NCLKOkd4udoo",
     "delivered_date": "2023-05-20T23:00:00.000Z",
+    "expected_lifetime_days": 1647,
     "notes": "Ktds2xzuTAsYoLdrS97u",
     "properties": [
       {
@@ -971,6 +987,7 @@
     "asset_number": "j89RnRapt6",
     "serial_number": "TNeyG4W81AbG",
     "delivered_date": "2023-06-18T23:00:00.000Z",
+    "expected_lifetime_days": 1685,
     "notes": "faziBmjPjnLgFjUNPXFr",
     "properties": [
       {
@@ -1031,6 +1048,7 @@
     "asset_number": "NcvOMJS43j",
     "serial_number": "aYezner3PO3F",
     "delivered_date": "2023-10-14T23:00:00.000Z",
+    "expected_lifetime_days": 2738,
     "notes": "QHRbcqwFSTMxLDcgswP0",
     "properties": [
       {
@@ -1091,6 +1109,7 @@
     "asset_number": "WXI35E23yp",
     "serial_number": "nUUTg1Q1VKsK",
     "delivered_date": "2023-11-22T00:00:00.000Z",
+    "expected_lifetime_days": 3056,
     "notes": "NMEcu8HzEIP39KYA6hZa",
     "properties": [
       {
@@ -1151,6 +1170,7 @@
     "asset_number": "aC8GPh3aOr",
     "serial_number": "T4yvzoeKoccA",
     "delivered_date": "2023-12-03T00:00:00.000Z",
+    "expected_lifetime_days": null,
     "notes": "6OPtp2zQmTZ5IHeBROX6",
     "properties": [
       {
@@ -1211,6 +1231,7 @@
     "asset_number": "GmI9IDFUyB",
     "serial_number": "339wVcXK7sGd",
     "delivered_date": "2023-09-12T23:00:00.000Z",
+    "expected_lifetime_days": 3613,
     "notes": "EppDIk2LPq4BXqSwWwZ0",
     "properties": [
       {
@@ -1271,6 +1292,7 @@
     "asset_number": "FQRG6LEqIa",
     "serial_number": "85cEMnVuohX9",
     "delivered_date": "2023-01-21T00:00:00.000Z",
+    "expected_lifetime_days": 655,
     "notes": "1JyZN6clKt39NwbSJ13d",
     "properties": [
       {
@@ -1331,6 +1353,7 @@
     "asset_number": "K9pDUxRicH",
     "serial_number": "Gws8RHwYVLCQ",
     "delivered_date": "2023-12-17T00:00:00.000Z",
+    "expected_lifetime_days": 1269,
     "notes": "lIrWEywzMyGWxeDIEBIC",
     "properties": [
       {
@@ -1391,6 +1414,7 @@
     "asset_number": "39WNByny3H",
     "serial_number": "uMMiTk14HzbX",
     "delivered_date": "2023-06-07T23:00:00.000Z",
+    "expected_lifetime_days": 613,
     "notes": "FSnzaHN1CJXEArTES0qM",
     "properties": [
       {
@@ -1451,6 +1475,7 @@
     "asset_number": "HrdRfczPgP",
     "serial_number": "mYASsvdQHX3I",
     "delivered_date": "2023-05-20T23:00:00.000Z",
+    "expected_lifetime_days": 449,
     "notes": "l4RZnZG5Da4DmppHqtnB",
     "properties": [
       {
@@ -1511,6 +1536,7 @@
     "asset_number": "UBxl9S7bkv",
     "serial_number": "g8VFc2ueZ4UB",
     "delivered_date": "2023-12-06T00:00:00.000Z",
+    "expected_lifetime_days": 815,
     "notes": "SBpsVRQX1r6tzoFlduYD",
     "properties": [
       {
@@ -1571,6 +1597,7 @@
     "asset_number": "zYM32EelLw",
     "serial_number": "W4cQL3af44p4",
     "delivered_date": "2023-07-12T23:00:00.000Z",
+    "expected_lifetime_days": 3124,
     "notes": "J8DDLjTdjFATRIJK4Wua",
     "properties": [
       {
@@ -1631,6 +1658,7 @@
     "asset_number": "OPi9uc8ZPA",
     "serial_number": "m9SEm9j32WFv",
     "delivered_date": "2023-02-28T00:00:00.000Z",
+    "expected_lifetime_days": 3635,
     "notes": "H7UkdViPt1Hv4iWGNf22",
     "properties": [
       {
@@ -1691,6 +1719,7 @@
     "asset_number": "SEMoP9HTdc",
     "serial_number": "ZavEEOlGRi6w",
     "delivered_date": "2023-08-08T23:00:00.000Z",
+    "expected_lifetime_days": 316,
     "notes": "SrkFRGCf7kE1rzevglLk",
     "properties": [
       {
@@ -1751,6 +1780,7 @@
     "asset_number": "dzBCVlaB5D",
     "serial_number": "tj67Q5XjT4fG",
     "delivered_date": "2023-09-18T23:00:00.000Z",
+    "expected_lifetime_days": 3598,
     "notes": "Wb6brgHLdoGLHgS5gj02",
     "properties": [
       {
@@ -1811,6 +1841,7 @@
     "asset_number": "dZdmLQpl4K",
     "serial_number": "SgEnbfb2W1yC",
     "delivered_date": "2023-04-24T23:00:00.000Z",
+    "expected_lifetime_days": null,
     "notes": "b54FfMW2M7A621XjyoVT",
     "properties": [
       {
@@ -1871,6 +1902,7 @@
     "asset_number": "YCQtUyUiBd",
     "serial_number": "iL99Tit8XOAk",
     "delivered_date": "2023-10-22T23:00:00.000Z",
+    "expected_lifetime_days": 2677,
     "notes": "eB0HQjbPaRpRbg9uCrCn",
     "properties": [
       {
@@ -1931,6 +1963,7 @@
     "asset_number": "RdUjFYsWXY",
     "serial_number": "D9LEiOzsEKrG",
     "delivered_date": "2023-06-02T23:00:00.000Z",
+    "expected_lifetime_days": 647,
     "notes": "TOlaWXKwh2mappCGTvbo",
     "properties": [
       {
@@ -1991,6 +2024,7 @@
     "asset_number": "Gpy8qkLGGo",
     "serial_number": "OE9gyMQTLMK5",
     "delivered_date": "2023-08-31T23:00:00.000Z",
+    "expected_lifetime_days": 2778,
     "notes": "0g2HeXdAu6sQgAThUpOk",
     "properties": [
       {
@@ -2051,6 +2085,7 @@
     "asset_number": "xuNsb8qsAr",
     "serial_number": "QnfSKahnQuze",
     "delivered_date": "2023-08-10T23:00:00.000Z",
+    "expected_lifetime_days": 1862,
     "notes": "mqfHIbzHVIgut8iWcKEE",
     "properties": [
       {
@@ -2111,6 +2146,7 @@
     "asset_number": "g1fVgqkI6n",
     "serial_number": "vDlT86oLEatk",
     "delivered_date": "2023-03-17T00:00:00.000Z",
+    "expected_lifetime_days": 1735,
     "notes": "6rb6SbFbPa4g2k14uwly",
     "properties": [
       {
@@ -2171,6 +2207,7 @@
     "asset_number": "t8f8FVgO3q",
     "serial_number": "qk14UTxpHArR",
     "delivered_date": "2023-10-23T23:00:00.000Z",
+    "expected_lifetime_days": 3566,
     "notes": "lo41WwSqJChzvp0W4ozn",
     "properties": [
       {
@@ -2231,6 +2268,7 @@
     "asset_number": "gEeZQirWXW",
     "serial_number": "A8piSndIIgqe",
     "delivered_date": "2023-09-19T23:00:00.000Z",
+    "expected_lifetime_days": 1875,
     "notes": "pbvZMcIMMkn4NZUHV1bP",
     "properties": [
       {
@@ -2291,6 +2329,7 @@
     "asset_number": "jbT0fUj6jy",
     "serial_number": "wFVfKWnafXPO",
     "delivered_date": "2023-03-31T23:00:00.000Z",
+    "expected_lifetime_days": null,
     "notes": "7zsvcjOZItM2om4IttzI",
     "properties": [
       {
@@ -2351,6 +2390,7 @@
     "asset_number": "Mhg4PNjLaC",
     "serial_number": "Vuisgn2orN3y",
     "delivered_date": "2023-03-20T00:00:00.000Z",
+    "expected_lifetime_days": 2378,
     "notes": "19SOsha06iilt09uOmI3",
     "properties": [
       {
@@ -2411,6 +2451,7 @@
     "asset_number": "pqiH6KrPtV",
     "serial_number": "A29moUCuvUyg",
     "delivered_date": "2023-04-30T23:00:00.000Z",
+    "expected_lifetime_days": 967,
     "notes": "OgTpFwkby1xtrBeN3KkF",
     "properties": [
       {
@@ -2471,6 +2512,7 @@
     "asset_number": "v4aOQlVsFL",
     "serial_number": "NyDRnzDtOGKv",
     "delivered_date": "2023-06-15T23:00:00.000Z",
+    "expected_lifetime_days": 2903,
     "notes": "70XSDEmGWvrqeJspfwdq",
     "properties": [
       {
@@ -2531,6 +2573,7 @@
     "asset_number": "K5BVFot8Oc",
     "serial_number": "iG8Od1ZJwagi",
     "delivered_date": "2023-03-08T00:00:00.000Z",
+    "expected_lifetime_days": 1709,
     "notes": "TZU8dsiphO29cjjXJnj0",
     "properties": [
       {
@@ -2591,6 +2634,7 @@
     "asset_number": "k7pisKT3oK",
     "serial_number": "MBpSxvq7NR6d",
     "delivered_date": "2023-06-22T23:00:00.000Z",
+    "expected_lifetime_days": 707,
     "notes": "5Hxlc8wubaaCMJKyW2pe",
     "properties": [
       {
@@ -2651,6 +2695,7 @@
     "asset_number": "76CU46exWG",
     "serial_number": "gm49DraDkAgp",
     "delivered_date": "2023-08-20T23:00:00.000Z",
+    "expected_lifetime_days": 291,
     "notes": "QlOySGHcMoCm0aIvx0dL",
     "properties": [
       {
@@ -2711,6 +2756,7 @@
     "asset_number": "sMhldy95TL",
     "serial_number": "Ts65G0V2V8fz",
     "delivered_date": "2023-10-03T23:00:00.000Z",
+    "expected_lifetime_days": 3291,
     "notes": "m0eUVVC4pzO1BVca5bmE",
     "properties": [
       {
@@ -2771,6 +2817,7 @@
     "asset_number": "BiJ5SjV6Ik",
     "serial_number": "4OoFLykH5hQ5",
     "delivered_date": "2023-08-18T23:00:00.000Z",
+    "expected_lifetime_days": 3225,
     "notes": "bN0cEZy2sGJigVU9EThg",
     "properties": [
       {
@@ -2831,6 +2878,7 @@
     "asset_number": "F35bSEHEqa",
     "serial_number": "7ClA2rtITNxZ",
     "delivered_date": "2023-05-09T23:00:00.000Z",
+    "expected_lifetime_days": 2070,
     "notes": "I6chLssP7qfvy0zi7ZqI",
     "properties": [
       {
@@ -2891,6 +2939,7 @@
     "asset_number": "0etHDZ3ehA",
     "serial_number": "RncNJlDk1pXC",
     "delivered_date": "2023-07-31T23:00:00.000Z",
+    "expected_lifetime_days": 400,
     "notes": null,
     "properties": [
       {
@@ -2951,6 +3000,7 @@
     "asset_number": "XasGoaPGES",
     "serial_number": "XIFbuOf7x2JI",
     "delivered_date": "2023-07-04T23:00:00.000Z",
+    "expected_lifetime_days": 322,
     "notes": "HO5uwc0jWJBLBpQzanYe",
     "properties": [
       {
@@ -3011,6 +3061,7 @@
     "asset_number": "ppZwMpjLbZ",
     "serial_number": "hLX8zMTw40cN",
     "delivered_date": "2023-04-13T23:00:00.000Z",
+    "expected_lifetime_days": 1609,
     "notes": "TiYK2dbSza2dhdimSogM",
     "properties": [
       {
@@ -3071,6 +3122,7 @@
     "asset_number": "esSaESREVM",
     "serial_number": null,
     "delivered_date": "2023-11-06T00:00:00.000Z",
+    "expected_lifetime_days": 1609,
     "notes": "MJuSPgXEiXmBbf1Vlq4B",
     "properties": [
       {
@@ -3131,6 +3183,7 @@
     "asset_number": "HCPbzzzanH",
     "serial_number": "tWdvjircsEhc",
     "delivered_date": "2023-01-14T00:00:00.000Z",
+    "expected_lifetime_days": 3501,
     "notes": "TnB0SBoekEtWRijmClwV",
     "properties": [
       {
@@ -3191,6 +3244,7 @@
     "asset_number": "f1YUdE0xHZ",
     "serial_number": "t8b8ayBNKPj2",
     "delivered_date": "2023-01-25T00:00:00.000Z",
+    "expected_lifetime_days": 936,
     "notes": "3lgyY5z44oUOiG0gcKmW",
     "properties": [
       {
@@ -3251,6 +3305,7 @@
     "asset_number": "iNbAd08N1f",
     "serial_number": "WjCDOrcWjKSL",
     "delivered_date": "2023-06-01T23:00:00.000Z",
+    "expected_lifetime_days": 1029,
     "notes": "kOXtpKKRIpSAcGVTVCE7",
     "properties": [
       {
@@ -3311,6 +3366,7 @@
     "asset_number": "1Z329kWMfP",
     "serial_number": "KE9pTfWhDdI0",
     "delivered_date": "2023-12-21T00:00:00.000Z",
+    "expected_lifetime_days": 1309,
     "notes": "DsWPDuHRWxg6CmVAf9GR",
     "properties": [
       {
@@ -3371,6 +3427,7 @@
     "asset_number": "fA52G4qZbT",
     "serial_number": "RBHV0wW4bp9o",
     "delivered_date": "2023-02-16T00:00:00.000Z",
+    "expected_lifetime_days": null,
     "notes": "oa4cODzQ2Tqy64F6ftzb",
     "properties": [
       {
@@ -3431,6 +3488,7 @@
     "asset_number": "sDMu5XJQAs",
     "serial_number": "jnHUupj5uwqG",
     "delivered_date": "2023-12-04T00:00:00.000Z",
+    "expected_lifetime_days": 3335,
     "notes": "aaIyQyHJQZiOpfkeldM3",
     "properties": [
       {
@@ -3491,6 +3549,7 @@
     "asset_number": "d9Gl4GJkM3",
     "serial_number": "yVNyQ6iP56Pb",
     "delivered_date": "2023-05-07T23:00:00.000Z",
+    "expected_lifetime_days": 1387,
     "notes": "fcFJlCw60OHBnpppVuuy",
     "properties": [
       {
@@ -3551,6 +3610,7 @@
     "asset_number": "UX5EYGkY0r",
     "serial_number": "1Ibr13NzphA2",
     "delivered_date": "2023-09-12T23:00:00.000Z",
+    "expected_lifetime_days": 2857,
     "notes": "cP3UeAmUXkLeraszAU2P",
     "properties": [
       {
@@ -3611,6 +3671,7 @@
     "asset_number": "RKUrdKtxXg",
     "serial_number": "QrDADWQ0f9iB",
     "delivered_date": "2023-10-12T23:00:00.000Z",
+    "expected_lifetime_days": 1050,
     "notes": "FczfYKxdgJ1qjF3Pv37O",
     "properties": [
       {
@@ -3671,6 +3732,7 @@
     "asset_number": "RaAghChWnA",
     "serial_number": "SBNwIdVkOgMf",
     "delivered_date": "2023-11-30T00:00:00.000Z",
+    "expected_lifetime_days": 1080,
     "notes": "Zdu7DBsagcmkNk6TBXNq",
     "properties": [
       {
@@ -3731,6 +3793,7 @@
     "asset_number": "fzXT3sY5MO",
     "serial_number": "qBg8g7vS0unH",
     "delivered_date": "2023-08-31T23:00:00.000Z",
+    "expected_lifetime_days": 1647,
     "notes": "MasqBVp9cqsVg6xxCGUN",
     "properties": [
       {
@@ -3791,6 +3854,7 @@
     "asset_number": "V2sT9Kr4kS",
     "serial_number": "7aMMWUo0x3sD",
     "delivered_date": "2023-01-31T00:00:00.000Z",
+    "expected_lifetime_days": 1685,
     "notes": "CysscJiHpAoMZcnxuxA5",
     "properties": [
       {
@@ -3851,6 +3915,7 @@
     "asset_number": "704zw8Zkz3",
     "serial_number": "oaQ5DaWUAwvA",
     "delivered_date": "2023-09-06T23:00:00.000Z",
+    "expected_lifetime_days": 2738,
     "notes": "Jb7GI7gOgMuXtMQNRKrc",
     "properties": [
       {
@@ -3911,6 +3976,7 @@
     "asset_number": "EAEMp8MySD",
     "serial_number": "rUtBAySjoXOl",
     "delivered_date": "2023-11-08T00:00:00.000Z",
+    "expected_lifetime_days": 3056,
     "notes": "dNN8rB1VGNPqamhN0lJF",
     "properties": [
       {
@@ -3971,6 +4037,7 @@
     "asset_number": "PMcGeuQ7dU",
     "serial_number": "6O5EHoFYA1ac",
     "delivered_date": "2022-12-31T00:00:00.000Z",
+    "expected_lifetime_days": null,
     "notes": "qeXF7Zz0hNG5VFL0G69w",
     "properties": [
       {
@@ -4031,6 +4098,7 @@
     "asset_number": "pz437DyFAD",
     "serial_number": "p327Mgp63eCc",
     "delivered_date": "2023-11-14T00:00:00.000Z",
+    "expected_lifetime_days": 3613,
     "notes": "P0KzleB9GtfPseJQh6wb",
     "properties": [
       {
@@ -4091,6 +4159,7 @@
     "asset_number": "0wcG7meqmi",
     "serial_number": "hvn1DWBvxlV9",
     "delivered_date": "2023-02-21T00:00:00.000Z",
+    "expected_lifetime_days": 655,
     "notes": "tn0lbLTQvKSrEsidgjoF",
     "properties": [
       {
@@ -4151,6 +4220,7 @@
     "asset_number": "OXR7kCR7Rk",
     "serial_number": "7lv3EYQEoN9Q",
     "delivered_date": "2023-10-11T23:00:00.000Z",
+    "expected_lifetime_days": 1269,
     "notes": "W8esG8PuOqb6uxzld57E",
     "properties": [
       {
@@ -4211,6 +4281,7 @@
     "asset_number": "FBr0hfc9rm",
     "serial_number": "GgmfKFuaQ8fG",
     "delivered_date": "2023-03-17T00:00:00.000Z",
+    "expected_lifetime_days": 613,
     "notes": "XQXwzMakopdmlfY7uxGU",
     "properties": [
       {
@@ -4271,6 +4342,7 @@
     "asset_number": "9yXM4s2iWF",
     "serial_number": "CvdqMwW4JgSG",
     "delivered_date": "2023-07-26T23:00:00.000Z",
+    "expected_lifetime_days": 449,
     "notes": "zqtIgH3mpkgZShJFMYq4",
     "properties": [
       {
@@ -4331,6 +4403,7 @@
     "asset_number": "SrTFhdYgSv",
     "serial_number": "jZF6EMG68teY",
     "delivered_date": "2023-08-24T23:00:00.000Z",
+    "expected_lifetime_days": 815,
     "notes": "Dy4OXkjqN6PGE7w9Icpt",
     "properties": [
       {
@@ -4391,6 +4464,7 @@
     "asset_number": "C70UGm5jfM",
     "serial_number": "55pemAkvPyol",
     "delivered_date": "2023-07-23T23:00:00.000Z",
+    "expected_lifetime_days": 3124,
     "notes": "UKEbzonQwCnD0F1iCXmr",
     "properties": [
       {
@@ -4451,6 +4525,7 @@
     "asset_number": "y8Qnfo1yfb",
     "serial_number": "leIAOaq0jDmc",
     "delivered_date": "2023-12-09T00:00:00.000Z",
+    "expected_lifetime_days": 3635,
     "notes": "ePxKZbqyOYfdg2oUPZT2",
     "properties": [
       {
@@ -4511,6 +4586,7 @@
     "asset_number": "PsDMcKTLpv",
     "serial_number": "ucHlT5szXSS8",
     "delivered_date": "2023-11-06T00:00:00.000Z",
+    "expected_lifetime_days": 316,
     "notes": "7XP1xsEKkZeyx1bZ8QY2",
     "properties": [
       {
@@ -4571,6 +4647,7 @@
     "asset_number": "uIoPWYm7JJ",
     "serial_number": "t637sUpzfeAR",
     "delivered_date": "2023-02-14T00:00:00.000Z",
+    "expected_lifetime_days": 3598,
     "notes": "np5yb0TW3Xc92NEp42UG",
     "properties": [
       {
@@ -4631,6 +4708,7 @@
     "asset_number": "W9d9jfaQ5v",
     "serial_number": "1TFZy89UhYqi",
     "delivered_date": "2023-06-04T23:00:00.000Z",
+    "expected_lifetime_days": null,
     "notes": "L7JEBJQ6ENBFVihedd37",
     "properties": [
       {
@@ -4691,6 +4769,7 @@
     "asset_number": "wAyYKizgM0",
     "serial_number": "K13kblTOlu1r",
     "delivered_date": "2023-08-04T23:00:00.000Z",
+    "expected_lifetime_days": 2677,
     "notes": "iRLEFGlpFqKBbgwQtbhz",
     "properties": [
       {
@@ -4751,6 +4830,7 @@
     "asset_number": "YTj79hjP32",
     "serial_number": "vUOJuAIiLcb8",
     "delivered_date": "2023-07-21T23:00:00.000Z",
+    "expected_lifetime_days": 647,
     "notes": "oaHsbxiD2w3w1owlDtrc",
     "properties": [
       {
@@ -4811,6 +4891,7 @@
     "asset_number": "JmIS31Bj1D",
     "serial_number": "l9cjmXh72muk",
     "delivered_date": "2023-02-14T00:00:00.000Z",
+    "expected_lifetime_days": 2778,
     "notes": "oAxASPzyj6o9qOoA1m26",
     "properties": [
       {
@@ -4871,6 +4952,7 @@
     "asset_number": "qJ9XZS38hu",
     "serial_number": "0Zlb9C5GU9uY",
     "delivered_date": "2023-09-18T23:00:00.000Z",
+    "expected_lifetime_days": 1862,
     "notes": "19MwwDn67hCxkKEulAiY",
     "properties": [
       {
@@ -4931,6 +5013,7 @@
     "asset_number": "aWzXoidRKd",
     "serial_number": "bJMbHZ0Wmzvc",
     "delivered_date": "2023-06-19T23:00:00.000Z",
+    "expected_lifetime_days": 1735,
     "notes": "N8b9qSbVQOEKbhhKaoss",
     "properties": [
       {
@@ -4991,6 +5074,7 @@
     "asset_number": "t8enN6SqOo",
     "serial_number": "H4sJT1kh7587",
     "delivered_date": "2023-10-25T23:00:00.000Z",
+    "expected_lifetime_days": 3566,
     "notes": "M25QDk8ps1gpWaa7P0Zx",
     "properties": [
       {
@@ -5051,6 +5135,7 @@
     "asset_number": "oZMmaiiJ7n",
     "serial_number": "oLqfPXfXGOYP",
     "delivered_date": "2023-06-14T23:00:00.000Z",
+    "expected_lifetime_days": 1875,
     "notes": "fwGzmvs2XDBD3l25FuSF",
     "properties": [
       {
@@ -5111,6 +5196,7 @@
     "asset_number": "H6Pba9ueSv",
     "serial_number": "tU96Bdx432FW",
     "delivered_date": "2023-11-15T00:00:00.000Z",
+    "expected_lifetime_days": null,
     "notes": "rbaSKsMVUq3MiwnjLVww",
     "properties": [
       {
@@ -5171,6 +5257,7 @@
     "asset_number": "H2Mm5EkOkl",
     "serial_number": "kn3rfkSsqR38",
     "delivered_date": "2023-12-04T00:00:00.000Z",
+    "expected_lifetime_days": 2378,
     "notes": "paPSDnitwYuvVtxL5sQC",
     "properties": [
       {
@@ -5231,6 +5318,7 @@
     "asset_number": "WffviNBr87",
     "serial_number": "p7D7Yz9kk0WK",
     "delivered_date": "2023-07-09T23:00:00.000Z",
+    "expected_lifetime_days": 967,
     "notes": "kmpVdVNR4JzGioRKLQxl",
     "properties": [
       {
@@ -5291,6 +5379,7 @@
     "asset_number": "HTGstO62bW",
     "serial_number": "Ze1gGXYcttas",
     "delivered_date": "2023-03-26T00:00:00.000Z",
+    "expected_lifetime_days": 2903,
     "notes": "r9D8b8fBQFRAW87GR121",
     "properties": [
       {
@@ -5351,6 +5440,7 @@
     "asset_number": "i9VmmBPt9y",
     "serial_number": "Paq4h96AFKpc",
     "delivered_date": "2023-12-10T00:00:00.000Z",
+    "expected_lifetime_days": 1709,
     "notes": "HnmjJTblif32RvKTDk0Q",
     "properties": [
       {
@@ -5411,6 +5501,7 @@
     "asset_number": "OfNefMBIkG",
     "serial_number": "R3QmpkSMiP9d",
     "delivered_date": "2023-09-19T23:00:00.000Z",
+    "expected_lifetime_days": 707,
     "notes": "PZv76qeNiogTQigT4z6Q",
     "properties": [
       {
@@ -5471,6 +5562,7 @@
     "asset_number": "3tqFQ4johk",
     "serial_number": "PA03nyfbT1LQ",
     "delivered_date": "2023-03-08T00:00:00.000Z",
+    "expected_lifetime_days": 291,
     "notes": "69AqXbZsEKsWDiBfiJCC",
     "properties": [
       {
@@ -5531,6 +5623,7 @@
     "asset_number": "NZCKQc7DqH",
     "serial_number": "jIbE9HHkvPrT",
     "delivered_date": "2023-04-16T23:00:00.000Z",
+    "expected_lifetime_days": 3291,
     "notes": "VmRODDcssMkCvergWZfX",
     "properties": [
       {
@@ -5591,6 +5684,7 @@
     "asset_number": "U7D4kZTjjY",
     "serial_number": "ju3oKqeE7NJj",
     "delivered_date": "2023-09-19T23:00:00.000Z",
+    "expected_lifetime_days": 3225,
     "notes": "GmAKeRYp6z5vhRr4nVl9",
     "properties": [
       {
@@ -5651,6 +5745,7 @@
     "asset_number": "jjalu69Dyo",
     "serial_number": "8BkDWOabmXu9",
     "delivered_date": "2023-09-14T23:00:00.000Z",
+    "expected_lifetime_days": 2070,
     "notes": "Zu7xmpN4OBrSTuj9cvjU",
     "properties": [
       {
@@ -5711,6 +5806,7 @@
     "asset_number": "dL5vRh5NcA",
     "serial_number": "uDDtFVuSfPjp",
     "delivered_date": "2023-11-10T00:00:00.000Z",
+    "expected_lifetime_days": 400,
     "notes": "TMfF4IVxciK9veXOuLoJ",
     "properties": [
       {
@@ -5771,6 +5867,7 @@
     "asset_number": "IsPWbfyDqp",
     "serial_number": "Ud1zdU0jRAX4",
     "delivered_date": "2023-07-10T23:00:00.000Z",
+    "expected_lifetime_days": 322,
     "notes": "I9X92SWzvVpmd1N1VJY0",
     "properties": [
       {
@@ -5831,6 +5928,7 @@
     "asset_number": "NCYJ6dRWLL",
     "serial_number": "GYBR5Jf9z24M",
     "delivered_date": "2023-02-03T00:00:00.000Z",
+    "expected_lifetime_days": 1609,
     "notes": "wE4ynT4wxnVybP9m76so",
     "properties": [
       {
@@ -5891,6 +5989,7 @@
     "asset_number": "M3Hn516fQk",
     "serial_number": "srpHdX9qAXGG",
     "delivered_date": "2023-12-09T00:00:00.000Z",
+    "expected_lifetime_days": 3501,
     "notes": "SWWPeu9KsgC8xJ5Z3T2j",
     "properties": [
       {
@@ -5951,6 +6050,7 @@
     "asset_number": "o9YJkR9Dfd",
     "serial_number": "8nnlIEE06rry",
     "delivered_date": "2023-07-25T23:00:00.000Z",
+    "expected_lifetime_days": 936,
     "notes": "hlm1TXSd14GvCEpXjpaS",
     "properties": [
       {
@@ -6011,6 +6111,7 @@
     "asset_number": "l0hshTahMz",
     "serial_number": "0QcKayBCxRm4",
     "delivered_date": "2023-06-11T23:00:00.000Z",
+    "expected_lifetime_days": 1029,
     "notes": "XE7X5RfIo74INbYlSYlX",
     "properties": [
       {
@@ -6043,6 +6144,7 @@
     "asset_number": "WFsVqmP6v2",
     "serial_number": "AkeNZy9eKNrd",
     "delivered_date": "2023-09-11T23:00:00.000Z",
+    "expected_lifetime_days": 1309,
     "notes": "A9BbgQVzJPpGIchpylgD",
     "properties": [
       {
@@ -6075,6 +6177,7 @@
     "asset_number": "7QfQgFLdGv",
     "serial_number": "NRbLRxbQU4Da",
     "delivered_date": "2023-03-18T00:00:00.000Z",
+    "expected_lifetime_days": null,
     "notes": "7yWecXdROPlQBBO9Opr0",
     "properties": [
       {
@@ -6107,6 +6210,7 @@
     "asset_number": "povXLfE0LC",
     "serial_number": "qKcw2send4S8",
     "delivered_date": "2023-12-12T00:00:00.000Z",
+    "expected_lifetime_days": 3335,
     "notes": "fPFug3zQLTlI2SzSeYoH",
     "properties": [
       {
@@ -6139,6 +6243,7 @@
     "asset_number": "t9eMaje1Kk",
     "serial_number": "yrWdBzgem974",
     "delivered_date": "2023-08-01T23:00:00.000Z",
+    "expected_lifetime_days": 1387,
     "notes": "nMTHY5q321cc3HKN6YV8",
     "properties": [
       {
@@ -6164,6 +6269,7 @@
     "asset_number": "UCxtx20PV1",
     "serial_number": "rmI7fyfJ71kR",
     "delivered_date": "2023-05-21T23:00:00.000Z",
+    "expected_lifetime_days": 2857,
     "notes": "jUBNzZz7NWo6HYSFU2NE",
     "properties": [
       {
@@ -6189,6 +6295,7 @@
     "asset_number": "UdZhUouSQZ",
     "serial_number": "i9Ui6Dtx2yhM",
     "delivered_date": "2023-01-23T00:00:00.000Z",
+    "expected_lifetime_days": 1050,
     "notes": "XLSZVe0BtZuNzrNk1Yqn",
     "properties": [
       {
@@ -6214,6 +6321,7 @@
     "asset_number": "FnGqKraQjR",
     "serial_number": "xqQdiS6Eack5",
     "delivered_date": "2023-04-02T23:00:00.000Z",
+    "expected_lifetime_days": 1080,
     "notes": "aZQ98smccMGxE0UQnjgJ",
     "properties": [
       {
@@ -6239,6 +6347,7 @@
     "asset_number": "35gYMrHOic",
     "serial_number": "uRNEPRjrC3Pu",
     "delivered_date": "2023-10-06T23:00:00.000Z",
+    "expected_lifetime_days": 1647,
     "notes": "6WZTM8lKdcpw4UCZeCLW",
     "properties": [
       {
@@ -6271,6 +6380,7 @@
     "asset_number": "xvi6mVpZ4f",
     "serial_number": "6tht50p1oIzo",
     "delivered_date": "2023-01-13T00:00:00.000Z",
+    "expected_lifetime_days": 1685,
     "notes": "cL6Q2NTE6GqE5Sp7ePtk",
     "properties": [
       {
@@ -6303,6 +6413,7 @@
     "asset_number": "w53yViuvXC",
     "serial_number": "m96paPN4YTMg",
     "delivered_date": "2023-03-16T00:00:00.000Z",
+    "expected_lifetime_days": 2738,
     "notes": "WbNStiAdEtOv3LPWAEUF",
     "properties": [
       {
@@ -6335,6 +6446,7 @@
     "asset_number": "OhMFFcRsrU",
     "serial_number": "ipUax25efRtk",
     "delivered_date": "2023-12-22T00:00:00.000Z",
+    "expected_lifetime_days": 3056,
     "notes": "O4cUeqVkNa7eFXH7YpSq",
     "properties": [
       {
@@ -6367,6 +6479,7 @@
     "asset_number": "prTExHgpPW",
     "serial_number": "waVg3NP9745x",
     "delivered_date": "2023-06-15T23:00:00.000Z",
+    "expected_lifetime_days": null,
     "notes": "c3ZcQIwtfhS7JGYETSaj",
     "properties": [
       {
@@ -6399,6 +6512,7 @@
     "asset_number": "uLuMI0o2xu",
     "serial_number": "RF4B8pyFq6fE",
     "delivered_date": "2023-04-03T23:00:00.000Z",
+    "expected_lifetime_days": 3613,
     "notes": "Q2SXr0B4ZzxYnqjPlZYG",
     "properties": [
       {
@@ -6431,6 +6545,7 @@
     "asset_number": "a2daotAPxx",
     "serial_number": "4bZgk2nHa0Np",
     "delivered_date": "2023-06-29T23:00:00.000Z",
+    "expected_lifetime_days": 655,
     "notes": "FTK9dhzrtGqQjPMrxID9",
     "properties": [
       {
@@ -6463,6 +6578,7 @@
     "asset_number": "HrMMDpTomS",
     "serial_number": "WbSNegUNzsNp",
     "delivered_date": "2023-01-17T00:00:00.000Z",
+    "expected_lifetime_days": 1269,
     "notes": "r267SmNjpa5EE7p24pfI",
     "properties": [
       {
@@ -6495,6 +6611,7 @@
     "asset_number": "Aywk6uL8rF",
     "serial_number": "0xRfeqS9wA8G",
     "delivered_date": "2023-09-09T23:00:00.000Z",
+    "expected_lifetime_days": 613,
     "notes": "MkNfDx3h49wRquYCsZ1a",
     "properties": [
       {
@@ -6527,6 +6644,7 @@
     "asset_number": "DHJIsl1PVf",
     "serial_number": "7D6pgSkBJzWa",
     "delivered_date": "2023-03-17T00:00:00.000Z",
+    "expected_lifetime_days": 449,
     "notes": "HuxxAdajO5nkuY6d7tal",
     "properties": [
       {
@@ -6559,6 +6677,7 @@
     "asset_number": "e69Vt1PpzE",
     "serial_number": "SOMWBgZWrpjM",
     "delivered_date": "2023-06-09T23:00:00.000Z",
+    "expected_lifetime_days": 815,
     "notes": "7ax4Qzsby2zvrbfEpnzM",
     "properties": [
       {
@@ -6591,6 +6710,7 @@
     "asset_number": "7mRngDtH6V",
     "serial_number": "QJVElgsW16Z9",
     "delivered_date": "2023-10-23T23:00:00.000Z",
+    "expected_lifetime_days": 3124,
     "notes": "4GSxE58WgBmqUumlkiSn",
     "properties": [
       {
@@ -6623,6 +6743,7 @@
     "asset_number": "02g22MjY2i",
     "serial_number": "jAphNpoQdfoW",
     "delivered_date": null,
+    "expected_lifetime_days": 3635,
     "notes": "mGnfL5356frGo54nMqZo",
     "properties": [
       {
@@ -6655,6 +6776,7 @@
     "asset_number": "GJDMPonl8K",
     "serial_number": "MAha1fWLcYC6",
     "delivered_date": "2023-08-24T23:00:00.000Z",
+    "expected_lifetime_days": 316,
     "notes": "y7s8pFWj0SupMlmwI4sG",
     "properties": [
       {
@@ -6687,6 +6809,7 @@
     "asset_number": "L3fGkOZeTh",
     "serial_number": "ZUvfW7i0k2Jz",
     "delivered_date": "2023-02-05T00:00:00.000Z",
+    "expected_lifetime_days": 3598,
     "notes": "afivPs2rgMEAC1oVqVPw",
     "properties": [
       {
@@ -6719,6 +6842,7 @@
     "asset_number": "gPI9uoz3IZ",
     "serial_number": "RbqvXYE5B0PV",
     "delivered_date": "2023-08-20T23:00:00.000Z",
+    "expected_lifetime_days": null,
     "notes": "ACabG7FjejN5xJ6CTE01",
     "properties": [
       {
@@ -6751,6 +6875,7 @@
     "asset_number": "DEAbxBGr2M",
     "serial_number": "dfzqkOJbqifO",
     "delivered_date": "2023-06-15T23:00:00.000Z",
+    "expected_lifetime_days": 2677,
     "notes": "uaw8BqYE3vMI5CmOJgFP",
     "properties": [
       {
@@ -6783,6 +6908,7 @@
     "asset_number": "lZsBiRCUUs",
     "serial_number": "tenrMn1KOmIg",
     "delivered_date": "2023-06-06T23:00:00.000Z",
+    "expected_lifetime_days": 647,
     "notes": "esdlch8Z8do7eCzUBkMM",
     "properties": [
       {
@@ -6815,6 +6941,7 @@
     "asset_number": "YRUe8yPL0K",
     "serial_number": "eUc80U7FqJum",
     "delivered_date": "2023-07-04T23:00:00.000Z",
+    "expected_lifetime_days": 2778,
     "notes": "pJFVQDGwb4BuBsMt5upM",
     "properties": [
       {
@@ -6847,6 +6974,7 @@
     "asset_number": "uHs45w4E3T",
     "serial_number": "WrgqAVk3qUQK",
     "delivered_date": "2023-10-10T23:00:00.000Z",
+    "expected_lifetime_days": 1862,
     "notes": "N2mwM2j2UNv3ODTyJsp8",
     "properties": [
       {
@@ -6879,6 +7007,7 @@
     "asset_number": "xcgARVjROT",
     "serial_number": "IiMvRfRwgbpp",
     "delivered_date": "2023-02-25T00:00:00.000Z",
+    "expected_lifetime_days": 1735,
     "notes": "ZWO0b2rsLQaKvlNdt33q",
     "properties": [
       {
@@ -6911,6 +7040,7 @@
     "asset_number": "QwsqPQq8GD",
     "serial_number": "J17ILkc1IBDF",
     "delivered_date": "2023-09-14T23:00:00.000Z",
+    "expected_lifetime_days": 3566,
     "notes": "OKpsFysikeIw0nhIlowt",
     "properties": [
       {
@@ -6943,6 +7073,7 @@
     "asset_number": "tSU6CAzHmc",
     "serial_number": "UxDBotf7cgsi",
     "delivered_date": "2023-01-10T00:00:00.000Z",
+    "expected_lifetime_days": 1875,
     "notes": "CSv9YXp4MejhaoTCna0N",
     "properties": [
       {
@@ -6975,6 +7106,7 @@
     "asset_number": "ihonHCeQvs",
     "serial_number": "NOEjCgiPperh",
     "delivered_date": "2023-01-20T00:00:00.000Z",
+    "expected_lifetime_days": null,
     "notes": "aRfNiI7QIRy5WjaB1uPP",
     "properties": [
       {
@@ -7007,6 +7139,7 @@
     "asset_number": "0ORclNoF7a",
     "serial_number": "5R491SmALagI",
     "delivered_date": "2023-05-30T23:00:00.000Z",
+    "expected_lifetime_days": 2378,
     "notes": "RFPZIGLZmBxTebM1VLJp",
     "properties": [
       {
@@ -7039,6 +7172,7 @@
     "asset_number": "UYYvHKIN8B",
     "serial_number": "r0msqDvF28Fm",
     "delivered_date": "2023-02-13T00:00:00.000Z",
+    "expected_lifetime_days": 967,
     "notes": "IBgaqfKL613mnxykkGMn",
     "properties": [
       {
@@ -7071,6 +7205,7 @@
     "asset_number": "RPrzu6wUi6",
     "serial_number": "gFBfnr8i22ov",
     "delivered_date": "2023-03-16T00:00:00.000Z",
+    "expected_lifetime_days": 2903,
     "notes": "NRRRwaUu4SejaENtu5ST",
     "properties": [
       {
@@ -7103,6 +7238,7 @@
     "asset_number": "u6BT8U0Dop",
     "serial_number": "SqEBTUww4vQ5",
     "delivered_date": "2023-03-13T00:00:00.000Z",
+    "expected_lifetime_days": 1709,
     "notes": "klvpXG7MJeTv9FGCavfe",
     "properties": [
       {
@@ -7135,6 +7271,7 @@
     "asset_number": "ZNBnINiagU",
     "serial_number": "wfodMFnbXRID",
     "delivered_date": "2023-09-05T23:00:00.000Z",
+    "expected_lifetime_days": 707,
     "notes": "EwUxqrneXd3WTgii6y2K",
     "properties": [
       {
@@ -7167,6 +7304,7 @@
     "asset_number": "PnH2gufnS4",
     "serial_number": "VYjycpi7fXhE",
     "delivered_date": "2023-11-01T00:00:00.000Z",
+    "expected_lifetime_days": 291,
     "notes": "DGOQAv8mcFDzoFDavVs6",
     "properties": [
       {
@@ -7199,6 +7337,7 @@
     "asset_number": "6kMh3nmRON",
     "serial_number": "MhibwZQ0nFPt",
     "delivered_date": "2023-10-10T23:00:00.000Z",
+    "expected_lifetime_days": 3291,
     "notes": "SidiG6iqyLiqR6msG3fF",
     "properties": [
       {
@@ -7231,6 +7370,7 @@
     "asset_number": "gImjOsvWwC",
     "serial_number": "VTNKXHAWFXdz",
     "delivered_date": "2023-07-10T23:00:00.000Z",
+    "expected_lifetime_days": 3225,
     "notes": "Z84XMNiGLKr0tUkdbRHz",
     "properties": [
       {
@@ -7263,6 +7403,7 @@
     "asset_number": "sk1CtF6RkN",
     "serial_number": "DOzbems9h6iV",
     "delivered_date": "2023-05-26T23:00:00.000Z",
+    "expected_lifetime_days": 2070,
     "notes": "q7LFuhHmqJnUnoXeP2Zz",
     "properties": [
       {
@@ -7295,6 +7436,7 @@
     "asset_number": "4TkqsJuRsG",
     "serial_number": "ZftPea2rIEp6",
     "delivered_date": "2023-02-28T00:00:00.000Z",
+    "expected_lifetime_days": 400,
     "notes": "ZMEFQ9fhzsY6UUhzjwj5",
     "properties": [
       {
@@ -7327,6 +7469,7 @@
     "asset_number": "N9r4KkGq73",
     "serial_number": "J0kIBGvea0l3",
     "delivered_date": "2023-04-15T23:00:00.000Z",
+    "expected_lifetime_days": 322,
     "notes": "lYXgbpvDBDdjXFqRqBbk",
     "properties": [
       {
@@ -7359,6 +7502,7 @@
     "asset_number": "n9xQx48ZBn",
     "serial_number": "eHxlwTgIn0kU",
     "delivered_date": "2023-05-23T23:00:00.000Z",
+    "expected_lifetime_days": 1609,
     "notes": "HbCnhoN9t6ncfCwdiFQQ",
     "properties": [
       {
@@ -7391,6 +7535,7 @@
     "asset_number": "827cdeGGMD",
     "serial_number": "KtuD0GqmJZXh",
     "delivered_date": "2023-02-01T00:00:00.000Z",
+    "expected_lifetime_days": 3501,
     "notes": "8Cim8N0Ta9vEomqhIXz9",
     "properties": [
       {
@@ -7423,6 +7568,7 @@
     "asset_number": "ivCDas6QSB",
     "serial_number": "9fFhbzyG7pZB",
     "delivered_date": "2023-03-21T00:00:00.000Z",
+    "expected_lifetime_days": 936,
     "notes": "azxaxoAtqDJRUMFCYdQC",
     "properties": [
       {
@@ -7455,6 +7601,7 @@
     "asset_number": "Y9Muih8aA8",
     "serial_number": "F9oodz8dhZBx",
     "delivered_date": "2023-09-03T23:00:00.000Z",
+    "expected_lifetime_days": 1029,
     "notes": "q5XnQJ7fxG8JpxL6Hdc0",
     "properties": [
       {
@@ -7487,6 +7634,7 @@
     "asset_number": "2VxQzdndav",
     "serial_number": "q1RFEd6EMt6M",
     "delivered_date": "2023-12-22T00:00:00.000Z",
+    "expected_lifetime_days": 1309,
     "notes": "GZOEMCrKmCJc11Tw17qt",
     "properties": [
       {
@@ -7519,6 +7667,7 @@
     "asset_number": "qyxpzStotS",
     "serial_number": "fpPdJiYde390",
     "delivered_date": "2023-01-03T00:00:00.000Z",
+    "expected_lifetime_days": null,
     "notes": "Q8d89aVlAlaq8O7wkaNB",
     "properties": [
       {
@@ -7558,6 +7707,7 @@
     "asset_number": "DwNOtWZxmd",
     "serial_number": "w2chFAwXR1OO",
     "delivered_date": "2023-06-07T23:00:00.000Z",
+    "expected_lifetime_days": 3335,
     "notes": "0ozhaRt89oKgGtBflaWC",
     "properties": [
       {
@@ -7597,6 +7747,7 @@
     "asset_number": "nK9qTeYXBL",
     "serial_number": "JYDcIbhmAK4I",
     "delivered_date": "2023-03-25T00:00:00.000Z",
+    "expected_lifetime_days": 1387,
     "notes": "y4PVjkQsdFYe5fCL67S4",
     "properties": [
       {
@@ -7636,6 +7787,7 @@
     "asset_number": "zatQd41JcR",
     "serial_number": "yZ1MBXOTK4ch",
     "delivered_date": "2023-03-04T00:00:00.000Z",
+    "expected_lifetime_days": 2857,
     "notes": "xiyI3Rx1bTI1U5RlBwVE",
     "properties": [
       {
@@ -7675,6 +7827,7 @@
     "asset_number": "buhnU6tFhQ",
     "serial_number": "0NPcNvp3QJTz",
     "delivered_date": "2023-10-17T23:00:00.000Z",
+    "expected_lifetime_days": 1050,
     "notes": "nTv79nT4h9EU4dGDEKDr",
     "properties": [
       {
@@ -7714,6 +7867,7 @@
     "asset_number": "SK2hgydfxY",
     "serial_number": "IhJbKTKvuC8r",
     "delivered_date": "2023-10-19T23:00:00.000Z",
+    "expected_lifetime_days": 1080,
     "notes": "lu6YLDaalxqGan2sFQkU",
     "properties": [
       {
@@ -7753,6 +7907,7 @@
     "asset_number": "Gd8tPzVqS0",
     "serial_number": "UFxhZMRAHpVC",
     "delivered_date": "2023-01-24T00:00:00.000Z",
+    "expected_lifetime_days": 1647,
     "notes": "4X1YkNmR1Is39DpDYQN6",
     "properties": [
       {
@@ -7792,6 +7947,7 @@
     "asset_number": "uVzmfTTFWl",
     "serial_number": "BGpOgOpuSS26",
     "delivered_date": "2023-03-08T00:00:00.000Z",
+    "expected_lifetime_days": 1685,
     "notes": "3ETcDRsVc4R87LKJSs7b",
     "properties": [
       {
@@ -7831,6 +7987,7 @@
     "asset_number": "FOwCqPXOGE",
     "serial_number": "xUk0FJnCAe20",
     "delivered_date": "2023-01-23T00:00:00.000Z",
+    "expected_lifetime_days": 2738,
     "notes": "oxMzYyEQBVdG6EXzFyym",
     "properties": [
       {
@@ -7870,6 +8027,7 @@
     "asset_number": "iNnyUUlbM6",
     "serial_number": "tHwTQ3mPzYVY",
     "delivered_date": "2023-02-18T00:00:00.000Z",
+    "expected_lifetime_days": 3056,
     "notes": "19cSv9yHOXgzTPhK6OYw",
     "properties": [
       {
@@ -7909,6 +8067,7 @@
     "asset_number": "83EnZjYvlq",
     "serial_number": "ncou9UruaRbz",
     "delivered_date": "2023-10-24T23:00:00.000Z",
+    "expected_lifetime_days": null,
     "notes": "POqplOixrqfkmKyIRWbQ",
     "properties": [
       {
@@ -7948,6 +8107,7 @@
     "asset_number": "1wgSBhhJU1",
     "serial_number": "sZvN7k08CG9K",
     "delivered_date": "2023-05-30T23:00:00.000Z",
+    "expected_lifetime_days": 3613,
     "notes": "10gCy6XefVYzrmvlem7r",
     "properties": [
       {
@@ -7987,6 +8147,7 @@
     "asset_number": "7HCD6cOz7q",
     "serial_number": "VEZcSuMsPA9x",
     "delivered_date": "2023-10-10T23:00:00.000Z",
+    "expected_lifetime_days": 655,
     "notes": "caaaVHgF7vNEYx4nNep6",
     "properties": [
       {
@@ -8026,6 +8187,7 @@
     "asset_number": "6bYTxauwq3",
     "serial_number": "8Cj9TIHiRJMn",
     "delivered_date": "2023-04-19T23:00:00.000Z",
+    "expected_lifetime_days": 1269,
     "notes": "R6nGA7CvqeQAtqr3oNkV",
     "properties": [
       {
@@ -8065,6 +8227,7 @@
     "asset_number": "ffUJvoGbjN",
     "serial_number": "nFXndOMqAdtE",
     "delivered_date": "2023-04-02T23:00:00.000Z",
+    "expected_lifetime_days": 613,
     "notes": "hwQoaUxxNyTbDFx1afH5",
     "properties": [
       {
@@ -8104,6 +8267,7 @@
     "asset_number": "hGrSPx4vUf",
     "serial_number": "mfFQ8DklKrvy",
     "delivered_date": "2023-02-17T00:00:00.000Z",
+    "expected_lifetime_days": 449,
     "notes": "XdZGJbNMOjmzZF9G5cGC",
     "properties": [
       {
@@ -8143,6 +8307,7 @@
     "asset_number": "WX3XYVFeEu",
     "serial_number": "5xE1KSraISvu",
     "delivered_date": "2023-09-05T23:00:00.000Z",
+    "expected_lifetime_days": 815,
     "notes": "ihwCjMdJ4n7KKcaM34Lj",
     "properties": [
       {
@@ -8175,6 +8340,7 @@
     "asset_number": "WX3XYVFeEu",
     "serial_number": "5xE1KSraISvu",
     "delivered_date": null,
+    "expected_lifetime_days": 3124,
     "notes": "ihwCjMdJ4n7KKcaM34Lj",
     "properties": [
       {
@@ -8207,6 +8373,7 @@
     "asset_number": "RL06KWoFxU",
     "serial_number": "i2L9NVrXgqvb",
     "delivered_date": "2023-03-09T00:00:00.000Z",
+    "expected_lifetime_days": 3635,
     "notes": "iucjXGWhQgL594qqpMg1",
     "properties": [
       {
@@ -8239,6 +8406,7 @@
     "asset_number": "LRhk6qS8Je",
     "serial_number": "EUnvCuq0uxUn",
     "delivered_date": "2023-07-26T23:00:00.000Z",
+    "expected_lifetime_days": 316,
     "notes": "qsg1lklCfv4T2d86rGYN",
     "properties": [
       {
@@ -8271,6 +8439,7 @@
     "asset_number": "4vwy47IdmR",
     "serial_number": "8bzXyk1DpGHf",
     "delivered_date": "2023-09-22T23:00:00.000Z",
+    "expected_lifetime_days": 3598,
     "notes": "Mk0E9IbPEiE3lFIgRKSQ",
     "properties": [
       {
@@ -8303,6 +8472,7 @@
     "asset_number": "4l8tOWtHJv",
     "serial_number": "UyFW7jFKSniX",
     "delivered_date": "2023-07-23T23:00:00.000Z",
+    "expected_lifetime_days": null,
     "notes": "1G6lbRajvSyW9AY3PZu7",
     "properties": [
       {
@@ -8335,6 +8505,7 @@
     "asset_number": "mz4fHfrSu7",
     "serial_number": "yGmHZPkDDsXt",
     "delivered_date": "2023-02-27T00:00:00.000Z",
+    "expected_lifetime_days": 2677,
     "notes": "K8jKu1xe7SH7QxRH3bnK",
     "properties": [
       {
@@ -8367,6 +8538,7 @@
     "asset_number": "ubqONeeYFy",
     "serial_number": "4yPdt6rQN67F",
     "delivered_date": "2023-05-25T23:00:00.000Z",
+    "expected_lifetime_days": 647,
     "notes": "KH7HphnesrazL2UUX5mS",
     "properties": [
       {
@@ -8399,6 +8571,7 @@
     "asset_number": "AFlcDSnsYV",
     "serial_number": "Ux2V200jgsOS",
     "delivered_date": "2023-09-09T23:00:00.000Z",
+    "expected_lifetime_days": 2778,
     "notes": "72fS4ub2GFYZm5huoLC5",
     "properties": [
       {
@@ -8431,6 +8604,7 @@
     "asset_number": "VQSeovQec9",
     "serial_number": "dWnvzeKLqvyd",
     "delivered_date": "2023-06-08T23:00:00.000Z",
+    "expected_lifetime_days": 1862,
     "notes": "u1nV5yJ9mllLJngsx9Ow",
     "properties": [
       {
@@ -8463,6 +8637,7 @@
     "asset_number": "t3hsMbxMrB",
     "serial_number": "sA38Z7EoSB2A",
     "delivered_date": "2023-12-12T00:00:00.000Z",
+    "expected_lifetime_days": 1735,
     "notes": "1eqImgdxuj7UmGQ3aKWY",
     "properties": [
       {
@@ -8495,6 +8670,7 @@
     "asset_number": "h792cv8tPH",
     "serial_number": "PbtWpvUd7zgF",
     "delivered_date": "2023-01-07T00:00:00.000Z",
+    "expected_lifetime_days": 3566,
     "notes": "BdzIYfZOfKhqu7jDro7R",
     "properties": [
       {
@@ -8527,6 +8703,7 @@
     "asset_number": "9uFGhRPcIA",
     "serial_number": "w9mxaiXIXAdC",
     "delivered_date": "2023-01-19T00:00:00.000Z",
+    "expected_lifetime_days": 1875,
     "notes": "uOU65qfPbEad6jNXe8st",
     "properties": [
       {
@@ -8559,6 +8736,7 @@
     "asset_number": "oxekY3Oa0I",
     "serial_number": "tos1yFVlbc59",
     "delivered_date": "2023-03-01T00:00:00.000Z",
+    "expected_lifetime_days": null,
     "notes": "DaZF7fXY2n6XzkUxuDtu",
     "properties": [
       {
@@ -8591,6 +8769,7 @@
     "asset_number": "RHvPE85h5k",
     "serial_number": "AhYikULrwO8a",
     "delivered_date": "2023-01-07T00:00:00.000Z",
+    "expected_lifetime_days": 2378,
     "notes": "3JWYt7hoZw2H3TLxtraW",
     "properties": [
       {
@@ -8623,6 +8802,7 @@
     "asset_number": "2iLdbazySf",
     "serial_number": "F3nomgo4Fqei",
     "delivered_date": "2023-05-04T23:00:00.000Z",
+    "expected_lifetime_days": 967,
     "notes": "vSAN2gQTyG8wd2KVAyQi",
     "properties": [
       {
@@ -8655,6 +8835,7 @@
     "asset_number": "PwOEzVGCjt",
     "serial_number": "aygkOmoTamJk",
     "delivered_date": "2023-09-05T23:00:00.000Z",
+    "expected_lifetime_days": 2903,
     "notes": "AbYjlRBn4FiFXNVr3ltd",
     "properties": [
       {

@@ -234,6 +234,20 @@ export function ItemsTable(props: ItemTableProps) {
           }),
       },
       {
+        header: 'Expected Lifetime (Days)',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => row.item.expected_lifetime_days ?? '',
+        id: 'item.expected_lifetime_days',
+        size: 300,
+        filterVariant: COLUMN_FILTER_VARIANTS.number,
+        filterFn: COLUMN_FILTER_FUNCTIONS.number,
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS.number,
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
+        ],
+        GroupedCell: TableGroupedCell,
+      },
+      {
         header: 'Is Defective',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => (row.item.is_defective === true ? 'Yes' : 'No'),

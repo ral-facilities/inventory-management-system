@@ -181,6 +181,7 @@ describe('items api functions', () => {
         delivered_date: '2023-03-17T00:00:00.000Z',
         id: 'KvT2Ox7n',
         is_defective: false,
+        expected_lifetime_days: 3225,
         notes: '6Y5XTJfBrNNx8oltI9HE',
         properties: [
           {

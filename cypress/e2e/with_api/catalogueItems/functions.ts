@@ -7,7 +7,6 @@ const modifyCatalogueItem = (
     costToReworkGbp?: string;
     daysToReplace: string;
     daysToRework?: string;
-    expectedLifetimeDays?: string;
     drawingNumber?: string;
     drawingLink?: string;
     itemModelNumber?: string;
@@ -61,15 +60,6 @@ const modifyCatalogueItem = (
         cy.findByLabelText('Time to rework (days)').type(values.daysToRework);
       } else {
         cy.findByLabelText('Time to rework (days)').clear();
-      }
-
-      if (values.expectedLifetimeDays) {
-        cy.findByLabelText('Expected Lifetime (days)').clear();
-        cy.findByLabelText('Expected Lifetime (days)').type(
-          values.expectedLifetimeDays
-        );
-      } else {
-        cy.findByLabelText('Expected Lifetime (days)').clear();
       }
 
       if (values.drawingNumber) {
@@ -148,9 +138,6 @@ const modifyCatalogueItem = (
     cy.findByText(values.daysToReplace).should('exist');
 
     if (values.daysToRework) cy.findByText(values.daysToRework).should('exist');
-
-    if (values.expectedLifetimeDays)
-      cy.findByText(values.expectedLifetimeDays).should('exist');
 
     if (values.drawingNumber)
       cy.findByText(values.drawingNumber).should('exist');
@@ -310,7 +297,6 @@ export const addCatalogueItem = (ignoreChecks?: boolean) => {
       costToReworkGbp: '20',
       daysToReplace: '5',
       daysToRework: '1',
-      expectedLifetimeDays: '365',
       drawingLink: 'https://example.com/',
       drawingNumber: 'GH45235324',
       itemModelNumber: 'rew5435453',
@@ -333,7 +319,6 @@ export const editCatalogueItem = () => {
     costGbp: '43.95',
     costToReworkGbp: '20',
     daysToReplace: '5',
-    expectedLifetimeDays: '365',
     drawingLink: 'https://example.com/',
     drawingNumber: 'GH4523566324',
     itemModelNumber: 'rew54359453',

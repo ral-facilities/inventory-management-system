@@ -42,7 +42,6 @@ describe('delete Catalogue Category dialogue', () => {
       cost_to_rework_gbp: null,
       days_to_replace: 0,
       days_to_rework: null,
-      expected_lifetime_days: null,
       drawing_link: null,
       drawing_number: null,
       notes: null,

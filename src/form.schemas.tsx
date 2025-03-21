@@ -509,11 +509,6 @@ export const CatalogueItemDetailsStepSchema = (requestType: RequestType) => {
       invalidTypeErrorMessage: 'Please enter a valid number.',
       min: 0,
     }),
-    expected_lifetime_days: OptionalOrNullableNumberSchema({
-      requestType,
-      invalidTypeErrorMessage: 'Please enter a valid number.',
-      min: 0,
-    }),
     description: OptionalOrNullableStringSchema({ requestType }),
     drawing_number: OptionalOrNullableStringSchema({ requestType }),
     drawing_link: OptionalOrNullableURLSchema({
@@ -612,6 +607,11 @@ export const ItemDetailsStepSchema = (requestType: RequestType) => {
       maxDate: DATE_TODAY,
       minDate: DATE_PICKER_MIN_DATE,
       dateFormatErrorMessage: INVALID_DATE_FORMAT_MESSAGE,
+    }),
+    expected_lifetime_days: OptionalOrNullableNumberSchema({
+      requestType,
+      invalidTypeErrorMessage: 'Please enter a valid number.',
+      min: 0,
     }),
     notes: OptionalOrNullableStringSchema({ requestType }),
   });

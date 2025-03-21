@@ -226,6 +226,15 @@ function ItemsLandingPage() {
 
                             <Grid item xs={12} sm={6} md={4}>
                               <Typography align="left" color="text.primary">
+                                Expected Lifetime (days)
+                              </Typography>
+                              <Typography align="left" color="text.secondary">
+                                {itemData.expected_lifetime_days ?? 'None'}
+                              </Typography>
+                            </Grid>
+
+                            <Grid item xs={12} sm={6} md={4}>
+                              <Typography align="left" color="text.primary">
                                 Delivered Date
                               </Typography>
                               <Typography align="left" color="text.secondary">

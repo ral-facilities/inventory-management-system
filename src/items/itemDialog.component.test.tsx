@@ -45,6 +45,7 @@ describe('ItemDialog', () => {
     purchaseOrderNumber?: string;
     warrantyEndDate?: string;
     deliveredDate?: string;
+    expectedLifetimeDays?: string;
     isDefective?: string;
     usageStatus?: string;
     notes?: string;
@@ -94,6 +95,11 @@ describe('ItemDialog', () => {
         screen.getByLabelText('Delivered date'),
         values.deliveredDate
       );
+
+    if (values.expectedLifetimeDays !== undefined)
+      fireEvent.change(screen.getByLabelText('Expected Lifetime (days)'), {
+        target: { value: values.expectedLifetimeDays },
+      });
 
     if (values.isDefective !== undefined) {
       const isDefectiveAutocomplete = screen.getAllByRole('combobox')[0];
@@ -234,6 +240,7 @@ describe('ItemDialog', () => {
         catalogue_item_id: '1',
         delivered_date: null,
         is_defective: false,
+        expected_lifetime_days: null,
         notes: null,
         properties: [
           { id: '1', value: 12 },
@@ -276,6 +283,7 @@ describe('ItemDialog', () => {
           catalogue_item_id: '1',
           delivered_date: null,
           is_defective: false,
+          expected_lifetime_days: null,
           notes: null,
           properties: [
             {
@@ -395,6 +403,7 @@ describe('ItemDialog', () => {
         catalogue_item_id: '17',
         delivered_date: null,
         is_defective: false,
+        expected_lifetime_days: null,
         notes: null,
         properties: [
           { id: '17', value: 400 },
@@ -422,6 +431,7 @@ describe('ItemDialog', () => {
         notes: 'test',
         warrantyEndDate: '17/02/2035',
         deliveredDate: '23/09/2024',
+        expectedLifetimeDays: '541',
         isDefective: 'Y{arrowdown}{enter}',
         usageStatus: 'U{arrowdown}{enter}',
       });
@@ -450,6 +460,7 @@ describe('ItemDialog', () => {
         catalogue_item_id: '1',
         delivered_date: '2024-09-23T00:00:00.000Z',
         is_defective: true,
+        expected_lifetime_days: 541,
         notes: 'test',
         properties: [
           { id: '1', value: 12 },
@@ -651,6 +662,7 @@ describe('ItemDialog', () => {
         catalogue_item_id: '1',
         delivered_date: '2024-09-23T00:00:00.000Z',
         is_defective: true,
+        expected_lifetime_days: null,
         notes: 'test',
         properties: [
           { id: '1', value: 12 },
@@ -771,7 +783,7 @@ describe('ItemDialog', () => {
 
       const validDateMaxHelperText = await screen.findAllByText(
         'Date cannot be later than',
-        {exact: false}
+        { exact: false }
       );
       expect(validDateMaxHelperText.length).toEqual(2);
 
@@ -783,10 +795,7 @@ describe('ItemDialog', () => {
       });
 
       expect(
-        screen.queryByText(
-          'Date cannot be later than',
-          {exact: false}
-        )
+        screen.queryByText('Date cannot be later than', { exact: false })
       ).not.toBeInTheDocument();
       expect(
         screen.queryByText(
@@ -887,6 +896,7 @@ describe('ItemDialog', () => {
         catalogue_item_id: '1',
         delivered_date: '2023-05-11T23:00:00.000Z',
         is_defective: false,
+        expected_lifetime_days: 2070,
         notes: 'rRXBHQFbF3zts6XS279k',
         properties: [
           { id: '1', value: 12 },

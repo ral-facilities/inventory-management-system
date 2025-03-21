@@ -25,7 +25,6 @@ describe('Catalogue Items', () => {
         cy.findByLabelText('Cost to rework (£)').type('400');
         cy.findByLabelText('Time to replace (days) *').type('14');
         cy.findByLabelText('Time to rework (days)').type('5');
-        cy.findByLabelText('Expected Lifetime (days)').type('345');
         cy.findByLabelText('Drawing number').type('MX43242');
         cy.findByLabelText('Drawing link').type('https://example.com');
         cy.findByLabelText('Model number').type('MXtest');
@@ -65,7 +64,6 @@ describe('Catalogue Items', () => {
           cost_to_rework_gbp: 400,
           days_to_replace: 14,
           days_to_rework: 5,
-          expected_lifetime_days: 345,
           drawing_number: 'MX43242',
           drawing_link: 'https://example.com',
           item_model_number: 'MXtest',
@@ -114,7 +112,6 @@ describe('Catalogue Items', () => {
           cost_to_rework_gbp: 89,
           days_to_replace: 7,
           days_to_rework: 60,
-          expected_lifetime_days: 3635,
           drawing_number: null,
           drawing_link: null,
           item_model_number: null,
@@ -176,7 +173,6 @@ describe('Catalogue Items', () => {
           cost_to_rework_gbp: null,
           days_to_replace: 14,
           days_to_rework: null,
-          expected_lifetime_days: null,
           drawing_number: null,
           drawing_link: null,
           item_model_number: null,
@@ -243,7 +239,6 @@ describe('Catalogue Items', () => {
           cost_to_rework_gbp: null,
           days_to_replace: 14,
           days_to_rework: null,
-          expected_lifetime_days: null,
           drawing_number: null,
           drawing_link: null,
           item_model_number: null,
@@ -326,13 +321,11 @@ describe('Catalogue Items', () => {
         cy.findByLabelText('Time to replace (days) *').clear();
         cy.findByLabelText('Cost (£) *').type('gfdg');
         cy.findByLabelText('Time to replace (days) *').type('32gf');
-        cy.findByLabelText('Expected Lifetime (days)').clear();
         cy.findByLabelText('Drawing link').type('test.co.uk');
-        cy.findByLabelText('Expected Lifetime (days)').type('friday');
 
         cy.findAllByText('Please enter a valid number.').should(
           'have.length',
-          3
+          2
         );
         cy.findAllByText(
           'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted.'
@@ -345,8 +338,6 @@ describe('Catalogue Items', () => {
         cy.findByLabelText('Cost (£) *').type('-10');
         cy.findByLabelText('Cost to rework (£)').clear();
         cy.findByLabelText('Cost to rework (£)').type('-10');
-        cy.findByLabelText('Expected Lifetime (days)').clear();
-        cy.findByLabelText('Expected Lifetime (days)').type('-10');
         cy.findByLabelText('Time to replace (days) *').clear();
         cy.findByLabelText('Time to replace (days) *').type('-10');
         cy.findByLabelText('Time to rework (days)').clear();
@@ -354,7 +345,7 @@ describe('Catalogue Items', () => {
 
         cy.findAllByText('Number must be greater than or equal to 0').should(
           'have.length',
-          5
+          4
         );
         cy.findByRole('button', { name: 'Next' }).should('be.disabled');
 
@@ -365,8 +356,6 @@ describe('Catalogue Items', () => {
         cy.findByLabelText('Cost to rework (£)').clear();
         cy.findByLabelText('Time to rework (days)').clear();
         cy.findByLabelText('Drawing link').type('https://test.co.uk');
-        cy.findByLabelText('Expected Lifetime (days)').clear();
-        cy.findByLabelText('Expected Lifetime (days)').type('200');
 
         cy.findByRole('button', { name: 'Next' }).click();
 
@@ -607,12 +596,14 @@ describe('Catalogue Items', () => {
     cy.findByLabelText('Manufacturer *').type('Man{downArrow}{enter}');
     cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.findByRole('button', { name: 'Finish'}).click();
+    cy.findByRole('button', { name: 'Finish' }).click();
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.contains('Unable to update catalogue item properties and manufacturer '
-          + '(Manufacturer C), as the catalogue item has associated items.')
+        cy.contains(
+          'Unable to update catalogue item properties and manufacturer ' +
+            '(Manufacturer C), as the catalogue item has associated items.'
+        );
       });
     cy.findByRole('button', { name: 'Finish' }).should('be.disabled');
 
@@ -627,8 +618,10 @@ describe('Catalogue Items', () => {
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.contains('Unable to update catalogue item properties and manufacturer '
-          + '(Manufacturer C), as the catalogue item has associated items.')
+        cy.contains(
+          'Unable to update catalogue item properties and manufacturer ' +
+            '(Manufacturer C), as the catalogue item has associated items.'
+        );
       });
     cy.findByRole('button', { name: 'Finish' }).should('be.disabled');
   });
@@ -648,8 +641,6 @@ describe('Catalogue Items', () => {
         cy.findByLabelText('Cost to rework (£)').type('4');
         cy.findByLabelText('Time to replace (days) *').type('1');
         cy.findByLabelText('Time to rework (days)').type('5');
-        cy.findByLabelText('Expected Lifetime (days)').clear();
-        cy.findByLabelText('Expected Lifetime (days)').type('345');
         cy.findByLabelText('Drawing number').type('MX43242');
         cy.findByLabelText('Drawing link').type('https://example.com');
         cy.findByLabelText('Model number').type('MXtest');
@@ -680,7 +671,6 @@ describe('Catalogue Items', () => {
           cost_to_rework_gbp: 894,
           days_to_replace: 71,
           days_to_rework: 605,
-          expected_lifetime_days: 345,
           drawing_number: 'MX43242',
           drawing_link: 'https://example.com',
           item_model_number: 'MXtest',
@@ -1088,7 +1078,6 @@ describe('Catalogue Items', () => {
           cost_to_rework_gbp: null,
           days_to_replace: 7,
           days_to_rework: null,
-          expected_lifetime_days: 3124,
           drawing_number: null,
           drawing_link: 'http://example-drawing-link.com',
           item_model_number: null,
@@ -1115,7 +1104,6 @@ describe('Catalogue Items', () => {
           cost_to_rework_gbp: 89,
           days_to_replace: 7,
           days_to_rework: 60,
-          expected_lifetime_days: 3635,
           drawing_number: null,
           drawing_link: null,
           item_model_number: null,

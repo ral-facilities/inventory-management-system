@@ -249,16 +249,6 @@ function CatalogueItemsLandingPage() {
 
                           <Grid item xs={12} sm={6} md={4}>
                             <Typography align="left" color="text.primary">
-                              Expected Lifetime (days)
-                            </Typography>
-                            <Typography align="left" color="text.secondary">
-                              {catalogueItemIdData.expected_lifetime_days ??
-                                'None'}
-                            </Typography>
-                          </Grid>
-
-                          <Grid item xs={12} sm={6} md={4}>
-                            <Typography align="left" color="text.primary">
                               Drawing Number
                             </Typography>
                             <Typography

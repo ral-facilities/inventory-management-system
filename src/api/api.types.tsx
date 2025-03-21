@@ -174,7 +174,6 @@ export interface CatalogueItemPost {
   cost_to_rework_gbp?: number | null;
   days_to_replace: number;
   days_to_rework?: number | null;
-  expected_lifetime_days?: number | null;
   drawing_number?: string | null;
   drawing_link?: string | null;
   item_model_number?: string | null;
@@ -205,6 +204,7 @@ export interface ItemPost {
   asset_number?: string | null;
   serial_number?: string | null;
   delivered_date?: string | null;
+  expected_lifetime_days?: number | null;
   notes?: string | null;
   properties?: PropertyPost[] | null;
 }

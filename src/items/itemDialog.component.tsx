@@ -73,6 +73,7 @@ function toItemDetailsStep(item: Item | undefined): ItemDetailsStep {
         quantity: '',
       },
       delivered_date: null,
+      expected_lifetime_days: '',
       notes: '',
     };
   }
@@ -89,6 +90,10 @@ function toItemDetailsStep(item: Item | undefined): ItemDetailsStep {
       quantity: '',
     },
     delivered_date: item.delivered_date,
+    expected_lifetime_days:
+      item.expected_lifetime_days !== null
+        ? String(item.expected_lifetime_days)
+        : '',
     notes: item.notes ?? '',
   };
 }
@@ -108,6 +113,9 @@ function convertToItemDetailsStepPost(
     delivered_date: item.delivered_date
       ? new Date(item.delivered_date).toISOString()
       : null,
+    expected_lifetime_days: item.expected_lifetime_days
+      ? Number(item.expected_lifetime_days)
+      : null, // Convert if not null
     notes: item.notes ?? null,
   };
 }
@@ -340,6 +348,9 @@ function ItemDialog(props: ItemDialogProps) {
         const isDeliveredDateUpdated =
           data.delivered_date !== selectedItem.delivered_date;
 
+        const isExpectedLifetimeDaysUpdated =
+          data.expected_lifetime_days !== selectedItem.expected_lifetime_days;
+
         const isNotesUpdated = data.notes !== selectedItem.notes;
 
         const isCatalogueItemPropertiesUpdated =
@@ -364,6 +375,8 @@ function ItemDialog(props: ItemDialogProps) {
           item.warranty_end_date = data.warranty_end_date;
         if (isAssetNumberUpdated) item.asset_number = data.asset_number;
         if (isDeliveredDateUpdated) item.delivered_date = data.delivered_date;
+        if (isExpectedLifetimeDaysUpdated)
+          item.expected_lifetime_days = data.expected_lifetime_days;
         if (isNotesUpdated) item.notes = data.notes;
         if (isSystemIdUpdated) item.system_id = data.system_id;
         if (isCatalogueItemPropertiesUpdated) item.properties = data.properties;
@@ -378,6 +391,7 @@ function ItemDialog(props: ItemDialogProps) {
             isAssetNumberUpdated ||
             isSerialNumberUpdated ||
             isDeliveredDateUpdated ||
+            isExpectedLifetimeDaysUpdated ||
             isNotesUpdated ||
             isCatalogueItemPropertiesUpdated ||
             isSystemIdUpdated)
@@ -688,6 +702,17 @@ function ItemDialog(props: ItemDialogProps) {
                     }}
                   />
                 )}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                id="catalogue-item-expected-lifetime-days-input"
+                label="Expected Lifetime (days)"
+                size="small"
+                {...registerDetailsStep('expected_lifetime_days')}
+                error={!!errorsDetailsStep.expected_lifetime_days}
+                helperText={errorsDetailsStep.expected_lifetime_days?.message}
+                fullWidth
               />
             </Grid>
             <Grid item xs={12}>
