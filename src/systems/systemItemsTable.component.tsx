@@ -368,6 +368,19 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           }),
       },
       {
+        header: 'Expected Lifetime (Days)',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => row.item.expected_lifetime_days ?? '',
+        id: 'item.expected_lifetime_days',
+        filterVariant: COLUMN_FILTER_VARIANTS.number,
+        filterFn: COLUMN_FILTER_FUNCTIONS.number,
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS.number,
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
+        ],
+        size: 300,
+      },
+      {
         header: 'Is Defective',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => (row.item.is_defective === true ? 'Yes' : 'No'),
@@ -599,30 +612,6 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
               }
             : undefined,
       },
-      {
-        header: 'Expected Lifetime (Days)',
-        Header: TableHeaderOverflowTip,
-        accessorFn: (row) => row.catalogueItem?.expected_lifetime_days ?? '',
-        id: 'catalogueItem.expected_lifetime_days',
-        filterVariant: COLUMN_FILTER_VARIANTS.number,
-        filterFn: COLUMN_FILTER_FUNCTIONS.number,
-        columnFilterModeOptions: [
-          ...COLUMN_FILTER_MODE_OPTIONS.number,
-          ...OPTIONAL_FILTER_MODE_OPTIONS,
-        ],
-        size: 300,
-        AggregatedCell: ({ cell, table }) => {
-          const isCatalogueGrouped = table
-            .getState()
-            .grouping.includes('catalogueItem.name');
-          const isCatalogueItemRow =
-            cell.row.groupingColumnId === 'catalogueItem.name';
-          return (
-            isCatalogueGrouped &&
-            isCatalogueItemRow && <>{cell.getValue<number>()}</>
-          );
-        },
-      },
     ];
   }, [
     aggregatedCellUsageStatus,
@@ -658,7 +647,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         : [
             { ...columns[0], size: 200 },
             { ...columns[1], size: 200 },
-            { ...columns[6], size: 200 },
+            { ...columns[7], size: 200 },
           ],
     data: tableRows,
     // Features

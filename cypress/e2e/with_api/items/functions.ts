@@ -6,6 +6,7 @@ const modifyItem = (
     purchaseOrderNumber?: string;
     warrantyEndDate?: string;
     deliveredDate?: string;
+    expectedLifetimeDays?: string;
     isDefective: string;
     usageStatus: string;
     notes?: string;
@@ -60,6 +61,15 @@ const modifyItem = (
     cy.findByLabelText('Delivered date').type(values.deliveredDate);
   } else {
     cy.findByLabelText('Delivered date').clear();
+  }
+
+  if (values.expectedLifetimeDays) {
+    cy.findByLabelText('Expected Lifetime (days)').clear();
+    cy.findByLabelText('Expected Lifetime (days)').type(
+      values.expectedLifetimeDays
+    );
+  } else {
+    cy.findByLabelText('Expected Lifetime (days)').clear();
   }
 
   cy.findByLabelText('Usage status *').click();
@@ -253,6 +263,7 @@ export const addItem = (ignoreChecks?: boolean) => {
       purchaseOrderNumber: '234',
       warrantyEndDate: '17/02/2029',
       deliveredDate: '19/03/2022',
+      expectedLifetimeDays: '365',
       isDefective: 'Yes',
       usageStatus: 'New',
       notes: 'test',
@@ -274,6 +285,7 @@ export const editItem = () => {
     purchaseOrderNumber: '2334',
     warrantyEndDate: '17/02/2030',
     deliveredDate: '19/03/2024',
+    expectedLifetimeDays: '42',
     isDefective: 'No',
     usageStatus: 'Used',
     notes: 'tests',

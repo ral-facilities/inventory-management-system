@@ -143,6 +143,15 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                   </Typography>
                 </Grid>
 
+                <Grid item xs={12} sm={6} key={8}>
+                  <Typography color="text.primary">
+                    Expected Lifetime (days)
+                  </Typography>
+                  <Typography color="text.secondary">
+                    {itemData.expected_lifetime_days ?? 'None'}
+                  </Typography>
+                </Grid>
+
                 <Grid item xs={12} sm={6} key={5}>
                   <Typography color="text.primary">Is Defective</Typography>
                   <Typography color="text.secondary">

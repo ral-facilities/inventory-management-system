@@ -75,10 +75,7 @@ describe('Catalogue Items Landing Page', () => {
           );
         }
 
-        return HttpResponse.json(
-          { ...data, properties: [], expected_lifetime_days: null },
-          { status: 200 }
-        );
+        return HttpResponse.json({ ...data, properties: [] }, { status: 200 });
       })
     );
     createView('/catalogue/4/items/1');
@@ -92,7 +89,7 @@ describe('Catalogue Items Landing Page', () => {
       screen.getByText('High-resolution cameras for beam characterization. 1')
     ).toBeInTheDocument();
 
-    expect(screen.getAllByText('None').length).toEqual(9);
+    expect(screen.getAllByText('None').length).toEqual(8);
   });
 
   it('renders text correctly (extra details given)', async () => {

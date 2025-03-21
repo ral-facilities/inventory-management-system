@@ -49,7 +49,6 @@ describe('Catalogue Items Dialog', () => {
     costToReworkGbp?: string;
     daysToReplace?: string;
     daysToRework?: string;
-    expectedLifetimeDays?: string;
     drawingNumber?: string;
     drawingLink?: string;
     itemModelNumber?: string;
@@ -90,11 +89,6 @@ describe('Catalogue Items Dialog', () => {
     if (values.daysToRework !== undefined)
       fireEvent.change(screen.getByLabelText('Time to rework (days)'), {
         target: { value: values.daysToRework },
-      });
-
-    if (values.expectedLifetimeDays !== undefined)
-      fireEvent.change(screen.getByLabelText('Expected Lifetime (days)'), {
-        target: { value: values.expectedLifetimeDays },
       });
 
     if (values.drawingNumber !== undefined)
@@ -227,7 +221,6 @@ describe('Catalogue Items Dialog', () => {
       costToReworkGbp: '400',
       daysToReplace: '20',
       daysToRework: '2',
-      expectedLifetimeDays: '541',
       description: '',
       drawingLink: 'https://example.com',
       drawingNumber: 'mk4324',
@@ -256,7 +249,6 @@ describe('Catalogue Items Dialog', () => {
       cost_to_rework_gbp: 400,
       days_to_replace: 20,
       days_to_rework: 2,
-      expected_lifetime_days: 541,
       description: null,
       drawing_link: 'https://example.com',
       drawing_number: 'mk4324',
@@ -291,7 +283,6 @@ describe('Catalogue Items Dialog', () => {
       costToReworkGbp: '400',
       daysToReplace: '20',
       daysToRework: '2',
-      expectedLifetimeDays: '146',
       description: '',
       drawingLink: 'https://example.com',
       drawingNumber: 'mk4324',
@@ -320,7 +311,6 @@ describe('Catalogue Items Dialog', () => {
       cost_to_rework_gbp: 400,
       days_to_replace: 20,
       days_to_rework: 2,
-      expected_lifetime_days: 146,
       description: null,
       drawing_link: 'https://example.com',
       drawing_number: 'mk4324',
@@ -362,7 +352,6 @@ describe('Catalogue Items Dialog', () => {
       costToReworkGbp: '400',
       daysToReplace: '20',
       daysToRework: '2',
-      expectedLifetimeDays: '321',
       description: '',
       drawingLink: 'https://example.com',
       drawingNumber: 'mk4324',
@@ -402,7 +391,6 @@ describe('Catalogue Items Dialog', () => {
       costToReworkGbp: '400',
       daysToReplace: '20',
       daysToRework: '2',
-      expectedLifetimeDays: '524',
       description: '',
       drawingLink: 'https://example.com',
       drawingNumber: 'mk4324',
@@ -459,7 +447,6 @@ describe('Catalogue Items Dialog', () => {
       cost_to_rework_gbp: null,
       days_to_replace: 5,
       days_to_rework: null,
-      expected_lifetime_days: null,
       description: null,
       drawing_link: null,
       drawing_number: null,
@@ -546,7 +533,6 @@ describe('Catalogue Items Dialog', () => {
       costToReworkGbp: '400a',
       daysToReplace: '20a',
       daysToRework: '2a',
-      expectedLifetimeDays: '43ab',
       description: '',
       drawingLink: 'example.com',
       drawingNumber: 'mk4324',
@@ -560,7 +546,7 @@ describe('Catalogue Items Dialog', () => {
       'Please enter a valid number.'
     );
 
-    expect(validNumberDetailsHelperText.length).toBe(5);
+    expect(validNumberDetailsHelperText.length).toBe(4);
     expect(validNumberDetailsHelperText[0]).toHaveTextContent(
       'Please enter a valid number.'
     );
@@ -576,7 +562,6 @@ describe('Catalogue Items Dialog', () => {
       costToReworkGbp: '400',
       daysToReplace: '20',
       daysToRework: '2',
-      expectedLifetimeDays: '43',
       drawingLink: 'https://example.com',
     });
 
@@ -618,7 +603,6 @@ describe('Catalogue Items Dialog', () => {
       description: '',
       drawingLink: 'https://example.com',
       drawingNumber: 'mk4324',
-      expectedLifetimeDays: '-5',
       itemModelNumber: 'mk4324',
       name: 'test',
       manufacturer: 'Man{arrowdown}{enter}',
@@ -630,7 +614,7 @@ describe('Catalogue Items Dialog', () => {
       'Number must be greater than or equal to 0'
     );
 
-    expect(NegativeNumberErrorText.length).toBe(5);
+    expect(NegativeNumberErrorText.length).toBe(4);
     expect(NegativeNumberErrorText[0]).toHaveTextContent(
       'Number must be greater than or equal to 0'
     );
@@ -640,7 +624,6 @@ describe('Catalogue Items Dialog', () => {
       costToReworkGbp: '5',
       daysToReplace: '5',
       daysToRework: '5',
-      expectedLifetimeDays: '5',
     });
 
     await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -659,7 +642,6 @@ describe('Catalogue Items Dialog', () => {
       costToReworkGbp: '400',
       daysToReplace: '20',
       daysToRework: '2',
-      expectedLifetimeDays: '421',
       description: '',
       drawingLink: 'https://example.com',
       drawingNumber: 'mk4324',
@@ -806,7 +788,6 @@ describe('Catalogue Items Dialog', () => {
         costToReworkGbp: '89',
         daysToReplace: '78',
         daysToRework: '68',
-        expectedLifetimeDays: '486',
         description: ' ',
         drawingLink: 'http://example.com',
         drawingNumber: 'test',
@@ -824,7 +805,6 @@ describe('Catalogue Items Dialog', () => {
         cost_to_rework_gbp: 89,
         days_to_replace: 78,
         days_to_rework: 68,
-        expected_lifetime_days: 486,
         description: null,
         drawing_link: 'http://example.com',
         drawing_number: 'test',
@@ -925,7 +905,6 @@ describe('Catalogue Items Dialog', () => {
         costToReworkGbp: '',
         daysToReplace: '',
         daysToRework: '',
-        expectedLifetimeDays: '',
         description: '',
         drawingLink: '',
         drawingNumber: '',
@@ -1109,8 +1088,8 @@ describe('Catalogue Items Dialog', () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            'Unable to update catalogue item properties and manufacturer '
-              + '(Manufacturer A), as the catalogue item has associated items.'
+            'Unable to update catalogue item properties and manufacturer ' +
+              '(Manufacturer A), as the catalogue item has associated items.'
           )
         ).toBeInTheDocument();
       });
@@ -1152,8 +1131,8 @@ describe('Catalogue Items Dialog', () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            'Unable to update catalogue item properties and manufacturer '
-              + '(Manufacturer A), as the catalogue item has associated items.'
+            'Unable to update catalogue item properties and manufacturer ' +
+              '(Manufacturer A), as the catalogue item has associated items.'
           )
         ).toBeInTheDocument();
       });

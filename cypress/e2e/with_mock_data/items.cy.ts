@@ -129,6 +129,7 @@ describe('Items', () => {
           asset_number: null,
           serial_number: null,
           delivered_date: null,
+          expected_lifetime_days: null,
           notes: null,
           properties: [
             { id: '1', value: 12 },
@@ -179,6 +180,7 @@ describe('Items', () => {
             asset_number: null,
             serial_number: `test ${i + 2}`,
             delivered_date: null,
+            expected_lifetime_days: null,
             notes: null,
             properties: [
               { id: '1', value: 12 },
@@ -295,6 +297,7 @@ describe('Items', () => {
           asset_number: null,
           serial_number: null,
           delivered_date: null,
+          expected_lifetime_days: null,
           notes: null,
           properties: [
             { id: '17', value: 400 },
@@ -316,6 +319,7 @@ describe('Items', () => {
     cy.findByLabelText('Purchase order number').type('test23');
     cy.findByLabelText('Warranty end date').type('12/02/2028');
     cy.findByLabelText('Delivered date').type('12/02/2024');
+    cy.findByLabelText('Expected Lifetime (days)').type('345');
     cy.findByLabelText('Is defective *').click();
     cy.findByRole('option', { name: 'Yes' }).click();
     cy.findByLabelText('Usage status *').click();
@@ -356,6 +360,7 @@ describe('Items', () => {
           asset_number: 'test13221',
           serial_number: 'test1234',
           delivered_date: '2024-02-12T00:00:00.000Z',
+          expected_lifetime_days: 345,
           notes: 'test',
           properties: [
             { id: '1', value: 1218 },
@@ -1313,6 +1318,7 @@ describe('Items', () => {
             asset_number: 'LyH8yp1FHf',
             serial_number: '5YUQDDjKpz2z',
             delivered_date: '2023-03-17T00:00:00.000Z',
+            expected_lifetime_days: 3225,
             notes:
               '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this Serial Number: 5YUQDDjKpz2z',
             properties: [
@@ -1346,6 +1352,8 @@ describe('Items', () => {
       cy.findByLabelText('Purchase order number').type('test23');
       cy.findByLabelText('Warranty end date').type('12/02/2028');
       cy.findByLabelText('Delivered date').type('12/02/2024');
+      cy.findByLabelText('Expected Lifetime (days)').clear();
+      cy.findByLabelText('Expected Lifetime (days)').type('42');
       cy.findByLabelText('Is defective *').click();
       cy.findByRole('option', { name: 'Yes' }).click();
       cy.findByLabelText('Usage status *').click();
@@ -1386,6 +1394,7 @@ describe('Items', () => {
             warranty_end_date: '2028-02-12T23:00:00.000Z',
             asset_number: '75YWiLwy54test13221',
             delivered_date: '2024-02-12T00:00:00.000Z',
+            expected_lifetime_days: 42,
             notes: 'zolZDKKuvAoTFRUWeZNAtest',
             system_id: '65328f34a40ff5301575a4e3',
             properties: [
