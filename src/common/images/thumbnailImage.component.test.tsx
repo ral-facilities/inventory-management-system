@@ -18,6 +18,8 @@ describe('ThumbnailImage Component', () => {
       onClick: onClick,
       dense: false,
       image: ImagesJSON[0],
+      imageLoading: false,
+      isPrimaryThumbnail: false,
     };
   });
 
@@ -28,21 +30,23 @@ describe('ThumbnailImage Component', () => {
     createView();
 
     const imageElement = screen.getByAltText(
-      props.image.description ?? 'No photo description available.'
+      props.image?.description ?? 'No photo description available.'
     );
     expect(imageElement).toBeInTheDocument();
     expect(imageElement).toHaveAttribute(
       'src',
-      `data:image/webp;base64,${props.image.thumbnail_base64}`
+      `data:image/webp;base64,${props?.image?.thumbnail_base64}`
     );
   });
 
   it('should render fallback text when the image fails to load', () => {
-    props.image.thumbnail_base64 = 'test';
+    if (props?.image?.thumbnail_base64) {
+      props.image.thumbnail_base64 = 'test';
+    }
     createView();
 
     const imageElement = screen.getByAltText(
-      props.image.description ?? 'No photo description available.'
+      props.image?.description ?? 'No photo description available.'
     );
     fireEvent.error(imageElement);
 
@@ -54,7 +58,7 @@ describe('ThumbnailImage Component', () => {
     createView();
 
     const imageElement = screen.getByAltText(
-      props.image.description ?? 'No photo description available.'
+      props.image?.description ?? 'No photo description available.'
     );
     fireEvent.click(imageElement);
 
@@ -65,7 +69,7 @@ describe('ThumbnailImage Component', () => {
     createView();
 
     const imageElement = screen.getByAltText(
-      props.image.description ?? 'No photo description available.'
+      props.image?.description ?? 'No photo description available.'
     );
     fireEvent.error(imageElement);
 
@@ -73,5 +77,23 @@ describe('ThumbnailImage Component', () => {
     fireEvent.click(fallbackText);
 
     expect(onClick).toHaveBeenCalledTimes(1);
+  });
+
+  it('should display a progress bar when the image is loading', async () => {
+    props.isPrimaryThumbnail = true;
+    props.imageLoading = true;
+
+    createView();
+
+    expect(await screen.findByRole('progressbar')).toBeInTheDocument();
+  });
+
+  it('should display no image if there is no set primary image', async () => {
+    props.isPrimaryThumbnail = true;
+    props.image = undefined;
+
+    createView();
+
+    expect(await screen.findByAltText('No Image')).toBeInTheDocument();
   });
 });

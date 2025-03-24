@@ -1019,7 +1019,7 @@ describe('Items', () => {
             'http://localhost:3000/images/stfc-logo-blue-text.png?text=1'
           );
 
-        cy.findByLabelText('Next').click();
+        cy.findAllByLabelText('Next').last().click();
 
         cy.findByText('File name: logo1.png').should('exist');
         cy.findByText('Title: logo1').should('exist');
@@ -1030,7 +1030,7 @@ describe('Items', () => {
         cy.findByAltText('test')
           .should('have.attr', 'src')
           .and('include', 'http://localhost:3000/logo192.png?text=2');
-        cy.findByLabelText('Close').click();
+        cy.findAllByLabelText('Close').last().click();
       });
 
       cy.findByTestId('galleryLightBox').should('not.exist');
@@ -1052,7 +1052,7 @@ describe('Items', () => {
 
         cy.findByText('The image cannot be loaded').should('exist');
 
-        cy.findByLabelText('Previous').click();
+        cy.findAllByLabelText('Previous').last().click();
 
         cy.findByText('File name: logo1.png').should('exist');
         cy.findByText('Title: logo1').should('exist');
@@ -1063,7 +1063,7 @@ describe('Items', () => {
         cy.findByAltText('test')
           .should('have.attr', 'src')
           .and('include', 'http://localhost:3000/logo192.png?text=2');
-        cy.findByLabelText('Close').click();
+        cy.findAllByLabelText('Close').last().click();
       });
 
       cy.findByTestId('galleryLightBox').should('not.exist');
@@ -1076,8 +1076,8 @@ describe('Items', () => {
       ).should('exist');
 
       cy.findByText('Gallery').click();
+      cy.findAllByAltText('test').eq(4).click();
 
-      cy.findAllByAltText('test').eq(3).click();
       cy.findByTestId('galleryLightBox').within(() => {
         cy.findByText('The image cannot be loaded', { timeout: 10000 }).should(
           'exist'
@@ -1087,7 +1087,7 @@ describe('Items', () => {
         cy.findByText('Title: stfc-logo-blue-text').should('exist');
         cy.findByText('test').should('exist');
 
-        cy.findByLabelText('Close').click();
+        cy.findAllByLabelText('Close').last().click();
       });
 
       cy.findByTestId('galleryLightBox').should('not.exist');
@@ -1133,7 +1133,7 @@ describe('Items', () => {
 
       cy.findByRole('dialog').should('not.exist');
 
-      cy.findByLabelText('Close').click();
+      cy.findAllByLabelText('Close').last().click();
 
       cy.findByTestId('galleryLightBox').should('not.exist');
     });
@@ -1263,7 +1263,7 @@ describe('Items', () => {
 
       cy.findByRole('dialog').should('not.exist');
 
-      cy.findByLabelText('Close').click();
+      cy.findAllByLabelText('Close').last().click();
 
       cy.findByTestId('galleryLightBox').should('not.exist');
     });

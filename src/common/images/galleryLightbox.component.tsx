@@ -1,5 +1,12 @@
 import { ArrowBack, ArrowForward, Close } from '@mui/icons-material';
-import { Backdrop, Box, IconButton, Stack, Typography } from '@mui/material';
+import {
+  Backdrop,
+  Box,
+  IconButton,
+  Stack,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 import {
   MRT_Cell,
   MRT_Row,
@@ -102,15 +109,19 @@ const GalleryLightBox = (props: GalleryLightBoxProps) => {
                 }}
               />
             )}
-            <IconButton
-              onClick={onClose}
-              aria-label="Close"
-              sx={{
-                color: 'inherit',
-              }}
-            >
-              <Close />
-            </IconButton>
+            <Tooltip title="Close">
+              <span>
+                <IconButton
+                  onClick={onClose}
+                  aria-label="Close"
+                  sx={{
+                    color: 'inherit',
+                  }}
+                >
+                  <Close />
+                </IconButton>
+              </span>
+            </Tooltip>
           </Box>
         </Box>
 
@@ -147,18 +158,22 @@ const GalleryLightBox = (props: GalleryLightBoxProps) => {
             maxHeight: '70%',
           }}
         >
-          <IconButton
-            onClick={(e) => {
-              e.stopPropagation();
-              handlePrevious();
-            }}
-            aria-label="Previous"
-            sx={{
-              color: 'inherit',
-            }}
-          >
-            <ArrowBack />
-          </IconButton>
+          <Tooltip title="Previous">
+            <span>
+              <IconButton
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handlePrevious();
+                }}
+                aria-label="Previous"
+                sx={{
+                  color: 'inherit',
+                }}
+              >
+                <ArrowBack />
+              </IconButton>
+            </span>
+          </Tooltip>
           <Box
             sx={{
               display: 'flex',
@@ -196,19 +211,22 @@ const GalleryLightBox = (props: GalleryLightBoxProps) => {
               />
             )}
           </Box>
-
-          <IconButton
-            onClick={(e) => {
-              e.stopPropagation();
-              handleNext();
-            }}
-            aria-label="Next"
-            sx={{
-              color: 'inherit',
-            }}
-          >
-            <ArrowForward />
-          </IconButton>
+          <Tooltip title="Next">
+            <span>
+              <IconButton
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleNext();
+                }}
+                aria-label="Next"
+                sx={{
+                  color: 'inherit',
+                }}
+              >
+                <ArrowForward />
+              </IconButton>
+            </span>
+          </Tooltip>
         </Stack>
 
         <Box

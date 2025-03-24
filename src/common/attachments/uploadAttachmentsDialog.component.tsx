@@ -6,6 +6,7 @@ import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 import ProgressBar from '@uppy/progress-bar';
 import { DashboardModal } from '@uppy/react';
+import { AxiosError } from 'axios';
 import React from 'react';
 import {
   useDeleteAttachment,
@@ -90,11 +91,9 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
       if (id) {
         if (deleteMetadata && !deletedFileIds.current.has(fileId)) {
           deletedFileIds.current.add(fileId);
-          try {
-            await deleteAttachment(id);
-          } catch (error: any) {
+          await deleteAttachment(id).catch((error: AxiosError) => {
             handleIMS_APIError(error);
-          };
+          });
         }
 
         setFileMetadataMap((prev) => {
@@ -111,7 +110,7 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
         });
       }
     },
-    [deleteAttachment, deletedFileIds, fileMetadataMap, handleIMS_APIError]
+    [deleteAttachment, deletedFileIds, fileMetadataMap]
   );
 
   const { files = {} } = uppy.getState();

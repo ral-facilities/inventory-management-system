@@ -286,7 +286,7 @@ describe('SystemItemsDialog', () => {
         expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
       );
 
-      await selectUsageStatus({ index: 0, usageStatus: 'Used' });
+      await selectUsageStatus({ index: 1, usageStatus: 'Used' });
 
       expect(
         await screen.findByRole('button', { name: 'Finish' })

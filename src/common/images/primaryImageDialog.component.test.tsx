@@ -139,7 +139,7 @@ describe('Primary Image Dialog', () => {
     const imageCard = screen.getAllByRole('radio', {
       name: 'Toggle select card',
     })[0];
-    user.click(imageCard);
+    await user.click(imageCard);
 
     const saveButton: HTMLButtonElement = screen.getByRole('button', {
       name: 'Save',
@@ -147,7 +147,7 @@ describe('Primary Image Dialog', () => {
 
     await waitFor(() => expect(saveButton.disabled).toBe(false));
 
-    user.click(saveButton);
+    await user.click(saveButton);
 
     await waitFor(() => expect(onClose).toHaveBeenCalled());
 
@@ -168,7 +168,7 @@ describe('Primary Image Dialog', () => {
       name: 'Toggle select card',
     })[16];
 
-    user.click(imageCard);
+    await user.click(imageCard);
 
     const saveButton: HTMLButtonElement = screen.getByRole('button', {
       name: 'Save',
@@ -176,7 +176,7 @@ describe('Primary Image Dialog', () => {
 
     await waitFor(() => expect(saveButton.disabled).toBe(false));
 
-    user.click(saveButton);
+    await user.click(saveButton);
 
     await waitFor(() => expect(handleIMS_APIError).toHaveBeenCalled());
   });
