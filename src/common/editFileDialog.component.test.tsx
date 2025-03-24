@@ -16,6 +16,7 @@ vi.mock('../handleIMS_APIError');
 
 describe('Edit file dialog', () => {
   const onClose = vi.fn();
+  let axiosPatchSpy : MockInstance;
   let props: FileDialogProps;
   let user: UserEvent;
   const createView = () => {
@@ -23,6 +24,7 @@ describe('Edit file dialog', () => {
   };
 
   beforeEach(() => {
+    axiosPatchSpy = vi.spyOn(storageApi, 'patch');
     user = userEvent.setup();
   });
 
@@ -52,7 +54,6 @@ describe('Edit file dialog', () => {
   };
 
   describe('Edit an image', () => {
-    let axiosPatchSpy: MockInstance;
     beforeEach(() => {
       props = {
         open: true,
@@ -61,8 +62,6 @@ describe('Edit file dialog', () => {
         usePatchFile: usePatchImage,
         selectedFile: ImagesJSON[0],
       };
-
-      axiosPatchSpy = vi.spyOn(storageApi, 'patch');
     });
 
     it('disables save button and shows circular progress indicator when request is pending', async () => {
@@ -161,8 +160,6 @@ describe('Edit file dialog', () => {
   });
 
   describe('Edit an attachment', () => {
-    let axiosPatchSpy: MockInstance;
-
     beforeEach(() => {
       props = {
         open: true,
@@ -171,8 +168,6 @@ describe('Edit file dialog', () => {
         usePatchFile: usePatchAttachment,
         selectedFile: AttachmentsJSON[0],
       };
-
-      axiosPatchSpy = vi.spyOn(storageApi, 'patch');
     });
 
     it('disables save button and shows circular progress indicator when request is pending', async () => {

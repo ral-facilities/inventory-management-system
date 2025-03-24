@@ -311,12 +311,14 @@ function AttachmentsTable(props: AttachmentTableProps) {
         onClose={() => setDeleteAttachmentDialog(false)}
         attachment={selectedAttachment}
       />
-      <DownloadFileDialog
-        open={downloadAttachmentDialog}
-        onClose={() => setDownloadAttachmentDialog(false)}
-        fileType="Attachment"
-        file={selectedAttachment}
-      />
+      {selectedAttachment && (
+        <DownloadFileDialog
+          open={downloadAttachmentDialog}
+          onClose={() => setDownloadAttachmentDialog(false)}
+          fileType="Attachment"
+          file={selectedAttachment}
+        />
+      )}
     </>
   );
 }
