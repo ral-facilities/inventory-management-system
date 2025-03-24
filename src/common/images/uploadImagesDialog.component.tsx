@@ -16,7 +16,7 @@ import type {
 } from '../../app.types';
 import { settings } from '../../settings';
 import { getNonEmptyTrimmedString } from '../../utils';
-import { useMetaFields } from '../uppy.utils';
+import { isAnyFileWaiting, useMetaFields } from '../uppy.utils';
 
 // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000, so here the former is expected despite them really being GiB, MiB and KiB.
 const MAX_FILE_SIZE_MB = 50;
@@ -67,11 +67,15 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
     return newUppy;
   });
 
+  const { files = {} } = uppy.getState();
+
   const handleClose = React.useCallback(() => {
+    // prevent users from closing the dialog while the download is in progress
+    if (isAnyFileWaiting(files)) return;
     onClose();
-    uppy.cancelAll();
+    uppy.clear();
     queryClient.invalidateQueries({ queryKey: ['Images', entityId] });
-  }, [entityId, onClose, queryClient, uppy]);
+  }, [entityId, files, onClose, queryClient, uppy]);
 
   React.useEffect(() => {
     uppy.setMeta({

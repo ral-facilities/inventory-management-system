@@ -83,3 +83,24 @@ export const usePatchAttachment = (): UseMutationResult<
     },
   });
 };
+
+const deleteAttachent = async (id: string): Promise<void> => {
+  return storageApi
+    .delete(`/attachments/${id}`, {})
+    .then((response) => response.data);
+};
+
+export const useDeleteAttachment = (): UseMutationResult<
+  void,
+  AxiosError,
+  string
+> => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => deleteAttachent(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [`Attachments`] });
+      queryClient.removeQueries({ queryKey: [`Attachment`] });
+    },
+  });
+};

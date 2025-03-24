@@ -1031,25 +1031,42 @@ export const handlers = [
     return HttpResponse.json(generateAttachments(), { status: 200 });
   }),
 
-  http.patch<{ id: string }, AttachmentMetadataPatch, AttachmentMetadata | ErrorResponse>(
-    '/attachments/:id',
-    async ({ request, params }) => {
-      const { id } = params;
+  http.patch<
+    { id: string },
+    AttachmentMetadataPatch,
+    AttachmentMetadata | ErrorResponse
+  >('/attachments/:id', async ({ request, params }) => {
+    const { id } = params;
 
-      const obj = AttachmentsJSON.find((attachment) => attachment.id === id);
-      const body = await request.json();
+    const obj = AttachmentsJSON.find((attachment) => attachment.id === id);
+    const body = await request.json();
 
-      const fullBody = { ...obj, ...body };
+    const fullBody = { ...obj, ...body };
 
-      if (fullBody.file_name === 'Error_500.txt') {
-        return HttpResponse.json(
-          { detail: 'Something went wrong' },
-          { status: 500 }
-        );
-      }
-      return HttpResponse.json(fullBody as AttachmentMetadata, { status: 200 });
+    if (fullBody.file_name === 'Error_500.txt') {
+      return HttpResponse.json(
+        { detail: 'Something went wrong' },
+        { status: 500 }
+      );
     }
-  ),
+    return HttpResponse.json(fullBody as AttachmentMetadata, { status: 200 });
+  }),
+
+  http.delete<
+    { id: string },
+    DefaultBodyType,
+    ErrorResponse | NonNullable<unknown>
+  >('/attachments/:id', ({ params }) => {
+    const { id } = params;
+
+    if (id === 'Error 500')
+      return HttpResponse.json(
+        { detail: 'Something went wrong' },
+        { status: 500 }
+      );
+
+    return HttpResponse.json(undefined, { status: 204 });
+  }),
 
   // ------------------------------------ OBJECT STORAGE ------------------------------------------------
 
