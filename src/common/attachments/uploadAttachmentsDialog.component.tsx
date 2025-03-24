@@ -110,7 +110,7 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
         });
       }
     },
-    [deleteAttachment, deletedFileIds, fileMetadataMap, handleIMS_APIError]
+    [deleteAttachment, deletedFileIds, fileMetadataMap]
   );
 
   const { files = {} } = uppy.getState();
