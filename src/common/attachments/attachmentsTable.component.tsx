@@ -98,7 +98,6 @@ function AttachmentsTable(props: AttachmentTableProps) {
         size: 350,
         enableGrouping: false,
         Cell: ({ row }) =>
-          row.original.created_time &&
           formatDateTimeStrings(row.original.created_time, true),
       },
       {
@@ -112,7 +111,6 @@ function AttachmentsTable(props: AttachmentTableProps) {
         size: 350,
         enableGrouping: false,
         Cell: ({ row }) =>
-          row.original.modified_time &&
           formatDateTimeStrings(row.original.modified_time, true),
       },
     ];
