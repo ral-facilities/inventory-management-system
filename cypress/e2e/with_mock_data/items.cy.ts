@@ -460,6 +460,15 @@ describe('Items', () => {
   });
 
   describe('Attachments', () => {
+    beforeEach(() => {
+      // Catch error to avoid the CI failing unnecessarily
+      Cypress.on('uncaught:exception', (err) => {
+        if (err.message.includes('ResizeObserver')) {
+          return false;
+        }
+      });
+    });
+
     afterEach(() => {
       cy.clearMocks();
     });
@@ -711,14 +720,34 @@ describe('Items', () => {
       cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
     });
 
-    it('edits an attachment successfully', () => {
-      // Catch error to avoid the CI failing unnecessarily
-      Cypress.on('uncaught:exception', (err) => {
-        if (err.message.includes('ResizeObserver')) {
-          return false;
-        }
-      });
+    it('downloads an attachment successfully', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
 
+      cy.findByText('Attachments').click();
+
+      cy.findAllByLabelText('Row Actions').first().click();
+      cy.findByText('Download').click();
+
+      cy.findByRole('dialog').should('be.visible');
+
+      cy.startSnoopingBrowserMockedRequest();
+
+      cy.findByRole('button', { name: 'Continue' }).click();
+
+      cy.findBrowserMockedRequests({
+        method: 'GET',
+        url: '/attachments/:id',
+      }).should((getRequests) => {
+        expect(getRequests.length).equal(1);
+        const request = getRequests[0];
+        expect(request.url.toString()).to.contain('1');
+      })
+    });
+
+    it('edits an attachment successfully', () => {
       cy.findByText('5YUQDDjKpz2z').click();
       cy.findByText(
         'High-resolution cameras for beam characterization. 1'
@@ -761,13 +790,6 @@ describe('Items', () => {
     });
 
     it('shows error message when no fields have been changed', () => {
-      // Catch error to avoid the CI failing unnecessarily
-      Cypress.on('uncaught:exception', (err) => {
-        if (err.message.includes('ResizeObserver')) {
-          return false;
-        }
-      });
-
       cy.findByText('5YUQDDjKpz2z').click();
       cy.findByText(
         'High-resolution cameras for beam characterization. 1'
@@ -790,13 +812,6 @@ describe('Items', () => {
     });
 
     it('shows error message when required fields are cleared', () => {
-      // Catch error to avoid the CI failing unnecessarily
-      Cypress.on('uncaught:exception', (err) => {
-        if (err.message.includes('ResizeObserver')) {
-          return false;
-        }
-      });
-
       cy.findByText('5YUQDDjKpz2z').click();
       cy.findByText(
         'High-resolution cameras for beam characterization. 1'
@@ -838,9 +853,9 @@ describe('Items', () => {
       cy.findBrowserMockedRequests({
         method: 'DELETE',
         url: '/attachments/:id',
-      }).should((patchRequests) => {
-        expect(patchRequests.length).equal(1);
-        const request = patchRequests[0];
+      }).should((deleteRequests) => {
+        expect(deleteRequests.length).equal(1);
+        const request = deleteRequests[0];
         expect(request.url.toString()).to.contain('1');
       });
     });
@@ -1138,6 +1153,33 @@ describe('Items', () => {
       cy.findByTestId('galleryLightBox').should('not.exist');
     });
 
+    it('downloads an image successfully', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Gallery').click();
+
+      cy.findAllByLabelText('Card Actions').first().click();
+      cy.findAllByText('Download').last().click();
+
+      cy.findByRole('dialog').should('be.visible');
+
+      cy.startSnoopingBrowserMockedRequest();
+
+      cy.findByRole('button', { name: 'Continue' }).click();
+
+      cy.findBrowserMockedRequests({
+        method: 'GET',
+        url: '/images/:id',
+      }).should((getRequests) => {
+        expect(getRequests.length).equal(1);
+        const request = getRequests[0];
+        expect(request.url.toString()).to.contain('1');
+      })
+    })
+
     it('edits an image successfully', () => {
       cy.findByText('5YUQDDjKpz2z').click();
       cy.findByText(
@@ -1303,9 +1345,9 @@ describe('Items', () => {
       cy.findBrowserMockedRequests({
         method: 'DELETE',
         url: '/images/:id',
-      }).should((patchRequests) => {
-        expect(patchRequests.length).equal(1);
-        const request = patchRequests[0];
+      }).should((deleteRequests) => {
+        expect(deleteRequests.length).equal(1);
+        const request = deleteRequests[0];
         expect(request.url.toString()).to.contain('1');
       });
     });
@@ -1324,9 +1366,9 @@ describe('Items', () => {
     cy.findBrowserMockedRequests({
       method: 'DELETE',
       url: '/v1/items/:id',
-    }).should((patchRequests) => {
-      expect(patchRequests.length).equal(1);
-      const request = patchRequests[0];
+    }).should((deleteRequests) => {
+      expect(deleteRequests.length).equal(1);
+      const request = deleteRequests[0];
       expect(request.url.toString()).to.contain('KvT2Ox7n');
     });
   });
@@ -1419,9 +1461,9 @@ describe('Items', () => {
     cy.findBrowserMockedRequests({
       method: 'PATCH',
       url: '/v1/items/:id',
-    }).should(async (postRequests) => {
-      expect(postRequests.length).eq(1);
-      expect(JSON.stringify(await postRequests[0].json())).equal(
+    }).should(async (patchRequests) => {
+      expect(patchRequests.length).eq(1);
+      expect(JSON.stringify(await patchRequests[0].json())).equal(
         JSON.stringify({
           serial_number: 'Zf7P8Qu8TD8ctest1234',
           purchase_order_number: 'hpGBgi0dtest23',
@@ -1461,9 +1503,9 @@ describe('Items', () => {
     cy.findBrowserMockedRequests({
       method: 'PATCH',
       url: '/v1/items/:id',
-    }).should(async (postRequests) => {
-      expect(postRequests.length).eq(1);
-      expect(JSON.stringify(await postRequests[0].json())).equal(
+    }).should(async (patchRequests) => {
+      expect(patchRequests.length).eq(1);
+      expect(JSON.stringify(await patchRequests[0].json())).equal(
         JSON.stringify({ serial_number: 'Zf7P8Qu8TD8ctest1234' })
       );
     });
@@ -1494,9 +1536,9 @@ describe('Items', () => {
     cy.findBrowserMockedRequests({
       method: 'PATCH',
       url: '/v1/items/:id',
-    }).should(async (postRequests) => {
-      expect(postRequests.length).eq(1);
-      expect(JSON.stringify(await postRequests[0].json())).equal(
+    }).should(async (patchRequests) => {
+      expect(patchRequests.length).eq(1);
+      expect(JSON.stringify(await patchRequests[0].json())).equal(
         JSON.stringify({
           properties: [
             { id: '1', value: 1218 },
