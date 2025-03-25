@@ -1,6 +1,8 @@
 import { RenderResult, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { storageApi } from '../api/api';
+import { APIImage, AttachmentMetadata } from '../api/api.types';
+import handleIMS_APIError from '../handleIMS_APIError';
 import AttachmentsJSON from '../mocks/Attachments.json';
 import ImagesJSON from '../mocks/Images.json';
 import { renderComponentWithRouterProvider } from '../testUtils';
@@ -30,12 +32,16 @@ describe('Download File dialog', () => {
   });
 
   describe('Download an image', () => {
+    let image: APIImage;
+
     beforeEach(() => {
+      image = ImagesJSON[0];
+
       props = {
         open: true,
         onClose: onClose,
         fileType: 'Image',
-        file: ImagesJSON[0],
+        file: image,
       };
     });
 
@@ -55,15 +61,35 @@ describe('Download File dialog', () => {
         expect(onClose).toHaveBeenCalled();
       });
     });
+
+    it('diplays error message if an unknown error occurs', async () => {
+      image.id = '5';
+
+      createView();
+
+      const continueButton = screen.getByRole('button', { name: 'Continue' });
+
+      await waitFor(() => {
+        expect(continueButton).not.toBeDisabled();
+      });
+
+      await user.click(continueButton);
+
+      expect(handleIMS_APIError).toHaveBeenCalled();
+    });
   });
 
   describe('Download an attachment', () => {
+    let attachment: AttachmentMetadata;
+
     beforeEach(() => {
+      attachment = AttachmentsJSON[0];
+
       props = {
         open: true,
         onClose: onClose,
         fileType: 'Attachment',
-        file: AttachmentsJSON[0],
+        file: attachment,
       };
     });
 
@@ -84,6 +110,21 @@ describe('Download File dialog', () => {
       });
     });
 
+    it('diplays error message if an unknown error occurs', async () => {
+      attachment.id = '5';
+
+      createView();
+
+      const continueButton = screen.getByRole('button', { name: 'Continue' });
+
+      await waitFor(() => {
+        expect(continueButton).not.toBeDisabled();
+      });
+
+      await user.click(continueButton);
+
+      expect(handleIMS_APIError).toHaveBeenCalled();
+    });
   });
 
   it('calls onClose when cancel button is clicked', async () => {
