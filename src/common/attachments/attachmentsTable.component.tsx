@@ -222,13 +222,13 @@ function AttachmentsTable(props: AttachmentTableProps) {
     // Functions
     ...onPreservedStatesChange,
 
-    renderCreateRowDialogContent: ({ table, row }) => (
+    renderCreateRowDialogContent: ({ table }) => (
       <UploadAttachmentsDialog
         open={true}
         onClose={() => {
           table.setCreatingRow(null);
         }}
-        entityId={row.original.entity_id}
+        entityId={entityId}
       />
     ),
 
