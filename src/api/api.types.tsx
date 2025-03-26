@@ -254,6 +254,12 @@ export interface AttachmentPostMetadataResponse extends AttachmentMetadata {
 
 export type AttachmentMetadataPatch = ObjectFilePatchBase;
 
+export interface AttachmentMetadataWithURL extends AttachmentMetadata {
+  /* The url has a `ResponseContentDisposition` set in the url, for downloading attachments.
+  This allows links to be downloaded directly to the user's computer and not to their client first. */
+  download_url: string;
+}
+
 // ------------------------------------ IMAGES ------------------------------------------------
 export interface ImagePost extends ObjectFileUploadMetadata {
   upload_file: File;
@@ -271,8 +277,9 @@ export interface ImageMetadataPatch extends ObjectFilePatchBase {
   primary?: boolean | null;
 }
 export interface APIImageWithURL extends APIImage {
-  /* Each url has a different `ResponseContentDisposition` set in the url, for viewing images inline and downloading respectively.
-   Allows links to be downloaded directly to the user's computer and not to their client first. */
+  /* Each url has a different `ResponseContentDisposition` set in the url, for viewing images inline and
+  downloading respectively. This allows links to be downloaded directly to the user's computer and
+  not to their client first. */
   view_url: string;
   download_url: string;
 }

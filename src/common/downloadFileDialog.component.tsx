@@ -8,7 +8,13 @@ import {
 import { useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { APIImage, APIImageWithURL } from '../api/api.types';
+import {
+  APIImage,
+  APIImageWithURL,
+  AttachmentMetadata,
+  AttachmentMetadataWithURL,
+} from '../api/api.types';
+import { getAttachmentQuery } from '../api/attachments';
 import { getImageQuery } from '../api/images';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { downloadFileByLink } from '../utils';
@@ -24,27 +30,47 @@ export interface ImageDownloadDialogProps extends BaseDownloadFileProps {
   file: APIImage;
 }
 
-export type DownloadFileProps = ImageDownloadDialogProps;
+export interface AttachmentDownloadDialogProps extends BaseDownloadFileProps {
+  fileType: 'Attachment';
+  file: AttachmentMetadata;
+}
+
+export type DownloadFileProps =
+  | ImageDownloadDialogProps
+  | AttachmentDownloadDialogProps;
 
 const DownloadFileDialog = (props: DownloadFileProps) => {
   const { open, onClose, fileType, file } = props;
 
-  const getDownloadFileQuery = getImageQuery;
-
   const queryClient = useQueryClient();
 
   const handleClick = React.useCallback(async () => {
-    queryClient
-      .fetchQuery(getDownloadFileQuery(file.id, false))
-      .then((data: APIImageWithURL) => {
-        downloadFileByLink(data.download_url, data.file_name);
-        onClose();
-      })
-      .catch((error: AxiosError) => {
-        handleIMS_APIError(error);
-        onClose();
-      });
-  }, [file, queryClient, onClose, getDownloadFileQuery]);
+    if (file) {
+      if (fileType === 'Image') {
+        queryClient
+          .fetchQuery(getImageQuery(file.id, false))
+          .then((data: APIImageWithURL) => {
+            downloadFileByLink(data.download_url, data.file_name);
+            onClose();
+          })
+          .catch((error: AxiosError) => {
+            handleIMS_APIError(error);
+            onClose();
+          });
+      } else {
+        queryClient
+          .fetchQuery(getAttachmentQuery(file.id, false))
+          .then((data: AttachmentMetadataWithURL) => {
+            downloadFileByLink(data.download_url, data.file_name);
+            onClose();
+          })
+          .catch((error: AxiosError) => {
+            handleIMS_APIError(error);
+            onClose();
+          });
+      }
+    }
+  }, [file, fileType, queryClient, onClose]);
 
   return (
     <Dialog open={open} maxWidth="lg">

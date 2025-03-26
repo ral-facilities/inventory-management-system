@@ -1,5 +1,6 @@
 import ClearIcon from '@mui/icons-material/Clear';
 import DeleteIcon from '@mui/icons-material/Delete'
+import DownloadIcon from '@mui/icons-material/Download';
 import EditIcon from '@mui/icons-material/Edit';
 import {
   Box,
@@ -20,6 +21,7 @@ import React from 'react';
 import { AttachmentMetadata } from '../../api/api.types';
 import { useGetAttachments, usePatchAttachment } from '../../api/attachments';
 import DeleteAttachmentDialog from './deleteAttachmentDialog.component';
+import DownloadFileDialog from '../downloadFileDialog.component';
 import EditFileDialog from '../editFileDialog.component';
 import {
   COLUMN_FILTER_FUNCTIONS,
@@ -46,6 +48,9 @@ function AttachmentsTable(props: AttachmentTableProps) {
     useGetAttachments(entityId);
 
   const [deleteAttachmentDialog, setDeleteAttachmentDialog] =
+    React.useState<boolean>(false);
+
+  const [downloadAttachmentDialog, setDownloadAttachmentDialog] =
     React.useState<boolean>(false);
 
   const [selectedAttachment, setSelectedAttachment] = React.useState<AttachmentMetadata>();
@@ -258,6 +263,21 @@ function AttachmentsTable(props: AttachmentTableProps) {
           <ListItemText>Edit</ListItemText>
         </MenuItem>,
         <MenuItem
+          key="download"
+          aria-label={`Download ${row.original.file_name} attachment`}
+          onClick={() => {
+            setSelectedAttachment(row.original);
+            setDownloadAttachmentDialog(true);
+            closeMenu();
+          }}
+          sx={{ m: 0 }}
+        >
+          <ListItemIcon>
+            <DownloadIcon />
+          </ListItemIcon>
+          <ListItemText>Download</ListItemText>
+        </MenuItem>,
+        <MenuItem
           key="delete"
           aria-label={`Delete attachment ${row.original.file_name}`}
           onClick={() => {
@@ -289,6 +309,14 @@ function AttachmentsTable(props: AttachmentTableProps) {
         onClose={() => setDeleteAttachmentDialog(false)}
         attachment={selectedAttachment}
       />
+      {selectedAttachment && (
+        <DownloadFileDialog
+          open={downloadAttachmentDialog}
+          onClose={() => setDownloadAttachmentDialog(false)}
+          fileType="Attachment"
+          file={selectedAttachment}
+        />
+      )}
     </>
   );
 }
