@@ -86,6 +86,27 @@ describe('Attachments Table', () => {
     expect(router.state.location.search).toBe('');
   });
 
+  it('opens the upload attachments dialog and closes it correctly', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getAllByText('laser-calibration.txt').length).toEqual(3);
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Upload Attachments' }));
+
+    await waitFor(() => {
+      expect(screen.getByText('Drop files here or')).toBeInTheDocument();
+    });
+
+    const closeButton = screen.getByRole('button', { name: 'Close Modal' });
+    await user.click(closeButton);
+
+    await waitFor(() => {
+      expect(screen.queryByText('Drop files here or')).not.toBeInTheDocument();
+    });
+  });
+
   it('sets the table filters and clears the table filters', async () => {
     createView();
 
@@ -196,8 +217,8 @@ describe('Attachments Table', () => {
 
     expect(screen.getByText('Delete Attachment')).toBeInTheDocument();
 
-    const closeButton = screen.getByRole('button', { name: 'Cancel' });
-    await user.click(closeButton);
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
 
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
