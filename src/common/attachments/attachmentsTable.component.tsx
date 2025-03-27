@@ -39,6 +39,7 @@ import {
   mrtTheme,
 } from '../../utils';
 import { usePreservedTableState } from '../preservedTableState.component';
+import { StyledUppyBox } from '../uppy.utils';
 
 export interface AttachmentTableProps {
   entityId: string;
@@ -223,13 +224,15 @@ function AttachmentsTable(props: AttachmentTableProps) {
     ...onPreservedStatesChange,
 
     renderCreateRowDialogContent: ({ table }) => (
-      <UploadAttachmentsDialog
-        open={true}
-        onClose={() => {
-          table.setCreatingRow(null);
-        }}
-        entityId={entityId}
-      />
+      <StyledUppyBox>
+        <UploadAttachmentsDialog
+          open={true}
+          onClose={() => {
+            table.setCreatingRow(null);
+          }}
+          entityId={entityId}
+        />
+      </StyledUppyBox>
     ),
 
     renderEditRowDialogContent: ({ table, row }) => (
