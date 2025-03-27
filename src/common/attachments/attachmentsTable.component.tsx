@@ -1,3 +1,4 @@
+import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import DeleteIcon from '@mui/icons-material/Delete'
 import DownloadIcon from '@mui/icons-material/Download';
@@ -23,6 +24,7 @@ import { useGetAttachments, usePatchAttachment } from '../../api/attachments';
 import DeleteAttachmentDialog from './deleteAttachmentDialog.component';
 import DownloadFileDialog from '../downloadFileDialog.component';
 import EditFileDialog from '../editFileDialog.component';
+import UploadAttachmentsDialog from './uploadAttachmentsDialog.component';
 import {
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
@@ -37,6 +39,7 @@ import {
   mrtTheme,
 } from '../../utils';
 import { usePreservedTableState } from '../preservedTableState.component';
+import { StyledUppyBox } from '../uppy.utils';
 
 export interface AttachmentTableProps {
   entityId: string;
@@ -220,6 +223,18 @@ function AttachmentsTable(props: AttachmentTableProps) {
     // Functions
     ...onPreservedStatesChange,
 
+    renderCreateRowDialogContent: ({ table }) => (
+      <StyledUppyBox>
+        <UploadAttachmentsDialog
+          open={true}
+          onClose={() => {
+            table.setCreatingRow(null);
+          }}
+          entityId={entityId}
+        />
+      </StyledUppyBox>
+    ),
+
     renderEditRowDialogContent: ({ table, row }) => (
       <EditFileDialog
         open={true}
@@ -232,6 +247,16 @@ function AttachmentsTable(props: AttachmentTableProps) {
 
     renderTopToolbarCustomActions: ({ table }) => (
       <Box sx={{ display: 'flex' }}>
+        <Button
+          startIcon={<AddIcon />}
+          sx={{ mx: '4px' }}
+          variant="outlined"
+          onClick={() => {
+            table.setCreatingRow(true);
+          }}
+        >
+          Upload Attachments
+        </Button>
         <Button
           startIcon={<ClearIcon />}
           sx={{ mx: '4px' }}

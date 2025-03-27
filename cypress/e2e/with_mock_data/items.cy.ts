@@ -473,6 +473,47 @@ describe('Items', () => {
       cy.clearMocks();
     });
 
+    it('opens and closes the upload attachments dialog from both the actions menu and the table button', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByRole('button', {
+        name: 'items landing page actions menu',
+      }).click();
+      cy.findByText('Upload Attachments').click();
+
+      cy.findAllByText('Files cannot be larger than', { exact: false }).should(
+        'exist'
+      );
+
+      cy.findByRole('button', {
+        name: 'Close Modal',
+      }).click();
+
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Attachments').click();
+      cy.findByRole('button', {
+        name: 'Upload Attachments',
+      }).click();
+
+      cy.findAllByText('Files cannot be larger than', { exact: false }).should(
+        'exist'
+      );
+
+      cy.findByRole('button', {
+        name: 'Close Modal',
+      }).click();
+
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+    });
+
     it('uploads attachment', () => {
       cy.findByText('5YUQDDjKpz2z').click();
       cy.findByText(
