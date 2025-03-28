@@ -86,6 +86,27 @@ describe('Attachments Table', () => {
     expect(router.state.location.search).toBe('');
   });
 
+  it('opens the upload attachments dialog and closes it correctly', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getAllByText('laser-calibration.txt').length).toEqual(3);
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Upload Attachments' }));
+
+    await waitFor(() => {
+      expect(screen.getByText('Drop files here or')).toBeInTheDocument();
+    });
+
+    const closeButton = screen.getByRole('button', { name: 'Close Modal' });
+    await user.click(closeButton);
+
+    await waitFor(() => {
+      expect(screen.queryByText('Drop files here or')).not.toBeInTheDocument();
+    });
+  });
+
   it('sets the table filters and clears the table filters', async () => {
     createView();
 
@@ -116,6 +137,36 @@ describe('Attachments Table', () => {
     expect(clearFiltersButton).toBeDisabled();
   }, 10000);
 
+  it('opens download dialog and can close the dialog', async () => {
+    createView();
+
+    expect((await screen.findAllByText('safety-protocols.pdf')).length).toEqual(4);
+
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Download')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByText('Download'));
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    expect(screen.getByText('Download Attachment?')).toBeInTheDocument();
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+
+    expect(screen.queryByText('Download Attachment?')).not.toBeInTheDocument();
+  });
+
   it('opens edit dialog and closes it correctly', async () => {
     createView();
 
@@ -130,13 +181,49 @@ describe('Attachments Table', () => {
 
     await user.click(screen.getByText('Edit'));
 
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
     expect(screen.getByText('Edit Attachment')).toBeInTheDocument();
 
     const cancelButton = screen.getByRole('button', { name: 'Cancel' });
     await user.click(cancelButton);
 
     await waitFor(() => {
-      expect(screen.queryByText('Edit Attachment')).not.toBeInTheDocument();
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
+
+    expect(screen.queryByText('Edit Attachment')).not.toBeInTheDocument();
+  });
+
+  it('opens delete dialog and closes it correctly', async () => {
+    createView();
+
+    expect((await screen.findAllByText('safety-protocols.pdf')).length).toEqual(4);
+
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0])
+
+    await waitFor(() => {
+      expect(screen.getByText('Delete')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByText('Delete'));
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    expect(screen.getByText('Delete Attachment')).toBeInTheDocument();
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+
+    expect(screen.queryByText('Delete Attachment')).not.toBeInTheDocument();
   });
 });
