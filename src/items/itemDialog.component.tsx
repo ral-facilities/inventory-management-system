@@ -704,17 +704,7 @@ function ItemDialog(props: ItemDialogProps) {
                 )}
               />
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                id="catalogue-item-expected-lifetime-days-input"
-                label="Expected Lifetime (days)"
-                size="small"
-                {...registerDetailsStep('expected_lifetime_days')}
-                error={!!errorsDetailsStep.expected_lifetime_days}
-                helperText={errorsDetailsStep.expected_lifetime_days?.message}
-                fullWidth
-              />
-            </Grid>
+
             <Grid item xs={12}>
               <Controller
                 name="delivered_date"
@@ -764,6 +754,17 @@ function ItemDialog(props: ItemDialogProps) {
                     }}
                   />
                 )}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                id="catalogue-item-expected-lifetime-days-input"
+                label="Expected Lifetime (days)"
+                size="small"
+                {...registerDetailsStep('expected_lifetime_days')}
+                error={!!errorsDetailsStep.expected_lifetime_days}
+                helperText={errorsDetailsStep.expected_lifetime_days?.message}
+                fullWidth
               />
             </Grid>
             <Grid item xs={12}>
