@@ -325,6 +325,7 @@ function ManufacturerTable() {
           onClick={() => {
             setDeleteManufacturerDialog(true);
             setSelectedManufacturer(row.original);
+            closeMenu();
           }}
           sx={{ m: 0 }}
         >
