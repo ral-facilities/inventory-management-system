@@ -2480,31 +2480,111 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
               data-index="6"
             >
               <div
-                aria-label=",Tue Sep 05 2023 23:00:00 GMT+0000 (Coordinated Universal Time)"
+                aria-label="Tue Sep 05 2023 23:00:00 GMT+0000 (Coordinated Universal Time),Tue Sep 05 2023 23:00:00 GMT+0000 (Coordinated Universal Time)"
                 class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                 data-mui-internal-clone-element="true"
                 role="tooltip"
-              />
+              >
+                <div
+                  class="MuiBox-root css-0"
+                >
+                  <div
+                    class="MuiBox-root css-0"
+                  >
+                    Delivered: 
+                    <div
+                      class="MuiBox-root css-fo8535"
+                    >
+                      1
+                    </div>
+                  </div>
+                  <div
+                    class="MuiBox-root css-0"
+                  >
+                    Not Delivered: 
+                    <div
+                      class="MuiBox-root css-1t2dw6n"
+                    >
+                      1
+                    </div>
+                  </div>
+                </div>
+              </div>
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-9wi3h7-MuiTableCell-root-MuiTableCell-root"
               data-index="7"
             >
               <div
-                aria-label="3939"
+                aria-label="1969.5"
                 class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                 data-mui-internal-clone-element="true"
                 role="tooltip"
-              />
+              >
+                <div
+                  class="MuiBox-root css-0"
+                >
+                  Average: 
+                  <div
+                    class="MuiBox-root css-fo8535"
+                  >
+                    1,970 
+                  </div>
+                </div>
+              </div>
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ch9d8-MuiTableCell-root-MuiTableCell-root"
               data-index="8"
-            />
+            >
+              <div
+                class="MuiBox-root css-13o7eu2"
+              >
+                <div
+                  class="MuiBox-root css-0"
+                >
+                  Not Defective:
+                  <div
+                    class="MuiBox-root css-fo8535"
+                  >
+                    2
+                  </div>
+                </div>
+                <div
+                  class="MuiBox-root css-0"
+                >
+                  Defective:
+                  <div
+                    class="MuiBox-root css-1t2dw6n"
+                  >
+                    0
+                  </div>
+                </div>
+              </div>
+            </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-11phabq-MuiTableCell-root-MuiTableCell-root"
               data-index="9"
-            />
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <div
+                  class="MuiBox-root css-19idom"
+                >
+                  <div
+                    class="MuiBox-root css-0"
+                  >
+                    In Use:
+                  </div>
+                  <div
+                    class="MuiBox-root css-fo8535"
+                  >
+                    2
+                  </div>
+                </div>
+              </div>
+            </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"
               data-index="10"
@@ -2986,27 +3066,121 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                 class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                 data-mui-internal-clone-element="true"
                 role="tooltip"
-              />
+              >
+                <div
+                  class="MuiBox-root css-0"
+                >
+                  <div
+                    class="MuiBox-root css-0"
+                  >
+                    Delivered: 
+                    <div
+                      class="MuiBox-root css-fo8535"
+                    >
+                      2
+                    </div>
+                  </div>
+                  <div
+                    class="MuiBox-root css-0"
+                  >
+                    Not Delivered: 
+                    <div
+                      class="MuiBox-root css-1t2dw6n"
+                    >
+                      0
+                    </div>
+                  </div>
+                </div>
+              </div>
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-9wi3h7-MuiTableCell-root-MuiTableCell-root"
               data-index="7"
             >
               <div
-                aria-label="5455"
+                aria-label="2727.5"
                 class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                 data-mui-internal-clone-element="true"
                 role="tooltip"
-              />
+              >
+                <div
+                  class="MuiBox-root css-0"
+                >
+                  Average: 
+                  <div
+                    class="MuiBox-root css-fo8535"
+                  >
+                    2,728 
+                  </div>
+                </div>
+              </div>
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ch9d8-MuiTableCell-root-MuiTableCell-root"
               data-index="8"
-            />
+            >
+              <div
+                class="MuiBox-root css-13o7eu2"
+              >
+                <div
+                  class="MuiBox-root css-0"
+                >
+                  Not Defective:
+                  <div
+                    class="MuiBox-root css-fo8535"
+                  >
+                    1
+                  </div>
+                </div>
+                <div
+                  class="MuiBox-root css-0"
+                >
+                  Defective:
+                  <div
+                    class="MuiBox-root css-1t2dw6n"
+                  >
+                    1
+                  </div>
+                </div>
+              </div>
+            </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-11phabq-MuiTableCell-root-MuiTableCell-root"
               data-index="9"
-            />
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <div
+                  class="MuiBox-root css-19idom"
+                >
+                  <div
+                    class="MuiBox-root css-0"
+                  >
+                    New:
+                  </div>
+                  <div
+                    class="MuiBox-root css-fo8535"
+                  >
+                    1
+                  </div>
+                </div>
+                <div
+                  class="MuiBox-root css-19idom"
+                >
+                  <div
+                    class="MuiBox-root css-0"
+                  >
+                    Scrapped:
+                  </div>
+                  <div
+                    class="MuiBox-root css-fo8535"
+                  >
+                    1
+                  </div>
+                </div>
+              </div>
+            </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"
               data-index="10"

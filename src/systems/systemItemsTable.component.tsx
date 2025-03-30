@@ -351,7 +351,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         header: 'Delivered Date',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) =>
-          row.item.delivered_date ? new Date(row.item.delivered_date) : '',
+          row.item.delivered_date ? new Date(row.item.delivered_date) : null,
         id: 'item.delivered_date',
         filterVariant: COLUMN_FILTER_VARIANTS.date,
         filterFn: COLUMN_FILTER_FUNCTIONS.date,
@@ -360,17 +360,41 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         Cell: ({ row }) =>
           row.original.item.delivered_date &&
           formatDateTimeStrings(row.original.item.delivered_date, false),
-
         GroupedCell: (props) =>
           TableGroupedCell({
             ...props,
             outputType: 'Date',
           }),
+        AggregatedCell: ({ cell }) => {
+          const labels = ['Delivered', 'Not Delivered'];
+          const values =
+            cell.row.subRows?.map((val) => val.original.item.delivered_date) ||
+            [];
+          const deliveredCount = values.filter(Boolean).length;
+          const notDeliveredCount = values.length - deliveredCount;
+
+          return (
+            <Box key={cell.id}>
+              <Box>
+                {labels[0]}:{' '}
+                <Box sx={{ color: 'success.main', fontWeight: 'bold' }}>
+                  {deliveredCount}
+                </Box>
+              </Box>
+              <Box>
+                {labels[1]}:{' '}
+                <Box sx={{ color: 'error.main', fontWeight: 'bold' }}>
+                  {notDeliveredCount}
+                </Box>
+              </Box>
+            </Box>
+          );
+        },
       },
       {
         header: 'Expected Lifetime (Days)',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => row.item.expected_lifetime_days ?? '',
+        accessorFn: (row) => row.item.expected_lifetime_days ?? null,
         id: 'item.expected_lifetime_days',
         filterVariant: COLUMN_FILTER_VARIANTS.number,
         filterFn: COLUMN_FILTER_FUNCTIONS.number,
@@ -378,6 +402,27 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           ...COLUMN_FILTER_MODE_OPTIONS.number,
           ...OPTIONAL_FILTER_MODE_OPTIONS,
         ],
+        enableGrouping: false,
+        aggregationFn: ['mean'],
+        AggregatedCell: ({ cell }) => {
+          const labels = ['Average'];
+          const values = cell.getValue<Array<number>>() || [];
+          return (
+            <>
+              {labels.map((label, index) => (
+                <Box key={label}>
+                  {label}:{' '}
+                  <Box sx={{ color: 'success.main', fontWeight: 'bold' }}>
+                    {values[index]?.toLocaleString(undefined, {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: index === 0 ? 0 : 1,
+                    })}{' '}
+                  </Box>
+                </Box>
+              ))}
+            </>
+          );
+        },
         size: 300,
       },
       {
@@ -388,6 +433,30 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         filterVariant: COLUMN_FILTER_VARIANTS.boolean,
         enableColumnFilterModes: false,
         size: 200,
+        AggregatedCell: ({ cell }) => {
+          const labels = ['Defective', 'Not Defective'];
+          const values =
+            cell.row.subRows?.map((val) => val.original.item.is_defective) ||
+            [];
+          const defectiveCount = values.filter(Boolean).length;
+          const notDefectiveCount = values.length - defectiveCount;
+          return (
+            <Box display="block">
+              <Box>
+                {labels[1]}:
+                <Box sx={{ color: 'success.main', fontWeight: 'bold' }}>
+                  {notDefectiveCount}
+                </Box>
+              </Box>
+              <Box>
+                {labels[0]}:
+                <Box sx={{ color: 'error.main', fontWeight: 'bold' }}>
+                  {defectiveCount}
+                </Box>
+              </Box>
+            </Box>
+          );
+        },
       },
       {
         header: 'Usage Status',
@@ -517,7 +586,37 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                   </FormControl>
                 );
               }
-            : undefined,
+            : ({ cell }) => {
+                // Extract usage status values from subRows safely
+                const values =
+                  cell.row.subRows?.map(
+                    (subRow) => subRow.original?.item?.usage_status
+                  ) ?? [];
+
+                // Count occurrences of each usage status
+                const usageCounts = values.reduce(
+                  (acc, status) => {
+                    if (status) {
+                      acc[status] = (acc[status] || 0) + 1;
+                    }
+                    return acc;
+                  },
+                  {} as Record<string, number>
+                );
+
+                return (
+                  <Box key={cell.id}>
+                    {Object.entries(usageCounts).map(([status, count]) => (
+                      <Box key={status} sx={{ mb: 1 }}>
+                        <Box>{status}:</Box>
+                        <Box sx={{ color: 'success.main', fontWeight: 'bold' }}>
+                          {count}
+                        </Box>
+                      </Box>
+                    ))}
+                  </Box>
+                );
+              },
         Cell:
           type === 'usageStatus'
             ? ({ row }) => {
