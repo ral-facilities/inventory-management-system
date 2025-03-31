@@ -31,13 +31,12 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
 
   const queryClient = useQueryClient();
 
-  const osApiUrl = async () => (await settings)?.osApiUrl || '';
-
-  const settings = React.useContext(InventoryManagementSystemSettingsContext);
-  const maxFileSizeB = settings.maxImageSizeBytes;
+  const { maxImageSizeBytes, osApiUrl } = React.useContext(
+    InventoryManagementSystemSettingsContext
+  );
 
   // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000, so here the former is expected despite them really being GiB, MiB and KiB.
-  const maxFileSizeMB = maxFileSizeB / 1024 ** 2;
+  const maxFileSizeMB = maxImageSizeBytes / 1024 ** 2;
 
   const [uppy] = React.useState<
     Uppy<UppyUploadMetadata, UppyImageUploadResponse>
@@ -45,7 +44,7 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
     const newUppy = new Uppy<UppyUploadMetadata, UppyImageUploadResponse>({
       autoProceed: false,
       restrictions: {
-        maxFileSize: maxFileSizeB,
+        maxFileSize: maxImageSizeBytes,
         requiredMetaFields: ['name'],
         allowedFileTypes: ['image/*'],
       },
@@ -53,18 +52,16 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
       .use(ImageEditor)
       .use(ProgressBar);
 
-    osApiUrl().then((url) => {
-      newUppy.use(XHR, {
-        endpoint: `${url}/images`,
-        method: 'POST',
-        fieldName: 'upload_file',
-        async onBeforeRequest(xhr) {
-          uppyOnBeforeRequest(xhr);
-        },
-        async onAfterResponse(xhr) {
-          await uppyOnAfterResponse(xhr);
-        },
-      });
+    newUppy.use(XHR, {
+      endpoint: `${osApiUrl}/images`,
+      method: 'POST',
+      fieldName: 'upload_file',
+      async onBeforeRequest(xhr) {
+        uppyOnBeforeRequest(xhr);
+      },
+      async onAfterResponse(xhr) {
+        await uppyOnAfterResponse(xhr);
+      },
     });
 
     return newUppy;
