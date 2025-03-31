@@ -65,6 +65,7 @@ USER www-data
 ENV IMS_API_URL="/inventory-management-system-api"
 ENV OS_API_URL="/object-storage-api"
 ENV PLUGIN_HOST="/inventory-management-system"
+ENV MAX_ATTACHMENT_SIZE_BYTES=104857600
 
 COPY docker/docker-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["docker-entrypoint.sh"]
