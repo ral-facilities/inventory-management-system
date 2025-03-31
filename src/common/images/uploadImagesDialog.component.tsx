@@ -16,7 +16,7 @@ import type {
 } from '../../app.types';
 import { InventoryManagementSystemSettingsContext } from '../../configProvider.component';
 import { getNonEmptyTrimmedString } from '../../utils';
-import { useMetaFields } from '../uppy.utils';
+import { isAnyFileWaiting, useMetaFields } from '../uppy.utils';
 
 export interface UploadImagesDialogProps {
   open: boolean;
@@ -67,11 +67,15 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
     return newUppy;
   });
 
+  const { files = {} } = uppy.getState();
+
   const handleClose = React.useCallback(() => {
+    // prevent users from closing the dialog while the download is in progress
+    if (isAnyFileWaiting(files)) return;
     onClose();
-    uppy.cancelAll();
+    uppy.clear();
     queryClient.invalidateQueries({ queryKey: ['Images', entityId] });
-  }, [entityId, onClose, queryClient, uppy]);
+  }, [entityId, files, onClose, queryClient, uppy]);
 
   React.useEffect(() => {
     uppy.setMeta({

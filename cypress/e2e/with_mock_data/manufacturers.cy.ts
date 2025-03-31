@@ -391,7 +391,8 @@ describe('Manufacturer', () => {
     cy.findByText('Manufacturer B').should('exist');
     cy.findByText('Manufacturer C').should('exist');
   });
-  it('sets the table filters and clears the table filters', () => {
+
+  it('sets and clears the table filters', () => {
     cy.findByText('Manufacturer A').should('exist');
     cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
     cy.findByLabelText('Filter by Name').type('B');

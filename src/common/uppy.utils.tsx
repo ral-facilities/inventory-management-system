@@ -1,5 +1,5 @@
 import { Box, styled } from '@mui/material';
-import { Body, Meta } from '@uppy/core';
+import { Body, Meta, type UppyFile } from '@uppy/core';
 import { DashboardState } from '@uppy/dashboard/lib/Dashboard';
 import type { VNode } from 'preact';
 import React from 'react';
@@ -13,7 +13,8 @@ export const StyledUppyBox = styled(Box)(({ theme }) => ({
     maxHeight: 'calc(100% - 64px)',
     width: 'calc(100% - 64px)',
   },
-  '& .uppy-Dashboard--modal .uppy-Dashboard-inner': { zIndex: 1300 },
+  // Ensures uppy dialog appears above MUI dialogs; MUI dialogs have a value of 1300.
+  '& .uppy-Dashboard--modal .uppy-Dashboard-inner': { zIndex: 1300 + 1 },
   // The theme variable doesn't update as expected in the renderFields function.
   // Therefore, all CSS that depends on the theme mode is handled here.
   // The input focus styles are adapted from Uppy core styles:
@@ -145,4 +146,18 @@ export function useMetaFields<M extends Meta, B extends Body>(): MetaFields<
   ];
 
   return metaFieldsData;
+}
+
+export function isAnyFileWaiting<M extends Meta, B extends Body>(
+  files: Record<string, UppyFile<M, B>>
+): boolean {
+  const fileIDs = Object.keys(files);
+  for (let i = 0; i < fileIDs.length; i++) {
+    const { progress } = files[fileIDs[i]];
+    // If any file is still waiting to upload, return true
+    if (progress.uploadStarted && !progress.uploadComplete) {
+      return true;
+    }
+  }
+  return false;
 }

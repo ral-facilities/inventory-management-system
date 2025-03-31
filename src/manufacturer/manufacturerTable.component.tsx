@@ -37,6 +37,7 @@ import {
   formatDateTimeStrings,
   getInitialColumnFilterFnState,
   getPageHeightCalc,
+  mrtTheme,
 } from '../utils';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 import ManufacturerDialog from './manufacturerDialog.component';
@@ -222,7 +223,9 @@ function ManufacturerTable() {
       ...preservedState,
       showProgressBars: manufacturerDataLoading, //or showSkeletons
     },
-    // MUI
+    //MRT
+    mrtTheme,
+    //MUI
     muiTableBodyRowProps: ({ row }) => {
       return { component: TableRow, 'aria-label': `${row.original.name} row` };
     },
@@ -322,6 +325,7 @@ function ManufacturerTable() {
           onClick={() => {
             setDeleteManufacturerDialog(true);
             setSelectedManufacturer(row.original);
+            closeMenu();
           }}
           sx={{ m: 0 }}
         >

@@ -13,6 +13,7 @@ import UploadAttachmentsDialog, {
 describe('Upload attachment dialog', () => {
   let props: UploadAttachmentsDialogProps;
   let user: UserEvent;
+  let axiosDeleteSpy: MockInstance;
   let axiosPostSpy: MockInstance;
   let xhrPostSpy: MockInstance;
 
@@ -31,6 +32,7 @@ describe('Upload attachment dialog', () => {
       entityId: '1',
     };
     user = userEvent.setup();
+    axiosDeleteSpy = vi.spyOn(storageApi, 'delete');
     axiosPostSpy = vi.spyOn(storageApi, 'post');
     xhrPostSpy = vi.spyOn(window.XMLHttpRequest.prototype, 'open');
     vi.spyOn(console, 'error').mockImplementation(() => {});
@@ -38,6 +40,7 @@ describe('Upload attachment dialog', () => {
 
   afterEach(() => {
     vi.clearAllMocks();
+    axiosDeleteSpy.mockRestore();
     axiosPostSpy.mockRestore();
     xhrPostSpy.mockRestore();
   });
@@ -96,18 +99,28 @@ describe('Upload attachment dialog', () => {
     // Checks if file extension is displayed. If it's editable, actual value will disappear after editing.
     expect(await screen.findByText('.txt')).toBeInTheDocument();
 
-    const title = screen.getByRole('textbox', { name: 'Title' });
-    const description = screen.getByRole('textbox', { name: 'Description' });
+    const description: HTMLInputElement = screen.getByRole('textbox', {
+      name: 'Description',
+    });
+
+    const title: HTMLInputElement = screen.getByRole('textbox', {
+      name: 'Title',
+    });
 
     expect(await screen.findByDisplayValue('test1')).toBeInTheDocument();
+
+    // The input elements would be upto date, but the last form attribute would be missing a word/letter,
+    // likely caused by the automated typing and submission being too fast for the form to update.
+    // Adding a typing delay fixed this issue, ensuring enough time for the form to update.
+
+    const delayedUser = userEvent.setup({ delay: 20 });
+
+    await delayedUser.type(title, 'test title');
+
+    await delayedUser.type(description, 'test description');
+
     expect(await screen.findByText('.txt')).toBeInTheDocument();
 
-    await user.type(title, 'test title');
-
-    expect(await screen.findByDisplayValue('test title')).toBeInTheDocument();
-    await user.click(description);
-
-    await user.type(description, 'test description');
     expect(
       await screen.findByDisplayValue('test description')
     ).toBeInTheDocument();
@@ -135,6 +148,7 @@ describe('Upload attachment dialog', () => {
   it('errors when presigned url fails', async () => {
     server.use(
       http.post('/object-storage', async () => {
+        await delay(1000);
         return HttpResponse.error();
       })
     );
@@ -181,13 +195,15 @@ describe('Upload attachment dialog', () => {
     expect(
       await screen.findByLabelText('Show error details')
     ).toBeInTheDocument();
+
+    await waitFor(() =>
+      expect(axiosDeleteSpy).toHaveBeenCalledWith('/attachments/1', {})
+    );
   });
 
   it('should send a DELETE request for the attachment document if a file is removed during upload', async () => {
     server.use(
       http.post('/attachments', async () => {
-        await delay(500);
-
         return HttpResponse.json(
           {
             id: '1',
@@ -199,6 +215,20 @@ describe('Upload attachment dialog', () => {
           },
           { status: 200 }
         );
+      })
+    );
+
+    server.use(
+      http.post('/object-storage', async () => {
+        await delay(1000);
+        return new HttpResponse(undefined, {
+          status: 204,
+          headers: {
+            'Content-Type': 'text/plain; charset=utf-8',
+            // This is need for uppy
+            ETag: '"e76fe3d21078d7a3b9ec95edf437d010"',
+          },
+        });
       })
     );
 
@@ -237,7 +267,9 @@ describe('Upload attachment dialog', () => {
       await screen.findByRole('button', { name: 'Remove file' })
     );
 
-    //TODO: Assert axios delete request was called
+    await waitFor(() =>
+      expect(axiosDeleteSpy).toHaveBeenCalledWith('/attachments/1', {})
+    );
 
     expect(screen.queryByText('Upload 1 file')).not.toBeInTheDocument();
   });

@@ -62,8 +62,8 @@ describe('Manufacturer Table', () => {
 
     expect(screen.getByText('Delete Manufacturer')).toBeInTheDocument();
 
-    const closeButton = screen.getByRole('button', { name: 'Cancel' });
-    await user.click(closeButton);
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
 
     await waitFor(() => {
       expect(screen.queryByText('Delete Manufacturer')).not.toBeInTheDocument();
@@ -87,8 +87,8 @@ describe('Manufacturer Table', () => {
 
     expect(screen.getByText('Edit Manufacturer')).toBeInTheDocument();
 
-    const closeButton = screen.getByRole('button', { name: 'Cancel' });
-    await user.click(closeButton);
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
 
     await waitFor(() => {
       expect(screen.queryByText('Edit Manufacturer')).not.toBeInTheDocument();
@@ -103,8 +103,8 @@ describe('Manufacturer Table', () => {
 
     await user.click(screen.getByRole('button', { name: 'Add Manufacturer' }));
 
-    const closeButton = screen.getByRole('button', { name: 'Cancel' });
-    await user.click(closeButton);
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
   });
 
   it('sets the table filters and clears the table filters', async () => {

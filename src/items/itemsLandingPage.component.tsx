@@ -12,7 +12,7 @@ import { useGetItem } from '../api/items';
 import { useGetManufacturer } from '../api/manufacturers';
 import { useGetSystem } from '../api/systems';
 import ActionMenu from '../common/actionMenu.component';
-import PlaceholderImage from '../common/images/placeholderImage.component';
+import PrimaryImage from '../common/images/primaryImage.component';
 import TabView from '../common/tab/tabView.component';
 import { formatDateTimeStrings } from '../utils';
 import ItemDialog from './itemDialog.component';
@@ -94,54 +94,55 @@ function ItemsLandingPage() {
               style={{ maxWidth: '80%' }}
             >
               {/* Image Section */}
-              <Grid item container xs={12}>
-                <Grid item xs={12} sm={4}>
-                  <PlaceholderImage />
-                </Grid>
-                {/* Title and Description Section */}
-                <Grid
-                  item
-                  container
-                  xs={12}
-                  sm={6}
-                  sx={{ alignItems: 'flex-start', pl: 2 }}
-                >
-                  <Grid item xs={12}>
-                    <Typography
-                      variant="h4"
-                      gutterBottom
-                      sx={{
-                        fontWeight: 'bold',
-                        wordWrap: 'break-word',
-                      }}
-                    >
-                      {catalogueItemData.name}
-                    </Typography>
-
-                    <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
-                      Serial Number: {itemData.serial_number ?? 'None'}
-                    </Typography>
-
-                    <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
-                      Description:
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      sx={{ whiteSpace: 'pre-line', wordWrap: 'break-word' }}
-                      color="text.secondary"
-                    >
-                      {catalogueItemData.description ?? 'None'}
-                    </Typography>
+              <Grid item>
+                <Grid container>
+                  <Grid item xs="auto">
+                    <PrimaryImage entityId={itemData.id} />
                   </Grid>
+                  {/* Title and Description Section */}
+                  <Grid
+                    item
+                    container
+                    xs
+                    sx={{ alignItems: 'flex-start', pl: 2 }}
+                  >
+                    <Grid item xs={12}>
+                      <Typography
+                        variant="h4"
+                        gutterBottom
+                        sx={{
+                          fontWeight: 'bold',
+                          wordWrap: 'break-word',
+                        }}
+                      >
+                        {catalogueItemData.name}
+                      </Typography>
+
+                      <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
+                        Serial Number: {itemData.serial_number ?? 'None'}
+                      </Typography>
+
+                      <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
+                        Description:
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        sx={{ whiteSpace: 'pre-line', wordWrap: 'break-word' }}
+                        color="text.secondary"
+                      >
+                        {catalogueItemData.description ?? 'None'}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+
+                  {/* Actions Section */}
+
+                  <ItemsActionMenu
+                    item={itemData}
+                    catalogueItem={catalogueItemData}
+                    catalogueCategory={catalogueCategoryData}
+                  />
                 </Grid>
-
-                {/* Actions Section */}
-
-                <ItemsActionMenu
-                  item={itemData}
-                  catalogueItem={catalogueItemData}
-                  catalogueCategory={catalogueCategoryData}
-                />
               </Grid>
 
               <TabView
@@ -315,7 +316,16 @@ function ItemsLandingPage() {
                         </Grid>
                         <Grid container item xs={12}>
                           <Grid container item spacing={1}>
-                            {itemData.properties &&
+                            {itemData.properties.length === 0 ? (
+                              <Grid item>
+                                <Typography
+                                  variant="body1"
+                                  color="text.secondary"
+                                >
+                                  None
+                                </Typography>
+                              </Grid>
+                            ) : (
                               itemData.properties.map((property, index) => (
                                 <Grid item xs={12} sm={6} md={4} key={index}>
                                   <Typography
@@ -335,7 +345,8 @@ function ItemsLandingPage() {
                                       : 'None'}
                                   </Typography>
                                 </Grid>
-                              ))}
+                              ))
+                            )}
                           </Grid>
                         </Grid>
 

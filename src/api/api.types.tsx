@@ -220,11 +220,16 @@ export interface Item
 }
 // ------------------------------------ OBJECT STORAGE API -----------------------------------------
 
-export interface ObjectFileUploadMetadata {
-  entity_id: string;
+export interface ObjectFilePostBase {
   file_name: string;
   title?: string | null;
   description?: string | null;
+}
+
+export type ObjectFilePatchBase = Partial<ObjectFilePostBase>;
+
+export interface ObjectFileUploadMetadata extends ObjectFilePostBase {
+  entity_id: string;
 }
 
 // ------------------------------------ ATTACHMENTS ------------------------------------------------
@@ -236,22 +241,28 @@ export interface AttachmentUploadInfo {
   url: string;
   fields: Record<string, string>;
 }
-export interface AttachmentPostMetadataResponse
+
+export interface AttachmentMetadata
   extends Required<AttachmentPostMetadata>,
     CreatedModifiedMixin {
   id: string;
+}
+
+export interface AttachmentPostMetadataResponse extends AttachmentMetadata {
   upload_info: AttachmentUploadInfo;
+}
+
+export type AttachmentMetadataPatch = ObjectFilePatchBase;
+
+export interface AttachmentMetadataWithURL extends AttachmentMetadata {
+  /* The url has a `ResponseContentDisposition` set in the url, for downloading attachments.
+  This allows links to be downloaded directly to the user's computer and not to their client first. */
+  download_url: string;
 }
 
 // ------------------------------------ IMAGES ------------------------------------------------
 export interface ImagePost extends ObjectFileUploadMetadata {
   upload_file: File;
-}
-
-export interface ObjectFilePatch {
-  file_name?: string;
-  title?: string | null;
-  description?: string | null;
 }
 
 export interface APIImage
@@ -262,9 +273,13 @@ export interface APIImage
   thumbnail_base64: string;
 }
 
+export interface ImageMetadataPatch extends ObjectFilePatchBase {
+  primary?: boolean | null;
+}
 export interface APIImageWithURL extends APIImage {
-  /* Each url has a different `ResponseContentDisposition` set in the url, for viewing images inline and downloading respectively.
-   Allows links to be downloaded directly to the user's computer and not to their client first. */
+  /* Each url has a different `ResponseContentDisposition` set in the url, for viewing images inline and
+  downloading respectively. This allows links to be downloaded directly to the user's computer and
+  not to their client first. */
   view_url: string;
   download_url: string;
 }

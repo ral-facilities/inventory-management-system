@@ -1,6 +1,8 @@
 import { DefaultBodyType, delay, http, HttpResponse, PathParams } from 'msw';
 import {
   APIImage,
+  AttachmentMetadata,
+  AttachmentMetadataPatch,
   AttachmentPostMetadata,
   AttachmentPostMetadataResponse,
   AttachmentUploadInfo,
@@ -14,13 +16,13 @@ import {
   CatalogueItem,
   CatalogueItemPatch,
   CatalogueItemPost,
+  ImageMetadataPatch,
   Item,
   ItemPatch,
   ItemPost,
   Manufacturer,
   ManufacturerPatch,
   ManufacturerPost,
-  ObjectFilePatch,
   System,
   SystemPatch,
   SystemPost,
@@ -30,6 +32,7 @@ import {
   UsageStatusPost,
 } from '../api/api.types';
 import { generateUniqueId } from '../utils';
+import AttachmentsJSON from './Attachments.json';
 import CatalogueCategoriesJSON from './CatalogueCategories.json';
 import CatalogueCategoryBreadcrumbsJSON from './CatalogueCategoryBreadcrumbs.json';
 import CatalogueItemsJSON from './CatalogueItems.json';
@@ -984,8 +987,8 @@ export const handlers = [
     PathParams,
     AttachmentPostMetadata,
     AttachmentPostMetadataResponse | ErrorResponse
-  >('/attachments', async ({ request }) => {
-    const body = (await request.json()) as AttachmentPostMetadata;
+  >('/attachments', async () => {
+    const body = AttachmentsJSON[0];
 
     const upload_info: AttachmentUploadInfo = {
       url: `http://localhost:3000/object-storage`,
@@ -1000,16 +1003,131 @@ export const handlers = [
 
     return HttpResponse.json(
       {
-        id: '1',
         ...body,
-        title: body.title ?? null,
-        description: body.description ?? null,
         upload_info: upload_info,
-        modified_time: '2024-01-02T13:10:10.000+00:00',
-        created_time: '2024-01-01T12:00:00.000+00:00',
       },
       { status: 201 }
     );
+  }),
+
+  http.get('/attachments', ({ request }) => {
+    const url = new URL(request.url);
+    const attachmentParams = url.searchParams;
+    const entityId = attachmentParams.get('entity_id');
+
+    const generateAttachments = () => {
+      return Array.from({ length: 20 }, (_, index) => {
+        const id = index + 1;
+        const attachment = { ...AttachmentsJSON[id % 4] };
+
+        return {
+          ...attachment,
+          id: String(id), // Ensure the id is a string
+          entity_id: entityId,
+        };
+      });
+    };
+
+    return HttpResponse.json(generateAttachments(), { status: 200 });
+  }),
+
+  http.get('/attachments/:id', ({ params }) => {
+    const { id } = params;
+    // This is needed otherwise the msw would intercept the
+    // mocked attachment get request for the object store
+    if (!isNaN(Number(id))) {
+      let attachment = undefined;
+      if (Number(id) % 4 === 0) {
+        attachment = {
+          ...AttachmentsJSON[0],
+          download_url: `${window.location.origin}/attachments/laser-calibration.txt?text=${
+            encodeURIComponent(id as string)
+          }`,
+        };
+      } else {
+        if (Number(id) % 4 === 1) {
+          attachment = {
+            ...AttachmentsJSON[1],
+            download_url: `${window.location.origin}/attachments/safety-protocols.pdf?text=${
+              encodeURIComponent(id as string)
+            }`,
+          };
+        } else {
+          if (Number(id) % 4 === 2) {
+            attachment = {
+              ...AttachmentsJSON[2],
+              download_url: `${window.location.origin}/attachments/camera-setup-guide.docx?text=${
+                encodeURIComponent(id as string)
+              }`,
+            };
+          } else {
+            if (id === '3') {
+              attachment = {
+                ...AttachmentsJSON[3],
+                download_url: 'invalid url',
+                description: undefined,
+              };
+            } else {
+              attachment = {
+                ...AttachmentsJSON[3],
+                download_url: `${window.location.origin}/attachments/experiment-results.rtf?text=${
+                  encodeURIComponent(id as string)
+                }`,
+              };
+            }
+          }
+        }
+      }
+
+      if (id === '5') {
+        return HttpResponse.error();
+      }
+
+      return HttpResponse.json(
+        {
+          ...attachment,
+          id: id,
+        },
+        { status: 200 }
+      );
+    }
+  }),
+
+  http.patch<
+    { id: string },
+    AttachmentMetadataPatch,
+    AttachmentMetadata | ErrorResponse
+  >('/attachments/:id', async ({ request, params }) => {
+    const { id } = params;
+
+    const obj = AttachmentsJSON.find((attachment) => attachment.id === id);
+    const body = await request.json();
+
+    const fullBody = { ...obj, ...body };
+
+    if (fullBody.file_name === 'Error_500.txt') {
+      return HttpResponse.json(
+        { detail: 'Something went wrong' },
+        { status: 500 }
+      );
+    }
+    return HttpResponse.json(fullBody as AttachmentMetadata, { status: 200 });
+  }),
+
+  http.delete<
+    { id: string },
+    DefaultBodyType,
+    ErrorResponse | NonNullable<unknown>
+  >('/attachments/:id', ({ params }) => {
+    const { id } = params;
+
+    if (id === 'Error 500')
+      return HttpResponse.json(
+        { detail: 'Something went wrong' },
+        { status: 500 }
+      );
+
+    return HttpResponse.json(undefined, { status: 204 });
   }),
 
   // ------------------------------------ OBJECT STORAGE ------------------------------------------------
@@ -1029,8 +1147,9 @@ export const handlers = [
   // ------------------------------------ IMAGES ------------------------------------------------
 
   http.post('/images', async () => {
-    return HttpResponse.json(ImagesJSON[0], { status: 200 });
+    return HttpResponse.json(ImagesJSON[0], { status: 201 });
   }),
+
   http.get('/images', ({ request }) => {
     const url = new URL(request.url);
     const imageParams = url.searchParams;
@@ -1044,7 +1163,7 @@ export const handlers = [
         return HttpResponse.json(
           [
             {
-              ...ImagesJSON[0],
+              ...ImagesJSON[1],
               primary: true,
               entity_id: entityId,
               ...(entityId === '3' && { thumbnail_base64: 'test' }),
@@ -1124,7 +1243,7 @@ export const handlers = [
     }
   }),
 
-  http.patch<{ id: string }, ObjectFilePatch, APIImage | ErrorResponse>(
+  http.patch<{ id: string }, ImageMetadataPatch, APIImage | ErrorResponse>(
     '/images/:id',
     async ({ request, params }) => {
       const { id } = params;
@@ -1134,7 +1253,12 @@ export const handlers = [
 
       const fullBody = { ...obj, ...body };
 
-      if (fullBody.file_name === 'Error_500.png') {
+      if (
+        // Test case for editing an image's metadata
+        fullBody.file_name === 'Error_500.png' ||
+        // Test case for setting an image to primary
+        (id === '17' && fullBody.primary === true)
+      ) {
         return HttpResponse.json(
           { detail: 'Something went wrong' },
           { status: 500 }

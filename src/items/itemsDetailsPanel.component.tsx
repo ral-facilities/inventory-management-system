@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 import { CatalogueItem, Item } from '../api/api.types';
 import { useGetManufacturer } from '../api/manufacturers';
 import { useGetSystem } from '../api/systems';
-import PlaceholderImage from '../common/images/placeholderImage.component';
+import PrimaryImage from '../common/images/primaryImage.component';
 import { formatDateTimeStrings } from '../utils';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -71,121 +71,125 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
       </Grid>
       <Grid item sx={{ ml: 2 }} xs={12}>
         <TabPanel value={tabValue} index={0}>
-          <Grid item container spacing={0}>
-            <Grid item xs={12} sm={4} padding={1}>
-              <PlaceholderImage />
-            </Grid>
-            <Grid item xs={12} sm={8}>
-              <Typography variant="h4" sx={{ wordWrap: 'break-word' }}>
-                {catalogueItemIdData.name}
-              </Typography>
-              <Typography sx={{ my: 1 }} variant="h6">
-                Description:
-              </Typography>
-              <Typography
-                sx={{ mb: 1, whiteSpace: 'pre-line', wordWrap: 'break-word' }}
-                variant="body1"
-                color="text.secondary"
-              >
-                {catalogueItemIdData.description ?? 'None'}
-              </Typography>
-            </Grid>
-            <Grid item container spacing={0}>
-              <Grid item xs={12} sm={6} key={0}>
-                <Typography color="text.primary">Serial Number</Typography>
-                <Typography
-                  color="text.secondary"
-                  sx={{ wordWrap: 'break-word' }}
-                >
-                  {itemData.serial_number ?? 'None'}
-                </Typography>
+          <Grid item>
+            <Grid container spacing={0}>
+              <Grid item xs={12} sm={6} padding={1}>
+                <PrimaryImage entityId={itemData.id} isDetailsPanel />
               </Grid>
-
-              <Grid item xs={12} sm={6} key={1}>
-                <Typography color="text.primary">Asset Number</Typography>
-                <Typography
-                  color="text.secondary"
-                  sx={{ wordWrap: 'break-word' }}
-                >
-                  {itemData.asset_number ?? 'None'}
+              <Grid item xs={12} sm={6}>
+                <Typography variant="h4" sx={{ wordWrap: 'break-word' }}>
+                  {catalogueItemIdData.name}
                 </Typography>
-              </Grid>
-
-              <Grid item xs={12} sm={6} key={2}>
-                <Typography color="text.primary">
-                  Purchase Order Number
+                <Typography sx={{ my: 1 }} variant="h6">
+                  Description:
                 </Typography>
                 <Typography
+                  sx={{ mb: 1, whiteSpace: 'pre-line', wordWrap: 'break-word' }}
+                  variant="body1"
                   color="text.secondary"
-                  sx={{ wordWrap: 'break-word' }}
                 >
-                  {itemData.purchase_order_number ?? 'None'}
+                  {catalogueItemIdData.description ?? 'None'}
                 </Typography>
               </Grid>
-
-              <Grid item xs={12} sm={6} key={3}>
-                <Typography color="text.primary">Warranty End Date</Typography>
-                <Typography color="text.secondary">
-                  {itemData.warranty_end_date
-                    ? formatDateTimeStrings(itemData.warranty_end_date, false)
-                    : 'None'}
-                </Typography>
-              </Grid>
-              <Grid item xs={12} sm={6} key={4}>
-                <Typography color="text.primary">Delivered Date</Typography>
-                <Typography color="text.secondary">
-                  {itemData.delivered_date
-                    ? formatDateTimeStrings(itemData.delivered_date, false)
-                    : 'None'}
-                </Typography>
-              </Grid>
-
-              <Grid item xs={12} sm={6} key={5}>
-                <Typography color="text.primary">Is Defective</Typography>
-                <Typography color="text.secondary">
-                  {itemData.is_defective ? 'Yes' : 'No'}
-                </Typography>
-              </Grid>
-
-              <Grid item xs={12} sm={6} key={6}>
-                <Typography color="text.primary">Usage Status</Typography>
-                <Typography
-                  color="text.secondary"
-                  sx={{ wordWrap: 'break-word' }}
-                >
-                  {itemData.usage_status}
-                </Typography>
-              </Grid>
-
-              <Grid item xs={12} sm={6} key={7}>
-                <Typography color="text.primary">System</Typography>
-                <Typography
-                  color="text.secondary"
-                  sx={{ wordWrap: 'break-word' }}
-                >
-                  <MuiLink
-                    component={Link}
-                    underline="hover"
-                    target="_blank"
-                    to={'/systems/' + systemData?.id}
+              <Grid item container spacing={0}>
+                <Grid item xs={12} sm={6} key={0}>
+                  <Typography color="text.primary">Serial Number</Typography>
+                  <Typography
+                    color="text.secondary"
+                    sx={{ wordWrap: 'break-word' }}
                   >
-                    {systemData?.name}
-                  </MuiLink>
-                </Typography>
-              </Grid>
+                    {itemData.serial_number ?? 'None'}
+                  </Typography>
+                </Grid>
 
-              <Grid item xs={12} sm={6} key={8}>
-                <Typography color="text.primary">Last Modified</Typography>
-                <Typography color="text.secondary">
-                  {formatDateTimeStrings(itemData.modified_time, true)}
-                </Typography>
-              </Grid>
+                <Grid item xs={12} sm={6} key={1}>
+                  <Typography color="text.primary">Asset Number</Typography>
+                  <Typography
+                    color="text.secondary"
+                    sx={{ wordWrap: 'break-word' }}
+                  >
+                    {itemData.asset_number ?? 'None'}
+                  </Typography>
+                </Grid>
 
-              <Grid item xs={12} sm={6} key={9}>
-                <Typography color="text.primary">Created</Typography>
-                <Typography color="text.secondary">
-                  {formatDateTimeStrings(itemData.created_time, true)}
-                </Typography>
+                <Grid item xs={12} sm={6} key={2}>
+                  <Typography color="text.primary">
+                    Purchase Order Number
+                  </Typography>
+                  <Typography
+                    color="text.secondary"
+                    sx={{ wordWrap: 'break-word' }}
+                  >
+                    {itemData.purchase_order_number ?? 'None'}
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={12} sm={6} key={3}>
+                  <Typography color="text.primary">
+                    Warranty End Date
+                  </Typography>
+                  <Typography color="text.secondary">
+                    {itemData.warranty_end_date
+                      ? formatDateTimeStrings(itemData.warranty_end_date, false)
+                      : 'None'}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6} key={4}>
+                  <Typography color="text.primary">Delivered Date</Typography>
+                  <Typography color="text.secondary">
+                    {itemData.delivered_date
+                      ? formatDateTimeStrings(itemData.delivered_date, false)
+                      : 'None'}
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={12} sm={6} key={5}>
+                  <Typography color="text.primary">Is Defective</Typography>
+                  <Typography color="text.secondary">
+                    {itemData.is_defective ? 'Yes' : 'No'}
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={12} sm={6} key={6}>
+                  <Typography color="text.primary">Usage Status</Typography>
+                  <Typography
+                    color="text.secondary"
+                    sx={{ wordWrap: 'break-word' }}
+                  >
+                    {itemData.usage_status}
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={12} sm={6} key={7}>
+                  <Typography color="text.primary">System</Typography>
+                  <Typography
+                    color="text.secondary"
+                    sx={{ wordWrap: 'break-word' }}
+                  >
+                    <MuiLink
+                      component={Link}
+                      underline="hover"
+                      target="_blank"
+                      to={'/systems/' + systemData?.id}
+                    >
+                      {systemData?.name}
+                    </MuiLink>
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={12} sm={6} key={8}>
+                  <Typography color="text.primary">Last Modified</Typography>
+                  <Typography color="text.secondary">
+                    {formatDateTimeStrings(itemData.modified_time, true)}
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={12} sm={6} key={9}>
+                  <Typography color="text.primary">Created</Typography>
+                  <Typography color="text.secondary">
+                    {formatDateTimeStrings(itemData.created_time, true)}
+                  </Typography>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
@@ -193,7 +197,9 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
 
         <TabPanel value={tabValue} index={1}>
           <Grid item container spacing={0}>
-            {itemData.properties &&
+            {itemData.properties.length === 0 ? (
+              <Typography color="text.secondary">None</Typography>
+            ) : (
               itemData.properties.map((property, index) => {
                 return (
                   <Grid item xs={12} sm={6} key={index}>
@@ -217,7 +223,8 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                     </Box>
                   </Grid>
                 );
-              })}
+              })
+            )}
           </Grid>
         </TabPanel>
 
