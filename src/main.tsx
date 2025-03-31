@@ -127,7 +127,7 @@ export const fetchSettings =
           throw new Error('osApiUrl is undefined in settings');
         }
 
-        // Ensure the maxAttachmentSizeMB value exists.
+        // Ensure the maxAttachmentSizeBytes value exists.
         if (!('maxAttachmentSizeBytes' in settings)) {
           throw new Error('maxAttachmentSizeBytes is undefined in settings');
         }
