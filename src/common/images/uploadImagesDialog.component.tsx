@@ -14,6 +14,7 @@ import type {
   UppyImageUploadResponse,
   UppyUploadMetadata,
 } from '../../app.types';
+import { InventoryManagementSystemSettingsContext } from '../../configProvider.component';
 import { settings } from '../../settings';
 import { getNonEmptyTrimmedString } from '../../utils';
 import { isAnyFileWaiting, useMetaFields } from '../uppy.utils';
@@ -35,6 +36,10 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
 
   const queryClient = useQueryClient();
 
+  const { imageAllowedFileExtensions } = React.useContext(
+    InventoryManagementSystemSettingsContext
+  );
+
   const osApiUrl = async () => (await settings)?.osApiUrl || '';
   const [uppy] = React.useState<
     Uppy<UppyUploadMetadata, UppyImageUploadResponse>
@@ -44,7 +49,7 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
       restrictions: {
         maxFileSize: MAX_FILE_SIZE_B,
         requiredMetaFields: ['name'],
-        allowedFileTypes: ['image/*'],
+        allowedFileTypes: imageAllowedFileExtensions,
       },
     })
       .use(ImageEditor)
