@@ -33,6 +33,7 @@ import {
   ItemPost,
   UsageStatus,
 } from '../api/api.types';
+import { useGetCatalogueCategory } from '../api/catalogueCategories';
 import { usePatchItem, usePostItem, usePostItems } from '../api/items';
 import { useGetSystems, useGetSystemsBreadcrumbs } from '../api/systems';
 import { useGetUsageStatuses } from '../api/usageStatuses';
@@ -146,6 +147,7 @@ export interface ItemDialogProps {
   catalogueItem?: CatalogueItem;
   catalogueCategory?: CatalogueCategory;
   selectedItem?: Item;
+  type?: 'items' | 'systems';
 }
 
 function ItemDialog(props: ItemDialogProps) {
@@ -155,9 +157,16 @@ function ItemDialog(props: ItemDialogProps) {
     requestType,
     duplicate,
     catalogueItem,
-    catalogueCategory,
     selectedItem,
+    type = 'items',
   } = props;
+
+  const fetchedCatalogueCategory = useGetCatalogueCategory(
+    catalogueItem?.catalogue_category_id ?? ''
+  ).data;
+
+  const catalogueCategory = props.catalogueCategory ?? fetchedCatalogueCategory;
+
   const parentCatalogueItemPropertiesInfo = React.useMemo(
     () => catalogueCategory?.properties ?? [],
     [catalogueCategory]
@@ -187,11 +196,13 @@ function ItemDialog(props: ItemDialogProps) {
     React.useState<boolean>(false);
 
   const { data: systemsData, isLoading: systemsDataLoading } = useGetSystems(
-    parentSystemId === null ? 'null' : parentSystemId
+    parentSystemId === null ? 'null' : parentSystemId,
+    type !== 'systems'
   );
 
-  const { data: parentSystemBreadcrumbs } =
-    useGetSystemsBreadcrumbs(parentSystemId);
+  const { data: parentSystemBreadcrumbs } = useGetSystemsBreadcrumbs(
+    type === 'systems' ? undefined : parentSystemId
+  );
 
   const ItemDetailsStepFormMethods = useForm<ItemDetailsStep>({
     resolver: zodResolver(ItemDetailsStepSchema(requestType)),
@@ -413,11 +424,14 @@ function ItemDialog(props: ItemDialogProps) {
   );
 
   // Stepper
-  const STEPS = [
-    (requestType === 'patch' ? 'Edit' : 'Add') + ' item details',
-    (requestType === 'patch' ? 'Edit' : 'Add') + ' item properties',
-    'Place into a system',
-  ];
+  const STEPS = React.useMemo(
+    () => [
+      (requestType === 'patch' ? 'Edit' : 'Add') + ' item details',
+      (requestType === 'patch' ? 'Edit' : 'Add') + ' item properties',
+      ...(type === 'items' ? ['Place into a system'] : []),
+    ],
+    [requestType, type]
+  );
   const [activeStep, setActiveStep] = React.useState<number>(0);
 
   const handlePropertiesStep = React.useCallback(
@@ -480,7 +494,7 @@ function ItemDialog(props: ItemDialogProps) {
       const { detailsStepData, propertiesStepData } =
         await handlePropertiesStep(event);
 
-      if (!parentSystemId) {
+      if (!parentSystemId && type === 'items') {
         setParentSystemIdError(true);
       }
 
@@ -510,13 +524,14 @@ function ItemDialog(props: ItemDialogProps) {
       }
     },
     [
-      catalogueItem?.id,
+      catalogueItem,
       duplicate,
       handleAddItem,
       handleEditItem,
       handlePropertiesStep,
       parentSystemId,
       requestType,
+      type,
     ]
   );
 

@@ -129,6 +129,72 @@ describe('Systems', () => {
     cy.location('search').should('eq', '');
   });
 
+  it('edits an item with all fields altered', () => {
+    cy.visit('/systems/65328f34a40ff5301575a4e3');
+
+    cy.findAllByRole('button', { name: 'Expand' }).first().click();
+    cy.findAllByLabelText('Row Actions').last().click();
+    cy.findByText('Edit').click();
+
+    cy.findByLabelText('Serial number').type('test1234');
+    cy.findByLabelText('Asset number').type('test13221');
+    cy.findByLabelText('Purchase order number').type('test23');
+    cy.findByLabelText('Warranty end date').type('12/02/2028');
+    cy.findByLabelText('Delivered date').type('12/02/2024');
+    cy.findByLabelText('Is defective *').click();
+    cy.findByRole('option', { name: 'Yes' }).click();
+    cy.findByLabelText('Usage status *').click();
+    cy.findByText('Scrapped').click();
+    cy.findByLabelText('Notes').type('test');
+
+    cy.findByRole('button', { name: 'Next' }).click();
+
+    cy.findByLabelText('Resolution (megapixels) *').type('18');
+    cy.findByLabelText('Frame Rate (fps)').type('60');
+    cy.findByLabelText('Sensor Type *').type('IO');
+    cy.findByLabelText('Sensor brand').type('pixel');
+    cy.findByLabelText('Broken *').click();
+    cy.findByRole('option', { name: 'False' }).click();
+    cy.findByLabelText('Older than five years').click();
+    cy.findByRole('option', { name: 'True' }).click();
+
+    cy.findByRole('button', { name: 'Next' }).click();
+
+    cy.findByRole('button', { name: 'navigate to systems home' }).click();
+    cy.findByText('Giant laser').click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('dialog').should('not.exist');
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/items/:id',
+    }).should(async (patchRequests) => {
+      expect(patchRequests.length).eq(1);
+      expect(JSON.stringify(await patchRequests[0].json())).equal(
+        JSON.stringify({
+          serial_number: 'Zf7P8Qu8TD8ctest1234',
+          purchase_order_number: 'hpGBgi0dtest23',
+          usage_status_id: '3',
+          warranty_end_date: '2028-02-12T23:00:00.000Z',
+          asset_number: '75YWiLwy54test13221',
+          delivered_date: '2024-02-12T00:00:00.000Z',
+          notes: 'zolZDKKuvAoTFRUWeZNAtest',
+          properties: [
+            { id: '1', value: 1218 },
+            { id: '2', value: 3060 },
+            { id: '3', value: 'CMOSIO' },
+            { id: '4', value: 'pixel' },
+            { id: '5', value: false },
+            { id: '6', value: true },
+          ],
+        })
+      );
+    });
+  });
+
   it('should be able to navigate through subsystems while preserving the table states when going back', () => {
     cy.visit('/systems/65328f34a40ff5301575a4e3');
 

@@ -1,11 +1,14 @@
 import ClearIcon from '@mui/icons-material/Clear';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
+import EditIcon from '@mui/icons-material/Edit';
 import ErrorIcon from '@mui/icons-material/Error';
 import {
   Autocomplete,
   Box,
   Button,
   FormControl,
+  ListItemIcon,
+  ListItemText,
   MenuItem,
   TableCellBaseProps,
   TextField,
@@ -25,6 +28,7 @@ import { useGetItems } from '../api/items';
 import { useGetUsageStatuses } from '../api/usageStatuses';
 import CatalogueLink from '../catalogue/items/catalogueLink.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
+import ItemDialog from '../items/itemDialog.component';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
 import {
   COLUMN_FILTER_FUNCTIONS,
@@ -43,10 +47,10 @@ import {
   getPageHeightCalc,
   mrtTheme,
 } from '../utils';
-import SystemItemsDialog, {
+import MoveItemsToSystemDialog, {
   ItemUsageStatusesErrorStateType,
   UsageStatusesType,
-} from './systemItemsDialog.component';
+} from './moveItemsToSystemDialog.component';
 
 const MoveItemsButton = (props: {
   selectedItems: Item[];
@@ -67,7 +71,7 @@ const MoveItemsButton = (props: {
       >
         Move to
       </Button>
-      <SystemItemsDialog
+      <MoveItemsToSystemDialog
         open={moveItemsDialogOpen}
         onClose={() => setMoveItemsDialogOpen(false)}
         selectedItems={props.selectedItems}
@@ -753,6 +757,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     enableColumnOrdering: type === 'normal' ? true : false,
     enableFacetedValues: true,
     enableColumnFilterModes: true,
+    enableRowActions: type === 'normal' ? true : false,
     enableColumnResizing: type === 'normal' ? true : false,
     enableStickyHeader: true,
     enableDensityToggle: false,
@@ -870,6 +875,40 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     ...onPreservedStatesChange,
     getRowId: (row) => row.item.id,
     onRowSelectionChange: setRowSelection,
+    renderCreateRowDialogContent: ({ table, row }) => {
+      return (
+        <>
+          <ItemDialog
+            open={true}
+            onClose={() => {
+              table.setCreatingRow(null);
+            }}
+            requestType="patch"
+            catalogueItem={row.original.catalogueItem}
+            selectedItem={row.original.item}
+            type="systems"
+          />
+        </>
+      );
+    },
+    renderRowActionMenuItems: ({ closeMenu, row, table }) => {
+      return [
+        <MenuItem
+          key="edit"
+          aria-label={`Edit item ${row.original.item.id}`}
+          onClick={() => {
+            table.setCreatingRow(row);
+            closeMenu();
+          }}
+          sx={{ m: 0 }}
+        >
+          <ListItemIcon>
+            <EditIcon />
+          </ListItemIcon>
+          <ListItemText>Edit</ListItemText>
+        </MenuItem>,
+      ];
+    },
     renderTopToolbarCustomActions: ({ table }) => (
       <Box sx={{ display: 'flex' }}>
         <Button

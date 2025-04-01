@@ -54,13 +54,15 @@ export const useGetSystemIds = (ids: string[]): UseQueryResult<System>[] => {
 };
 
 export const useGetSystems = (
-  parent_id?: string
+  parent_id?: string,
+  enabled: boolean = false
 ): UseQueryResult<System[], AxiosError> => {
   return useQuery({
     queryKey: ['Systems', parent_id],
     queryFn: () => {
       return getSystems(parent_id);
     },
+    enabled,
   });
 };
 

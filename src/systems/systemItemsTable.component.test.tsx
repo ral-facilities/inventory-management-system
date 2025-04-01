@@ -85,6 +85,47 @@ describe('SystemItemsTable', () => {
       expect(screen.getByText('No items found')).toBeInTheDocument();
     });
 
+    it('can open the edit dialog and close it again', async () => {
+      createView();
+      // Name (obtained from catalogue category item)
+      await waitFor(
+        () => {
+          expect(
+            screen.getByRole('cell', {
+              name: `Turbomolecular Pumps 42 (2)`,
+            })
+          ).toBeInTheDocument();
+        },
+        { timeout: 4000 }
+      );
+
+      // Ensure no loading bars visible
+      await waitFor(() =>
+        expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+      );
+      await user.click(screen.getAllByRole('button', { name: 'Expand' })[0]);
+
+      const rowActionsButton = screen.getAllByLabelText('Row Actions');
+      await user.click(rowActionsButton[0]);
+
+      await waitFor(() => {
+        expect(screen.getByText('Edit')).toBeInTheDocument();
+      });
+
+      const editButton = screen.getByText('Edit');
+      await user.click(editButton);
+
+      await waitFor(() => {
+        expect(screen.getByRole('dialog')).toBeInTheDocument();
+      });
+
+      const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+      await user.click(cancelButton);
+      await waitFor(() => {
+        expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+      });
+    });
+
     it('links to catalogue item landing page', async () => {
       createView();
 

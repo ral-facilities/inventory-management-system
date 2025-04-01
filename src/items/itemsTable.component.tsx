@@ -524,6 +524,7 @@ export function ItemsTable(props: ItemTableProps) {
             requestType={itemDialogType === 'edit' ? 'patch' : 'post'}
             catalogueCategory={catalogueCategory}
             catalogueItem={catalogueItem}
+            type="items"
             selectedItem={
               itemDialogType === 'create'
                 ? undefined

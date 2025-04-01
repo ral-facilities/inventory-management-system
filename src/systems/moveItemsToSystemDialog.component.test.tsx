@@ -5,12 +5,12 @@ import { imsApi } from '../api/api';
 import { Item } from '../api/api.types';
 import ItemsJSON from '../mocks/Items.json';
 import { renderComponentWithRouterProvider } from '../testUtils';
-import SystemItemsDialog, {
-  SystemItemsDialogProps,
-} from './systemItemsDialog.component';
+import MoveItemsToSystemDialog, {
+  MoveItemsToSystemDialogProps,
+} from './moveItemsToSystemDialog.component';
 
-describe('SystemItemsDialog', () => {
-  let props: SystemItemsDialogProps;
+describe('MoveItemsToSystemDialog', () => {
+  let props: MoveItemsToSystemDialogProps;
   let user: UserEvent;
   let axiosPatchSpy: MockInstance;
 
@@ -23,7 +23,9 @@ describe('SystemItemsDialog', () => {
   ];
 
   const createView = () => {
-    return renderComponentWithRouterProvider(<SystemItemsDialog {...props} />);
+    return renderComponentWithRouterProvider(
+      <MoveItemsToSystemDialog {...props} />
+    );
   };
 
   beforeEach(() => {

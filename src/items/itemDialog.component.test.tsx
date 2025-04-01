@@ -1046,6 +1046,53 @@ describe('ItemDialog', () => {
       });
     }, 10000);
 
+    it('edit an item on the systems page (all input values)', async () => {
+      props.type = 'systems';
+      createView();
+
+      await modifyDetailsValues({
+        serialNumber: 'test12',
+        assetNumber: 'test43',
+        purchaseOrderNumber: 'test21',
+        notes: 'test',
+        warrantyEndDate: '17/02/2035',
+        deliveredDate: '23/09/2024',
+        isDefective: 'Y{arrowdown}{enter}',
+        usageStatus: 'U{enter}',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await modifyPropertiesValues({
+        resolution: '12',
+        frameRate: '60',
+        sensorType: 'IO',
+        sensorBrand: 'pixel',
+        broken: 'T{arrowdown}{enter}',
+        older: 'F{arrowdown}{enter}',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
+        asset_number: 'test43',
+        delivered_date: '2024-09-23T23:00:00.000Z',
+        is_defective: true,
+        notes: 'test',
+        properties: [
+          { id: '1', value: 12 },
+          { id: '2', value: 60 },
+          { id: '3', value: 'IO' },
+          { id: '4', value: 'pixel' },
+          { id: '5', value: true },
+          { id: '6', value: false },
+        ],
+        purchase_order_number: 'test21',
+        serial_number: 'test12',
+        warranty_end_date: '2035-02-17T23:00:00.000Z',
+      });
+    }, 10000);
+
     it('edits an item where the item property has an allowed list of values', async () => {
       props = {
         ...props,
