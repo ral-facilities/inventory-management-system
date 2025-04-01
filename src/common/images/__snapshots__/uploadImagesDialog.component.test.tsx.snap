@@ -55,7 +55,7 @@ exports[`Upload image dialog > renders dialog correctly 1`] = `
                 class="uppy-Dashboard-AddFiles"
               >
                 <input
-                  accept="image/*"
+                  accept=".bmp, .jpe, .jpeg, .jpg, .png, .tif, .tiff, .webp"
                   aria-hidden="true"
                   class="uppy-Dashboard-input"
                   hidden=""
@@ -65,7 +65,7 @@ exports[`Upload image dialog > renders dialog correctly 1`] = `
                   type="file"
                 />
                 <input
-                  accept="image/*"
+                  accept=".bmp, .jpe, .jpeg, .jpg, .png, .tif, .tiff, .webp"
                   aria-hidden="true"
                   class="uppy-Dashboard-input"
                   hidden=""
