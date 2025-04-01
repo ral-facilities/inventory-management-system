@@ -127,7 +127,7 @@ export const fetchSettings =
           throw new Error('osApiUrl is undefined in settings');
         }
 
-        // Ensure the maxImageSizeMB value exists.
+        // Ensure the maxImageSizeBytes value exists.
         if (!('maxImageSizeBytes' in settings)) {
           throw new Error('maxImageSizeBytes is undefined in settings');
         }

@@ -35,7 +35,8 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
     InventoryManagementSystemSettingsContext
   );
 
-  // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000, so here the former is expected despite them really being GiB, MiB and KiB.
+  // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000,
+  // so here the former is expected despite them really being GiB, MiB and KiB.
   const maxFileSizeMB = maxImageSizeBytes / 1024 ** 2;
 
   const [uppy] = React.useState<
