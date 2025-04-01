@@ -197,7 +197,7 @@ function ItemDialog(props: ItemDialogProps) {
 
   const { data: systemsData, isLoading: systemsDataLoading } = useGetSystems(
     parentSystemId === null ? 'null' : parentSystemId,
-    type !== 'systems'
+    type === 'items'
   );
 
   const { data: parentSystemBreadcrumbs } = useGetSystemsBreadcrumbs(

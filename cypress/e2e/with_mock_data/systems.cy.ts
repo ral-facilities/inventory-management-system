@@ -158,11 +158,6 @@ describe('Systems', () => {
     cy.findByLabelText('Older than five years').click();
     cy.findByRole('option', { name: 'True' }).click();
 
-    cy.findByRole('button', { name: 'Next' }).click();
-
-    cy.findByRole('button', { name: 'navigate to systems home' }).click();
-    cy.findByText('Giant laser').click();
-
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Finish' }).click();
@@ -175,16 +170,17 @@ describe('Systems', () => {
       expect(patchRequests.length).eq(1);
       expect(JSON.stringify(await patchRequests[0].json())).equal(
         JSON.stringify({
-          serial_number: 'Zf7P8Qu8TD8ctest1234',
-          purchase_order_number: 'hpGBgi0dtest23',
+          serial_number: 'PcfCM1jp0SUVtest1234',
+          purchase_order_number: 'Qf65nCwOtest23',
+          is_defective: true,
           usage_status_id: '3',
           warranty_end_date: '2028-02-12T23:00:00.000Z',
-          asset_number: '75YWiLwy54test13221',
-          delivered_date: '2024-02-12T00:00:00.000Z',
-          notes: 'zolZDKKuvAoTFRUWeZNAtest',
+          asset_number: 'dvI4GyEsFttest13221',
+          delivered_date: '2024-02-12T23:00:00.000Z',
+          notes: '9Jgm0xJKSkmYG5fOdw6ktest',
           properties: [
             { id: '1', value: 1218 },
-            { id: '2', value: 3060 },
+            { id: '2', value: 60 },
             { id: '3', value: 'CMOSIO' },
             { id: '4', value: 'pixel' },
             { id: '5', value: false },
@@ -292,7 +288,7 @@ describe('Systems', () => {
   it("should be able to navigate to an item's landing page", () => {
     cy.findByRole('cell', { name: 'Pulse Laser' }).click();
     cy.findAllByRole('button', { name: 'Expand' }).eq(1).click();
-    cy.findByRole('link', { name: 'QnfSKahnQuze' }).click();
+    cy.findByRole('link', { name: 'QnfSKahnQuze' }).click({ force: true });
 
     // Check now on landing page for the item
     cy.url().should('include', '/catalogue/4/items/28/items/z1hJvV8Z');

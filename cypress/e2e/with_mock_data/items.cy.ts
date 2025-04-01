@@ -1444,6 +1444,7 @@ describe('Items', () => {
           asset_number: 'LyH8yp1FHf',
           serial_number: '5YUQDDjKpz2z',
           delivered_date: '2023-03-17T00:00:00.000Z',
+          expected_lifetime_days: 3225,
           notes:
             '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this Serial Number: 5YUQDDjKpz2z',
           properties: [
