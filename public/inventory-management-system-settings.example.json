@@ -1,6 +1,16 @@
 {
   "imsApiUrl": "",
   "osApiUrl": "",
+  "imageAllowedFileExtensions": [
+    ".bmp",
+    ".jpe",
+    ".jpeg",
+    ".jpg",
+    ".png",
+    ".tif",
+    ".tiff",
+    ".webp"
+  ],
   "routes": [
     {
       "section": "homepage",
