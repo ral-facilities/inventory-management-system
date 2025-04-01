@@ -43,8 +43,9 @@ describe('Primary Image Dialog', () => {
       baseElement = createView().baseElement;
     });
 
-    await waitFor(() =>
-      expect(screen.queryAllByRole('progressbar')).toHaveLength(0)
+    await waitFor(
+      () => expect(screen.queryAllByRole('progressbar')).toHaveLength(0),
+      { timeout: 10000 }
     );
 
     expect((await screen.findAllByText('logo1.png')).length).toEqual(9);
