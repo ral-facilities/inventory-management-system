@@ -9,6 +9,16 @@ const initialConfiguration: InventoryManagementSystemSettings = {
   imsApiUrl: '',
   osApiUrl: '',
   maxAttachmentSizeBytes: 104857600,
+  attachmentAllowedFileExtensions: [
+    ".csv",
+    ".doc",
+    ".docx",
+    ".pdf",
+    ".rtf",
+    ".txt",
+    ".xls",
+    ".xlsx"
+  ],
   routes: [],
   pluginHost: '',
 };

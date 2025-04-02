@@ -2,6 +2,16 @@
   "imsApiUrl": "http://127.0.0.1:8000",
   "osApiUrl": "",
   "maxAttachmentSizeBytes": 104857600,
+  "attachmentAllowedFileExtensions": [
+    ".csv",
+    ".doc",
+    ".docx",
+    ".pdf",
+    ".rtf",
+    ".txt",
+    ".xls",
+    ".xlsx"
+  ],
   "routes": [
     {
       "section": "Inventory Management System",

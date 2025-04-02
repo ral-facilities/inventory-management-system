@@ -132,6 +132,11 @@ export const fetchSettings =
           throw new Error('maxAttachmentSizeBytes is undefined in settings');
         }
 
+        // Ensure the attachmentAllowedFileExtensions name exists.
+        if (!('attachmentAllowedFileExtensions' in settings)) {
+          throw new Error('attachmentAllowedFileExtensions is undefined in settings');
+        }
+
         if (Array.isArray(settings['routes']) && settings['routes'].length) {
           settings['routes'].forEach((route: PluginRoute, index: number) => {
             if (
