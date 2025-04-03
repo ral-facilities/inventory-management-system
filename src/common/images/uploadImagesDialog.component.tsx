@@ -58,8 +58,8 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
         async onBeforeRequest(xhr) {
           uppyOnBeforeRequest(xhr);
         },
-        async onAfterResponse(xhr, retryCount) {
-          await uppyOnAfterResponse(xhr, retryCount);
+        async onAfterResponse(xhr) {
+          await uppyOnAfterResponse(xhr);
         },
       });
     });
