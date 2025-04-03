@@ -91,7 +91,7 @@ const createAuthenticatedClient = (props: {
   return apiClient;
 };
 
-export function uppyOnAfterResponse(xhr: XMLHttpRequest) {
+export function uppyOnAfterResponse(xhr: XMLHttpRequest, retryCount: number) {
   if (xhr.status >= 400 && xhr.status < 600) {
     const errorMessage: string = (
       JSON.parse(xhr.responseText) as APIError
@@ -126,6 +126,12 @@ export function uppyOnAfterResponse(xhr: XMLHttpRequest) {
           else resolve();
         });
       });
+    } else if (retryCount === 3 || (xhr.status >= 400 && xhr.status < 600)) {
+      let errorMessage = (JSON.parse(xhr.responseText) as APIError).detail;
+      if (errorMessage.includes('Limit for the maximum number of images')) {
+        errorMessage = 'Maximum number of images reached.';
+      }
+      throw new Error(errorMessage);
     }
   }
 }
