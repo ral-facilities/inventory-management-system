@@ -8,6 +8,7 @@ import ProgressBar from '@uppy/progress-bar';
 import { DashboardModal } from '@uppy/react';
 import { AxiosError } from 'axios';
 import React from 'react';
+import { APIError } from '../../api/api.types';
 import {
   useDeleteAttachment,
   usePostAttachmentMetadata,
@@ -58,6 +59,17 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
             file_name: file.meta.name,
             title: getNonEmptyTrimmedString(file.meta.title),
             description: getNonEmptyTrimmedString(file.meta.description),
+          }).catch((error) => {
+            const response = error.response?.data as APIError;
+            let errorMessage = response.detail;
+            if (
+              response.detail.includes(
+                'Limit for the maximum number of attachments'
+              )
+            ) {
+              errorMessage = 'Maximum number of attachments reached';
+            }
+            throw new Error(errorMessage);
           });
 
           setFileMetadataMap((prev) => ({
