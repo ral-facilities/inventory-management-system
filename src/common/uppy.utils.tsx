@@ -150,6 +150,7 @@ export function useMetaFields<M extends Meta, B extends Body>(): MetaFields<
   return metaFieldsData;
 }
 
+// https://github.com/transloadit/uppy/blob/229902eb17cbb9f866921cf232d94b25eb584efd/packages/%40uppy/status-bar/src/StatusBar.tsx#L24
 export function getUploadingState(
   error: unknown,
   isAllComplete: boolean,
