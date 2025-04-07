@@ -250,7 +250,7 @@ describe('Upload attachment dialog', () => {
 
     await waitFor(() => {
       expect(
-        screen.getAllByLabelText('Maximum number of attachments reached').length
+        screen.getAllByLabelText('Maximum number of files reached.').length
       ).toBe(2);
     });
   });

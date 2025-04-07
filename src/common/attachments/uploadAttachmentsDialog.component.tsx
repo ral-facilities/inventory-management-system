@@ -15,7 +15,7 @@ import {
 } from '../../api/attachments';
 import type { UppyUploadMetadata } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
-import { getNonEmptyTrimmedString } from '../../utils';
+import { getNonEmptyTrimmedString, parseErrorResponse } from '../../utils';
 import { isAnyFileWaiting, useMetaFields } from '../uppy.utils';
 
 // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000,
@@ -61,15 +61,9 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
             description: getNonEmptyTrimmedString(file.meta.description),
           }).catch((error) => {
             const response = error.response?.data as APIError;
-            let errorMessage = response.detail;
-            if (
-              response.detail.includes(
-                'Limit for the maximum number of attachments'
-              )
-            ) {
-              errorMessage = 'Maximum number of attachments reached';
-            }
-            throw new Error(errorMessage);
+            const errorMessage = response.detail.toLocaleLowerCase();
+            let returnMessage = parseErrorResponse(errorMessage);
+            throw new Error(returnMessage);
           });
 
           setFileMetadataMap((prev) => ({

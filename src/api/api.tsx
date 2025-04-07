@@ -3,6 +3,7 @@ import { MicroFrontendId } from '../app.types';
 import { readSciGatewayToken } from '../parseTokens';
 import { InventoryManagementSystemSettings, settings } from '../settings';
 import { InvalidateTokenType } from '../state/actions/actions.types';
+import { parseErrorResponse } from '../utils';
 import { APIError } from './api.types';
 
 // These are for ensuring refresh request is only sent once when multiple requests
@@ -127,11 +128,8 @@ export function uppyOnAfterResponse(xhr: XMLHttpRequest) {
         });
       });
     } else {
-      let errorMessage = (JSON.parse(xhr.responseText) as APIError).detail;
-      if (errorMessage.includes('Limit for the maximum number of images')) {
-        errorMessage = 'Maximum number of images reached.';
-      }
-      throw new Error(errorMessage);
+      let returnMessage = parseErrorResponse(errorMessage);
+      throw new Error(returnMessage);
     }
   }
 }
