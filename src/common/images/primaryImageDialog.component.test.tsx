@@ -44,7 +44,9 @@ describe('Primary Image Dialog', () => {
     });
 
     await waitFor(
-      () => expect(screen.queryAllByRole('progressbar')).toHaveLength(0),
+      () => {
+        expect(screen.queryAllByRole('progressbar')).toHaveLength(0);
+      },
       { timeout: 10000 }
     );
 

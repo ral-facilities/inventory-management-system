@@ -18,6 +18,7 @@ const initialConfiguration: InventoryManagementSystemSettings = {
     '.tiff',
     '.webp',
   ],
+  maxImageSizeBytes: 52428800,
   routes: [],
   pluginHost: '',
 };

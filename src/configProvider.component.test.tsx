@@ -26,6 +26,7 @@ vi.mock('./settings', () => ({
       '.tiff',
       '.webp',
     ],
+    maxImageSizeBytes: 52428800,
     routes: [
       {
         section: 'homepage',
@@ -99,6 +100,7 @@ describe('ConfigProvider', () => {
           '.tiff',
           '.webp',
         ],
+        maxImageSizeBytes: 52428800,
         routes: [
           {
             section: 'homepage',
