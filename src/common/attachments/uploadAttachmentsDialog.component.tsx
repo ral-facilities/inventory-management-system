@@ -33,7 +33,9 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
 
   const queryClient = useQueryClient();
 
-  const { maxAttachmentSizeBytes } = React.useContext(InventoryManagementSystemSettingsContext);
+  const { attachmentAllowedFileExtensions, maxAttachmentSizeBytes } = React.useContext(
+    InventoryManagementSystemSettingsContext
+  );
 
   // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000,
   // so here the former is expected despite them really being GiB, MiB and KiB.
@@ -53,6 +55,7 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
       restrictions: {
         maxFileSize: maxAttachmentSizeBytes,
         requiredMetaFields: ['name'],
+        allowedFileTypes: attachmentAllowedFileExtensions,
       },
     })
       .use(AwsS3<UppyUploadMetadata, AwsBody>, {
