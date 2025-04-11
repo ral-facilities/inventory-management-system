@@ -127,6 +127,13 @@ export const fetchSettings =
           throw new Error('osApiUrl is undefined in settings');
         }
 
+        // Ensure the imageAllowedFileExtensions name exists.
+        if (!('imageAllowedFileExtensions' in settings)) {
+          throw new Error(
+            'imageAllowedFileExtensions is undefined in settings'
+          );
+        }
+
         // Ensure the maxImageSizeBytes value exists.
         if (!('maxImageSizeBytes' in settings)) {
           throw new Error('maxImageSizeBytes is undefined in settings');

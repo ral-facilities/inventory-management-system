@@ -16,6 +16,16 @@ vi.mock('./settings', () => ({
   settings: Promise.resolve({
     imsApiUrl: '',
     osApiUrl: '',
+    imageAllowedFileExtensions: [
+      '.bmp',
+      '.jpe',
+      '.jpeg',
+      '.jpg',
+      '.png',
+      '.tif',
+      '.tiff',
+      '.webp',
+    ],
     maxImageSizeBytes: 52428800,
     routes: [
       {
@@ -80,6 +90,16 @@ describe('ConfigProvider', () => {
       JSON.stringify({
         imsApiUrl: '',
         osApiUrl: '',
+        imageAllowedFileExtensions: [
+          '.bmp',
+          '.jpe',
+          '.jpeg',
+          '.jpg',
+          '.png',
+          '.tif',
+          '.tiff',
+          '.webp',
+        ],
         maxImageSizeBytes: 52428800,
         routes: [
           {

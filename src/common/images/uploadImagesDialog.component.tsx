@@ -32,9 +32,8 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
 
   const queryClient = useQueryClient();
 
-  const { maxImageSizeBytes, osApiUrl } = React.useContext(
-    InventoryManagementSystemSettingsContext
-  );
+  const { maxImageSizeBytes, osApiUrl, imageAllowedFileExtensions } =
+    React.useContext(InventoryManagementSystemSettingsContext);
 
   // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000,
   // so here the former is expected despite them really being GiB, MiB and KiB.
@@ -48,7 +47,7 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
       restrictions: {
         maxFileSize: maxImageSizeBytes,
         requiredMetaFields: ['name'],
-        allowedFileTypes: ['image/*'],
+        allowedFileTypes: imageAllowedFileExtensions,
       },
     })
       .use(ImageEditor)

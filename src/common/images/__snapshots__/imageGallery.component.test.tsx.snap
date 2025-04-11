@@ -852,7 +852,7 @@ exports[`Image Gallery > displays no images message and can open and close uploa
                     class="uppy-Dashboard-AddFiles"
                   >
                     <input
-                      accept="image/*"
+                      accept=".bmp, .jpe, .jpeg, .jpg, .png, .tif, .tiff, .webp"
                       aria-hidden="true"
                       class="uppy-Dashboard-input"
                       hidden=""
@@ -862,7 +862,7 @@ exports[`Image Gallery > displays no images message and can open and close uploa
                       type="file"
                     />
                     <input
-                      accept="image/*"
+                      accept=".bmp, .jpe, .jpeg, .jpg, .png, .tif, .tiff, .webp"
                       aria-hidden="true"
                       class="uppy-Dashboard-input"
                       hidden=""
@@ -3015,7 +3015,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                     class="uppy-Dashboard-AddFiles"
                   >
                     <input
-                      accept="image/*"
+                      accept=".bmp, .jpe, .jpeg, .jpg, .png, .tif, .tiff, .webp"
                       aria-hidden="true"
                       class="uppy-Dashboard-input"
                       hidden=""
@@ -3025,7 +3025,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                       type="file"
                     />
                     <input
-                      accept="image/*"
+                      accept=".bmp, .jpe, .jpeg, .jpg, .png, .tif, .tiff, .webp"
                       aria-hidden="true"
                       class="uppy-Dashboard-input"
                       hidden=""
@@ -5558,7 +5558,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                     class="uppy-Dashboard-AddFiles"
                   >
                     <input
-                      accept="image/*"
+                      accept=".bmp, .jpe, .jpeg, .jpg, .png, .tif, .tiff, .webp"
                       aria-hidden="true"
                       class="uppy-Dashboard-input"
                       hidden=""
@@ -5568,7 +5568,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                       type="file"
                     />
                     <input
-                      accept="image/*"
+                      accept=".bmp, .jpe, .jpeg, .jpg, .png, .tif, .tiff, .webp"
                       aria-hidden="true"
                       class="uppy-Dashboard-input"
                       hidden=""
@@ -6518,7 +6518,7 @@ exports[`Image Gallery > renders no results page correctly 1`] = `
                     class="uppy-Dashboard-AddFiles"
                   >
                     <input
-                      accept="image/*"
+                      accept=".bmp, .jpe, .jpeg, .jpg, .png, .tif, .tiff, .webp"
                       aria-hidden="true"
                       class="uppy-Dashboard-input"
                       hidden=""
@@ -6528,7 +6528,7 @@ exports[`Image Gallery > renders no results page correctly 1`] = `
                       type="file"
                     />
                     <input
-                      accept="image/*"
+                      accept=".bmp, .jpe, .jpeg, .jpg, .png, .tif, .tiff, .webp"
                       aria-hidden="true"
                       class="uppy-Dashboard-input"
                       hidden=""
