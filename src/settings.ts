@@ -4,6 +4,8 @@ export interface InventoryManagementSystemSettings {
   imsApiUrl: string;
   osApiUrl: string;
   maxAttachmentSizeBytes: number;
+  imageAllowedFileExtensions: string[];
+  maxImageSizeBytes: number;
   routes: PluginRoute[];
   pluginHost?: string;
 }

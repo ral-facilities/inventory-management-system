@@ -101,7 +101,7 @@ For development purposes, use `yarn preview:build:dev` to build in watch mode so
    ```
 4. Start the website
    ```bash
-   yarn inventory-management-system
+   yarn dev
    ```
 
 ### End-to-End Testing (Locally)

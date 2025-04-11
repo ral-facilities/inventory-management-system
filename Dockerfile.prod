@@ -66,6 +66,8 @@ ENV IMS_API_URL="/inventory-management-system-api"
 ENV OS_API_URL="/object-storage-api"
 ENV PLUGIN_HOST="/inventory-management-system"
 ENV MAX_ATTACHMENT_SIZE_BYTES=104857600
+ENV IMAGE_ALLOWED_FILE_EXTENSIONS='[".bmp", ".jpe", ".jpeg", ".jpg", ".png", ".tif", ".tiff", ".webp"]'
+ENV MAX_IMAGE_SIZE_BYTES=52428800
 
 COPY docker/docker-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["docker-entrypoint.sh"]
