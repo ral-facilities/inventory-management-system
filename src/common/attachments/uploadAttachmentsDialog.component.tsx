@@ -6,16 +6,18 @@ import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 import ProgressBar from '@uppy/progress-bar';
 import { DashboardModal } from '@uppy/react';
+import statusBarStates from '@uppy/status-bar/lib/StatusBarStates';
 import { AxiosError } from 'axios';
 import React from 'react';
+import { APIError } from '../../api/api.types';
 import {
   useDeleteAttachment,
   usePostAttachmentMetadata,
 } from '../../api/attachments';
 import type { UppyUploadMetadata } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
-import { getNonEmptyTrimmedString } from '../../utils';
-import { isAnyFileWaiting, useMetaFields } from '../uppy.utils';
+import { getNonEmptyTrimmedString, parseErrorResponse } from '../../utils';
+import { getUploadingState, useMetaFields } from '../uppy.utils';
 
 // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000,
 // so here the former is expected despite them really being GiB, MiB and KiB.
@@ -58,6 +60,11 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
             file_name: file.meta.name,
             title: getNonEmptyTrimmedString(file.meta.title),
             description: getNonEmptyTrimmedString(file.meta.description),
+          }).catch((error) => {
+            const response = error.response?.data as APIError;
+            const errorMessage = response.detail.toLocaleLowerCase();
+            let returnMessage = parseErrorResponse(errorMessage);
+            throw new Error(returnMessage);
           });
 
           setFileMetadataMap((prev) => ({
@@ -113,16 +120,38 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
     [deleteAttachment, deletedFileIds, fileMetadataMap]
   );
 
-  const { files = {} } = uppy.getState();
+  const { files = {}, error, recoveredState } = uppy.getState();
+  const { isAllComplete } = uppy.getObjectOfFilesPerState();
 
   const handleClose = React.useCallback(() => {
     // prevent users from closing the dialog while the download is in progress
-    if (isAnyFileWaiting(files)) return;
+    const uploadState = getUploadingState(
+      error,
+      isAllComplete,
+      recoveredState,
+      files
+    );
+    if (
+      uploadState === statusBarStates.STATE_POSTPROCESSING ||
+      uploadState === statusBarStates.STATE_PREPROCESSING ||
+      uploadState === statusBarStates.STATE_UPLOADING
+    ) {
+      return;
+    }
     onClose();
     setFileMetadataMap({});
     uppy.clear();
     queryClient.invalidateQueries({ queryKey: ['Attachments', entityId] });
-  }, [entityId, files, onClose, queryClient, uppy]);
+  }, [
+    entityId,
+    error,
+    files,
+    isAllComplete,
+    onClose,
+    queryClient,
+    recoveredState,
+    uppy,
+  ]);
 
   // Track the start and completion of uploads
   uppy.on('upload-error', async (file) => await updateFileMetadata(file, true));

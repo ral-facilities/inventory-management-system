@@ -1,6 +1,17 @@
 {
   "imsApiUrl": "http://127.0.0.1:8000",
   "osApiUrl": "http://127.0.0.1:8002",
+  "imageAllowedFileExtensions": [
+    ".bmp",
+    ".jpe",
+    ".jpeg",
+    ".jpg",
+    ".png",
+    ".tif",
+    ".tiff",
+    ".webp"
+  ],
+  "maxImageSizeBytes": 52428800,
   "routes": [
     {
       "section": "Inventory Management System",
