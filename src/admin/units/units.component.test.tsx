@@ -80,4 +80,34 @@ describe('Units', () => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
   });
+
+  it('sets and clears the table filters', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('megapixels')).toBeInTheDocument();
+    });
+
+    const clearFiltersButton = screen.getByRole('button', {
+      name: 'Clear Filters',
+    });
+
+    expect(clearFiltersButton).toBeDisabled();
+
+    const valueInput = screen.getByLabelText('Filter by Value');
+
+    await user.type(valueInput, 'k')
+
+    await waitFor(() => {
+      expect(screen.queryByText('megapixels')).not.toBeInTheDocument();
+    });
+
+    await user.click(clearFiltersButton);
+
+    await waitFor(() => {
+      expect(screen.getByText('megapixels')).toBeInTheDocument();
+    });
+
+    expect(clearFiltersButton).toBeDisabled();
+  }, 10000);
 });

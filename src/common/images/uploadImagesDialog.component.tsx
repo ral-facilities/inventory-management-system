@@ -7,6 +7,7 @@ import ImageEditor from '@uppy/image-editor';
 import '@uppy/image-editor/dist/style.css';
 import ProgressBar from '@uppy/progress-bar'; // Import the ProgressBar plugin
 import { DashboardModal } from '@uppy/react';
+import statusBarStates from '@uppy/status-bar/lib/StatusBarStates';
 import XHR from '@uppy/xhr-upload';
 import React from 'react';
 import { uppyOnAfterResponse, uppyOnBeforeRequest } from '../../api/api';
@@ -16,7 +17,7 @@ import type {
 } from '../../app.types';
 import { settings } from '../../settings';
 import { getNonEmptyTrimmedString } from '../../utils';
-import { isAnyFileWaiting, useMetaFields } from '../uppy.utils';
+import { getUploadingState, useMetaFields } from '../uppy.utils';
 
 // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000, so here the former is expected despite them really being GiB, MiB and KiB.
 const MAX_FILE_SIZE_MB = 50;
@@ -67,15 +68,37 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
     return newUppy;
   });
 
-  const { files = {} } = uppy.getState();
+  const { files = {}, error, recoveredState } = uppy.getState();
+  const { isAllComplete } = uppy.getObjectOfFilesPerState();
 
   const handleClose = React.useCallback(() => {
     // prevent users from closing the dialog while the download is in progress
-    if (isAnyFileWaiting(files)) return;
+    const uploadState = getUploadingState(
+      error,
+      isAllComplete,
+      recoveredState,
+      files
+    );
+    if (
+      uploadState === statusBarStates.STATE_POSTPROCESSING ||
+      uploadState === statusBarStates.STATE_PREPROCESSING ||
+      uploadState === statusBarStates.STATE_UPLOADING
+    ) {
+      return;
+    }
     onClose();
     uppy.clear();
     queryClient.invalidateQueries({ queryKey: ['Images', entityId] });
-  }, [entityId, files, onClose, queryClient, uppy]);
+  }, [
+    entityId,
+    error,
+    files,
+    isAllComplete,
+    onClose,
+    queryClient,
+    recoveredState,
+    uppy,
+  ]);
 
   React.useEffect(() => {
     uppy.setMeta({
