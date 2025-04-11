@@ -128,7 +128,7 @@ export function uppyOnAfterResponse(xhr: XMLHttpRequest) {
         });
       });
     } else {
-      let returnMessage = parseErrorResponse(errorMessage);
+      const returnMessage = parseErrorResponse(errorMessage);
       throw new Error(returnMessage);
     }
   }

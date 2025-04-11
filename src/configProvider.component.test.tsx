@@ -16,6 +16,7 @@ vi.mock('./settings', () => ({
   settings: Promise.resolve({
     imsApiUrl: '',
     osApiUrl: '',
+    maxAttachmentSizeBytes: 104857600,
     imageAllowedFileExtensions: [
       '.bmp',
       '.jpe',
@@ -90,6 +91,7 @@ describe('ConfigProvider', () => {
       JSON.stringify({
         imsApiUrl: '',
         osApiUrl: '',
+        maxAttachmentSizeBytes: 104857600,
         imageAllowedFileExtensions: [
           '.bmp',
           '.jpe',

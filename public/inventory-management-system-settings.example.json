@@ -1,6 +1,7 @@
 {
   "imsApiUrl": "",
   "osApiUrl": "",
+  "maxAttachmentSizeBytes": 104857600,
   "imageAllowedFileExtensions": [
     ".bmp",
     ".jpe",
