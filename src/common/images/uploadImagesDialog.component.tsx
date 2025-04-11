@@ -15,13 +15,9 @@ import type {
   UppyImageUploadResponse,
   UppyUploadMetadata,
 } from '../../app.types';
-import { settings } from '../../settings';
+import { InventoryManagementSystemSettingsContext } from '../../configProvider.component';
 import { getNonEmptyTrimmedString } from '../../utils';
 import { getUploadingState, useMetaFields } from '../uppy.utils';
-
-// Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000, so here the former is expected despite them really being GiB, MiB and KiB.
-const MAX_FILE_SIZE_MB = 50;
-const MAX_FILE_SIZE_B = MAX_FILE_SIZE_MB * 1024 * 1024;
 
 export interface UploadImagesDialogProps {
   open: boolean;
@@ -36,14 +32,21 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
 
   const queryClient = useQueryClient();
 
-  const osApiUrl = async () => (await settings)?.osApiUrl || '';
+  const { maxImageSizeBytes, osApiUrl } = React.useContext(
+    InventoryManagementSystemSettingsContext
+  );
+
+  // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000,
+  // so here the former is expected despite them really being GiB, MiB and KiB.
+  const maxFileSizeMB = maxImageSizeBytes / 1024 ** 2;
+
   const [uppy] = React.useState<
     Uppy<UppyUploadMetadata, UppyImageUploadResponse>
   >(() => {
     const newUppy = new Uppy<UppyUploadMetadata, UppyImageUploadResponse>({
       autoProceed: false,
       restrictions: {
-        maxFileSize: MAX_FILE_SIZE_B,
+        maxFileSize: maxImageSizeBytes,
         requiredMetaFields: ['name'],
         allowedFileTypes: ['image/*'],
       },
@@ -51,18 +54,16 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
       .use(ImageEditor)
       .use(ProgressBar);
 
-    osApiUrl().then((url) => {
-      newUppy.use(XHR, {
-        endpoint: `${url}/images`,
-        method: 'POST',
-        fieldName: 'upload_file',
-        async onBeforeRequest(xhr) {
-          uppyOnBeforeRequest(xhr);
-        },
-        async onAfterResponse(xhr) {
-          await uppyOnAfterResponse(xhr);
-        },
-      });
+    newUppy.use(XHR, {
+      endpoint: `${osApiUrl}/images`,
+      method: 'POST',
+      fieldName: 'upload_file',
+      async onBeforeRequest(xhr) {
+        uppyOnBeforeRequest(xhr);
+      },
+      async onAfterResponse(xhr) {
+        await uppyOnAfterResponse(xhr);
+      },
     });
 
     return newUppy;
@@ -139,7 +140,7 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
       closeModalOnClickOutside={false}
       animateOpenClose={false}
       uppy={uppy}
-      note={`Files cannot be larger than ${MAX_FILE_SIZE_MB}MB. Only images are allowed.`}
+      note={`Files cannot be larger than ${maxFileSizeMB}MB. Only images are allowed.`}
       proudlyDisplayPoweredByUppy={false}
       theme={theme.palette.mode}
       doneButtonHandler={handleClose}

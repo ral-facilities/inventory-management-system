@@ -1,6 +1,7 @@
 {
   "imsApiUrl": "",
   "osApiUrl": "",
+  "maxImageSizeBytes": 52428800,
   "routes": [
     {
       "section": "Inventory Management System",
