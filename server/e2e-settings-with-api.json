@@ -1,6 +1,6 @@
 {
   "imsApiUrl": "http://127.0.0.1:8000",
-  "osApiUrl": "",
+  "osApiUrl": "http://127.0.0.1:8002",
   "routes": [
     {
       "section": "Inventory Management System",

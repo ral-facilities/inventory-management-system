@@ -75,7 +75,7 @@ Cypress.Commands.add('startSnoopingBrowserMockedRequest', () => {
 Cypress.Commands.add('dropIMSCollections', (collections: string[]) => {
   collections.forEach((collection) =>
     cy.exec(
-      `docker exec -i $(docker ps | grep mongo | awk '{ print $1 }') mongosh ims --username "root" --password "example" --authenticationDatabase=admin --eval "db.${collection}.drop()"`
+      `docker exec -i $(docker ps | grep ims_api_mongodb_container | awk '{ print $1 }') mongosh ims --username "root" --password "example" --authenticationDatabase=admin --eval "db.${collection}.drop()"`
     )
   );
 });

@@ -83,13 +83,6 @@ jobs:
           repository: ral-facilities/inventory-management-system-api
           ref: develop
 
-      - name: Clone Object Storage api repo
-        uses: actions/checkout@cbb722410c2e876e24abbe8de2cc27693e501dcb
-        with:
-          repository: ral-facilities/object-storage-api
-          ref: develop
-
-
       - name: Set up Python
         uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
         with:
@@ -133,23 +126,32 @@ jobs:
           --env OBJECT_STORAGE__API_URL=http://localhost:8002 \
           harbor.stfc.ac.uk/inventory-management-system/ims-api:develop
 
+      - name: Clone Object Storage api repo
+        uses: actions/checkout@cbb722410c2e876e24abbe8de2cc27693e501dcb
+        with:
+          repository: ral-facilities/object-storage-api
+          ref: develop
+          path: object-storage-api
+
       - name: Move Object Storage api repo
         run: |
           cd ..
           mkdir object-storage-api
-          mv -v object-storage/* object-storage-api/
+          mv -v inventory-management-system/* .
           cd object-storage-api/
 
       - name: Start MongoDB and MinIO
+        working-directory: ../object-storage-api
         run: |
           docker compose up --detach mongo-db minio
           sleep 10
         
       - name: Create MinIO buckets
+        working-directory: ../object-storage-api
         run: |
           docker compose up minio-create-buckets
 
-      - name: Start inventory-management-system-api
+      - name: Start object-storage-api
         run: |
           docker run -d --network=host \
           --name object_storage_api_container \
@@ -159,7 +161,7 @@ jobs:
           --env DATABASE__PROTOCOL="mongodb" \
           --env DATABASE__USERNAME="root" \
           --env DATABASE__PASSWORD="example" \
-          --env DATABASE__HOST_AND_OPTIONS="localhost:27017/?authMechanism=SCRAM-SHA-256&authSource=admin" \
+          --env DATABASE__HOST_AND_OPTIONS="localhost:27018/?authMechanism=SCRAM-SHA-256&authSource=admin" \
           --env DATABASE__NAME="object-storage" \
           --env API__ALLOWED_CORS_HEADERS='["*"]' \
           --env API__ALLOWED_CORS_ORIGINS='["*"]' \
