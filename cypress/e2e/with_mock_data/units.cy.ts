@@ -14,6 +14,19 @@ describe('Units', () => {
     cy.findByText('megapixels').should('be.visible');
   });
 
+  it('sets and clears the table filters', () => {
+    cy.findByText('megapixels').should('exist');
+    cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
+
+    cy.findByLabelText('Filter by Value').type('kilogram');
+    cy.findByText('kilograms').should('exist');
+    cy.findAllByText('megapixels').should('not.exist');
+
+    cy.findByRole('button', { name: 'Clear Filters' }).click();
+    cy.findByText('megapixels').should('exist');
+    cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
+  });
+
   it('adds a unit and deals with errors correctly', () => {
     cy.findByRole('button', { name: 'Add Unit' }).click();
 

@@ -485,7 +485,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
                         <Card
                           component={Grid}
                           container
-                          xs
                           style={{
                             maxWidth:
                               data.length === 1 ||

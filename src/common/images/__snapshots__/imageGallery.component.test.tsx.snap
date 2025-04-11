@@ -852,7 +852,7 @@ exports[`Image Gallery > displays no images message and can open and close uploa
                     class="uppy-Dashboard-AddFiles"
                   >
                     <input
-                      accept="image/*"
+                      accept=".bmp, .jpe, .jpeg, .jpg, .png, .tif, .tiff, .webp"
                       aria-hidden="true"
                       class="uppy-Dashboard-input"
                       hidden=""
@@ -862,7 +862,7 @@ exports[`Image Gallery > displays no images message and can open and close uploa
                       type="file"
                     />
                     <input
-                      accept="image/*"
+                      accept=".bmp, .jpe, .jpeg, .jpg, .png, .tif, .tiff, .webp"
                       aria-hidden="true"
                       class="uppy-Dashboard-input"
                       hidden=""
@@ -1598,7 +1598,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6zjda9-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-bvn3da-MuiGrid-root-MuiPaper-root-MuiCard-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-vs7l9g-MuiGrid-root"
@@ -1672,7 +1672,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6zjda9-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-bvn3da-MuiGrid-root-MuiPaper-root-MuiCard-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-vs7l9g-MuiGrid-root"
@@ -1746,7 +1746,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6zjda9-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-bvn3da-MuiGrid-root-MuiPaper-root-MuiCard-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-vs7l9g-MuiGrid-root"
@@ -1820,7 +1820,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6zjda9-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-bvn3da-MuiGrid-root-MuiPaper-root-MuiCard-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-vs7l9g-MuiGrid-root"
@@ -1894,7 +1894,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6zjda9-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-bvn3da-MuiGrid-root-MuiPaper-root-MuiCard-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-vs7l9g-MuiGrid-root"
@@ -1968,7 +1968,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6zjda9-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-bvn3da-MuiGrid-root-MuiPaper-root-MuiCard-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-vs7l9g-MuiGrid-root"
@@ -2042,7 +2042,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6zjda9-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-bvn3da-MuiGrid-root-MuiPaper-root-MuiCard-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-vs7l9g-MuiGrid-root"
@@ -2116,7 +2116,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6zjda9-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-bvn3da-MuiGrid-root-MuiPaper-root-MuiCard-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-vs7l9g-MuiGrid-root"
@@ -2190,7 +2190,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6zjda9-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-bvn3da-MuiGrid-root-MuiPaper-root-MuiCard-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-vs7l9g-MuiGrid-root"
@@ -2264,7 +2264,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6zjda9-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-bvn3da-MuiGrid-root-MuiPaper-root-MuiCard-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-vs7l9g-MuiGrid-root"
@@ -2338,7 +2338,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6zjda9-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-bvn3da-MuiGrid-root-MuiPaper-root-MuiCard-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-vs7l9g-MuiGrid-root"
@@ -2412,7 +2412,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6zjda9-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-bvn3da-MuiGrid-root-MuiPaper-root-MuiCard-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-vs7l9g-MuiGrid-root"
@@ -2486,7 +2486,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6zjda9-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-bvn3da-MuiGrid-root-MuiPaper-root-MuiCard-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-vs7l9g-MuiGrid-root"
@@ -2560,7 +2560,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6zjda9-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-bvn3da-MuiGrid-root-MuiPaper-root-MuiCard-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-vs7l9g-MuiGrid-root"
@@ -2634,7 +2634,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6zjda9-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-bvn3da-MuiGrid-root-MuiPaper-root-MuiCard-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-vs7l9g-MuiGrid-root"
@@ -2708,7 +2708,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6zjda9-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-bvn3da-MuiGrid-root-MuiPaper-root-MuiCard-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-vs7l9g-MuiGrid-root"
@@ -3015,7 +3015,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                     class="uppy-Dashboard-AddFiles"
                   >
                     <input
-                      accept="image/*"
+                      accept=".bmp, .jpe, .jpeg, .jpg, .png, .tif, .tiff, .webp"
                       aria-hidden="true"
                       class="uppy-Dashboard-input"
                       hidden=""
@@ -3025,7 +3025,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                       type="file"
                     />
                     <input
-                      accept="image/*"
+                      accept=".bmp, .jpe, .jpeg, .jpg, .png, .tif, .tiff, .webp"
                       aria-hidden="true"
                       class="uppy-Dashboard-input"
                       hidden=""
@@ -3741,7 +3741,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1g1v32h-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
                   style="cursor: pointer;"
                 >
                   <div
@@ -3829,7 +3829,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1g1v32h-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
                   style="cursor: pointer;"
                 >
                   <div
@@ -3917,7 +3917,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1g1v32h-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
                   style="cursor: pointer;"
                 >
                   <div
@@ -4005,7 +4005,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1g1v32h-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
                   style="cursor: pointer;"
                 >
                   <div
@@ -4093,7 +4093,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1g1v32h-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
                   style="cursor: pointer;"
                 >
                   <div
@@ -4181,7 +4181,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1g1v32h-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
                   style="cursor: pointer;"
                 >
                   <div
@@ -4269,7 +4269,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1g1v32h-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
                   style="cursor: pointer;"
                 >
                   <div
@@ -4357,7 +4357,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1g1v32h-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
                   style="cursor: pointer;"
                 >
                   <div
@@ -4445,7 +4445,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1g1v32h-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
                   style="cursor: pointer;"
                 >
                   <div
@@ -4533,7 +4533,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1g1v32h-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
                   style="cursor: pointer;"
                 >
                   <div
@@ -4621,7 +4621,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1g1v32h-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
                   style="cursor: pointer;"
                 >
                   <div
@@ -4709,7 +4709,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1g1v32h-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
                   style="cursor: pointer;"
                 >
                   <div
@@ -4797,7 +4797,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1g1v32h-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
                   style="cursor: pointer;"
                 >
                   <div
@@ -4885,7 +4885,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1g1v32h-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
                   style="cursor: pointer;"
                 >
                   <div
@@ -4973,7 +4973,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1g1v32h-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
                   style="cursor: pointer;"
                 >
                   <div
@@ -5061,7 +5061,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1g1v32h-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
                   style="cursor: pointer;"
                 >
                   <div
@@ -5149,7 +5149,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1g1v32h-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
                   style="cursor: pointer;"
                 >
                   <div
@@ -5237,7 +5237,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-true MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1g1v32h-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                  class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
                   style="cursor: pointer;"
                 >
                   <div
@@ -5558,7 +5558,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                     class="uppy-Dashboard-AddFiles"
                   >
                     <input
-                      accept="image/*"
+                      accept=".bmp, .jpe, .jpeg, .jpg, .png, .tif, .tiff, .webp"
                       aria-hidden="true"
                       class="uppy-Dashboard-input"
                       hidden=""
@@ -5568,7 +5568,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                       type="file"
                     />
                     <input
-                      accept="image/*"
+                      accept=".bmp, .jpe, .jpeg, .jpg, .png, .tif, .tiff, .webp"
                       aria-hidden="true"
                       class="uppy-Dashboard-input"
                       hidden=""
@@ -6518,7 +6518,7 @@ exports[`Image Gallery > renders no results page correctly 1`] = `
                     class="uppy-Dashboard-AddFiles"
                   >
                     <input
-                      accept="image/*"
+                      accept=".bmp, .jpe, .jpeg, .jpg, .png, .tif, .tiff, .webp"
                       aria-hidden="true"
                       class="uppy-Dashboard-input"
                       hidden=""
@@ -6528,7 +6528,7 @@ exports[`Image Gallery > renders no results page correctly 1`] = `
                       type="file"
                     />
                     <input
-                      accept="image/*"
+                      accept=".bmp, .jpe, .jpeg, .jpg, .png, .tif, .tiff, .webp"
                       aria-hidden="true"
                       class="uppy-Dashboard-input"
                       hidden=""

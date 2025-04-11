@@ -551,3 +551,17 @@ export function downloadFileByLink(url: string, filename: string): void {
 export const mrtTheme = (theme: Theme): Partial<MRT_Theme> => ({
   baseBackgroundColor: theme.palette.background.default,
 });
+
+export function parseErrorResponse(errorMessage: string): string {
+  let returnMessage = 'There was an unexpected error.';
+  if (errorMessage.includes('limit for the maximum number of')) {
+    returnMessage = 'Maximum number of files reached.';
+  } else if (errorMessage.includes('does not contain the correct extension')) {
+    returnMessage = 'File extension does not match content type.';
+  } else if (errorMessage.includes('is not supported')) {
+    returnMessage = 'Content type not supported.';
+  } else if (errorMessage.includes('not a valid image')) {
+    returnMessage = 'File given is not a valid image.';
+  }
+  return returnMessage;
+}
