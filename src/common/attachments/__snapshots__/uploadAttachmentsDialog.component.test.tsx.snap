@@ -55,6 +55,7 @@ exports[`Upload attachment dialog > renders dialog correctly 1`] = `
                 class="uppy-Dashboard-AddFiles"
               >
                 <input
+                  accept=".csv, .doc, .docx, .pdf, .rtf, .txt, .xls, .xlsx"
                   aria-hidden="true"
                   class="uppy-Dashboard-input"
                   hidden=""
@@ -64,6 +65,7 @@ exports[`Upload attachment dialog > renders dialog correctly 1`] = `
                   type="file"
                 />
                 <input
+                  accept=".csv, .doc, .docx, .pdf, .rtf, .txt, .xls, .xlsx"
                   aria-hidden="true"
                   class="uppy-Dashboard-input"
                   hidden=""

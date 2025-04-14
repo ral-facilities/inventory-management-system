@@ -15,14 +15,11 @@ import {
   usePostAttachmentMetadata,
 } from '../../api/attachments';
 import type { UppyUploadMetadata } from '../../app.types';
+import { InventoryManagementSystemSettingsContext } from '../../configProvider.component';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { getNonEmptyTrimmedString, parseErrorResponse } from '../../utils';
 import { getUploadingState, useMetaFields } from '../uppy.utils';
 
-// Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000,
-// so here the former is expected despite them really being GiB, MiB and KiB.
-const MAX_FILE_SIZE_MB = 100;
-const MAX_FILE_SIZE_B = MAX_FILE_SIZE_MB * 1024 * 1024;
 export interface UploadAttachmentsDialogProps {
   open: boolean;
   onClose: () => void;
@@ -36,6 +33,14 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
 
   const queryClient = useQueryClient();
 
+  const { attachmentAllowedFileExtensions, maxAttachmentSizeBytes } = React.useContext(
+    InventoryManagementSystemSettingsContext
+  );
+
+  // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000,
+  // so here the former is expected despite them really being GiB, MiB and KiB.
+  const maxAttachmentSizeMB = maxAttachmentSizeBytes / (1024 ** 2)
+
   const { mutateAsync: postAttachmentMetadata } = usePostAttachmentMetadata();
 
   const { mutateAsync: deleteAttachment } = useDeleteAttachment();
@@ -48,8 +53,9 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
     new Uppy<UppyUploadMetadata, AwsBody>({
       autoProceed: false,
       restrictions: {
-        maxFileSize: MAX_FILE_SIZE_B,
+        maxFileSize: maxAttachmentSizeBytes,
         requiredMetaFields: ['name'],
+        allowedFileTypes: attachmentAllowedFileExtensions,
       },
     })
       .use(AwsS3<UppyUploadMetadata, AwsBody>, {
@@ -63,7 +69,7 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
           }).catch((error) => {
             const response = error.response?.data as APIError;
             const errorMessage = response.detail.toLocaleLowerCase();
-            let returnMessage = parseErrorResponse(errorMessage);
+            const returnMessage = parseErrorResponse(errorMessage);
             throw new Error(returnMessage);
           });
 
@@ -167,7 +173,7 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
       closeModalOnClickOutside={false}
       animateOpenClose={false}
       uppy={uppy}
-      note={`Files cannot be larger than ${MAX_FILE_SIZE_MB}MB. Only supported attachments are allowed.`}
+      note={`Files cannot be larger than ${maxAttachmentSizeMB}MB. Only supported attachments are allowed.`}
       proudlyDisplayPoweredByUppy={false}
       theme={theme.palette.mode}
       doneButtonHandler={handleClose}
