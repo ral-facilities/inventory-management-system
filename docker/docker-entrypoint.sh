@@ -19,7 +19,7 @@ jq \
    .imageAllowedFileExtensions = $imageAllowedFileExtensions |
    .maxImageSizeBytes = $maxImageSizeBytes |
    .pluginHost = $pluginHost' \
-  public/inventory-management-system-settings.example.json > "$TEMPFILE"
+  /usr/local/apache2/htdocs/inventory-management-system-settings.json > "$TEMPFILE"
 
 cat "$TEMPFILE" > /usr/local/apache2/htdocs/inventory-management-system-settings.json
 rm "$TEMPFILE"
