@@ -300,7 +300,7 @@ export const addAttachment = (
   if (!ignoreChecks) {
     cy.findByText('Attachments').click();
     for (let i = 0; i++; i < values.files.length) {
-      let fileName = values.files[i].slice(
+      const fileName = values.files[i].slice(
         values.files[i].lastIndexOf('/') + 1
       );
       cy.findByText(fileName).should('exist');
@@ -318,9 +318,9 @@ export const editAttachment = (
   ignoreChecks: boolean
 ) => {
   cy.findByText('Attachments').click();
-  cy.findByLabelText(`${values.originalFileName}`)
-    .scrollIntoView()
-    .should('be.visible');
+  cy.findByLabelText(`${values.originalFileName}`).scrollIntoView();
+
+  cy.findByLabelText(`${values.originalFileName}`).should('exist');
 
   cy.findAllByLabelText('Row Actions').first().click();
 
