@@ -5,12 +5,15 @@ import { addSystems } from '../systems/functions';
 import { addUnits } from '../units/functions';
 import { addUsageStatuses } from '../usageStatuses/functions';
 import {
+  addAttachment,
   addItem,
   addProperty,
+  deleteAttachment,
   deleteItem,
+  duplicateItem,
+  editAttachment,
   editItem,
   editProperty,
-  duplicateItem,
 } from './functions';
 
 describe('items', () => {
@@ -23,6 +26,7 @@ describe('items', () => {
       'systems',
       'units',
       'usage_statuses',
+      'attachments',
     ]);
     // Prepare relevant data for items
     cy.visit('/admin-ims/usage-statuses');
@@ -47,6 +51,7 @@ describe('items', () => {
       'systems',
       'units',
       'usage_statuses',
+      'attachments',
     ]);
   });
 
@@ -58,5 +63,29 @@ describe('items', () => {
     editProperty();
     deleteItem('MX4332424', 0);
     deleteItem('MX4332424', 0);
+  });
+
+  it('CRUD for attachments', () => {
+    addItem();
+    cy.findByLabelText('MX432424').click();
+    addAttachment(
+      {
+        files: [
+          'cypress/fixtures/documents/test1.txt',
+          'cypress/fixtures/documents/test2.txt',
+        ],
+      },
+      true
+    );
+    editAttachment(
+      {
+        originalFileName: 'test1.txt',
+        newFileName: 'test file',
+        title: 'test title',
+        description: 'test description',
+      },
+      true
+    );
+    deleteAttachment(['test2.txt', 'test file.txt']);
   });
 });
