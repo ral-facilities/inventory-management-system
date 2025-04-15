@@ -351,7 +351,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         header: 'Delivered Date',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) =>
-          row.item.delivered_date ? new Date(row.item.delivered_date) : '',
+          row.item.delivered_date ? new Date(row.item.delivered_date) : null,
         id: 'item.delivered_date',
         filterVariant: COLUMN_FILTER_VARIANTS.date,
         filterFn: COLUMN_FILTER_FUNCTIONS.date,
