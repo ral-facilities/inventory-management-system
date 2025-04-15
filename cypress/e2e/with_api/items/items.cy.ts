@@ -10,6 +10,7 @@ import {
   addProperty,
   deleteAttachment,
   deleteItem,
+  downloadAttachment,
   duplicateItem,
   editAttachment,
   editItem,
@@ -86,6 +87,7 @@ describe('items', () => {
       },
       true
     );
+    downloadAttachment('test file.txt');
     deleteAttachment(['test2.txt', 'test file.txt']);
   });
 });

@@ -362,6 +362,17 @@ export const editAttachment = (
   }
 };
 
+export const downloadAttachment = (fileName: string) => {
+  cy.findByText('Attachments').click();
+  cy.findByLabelText(`${fileName} row`).within(() => {
+    cy.findByLabelText('Row Actions').click();
+  });
+  cy.findByLabelText(`Download ${fileName} attachment`).click();
+  cy.findByRole('dialog').should('be.visible');
+
+  cy.findByRole('button', { name: 'Continue' }).click();
+};
+
 export const deleteAttachment = (fileNames: string[]) => {
   cy.findByText('Attachments').click();
   fileNames.forEach((fileName) => {
