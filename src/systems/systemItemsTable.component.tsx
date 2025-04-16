@@ -351,7 +351,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         header: 'Delivered Date',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) =>
-          row.item.delivered_date ? new Date(row.item.delivered_date) : null,
+          row.item.delivered_date ? new Date(row.item.delivered_date) : '',
         id: 'item.delivered_date',
         filterVariant: COLUMN_FILTER_VARIANTS.date,
         filterFn: COLUMN_FILTER_FUNCTIONS.date,
@@ -360,7 +360,6 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         Cell: ({ row }) =>
           row.original.item.delivered_date &&
           formatDateTimeStrings(row.original.item.delivered_date, false),
-
         GroupedCell: (props) =>
           TableGroupedCell({
             ...props,

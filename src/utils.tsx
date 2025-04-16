@@ -141,13 +141,16 @@ const getTextContent = (
     } else if (React.isValidElement(children)) {
       if (children.props.children[0] && children.props.children[0].props.cell) {
         const childCell = children.props.children[0].props.cell;
-        if (childCell.renderValue() instanceof Date) {
+        const childCellRenderValue = childCell.renderValue();
+        if (childCellRenderValue instanceof Date) {
           return children;
         } else {
           if (childCell.getIsGrouped()) {
-            return `${String(childCell.renderValue())} (${childCell.row.subRows?.length})`;
+            return `${String(childCellRenderValue)} (${childCell.row.subRows?.length})`;
+          } else if (childCell.getIsAggregated()) {
+            return '';
           } else {
-            return String(childCell.renderValue());
+            return String(childCellRenderValue);
           }
         }
       }
@@ -216,11 +219,11 @@ export const OverflowTip: React.FC<OverflowTipProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [children]
   );
-
-  return (
+  const textContent = getTextContent(children, mrtCell);
+  return textContent === '' ? null : (
     <Tooltip
       role="tooltip"
-      title={getTextContent(children, mrtCell)}
+      title={textContent}
       disableHoverListener={!isOverflowed}
       placement="top"
       enterTouchDelay={0}
@@ -261,6 +264,7 @@ export const TableBodyCellOverFlowTip: React.FC<TableCellOverFlowTipProps> = (
       renderValue === undefined ||
       (typeof renderValue === 'string' && renderValue.trim() === '');
   }
+
   return (
     <TableCell {...tableCellProps}>
       {!isEmpty ? (

@@ -199,7 +199,7 @@ export function ItemsTable(props: ItemTableProps) {
         accessorFn: (row) =>
           row.item.warranty_end_date
             ? new Date(row.item.warranty_end_date)
-            : null,
+            : '',
         id: 'item.warranty_end_date',
         filterVariant: COLUMN_FILTER_VARIANTS.date,
         filterFn: COLUMN_FILTER_FUNCTIONS.date,
@@ -218,7 +218,7 @@ export function ItemsTable(props: ItemTableProps) {
         header: 'Delivered Date',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) =>
-          row.item.delivered_date ? new Date(row.item.delivered_date) : null,
+          row.item.delivered_date ? new Date(row.item.delivered_date) : '',
         id: 'item.delivered_date',
         filterVariant: COLUMN_FILTER_VARIANTS.date,
         filterFn: COLUMN_FILTER_FUNCTIONS.date,
