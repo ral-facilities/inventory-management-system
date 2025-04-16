@@ -98,7 +98,7 @@ jobs:
           mv -v inventory-management-system/* inventory-management-system-api/
           cd inventory-management-system-api/
 
-      - name: Setup MongoDB
+      - name: Setup MongoDB (For inventory-management-system-api)
         working-directory: ../inventory-management-system-api
         run: |
           python ./scripts/dev_cli.py --ci db-init --replicaSetMemberHost localhost
@@ -131,7 +131,7 @@ jobs:
         with:
           repository: ral-facilities/object-storage-api
           ref: develop
-          path: object-storage-api
+         
 
       - name: Move Object Storage api repo
         run: |
@@ -140,13 +140,13 @@ jobs:
           mv -v inventory-management-system/* .
           cd object-storage-api/
 
-      - name: Start MongoDB and MinIO
+      - name: Start MongoDB and MinIO (For object-storage-api)
         working-directory: ../object-storage-api
         run: |
           docker compose up --detach mongo-db minio
           sleep 10
         
-      - name: Create MinIO buckets
+      - name: Create MinIO buckets (For object-storage-api)
         working-directory: ../object-storage-api
         run: |
           docker compose up minio-create-buckets
