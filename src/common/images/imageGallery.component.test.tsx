@@ -640,7 +640,7 @@ describe('Image Gallery', () => {
     expect((await screen.findAllByText('logo1.png')).length).toEqual(9);
 
     const uploadImageButton = screen.getByRole('button', {
-      name: 'Upload Image',
+      name: 'Upload Images',
     });
 
     await user.click(uploadImageButton);
@@ -674,7 +674,7 @@ describe('Image Gallery', () => {
     expect(baseElement).toMatchSnapshot();
 
     const uploadImageButton = screen.getByRole('button', {
-      name: 'Upload Image',
+      name: 'Upload Images',
     });
 
     await user.click(uploadImageButton);

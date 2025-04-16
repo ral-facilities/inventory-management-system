@@ -51,7 +51,7 @@ exports[`Image Gallery > displays no images message and can open and close uploa
                     />
                   </svg>
                 </span>
-                Upload Image
+                Upload Images
                 <span
                   class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                 />
@@ -989,7 +989,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                     />
                   </svg>
                 </span>
-                Upload Image
+                Upload Images
                 <span
                   class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                 />
@@ -3154,7 +3154,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                     />
                   </svg>
                 </span>
-                Upload Image
+                Upload Images
                 <span
                   class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                 />
@@ -5695,7 +5695,7 @@ exports[`Image Gallery > renders no results page correctly 1`] = `
                     />
                   </svg>
                 </span>
-                Upload Image
+                Upload Images
                 <span
                   class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                 />
