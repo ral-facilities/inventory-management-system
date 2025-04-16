@@ -33,13 +33,12 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
 
   const queryClient = useQueryClient();
 
-  const { attachmentAllowedFileExtensions, maxAttachmentSizeBytes } = React.useContext(
-    InventoryManagementSystemSettingsContext
-  );
+  const { attachmentAllowedFileExtensions, maxAttachmentSizeBytes } =
+    React.useContext(InventoryManagementSystemSettingsContext);
 
   // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000,
   // so here the former is expected despite them really being GiB, MiB and KiB.
-  const maxAttachmentSizeMB = maxAttachmentSizeBytes / (1024 ** 2)
+  const maxAttachmentSizeMB = maxAttachmentSizeBytes / 1024 ** 2;
 
   const { mutateAsync: postAttachmentMetadata } = usePostAttachmentMetadata();
 
@@ -102,10 +101,14 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
       const id = fileMetadataMap[fileId];
 
       if (id) {
-        if (deleteMetadata && !deletedFileIds.current.has(fileId)) {
+        if (
+          deleteMetadata &&
+          !deletedFileIds.current.has(fileId) &&
+          file?.progress.uploadComplete === false
+        ) {
           deletedFileIds.current.add(fileId);
           await deleteAttachment(id).catch((error: AxiosError) => {
-            handleIMS_APIError(error);
+            handleIMS_APIError(error, false);
           });
         }
 
