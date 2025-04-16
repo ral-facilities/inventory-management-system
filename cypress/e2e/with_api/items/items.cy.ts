@@ -5,14 +5,14 @@ import { addSystems } from '../systems/functions';
 import { addUnits } from '../units/functions';
 import { addUsageStatuses } from '../usageStatuses/functions';
 import {
-  addAttachment,
+  addFile,
   addItem,
   addProperty,
-  deleteAttachment,
+  deleteFile,
   deleteItem,
-  downloadAttachment,
+  downloadFile,
   duplicateItem,
-  editAttachment,
+  editFile,
   editItem,
   editProperty,
 } from './functions';
@@ -69,25 +69,54 @@ describe('items', () => {
   it('CRUD for attachments', () => {
     addItem();
     cy.findByLabelText('MX432424').click();
-    addAttachment(
+    addFile(
       {
         files: [
           'cypress/fixtures/documents/test1.txt',
           'cypress/fixtures/documents/test2.txt',
         ],
       },
+      'attachment',
       true
     );
-    editAttachment(
+    editFile(
       {
         originalFileName: 'test1.txt',
         newFileName: 'test file',
         title: 'test title',
         description: 'test description',
       },
+      'attachment',
       true
     );
-    downloadAttachment('test file.txt');
-    deleteAttachment(['test2.txt', 'test file.txt']);
+    downloadFile('test file.txt', 'attachment');
+    deleteFile(['test2.txt', 'test file.txt'], 'attachment');
+  });
+
+  it('CRUD for images', () => {
+    addItem();
+    cy.findByLabelText('MX432424').click();
+    addFile(
+      {
+        files: [
+          'cypress/fixtures/images/logo1.png',
+          'cypress/fixtures/images/logo2.png',
+        ],
+      },
+      'image',
+      true
+    );
+    editFile(
+      {
+        originalFileName: 'logo1.png',
+        newFileName: 'badge',
+        title: 'test title',
+        description: 'test description',
+      },
+      'image',
+      true
+    );
+    downloadFile('logo2.png', 'image');
+    deleteFile(['badge.png', 'logo2.png'], 'image');
   });
 });

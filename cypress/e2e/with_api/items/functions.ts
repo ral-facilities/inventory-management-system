@@ -271,15 +271,18 @@ export const editItem = () => {
   });
 };
 
-export const addAttachment = (
+export const addFile = (
   values: {
     files: string[];
   },
+  type: 'image' | 'attachment',
   ignoreChecks?: boolean
 ) => {
-  cy.findByText('Attachments').click();
+  const tabValue = type === 'image' ? 'Gallery' : 'Attachments';
+  const uploadButton = type === 'image' ? 'Upload Image' : 'Upload Attachments';
+  cy.findByText(tabValue).click();
   cy.findByRole('button', {
-    name: 'Upload Attachments',
+    name: uploadButton,
   }).click();
 
   cy.findAllByText('Files cannot be larger than', { exact: false }).should(
@@ -287,9 +290,15 @@ export const addAttachment = (
   );
   cy.get('.uppy-Dashboard-input').as('fileInput');
 
-  cy.get('@fileInput').first().selectFile(values.files, { force: true });
+  if (type === 'image') {
+    cy.get('@fileInput').last().selectFile(values.files, { force: true });
+  } else {
+    cy.get('@fileInput').first().selectFile(values.files, { force: true });
+  }
 
-  cy.findByText('Upload 2 files').click({ force: true });
+  cy.findByText(
+    `Upload ${values.files.length} file${values.files.length > 1 ? 's' : ''}`
+  ).click({ force: true });
 
   cy.findAllByRole('button', {
     name: 'Close Modal',
@@ -298,9 +307,9 @@ export const addAttachment = (
     .click();
 
   if (!ignoreChecks) {
-    cy.findByText('Attachments').click();
+    cy.findByText(tabValue).click();
     for (let i = 0; i++; i < values.files.length) {
-      let fileName = values.files[i].slice(
+      const fileName = values.files[i].slice(
         values.files[i].lastIndexOf('/') + 1
       );
       cy.findByText(fileName).should('exist');
@@ -308,30 +317,36 @@ export const addAttachment = (
   }
 };
 
-export const editAttachment = (
+export const editFile = (
   values: {
     originalFileName: string;
     newFileName?: string;
     description?: string;
     title?: string;
   },
+  type: 'image' | 'attachment',
   ignoreChecks: boolean
 ) => {
-  cy.findByText('Attachments').click();
-  cy.findByLabelText(`${values.originalFileName}`)
-    .scrollIntoView()
-    .should('be.visible');
+  const tabValue = type === 'image' ? 'Gallery' : 'Attachments';
+  cy.findByText(tabValue).click();
+  cy.findByLabelText(`${values.originalFileName}`).scrollIntoView();
+  cy.findByLabelText(`${values.originalFileName}`).should('be.visible');
 
-  cy.findAllByLabelText('Row Actions').first().click();
+  if (type === 'image') {
+    cy.findAllByLabelText('Card Actions').first().click();
+    cy.findAllByText('Edit').last().click();
+  } else {
+    cy.findAllByLabelText('Row Actions').first().click();
 
-  cy.findByLabelText(`Edit ${values.originalFileName} attachment`).click();
+    cy.findByLabelText(`Edit ${values.originalFileName} ${type}`).click();
+  }
 
   cy.findByRole('dialog')
     .should('be.visible')
     .within(() => {
       if (values.newFileName) {
         cy.findByLabelText('File Name *').clear();
-        cy.findByText('.txt').should('exist');
+        cy.findByText(type === 'attachment' ? '.txt' : '.png').should('exist');
         cy.findByLabelText('File Name *').type(values.newFileName);
       }
 
@@ -349,7 +364,7 @@ export const editAttachment = (
   cy.findByRole('dialog').should('not.exist');
 
   if (!ignoreChecks) {
-    cy.findByText('Attachments').click();
+    cy.findByText(type).click();
     cy.findByText(values.newFileName ?? values.originalFileName).should(
       'exist'
     );
@@ -362,24 +377,43 @@ export const editAttachment = (
   }
 };
 
-export const downloadAttachment = (fileName: string) => {
-  cy.findByText('Attachments').click();
-  cy.findByLabelText(`${fileName} row`).within(() => {
-    cy.findByLabelText('Row Actions').click();
-  });
-  cy.findByLabelText(`Download ${fileName} attachment`).click();
+export const downloadFile = (
+  fileName: string,
+  type: 'image' | 'attachment'
+) => {
+  const tabValue = type === 'image' ? 'Gallery' : 'Attachments';
+  cy.findByText(tabValue).click();
+  if (type === 'image') {
+    cy.findAllByLabelText('Card Actions').first().click();
+    cy.findAllByText('Download').last().click();
+  } else {
+    cy.findByLabelText(`${fileName} row`).within(() => {
+      cy.findByLabelText('Row Actions').click();
+    });
+    cy.findByLabelText(`Download ${fileName} attachment`).click();
+  }
+
   cy.findByRole('dialog').should('be.visible');
 
   cy.findByRole('button', { name: 'Continue' }).click();
 };
 
-export const deleteAttachment = (fileNames: string[]) => {
-  cy.findByText('Attachments').click();
+export const deleteFile = (
+  fileNames: string[],
+  type: 'image' | 'attachment'
+) => {
+  const tabValue = type === 'image' ? 'Gallery' : 'Attachments';
+  cy.findByText(tabValue).click();
   fileNames.forEach((fileName) => {
-    cy.findByLabelText(`${fileName} row`).within(() => {
-      cy.findByLabelText('Row Actions').click();
-    });
-    cy.findByLabelText(`Delete attachment ${fileName}`).click();
+    if (type === 'image') {
+      cy.findAllByLabelText('Card Actions').first().click();
+      cy.findAllByText('Delete').last().click();
+    } else {
+      cy.findByLabelText(`${fileName} row`).within(() => {
+        cy.findByLabelText('Row Actions').click();
+      });
+      cy.findByLabelText(`Delete attachment ${fileName}`).click();
+    }
     cy.findByRole('dialog').should('be.visible');
 
     cy.findByRole('button', { name: 'Continue' }).click();
