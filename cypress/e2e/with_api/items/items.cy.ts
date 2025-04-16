@@ -28,6 +28,7 @@ describe('items', () => {
       'units',
       'usage_statuses',
       'attachments',
+      'images',
     ]);
     // Prepare relevant data for items
     cy.visit('/admin-ims/usage-statuses');
@@ -53,6 +54,7 @@ describe('items', () => {
       'units',
       'usage_statuses',
       'attachments',
+      'images',
     ]);
   });
 

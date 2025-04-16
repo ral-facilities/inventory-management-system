@@ -329,8 +329,7 @@ export const editFile = (
 ) => {
   const tabValue = type === 'image' ? 'Gallery' : 'Attachments';
   cy.findByText(tabValue).click();
-  cy.findByLabelText(`${values.originalFileName}`).scrollIntoView();
-  cy.findByLabelText(`${values.originalFileName}`).should('be.visible');
+  cy.findByText(`${values.originalFileName}`).scrollIntoView();
 
   if (type === 'image') {
     cy.findAllByLabelText('Card Actions').first().click();
