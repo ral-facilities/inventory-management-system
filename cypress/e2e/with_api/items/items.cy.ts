@@ -56,19 +56,15 @@ describe('items', () => {
     ]);
   });
 
-  it('CRUD for items', () => {
+  it('CRUD for items and attachments', () => {
     addItem();
     editItem();
     duplicateItem('MX4332424', 0);
     addProperty();
     editProperty();
-    deleteItem('MX4332424', 0);
-    deleteItem('MX4332424', 0);
-  });
-
-  it('CRUD for attachments', () => {
-    addItem();
-    cy.findByLabelText('MX432424').click();
+    cy.findByText('Plano-Convex Lens').click();
+    cy.findByText('Items').click();
+    cy.findAllByText('MX4332424').first().click();
     addAttachment(
       {
         files: [
@@ -89,5 +85,8 @@ describe('items', () => {
     );
     downloadAttachment('test file.txt');
     deleteAttachment(['test2.txt', 'test file.txt']);
+    cy.findByText('Items').click();
+    deleteItem('MX4332424', 0);
+    deleteItem('MX4332424', 0);
   });
 });

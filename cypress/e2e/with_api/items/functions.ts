@@ -318,11 +318,11 @@ export const editAttachment = (
   ignoreChecks: boolean
 ) => {
   cy.findByText('Attachments').click();
-  cy.findByLabelText(`${values.originalFileName}`).scrollIntoView();
+  cy.findByText(`${values.originalFileName}`).scrollIntoView();
 
-  cy.findByLabelText(`${values.originalFileName}`).should('exist');
+  cy.findByText(`${values.originalFileName}`).should('exist');
 
-  cy.findAllByLabelText('Row Actions').first().click();
+  cy.findAllByText('Row Actions').first().click();
 
   cy.findByLabelText(`Edit ${values.originalFileName} attachment`).click();
 
