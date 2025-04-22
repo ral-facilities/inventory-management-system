@@ -85,7 +85,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           />
                         </svg>
                       </span>
-                      Upload Image
+                      Upload Images
                       <span
                         class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                       />
@@ -2693,7 +2693,7 @@ exports[`Primary Image Dialog > renders no results page correctly, and can still
                           />
                         </svg>
                       </span>
-                      Upload Image
+                      Upload Images
                       <span
                         class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                       />
