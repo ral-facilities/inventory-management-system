@@ -1,8 +1,8 @@
-import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
-import DeleteIcon from '@mui/icons-material/Delete'
+import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
 import EditIcon from '@mui/icons-material/Edit';
+import UploadIcon from '@mui/icons-material/Upload';
 import {
   Box,
   Button,
@@ -21,10 +21,6 @@ import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { AttachmentMetadata } from '../../api/api.types';
 import { useGetAttachments, usePatchAttachment } from '../../api/attachments';
-import DeleteAttachmentDialog from './deleteAttachmentDialog.component';
-import DownloadFileDialog from '../downloadFileDialog.component';
-import EditFileDialog from '../editFileDialog.component';
-import UploadAttachmentsDialog from './uploadAttachmentsDialog.component';
 import {
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
@@ -38,8 +34,12 @@ import {
   getPageHeightCalc,
   mrtTheme,
 } from '../../utils';
+import DownloadFileDialog from '../downloadFileDialog.component';
+import EditFileDialog from '../editFileDialog.component';
 import { usePreservedTableState } from '../preservedTableState.component';
 import { StyledUppyBox } from '../uppy.utils';
+import DeleteAttachmentDialog from './deleteAttachmentDialog.component';
+import UploadAttachmentsDialog from './uploadAttachmentsDialog.component';
 
 export interface AttachmentTableProps {
   entityId: string;
@@ -56,7 +56,8 @@ function AttachmentsTable(props: AttachmentTableProps) {
   const [downloadAttachmentDialog, setDownloadAttachmentDialog] =
     React.useState<boolean>(false);
 
-  const [selectedAttachment, setSelectedAttachment] = React.useState<AttachmentMetadata>();
+  const [selectedAttachment, setSelectedAttachment] =
+    React.useState<AttachmentMetadata>();
 
   const columns = React.useMemo<MRT_ColumnDef<AttachmentMetadata>[]>(() => {
     return [
@@ -248,7 +249,7 @@ function AttachmentsTable(props: AttachmentTableProps) {
     renderTopToolbarCustomActions: ({ table }) => (
       <Box sx={{ display: 'flex' }}>
         <Button
-          startIcon={<AddIcon />}
+          startIcon={<UploadIcon />}
           sx={{ mx: '4px' }}
           variant="outlined"
           onClick={() => {
@@ -316,7 +317,7 @@ function AttachmentsTable(props: AttachmentTableProps) {
             <DeleteIcon />
           </ListItemIcon>
           <ListItemText>Delete</ListItemText>
-        </MenuItem>
+        </MenuItem>,
       ];
     },
 
