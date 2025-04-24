@@ -282,6 +282,10 @@ export const addAttachment = (
     name: 'Upload Attachments',
   }).click();
 
+  cy.intercept('OPTIONS', 'http://localhost:9000/object-storage').as(
+    'testSnoop'
+  );
+
   cy.findAllByText('Files cannot be larger than', { exact: false }).should(
     'exist'
   );
@@ -291,11 +295,26 @@ export const addAttachment = (
 
   cy.findByText('Upload 2 files').click({ force: true });
 
-  cy.findAllByRole('button', {
-    name: 'Close Modal',
-  })
+  cy.findByText('Uploading').should('not.exist');
+
+  /* cy.wait('@testSnoop').its('response.statusCode').should('eq', 204);
+
+  cy.wait('@testSnoop').then((interception) => {
+    cy.task(
+      'log',
+      '[CYPRESS] Response body: ' + JSON.stringify(interception.response)
+    );
+  }); */
+
+  cy.findAllByRole('dialog')
     .first()
-    .click();
+    .within(() => {
+      cy.findAllByRole('button', {
+        name: 'Close Modal',
+      })
+        .last()
+        .click();
+    });
 
   if (!ignoreChecks) {
     cy.findByText('Attachments').click();
@@ -322,8 +341,11 @@ export const editAttachment = (
 
   cy.findByText(`${values.originalFileName}`).should('exist');
 
-  cy.findAllByText('Row Actions').first().click();
-
+  cy.findByRole('row', { name: `${values.originalFileName} row` }).within(
+    () => {
+      cy.findByLabelText('Row Actions').click();
+    }
+  );
   cy.findByLabelText(`Edit ${values.originalFileName} attachment`).click();
 
   cy.findByRole('dialog')
