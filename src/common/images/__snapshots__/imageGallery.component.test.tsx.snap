@@ -875,7 +875,7 @@ exports[`Image Gallery > displays no images message and can open and close uploa
                     <div
                       class="uppy-Dashboard-AddFiles-title"
                     >
-                      Drop files here or 
+                      Drop images here or 
                       <button
                         class="uppy-u-reset uppy-c-btn uppy-Dashboard-browse"
                         data-uppy-super-focusable="true"
@@ -899,7 +899,7 @@ exports[`Image Gallery > displays no images message and can open and close uploa
                       <div
                         class="uppy-Dashboard-note"
                       >
-                        Files cannot be larger than 50MB. Only images are allowed.
+                        Files cannot be larger than 50MB. Supported file types: .bmp, .jpe, .jpeg, .jpg, .png, .tif, .tiff, .webp.
                       </div>
                     </div>
                   </div>
@@ -3038,7 +3038,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                     <div
                       class="uppy-Dashboard-AddFiles-title"
                     >
-                      Drop files here or 
+                      Drop images here or 
                       <button
                         class="uppy-u-reset uppy-c-btn uppy-Dashboard-browse"
                         data-uppy-super-focusable="true"
@@ -3062,7 +3062,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                       <div
                         class="uppy-Dashboard-note"
                       >
-                        Files cannot be larger than 50MB. Only images are allowed.
+                        Files cannot be larger than 50MB. Supported file types: .bmp, .jpe, .jpeg, .jpg, .png, .tif, .tiff, .webp.
                       </div>
                     </div>
                   </div>
@@ -5581,7 +5581,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                     <div
                       class="uppy-Dashboard-AddFiles-title"
                     >
-                      Drop files here or 
+                      Drop images here or 
                       <button
                         class="uppy-u-reset uppy-c-btn uppy-Dashboard-browse"
                         data-uppy-super-focusable="true"
@@ -5605,7 +5605,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                       <div
                         class="uppy-Dashboard-note"
                       >
-                        Files cannot be larger than 50MB. Only images are allowed.
+                        Files cannot be larger than 50MB. Supported file types: .bmp, .jpe, .jpeg, .jpg, .png, .tif, .tiff, .webp.
                       </div>
                     </div>
                   </div>
@@ -6541,7 +6541,7 @@ exports[`Image Gallery > renders no results page correctly 1`] = `
                     <div
                       class="uppy-Dashboard-AddFiles-title"
                     >
-                      Drop files here or 
+                      Drop images here or 
                       <button
                         class="uppy-u-reset uppy-c-btn uppy-Dashboard-browse"
                         data-uppy-super-focusable="true"
@@ -6565,7 +6565,7 @@ exports[`Image Gallery > renders no results page correctly 1`] = `
                       <div
                         class="uppy-Dashboard-note"
                       >
-                        Files cannot be larger than 50MB. Only images are allowed.
+                        Files cannot be larger than 50MB. Supported file types: .bmp, .jpe, .jpeg, .jpg, .png, .tif, .tiff, .webp.
                       </div>
                     </div>
                   </div>

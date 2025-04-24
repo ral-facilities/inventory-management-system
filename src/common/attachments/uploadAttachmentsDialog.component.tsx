@@ -84,9 +84,16 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
           };
         },
       })
-      .use(ProgressBar)
+      .use(ProgressBar<UppyUploadMetadata, AwsBody>)
   );
 
+  uppy.getPlugin('DragDrop')?.setOptions({
+    locale: {
+      strings: {
+        dropPasteFiles: `Drop attachments here or %{browseFiles}`,
+      },
+    },
+  });
   // This is necessary to prevent multiple calls of the delete endpoint.
   const deletedFileIds = React.useRef(new Set<string>());
 
@@ -176,7 +183,18 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
       closeModalOnClickOutside={false}
       animateOpenClose={false}
       uppy={uppy}
-      note={`Files cannot be larger than ${maxAttachmentSizeMB}MB. Only supported attachments are allowed.`}
+      locale={{
+        strings: {
+          dropPasteFiles: 'Drop attachments here or %{browseFiles}',
+        },
+        pluralize: (n) => {
+          if (n === 1) {
+            return 0;
+          }
+          return 1;
+        },
+      }}
+      note={`Files cannot be larger than ${maxAttachmentSizeMB}MB. Supported file types: ${attachmentAllowedFileExtensions.join(', ')}.`}
       proudlyDisplayPoweredByUppy={false}
       theme={theme.palette.mode}
       doneButtonHandler={handleClose}

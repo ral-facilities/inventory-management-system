@@ -135,11 +135,22 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
   return (
     <DashboardModal
       open={open}
+      locale={{
+        strings: {
+          dropPasteFiles: 'Drop images here or %{browseFiles}',
+        },
+        pluralize: (n) => {
+          if (n === 1) {
+            return 0;
+          }
+          return 1;
+        },
+      }}
       onRequestClose={handleClose}
       closeModalOnClickOutside={false}
       animateOpenClose={false}
       uppy={uppy}
-      note={`Files cannot be larger than ${maxFileSizeMB}MB. Only images are allowed.`}
+      note={`Files cannot be larger than ${maxFileSizeMB}MB. Supported file types: ${imageAllowedFileExtensions.join(', ')}.`}
       proudlyDisplayPoweredByUppy={false}
       theme={theme.palette.mode}
       doneButtonHandler={handleClose}
