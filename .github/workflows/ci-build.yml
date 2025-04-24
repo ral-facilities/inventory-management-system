@@ -150,6 +150,8 @@ jobs:
         working-directory: ../object-storage-api
         run: |
           docker compose up minio-create-buckets
+          docker network ls
+
 
       - name: Start object-storage-api
         run: |
@@ -162,7 +164,7 @@ jobs:
           --env DATABASE__PROTOCOL="mongodb" \
           --env DATABASE__USERNAME="root" \
           --env DATABASE__PASSWORD="example" \
-          --env DATABASE__HOST_AND_OPTIONS="object-storage-api-mongodb:27018" \
+          --env DATABASE__HOST_AND_OPTIONS="object-storage-api-mongodb:27017" \
           --env DATABASE__NAME="object-storage" \
           --env API__ALLOWED_CORS_HEADERS='["*"]' \
           --env API__ALLOWED_CORS_ORIGINS='["*"]' \
@@ -178,6 +180,7 @@ jobs:
           --env ATTACHMENT__UPLOAD_LIMIT=50 \
           --env IMAGE__ALLOWED_FILE_EXTENSIONS='[".bmp", ".jpe", ".jpeg", ".jpg", ".png", ".tif", ".tiff", ".webp"]' \
           --env IMAGE__UPLOAD_LIMIT=100 \
+          --add-host "localhost:host-gateway" \
           -v /home/runner/work/inventory-management-system/object-storage-api/object_storage_api/logging.example.ini:/app/object_storage_api/logging.ini \
           harbor.stfc.ac.uk/scd-object-storage-api/object-storage-api:develop
           
