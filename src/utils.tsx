@@ -20,6 +20,7 @@ import {
   MRT_Row,
   MRT_RowData,
   MRT_TableInstance,
+  type MRT_Theme,
 } from 'material-react-table';
 import React from 'react';
 
@@ -140,13 +141,16 @@ const getTextContent = (
     } else if (React.isValidElement(children)) {
       if (children.props.children[0] && children.props.children[0].props.cell) {
         const childCell = children.props.children[0].props.cell;
-        if (childCell.renderValue() instanceof Date) {
+        const childCellRenderValue = childCell.renderValue();
+        if (childCellRenderValue instanceof Date) {
           return children;
         } else {
           if (childCell.getIsGrouped()) {
-            return `${String(childCell.renderValue())} (${childCell.row.subRows?.length})`;
+            return `${String(childCellRenderValue)} (${childCell.row.subRows?.length})`;
+          } else if (childCell.getIsAggregated()) {
+            return '';
           } else {
-            return String(childCell.renderValue());
+            return String(childCellRenderValue);
           }
         }
       }
@@ -215,11 +219,11 @@ export const OverflowTip: React.FC<OverflowTipProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [children]
   );
-
-  return (
+  const textContent = getTextContent(children, mrtCell);
+  return textContent === '' ? null : (
     <Tooltip
       role="tooltip"
-      title={getTextContent(children, mrtCell)}
+      title={textContent}
       disableHoverListener={!isOverflowed}
       placement="top"
       enterTouchDelay={0}
@@ -260,6 +264,7 @@ export const TableBodyCellOverFlowTip: React.FC<TableCellOverFlowTipProps> = (
       renderValue === undefined ||
       (typeof renderValue === 'string' && renderValue.trim() === '');
   }
+
   return (
     <TableCell {...tableCellProps}>
       {!isEmpty ? (
@@ -526,4 +531,41 @@ export function getNonEmptyTrimmedString(value: unknown): string | undefined {
   return typeof value === 'string' && value.trim() !== ''
     ? value.trim()
     : undefined;
+}
+
+export const getNameAndExtension = (
+  filename: string
+): [name: string, extension: string] => {
+  const point = filename.lastIndexOf('.') ?? 0;
+  const extension = filename.slice(point) ?? '';
+  const name = filename.slice(0, point) ?? '';
+
+  return [name, extension];
+};
+
+export function downloadFileByLink(url: string, filename: string): void {
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+export const mrtTheme = (theme: Theme): Partial<MRT_Theme> => ({
+  baseBackgroundColor: theme.palette.background.default,
+});
+
+export function parseErrorResponse(errorMessage: string): string {
+  let returnMessage = 'There was an unexpected error.';
+  if (errorMessage.includes('limit for the maximum number of')) {
+    returnMessage = 'Maximum number of files reached.';
+  } else if (errorMessage.includes('does not contain the correct extension')) {
+    returnMessage = 'File extension does not match content type.';
+  } else if (errorMessage.includes('is not supported')) {
+    returnMessage = 'Content type not supported.';
+  } else if (errorMessage.includes('not a valid image')) {
+    returnMessage = 'File given is not a valid image.';
+  }
+  return returnMessage;
 }

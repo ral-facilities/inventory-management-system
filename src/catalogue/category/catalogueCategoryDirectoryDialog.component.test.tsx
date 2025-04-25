@@ -16,7 +16,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
   let user: UserEvent;
   let axiosPatchSpy: MockInstance;
   let axiosPostSpy: MockInstance;
-  const onChangeSelectedCategories = vi.fn();
+  const resetSelectedCategories = vi.fn();
   const onClose = vi.fn();
   const createView = () => {
     return renderComponentWithRouterProvider(
@@ -30,7 +30,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
         open: true,
         onClose: onClose,
         selectedCategories: [],
-        onChangeSelectedCategories: onChangeSelectedCategories,
+        resetSelectedCategories: resetSelectedCategories,
         parentCategoryId: null,
         requestType: 'moveTo',
       };
@@ -291,7 +291,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
         open: true,
         onClose: onClose,
         selectedCategories: [],
-        onChangeSelectedCategories: onChangeSelectedCategories,
+        resetSelectedCategories: resetSelectedCategories,
         parentCategoryId: null,
         requestType: 'copyTo',
       };

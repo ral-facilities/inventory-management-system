@@ -127,7 +127,7 @@ describe('SystemItemsTable', () => {
       });
       expect(clearFiltersButton).toBeDisabled();
 
-      await user.type(screen.getByLabelText('Filter by Catalogue Item'), '43');
+      await user.type(screen.getByLabelText('Filter by Serial Number'), '43');
 
       await waitFor(
         () => {
@@ -330,41 +330,41 @@ describe('SystemItemsTable', () => {
 
         if (values.cameras1Item1) {
           await selectUsageStatus({
-            index: 0,
+            index: 1,
             usage_status_id: values.cameras1Item1,
           });
         }
 
         if (values.cameras1Item2) {
           await selectUsageStatus({
-            index: 1,
+            index: 2,
             usage_status_id: values.cameras1Item2,
           });
         }
 
         if (values.cameras6Item1) {
           await selectUsageStatus({
-            index: 2,
+            index: 3,
             usage_status_id: values.cameras6Item1,
           });
         }
 
         if (values.cameras6Item2) {
           await selectUsageStatus({
-            index: 3,
+            index: 4,
             usage_status_id: values.cameras6Item2,
           });
         }
       }
       if (values.cameras1)
         await selectUsageStatus({
-          index: 0,
+          index: 1,
           usage_status_id: values.cameras1,
         });
 
       if (values.cameras6)
         await selectUsageStatus({
-          index: 1,
+          index: 2,
           usage_status_id: values.cameras6,
         });
     };
@@ -486,8 +486,8 @@ describe('SystemItemsTable', () => {
         { timeout: 4000 }
       );
 
-      expect((await screen.findAllByRole('combobox'))[0]).toHaveValue('New');
-      expect(screen.getAllByRole('combobox')[1]).toHaveValue('In Use');
+      expect((await screen.findAllByRole('combobox'))[1]).toHaveValue('New');
+      expect(screen.getAllByRole('combobox')[2]).toHaveValue('In Use');
     });
 
     it('displays errors messages correctly', async () => {

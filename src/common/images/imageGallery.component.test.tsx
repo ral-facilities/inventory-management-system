@@ -20,6 +20,7 @@ describe('Image Gallery', () => {
   beforeEach(() => {
     props = {
       entityId: '1',
+      dense: false,
     };
     user = userEvent.setup();
     axiosGetSpy = vi.spyOn(storageApi, 'get');
@@ -35,14 +36,15 @@ describe('Image Gallery', () => {
       baseElement = createView().baseElement;
     });
 
-    await waitFor(() =>
-      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    await waitFor(
+      () => expect(screen.queryByRole('progressbar')).not.toBeInTheDocument(),
+      { timeout: 5000 }
     );
 
     expect((await screen.findAllByText('logo1.png')).length).toEqual(8);
 
     expect(baseElement).toMatchSnapshot();
-  });
+  }, 10000);
 
   it('renders no results page correctly', async () => {
     server.use(
@@ -100,11 +102,9 @@ describe('Image Gallery', () => {
 
     expect((await screen.findAllByText('logo1.png')).length).toEqual(8);
 
-    await user.click(screen.getByText('Show Filters'));
+    await user.click(screen.getByRole('button', { name: 'Show/Hide filters' }));
 
-    expect(await screen.findByText('Hide Filters')).toBeInTheDocument();
-
-    const nameInput = screen.getByLabelText('Filter by File name');
+    const nameInput = await screen.findByLabelText('Filter by File name');
     await user.type(nameInput, 'stfc-logo-blue-text.png');
     await waitFor(() => {
       expect(screen.queryByText('logo1.png')).not.toBeInTheDocument();
@@ -117,29 +117,6 @@ describe('Image Gallery', () => {
     expect((await screen.findAllByText('logo1.png')).length).toEqual(8);
 
     expect(clearFiltersButton).toBeDisabled();
-  });
-
-  it('toggles filter visibility when clicking the toggle button', async () => {
-    createView();
-
-    await waitFor(() =>
-      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
-    );
-
-    expect((await screen.findAllByText('logo1.png')).length).toEqual(8);
-
-    expect(screen.queryByText('Hide Filters')).not.toBeInTheDocument();
-    expect(screen.getByText('Show Filters')).toBeInTheDocument();
-
-    await user.click(screen.getByText('Show Filters'));
-
-    expect(screen.getByText('Hide Filters')).toBeInTheDocument();
-    expect(screen.getByText('Images per page')).toBeInTheDocument();
-
-    await user.click(screen.getByText('Hide Filters'));
-
-    expect(screen.queryByText('Hide Filters')).not.toBeInTheDocument();
-    expect(screen.getByText('Show Filters')).toBeInTheDocument();
   });
 
   it('opens image information dialog and can close the dialog', async () => {
@@ -168,6 +145,59 @@ describe('Image Gallery', () => {
     });
   });
 
+  it('opens image download dialog and can close the dialog', async () => {
+    createView();
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(8);
+
+    const actionMenus = screen.getAllByLabelText(`Card Actions`);
+    await user.click(actionMenus[0]);
+
+    const downloadButton = await screen.findByText(`Download`);
+    await user.click(downloadButton);
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('opens image edit dialog and can close the dialog', async () => {
+    createView();
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(8);
+
+    const actionMenus = screen.getAllByLabelText(`Card Actions`);
+    await user.click(actionMenus[0]);
+
+    const editButton = await screen.findByText(`Edit`);
+    await user.click(editButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
   it('opens image delete dialog and can close the dialog', async () => {
     createView();
 
@@ -182,12 +212,13 @@ describe('Image Gallery', () => {
 
     const deleteButton = await screen.findByText(`Delete`);
     await user.click(deleteButton);
+
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
     });
 
-    const closeButton = screen.getByRole('button', { name: 'Cancel' });
-    await user.click(closeButton);
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
 
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
@@ -224,7 +255,7 @@ describe('Image Gallery', () => {
       `http://localhost:3000/images/stfc-logo-blue-text.png?text=1`
     );
 
-    await user.click(galleryLightBox.getByLabelText('Next'));
+    await user.click(galleryLightBox.getAllByLabelText('Next')[1]);
 
     expect(axiosGetSpy).toHaveBeenCalledWith('/images/2');
 
@@ -243,7 +274,7 @@ describe('Image Gallery', () => {
       `http://localhost:3000/logo192.png?text=2`
     );
 
-    await user.click(screen.getByLabelText('Close'));
+    await user.click(galleryLightBox.getAllByLabelText('Close')[1]);
 
     await waitFor(() => {
       expect(screen.queryByTestId('galleryLightBox')).not.toBeInTheDocument();
@@ -287,7 +318,7 @@ describe('Image Gallery', () => {
       ).toBeInTheDocument();
     });
 
-    await user.click(galleryLightBox.getByLabelText('Previous'));
+    await user.click(galleryLightBox.getAllByLabelText('Previous')[1]);
 
     await waitFor(() => {
       expect(screen.getByText('File name: logo1.png')).toBeInTheDocument();
@@ -304,7 +335,7 @@ describe('Image Gallery', () => {
       `http://localhost:3000/logo192.png?text=2`
     );
 
-    await user.click(screen.getByLabelText('Close'));
+    await user.click(galleryLightBox.getAllByLabelText('Close')[1]);
 
     await waitFor(() => {
       expect(screen.queryByTestId('galleryLightBox')).not.toBeInTheDocument();
@@ -324,18 +355,23 @@ describe('Image Gallery', () => {
 
     const galleryLightBox = within(screen.getByTestId('galleryLightBox'));
 
-    await waitFor(() => {
-      expect(
-        galleryLightBox.getByText('The image cannot be loaded')
-      ).toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        expect(
+          galleryLightBox.getByText('The image cannot be loaded')
+        ).toBeInTheDocument();
+      },
+      {
+        timeout: 10000,
+      }
+    );
 
-    await user.click(screen.getByLabelText('Close'));
+    await user.click(galleryLightBox.getAllByLabelText('Close')[1]);
 
     await waitFor(() => {
       expect(screen.queryByTestId('galleryLightBox')).not.toBeInTheDocument();
     });
-  });
+  }, 10000);
 
   it('opens information dialog in lightbox', async () => {
     createView();
@@ -383,7 +419,60 @@ describe('Image Gallery', () => {
       within(screen.getByRole('dialog')).getByRole('button', { name: 'Close' })
     );
 
-    await user.click(screen.getByLabelText('Close'));
+    await user.click(galleryLightBox.getAllByLabelText('Close')[1]);
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('galleryLightBox')).not.toBeInTheDocument();
+    });
+  });
+
+  it('opens edit dialog in lightbox', async () => {
+    createView();
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+    const thumbnail = await screen.findAllByAltText('test');
+    await user.click(thumbnail[0]);
+
+    expect(axiosGetSpy).toHaveBeenCalledWith('/images/1');
+    await waitFor(() => {
+      expect(
+        screen.getByText('File name: stfc-logo-blue-text.png')
+      ).toBeInTheDocument();
+    });
+    expect(screen.getByText('Title: stfc-logo-blue-text')).toBeInTheDocument();
+    expect(screen.getByText('test')).toBeInTheDocument();
+
+    const galleryLightBox = within(screen.getByTestId('galleryLightBox'));
+
+    const imageElement1 = await galleryLightBox.findByAltText(`test`);
+
+    expect(imageElement1).toBeInTheDocument();
+
+    expect(imageElement1).toHaveAttribute(
+      'src',
+      `http://localhost:3000/images/stfc-logo-blue-text.png?text=1`
+    );
+
+    await user.click(galleryLightBox.getByLabelText('Image Actions'));
+
+    const editButton = await screen.findByText(`Edit`);
+
+    await user.click(editButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    expect(
+      within(screen.getByRole('dialog')).getByText('Edit Image')
+    ).toBeInTheDocument();
+    await user.click(
+      within(screen.getByRole('dialog')).getByRole('button', { name: 'Cancel' })
+    );
+
+    await user.click(galleryLightBox.getAllByLabelText('Close')[1]);
 
     await waitFor(() => {
       expect(screen.queryByTestId('galleryLightBox')).not.toBeInTheDocument();
@@ -438,6 +527,165 @@ describe('Image Gallery', () => {
 
     await waitFor(() => {
       expect(screen.queryByTestId('galleryLightBox')).not.toBeInTheDocument();
+    });
+  });
+
+  it('opens download dialog in lightbox', async () => {
+    createView();
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+    const thumbnail = await screen.findAllByAltText('test');
+    await user.click(thumbnail[0]);
+
+    expect(axiosGetSpy).toHaveBeenCalledWith('/images/1');
+    await waitFor(() => {
+      expect(
+        screen.getByText('File name: stfc-logo-blue-text.png')
+      ).toBeInTheDocument();
+    });
+    expect(screen.getByText('Title: stfc-logo-blue-text')).toBeInTheDocument();
+    expect(screen.getByText('test')).toBeInTheDocument();
+
+    const galleryLightBox = within(screen.getByTestId('galleryLightBox'));
+
+    const imageElement1 = await galleryLightBox.findByAltText(`test`);
+
+    expect(imageElement1).toBeInTheDocument();
+
+    expect(imageElement1).toHaveAttribute(
+      'src',
+      `http://localhost:3000/images/stfc-logo-blue-text.png?text=1`
+    );
+
+    await user.click(galleryLightBox.getByLabelText('Image Actions'));
+
+    const downloadButton = await screen.findAllByText(`Download`);
+
+    await user.click(downloadButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    expect(
+      await within(screen.getByRole('dialog')).findByText('Download Image?')
+    ).toBeInTheDocument();
+    await user.click(
+      within(screen.getByRole('dialog')).getByRole('button', {
+        name: 'Cancel',
+        hidden: true,
+      })
+    );
+
+    await user.click(galleryLightBox.getAllByLabelText('Close')[1]);
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('galleryLightBox')).not.toBeInTheDocument();
+    });
+  });
+
+  it('renders correctly in dense view', async () => {
+    props.dense = true;
+    let baseElement;
+    await act(async () => {
+      baseElement = createView().baseElement;
+    });
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(9);
+
+    expect(baseElement).toMatchSnapshot();
+  });
+
+  it('does not store filters in url when dense', async () => {
+    props.dense = true;
+
+    const { router } = createView();
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(9);
+
+    const initialURL = router.state.location.search;
+    await user.click(screen.getByRole('button', { name: 'Show/Hide filters' }));
+
+    expect(
+      await screen.findByLabelText('Filter by File name')
+    ).toBeInTheDocument();
+
+    const nameInput = screen.getByLabelText('Filter by File name');
+    await user.type(nameInput, 'stfc-logo-blue-text.png');
+    await waitFor(() => {
+      expect(screen.queryByText('logo1.png')).not.toBeInTheDocument();
+    });
+
+    expect(router.state.location.search).toBe(initialURL);
+  });
+
+  it('can open and close upload dialog when dense', async () => {
+    props.dense = true;
+    createView();
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(9);
+
+    const uploadImageButton = screen.getByRole('button', {
+      name: 'Upload Images',
+    });
+
+    await user.click(uploadImageButton);
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const closeButton = screen.getByRole('button', { name: 'Close Modal' });
+    await user.click(closeButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('displays no images message and can open and close upload dialog when dense', async () => {
+    props.dense = true;
+    server.use(
+      http.get('/images', async () => {
+        return HttpResponse.json([], { status: 200 });
+      })
+    );
+    let baseElement;
+    await act(async () => {
+      baseElement = createView().baseElement;
+    });
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+    expect(screen.queryByText('logo1.png')).not.toBeInTheDocument();
+    expect(baseElement).toMatchSnapshot();
+
+    const uploadImageButton = screen.getByRole('button', {
+      name: 'Upload Images',
+    });
+
+    await user.click(uploadImageButton);
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const closeButton = screen.getByRole('button', { name: 'Close Modal' });
+    await user.click(closeButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
   });
 });

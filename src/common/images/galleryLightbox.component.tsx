@@ -1,5 +1,12 @@
 import { ArrowBack, ArrowForward, Close } from '@mui/icons-material';
-import { Backdrop, Box, IconButton, Stack, Typography } from '@mui/material';
+import {
+  Backdrop,
+  Box,
+  IconButton,
+  Stack,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 import {
   MRT_Cell,
   MRT_Row,
@@ -16,6 +23,7 @@ interface GalleryLightBoxProps {
   open: boolean;
   onClose: () => void;
   currentImageId: string;
+  onChangeCurrentLightBoxImage: (imageId: string) => void;
   imageCardData: MRT_Cell<APIImage, unknown>[];
   table: MRT_TableInstance<APIImage>;
 }
@@ -24,11 +32,12 @@ const GalleryLightBox = (props: GalleryLightBoxProps) => {
   const {
     open,
     onClose,
-    currentImageId: initialImageId,
     imageCardData,
     table,
+    currentImageId,
+    onChangeCurrentLightBoxImage,
   } = props;
-  const [currentImageId, setCurrentImageId] = React.useState(initialImageId);
+
   const [hasError, setHasError] = React.useState<string | undefined>(undefined);
 
   const images = imageCardData.map((val) => val.row.original);
@@ -43,15 +52,15 @@ const GalleryLightBox = (props: GalleryLightBoxProps) => {
 
   const handleNext = React.useCallback(() => {
     const nextIndex = (currentIndex + 1) % images.length;
-    setCurrentImageId(images[nextIndex].id);
+    onChangeCurrentLightBoxImage(images[nextIndex].id);
     if (hasError) setHasError(undefined);
-  }, [currentIndex, hasError, images]);
+  }, [currentIndex, hasError, images, onChangeCurrentLightBoxImage]);
 
   const handlePrevious = React.useCallback(() => {
     const prevIndex = (currentIndex - 1 + images.length) % images.length;
-    setCurrentImageId(images[prevIndex].id);
+    onChangeCurrentLightBoxImage(images[prevIndex].id);
     if (hasError) setHasError(undefined);
-  }, [currentIndex, hasError, images]);
+  }, [currentIndex, hasError, images, onChangeCurrentLightBoxImage]);
 
   return (
     <Backdrop
@@ -88,25 +97,31 @@ const GalleryLightBox = (props: GalleryLightBoxProps) => {
             {currentIndex + 1} / {images.length}
           </Typography>
           <Box>
-            <MRT_ToggleRowActionMenuButton
-              cell={currentImageCardData as MRT_Cell<APIImage>}
-              row={currentImageCardData?.row as MRT_Row<APIImage>}
-              table={table}
-              sx={{
-                ariaLabel: `actions ${currentImageCardData?.row.original.file_name} photo button`,
-                margin: 0.5,
-                color: 'inherit',
-              }}
-            />
-            <IconButton
-              onClick={onClose}
-              aria-label="Close"
-              sx={{
-                color: 'inherit',
-              }}
-            >
-              <Close />
-            </IconButton>
+            {currentImageCardData && (
+              <MRT_ToggleRowActionMenuButton
+                cell={currentImageCardData as MRT_Cell<APIImage>}
+                row={currentImageCardData?.row as MRT_Row<APIImage>}
+                table={table}
+                sx={{
+                  ariaLabel: `actions ${currentImageCardData?.row.original.file_name} photo button`,
+                  margin: 0.5,
+                  color: 'inherit',
+                }}
+              />
+            )}
+            <Tooltip title="Close">
+              <span>
+                <IconButton
+                  onClick={onClose}
+                  aria-label="Close"
+                  sx={{
+                    color: 'inherit',
+                  }}
+                >
+                  <Close />
+                </IconButton>
+              </span>
+            </Tooltip>
           </Box>
         </Box>
 
@@ -143,18 +158,22 @@ const GalleryLightBox = (props: GalleryLightBoxProps) => {
             maxHeight: '70%',
           }}
         >
-          <IconButton
-            onClick={(e) => {
-              e.stopPropagation();
-              handlePrevious();
-            }}
-            aria-label="Previous"
-            sx={{
-              color: 'inherit',
-            }}
-          >
-            <ArrowBack />
-          </IconButton>
+          <Tooltip title="Previous">
+            <span>
+              <IconButton
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handlePrevious();
+                }}
+                aria-label="Previous"
+                sx={{
+                  color: 'inherit',
+                }}
+              >
+                <ArrowBack />
+              </IconButton>
+            </span>
+          </Tooltip>
           <Box
             sx={{
               display: 'flex',
@@ -165,25 +184,23 @@ const GalleryLightBox = (props: GalleryLightBoxProps) => {
               width: '100%',
             }}
           >
-            {isLoading && (
-              <DelayedLoader
-                isLoading={isLoading}
-                timeMS={1000}
-                sx={{ color: 'inherit', fontSize: 'large' }}
-              />
-            )}
+            <DelayedLoader
+              isLoading={isLoading}
+              timeMS={1000}
+              sx={{ color: 'inherit', fontSize: 'large' }}
+            />
             {(hasError === data?.id || !data) && !isLoading && (
               <Typography variant="h6" color="inherit">
                 The image cannot be loaded
               </Typography>
             )}
-            {!isLoading && data?.url && !(hasError === data?.id) && (
+            {!isLoading && data?.view_url && !(hasError === data?.id) && (
               <img
                 // The key forces React to remount the <img> tag when hasError changes.
                 // This is necessary because, without remounting, the <img> tag doesn't
                 // refetch the image when navigating to the next image after an error.
                 key={hasError}
-                src={data.url}
+                src={data.view_url}
                 alt={data.description ?? 'No photo description available.'}
                 style={{
                   objectFit: 'contain',
@@ -194,19 +211,22 @@ const GalleryLightBox = (props: GalleryLightBoxProps) => {
               />
             )}
           </Box>
-
-          <IconButton
-            onClick={(e) => {
-              e.stopPropagation();
-              handleNext();
-            }}
-            aria-label="Next"
-            sx={{
-              color: 'inherit',
-            }}
-          >
-            <ArrowForward />
-          </IconButton>
+          <Tooltip title="Next">
+            <span>
+              <IconButton
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleNext();
+                }}
+                aria-label="Next"
+                sx={{
+                  color: 'inherit',
+                }}
+              >
+                <ArrowForward />
+              </IconButton>
+            </span>
+          </Tooltip>
         </Stack>
 
         <Box

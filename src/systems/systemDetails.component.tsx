@@ -11,7 +11,7 @@ import React from 'react';
 import { System } from '../api/api.types';
 import { getSystemImportanceColour, useGetSystem } from '../api/systems';
 import ActionMenu from '../common/actionMenu.component';
-import PlaceholderImage from '../common/images/placeholderImage.component';
+import PrimaryImage from '../common/images/primaryImage.component';
 import TabView from '../common/tab/tabView.component';
 import { formatDateTimeStrings, OverflowTip } from '../utils';
 import SystemDialog from './systemDialog.component';
@@ -101,97 +101,101 @@ function SystemDetails(props: SystemDetailsProps) {
           <Typography variant="h3">Please select a system</Typography>
         </Box>
       ) : (
-        <Grid container item direction="column" wrap="nowrap" spacing={1}>
-          <Grid
-            container
-            item
-            direction="row"
-            justifyContent="space-evenly"
-            sx={{ margin: 0, mt: 1 }}
-          >
-            <Grid item container spacing={2}>
-              <Grid item xs={12} sm={4}>
-                <PlaceholderImage />
-              </Grid>
-              <Grid item container spacing={1} xs={12} sm={8}>
-                <Grid item xs={12} sm={6}>
-                  <Typography color="text.primary">Location</Typography>
-                  <Typography
-                    variant="body1"
-                    color="text.secondary"
-                    sx={{ wordWrap: 'break-word' }}
-                  >
-                    {system.location ?? 'None'}
-                  </Typography>
+        <Grid item>
+          <Grid container direction="column" wrap="nowrap" spacing={1}>
+            <Grid
+              container
+              item
+              direction="row"
+              justifyContent="space-evenly"
+              sx={{ margin: 0, mt: 1 }}
+            >
+              <Grid item container spacing={2}>
+                <Grid item xs="auto">
+                  <PrimaryImage entityId={system.id} />
                 </Grid>
-                <Grid item xs={12} sm={6} sx={{ display: 'inline-flex' }}>
-                  <Typography color="text.primary">Importance</Typography>
-                  <Chip
-                    label={system.importance}
-                    sx={() => {
-                      const colorName = getSystemImportanceColour(
-                        system.importance
-                      );
-                      return {
-                        margin: 0,
-                        marginLeft: 1,
-                        bgcolor: `${colorName}.main`,
-                        color: `${colorName}.contrastText`,
-                      };
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Typography color="text.primary">Owner</Typography>
-                  <Typography
-                    variant="body1"
-                    color="text.secondary"
-                    sx={{ wordWrap: 'break-word' }}
-                  >
-                    {system.owner ?? 'None'}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Typography color="text.primary">Last modified</Typography>
-                  <Typography variant="body1" color="text.secondary">
-                    {formatDateTimeStrings(system.modified_time, true)}
-                  </Typography>
-                </Grid>
+                <Grid item container spacing={1} xs>
+                  <Grid item xs={12} sm={6}>
+                    <Typography color="text.primary">Location</Typography>
+                    <Typography
+                      variant="body1"
+                      color="text.secondary"
+                      sx={{ wordWrap: 'break-word' }}
+                    >
+                      {system.location ?? 'None'}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6} sx={{ display: 'inline-flex' }}>
+                    <Typography color="text.primary">Importance</Typography>
+                    <Chip
+                      label={system.importance}
+                      sx={() => {
+                        const colorName = getSystemImportanceColour(
+                          system.importance
+                        );
+                        return {
+                          margin: 0,
+                          marginLeft: 1,
+                          bgcolor: `${colorName}.main`,
+                          color: `${colorName}.contrastText`,
+                        };
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography color="text.primary">Owner</Typography>
+                    <Typography
+                      variant="body1"
+                      color="text.secondary"
+                      sx={{ wordWrap: 'break-word' }}
+                    >
+                      {system.owner ?? 'None'}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography color="text.primary">Last modified</Typography>
+                    <Typography variant="body1" color="text.secondary">
+                      {formatDateTimeStrings(system.modified_time, true)}
+                    </Typography>
+                  </Grid>
 
-                <Grid item xs={12} sm={6}>
-                  <Typography color="text.primary">Created</Typography>
-                  <Typography variant="body1" color="text.secondary">
-                    {formatDateTimeStrings(system.created_time, true)}
-                  </Typography>
+                  <Grid item xs={12} sm={6}>
+                    <Typography color="text.primary">Created</Typography>
+                    <Typography variant="body1" color="text.secondary">
+                      {formatDateTimeStrings(system.created_time, true)}
+                    </Typography>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
-          </Grid>
-          <Grid item mt={2}>
-            <Typography color="text.primary">Description</Typography>
-            <Typography
-              variant="body1"
-              color="text.secondary"
-              sx={{ whiteSpace: 'pre-line', wordWrap: 'break-word' }}
-            >
-              {system.description ?? 'None'}
-            </Typography>
-          </Grid>
-          <Grid item container sx={{ marginTop: 2, display: 'inline-block' }}>
-            <TabView
-              ariaLabelPrefix="systems page"
-              defaultTab="Items"
-              galleryEntityId={system.id}
-              attachmentsEntityId={system.id}
-              tabData={[
-                {
-                  value: 'Items',
-                  icon: <InventoryOutlinedIcon />,
-                  component: <SystemItemsTable system={system} type="normal" />,
-                  order: 0,
-                },
-              ]}
-            />
+            <Grid item>
+              <Typography color="text.primary">Description</Typography>
+              <Typography
+                variant="body1"
+                color="text.secondary"
+                sx={{ whiteSpace: 'pre-line', wordWrap: 'break-word' }}
+              >
+                {system.description ?? 'None'}
+              </Typography>
+            </Grid>
+            <Grid item container sx={{ marginTop: 2, display: 'inline-block' }}>
+              <TabView
+                ariaLabelPrefix="systems page"
+                defaultTab="Items"
+                galleryEntityId={system.id}
+                attachmentsEntityId={system.id}
+                tabData={[
+                  {
+                    value: 'Items',
+                    icon: <InventoryOutlinedIcon />,
+                    component: (
+                      <SystemItemsTable system={system} type="normal" />
+                    ),
+                    order: 0,
+                  },
+                ]}
+              />
+            </Grid>
           </Grid>
         </Grid>
       )}

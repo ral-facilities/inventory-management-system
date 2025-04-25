@@ -1,17 +1,25 @@
 import { useTheme } from '@mui/material';
-import AwsS3 from '@uppy/aws-s3';
-import Uppy, { Body, Meta, UppyFile } from '@uppy/core';
+import { useQueryClient } from '@tanstack/react-query';
+import AwsS3, { type AwsBody } from '@uppy/aws-s3';
+import Uppy, { UppyFile } from '@uppy/core';
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 import ProgressBar from '@uppy/progress-bar';
 import { DashboardModal } from '@uppy/react';
+import statusBarStates from '@uppy/status-bar/lib/StatusBarStates';
+import { AxiosError } from 'axios';
 import React from 'react';
-import { usePostAttachmentMetadata } from '../../api/attachments';
-import { getNonEmptyTrimmedString } from '../../utils';
+import { APIError } from '../../api/api.types';
+import {
+  useDeleteAttachment,
+  usePostAttachmentMetadata,
+} from '../../api/attachments';
+import type { UppyUploadMetadata } from '../../app.types';
+import { InventoryManagementSystemSettingsContext } from '../../configProvider.component';
+import handleIMS_APIError from '../../handleIMS_APIError';
+import { getNonEmptyTrimmedString, parseErrorResponse } from '../../utils';
+import { getUploadingState, useMetaFields } from '../uppy.utils';
 
-// Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000, so here the former is expected despite them really being GiB, MiB and KiB.
-const MAX_FILE_SIZE_MB = 100;
-const MAX_FILE_SIZE_B = MAX_FILE_SIZE_MB * 1024 * 1024;
 export interface UploadAttachmentsDialogProps {
   open: boolean;
   onClose: () => void;
@@ -20,29 +28,48 @@ export interface UploadAttachmentsDialogProps {
 
 const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
   const { open, onClose, entityId } = props;
+
   const theme = useTheme();
 
+  const queryClient = useQueryClient();
+
+  const { attachmentAllowedFileExtensions, maxAttachmentSizeBytes } =
+    React.useContext(InventoryManagementSystemSettingsContext);
+
+  // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000,
+  // so here the former is expected despite them really being GiB, MiB and KiB.
+  const maxAttachmentSizeMB = maxAttachmentSizeBytes / 1024 ** 2;
+
   const { mutateAsync: postAttachmentMetadata } = usePostAttachmentMetadata();
+
+  const { mutateAsync: deleteAttachment } = useDeleteAttachment();
+
   const [fileMetadataMap, setFileMetadataMap] = React.useState<
     Record<string, string>
   >({});
 
-  const [uppy] = React.useState<Uppy<Meta, Body>>(
-    new Uppy<Meta, Body>({
+  const [uppy] = React.useState<Uppy<UppyUploadMetadata, AwsBody>>(
+    new Uppy<UppyUploadMetadata, AwsBody>({
       autoProceed: false,
       restrictions: {
-        maxFileSize: MAX_FILE_SIZE_B,
+        maxFileSize: maxAttachmentSizeBytes,
         requiredMetaFields: ['name'],
+        allowedFileTypes: attachmentAllowedFileExtensions,
       },
     })
-      .use(AwsS3, {
+      .use(AwsS3<UppyUploadMetadata, AwsBody>, {
         shouldUseMultipart: false,
         getUploadParameters: async (file) => {
           const response = await postAttachmentMetadata({
             entity_id: entityId,
-            file_name: (file.meta.name as string) || '',
+            file_name: file.meta.name,
             title: getNonEmptyTrimmedString(file.meta.title),
             description: getNonEmptyTrimmedString(file.meta.description),
+          }).catch((error) => {
+            const response = error.response?.data as APIError;
+            const errorMessage = response.detail.toLocaleLowerCase();
+            const returnMessage = parseErrorResponse(errorMessage);
+            throw new Error(returnMessage);
           });
 
           setFileMetadataMap((prev) => ({
@@ -57,38 +84,97 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
           };
         },
       })
-      .use(ProgressBar)
+      .use(ProgressBar<UppyUploadMetadata, AwsBody>)
   );
+
+  uppy.getPlugin('DragDrop')?.setOptions({
+    locale: {
+      strings: {
+        dropPasteFiles: `Drop attachments here or %{browseFiles}`,
+      },
+    },
+  });
+  // This is necessary to prevent multiple calls of the delete endpoint.
+  const deletedFileIds = React.useRef(new Set<string>());
 
   const updateFileMetadata = React.useCallback(
-    (file?: UppyFile<Meta, Body>, deleteMetadata?: boolean) => {
-      const id = fileMetadataMap[file?.id ?? ''];
+    async (
+      file?: UppyFile<UppyUploadMetadata, AwsBody>,
+      deleteMetadata: boolean = false
+    ) => {
+      const fileId = file?.id;
+      if (!fileId) return;
+
+      const id = fileMetadataMap[fileId];
+
       if (id) {
-        if (deleteMetadata) {
-          // TODO: Implement logic to delete metadata using id
-          // If metadata exists for the given id, remove it from the api
-          // If not, do nothing and exit the function
+        if (
+          deleteMetadata &&
+          !deletedFileIds.current.has(fileId) &&
+          file?.progress.uploadComplete === false
+        ) {
+          deletedFileIds.current.add(fileId);
+          await deleteAttachment(id).catch((error: AxiosError) => {
+            handleIMS_APIError(error, false);
+          });
         }
 
-        const newMap = Object.fromEntries(
-          Object.entries(fileMetadataMap).filter(([key]) => key !== file?.id)
-        );
-        setFileMetadataMap(newMap);
+        setFileMetadataMap((prev) => {
+          const newMap = Object.fromEntries(
+            Object.entries(prev).filter(([key]) => key !== fileId)
+          );
+
+          // Reset deletedFileIds if newMap is empty
+          if (Object.keys(newMap).length === 0) {
+            deletedFileIds.current.clear();
+          }
+
+          return newMap;
+        });
       }
     },
-    [fileMetadataMap]
+    [deleteAttachment, deletedFileIds, fileMetadataMap]
   );
 
+  const { files = {}, error, recoveredState } = uppy.getState();
+  const { isAllComplete } = uppy.getObjectOfFilesPerState();
+
   const handleClose = React.useCallback(() => {
+    // prevent users from closing the dialog while the download is in progress
+    const uploadState = getUploadingState(
+      error,
+      isAllComplete,
+      recoveredState,
+      files
+    );
+    if (
+      uploadState === statusBarStates.STATE_POSTPROCESSING ||
+      uploadState === statusBarStates.STATE_PREPROCESSING ||
+      uploadState === statusBarStates.STATE_UPLOADING
+    ) {
+      return;
+    }
     onClose();
     setFileMetadataMap({});
-    uppy.cancelAll();
-  }, [onClose, uppy]);
+    uppy.clear();
+    queryClient.invalidateQueries({ queryKey: ['Attachments', entityId] });
+  }, [
+    entityId,
+    error,
+    files,
+    isAllComplete,
+    onClose,
+    queryClient,
+    recoveredState,
+    uppy,
+  ]);
 
   // Track the start and completion of uploads
-  uppy.on('upload-error', (file) => updateFileMetadata(file, true));
-  uppy.on('file-removed', (file) => updateFileMetadata(file, true));
-  uppy.on('upload-success', (file) => updateFileMetadata(file));
+  uppy.on('upload-error', async (file) => await updateFileMetadata(file, true));
+  uppy.on('file-removed', async (file) => await updateFileMetadata(file, true));
+  uppy.on('upload-success', async (file) => await updateFileMetadata(file));
+
+  const metaFields = useMetaFields<UppyUploadMetadata, AwsBody>();
 
   return (
     <DashboardModal
@@ -97,28 +183,24 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
       closeModalOnClickOutside={false}
       animateOpenClose={false}
       uppy={uppy}
-      note={`Files cannot be larger than ${MAX_FILE_SIZE_MB}MB. Only supported attachments are allowed.`}
+      locale={{
+        strings: {
+          dropPasteFiles: 'Drop attachments here or %{browseFiles}',
+        },
+        // Copied from Uppy locales template:
+        // https://github.com/transloadit/uppy/blob/bb82326d0dd8f999bcb99deeeaa924250c41ffae/packages/%40uppy/locales/template.ts#L6
+        pluralize: (n) => {
+          if (n === 1) {
+            return 0;
+          }
+          return 1;
+        },
+      }}
+      note={`Files cannot be larger than ${maxAttachmentSizeMB}MB. Supported file types: ${attachmentAllowedFileExtensions.join(', ')}.`}
       proudlyDisplayPoweredByUppy={false}
       theme={theme.palette.mode}
       doneButtonHandler={handleClose}
-      metaFields={[
-        {
-          id: 'name',
-          name: 'File name',
-          placeholder: 'Enter file name',
-        },
-        {
-          id: 'title',
-          name: 'Title',
-          placeholder: 'Enter file title',
-        },
-
-        {
-          id: 'description',
-          name: 'Description',
-          placeholder: 'Enter file description',
-        },
-      ]}
+      metaFields={metaFields}
     />
   );
 };

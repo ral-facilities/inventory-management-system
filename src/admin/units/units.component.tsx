@@ -21,11 +21,18 @@ import { Unit } from '../../api/api.types.tsx';
 import { useGetUnits } from '../../api/units.tsx';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import {
+  COLUMN_FILTER_FUNCTIONS,
+  COLUMN_FILTER_MODE_OPTIONS,
+  COLUMN_FILTER_VARIANTS,
   TableBodyCellOverFlowTip,
+  TableHeaderOverflowTip,
   TableCellOverFlowTipProps,
   displayTableRowCountText,
   formatDateTimeStrings,
+  getInitialColumnFilterFnState,
   getPageHeightCalc,
+  mrtTheme,
+  customFilterFunctions,
 } from '../../utils';
 import DeleteUnitDialog from './deleteUnitsDialog.component.tsx';
 import UnitsDialog from './unitsDialog.component.tsx';
@@ -46,28 +53,35 @@ function Units() {
     return [
       {
         header: 'Value',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.value,
         id: 'value',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
         Cell: ({ row }) => row.original.value,
       },
       {
         header: 'Last modified',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.modified_time),
         id: 'modified_time',
-        filterVariant: 'datetime-range',
-        filterFn: 'betweenInclusive',
+        filterVariant: COLUMN_FILTER_VARIANTS.datetime,
+        filterFn: COLUMN_FILTER_FUNCTIONS.datetime,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.datetime,
         size: 350,
         enableGrouping: false,
         Cell: ({ row }) =>
-          row.original.modified_time &&
           formatDateTimeStrings(row.original.modified_time, true),
       },
       {
         header: 'Created',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.created_time),
         id: 'created_time',
-        filterVariant: 'datetime-range',
-        filterFn: 'betweenInclusive',
+        filterVariant: COLUMN_FILTER_VARIANTS.datetime,
+        filterFn: COLUMN_FILTER_FUNCTIONS.datetime,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.datetime,
         size: 350,
         enableGrouping: false,
         enableHiding: true,
@@ -77,11 +91,16 @@ function Units() {
     ];
   }, []);
 
-  const noResultsTxt =
+  const noResultsText =
     'No results found: Try adding a Unit by using the Add Unit button';
+
+  const initialColumnFilterFnState = React.useMemo(() => {
+    return getInitialColumnFilterFnState(columns);
+  }, [columns]);
 
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
+      columnFilterFns: initialColumnFilterFnState,
       pagination: { pageSize: 15, pageIndex: 0 },
     },
     storeInUrl: true,
@@ -92,6 +111,7 @@ function Units() {
     data: unitData ?? [],
     // Features
     enableColumnOrdering: true,
+    enableColumnFilterModes: true,
     enableFacetedValues: true,
     enableRowActions: true,
     enableStickyHeader: true,
@@ -99,6 +119,7 @@ function Units() {
     enableDensityToggle: false,
     enableFullScreenToggle: false,
     enablePagination: true,
+    filterFns: customFilterFunctions,
     // Other settings
     manualFiltering: false,
     paginationDisplayMode: 'pages',
@@ -107,7 +128,7 @@ function Units() {
     // Localisation
     localization: {
       ...MRT_Localization_EN,
-      noRecordsToDisplay: noResultsTxt,
+      noRecordsToDisplay: noResultsText,
     },
     // State
     initialState: {
@@ -118,6 +139,9 @@ function Units() {
       ...preservedState,
       showProgressBars: unitDataLoading, //or showSkeletons
     },
+    //MRT
+    mrtTheme,
+    //MUI
     muiTableBodyRowProps: ({ row }) => {
       return { component: TableRow, 'aria-label': `${row.original.value} row` };
     },
