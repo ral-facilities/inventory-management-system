@@ -187,6 +187,8 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
         strings: {
           dropPasteFiles: 'Drop attachments here or %{browseFiles}',
         },
+        // Copied from Uppy locales template:
+        // https://github.com/transloadit/uppy/blob/bb82326d0dd8f999bcb99deeeaa924250c41ffae/packages/%40uppy/locales/template.ts#L6
         pluralize: (n) => {
           if (n === 1) {
             return 0;
