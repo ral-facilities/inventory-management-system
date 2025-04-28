@@ -72,7 +72,7 @@ describe('items', () => {
           'cypress/fixtures/documents/test2.txt',
         ],
       },
-      false
+      true
     );
     editAttachment(
       {

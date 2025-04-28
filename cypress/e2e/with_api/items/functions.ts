@@ -337,9 +337,9 @@ export const editAttachment = (
   ignoreChecks: boolean
 ) => {
   cy.findByText('Attachments').click();
-  cy.findByText(`${values.originalFileName}`).scrollIntoView();
+  cy.findAllByText(`${values.originalFileName}`).last().scrollIntoView();
 
-  cy.findByText(`${values.originalFileName}`).should('exist');
+  cy.findAllByText(`${values.originalFileName}`).last().should('exist');
 
   cy.findByRole('row', { name: `${values.originalFileName} row` }).within(
     () => {
@@ -401,9 +401,18 @@ export const deleteAttachment = (fileNames: string[]) => {
     cy.findByLabelText(`${fileName} row`).within(() => {
       cy.findByLabelText('Row Actions').click();
     });
+
+    cy.intercept('DELETE', '**/attachments/**').as('deleteSnoop');
+
     cy.findByLabelText(`Delete attachment ${fileName}`).click();
     cy.findByRole('dialog').should('be.visible');
 
     cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.wait('@deleteSnoop').then((request) => {
+      cy.task('log', '[CYPRESS] Request body: ' + JSON.stringify(request));
+    });
+
+    cy.findByRole('dialog').should('not.be.visible', { timeout: 4000 });
   });
 };

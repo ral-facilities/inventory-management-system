@@ -169,7 +169,7 @@ jobs:
           --env API__ALLOWED_CORS_HEADERS='["*"]' \
           --env API__ALLOWED_CORS_ORIGINS='["*"]' \
           --env API__ALLOWED_CORS_METHODS='["*"]' \
-          --env OBJECT_STORAGE__ENDPOINT_URL="http://object-storage-minio:9000" \
+          --env OBJECT_STORAGE__ENDPOINT_URL="http://localhost:9000" \
           --env OBJECT_STORAGE__ACCESS_KEY="root" \
           --env OBJECT_STORAGE__SECRET_ACCESS_KEY="example_password" \
           --env OBJECT_STORAGE__BUCKET_NAME="object-storage" \
