@@ -285,6 +285,10 @@ export const addFile = (
     name: uploadButton,
   }).click();
 
+  cy.intercept('OPTIONS', 'http://localhost:9000/object-storage').as(
+    'testSnoop'
+  );
+
   cy.findAllByText('Files cannot be larger than', { exact: false }).should(
     'exist'
   );
@@ -300,11 +304,26 @@ export const addFile = (
     `Upload ${values.files.length} file${values.files.length > 1 ? 's' : ''}`
   ).click({ force: true });
 
-  cy.findAllByRole('button', {
-    name: 'Close Modal',
-  })
+  cy.findByText('Uploading').should('not.exist');
+
+  /* cy.wait('@testSnoop').its('response.statusCode').should('eq', 204);
+
+  cy.wait('@testSnoop').then((interception) => {
+    cy.task(
+      'log',
+      '[CYPRESS] Response body: ' + JSON.stringify(interception.response)
+    );
+  }); */
+
+  cy.findAllByRole('dialog')
     .first()
-    .click();
+    .within(() => {
+      cy.findAllByRole('button', {
+        name: 'Close Modal',
+      })
+        .last()
+        .click();
+    });
 
   if (!ignoreChecks) {
     cy.findByText(tabValue).click();
@@ -329,15 +348,20 @@ export const editFile = (
 ) => {
   const tabValue = type === 'image' ? 'Gallery' : 'Attachments';
   cy.findByText(tabValue).click();
-  cy.findByText(`${values.originalFileName}`).scrollIntoView();
+  cy.findAllByText(`${values.originalFileName}`).last().scrollIntoView();
+
+  cy.findAllByText(`${values.originalFileName}`).last().should('exist');
 
   if (type === 'image') {
     cy.findAllByLabelText('Card Actions').first().click();
     cy.findAllByText('Edit').last().click();
   } else {
-    cy.findAllByLabelText('Row Actions').first().click();
-
-    cy.findByLabelText(`Edit ${values.originalFileName} ${type}`).click();
+    cy.findByRole('row', { name: `${values.originalFileName} row` }).within(
+      () => {
+        cy.findByLabelText('Row Actions').click();
+      }
+    );
+    cy.findByLabelText(`Edit ${values.originalFileName} attachment`).click();
   }
 
   cy.findByRole('dialog')
@@ -413,8 +437,11 @@ export const deleteFile = (
       });
       cy.findByLabelText(`Delete attachment ${fileName}`).click();
     }
+
     cy.findByRole('dialog').should('be.visible');
 
     cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.findByRole('dialog').should('not.be.visible', { timeout: 4000 });
   });
 };

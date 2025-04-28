@@ -1,6 +1,12 @@
 name: CI Build
 
 on:
+  workflow_dispatch:
+    inputs:
+      push-docker-image-to-harbor:
+        description: 'Push Docker Image to Harbor'
+        type: boolean
+        default: false
   pull_request:
   push:
     branches:
@@ -150,18 +156,21 @@ jobs:
         working-directory: ../object-storage-api
         run: |
           docker compose up minio-create-buckets
+          docker network ls
+
 
       - name: Start object-storage-api
         run: |
-          docker run -d --network=host \
+          docker run -d -p 8002:8000 \
           --name object_storage_api_container \
+          --network object-storage-api_default \
           --env AUTHENTICATION__ENABLED=false \
           --env API__TITLE="Object Storage Service API" \
           --env API__DESCRIPTION="This is the API for the Object Storage Service" \
           --env DATABASE__PROTOCOL="mongodb" \
           --env DATABASE__USERNAME="root" \
           --env DATABASE__PASSWORD="example" \
-          --env DATABASE__HOST_AND_OPTIONS="localhost:27018/?authMechanism=SCRAM-SHA-256&authSource=admin" \
+          --env DATABASE__HOST_AND_OPTIONS="object-storage-api-mongodb:27017" \
           --env DATABASE__NAME="object-storage" \
           --env API__ALLOWED_CORS_HEADERS='["*"]' \
           --env API__ALLOWED_CORS_ORIGINS='["*"]' \
@@ -173,7 +182,14 @@ jobs:
           --env OBJECT_STORAGE__PRESIGNED_URL_EXPIRY_SECONDS=1800 \
           --env ATTACHMENT__MAX_SIZE_BYTES=104857600 \
           --env IMAGE__THUMBNAIL_MAX_SIZE_PIXELS=300 \
+          --env ATTACHMENT__ALLOWED_FILE_EXTENSIONS='[".csv", ".doc", ".docx", ".ods", ".odt", ".rtf", ".pdf", ".txt", ".xls", ".xlsx"]' \
+          --env ATTACHMENT__UPLOAD_LIMIT=50 \
+          --env IMAGE__ALLOWED_FILE_EXTENSIONS='[".bmp", ".jpe", ".jpeg", ".jpg", ".png", ".tif", ".tiff", ".webp"]' \
+          --env IMAGE__UPLOAD_LIMIT=100 \
+          --add-host "localhost:host-gateway" \
+          -v /home/runner/work/inventory-management-system/object-storage-api/object_storage_api/logging.example.ini:/app/object_storage_api/logging.ini \
           harbor.stfc.ac.uk/scd-object-storage-api/object-storage-api:develop
+          
 
       - name: Checkout repo
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -191,13 +207,25 @@ jobs:
       - name: Run e2e tests
         run: yarn e2e:api
 
-      - name: Output docker logs (mongodb)
+      - name: Output docker logs (ims mongodb)
         if: failure()
         run: docker logs ims_api_mongodb_container
 
-      - name: Output docker logs (api)
+      - name: Output docker logs (ims api)
         if: failure()
         run: docker logs inventory_management_system_api_container
+      
+      - name: Output docker logs (object-storage mongodb)
+        if: failure()
+        run: docker logs object-storage-api-mongodb
+
+      - name: Output docker logs (object-storage minio)
+        if: failure()
+        run: docker logs object-storage-minio
+
+      - name: Output docker logs (object-storage api)
+        if: failure()
+        run: docker logs object_storage_api_container
 
       - name: Upload Cypress screenshots
         if: failure()
@@ -236,6 +264,8 @@ jobs:
     needs: [lint-and-unit-test, e2e-tests, e2e-tests-api]
     name: Docker
     runs-on: ubuntu-latest
+    env:
+      PUSH_DOCKER_IMAGE_TO_HARBOR: ${{ inputs.push-docker-image-to-harbor != null && inputs.push-docker-image-to-harbor || 'false' }}
     steps:
       - name: Check out repo
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -253,11 +283,11 @@ jobs:
         with:
           images: ${{ secrets.HARBOR_URL }}/ims
 
-      - name: Build and push Docker image to Harbor
+      - name: ${{ fromJSON(env.PUSH_DOCKER_IMAGE_TO_HARBOR) && 'Build and push Docker image to Harbor' || 'Build Docker image' }}
         uses: docker/build-push-action@b32b51a8eda65d6793cd0494a773d4f6bcef32dc # v6.11.0
         with:
           context: .
           file: ./Dockerfile.prod
-          push: true
+          push: ${{ fromJSON(env.PUSH_DOCKER_IMAGE_TO_HARBOR) }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
