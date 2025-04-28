@@ -442,6 +442,6 @@ export const deleteFile = (
 
     cy.findByRole('button', { name: 'Continue' }).click();
 
-    cy.findByRole('dialog').should('not.be.visible', { timeout: 4000 });
+    cy.findByRole('dialog').should('not.exist');
   });
 };
