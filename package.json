@@ -107,7 +107,7 @@
     "prettier": "3.5.3",
     "serve": "14.2.4",
     "serve-static": "1.16.2",
-    "start-server-and-test": "2.0.9",
+    "start-server-and-test": "2.0.11",
     "typescript-eslint": "8.31.0",
     "vitest": "2.1.9"
   },
