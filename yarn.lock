@@ -2394,6 +2394,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@uppy/locales@npm:^4.5.2":
+  version: 4.5.2
+  resolution: "@uppy/locales@npm:4.5.2"
+  dependencies:
+    "@uppy/utils": "npm:^6.1.3"
+  checksum: 10c0/f13858d92124c3968692720c61175b5ff340738c9dd8379f0501d471610952c3edeb68b5fe9f280724497377607e73d46e1a9c65e8f2e37095d2325e178f287f
+  languageName: node
+  linkType: hard
+
 "@uppy/progress-bar@npm:^4.0.0":
   version: 4.2.1
   resolution: "@uppy/progress-bar@npm:4.2.1"
@@ -5574,6 +5583,7 @@ __metadata:
     "@uppy/drag-drop": "npm:^4.0.2"
     "@uppy/file-input": "npm:^4.0.1"
     "@uppy/image-editor": "npm:^3.1.0"
+    "@uppy/locales": "npm:^4.5.2"
     "@uppy/progress-bar": "npm:^4.0.0"
     "@uppy/react": "npm:^4.0.2"
     "@uppy/xhr-upload": "npm:^4.3.3"
