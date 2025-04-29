@@ -82,12 +82,7 @@ export const MigrationWarningMessage = (
   return (
     <Paper
       elevation={3}
-      sx={{
-        padding: 2,
-        mx: 1,
-        display: 'flex',
-        alignItems: 'center',
-      }}
+      sx={{ padding: 2, mx: 1, display: 'flex', alignItems: 'center' }}
     >
       <FormControlLabel
         control={
@@ -102,13 +97,7 @@ export const MigrationWarningMessage = (
         label=""
         aria-label="Confirm understanding and proceed checkbox"
       />
-      <WarningIcon
-        sx={{
-          pr: 2,
-          fontSize: '50px',
-          color: 'warning.main',
-        }}
-      />
+      <WarningIcon sx={{ pr: 2, fontSize: '50px', color: 'warning.main' }} />
       <Typography variant="body1">
         This action will permanently alter all existing items and catalogue
         items in this catalogue category. Please confirm that you understand the
@@ -532,7 +521,7 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                   AddCatalogueCategoryWithPlacementIds | AddPropertyMigration,
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   any,
-                  undefined
+                  AddCatalogueCategoryWithPlacementIds | AddPropertyMigration
                 >)}
               >
                 <AllowedValuesListTextFields
