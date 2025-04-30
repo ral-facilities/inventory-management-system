@@ -1,3 +1,4 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Autocomplete,
   Box,
@@ -15,6 +16,7 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import {
   System,
   SystemImportanceType,
@@ -26,11 +28,9 @@ import {
   usePatchSystem,
   usePostSystem,
 } from '../api/systems';
-
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Controller, useForm } from 'react-hook-form';
 import { RequestType, SystemsSchema } from '../form.schemas';
 import handleIMS_APIError from '../handleIMS_APIError';
+import { createFormControlWithRootErrorClearing } from '../utils';
 
 export interface SystemDialogProps {
   open: boolean;
@@ -43,15 +43,15 @@ export interface SystemDialogProps {
   selectedSystem?: System;
 }
 
-const SystemDialog = React.memo((props: SystemDialogProps) => {
+const SystemDialog = (props: SystemDialogProps) => {
   const { open, onClose, parentId, requestType, selectedSystem, duplicate } =
     props;
-
-  const isNotCreating = (requestType !== 'post' || duplicate) && selectedSystem;
 
   const { mutateAsync: postSystem, isPending: isAddPending } = usePostSystem();
   const { mutateAsync: patchSystem, isPending: isEditPending } =
     usePatchSystem();
+
+  const isNotCreating = (requestType !== 'post' || duplicate) && selectedSystem;
 
   const initialSystem: SystemPost = React.useMemo(
     () =>
@@ -66,17 +66,19 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
           },
     [isNotCreating, selectedSystem]
   );
+  // This is within the React Component as this dialog is used in multiple places in the systems page
+  const formControl = createFormControlWithRootErrorClearing<SystemPost>();
 
   const {
     handleSubmit,
     register,
     formState: { errors },
-    watch,
     control,
     setError,
     clearErrors,
     reset,
   } = useForm<SystemPost>({
+    formControl,
     resolver: zodResolver(SystemsSchema(requestType)),
     defaultValues: initialSystem,
   });
@@ -85,14 +87,6 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
   React.useEffect(() => {
     reset(initialSystem);
   }, [initialSystem, reset]);
-
-  // Clears form errors when a value has been changed
-  React.useEffect(() => {
-    if (errors.root?.formError) {
-      const subscription = watch(() => clearErrors('root.formError'));
-      return () => subscription.unsubscribe();
-    }
-  }, [clearErrors, errors, watch]);
 
   const handleClose = React.useCallback(() => {
     reset();
@@ -328,7 +322,6 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
       </DialogActions>
     </Dialog>
   );
-});
-SystemDialog.displayName = 'SystemDialog';
+};
 
 export default SystemDialog;

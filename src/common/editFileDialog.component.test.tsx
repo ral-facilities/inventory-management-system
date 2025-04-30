@@ -16,7 +16,7 @@ vi.mock('../handleIMS_APIError');
 
 describe('Edit file dialog', () => {
   const onClose = vi.fn();
-  let axiosPatchSpy : MockInstance;
+  let axiosPatchSpy: MockInstance;
   let props: FileDialogProps;
   let user: UserEvent;
   const createView = () => {
@@ -121,6 +121,18 @@ describe('Edit file dialog', () => {
           "There have been no changes made. Please change a field's value or press Cancel to exit."
         )
       ).toBeInTheDocument();
+
+      modifyFileValues({
+        file_name: 'test_file_name.jpeg',
+      });
+
+      await waitFor(() =>
+        expect(
+          screen.queryByText(
+            "There have been no changes made. Please change a field's value or press Cancel to exit."
+          )
+        ).not.toBeInTheDocument()
+      );
     });
 
     it('shows error message if required fields are whitespace or their current value was removed', async () => {

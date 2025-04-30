@@ -49,28 +49,6 @@ import {
 import { transformAllowedValues } from '../catalogueCategoryDialog.component';
 import AllowedValuesListTextFields from './allowedValuesListTextFields.component';
 
-// Using `any` instead of `FieldPath` to avoid circular dependencies
-function getProperty<T extends Record<string, unknown>>(
-  obj: T,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  key: any
-) {
-  if (key === undefined) return undefined;
-
-  const keys = key.toString().split('.');
-  let current: unknown = obj;
-
-  for (const part of keys) {
-    if (current && typeof current === 'object' && part in current) {
-      current = (current as Record<string, unknown>)[part];
-    } else {
-      return undefined;
-    }
-  }
-
-  return current;
-}
-
 interface MigrationWarningMessageProps {
   isChecked: boolean;
   setIsChecked: (isChecked: boolean) => void;
@@ -155,20 +133,9 @@ const PropertyDialog = (props: PropertyDialogProps) => {
     setValue: setValueAdd,
     resetField: resetFieldAdd,
     trigger: triggerAdd,
-    clearErrors: clearErrorsAdd,
   } = formMethodsAdd;
 
   const propertyAdd = watchAdd();
-
-  // Clears form errors when a value has been changed
-  React.useEffect(() => {
-    const subscription = watchAdd((_, type) => {
-      if (type.name && !!getProperty(errorsAdd, type.name)) {
-        clearErrorsAdd(type.name);
-      }
-    });
-    return () => subscription.unsubscribe();
-  }, [clearErrorsAdd, errorsAdd, watchAdd]);
 
   const allowedValuesTypeAdd =
     propertyAdd.properties &&

@@ -1082,6 +1082,20 @@ describe('Catalogue Items Dialog', () => {
           )
         ).toBeInTheDocument();
       });
+
+      await user.click(screen.getByRole('button', { name: 'Back' }));
+
+      await modifyValues({
+        name: 'test',
+      });
+
+      await waitFor(() =>
+        expect(
+          screen.queryByText(
+            "There have been no changes made. Please change a field's value or press Cancel to exit."
+          )
+        ).not.toBeInTheDocument()
+      );
     });
 
     it('displays error message when editing manufacturer_id if catalogue item has child elements', async () => {
@@ -1109,8 +1123,8 @@ describe('Catalogue Items Dialog', () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            'Unable to update catalogue item properties and manufacturer '
-              + '(Manufacturer A), as the catalogue item has associated items.'
+            'Unable to update catalogue item properties and manufacturer ' +
+              '(Manufacturer A), as the catalogue item has associated items.'
           )
         ).toBeInTheDocument();
       });
@@ -1152,8 +1166,8 @@ describe('Catalogue Items Dialog', () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            'Unable to update catalogue item properties and manufacturer '
-              + '(Manufacturer A), as the catalogue item has associated items.'
+            'Unable to update catalogue item properties and manufacturer ' +
+              '(Manufacturer A), as the catalogue item has associated items.'
           )
         ).toBeInTheDocument();
       });
