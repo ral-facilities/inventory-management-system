@@ -48,6 +48,20 @@ const modifyItem = (
     cy.findByLabelText('Purchase order number').clear();
   }
 
+  if (values.warrantyEndDate) {
+    cy.findByLabelText('Warranty end date').clear();
+    cy.findByLabelText('Warranty end date').type(values.warrantyEndDate);
+  } else {
+    cy.findByLabelText('Warranty end date').clear();
+  }
+
+  if (values.deliveredDate) {
+    cy.findByLabelText('Delivered date').clear();
+    cy.findByLabelText('Delivered date').type(values.deliveredDate);
+  } else {
+    cy.findByLabelText('Delivered date').clear();
+  }
+
   cy.findByLabelText('Usage status *').click();
   cy.findByRole('option', { name: values.usageStatus }).click();
 
@@ -268,151 +282,5 @@ export const editItem = () => {
     wavelengthRange: '195 - 2100',
     broken: 'True',
     system: 'optics 1',
-  });
-};
-
-export const addAttachment = (
-  values: {
-    files: string[];
-  },
-  ignoreChecks?: boolean
-) => {
-  cy.findByText('Attachments').click();
-  cy.findByRole('button', {
-    name: 'Upload Attachments',
-  }).click();
-
-  cy.intercept('OPTIONS', 'http://localhost:9000/object-storage').as(
-    'testSnoop'
-  );
-
-  cy.findAllByText('Files cannot be larger than', { exact: false }).should(
-    'exist'
-  );
-  cy.get('.uppy-Dashboard-input').as('fileInput');
-
-  cy.get('@fileInput').first().selectFile(values.files, { force: true });
-
-  cy.findByText('Upload 2 files').click({ force: true });
-
-  cy.findByText('Uploading').should('not.exist');
-
-  /* cy.wait('@testSnoop').its('response.statusCode').should('eq', 204);
-
-  cy.wait('@testSnoop').then((interception) => {
-    cy.task(
-      'log',
-      '[CYPRESS] Response body: ' + JSON.stringify(interception.response)
-    );
-  }); */
-
-  cy.findAllByRole('dialog')
-    .first()
-    .within(() => {
-      cy.findAllByRole('button', {
-        name: 'Close Modal',
-      })
-        .last()
-        .click();
-    });
-
-  if (!ignoreChecks) {
-    cy.findByText('Attachments').click();
-    for (let i = 0; i++; i < values.files.length) {
-      const fileName = values.files[i].slice(
-        values.files[i].lastIndexOf('/') + 1
-      );
-      cy.findByText(fileName).should('exist');
-    }
-  }
-};
-
-export const editAttachment = (
-  values: {
-    originalFileName: string;
-    newFileName?: string;
-    description?: string;
-    title?: string;
-  },
-  ignoreChecks: boolean
-) => {
-  cy.findByText('Attachments').click();
-  cy.findAllByText(`${values.originalFileName}`).last().scrollIntoView();
-
-  cy.findAllByText(`${values.originalFileName}`).last().should('exist');
-
-  cy.findByRole('row', { name: `${values.originalFileName} row` }).within(
-    () => {
-      cy.findByLabelText('Row Actions').click();
-    }
-  );
-  cy.findByLabelText(`Edit ${values.originalFileName} attachment`).click();
-
-  cy.findByRole('dialog')
-    .should('be.visible')
-    .within(() => {
-      if (values.newFileName) {
-        cy.findByLabelText('File Name *').clear();
-        cy.findByText('.txt').should('exist');
-        cy.findByLabelText('File Name *').type(values.newFileName);
-      }
-
-      if (values.title) {
-        cy.findByLabelText('Title').clear();
-        cy.findByLabelText('Title').type(values.title);
-      }
-
-      if (values.description) {
-        cy.findByLabelText('Description').clear();
-        cy.findByLabelText('Description').type(values.description);
-      }
-    });
-  cy.findByRole('button', { name: 'Save' }).click();
-  cy.findByRole('dialog').should('not.exist');
-
-  if (!ignoreChecks) {
-    cy.findByText('Attachments').click();
-    cy.findByText(values.newFileName ?? values.originalFileName).should(
-      'exist'
-    );
-    if (values.description) {
-      cy.findByText(values.description).should('exist');
-    }
-    if (values.title) {
-      cy.findByText(values.title).should('exist');
-    }
-  }
-};
-
-export const downloadAttachment = (fileName: string) => {
-  cy.findByText('Attachments').click();
-  cy.findByLabelText(`${fileName} row`).within(() => {
-    cy.findByLabelText('Row Actions').click();
-  });
-  cy.findByLabelText(`Download ${fileName} attachment`).click();
-  cy.findByRole('dialog').should('be.visible');
-
-  cy.findByRole('button', { name: 'Continue' }).click();
-};
-
-export const deleteAttachment = (fileNames: string[]) => {
-  cy.findByText('Attachments').click();
-  fileNames.forEach((fileName) => {
-    cy.findByLabelText(`${fileName} row`).within(() => {
-      cy.findByLabelText('Row Actions').click();
-    });
-
-    cy.intercept('DELETE', '**/attachments/**').as('deleteSnoop');
-
-    cy.findByLabelText(`Delete attachment ${fileName}`).click();
-    cy.findByRole('dialog').should('be.visible');
-
-    cy.findByRole('button', { name: 'Continue' }).click();
-
-    cy.wait('@deleteSnoop').then((request) => {
-      cy.task('log', '[CYPRESS] Request body: ' + JSON.stringify(request));
-    });
-
-    cy.findByRole('dialog').should('not.be.visible', { timeout: 4000 });
   });
 };
