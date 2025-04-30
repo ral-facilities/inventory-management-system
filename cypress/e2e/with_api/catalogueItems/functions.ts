@@ -354,7 +354,8 @@ export const addFile = (
   ignoreChecks?: boolean
 ) => {
   const tabValue = type === 'image' ? 'Gallery' : 'Attachments';
-  const uploadButton = type === 'image' ? 'Upload Image' : 'Upload Attachments';
+  const uploadButton =
+    type === 'image' ? 'Upload Images' : 'Upload Attachments';
   cy.findByText(tabValue).click();
   cy.findByRole('button', {
     name: uploadButton,
