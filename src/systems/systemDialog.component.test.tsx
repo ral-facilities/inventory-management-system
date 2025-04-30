@@ -1,4 +1,4 @@
-import { fireEvent, screen, within } from '@testing-library/react';
+import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http } from 'msw';
 import { MockInstance } from 'vitest';
@@ -388,11 +388,13 @@ describe('Systems Dialog', () => {
 
       await modifyValues({ description: 'New description' });
 
-      expect(
-        screen.queryByText(
-          "There have been no changes made. Please change a field's value or press Cancel to exit."
-        )
-      ).not.toBeInTheDocument();
+      await waitFor(() =>
+        expect(
+          screen.queryByText(
+            "There have been no changes made. Please change a field's value or press Cancel to exit."
+          )
+        ).not.toBeInTheDocument()
+      );
     });
 
     it('displays error message when name field is not filled in', async () => {

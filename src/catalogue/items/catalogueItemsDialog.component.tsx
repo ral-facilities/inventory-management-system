@@ -52,7 +52,10 @@ import {
 } from '../../form.schemas';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component';
-import { sortDataList } from '../../utils';
+import {
+  createFormControlWithRootErrorClearing,
+  sortDataList,
+} from '../../utils';
 
 const RECENT_MANUFACTURER_CUTOFF_TIME = 10 * 60 * 1000;
 
@@ -157,6 +160,15 @@ function convertToCatalogueItemDetailsStepPost(
   };
 }
 
+const formControlPropertiesStep =
+  createFormControlWithRootErrorClearing<PropertiesStep>();
+
+const formControlDetailsStep =
+  createFormControlWithRootErrorClearing<CatalogueItemDetailsStep>({
+    customCallback: () =>
+      formControlPropertiesStep.clearErrors('root.formError'),
+  });
+
 export interface CatalogueItemsDialogProps {
   open: boolean;
   onClose: () => void;
@@ -181,8 +193,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     [parentInfo]
   );
 
-  const CatalogueItemDetailsStepFormMethods = useForm<CatalogueItemDetailsStep>(
+  const catalogueItemDetailsStepFormMethods = useForm<CatalogueItemDetailsStep>(
     {
+      formControl: formControlDetailsStep,
       resolver: zodResolver(CatalogueItemDetailsStepSchema(requestType)),
       defaultValues: toCatalogueItemDetailsStep(selectedCatalogueItem),
     }
@@ -195,10 +208,10 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     control: controlDetailsStep,
     clearErrors: clearErrorsDetailsStep,
     reset: resetDetailsStep,
-    watch: watchDetailsStep,
-  } = CatalogueItemDetailsStepFormMethods;
+  } = catalogueItemDetailsStepFormMethods;
 
   const catalogueItemPropertiesStepFormMethods = useForm<PropertiesStep>({
+    formControl: formControlPropertiesStep,
     resolver: zodResolver(PropertiesStepSchema),
     defaultValues: {
       properties: convertToPropertyValueList(
@@ -215,7 +228,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     control: controlPropertiesStep,
     clearErrors: clearErrorsPropertiesStep,
     reset: resetPropertiesStep,
-    watch: watchPropertiesStep,
     setError: setErrorPropertiesStep,
   } = catalogueItemPropertiesStepFormMethods;
 
@@ -250,21 +262,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     selectedCatalogueItem,
     selectedCatalogueItem?.properties,
   ]);
-
-  // Clears form errors when a value has been changed
-  React.useEffect(() => {
-    const subscription1 = watchDetailsStep(() =>
-      clearErrorsPropertiesStep('root.formError')
-    );
-    return () => subscription1.unsubscribe();
-  }, [clearErrorsPropertiesStep, watchDetailsStep]);
-
-  React.useEffect(() => {
-    const subscription = watchPropertiesStep(() =>
-      clearErrorsPropertiesStep('root.formError')
-    );
-    return () => subscription.unsubscribe();
-  }, [clearErrorsPropertiesStep, watchPropertiesStep]);
 
   const { mutateAsync: postCatalogueItem, isPending: isAddPending } =
     usePostCatalogueItem();
@@ -509,10 +506,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   const options = (): Array<Manufacturer & { isRecent: string }> => {
     const classifiedManufacturers = manufacturerList
       ? manufacturerList.map((option) => {
-          return {
-            ...option,
-            isRecent: 'A-Z',
-          };
+          return { ...option, isRecent: 'A-Z' };
         })
       : [];
 
@@ -526,10 +520,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         return isRecent;
       })
       .map((option) => {
-        return {
-          ...option,
-          isRecent: 'Recently Added',
-        };
+        return { ...option, isRecent: 'Recently Added' };
       });
 
     /*returns them in reverse alphabetical order, since they will be sorted by "isRecent",
@@ -940,10 +931,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           sx={{ marginTop: 2 }}
         >
           {STEPS.map((label, index) => {
-            const labelProps: {
-              optional?: React.ReactNode;
-              error?: boolean;
-            } = {};
+            const labelProps: { optional?: React.ReactNode; error?: boolean } =
+              {};
 
             if (isStepFailed(index)) {
               labelProps.optional = (
@@ -1002,11 +991,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         )}
       </DialogActions>
       <Box
-        sx={{
-          width: '100%',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
+        sx={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}
       >
         {errorsPropertiesStep.root?.formError && (
           <FormHelperText sx={{ marginBottom: 2, textAlign: 'center' }} error>
