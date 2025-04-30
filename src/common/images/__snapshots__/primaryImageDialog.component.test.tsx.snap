@@ -85,7 +85,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           />
                         </svg>
                       </span>
-                      Upload Image
+                      Upload Images
                       <span
                         class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                       />
@@ -2512,7 +2512,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           <div
                             class="uppy-Dashboard-AddFiles-title"
                           >
-                            Drop files here or 
+                            Drop images here or 
                             <button
                               class="uppy-u-reset uppy-c-btn uppy-Dashboard-browse"
                               data-uppy-super-focusable="true"
@@ -2536,7 +2536,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                             <div
                               class="uppy-Dashboard-note"
                             >
-                              Files cannot be larger than 50MB. Only images are allowed.
+                              Files cannot be larger than 50MB. Supported file types: .bmp, .jpe, .jpeg, .jpg, .png, .tif, .tiff, .webp.
                             </div>
                           </div>
                         </div>
@@ -2693,7 +2693,7 @@ exports[`Primary Image Dialog > renders no results page correctly, and can still
                           />
                         </svg>
                       </span>
-                      Upload Image
+                      Upload Images
                       <span
                         class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                       />
@@ -3517,7 +3517,7 @@ exports[`Primary Image Dialog > renders no results page correctly, and can still
                           <div
                             class="uppy-Dashboard-AddFiles-title"
                           >
-                            Drop files here or 
+                            Drop images here or 
                             <button
                               class="uppy-u-reset uppy-c-btn uppy-Dashboard-browse"
                               data-uppy-super-focusable="true"
@@ -3541,7 +3541,7 @@ exports[`Primary Image Dialog > renders no results page correctly, and can still
                             <div
                               class="uppy-Dashboard-note"
                             >
-                              Files cannot be larger than 50MB. Only images are allowed.
+                              Files cannot be larger than 50MB. Supported file types: .bmp, .jpe, .jpeg, .jpg, .png, .tif, .tiff, .webp.
                             </div>
                           </div>
                         </div>

@@ -43,7 +43,7 @@ const ThumbnailImage = (props: ThumbnailImageProps) => {
         <Box
           component="img"
           key={image?.id} // Force remount when the image changes
-          src={`data:image/webp;base64,${image?.thumbnail_base64}`}
+          src={`data:image/webp;base64,${image?.thumbnail_base64 ?? ''}`}
           alt={
             !image
               ? 'No Image'

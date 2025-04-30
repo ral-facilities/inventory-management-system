@@ -297,7 +297,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
             setOpenUploadDialog(true);
           }}
         >
-          Upload Image
+          Upload Images
         </Button>
 
         <Button

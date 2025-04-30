@@ -135,11 +135,24 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
   return (
     <DashboardModal
       open={open}
+      locale={{
+        strings: {
+          dropPasteFiles: 'Drop images here or %{browseFiles}',
+        },
+        // Copied from Uppy locales template:
+        // https://github.com/transloadit/uppy/blob/bb82326d0dd8f999bcb99deeeaa924250c41ffae/packages/%40uppy/locales/template.ts#L6
+        pluralize: (n) => {
+          if (n === 1) {
+            return 0;
+          }
+          return 1;
+        },
+      }}
       onRequestClose={handleClose}
       closeModalOnClickOutside={false}
       animateOpenClose={false}
       uppy={uppy}
-      note={`Files cannot be larger than ${maxFileSizeMB}MB. Only images are allowed.`}
+      note={`Files cannot be larger than ${maxFileSizeMB}MB. Supported file types: ${imageAllowedFileExtensions.join(', ')}.`}
       proudlyDisplayPoweredByUppy={false}
       theme={theme.palette.mode}
       doneButtonHandler={handleClose}
