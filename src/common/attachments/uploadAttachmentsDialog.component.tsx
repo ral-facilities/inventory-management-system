@@ -33,13 +33,12 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
 
   const queryClient = useQueryClient();
 
-  const { attachmentAllowedFileExtensions, maxAttachmentSizeBytes } = React.useContext(
-    InventoryManagementSystemSettingsContext
-  );
+  const { attachmentAllowedFileExtensions, maxAttachmentSizeBytes } =
+    React.useContext(InventoryManagementSystemSettingsContext);
 
   // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000,
   // so here the former is expected despite them really being GiB, MiB and KiB.
-  const maxAttachmentSizeMB = maxAttachmentSizeBytes / (1024 ** 2)
+  const maxAttachmentSizeMB = maxAttachmentSizeBytes / 1024 ** 2;
 
   const { mutateAsync: postAttachmentMetadata } = usePostAttachmentMetadata();
 
@@ -85,9 +84,16 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
           };
         },
       })
-      .use(ProgressBar)
+      .use(ProgressBar<UppyUploadMetadata, AwsBody>)
   );
 
+  uppy.getPlugin('DragDrop')?.setOptions({
+    locale: {
+      strings: {
+        dropPasteFiles: `Drop attachments here or %{browseFiles}`,
+      },
+    },
+  });
   // This is necessary to prevent multiple calls of the delete endpoint.
   const deletedFileIds = React.useRef(new Set<string>());
 
@@ -102,10 +108,14 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
       const id = fileMetadataMap[fileId];
 
       if (id) {
-        if (deleteMetadata && !deletedFileIds.current.has(fileId)) {
+        if (
+          deleteMetadata &&
+          !deletedFileIds.current.has(fileId) &&
+          file?.progress.uploadComplete === false
+        ) {
           deletedFileIds.current.add(fileId);
           await deleteAttachment(id).catch((error: AxiosError) => {
-            handleIMS_APIError(error);
+            handleIMS_APIError(error, false);
           });
         }
 
@@ -173,7 +183,20 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
       closeModalOnClickOutside={false}
       animateOpenClose={false}
       uppy={uppy}
-      note={`Files cannot be larger than ${maxAttachmentSizeMB}MB. Only supported attachments are allowed.`}
+      locale={{
+        strings: {
+          dropPasteFiles: 'Drop attachments here or %{browseFiles}',
+        },
+        // Copied from Uppy locales template:
+        // https://github.com/transloadit/uppy/blob/bb82326d0dd8f999bcb99deeeaa924250c41ffae/packages/%40uppy/locales/template.ts#L6
+        pluralize: (n) => {
+          if (n === 1) {
+            return 0;
+          }
+          return 1;
+        },
+      }}
+      note={`Files cannot be larger than ${maxAttachmentSizeMB}MB. Supported file types: ${attachmentAllowedFileExtensions.join(', ')}.`}
       proudlyDisplayPoweredByUppy={false}
       theme={theme.palette.mode}
       doneButtonHandler={handleClose}

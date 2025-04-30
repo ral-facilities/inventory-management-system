@@ -65,7 +65,7 @@ describe('Primary Image Dialog', () => {
     expect((await screen.findAllByText('logo1.png')).length).toEqual(9);
 
     const uploadImageButton = screen.getByRole('button', {
-      name: 'Upload Image',
+      name: 'Upload Images',
     });
 
     await user.click(uploadImageButton);
@@ -105,7 +105,7 @@ describe('Primary Image Dialog', () => {
     expect(baseElement).toMatchSnapshot();
 
     const uploadImageButton = screen.getByRole('button', {
-      name: 'Upload Image',
+      name: 'Upload Images',
     });
 
     await user.click(uploadImageButton);

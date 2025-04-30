@@ -360,7 +360,6 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         Cell: ({ row }) =>
           row.original.item.delivered_date &&
           formatDateTimeStrings(row.original.item.delivered_date, false),
-
         GroupedCell: (props) =>
           TableGroupedCell({
             ...props,
