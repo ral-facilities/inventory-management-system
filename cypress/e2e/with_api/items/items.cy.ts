@@ -23,7 +23,6 @@ describe('items', () => {
       'systems',
       'units',
       'usage_statuses',
-      'attachments',
     ]);
     // Prepare relevant data for items
     cy.visit('/admin-ims/usage-statuses');
@@ -48,11 +47,10 @@ describe('items', () => {
       'systems',
       'units',
       'usage_statuses',
-      'attachments',
     ]);
   });
 
-  it('CRUD for items and attachments', () => {
+  it('CRUD for items', () => {
     addItem();
     editItem();
     duplicateItem('MX4332424', 0);

@@ -24,6 +24,7 @@ describe('catalogue items', () => {
       'catalogue_items',
       'manufacturers',
       'units',
+      'attachments',
     ]);
     // Prepare relevant data for catalogue items
     cy.visit('/manufacturers');
@@ -41,10 +42,11 @@ describe('catalogue items', () => {
       'catalogue_items',
       'manufacturers',
       'units',
+      'attachments',
     ]);
   });
 
-  it('CRUD for catalogue items', () => {
+  it('CRUD for catalogue items and attachments', () => {
     addCatalogueItem();
     cy.findAllByText('Plano-Convex Lens').first().click();
     addAttachment(
