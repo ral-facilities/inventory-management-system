@@ -1440,6 +1440,33 @@ describe('Items', () => {
         );
       });
     });
+
+    it('sets a primary image', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByRole('button', { name: 'primary images action menu' }).click();
+      cy.findByText('Set Primary Image').click();
+      cy.findByRole('dialog')
+        .should('be.visible')
+        .within(() => {
+          cy.findAllByRole('radio').last().click();
+          cy.startSnoopingBrowserMockedRequest();
+          cy.findByText('Save').click();
+        });
+      cy.findByRole('dialog').should('not.exist');
+
+      cy.findBrowserMockedRequests({
+        method: 'PATCH',
+        url: '/images/:id',
+      }).should(async (patchRequests) => {
+        expect(patchRequests.length).equal(1);
+        const request = patchRequests[0];
+        expect(JSON.stringify(await request.json())).equal('{"primary":true}');
+      });
+    });
   });
 
   it('deletes an item', () => {
