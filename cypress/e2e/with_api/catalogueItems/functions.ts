@@ -469,6 +469,6 @@ export const deleteAttachment = (fileNames: string[]) => {
 
     cy.findByRole('button', { name: 'Continue' }).click();
 
-    cy.findByRole('dialog').should('not.be.visible', { timeout: 4000 });
+    cy.findByRole('dialog').should('not.exist', { timeout: 4000 });
   });
 };
