@@ -352,7 +352,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codecov/vite-plugin@npm:1.9.0":
+"@codecov/vite-plugin@npm:^1.9.0":
   version: 1.9.0
   resolution: "@codecov/vite-plugin@npm:1.9.0"
   dependencies:
@@ -460,7 +460,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@date-io/date-fns@npm:3.2.1":
+"@date-io/date-fns@npm:^3.2.1":
   version: 3.2.1
   resolution: "@date-io/date-fns@npm:3.2.1"
   dependencies:
@@ -3952,7 +3952,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"date-fns@npm:4.1.0":
+"date-fns@npm:^4.1.0":
   version: 4.1.0
   resolution: "date-fns@npm:4.1.0"
   checksum: 10c0/b79ff32830e6b7faa009590af6ae0fb8c3fd9ffad46d930548fbb5acf473773b4712ae887e156ba91a7b3dc30591ce0f517d69fd83bd9c38650fdc03b4e0bac8
@@ -5784,8 +5784,8 @@ __metadata:
   resolution: "inventory-management-system@workspace:."
   dependencies:
     "@babel/eslint-parser": "npm:7.27.0"
-    "@codecov/vite-plugin": "npm:1.9.0"
-    "@date-io/date-fns": "npm:3.2.1"
+    "@codecov/vite-plugin": "npm:^1.9.0"
+    "@date-io/date-fns": "npm:^3.2.1"
     "@emotion/react": "npm:^11.11.4"
     "@emotion/styled": "npm:^11.11.5"
     "@eslint/compat": "npm:1.2.8"
@@ -5826,7 +5826,7 @@ __metadata:
     browserslist-to-esbuild: "npm:^2.1.1"
     cross-env: "npm:7.0.3"
     cypress: "npm:13.17.0"
-    date-fns: "npm:4.1.0"
+    date-fns: "npm:^4.1.0"
     eslint: "npm:9.25.1"
     eslint-config-prettier: "npm:10.1.2"
     eslint-plugin-cypress: "npm:4.3.0"
@@ -5843,7 +5843,7 @@ __metadata:
     loglevel: "npm:^1.9.1"
     lz-string: "npm:^1.5.0"
     material-react-table: "npm:^2.13.0"
-    msw: "npm:2.7.5"
+    msw: "npm:^2.7.5"
     prettier: "npm:3.5.3"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
@@ -5852,7 +5852,7 @@ __metadata:
     react-router-dom: "npm:^6.23.1"
     serve: "npm:14.2.4"
     serve-static: "npm:1.16.2"
-    single-spa-react: "npm:6.0.2"
+    single-spa-react: "npm:^6.0.2"
     start-server-and-test: "npm:2.0.11"
     typescript: "npm:^5.4.5"
     typescript-eslint: "npm:8.31.0"
@@ -7009,7 +7009,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"msw@npm:2.7.5":
+"msw@npm:^2.7.5":
   version: 2.7.5
   resolution: "msw@npm:2.7.5"
   dependencies:
@@ -8449,7 +8449,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"single-spa-react@npm:6.0.2":
+"single-spa-react@npm:^6.0.2":
   version: 6.0.2
   resolution: "single-spa-react@npm:6.0.2"
   dependencies:
