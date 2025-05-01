@@ -520,7 +520,7 @@ export const setPrimaryImage = (index: number, ignoreChecks: boolean) => {
     });
   cy.findByRole('dialog').should('not.exist');
   if (!ignoreChecks) {
-    cy.findByText('No Image').should('not.exist');
+    cy.findByRole('img', { name: 'No Image' }).should('not.exist');
   }
 };
 
@@ -537,8 +537,20 @@ export const viewPrimaryImage = () => {
     cy.findByText('File name: logo2.png').should('exist');
     cy.findByText('No description available').should('exist');
 
-    cy.findByText('No Image').should('not.exist');
+    cy.findByRole('img', { name: 'No Image' }).should('not.exist');
     cy.findAllByLabelText('Close').last().click();
   });
   cy.findByTestId('galleryLightBox').should('not.exist');
+};
+
+export const removePrimaryImage = () => {
+  cy.findByRole('button', { name: 'primary images action menu' }).click();
+  cy.findByText('Remove Primary Image').click();
+  cy.findByRole('dialog')
+    .should('be.visible')
+    .within(() => {
+      cy.findByText('Continue').click();
+    });
+  cy.findByRole('dialog').should('not.exist');
+  cy.findByRole('img', { name: 'No Image' }).should('exist');
 };

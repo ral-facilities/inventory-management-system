@@ -15,6 +15,7 @@ import {
   editFile,
   moveToCatalogueItems,
   obsoleteCatalogueItem,
+  removePrimaryImage,
   setPrimaryImage,
   viewPrimaryImage,
 } from './functions';
@@ -87,6 +88,7 @@ describe('catalogue items', () => {
     );
     setPrimaryImage(0, true);
     viewPrimaryImage();
+    removePrimaryImage();
     editFile(
       {
         originalFileName: 'logo1.png',
