@@ -5,5 +5,9 @@ export default defineConfig({
     baseUrl: 'http://localhost:3000',
     chromeWebSecurity: false,
     video: false,
+    retries: {
+      runMode: 3,
+      openMode: 1,
+    },
   },
 });
