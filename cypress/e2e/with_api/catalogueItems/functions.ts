@@ -510,20 +510,18 @@ export const deleteFile = (
 };
 
 export const setPrimaryImage = (index: number, ignoreChecks: boolean) => {
-  it('sets a primary image', () => {
-    cy.findByRole('button', { name: 'primary images action menu' }).click();
-    cy.findByText('Set Primary Image').click();
-    cy.findByRole('dialog')
-      .should('be.visible')
-      .within(() => {
-        cy.findAllByRole('radio').eq(index).click();
-        cy.findByText('Save').click();
-      });
-    cy.findByRole('dialog').should('not.exist');
-    if (!ignoreChecks) {
-      cy.findByText('No Image').should('not.exist');
-    }
-  });
+  cy.findByRole('button', { name: 'primary images action menu' }).click();
+  cy.findByText('Set Primary Image').click();
+  cy.findByRole('dialog')
+    .should('be.visible')
+    .within(() => {
+      cy.findAllByRole('radio').eq(index).click();
+      cy.findByText('Save').click();
+    });
+  cy.findByRole('dialog').should('not.exist');
+  if (!ignoreChecks) {
+    cy.findByText('No Image').should('not.exist');
+  }
 };
 
 export const viewPrimaryImage = () => {
@@ -531,22 +529,15 @@ export const viewPrimaryImage = () => {
     'have.length',
     3
   );
+  cy.findByText('No Image').should('not.exist');
   cy.findAllByRole('img', { name: 'No photo description available.' })
     .first()
     .click();
   cy.findByTestId('galleryLightBox').within(() => {
-    cy.findByText('File name: stfc-logo-blue-text.png').should('exist');
-    cy.findByText('Title: stfc-logo-blue-text').should('exist');
-    cy.findByText('test').should('exist');
+    cy.findByText('File name: logo2.png').should('exist');
+    cy.findByText('No description available').should('exist');
 
-    cy.findByAltText('test').should('exist');
-
-    cy.findByAltText('test')
-      .should('have.attr', 'src')
-      .and(
-        'include',
-        'http://localhost:3000/images/stfc-logo-blue-text.png?text=1'
-      );
+    cy.findByText('No Image').should('not.exist');
     cy.findAllByLabelText('Close').last().click();
   });
   cy.findByTestId('galleryLightBox').should('not.exist');

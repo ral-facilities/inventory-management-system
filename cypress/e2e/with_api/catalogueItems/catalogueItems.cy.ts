@@ -85,7 +85,7 @@ describe('catalogue items', () => {
       'image',
       true
     );
-    setPrimaryImage(1, true);
+    setPrimaryImage(0, true);
     viewPrimaryImage();
     editFile(
       {
