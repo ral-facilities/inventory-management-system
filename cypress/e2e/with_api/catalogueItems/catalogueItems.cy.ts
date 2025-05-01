@@ -16,6 +16,7 @@ import {
   moveToCatalogueItems,
   obsoleteCatalogueItem,
   setPrimaryImage,
+  viewPrimaryImage,
 } from './functions';
 
 describe('catalogue items', () => {
@@ -62,7 +63,6 @@ describe('catalogue items', () => {
       'attachment',
       true
     );
-    setPrimaryImage(0, true);
     editFile(
       {
         originalFileName: 'test1.txt',
@@ -85,6 +85,8 @@ describe('catalogue items', () => {
       'image',
       true
     );
+    setPrimaryImage(1, true);
+    viewPrimaryImage();
     editFile(
       {
         originalFileName: 'logo1.png',
