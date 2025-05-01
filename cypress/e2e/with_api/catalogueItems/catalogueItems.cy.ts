@@ -15,6 +15,7 @@ import {
   editFile,
   moveToCatalogueItems,
   obsoleteCatalogueItem,
+  setPrimaryImage,
 } from './functions';
 
 describe('catalogue items', () => {
@@ -61,6 +62,7 @@ describe('catalogue items', () => {
       'attachment',
       true
     );
+    setPrimaryImage(0, true);
     editFile(
       {
         originalFileName: 'test1.txt',

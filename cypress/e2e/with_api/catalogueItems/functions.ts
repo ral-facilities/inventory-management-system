@@ -508,3 +508,20 @@ export const deleteFile = (
     cy.findByRole('dialog').should('not.exist');
   });
 };
+
+export const setPrimaryImage = (index: number, ignoreChecks: boolean) => {
+  it('sets a primary image', () => {
+    cy.findByRole('button', { name: 'primary images action menu' }).click();
+    cy.findByText('Set Primary Image').click();
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findAllByRole('radio').eq(index).click();
+        cy.findByText('Save').click();
+      });
+    cy.findByRole('dialog').should('not.exist');
+    if (!ignoreChecks) {
+      cy.findByText('No Image').should('not.exist');
+    }
+  });
+};
