@@ -4,6 +4,7 @@ import AwsS3, { type AwsBody } from '@uppy/aws-s3';
 import Uppy, { UppyFile } from '@uppy/core';
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
+import en_US from '@uppy/locales/lib/en_US';
 import ProgressBar from '@uppy/progress-bar';
 import { DashboardModal } from '@uppy/react';
 import statusBarStates from '@uppy/status-bar/lib/StatusBarStates';
@@ -18,7 +19,11 @@ import type { UppyUploadMetadata } from '../../app.types';
 import { InventoryManagementSystemSettingsContext } from '../../configProvider.component';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { getNonEmptyTrimmedString, parseErrorResponse } from '../../utils';
-import { getUploadingState, useMetaFields } from '../uppy.utils';
+import {
+  getUploadingState,
+  useMetaFields,
+  type UppyDashboardLocaleStrings,
+} from '../uppy.utils';
 
 export interface UploadAttachmentsDialogProps {
   open: boolean;
@@ -72,10 +77,7 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
             throw new Error(returnMessage);
           });
 
-          setFileMetadataMap((prev) => ({
-            ...prev,
-            [file.id]: response.id,
-          }));
+          setFileMetadataMap((prev) => ({ ...prev, [file.id]: response.id }));
 
           return {
             method: 'POST',
@@ -87,13 +89,13 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
       .use(ProgressBar<UppyUploadMetadata, AwsBody>)
   );
 
-  uppy.getPlugin('DragDrop')?.setOptions({
-    locale: {
-      strings: {
-        dropPasteFiles: `Drop attachments here or %{browseFiles}`,
+  uppy
+    .getPlugin('DragDrop')
+    ?.setOptions({
+      locale: {
+        strings: { dropPasteFiles: `Drop attachments here or %{browseFiles}` },
       },
-    },
-  });
+    });
   // This is necessary to prevent multiple calls of the delete endpoint.
   const deletedFileIds = React.useRef(new Set<string>());
 
@@ -185,16 +187,9 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
       uppy={uppy}
       locale={{
         strings: {
+          ...en_US.strings,
           dropPasteFiles: 'Drop attachments here or %{browseFiles}',
-        },
-        // Copied from Uppy locales template:
-        // https://github.com/transloadit/uppy/blob/bb82326d0dd8f999bcb99deeeaa924250c41ffae/packages/%40uppy/locales/template.ts#L6
-        pluralize: (n) => {
-          if (n === 1) {
-            return 0;
-          }
-          return 1;
-        },
+        } as UppyDashboardLocaleStrings<UppyUploadMetadata, AwsBody>,
       }}
       note={`Files cannot be larger than ${maxAttachmentSizeMB}MB. Supported file types: ${attachmentAllowedFileExtensions.join(', ')}.`}
       proudlyDisplayPoweredByUppy={false}
