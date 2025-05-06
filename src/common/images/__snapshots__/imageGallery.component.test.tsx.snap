@@ -51,7 +51,7 @@ exports[`Image Gallery > displays no images message and can open and close uploa
                     />
                   </svg>
                 </span>
-                Upload Image
+                Upload Images
                 <span
                   class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                 />
@@ -115,7 +115,7 @@ exports[`Image Gallery > displays no images message and can open and close uploa
                           aria-invalid="false"
                           autocomplete="new-password"
                           class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12yjm75-MuiInputBase-input-MuiOutlinedInput-input"
-                          id=":ruu:"
+                          id=":rv0:"
                           placeholder="Search"
                           type="text"
                           value=""
@@ -712,7 +712,7 @@ exports[`Image Gallery > displays no images message and can open and close uploa
                     class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                   >
                     <div
-                      aria-controls=":rvb:"
+                      aria-controls=":rvd:"
                       aria-expanded="false"
                       aria-haspopup="listbox"
                       aria-label="Images per page"
@@ -875,7 +875,7 @@ exports[`Image Gallery > displays no images message and can open and close uploa
                     <div
                       class="uppy-Dashboard-AddFiles-title"
                     >
-                      Drop files here or 
+                      Drop images here or 
                       <button
                         class="uppy-u-reset uppy-c-btn uppy-Dashboard-browse"
                         data-uppy-super-focusable="true"
@@ -899,31 +899,13 @@ exports[`Image Gallery > displays no images message and can open and close uploa
                       <div
                         class="uppy-Dashboard-note"
                       >
-                        Files cannot be larger than 50MB. Only images are allowed.
+                        Files cannot be larger than 50MB. Supported file types: .bmp, .jpe, .jpeg, .jpg, .png, .tif, .tiff, .webp.
                       </div>
                     </div>
                   </div>
                   <div
                     class="uppy-Dashboard-progressindicators"
                   >
-                    <div
-                      aria-hidden="true"
-                      class="uppy-StatusBar is-waiting"
-                    >
-                      <div
-                        aria-label="0%"
-                        aria-valuemax="100"
-                        aria-valuemin="0"
-                        aria-valuenow="0"
-                        aria-valuetext="0%"
-                        class="uppy-StatusBar-progress"
-                        role="progressbar"
-                        style="width: 0%;"
-                      />
-                      <div
-                        class="uppy-StatusBar-actions"
-                      />
-                    </div>
                     <div
                       class="uppy uppy-Informer"
                     >
@@ -989,7 +971,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                     />
                   </svg>
                 </span>
-                Upload Image
+                Upload Images
                 <span
                   class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                 />
@@ -3038,7 +3020,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                     <div
                       class="uppy-Dashboard-AddFiles-title"
                     >
-                      Drop files here or 
+                      Drop images here or 
                       <button
                         class="uppy-u-reset uppy-c-btn uppy-Dashboard-browse"
                         data-uppy-super-focusable="true"
@@ -3062,31 +3044,13 @@ exports[`Image Gallery > renders correctly 1`] = `
                       <div
                         class="uppy-Dashboard-note"
                       >
-                        Files cannot be larger than 50MB. Only images are allowed.
+                        Files cannot be larger than 50MB. Supported file types: .bmp, .jpe, .jpeg, .jpg, .png, .tif, .tiff, .webp.
                       </div>
                     </div>
                   </div>
                   <div
                     class="uppy-Dashboard-progressindicators"
                   >
-                    <div
-                      aria-hidden="true"
-                      class="uppy-StatusBar is-waiting"
-                    >
-                      <div
-                        aria-label="0%"
-                        aria-valuemax="100"
-                        aria-valuemin="0"
-                        aria-valuenow="0"
-                        aria-valuetext="0%"
-                        class="uppy-StatusBar-progress"
-                        role="progressbar"
-                        style="width: 0%;"
-                      />
-                      <div
-                        class="uppy-StatusBar-actions"
-                      />
-                    </div>
                     <div
                       class="uppy uppy-Informer"
                     >
@@ -3154,7 +3118,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                     />
                   </svg>
                 </span>
-                Upload Image
+                Upload Images
                 <span
                   class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                 />
@@ -3218,7 +3182,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                           aria-invalid="false"
                           autocomplete="new-password"
                           class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12yjm75-MuiInputBase-input-MuiOutlinedInput-input"
-                          id=":rpk:"
+                          id=":rpm:"
                           placeholder="Search"
                           type="text"
                           value=""
@@ -5389,7 +5353,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                     class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                   >
                     <div
-                      aria-controls=":rq1:"
+                      aria-controls=":rq3:"
                       aria-expanded="false"
                       aria-haspopup="listbox"
                       aria-label="Images per page"
@@ -5581,7 +5545,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                     <div
                       class="uppy-Dashboard-AddFiles-title"
                     >
-                      Drop files here or 
+                      Drop images here or 
                       <button
                         class="uppy-u-reset uppy-c-btn uppy-Dashboard-browse"
                         data-uppy-super-focusable="true"
@@ -5605,31 +5569,13 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                       <div
                         class="uppy-Dashboard-note"
                       >
-                        Files cannot be larger than 50MB. Only images are allowed.
+                        Files cannot be larger than 50MB. Supported file types: .bmp, .jpe, .jpeg, .jpg, .png, .tif, .tiff, .webp.
                       </div>
                     </div>
                   </div>
                   <div
                     class="uppy-Dashboard-progressindicators"
                   >
-                    <div
-                      aria-hidden="true"
-                      class="uppy-StatusBar is-waiting"
-                    >
-                      <div
-                        aria-label="0%"
-                        aria-valuemax="100"
-                        aria-valuemin="0"
-                        aria-valuenow="0"
-                        aria-valuetext="0%"
-                        class="uppy-StatusBar-progress"
-                        role="progressbar"
-                        style="width: 0%;"
-                      />
-                      <div
-                        class="uppy-StatusBar-actions"
-                      />
-                    </div>
                     <div
                       class="uppy uppy-Informer"
                     >
@@ -5695,7 +5641,7 @@ exports[`Image Gallery > renders no results page correctly 1`] = `
                     />
                   </svg>
                 </span>
-                Upload Image
+                Upload Images
                 <span
                   class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                 />
@@ -6541,7 +6487,7 @@ exports[`Image Gallery > renders no results page correctly 1`] = `
                     <div
                       class="uppy-Dashboard-AddFiles-title"
                     >
-                      Drop files here or 
+                      Drop images here or 
                       <button
                         class="uppy-u-reset uppy-c-btn uppy-Dashboard-browse"
                         data-uppy-super-focusable="true"
@@ -6565,31 +6511,13 @@ exports[`Image Gallery > renders no results page correctly 1`] = `
                       <div
                         class="uppy-Dashboard-note"
                       >
-                        Files cannot be larger than 50MB. Only images are allowed.
+                        Files cannot be larger than 50MB. Supported file types: .bmp, .jpe, .jpeg, .jpg, .png, .tif, .tiff, .webp.
                       </div>
                     </div>
                   </div>
                   <div
                     class="uppy-Dashboard-progressindicators"
                   >
-                    <div
-                      aria-hidden="true"
-                      class="uppy-StatusBar is-waiting"
-                    >
-                      <div
-                        aria-label="0%"
-                        aria-valuemax="100"
-                        aria-valuemin="0"
-                        aria-valuenow="0"
-                        aria-valuetext="0%"
-                        class="uppy-StatusBar-progress"
-                        role="progressbar"
-                        style="width: 0%;"
-                      />
-                      <div
-                        class="uppy-StatusBar-actions"
-                      />
-                    </div>
                     <div
                       class="uppy uppy-Informer"
                     >

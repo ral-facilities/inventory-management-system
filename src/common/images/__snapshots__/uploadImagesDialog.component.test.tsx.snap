@@ -78,7 +78,7 @@ exports[`Upload image dialog > renders dialog correctly 1`] = `
                 <div
                   class="uppy-Dashboard-AddFiles-title"
                 >
-                  Drop files here or 
+                  Drop images here or 
                   <button
                     class="uppy-u-reset uppy-c-btn uppy-Dashboard-browse"
                     data-uppy-super-focusable="true"
@@ -102,31 +102,13 @@ exports[`Upload image dialog > renders dialog correctly 1`] = `
                   <div
                     class="uppy-Dashboard-note"
                   >
-                    Files cannot be larger than 50MB. Only images are allowed.
+                    Files cannot be larger than 50MB. Supported file types: .bmp, .jpe, .jpeg, .jpg, .png, .tif, .tiff, .webp.
                   </div>
                 </div>
               </div>
               <div
                 class="uppy-Dashboard-progressindicators"
               >
-                <div
-                  aria-hidden="true"
-                  class="uppy-StatusBar is-waiting"
-                >
-                  <div
-                    aria-label="0%"
-                    aria-valuemax="100"
-                    aria-valuemin="0"
-                    aria-valuenow="0"
-                    aria-valuetext="0%"
-                    class="uppy-StatusBar-progress"
-                    role="progressbar"
-                    style="width: 0%;"
-                  />
-                  <div
-                    class="uppy-StatusBar-actions"
-                  />
-                </div>
                 <div
                   class="uppy uppy-Informer"
                 >

@@ -171,7 +171,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
 
       {
         header: 'Created',
-        accessorFn: (row) => new Date(row.modified_time),
+        accessorFn: (row) => new Date(row.created_time),
         id: 'created',
         filterVariant: COLUMN_FILTER_VARIANTS.datetime,
         filterFn: COLUMN_FILTER_FUNCTIONS.datetime,
@@ -297,7 +297,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
             setOpenUploadDialog(true);
           }}
         >
-          Upload Image
+          Upload Images
         </Button>
 
         <Button

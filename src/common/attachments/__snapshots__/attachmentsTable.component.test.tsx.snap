@@ -36,12 +36,12 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                 <svg
                   aria-hidden="true"
                   class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                  data-testid="AddIcon"
+                  data-testid="UploadIcon"
                   focusable="false"
                   viewBox="0 0 24 24"
                 >
                   <path
-                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"
+                    d="M5 20h14v-2H5zm0-10h4v6h6v-6h4l-7-7z"
                   />
                 </svg>
               </span>
@@ -1694,12 +1694,12 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 <svg
                   aria-hidden="true"
                   class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                  data-testid="AddIcon"
+                  data-testid="UploadIcon"
                   focusable="false"
                   viewBox="0 0 24 24"
                 >
                   <path
-                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"
+                    d="M5 20h14v-2H5zm0-10h4v6h6v-6h4l-7-7z"
                   />
                 </svg>
               </span>

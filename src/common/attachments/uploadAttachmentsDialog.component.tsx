@@ -4,6 +4,7 @@ import AwsS3, { type AwsBody } from '@uppy/aws-s3';
 import Uppy, { UppyFile } from '@uppy/core';
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
+import en_US from '@uppy/locales/lib/en_US';
 import ProgressBar from '@uppy/progress-bar';
 import { DashboardModal } from '@uppy/react';
 import statusBarStates from '@uppy/status-bar/lib/StatusBarStates';
@@ -18,7 +19,11 @@ import type { UppyUploadMetadata } from '../../app.types';
 import { InventoryManagementSystemSettingsContext } from '../../configProvider.component';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { getNonEmptyTrimmedString, parseErrorResponse } from '../../utils';
-import { getUploadingState, useMetaFields } from '../uppy.utils';
+import {
+  getUploadingState,
+  useMetaFields,
+  type UppyDashboardLocaleStrings,
+} from '../uppy.utils';
 
 export interface UploadAttachmentsDialogProps {
   open: boolean;
@@ -33,13 +38,12 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
 
   const queryClient = useQueryClient();
 
-  const { attachmentAllowedFileExtensions, maxAttachmentSizeBytes } = React.useContext(
-    InventoryManagementSystemSettingsContext
-  );
+  const { attachmentAllowedFileExtensions, maxAttachmentSizeBytes } =
+    React.useContext(InventoryManagementSystemSettingsContext);
 
   // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000,
   // so here the former is expected despite them really being GiB, MiB and KiB.
-  const maxAttachmentSizeMB = maxAttachmentSizeBytes / (1024 ** 2)
+  const maxAttachmentSizeMB = maxAttachmentSizeBytes / 1024 ** 2;
 
   const { mutateAsync: postAttachmentMetadata } = usePostAttachmentMetadata();
 
@@ -73,10 +77,7 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
             throw new Error(returnMessage);
           });
 
-          setFileMetadataMap((prev) => ({
-            ...prev,
-            [file.id]: response.id,
-          }));
+          setFileMetadataMap((prev) => ({ ...prev, [file.id]: response.id }));
 
           return {
             method: 'POST',
@@ -85,9 +86,16 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
           };
         },
       })
-      .use(ProgressBar)
+      .use(ProgressBar<UppyUploadMetadata, AwsBody>)
   );
 
+  uppy
+    .getPlugin('DragDrop')
+    ?.setOptions({
+      locale: {
+        strings: { dropPasteFiles: `Drop attachments here or %{browseFiles}` },
+      },
+    });
   // This is necessary to prevent multiple calls of the delete endpoint.
   const deletedFileIds = React.useRef(new Set<string>());
 
@@ -102,10 +110,14 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
       const id = fileMetadataMap[fileId];
 
       if (id) {
-        if (deleteMetadata && !deletedFileIds.current.has(fileId)) {
+        if (
+          deleteMetadata &&
+          !deletedFileIds.current.has(fileId) &&
+          file?.progress.uploadComplete === false
+        ) {
           deletedFileIds.current.add(fileId);
           await deleteAttachment(id).catch((error: AxiosError) => {
-            handleIMS_APIError(error);
+            handleIMS_APIError(error, false);
           });
         }
 
@@ -173,7 +185,13 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
       closeModalOnClickOutside={false}
       animateOpenClose={false}
       uppy={uppy}
-      note={`Files cannot be larger than ${maxAttachmentSizeMB}MB. Only supported attachments are allowed.`}
+      locale={{
+        strings: {
+          ...en_US.strings,
+          dropPasteFiles: 'Drop attachments here or %{browseFiles}',
+        } as UppyDashboardLocaleStrings<UppyUploadMetadata, AwsBody>,
+      }}
+      note={`Files cannot be larger than ${maxAttachmentSizeMB}MB. Supported file types: ${attachmentAllowedFileExtensions.join(', ')}.`}
       proudlyDisplayPoweredByUppy={false}
       theme={theme.palette.mode}
       doneButtonHandler={handleClose}
