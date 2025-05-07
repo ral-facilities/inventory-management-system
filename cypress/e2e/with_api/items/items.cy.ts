@@ -8,9 +8,9 @@ import {
   addItem,
   addProperty,
   deleteItem,
+  duplicateItem,
   editItem,
   editProperty,
-  duplicateItem,
 } from './functions';
 
 describe('items', () => {

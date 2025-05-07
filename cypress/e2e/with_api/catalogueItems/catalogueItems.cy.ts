@@ -5,9 +5,13 @@ import {
 import { addManufacturer } from '../manufacturers/functions';
 import { addUnits } from '../units/functions';
 import {
+  addAttachment,
   addCatalogueItem,
   copyToCatalogueItems,
+  deleteAttachment,
+  downloadAttachment,
   duplicateCatalogueItem,
+  editAttachment,
   editCatalogueItem,
   moveToCatalogueItems,
   obsoleteCatalogueItem,
@@ -20,6 +24,7 @@ describe('catalogue items', () => {
       'catalogue_items',
       'manufacturers',
       'units',
+      'attachments',
     ]);
     // Prepare relevant data for catalogue items
     cy.visit('/manufacturers');
@@ -37,11 +42,34 @@ describe('catalogue items', () => {
       'catalogue_items',
       'manufacturers',
       'units',
+      'attachments',
     ]);
   });
 
-  it('CRUD for catalogue items', () => {
+  it('CRUD for catalogue items and attachments', () => {
     addCatalogueItem();
+    cy.findAllByText('Plano-Convex Lens').first().click();
+    addAttachment(
+      {
+        files: [
+          'cypress/fixtures/documents/test1.txt',
+          'cypress/fixtures/documents/test2.txt',
+        ],
+      },
+      true
+    );
+    editAttachment(
+      {
+        originalFileName: 'test1.txt',
+        newFileName: 'test file',
+        title: 'test title',
+        description: 'test description',
+      },
+      true
+    );
+    downloadAttachment('test file.txt');
+    deleteAttachment(['test2.txt', 'test file.txt']);
+    cy.findByText('Spherical Lenses').click();
     editCatalogueItem();
     duplicateCatalogueItem('Plano-Convex Lens 2');
     obsoleteCatalogueItem({
