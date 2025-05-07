@@ -785,7 +785,7 @@ describe('Items', () => {
         expect(getRequests.length).equal(1);
         const request = getRequests[0];
         expect(request.url.toString()).to.contain('1');
-      })
+      });
     });
 
     it('edits an attachment successfully', () => {
@@ -1218,8 +1218,8 @@ describe('Items', () => {
         expect(getRequests.length).equal(1);
         const request = getRequests[0];
         expect(request.url.toString()).to.contain('1');
-      })
-    })
+      });
+    });
 
     it('edits an image successfully', () => {
       cy.findByText('5YUQDDjKpz2z').click();
@@ -1390,6 +1390,81 @@ describe('Items', () => {
         expect(deleteRequests.length).equal(1);
         const request = deleteRequests[0];
         expect(request.url.toString()).to.contain('1');
+      });
+    });
+
+    it('views a primary image (lightbox)', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByRole('img', { name: 'test' }).click();
+      cy.findByTestId('galleryLightBox').within(() => {
+        cy.findByText('File name: stfc-logo-blue-text.png').should('exist');
+        cy.findByText('Title: stfc-logo-blue-text').should('exist');
+        cy.findByText('test').should('exist');
+
+        cy.findByAltText('test').should('exist');
+
+        cy.findByAltText('test')
+          .should('have.attr', 'src')
+          .and(
+            'include',
+            'http://localhost:3000/images/stfc-logo-blue-text.png?text=1'
+          );
+        cy.findAllByLabelText('Close').last().click();
+      });
+      cy.findByTestId('galleryLightBox').should('not.exist');
+    });
+
+    it('removes a primary image', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByRole('button', { name: 'primary images action menu' }).click();
+      cy.findByText('Remove Primary Image').click();
+      cy.startSnoopingBrowserMockedRequest();
+      cy.findByRole('button', { name: 'Continue' }).click();
+
+      cy.findBrowserMockedRequests({
+        method: 'PATCH',
+        url: '/images/:id',
+      }).should(async (patchRequests) => {
+        expect(patchRequests.length).equal(1);
+        const request = patchRequests[0];
+        expect(JSON.stringify(await request.json())).equal(
+          '{"primary":false,"file_name":"stfc-logo-blue-text.png"}'
+        );
+      });
+    });
+
+    it('sets a primary image', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByRole('button', { name: 'primary images action menu' }).click();
+      cy.findByText('Set Primary Image').click();
+      cy.findByRole('dialog')
+        .should('be.visible')
+        .within(() => {
+          cy.findAllByRole('radio').last().click();
+          cy.startSnoopingBrowserMockedRequest();
+          cy.findByText('Save').click();
+        });
+      cy.findByRole('dialog').should('not.exist');
+
+      cy.findBrowserMockedRequests({
+        method: 'PATCH',
+        url: '/images/:id',
+      }).should(async (patchRequests) => {
+        expect(patchRequests.length).equal(1);
+        const request = patchRequests[0];
+        expect(JSON.stringify(await request.json())).equal('{"primary":true}');
       });
     });
   });
