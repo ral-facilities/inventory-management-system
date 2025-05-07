@@ -12,18 +12,17 @@ import {
   InputAdornment,
   TextField,
 } from '@mui/material';
-import { useForm } from 'react-hook-form';
-
-import React from 'react';
-
 import { UseMutationResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 import {
   APIImage,
   AttachmentMetadata,
   AttachmentMetadataPatch,
   ImageMetadataPatch,
   ObjectFilePatchBase,
+  type APIError,
 } from '../api/api.types';
 import { FileSchemaPatch } from '../form.schemas';
 import handleIMS_APIError from '../handleIMS_APIError';
@@ -126,6 +125,18 @@ const EditFileDialog = (props: FileDialogProps) => {
         })
           .then(() => handleClose())
           .catch((error: AxiosError) => {
+            const response = error.response?.data as APIError;
+            if (
+              response.detail.includes(
+                'file name already exists within the parent entity.'
+              )
+            ) {
+              setError('file_name', {
+                message:
+                  'A file with the same name has been found. Please enter a different name.',
+              });
+              return;
+            }
             handleIMS_APIError(error);
           });
       } else {
