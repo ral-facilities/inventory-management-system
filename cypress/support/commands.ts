@@ -73,11 +73,20 @@ Cypress.Commands.add('startSnoopingBrowserMockedRequest', () => {
 });
 
 Cypress.Commands.add('dropIMSCollections', (collections: string[]) => {
-  collections.forEach((collection) =>
+  collections.forEach((collection) => {
+    let containerName = '';
+    let databaseName = '';
+    if (['images', 'attachments'].includes(collection)) {
+      containerName = 'object-storage-api-mongodb';
+      databaseName = 'object-storage';
+    } else {
+      containerName = 'ims_api_mongodb_container';
+      databaseName = 'ims';
+    }
     cy.exec(
-      `docker exec -i $(docker ps | grep mongo | awk '{ print $1 }') mongosh ims --username "root" --password "example" --authenticationDatabase=admin --eval "db.${collection}.drop()"`
-    )
-  );
+      `docker exec -i $(docker ps | grep ${containerName} | awk '{ print $1 }') mongosh ${databaseName} --username "root" --password "example" --authenticationDatabase=admin --eval "db.${collection}.drop()"`
+    );
+  });
 });
 
 /**
