@@ -213,4 +213,66 @@ describe('Upload image dialog', () => {
     },
     { timeout: 15000 }
   );
+
+  it(
+    'should error when file name already exists',
+    async () => {
+      server.use(
+        http.post('/images', async () => {
+          await delay(1000);
+          return HttpResponse.json(
+            {
+              detail:
+                'An attachment with the same file name already exists within the parent entity.',
+            },
+            { status: 409 }
+          );
+        })
+      );
+
+      createView();
+
+      const file1 = new File(['hello world'], 'image.png', {
+        type: 'image/png',
+      });
+
+      const dropZone = screen.getByText('files cannot be larger than', {
+        exact: false,
+      });
+
+      Object.defineProperty(dropZone, 'files', {
+        value: [file1],
+      });
+
+      fireEvent.drop(dropZone, {
+        dataTransfer: {
+          files: [file1],
+        },
+      });
+
+      await waitFor(() => {
+        expect(screen.getByText('image.png')).toBeInTheDocument();
+      });
+
+      await user.click(await screen.findByText('Upload 1 file'));
+
+      expect(xhrPostSpy).toHaveBeenCalledWith('POST', '/images', true);
+
+      await waitFor(
+        () => {
+          expect(screen.getByText('Upload failed')).toBeInTheDocument();
+        },
+        { timeout: 10000 }
+      );
+
+      await waitFor(() => {
+        expect(
+          screen.getAllByLabelText(
+            'A file with this name already exists. To rename it, remove the file and add it again. You’ll then be able to click the pencil icon just below the file to change its name.'
+          ).length
+        ).toBe(2);
+      });
+    },
+    { timeout: 15000 }
+  );
 });
