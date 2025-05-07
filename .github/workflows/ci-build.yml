@@ -137,7 +137,6 @@ jobs:
         with:
           repository: ral-facilities/object-storage-api
           ref: develop
-          path: object-storage-api
 
       - name: Move Object Storage api repo
         run: |
@@ -156,8 +155,6 @@ jobs:
         working-directory: ../object-storage-api
         run: |
           docker compose up minio-create-buckets
-          docker network ls
-
 
       - name: Start object-storage-api
         run: |
@@ -189,7 +186,6 @@ jobs:
           --add-host "localhost:host-gateway" \
           -v /home/runner/work/inventory-management-system/object-storage-api/object_storage_api/logging.example.ini:/app/object_storage_api/logging.ini \
           harbor.stfc.ac.uk/scd-object-storage-api/object-storage-api:develop
-          
 
       - name: Checkout repo
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
