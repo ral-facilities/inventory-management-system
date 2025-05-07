@@ -137,6 +137,7 @@ jobs:
         with:
           repository: ral-facilities/object-storage-api
           ref: develop
+          path: object-storage-api
 
       - name: Move Object Storage api repo
         run: |
