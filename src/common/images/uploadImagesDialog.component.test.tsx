@@ -268,7 +268,7 @@ describe('Upload image dialog', () => {
       await waitFor(() => {
         expect(
           screen.getAllByLabelText(
-            'A file with this name already exists. To rename it, remove the file and add it again. You’ll then be able to click the pencil icon just below the file to change its name.'
+            'A file with this name already exists. To rename your file: remove it, add it back and click the edit icon below the file to change its name.'
           ).length
         ).toBe(2);
       });
