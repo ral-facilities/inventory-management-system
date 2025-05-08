@@ -9,8 +9,7 @@ on:
         default: false
   pull_request:
     paths-ignore:
-      - 'README.md'
-      - '.github/workflows/ci-build.yml'
+      cat .githubactionsignore
   push:
     branches:
       - main
