@@ -16,31 +16,6 @@ This project uses [Vite](https://vitejs.dev/).
 
 In the project directory, you can run:
 
-#
-#### Prerequisites
-
-- Node.js (https://nodejs.org/en/) - (LTS version at the time of writing is 16.17.0)
-- NPM (comes with the node.js installation)
-- An IDE for developing with JavaScript (VS Code is a good cross-platform suggestion)
-- [Yarn 3.5.0](https://yarnpkg.com/lang/en/docs/install/)
-
-1. Clone the repository and navigate to the project directory:
-   ```bash
-   git clone git@github.com:ral-facilities/inventory-management-system.git
-   cd inventory-management-system
-   ```
-2. Run install all the dependancies
-   ```bash
-   yarn install
-   ```
-3. Create a inventory-management-system-settings.json file
-   ```bash
-   cp public/inventory-management-system-settings.example.json public/inventory-management-system-settings.json
-   ```
-4. Start the website
-   ```bash
-   yarn dev
-   ```
 
 ### End-to-End Testing (Locally)
 

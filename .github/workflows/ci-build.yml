@@ -8,12 +8,13 @@ on:
         type: boolean
         default: false
   pull_request:
+    paths-ignore:
+      - 'README.md'
+      - '.github/workflows/ci-build.yml'
   push:
     branches:
       - main
       - develop
-    paths-ignore:
-      - 'README.md'
 
 jobs:
   lint-and-unit-test:
