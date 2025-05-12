@@ -158,7 +158,7 @@ exports[`Systems Layout Error Component > renders system error page correctly 1`
         >
           <button
             aria-label="navigate to systems home"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+            class="MuiButtonBase-root Mui-focusVisible MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
             tabindex="0"
             type="button"
           >
@@ -182,6 +182,14 @@ exports[`Systems Layout Error Component > renders system error page correctly 1`
               >
                 <span
                   class="MuiTouchRipple-child MuiTouchRipple-childLeaving"
+                />
+              </span>
+              <span
+                class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible MuiTouchRipple-ripplePulsate"
+                style="width: 1px; height: 1px; top: -0.5px; left: -0.5px;"
+              >
+                <span
+                  class="MuiTouchRipple-child MuiTouchRipple-childPulsate"
                 />
               </span>
             </span>
