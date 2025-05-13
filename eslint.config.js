@@ -1,4 +1,3 @@
-import { fixupPluginRules } from '@eslint/compat';
 import eslint from '@eslint/js';
 import queryPlugin from '@tanstack/eslint-plugin-query';
 import prettierPlugin from 'eslint-config-prettier';
@@ -33,9 +32,6 @@ export default tseslint.config(
     },
     plugins: {
       react: reactPlugin,
-      // eslint-plugin-react-hooks doesn't support flat config properly yet
-      // https://github.com/facebook/react/issues/28313
-      'react-hooks': fixupPluginRules(reactHooksPlugin),
       '@tanstack/query': queryPlugin,
       'no-only-tests': noOnlyTestsPlugin,
       'jsx-a11y': jsxA11yPlugin,
@@ -43,6 +39,7 @@ export default tseslint.config(
     extends: [
       eslint.configs.recommended,
       ...tseslint.configs.recommended,
+      reactHooksPlugin.configs['recommended-latest'],
       cypressPlugin.configs.recommended,
       // See https://github.com/prettier/eslint-config-prettier put last
       prettierPlugin,
