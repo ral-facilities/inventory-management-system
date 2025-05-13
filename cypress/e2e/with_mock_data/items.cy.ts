@@ -874,6 +874,31 @@ describe('Items', () => {
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
     });
 
+    it('should error when file name already exists', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Attachments').click();
+
+      cy.findAllByLabelText('Row Actions').first().click();
+      cy.findByText('Edit').click();
+
+      cy.findByRole('dialog')
+        .should('be.visible')
+        .within(() => {
+          cy.findByLabelText('File Name *').clear();
+          cy.findByLabelText('File Name *').type('duplicate_file_name');
+
+          cy.findByRole('button', { name: 'Save' }).click();
+          cy.findByText(
+            'A file with the same name has been found. Please enter a different name.'
+          );
+        });
+      cy.findByRole('button', { name: 'Save' }).should('be.disabled');
+    });
+
     it('deletes an attachment', () => {
       cy.findByText('5YUQDDjKpz2z').click();
       cy.findByText(
@@ -1303,6 +1328,31 @@ describe('Items', () => {
 
           cy.findByRole('button', { name: 'Save' }).click();
           cy.contains('Please enter a file name.');
+        });
+      cy.findByRole('button', { name: 'Save' }).should('be.disabled');
+    });
+
+    it('should error when file name already exists', () => {
+      cy.findByText('5YUQDDjKpz2z').click();
+      cy.findByText(
+        'High-resolution cameras for beam characterization. 1'
+      ).should('exist');
+
+      cy.findByText('Gallery').click();
+
+      cy.findAllByLabelText('Card Actions').first().click();
+      cy.findAllByText('Edit').last().click();
+
+      cy.findByRole('dialog')
+        .should('be.visible')
+        .within(() => {
+          cy.findByLabelText('File Name *').clear();
+          cy.findByLabelText('File Name *').type('duplicate_file_name');
+
+          cy.findByRole('button', { name: 'Save' }).click();
+          cy.findByText(
+            'A file with the same name has been found. Please enter a different name.'
+          );
         });
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
     });
