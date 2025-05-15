@@ -40,7 +40,7 @@ jobs:
       - name: Check unit tests should run
         id: filter
         run: |
-          if grep -vE '^(server/|cypress/|cypress\.config\.ts)' changed.txt | grep .; then
+          if grep -vE '^(server/|cypress/|cypress\.config\.ts|README\.md|\.github/workflows/ci-build\.yml|renovate\.json|LICENSE|\.prettierrc|\.github/workflows/release-build\.yml|\.github/PULL_REQUEST_TEMPLATE\.md|public/robots\.txt)' changed.txt | grep .; then
             echo "only_docs=false" >> $GITHUB_OUTPUT
           else
             echo "only_docs=true" >> $GITHUB_OUTPUT
