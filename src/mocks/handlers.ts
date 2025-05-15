@@ -1040,25 +1040,25 @@ export const handlers = [
       if (Number(id) % 4 === 0) {
         attachment = {
           ...AttachmentsJSON[0],
-          download_url: `${window.location.origin}/attachments/laser-calibration.txt?text=${
-            encodeURIComponent(id as string)
-          }`,
+          download_url: `${window.location.origin}/attachments/laser-calibration.txt?text=${encodeURIComponent(
+            id as string
+          )}`,
         };
       } else {
         if (Number(id) % 4 === 1) {
           attachment = {
             ...AttachmentsJSON[1],
-            download_url: `${window.location.origin}/attachments/safety-protocols.pdf?text=${
-              encodeURIComponent(id as string)
-            }`,
+            download_url: `${window.location.origin}/attachments/safety-protocols.pdf?text=${encodeURIComponent(
+              id as string
+            )}`,
           };
         } else {
           if (Number(id) % 4 === 2) {
             attachment = {
               ...AttachmentsJSON[2],
-              download_url: `${window.location.origin}/attachments/camera-setup-guide.docx?text=${
-                encodeURIComponent(id as string)
-              }`,
+              download_url: `${window.location.origin}/attachments/camera-setup-guide.docx?text=${encodeURIComponent(
+                id as string
+              )}`,
             };
           } else {
             if (id === '3') {
@@ -1070,9 +1070,9 @@ export const handlers = [
             } else {
               attachment = {
                 ...AttachmentsJSON[3],
-                download_url: `${window.location.origin}/attachments/experiment-results.rtf?text=${
-                  encodeURIComponent(id as string)
-                }`,
+                download_url: `${window.location.origin}/attachments/experiment-results.rtf?text=${encodeURIComponent(
+                  id as string
+                )}`,
               };
             }
           }
@@ -1109,6 +1109,14 @@ export const handlers = [
       return HttpResponse.json(
         { detail: 'Something went wrong' },
         { status: 500 }
+      );
+    } else if (fullBody.file_name?.includes('duplicate_file_name')) {
+      return HttpResponse.json(
+        {
+          detail:
+            'An image with the same file name already exists within the parent entity.',
+        },
+        { status: 409 }
       );
     }
     return HttpResponse.json(fullBody as AttachmentMetadata, { status: 200 });
@@ -1262,6 +1270,14 @@ export const handlers = [
         return HttpResponse.json(
           { detail: 'Something went wrong' },
           { status: 500 }
+        );
+      } else if (fullBody.file_name?.includes('duplicate_file_name')) {
+        return HttpResponse.json(
+          {
+            detail:
+              'An image with the same file name already exists within the parent entity.',
+          },
+          { status: 409 }
         );
       }
       return HttpResponse.json(fullBody as APIImage, { status: 200 });
