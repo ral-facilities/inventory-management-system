@@ -508,3 +508,49 @@ export const deleteFile = (
     cy.findByRole('dialog').should('not.exist');
   });
 };
+
+export const setPrimaryImage = (index: number, ignoreChecks: boolean) => {
+  cy.findByRole('button', { name: 'primary images action menu' }).click();
+  cy.findByText('Set Primary Image').click();
+  cy.findByRole('dialog')
+    .should('be.visible')
+    .within(() => {
+      cy.findAllByRole('radio').eq(index).click();
+      cy.findByText('Save').click();
+    });
+  cy.findByRole('dialog').should('not.exist');
+  if (!ignoreChecks) {
+    cy.findByRole('img', { name: 'No Image' }).should('not.exist');
+  }
+};
+
+export const viewPrimaryImage = () => {
+  cy.findAllByRole('img', { name: 'No photo description available.' }).should(
+    'have.length',
+    3
+  );
+  cy.findByText('No Image').should('not.exist');
+  cy.findAllByRole('img', { name: 'No photo description available.' })
+    .first()
+    .click();
+  cy.findByTestId('galleryLightBox').within(() => {
+    cy.findByText('File name: logo2.png').should('exist');
+    cy.findByText('No description available').should('exist');
+
+    cy.findByRole('img', { name: 'No Image' }).should('not.exist');
+    cy.findAllByLabelText('Close').last().click();
+  });
+  cy.findByTestId('galleryLightBox').should('not.exist');
+};
+
+export const removePrimaryImage = () => {
+  cy.findByRole('button', { name: 'primary images action menu' }).click();
+  cy.findByText('Remove Primary Image').click();
+  cy.findByRole('dialog')
+    .should('be.visible')
+    .within(() => {
+      cy.findByText('Continue').click();
+    });
+  cy.findByRole('dialog').should('not.exist');
+  cy.findByRole('img', { name: 'No Image' }).should('exist');
+};
