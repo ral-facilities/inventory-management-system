@@ -29,12 +29,21 @@ jobs:
       only_docs_changed: ${{ steps.filter.outputs.only_docs }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+
+      - name: Set base ref
+        run: echo "BASE_REF=${{ github.base_ref || 'develop' }}" >> $GITHUB_ENV
+
+      - name: Fetch base branch
+        run: git fetch origin $BASE_REF
 
       - name: Get changed files
         id: changed
         run: |
-          git fetch origin ${{ github.event.before }} --depth=1
-          git diff --name-only ${{ github.event.before }} ${{ github.sha }} > changed.txt
+          BASE=$(git merge-base HEAD origin/develop)
+          echo "Merge base is $BASE"
+          git diff --name-only $BASE HEAD > changed.txt
           cat changed.txt
 
       - name: Check unit tests should run
@@ -42,9 +51,12 @@ jobs:
         run: |
           if grep -vE '^(server/|cypress/|cypress\.config\.ts|README\.md|\.github/workflows/ci-build\.yml|renovate\.json|LICENSE|\.prettierrc|\.github/workflows/release-build\.yml|\.github/PULL_REQUEST_TEMPLATE\.md|public/robots\.txt)' changed.txt | grep .; then
             echo "only_docs=false" >> $GITHUB_OUTPUT
+            echo "no change"
           else
             echo "only_docs=true" >> $GITHUB_OUTPUT
+            echo "change"
           fi
+          
 
   lint-and-unit-test:
     name: Lint & Unit Tests
