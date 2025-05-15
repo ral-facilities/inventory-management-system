@@ -1,5 +1,6 @@
-import { Box, Button, Grid, Paper, alpha, styled } from '@mui/material';
+import { Box, Button, Paper, alpha, styled } from '@mui/material';
 import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Unstable_Grid2';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PageNotFoundComponent from '../common/pageNotFound/pageNotFound.component';

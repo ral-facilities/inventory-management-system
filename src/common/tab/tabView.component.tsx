@@ -1,7 +1,7 @@
 import AttachmentOutlinedIcon from '@mui/icons-material/AttachmentOutlined';
 import CollectionsOutlinedIcon from '@mui/icons-material/CollectionsOutlined';
 import { Tabs } from '@mui/material';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Unstable_Grid2';
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { a11yProps, StyledTab } from '../../common/tab/tab.utils';

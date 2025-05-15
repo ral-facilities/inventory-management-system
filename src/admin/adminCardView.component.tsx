@@ -1,4 +1,5 @@
-import { Button, Card, CardContent, Grid, Typography } from '@mui/material';
+import { Button, Card, CardContent, Typography } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
 import { Link } from 'react-router-dom';
 
 function AdminCardView() {

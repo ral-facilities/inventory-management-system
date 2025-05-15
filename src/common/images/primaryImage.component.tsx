@@ -3,7 +3,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import {
   Box,
-  Grid,
   IconButton,
   ListItemIcon,
   ListItemText,
@@ -11,6 +10,7 @@ import {
   MenuItem,
   Tooltip,
 } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useGetImages } from '../../api/images';

@@ -11,7 +11,6 @@ import {
   DialogContent,
   DialogTitle,
   FormHelperText,
-  Grid,
   IconButton,
   Step,
   StepLabel,
@@ -20,6 +19,7 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
 import { DatePicker, DateValidationError } from '@mui/x-date-pickers';
 import { AxiosError } from 'axios';
 import React from 'react';

@@ -7,9 +7,9 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Grid,
   TextField,
 } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
 import { AxiosError } from 'axios';
 import React from 'react';
 import { useForm } from 'react-hook-form';

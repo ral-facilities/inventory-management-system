@@ -8,8 +8,8 @@ import {
   LinearProgress,
   Link as MuiLink,
 } from '@mui/material';
-import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Unstable_Grid2';
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { CatalogueCategory, CatalogueItem } from '../../api/api.types';

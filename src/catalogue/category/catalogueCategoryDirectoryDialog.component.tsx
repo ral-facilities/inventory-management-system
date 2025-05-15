@@ -6,9 +6,9 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Grid,
   Tooltip,
 } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
 import React from 'react';
 import { CatalogueCategory } from '../../api/api.types';
 import {

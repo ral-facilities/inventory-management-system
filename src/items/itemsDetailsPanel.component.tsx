@@ -1,12 +1,12 @@
 import {
   Box,
   Collapse,
-  Grid,
   Link as MuiLink,
   Tab,
   Tabs,
   Typography,
 } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { CatalogueItem, Item } from '../api/api.types';

@@ -1,4 +1,5 @@
-import { Grid, Table, TableHead, TableRow, useTheme } from '@mui/material';
+import { Table, TableHead, TableRow, useTheme } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
 import {
   MRT_Header,
   MRT_RowData,

@@ -10,7 +10,6 @@ import {
   Box,
   CircularProgress,
   Divider,
-  Grid,
   IconButton,
   ListItemIcon,
   ListItemText,
@@ -25,6 +24,7 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
 import {
   // To resolve react/jsx-pascal-case
   MRT_GlobalFilterTextField as MRTGlobalFilterTextField,

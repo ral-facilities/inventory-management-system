@@ -1,8 +1,8 @@
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import NotesIcon from '@mui/icons-material/Notes';
 import { Box, Divider, LinearProgress, Link as MuiLink } from '@mui/material';
-import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Unstable_Grid2';
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { CatalogueCategory, CatalogueItem, Item } from '../api/api.types';

@@ -9,12 +9,12 @@ import {
   Button,
   Card,
   Collapse,
-  Grid,
   ListItemIcon,
   ListItemText,
   MenuItem,
   Paper,
 } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
 import {
   MRT_BottomToolbar,
   MRT_Cell,

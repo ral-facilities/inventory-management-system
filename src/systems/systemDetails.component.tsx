@@ -4,9 +4,9 @@ import {
   Chip,
   CircularProgress,
   Divider,
-  Grid,
   Typography,
 } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
 import React from 'react';
 import { System } from '../api/api.types';
 import { getSystemImportanceColour, useGetSystem } from '../api/systems';

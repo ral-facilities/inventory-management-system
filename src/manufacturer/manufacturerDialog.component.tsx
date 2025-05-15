@@ -8,10 +8,10 @@ import {
   DialogContent,
   DialogTitle,
   FormHelperText,
-  Grid,
   TextField,
   Typography,
 } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
 import { useForm } from 'react-hook-form';
 
 import React from 'react';

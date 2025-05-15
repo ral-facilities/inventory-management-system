@@ -6,9 +6,9 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Grid,
   Tooltip,
 } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
 import { MRT_RowSelectionState } from 'material-react-table';
 import React from 'react';
 import { System } from '../api/api.types';

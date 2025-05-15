@@ -8,10 +8,10 @@ import {
   DialogContent,
   DialogTitle,
   FormHelperText,
-  Grid,
   InputAdornment,
   TextField,
 } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
 import { UseMutationResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import React from 'react';

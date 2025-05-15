@@ -7,9 +7,9 @@ import {
   DialogContent,
   DialogTitle,
   FormHelperText,
-  Grid,
   Tooltip,
 } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
 import { MRT_RowSelectionState } from 'material-react-table';
 import React from 'react';
 import { CatalogueCategory, CatalogueItem } from '../../api/api.types';
