@@ -146,6 +146,7 @@ jobs:
           mv -v inventory-management-system/* .
           cd object-storage-api/
 
+
       - name: Start MongoDB and MinIO (For object-storage-api)
         working-directory: ../object-storage-api
         run: |
