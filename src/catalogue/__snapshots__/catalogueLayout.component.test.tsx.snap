@@ -850,7 +850,7 @@ exports[`Catalogue Layout Error Component > renders catalogue error page correct
         >
           <button
             aria-label="navigate to catalogue home"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+            class="MuiButtonBase-root Mui-focusVisible MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
             tabindex="0"
             type="button"
           >
@@ -874,6 +874,14 @@ exports[`Catalogue Layout Error Component > renders catalogue error page correct
               >
                 <span
                   class="MuiTouchRipple-child MuiTouchRipple-childLeaving"
+                />
+              </span>
+              <span
+                class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible MuiTouchRipple-ripplePulsate"
+                style="width: 1px; height: 1px; top: -0.5px; left: -0.5px;"
+              >
+                <span
+                  class="MuiTouchRipple-child MuiTouchRipple-childPulsate"
                 />
               </span>
             </span>

@@ -5,6 +5,7 @@ import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 import ImageEditor from '@uppy/image-editor';
 import '@uppy/image-editor/dist/style.css';
+import en_US from '@uppy/locales/lib/en_US';
 import ProgressBar from '@uppy/progress-bar'; // Import the ProgressBar plugin
 import { DashboardModal } from '@uppy/react';
 import statusBarStates from '@uppy/status-bar/lib/StatusBarStates';
@@ -17,7 +18,11 @@ import type {
 } from '../../app.types';
 import { InventoryManagementSystemSettingsContext } from '../../configProvider.component';
 import { getNonEmptyTrimmedString } from '../../utils';
-import { getUploadingState, useMetaFields } from '../uppy.utils';
+import {
+  getUploadingState,
+  useMetaFields,
+  type UppyDashboardLocaleStrings,
+} from '../uppy.utils';
 
 export interface UploadImagesDialogProps {
   open: boolean;
@@ -101,9 +106,7 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
   ]);
 
   React.useEffect(() => {
-    uppy.setMeta({
-      entity_id: entityId,
-    });
+    uppy.setMeta({ entity_id: entityId });
   }, [entityId, uppy]);
 
   uppy.on('dashboard:file-edit-complete', (file) => {
@@ -119,11 +122,7 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
         ...(formattedDescription && { description: formattedDescription }),
       };
 
-      uppy.patchFilesState({
-        [file.id]: {
-          meta: updatedFileData,
-        },
-      });
+      uppy.patchFilesState({ [file.id]: { meta: updatedFileData } });
     }
   });
 
@@ -137,16 +136,12 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
       open={open}
       locale={{
         strings: {
+          ...en_US.strings, // Spread default strings
           dropPasteFiles: 'Drop images here or %{browseFiles}',
-        },
-        // Copied from Uppy locales template:
-        // https://github.com/transloadit/uppy/blob/bb82326d0dd8f999bcb99deeeaa924250c41ffae/packages/%40uppy/locales/template.ts#L6
-        pluralize: (n) => {
-          if (n === 1) {
-            return 0;
-          }
-          return 1;
-        },
+        } as UppyDashboardLocaleStrings<
+          UppyUploadMetadata,
+          UppyImageUploadResponse
+        >,
       }}
       onRequestClose={handleClose}
       closeModalOnClickOutside={false}

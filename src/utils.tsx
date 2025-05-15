@@ -566,6 +566,12 @@ export function parseErrorResponse(errorMessage: string): string {
     returnMessage = 'Content type not supported.';
   } else if (errorMessage.includes('not a valid image')) {
     returnMessage = 'File given is not a valid image.';
+  } else if (
+    errorMessage.includes('file name already exists within the parent entity.')
+  ) {
+    returnMessage =
+      'A file with this name already exists. To rename your file: remove it, add it back and click the edit icon below the file to change its name.';
   }
+
   return returnMessage;
 }

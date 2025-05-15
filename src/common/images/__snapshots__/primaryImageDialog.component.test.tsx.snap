@@ -2544,24 +2544,6 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           class="uppy-Dashboard-progressindicators"
                         >
                           <div
-                            aria-hidden="true"
-                            class="uppy-StatusBar is-waiting"
-                          >
-                            <div
-                              aria-label="0%"
-                              aria-valuemax="100"
-                              aria-valuemin="0"
-                              aria-valuenow="0"
-                              aria-valuetext="0%"
-                              class="uppy-StatusBar-progress"
-                              role="progressbar"
-                              style="width: 0%;"
-                            />
-                            <div
-                              class="uppy-StatusBar-actions"
-                            />
-                          </div>
-                          <div
                             class="uppy uppy-Informer"
                           >
                             <span />
@@ -3548,24 +3530,6 @@ exports[`Primary Image Dialog > renders no results page correctly, and can still
                         <div
                           class="uppy-Dashboard-progressindicators"
                         >
-                          <div
-                            aria-hidden="true"
-                            class="uppy-StatusBar is-waiting"
-                          >
-                            <div
-                              aria-label="0%"
-                              aria-valuemax="100"
-                              aria-valuemin="0"
-                              aria-valuenow="0"
-                              aria-valuetext="0%"
-                              class="uppy-StatusBar-progress"
-                              role="progressbar"
-                              style="width: 0%;"
-                            />
-                            <div
-                              class="uppy-StatusBar-actions"
-                            />
-                          </div>
                           <div
                             class="uppy uppy-Informer"
                           >

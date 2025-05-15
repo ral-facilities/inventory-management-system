@@ -1,6 +1,7 @@
 import { Box, styled } from '@mui/material';
 import { Body, Meta, type UppyFile } from '@uppy/core';
 import { DashboardState } from '@uppy/dashboard/lib/Dashboard';
+import type { DashboardModalProps } from '@uppy/react/lib/DashboardModal';
 import statusBarStates from '@uppy/status-bar/lib/StatusBarStates';
 import { type StatusBarUIProps } from '@uppy/status-bar/lib/StatusBarUI';
 import type { VNode } from 'preact';
@@ -108,10 +109,7 @@ function renderFields(
         'label',
         {
           for: 'uppy-Dashboard-FileCard-input-name',
-          style: {
-            height: '31px',
-            padding: '5px',
-          },
+          style: { height: '31px', padding: '5px' },
         },
         extension
       ),
@@ -123,6 +121,11 @@ export type MetaFields<M extends Meta, B extends Body> = DashboardState<
   M,
   B
 >['metaFields'];
+
+export type UppyDashboardLocaleStrings<
+  M extends Meta,
+  B extends Body,
+> = NonNullable<DashboardModalProps<M, B>['locale']>['strings'];
 
 export function useMetaFields<M extends Meta, B extends Body>(): MetaFields<
   M,
