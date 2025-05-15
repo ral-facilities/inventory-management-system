@@ -1,7 +1,7 @@
 {
   "imsApiUrl": "",
   "osApiUrl": "",
-  "maxAttachmentSizeBytes": 104857600,
+  "maxAttachmentSizeBytes": 10485760,
   "attachmentAllowedFileExtensions": [
     ".csv",
     ".doc",

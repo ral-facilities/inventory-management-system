@@ -401,7 +401,7 @@ describe('Catalogue Items', () => {
     cy.findByText('Add Manufacturer').should('not.exist');
   });
 
-  it('displays the table view correctly', () => {
+  it('displays the tdable view correctly', () => {
     cy.findByText('Cameras 1').should('exist');
     cy.findByText('Cameras 2').should('exist');
     cy.findByText('Cameras 3').should('exist');
@@ -607,12 +607,14 @@ describe('Catalogue Items', () => {
     cy.findByLabelText('Manufacturer *').type('Man{downArrow}{enter}');
     cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.findByRole('button', { name: 'Finish'}).click();
+    cy.findByRole('button', { name: 'Finish' }).click();
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.contains('Unable to update catalogue item properties and manufacturer '
-          + '(Manufacturer C), as the catalogue item has associated items.')
+        cy.contains(
+          'Unable to update catalogue item properties and manufacturer ' +
+            '(Manufacturer C), as the catalogue item has associated items.'
+        );
       });
     cy.findByRole('button', { name: 'Finish' }).should('be.disabled');
 
@@ -627,8 +629,10 @@ describe('Catalogue Items', () => {
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.contains('Unable to update catalogue item properties and manufacturer '
-          + '(Manufacturer C), as the catalogue item has associated items.')
+        cy.contains(
+          'Unable to update catalogue item properties and manufacturer ' +
+            '(Manufacturer C), as the catalogue item has associated items.'
+        );
       });
     cy.findByRole('button', { name: 'Finish' }).should('be.disabled');
   });

@@ -6,7 +6,7 @@ export default defineConfig({
     chromeWebSecurity: false,
     video: false,
     retries: {
-      runMode: 3,
+      runMode: 4,
       openMode: 1,
     },
   },
