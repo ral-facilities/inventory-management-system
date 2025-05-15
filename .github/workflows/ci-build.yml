@@ -127,7 +127,7 @@ jobs:
           --env API__ALLOWED_CORS_HEADERS='["*"]' \
           --env API__ALLOWED_CORS_ORIGINS='["*"]' \
           --env API__ALLOWED_CORS_METHODS='["*"]' \
-          --env OBJECT_STORAGE__ENABLED=false \
+          --env OBJECT_STORAGE__ENABLED=true \
           --env OBJECT_STORAGE__API_REQUEST_TIMEOUT_SECONDS=10 \
           --env OBJECT_STORAGE__API_URL=http://localhost:8002 \
           harbor.stfc.ac.uk/inventory-management-system/ims-api:develop
@@ -137,6 +137,7 @@ jobs:
         with:
           repository: ral-facilities/object-storage-api
           ref: develop
+          path: object-storage-api
 
       - name: Move Object Storage api repo
         run: |
@@ -158,15 +159,16 @@ jobs:
 
       - name: Start object-storage-api
         run: |
-          docker run -d --network=host \
+          docker run -d -p 8002:8000 \
           --name object_storage_api_container \
+          --network object-storage-api_default \
           --env AUTHENTICATION__ENABLED=false \
           --env API__TITLE="Object Storage Service API" \
           --env API__DESCRIPTION="This is the API for the Object Storage Service" \
           --env DATABASE__PROTOCOL="mongodb" \
           --env DATABASE__USERNAME="root" \
           --env DATABASE__PASSWORD="example" \
-          --env DATABASE__HOST_AND_OPTIONS="localhost:27018/?authMechanism=SCRAM-SHA-256&authSource=admin" \
+          --env DATABASE__HOST_AND_OPTIONS="object-storage-api-mongodb:27017" \
           --env DATABASE__NAME="object-storage" \
           --env API__ALLOWED_CORS_HEADERS='["*"]' \
           --env API__ALLOWED_CORS_ORIGINS='["*"]' \
@@ -178,6 +180,12 @@ jobs:
           --env OBJECT_STORAGE__PRESIGNED_URL_EXPIRY_SECONDS=1800 \
           --env ATTACHMENT__MAX_SIZE_BYTES=104857600 \
           --env IMAGE__THUMBNAIL_MAX_SIZE_PIXELS=300 \
+          --env ATTACHMENT__ALLOWED_FILE_EXTENSIONS='[".csv", ".doc", ".docx", ".ods", ".odt", ".rtf", ".pdf", ".txt", ".xls", ".xlsx"]' \
+          --env ATTACHMENT__UPLOAD_LIMIT=50 \
+          --env IMAGE__ALLOWED_FILE_EXTENSIONS='[".bmp", ".jpe", ".jpeg", ".jpg", ".png", ".tif", ".tiff", ".webp"]' \
+          --env IMAGE__UPLOAD_LIMIT=100 \
+          --add-host "localhost:host-gateway" \
+          -v /home/runner/work/inventory-management-system/object-storage-api/object_storage_api/logging.example.ini:/app/object_storage_api/logging.ini \
           harbor.stfc.ac.uk/scd-object-storage-api/object-storage-api:develop
 
       - name: Checkout repo
@@ -196,13 +204,25 @@ jobs:
       - name: Run e2e tests
         run: yarn e2e:api
 
-      - name: Output docker logs (mongodb)
+      - name: Output docker logs (ims mongodb)
         if: failure()
         run: docker logs ims_api_mongodb_container
 
-      - name: Output docker logs (api)
+      - name: Output docker logs (ims api)
         if: failure()
         run: docker logs inventory_management_system_api_container
+      
+      - name: Output docker logs (object-storage mongodb)
+        if: failure()
+        run: docker logs object-storage-api-mongodb
+
+      - name: Output docker logs (object-storage minio)
+        if: failure()
+        run: docker logs object-storage-minio
+
+      - name: Output docker logs (object-storage api)
+        if: failure()
+        run: docker logs object_storage_api_container
 
       - name: Upload Cypress screenshots
         if: failure()
