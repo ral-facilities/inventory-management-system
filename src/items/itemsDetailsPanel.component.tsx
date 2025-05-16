@@ -61,7 +61,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
       // by clicks inside this grid
       onClick={(e) => e.stopPropagation()}
     >
-      <Grid item sx={{ mb: 4 }} xs={12}>
+      <Grid sx={{ mb: 4 }} xs={12}>
         <Tabs value={tabValue} onChange={handleTabChange}>
           <Tab label="Details" />
           <Tab label="Properties" />
@@ -69,14 +69,14 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
           <Tab label="Notes" />
         </Tabs>
       </Grid>
-      <Grid item sx={{ ml: 2 }} xs={12}>
+      <Grid sx={{ ml: 2 }} xs={12}>
         <TabPanel value={tabValue} index={0}>
-          <Grid item>
+          <Grid>
             <Grid container spacing={0}>
-              <Grid item xs={12} sm={6} padding={1}>
+              <Grid xs={12} sm={6} padding={1}>
                 <PrimaryImage entityId={itemData.id} isDetailsPanel />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid xs={12} sm={6}>
                 <Typography variant="h4" sx={{ wordWrap: 'break-word' }}>
                   {catalogueItemIdData.name}
                 </Typography>
@@ -91,8 +91,8 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                   {catalogueItemIdData.description ?? 'None'}
                 </Typography>
               </Grid>
-              <Grid item container spacing={0}>
-                <Grid item xs={12} sm={6} key={0}>
+              <Grid container spacing={0}>
+                <Grid xs={12} sm={6} key={0}>
                   <Typography color="text.primary">Serial Number</Typography>
                   <Typography
                     color="text.secondary"
@@ -102,7 +102,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                   </Typography>
                 </Grid>
 
-                <Grid item xs={12} sm={6} key={1}>
+                <Grid xs={12} sm={6} key={1}>
                   <Typography color="text.primary">Asset Number</Typography>
                   <Typography
                     color="text.secondary"
@@ -112,7 +112,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                   </Typography>
                 </Grid>
 
-                <Grid item xs={12} sm={6} key={2}>
+                <Grid xs={12} sm={6} key={2}>
                   <Typography color="text.primary">
                     Purchase Order Number
                   </Typography>
@@ -124,7 +124,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                   </Typography>
                 </Grid>
 
-                <Grid item xs={12} sm={6} key={3}>
+                <Grid xs={12} sm={6} key={3}>
                   <Typography color="text.primary">
                     Warranty End Date
                   </Typography>
@@ -134,7 +134,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                       : 'None'}
                   </Typography>
                 </Grid>
-                <Grid item xs={12} sm={6} key={4}>
+                <Grid xs={12} sm={6} key={4}>
                   <Typography color="text.primary">Delivered Date</Typography>
                   <Typography color="text.secondary">
                     {itemData.delivered_date
@@ -143,14 +143,14 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                   </Typography>
                 </Grid>
 
-                <Grid item xs={12} sm={6} key={5}>
+                <Grid xs={12} sm={6} key={5}>
                   <Typography color="text.primary">Is Defective</Typography>
                   <Typography color="text.secondary">
                     {itemData.is_defective ? 'Yes' : 'No'}
                   </Typography>
                 </Grid>
 
-                <Grid item xs={12} sm={6} key={6}>
+                <Grid xs={12} sm={6} key={6}>
                   <Typography color="text.primary">Usage Status</Typography>
                   <Typography
                     color="text.secondary"
@@ -160,7 +160,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                   </Typography>
                 </Grid>
 
-                <Grid item xs={12} sm={6} key={7}>
+                <Grid xs={12} sm={6} key={7}>
                   <Typography color="text.primary">System</Typography>
                   <Typography
                     color="text.secondary"
@@ -177,14 +177,14 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                   </Typography>
                 </Grid>
 
-                <Grid item xs={12} sm={6} key={8}>
+                <Grid xs={12} sm={6} key={8}>
                   <Typography color="text.primary">Last Modified</Typography>
                   <Typography color="text.secondary">
                     {formatDateTimeStrings(itemData.modified_time, true)}
                   </Typography>
                 </Grid>
 
-                <Grid item xs={12} sm={6} key={9}>
+                <Grid xs={12} sm={6} key={9}>
                   <Typography color="text.primary">Created</Typography>
                   <Typography color="text.secondary">
                     {formatDateTimeStrings(itemData.created_time, true)}
@@ -196,13 +196,13 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
         </TabPanel>
 
         <TabPanel value={tabValue} index={1}>
-          <Grid item container spacing={0}>
+          <Grid container spacing={0}>
             {itemData.properties.length === 0 ? (
               <Typography color="text.secondary">None</Typography>
             ) : (
               itemData.properties.map((property, index) => {
                 return (
-                  <Grid item xs={12} sm={6} key={index}>
+                  <Grid xs={12} sm={6} key={index}>
                     <Typography
                       align="left"
                       color="text.primary"
@@ -229,8 +229,8 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
         </TabPanel>
 
         <TabPanel value={tabValue} index={2}>
-          <Grid item container spacing={0}>
-            <Grid item xs={12} sm={6} key={0}>
+          <Grid container spacing={0}>
+            <Grid xs={12} sm={6} key={0}>
               <Typography color="text.primary">Manufacturer Name</Typography>
               <Typography
                 color="text.secondary"
@@ -245,7 +245,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                 </MuiLink>
               </Typography>
             </Grid>
-            <Grid item xs={12} sm={6} key={1}>
+            <Grid xs={12} sm={6} key={1}>
               <Typography color="text.primary">Manufacturer URL</Typography>
               <Typography
                 color="text.secondary"
@@ -265,7 +265,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                 )}
               </Typography>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid xs={12} sm={6}>
               <Typography align="left" color="text.primary">
                 Telephone number
               </Typography>
@@ -277,7 +277,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                 {manufacturerData?.telephone ?? 'None'}
               </Typography>
             </Grid>
-            <Grid item xs={12} sm={6} md={4}>
+            <Grid xs={12} sm={6} md={4}>
               <Typography align="left" color="text.primary">
                 Address
               </Typography>
@@ -321,7 +321,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
         </TabPanel>
 
         <TabPanel value={tabValue} index={3}>
-          <Grid item xs={12}>
+          <Grid xs={12}>
             <Typography color="text.secondary" whiteSpace="pre-line">
               {itemData.notes ?? 'None'}
             </Typography>

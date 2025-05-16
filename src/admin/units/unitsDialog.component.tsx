@@ -72,7 +72,7 @@ function UnitsDialog(props: UnitsDialogProps) {
       <DialogTitle>Add Unit</DialogTitle>
       <DialogContent>
         <Grid container direction="column" spacing={1}>
-          <Grid item sx={{ mt: 1 }}>
+          <Grid sx={{ mt: 1 }}>
             <TextField
               id="unit-value-input"
               label="Value"

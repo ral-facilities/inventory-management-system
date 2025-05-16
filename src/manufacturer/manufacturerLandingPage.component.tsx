@@ -32,11 +32,10 @@ function ManufacturerLandingPage() {
             display: 'none',
           },
         }}
-        item
         container
       >
         {manufacturerData && (
-          <Grid item container sx={{ display: 'flex', py: 2 }}>
+          <Grid container sx={{ display: 'flex', py: 2 }}>
             <Button
               sx={{ mx: 0.5 }}
               variant="outlined"
@@ -62,14 +61,13 @@ function ManufacturerLandingPage() {
       </Grid>
       {manufacturerData && (
         <Grid
-          item
           container
           spacing={1}
           sx={{ px: '192px' }}
           alignContent={'center'}
           flexDirection="row"
         >
-          <Grid item xs={12}>
+          <Grid xs={12}>
             <Typography
               sx={{ margin: 1, textAlign: 'center', wordWrap: 'break-word' }}
               variant="h4"
@@ -77,12 +75,12 @@ function ManufacturerLandingPage() {
               {manufacturerData.name}
             </Typography>
           </Grid>
-          <Grid item xs={12} my={2}>
+          <Grid xs={12} my={2}>
             <Typography textAlign={'center'} variant="h6">
               URL:
             </Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid xs={12}>
             {manufacturerData.url ? (
               <Typography
                 textAlign={'center'}
@@ -109,12 +107,12 @@ function ManufacturerLandingPage() {
               </Typography>
             )}
           </Grid>
-          <Grid item xs={12} my={2}>
+          <Grid xs={12} my={2}>
             <Typography textAlign={'center'} variant="h6">
               Telephone number:
             </Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid xs={12}>
             <Typography
               sx={{ mx: '8px', wordWrap: 'break-word' }}
               textAlign={'center'}
@@ -124,12 +122,12 @@ function ManufacturerLandingPage() {
               {manufacturerData.telephone ?? 'None'}
             </Typography>
           </Grid>
-          <Grid item xs={12} my={2}>
+          <Grid xs={12} my={2}>
             <Typography textAlign={'center'} variant="h6">
               Address:
             </Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid xs={12}>
             <Typography
               align="center"
               sx={{ mx: '8px', wordWrap: 'break-word' }}
@@ -167,12 +165,12 @@ function ManufacturerLandingPage() {
             </Typography>
           </Grid>
 
-          <Grid item xs={12} my={2}>
+          <Grid xs={12} my={2}>
             <Typography textAlign={'center'} variant="h6">
               Last modified:
             </Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid xs={12}>
             <Typography
               sx={{ mx: '8px' }}
               textAlign={'center'}
@@ -183,12 +181,12 @@ function ManufacturerLandingPage() {
             </Typography>
           </Grid>
 
-          <Grid item xs={12} my={2}>
+          <Grid xs={12} my={2}>
             <Typography textAlign={'center'} variant="h6">
               Created:
             </Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid xs={12}>
             <Typography
               sx={{ mx: '8px' }}
               textAlign={'center'}

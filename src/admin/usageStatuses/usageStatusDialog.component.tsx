@@ -72,7 +72,7 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
       <DialogTitle>Add Usage Status</DialogTitle>
       <DialogContent>
         <Grid container direction="column" spacing={1}>
-          <Grid item sx={{ mt: 1 }}>
+          <Grid sx={{ mt: 1 }}>
             <TextField
               id="usage-status-value-input"
               label="Value"

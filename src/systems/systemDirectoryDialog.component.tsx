@@ -129,7 +129,7 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
     >
       <DialogTitle marginLeft={2}>
         <Grid container spacing={2}>
-          <Grid item>
+          <Grid>
             <Box
               display="inline-flex"
               alignItems="center"
@@ -158,7 +158,7 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
               )}
             </Box>
           </Grid>
-          <Grid item xs={12}>
+          <Grid xs={12}>
             <Breadcrumbs
               breadcrumbsInfo={parentSystemBreadcrumbs}
               onChangeNode={setParentSystemId}

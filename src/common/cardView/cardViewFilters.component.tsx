@@ -32,12 +32,11 @@ const CardViewFilters = <TData extends MRT_RowData>(
         zIndex: 1,
         backgroundColor: baseBackgroundColor,
       }}
-      item
       container
     >
-      <Grid component={TableHead} item container>
+      <Grid component={TableHead} container>
         {table.getHeaderGroups().map((headerGroup) => (
-          <Grid component={TableRow} key={headerGroup.id} item container>
+          <Grid component={TableRow} key={headerGroup.id} container>
             {headerGroup.headers.map(
               (headerOrVirtualHeader, staticColumnIndex) => {
                 const header = headerOrVirtualHeader as MRT_Header<TData>;

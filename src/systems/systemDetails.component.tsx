@@ -69,7 +69,6 @@ function SystemDetails(props: SystemDetailsProps) {
     <>
       <Grid
         container
-        item
         sx={{
           display: 'flex',
           alignItems: 'center',
@@ -77,7 +76,7 @@ function SystemDetails(props: SystemDetailsProps) {
         }}
         spacing={1}
       >
-        <Grid item xs={9}>
+        <Grid xs={9}>
           <OverflowTip
             sx={{
               typography: 'h5',
@@ -101,21 +100,20 @@ function SystemDetails(props: SystemDetailsProps) {
           <Typography variant="h3">Please select a system</Typography>
         </Box>
       ) : (
-        <Grid item>
+        <Grid>
           <Grid container direction="column" wrap="nowrap" spacing={1}>
             <Grid
               container
-              item
               direction="row"
               justifyContent="space-evenly"
               sx={{ margin: 0, mt: 1 }}
             >
-              <Grid item container spacing={2}>
-                <Grid item xs="auto">
+              <Grid container spacing={2}>
+                <Grid xs="auto">
                   <PrimaryImage entityId={system.id} />
                 </Grid>
-                <Grid item container spacing={1} xs>
-                  <Grid item xs={12} sm={6}>
+                <Grid container spacing={1} xs>
+                  <Grid xs={12} sm={6}>
                     <Typography color="text.primary">Location</Typography>
                     <Typography
                       variant="body1"
@@ -125,7 +123,7 @@ function SystemDetails(props: SystemDetailsProps) {
                       {system.location ?? 'None'}
                     </Typography>
                   </Grid>
-                  <Grid item xs={12} sm={6} sx={{ display: 'inline-flex' }}>
+                  <Grid xs={12} sm={6} sx={{ display: 'inline-flex' }}>
                     <Typography color="text.primary">Importance</Typography>
                     <Chip
                       label={system.importance}
@@ -142,7 +140,7 @@ function SystemDetails(props: SystemDetailsProps) {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={6}>
+                  <Grid xs={12} sm={6}>
                     <Typography color="text.primary">Owner</Typography>
                     <Typography
                       variant="body1"
@@ -152,14 +150,14 @@ function SystemDetails(props: SystemDetailsProps) {
                       {system.owner ?? 'None'}
                     </Typography>
                   </Grid>
-                  <Grid item xs={12} sm={6}>
+                  <Grid xs={12} sm={6}>
                     <Typography color="text.primary">Last modified</Typography>
                     <Typography variant="body1" color="text.secondary">
                       {formatDateTimeStrings(system.modified_time, true)}
                     </Typography>
                   </Grid>
 
-                  <Grid item xs={12} sm={6}>
+                  <Grid xs={12} sm={6}>
                     <Typography color="text.primary">Created</Typography>
                     <Typography variant="body1" color="text.secondary">
                       {formatDateTimeStrings(system.created_time, true)}
@@ -168,7 +166,7 @@ function SystemDetails(props: SystemDetailsProps) {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item>
+            <Grid>
               <Typography color="text.primary">Description</Typography>
               <Typography
                 variant="body1"
@@ -178,7 +176,7 @@ function SystemDetails(props: SystemDetailsProps) {
                 {system.description ?? 'None'}
               </Typography>
             </Grid>
-            <Grid item container sx={{ marginTop: 2, display: 'inline-block' }}>
+            <Grid container sx={{ marginTop: 2, display: 'inline-block' }}>
               <TabView
                 ariaLabelPrefix="systems page"
                 defaultTab="Items"

@@ -512,13 +512,12 @@ function CatalogueCardView() {
           height={cardViewHeight}
           maxHeight={cardViewHeight}
         >
-          <Grid item width="100%" sx={{ flexShrink: 0 }}>
+          <Grid width="100%" sx={{ flexShrink: 0 }}>
             <MRT_TopToolbar table={table} />
           </Grid>
-          <Grid item width="100%" sx={{ flex: 1, overflow: 'auto' }}>
+          <Grid width="100%" sx={{ flex: 1, overflow: 'auto' }}>
             <Grid container>
               <Grid
-                item
                 container
                 alignItems="top"
                 display={!isCollapsed ? 'none' : undefined}
@@ -541,12 +540,12 @@ function CatalogueCardView() {
                   <CardViewFilters table={table} />
                 </Collapse>
               </Grid>
-              <Grid item width="100%">
+              <Grid width="100%">
                 <Grid container width="100%">
                   {!isLoading &&
                     (data.length !== 0 ? (
                       data.map((card, index) => (
-                        <Grid item key={index} sm={6} md={4} width={'100%'}>
+                        <Grid key={index} sm={6} md={4} width={'100%'}>
                           <CatalogueCard
                             card={card as MRT_Cell<CatalogueCategory>}
                             table={table}
@@ -566,7 +565,7 @@ function CatalogueCardView() {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item width="100%" sx={{ flexShrink: 0 }}>
+          <Grid width="100%" sx={{ flexShrink: 0 }}>
             <MRT_BottomToolbar table={table} />
           </Grid>
           <CatalogueCategoryDialog

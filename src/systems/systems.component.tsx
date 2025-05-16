@@ -335,7 +335,6 @@ function Systems() {
       <Box height="100%">
         <Grid container margin={0} direction="row" alignItems="stretch">
           <Grid
-            item
             xs={12}
             md
             minWidth={MIN_SUBSYSTEMS_WIDTH}
@@ -455,7 +454,6 @@ function Systems() {
             )}
           </Grid>
           <Grid
-            item
             textAlign="left"
             padding={1}
             xs

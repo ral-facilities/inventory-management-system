@@ -300,8 +300,8 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
       </DialogTitle>
       <DialogContent>
         <Grid container direction="column" spacing={1}>
-          <Grid item container sx={{ mt: 1, alignItems: 'center' }}>
-            <Grid item xs={requestType === 'patch' ? 11 : 12}>
+          <Grid container sx={{ mt: 1, alignItems: 'center' }}>
+            <Grid xs={requestType === 'patch' ? 11 : 12}>
               <TextField
                 id="catalogue-category-name-input"
                 label="Name"
@@ -321,7 +321,6 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
                   justifyContent: 'center',
                   paddingLeft: 1,
                 }}
-                item
                 xs={1}
               >
                 <Button
@@ -345,7 +344,7 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
               </Grid>
             )}
           </Grid>
-          <Grid item>
+          <Grid>
             <Controller
               control={control}
               name="is_leaf"
@@ -387,10 +386,10 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
           </Grid>
           {isLeaf === 'true' && (
             <>
-              <Grid item>
+              <Grid>
                 <Divider sx={{ minWidth: '700px' }} />
               </Grid>
-              <Grid item sx={{ paddingLeft: 1, paddingTop: 3 }}>
+              <Grid sx={{ paddingLeft: 1, paddingTop: 3 }}>
                 <Typography variant="h6">Catalogue Item Properties</Typography>
                 <Box mt={1}>
                   <FormProvider {...formMethods}>

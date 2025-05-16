@@ -174,7 +174,7 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
       >
         <Paper sx={paperStyles} elevation={1}>
           <Grid container style={{ height: '100%' }}>
-            <Grid item xs={6}>
+            <Grid xs={6}>
               <Box sx={paperContentStyles}>
                 <Typography
                   variant="h3"
@@ -210,7 +210,7 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
                 </Box>
               </Box>
             </Grid>
-            <Grid item xs={6}>
+            <Grid xs={6}>
               <div
                 style={{
                   backgroundImage: `url(${props.facilityImage})`,
@@ -232,7 +232,7 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
           </Grid>
         </Paper>
         <Grid container spacing={2}>
-          <Grid item sm={12} md={4}>
+          <Grid sm={12} md={4}>
             <Paper sx={paperStyles} elevation={1}>
               <Box sx={paperContentStyles}>
                 <PaperHeading variant="h4">{'Systems'}</PaperHeading>
@@ -259,7 +259,7 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
               </Box>
             </Paper>
           </Grid>
-          <Grid item sm={12} md={4}>
+          <Grid sm={12} md={4}>
             <Paper sx={paperStyles} elevation={1}>
               <Box sx={paperContentStyles}>
                 <PaperHeading variant="h4">{'Manufacturers'}</PaperHeading>
@@ -284,7 +284,7 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
               </Box>
             </Paper>
           </Grid>
-          <Grid item sm={12} md={4}>
+          <Grid sm={12} md={4}>
             <Paper
               sx={{ ...paperStyles, backgroundColor: '#003088' }}
               elevation={1}

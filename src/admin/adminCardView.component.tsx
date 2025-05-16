@@ -6,8 +6,8 @@ function AdminCardView() {
   return (
     <Grid container>
       <Grid container flexDirection={'column'}>
-        <Grid item container xs={12} overflow={'auto'}>
-          <Grid item key={0} xs={12} sm={6}>
+        <Grid container xs={12} overflow={'auto'}>
+          <Grid key={0} xs={12} sm={6}>
             <Button
               component={Link}
               to="units"
@@ -46,7 +46,7 @@ function AdminCardView() {
               </Card>
             </Button>
           </Grid>
-          <Grid item key={1} xs={12} sm={6}>
+          <Grid key={1} xs={12} sm={6}>
             <Button
               component={Link}
               to={'usage-statuses'}

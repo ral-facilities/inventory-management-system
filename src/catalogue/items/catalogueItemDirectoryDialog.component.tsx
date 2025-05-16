@@ -160,7 +160,7 @@ const CatalogueItemDirectoryDialog = (
     >
       <DialogTitle sx={{ marginLeft: 2 }}>
         <Grid container spacing={2}>
-          <Grid container item flexDirection="row" alignItems="center" xs={12}>
+          <Grid container flexDirection="row" alignItems="center" xs={12}>
             <>
               {requestType === 'moveTo' ? 'Move ' : 'Copy '}{' '}
               {selectedItems.length}{' '}
@@ -184,7 +184,7 @@ const CatalogueItemDirectoryDialog = (
               </Tooltip>
             )}
           </Grid>
-          <Grid item xs={12}>
+          <Grid xs={12}>
             <Breadcrumbs
               breadcrumbsInfo={catalogueBreadcrumbs}
               onChangeNode={setParentCategoryId}

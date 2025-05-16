@@ -419,13 +419,12 @@ const ImageGallery = (props: ImageGalleryProps) => {
         ...(table.getState().isFullScreen && MRT_FULL_SCREEN_STYLES),
       }}
     >
-      <Grid item width="100%" sx={{ flexShrink: 0 }}>
+      <Grid width="100%" sx={{ flexShrink: 0 }}>
         <MRT_TopToolbar table={table} />
       </Grid>
-      <Grid item width="100%" sx={{ flex: 1, overflow: 'auto' }}>
+      <Grid width="100%" sx={{ flex: 1, overflow: 'auto' }}>
         <Grid container>
           <Grid
-            item
             container
             display={!isCollapsed ? 'none' : undefined}
             direction="column"
@@ -449,7 +448,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
               <CardViewFilters table={table} />
             </Collapse>
           </Grid>
-          <Grid container item padding={1}>
+          <Grid container padding={1}>
             {images &&
               (images.length === 0 ? (
                 <ErrorPage
@@ -460,7 +459,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
               ) : (
                 <Grid
                   container
-                  item
                   mt={2}
                   gap={2}
                   sx={{
@@ -481,7 +479,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
                       (image) => image.id === card.row.original.id
                     );
                     return (
-                      <Grid key={`thumbnail-displayed-${index}`} item>
+                      <Grid key={`thumbnail-displayed-${index}`}>
                         <Card
                           component={Grid}
                           container
@@ -512,13 +510,12 @@ const ImageGallery = (props: ImageGalleryProps) => {
                             display="flex"
                             justifyContent="flex-start"
                             alignItems="center"
-                            item
                             container
                             height="fit-content"
                             pt={!dense ? 5.25 : undefined}
                             xs={12}
                           >
-                            <Grid item xs={2}>
+                            <Grid xs={2}>
                               {dense && (
                                 <MRT_SelectCheckbox
                                   row={card.row as MRT_Row<APIImage>}
@@ -535,7 +532,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
                             display="flex"
                             justifyContent="center"
                             alignItems="center"
-                            item
                             minHeight={`${maxHeightThumbnail}px`}
                             xs
                           >
@@ -557,13 +553,12 @@ const ImageGallery = (props: ImageGalleryProps) => {
                             display="flex"
                             justifyContent="center"
                             alignItems="center"
-                            item
                             height="fit-content"
                             container
                             xs={12}
                           >
                             {!dense && (
-                              <Grid xs={2} item>
+                              <Grid xs={2}>
                                 <MRT_ToggleRowActionMenuButton
                                   cell={card as MRT_Cell<APIImage>}
                                   row={card.row as MRT_Row<APIImage>}
@@ -574,7 +569,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
                                 />
                               </Grid>
                             )}
-                            <Grid item xs={dense ? 12 : 8}>
+                            <Grid xs={dense ? 12 : 8}>
                               <OverflowTip
                                 sx={{
                                   fontVariant: 'body2',
@@ -587,7 +582,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
                               </OverflowTip>
                             </Grid>
                             {/*Adds an item for spacing, to centre the file name in the card. */}
-                            {!dense && <Grid item xs={2}></Grid>}
+                            {!dense && <Grid xs={2}></Grid>}
                           </Grid>
                         </Card>
                       </Grid>
@@ -598,7 +593,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item width="100%" sx={{ flexShrink: 0 }}>
+      <Grid width="100%" sx={{ flexShrink: 0 }}>
         <MRT_BottomToolbar
           table={table}
           sx={{ width: '100%', bottom: undefined, position: 'relative' }}

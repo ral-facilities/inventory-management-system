@@ -154,7 +154,7 @@ const EditFileDialog = (props: FileDialogProps) => {
       <DialogTitle>{`Edit ${fileType}`}</DialogTitle>
       <DialogContent>
         <Grid container direction="column" spacing={1} component="form">
-          <Grid item sx={{ mt: 1 }}>
+          <Grid sx={{ mt: 1 }}>
             <TextField
               id="object-file-name-input"
               label="File Name"
@@ -170,7 +170,7 @@ const EditFileDialog = (props: FileDialogProps) => {
               fullWidth
             />
           </Grid>
-          <Grid item>
+          <Grid>
             <TextField
               id="object-description-input"
               label="Description"
@@ -181,7 +181,7 @@ const EditFileDialog = (props: FileDialogProps) => {
               multiline
             />
           </Grid>
-          <Grid item>
+          <Grid>
             <TextField
               id="object-title-input"
               label="Title"

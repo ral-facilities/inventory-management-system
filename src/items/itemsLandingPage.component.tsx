@@ -85,28 +85,22 @@ function ItemsLandingPage() {
         catalogueItemData &&
         itemData &&
         catalogueCategoryData && (
-          <Grid item container justifyContent="center" xs={12}>
+          <Grid container justifyContent="center" xs={12}>
             <Grid
-              item
               container
               xs={10}
               display="inline-block"
               style={{ maxWidth: '80%' }}
             >
               {/* Image Section */}
-              <Grid item>
+              <Grid>
                 <Grid container>
-                  <Grid item xs="auto">
+                  <Grid xs="auto">
                     <PrimaryImage entityId={itemData.id} />
                   </Grid>
                   {/* Title and Description Section */}
-                  <Grid
-                    item
-                    container
-                    xs
-                    sx={{ alignItems: 'flex-start', pl: 2 }}
-                  >
-                    <Grid item xs={12}>
+                  <Grid container xs sx={{ alignItems: 'flex-start', pl: 2 }}>
+                    <Grid xs={12}>
                       <Typography
                         variant="h4"
                         gutterBottom
@@ -157,9 +151,8 @@ function ItemsLandingPage() {
                     value: 'Information',
                     icon: <InfoOutlinedIcon />,
                     component: (
-                      <Grid item container spacing={1} xs={12} mt={1}>
+                      <Grid container spacing={1} xs={12} mt={1}>
                         <Grid
-                          item
                           xs={12}
                           sx={{
                             display: 'flex',
@@ -171,9 +164,9 @@ function ItemsLandingPage() {
                           <Divider sx={{ width: '100%', mt: 1 }} />
                         </Grid>
 
-                        <Grid item container xs={12}>
-                          <Grid item container spacing={1}>
-                            <Grid item xs={12} sm={6} md={4}>
+                        <Grid container xs={12}>
+                          <Grid container spacing={1}>
+                            <Grid xs={12} sm={6} md={4}>
                               <Typography align="left" color="text.primary">
                                 Serial Number
                               </Typography>
@@ -185,7 +178,7 @@ function ItemsLandingPage() {
                                 {itemData.serial_number ?? 'None'}
                               </Typography>
                             </Grid>
-                            <Grid item xs={12} sm={6} md={4}>
+                            <Grid xs={12} sm={6} md={4}>
                               <Typography align="left" color="text.primary">
                                 Asset Number
                               </Typography>
@@ -198,7 +191,7 @@ function ItemsLandingPage() {
                               </Typography>
                             </Grid>
 
-                            <Grid item xs={12} sm={6} md={4}>
+                            <Grid xs={12} sm={6} md={4}>
                               <Typography align="left" color="text.primary">
                                 Purchase Order Number
                               </Typography>
@@ -210,7 +203,7 @@ function ItemsLandingPage() {
                                 {itemData.purchase_order_number ?? 'None'}
                               </Typography>
                             </Grid>
-                            <Grid item xs={12} sm={6} md={4}>
+                            <Grid xs={12} sm={6} md={4}>
                               <Typography align="left" color="text.primary">
                                 Warranty End Date
                               </Typography>
@@ -224,7 +217,7 @@ function ItemsLandingPage() {
                               </Typography>
                             </Grid>
 
-                            <Grid item xs={12} sm={6} md={4}>
+                            <Grid xs={12} sm={6} md={4}>
                               <Typography align="left" color="text.primary">
                                 Delivered Date
                               </Typography>
@@ -237,7 +230,7 @@ function ItemsLandingPage() {
                                   : 'None'}
                               </Typography>
                             </Grid>
-                            <Grid item xs={12} sm={6} md={4}>
+                            <Grid xs={12} sm={6} md={4}>
                               <Typography align="left" color="text.primary">
                                 Is Defective
                               </Typography>
@@ -246,7 +239,7 @@ function ItemsLandingPage() {
                               </Typography>
                             </Grid>
 
-                            <Grid item xs={12} sm={6} md={4}>
+                            <Grid xs={12} sm={6} md={4}>
                               <Typography align="left" color="text.primary">
                                 Usage Status
                               </Typography>
@@ -258,7 +251,7 @@ function ItemsLandingPage() {
                                 {itemData.usage_status}
                               </Typography>
                             </Grid>
-                            <Grid item xs={12} sm={6} md={4}>
+                            <Grid xs={12} sm={6} md={4}>
                               <Typography align="left" color="text.primary">
                                 System
                               </Typography>
@@ -276,7 +269,7 @@ function ItemsLandingPage() {
                                 </MuiLink>
                               </Typography>
                             </Grid>
-                            <Grid item xs={12} sm={6} md={4}>
+                            <Grid xs={12} sm={6} md={4}>
                               <Typography align="left" color="text.primary">
                                 Last modified
                               </Typography>
@@ -287,7 +280,7 @@ function ItemsLandingPage() {
                                 )}
                               </Typography>
                             </Grid>
-                            <Grid item xs={12} sm={6} md={4}>
+                            <Grid xs={12} sm={6} md={4}>
                               <Typography align="left" color="text.primary">
                                 Created
                               </Typography>
@@ -302,7 +295,6 @@ function ItemsLandingPage() {
                         </Grid>
 
                         <Grid
-                          item
                           xs={12}
                           sx={{
                             display: 'flex',
@@ -314,10 +306,10 @@ function ItemsLandingPage() {
                           <Typography variant="h6">Properties</Typography>
                           <Divider sx={{ width: '100%', mt: 1 }} />
                         </Grid>
-                        <Grid container item xs={12}>
-                          <Grid container item spacing={1}>
+                        <Grid container xs={12}>
+                          <Grid container spacing={1}>
                             {itemData.properties.length === 0 ? (
-                              <Grid item>
+                              <Grid>
                                 <Typography
                                   variant="body1"
                                   color="text.secondary"
@@ -327,7 +319,7 @@ function ItemsLandingPage() {
                               </Grid>
                             ) : (
                               itemData.properties.map((property, index) => (
-                                <Grid item xs={12} sm={6} md={4} key={index}>
+                                <Grid xs={12} sm={6} md={4} key={index}>
                                   <Typography
                                     align="left"
                                     color="text.primary"
@@ -351,7 +343,6 @@ function ItemsLandingPage() {
                         </Grid>
 
                         <Grid
-                          item
                           xs={12}
                           sx={{
                             display: 'flex',
@@ -365,9 +356,9 @@ function ItemsLandingPage() {
                         </Grid>
 
                         {manufacturer && (
-                          <Grid item container xs={12}>
-                            <Grid container item spacing={1} xs={12}>
-                              <Grid item xs={12} sm={6} md={4}>
+                          <Grid container xs={12}>
+                            <Grid container spacing={1} xs={12}>
+                              <Grid xs={12} sm={6} md={4}>
                                 <Typography align="left" color="text.primary">
                                   Name
                                 </Typography>
@@ -385,7 +376,7 @@ function ItemsLandingPage() {
                                   </MuiLink>
                                 </Typography>
                               </Grid>
-                              <Grid item xs={12} sm={6} md={4}>
+                              <Grid xs={12} sm={6} md={4}>
                                 <Typography align="left" color="text.primary">
                                   URL
                                 </Typography>
@@ -408,7 +399,7 @@ function ItemsLandingPage() {
                                   )}
                                 </Typography>
                               </Grid>
-                              <Grid item xs={12} sm={6} md={4}>
+                              <Grid xs={12} sm={6} md={4}>
                                 <Typography align="left" color="text.primary">
                                   Telephone number
                                 </Typography>
@@ -420,7 +411,7 @@ function ItemsLandingPage() {
                                   {manufacturer?.telephone ?? 'None'}
                                 </Typography>
                               </Grid>
-                              <Grid item xs={12} sm={6} md={4}>
+                              <Grid xs={12} sm={6} md={4}>
                                 <Typography align="left" color="text.primary">
                                   Address
                                 </Typography>

@@ -99,7 +99,7 @@ function TabView<T extends string>(props: TabViewProps<T>) {
 
   return (
     <Grid container flexDirection="column">
-      <Grid item xs={12}>
+      <Grid xs={12}>
         <Tabs
           value={tabValue}
           onChange={handleTabChange}
@@ -119,7 +119,7 @@ function TabView<T extends string>(props: TabViewProps<T>) {
           ))}
         </Tabs>
       </Grid>
-      <Grid item xs={12}>
+      <Grid xs={12}>
         {tabData.map(({ value, component }) => (
           <TabPanel key={value} value={tabValue} label={value}>
             {component}

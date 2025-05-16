@@ -253,7 +253,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       <DialogTitle>{`${type === 'post' ? 'Add' : 'Edit'} Manufacturer`}</DialogTitle>
       <DialogContent>
         <Grid container direction="column" spacing={1} component="form">
-          <Grid item sx={{ mt: 1 }}>
+          <Grid sx={{ mt: 1 }}>
             <TextField
               id="manufacturer-name-input"
               label="Name"
@@ -264,7 +264,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               fullWidth
             />
           </Grid>
-          <Grid item>
+          <Grid>
             <TextField
               id="manufacturer-url-input"
               label="URL"
@@ -274,10 +274,10 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               fullWidth
             />
           </Grid>
-          <Grid item>
+          <Grid>
             <Typography>Address</Typography>
           </Grid>
-          <Grid item>
+          <Grid>
             <TextField
               id="manufacturer-address-line-input"
               label="Address Line"
@@ -288,7 +288,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               fullWidth
             />
           </Grid>
-          <Grid item>
+          <Grid>
             <TextField
               id="manufacturer-town-input"
               label="Town"
@@ -296,7 +296,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               fullWidth
             />
           </Grid>
-          <Grid item>
+          <Grid>
             <TextField
               id="manufacturer-county-input"
               label="County"
@@ -304,7 +304,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               fullWidth
             />
           </Grid>
-          <Grid item>
+          <Grid>
             <TextField
               id="manufacturer-country-input"
               label="Country"
@@ -315,7 +315,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               fullWidth
             />
           </Grid>
-          <Grid item>
+          <Grid>
             <TextField
               id="manufacturer-postcode-input"
               label="Post/Zip code"
@@ -326,7 +326,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               fullWidth
             />
           </Grid>
-          <Grid item>
+          <Grid>
             <TextField
               id="manufacturer-telephone-input"
               label="Telephone number"

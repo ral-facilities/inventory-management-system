@@ -527,8 +527,8 @@ function ItemDialog(props: ItemDialogProps) {
     switch (step) {
       case 0:
         return (
-          <Grid item container spacing={1.5} xs={12}>
-            <Grid item container xs={12}>
+          <Grid container spacing={1.5} xs={12}>
+            <Grid container xs={12}>
               <TextField
                 id="item-serial-number-input"
                 label="Serial number"
@@ -554,7 +554,6 @@ function ItemDialog(props: ItemDialogProps) {
               {requestType !== 'patch' && (
                 <>
                   <Grid
-                    item
                     onClick={() =>
                       setShowAdvancedSerialNumberOptions(
                         !showAdvancedSerialNumberOptions
@@ -575,13 +574,13 @@ function ItemDialog(props: ItemDialogProps) {
                         : 'Show advanced options'}
                     </Typography>
                   </Grid>
-                  <Grid container item xs={12}>
+                  <Grid container xs={12}>
                     <Collapse
                       sx={{ width: '100%' }}
                       in={showAdvancedSerialNumberOptions}
                     >
-                      <Grid item container mt={0.25} spacing={1.5} xs={12}>
-                        <Grid item xs={6}>
+                      <Grid container mt={0.25} spacing={1.5} xs={12}>
+                        <Grid xs={6}>
                           <TextField
                             id="item-quantity-input"
                             label="Quantity"
@@ -594,7 +593,7 @@ function ItemDialog(props: ItemDialogProps) {
                             }
                           />
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid xs={6}>
                           <TextField
                             id="item-starting-value-input"
                             label="Starting value"
@@ -618,7 +617,7 @@ function ItemDialog(props: ItemDialogProps) {
                 </>
               )}
             </Grid>
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <TextField
                 id="item-asset-input"
                 label="Asset number"
@@ -627,7 +626,7 @@ function ItemDialog(props: ItemDialogProps) {
                 fullWidth
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <TextField
                 id="item-purchase-order-input"
                 label="Purchase order number"
@@ -636,7 +635,7 @@ function ItemDialog(props: ItemDialogProps) {
                 fullWidth
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <Controller
                 name="warranty_end_date"
                 control={controlDetailsStep}
@@ -690,7 +689,7 @@ function ItemDialog(props: ItemDialogProps) {
                 )}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <Controller
                 name="delivered_date"
                 control={controlDetailsStep}
@@ -741,7 +740,7 @@ function ItemDialog(props: ItemDialogProps) {
                 )}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <Controller
                 control={controlDetailsStep}
                 name="is_defective"
@@ -768,7 +767,7 @@ function ItemDialog(props: ItemDialogProps) {
                 )}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <Controller
                 control={controlDetailsStep}
                 name="usage_status_id"
@@ -806,8 +805,8 @@ function ItemDialog(props: ItemDialogProps) {
               />
             </Grid>
 
-            <Grid item container xs={12} sx={{ display: 'flex' }}>
-              <Grid item xs={11}>
+            <Grid container xs={12} sx={{ display: 'flex' }}>
+              <Grid xs={11}>
                 <TextField
                   id="item-notes-input"
                   label="Notes"
@@ -818,7 +817,7 @@ function ItemDialog(props: ItemDialogProps) {
                   fullWidth
                 />
               </Grid>
-              <Grid item xs={1}>
+              <Grid xs={1}>
                 <Tooltip
                   sx={{ alignItems: 'center' }}
                   title={
@@ -843,14 +842,14 @@ function ItemDialog(props: ItemDialogProps) {
         );
       case 1:
         return (
-          <Grid item xs={12}>
+          <Grid xs={12}>
             {parentCatalogueItemPropertiesInfo.length >= 1 ? (
               <Grid container spacing={1.5}>
                 {parentCatalogueItemPropertiesInfo.map(
                   (property: CatalogueCategoryProperty, index: number) => (
-                    <Grid item xs={12} key={index}>
+                    <Grid xs={12} key={index}>
                       <Grid container spacing={1.5}>
-                        <Grid item xs={11} sx={{ display: 'flex' }}>
+                        <Grid xs={11} sx={{ display: 'flex' }}>
                           {property.type === 'boolean' ? (
                             <Controller
                               control={controlPropertiesStep}
@@ -977,7 +976,6 @@ function ItemDialog(props: ItemDialogProps) {
                           )}
                         </Grid>
                         <Grid
-                          item
                           xs={1}
                           sx={{ display: 'flex', alignItems: 'center' }}
                         >
@@ -1031,7 +1029,7 @@ function ItemDialog(props: ItemDialogProps) {
         );
       case 2:
         return (
-          <Grid item xs={12}>
+          <Grid xs={12}>
             <Breadcrumbs
               breadcrumbsInfo={parentSystemBreadcrumbs}
               onChangeNode={setParentSystemId}
@@ -1063,7 +1061,6 @@ function ItemDialog(props: ItemDialogProps) {
     >
       <DialogTitle>
         <Grid
-          item
           xs={12}
         >{`${requestType === 'patch' ? 'Edit' : 'Add'} Item`}</Grid>
       </DialogTitle>

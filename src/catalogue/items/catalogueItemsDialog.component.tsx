@@ -543,8 +543,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     switch (step) {
       case 0:
         return (
-          <Grid item container spacing={1.5} xs={12}>
-            <Grid item xs={12}>
+          <Grid container spacing={1.5} xs={12}>
+            <Grid xs={12}>
               <TextField
                 id="catalogue-item-name-input"
                 label="Name"
@@ -556,7 +556,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 helperText={errorsDetailsStep.name?.message}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <TextField
                 id="catalogue-item-description-input"
                 label="Description"
@@ -566,7 +566,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 multiline
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <TextField
                 id="catalogue-item-cost-input"
                 label="Cost (£)"
@@ -579,7 +579,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               />
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <TextField
                 id="catalogue-item-cost-rework-input"
                 label="Cost to rework (£)"
@@ -591,7 +591,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               />
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <TextField
                 id="catalogue-item-replace-input"
                 label="Time to replace (days)"
@@ -604,7 +604,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               />
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <TextField
                 id="catalogue-item-rework-input"
                 label="Time to rework (days)"
@@ -616,7 +616,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               />
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <TextField
                 id="catalogue-item-expected-lifetime-days-input"
                 label="Expected Lifetime (days)"
@@ -628,7 +628,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               />
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <TextField
                 id="catalogue-item-drawing-number-input"
                 label="Drawing number"
@@ -638,7 +638,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               />
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <TextField
                 id="catalogue-item-drawing-link-input"
                 label="Drawing link"
@@ -650,7 +650,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               />
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <TextField
                 id="catalogue-item-model-input"
                 label="Model number"
@@ -660,8 +660,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               />
             </Grid>
 
-            <Grid item xs={12} style={{ display: 'flex' }}>
-              <Grid item xs={11}>
+            <Grid xs={12} style={{ display: 'flex' }}>
+              <Grid xs={11}>
                 <Controller
                   control={controlDetailsStep}
                   name="manufacturer_id"
@@ -704,7 +704,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                   )}
                 />
               </Grid>
-              <Grid item xs={1}>
+              <Grid xs={1}>
                 <Tooltip title="Add Manufacturer">
                   <span>
                     <IconButton
@@ -724,7 +724,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               type="post"
             />
 
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <TextField
                 id="catalogue-item-notes-input"
                 label="Notes"
@@ -739,14 +739,14 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         );
       case 1:
         return (
-          <Grid item xs={12}>
+          <Grid xs={12}>
             {parentCatalogueItemPropertiesInfo.length >= 1 ? (
               <Grid container spacing={1.5}>
                 {parentCatalogueItemPropertiesInfo.map(
                   (property: CatalogueCategoryProperty, index: number) => (
-                    <Grid item xs={12} key={index}>
+                    <Grid xs={12} key={index}>
                       <Grid container spacing={1.5}>
-                        <Grid item xs={11} sx={{ display: 'flex' }}>
+                        <Grid xs={11} sx={{ display: 'flex' }}>
                           {property.type === 'boolean' ? (
                             <Controller
                               control={controlPropertiesStep}
@@ -873,7 +873,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                           )}
                         </Grid>
                         <Grid
-                          item
                           xs={1}
                           sx={{ display: 'flex', alignItems: 'center' }}
                         >

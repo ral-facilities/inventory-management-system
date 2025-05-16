@@ -43,7 +43,6 @@ function ActionMenu(props: ActionMenuProps) {
 
   return (
     <Grid
-      item
       xs={12}
       sm
       container
@@ -56,7 +55,7 @@ function ActionMenu(props: ActionMenuProps) {
         },
       }}
     >
-      <Grid item>
+      <Grid>
         <Typography variant="body1" sx={{ display: 'inline-block', mr: 1 }}>
           Actions
         </Typography>
