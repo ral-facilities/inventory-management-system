@@ -43,8 +43,11 @@ describe('Primary Image Dialog', () => {
       baseElement = createView().baseElement;
     });
 
-    await waitFor(() =>
-      expect(screen.queryAllByRole('progressbar')).toHaveLength(0)
+    await waitFor(
+      () => {
+        expect(screen.queryAllByRole('progressbar')).toHaveLength(0);
+      },
+      { timeout: 10000 }
     );
 
     expect((await screen.findAllByText('logo1.png')).length).toEqual(9);
@@ -62,7 +65,7 @@ describe('Primary Image Dialog', () => {
     expect((await screen.findAllByText('logo1.png')).length).toEqual(9);
 
     const uploadImageButton = screen.getByRole('button', {
-      name: 'Upload Image',
+      name: 'Upload Images',
     });
 
     await user.click(uploadImageButton);
@@ -102,7 +105,7 @@ describe('Primary Image Dialog', () => {
     expect(baseElement).toMatchSnapshot();
 
     const uploadImageButton = screen.getByRole('button', {
-      name: 'Upload Image',
+      name: 'Upload Images',
     });
 
     await user.click(uploadImageButton);
@@ -139,7 +142,7 @@ describe('Primary Image Dialog', () => {
     const imageCard = screen.getAllByRole('radio', {
       name: 'Toggle select card',
     })[0];
-    user.click(imageCard);
+    await user.click(imageCard);
 
     const saveButton: HTMLButtonElement = screen.getByRole('button', {
       name: 'Save',
@@ -147,7 +150,7 @@ describe('Primary Image Dialog', () => {
 
     await waitFor(() => expect(saveButton.disabled).toBe(false));
 
-    user.click(saveButton);
+    await user.click(saveButton);
 
     await waitFor(() => expect(onClose).toHaveBeenCalled());
 
@@ -168,7 +171,7 @@ describe('Primary Image Dialog', () => {
       name: 'Toggle select card',
     })[16];
 
-    user.click(imageCard);
+    await user.click(imageCard);
 
     const saveButton: HTMLButtonElement = screen.getByRole('button', {
       name: 'Save',
@@ -176,7 +179,7 @@ describe('Primary Image Dialog', () => {
 
     await waitFor(() => expect(saveButton.disabled).toBe(false));
 
-    user.click(saveButton);
+    await user.click(saveButton);
 
     await waitFor(() => expect(handleIMS_APIError).toHaveBeenCalled());
   });

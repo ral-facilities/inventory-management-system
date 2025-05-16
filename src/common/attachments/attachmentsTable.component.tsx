@@ -1,5 +1,8 @@
 import ClearIcon from '@mui/icons-material/Clear';
+import DeleteIcon from '@mui/icons-material/Delete';
+import DownloadIcon from '@mui/icons-material/Download';
 import EditIcon from '@mui/icons-material/Edit';
+import UploadIcon from '@mui/icons-material/Upload';
 import {
   Box,
   Button,
@@ -18,7 +21,6 @@ import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { AttachmentMetadata } from '../../api/api.types';
 import { useGetAttachments, usePatchAttachment } from '../../api/attachments';
-import EditFileDialog from '../editFileDialog.component';
 import {
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
@@ -32,7 +34,12 @@ import {
   getPageHeightCalc,
   mrtTheme,
 } from '../../utils';
+import DownloadFileDialog from '../downloadFileDialog.component';
+import EditFileDialog from '../editFileDialog.component';
 import { usePreservedTableState } from '../preservedTableState.component';
+import { StyledUppyBox } from '../uppy.utils';
+import DeleteAttachmentDialog from './deleteAttachmentDialog.component';
+import UploadAttachmentsDialog from './uploadAttachmentsDialog.component';
 
 export interface AttachmentTableProps {
   entityId: string;
@@ -43,6 +50,14 @@ function AttachmentsTable(props: AttachmentTableProps) {
   const { data: attachments, isLoading: attachmentIsLoading } =
     useGetAttachments(entityId);
 
+  const [deleteAttachmentDialog, setDeleteAttachmentDialog] =
+    React.useState<boolean>(false);
+
+  const [downloadAttachmentDialog, setDownloadAttachmentDialog] =
+    React.useState<boolean>(false);
+
+  const [selectedAttachment, setSelectedAttachment] =
+    React.useState<AttachmentMetadata>();
 
   const columns = React.useMemo<MRT_ColumnDef<AttachmentMetadata>[]>(() => {
     return [
@@ -209,6 +224,18 @@ function AttachmentsTable(props: AttachmentTableProps) {
     // Functions
     ...onPreservedStatesChange,
 
+    renderCreateRowDialogContent: ({ table }) => (
+      <StyledUppyBox>
+        <UploadAttachmentsDialog
+          open={true}
+          onClose={() => {
+            table.setCreatingRow(null);
+          }}
+          entityId={entityId}
+        />
+      </StyledUppyBox>
+    ),
+
     renderEditRowDialogContent: ({ table, row }) => (
       <EditFileDialog
         open={true}
@@ -221,6 +248,16 @@ function AttachmentsTable(props: AttachmentTableProps) {
 
     renderTopToolbarCustomActions: ({ table }) => (
       <Box sx={{ display: 'flex' }}>
+        <Button
+          startIcon={<UploadIcon />}
+          sx={{ mx: '4px' }}
+          variant="outlined"
+          onClick={() => {
+            table.setCreatingRow(true);
+          }}
+        >
+          Upload Attachments
+        </Button>
         <Button
           startIcon={<ClearIcon />}
           sx={{ mx: '4px' }}
@@ -250,7 +287,37 @@ function AttachmentsTable(props: AttachmentTableProps) {
             <EditIcon />
           </ListItemIcon>
           <ListItemText>Edit</ListItemText>
-        </MenuItem>
+        </MenuItem>,
+        <MenuItem
+          key="download"
+          aria-label={`Download ${row.original.file_name} attachment`}
+          onClick={() => {
+            setSelectedAttachment(row.original);
+            setDownloadAttachmentDialog(true);
+            closeMenu();
+          }}
+          sx={{ m: 0 }}
+        >
+          <ListItemIcon>
+            <DownloadIcon />
+          </ListItemIcon>
+          <ListItemText>Download</ListItemText>
+        </MenuItem>,
+        <MenuItem
+          key="delete"
+          aria-label={`Delete attachment ${row.original.file_name}`}
+          onClick={() => {
+            setSelectedAttachment(row.original);
+            setDeleteAttachmentDialog(true);
+            closeMenu();
+          }}
+          sx={{ m: 0 }}
+        >
+          <ListItemIcon>
+            <DeleteIcon />
+          </ListItemIcon>
+          <ListItemText>Delete</ListItemText>
+        </MenuItem>,
       ];
     },
 
@@ -261,7 +328,22 @@ function AttachmentsTable(props: AttachmentTableProps) {
   });
 
   return (
-    <MaterialReactTable table={table} />
+    <>
+      <MaterialReactTable table={table} />
+      <DeleteAttachmentDialog
+        open={deleteAttachmentDialog}
+        onClose={() => setDeleteAttachmentDialog(false)}
+        attachment={selectedAttachment}
+      />
+      {selectedAttachment && (
+        <DownloadFileDialog
+          open={downloadAttachmentDialog}
+          onClose={() => setDownloadAttachmentDialog(false)}
+          fileType="Attachment"
+          file={selectedAttachment}
+        />
+      )}
+    </>
   );
 }
 

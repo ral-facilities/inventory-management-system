@@ -263,6 +263,7 @@ export const useGetSystemsTree = (
   const queryClient = useQueryClient();
 
   return useQuery({
+    // eslint-disable-next-line @tanstack/query/exhaustive-deps
     queryKey: [
       'SystemsTree',
       parent_id,

@@ -40,11 +40,13 @@ import {
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
   COLUMN_FILTER_VARIANTS,
+  MRT_Functions_Localisation,
   OPTIONAL_FILTER_MODE_OPTIONS,
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
   TableGroupedCell,
   TableHeaderOverflowTip,
+  customFilterFunctions,
   displayTableRowCountText,
   formatDateTimeStrings,
   generateUniqueName,
@@ -527,10 +529,24 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.manufacturer?.name,
         id: 'manufacturer.name',
-        filterVariant: 'autocomplete',
-        filterFn: COLUMN_FILTER_FUNCTIONS.string,
-        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
-        size: 250,
+        filterVariant: 'multi-select',
+        filterFn: 'arrIncludesSome',
+        columnFilterModeOptions: ['arrIncludesSome', 'arrExcludesSome'],
+        renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) => [
+          <MenuItem
+            key="arrIncludesSome"
+            onClick={() => onSelectFilterMode('arrIncludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrIncludesSome}
+          </MenuItem>,
+          <MenuItem
+            key="arrExcludesSome"
+            onClick={() => onSelectFilterMode('arrExcludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrExcludesSome}
+          </MenuItem>,
+        ],
+        size: 350,
         Cell: ({ row }) => (
           <MuiLink
             underline="hover"
@@ -708,6 +724,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     enableGrouping: !dense,
     enablePagination: true,
     // Other settings
+    filterFns: customFilterFunctions,
     columnVirtualizerOptions: dense
       ? undefined
       : {
@@ -729,6 +746,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     // Localisation
     localization: {
       ...MRT_Localization_EN,
+      ...MRT_Functions_Localisation,
       noRecordsToDisplay: noResultsTxt,
     },
     // State

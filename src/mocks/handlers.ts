@@ -1031,25 +1031,112 @@ export const handlers = [
     return HttpResponse.json(generateAttachments(), { status: 200 });
   }),
 
-  http.patch<{ id: string }, AttachmentMetadataPatch, AttachmentMetadata | ErrorResponse>(
-    '/attachments/:id',
-    async ({ request, params }) => {
-      const { id } = params;
-
-      const obj = AttachmentsJSON.find((attachment) => attachment.id === id);
-      const body = await request.json();
-
-      const fullBody = { ...obj, ...body };
-
-      if (fullBody.file_name === 'Error_500.txt') {
-        return HttpResponse.json(
-          { detail: 'Something went wrong' },
-          { status: 500 }
-        );
+  http.get('/attachments/:id', ({ params }) => {
+    const { id } = params;
+    // This is needed otherwise the msw would intercept the
+    // mocked attachment get request for the object store
+    if (!isNaN(Number(id))) {
+      let attachment = undefined;
+      if (Number(id) % 4 === 0) {
+        attachment = {
+          ...AttachmentsJSON[0],
+          download_url: `${window.location.origin}/attachments/laser-calibration.txt?text=${encodeURIComponent(
+            id as string
+          )}`,
+        };
+      } else {
+        if (Number(id) % 4 === 1) {
+          attachment = {
+            ...AttachmentsJSON[1],
+            download_url: `${window.location.origin}/attachments/safety-protocols.pdf?text=${encodeURIComponent(
+              id as string
+            )}`,
+          };
+        } else {
+          if (Number(id) % 4 === 2) {
+            attachment = {
+              ...AttachmentsJSON[2],
+              download_url: `${window.location.origin}/attachments/camera-setup-guide.docx?text=${encodeURIComponent(
+                id as string
+              )}`,
+            };
+          } else {
+            if (id === '3') {
+              attachment = {
+                ...AttachmentsJSON[3],
+                download_url: 'invalid url',
+                description: undefined,
+              };
+            } else {
+              attachment = {
+                ...AttachmentsJSON[3],
+                download_url: `${window.location.origin}/attachments/experiment-results.rtf?text=${encodeURIComponent(
+                  id as string
+                )}`,
+              };
+            }
+          }
+        }
       }
-      return HttpResponse.json(fullBody as AttachmentMetadata, { status: 200 });
+
+      if (id === '5') {
+        return HttpResponse.error();
+      }
+
+      return HttpResponse.json(
+        {
+          ...attachment,
+          id: id,
+        },
+        { status: 200 }
+      );
     }
-  ),
+  }),
+
+  http.patch<
+    { id: string },
+    AttachmentMetadataPatch,
+    AttachmentMetadata | ErrorResponse
+  >('/attachments/:id', async ({ request, params }) => {
+    const { id } = params;
+
+    const obj = AttachmentsJSON.find((attachment) => attachment.id === id);
+    const body = await request.json();
+
+    const fullBody = { ...obj, ...body };
+
+    if (fullBody.file_name === 'Error_500.txt') {
+      return HttpResponse.json(
+        { detail: 'Something went wrong' },
+        { status: 500 }
+      );
+    } else if (fullBody.file_name?.includes('duplicate_file_name')) {
+      return HttpResponse.json(
+        {
+          detail:
+            'An image with the same file name already exists within the parent entity.',
+        },
+        { status: 409 }
+      );
+    }
+    return HttpResponse.json(fullBody as AttachmentMetadata, { status: 200 });
+  }),
+
+  http.delete<
+    { id: string },
+    DefaultBodyType,
+    ErrorResponse | NonNullable<unknown>
+  >('/attachments/:id', ({ params }) => {
+    const { id } = params;
+
+    if (id === 'Error 500')
+      return HttpResponse.json(
+        { detail: 'Something went wrong' },
+        { status: 500 }
+      );
+
+    return HttpResponse.json(undefined, { status: 204 });
+  }),
 
   // ------------------------------------ OBJECT STORAGE ------------------------------------------------
 
@@ -1084,7 +1171,7 @@ export const handlers = [
         return HttpResponse.json(
           [
             {
-              ...ImagesJSON[0],
+              ...ImagesJSON[1],
               primary: true,
               entity_id: entityId,
               ...(entityId === '3' && { thumbnail_base64: 'test' }),
@@ -1183,6 +1270,14 @@ export const handlers = [
         return HttpResponse.json(
           { detail: 'Something went wrong' },
           { status: 500 }
+        );
+      } else if (fullBody.file_name?.includes('duplicate_file_name')) {
+        return HttpResponse.json(
+          {
+            detail:
+              'An image with the same file name already exists within the parent entity.',
+          },
+          { status: 409 }
         );
       }
       return HttpResponse.json(fullBody as APIImage, { status: 200 });

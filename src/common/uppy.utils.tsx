@@ -1,6 +1,9 @@
 import { Box, styled } from '@mui/material';
-import { Body, Meta } from '@uppy/core';
+import { Body, Meta, type UppyFile } from '@uppy/core';
 import { DashboardState } from '@uppy/dashboard/lib/Dashboard';
+import type { DashboardModalProps } from '@uppy/react/lib/DashboardModal';
+import statusBarStates from '@uppy/status-bar/lib/StatusBarStates';
+import { type StatusBarUIProps } from '@uppy/status-bar/lib/StatusBarUI';
 import type { VNode } from 'preact';
 import React from 'react';
 import { getNameAndExtension } from '../utils';
@@ -106,10 +109,7 @@ function renderFields(
         'label',
         {
           for: 'uppy-Dashboard-FileCard-input-name',
-          style: {
-            height: '31px',
-            padding: '5px',
-          },
+          style: { height: '31px', padding: '5px' },
         },
         extension
       ),
@@ -121,6 +121,11 @@ export type MetaFields<M extends Meta, B extends Body> = DashboardState<
   M,
   B
 >['metaFields'];
+
+export type UppyDashboardLocaleStrings<
+  M extends Meta,
+  B extends Body,
+> = NonNullable<DashboardModalProps<M, B>['locale']>['strings'];
 
 export function useMetaFields<M extends Meta, B extends Body>(): MetaFields<
   M,
@@ -146,4 +151,50 @@ export function useMetaFields<M extends Meta, B extends Body>(): MetaFields<
   ];
 
   return metaFieldsData;
+}
+
+// https://github.com/transloadit/uppy/blob/229902eb17cbb9f866921cf232d94b25eb584efd/packages/%40uppy/status-bar/src/StatusBar.tsx#L24
+export function getUploadingState(
+  error: unknown,
+  isAllComplete: boolean,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  recoveredState: any,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  files: Record<string, UppyFile<any, any>>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): StatusBarUIProps<any, any>['uploadState'] {
+  if (error) {
+    return statusBarStates.STATE_ERROR;
+  }
+
+  if (isAllComplete) {
+    return statusBarStates.STATE_COMPLETE;
+  }
+
+  if (recoveredState) {
+    return statusBarStates.STATE_WAITING;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let state: StatusBarUIProps<any, any>['uploadState'] =
+    statusBarStates.STATE_WAITING;
+  const fileIDs = Object.keys(files);
+  for (let i = 0; i < fileIDs.length; i++) {
+    const { progress } = files[fileIDs[i]];
+    // If ANY files are being uploaded right now, show the uploading state.
+    if (progress.uploadStarted && !progress.uploadComplete) {
+      return statusBarStates.STATE_UPLOADING;
+    }
+    // If files are being preprocessed AND postprocessed at this time, we show the
+    // preprocess state. If any files are being uploaded we show uploading.
+    if (progress.preprocess) {
+      state = statusBarStates.STATE_PREPROCESSING;
+    }
+    // If NO files are being preprocessed or uploaded right now, but some files are
+    // being postprocessed, show the postprocess state.
+    if (progress.postprocess && state !== statusBarStates.STATE_PREPROCESSING) {
+      state = statusBarStates.STATE_POSTPROCESSING;
+    }
+  }
+  return state;
 }

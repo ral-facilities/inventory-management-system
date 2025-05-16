@@ -9,15 +9,14 @@ import {
   ListItemText,
   Menu,
   MenuItem,
-  SxProps,
-  Theme,
   Tooltip,
-  Typography,
 } from '@mui/material';
 import React from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useGetImages } from '../../api/images';
 import PrimaryImageDialog from './primaryImageDialog.component';
 import RemovePrimaryImageDialog from './removePrimaryImageDialog.component';
+import ThumbnailImage from './thumbnailImage.component';
 
 interface PrimaryOptionsMenuInterface {
   onChangePrimaryDialogOpen: (dialogOpen: false | 'set' | 'remove') => void;
@@ -81,60 +80,71 @@ const PrimaryOptionsMenu = (props: PrimaryOptionsMenuInterface) => {
 };
 
 export interface PrimaryImageProps {
-  sx?: SxProps<Theme>;
   entityId: string;
+  isDetailsPanel?: boolean;
 }
 
 const PrimaryImage = (props: PrimaryImageProps) => {
-  const { sx, entityId } = props;
+  const { entityId, isDetailsPanel = false } = props;
 
-  const { data: imagesData } = useGetImages(entityId, true);
+  const { data: imagesData, isLoading: imageLoading } = useGetImages(
+    entityId,
+    true
+  );
 
   const primaryImageExists = !!imagesData && imagesData.length > 0;
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const handleViewPrimary = React.useCallback(() => {
+    if (imagesData?.[0]) {
+      const updatedParams = new URLSearchParams(searchParams);
+      updatedParams.set('tab', 'Gallery');
+      updatedParams.set('image', imagesData?.[0].id);
+      setSearchParams(updatedParams);
+    }
+  }, [searchParams, setSearchParams, imagesData]);
 
   const [primaryDialogOpen, setPrimaryDialogOpen] = React.useState<
     false | 'set' | 'remove'
   >(false);
+
   return (
-    <Grid sx={{ height: '100%', width: '100%' }}>
-      <Box
-        sx={{
-          height: '80%',
-          borderRadius: 2,
-          backgroundColor: 'inherit',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          textAlign: 'center',
-          color: 'text.primary',
-          border: '1px dashed',
-          borderColor: 'text.primary',
-          ...sx,
-        }}
-      >
-        <Typography variant="h5">No Image</Typography>
-      </Box>
-      <Box sx={{ height: '20%' }}>
-        <PrimaryOptionsMenu
-          onChangePrimaryDialogOpen={setPrimaryDialogOpen}
-          primaryImageExists={primaryImageExists}
+    <Grid>
+      {!imageLoading && (
+        <ThumbnailImage
+          image={imagesData?.[0]}
+          dense={isDetailsPanel}
+          isPrimaryThumbnail
+          imageLoading={imageLoading}
+          onClick={isDetailsPanel ? undefined : handleViewPrimary}
         />
-      </Box>
-      <PrimaryImageDialog
-        open={primaryDialogOpen == 'set'}
-        onClose={() => {
-          setPrimaryDialogOpen(false);
-        }}
-        entityID={entityId}
-      />
-      {primaryImageExists && (
-        <RemovePrimaryImageDialog
-          open={primaryDialogOpen == 'remove'}
-          onClose={() => {
-            setPrimaryDialogOpen(false);
-          }}
-          image={imagesData[0]}
-        />
+      )}
+      {!isDetailsPanel && (
+        <>
+          <Box sx={{ height: '20%' }}>
+            <PrimaryOptionsMenu
+              onChangePrimaryDialogOpen={setPrimaryDialogOpen}
+              primaryImageExists={primaryImageExists}
+            />
+          </Box>
+          <PrimaryImageDialog
+            open={primaryDialogOpen == 'set'}
+            onClose={() => {
+              setPrimaryDialogOpen(false);
+            }}
+            entityID={entityId}
+          />
+          {primaryImageExists && (
+            <RemovePrimaryImageDialog
+              open={primaryDialogOpen == 'remove'}
+              onClose={() => {
+                setPrimaryDialogOpen(false);
+              }}
+              image={imagesData[0]}
+            />
+          )}
+        </>
       )}
     </Grid>
   );

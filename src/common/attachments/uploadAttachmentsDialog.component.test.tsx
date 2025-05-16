@@ -13,6 +13,7 @@ import UploadAttachmentsDialog, {
 describe('Upload attachment dialog', () => {
   let props: UploadAttachmentsDialogProps;
   let user: UserEvent;
+  let axiosDeleteSpy: MockInstance;
   let axiosPostSpy: MockInstance;
   let xhrPostSpy: MockInstance;
 
@@ -31,6 +32,7 @@ describe('Upload attachment dialog', () => {
       entityId: '1',
     };
     user = userEvent.setup();
+    axiosDeleteSpy = vi.spyOn(storageApi, 'delete');
     axiosPostSpy = vi.spyOn(storageApi, 'post');
     xhrPostSpy = vi.spyOn(window.XMLHttpRequest.prototype, 'open');
     vi.spyOn(console, 'error').mockImplementation(() => {});
@@ -38,6 +40,7 @@ describe('Upload attachment dialog', () => {
 
   afterEach(() => {
     vi.clearAllMocks();
+    axiosDeleteSpy.mockRestore();
     axiosPostSpy.mockRestore();
     xhrPostSpy.mockRestore();
   });
@@ -145,6 +148,7 @@ describe('Upload attachment dialog', () => {
   it('errors when presigned url fails', async () => {
     server.use(
       http.post('/object-storage', async () => {
+        await delay(1000);
         return HttpResponse.error();
       })
     );
@@ -191,13 +195,125 @@ describe('Upload attachment dialog', () => {
     expect(
       await screen.findByLabelText('Show error details')
     ).toBeInTheDocument();
+
+    await waitFor(() =>
+      expect(axiosDeleteSpy).toHaveBeenCalledWith('/attachments/1', {})
+    );
+  });
+
+  it('errors when maximum upload limit reached', async () => {
+    server.use(
+      http.post('/attachments', async () => {
+        await delay(1000);
+        return HttpResponse.json(
+          {
+            detail:
+              'Limit for the maximum number of attachments for the provided `entity_id` has been reached.',
+          },
+          { status: 422 }
+        );
+      })
+    );
+
+    createView();
+
+    const file1 = new File(['test'], 'uploadError.txt', {
+      type: 'text/plain',
+    });
+
+    const dropZone = screen.getByText('Files cannot be larger than', {
+      exact: false,
+    });
+
+    Object.defineProperty(dropZone, 'files', {
+      value: [file1],
+    });
+
+    fireEvent.drop(dropZone, {
+      dataTransfer: {
+        files: [file1],
+      },
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('uploadError.txt')).toBeInTheDocument();
+    });
+
+    await user.click(await screen.findByText('Upload 1 file'));
+
+    expect(axiosPostSpy).toHaveBeenCalledWith('/attachments', {
+      entity_id: '1',
+      file_name: 'uploadError.txt',
+    });
+
+    expect(await screen.findByText('Upload failed')).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(
+        screen.getAllByLabelText('Maximum number of files reached.').length
+      ).toBe(2);
+    });
+  });
+
+  it('should error when file name already exists', async () => {
+    server.use(
+      http.post('/attachments', async () => {
+        await delay(1000);
+        return HttpResponse.json(
+          {
+            detail:
+              'An image with the same file name already exists within the parent entity.',
+          },
+          { status: 409 }
+        );
+      })
+    );
+
+    createView();
+
+    const file1 = new File(['test'], 'uploadError.txt', {
+      type: 'text/plain',
+    });
+
+    const dropZone = screen.getByText('Files cannot be larger than', {
+      exact: false,
+    });
+
+    Object.defineProperty(dropZone, 'files', {
+      value: [file1],
+    });
+
+    fireEvent.drop(dropZone, {
+      dataTransfer: {
+        files: [file1],
+      },
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('uploadError.txt')).toBeInTheDocument();
+    });
+
+    await user.click(await screen.findByText('Upload 1 file'));
+
+    expect(axiosPostSpy).toHaveBeenCalledWith('/attachments', {
+      entity_id: '1',
+      file_name: 'uploadError.txt',
+    });
+
+    expect(await screen.findByText('Upload failed')).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(
+        screen.getAllByLabelText(
+          'A file with this name already exists. To rename your file: remove it, add it back and click the edit icon below the file to change its name.'
+        ).length
+      ).toBe(2);
+    });
   });
 
   it('should send a DELETE request for the attachment document if a file is removed during upload', async () => {
     server.use(
       http.post('/attachments', async () => {
-        await delay(500);
-
         return HttpResponse.json(
           {
             id: '1',
@@ -209,6 +325,20 @@ describe('Upload attachment dialog', () => {
           },
           { status: 200 }
         );
+      })
+    );
+
+    server.use(
+      http.post('/object-storage', async () => {
+        await delay(1000);
+        return new HttpResponse(undefined, {
+          status: 204,
+          headers: {
+            'Content-Type': 'text/plain; charset=utf-8',
+            // This is need for uppy
+            ETag: '"e76fe3d21078d7a3b9ec95edf437d010"',
+          },
+        });
       })
     );
 
@@ -247,7 +377,9 @@ describe('Upload attachment dialog', () => {
       await screen.findByRole('button', { name: 'Remove file' })
     );
 
-    //TODO: Assert axios delete request was called
+    await waitFor(() =>
+      expect(axiosDeleteSpy).toHaveBeenCalledWith('/attachments/1', {})
+    );
 
     expect(screen.queryByText('Upload 1 file')).not.toBeInTheDocument();
   });

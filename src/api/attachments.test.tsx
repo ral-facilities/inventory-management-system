@@ -1,8 +1,14 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import AttachmentsJSON from '../mocks/Attachments.json'
-import { hooksWrapperWithProviders } from '../testUtils';
-import { AttachmentMetadataPatch, AttachmentPostMetadata } from './api.types';
-import { useGetAttachments, usePatchAttachment, usePostAttachmentMetadata } from './attachments';
+import AttachmentsJSON from '../mocks/Attachments.json';
+import { CREATED_MODIFIED_TIME_VALUES, hooksWrapperWithProviders } from '../testUtils';
+import { AttachmentMetadata, AttachmentMetadataPatch, AttachmentPostMetadata } from './api.types';
+import {
+  useDeleteAttachment,
+  useGetAttachment,
+  useGetAttachments,
+  usePatchAttachment,
+  usePostAttachmentMetadata,
+} from './attachments';
 
 describe('attachments api functions', () => {
   afterEach(() => {
@@ -62,6 +68,23 @@ describe('attachments api functions', () => {
     });
   });
 
+  describe('useGetAttachment', () => {
+    it('sends request to fetch attachment data and returns a successful response', async () => {
+      const { result } = renderHook(() => useGetAttachment('1'), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+
+      expect(result.current.data).toEqual({
+        ...AttachmentsJSON[1],
+        download_url: 'http://localhost:3000/attachments/safety-protocols.pdf?text=1',
+      });
+    });
+  });
+
   describe('usePatchAttachment', () => {
     let mockDataPatch: AttachmentMetadataPatch;
 
@@ -85,6 +108,32 @@ describe('attachments api functions', () => {
         ...AttachmentsJSON[0],
         ...mockDataPatch,
       });
+    });
+  });
+
+  describe('useDeleteAttachment', () => {
+    let mockDataView: AttachmentMetadata;
+    beforeEach(() => {
+      mockDataView = {
+        id: '1',
+        file_name: 'Attachment A',
+        entity_id: '2',
+        title: '2',
+        description: 'a description',
+        ...CREATED_MODIFIED_TIME_VALUES,
+      };
+    });
+
+    it('posts a request to delete an attachment and return a successful response', async () => {
+      const { result } = renderHook(() => useDeleteAttachment(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+      expect(result.current.isIdle).toBe(true);
+      result.current.mutate(mockDataView.id);
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      expect(result.current.data).toEqual('');
     });
   });
 });

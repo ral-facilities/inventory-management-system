@@ -8,6 +8,28 @@ import {
 const initialConfiguration: InventoryManagementSystemSettings = {
   imsApiUrl: '',
   osApiUrl: '',
+  maxAttachmentSizeBytes: 104857600,
+  attachmentAllowedFileExtensions: [
+    '.csv',
+    '.doc',
+    '.docx',
+    '.pdf',
+    '.rtf',
+    '.txt',
+    '.xls',
+    '.xlsx',
+  ],
+  imageAllowedFileExtensions: [
+    '.bmp',
+    '.jpe',
+    '.jpeg',
+    '.jpg',
+    '.png',
+    '.tif',
+    '.tiff',
+    '.webp',
+  ],
+  maxImageSizeBytes: 52428800,
   routes: [],
   pluginHost: '',
 };

@@ -5,8 +5,10 @@ import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 import ImageEditor from '@uppy/image-editor';
 import '@uppy/image-editor/dist/style.css';
+import en_US from '@uppy/locales/lib/en_US';
 import ProgressBar from '@uppy/progress-bar'; // Import the ProgressBar plugin
 import { DashboardModal } from '@uppy/react';
+import statusBarStates from '@uppy/status-bar/lib/StatusBarStates';
 import XHR from '@uppy/xhr-upload';
 import React from 'react';
 import { uppyOnAfterResponse, uppyOnBeforeRequest } from '../../api/api';
@@ -14,13 +16,13 @@ import type {
   UppyImageUploadResponse,
   UppyUploadMetadata,
 } from '../../app.types';
-import { settings } from '../../settings';
+import { InventoryManagementSystemSettingsContext } from '../../configProvider.component';
 import { getNonEmptyTrimmedString } from '../../utils';
-import { useMetaFields } from '../uppy.utils';
-
-// Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000, so here the former is expected despite them really being GiB, MiB and KiB.
-const MAX_FILE_SIZE_MB = 50;
-const MAX_FILE_SIZE_B = MAX_FILE_SIZE_MB * 1024 * 1024;
+import {
+  getUploadingState,
+  useMetaFields,
+  type UppyDashboardLocaleStrings,
+} from '../uppy.utils';
 
 export interface UploadImagesDialogProps {
   open: boolean;
@@ -35,48 +37,76 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
 
   const queryClient = useQueryClient();
 
-  const osApiUrl = async () => (await settings)?.osApiUrl || '';
+  const { maxImageSizeBytes, osApiUrl, imageAllowedFileExtensions } =
+    React.useContext(InventoryManagementSystemSettingsContext);
+
+  // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000,
+  // so here the former is expected despite them really being GiB, MiB and KiB.
+  const maxFileSizeMB = maxImageSizeBytes / 1024 ** 2;
+
   const [uppy] = React.useState<
     Uppy<UppyUploadMetadata, UppyImageUploadResponse>
   >(() => {
     const newUppy = new Uppy<UppyUploadMetadata, UppyImageUploadResponse>({
       autoProceed: false,
       restrictions: {
-        maxFileSize: MAX_FILE_SIZE_B,
+        maxFileSize: maxImageSizeBytes,
         requiredMetaFields: ['name'],
-        allowedFileTypes: ['image/*'],
+        allowedFileTypes: imageAllowedFileExtensions,
       },
     })
       .use(ImageEditor)
       .use(ProgressBar);
 
-    osApiUrl().then((url) => {
-      newUppy.use(XHR, {
-        endpoint: `${url}/images`,
-        method: 'POST',
-        fieldName: 'upload_file',
-        async onBeforeRequest(xhr) {
-          uppyOnBeforeRequest(xhr);
-        },
-        async onAfterResponse(xhr) {
-          await uppyOnAfterResponse(xhr);
-        },
-      });
+    newUppy.use(XHR, {
+      endpoint: `${osApiUrl}/images`,
+      method: 'POST',
+      fieldName: 'upload_file',
+      async onBeforeRequest(xhr) {
+        uppyOnBeforeRequest(xhr);
+      },
+      async onAfterResponse(xhr) {
+        await uppyOnAfterResponse(xhr);
+      },
     });
 
     return newUppy;
   });
 
+  const { files = {}, error, recoveredState } = uppy.getState();
+  const { isAllComplete } = uppy.getObjectOfFilesPerState();
+
   const handleClose = React.useCallback(() => {
+    // prevent users from closing the dialog while the download is in progress
+    const uploadState = getUploadingState(
+      error,
+      isAllComplete,
+      recoveredState,
+      files
+    );
+    if (
+      uploadState === statusBarStates.STATE_POSTPROCESSING ||
+      uploadState === statusBarStates.STATE_PREPROCESSING ||
+      uploadState === statusBarStates.STATE_UPLOADING
+    ) {
+      return;
+    }
     onClose();
-    uppy.cancelAll();
+    uppy.clear();
     queryClient.invalidateQueries({ queryKey: ['Images', entityId] });
-  }, [entityId, onClose, queryClient, uppy]);
+  }, [
+    entityId,
+    error,
+    files,
+    isAllComplete,
+    onClose,
+    queryClient,
+    recoveredState,
+    uppy,
+  ]);
 
   React.useEffect(() => {
-    uppy.setMeta({
-      entity_id: entityId,
-    });
+    uppy.setMeta({ entity_id: entityId });
   }, [entityId, uppy]);
 
   uppy.on('dashboard:file-edit-complete', (file) => {
@@ -92,11 +122,7 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
         ...(formattedDescription && { description: formattedDescription }),
       };
 
-      uppy.patchFilesState({
-        [file.id]: {
-          meta: updatedFileData,
-        },
-      });
+      uppy.patchFilesState({ [file.id]: { meta: updatedFileData } });
     }
   });
 
@@ -108,11 +134,20 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
   return (
     <DashboardModal
       open={open}
+      locale={{
+        strings: {
+          ...en_US.strings, // Spread default strings
+          dropPasteFiles: 'Drop images here or %{browseFiles}',
+        } as UppyDashboardLocaleStrings<
+          UppyUploadMetadata,
+          UppyImageUploadResponse
+        >,
+      }}
       onRequestClose={handleClose}
       closeModalOnClickOutside={false}
       animateOpenClose={false}
       uppy={uppy}
-      note={`Files cannot be larger than ${MAX_FILE_SIZE_MB}MB. Only images are allowed.`}
+      note={`Files cannot be larger than ${maxFileSizeMB}MB. Supported file types: ${imageAllowedFileExtensions.join(', ')}.`}
       proudlyDisplayPoweredByUppy={false}
       theme={theme.palette.mode}
       doneButtonHandler={handleClose}

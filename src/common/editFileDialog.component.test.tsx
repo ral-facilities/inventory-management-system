@@ -16,6 +16,7 @@ vi.mock('../handleIMS_APIError');
 
 describe('Edit file dialog', () => {
   const onClose = vi.fn();
+  let axiosPatchSpy: MockInstance;
   let props: FileDialogProps;
   let user: UserEvent;
   const createView = () => {
@@ -23,6 +24,7 @@ describe('Edit file dialog', () => {
   };
 
   beforeEach(() => {
+    axiosPatchSpy = vi.spyOn(storageApi, 'patch');
     user = userEvent.setup();
   });
 
@@ -52,7 +54,6 @@ describe('Edit file dialog', () => {
   };
 
   describe('Edit an image', () => {
-    let axiosPatchSpy: MockInstance;
     beforeEach(() => {
       props = {
         open: true,
@@ -61,8 +62,6 @@ describe('Edit file dialog', () => {
         usePatchFile: usePatchImage,
         selectedFile: ImagesJSON[0],
       };
-
-      axiosPatchSpy = vi.spyOn(storageApi, 'patch');
     });
 
     it('disables save button and shows circular progress indicator when request is pending', async () => {
@@ -137,6 +136,23 @@ describe('Edit file dialog', () => {
       expect(onClose).not.toHaveBeenCalled();
     });
 
+    it('should error when file name already exists', async () => {
+      createView();
+      modifyFileValues({
+        file_name: 'duplicate_file_name',
+      });
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await user.click(saveButton);
+
+      expect(
+        screen.getByText(
+          'A file with the same name has been found. Please enter a different name.'
+        )
+      ).toBeInTheDocument();
+      expect(onClose).not.toHaveBeenCalled();
+    });
+
     it('displays refresh page message and a CatchAllError request works correctly', async () => {
       createView();
       modifyFileValues({
@@ -161,8 +177,6 @@ describe('Edit file dialog', () => {
   });
 
   describe('Edit an attachment', () => {
-    let axiosPatchSpy: MockInstance;
-
     beforeEach(() => {
       props = {
         open: true,
@@ -171,8 +185,6 @@ describe('Edit file dialog', () => {
         usePatchFile: usePatchAttachment,
         selectedFile: AttachmentsJSON[0],
       };
-
-      axiosPatchSpy = vi.spyOn(storageApi, 'patch');
     });
 
     it('disables save button and shows circular progress indicator when request is pending', async () => {
@@ -230,6 +242,23 @@ describe('Edit file dialog', () => {
           "There have been no changes made. Please change a field's value or press Cancel to exit."
         )
       ).toBeInTheDocument();
+    });
+
+    it('should error when file name already exists', async () => {
+      createView();
+      modifyFileValues({
+        file_name: 'duplicate_file_name',
+      });
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await user.click(saveButton);
+
+      expect(
+        await screen.findByText(
+          'A file with the same name has been found. Please enter a different name.'
+        )
+      ).toBeInTheDocument();
+      expect(onClose).not.toHaveBeenCalled();
     });
 
     it('shows error message if required fields are whitespace or their current value was removed', async () => {

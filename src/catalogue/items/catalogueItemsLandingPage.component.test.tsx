@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react';
+import { screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import CatalogueItemsJSON from '../../mocks/CatalogueItems.json';
@@ -251,5 +251,36 @@ describe('Catalogue Items Landing Page', () => {
 
     const url = await screen.findByText('Manufacturer A');
     expect(url).toHaveAttribute('href', '/manufacturers/1');
+  });
+
+  it('opens lightbox when clicking on primary image thumbnail', async () => {
+    createView('/catalogue/4/items/1');
+
+    await waitFor(() => {
+      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
+    });
+
+    expect(await screen.findByAltText('test')).toBeInTheDocument();
+
+    const primaryImageElement = screen.getByAltText('test');
+
+    expect(primaryImageElement).not.toHaveAttribute('disabled');
+
+    await user.click(primaryImageElement);
+
+    await waitFor(() => {
+      within(screen.getByTestId('galleryLightBox'));
+    });
+
+    const galleryLightBox = within(screen.getByTestId('galleryLightBox'));
+
+    await waitFor(() => {
+      expect(
+        galleryLightBox.getByText('File name: stfc-logo-blue-text.png')
+      ).toBeInTheDocument();
+    });
+    expect(
+      galleryLightBox.getByText('Title: stfc-logo-blue-text')
+    ).toBeInTheDocument();
   });
 });

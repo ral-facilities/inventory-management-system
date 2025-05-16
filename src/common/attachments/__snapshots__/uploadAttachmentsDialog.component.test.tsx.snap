@@ -55,6 +55,7 @@ exports[`Upload attachment dialog > renders dialog correctly 1`] = `
                 class="uppy-Dashboard-AddFiles"
               >
                 <input
+                  accept=".csv, .doc, .docx, .pdf, .rtf, .txt, .xls, .xlsx"
                   aria-hidden="true"
                   class="uppy-Dashboard-input"
                   hidden=""
@@ -64,6 +65,7 @@ exports[`Upload attachment dialog > renders dialog correctly 1`] = `
                   type="file"
                 />
                 <input
+                  accept=".csv, .doc, .docx, .pdf, .rtf, .txt, .xls, .xlsx"
                   aria-hidden="true"
                   class="uppy-Dashboard-input"
                   hidden=""
@@ -76,7 +78,7 @@ exports[`Upload attachment dialog > renders dialog correctly 1`] = `
                 <div
                   class="uppy-Dashboard-AddFiles-title"
                 >
-                  Drop files here or 
+                  Drop attachments here or 
                   <button
                     class="uppy-u-reset uppy-c-btn uppy-Dashboard-browse"
                     data-uppy-super-focusable="true"
@@ -100,7 +102,7 @@ exports[`Upload attachment dialog > renders dialog correctly 1`] = `
                   <div
                     class="uppy-Dashboard-note"
                   >
-                    Files cannot be larger than 100MB. Only supported attachments are allowed.
+                    Files cannot be larger than 100MB. Supported file types: .csv, .doc, .docx, .pdf, .rtf, .txt, .xls, .xlsx.
                   </div>
                 </div>
               </div>
