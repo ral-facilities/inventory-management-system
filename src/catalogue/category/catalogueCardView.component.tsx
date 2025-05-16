@@ -511,6 +511,7 @@ function CatalogueCardView() {
           flexDirection="column"
           height={cardViewHeight}
           maxHeight={cardViewHeight}
+          width="100%"
         >
           <Grid width="100%" sx={{ flexShrink: 0 }}>
             <MRT_TopToolbar table={table} />
@@ -541,7 +542,7 @@ function CatalogueCardView() {
                 </Collapse>
               </Grid>
               <Grid width="100%">
-                <Grid container width="100%">
+                <Grid container width="100%" columns={12}>
                   {!isLoading &&
                     (data.length !== 0 ? (
                       data.map((card, index) => (
