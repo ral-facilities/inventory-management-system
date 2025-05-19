@@ -448,7 +448,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
               <CardViewFilters table={table} />
             </Collapse>
           </Grid>
-          <Grid container padding={1}>
+          <Grid padding={1} width={'100%'}>
             {images &&
               (images.length === 0 ? (
                 <ErrorPage
@@ -482,7 +482,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
                       <Grid key={`thumbnail-displayed-${index}`}>
                         <Card
                           component={Grid}
-                          container
                           style={{
                             maxWidth:
                               data.length === 1 ||
