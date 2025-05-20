@@ -528,7 +528,7 @@ function ItemDialog(props: ItemDialogProps) {
       case 0:
         return (
           <Grid container spacing={1.5} xs={12}>
-            <Grid container xs={12}>
+            <Grid container margin={0} xs={12}>
               <TextField
                 id="item-serial-number-input"
                 label="Serial number"
@@ -844,11 +844,11 @@ function ItemDialog(props: ItemDialogProps) {
         return (
           <Grid xs={12}>
             {parentCatalogueItemPropertiesInfo.length >= 1 ? (
-              <Grid container spacing={1.5}>
+              <Grid container columns={12} spacing={1.5}>
                 {parentCatalogueItemPropertiesInfo.map(
                   (property: CatalogueCategoryProperty, index: number) => (
                     <Grid xs={12} key={index}>
-                      <Grid container spacing={1.5}>
+                      <Grid container columns={12} spacing={1.5}>
                         <Grid xs={11} sx={{ display: 'flex' }}>
                           {property.type === 'boolean' ? (
                             <Controller
