@@ -3,82 +3,78 @@
 exports[`AdminCardView > renders admin card view correctly 1`] = `
 <DocumentFragment>
   <div
-    class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
+    class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1pi8xg4-MuiGrid2-root"
   >
     <div
-      class="MuiGrid-root MuiGrid-container css-k6wrnl-MuiGrid-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-2mh104-MuiGrid2-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-le9sc4-MuiGrid-root"
+        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-pjetxh-MuiGrid2-root"
       >
-        <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+        <a
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-fullWidth css-q760su-MuiButtonBase-root-MuiButton-root"
+          href="/units"
+          tabindex="0"
         >
-          <a
-            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-fullWidth css-q760su-MuiButtonBase-root-MuiButton-root"
-            href="/units"
-            tabindex="0"
+          <div
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-siqlql-MuiPaper-root-MuiCard-root"
           >
             <div
-              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-siqlql-MuiPaper-root-MuiCard-root"
+              class="MuiCardContent-root css-lo1d59-MuiCardContent-root"
             >
               <div
-                class="MuiCardContent-root css-lo1d59-MuiCardContent-root"
+                class="MuiGrid2-root MuiGrid2-direction-xs-row css-27y2fm-MuiGrid2-root"
               >
                 <div
-                  class="MuiGrid-root css-vj1n65-MuiGrid-root"
+                  class="MuiGrid2-root MuiGrid2-direction-xs-row css-veq2t0-MuiGrid2-root"
                 >
-                  <div
-                    class="MuiGrid-root css-13qkvwv-MuiGrid-root"
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
                   >
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
-                    >
-                      Units
-                    </p>
-                  </div>
+                    Units
+                  </p>
                 </div>
               </div>
             </div>
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
-          </a>
-        </div>
-        <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+          </div>
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
+        </a>
+      </div>
+      <div
+        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-pjetxh-MuiGrid2-root"
+      >
+        <a
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-fullWidth css-q760su-MuiButtonBase-root-MuiButton-root"
+          href="/usage-statuses"
+          tabindex="0"
         >
-          <a
-            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-fullWidth css-q760su-MuiButtonBase-root-MuiButton-root"
-            href="/usage-statuses"
-            tabindex="0"
+          <div
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-siqlql-MuiPaper-root-MuiCard-root"
           >
             <div
-              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-siqlql-MuiPaper-root-MuiCard-root"
+              class="MuiCardContent-root css-lo1d59-MuiCardContent-root"
             >
               <div
-                class="MuiCardContent-root css-lo1d59-MuiCardContent-root"
+                class="MuiGrid2-root MuiGrid2-direction-xs-row css-27y2fm-MuiGrid2-root"
               >
                 <div
-                  class="MuiGrid-root css-vj1n65-MuiGrid-root"
+                  class="MuiGrid2-root MuiGrid2-direction-xs-row css-veq2t0-MuiGrid2-root"
                 >
-                  <div
-                    class="MuiGrid-root css-13qkvwv-MuiGrid-root"
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
                   >
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
-                    >
-                      Usage Statuses
-                    </p>
-                  </div>
+                    Usage Statuses
+                  </p>
                 </div>
               </div>
             </div>
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
-          </a>
-        </div>
+          </div>
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
+        </a>
       </div>
     </div>
   </div>

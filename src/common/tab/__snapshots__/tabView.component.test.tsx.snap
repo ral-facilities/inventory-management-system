@@ -4,10 +4,10 @@ exports[`TabView Component > renders correctly 1`] = `
 <body>
   <div>
     <div
-      class="MuiGrid-root MuiGrid-container css-k6wrnl-MuiGrid-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-i9v5tx-MuiGrid2-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16fnxy3-MuiGrid2-root"
       >
         <div
           class="MuiTabs-root css-1ujnqem-MuiTabs-root"
@@ -141,7 +141,7 @@ exports[`TabView Component > renders correctly 1`] = `
         </div>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16fnxy3-MuiGrid2-root"
       >
         <div
           aria-labelledby="tab1-tab"

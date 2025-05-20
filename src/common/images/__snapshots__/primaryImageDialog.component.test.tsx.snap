@@ -41,10 +41,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
           class="MuiDialogContent-root css-ypiqx9-MuiDialogContent-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-na6woh-MuiGrid-root-MuiPaper-root"
+            class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-182neuw-MuiGrid2-root-MuiPaper-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-item css-17hisp5-MuiGrid-root"
+              class="MuiGrid2-root MuiGrid2-direction-xs-row css-hottla-MuiGrid2-root"
             >
               <div
                 class="MuiBox-root css-1tbggly"
@@ -233,13 +233,13 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item css-jpsoni-MuiGrid-root"
+              class="MuiGrid2-root MuiGrid2-direction-xs-row css-eqd3hj-MuiGrid2-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
+                class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-182z5mw-MuiGrid2-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-fw24ci-MuiGrid-root"
+                  class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-column css-1duc7bw-MuiGrid2-root"
                 >
                   <div
                     class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
@@ -252,13 +252,13 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                         class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
                       >
                         <table
-                          class="MuiTable-root MuiGrid-root MuiGrid-container MuiGrid-item css-1uc6v0-MuiTable-root-MuiGrid-root"
+                          class="MuiTable-root MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-thwn6p-MuiTable-root-MuiGrid2-root"
                         >
                           <thead
-                            class="MuiTableHead-root MuiGrid-root MuiGrid-container MuiGrid-item css-1pr0ogz-MuiTableHead-root-MuiGrid-root"
+                            class="MuiTableHead-root MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-138f2jo-MuiTableHead-root-MuiGrid2-root"
                           >
                             <tr
-                              class="MuiTableRow-root MuiTableRow-head MuiGrid-root MuiGrid-container MuiGrid-item css-hb19md-MuiTableRow-root-MuiGrid-root"
+                              class="MuiTableRow-root MuiTableRow-head MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-hzqrp7-MuiTableRow-root-MuiGrid2-root"
                             >
                               <th
                                 aria-sort="none"
@@ -663,23 +663,23 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                   </div>
                 </div>
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-14i775n-MuiGrid-root"
+                  class="MuiGrid2-root MuiGrid2-direction-xs-row css-bgdwck-MuiGrid2-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item css-owgjh-MuiGrid-root"
+                    class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-15qm9uj-MuiGrid2-root"
                   >
                     <div
-                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-19w6is9-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j6t70b-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-2 css-1oua83y-MuiGrid2-root"
                           >
                             <span
                               aria-label="Toggle select card"
@@ -725,7 +725,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-true css-j4u7pp-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -739,10 +739,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1lpx4py-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16skdyy-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                           >
                             <p
                               aria-label="stfc-logo-blue-text.png"
@@ -757,17 +757,17 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-19w6is9-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j6t70b-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-2 css-1oua83y-MuiGrid2-root"
                           >
                             <span
                               aria-label="Toggle select card"
@@ -813,7 +813,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-true css-j4u7pp-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -827,10 +827,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1lpx4py-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16skdyy-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                           >
                             <p
                               aria-label="logo1.png"
@@ -845,17 +845,17 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-19w6is9-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j6t70b-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-2 css-1oua83y-MuiGrid2-root"
                           >
                             <span
                               aria-label="Toggle select card"
@@ -901,7 +901,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-true css-j4u7pp-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -915,10 +915,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1lpx4py-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16skdyy-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                           >
                             <p
                               aria-label="stfc-logo-blue-text.png"
@@ -933,17 +933,17 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-19w6is9-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j6t70b-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-2 css-1oua83y-MuiGrid2-root"
                           >
                             <span
                               aria-label="Toggle select card"
@@ -989,7 +989,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-true css-j4u7pp-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -1003,10 +1003,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1lpx4py-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16skdyy-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                           >
                             <p
                               aria-label="logo1.png"
@@ -1021,17 +1021,17 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-19w6is9-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j6t70b-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-2 css-1oua83y-MuiGrid2-root"
                           >
                             <span
                               aria-label="Toggle select card"
@@ -1077,7 +1077,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-true css-j4u7pp-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -1091,10 +1091,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1lpx4py-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16skdyy-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                           >
                             <p
                               aria-label="stfc-logo-blue-text.png"
@@ -1109,17 +1109,17 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-19w6is9-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j6t70b-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-2 css-1oua83y-MuiGrid2-root"
                           >
                             <span
                               aria-label="Toggle select card"
@@ -1165,7 +1165,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-true css-j4u7pp-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -1179,10 +1179,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1lpx4py-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16skdyy-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                           >
                             <p
                               aria-label="logo1.png"
@@ -1197,17 +1197,17 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-19w6is9-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j6t70b-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-2 css-1oua83y-MuiGrid2-root"
                           >
                             <span
                               aria-label="Toggle select card"
@@ -1253,7 +1253,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-true css-j4u7pp-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -1267,10 +1267,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1lpx4py-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16skdyy-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                           >
                             <p
                               aria-label="stfc-logo-blue-text.png"
@@ -1285,17 +1285,17 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-19w6is9-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j6t70b-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-2 css-1oua83y-MuiGrid2-root"
                           >
                             <span
                               aria-label="Toggle select card"
@@ -1341,7 +1341,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-true css-j4u7pp-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -1355,10 +1355,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1lpx4py-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16skdyy-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                           >
                             <p
                               aria-label="logo1.png"
@@ -1373,17 +1373,17 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-19w6is9-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j6t70b-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-2 css-1oua83y-MuiGrid2-root"
                           >
                             <span
                               aria-label="Toggle select card"
@@ -1429,7 +1429,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-true css-j4u7pp-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -1443,10 +1443,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1lpx4py-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16skdyy-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                           >
                             <p
                               aria-label="stfc-logo-blue-text.png"
@@ -1461,17 +1461,17 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-19w6is9-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j6t70b-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-2 css-1oua83y-MuiGrid2-root"
                           >
                             <span
                               aria-label="Toggle select card"
@@ -1517,7 +1517,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-true css-j4u7pp-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -1531,10 +1531,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1lpx4py-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16skdyy-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                           >
                             <p
                               aria-label="logo1.png"
@@ -1549,17 +1549,17 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-19w6is9-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j6t70b-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-2 css-1oua83y-MuiGrid2-root"
                           >
                             <span
                               aria-label="Toggle select card"
@@ -1605,7 +1605,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-true css-j4u7pp-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -1619,10 +1619,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1lpx4py-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16skdyy-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                           >
                             <p
                               aria-label="stfc-logo-blue-text.png"
@@ -1637,17 +1637,17 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-19w6is9-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j6t70b-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-2 css-1oua83y-MuiGrid2-root"
                           >
                             <span
                               aria-label="Toggle select card"
@@ -1693,7 +1693,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-true css-j4u7pp-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -1707,10 +1707,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1lpx4py-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16skdyy-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                           >
                             <p
                               aria-label="logo1.png"
@@ -1725,17 +1725,17 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-19w6is9-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j6t70b-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-2 css-1oua83y-MuiGrid2-root"
                           >
                             <span
                               aria-label="Toggle select card"
@@ -1781,7 +1781,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-true css-j4u7pp-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -1795,10 +1795,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1lpx4py-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16skdyy-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                           >
                             <p
                               aria-label="stfc-logo-blue-text.png"
@@ -1813,17 +1813,17 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-19w6is9-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j6t70b-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-2 css-1oua83y-MuiGrid2-root"
                           >
                             <span
                               aria-label="Toggle select card"
@@ -1869,7 +1869,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-true css-j4u7pp-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -1883,10 +1883,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1lpx4py-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16skdyy-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                           >
                             <p
                               aria-label="logo1.png"
@@ -1901,17 +1901,17 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-19w6is9-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j6t70b-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-2 css-1oua83y-MuiGrid2-root"
                           >
                             <span
                               aria-label="Toggle select card"
@@ -1957,7 +1957,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-true css-j4u7pp-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -1971,10 +1971,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1lpx4py-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16skdyy-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                           >
                             <p
                               aria-label="stfc-logo-blue-text.png"
@@ -1989,17 +1989,17 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-19w6is9-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j6t70b-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-2 css-1oua83y-MuiGrid2-root"
                           >
                             <span
                               aria-label="Toggle select card"
@@ -2045,7 +2045,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-true css-j4u7pp-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -2059,10 +2059,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1lpx4py-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16skdyy-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                           >
                             <p
                               aria-label="logo1.png"
@@ -2077,17 +2077,17 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-19w6is9-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j6t70b-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-2 css-1oua83y-MuiGrid2-root"
                           >
                             <span
                               aria-label="Toggle select card"
@@ -2133,7 +2133,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-true css-j4u7pp-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -2147,10 +2147,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1lpx4py-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16skdyy-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                           >
                             <p
                               aria-label="stfc-logo-blue-text.png"
@@ -2165,17 +2165,17 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-vxzi43-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-19w6is9-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j6t70b-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-2 css-1oua83y-MuiGrid2-root"
                           >
                             <span
                               aria-label="Toggle select card"
@@ -2221,7 +2221,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-true css-j4u7pp-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -2235,10 +2235,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1lpx4py-MuiGrid-root"
+                          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16skdyy-MuiGrid2-root"
                         >
                           <div
-                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                           >
                             <p
                               aria-label="logo1.png"
@@ -2257,7 +2257,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item css-17hisp5-MuiGrid-root"
+              class="MuiGrid2-root MuiGrid2-direction-xs-row css-hottla-MuiGrid2-root"
             >
               <div
                 class="MuiBox-root css-cg6jg"
@@ -2631,10 +2631,10 @@ exports[`Primary Image Dialog > renders no results page correctly, and can still
           class="MuiDialogContent-root css-ypiqx9-MuiDialogContent-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-na6woh-MuiGrid-root-MuiPaper-root"
+            class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-182neuw-MuiGrid2-root-MuiPaper-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-item css-17hisp5-MuiGrid-root"
+              class="MuiGrid2-root MuiGrid2-direction-xs-row css-hottla-MuiGrid2-root"
             >
               <div
                 class="MuiBox-root css-1tbggly"
@@ -2823,13 +2823,13 @@ exports[`Primary Image Dialog > renders no results page correctly, and can still
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item css-jpsoni-MuiGrid-root"
+              class="MuiGrid2-root MuiGrid2-direction-xs-row css-eqd3hj-MuiGrid2-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
+                class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-182z5mw-MuiGrid2-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-fw24ci-MuiGrid-root"
+                  class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-column css-1duc7bw-MuiGrid2-root"
                 >
                   <div
                     class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
@@ -2842,13 +2842,13 @@ exports[`Primary Image Dialog > renders no results page correctly, and can still
                         class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
                       >
                         <table
-                          class="MuiTable-root MuiGrid-root MuiGrid-container MuiGrid-item css-1uc6v0-MuiTable-root-MuiGrid-root"
+                          class="MuiTable-root MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-thwn6p-MuiTable-root-MuiGrid2-root"
                         >
                           <thead
-                            class="MuiTableHead-root MuiGrid-root MuiGrid-container MuiGrid-item css-1pr0ogz-MuiTableHead-root-MuiGrid-root"
+                            class="MuiTableHead-root MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-138f2jo-MuiTableHead-root-MuiGrid2-root"
                           >
                             <tr
-                              class="MuiTableRow-root MuiTableRow-head MuiGrid-root MuiGrid-container MuiGrid-item css-hb19md-MuiTableRow-root-MuiGrid-root"
+                              class="MuiTableRow-root MuiTableRow-head MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-hzqrp7-MuiTableRow-root-MuiGrid2-root"
                             >
                               <th
                                 aria-sort="none"
@@ -3253,7 +3253,7 @@ exports[`Primary Image Dialog > renders no results page correctly, and can still
                   </div>
                 </div>
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-14i775n-MuiGrid-root"
+                  class="MuiGrid2-root MuiGrid2-direction-xs-row css-bgdwck-MuiGrid2-root"
                 >
                   <div
                     class="MuiBox-root css-5tbyhb"
@@ -3273,7 +3273,7 @@ exports[`Primary Image Dialog > renders no results page correctly, and can still
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item css-17hisp5-MuiGrid-root"
+              class="MuiGrid2-root MuiGrid2-direction-xs-row css-hottla-MuiGrid2-root"
             >
               <div
                 class="MuiBox-root css-cg6jg"
