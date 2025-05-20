@@ -72,9 +72,7 @@
     "cy:run:api": "cross-env TZ=UTC cypress run --spec \"./cypress/e2e/with_api/**/*.cy.ts\""
   },
   "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not op_mini all"
+    "defaults"
   ],
   "packageManager": "yarn@4.9.1",
   "devDependencies": {
