@@ -463,13 +463,11 @@ export function ItemsTable(props: ItemTableProps) {
       ];
       return (
         // Ignore MRT rendered cells e.g. expand , spacer etc
-        column.id.startsWith('mrt') ||
+        (column.id.startsWith('mrt') ||
           // Ignore for grouped cells done manually
           ((disabledGroupedHeaderColumnIDs.some((id) => id === column.id) ||
             column.id.startsWith('item.properties')) &&
-            column.getIsGrouped())
-          ? {}
-          : {
+            column.getIsGrouped()) ? {} : {
               component: (props: TableCellBaseProps) => {
                 return (
                   <TableBodyCellOverFlowTip
@@ -482,7 +480,7 @@ export function ItemsTable(props: ItemTableProps) {
                   />
                 );
               },
-            }
+            })
       );
     },
     muiSearchTextFieldProps: {

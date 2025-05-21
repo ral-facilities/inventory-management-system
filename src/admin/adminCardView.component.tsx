@@ -1,12 +1,17 @@
 import { Button, Card, CardContent, Typography } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Grid2';
 import { Link } from 'react-router-dom';
 
 function AdminCardView() {
   return (
     <Grid container>
-      <Grid container xs={12} overflow={'auto'}>
-        <Grid key={0} xs={12} sm={6}>
+      <Grid container overflow={'auto'} size={12}>
+        <Grid
+          key={0}
+          size={{
+            xs: 12,
+            sm: 6
+          }}>
           <Button
             component={Link}
             to="units"
@@ -45,7 +50,12 @@ function AdminCardView() {
             </Card>
           </Button>
         </Grid>
-        <Grid key={1} xs={12} sm={6}>
+        <Grid
+          key={1}
+          size={{
+            xs: 12,
+            sm: 6
+          }}>
           <Button
             component={Link}
             to={'usage-statuses'}

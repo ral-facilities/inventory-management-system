@@ -7,7 +7,7 @@ import {
   Link as MuiLink,
   Typography,
 } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Grid2';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetManufacturer } from '../api/manufacturers';
@@ -67,7 +67,7 @@ function ManufacturerLandingPage() {
           alignContent={'center'}
           flexDirection="row"
         >
-          <Grid xs={12}>
+          <Grid size={12}>
             <Typography
               sx={{ margin: 1, textAlign: 'center', wordWrap: 'break-word' }}
               variant="h4"
@@ -75,12 +75,12 @@ function ManufacturerLandingPage() {
               {manufacturerData.name}
             </Typography>
           </Grid>
-          <Grid xs={12} my={2}>
+          <Grid my={2} size={12}>
             <Typography textAlign={'center'} variant="h6">
               URL:
             </Typography>
           </Grid>
-          <Grid xs={12}>
+          <Grid size={12}>
             {manufacturerData.url ? (
               <Typography
                 textAlign={'center'}
@@ -107,12 +107,12 @@ function ManufacturerLandingPage() {
               </Typography>
             )}
           </Grid>
-          <Grid xs={12} my={2}>
+          <Grid my={2} size={12}>
             <Typography textAlign={'center'} variant="h6">
               Telephone number:
             </Typography>
           </Grid>
-          <Grid xs={12}>
+          <Grid size={12}>
             <Typography
               sx={{ mx: '8px', wordWrap: 'break-word' }}
               textAlign={'center'}
@@ -122,12 +122,12 @@ function ManufacturerLandingPage() {
               {manufacturerData.telephone ?? 'None'}
             </Typography>
           </Grid>
-          <Grid xs={12} my={2}>
+          <Grid my={2} size={12}>
             <Typography textAlign={'center'} variant="h6">
               Address:
             </Typography>
           </Grid>
-          <Grid xs={12}>
+          <Grid size={12}>
             <Typography
               align="center"
               sx={{ mx: '8px', wordWrap: 'break-word' }}
@@ -165,12 +165,12 @@ function ManufacturerLandingPage() {
             </Typography>
           </Grid>
 
-          <Grid xs={12} my={2}>
+          <Grid my={2} size={12}>
             <Typography textAlign={'center'} variant="h6">
               Last modified:
             </Typography>
           </Grid>
-          <Grid xs={12}>
+          <Grid size={12}>
             <Typography
               sx={{ mx: '8px' }}
               textAlign={'center'}
@@ -181,12 +181,12 @@ function ManufacturerLandingPage() {
             </Typography>
           </Grid>
 
-          <Grid xs={12} my={2}>
+          <Grid my={2} size={12}>
             <Typography textAlign={'center'} variant="h6">
               Created:
             </Typography>
           </Grid>
-          <Grid xs={12}>
+          <Grid size={12}>
             <Typography
               sx={{ mx: '8px' }}
               textAlign={'center'}
@@ -203,7 +203,6 @@ function ManufacturerLandingPage() {
           <LinearProgress />
         </Box>
       )}
-
       <ManufacturerDialog
         open={editManufacturerDialogOpen}
         onClose={() => setEditManufacturerDialogOpen(false)}

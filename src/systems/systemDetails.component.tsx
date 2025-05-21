@@ -6,7 +6,7 @@ import {
   Divider,
   Typography,
 } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Grid2';
 import React from 'react';
 import { System } from '../api/api.types';
 import { getSystemImportanceColour, useGetSystem } from '../api/systems';
@@ -76,7 +76,7 @@ function SystemDetails(props: SystemDetailsProps) {
         }}
         spacing={1}
       >
-        <Grid xs={9}>
+        <Grid size={9}>
           <OverflowTip
             sx={{
               typography: 'h5',
@@ -109,11 +109,15 @@ function SystemDetails(props: SystemDetailsProps) {
               sx={{ margin: 0, mt: 1 }}
             >
               <Grid container spacing={2}>
-                <Grid xs="auto">
+                <Grid size="auto">
                   <PrimaryImage entityId={system.id} />
                 </Grid>
-                <Grid container spacing={1} xs>
-                  <Grid xs={12} sm={6}>
+                <Grid container spacing={1} size="grow">
+                  <Grid
+                    size={{
+                      xs: 12,
+                      sm: 6
+                    }}>
                     <Typography color="text.primary">Location</Typography>
                     <Typography
                       variant="body1"
@@ -123,7 +127,12 @@ function SystemDetails(props: SystemDetailsProps) {
                       {system.location ?? 'None'}
                     </Typography>
                   </Grid>
-                  <Grid xs={12} sm={6} sx={{ display: 'inline-flex' }}>
+                  <Grid
+                    sx={{ display: 'inline-flex' }}
+                    size={{
+                      xs: 12,
+                      sm: 6
+                    }}>
                     <Typography color="text.primary">Importance</Typography>
                     <Chip
                       label={system.importance}
@@ -140,7 +149,11 @@ function SystemDetails(props: SystemDetailsProps) {
                       }}
                     />
                   </Grid>
-                  <Grid xs={12} sm={6}>
+                  <Grid
+                    size={{
+                      xs: 12,
+                      sm: 6
+                    }}>
                     <Typography color="text.primary">Owner</Typography>
                     <Typography
                       variant="body1"
@@ -150,14 +163,22 @@ function SystemDetails(props: SystemDetailsProps) {
                       {system.owner ?? 'None'}
                     </Typography>
                   </Grid>
-                  <Grid xs={12} sm={6}>
+                  <Grid
+                    size={{
+                      xs: 12,
+                      sm: 6
+                    }}>
                     <Typography color="text.primary">Last modified</Typography>
                     <Typography variant="body1" color="text.secondary">
                       {formatDateTimeStrings(system.modified_time, true)}
                     </Typography>
                   </Grid>
 
-                  <Grid xs={12} sm={6}>
+                  <Grid
+                    size={{
+                      xs: 12,
+                      sm: 6
+                    }}>
                     <Typography color="text.primary">Created</Typography>
                     <Typography variant="body1" color="text.secondary">
                       {formatDateTimeStrings(system.created_time, true)}

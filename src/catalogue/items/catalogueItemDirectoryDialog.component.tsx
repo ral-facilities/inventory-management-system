@@ -9,7 +9,7 @@ import {
   FormHelperText,
   Tooltip,
 } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Grid2';
 import { MRT_RowSelectionState } from 'material-react-table';
 import React from 'react';
 import { CatalogueCategory, CatalogueItem } from '../../api/api.types';
@@ -160,7 +160,7 @@ const CatalogueItemDirectoryDialog = (
     >
       <DialogTitle sx={{ marginLeft: 2 }}>
         <Grid container spacing={2}>
-          <Grid container flexDirection="row" alignItems="center" xs={12}>
+          <Grid container flexDirection="row" alignItems="center" size={12}>
             <>
               {requestType === 'moveTo' ? 'Move ' : 'Copy '}{' '}
               {selectedItems.length}{' '}
@@ -184,7 +184,7 @@ const CatalogueItemDirectoryDialog = (
               </Tooltip>
             )}
           </Grid>
-          <Grid xs={12}>
+          <Grid size={12}>
             <Breadcrumbs
               breadcrumbsInfo={catalogueBreadcrumbs}
               onChangeNode={setParentCategoryId}

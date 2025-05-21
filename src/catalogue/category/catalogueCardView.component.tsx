@@ -14,7 +14,7 @@ import {
   MenuItem,
   Paper,
 } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Grid2';
 import {
   MRT_BottomToolbar,
   MRT_ColumnDef,
@@ -546,7 +546,13 @@ function CatalogueCardView() {
                   {!isLoading &&
                     (data.length !== 0 ? (
                       data.map((card, index) => (
-                        <Grid key={index} sm={6} md={4} width={'100%'}>
+                        <Grid
+                          key={index}
+                          width={'100%'}
+                          size={{
+                            sm: 6,
+                            md: 4
+                          }}>
                           <CatalogueCard
                             card={card as MRT_Cell<CatalogueCategory>}
                             table={table}

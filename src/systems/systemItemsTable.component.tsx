@@ -165,26 +165,28 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       setTableRows(
         itemsData.map(
           (itemData) =>
-            ({
+            (({
               item: itemData,
+
               catalogueItem: catalogueItemList?.find(
                 (catalogueItem) =>
                   catalogueItem?.id === itemData.catalogue_item_id
-              ),
-            }) as TableRowData
+              )
+            }) as TableRowData)
         )
       );
     } else if (!isLoading && moveToSelectedItems) {
       setTableRows(
         moveToSelectedItems.map(
           (itemData) =>
-            ({
+            (({
               item: itemData,
+
               catalogueItem: catalogueItemList?.find(
                 (catalogueItem) =>
                   catalogueItem?.id === itemData.catalogue_item_id
-              ),
-            }) as TableRowData
+              )
+            }) as TableRowData)
         )
       );
     }

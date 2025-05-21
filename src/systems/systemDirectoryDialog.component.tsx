@@ -8,7 +8,7 @@ import {
   DialogTitle,
   Tooltip,
 } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Grid2';
 import { MRT_RowSelectionState } from 'material-react-table';
 import React from 'react';
 import { System } from '../api/api.types';
@@ -158,7 +158,7 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
               )}
             </Box>
           </Grid>
-          <Grid xs={12}>
+          <Grid size={12}>
             <Breadcrumbs
               breadcrumbsInfo={parentSystemBreadcrumbs}
               onChangeNode={setParentSystemId}

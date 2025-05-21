@@ -803,7 +803,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       ];
       return (
         // ignore cells that render "click here"
-        column.id === 'View Items' ||
+        (column.id === 'View Items' ||
           column.id ===
             'catalogueItem.obsolete_replacement_catalogue_item_id' ||
           // Ignore MRT rendered cells e.g. expand , spacer etc
@@ -811,9 +811,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           // Ignore for grouped cells done manually
           ((disabledGroupedHeaderColumnIDs.some((id) => id === column.id) ||
             column.id.startsWith('catalogueItem.properties')) &&
-            column.getIsGrouped())
-          ? {}
-          : {
+            column.getIsGrouped()) ? {} : {
               component: (props: TableCellBaseProps) => {
                 return (
                   <TableBodyCellOverFlowTip
@@ -832,7 +830,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                   />
                 );
               },
-            }
+            })
       );
     },
     muiSelectCheckboxProps: dense

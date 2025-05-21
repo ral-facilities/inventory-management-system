@@ -14,7 +14,7 @@ import {
   MenuItem,
   Paper,
 } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Grid2';
 import {
   MRT_BottomToolbar,
   MRT_Cell,
@@ -512,9 +512,9 @@ const ImageGallery = (props: ImageGalleryProps) => {
                             container
                             height="fit-content"
                             pt={!dense ? 5.25 : undefined}
-                            xs={12}
+                            size={12}
                           >
-                            <Grid xs={2}>
+                            <Grid size={2}>
                               {dense && (
                                 <MRT_SelectCheckbox
                                   row={card.row as MRT_Row<APIImage>}
@@ -532,7 +532,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
                             justifyContent="center"
                             alignItems="center"
                             minHeight={`${maxHeightThumbnail}px`}
-                            xs
+                            size="grow"
                           >
                             <ThumbnailImage
                               onClick={
@@ -554,10 +554,10 @@ const ImageGallery = (props: ImageGalleryProps) => {
                             alignItems="center"
                             height="fit-content"
                             container
-                            xs={12}
+                            size={12}
                           >
                             {!dense && (
-                              <Grid xs={2}>
+                              <Grid size={2}>
                                 <MRT_ToggleRowActionMenuButton
                                   cell={card as MRT_Cell<APIImage>}
                                   row={card.row as MRT_Row<APIImage>}
@@ -568,7 +568,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
                                 />
                               </Grid>
                             )}
-                            <Grid xs={dense ? 12 : 8}>
+                            <Grid size={dense ? 12 : 8}>
                               <OverflowTip
                                 sx={{
                                   fontVariant: 'body2',
@@ -581,7 +581,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
                               </OverflowTip>
                             </Grid>
                             {/*Adds an item for spacing, to centre the file name in the card. */}
-                            {!dense && <Grid xs={2}></Grid>}
+                            {!dense && <Grid size={2}></Grid>}
                           </Grid>
                         </Card>
                       </Grid>
