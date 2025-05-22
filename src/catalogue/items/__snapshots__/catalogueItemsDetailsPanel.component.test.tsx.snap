@@ -543,7 +543,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                   class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j0u08r-MuiGrid2-root"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-6uw6i2-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 css-d0dpo5-MuiTypography-root"
                   >
                     None
                   </p>
@@ -1101,7 +1101,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                   class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j0u08r-MuiGrid2-root"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-6uw6i2-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 css-d0dpo5-MuiTypography-root"
                   >
                     None
                   </p>
@@ -1629,7 +1629,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                   class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j0u08r-MuiGrid2-root"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-6uw6i2-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 css-d0dpo5-MuiTypography-root"
                   >
                     None
                   </p>
@@ -2157,7 +2157,7 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                   class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j0u08r-MuiGrid2-root"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-6uw6i2-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 css-d0dpo5-MuiTypography-root"
                   >
                     Need to find new manufacturer. 26
                   </p>
@@ -2705,7 +2705,7 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                   class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j0u08r-MuiGrid2-root"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-6uw6i2-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 css-d0dpo5-MuiTypography-root"
                   >
                     Need to find new manufacturer. 26
                   </p>
@@ -3253,7 +3253,7 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                   class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j0u08r-MuiGrid2-root"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-6uw6i2-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 css-d0dpo5-MuiTypography-root"
                   >
                     Need to find new manufacturer. 26
                   </p>
@@ -3773,7 +3773,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly (emp
                   class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j0u08r-MuiGrid2-root"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-6uw6i2-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 css-d0dpo5-MuiTypography-root"
                   >
                     None
                   </p>
@@ -4321,7 +4321,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                   class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j0u08r-MuiGrid2-root"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-6uw6i2-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 css-d0dpo5-MuiTypography-root"
                   >
                     Need to find new manufacturer. 26
                   </p>
