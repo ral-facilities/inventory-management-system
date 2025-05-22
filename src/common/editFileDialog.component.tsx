@@ -162,12 +162,14 @@ const EditFileDialog = (props: FileDialogProps) => {
               {...register('file_name')}
               error={!!errors.file_name}
               helperText={errors.file_name?.message}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">{extension}</InputAdornment>
-                ),
-              }}
               fullWidth
+              slotProps={{
+                input: {
+                  endAdornment: (
+                    <InputAdornment position="end">{extension}</InputAdornment>
+                  ),
+                }
+              }}
             />
           </Grid>
           <Grid>
