@@ -4,17 +4,17 @@ exports[`CardViewFilters > renders dialog correctly 1`] = `
 <body>
   <div>
     <table
-      class="MuiTable-root MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-thwn6p-MuiTable-root-MuiGrid2-root"
+      class="MuiTable-root MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-16tczb-MuiTable-root-MuiGrid2-root"
     >
       <thead
-        class="MuiTableHead-root MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-138f2jo-MuiTableHead-root-MuiGrid2-root"
+        class="MuiTableHead-root MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-nhfqov-MuiTableHead-root-MuiGrid2-root"
       >
         <tr
-          class="MuiTableRow-root MuiTableRow-head MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-hzqrp7-MuiTableRow-root-MuiGrid2-root"
+          class="MuiTableRow-root MuiTableRow-head MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1gfz8fy-MuiTableRow-root-MuiGrid2-root"
         >
           <th
             aria-sort="none"
-            class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-u9cvxd-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1j1a2m9-MuiTableCell-root"
             colspan="1"
             data-can-sort="true"
             data-index="0"
@@ -33,18 +33,18 @@ exports[`CardViewFilters > renders dialog correctly 1`] = `
                 </div>
                 <span
                   aria-label="Sort by Name ascending"
-                  class="MuiBadge-root css-1c32n2y-MuiBadge-root"
+                  class="MuiBadge-root css-63ezxx-MuiBadge-root"
                   data-mui-internal-clone-element="true"
                 >
                   <span
                     aria-label="Sort by Name ascending"
-                    class="MuiButtonBase-root MuiTableSortLabel-root Mui-active css-118d58w-MuiButtonBase-root-MuiTableSortLabel-root"
+                    class="MuiButtonBase-root MuiTableSortLabel-root Mui-active MuiTableSortLabel-directionAsc css-bgz9z4-MuiButtonBase-root-MuiTableSortLabel-root"
                     role="button"
                     tabindex="0"
                   >
                     <svg
                       aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-1vweko9-MuiSvgIcon-root-MuiTableSortLabel-icon"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-7ojauk-MuiSvgIcon-root-MuiTableSortLabel-icon"
                       data-testid="SyncAltIcon"
                       focusable="false"
                       style="transform: rotate(-90deg) scaleX(0.9) translateX(-1px);"
@@ -56,7 +56,7 @@ exports[`CardViewFilters > renders dialog correctly 1`] = `
                     </svg>
                   </span>
                   <span
-                    class="MuiBadge-badge MuiBadge-standard MuiBadge-invisible MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightCircular MuiBadge-overlapCircular css-2v5rxe-MuiBadge-badge"
+                    class="MuiBadge-badge MuiBadge-standard MuiBadge-invisible MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightCircular MuiBadge-overlapCircular css-hkekw-MuiBadge-badge"
                   >
                     0
                   </span>
@@ -67,14 +67,14 @@ exports[`CardViewFilters > renders dialog correctly 1`] = `
               >
                 <button
                   aria-label="Column Actions"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1p8dotb-MuiButtonBase-root-MuiIconButton-root"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1a3u37w-MuiButtonBase-root-MuiIconButton-root"
                   data-mui-internal-clone-element="true"
                   tabindex="0"
                   type="button"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                     data-testid="MoreVertIcon"
                     focusable="false"
                     style="transform: scale(0.9);"
@@ -84,16 +84,13 @@ exports[`CardViewFilters > renders dialog correctly 1`] = `
                       d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                     />
                   </svg>
-                  <span
-                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                  />
                 </button>
               </div>
             </div>
           </th>
           <th
             aria-sort="none"
-            class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1mo3a7w-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-605d5e-MuiTableCell-root"
             colspan="1"
             data-can-sort="true"
             data-index="1"
@@ -112,18 +109,18 @@ exports[`CardViewFilters > renders dialog correctly 1`] = `
                 </div>
                 <span
                   aria-label="Sort by Description ascending"
-                  class="MuiBadge-root css-1c32n2y-MuiBadge-root"
+                  class="MuiBadge-root css-63ezxx-MuiBadge-root"
                   data-mui-internal-clone-element="true"
                 >
                   <span
                     aria-label="Sort by Description ascending"
-                    class="MuiButtonBase-root MuiTableSortLabel-root Mui-active css-118d58w-MuiButtonBase-root-MuiTableSortLabel-root"
+                    class="MuiButtonBase-root MuiTableSortLabel-root Mui-active MuiTableSortLabel-directionAsc css-bgz9z4-MuiButtonBase-root-MuiTableSortLabel-root"
                     role="button"
                     tabindex="0"
                   >
                     <svg
                       aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-1vweko9-MuiSvgIcon-root-MuiTableSortLabel-icon"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-7ojauk-MuiSvgIcon-root-MuiTableSortLabel-icon"
                       data-testid="SyncAltIcon"
                       focusable="false"
                       style="transform: rotate(-90deg) scaleX(0.9) translateX(-1px);"
@@ -135,7 +132,7 @@ exports[`CardViewFilters > renders dialog correctly 1`] = `
                     </svg>
                   </span>
                   <span
-                    class="MuiBadge-badge MuiBadge-standard MuiBadge-invisible MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightCircular MuiBadge-overlapCircular css-2v5rxe-MuiBadge-badge"
+                    class="MuiBadge-badge MuiBadge-standard MuiBadge-invisible MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightCircular MuiBadge-overlapCircular css-hkekw-MuiBadge-badge"
                   >
                     0
                   </span>
@@ -146,14 +143,14 @@ exports[`CardViewFilters > renders dialog correctly 1`] = `
               >
                 <button
                   aria-label="Column Actions"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1p8dotb-MuiButtonBase-root-MuiIconButton-root"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1a3u37w-MuiButtonBase-root-MuiIconButton-root"
                   data-mui-internal-clone-element="true"
                   tabindex="0"
                   type="button"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                     data-testid="MoreVertIcon"
                     focusable="false"
                     style="transform: scale(0.9);"
@@ -163,9 +160,6 @@ exports[`CardViewFilters > renders dialog correctly 1`] = `
                       d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                     />
                   </svg>
-                  <span
-                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                  />
                 </button>
               </div>
             </div>

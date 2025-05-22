@@ -6,7 +6,8 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
     style="width: 100%;"
   >
     <div
-      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-1atu56z-MuiPaper-root"
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-1hoqul-MuiPaper-root"
+      style="--Paper-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);"
     >
       <div
         class="MuiBox-root css-1tbggly"
@@ -16,7 +17,7 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
           style="opacity: 0; visibility: hidden;"
         >
           <p
-            class="MuiTypography-root MuiTypography-body1 css-p3gdy2-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 css-m4t3jl-MuiTypography-root"
           >
             Drop to group by 
           </p>
@@ -28,16 +29,16 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
             class="MuiBox-root css-k008qs"
           >
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1owl11-MuiButtonBase-root-MuiButton-root"
+              class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1ioyh7z-MuiButtonBase-root-MuiButton-root"
               tabindex="0"
               type="button"
             >
               <span
-                class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1d6wzja-MuiButton-startIcon"
+                class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1sh91j5-MuiButton-startIcon"
               >
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                   data-testid="AddIcon"
                   focusable="false"
                   viewBox="0 0 24 24"
@@ -48,22 +49,19 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
                 </svg>
               </span>
               Add Catalogue Item
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
             </button>
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary Mui-disabled MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1owl11-MuiButtonBase-root-MuiButton-root"
+              class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary Mui-disabled MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1ioyh7z-MuiButtonBase-root-MuiButton-root"
               disabled=""
               tabindex="-1"
               type="button"
             >
               <span
-                class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1d6wzja-MuiButton-startIcon"
+                class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1sh91j5-MuiButton-startIcon"
               >
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                   data-testid="ClearIcon"
                   focusable="false"
                   viewBox="0 0 24 24"
@@ -80,24 +78,24 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
             class="MuiBox-root css-1p0wbhh"
           >
             <div
-              class="MuiCollapse-root MuiCollapse-horizontal MuiCollapse-entered css-1d98dbz-MuiCollapse-root"
+              class="MuiCollapse-root MuiCollapse-horizontal MuiCollapse-entered css-1uiyv8z-MuiCollapse-root"
               style="min-width: 0px;"
             >
               <div
-                class="MuiCollapse-wrapper MuiCollapse-horizontal css-18w3a48-MuiCollapse-wrapper"
+                class="MuiCollapse-wrapper MuiCollapse-horizontal css-gquduo-MuiCollapse-wrapper"
               >
                 <div
-                  class="MuiCollapse-wrapperInner MuiCollapse-horizontal css-14vyde3-MuiCollapse-wrapperInner"
+                  class="MuiCollapse-wrapperInner MuiCollapse-horizontal css-3cp540-MuiCollapse-wrapperInner"
                 >
                   <div
-                    class="MuiFormControl-root MuiTextField-root css-11sh9fj-MuiFormControl-root-MuiTextField-root"
+                    class="MuiFormControl-root MuiTextField-root css-98z96m-MuiFormControl-root-MuiTextField-root"
                   >
                     <div
-                      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall MuiInputBase-adornedStart MuiInputBase-adornedEnd css-1v8abvc-MuiInputBase-root-MuiOutlinedInput-root"
+                      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall MuiInputBase-adornedStart MuiInputBase-adornedEnd css-1ambpiq-MuiInputBase-root-MuiOutlinedInput-root"
                     >
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                         data-testid="SearchIcon"
                         focusable="false"
                         style="margin-right: 4px;"
@@ -110,14 +108,14 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
                       <input
                         aria-invalid="false"
                         autocomplete="new-password"
-                        class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12yjm75-MuiInputBase-input-MuiOutlinedInput-input"
-                        id=":r0:"
+                        class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12tjcea-MuiInputBase-input-MuiOutlinedInput-input"
+                        id=":r2:"
                         placeholder="Search"
                         type="text"
                         value=""
                       />
                       <div
-                        class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-outlined MuiInputAdornment-sizeSmall css-1laqsz7-MuiInputAdornment-root"
+                        class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-outlined MuiInputAdornment-sizeSmall css-elo8k2-MuiInputAdornment-root"
                       >
                         <span
                           aria-label="Clear search"
@@ -126,14 +124,14 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
                         >
                           <button
                             aria-label="Clear search"
-                            class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeSmall css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root"
+                            class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeSmall css-155wbr6-MuiButtonBase-root-MuiIconButton-root"
                             disabled=""
                             tabindex="-1"
                             type="button"
                           >
                             <svg
                               aria-hidden="true"
-                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                               data-testid="CloseIcon"
                               focusable="false"
                               viewBox="0 0 24 24"
@@ -147,12 +145,13 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
                       </div>
                       <fieldset
                         aria-hidden="true"
-                        class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                        class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
                       >
                         <legend
-                          class="css-ihdtdm"
+                          class="css-w4cd9x"
                         >
                           <span
+                            aria-hidden="true"
                             class="notranslate"
                           >
                             ​
@@ -169,14 +168,14 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
             >
               <button
                 aria-label="Show/Hide filters"
-                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
                 data-mui-internal-clone-element="true"
                 tabindex="0"
                 type="button"
               >
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                   data-testid="FilterListOffIcon"
                   focusable="false"
                   viewBox="0 0 24 24"
@@ -185,20 +184,17 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
                     d="M10.83 8H21V6H8.83zm5 5H18v-2h-4.17zM14 16.83V18h-4v-2h3.17l-3-3H6v-2h2.17l-3-3H3V6h.17L1.39 4.22 2.8 2.81l18.38 18.38-1.41 1.41z"
                   />
                 </svg>
-                <span
-                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                />
               </button>
               <button
                 aria-label="Show/Hide columns"
-                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
                 data-mui-internal-clone-element="true"
                 tabindex="0"
                 type="button"
               >
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                   data-testid="ViewColumnIcon"
                   focusable="false"
                   viewBox="0 0 24 24"
@@ -207,125 +203,122 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
                     d="M14.67 5v14H9.33V5zm1 14H21V5h-5.33zm-7.34 0V5H3v14z"
                   />
                 </svg>
-                <span
-                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                />
               </button>
             </div>
           </div>
         </div>
       </div>
       <div
-        class="MuiTableContainer-root css-15zpm7g-MuiTableContainer-root"
+        class="MuiTableContainer-root css-tma6sn-MuiTableContainer-root"
         data-testid="catalogue-items-table-container"
       >
         <table
-          class="MuiTable-root MuiTable-stickyHeader css-ts728e-MuiTable-root"
+          class="MuiTable-root MuiTable-stickyHeader css-1gcyac0-MuiTable-root"
           style="--header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-mrt_row_select-size: 60; --col-mrt_row_select-size: 60; --header-catalogueItem_name-size: 200; --col-catalogueItem_name-size: 200; --header-catalogueItem_modified_time-size: 350; --col-catalogueItem_modified_time-size: 350; --header-View_Items-size: 200; --col-View_Items-size: 200; --header-catalogueItem_description-size: 250; --col-catalogueItem_description-size: 250; --header-catalogueItem_is_obsolete-size: 200; --col-catalogueItem_is_obsolete-size: 200; --header-catalogueItem_obsolete_replacement_catalogue_item_id-size: 275; --col-catalogueItem_obsolete_replacement_catalogue_item_id-size: 275; --header-catalogueItem_obsolete_reason-size: 225; --col-catalogueItem_obsolete_reason-size: 225; --header-catalogueItem_properties_1-size: 250; --col-catalogueItem_properties_1-size: 250; --header-catalogueItem_properties_2-size: 250; --col-catalogueItem_properties_2-size: 250; --header-catalogueItem_properties_3-size: 250; --col-catalogueItem_properties_3-size: 250; --header-catalogueItem_properties_4-size: 250; --col-catalogueItem_properties_4-size: 250; --header-catalogueItem_properties_5-size: 250; --col-catalogueItem_properties_5-size: 250; --header-catalogueItem_properties_6-size: 250; --col-catalogueItem_properties_6-size: 250; --header-catalogueItem_cost_gbp-size: 250; --col-catalogueItem_cost_gbp-size: 250; --header-catalogueItem_cost_to_rework_gbp-size: 250; --col-catalogueItem_cost_to_rework_gbp-size: 250; --header-catalogueItem_days_to_replace-size: 275; --col-catalogueItem_days_to_replace-size: 275; --header-catalogueItem_days_to_rework-size: 250; --col-catalogueItem_days_to_rework-size: 250; --header-catalogueItem_expected_lifetime_days-size: 300; --col-catalogueItem_expected_lifetime_days-size: 300; --header-catalogueItem_drawing_number-size: 250; --col-catalogueItem_drawing_number-size: 250; --header-catalogueItem_drawing_link-size: 250; --col-catalogueItem_drawing_link-size: 250; --header-catalogueItem_item_model_number-size: 250; --col-catalogueItem_item_model_number-size: 250; --header-manufacturer_name-size: 350; --col-manufacturer_name-size: 350; --header-manufacturer_url-size: 250; --col-manufacturer_url-size: 250; --header-manufacturer_address-size: 300; --col-manufacturer_address-size: 300; --header-manufacturer_telephone-size: 300; --col-manufacturer_telephone-size: 300; --header-catalogueItem_notes-size: 250; --col-catalogueItem_notes-size: 250; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
         >
           <thead
-            class="MuiTableHead-root css-q4cnup-MuiTableHead-root"
+            class="MuiTableHead-root css-7psuou-MuiTableHead-root"
           >
             <tr
-              class="MuiTableRow-root MuiTableRow-head css-ssspk8-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-head css-1mpnnre-MuiTableRow-root"
             />
           </thead>
           <tbody
-            class="MuiTableBody-root css-129p5vw-MuiTableBody-root"
+            class="MuiTableBody-root css-tlrxt6-MuiTableBody-root"
           >
             <tr
               aria-label="Cameras 1 row"
-              class="MuiTableRow-root MuiTableRow-root css-i1y727-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
               data-index="0"
               role="row"
             />
             <tr
               aria-label="Cameras 2 row"
-              class="MuiTableRow-root MuiTableRow-root css-i1y727-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
               data-index="1"
               role="row"
             />
             <tr
               aria-label="Cameras 3 row"
-              class="MuiTableRow-root MuiTableRow-root css-i1y727-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
               data-index="2"
               role="row"
             />
             <tr
               aria-label="Cameras 4 row"
-              class="MuiTableRow-root MuiTableRow-root css-i1y727-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
               data-index="3"
               role="row"
             />
             <tr
               aria-label="Cameras 5 row"
-              class="MuiTableRow-root MuiTableRow-root css-i1y727-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
               data-index="4"
               role="row"
             />
             <tr
               aria-label="Cameras 6 row"
-              class="MuiTableRow-root MuiTableRow-root css-i1y727-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
               data-index="5"
               role="row"
             />
             <tr
               aria-label="Cameras 7 row"
-              class="MuiTableRow-root MuiTableRow-root css-i1y727-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
               data-index="6"
               role="row"
             />
             <tr
               aria-label="Cameras 8 row"
-              class="MuiTableRow-root MuiTableRow-root css-i1y727-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
               data-index="7"
               role="row"
             />
             <tr
               aria-label="Cameras 9 row"
-              class="MuiTableRow-root MuiTableRow-root css-i1y727-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
               data-index="8"
               role="row"
             />
             <tr
               aria-label="Cameras 10 row"
-              class="MuiTableRow-root MuiTableRow-root css-i1y727-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
               data-index="9"
               role="row"
             />
             <tr
               aria-label="Cameras 11 row"
-              class="MuiTableRow-root MuiTableRow-root css-i1y727-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
               data-index="10"
               role="row"
             />
             <tr
               aria-label="Cameras 12 row"
-              class="MuiTableRow-root MuiTableRow-root css-i1y727-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
               data-index="11"
               role="row"
             />
             <tr
               aria-label="Cameras 13 row"
-              class="MuiTableRow-root MuiTableRow-root css-i1y727-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
               data-index="12"
               role="row"
             />
             <tr
               aria-label="Cameras 14 row"
-              class="MuiTableRow-root MuiTableRow-root css-i1y727-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
               data-index="13"
               role="row"
             />
             <tr
               aria-label="Cameras 15 row"
-              class="MuiTableRow-root MuiTableRow-root css-i1y727-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
               data-index="14"
               role="row"
             />
           </tbody>
           <tfoot
-            class="MuiTableFooter-root css-4ar9ic-MuiTableFooter-root"
+            class="MuiTableFooter-root css-13kpbyb-MuiTableFooter-root"
           />
         </table>
       </div>
@@ -333,21 +326,22 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
         class="MuiBox-root css-10gei56"
       >
         <div
-          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-cwrbtg-MuiCollapse-root"
           style="min-height: 0px;"
         >
           <div
-            class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+            class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
           >
             <div
-              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
             >
               <div
-                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-3fnbcm-MuiPaper-root-MuiAlert-root"
+                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-ltczp2-MuiPaper-root-MuiAlert-root"
                 role="alert"
+                style="--Paper-shadow: none;"
               >
                 <div
-                  class="MuiAlert-message css-1pxa9xg-MuiAlert-message"
+                  class="MuiAlert-message css-zioonp-MuiAlert-message"
                 >
                   <div
                     class="MuiStack-root css-5kul5x-MuiStack-root"
@@ -367,7 +361,7 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
           class="MuiBox-root css-1llu0od"
         >
           <p
-            class="MuiTypography-root MuiTypography-body1 css-13zw5gk-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 css-110q72o-MuiTypography-root"
           >
             Total Catalogue Items: 25
           </p>
@@ -381,20 +375,19 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
                 class="MuiBox-root css-exd1zr"
               >
                 <label
-                  class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-uqq6zz-MuiFormLabel-root-MuiInputLabel-root"
+                  class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-10j3yc8-MuiFormLabel-root-MuiInputLabel-root"
                   for="mrt-rows-per-page"
                 >
                   Rows per page
                 </label>
                 <div
-                  class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
+                  class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary MuiSelect-root css-1y2ya84-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
                   <div
-                    aria-controls=":r4:"
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-label="Rows per page"
-                    class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input"
+                    class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-5lvf42-MuiSelect-select-MuiInputBase-input-MuiInput-input"
                     role="combobox"
                     tabindex="0"
                   >
@@ -403,14 +396,14 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
                   <input
                     aria-hidden="true"
                     aria-invalid="false"
-                    class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                    class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
                     id="mrt-rows-per-page"
                     tabindex="-1"
                     value="15"
                   />
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-1gpuzre-MuiSvgIcon-root-MuiSelect-icon"
                     data-testid="ArrowDropDownIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
@@ -423,22 +416,22 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
               </div>
               <nav
                 aria-label="pagination navigation"
-                class="MuiPagination-root MuiPagination-outlined css-1oj2twp-MuiPagination-root"
+                class="MuiPagination-root MuiPagination-outlined css-1xra8g6-MuiPagination-root"
               >
                 <ul
-                  class="MuiPagination-ul css-wjh20t-MuiPagination-ul"
+                  class="MuiPagination-ul css-1c5o7vy-MuiPagination-ul"
                 >
                   <li>
                     <button
                       aria-label="Go to previous page"
-                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
+                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-fpujy5-MuiButtonBase-root-MuiPaginationItem-root"
                       disabled=""
                       tabindex="-1"
                       type="button"
                     >
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiPaginationItem-icon css-g2z002-MuiSvgIcon-root-MuiPaginationItem-icon"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiPaginationItem-icon css-8uzxat-MuiSvgIcon-root-MuiPaginationItem-icon"
                         data-testid="ChevronLeftIcon"
                         focusable="false"
                         viewBox="0 0 24 24"
@@ -451,41 +444,35 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
                   </li>
                   <li>
                     <button
-                      aria-current="true"
+                      aria-current="page"
                       aria-label="page 1"
-                      class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-selected MuiPaginationItem-page css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
+                      class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-selected MuiPaginationItem-page css-fpujy5-MuiButtonBase-root-MuiPaginationItem-root"
                       tabindex="0"
                       type="button"
                     >
                       1
-                      <span
-                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                      />
                     </button>
                   </li>
                   <li>
                     <button
                       aria-label="Go to page 2"
-                      class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary MuiPaginationItem-page css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
+                      class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary MuiPaginationItem-page css-fpujy5-MuiButtonBase-root-MuiPaginationItem-root"
                       tabindex="0"
                       type="button"
                     >
                       2
-                      <span
-                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                      />
                     </button>
                   </li>
                   <li>
                     <button
                       aria-label="Go to next page"
-                      class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary MuiPaginationItem-previousNext css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
+                      class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary MuiPaginationItem-previousNext css-fpujy5-MuiButtonBase-root-MuiPaginationItem-root"
                       tabindex="0"
                       type="button"
                     >
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiPaginationItem-icon css-g2z002-MuiSvgIcon-root-MuiPaginationItem-icon"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiPaginationItem-icon css-8uzxat-MuiSvgIcon-root-MuiPaginationItem-icon"
                         data-testid="ChevronRightIcon"
                         focusable="false"
                         viewBox="0 0 24 24"
@@ -494,9 +481,6 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
                           d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
                         />
                       </svg>
-                      <span
-                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                      />
                     </button>
                   </li>
                 </ul>

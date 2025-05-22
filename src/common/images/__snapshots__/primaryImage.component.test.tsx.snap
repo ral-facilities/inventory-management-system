@@ -3,7 +3,7 @@
 exports[`PrimaryImage Component > matches the snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="MuiGrid2-root MuiGrid2-direction-xs-row css-27y2fm-MuiGrid2-root"
+    class="MuiGrid2-root MuiGrid2-direction-xs-row css-1fzlhpv-MuiGrid2-root"
   >
     <div
       class="MuiBox-root css-nnlis0"
@@ -18,13 +18,13 @@ exports[`PrimaryImage Component > matches the snapshot 1`] = `
         >
           <button
             aria-label="primary images action menu"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-1t9jaav-MuiButtonBase-root-MuiIconButton-root"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-1c3nke9-MuiButtonBase-root-MuiIconButton-root"
             tabindex="0"
             type="button"
           >
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
               data-testid="MoreHorizIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -33,9 +33,6 @@ exports[`PrimaryImage Component > matches the snapshot 1`] = `
                 d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
               />
             </svg>
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
         </span>
       </div>

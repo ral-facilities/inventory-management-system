@@ -6,7 +6,8 @@ exports[`Units > renders table correctly 1`] = `
     style="width: 100%; height: 100%;"
   >
     <div
-      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-1s80a98-MuiPaper-root"
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-18m8dtv-MuiPaper-root"
+      style="--Paper-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);"
     >
       <div
         class="MuiBox-root css-1tbggly"
@@ -16,7 +17,7 @@ exports[`Units > renders table correctly 1`] = `
           style="opacity: 0; visibility: hidden;"
         >
           <p
-            class="MuiTypography-root MuiTypography-body1 css-p3gdy2-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 css-m4t3jl-MuiTypography-root"
           >
             Drop to group by 
           </p>
@@ -28,16 +29,16 @@ exports[`Units > renders table correctly 1`] = `
             class="MuiBox-root css-0"
           >
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1owl11-MuiButtonBase-root-MuiButton-root"
+              class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1ioyh7z-MuiButtonBase-root-MuiButton-root"
               tabindex="0"
               type="button"
             >
               <span
-                class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1d6wzja-MuiButton-startIcon"
+                class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1sh91j5-MuiButton-startIcon"
               >
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                   data-testid="AddIcon"
                   focusable="false"
                   viewBox="0 0 24 24"
@@ -48,22 +49,19 @@ exports[`Units > renders table correctly 1`] = `
                 </svg>
               </span>
               Add Unit
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
             </button>
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary Mui-disabled MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1owl11-MuiButtonBase-root-MuiButton-root"
+              class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary Mui-disabled MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1ioyh7z-MuiButtonBase-root-MuiButton-root"
               disabled=""
               tabindex="-1"
               type="button"
             >
               <span
-                class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1d6wzja-MuiButton-startIcon"
+                class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1sh91j5-MuiButton-startIcon"
               >
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                   data-testid="ClearIcon"
                   focusable="false"
                   viewBox="0 0 24 24"
@@ -80,24 +78,24 @@ exports[`Units > renders table correctly 1`] = `
             class="MuiBox-root css-1p0wbhh"
           >
             <div
-              class="MuiCollapse-root MuiCollapse-horizontal MuiCollapse-entered css-1d98dbz-MuiCollapse-root"
+              class="MuiCollapse-root MuiCollapse-horizontal MuiCollapse-entered css-1uiyv8z-MuiCollapse-root"
               style="min-width: 0px;"
             >
               <div
-                class="MuiCollapse-wrapper MuiCollapse-horizontal css-18w3a48-MuiCollapse-wrapper"
+                class="MuiCollapse-wrapper MuiCollapse-horizontal css-gquduo-MuiCollapse-wrapper"
               >
                 <div
-                  class="MuiCollapse-wrapperInner MuiCollapse-horizontal css-14vyde3-MuiCollapse-wrapperInner"
+                  class="MuiCollapse-wrapperInner MuiCollapse-horizontal css-3cp540-MuiCollapse-wrapperInner"
                 >
                   <div
-                    class="MuiFormControl-root MuiTextField-root css-11sh9fj-MuiFormControl-root-MuiTextField-root"
+                    class="MuiFormControl-root MuiTextField-root css-98z96m-MuiFormControl-root-MuiTextField-root"
                   >
                     <div
-                      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall MuiInputBase-adornedStart MuiInputBase-adornedEnd css-1v8abvc-MuiInputBase-root-MuiOutlinedInput-root"
+                      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall MuiInputBase-adornedStart MuiInputBase-adornedEnd css-1ambpiq-MuiInputBase-root-MuiOutlinedInput-root"
                     >
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                         data-testid="SearchIcon"
                         focusable="false"
                         style="margin-right: 4px;"
@@ -110,14 +108,14 @@ exports[`Units > renders table correctly 1`] = `
                       <input
                         aria-invalid="false"
                         autocomplete="new-password"
-                        class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12yjm75-MuiInputBase-input-MuiOutlinedInput-input"
-                        id=":r0:"
+                        class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12tjcea-MuiInputBase-input-MuiOutlinedInput-input"
+                        id=":r2:"
                         placeholder="Search"
                         type="text"
                         value=""
                       />
                       <div
-                        class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-outlined MuiInputAdornment-sizeSmall css-1laqsz7-MuiInputAdornment-root"
+                        class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-outlined MuiInputAdornment-sizeSmall css-elo8k2-MuiInputAdornment-root"
                       >
                         <span
                           aria-label="Clear search"
@@ -126,14 +124,14 @@ exports[`Units > renders table correctly 1`] = `
                         >
                           <button
                             aria-label="Clear search"
-                            class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeSmall css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root"
+                            class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeSmall css-155wbr6-MuiButtonBase-root-MuiIconButton-root"
                             disabled=""
                             tabindex="-1"
                             type="button"
                           >
                             <svg
                               aria-hidden="true"
-                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                               data-testid="CloseIcon"
                               focusable="false"
                               viewBox="0 0 24 24"
@@ -147,12 +145,13 @@ exports[`Units > renders table correctly 1`] = `
                       </div>
                       <fieldset
                         aria-hidden="true"
-                        class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                        class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
                       >
                         <legend
-                          class="css-ihdtdm"
+                          class="css-w4cd9x"
                         >
                           <span
+                            aria-hidden="true"
                             class="notranslate"
                           >
                             ​
@@ -169,14 +168,14 @@ exports[`Units > renders table correctly 1`] = `
             >
               <button
                 aria-label="Show/Hide filters"
-                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
                 data-mui-internal-clone-element="true"
                 tabindex="0"
                 type="button"
               >
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                   data-testid="FilterListOffIcon"
                   focusable="false"
                   viewBox="0 0 24 24"
@@ -185,20 +184,17 @@ exports[`Units > renders table correctly 1`] = `
                     d="M10.83 8H21V6H8.83zm5 5H18v-2h-4.17zM14 16.83V18h-4v-2h3.17l-3-3H6v-2h2.17l-3-3H3V6h.17L1.39 4.22 2.8 2.81l18.38 18.38-1.41 1.41z"
                   />
                 </svg>
-                <span
-                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                />
               </button>
               <button
                 aria-label="Show/Hide columns"
-                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
                 data-mui-internal-clone-element="true"
                 tabindex="0"
                 type="button"
               >
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                   data-testid="ViewColumnIcon"
                   focusable="false"
                   viewBox="0 0 24 24"
@@ -207,30 +203,27 @@ exports[`Units > renders table correctly 1`] = `
                     d="M14.67 5v14H9.33V5zm1 14H21V5h-5.33zm-7.34 0V5H3v14z"
                   />
                 </svg>
-                <span
-                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                />
               </button>
             </div>
           </div>
         </div>
       </div>
       <div
-        class="MuiTableContainer-root css-15zpm7g-MuiTableContainer-root"
+        class="MuiTableContainer-root css-tma6sn-MuiTableContainer-root"
       >
         <table
-          class="MuiTable-root MuiTable-stickyHeader css-1y6k1sx-MuiTable-root"
+          class="MuiTable-root MuiTable-stickyHeader css-ithv9-MuiTable-root"
           style="--header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-value-size: 180; --col-value-size: 180; --header-modified_time-size: 350; --col-modified_time-size: 350; --header-created_time-size: 350; --col-created_time-size: 350;"
         >
           <thead
-            class="MuiTableHead-root css-dk8izd-MuiTableHead-root"
+            class="MuiTableHead-root css-1e5wupo-MuiTableHead-root"
           >
             <tr
-              class="MuiTableRow-root MuiTableRow-head css-7sv680-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-head css-1jx5a6f-MuiTableRow-root"
             >
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-8xigsx-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-59ho2q-MuiTableCell-root"
                 colspan="1"
                 data-index="0"
                 scope="col"
@@ -254,7 +247,7 @@ exports[`Units > renders table correctly 1`] = `
               </th>
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17b04qq-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-x5il41-MuiTableCell-root"
                 colspan="1"
                 data-can-sort="true"
                 data-index="1"
@@ -271,7 +264,7 @@ exports[`Units > renders table correctly 1`] = `
                     >
                       <p
                         aria-label="Value"
-                        class="MuiTypography-root MuiTypography-body1 css-1jmsoko-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-1bnbo3v-MuiTypography-root"
                         data-mui-internal-clone-element="true"
                         role="tooltip"
                       >
@@ -280,18 +273,18 @@ exports[`Units > renders table correctly 1`] = `
                     </div>
                     <span
                       aria-label="Sort by Value ascending"
-                      class="MuiBadge-root css-1c32n2y-MuiBadge-root"
+                      class="MuiBadge-root css-63ezxx-MuiBadge-root"
                       data-mui-internal-clone-element="true"
                     >
                       <span
                         aria-label="Sort by Value ascending"
-                        class="MuiButtonBase-root MuiTableSortLabel-root Mui-active css-118d58w-MuiButtonBase-root-MuiTableSortLabel-root"
+                        class="MuiButtonBase-root MuiTableSortLabel-root Mui-active MuiTableSortLabel-directionAsc css-bgz9z4-MuiButtonBase-root-MuiTableSortLabel-root"
                         role="button"
                         tabindex="0"
                       >
                         <svg
                           aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-1vweko9-MuiSvgIcon-root-MuiTableSortLabel-icon"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-7ojauk-MuiSvgIcon-root-MuiTableSortLabel-icon"
                           data-testid="SyncAltIcon"
                           focusable="false"
                           style="transform: rotate(-90deg) scaleX(0.9) translateX(-1px);"
@@ -303,7 +296,7 @@ exports[`Units > renders table correctly 1`] = `
                         </svg>
                       </span>
                       <span
-                        class="MuiBadge-badge MuiBadge-standard MuiBadge-invisible MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightCircular MuiBadge-overlapCircular css-2v5rxe-MuiBadge-badge"
+                        class="MuiBadge-badge MuiBadge-standard MuiBadge-invisible MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightCircular MuiBadge-overlapCircular css-hkekw-MuiBadge-badge"
                       >
                         0
                       </span>
@@ -314,7 +307,7 @@ exports[`Units > renders table correctly 1`] = `
                   >
                     <button
                       aria-label="Move"
-                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1uxkzex-MuiButtonBase-root-MuiIconButton-root"
+                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-498d1l-MuiButtonBase-root-MuiIconButton-root"
                       data-mui-internal-clone-element="true"
                       draggable="true"
                       tabindex="0"
@@ -322,7 +315,7 @@ exports[`Units > renders table correctly 1`] = `
                     >
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                         data-testid="DragHandleIcon"
                         focusable="false"
                         viewBox="0 0 24 24"
@@ -334,14 +327,14 @@ exports[`Units > renders table correctly 1`] = `
                     </button>
                     <button
                       aria-label="Column Actions"
-                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1p8dotb-MuiButtonBase-root-MuiIconButton-root"
+                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1a3u37w-MuiButtonBase-root-MuiIconButton-root"
                       data-mui-internal-clone-element="true"
                       tabindex="0"
                       type="button"
                     >
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                         data-testid="MoreVertIcon"
                         focusable="false"
                         style="transform: scale(0.9);"
@@ -351,32 +344,30 @@ exports[`Units > renders table correctly 1`] = `
                           d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                         />
                       </svg>
-                      <span
-                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                      />
                     </button>
                   </div>
                 </div>
                 <div
-                  class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-entered css-pwcg7p-MuiCollapse-root"
+                  class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-entered css-qr6njo-MuiCollapse-root"
                   style="min-height: 0px;"
                 >
                   <div
-                    class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+                    class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
                   >
                     <div
-                      class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+                      class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
                     >
                       <div
-                        class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-jk1t0h-MuiFormControl-root-MuiTextField-root"
+                        class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-p1we6z-MuiFormControl-root-MuiTextField-root"
                       >
                         <div
-                          class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
+                          class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                         >
                           <div
-                            class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-ittuaa-MuiInputAdornment-root"
+                            class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1nowbqt-MuiInputAdornment-root"
                           >
                             <span
+                              aria-hidden="true"
                               class="notranslate"
                             >
                               ​
@@ -388,13 +379,13 @@ exports[`Units > renders table correctly 1`] = `
                             >
                               <button
                                 aria-label="Change filter mode"
-                                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1cyhbc3-MuiButtonBase-root-MuiIconButton-root"
+                                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-egflwm-MuiButtonBase-root-MuiIconButton-root"
                                 tabindex="0"
                                 type="button"
                               >
                                 <svg
                                   aria-hidden="true"
-                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                                   data-testid="FilterListIcon"
                                   focusable="false"
                                   viewBox="0 0 24 24"
@@ -403,26 +394,23 @@ exports[`Units > renders table correctly 1`] = `
                                     d="M10 18h4v-2h-4zM3 6v2h18V6zm3 7h12v-2H6z"
                                   />
                                 </svg>
-                                <span
-                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                />
                               </button>
                             </span>
                           </div>
                           <input
-                            aria-describedby=":r8:-helper-text"
+                            aria-describedby=":rf:-helper-text"
                             aria-invalid="false"
                             aria-label="Filter by Value"
                             autocomplete="new-password"
-                            class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r8:"
+                            class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
+                            id=":rf:"
                             placeholder="Filter by Value"
                             title="Filter by Value"
                             type="text"
                             value=""
                           />
                           <div
-                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-elo8k2-MuiInputAdornment-root"
                           >
                             <span
                               aria-label="Clear filter"
@@ -431,14 +419,14 @@ exports[`Units > renders table correctly 1`] = `
                             >
                               <button
                                 aria-label="Clear filter"
-                                class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeSmall css-1so9ih7-MuiButtonBase-root-MuiIconButton-root"
+                                class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeSmall css-pqx1bi-MuiButtonBase-root-MuiIconButton-root"
                                 disabled=""
                                 tabindex="-1"
                                 type="button"
                               >
                                 <svg
                                   aria-hidden="true"
-                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                                   data-testid="CloseIcon"
                                   focusable="false"
                                   viewBox="0 0 24 24"
@@ -452,8 +440,8 @@ exports[`Units > renders table correctly 1`] = `
                           </div>
                         </div>
                         <p
-                          class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                          id=":r8:-helper-text"
+                          class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
+                          id=":rf:-helper-text"
                         >
                           <label>
                             Filter Mode: Fuzzy
@@ -466,7 +454,7 @@ exports[`Units > renders table correctly 1`] = `
               </th>
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-2jn5i7-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-5yqoyu-MuiTableCell-root"
                 colspan="1"
                 data-can-sort="true"
                 data-index="2"
@@ -483,7 +471,7 @@ exports[`Units > renders table correctly 1`] = `
                     >
                       <p
                         aria-label="Last modified"
-                        class="MuiTypography-root MuiTypography-body1 css-1jmsoko-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-1bnbo3v-MuiTypography-root"
                         data-mui-internal-clone-element="true"
                         role="tooltip"
                       >
@@ -492,18 +480,18 @@ exports[`Units > renders table correctly 1`] = `
                     </div>
                     <span
                       aria-label="Sort by Last modified descending"
-                      class="MuiBadge-root css-1c32n2y-MuiBadge-root"
+                      class="MuiBadge-root css-63ezxx-MuiBadge-root"
                       data-mui-internal-clone-element="true"
                     >
                       <span
                         aria-label="Sort by Last modified descending"
-                        class="MuiButtonBase-root MuiTableSortLabel-root Mui-active css-118d58w-MuiButtonBase-root-MuiTableSortLabel-root"
+                        class="MuiButtonBase-root MuiTableSortLabel-root Mui-active MuiTableSortLabel-directionAsc css-bgz9z4-MuiButtonBase-root-MuiTableSortLabel-root"
                         role="button"
                         tabindex="0"
                       >
                         <svg
                           aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-1vweko9-MuiSvgIcon-root-MuiTableSortLabel-icon"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-7ojauk-MuiSvgIcon-root-MuiTableSortLabel-icon"
                           data-testid="SyncAltIcon"
                           focusable="false"
                           style="transform: rotate(-90deg) scaleX(0.9) translateX(-1px);"
@@ -515,7 +503,7 @@ exports[`Units > renders table correctly 1`] = `
                         </svg>
                       </span>
                       <span
-                        class="MuiBadge-badge MuiBadge-standard MuiBadge-invisible MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightCircular MuiBadge-overlapCircular css-2v5rxe-MuiBadge-badge"
+                        class="MuiBadge-badge MuiBadge-standard MuiBadge-invisible MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightCircular MuiBadge-overlapCircular css-hkekw-MuiBadge-badge"
                       >
                         0
                       </span>
@@ -526,7 +514,7 @@ exports[`Units > renders table correctly 1`] = `
                   >
                     <button
                       aria-label="Move"
-                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1uxkzex-MuiButtonBase-root-MuiIconButton-root"
+                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-498d1l-MuiButtonBase-root-MuiIconButton-root"
                       data-mui-internal-clone-element="true"
                       draggable="true"
                       tabindex="0"
@@ -534,7 +522,7 @@ exports[`Units > renders table correctly 1`] = `
                     >
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                         data-testid="DragHandleIcon"
                         focusable="false"
                         viewBox="0 0 24 24"
@@ -546,14 +534,14 @@ exports[`Units > renders table correctly 1`] = `
                     </button>
                     <button
                       aria-label="Column Actions"
-                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1p8dotb-MuiButtonBase-root-MuiIconButton-root"
+                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1a3u37w-MuiButtonBase-root-MuiIconButton-root"
                       data-mui-internal-clone-element="true"
                       tabindex="0"
                       type="button"
                     >
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                         data-testid="MoreVertIcon"
                         focusable="false"
                         style="transform: scale(0.9);"
@@ -563,35 +551,33 @@ exports[`Units > renders table correctly 1`] = `
                           d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                         />
                       </svg>
-                      <span
-                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                      />
                     </button>
                   </div>
                 </div>
                 <div
-                  class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-entered css-pwcg7p-MuiCollapse-root"
+                  class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-entered css-qr6njo-MuiCollapse-root"
                   style="min-height: 0px;"
                 >
                   <div
-                    class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+                    class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
                   >
                     <div
-                      class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+                      class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
                     >
                       <div
                         class="MuiBox-root css-8yqbvs"
                       >
                         <div
-                          class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1blq8rz-MuiFormControl-root-MuiTextField-root"
+                          class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w93hbh-MuiFormControl-root-MuiTextField-root"
                         >
                           <div
-                            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
+                            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                           >
                             <div
-                              class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-ittuaa-MuiInputAdornment-root"
+                              class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1nowbqt-MuiInputAdornment-root"
                             >
                               <span
+                                aria-hidden="true"
                                 class="notranslate"
                               >
                                 ​
@@ -603,13 +589,13 @@ exports[`Units > renders table correctly 1`] = `
                               >
                                 <button
                                   aria-label="Change filter mode"
-                                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1cyhbc3-MuiButtonBase-root-MuiIconButton-root"
+                                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-egflwm-MuiButtonBase-root-MuiIconButton-root"
                                   tabindex="0"
                                   type="button"
                                 >
                                   <svg
                                     aria-hidden="true"
-                                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                                     data-testid="FilterListIcon"
                                     focusable="false"
                                     viewBox="0 0 24 24"
@@ -618,19 +604,16 @@ exports[`Units > renders table correctly 1`] = `
                                       d="M10 18h4v-2h-4zM3 6v2h18V6zm3 7h12v-2H6z"
                                     />
                                   </svg>
-                                  <span
-                                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                  />
                                 </button>
                               </span>
                             </div>
                             <input
-                              aria-describedby=":rf:-helper-text"
+                              aria-describedby=":rq:-helper-text"
                               aria-invalid="false"
                               aria-label="Min"
                               autocomplete="new-password"
-                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":rf:"
+                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
+                              id=":rq:"
                               inputmode="text"
                               placeholder="Min"
                               title="Min"
@@ -638,17 +621,17 @@ exports[`Units > renders table correctly 1`] = `
                               value=""
                             />
                             <div
-                              class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+                              class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-elo8k2-MuiInputAdornment-root"
                             >
                               <button
                                 aria-label="Choose date"
-                                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root"
+                                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1ysp02-MuiButtonBase-root-MuiIconButton-root"
                                 tabindex="0"
                                 type="button"
                               >
                                 <svg
                                   aria-hidden="true"
-                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                                   data-testid="CalendarIcon"
                                   focusable="false"
                                   viewBox="0 0 24 24"
@@ -657,15 +640,12 @@ exports[`Units > renders table correctly 1`] = `
                                     d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
                                   />
                                 </svg>
-                                <span
-                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                />
                               </button>
                             </div>
                           </div>
                           <p
-                            class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                            id=":rf:-helper-text"
+                            class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
+                            id=":rq:-helper-text"
                           >
                             <label>
                               Filter Mode: Between Inclusive
@@ -673,17 +653,17 @@ exports[`Units > renders table correctly 1`] = `
                           </p>
                         </div>
                         <div
-                          class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1blq8rz-MuiFormControl-root-MuiTextField-root"
+                          class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w93hbh-MuiFormControl-root-MuiTextField-root"
                         >
                           <div
-                            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
+                            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                           >
                             <input
                               aria-invalid="false"
                               aria-label="Max"
                               autocomplete="new-password"
-                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":ri:"
+                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
+                              id=":rv:"
                               inputmode="text"
                               placeholder="Max"
                               title="Max"
@@ -691,17 +671,17 @@ exports[`Units > renders table correctly 1`] = `
                               value=""
                             />
                             <div
-                              class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+                              class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-elo8k2-MuiInputAdornment-root"
                             >
                               <button
                                 aria-label="Choose date"
-                                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root"
+                                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1ysp02-MuiButtonBase-root-MuiIconButton-root"
                                 tabindex="0"
                                 type="button"
                               >
                                 <svg
                                   aria-hidden="true"
-                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                                   data-testid="CalendarIcon"
                                   focusable="false"
                                   viewBox="0 0 24 24"
@@ -710,9 +690,6 @@ exports[`Units > renders table correctly 1`] = `
                                     d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
                                   />
                                 </svg>
-                                <span
-                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                />
                               </button>
                             </div>
                           </div>
@@ -724,7 +701,7 @@ exports[`Units > renders table correctly 1`] = `
               </th>
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pi1ouf-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1onqjjp-MuiTableCell-root"
                 colspan="1"
                 data-can-sort="true"
                 data-index="3"
@@ -741,7 +718,7 @@ exports[`Units > renders table correctly 1`] = `
                     >
                       <p
                         aria-label="Created"
-                        class="MuiTypography-root MuiTypography-body1 css-1jmsoko-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-1bnbo3v-MuiTypography-root"
                         data-mui-internal-clone-element="true"
                         role="tooltip"
                       >
@@ -750,18 +727,18 @@ exports[`Units > renders table correctly 1`] = `
                     </div>
                     <span
                       aria-label="Sort by Created descending"
-                      class="MuiBadge-root css-1c32n2y-MuiBadge-root"
+                      class="MuiBadge-root css-63ezxx-MuiBadge-root"
                       data-mui-internal-clone-element="true"
                     >
                       <span
                         aria-label="Sort by Created descending"
-                        class="MuiButtonBase-root MuiTableSortLabel-root Mui-active css-118d58w-MuiButtonBase-root-MuiTableSortLabel-root"
+                        class="MuiButtonBase-root MuiTableSortLabel-root Mui-active MuiTableSortLabel-directionAsc css-bgz9z4-MuiButtonBase-root-MuiTableSortLabel-root"
                         role="button"
                         tabindex="0"
                       >
                         <svg
                           aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-1vweko9-MuiSvgIcon-root-MuiTableSortLabel-icon"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-7ojauk-MuiSvgIcon-root-MuiTableSortLabel-icon"
                           data-testid="SyncAltIcon"
                           focusable="false"
                           style="transform: rotate(-90deg) scaleX(0.9) translateX(-1px);"
@@ -773,7 +750,7 @@ exports[`Units > renders table correctly 1`] = `
                         </svg>
                       </span>
                       <span
-                        class="MuiBadge-badge MuiBadge-standard MuiBadge-invisible MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightCircular MuiBadge-overlapCircular css-2v5rxe-MuiBadge-badge"
+                        class="MuiBadge-badge MuiBadge-standard MuiBadge-invisible MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightCircular MuiBadge-overlapCircular css-hkekw-MuiBadge-badge"
                       >
                         0
                       </span>
@@ -784,7 +761,7 @@ exports[`Units > renders table correctly 1`] = `
                   >
                     <button
                       aria-label="Move"
-                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1uxkzex-MuiButtonBase-root-MuiIconButton-root"
+                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-498d1l-MuiButtonBase-root-MuiIconButton-root"
                       data-mui-internal-clone-element="true"
                       draggable="true"
                       tabindex="0"
@@ -792,7 +769,7 @@ exports[`Units > renders table correctly 1`] = `
                     >
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                         data-testid="DragHandleIcon"
                         focusable="false"
                         viewBox="0 0 24 24"
@@ -804,14 +781,14 @@ exports[`Units > renders table correctly 1`] = `
                     </button>
                     <button
                       aria-label="Column Actions"
-                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1p8dotb-MuiButtonBase-root-MuiIconButton-root"
+                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1a3u37w-MuiButtonBase-root-MuiIconButton-root"
                       data-mui-internal-clone-element="true"
                       tabindex="0"
                       type="button"
                     >
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                         data-testid="MoreVertIcon"
                         focusable="false"
                         style="transform: scale(0.9);"
@@ -821,35 +798,33 @@ exports[`Units > renders table correctly 1`] = `
                           d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                         />
                       </svg>
-                      <span
-                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                      />
                     </button>
                   </div>
                 </div>
                 <div
-                  class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-entered css-pwcg7p-MuiCollapse-root"
+                  class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-entered css-qr6njo-MuiCollapse-root"
                   style="min-height: 0px;"
                 >
                   <div
-                    class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+                    class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
                   >
                     <div
-                      class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+                      class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
                     >
                       <div
                         class="MuiBox-root css-8yqbvs"
                       >
                         <div
-                          class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1blq8rz-MuiFormControl-root-MuiTextField-root"
+                          class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w93hbh-MuiFormControl-root-MuiTextField-root"
                         >
                           <div
-                            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
+                            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                           >
                             <div
-                              class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-ittuaa-MuiInputAdornment-root"
+                              class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1nowbqt-MuiInputAdornment-root"
                             >
                               <span
+                                aria-hidden="true"
                                 class="notranslate"
                               >
                                 ​
@@ -861,13 +836,13 @@ exports[`Units > renders table correctly 1`] = `
                               >
                                 <button
                                   aria-label="Change filter mode"
-                                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1cyhbc3-MuiButtonBase-root-MuiIconButton-root"
+                                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-egflwm-MuiButtonBase-root-MuiIconButton-root"
                                   tabindex="0"
                                   type="button"
                                 >
                                   <svg
                                     aria-hidden="true"
-                                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                                     data-testid="FilterListIcon"
                                     focusable="false"
                                     viewBox="0 0 24 24"
@@ -876,19 +851,16 @@ exports[`Units > renders table correctly 1`] = `
                                       d="M10 18h4v-2h-4zM3 6v2h18V6zm3 7h12v-2H6z"
                                     />
                                   </svg>
-                                  <span
-                                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                  />
                                 </button>
                               </span>
                             </div>
                             <input
-                              aria-describedby=":ro:-helper-text"
+                              aria-describedby=":r18:-helper-text"
                               aria-invalid="false"
                               aria-label="Min"
                               autocomplete="new-password"
-                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":ro:"
+                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
+                              id=":r18:"
                               inputmode="text"
                               placeholder="Min"
                               title="Min"
@@ -896,17 +868,17 @@ exports[`Units > renders table correctly 1`] = `
                               value=""
                             />
                             <div
-                              class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+                              class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-elo8k2-MuiInputAdornment-root"
                             >
                               <button
                                 aria-label="Choose date"
-                                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root"
+                                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1ysp02-MuiButtonBase-root-MuiIconButton-root"
                                 tabindex="0"
                                 type="button"
                               >
                                 <svg
                                   aria-hidden="true"
-                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                                   data-testid="CalendarIcon"
                                   focusable="false"
                                   viewBox="0 0 24 24"
@@ -915,15 +887,12 @@ exports[`Units > renders table correctly 1`] = `
                                     d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
                                   />
                                 </svg>
-                                <span
-                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                />
                               </button>
                             </div>
                           </div>
                           <p
-                            class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                            id=":ro:-helper-text"
+                            class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
+                            id=":r18:-helper-text"
                           >
                             <label>
                               Filter Mode: Between Inclusive
@@ -931,17 +900,17 @@ exports[`Units > renders table correctly 1`] = `
                           </p>
                         </div>
                         <div
-                          class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1blq8rz-MuiFormControl-root-MuiTextField-root"
+                          class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w93hbh-MuiFormControl-root-MuiTextField-root"
                         >
                           <div
-                            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
+                            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                           >
                             <input
                               aria-invalid="false"
                               aria-label="Max"
                               autocomplete="new-password"
-                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":rr:"
+                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
+                              id=":r1d:"
                               inputmode="text"
                               placeholder="Max"
                               title="Max"
@@ -949,17 +918,17 @@ exports[`Units > renders table correctly 1`] = `
                               value=""
                             />
                             <div
-                              class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+                              class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-elo8k2-MuiInputAdornment-root"
                             >
                               <button
                                 aria-label="Choose date"
-                                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root"
+                                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1ysp02-MuiButtonBase-root-MuiIconButton-root"
                                 tabindex="0"
                                 type="button"
                               >
                                 <svg
                                   aria-hidden="true"
-                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                                   data-testid="CalendarIcon"
                                   focusable="false"
                                   viewBox="0 0 24 24"
@@ -968,9 +937,6 @@ exports[`Units > renders table correctly 1`] = `
                                     d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
                                   />
                                 </svg>
-                                <span
-                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                />
                               </button>
                             </div>
                           </div>
@@ -983,28 +949,28 @@ exports[`Units > renders table correctly 1`] = `
             </tr>
           </thead>
           <tbody
-            class="MuiTableBody-root css-29nbga-MuiTableBody-root"
+            class="MuiTableBody-root css-1768eoe-MuiTableBody-root"
           >
             <tr
               aria-label="megapixels row"
-              class="MuiTableRow-root MuiTableRow-root css-d0n2b6-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-d2ddtk-MuiTableRow-root-MuiTableRow-root"
               data-index="0"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1hv5s0e-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pkwcky-MuiTableCell-root"
                 data-index="0"
               >
                 <button
                   aria-label="Row Actions"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-mvfa5q-MuiButtonBase-root-MuiIconButton-root"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-ctvy04-MuiButtonBase-root-MuiIconButton-root"
                   data-mui-internal-clone-element="true"
                   tabindex="0"
                   type="button"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                     data-testid="MoreHorizIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
@@ -1013,18 +979,15 @@ exports[`Units > renders table correctly 1`] = `
                       d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                     />
                   </svg>
-                  <span
-                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                  />
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1sd6a54-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ouuwtx-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
                   aria-label="megapixels"
-                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -1032,11 +995,11 @@ exports[`Units > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-pz83si-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-wvydvf-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
               >
                 <div
-                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -1044,11 +1007,11 @@ exports[`Units > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-4aklm5-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-2hkx67-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
               >
                 <div
-                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -1058,24 +1021,24 @@ exports[`Units > renders table correctly 1`] = `
             </tr>
             <tr
               aria-label="fps row"
-              class="MuiTableRow-root MuiTableRow-root css-d0n2b6-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-d2ddtk-MuiTableRow-root-MuiTableRow-root"
               data-index="1"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1hv5s0e-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pkwcky-MuiTableCell-root"
                 data-index="0"
               >
                 <button
                   aria-label="Row Actions"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-mvfa5q-MuiButtonBase-root-MuiIconButton-root"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-ctvy04-MuiButtonBase-root-MuiIconButton-root"
                   data-mui-internal-clone-element="true"
                   tabindex="0"
                   type="button"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                     data-testid="MoreHorizIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
@@ -1084,18 +1047,15 @@ exports[`Units > renders table correctly 1`] = `
                       d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                     />
                   </svg>
-                  <span
-                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                  />
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1sd6a54-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ouuwtx-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
                   aria-label="fps"
-                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -1103,11 +1063,11 @@ exports[`Units > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-pz83si-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-wvydvf-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
               >
                 <div
-                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -1115,11 +1075,11 @@ exports[`Units > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-4aklm5-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-2hkx67-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
               >
                 <div
-                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -1129,24 +1089,24 @@ exports[`Units > renders table correctly 1`] = `
             </tr>
             <tr
               aria-label="Joules row"
-              class="MuiTableRow-root MuiTableRow-root css-d0n2b6-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-d2ddtk-MuiTableRow-root-MuiTableRow-root"
               data-index="2"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1hv5s0e-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pkwcky-MuiTableCell-root"
                 data-index="0"
               >
                 <button
                   aria-label="Row Actions"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-mvfa5q-MuiButtonBase-root-MuiIconButton-root"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-ctvy04-MuiButtonBase-root-MuiIconButton-root"
                   data-mui-internal-clone-element="true"
                   tabindex="0"
                   type="button"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                     data-testid="MoreHorizIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
@@ -1155,18 +1115,15 @@ exports[`Units > renders table correctly 1`] = `
                       d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                     />
                   </svg>
-                  <span
-                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                  />
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1sd6a54-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ouuwtx-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
                   aria-label="Joules"
-                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -1174,11 +1131,11 @@ exports[`Units > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-pz83si-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-wvydvf-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
               >
                 <div
-                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -1186,11 +1143,11 @@ exports[`Units > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-4aklm5-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-2hkx67-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
               >
                 <div
-                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -1200,24 +1157,24 @@ exports[`Units > renders table correctly 1`] = `
             </tr>
             <tr
               aria-label="micrometers row"
-              class="MuiTableRow-root MuiTableRow-root css-d0n2b6-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-d2ddtk-MuiTableRow-root-MuiTableRow-root"
               data-index="3"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1hv5s0e-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pkwcky-MuiTableCell-root"
                 data-index="0"
               >
                 <button
                   aria-label="Row Actions"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-mvfa5q-MuiButtonBase-root-MuiIconButton-root"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-ctvy04-MuiButtonBase-root-MuiIconButton-root"
                   data-mui-internal-clone-element="true"
                   tabindex="0"
                   type="button"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                     data-testid="MoreHorizIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
@@ -1226,18 +1183,15 @@ exports[`Units > renders table correctly 1`] = `
                       d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                     />
                   </svg>
-                  <span
-                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                  />
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1sd6a54-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ouuwtx-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
                   aria-label="micrometers"
-                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -1245,11 +1199,11 @@ exports[`Units > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-pz83si-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-wvydvf-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
               >
                 <div
-                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -1257,11 +1211,11 @@ exports[`Units > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-4aklm5-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-2hkx67-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
               >
                 <div
-                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -1271,24 +1225,24 @@ exports[`Units > renders table correctly 1`] = `
             </tr>
             <tr
               aria-label="millimeters row"
-              class="MuiTableRow-root MuiTableRow-root css-d0n2b6-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-d2ddtk-MuiTableRow-root-MuiTableRow-root"
               data-index="4"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1hv5s0e-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pkwcky-MuiTableCell-root"
                 data-index="0"
               >
                 <button
                   aria-label="Row Actions"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-mvfa5q-MuiButtonBase-root-MuiIconButton-root"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-ctvy04-MuiButtonBase-root-MuiIconButton-root"
                   data-mui-internal-clone-element="true"
                   tabindex="0"
                   type="button"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                     data-testid="MoreHorizIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
@@ -1297,18 +1251,15 @@ exports[`Units > renders table correctly 1`] = `
                       d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                     />
                   </svg>
-                  <span
-                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                  />
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1sd6a54-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ouuwtx-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
                   aria-label="millimeters"
-                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -1316,11 +1267,11 @@ exports[`Units > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-pz83si-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-wvydvf-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
               >
                 <div
-                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -1328,11 +1279,11 @@ exports[`Units > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-4aklm5-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-2hkx67-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
               >
                 <div
-                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -1342,24 +1293,24 @@ exports[`Units > renders table correctly 1`] = `
             </tr>
             <tr
               aria-label="kilograms row"
-              class="MuiTableRow-root MuiTableRow-root css-d0n2b6-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-d2ddtk-MuiTableRow-root-MuiTableRow-root"
               data-index="5"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1hv5s0e-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pkwcky-MuiTableCell-root"
                 data-index="0"
               >
                 <button
                   aria-label="Row Actions"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-mvfa5q-MuiButtonBase-root-MuiIconButton-root"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-ctvy04-MuiButtonBase-root-MuiIconButton-root"
                   data-mui-internal-clone-element="true"
                   tabindex="0"
                   type="button"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                     data-testid="MoreHorizIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
@@ -1368,18 +1319,15 @@ exports[`Units > renders table correctly 1`] = `
                       d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                     />
                   </svg>
-                  <span
-                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                  />
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1sd6a54-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ouuwtx-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
                   aria-label="kilograms"
-                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -1387,11 +1335,11 @@ exports[`Units > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-pz83si-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-wvydvf-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
               >
                 <div
-                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -1399,11 +1347,11 @@ exports[`Units > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-4aklm5-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-2hkx67-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
               >
                 <div
-                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -1413,24 +1361,24 @@ exports[`Units > renders table correctly 1`] = `
             </tr>
             <tr
               aria-label="liters per second row"
-              class="MuiTableRow-root MuiTableRow-root css-d0n2b6-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-d2ddtk-MuiTableRow-root-MuiTableRow-root"
               data-index="6"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1hv5s0e-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pkwcky-MuiTableCell-root"
                 data-index="0"
               >
                 <button
                   aria-label="Row Actions"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-mvfa5q-MuiButtonBase-root-MuiIconButton-root"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-ctvy04-MuiButtonBase-root-MuiIconButton-root"
                   data-mui-internal-clone-element="true"
                   tabindex="0"
                   type="button"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                     data-testid="MoreHorizIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
@@ -1439,18 +1387,15 @@ exports[`Units > renders table correctly 1`] = `
                       d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                     />
                   </svg>
-                  <span
-                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                  />
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1sd6a54-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ouuwtx-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
                   aria-label="liters per second"
-                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -1458,11 +1403,11 @@ exports[`Units > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-pz83si-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-wvydvf-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
               >
                 <div
-                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -1470,11 +1415,11 @@ exports[`Units > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-4aklm5-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-2hkx67-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
               >
                 <div
-                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -1484,24 +1429,24 @@ exports[`Units > renders table correctly 1`] = `
             </tr>
             <tr
               aria-label="millibar row"
-              class="MuiTableRow-root MuiTableRow-root css-d0n2b6-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-d2ddtk-MuiTableRow-root-MuiTableRow-root"
               data-index="7"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1hv5s0e-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pkwcky-MuiTableCell-root"
                 data-index="0"
               >
                 <button
                   aria-label="Row Actions"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-mvfa5q-MuiButtonBase-root-MuiIconButton-root"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-ctvy04-MuiButtonBase-root-MuiIconButton-root"
                   data-mui-internal-clone-element="true"
                   tabindex="0"
                   type="button"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                     data-testid="MoreHorizIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
@@ -1510,18 +1455,15 @@ exports[`Units > renders table correctly 1`] = `
                       d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                     />
                   </svg>
-                  <span
-                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                  />
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1sd6a54-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ouuwtx-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
                   aria-label="millibar"
-                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -1529,11 +1471,11 @@ exports[`Units > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-pz83si-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-wvydvf-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
               >
                 <div
-                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -1541,11 +1483,11 @@ exports[`Units > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-4aklm5-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-2hkx67-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
               >
                 <div
-                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -1555,24 +1497,24 @@ exports[`Units > renders table correctly 1`] = `
             </tr>
             <tr
               aria-label="volts row"
-              class="MuiTableRow-root MuiTableRow-root css-d0n2b6-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-d2ddtk-MuiTableRow-root-MuiTableRow-root"
               data-index="8"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1hv5s0e-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pkwcky-MuiTableCell-root"
                 data-index="0"
               >
                 <button
                   aria-label="Row Actions"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-mvfa5q-MuiButtonBase-root-MuiIconButton-root"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-ctvy04-MuiButtonBase-root-MuiIconButton-root"
                   data-mui-internal-clone-element="true"
                   tabindex="0"
                   type="button"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                     data-testid="MoreHorizIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
@@ -1581,18 +1523,15 @@ exports[`Units > renders table correctly 1`] = `
                       d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                     />
                   </svg>
-                  <span
-                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                  />
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1sd6a54-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ouuwtx-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
                 <div
                   aria-label="volts"
-                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -1600,11 +1539,11 @@ exports[`Units > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-pz83si-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-wvydvf-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
               >
                 <div
-                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -1612,11 +1551,11 @@ exports[`Units > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-4aklm5-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-2hkx67-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
               >
                 <div
-                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -1626,7 +1565,7 @@ exports[`Units > renders table correctly 1`] = `
             </tr>
           </tbody>
           <tfoot
-            class="MuiTableFooter-root css-131pszo-MuiTableFooter-root"
+            class="MuiTableFooter-root css-1pwfv5b-MuiTableFooter-root"
           />
         </table>
       </div>
@@ -1634,21 +1573,22 @@ exports[`Units > renders table correctly 1`] = `
         class="MuiBox-root css-10gei56"
       >
         <div
-          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-cwrbtg-MuiCollapse-root"
           style="min-height: 0px;"
         >
           <div
-            class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+            class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
           >
             <div
-              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
             >
               <div
-                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-3fnbcm-MuiPaper-root-MuiAlert-root"
+                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-ltczp2-MuiPaper-root-MuiAlert-root"
                 role="alert"
+                style="--Paper-shadow: none;"
               >
                 <div
-                  class="MuiAlert-message css-1pxa9xg-MuiAlert-message"
+                  class="MuiAlert-message css-zioonp-MuiAlert-message"
                 >
                   <div
                     class="MuiStack-root css-5kul5x-MuiStack-root"
@@ -1668,7 +1608,7 @@ exports[`Units > renders table correctly 1`] = `
           class="MuiBox-root css-1llu0od"
         >
           <p
-            class="MuiTypography-root MuiTypography-body1 css-13zw5gk-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 css-110q72o-MuiTypography-root"
           >
             Total Units: 9
           </p>
@@ -1682,20 +1622,19 @@ exports[`Units > renders table correctly 1`] = `
                 class="MuiBox-root css-exd1zr"
               >
                 <label
-                  class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-uqq6zz-MuiFormLabel-root-MuiInputLabel-root"
+                  class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-10j3yc8-MuiFormLabel-root-MuiInputLabel-root"
                   for="mrt-rows-per-page"
                 >
                   Rows per page
                 </label>
                 <div
-                  class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
+                  class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary MuiSelect-root css-1y2ya84-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
                   <div
-                    aria-controls=":rt:"
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-label="Rows per page"
-                    class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input"
+                    class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-5lvf42-MuiSelect-select-MuiInputBase-input-MuiInput-input"
                     role="combobox"
                     tabindex="0"
                   >
@@ -1704,14 +1643,14 @@ exports[`Units > renders table correctly 1`] = `
                   <input
                     aria-hidden="true"
                     aria-invalid="false"
-                    class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                    class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
                     id="mrt-rows-per-page"
                     tabindex="-1"
                     value="15"
                   />
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-1gpuzre-MuiSvgIcon-root-MuiSelect-icon"
                     data-testid="ArrowDropDownIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
@@ -1724,22 +1663,22 @@ exports[`Units > renders table correctly 1`] = `
               </div>
               <nav
                 aria-label="pagination navigation"
-                class="MuiPagination-root MuiPagination-outlined css-1oj2twp-MuiPagination-root"
+                class="MuiPagination-root MuiPagination-outlined css-1xra8g6-MuiPagination-root"
               >
                 <ul
-                  class="MuiPagination-ul css-wjh20t-MuiPagination-ul"
+                  class="MuiPagination-ul css-1c5o7vy-MuiPagination-ul"
                 >
                   <li>
                     <button
                       aria-label="Go to previous page"
-                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
+                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-fpujy5-MuiButtonBase-root-MuiPaginationItem-root"
                       disabled=""
                       tabindex="-1"
                       type="button"
                     >
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiPaginationItem-icon css-g2z002-MuiSvgIcon-root-MuiPaginationItem-icon"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiPaginationItem-icon css-8uzxat-MuiSvgIcon-root-MuiPaginationItem-icon"
                         data-testid="ChevronLeftIcon"
                         focusable="false"
                         viewBox="0 0 24 24"
@@ -1752,29 +1691,26 @@ exports[`Units > renders table correctly 1`] = `
                   </li>
                   <li>
                     <button
-                      aria-current="true"
+                      aria-current="page"
                       aria-label="page 1"
-                      class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-selected MuiPaginationItem-page css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
+                      class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-selected MuiPaginationItem-page css-fpujy5-MuiButtonBase-root-MuiPaginationItem-root"
                       tabindex="0"
                       type="button"
                     >
                       1
-                      <span
-                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                      />
                     </button>
                   </li>
                   <li>
                     <button
                       aria-label="Go to next page"
-                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
+                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-fpujy5-MuiButtonBase-root-MuiPaginationItem-root"
                       disabled=""
                       tabindex="-1"
                       type="button"
                     >
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiPaginationItem-icon css-g2z002-MuiSvgIcon-root-MuiPaginationItem-icon"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiPaginationItem-icon css-8uzxat-MuiSvgIcon-root-MuiPaginationItem-icon"
                         data-testid="ChevronRightIcon"
                         focusable="false"
                         viewBox="0 0 24 24"

@@ -6,7 +6,7 @@ exports[`Catalogue Layout > renders a catalogue categories page correctly 1`] = 
     class="MuiBox-root css-v2kfba"
   >
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1oybmxg-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1gc5pr5-MuiGrid2-root"
     >
       <div
         class="MuiBox-root css-70qvj9"
@@ -18,13 +18,13 @@ exports[`Catalogue Layout > renders a catalogue categories page correctly 1`] = 
         >
           <button
             aria-label="navigate to catalogue home"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
             tabindex="0"
             type="button"
           >
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
               data-testid="HomeIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -33,17 +33,14 @@ exports[`Catalogue Layout > renders a catalogue categories page correctly 1`] = 
                 d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
               />
             </svg>
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
         </span>
         <nav
           aria-label="breadcrumb"
-          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1mc59t7-MuiTypography-root-MuiBreadcrumbs-root"
+          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-fxix4h-MuiTypography-root-MuiBreadcrumbs-root"
         >
           <ol
-            class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+            class="MuiBreadcrumbs-ol css-1uwp4ue-MuiBreadcrumbs-ol"
           >
             <li
               class="MuiBreadcrumbs-li"
@@ -54,11 +51,11 @@ exports[`Catalogue Layout > renders a catalogue categories page correctly 1`] = 
             </li>
             <li
               aria-hidden="true"
-              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+              class="MuiBreadcrumbs-separator css-jhr02i-MuiBreadcrumbs-separator"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
                 data-testid="NavigateNextIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
@@ -73,7 +70,7 @@ exports[`Catalogue Layout > renders a catalogue categories page correctly 1`] = 
             >
               <p
                 aria-label="Beam Characterization"
-                class="MuiTypography-root MuiTypography-body1 css-1qs6ojv-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 css-1d1tquj-MuiTypography-root"
                 data-mui-internal-clone-element="true"
                 role="tooltip"
               >
@@ -94,7 +91,7 @@ exports[`Catalogue Layout > renders a catalogue items landing page correctly 1`]
     class="MuiBox-root css-v2kfba"
   >
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1oybmxg-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1gc5pr5-MuiGrid2-root"
     >
       <div
         class="MuiBox-root css-70qvj9"
@@ -106,13 +103,13 @@ exports[`Catalogue Layout > renders a catalogue items landing page correctly 1`]
         >
           <button
             aria-label="navigate to catalogue home"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
             tabindex="0"
             type="button"
           >
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
               data-testid="HomeIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -121,17 +118,14 @@ exports[`Catalogue Layout > renders a catalogue items landing page correctly 1`]
                 d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
               />
             </svg>
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
         </span>
         <nav
           aria-label="breadcrumb"
-          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1mc59t7-MuiTypography-root-MuiBreadcrumbs-root"
+          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-fxix4h-MuiTypography-root-MuiBreadcrumbs-root"
         >
           <ol
-            class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+            class="MuiBreadcrumbs-ol css-1uwp4ue-MuiBreadcrumbs-ol"
           >
             <li
               class="MuiBreadcrumbs-li"
@@ -142,11 +136,11 @@ exports[`Catalogue Layout > renders a catalogue items landing page correctly 1`]
             </li>
             <li
               aria-hidden="true"
-              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+              class="MuiBreadcrumbs-separator css-jhr02i-MuiBreadcrumbs-separator"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
                 data-testid="NavigateNextIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
@@ -161,12 +155,12 @@ exports[`Catalogue Layout > renders a catalogue items landing page correctly 1`]
             >
               <a
                 aria-label="Beam Characterization"
-                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
                 href="#"
               >
                 <p
                   aria-label="Beam Characterization"
-                  class="MuiTypography-root MuiTypography-body1 css-gh1g71-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-1iitylf-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -176,11 +170,11 @@ exports[`Catalogue Layout > renders a catalogue items landing page correctly 1`]
             </li>
             <li
               aria-hidden="true"
-              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+              class="MuiBreadcrumbs-separator css-jhr02i-MuiBreadcrumbs-separator"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
                 data-testid="NavigateNextIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
@@ -195,12 +189,12 @@ exports[`Catalogue Layout > renders a catalogue items landing page correctly 1`]
             >
               <a
                 aria-label="Cameras"
-                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
                 href="#"
               >
                 <p
                   aria-label="Cameras"
-                  class="MuiTypography-root MuiTypography-body1 css-gh1g71-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-1iitylf-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -210,11 +204,11 @@ exports[`Catalogue Layout > renders a catalogue items landing page correctly 1`]
             </li>
             <li
               aria-hidden="true"
-              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+              class="MuiBreadcrumbs-separator css-jhr02i-MuiBreadcrumbs-separator"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
                 data-testid="NavigateNextIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
@@ -229,7 +223,7 @@ exports[`Catalogue Layout > renders a catalogue items landing page correctly 1`]
             >
               <p
                 aria-label="Cameras 1"
-                class="MuiTypography-root MuiTypography-body1 css-m2j0y4-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 css-15ru3cl-MuiTypography-root"
                 data-mui-internal-clone-element="true"
                 role="tooltip"
               >
@@ -250,7 +244,7 @@ exports[`Catalogue Layout > renders a catalogue items page correctly 1`] = `
     class="MuiBox-root css-v2kfba"
   >
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1oybmxg-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1gc5pr5-MuiGrid2-root"
     >
       <div
         class="MuiBox-root css-70qvj9"
@@ -262,13 +256,13 @@ exports[`Catalogue Layout > renders a catalogue items page correctly 1`] = `
         >
           <button
             aria-label="navigate to catalogue home"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
             tabindex="0"
             type="button"
           >
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
               data-testid="HomeIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -277,17 +271,14 @@ exports[`Catalogue Layout > renders a catalogue items page correctly 1`] = `
                 d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
               />
             </svg>
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
         </span>
         <nav
           aria-label="breadcrumb"
-          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1mc59t7-MuiTypography-root-MuiBreadcrumbs-root"
+          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-fxix4h-MuiTypography-root-MuiBreadcrumbs-root"
         >
           <ol
-            class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+            class="MuiBreadcrumbs-ol css-1uwp4ue-MuiBreadcrumbs-ol"
           >
             <li
               class="MuiBreadcrumbs-li"
@@ -298,11 +289,11 @@ exports[`Catalogue Layout > renders a catalogue items page correctly 1`] = `
             </li>
             <li
               aria-hidden="true"
-              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+              class="MuiBreadcrumbs-separator css-jhr02i-MuiBreadcrumbs-separator"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
                 data-testid="NavigateNextIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
@@ -317,12 +308,12 @@ exports[`Catalogue Layout > renders a catalogue items page correctly 1`] = `
             >
               <a
                 aria-label="Beam Characterization"
-                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
                 href="#"
               >
                 <p
                   aria-label="Beam Characterization"
-                  class="MuiTypography-root MuiTypography-body1 css-52u7fi-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-dbkvtt-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -332,11 +323,11 @@ exports[`Catalogue Layout > renders a catalogue items page correctly 1`] = `
             </li>
             <li
               aria-hidden="true"
-              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+              class="MuiBreadcrumbs-separator css-jhr02i-MuiBreadcrumbs-separator"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
                 data-testid="NavigateNextIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
@@ -351,7 +342,7 @@ exports[`Catalogue Layout > renders a catalogue items page correctly 1`] = `
             >
               <p
                 aria-label="Cameras"
-                class="MuiTypography-root MuiTypography-body1 css-jqbzo8-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 css-su6c9i-MuiTypography-root"
                 data-mui-internal-clone-element="true"
                 role="tooltip"
               >
@@ -372,7 +363,7 @@ exports[`Catalogue Layout > renders catalogue home page correctly 1`] = `
     class="MuiBox-root css-v2kfba"
   >
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1oybmxg-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1gc5pr5-MuiGrid2-root"
     >
       <div
         class="MuiBox-root css-70qvj9"
@@ -384,13 +375,13 @@ exports[`Catalogue Layout > renders catalogue home page correctly 1`] = `
         >
           <button
             aria-label="navigate to catalogue home"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
             tabindex="0"
             type="button"
           >
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
               data-testid="HomeIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -399,17 +390,14 @@ exports[`Catalogue Layout > renders catalogue home page correctly 1`] = `
                 d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
               />
             </svg>
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
         </span>
         <nav
           aria-label="breadcrumb"
-          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1mc59t7-MuiTypography-root-MuiBreadcrumbs-root"
+          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-fxix4h-MuiTypography-root-MuiBreadcrumbs-root"
         >
           <ol
-            class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+            class="MuiBreadcrumbs-ol css-1uwp4ue-MuiBreadcrumbs-ol"
           />
         </nav>
       </div>
@@ -424,7 +412,7 @@ exports[`Catalogue Layout > renders the item landing page page correctly 1`] = `
     class="MuiBox-root css-v2kfba"
   >
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1oybmxg-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1gc5pr5-MuiGrid2-root"
     >
       <div
         class="MuiBox-root css-70qvj9"
@@ -436,13 +424,13 @@ exports[`Catalogue Layout > renders the item landing page page correctly 1`] = `
         >
           <button
             aria-label="navigate to catalogue home"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
             tabindex="0"
             type="button"
           >
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
               data-testid="HomeIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -451,17 +439,14 @@ exports[`Catalogue Layout > renders the item landing page page correctly 1`] = `
                 d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
               />
             </svg>
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
         </span>
         <nav
           aria-label="breadcrumb"
-          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1mc59t7-MuiTypography-root-MuiBreadcrumbs-root"
+          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-fxix4h-MuiTypography-root-MuiBreadcrumbs-root"
         >
           <ol
-            class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+            class="MuiBreadcrumbs-ol css-1uwp4ue-MuiBreadcrumbs-ol"
           >
             <li
               class="MuiBreadcrumbs-li"
@@ -472,11 +457,11 @@ exports[`Catalogue Layout > renders the item landing page page correctly 1`] = `
             </li>
             <li
               aria-hidden="true"
-              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+              class="MuiBreadcrumbs-separator css-jhr02i-MuiBreadcrumbs-separator"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
                 data-testid="NavigateNextIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
@@ -491,12 +476,12 @@ exports[`Catalogue Layout > renders the item landing page page correctly 1`] = `
             >
               <a
                 aria-label="Beam Characterization"
-                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
                 href="#"
               >
                 <p
                   aria-label="Beam Characterization"
-                  class="MuiTypography-root MuiTypography-body1 css-hv4cj6-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-1d9gh2-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -506,11 +491,11 @@ exports[`Catalogue Layout > renders the item landing page page correctly 1`] = `
             </li>
             <li
               aria-hidden="true"
-              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+              class="MuiBreadcrumbs-separator css-jhr02i-MuiBreadcrumbs-separator"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
                 data-testid="NavigateNextIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
@@ -525,12 +510,12 @@ exports[`Catalogue Layout > renders the item landing page page correctly 1`] = `
             >
               <a
                 aria-label="Cameras"
-                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
                 href="#"
               >
                 <p
                   aria-label="Cameras"
-                  class="MuiTypography-root MuiTypography-body1 css-hv4cj6-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-1d9gh2-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -540,11 +525,11 @@ exports[`Catalogue Layout > renders the item landing page page correctly 1`] = `
             </li>
             <li
               aria-hidden="true"
-              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+              class="MuiBreadcrumbs-separator css-jhr02i-MuiBreadcrumbs-separator"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
                 data-testid="NavigateNextIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
@@ -559,12 +544,12 @@ exports[`Catalogue Layout > renders the item landing page page correctly 1`] = `
             >
               <a
                 aria-label="Cameras 1"
-                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
                 href="#"
               >
                 <p
                   aria-label="Cameras 1"
-                  class="MuiTypography-root MuiTypography-body1 css-hv4cj6-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-1d9gh2-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -574,11 +559,11 @@ exports[`Catalogue Layout > renders the item landing page page correctly 1`] = `
             </li>
             <li
               aria-hidden="true"
-              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+              class="MuiBreadcrumbs-separator css-jhr02i-MuiBreadcrumbs-separator"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
                 data-testid="NavigateNextIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
@@ -593,12 +578,12 @@ exports[`Catalogue Layout > renders the item landing page page correctly 1`] = `
             >
               <a
                 aria-label="Items"
-                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
                 href="#"
               >
                 <p
                   aria-label="Items"
-                  class="MuiTypography-root MuiTypography-body1 css-hv4cj6-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-1d9gh2-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -608,11 +593,11 @@ exports[`Catalogue Layout > renders the item landing page page correctly 1`] = `
             </li>
             <li
               aria-hidden="true"
-              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+              class="MuiBreadcrumbs-separator css-jhr02i-MuiBreadcrumbs-separator"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
                 data-testid="NavigateNextIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
@@ -627,7 +612,7 @@ exports[`Catalogue Layout > renders the item landing page page correctly 1`] = `
             >
               <p
                 aria-label="5YUQDDjKpz2z"
-                class="MuiTypography-root MuiTypography-body1 css-okeztt-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 css-a2v2gn-MuiTypography-root"
                 data-mui-internal-clone-element="true"
                 role="tooltip"
               >
@@ -648,7 +633,7 @@ exports[`Catalogue Layout > renders the items page correctly 1`] = `
     class="MuiBox-root css-v2kfba"
   >
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1oybmxg-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1gc5pr5-MuiGrid2-root"
     >
       <div
         class="MuiBox-root css-70qvj9"
@@ -660,13 +645,13 @@ exports[`Catalogue Layout > renders the items page correctly 1`] = `
         >
           <button
             aria-label="navigate to catalogue home"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
             tabindex="0"
             type="button"
           >
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
               data-testid="HomeIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -675,17 +660,14 @@ exports[`Catalogue Layout > renders the items page correctly 1`] = `
                 d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
               />
             </svg>
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
         </span>
         <nav
           aria-label="breadcrumb"
-          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1mc59t7-MuiTypography-root-MuiBreadcrumbs-root"
+          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-fxix4h-MuiTypography-root-MuiBreadcrumbs-root"
         >
           <ol
-            class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+            class="MuiBreadcrumbs-ol css-1uwp4ue-MuiBreadcrumbs-ol"
           >
             <li
               class="MuiBreadcrumbs-li"
@@ -696,11 +678,11 @@ exports[`Catalogue Layout > renders the items page correctly 1`] = `
             </li>
             <li
               aria-hidden="true"
-              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+              class="MuiBreadcrumbs-separator css-jhr02i-MuiBreadcrumbs-separator"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
                 data-testid="NavigateNextIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
@@ -715,12 +697,12 @@ exports[`Catalogue Layout > renders the items page correctly 1`] = `
             >
               <a
                 aria-label="Beam Characterization"
-                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
                 href="#"
               >
                 <p
                   aria-label="Beam Characterization"
-                  class="MuiTypography-root MuiTypography-body1 css-iwxmy2-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-1eflll8-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -730,11 +712,11 @@ exports[`Catalogue Layout > renders the items page correctly 1`] = `
             </li>
             <li
               aria-hidden="true"
-              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+              class="MuiBreadcrumbs-separator css-jhr02i-MuiBreadcrumbs-separator"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
                 data-testid="NavigateNextIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
@@ -749,12 +731,12 @@ exports[`Catalogue Layout > renders the items page correctly 1`] = `
             >
               <a
                 aria-label="Cameras"
-                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
                 href="#"
               >
                 <p
                   aria-label="Cameras"
-                  class="MuiTypography-root MuiTypography-body1 css-iwxmy2-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-1eflll8-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -764,11 +746,11 @@ exports[`Catalogue Layout > renders the items page correctly 1`] = `
             </li>
             <li
               aria-hidden="true"
-              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+              class="MuiBreadcrumbs-separator css-jhr02i-MuiBreadcrumbs-separator"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
                 data-testid="NavigateNextIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
@@ -783,12 +765,12 @@ exports[`Catalogue Layout > renders the items page correctly 1`] = `
             >
               <a
                 aria-label="Cameras 1"
-                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
                 href="#"
               >
                 <p
                   aria-label="Cameras 1"
-                  class="MuiTypography-root MuiTypography-body1 css-iwxmy2-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-1eflll8-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -798,11 +780,11 @@ exports[`Catalogue Layout > renders the items page correctly 1`] = `
             </li>
             <li
               aria-hidden="true"
-              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+              class="MuiBreadcrumbs-separator css-jhr02i-MuiBreadcrumbs-separator"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
                 data-testid="NavigateNextIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
@@ -817,7 +799,7 @@ exports[`Catalogue Layout > renders the items page correctly 1`] = `
             >
               <p
                 aria-label="Items"
-                class="MuiTypography-root MuiTypography-body1 css-1vfwmmq-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 css-zdtazc-MuiTypography-root"
                 data-mui-internal-clone-element="true"
                 role="tooltip"
               >
@@ -838,7 +820,7 @@ exports[`Catalogue Layout Error Component > renders catalogue error page correct
     class="MuiBox-root css-v2kfba"
   >
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1oybmxg-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1gc5pr5-MuiGrid2-root"
     >
       <div
         class="MuiBox-root css-70qvj9"
@@ -850,13 +832,13 @@ exports[`Catalogue Layout Error Component > renders catalogue error page correct
         >
           <button
             aria-label="navigate to catalogue home"
-            class="MuiButtonBase-root Mui-focusVisible MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+            class="MuiButtonBase-root Mui-focusVisible MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
             tabindex="0"
             type="button"
           >
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
               data-testid="HomeIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -866,7 +848,7 @@ exports[`Catalogue Layout Error Component > renders catalogue error page correct
               />
             </svg>
             <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              class="MuiTouchRipple-root css-r3djoj-MuiTouchRipple-root"
             >
               <span
                 class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible"
@@ -889,10 +871,10 @@ exports[`Catalogue Layout Error Component > renders catalogue error page correct
         </span>
         <nav
           aria-label="breadcrumb"
-          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1mc59t7-MuiTypography-root-MuiBreadcrumbs-root"
+          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-fxix4h-MuiTypography-root-MuiBreadcrumbs-root"
         >
           <ol
-            class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+            class="MuiBreadcrumbs-ol css-1uwp4ue-MuiBreadcrumbs-ol"
           />
         </nav>
       </div>
@@ -903,17 +885,17 @@ exports[`Catalogue Layout Error Component > renders catalogue error page correct
       >
         <svg
           aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1wffj3i-MuiSvgIcon-root"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-182b5zx-MuiSvgIcon-root"
           data-testid="BugReportIcon"
           focusable="false"
           viewBox="0 0 24 24"
         >
           <path
-            d="M20 8h-2.81c-.45-.78-1.07-1.45-1.82-1.96L17 4.41 15.59 3l-2.17 2.17C12.96 5.06 12.49 5 12 5c-.49 0-.96.06-1.41.17L8.41 3 7 4.41l1.62 1.63C7.88 6.55 7.26 7.22 6.81 8H4v2h2.09c-.05.33-.09.66-.09 1v1H4v2h2v1c0 .34.04.67.09 1H4v2h2.81c1.04 1.79 2.97 3 5.19 3s4.15-1.21 5.19-3H20v-2h-2.09c.05-.33.09-.66.09-1v-1h2v-2h-2v-1c0-.34-.04-.67-.09-1H20zm-6 8h-4v-2h4zm0-4h-4v-2h4z"
+            d="M20 8h-2.81c-.45-.78-1.07-1.45-1.82-1.96L17 4.41 15.59 3l-2.17 2.17C12.96 5.06 12.49 5 12 5s-.96.06-1.41.17L8.41 3 7 4.41l1.62 1.63C7.88 6.55 7.26 7.22 6.81 8H4v2h2.09c-.05.33-.09.66-.09 1v1H4v2h2v1c0 .34.04.67.09 1H4v2h2.81c1.04 1.79 2.97 3 5.19 3s4.15-1.21 5.19-3H20v-2h-2.09c.05-.33.09-.66.09-1v-1h2v-2h-2v-1c0-.34-.04-.67-.09-1H20zm-6 8h-4v-2h4zm0-4h-4v-2h4z"
           />
         </svg>
         <p
-          class="MuiTypography-root MuiTypography-body1 css-1fjbu-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 css-vbjpyr-MuiTypography-root"
         >
           404
         </p>
@@ -922,16 +904,16 @@ exports[`Catalogue Layout Error Component > renders catalogue error page correct
         class="MuiBox-root css-sg7ujc"
       >
         <h2
-          class="MuiTypography-root MuiTypography-h2 css-18ft2kn-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-h2 css-dyl3ya-MuiTypography-root"
         >
           Page not found
         </h2>
         <p
-          class="MuiTypography-root MuiTypography-body1 css-n3u125-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 css-13cqhiy-MuiTypography-root"
         >
           We're sorry, the page you requested was not found on the server. If you entered the URL manually please check your spelling and try again. Otherwise, return to the 
           <a
-            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-17fxp5y-MuiTypography-root-MuiLink-root"
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1amp05l-MuiTypography-root-MuiLink-root"
             href="/catalogue"
           >
             catalogue home page

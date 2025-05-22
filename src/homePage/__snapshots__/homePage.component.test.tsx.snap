@@ -8,17 +8,17 @@ exports[`Home Page Error Component > renders catalogue error page correctly 1`] 
     >
       <svg
         aria-hidden="true"
-        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1wffj3i-MuiSvgIcon-root"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-182b5zx-MuiSvgIcon-root"
         data-testid="BugReportIcon"
         focusable="false"
         viewBox="0 0 24 24"
       >
         <path
-          d="M20 8h-2.81c-.45-.78-1.07-1.45-1.82-1.96L17 4.41 15.59 3l-2.17 2.17C12.96 5.06 12.49 5 12 5c-.49 0-.96.06-1.41.17L8.41 3 7 4.41l1.62 1.63C7.88 6.55 7.26 7.22 6.81 8H4v2h2.09c-.05.33-.09.66-.09 1v1H4v2h2v1c0 .34.04.67.09 1H4v2h2.81c1.04 1.79 2.97 3 5.19 3s4.15-1.21 5.19-3H20v-2h-2.09c.05-.33.09-.66.09-1v-1h2v-2h-2v-1c0-.34-.04-.67-.09-1H20zm-6 8h-4v-2h4zm0-4h-4v-2h4z"
+          d="M20 8h-2.81c-.45-.78-1.07-1.45-1.82-1.96L17 4.41 15.59 3l-2.17 2.17C12.96 5.06 12.49 5 12 5s-.96.06-1.41.17L8.41 3 7 4.41l1.62 1.63C7.88 6.55 7.26 7.22 6.81 8H4v2h2.09c-.05.33-.09.66-.09 1v1H4v2h2v1c0 .34.04.67.09 1H4v2h2.81c1.04 1.79 2.97 3 5.19 3s4.15-1.21 5.19-3H20v-2h-2.09c.05-.33.09-.66.09-1v-1h2v-2h-2v-1c0-.34-.04-.67-.09-1H20zm-6 8h-4v-2h4zm0-4h-4v-2h4z"
         />
       </svg>
       <p
-        class="MuiTypography-root MuiTypography-body1 css-1fjbu-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 css-vbjpyr-MuiTypography-root"
       >
         404
       </p>
@@ -27,16 +27,16 @@ exports[`Home Page Error Component > renders catalogue error page correctly 1`] 
       class="MuiBox-root css-sg7ujc"
     >
       <h2
-        class="MuiTypography-root MuiTypography-h2 css-18ft2kn-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-h2 css-dyl3ya-MuiTypography-root"
       >
         Page not found
       </h2>
       <p
-        class="MuiTypography-root MuiTypography-body1 css-n3u125-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 css-13cqhiy-MuiTypography-root"
       >
         We're sorry, the page you requested was not found on the server. If you entered the URL manually please check your spelling and try again. Otherwise, return to the 
         <a
-          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-17fxp5y-MuiTypography-root-MuiLink-root"
+          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1amp05l-MuiTypography-root-MuiLink-root"
           href="/"
         >
            home page
@@ -63,14 +63,14 @@ exports[`Home page component > homepage renders correctly 1`] = `
           class="MuiBox-root css-h95k7f"
         >
           <h2
-            class="MuiTypography-root MuiTypography-h2 css-1c7qyh0-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-h2 css-1n0cdig-MuiTypography-root"
           >
             <strong>
               Inventory Management
             </strong>
           </h2>
           <h2
-            class="MuiTypography-root MuiTypography-h2 css-1c7qyh0-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-h2 css-1n0cdig-MuiTypography-root"
           >
             for 
             <strong>
@@ -84,25 +84,26 @@ exports[`Home page component > homepage renders correctly 1`] = `
       class="MuiBox-root css-12vlygr"
     >
       <div
-        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-177u6i-MuiPaper-root"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1lsxlyj-MuiPaper-root"
+        style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
       >
         <div
-          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1pi8xg4-MuiGrid2-root"
+          class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1jxwjqx-MuiGrid2-root"
           style="height: 100%;"
         >
           <div
-            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-6 css-sptymy-MuiGrid2-root"
+            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-6 css-ticvdu-MuiGrid2-root"
           >
             <div
               class="MuiBox-root css-bvoom2"
             >
               <h3
-                class="MuiTypography-root MuiTypography-h3 css-jadg01-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-h3 css-rp9k13-MuiTypography-root"
               >
                 Catalogue
               </h3>
               <p
-                class="MuiTypography-root MuiTypography-body1 css-16w7kz2-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 css-zfzl7o-MuiTypography-root"
               >
                 Browse catalogue categories, sub categories and catalogue items to locate specific items or add new ones.
               </p>
@@ -110,21 +111,18 @@ exports[`Home page component > homepage renders correctly 1`] = `
                 class="MuiBox-root css-1yuhvjn"
               >
                 <a
-                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-sghohy-MuiButtonBase-root-MuiButton-root"
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-74d805-MuiButtonBase-root-MuiButton-root"
                   data-testid="catalogue-button"
                   href="/catalogue"
                   tabindex="0"
                 >
                   Explore
-                  <span
-                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                  />
                 </a>
               </div>
             </div>
           </div>
           <div
-            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-6 css-sptymy-MuiGrid2-root"
+            class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-6 css-ticvdu-MuiGrid2-root"
           >
             <div
               style="background-image: url("/images/facility.jpg"); background-repeat: no-repeat; background-position: bottom right; background-size: cover; width: 100%; height: 100%; border-radius: 4px;"
@@ -137,24 +135,25 @@ exports[`Home page component > homepage renders correctly 1`] = `
         </div>
       </div>
       <div
-        class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-spacing-xs-2 css-x3vexg-MuiGrid2-root"
+        class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-spacing-xs-2 css-ubb9a5-MuiGrid2-root"
       >
         <div
-          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-sm-12 MuiGrid2-grid-md-4 css-1jy87w0-MuiGrid2-root"
+          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-sm-12 MuiGrid2-grid-md-4 css-r1gsp2-MuiGrid2-root"
         >
           <div
-            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-177u6i-MuiPaper-root"
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1lsxlyj-MuiPaper-root"
+            style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
           >
             <div
               class="MuiBox-root css-bvoom2"
             >
               <h4
-                class="MuiTypography-root MuiTypography-h4 css-rspydk-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-h4 css-stzmw-MuiTypography-root"
               >
                 Systems
               </h4>
               <p
-                class="MuiTypography-root MuiTypography-body1 css-16w7kz2-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 css-zfzl7o-MuiTypography-root"
               >
                 Navigate through systems and their sub systems to view their component items.
               </p>
@@ -162,36 +161,34 @@ exports[`Home page component > homepage renders correctly 1`] = `
                 class="MuiBox-root css-8xl60i"
               >
                 <a
-                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-sghohy-MuiButtonBase-root-MuiButton-root"
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-74d805-MuiButtonBase-root-MuiButton-root"
                   data-testid="systems-button"
                   href="/systems"
                   tabindex="0"
                 >
                   Explore
-                  <span
-                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                  />
                 </a>
               </div>
             </div>
           </div>
         </div>
         <div
-          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-sm-12 MuiGrid2-grid-md-4 css-1jy87w0-MuiGrid2-root"
+          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-sm-12 MuiGrid2-grid-md-4 css-r1gsp2-MuiGrid2-root"
         >
           <div
-            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-177u6i-MuiPaper-root"
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1lsxlyj-MuiPaper-root"
+            style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
           >
             <div
               class="MuiBox-root css-bvoom2"
             >
               <h4
-                class="MuiTypography-root MuiTypography-h4 css-rspydk-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-h4 css-stzmw-MuiTypography-root"
               >
                 Manufacturers
               </h4>
               <p
-                class="MuiTypography-root MuiTypography-body1 css-16w7kz2-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 css-zfzl7o-MuiTypography-root"
               >
                 View the manufacturers of parts used by EPAC.
               </p>
@@ -199,25 +196,23 @@ exports[`Home page component > homepage renders correctly 1`] = `
                 class="MuiBox-root css-8xl60i"
               >
                 <a
-                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-sghohy-MuiButtonBase-root-MuiButton-root"
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-74d805-MuiButtonBase-root-MuiButton-root"
                   data-testid="manufacturer-button"
                   href="/manufacturers"
                   tabindex="0"
                 >
                   Explore
-                  <span
-                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                  />
                 </a>
               </div>
             </div>
           </div>
         </div>
         <div
-          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-sm-12 MuiGrid2-grid-md-4 css-1jy87w0-MuiGrid2-root"
+          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-sm-12 MuiGrid2-grid-md-4 css-r1gsp2-MuiGrid2-root"
         >
           <div
-            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-19bggzh-MuiPaper-root"
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1egsplb-MuiPaper-root"
+            style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
           >
             <div
               style="background-image: url("/images/green-swirl2.png"); background-repeat: no-repeat; background-position: top right; background-size: auto 100%; height: 100%;"
@@ -226,12 +221,12 @@ exports[`Home page component > homepage renders correctly 1`] = `
                 class="MuiBox-root css-bvoom2"
               >
                 <h4
-                  class="MuiTypography-root MuiTypography-h4 css-94tke6-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-h4 css-1998a9a-MuiTypography-root"
                 >
                   EPAC
                 </h4>
                 <p
-                  class="MuiTypography-root MuiTypography-body1 css-1kje51w-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-1pkra2e-MuiTypography-root"
                 >
                   World-leading centre for scientific and industrial research.
                 </p>
@@ -239,15 +234,12 @@ exports[`Home page component > homepage renders correctly 1`] = `
                   class="MuiBox-root css-8xl60i"
                 >
                   <a
-                    class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-1m6sz6p-MuiButtonBase-root-MuiButton-root"
+                    class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-cx4aoo-MuiButtonBase-root-MuiButton-root"
                     data-testid="facility-button"
                     href="https://www.clf.stfc.ac.uk/Pages/EPAC-Applications.aspx"
                     tabindex="0"
                   >
                     Read more
-                    <span
-                      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                    />
                   </a>
                 </div>
               </div>

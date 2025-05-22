@@ -12,13 +12,13 @@ exports[`Channel Breadcrumbs > should render correctly for path 1`] = `
     >
       <button
         aria-label="navigate to catalogue home"
-        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
         tabindex="0"
         type="button"
       >
         <svg
           aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
           data-testid="HomeIcon"
           focusable="false"
           viewBox="0 0 24 24"
@@ -27,17 +27,14 @@ exports[`Channel Breadcrumbs > should render correctly for path 1`] = `
             d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
           />
         </svg>
-        <span
-          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-        />
       </button>
     </span>
     <nav
       aria-label="breadcrumb"
-      class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1mc59t7-MuiTypography-root-MuiBreadcrumbs-root"
+      class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-fxix4h-MuiTypography-root-MuiBreadcrumbs-root"
     >
       <ol
-        class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+        class="MuiBreadcrumbs-ol css-1uwp4ue-MuiBreadcrumbs-ol"
       >
         <li
           class="MuiBreadcrumbs-li"
@@ -48,11 +45,11 @@ exports[`Channel Breadcrumbs > should render correctly for path 1`] = `
         </li>
         <li
           aria-hidden="true"
-          class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+          class="MuiBreadcrumbs-separator css-jhr02i-MuiBreadcrumbs-separator"
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
             data-testid="NavigateNextIcon"
             focusable="false"
             viewBox="0 0 24 24"
@@ -67,12 +64,12 @@ exports[`Channel Breadcrumbs > should render correctly for path 1`] = `
         >
           <a
             aria-label="test"
-            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
             href="#"
           >
             <p
               aria-label="test"
-              class="MuiTypography-root MuiTypography-body1 css-52u7fi-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-dbkvtt-MuiTypography-root"
               data-mui-internal-clone-element="true"
               role="tooltip"
             >
@@ -82,11 +79,11 @@ exports[`Channel Breadcrumbs > should render correctly for path 1`] = `
         </li>
         <li
           aria-hidden="true"
-          class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+          class="MuiBreadcrumbs-separator css-jhr02i-MuiBreadcrumbs-separator"
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
             data-testid="NavigateNextIcon"
             focusable="false"
             viewBox="0 0 24 24"
@@ -101,7 +98,7 @@ exports[`Channel Breadcrumbs > should render correctly for path 1`] = `
         >
           <p
             aria-label="path"
-            class="MuiTypography-root MuiTypography-body1 css-jqbzo8-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 css-su6c9i-MuiTypography-root"
             data-mui-internal-clone-element="true"
             role="tooltip"
           >
@@ -126,13 +123,13 @@ exports[`Channel Breadcrumbs > should render correctly for path when the subtree
     >
       <button
         aria-label="navigate to catalogue home"
-        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
         tabindex="0"
         type="button"
       >
         <svg
           aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
           data-testid="HomeIcon"
           focusable="false"
           viewBox="0 0 24 24"
@@ -141,17 +138,14 @@ exports[`Channel Breadcrumbs > should render correctly for path when the subtree
             d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
           />
         </svg>
-        <span
-          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-        />
       </button>
     </span>
     <nav
       aria-label="breadcrumb"
-      class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1mc59t7-MuiTypography-root-MuiBreadcrumbs-root"
+      class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-fxix4h-MuiTypography-root-MuiBreadcrumbs-root"
     >
       <ol
-        class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+        class="MuiBreadcrumbs-ol css-1uwp4ue-MuiBreadcrumbs-ol"
       >
         <li
           class="MuiBreadcrumbs-li"
@@ -162,11 +156,11 @@ exports[`Channel Breadcrumbs > should render correctly for path when the subtree
         </li>
         <li
           aria-hidden="true"
-          class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+          class="MuiBreadcrumbs-separator css-jhr02i-MuiBreadcrumbs-separator"
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
             data-testid="NavigateNextIcon"
             focusable="false"
             viewBox="0 0 24 24"
@@ -184,7 +178,7 @@ exports[`Channel Breadcrumbs > should render correctly for path when the subtree
           >
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
               data-testid="MoreHorizIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -197,11 +191,11 @@ exports[`Channel Breadcrumbs > should render correctly for path when the subtree
         </li>
         <li
           aria-hidden="true"
-          class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+          class="MuiBreadcrumbs-separator css-jhr02i-MuiBreadcrumbs-separator"
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
             data-testid="NavigateNextIcon"
             focusable="false"
             viewBox="0 0 24 24"
@@ -216,12 +210,12 @@ exports[`Channel Breadcrumbs > should render correctly for path when the subtree
         >
           <a
             aria-label="test"
-            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
             href="#"
           >
             <p
               aria-label="test"
-              class="MuiTypography-root MuiTypography-body1 css-1xfehcj-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-1oz0j2q-MuiTypography-root"
               data-mui-internal-clone-element="true"
               role="tooltip"
             >
@@ -231,11 +225,11 @@ exports[`Channel Breadcrumbs > should render correctly for path when the subtree
         </li>
         <li
           aria-hidden="true"
-          class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+          class="MuiBreadcrumbs-separator css-jhr02i-MuiBreadcrumbs-separator"
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
             data-testid="NavigateNextIcon"
             focusable="false"
             viewBox="0 0 24 24"
@@ -250,12 +244,12 @@ exports[`Channel Breadcrumbs > should render correctly for path when the subtree
         >
           <a
             aria-label="path"
-            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
             href="#"
           >
             <p
               aria-label="path"
-              class="MuiTypography-root MuiTypography-body1 css-1xfehcj-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-1oz0j2q-MuiTypography-root"
               data-mui-internal-clone-element="true"
               role="tooltip"
             >
@@ -265,11 +259,11 @@ exports[`Channel Breadcrumbs > should render correctly for path when the subtree
         </li>
         <li
           aria-hidden="true"
-          class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+          class="MuiBreadcrumbs-separator css-jhr02i-MuiBreadcrumbs-separator"
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
             data-testid="NavigateNextIcon"
             focusable="false"
             viewBox="0 0 24 24"
@@ -284,12 +278,12 @@ exports[`Channel Breadcrumbs > should render correctly for path when the subtree
         >
           <a
             aria-label="test"
-            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
             href="#"
           >
             <p
               aria-label="test"
-              class="MuiTypography-root MuiTypography-body1 css-1xfehcj-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-1oz0j2q-MuiTypography-root"
               data-mui-internal-clone-element="true"
               role="tooltip"
             >
@@ -299,11 +293,11 @@ exports[`Channel Breadcrumbs > should render correctly for path when the subtree
         </li>
         <li
           aria-hidden="true"
-          class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+          class="MuiBreadcrumbs-separator css-jhr02i-MuiBreadcrumbs-separator"
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
             data-testid="NavigateNextIcon"
             focusable="false"
             viewBox="0 0 24 24"
@@ -318,12 +312,12 @@ exports[`Channel Breadcrumbs > should render correctly for path when the subtree
         >
           <a
             aria-label="path"
-            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
             href="#"
           >
             <p
               aria-label="path"
-              class="MuiTypography-root MuiTypography-body1 css-1xfehcj-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-1oz0j2q-MuiTypography-root"
               data-mui-internal-clone-element="true"
               role="tooltip"
             >
@@ -333,11 +327,11 @@ exports[`Channel Breadcrumbs > should render correctly for path when the subtree
         </li>
         <li
           aria-hidden="true"
-          class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+          class="MuiBreadcrumbs-separator css-jhr02i-MuiBreadcrumbs-separator"
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
             data-testid="NavigateNextIcon"
             focusable="false"
             viewBox="0 0 24 24"
@@ -352,7 +346,7 @@ exports[`Channel Breadcrumbs > should render correctly for path when the subtree
         >
           <p
             aria-label="test"
-            class="MuiTypography-root MuiTypography-body1 css-gw6ax-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 css-1jw5v3-MuiTypography-root"
             data-mui-internal-clone-element="true"
             role="tooltip"
           >
@@ -377,13 +371,13 @@ exports[`Channel Breadcrumbs > should render correctly for root 1`] = `
     >
       <button
         aria-label="navigate to catalogue home"
-        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
         tabindex="0"
         type="button"
       >
         <svg
           aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
           data-testid="HomeIcon"
           focusable="false"
           viewBox="0 0 24 24"
@@ -392,17 +386,14 @@ exports[`Channel Breadcrumbs > should render correctly for root 1`] = `
             d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
           />
         </svg>
-        <span
-          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-        />
       </button>
     </span>
     <nav
       aria-label="breadcrumb"
-      class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1mc59t7-MuiTypography-root-MuiBreadcrumbs-root"
+      class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-fxix4h-MuiTypography-root-MuiBreadcrumbs-root"
     >
       <ol
-        class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+        class="MuiBreadcrumbs-ol css-1uwp4ue-MuiBreadcrumbs-ol"
       >
         <li
           class="MuiBreadcrumbs-li"

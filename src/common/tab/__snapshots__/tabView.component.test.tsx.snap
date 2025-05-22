@@ -4,88 +4,79 @@ exports[`TabView Component > renders correctly 1`] = `
 <body>
   <div>
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-i9v5tx-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-smpqgx-MuiGrid2-root"
     >
       <div
-        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16fnxy3-MuiGrid2-root"
+        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j0u08r-MuiGrid2-root"
       >
         <div
-          class="MuiTabs-root css-1ujnqem-MuiTabs-root"
+          class="MuiTabs-root css-jhczcq-MuiTabs-root"
         >
           <div
-            class="MuiTabs-scrollableX MuiTabs-hideScrollbar css-oqr85h"
+            class="MuiTabs-scrollableX MuiTabs-hideScrollbar css-i8yde5"
             style="width: 99px; height: 99px; position: absolute; top: -9999px; overflow: scroll;"
           />
           <div
-            class="MuiTabs-scroller MuiTabs-hideScrollbar MuiTabs-scrollableX css-69z67c-MuiTabs-scroller"
+            class="MuiTabs-scroller MuiTabs-hideScrollbar MuiTabs-scrollableX css-1fr578y-MuiTabs-scroller"
             style="margin-bottom: 0px;"
           >
             <div
               aria-label="test view tabs"
-              class="MuiTabs-flexContainer css-heg063-MuiTabs-flexContainer"
+              class="MuiTabs-list MuiTabs-flexContainer css-hzcega-MuiTabs-list"
               role="tablist"
             >
               <button
                 aria-controls="tab1-tabpanel"
                 aria-selected="true"
-                class="MuiButtonBase-root MuiTab-root MuiTab-labelIcon MuiTab-textColorPrimary Mui-selected css-12xzlyc-MuiButtonBase-root-MuiTab-root"
+                class="MuiButtonBase-root MuiTab-root MuiTab-labelIcon MuiTab-textColorPrimary Mui-selected css-1noduw7-MuiButtonBase-root-MuiTab-root"
                 id="tab1-tab"
                 role="tab"
                 tabindex="0"
                 type="button"
               >
                 <div
-                  class="MuiTab-iconWrapper"
+                  class="MuiTab-iconWrapper MuiTab-icon"
                 >
                   icon 1
                 </div>
                 tab1
-                <span
-                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                />
               </button>
               <button
                 aria-controls="tab3-tabpanel"
                 aria-selected="false"
-                class="MuiButtonBase-root MuiTab-root MuiTab-labelIcon MuiTab-textColorPrimary css-12xzlyc-MuiButtonBase-root-MuiTab-root"
+                class="MuiButtonBase-root MuiTab-root MuiTab-labelIcon MuiTab-textColorPrimary css-1noduw7-MuiButtonBase-root-MuiTab-root"
                 id="tab3-tab"
                 role="tab"
                 tabindex="-1"
                 type="button"
               >
                 <div
-                  class="MuiTab-iconWrapper"
+                  class="MuiTab-iconWrapper MuiTab-icon"
                 >
                   icon 3
                 </div>
                 tab3
-                <span
-                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                />
               </button>
               <button
                 aria-controls="tab2-tabpanel"
                 aria-selected="false"
-                class="MuiButtonBase-root MuiTab-root MuiTab-labelIcon MuiTab-textColorPrimary css-12xzlyc-MuiButtonBase-root-MuiTab-root"
+                class="MuiButtonBase-root MuiTab-root MuiTab-labelIcon MuiTab-textColorPrimary css-1noduw7-MuiButtonBase-root-MuiTab-root"
                 id="tab2-tab"
                 role="tab"
                 tabindex="-1"
                 type="button"
               >
                 <div
-                  class="MuiTab-iconWrapper"
+                  class="MuiTab-iconWrapper MuiTab-icon"
                 >
                   icon 2
                 </div>
                 tab2
-                <span
-                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                />
               </button>
               <button
                 aria-controls="Gallery-tabpanel"
                 aria-selected="false"
-                class="MuiButtonBase-root MuiTab-root MuiTab-labelIcon MuiTab-textColorPrimary css-12xzlyc-MuiButtonBase-root-MuiTab-root"
+                class="MuiButtonBase-root MuiTab-root MuiTab-labelIcon MuiTab-textColorPrimary css-1noduw7-MuiButtonBase-root-MuiTab-root"
                 id="Gallery-tab"
                 role="tab"
                 tabindex="-1"
@@ -93,7 +84,7 @@ exports[`TabView Component > renders correctly 1`] = `
               >
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiTab-iconWrapper css-i4bv87-MuiSvgIcon-root"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiTab-iconWrapper MuiTab-icon css-1umw9bq-MuiSvgIcon-root"
                   data-testid="CollectionsOutlinedIcon"
                   focusable="false"
                   viewBox="0 0 24 24"
@@ -103,14 +94,11 @@ exports[`TabView Component > renders correctly 1`] = `
                   />
                 </svg>
                 Gallery
-                <span
-                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                />
               </button>
               <button
                 aria-controls="Attachments-tabpanel"
                 aria-selected="false"
-                class="MuiButtonBase-root MuiTab-root MuiTab-labelIcon MuiTab-textColorPrimary css-12xzlyc-MuiButtonBase-root-MuiTab-root"
+                class="MuiButtonBase-root MuiTab-root MuiTab-labelIcon MuiTab-textColorPrimary css-1noduw7-MuiButtonBase-root-MuiTab-root"
                 id="Attachments-tab"
                 role="tab"
                 tabindex="-1"
@@ -118,7 +106,7 @@ exports[`TabView Component > renders correctly 1`] = `
               >
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiTab-iconWrapper css-i4bv87-MuiSvgIcon-root"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiTab-iconWrapper MuiTab-icon css-1umw9bq-MuiSvgIcon-root"
                   data-testid="AttachmentOutlinedIcon"
                   focusable="false"
                   viewBox="0 0 24 24"
@@ -128,20 +116,17 @@ exports[`TabView Component > renders correctly 1`] = `
                   />
                 </svg>
                 Attachments
-                <span
-                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                />
               </button>
             </div>
             <span
-              class="MuiTabs-indicator css-1aquho2-MuiTabs-indicator"
+              class="MuiTabs-indicator css-1qltlow-MuiTabs-indicator"
               style="left: 0px; width: 0px;"
             />
           </div>
         </div>
       </div>
       <div
-        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16fnxy3-MuiGrid2-root"
+        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j0u08r-MuiGrid2-root"
       >
         <div
           aria-labelledby="tab1-tab"
