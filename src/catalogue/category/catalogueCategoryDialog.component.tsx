@@ -391,7 +391,9 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
               </Grid>
               <Grid sx={{ paddingLeft: 1, paddingTop: 3 }}>
                 <Typography variant="h6">Catalogue Item Properties</Typography>
-                <Box mt={1}>
+                <Box sx={{
+                  mt: 1
+                }}>
                   <FormProvider {...formMethods}>
                     <CatalogueItemsPropertiesTable
                       requestType={requestType}

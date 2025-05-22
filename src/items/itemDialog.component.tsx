@@ -528,7 +528,9 @@ function ItemDialog(props: ItemDialogProps) {
       case 0:
         return (
           <Grid container spacing={1.5} size={12}>
-            <Grid container margin={0} size={12}>
+            <Grid container size={12} sx={{
+              margin: 0
+            }}>
               <TextField
                 id="item-serial-number-input"
                 label="Serial number"
@@ -561,14 +563,13 @@ function ItemDialog(props: ItemDialogProps) {
                     }
                   >
                     <Typography
-                      ml={1}
-                      mb={0}
                       variant="caption"
                       sx={{
+                        ml: 1,
+                        mb: 0,
                         cursor: 'pointer',
-                        '&:hover': { textDecoration: 'underline' },
-                      }}
-                    >
+                        '&:hover': { textDecoration: 'underline' }
+                      }}>
                       {showAdvancedSerialNumberOptions
                         ? 'Close advanced options'
                         : 'Show advanced options'}
@@ -579,7 +580,9 @@ function ItemDialog(props: ItemDialogProps) {
                       sx={{ width: '100%' }}
                       in={showAdvancedSerialNumberOptions}
                     >
-                      <Grid container mt={0.25} spacing={1.5} size={12}>
+                      <Grid container spacing={1.5} size={12} sx={{
+                        mt: 0.25
+                      }}>
                         <Grid size={6}>
                           <TextField
                             id="item-quantity-input"
@@ -822,7 +825,9 @@ function ItemDialog(props: ItemDialogProps) {
                   title={
                     <div>
                       <Typography>Catalogue item note:</Typography>
-                      <Typography whiteSpace="pre-line">
+                      <Typography sx={{
+                        whiteSpace: "pre-line"
+                      }}>
                         {catalogueItem?.notes ?? 'None'}
                       </Typography>
                     </div>

@@ -354,7 +354,13 @@ const PropertyDialog = (props: PropertyDialogProps) => {
         {type === 'post' ? 'Add Property' : 'Edit Property'}
       </DialogTitle>
       <DialogContent sx={{ pb: 0.5 }}>
-        <Stack direction="column" spacing={1} px={0.5} py={1}>
+        <Stack
+          direction="column"
+          spacing={1}
+          sx={{
+            px: 0.5,
+            py: 1
+          }}>
           <TextField
             id={crypto.randomUUID()}
             label="Property Name"
@@ -751,7 +757,9 @@ const PropertyDialog = (props: PropertyDialogProps) => {
         </Stack>
       </DialogContent>
       <DialogActions>
-        <Grid container px={1.5}>
+        <Grid container sx={{
+          px: 1.5
+        }}>
           {isMigration && (
             <Grid sx={{ width: '100%' }}>
               <MigrationWarningMessage
@@ -761,9 +769,12 @@ const PropertyDialog = (props: PropertyDialogProps) => {
             </Grid>
           )}
           <Grid
-            display="flex"
-            sx={{ width: '100%', marginTop: 2, marginBottom: 1 }}
-          >
+            sx={{
+              display: "flex",
+              width: '100%',
+              marginTop: 2,
+              marginBottom: 1
+            }}>
             <Button
               variant="outlined"
               sx={{ width: '50%', mx: 1 }}

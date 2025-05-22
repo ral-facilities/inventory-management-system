@@ -160,7 +160,13 @@ const CatalogueItemDirectoryDialog = (
     >
       <DialogTitle sx={{ marginLeft: 2 }}>
         <Grid container spacing={2}>
-          <Grid container flexDirection="row" alignItems="center" size={12}>
+          <Grid
+            container
+            size={12}
+            sx={{
+              flexDirection: "row",
+              alignItems: "center"
+            }}>
             <>
               {requestType === 'moveTo' ? 'Move ' : 'Copy '}{' '}
               {selectedItems.length}{' '}

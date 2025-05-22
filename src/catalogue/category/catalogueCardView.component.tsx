@@ -508,21 +508,31 @@ function CatalogueCardView() {
       {!catalogueCategoryDetailLoading ? (
         <Grid
           container
-          flexDirection="column"
-          height={cardViewHeight}
-          maxHeight={cardViewHeight}
-          width="100%"
-        >
-          <Grid width="100%" sx={{ flexShrink: 0 }}>
+          sx={{
+            flexDirection: "column",
+            height: cardViewHeight,
+            maxHeight: cardViewHeight,
+            width: "100%"
+          }}>
+          <Grid
+            sx={{
+              width: "100%",
+              flexShrink: 0
+            }}>
             <MRT_TopToolbar table={table} />
           </Grid>
-          <Grid width="100%" sx={{ flex: 1, overflow: 'auto' }}>
+          <Grid
+            sx={{
+              width: "100%",
+              flex: 1,
+              overflow: 'auto'
+            }}>
             <Grid container>
               <Grid
                 container
-                alignItems="top"
-                display={!isCollapsed ? 'none' : undefined}
                 sx={{
+                  alignItems: "top",
+                  display: !isCollapsed ? 'none' : undefined,
                   paddingLeft: 0.5,
                   position: 'sticky',
                   top: 0,
@@ -531,9 +541,8 @@ function CatalogueCardView() {
                   width: '100%',
                   paddingTop: 2.5,
                   paddingBottom: 2.5,
-                  height: 'fit-content',
-                }}
-              >
+                  height: 'fit-content'
+                }}>
                 <Collapse
                   in={isCollapsed}
                   style={{ width: '100%', height: 'fit-content' }}
@@ -541,17 +550,23 @@ function CatalogueCardView() {
                   <CardViewFilters table={table} />
                 </Collapse>
               </Grid>
-              <Grid width="100%">
-                <Grid container width="100%" columns={12}>
+              <Grid sx={{
+                width: "100%"
+              }}>
+                <Grid container columns={12} sx={{
+                  width: "100%"
+                }}>
                   {!isLoading &&
                     (data.length !== 0 ? (
                       data.map((card, index) => (
                         <Grid
                           key={index}
-                          width={'100%'}
                           size={{
                             sm: 6,
                             md: 4
+                          }}
+                          sx={{
+                            width: '100%'
                           }}>
                           <CatalogueCard
                             card={card as MRT_Cell<CatalogueCategory>}
@@ -572,7 +587,11 @@ function CatalogueCardView() {
               </Grid>
             </Grid>
           </Grid>
-          <Grid width="100%" sx={{ flexShrink: 0 }}>
+          <Grid
+            sx={{
+              width: "100%",
+              flexShrink: 0
+            }}>
             <MRT_BottomToolbar table={table} />
           </Grid>
           <CatalogueCategoryDialog

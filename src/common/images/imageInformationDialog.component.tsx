@@ -40,7 +40,9 @@ const ImageInformationDialog = (props: ImageInformationDialogProps) => {
           </Box>
 
           <Typography variant="h6">File Name:</Typography>
-          <Typography color="text.secondary" variant="body1">
+          <Typography variant="body1" sx={{
+            color: "text.secondary"
+          }}>
             {image.file_name}
           </Typography>
           <Divider sx={{ marginY: 2 }} />
@@ -48,7 +50,9 @@ const ImageInformationDialog = (props: ImageInformationDialogProps) => {
           {image.title && (
             <>
               <Typography variant="h6">Title:</Typography>
-              <Typography color="text.secondary" variant="body1">
+              <Typography variant="body1" sx={{
+                color: "text.secondary"
+              }}>
                 {image.title}
               </Typography>
               <Divider sx={{ marginY: 2 }} />
@@ -58,7 +62,9 @@ const ImageInformationDialog = (props: ImageInformationDialogProps) => {
           {image.description && (
             <>
               <Typography variant="h6">Description:</Typography>
-              <Typography color="text.secondary" variant="body1">
+              <Typography variant="body1" sx={{
+                color: "text.secondary"
+              }}>
                 {image.description}
               </Typography>
               <Divider sx={{ marginY: 2 }} />
@@ -66,19 +72,25 @@ const ImageInformationDialog = (props: ImageInformationDialogProps) => {
           )}
 
           <Typography variant="h6">Primary:</Typography>
-          <Typography color="text.secondary" variant="body1">
+          <Typography variant="body1" sx={{
+            color: "text.secondary"
+          }}>
             {image.primary ? 'Yes' : 'No'}
           </Typography>
           <Divider sx={{ marginY: 2 }} />
 
           <Typography variant="h6">Created Time:</Typography>
-          <Typography color="text.secondary" variant="body1">
+          <Typography variant="body1" sx={{
+            color: "text.secondary"
+          }}>
             {formatDateTimeStrings(image.created_time, true)}
           </Typography>
           <Divider sx={{ marginY: 2 }} />
 
           <Typography variant="h6">Modified Time:</Typography>
-          <Typography color="text.secondary" variant="body1">
+          <Typography variant="body1" sx={{
+            color: "text.secondary"
+          }}>
             {formatDateTimeStrings(image.modified_time, true)}
           </Typography>
         </Box>

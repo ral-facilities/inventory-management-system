@@ -193,7 +193,9 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
                     'Browse catalogue categories, sub categories and catalogue items to locate specific items or add new ones.'
                   }
                 </PaperDescription>
-                <Box marginTop="16px">
+                <Box sx={{
+                  marginTop: "16px"
+                }}>
                   <Button
                     sx={(theme) => ({
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -245,7 +247,9 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
                     'Navigate through systems and their sub systems to view their component items.'
                   }
                 </PaperDescription>
-                <Box marginTop="auto">
+                <Box sx={{
+                  marginTop: "auto"
+                }}>
                   <Button
                     sx={(theme) => ({
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -274,7 +278,9 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
                 <PaperDescription variant="body1">
                   {'View the manufacturers of parts used by EPAC.'}
                 </PaperDescription>
-                <Box marginTop="auto">
+                <Box sx={{
+                  marginTop: "auto"
+                }}>
                   <Button
                     sx={(theme) => ({
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -317,7 +323,9 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
                       'World-leading centre for scientific and industrial research.'
                     }
                   </BluePaperDescription>
-                  <Box marginTop="auto">
+                  <Box sx={{
+                    marginTop: "auto"
+                  }}>
                     <LightBlueButton
                       color="primary"
                       variant="contained"

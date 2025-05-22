@@ -16,7 +16,9 @@ function TabPanel<T>({ children, value, label, ...other }: TabPanelProps<T>) {
       style={{ height: '100%' }}
       {...other}
     >
-      {value === label && <Box height="100%">{children}</Box>}
+      {value === label && <Box sx={{
+        height: "100%"
+      }}>{children}</Box>}
     </div>
   );
 }

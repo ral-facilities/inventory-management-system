@@ -22,11 +22,15 @@ function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
     [homeLocation, navigate]
   );
   return (
-    <Box height="100%" width="100%">
+    <Box
+      sx={{
+        height: "100%",
+        width: "100%"
+      }}>
       <Grid
         container
-        alignItems="center"
         sx={{
+          alignItems: "center",
           justifyContent: 'left',
           paddingLeft: 0.5,
           position: 'sticky',
@@ -35,9 +39,8 @@ function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
           zIndex: 1000,
           width: '100%',
           paddingTop: 2.5,
-          paddingBottom: 2.5,
-        }}
-      >
+          paddingBottom: 2.5
+        }}>
         <Breadcrumbs
           onChangeNode={onChangeNode}
           onChangeNavigateHome={() => onChangeNode(null)}

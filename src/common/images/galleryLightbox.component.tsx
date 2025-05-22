@@ -135,7 +135,11 @@ const GalleryLightBox = (props: GalleryLightBoxProps) => {
           }}
         >
           {!isLoading && (
-            <Box textAlign="center" width="100%">
+            <Box
+              sx={{
+                textAlign: "center",
+                width: "100%"
+              }}>
               {(data?.title || currentImageCardData?.row.original.title) && (
                 <OverflowTip
                   sx={{ typography: 'h6', color: 'inherit' }}

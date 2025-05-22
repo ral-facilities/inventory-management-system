@@ -5,7 +5,9 @@ import { Link } from 'react-router-dom';
 function AdminCardView() {
   return (
     <Grid container>
-      <Grid container overflow={'auto'} size={12}>
+      <Grid container size={12} sx={{
+        overflow: 'auto'
+      }}>
         <Grid
           key={0}
           size={{
@@ -42,7 +44,9 @@ function AdminCardView() {
                 }}
               >
                 <Grid>
-                  <Grid position="relative">
+                  <Grid sx={{
+                    position: "relative"
+                  }}>
                     <Typography>Units</Typography>
                   </Grid>
                 </Grid>
@@ -86,7 +90,9 @@ function AdminCardView() {
                 }}
               >
                 <Grid>
-                  <Grid position="relative">
+                  <Grid sx={{
+                    position: "relative"
+                  }}>
                     <Typography>Usage Statuses</Typography>
                   </Grid>
                 </Grid>

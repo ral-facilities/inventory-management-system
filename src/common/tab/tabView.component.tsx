@@ -98,7 +98,9 @@ function TabView<T extends string>(props: TabViewProps<T>) {
   ]);
 
   return (
-    <Grid container flexDirection="column">
+    <Grid container sx={{
+      flexDirection: "column"
+    }}>
       <Grid size={12}>
         <Tabs
           value={tabValue}

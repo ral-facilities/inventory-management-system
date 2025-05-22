@@ -653,7 +653,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               />
             </Grid>
             <Grid container style={{ display: 'flex', margin: 0 }} size={12}>
-              <Grid padding={0} size={11}>
+              <Grid size={11} sx={{
+                padding: 0
+              }}>
                 <Controller
                   control={controlDetailsStep}
                   name="manufacturer_id"
@@ -696,7 +698,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                   )}
                 />
               </Grid>
-              <Grid padding={0} size={1}>
+              <Grid size={1} sx={{
+                padding: 0
+              }}>
                 <Tooltip title="Add Manufacturer">
                   <span>
                     <IconButton
@@ -732,7 +736,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         return (
           <Grid size={12}>
             {parentCatalogueItemPropertiesInfo.length >= 1 ? (
-              <Grid spacing={1.5} margin={0}>
+              <Grid spacing={1.5} sx={{
+                margin: 0
+              }}>
                 {parentCatalogueItemPropertiesInfo.map(
                   (property: CatalogueCategoryProperty, index: number) => (
                     <Grid key={index} size={12}>

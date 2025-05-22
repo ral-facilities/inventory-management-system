@@ -105,9 +105,11 @@ function SystemDetails(props: SystemDetailsProps) {
             <Grid
               container
               direction="row"
-              justifyContent="space-evenly"
-              sx={{ margin: 0, mt: 1 }}
-            >
+              sx={{
+                justifyContent: "space-evenly",
+                margin: 0,
+                mt: 1
+              }}>
               <Grid container spacing={2}>
                 <Grid size="auto">
                   <PrimaryImage entityId={system.id} />
@@ -118,12 +120,15 @@ function SystemDetails(props: SystemDetailsProps) {
                       xs: 12,
                       sm: 6
                     }}>
-                    <Typography color="text.primary">Location</Typography>
+                    <Typography sx={{
+                      color: "text.primary"
+                    }}>Location</Typography>
                     <Typography
                       variant="body1"
-                      color="text.secondary"
-                      sx={{ wordWrap: 'break-word' }}
-                    >
+                      sx={{
+                        color: "text.secondary",
+                        wordWrap: 'break-word'
+                      }}>
                       {system.location ?? 'None'}
                     </Typography>
                   </Grid>
@@ -133,7 +138,9 @@ function SystemDetails(props: SystemDetailsProps) {
                       xs: 12,
                       sm: 6
                     }}>
-                    <Typography color="text.primary">Importance</Typography>
+                    <Typography sx={{
+                      color: "text.primary"
+                    }}>Importance</Typography>
                     <Chip
                       label={system.importance}
                       sx={() => {
@@ -154,12 +161,15 @@ function SystemDetails(props: SystemDetailsProps) {
                       xs: 12,
                       sm: 6
                     }}>
-                    <Typography color="text.primary">Owner</Typography>
+                    <Typography sx={{
+                      color: "text.primary"
+                    }}>Owner</Typography>
                     <Typography
                       variant="body1"
-                      color="text.secondary"
-                      sx={{ wordWrap: 'break-word' }}
-                    >
+                      sx={{
+                        color: "text.secondary",
+                        wordWrap: 'break-word'
+                      }}>
                       {system.owner ?? 'None'}
                     </Typography>
                   </Grid>
@@ -168,8 +178,12 @@ function SystemDetails(props: SystemDetailsProps) {
                       xs: 12,
                       sm: 6
                     }}>
-                    <Typography color="text.primary">Last modified</Typography>
-                    <Typography variant="body1" color="text.secondary">
+                    <Typography sx={{
+                      color: "text.primary"
+                    }}>Last modified</Typography>
+                    <Typography variant="body1" sx={{
+                      color: "text.secondary"
+                    }}>
                       {formatDateTimeStrings(system.modified_time, true)}
                     </Typography>
                   </Grid>
@@ -179,8 +193,12 @@ function SystemDetails(props: SystemDetailsProps) {
                       xs: 12,
                       sm: 6
                     }}>
-                    <Typography color="text.primary">Created</Typography>
-                    <Typography variant="body1" color="text.secondary">
+                    <Typography sx={{
+                      color: "text.primary"
+                    }}>Created</Typography>
+                    <Typography variant="body1" sx={{
+                      color: "text.secondary"
+                    }}>
                       {formatDateTimeStrings(system.created_time, true)}
                     </Typography>
                   </Grid>
@@ -188,12 +206,16 @@ function SystemDetails(props: SystemDetailsProps) {
               </Grid>
             </Grid>
             <Grid>
-              <Typography color="text.primary">Description</Typography>
+              <Typography sx={{
+                color: "text.primary"
+              }}>Description</Typography>
               <Typography
                 variant="body1"
-                color="text.secondary"
-                sx={{ whiteSpace: 'pre-line', wordWrap: 'break-word' }}
-              >
+                sx={{
+                  color: "text.secondary",
+                  whiteSpace: 'pre-line',
+                  wordWrap: 'break-word'
+                }}>
                 {system.description ?? 'None'}
               </Typography>
             </Grid>
