@@ -559,9 +559,6 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                     return (
                       <Autocomplete
                         disableClearable={property.mandatory === 'true'}
-                        componentsProps={{
-                          clearIndicator: { onClick: resetDefaultValue },
-                        }}
                         id={crypto.randomUUID()}
                         value={defaultValue?.value || ''}
                         onChange={(_event, newValue) => {
@@ -596,6 +593,9 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                             }
                           />
                         )}
+                        slotProps={{
+                          clearIndicator: { onClick: resetDefaultValue },
+                        }}
                       />
                     );
                   }}
@@ -608,9 +608,6 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                     return (
                       <Autocomplete
                         disableClearable={property.mandatory === 'true'}
-                        componentsProps={{
-                          clearIndicator: { onClick: resetDefaultValue },
-                        }}
                         id={crypto.randomUUID()}
                         value={
                           defaultValue?.value?.value
@@ -649,6 +646,9 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                             }
                           />
                         )}
+                        slotProps={{
+                          clearIndicator: { onClick: resetDefaultValue },
+                        }}
                       />
                     );
                   }}
