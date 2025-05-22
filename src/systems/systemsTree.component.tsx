@@ -216,6 +216,7 @@ const SystemsTree = () => {
     SUBSYSTEMS_CUT_OFF,
     MAX_SUBSYSTEMS
   );
+
   let systemIndex = 0;
   const transformToFlowData = React.useCallback(
     (
