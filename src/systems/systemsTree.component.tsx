@@ -2,6 +2,7 @@ import dagre from '@dagrejs/dagre';
 import { Warning } from '@mui/icons-material';
 import {
   Box,
+  Chip,
   IconButton,
   LinearProgress,
   Link as MuiLink,
@@ -32,7 +33,12 @@ import '@xyflow/react/dist/style.css';
 import type { NodeLookup } from '@xyflow/system';
 import React from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
-import { useGetSystemsTree, type SystemTree } from '../api/systems';
+import { SystemImportanceType } from '../api/api.types';
+import {
+  getSystemImportanceColour,
+  useGetSystemsTree,
+  type SystemTree,
+} from '../api/systems';
 import { getPageHeightCalc } from '../utils';
 import SystemsNodeHeader from './systemsNodeHeader.component';
 
@@ -247,6 +253,58 @@ const SystemsTree = () => {
             label:
               system.id === 'root' ? undefined : (
                 <Box>
+                  {system.importance && (
+                    <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
+                      <Typography sx={{ typography: 'h6' }}>
+                        Importance:
+                      </Typography>
+                      <Chip
+                        label={system.importance}
+                        sx={() => {
+                          const colorName = getSystemImportanceColour(
+                            system.importance ?? SystemImportanceType.LOW
+                          );
+                          return {
+                            margin: 0,
+                            marginLeft: 1,
+                            bgcolor: `${colorName}.main`,
+                            color: `${colorName}.contrastText`,
+                          };
+                        }}
+                      />
+                    </Box>
+                  )}
+
+                  {/* Location Heading */}
+
+                  {system.owner && (
+                    <Box>
+                      <Typography sx={{ typography: 'h6' }}>Owner:</Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{ marginBottom: 0.5, color: 'text.secondary' }}
+                      >
+                        {system.owner}
+                      </Typography>
+                    </Box>
+                  )}
+
+                  {/* Location Heading */}
+
+                  {system.location && (
+                    <Box>
+                      <Typography sx={{ typography: 'h6' }}>
+                        Location:
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{ marginBottom: 0.5, color: 'text.secondary' }}
+                      >
+                        {system.location}
+                      </Typography>
+                    </Box>
+                  )}
+
                   {/* Items Heading */}
                   <Typography variant="h6" sx={{ marginBottom: 1 }}>
                     Items:
@@ -257,13 +315,16 @@ const SystemsTree = () => {
                       <Typography
                         key={`${catalogueItem.id}-${system.id}`}
                         variant="body2"
-                        sx={{ marginBottom: 0.5 }}
+                        sx={{ marginBottom: 0.5, color: 'text.secondary' }}
                       >
                         {catalogueItem.name}: {catalogueItem.itemsQuantity}
                       </Typography>
                     ))
                   ) : (
-                    <Typography variant="body2" sx={{ marginBottom: 0.5 }}>
+                    <Typography
+                      variant="body2"
+                      sx={{ marginBottom: 0.5, color: 'text.secondary' }}
+                    >
                       No Items
                     </Typography>
                   )}

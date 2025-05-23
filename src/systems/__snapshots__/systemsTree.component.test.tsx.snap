@@ -308,53 +308,99 @@ exports[`SystemsTree > renders system tree correct at root 1`] = `
                     <div
                       class="MuiBox-root css-0"
                     >
+                      <div
+                        class="MuiBox-root css-4juikq"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                        >
+                          Importance:
+                        </p>
+                        <div
+                          class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-ypj0cx-MuiChip-root"
+                        >
+                          <span
+                            class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+                          >
+                            high
+                          </span>
+                        </div>
+                      </div>
+                      <div
+                        class="MuiBox-root css-0"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                        >
+                          Owner:
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                        >
+                          Juan Horton
+                        </p>
+                      </div>
+                      <div
+                        class="MuiBox-root css-0"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                        >
+                          Location:
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                        >
+                          80371 Alvarado Drive Apt. 272, Heatherhaven, MP 33307
+                        </p>
+                      </div>
                       <h6
                         class="MuiTypography-root MuiTypography-h6 css-14y9ogl-MuiTypography-root"
                       >
                         Items:
                       </h6>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 1: 2
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 2: 4
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 3: 3
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 4: 3
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 5: 4
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 6: 2
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 7: 4
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 8: 1
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Turbomolecular Pumps 42: 1
                       </p>
@@ -449,128 +495,177 @@ exports[`SystemsTree > renders system tree correct at root 1`] = `
                     <div
                       class="MuiBox-root css-0"
                     >
+                      <div
+                        class="MuiBox-root css-4juikq"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                        >
+                          Importance:
+                        </p>
+                        <div
+                          class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-ypj0cx-MuiChip-root"
+                        >
+                          <span
+                            class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+                          >
+                            high
+                          </span>
+                        </div>
+                      </div>
+                      <div
+                        class="MuiBox-root css-0"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                        >
+                          Owner:
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                        >
+                          Antony Yates
+                        </p>
+                      </div>
+                      <div
+                        class="MuiBox-root css-0"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                        >
+                          Location:
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                        >
+                          Studio 80s
+O'Sullivan trail
+Victoriaville
+NP1R 4QP
+                        </p>
+                      </div>
                       <h6
                         class="MuiTypography-root MuiTypography-h6 css-14y9ogl-MuiTypography-root"
                       >
                         Items:
                       </h6>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 8: 2
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 9: 3
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 10: 4
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 11: 1
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 12: 2
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 13: 4
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 14: 3
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 15: 2
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 16: 4
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 17: 2
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 18: 3
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 19: 2
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 20: 1
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 23: 1
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Wavefront Sensors 30: 3
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Wavefront Sensors 31: 3
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Motorized Actuators 32: 3
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Motorized Actuators 33: 3
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Motorized Actuators 34: 3
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Motorized Actuators 35: 3
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cryo Pumps 36: 2
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cryo Pumps 37: 1
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Dry Vacuum Pumps 40: 1
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Dry Vacuum Pumps 41: 1
                       </p>
@@ -665,93 +760,142 @@ exports[`SystemsTree > renders system tree correct at root 1`] = `
                     <div
                       class="MuiBox-root css-0"
                     >
+                      <div
+                        class="MuiBox-root css-4juikq"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                        >
+                          Importance:
+                        </p>
+                        <div
+                          class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-10vhyx7-MuiChip-root"
+                        >
+                          <span
+                            class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+                          >
+                            low
+                          </span>
+                        </div>
+                      </div>
+                      <div
+                        class="MuiBox-root css-0"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                        >
+                          Owner:
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                        >
+                          Dr Stacey Ward
+                        </p>
+                      </div>
+                      <div
+                        class="MuiBox-root css-0"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                        >
+                          Location:
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                        >
+                          Flat 90w
+Watson inlet
+New Eric
+G05 6SZ
+                        </p>
+                      </div>
                       <h6
                         class="MuiTypography-root MuiTypography-h6 css-14y9ogl-MuiTypography-root"
                       >
                         Items:
                       </h6>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 1: 2
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 9: 1
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 11: 1
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 20: 1
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Energy Meters 27: 2
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Motorized Actuators 33: 1
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Motorized Actuators 34: 1
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cryo Pumps 36: 1
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cryo Pumps 37: 3
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Dry Vacuum Pumps 38: 2
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Dry Vacuum Pumps 39: 1
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Dry Vacuum Pumps 40: 3
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Dry Vacuum Pumps 41: 2
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Turbomolecular Pumps 42: 2
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Turbomolecular Pumps 43: 2
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Turbo Pumps 44: 3
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 5: 2
                       </p>
@@ -1162,53 +1306,99 @@ exports[`SystemsTree > renders system tree correct in subsystem 1`] = `
                     <div
                       class="MuiBox-root css-0"
                     >
+                      <div
+                        class="MuiBox-root css-4juikq"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                        >
+                          Importance:
+                        </p>
+                        <div
+                          class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-ypj0cx-MuiChip-root"
+                        >
+                          <span
+                            class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+                          >
+                            high
+                          </span>
+                        </div>
+                      </div>
+                      <div
+                        class="MuiBox-root css-0"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                        >
+                          Owner:
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                        >
+                          Juan Horton
+                        </p>
+                      </div>
+                      <div
+                        class="MuiBox-root css-0"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                        >
+                          Location:
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                        >
+                          80371 Alvarado Drive Apt. 272, Heatherhaven, MP 33307
+                        </p>
+                      </div>
                       <h6
                         class="MuiTypography-root MuiTypography-h6 css-14y9ogl-MuiTypography-root"
                       >
                         Items:
                       </h6>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 1: 2
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 2: 4
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 3: 3
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 4: 3
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 5: 4
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 6: 2
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 7: 4
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 8: 1
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Turbomolecular Pumps 42: 1
                       </p>
@@ -1303,103 +1493,150 @@ exports[`SystemsTree > renders system tree correct in subsystem 1`] = `
                     <div
                       class="MuiBox-root css-0"
                     >
+                      <div
+                        class="MuiBox-root css-4juikq"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                        >
+                          Importance:
+                        </p>
+                        <div
+                          class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-10vhyx7-MuiChip-root"
+                        >
+                          <span
+                            class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+                          >
+                            low
+                          </span>
+                        </div>
+                      </div>
+                      <div
+                        class="MuiBox-root css-0"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                        >
+                          Owner:
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                        >
+                          Daniel Morrison
+                        </p>
+                      </div>
+                      <div
+                        class="MuiBox-root css-0"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                        >
+                          Location:
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                        >
+                          848 James Lock Suite 863
+New Robertbury, PW 17883
+                        </p>
+                      </div>
                       <h6
                         class="MuiTypography-root MuiTypography-h6 css-14y9ogl-MuiTypography-root"
                       >
                         Items:
                       </h6>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 4: 1
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 6: 1
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 11: 1
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 12: 2
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 17: 1
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 18: 1
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 19: 2
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 20: 2
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 21: 4
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 22: 2
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 23: 3
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 24: 3
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Cameras 25: 4
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Energy Meters 26: 3
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Energy Meters 27: 2
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Energy Meters 28: 4
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Energy Meters 29: 4
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Wavefront Sensors 30: 1
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         Turbo Pumps 44: 1
                       </p>
@@ -1810,13 +2047,59 @@ exports[`SystemsTree > renders system tree with any items  1`] = `
                     <div
                       class="MuiBox-root css-0"
                     >
+                      <div
+                        class="MuiBox-root css-4juikq"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                        >
+                          Importance:
+                        </p>
+                        <div
+                          class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-ypj0cx-MuiChip-root"
+                        >
+                          <span
+                            class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+                          >
+                            high
+                          </span>
+                        </div>
+                      </div>
+                      <div
+                        class="MuiBox-root css-0"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                        >
+                          Owner:
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                        >
+                          Juan Horton
+                        </p>
+                      </div>
+                      <div
+                        class="MuiBox-root css-0"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                        >
+                          Location:
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                        >
+                          80371 Alvarado Drive Apt. 272, Heatherhaven, MP 33307
+                        </p>
+                      </div>
                       <h6
                         class="MuiTypography-root MuiTypography-h6 css-14y9ogl-MuiTypography-root"
                       >
                         Items:
                       </h6>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         No Items
                       </p>
@@ -1911,13 +2194,60 @@ exports[`SystemsTree > renders system tree with any items  1`] = `
                     <div
                       class="MuiBox-root css-0"
                     >
+                      <div
+                        class="MuiBox-root css-4juikq"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                        >
+                          Importance:
+                        </p>
+                        <div
+                          class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-10vhyx7-MuiChip-root"
+                        >
+                          <span
+                            class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+                          >
+                            low
+                          </span>
+                        </div>
+                      </div>
+                      <div
+                        class="MuiBox-root css-0"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                        >
+                          Owner:
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                        >
+                          Daniel Morrison
+                        </p>
+                      </div>
+                      <div
+                        class="MuiBox-root css-0"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                        >
+                          Location:
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                        >
+                          848 James Lock Suite 863
+New Robertbury, PW 17883
+                        </p>
+                      </div>
                       <h6
                         class="MuiTypography-root MuiTypography-h6 css-14y9ogl-MuiTypography-root"
                       >
                         Items:
                       </h6>
                       <p
-                        class="MuiTypography-root MuiTypography-body2 css-aqcfp3-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
                       >
                         No Items
                       </p>

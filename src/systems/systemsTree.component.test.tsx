@@ -47,6 +47,10 @@ describe('SystemsTree', () => {
       expect(screen.getByText('Root')).toBeInTheDocument();
     });
 
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
     expect(view.asFragment()).toMatchSnapshot();
   });
 
@@ -59,6 +63,10 @@ describe('SystemsTree', () => {
     await waitFor(() => {
       expect(screen.getByText('Giant laser')).toBeInTheDocument();
     });
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
 
     expect(view.asFragment()).toMatchSnapshot();
   });
