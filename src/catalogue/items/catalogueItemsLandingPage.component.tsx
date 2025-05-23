@@ -76,7 +76,7 @@ function CatalogueItemsLandingPage() {
 
   return (
     <Grid container>
-      <Stack>
+      <Stack sx={{ width: '100%' }}>
         {catalogueItemIdData && catalogueCategoryData && isParentCorrect && (
           <Grid container justifyContent="center" xs={12}>
             <Grid
@@ -87,7 +87,7 @@ function CatalogueItemsLandingPage() {
             >
               {/* Image Section */}
               <Grid container>
-                <Grid container>
+                <Grid container xs={12}>
                   <Grid xs="auto">
                     <PrimaryImage entityId={catalogueItemId ?? ''} />
                   </Grid>

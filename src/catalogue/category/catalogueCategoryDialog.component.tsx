@@ -13,6 +13,7 @@ import {
   FormLabel,
   Radio,
   RadioGroup,
+  Stack,
   TextField,
   Typography,
 } from '@mui/material';
@@ -299,109 +300,113 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
           : 'Add Catalogue Category'}
       </DialogTitle>
       <DialogContent>
-        <Grid container direction="column" spacing={1}>
-          <Grid container sx={{ mt: 1, alignItems: 'center' }}>
-            <Grid xs={requestType === 'patch' ? 11 : 12}>
-              <TextField
-                id="catalogue-category-name-input"
-                label="Name"
-                required
-                sx={{ marginLeft: '4px', marginTop: '8px' }}
-                {...register('name')}
-                error={!!errors.name}
-                helperText={errors.name?.message}
-                fullWidth
+        <Grid container spacing={1}>
+          <Stack width="100%">
+            <Grid container sx={{ mt: 1, alignItems: 'center' }}>
+              <Grid xs={requestType === 'patch' ? 11 : 12}>
+                <TextField
+                  id="catalogue-category-name-input"
+                  label="Name"
+                  required
+                  sx={{ marginLeft: '4px', marginTop: '8px' }}
+                  {...register('name')}
+                  error={!!errors.name}
+                  helperText={errors.name?.message}
+                  fullWidth
+                />
+              </Grid>
+              {requestType === 'patch' && (
+                <Grid
+                  sx={{
+                    alignItems: 'center',
+                    marginTop: '8px',
+                    justifyContent: 'center',
+                    paddingLeft: 1,
+                  }}
+                  xs={1}
+                >
+                  <Button
+                    size="large"
+                    variant="outlined"
+                    sx={{ width: '50%', mx: 1 }}
+                    onClick={handleSubmit(onSubmit)}
+                    disabled={
+                      isEditPending ||
+                      isAddPending ||
+                      Object.values(errors).length !== 0
+                    }
+                    endIcon={
+                      isAddPending || isEditPending ? (
+                        <CircularProgress size={20} />
+                      ) : null
+                    }
+                  >
+                    Save
+                  </Button>
+                </Grid>
+              )}
+            </Grid>
+            <Grid>
+              <Controller
+                control={control}
+                name="is_leaf"
+                render={({ field: { value, onChange } }) => (
+                  <FormControl
+                    disabled={requestType === 'patch'}
+                    sx={{ margin: '8px' }}
+                  >
+                    <FormLabel
+                      id="controlled-radio-buttons-group"
+                      sx={{ fontWeight: 'bold' }}
+                      disabled={false}
+                    >
+                      Catalogue Directory Content
+                    </FormLabel>
+                    <RadioGroup
+                      aria-labelledby="controlled-radio-buttons-group"
+                      name="controlled-radio-buttons-group"
+                      value={value}
+                      onChange={(_event, value) => {
+                        onChange(value);
+                        if (value === 'true') setValue('properties', []);
+                      }}
+                    >
+                      <FormControlLabel
+                        value="false"
+                        control={<Radio />}
+                        label="Catalogue Categories"
+                      />
+                      <FormControlLabel
+                        value="true"
+                        control={<Radio />}
+                        label="Catalogue Items"
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                )}
               />
             </Grid>
-            {requestType === 'patch' && (
-              <Grid
-                sx={{
-                  alignItems: 'center',
-                  marginTop: '8px',
-                  justifyContent: 'center',
-                  paddingLeft: 1,
-                }}
-                xs={1}
-              >
-                <Button
-                  size="large"
-                  variant="outlined"
-                  sx={{ width: '50%', mx: 1 }}
-                  onClick={handleSubmit(onSubmit)}
-                  disabled={
-                    isEditPending ||
-                    isAddPending ||
-                    Object.values(errors).length !== 0
-                  }
-                  endIcon={
-                    isAddPending || isEditPending ? (
-                      <CircularProgress size={20} />
-                    ) : null
-                  }
-                >
-                  Save
-                </Button>
-              </Grid>
+            {isLeaf === 'true' && (
+              <>
+                <Grid>
+                  <Divider sx={{ minWidth: '700px' }} />
+                </Grid>
+                <Grid sx={{ paddingLeft: 1, paddingTop: 3 }}>
+                  <Typography variant="h6">
+                    Catalogue Item Properties
+                  </Typography>
+                  <Box mt={1}>
+                    <FormProvider {...formMethods}>
+                      <CatalogueItemsPropertiesTable
+                        requestType={requestType}
+                        catalogueCategory={selectedCatalogueCategory}
+                      />
+                    </FormProvider>
+                  </Box>
+                </Grid>
+              </>
             )}
-          </Grid>
-          <Grid>
-            <Controller
-              control={control}
-              name="is_leaf"
-              render={({ field: { value, onChange } }) => (
-                <FormControl
-                  disabled={requestType === 'patch'}
-                  sx={{ margin: '8px' }}
-                >
-                  <FormLabel
-                    id="controlled-radio-buttons-group"
-                    sx={{ fontWeight: 'bold' }}
-                    disabled={false}
-                  >
-                    Catalogue Directory Content
-                  </FormLabel>
-                  <RadioGroup
-                    aria-labelledby="controlled-radio-buttons-group"
-                    name="controlled-radio-buttons-group"
-                    value={value}
-                    onChange={(_event, value) => {
-                      onChange(value);
-                      if (value === 'true') setValue('properties', []);
-                    }}
-                  >
-                    <FormControlLabel
-                      value="false"
-                      control={<Radio />}
-                      label="Catalogue Categories"
-                    />
-                    <FormControlLabel
-                      value="true"
-                      control={<Radio />}
-                      label="Catalogue Items"
-                    />
-                  </RadioGroup>
-                </FormControl>
-              )}
-            />
-          </Grid>
-          {isLeaf === 'true' && (
-            <>
-              <Grid>
-                <Divider sx={{ minWidth: '700px' }} />
-              </Grid>
-              <Grid sx={{ paddingLeft: 1, paddingTop: 3 }}>
-                <Typography variant="h6">Catalogue Item Properties</Typography>
-                <Box mt={1}>
-                  <FormProvider {...formMethods}>
-                    <CatalogueItemsPropertiesTable
-                      requestType={requestType}
-                      catalogueCategory={selectedCatalogueCategory}
-                    />
-                  </FormProvider>
-                </Box>
-              </Grid>
-            </>
-          )}
+          </Stack>
         </Grid>
       </DialogContent>
       <DialogActions sx={{ flexDirection: 'column', padding: '0px 24px' }}>

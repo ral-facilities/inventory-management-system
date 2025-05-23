@@ -10,6 +10,7 @@ import {
   DialogTitle,
   FormHelperText,
   MenuItem,
+  Stack,
   TextField,
 } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
@@ -198,86 +199,73 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
         {requestType === 'patch' ? `Edit ${systemText}` : `Add ${systemText}`}
       </DialogTitle>
       <DialogContent>
-        <Grid container direction="column" spacing={2}>
-          <Grid sx={{ mt: 1 }}>
-            <TextField
-              id="system-name-input"
-              label="Name"
-              required
-              {...register('name')}
-              error={!!errors.name}
-              helperText={errors.name?.message}
-              fullWidth
-            />
-          </Grid>
-          <Grid>
-            <TextField
-              id="system-description-input"
-              label="Description"
-              {...register('description')}
-              multiline
-              fullWidth
-            />
-          </Grid>
-          <Grid>
-            <TextField
-              id="system-location-input"
-              label="Location"
-              {...register('location')}
-              fullWidth
-            />
-          </Grid>
-          <Grid>
-            <TextField
-              id="system-owner-input"
-              label="Owner"
-              {...register('owner')}
-              fullWidth
-            />
-          </Grid>
-          <Grid>
-            <Controller
-              control={control}
-              name="importance"
-              render={({ field: { value, onChange } }) => (
-                <Autocomplete
-                  multiple
-                  limitTags={1}
-                  disableClearable={true}
-                  id="importance-select"
-                  options={Object.values(SystemImportanceType)}
-                  getOptionLabel={(option) => option}
-                  value={[value]}
-                  onChange={(_event, value) => {
-                    if (value.length === 0) return;
-                    // as is a multiple autocomplete this removes original selection from list
-                    // therefore only the new option is in the array
-                    value.shift();
+        <Grid container spacing={2}>
+          <Stack width="100%">
+            <Grid sx={{ mt: 1 }}>
+              <TextField
+                id="system-name-input"
+                label="Name"
+                required
+                {...register('name')}
+                error={!!errors.name}
+                helperText={errors.name?.message}
+                fullWidth
+              />
+            </Grid>
+            <Grid>
+              <TextField
+                id="system-description-input"
+                label="Description"
+                {...register('description')}
+                multiline
+                fullWidth
+              />
+            </Grid>
+            <Grid>
+              <TextField
+                id="system-location-input"
+                label="Location"
+                {...register('location')}
+                fullWidth
+              />
+            </Grid>
+            <Grid>
+              <TextField
+                id="system-owner-input"
+                label="Owner"
+                {...register('owner')}
+                fullWidth
+              />
+            </Grid>
+            <Grid>
+              <Controller
+                control={control}
+                name="importance"
+                render={({ field: { value, onChange } }) => (
+                  <Autocomplete
+                    multiple
+                    limitTags={1}
+                    disableClearable={true}
+                    id="importance-select"
+                    options={Object.values(SystemImportanceType)}
+                    getOptionLabel={(option) => option}
+                    value={[value]}
+                    onChange={(_event, value) => {
+                      if (value.length === 0) return;
+                      // as is a multiple autocomplete this removes original selection from list
+                      // therefore only the new option is in the array
+                      value.shift();
 
-                    onChange(value[0]);
-                  }}
-                  renderInput={(params) => (
-                    <TextField label="Importance" {...params} />
-                  )}
-                  renderTags={() => (
-                    <Chip
-                      label={value}
-                      sx={() => {
-                        const colorName = getSystemImportanceColour(value);
-                        return {
-                          margin: 0,
-                          bgcolor: `${colorName}.main`,
-                          color: `${colorName}.contrastText`,
-                        };
-                      }}
-                    />
-                  )}
-                  renderOption={(props, option) => (
-                    <MenuItem {...props} key={option}>
+                      onChange(value[0]);
+                    }}
+                    renderInput={(params) => (
+                      <TextField label="Importance" {...params} />
+                    )}
+                    renderTags={() => (
                       <Chip
-                        label={option}
+                        label={value}
                         sx={() => {
-                          const colorName = getSystemImportanceColour(option);
+                          const colorName = getSystemImportanceColour(value);
                           return {
                             margin: 0,
                             bgcolor: `${colorName}.main`,
@@ -285,12 +273,27 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
                           };
                         }}
                       />
-                    </MenuItem>
-                  )}
-                />
-              )}
-            />
-          </Grid>
+                    )}
+                    renderOption={(props, option) => (
+                      <MenuItem {...props} key={option}>
+                        <Chip
+                          label={option}
+                          sx={() => {
+                            const colorName = getSystemImportanceColour(option);
+                            return {
+                              margin: 0,
+                              bgcolor: `${colorName}.main`,
+                              color: `${colorName}.contrastText`,
+                            };
+                          }}
+                        />
+                      </MenuItem>
+                    )}
+                  />
+                )}
+              />
+            </Grid>
+          </Stack>
         </Grid>
       </DialogContent>
       <DialogActions sx={{ flexDirection: 'column', padding: 4 }}>

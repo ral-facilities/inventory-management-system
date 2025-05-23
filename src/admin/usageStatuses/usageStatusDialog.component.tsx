@@ -7,6 +7,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  Stack,
   TextField,
 } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
@@ -71,19 +72,21 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
     <Dialog open={open} maxWidth="sm" fullWidth>
       <DialogTitle>Add Usage Status</DialogTitle>
       <DialogContent>
-        <Grid container direction="column" spacing={1}>
-          <Grid sx={{ mt: 1 }}>
-            <TextField
-              id="usage-status-value-input"
-              label="Value"
-              required
-              sx={{ marginLeft: '4px', my: '8px' }}
-              {...register('value')}
-              error={!!errors.value}
-              helperText={errors.value?.message}
-              fullWidth
-            />
-          </Grid>
+        <Grid container spacing={1}>
+          <Stack width="100%">
+            <Grid sx={{ mt: 1 }}>
+              <TextField
+                id="usage-status-value-input"
+                label="Value"
+                required
+                sx={{ marginLeft: '4px', my: '8px' }}
+                {...register('value')}
+                error={!!errors.value}
+                helperText={errors.value?.message}
+                fullWidth
+              />
+            </Grid>
+          </Stack>
         </Grid>
       </DialogContent>
       <DialogActions sx={{ flexDirection: 'column', padding: '0px 24px' }}>
