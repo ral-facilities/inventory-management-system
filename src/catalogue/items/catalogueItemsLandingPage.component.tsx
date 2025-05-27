@@ -76,7 +76,7 @@ function CatalogueItemsLandingPage() {
 
   return (
     <Grid container>
-      <Stack>
+      <Stack sx={{ width: '100%' }}>
         {catalogueItemIdData && catalogueCategoryData && isParentCorrect && (
           <Grid container justifyContent="center" size={12}>
             <Grid
@@ -87,7 +87,7 @@ function CatalogueItemsLandingPage() {
             >
               {/* Image Section */}
               <Grid container>
-                <Grid container>
+                <Grid container size={12}>
                   <Grid size="auto">
                     <PrimaryImage entityId={catalogueItemId ?? ''} />
                   </Grid>
@@ -97,8 +97,9 @@ function CatalogueItemsLandingPage() {
                     sx={{ alignItems: 'flex-start', pl: 2 }}
                     size={{
                       xs: 8,
-                      sm: "grow"
-                    }}>
+                      sm: 'grow',
+                    }}
+                  >
                     <Grid size={12}>
                       <Typography
                         variant="h4"
@@ -126,8 +127,9 @@ function CatalogueItemsLandingPage() {
                   <Grid
                     size={{
                       xs: 4,
-                      sm: "grow"
-                    }}>
+                      sm: 'grow',
+                    }}
+                  >
                     <Grid container justifyContent={'flex-end'}>
                       {/* Actions Section */}
                       <Grid>
@@ -183,8 +185,9 @@ function CatalogueItemsLandingPage() {
                               size={{
                                 xs: 12,
                                 sm: 6,
-                                md: 4
-                              }}>
+                                md: 4,
+                              }}
+                            >
                               <Typography align="left" color="text.primary">
                                 Obsolete
                               </Typography>
@@ -196,8 +199,9 @@ function CatalogueItemsLandingPage() {
                               size={{
                                 xs: 12,
                                 sm: 6,
-                                md: 4
-                              }}>
+                                md: 4,
+                              }}
+                            >
                               <Typography align="left" color="text.primary">
                                 Obsolete replacement link
                               </Typography>
@@ -219,8 +223,9 @@ function CatalogueItemsLandingPage() {
                               size={{
                                 xs: 12,
                                 sm: 6,
-                                md: 4
-                              }}>
+                                md: 4,
+                              }}
+                            >
                               <Typography align="left" color="text.primary">
                                 Obsolete reason
                               </Typography>
@@ -237,8 +242,9 @@ function CatalogueItemsLandingPage() {
                               size={{
                                 xs: 12,
                                 sm: 6,
-                                md: 4
-                              }}>
+                                md: 4,
+                              }}
+                            >
                               <Typography align="left" color="text.primary">
                                 Cost (£)
                               </Typography>
@@ -250,8 +256,9 @@ function CatalogueItemsLandingPage() {
                               size={{
                                 xs: 12,
                                 sm: 6,
-                                md: 4
-                              }}>
+                                md: 4,
+                              }}
+                            >
                               <Typography align="left" color="text.primary">
                                 Cost to rework (£)
                               </Typography>
@@ -265,8 +272,9 @@ function CatalogueItemsLandingPage() {
                               size={{
                                 xs: 12,
                                 sm: 6,
-                                md: 4
-                              }}>
+                                md: 4,
+                              }}
+                            >
                               <Typography align="left" color="text.primary">
                                 Time to replace (days)
                               </Typography>
@@ -278,8 +286,9 @@ function CatalogueItemsLandingPage() {
                               size={{
                                 xs: 12,
                                 sm: 6,
-                                md: 4
-                              }}>
+                                md: 4,
+                              }}
+                            >
                               <Typography align="left" color="text.primary">
                                 Time to rework (days)
                               </Typography>
@@ -292,8 +301,9 @@ function CatalogueItemsLandingPage() {
                               size={{
                                 xs: 12,
                                 sm: 6,
-                                md: 4
-                              }}>
+                                md: 4,
+                              }}
+                            >
                               <Typography align="left" color="text.primary">
                                 Expected Lifetime (days)
                               </Typography>
@@ -307,8 +317,9 @@ function CatalogueItemsLandingPage() {
                               size={{
                                 xs: 12,
                                 sm: 6,
-                                md: 4
-                              }}>
+                                md: 4,
+                              }}
+                            >
                               <Typography align="left" color="text.primary">
                                 Drawing Number
                               </Typography>
@@ -325,8 +336,9 @@ function CatalogueItemsLandingPage() {
                               size={{
                                 xs: 12,
                                 sm: 6,
-                                md: 4
-                              }}>
+                                md: 4,
+                              }}
+                            >
                               <Typography align="left" color="text.primary">
                                 Drawing link
                               </Typography>
@@ -353,8 +365,9 @@ function CatalogueItemsLandingPage() {
                               size={{
                                 xs: 12,
                                 sm: 6,
-                                md: 4
-                              }}>
+                                md: 4,
+                              }}
+                            >
                               <Typography align="left" color="text.primary">
                                 Model Number
                               </Typography>
@@ -371,8 +384,9 @@ function CatalogueItemsLandingPage() {
                               size={{
                                 xs: 12,
                                 sm: 6,
-                                md: 4
-                              }}>
+                                md: 4,
+                              }}
+                            >
                               <Typography align="left" color="text.primary">
                                 Last Modified
                               </Typography>
@@ -387,8 +401,9 @@ function CatalogueItemsLandingPage() {
                               size={{
                                 xs: 12,
                                 sm: 6,
-                                md: 4
-                              }}>
+                                md: 4,
+                              }}
+                            >
                               <Typography align="left" color="text.primary">
                                 Created
                               </Typography>
@@ -433,8 +448,9 @@ function CatalogueItemsLandingPage() {
                                     size={{
                                       xs: 12,
                                       sm: 6,
-                                      md: 4
-                                    }}>
+                                      md: 4,
+                                    }}
+                                  >
                                     <Typography
                                       align="left"
                                       color="text.primary"
@@ -478,8 +494,9 @@ function CatalogueItemsLandingPage() {
                                 size={{
                                   xs: 12,
                                   sm: 6,
-                                  md: 4
-                                }}>
+                                  md: 4,
+                                }}
+                              >
                                 <Typography align="left" color="text.primary">
                                   Name
                                 </Typography>
@@ -501,8 +518,9 @@ function CatalogueItemsLandingPage() {
                                 size={{
                                   xs: 12,
                                   sm: 6,
-                                  md: 4
-                                }}>
+                                  md: 4,
+                                }}
+                              >
                                 <Typography align="left" color="text.primary">
                                   URL
                                 </Typography>
@@ -529,8 +547,9 @@ function CatalogueItemsLandingPage() {
                                 size={{
                                   xs: 12,
                                   sm: 6,
-                                  md: 4
-                                }}>
+                                  md: 4,
+                                }}
+                              >
                                 <Typography align="left" color="text.primary">
                                   Telephone number
                                 </Typography>
@@ -546,8 +565,9 @@ function CatalogueItemsLandingPage() {
                                 size={{
                                   xs: 12,
                                   sm: 6,
-                                  md: 4
-                                }}>
+                                  md: 4,
+                                }}
+                              >
                                 <Typography align="left" color="text.primary">
                                   Address
                                 </Typography>
