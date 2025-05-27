@@ -118,8 +118,9 @@ function SystemDetails(props: SystemDetailsProps) {
                     <Grid
                       size={{
                         xs: 12,
-                        sm: 6
-                      }}>
+                        sm: 6,
+                      }}
+                    >
                       <Typography color="text.primary">Location</Typography>
                       <Typography
                         variant="body1"
@@ -133,8 +134,9 @@ function SystemDetails(props: SystemDetailsProps) {
                       sx={{ display: 'inline-flex' }}
                       size={{
                         xs: 12,
-                        sm: 6
-                      }}>
+                        sm: 6,
+                      }}
+                    >
                       <Typography color="text.primary">Importance</Typography>
                       <Chip
                         label={system.importance}
@@ -154,8 +156,9 @@ function SystemDetails(props: SystemDetailsProps) {
                     <Grid
                       size={{
                         xs: 12,
-                        sm: 6
-                      }}>
+                        sm: 6,
+                      }}
+                    >
                       <Typography color="text.primary">Owner</Typography>
                       <Typography
                         variant="body1"
@@ -168,8 +171,9 @@ function SystemDetails(props: SystemDetailsProps) {
                     <Grid
                       size={{
                         xs: 12,
-                        sm: 6
-                      }}>
+                        sm: 6,
+                      }}
+                    >
                       <Typography color="text.primary">
                         Last modified
                       </Typography>
@@ -181,8 +185,9 @@ function SystemDetails(props: SystemDetailsProps) {
                     <Grid
                       size={{
                         xs: 12,
-                        sm: 6
-                      }}>
+                        sm: 6,
+                      }}
+                    >
                       <Typography color="text.primary">Created</Typography>
                       <Typography variant="body1" color="text.secondary">
                         {formatDateTimeStrings(system.created_time, true)}
