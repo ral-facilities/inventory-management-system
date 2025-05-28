@@ -253,9 +253,9 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     <Dialog open={open} maxWidth="lg" fullWidth>
       <DialogTitle>{`${type === 'post' ? 'Add' : 'Edit'} Manufacturer`}</DialogTitle>
       <DialogContent>
-        <Grid container spacing={1} component="form">
-          <Stack width="100%">
-            <Grid sx={{ mt: 1 }}>
+        <Grid container component="form">
+          <Stack width="100%" spacing={1}>
+            <Grid sx={{ marginTop: '8px !important' }}>
               <TextField
                 id="manufacturer-name-input"
                 label="Name"

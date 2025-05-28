@@ -300,9 +300,12 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
           : 'Add Catalogue Category'}
       </DialogTitle>
       <DialogContent>
-        <Grid container spacing={1}>
-          <Stack width="100%">
-            <Grid container sx={{ mt: 1, alignItems: 'center' }}>
+        <Grid container>
+          <Stack width="100%" spacing={1}>
+            <Grid
+              container
+              sx={{ marginTop: '8px !important', alignItems: 'center' }}
+            >
               <Grid xs={requestType === 'patch' ? 11 : 12}>
                 <TextField
                   id="catalogue-category-name-input"

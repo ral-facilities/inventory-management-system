@@ -102,13 +102,13 @@ function SystemDetails(props: SystemDetailsProps) {
         </Box>
       ) : (
         <Grid>
-          <Grid container wrap="nowrap" spacing={1}>
-            <Stack width="100%">
+          <Grid container wrap="nowrap">
+            <Stack width="100%" spacing={1}>
               <Grid
                 container
                 direction="row"
                 justifyContent="space-evenly"
-                sx={{ margin: 0, mt: 1 }}
+                sx={{ margin: 0, marginTop: '8px !important' }}
               >
                 <Grid container spacing={2}>
                   <Grid xs="auto">

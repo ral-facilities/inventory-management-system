@@ -154,9 +154,9 @@ const EditFileDialog = (props: FileDialogProps) => {
     <Dialog open={open} maxWidth="sm" fullWidth>
       <DialogTitle>{`Edit ${fileType}`}</DialogTitle>
       <DialogContent>
-        <Grid container spacing={1} component="form">
-          <Stack width="100%">
-            <Grid sx={{ mt: 1 }}>
+        <Grid container component="form">
+          <Stack width="100%" spacing={1}>
+            <Grid sx={{ marginTop: '8px !important' }}>
               <TextField
                 id="object-file-name-input"
                 label="File Name"
