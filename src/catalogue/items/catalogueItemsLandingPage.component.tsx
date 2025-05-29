@@ -121,7 +121,7 @@ function CatalogueItemsLandingPage() {
                     </Typography>
                   </Grid>
                 </Grid>
-                <Grid xs={4} sm>
+                <Grid container xs={4} sm>
                   <Grid container justifyContent={'flex-end'}>
                     {/* Actions Section */}
                     <Grid>
