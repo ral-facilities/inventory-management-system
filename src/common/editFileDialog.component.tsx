@@ -154,47 +154,45 @@ const EditFileDialog = (props: FileDialogProps) => {
     <Dialog open={open} maxWidth="sm" fullWidth>
       <DialogTitle>{`Edit ${fileType}`}</DialogTitle>
       <DialogContent>
-        <Grid container component="form">
-          <Stack width="100%" spacing={1}>
-            <Grid sx={{ marginTop: '8px !important' }}>
-              <TextField
-                id="object-file-name-input"
-                label="File Name"
-                required
-                {...register('file_name')}
-                error={!!errors.file_name}
-                helperText={errors.file_name?.message}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">{extension}</InputAdornment>
-                  ),
-                }}
-                fullWidth
-              />
-            </Grid>
-            <Grid>
-              <TextField
-                id="object-description-input"
-                label="Description"
-                {...register('description')}
-                error={!!errors.description}
-                helperText={errors.description?.message}
-                fullWidth
-                multiline
-              />
-            </Grid>
-            <Grid>
-              <TextField
-                id="object-title-input"
-                label="Title"
-                {...register('title')}
-                error={!!errors.title}
-                helperText={errors.title?.message}
-                fullWidth
-              />
-            </Grid>
-          </Stack>
-        </Grid>
+        <Stack width="100%" spacing={1} component="form">
+          <Grid sx={{ marginTop: '8px !important' }}>
+            <TextField
+              id="object-file-name-input"
+              label="File Name"
+              required
+              {...register('file_name')}
+              error={!!errors.file_name}
+              helperText={errors.file_name?.message}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">{extension}</InputAdornment>
+                ),
+              }}
+              fullWidth
+            />
+          </Grid>
+          <Grid>
+            <TextField
+              id="object-description-input"
+              label="Description"
+              {...register('description')}
+              error={!!errors.description}
+              helperText={errors.description?.message}
+              fullWidth
+              multiline
+            />
+          </Grid>
+          <Grid>
+            <TextField
+              id="object-title-input"
+              label="Title"
+              {...register('title')}
+              error={!!errors.title}
+              helperText={errors.title?.message}
+              fullWidth
+            />
+          </Grid>
+        </Stack>
       </DialogContent>
       <DialogActions sx={{ flexDirection: 'column', padding: '0px 24px' }}>
         <Box

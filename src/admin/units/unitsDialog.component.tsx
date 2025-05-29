@@ -72,22 +72,20 @@ function UnitsDialog(props: UnitsDialogProps) {
     <Dialog open={open} maxWidth="sm" fullWidth>
       <DialogTitle>Add Unit</DialogTitle>
       <DialogContent>
-        <Grid container>
-          <Stack width={'100%'} spacing={1}>
-            <Grid sx={{ marginTop: '8px !important' }}>
-              <TextField
-                id="unit-value-input"
-                label="Value"
-                required
-                sx={{ marginLeft: '4px', my: '8px' }}
-                {...register('value')}
-                error={!!errors.value}
-                helperText={errors.value?.message}
-                fullWidth
-              />
-            </Grid>
-          </Stack>
-        </Grid>
+        <Stack width={'100%'} spacing={1}>
+          <Grid sx={{ marginTop: '8px !important' }}>
+            <TextField
+              id="unit-value-input"
+              label="Value"
+              required
+              sx={{ marginLeft: '4px', my: '8px' }}
+              {...register('value')}
+              error={!!errors.value}
+              helperText={errors.value?.message}
+              fullWidth
+            />
+          </Grid>
+        </Stack>
       </DialogContent>
       <DialogActions sx={{ flexDirection: 'column', padding: '0px 24px' }}>
         <Box
