@@ -511,62 +511,60 @@ function CatalogueCardView() {
           flexDirection="column"
           height={cardViewHeight}
           maxHeight={cardViewHeight}
-          width="100%"
+          xs={12}
         >
-          <Grid width="100%" sx={{ flexShrink: 0 }}>
+          <Grid xs={12} sx={{ flexShrink: 0 }}>
             <MRT_TopToolbar table={table} />
           </Grid>
-          <Grid width="100%" sx={{ flex: 1, overflow: 'auto' }}>
-            <Grid container>
-              <Grid
-                container
-                alignItems="top"
-                display={!isCollapsed ? 'none' : undefined}
-                sx={{
-                  paddingLeft: 0.5,
-                  position: 'sticky',
-                  top: 0,
-                  backgroundColor: 'background.default',
-                  zIndex: 1000,
-                  width: '100%',
-                  paddingTop: 2.5,
-                  paddingBottom: 2.5,
-                  height: 'fit-content',
-                }}
+          <Grid container xs={12} sx={{ flex: 1, overflow: 'auto' }}>
+            <Grid
+              container
+              alignItems="top"
+              display={!isCollapsed ? 'none' : undefined}
+              xs={12}
+              sx={{
+                paddingLeft: 0.5,
+                position: 'sticky',
+                top: 0,
+                backgroundColor: 'background.default',
+                zIndex: 1000,
+
+                paddingTop: 2.5,
+                paddingBottom: 2.5,
+                height: 'fit-content',
+              }}
+            >
+              <Collapse
+                in={isCollapsed}
+                style={{ width: '100%', height: 'fit-content' }}
               >
-                <Collapse
-                  in={isCollapsed}
-                  style={{ width: '100%', height: 'fit-content' }}
-                >
-                  <CardViewFilters table={table} />
-                </Collapse>
-              </Grid>
-              <Grid width="100%">
-                <Grid container width="100%" columns={12}>
-                  {!isLoading &&
-                    (data.length !== 0 ? (
-                      data.map((card, index) => (
-                        <Grid key={index} sm={6} md={4} width={'100%'}>
-                          <CatalogueCard
-                            card={card as MRT_Cell<CatalogueCategory>}
-                            table={table}
-                          />
-                        </Grid>
-                      ))
-                    ) : (
-                      <ErrorPage
-                        sx={{ marginTop: 2 }}
-                        boldErrorText="No results found"
-                        errorText={
-                          'There are no catalogue categories. Please add a category using the button in the top left of your screen.'
-                        }
+                <CardViewFilters table={table} />
+              </Collapse>
+            </Grid>
+
+            <Grid container xs={12}>
+              {!isLoading &&
+                (data.length !== 0 ? (
+                  data.map((card, index) => (
+                    <Grid key={index} sm={6} md={4} xs={12}>
+                      <CatalogueCard
+                        card={card as MRT_Cell<CatalogueCategory>}
+                        table={table}
                       />
-                    ))}
-                </Grid>
-              </Grid>
+                    </Grid>
+                  ))
+                ) : (
+                  <ErrorPage
+                    sx={{ marginTop: 2 }}
+                    boldErrorText="No results found"
+                    errorText={
+                      'There are no catalogue categories. Please add a category using the button in the top left of your screen.'
+                    }
+                  />
+                ))}
             </Grid>
           </Grid>
-          <Grid width="100%" sx={{ flexShrink: 0 }}>
+          <Grid xs={12} sx={{ flexShrink: 0 }}>
             <MRT_BottomToolbar table={table} />
           </Grid>
           <CatalogueCategoryDialog
