@@ -575,3 +575,18 @@ export function parseErrorResponse(errorMessage: string): string {
 
   return returnMessage;
 }
+
+export const FULL_SCREEN_STYLES = {
+  bottom: 0,
+  height: '100dvh',
+  left: 0,
+  margin: 0,
+  maxHeight: '100dvh',
+  maxWidth: '100dvw',
+  padding: 0,
+  position: 'fixed',
+  right: 0,
+  top: 0,
+  width: '100dvw',
+  zIndex: 1210,
+};

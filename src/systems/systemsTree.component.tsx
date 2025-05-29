@@ -1,5 +1,7 @@
 import dagre from '@dagrejs/dagre';
 import { Warning } from '@mui/icons-material';
+import FullscreenIcon from '@mui/icons-material/Fullscreen';
+import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import {
   Box,
   Chip,
@@ -39,7 +41,7 @@ import {
   useGetSystemsTree,
   type SystemTree,
 } from '../api/systems';
-import { getPageHeightCalc } from '../utils';
+import { FULL_SCREEN_STYLES, getPageHeightCalc } from '../utils';
 import SystemsNodeHeader from './systemsNodeHeader.component';
 
 type LayoutDirectionType = 'TB' | 'LR';
@@ -55,6 +57,7 @@ interface SystemFlowProps {
   rawEdges: Edge[];
   rawNodes: Node[];
   layoutDirection: LayoutDirectionType;
+  fullScreen: boolean;
 }
 
 const nodeWidth = 300;
@@ -129,7 +132,7 @@ const getLayoutedElements = (
 };
 
 const SystemsFlow = (props: SystemFlowProps) => {
-  const { rawEdges, rawNodes, layoutDirection } = props;
+  const { rawEdges, rawNodes, layoutDirection, fullScreen } = props;
 
   const [nodes, setNodes, _onNodesChange] = useNodesState<Node>(rawNodes);
   const [edges, setEdges, _onEdgesChange] = useEdgesState<Edge>(rawEdges);
@@ -176,7 +179,12 @@ const SystemsFlow = (props: SystemFlowProps) => {
   }, [fitView, nodes]);
   return (
     <Box
-      sx={{ width: '100%', height: getPageHeightCalc('96px + 40px + 30px') }}
+      sx={{
+        width: '100%',
+        height: fullScreen
+          ? 'calc(100vh - 40px)'
+          : getPageHeightCalc('96px + 40px + 30px'),
+      }}
     >
       <ReactFlow
         nodes={nodes}
@@ -198,6 +206,7 @@ const SystemsTree = () => {
   const { system_id: systemId } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const [fullScreen, setFullScreen] = React.useState(false);
   const layoutDirection = React.useMemo(
     () =>
       (searchParams.get(LAYOUT_DIRECTION_STATE) as LayoutDirectionType) ||
@@ -404,112 +413,137 @@ const SystemsTree = () => {
     systemsTree ?? [],
     systemId
   );
+
   return (
-    <ReactFlowProvider>
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          width: '100%',
-          px: 1,
-        }}
-      >
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Typography color="text.secondary" variant="h6" mr={1}>
-            Depth:
-          </Typography>
-
-          <ToggleButtonGroup
-            value={maxDepth}
-            exclusive
-            onChange={handleToggleMaxDepth}
-            size="small"
-          >
-            <ToggleButton value={1}>1</ToggleButton>
-            <ToggleButton value={2}>2</ToggleButton>
-            <ToggleButton value={3}>3</ToggleButton>
-            <ToggleButton value={-1}>unlimited</ToggleButton>
-          </ToggleButtonGroup>
-
-          <Tooltip
-            sx={{ ml: 1 }}
-            aria-label={`Systems tree warning message`}
-            title={
-              <Typography variant="body2" color="warning" sx={{ mt: 1 }}>
-                The larger the depth, the longer the query may take. If the
-                number of subsystems exceeds {MAX_SUBSYSTEMS}, the tree will not
-                load.
-              </Typography>
-            }
-            placement="right"
-            enterTouchDelay={0}
-          >
-            <IconButton size="small">
-              <Warning />
-            </IconButton>
-          </Tooltip>
-        </Box>
-
-        <ToggleButtonGroup
-          value={layoutDirection}
-          exclusive
-          onChange={handleToggleLayout}
-          size="small"
+    <Box
+      sx={{
+        ...(fullScreen && FULL_SCREEN_STYLES),
+        backgroundColor: 'background.default',
+      }}
+    >
+      <ReactFlowProvider>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            width: '100%',
+            px: 1,
+          }}
         >
-          <ToggleButton value="TB">Vertical</ToggleButton>
-          <ToggleButton value="LR">Horizontal</ToggleButton>
-        </ToggleButtonGroup>
-      </Box>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Typography color="text.secondary" variant="h6" mr={1}>
+              Depth:
+            </Typography>
 
-      {isLoading || !systemsTree ? (
-        <Box pt={1} height={getPageHeightCalc('96px + 45px')}>
-          {!isLimitedReached && <LinearProgress />}
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: '100%',
-              textAlign: 'center',
-            }}
-          >
-            {!isLimitedReached ? (
-              <>
-                <Typography variant="h6">
-                  Taking time to gather data... This may take a couple of
-                  minutes.
+            <ToggleButtonGroup
+              value={maxDepth}
+              exclusive
+              onChange={handleToggleMaxDepth}
+              size="small"
+            >
+              <ToggleButton value={1}>1</ToggleButton>
+              <ToggleButton value={2}>2</ToggleButton>
+              <ToggleButton value={3}>3</ToggleButton>
+              <ToggleButton value={-1}>unlimited</ToggleButton>
+            </ToggleButtonGroup>
+
+            <Tooltip
+              sx={{ ml: 1 }}
+              aria-label={`Systems tree warning message`}
+              title={
+                <Typography variant="body2" color="warning" sx={{ mt: 1 }}>
+                  The larger the depth, the longer the query may take. If the
+                  number of subsystems exceeds {MAX_SUBSYSTEMS}, the tree will
+                  not load.
                 </Typography>
-                <Typography variant="body2" color="warning.main" sx={{ mt: 2 }}>
-                  Note: If this system is high up the tree with many subsystems
-                  and items, this process might take significantly longer.
-                </Typography>
-              </>
-            ) : (
-              <>
-                <Typography variant="h6" color="error.main" sx={{ mt: 2 }}>
-                  The maximum number of subsystems has been reached.
-                </Typography>
-                <Typography variant="body2" sx={{ mt: 2 }}>
-                  To view more data, consider decreasing the depth of the tree,
-                  navigating down to a subtree with fewer subsystems, or try
-                  looking at the normal view for more limited results.
-                </Typography>
-              </>
-            )}
+              }
+              placement="right"
+              enterTouchDelay={0}
+            >
+              <IconButton size="small">
+                <Warning />
+              </IconButton>
+            </Tooltip>
+          </Box>
+
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <ToggleButtonGroup
+              value={layoutDirection}
+              exclusive
+              onChange={handleToggleLayout}
+              size="small"
+            >
+              <ToggleButton value="TB">Vertical</ToggleButton>
+              <ToggleButton value="LR">Horizontal</ToggleButton>
+            </ToggleButtonGroup>
+            <IconButton
+              sx={{ ml: 1 }}
+              onClick={() => setFullScreen(!fullScreen)}
+            >
+              {!fullScreen ? <FullscreenIcon /> : <FullscreenExitIcon />}
+            </IconButton>
           </Box>
         </Box>
-      ) : (
-        <SystemsFlow
-          // Need to unmount when the maxDepth has been changed to fitView correctly
-          key={maxDepth}
-          rawEdges={rawEdges}
-          rawNodes={rawNodes}
-          layoutDirection={layoutDirection}
-        />
-      )}
-    </ReactFlowProvider>
+
+        {isLoading || !systemsTree ? (
+          <Box
+            pt={1}
+            height={fullScreen ? '100%' : getPageHeightCalc('96px + 45px')}
+          >
+            {!isLimitedReached && <LinearProgress />}
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: '100%',
+                textAlign: 'center',
+              }}
+            >
+              {!isLimitedReached ? (
+                <>
+                  <Typography variant="h6">
+                    Taking time to gather data... This may take a couple of
+                    minutes.
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="warning.main"
+                    sx={{ mt: 2 }}
+                  >
+                    Note: If this system is high up the tree with many
+                    subsystems and items, this process might take significantly
+                    longer.
+                  </Typography>
+                </>
+              ) : (
+                <>
+                  <Typography variant="h6" color="error.main" sx={{ mt: 2 }}>
+                    The maximum number of subsystems has been reached.
+                  </Typography>
+                  <Typography variant="body2" sx={{ mt: 2 }}>
+                    To view more data, consider decreasing the depth of the
+                    tree, navigating down to a subtree with fewer subsystems, or
+                    try looking at the normal view for more limited results.
+                  </Typography>
+                </>
+              )}
+            </Box>
+          </Box>
+        ) : (
+          <SystemsFlow
+            // Need to unmount when the maxDepth has been changed to fitView correctly
+            key={maxDepth}
+            rawEdges={rawEdges}
+            rawNodes={rawNodes}
+            layoutDirection={layoutDirection}
+            fullScreen={fullScreen}
+          />
+        )}
+      </ReactFlowProvider>
+    </Box>
   );
 };
 
