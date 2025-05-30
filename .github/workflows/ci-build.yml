@@ -43,7 +43,7 @@ jobs:
         run: |
           BASE=$(git merge-base HEAD origin/develop)
           echo "Merge base is $BASE"
-          git diff --name-only $BASE HEAD > changed.txt
+          git diff --name-only HEAD~1 > changed.txt
           cat changed.txt
 
       - name: Check unit tests should run
