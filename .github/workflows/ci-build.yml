@@ -130,6 +130,7 @@ jobs:
           --env OBJECT_STORAGE__ENABLED=true \
           --env OBJECT_STORAGE__API_REQUEST_TIMEOUT_SECONDS=10 \
           --env OBJECT_STORAGE__API_URL=http://localhost:8002 \
+          --volume /home/runner/work/inventory-management-system/inventory-management-system-api/logging.example.ini:/app/logging.ini \
           harbor.stfc.ac.uk/inventory-management-system/ims-api:develop
 
       - name: Clone Object Storage api repo
@@ -185,7 +186,7 @@ jobs:
           --env IMAGE__ALLOWED_FILE_EXTENSIONS='[".bmp", ".jpe", ".jpeg", ".jpg", ".png", ".tif", ".tiff", ".webp"]' \
           --env IMAGE__UPLOAD_LIMIT=100 \
           --add-host "localhost:host-gateway" \
-          -v /home/runner/work/inventory-management-system/object-storage-api/object_storage_api/logging.example.ini:/app/object_storage_api/logging.ini \
+          --volume /home/runner/work/inventory-management-system/object-storage-api/logging.example.ini:/app/logging.ini \
           harbor.stfc.ac.uk/scd-object-storage-api/object-storage-api:develop
 
       - name: Checkout repo
@@ -206,12 +207,12 @@ jobs:
 
       - name: Output docker logs (ims mongodb)
         if: failure()
-        run: docker logs ims_api_mongodb_container
+        run: docker logs ims-api-mongodb
 
       - name: Output docker logs (ims api)
         if: failure()
         run: docker logs inventory_management_system_api_container
-      
+
       - name: Output docker logs (object-storage mongodb)
         if: failure()
         run: docker logs object-storage-api-mongodb
