@@ -130,7 +130,7 @@ const modifyCatalogueItem = (
     cy.findByRole('option', { name: values.broken }).click();
   } else {
     cy.findByLabelText('Broken').click();
-    cy.findByRole('option', { name: 'None' }).click();
+    cy.findByRole('option', { name: 'Noe' }).click();
   }
   cy.findByRole('button', { name: 'Finish' }).click();
 
