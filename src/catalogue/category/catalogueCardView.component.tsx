@@ -13,6 +13,7 @@ import {
   ListItemIcon,
   MenuItem,
   Paper,
+  Stack,
 } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import {
@@ -506,32 +507,25 @@ function CatalogueCardView() {
       container
     >
       {!catalogueCategoryDetailLoading ? (
-        <Grid
-          container
-          flexDirection="column"
-          height={cardViewHeight}
-          maxHeight={cardViewHeight}
-          xs={12}
-        >
-          <Grid xs={12} sx={{ flexShrink: 0 }}>
-            <MRT_TopToolbar table={table} />
-          </Grid>
-          <Grid container xs={12} sx={{ flex: 1, overflow: 'auto' }}>
-            <Grid
-              container
-              alignItems="top"
+        <Stack height={cardViewHeight} maxHeight={cardViewHeight} width="100%">
+          <MRT_TopToolbar table={table} />
+          <Stack
+            sx={{
+              flex: 1,
+              overflow: 'auto',
+              alignItems: 'flex-start',
+            }}
+          >
+            <Box
               display={!isCollapsed ? 'none' : undefined}
-              xs={12}
               sx={{
                 paddingLeft: 0.5,
                 position: 'sticky',
                 top: 0,
                 backgroundColor: 'background.default',
                 zIndex: 1000,
-
                 paddingTop: 2.5,
                 paddingBottom: 2.5,
-                height: 'fit-content',
               }}
             >
               <Collapse
@@ -540,13 +534,13 @@ function CatalogueCardView() {
               >
                 <CardViewFilters table={table} />
               </Collapse>
-            </Grid>
+            </Box>
 
-            <Grid container xs={12}>
+            <Grid container width="100%">
               {!isLoading &&
                 (data.length !== 0 ? (
                   data.map((card, index) => (
-                    <Grid key={index} sm={6} md={4} xs={12}>
+                    <Grid key={index} xs={12} sm={6} md={4}>
                       <CatalogueCard
                         card={card as MRT_Cell<CatalogueCategory>}
                         table={table}
@@ -554,19 +548,19 @@ function CatalogueCardView() {
                     </Grid>
                   ))
                 ) : (
-                  <ErrorPage
-                    sx={{ marginTop: 2 }}
-                    boldErrorText="No results found"
-                    errorText={
-                      'There are no catalogue categories. Please add a category using the button in the top left of your screen.'
-                    }
-                  />
+                  <Grid xs={12}>
+                    <ErrorPage
+                      sx={{ marginTop: 2 }}
+                      boldErrorText="No results found"
+                      errorText={
+                        'There are no catalogue categories. Please add a category using the button in the top left of your screen.'
+                      }
+                    />
+                  </Grid>
                 ))}
             </Grid>
-          </Grid>
-          <Grid xs={12} sx={{ flexShrink: 0 }}>
-            <MRT_BottomToolbar table={table} />
-          </Grid>
+          </Stack>
+          <MRT_BottomToolbar table={table} />
           <CatalogueCategoryDialog
             open={menuDialogOpen === 'edit' || menuDialogOpen === 'duplicate'}
             onClose={() => setMenuDialogOpen(false)}
@@ -593,7 +587,7 @@ function CatalogueCardView() {
             catalogueCategory={selectedCatalogueCategory}
             onChangeCatalogueCategory={setSelectedCatalogueCategory}
           />
-        </Grid>
+        </Stack>
       ) : (
         <Box sx={{ width: '100%' }}>
           <LinearProgress />
