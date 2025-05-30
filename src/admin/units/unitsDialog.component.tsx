@@ -7,10 +7,8 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Stack,
   TextField,
 } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
 import { AxiosError } from 'axios';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -72,20 +70,16 @@ function UnitsDialog(props: UnitsDialogProps) {
     <Dialog open={open} maxWidth="sm" fullWidth>
       <DialogTitle>Add Unit</DialogTitle>
       <DialogContent>
-        <Stack width={'100%'} spacing={1}>
-          <Grid sx={{ marginTop: '8px !important' }}>
-            <TextField
-              id="unit-value-input"
-              label="Value"
-              required
-              sx={{ marginLeft: '4px', my: '8px' }}
-              {...register('value')}
-              error={!!errors.value}
-              helperText={errors.value?.message}
-              fullWidth
-            />
-          </Grid>
-        </Stack>
+        <TextField
+          id="unit-value-input"
+          label="Value"
+          required
+          sx={{ marginLeft: '4px', mb: '8px', mt: '16px' }}
+          {...register('value')}
+          error={!!errors.value}
+          helperText={errors.value?.message}
+          fullWidth
+        />
       </DialogContent>
       <DialogActions sx={{ flexDirection: 'column', padding: '0px 24px' }}>
         <Box
