@@ -5,7 +5,7 @@ function AdminCardView() {
   return (
     <Grid container>
       <Grid container flexDirection={'column'}>
-        <Grid item container xs={12} overflow={'auto'}>
+        <Grid item container xs={12}>
           <Grid item key={0} xs={12} sm={6}>
             <Button
               component={Link}
