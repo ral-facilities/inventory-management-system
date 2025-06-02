@@ -1,5 +1,5 @@
 import { screen, waitFor } from '@testing-library/react';
-import { paths } from '../App';
+import { paths } from '../Paths';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import Items from './items.component';
 

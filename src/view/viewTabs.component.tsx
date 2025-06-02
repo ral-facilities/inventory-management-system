@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import React from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { paths } from '../App';
+import { paths } from '../Paths';
 import { TAB_VALUES, TabValue } from '../app.types';
 import { a11yProps, StyledTab } from '../common/tab/tab.utils';
 import TabPanel from '../common/tab/tabPanel.component';

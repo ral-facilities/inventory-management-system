@@ -9,7 +9,7 @@ import {
   createBrowserRouter,
   createMemoryRouter,
 } from 'react-router-dom';
-import { paths } from './App';
+import { paths } from './Paths';
 import {
   CatalogueCategory,
   CatalogueCategoryProperty,

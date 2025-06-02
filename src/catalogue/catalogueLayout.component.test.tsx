@@ -2,7 +2,7 @@ import { QueryClient } from '@tanstack/react-query';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import type { LoaderFunctionArgs } from 'react-router-dom';
-import { paths } from '../App';
+import { paths } from '../Paths';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import CatalogueLayout, {
   CatalogueLayoutErrorComponent,
