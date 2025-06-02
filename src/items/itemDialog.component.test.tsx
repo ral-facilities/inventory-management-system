@@ -771,7 +771,7 @@ describe('ItemDialog', () => {
 
       const validDateMaxHelperText = await screen.findAllByText(
         'Date cannot be later than',
-        {exact: false}
+        { exact: false }
       );
       expect(validDateMaxHelperText.length).toEqual(2);
 
@@ -783,10 +783,7 @@ describe('ItemDialog', () => {
       });
 
       expect(
-        screen.queryByText(
-          'Date cannot be later than',
-          {exact: false}
-        )
+        screen.queryByText('Date cannot be later than', { exact: false })
       ).not.toBeInTheDocument();
       expect(
         screen.queryByText(
@@ -1168,6 +1165,21 @@ describe('ItemDialog', () => {
           )
         ).toBeInTheDocument();
       });
+
+      await user.click(screen.getByRole('button', { name: 'Back' }));
+      await user.click(screen.getByRole('button', { name: 'Back' }));
+
+      await modifyDetailsValues({
+        serialNumber: 'test',
+      });
+
+      await waitFor(() =>
+        expect(
+          screen.queryByText(
+            "There have been no changes made. Please change a field's value or press Cancel to exit."
+          )
+        ).not.toBeInTheDocument()
+      );
     });
 
     it('displays warning message when an unknown error occurs', async () => {

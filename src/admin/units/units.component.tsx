@@ -25,14 +25,14 @@ import {
   COLUMN_FILTER_MODE_OPTIONS,
   COLUMN_FILTER_VARIANTS,
   TableBodyCellOverFlowTip,
-  TableHeaderOverflowTip,
   TableCellOverFlowTipProps,
+  TableHeaderOverflowTip,
+  customFilterFunctions,
   displayTableRowCountText,
   formatDateTimeStrings,
   getInitialColumnFilterFnState,
   getPageHeightCalc,
   mrtTheme,
-  customFilterFunctions,
 } from '../../utils';
 import DeleteUnitDialog from './deleteUnitsDialog.component.tsx';
 import UnitsDialog from './unitsDialog.component.tsx';
