@@ -751,19 +751,16 @@ const PropertyDialog = (props: PropertyDialogProps) => {
         </Stack>
       </DialogContent>
       <DialogActions>
-        <Grid container px={1.5}>
+        <Grid container px={1.5} xs={12}>
           {isMigration && (
-            <Grid sx={{ width: '100%' }}>
+            <Grid xs={12}>
               <MigrationWarningMessage
                 isChecked={isMigrationWarningChecked}
                 setIsChecked={setIsMigrationWarningChecked}
               />
             </Grid>
           )}
-          <Grid
-            display="flex"
-            sx={{ width: '100%', marginTop: 2, marginBottom: 1 }}
-          >
+          <Grid display="flex" xs={12} sx={{ marginTop: 2, marginBottom: 1 }}>
             <Button
               variant="outlined"
               sx={{ width: '50%', mx: 1 }}
