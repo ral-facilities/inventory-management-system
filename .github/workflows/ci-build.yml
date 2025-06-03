@@ -32,10 +32,18 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Set base ref
+        run: echo "BASE_REF=${{ github.base_ref || 'develop' }}" >> $GITHUB_ENV
+
+      - name: Fetch base branch
+        run: git fetch origin $BASE_REF
+
       - name: Get changed files
         id: changed
         run: |
-          git diff --name-only HEAD~1 > changed.txt
+          BASE=$(git merge-base HEAD origin/develop)
+          echo "Merge base is $BASE"
+          git diff --name-only $BASE HEAD > changed.txt
           cat changed.txt
 
       - name: Check unit tests should run
