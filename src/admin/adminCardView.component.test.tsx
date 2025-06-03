@@ -10,7 +10,7 @@ describe('AdminCardView', () => {
     const view = createView();
 
     await waitFor(() => {
-      expect(screen.getByText('u')).toBeInTheDocument();
+      expect(screen.getByText('Units')).toBeInTheDocument();
     });
 
     expect(view.asFragment()).toMatchSnapshot();
