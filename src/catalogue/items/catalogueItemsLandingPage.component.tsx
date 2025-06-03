@@ -121,26 +121,24 @@ function CatalogueItemsLandingPage() {
                     </Typography>
                   </Grid>
                 </Grid>
-                <Grid container xs={4} sm>
-                  <Grid container justifyContent={'flex-end'}>
-                    {/* Actions Section */}
-                    <Grid>
-                      <CatalogueItemsActionMenu
-                        catalogueItem={catalogueItemIdData}
-                        catalogueCategory={catalogueCategoryData}
-                      />
-                    </Grid>
-                    <Grid>
-                      <Button
-                        sx={{ ml: 0.5, py: '5.75px' }}
-                        variant="outlined"
-                        component={Link}
-                        to={'items'}
-                        startIcon={<InventoryOutlinedIcon />}
-                      >
-                        Items
-                      </Button>
-                    </Grid>
+                <Grid container xs={4} sm justifyContent={'flex-end'}>
+                  {/* Actions Section */}
+                  <Grid>
+                    <CatalogueItemsActionMenu
+                      catalogueItem={catalogueItemIdData}
+                      catalogueCategory={catalogueCategoryData}
+                    />
+                  </Grid>
+                  <Grid>
+                    <Button
+                      sx={{ ml: 0.5, py: '5.75px' }}
+                      variant="outlined"
+                      component={Link}
+                      to={'items'}
+                      startIcon={<InventoryOutlinedIcon />}
+                    >
+                      Items
+                    </Button>
                   </Grid>
                 </Grid>
               </Grid>
