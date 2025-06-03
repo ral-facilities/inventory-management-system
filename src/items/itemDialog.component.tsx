@@ -579,8 +579,14 @@ function ItemDialog(props: ItemDialogProps) {
                       sx={{ width: '100%' }}
                       in={showAdvancedSerialNumberOptions}
                     >
-                      <Grid container mt={0.25} spacing={1.5} xs={12}>
-                        <Grid xs={6}>
+                      <Grid
+                        container
+                        margin={0}
+                        mt={0.25}
+                        spacing={1.5}
+                        xs={12}
+                      >
+                        <Grid xs={6} pl={0}>
                           <TextField
                             id="item-quantity-input"
                             label="Quantity"
@@ -593,7 +599,7 @@ function ItemDialog(props: ItemDialogProps) {
                             }
                           />
                         </Grid>
-                        <Grid xs={6}>
+                        <Grid xs={6} pr={0}>
                           <TextField
                             id="item-starting-value-input"
                             label="Starting value"
@@ -1048,7 +1054,7 @@ function ItemDialog(props: ItemDialogProps) {
     <Dialog
       open={open}
       maxWidth="lg"
-      PaperProps={{ sx: { height: '770px' } }}
+      PaperProps={{ sx: { height: '780px' } }}
       fullWidth
     >
       <DialogTitle>
