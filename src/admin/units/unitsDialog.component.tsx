@@ -7,6 +7,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  Stack,
   TextField,
 } from '@mui/material';
 import { AxiosError } from 'axios';
@@ -70,16 +71,18 @@ function UnitsDialog(props: UnitsDialogProps) {
     <Dialog open={open} maxWidth="sm" fullWidth>
       <DialogTitle>Add Unit</DialogTitle>
       <DialogContent>
-        <TextField
-          id="unit-value-input"
-          label="Value"
-          required
-          sx={{ marginLeft: '4px', mb: '8px', mt: '16px' }}
-          {...register('value')}
-          error={!!errors.value}
-          helperText={errors.value?.message}
-          fullWidth
-        />
+        <Stack width="100%" marginTop={1}>
+          <TextField
+            id="unit-value-input"
+            label="Value"
+            required
+            sx={{ marginLeft: '4px', mb: '8px', mt: '16px' }}
+            {...register('value')}
+            error={!!errors.value}
+            helperText={errors.value?.message}
+            fullWidth
+          />
+        </Stack>
       </DialogContent>
       <DialogActions sx={{ flexDirection: 'column', padding: '0px 24px' }}>
         <Box
