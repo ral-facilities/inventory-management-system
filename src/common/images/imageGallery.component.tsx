@@ -13,6 +13,7 @@ import {
   ListItemText,
   MenuItem,
   Paper,
+  Stack,
 } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import {
@@ -406,28 +407,34 @@ const ImageGallery = (props: ImageGalleryProps) => {
     React.useState<boolean>(false);
 
   const cardViewHeight = getPageHeightCalc('150px');
+  console.log(cardViewHeight);
 
   return (
     <Paper
       component={Grid}
       container
-      flexDirection={'column'}
-      height={dense ? '100%' : cardViewHeight}
-      maxHeight={dense ? '100%' : cardViewHeight}
+      height={dense || table.getState().isFullScreen ? '100%' : cardViewHeight}
+      maxHeight={
+        dense || table.getState().isFullScreen ? '100%' : cardViewHeight
+      }
       sx={{
         backgroundColor: baseBackgroundColor,
         ...(table.getState().isFullScreen && MRT_FULL_SCREEN_STYLES),
       }}
     >
-      <Grid width="100%" sx={{ flexShrink: 0 }}>
+      <Stack
+        height={
+          dense || table.getState().isFullScreen ? '100%' : cardViewHeight
+        }
+        maxHeight={
+          dense || table.getState().isFullScreen ? '100%' : cardViewHeight
+        }
+        width="100%"
+      >
         <MRT_TopToolbar table={table} />
-      </Grid>
-      <Grid width="100%" sx={{ flex: 1, overflow: 'auto' }}>
-        <Grid container>
-          <Grid
-            container
+        <Stack width="100%" sx={{ flex: 1, overflow: 'auto' }}>
+          <Box
             display={!isCollapsed ? 'none' : undefined}
-            direction="column"
             alignItems="center"
             sx={{
               justifyContent: 'left',
@@ -447,8 +454,8 @@ const ImageGallery = (props: ImageGalleryProps) => {
             >
               <CardViewFilters table={table} />
             </Collapse>
-          </Grid>
-          <Grid padding={1} width={'100%'}>
+          </Box>
+          <Grid container padding={1} width={'100%'}>
             {images &&
               (images.length === 0 ? (
                 <ErrorPage
@@ -461,6 +468,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
                   container
                   mt={2}
                   gap={2}
+                  xs={12}
                   sx={{
                     display: 'grid',
                     gridTemplateColumns: dense
@@ -479,9 +487,10 @@ const ImageGallery = (props: ImageGalleryProps) => {
                       (image) => image.id === card.row.original.id
                     );
                     return (
-                      <Grid key={`thumbnail-displayed-${index}`}>
+                      <Grid xs={12} key={`thumbnail-displayed-${index}`}>
                         <Card
                           component={Grid}
+                          container
                           style={{
                             maxWidth:
                               data.length === 1 ||
@@ -532,7 +541,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
                             justifyContent="center"
                             alignItems="center"
                             minHeight={`${maxHeightThumbnail}px`}
-                            xs
+                            xs={12}
                           >
                             <ThumbnailImage
                               onClick={
@@ -590,14 +599,12 @@ const ImageGallery = (props: ImageGalleryProps) => {
                 </Grid>
               ))}
           </Grid>
-        </Grid>
-      </Grid>
-      <Grid width="100%" sx={{ flexShrink: 0 }}>
+        </Stack>
         <MRT_BottomToolbar
           table={table}
           sx={{ width: '100%', bottom: undefined, position: 'relative' }}
         />
-      </Grid>
+      </Stack>
       <StyledUppyBox>
         <UploadImagesDialog
           open={openUploadDialog}
