@@ -529,27 +529,29 @@ function ItemDialog(props: ItemDialogProps) {
         return (
           <Grid container spacing={1.5} xs={12}>
             <Grid container margin={0} xs={12}>
-              <TextField
-                id="item-serial-number-input"
-                label="Serial number"
-                size="small"
-                {...registerDetailsStep('serial_number.serial_number')}
-                fullWidth
-                error={!!errorsDetailsStep.serial_number?.serial_number}
-                helperText={
-                  errorsDetailsStep.serial_number?.serial_number?.message ||
-                  (itemDetails.serial_number.quantity &&
-                    itemDetails.serial_number.starting_value &&
-                    itemDetails.serial_number.serial_number &&
-                    itemDetails.serial_number.serial_number
-                      .trim()
-                      .includes('%s') &&
-                    `e.g. ${itemDetails.serial_number.serial_number?.replace(
-                      '%s',
-                      itemDetails.serial_number.starting_value
-                    )}`)
-                }
-              />
+              <Grid xs={12}>
+                <TextField
+                  id="item-serial-number-input"
+                  label="Serial number"
+                  size="small"
+                  {...registerDetailsStep('serial_number.serial_number')}
+                  fullWidth
+                  error={!!errorsDetailsStep.serial_number?.serial_number}
+                  helperText={
+                    errorsDetailsStep.serial_number?.serial_number?.message ||
+                    (itemDetails.serial_number.quantity &&
+                      itemDetails.serial_number.starting_value &&
+                      itemDetails.serial_number.serial_number &&
+                      itemDetails.serial_number.serial_number
+                        .trim()
+                        .includes('%s') &&
+                      `e.g. ${itemDetails.serial_number.serial_number?.replace(
+                        '%s',
+                        itemDetails.serial_number.starting_value
+                      )}`)
+                  }
+                />
+              </Grid>
 
               {requestType !== 'patch' && (
                 <>
@@ -1058,9 +1060,7 @@ function ItemDialog(props: ItemDialogProps) {
       fullWidth
     >
       <DialogTitle>
-        <Grid
-          xs={12}
-        >{`${requestType === 'patch' ? 'Edit' : 'Add'} Item`}</Grid>
+        {`${requestType === 'patch' ? 'Edit' : 'Add'} Item`}
       </DialogTitle>
       <DialogContent>
         <Stepper
