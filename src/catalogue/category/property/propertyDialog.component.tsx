@@ -348,6 +348,11 @@ const PropertyDialog = (props: PropertyDialogProps) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     any
   >;
+
+  // Create a record object to switch between the correct property type based on isMigration
+  const propertyType = isMigration
+    ? property.type
+    : propertyAdd?.properties?.[index]?.type;
   return (
     <Dialog open={open} maxWidth="sm" fullWidth>
       <DialogTitle>
@@ -462,7 +467,7 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                 <Autocomplete
                   disableClearable
                   disabled={
-                    property.type === CatalogueCategoryPropertyType.Boolean ||
+                    propertyType === CatalogueCategoryPropertyType.Boolean ||
                     (type === 'patch' && isMigration)
                   }
                   id={crypto.randomUUID()}
@@ -510,6 +515,8 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                       variant="outlined"
                       disabled={
                         property.type ===
+                          CatalogueCategoryPropertyType.Boolean ||
+                        propertyAdd?.properties?.[index].type ===
                           CatalogueCategoryPropertyType.Boolean ||
                         (type === 'patch' && isMigration)
                       }
@@ -594,7 +601,7 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                     );
                   }}
                 />
-              ) : property.type === CatalogueCategoryPropertyType.Boolean ? (
+              ) : propertyType === CatalogueCategoryPropertyType.Boolean ? (
                 <Controller
                   control={control}
                   name={`default_value`}
@@ -690,7 +697,7 @@ const PropertyDialog = (props: PropertyDialogProps) => {
             render={({ field: { value, onChange } }) => (
               <Autocomplete
                 disabled={
-                  property.type === CatalogueCategoryPropertyType.Boolean ||
+                  propertyType === CatalogueCategoryPropertyType.Boolean ||
                   (type === 'patch' && isMigration)
                 }
                 id={crypto.randomUUID()}
@@ -708,6 +715,8 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                     variant="outlined"
                     disabled={
                       property.type === CatalogueCategoryPropertyType.Boolean ||
+                      propertyAdd?.properties?.[index].type ===
+                        CatalogueCategoryPropertyType.Boolean ||
                       (type === 'patch' && isMigration)
                     }
                   />
