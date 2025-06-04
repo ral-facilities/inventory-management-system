@@ -49,6 +49,7 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
   >(() => {
     const newUppy = new Uppy<UppyUploadMetadata, UppyImageUploadResponse>({
       autoProceed: false,
+      infoTimeout: 10000,
       restrictions: {
         maxFileSize: maxImageSizeBytes,
         requiredMetaFields: ['name'],
