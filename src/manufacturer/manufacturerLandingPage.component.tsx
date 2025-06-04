@@ -35,7 +35,7 @@ function ManufacturerLandingPage() {
         container
       >
         {manufacturerData && (
-          <Grid container sx={{ display: 'flex', py: 2 }}>
+          <Grid container sx={{ py: 2 }} xs={12}>
             <Button
               sx={{ mx: 0.5 }}
               variant="outlined"
@@ -62,10 +62,10 @@ function ManufacturerLandingPage() {
       {manufacturerData && (
         <Grid
           container
-          spacing={1}
+          rowSpacing={1}
+          display="flex"
           sx={{ px: '192px' }}
-          alignContent={'center'}
-          flexDirection="row"
+          xs={12}
         >
           <Grid xs={12}>
             <Typography
