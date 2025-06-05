@@ -12,7 +12,6 @@ import {
   Stack,
   TextField,
 } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
 import { UseMutationResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import React from 'react';
@@ -155,7 +154,7 @@ const EditFileDialog = (props: FileDialogProps) => {
       <DialogTitle>{`Edit ${fileType}`}</DialogTitle>
       <DialogContent>
         <Stack width="100%" spacing={1} component="form">
-          <Grid sx={{ marginTop: '8px !important' }}>
+          <Box sx={{ marginTop: '8px !important' }}>
             <TextField
               id="object-file-name-input"
               label="File Name"
@@ -170,8 +169,8 @@ const EditFileDialog = (props: FileDialogProps) => {
               }}
               fullWidth
             />
-          </Grid>
-          <Grid>
+          </Box>
+          <Box>
             <TextField
               id="object-description-input"
               label="Description"
@@ -181,8 +180,8 @@ const EditFileDialog = (props: FileDialogProps) => {
               fullWidth
               multiline
             />
-          </Grid>
-          <Grid>
+          </Box>
+          <Box>
             <TextField
               id="object-title-input"
               label="Title"
@@ -191,7 +190,7 @@ const EditFileDialog = (props: FileDialogProps) => {
               helperText={errors.title?.message}
               fullWidth
             />
-          </Grid>
+          </Box>
         </Stack>
       </DialogContent>
       <DialogActions sx={{ flexDirection: 'column', padding: '0px 24px' }}>

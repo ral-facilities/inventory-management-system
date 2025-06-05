@@ -12,7 +12,6 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
 import { useForm } from 'react-hook-form';
 
 import React from 'react';
@@ -254,7 +253,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       <DialogTitle>{`${type === 'post' ? 'Add' : 'Edit'} Manufacturer`}</DialogTitle>
       <DialogContent>
         <Stack width="100%" spacing={1} component="form">
-          <Grid sx={{ marginTop: '8px !important' }}>
+          <Box sx={{ marginTop: '8px !important' }}>
             <TextField
               id="manufacturer-name-input"
               label="Name"
@@ -264,8 +263,8 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               helperText={errors.name?.message}
               fullWidth
             />
-          </Grid>
-          <Grid>
+          </Box>
+          <Box>
             <TextField
               id="manufacturer-url-input"
               label="URL"
@@ -274,11 +273,11 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               helperText={errors.url?.message}
               fullWidth
             />
-          </Grid>
-          <Grid>
+          </Box>
+          <Box>
             <Typography>Address</Typography>
-          </Grid>
-          <Grid>
+          </Box>
+          <Box>
             <TextField
               id="manufacturer-address-line-input"
               label="Address Line"
@@ -288,24 +287,24 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               helperText={errors?.address?.address_line?.message}
               fullWidth
             />
-          </Grid>
-          <Grid>
+          </Box>
+          <Box>
             <TextField
               id="manufacturer-town-input"
               label="Town"
               {...register('address.town')}
               fullWidth
             />
-          </Grid>
-          <Grid>
+          </Box>
+          <Box>
             <TextField
               id="manufacturer-county-input"
               label="County"
               {...register('address.county')}
               fullWidth
             />
-          </Grid>
-          <Grid>
+          </Box>
+          <Box>
             <TextField
               id="manufacturer-country-input"
               label="Country"
@@ -315,8 +314,8 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               helperText={errors?.address?.country?.message}
               fullWidth
             />
-          </Grid>
-          <Grid>
+          </Box>
+          <Box>
             <TextField
               id="manufacturer-postcode-input"
               label="Post/Zip code"
@@ -326,15 +325,15 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               helperText={errors?.address?.postcode?.message}
               fullWidth
             />
-          </Grid>
-          <Grid>
+          </Box>
+          <Box>
             <TextField
               id="manufacturer-telephone-input"
               label="Telephone number"
               {...register('telephone')}
               fullWidth
             />
-          </Grid>
+          </Box>
         </Stack>
       </DialogContent>
       <DialogActions sx={{ flexDirection: 'column', padding: '0px 24px' }}>
