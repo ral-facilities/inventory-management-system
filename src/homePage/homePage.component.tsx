@@ -231,7 +231,7 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
           </Grid>
         </Paper>
         <Grid container spacing={2}>
-          <Grid item sm={12} md={4}>
+          <Grid item xs={12} md={4}>
             <Paper sx={paperStyles} elevation={1}>
               <Box sx={paperContentStyles}>
                 <PaperHeading variant="h4">{'Systems'}</PaperHeading>
