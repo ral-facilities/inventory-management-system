@@ -338,42 +338,37 @@ function CatalogueItemsLandingPage() {
                         <Typography variant="h6">Properties</Typography>
                         <Divider sx={{ width: '100%', mt: 1 }} />
                       </Grid>
-                      <Grid container xs={12}>
-                        <Grid container spacing={1}>
-                          {catalogueItemIdData.properties.length === 0 ? (
-                            <Grid>
-                              <Typography
-                                variant="body1"
-                                color="text.secondary"
-                              >
-                                None
-                              </Typography>
-                            </Grid>
-                          ) : (
-                            catalogueItemIdData.properties.map(
-                              (property, index) => (
-                                <Grid xs={12} sm={6} md={4} key={index}>
-                                  <Typography
-                                    align="left"
-                                    color="text.primary"
-                                    sx={{ wordWrap: 'break-word' }}
-                                  >{`${property.name} ${
-                                    property.unit ? `(${property.unit})` : ''
-                                  }`}</Typography>
-                                  <Typography
-                                    align="left"
-                                    color="text.secondary"
-                                    sx={{ wordWrap: 'break-word' }}
-                                  >
-                                    {property.value !== null
-                                      ? String(property.value)
-                                      : 'None'}
-                                  </Typography>
-                                </Grid>
-                              )
+                      <Grid container xs={12} spacing={1}>
+                        {catalogueItemIdData.properties.length === 0 ? (
+                          <Grid>
+                            <Typography variant="body1" color="text.secondary">
+                              None
+                            </Typography>
+                          </Grid>
+                        ) : (
+                          catalogueItemIdData.properties.map(
+                            (property, index) => (
+                              <Grid xs={12} sm={6} md={4} key={index}>
+                                <Typography
+                                  align="left"
+                                  color="text.primary"
+                                  sx={{ wordWrap: 'break-word' }}
+                                >{`${property.name} ${
+                                  property.unit ? `(${property.unit})` : ''
+                                }`}</Typography>
+                                <Typography
+                                  align="left"
+                                  color="text.secondary"
+                                  sx={{ wordWrap: 'break-word' }}
+                                >
+                                  {property.value !== null
+                                    ? String(property.value)
+                                    : 'None'}
+                                </Typography>
+                              </Grid>
                             )
-                          )}
-                        </Grid>
+                          )
+                        )}
                       </Grid>
 
                       <Grid
@@ -390,101 +385,99 @@ function CatalogueItemsLandingPage() {
                       </Grid>
 
                       {manufacturer && (
-                        <Grid container xs={12}>
-                          <Grid container spacing={1} xs={12}>
-                            <Grid xs={12} sm={6} md={4}>
-                              <Typography align="left" color="text.primary">
-                                Name
-                              </Typography>
-                              <Typography
-                                align="left"
-                                color="text.secondary"
-                                sx={{ wordWrap: 'break-word' }}
+                        <Grid container xs={12} spacing={1}>
+                          <Grid xs={12} sm={6} md={4}>
+                            <Typography align="left" color="text.primary">
+                              Name
+                            </Typography>
+                            <Typography
+                              align="left"
+                              color="text.secondary"
+                              sx={{ wordWrap: 'break-word' }}
+                            >
+                              <MuiLink
+                                underline="hover"
+                                component={Link}
+                                to={`/manufacturers/${manufacturer.id}`}
                               >
+                                {manufacturer.name}
+                              </MuiLink>
+                            </Typography>
+                          </Grid>
+                          <Grid xs={12} sm={6} md={4}>
+                            <Typography align="left" color="text.primary">
+                              URL
+                            </Typography>
+                            <Typography
+                              align="left"
+                              color="text.secondary"
+                              sx={{ wordWrap: 'break-word' }}
+                            >
+                              {manufacturer.url ? (
                                 <MuiLink
-                                  underline="hover"
                                   component={Link}
-                                  to={`/manufacturers/${manufacturer.id}`}
+                                  underline="hover"
+                                  target="_blank"
+                                  to={manufacturer.url}
                                 >
-                                  {manufacturer.name}
+                                  {manufacturer.url}
                                 </MuiLink>
-                              </Typography>
-                            </Grid>
-                            <Grid xs={12} sm={6} md={4}>
-                              <Typography align="left" color="text.primary">
-                                URL
-                              </Typography>
-                              <Typography
-                                align="left"
-                                color="text.secondary"
-                                sx={{ wordWrap: 'break-word' }}
-                              >
-                                {manufacturer.url ? (
-                                  <MuiLink
-                                    component={Link}
-                                    underline="hover"
-                                    target="_blank"
-                                    to={manufacturer.url}
-                                  >
-                                    {manufacturer.url}
-                                  </MuiLink>
-                                ) : (
-                                  'None'
-                                )}
-                              </Typography>
-                            </Grid>
-                            <Grid xs={12} sm={6} md={4}>
-                              <Typography align="left" color="text.primary">
-                                Telephone number
-                              </Typography>
-                              <Typography
-                                align="left"
-                                color="text.secondary"
-                                sx={{ wordWrap: 'break-word' }}
-                              >
-                                {manufacturer?.telephone ?? 'None'}
-                              </Typography>
-                            </Grid>
-                            <Grid xs={12} sm={6} md={4}>
-                              <Typography align="left" color="text.primary">
-                                Address
-                              </Typography>
-                              <Typography
-                                align="left"
-                                color="text.secondary"
-                                sx={{ wordWrap: 'break-word' }}
-                              >
-                                {manufacturer?.address.address_line}
-                              </Typography>
-                              <Typography
-                                align="left"
-                                color="text.secondary"
-                                sx={{ wordWrap: 'break-word' }}
-                              >
-                                {manufacturer?.address.town}
-                              </Typography>
-                              <Typography
-                                align="left"
-                                color="text.secondary"
-                                sx={{ wordWrap: 'break-word' }}
-                              >
-                                {manufacturer?.address.county}
-                              </Typography>
-                              <Typography
-                                align="left"
-                                color="text.secondary"
-                                sx={{ wordWrap: 'break-word' }}
-                              >
-                                {manufacturer?.address.country}
-                              </Typography>
-                              <Typography
-                                align="left"
-                                color="text.secondary"
-                                sx={{ wordWrap: 'break-word' }}
-                              >
-                                {manufacturer?.address.postcode}
-                              </Typography>
-                            </Grid>
+                              ) : (
+                                'None'
+                              )}
+                            </Typography>
+                          </Grid>
+                          <Grid xs={12} sm={6} md={4}>
+                            <Typography align="left" color="text.primary">
+                              Telephone number
+                            </Typography>
+                            <Typography
+                              align="left"
+                              color="text.secondary"
+                              sx={{ wordWrap: 'break-word' }}
+                            >
+                              {manufacturer?.telephone ?? 'None'}
+                            </Typography>
+                          </Grid>
+                          <Grid xs={12} sm={6} md={4}>
+                            <Typography align="left" color="text.primary">
+                              Address
+                            </Typography>
+                            <Typography
+                              align="left"
+                              color="text.secondary"
+                              sx={{ wordWrap: 'break-word' }}
+                            >
+                              {manufacturer?.address.address_line}
+                            </Typography>
+                            <Typography
+                              align="left"
+                              color="text.secondary"
+                              sx={{ wordWrap: 'break-word' }}
+                            >
+                              {manufacturer?.address.town}
+                            </Typography>
+                            <Typography
+                              align="left"
+                              color="text.secondary"
+                              sx={{ wordWrap: 'break-word' }}
+                            >
+                              {manufacturer?.address.county}
+                            </Typography>
+                            <Typography
+                              align="left"
+                              color="text.secondary"
+                              sx={{ wordWrap: 'break-word' }}
+                            >
+                              {manufacturer?.address.country}
+                            </Typography>
+                            <Typography
+                              align="left"
+                              color="text.secondary"
+                              sx={{ wordWrap: 'break-word' }}
+                            >
+                              {manufacturer?.address.postcode}
+                            </Typography>
                           </Grid>
                         </Grid>
                       )}

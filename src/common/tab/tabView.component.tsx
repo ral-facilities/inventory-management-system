@@ -1,7 +1,6 @@
 import AttachmentOutlinedIcon from '@mui/icons-material/AttachmentOutlined';
 import CollectionsOutlinedIcon from '@mui/icons-material/CollectionsOutlined';
-import { Tabs } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+import { Box, Stack, Tabs } from '@mui/material';
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { a11yProps, StyledTab } from '../../common/tab/tab.utils';
@@ -98,8 +97,8 @@ function TabView<T extends string>(props: TabViewProps<T>) {
   ]);
 
   return (
-    <Grid container flexDirection="column">
-      <Grid xs={12}>
+    <Stack>
+      <Box width="100%">
         <Tabs
           value={tabValue}
           onChange={handleTabChange}
@@ -118,15 +117,15 @@ function TabView<T extends string>(props: TabViewProps<T>) {
             />
           ))}
         </Tabs>
-      </Grid>
-      <Grid xs={12}>
+      </Box>
+      <Box width="100%">
         {tabData.map(({ value, component }) => (
           <TabPanel key={value} value={tabValue} label={value}>
             {component}
           </TabPanel>
         ))}
-      </Grid>
-    </Grid>
+      </Box>
+    </Stack>
   );
 }
 

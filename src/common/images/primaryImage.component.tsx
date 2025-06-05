@@ -10,7 +10,6 @@ import {
   MenuItem,
   Tooltip,
 } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useGetImages } from '../../api/images';
@@ -110,7 +109,7 @@ const PrimaryImage = (props: PrimaryImageProps) => {
   >(false);
 
   return (
-    <Grid>
+    <>
       {!imageLoading && (
         <ThumbnailImage
           image={imagesData?.[0]}
@@ -146,7 +145,7 @@ const PrimaryImage = (props: PrimaryImageProps) => {
           )}
         </>
       )}
-    </Grid>
+    </>
   );
 };
 
