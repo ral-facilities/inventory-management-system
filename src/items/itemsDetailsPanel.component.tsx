@@ -317,11 +317,11 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
         </TabPanel>
 
         <TabPanel value={tabValue} index={3}>
-          <Grid xs={12}>
+          <Box width="100%">
             <Typography color="text.secondary" whiteSpace="pre-line">
               {itemData.notes ?? 'None'}
             </Typography>
-          </Grid>
+          </Box>
         </TabPanel>
       </Grid>
     </Grid>
