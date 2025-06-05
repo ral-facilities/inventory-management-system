@@ -232,7 +232,7 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
           </Grid>
         </Paper>
         <Grid container spacing={2}>
-          <Grid sm={12} md={4}>
+          <Grid xs={12} md={4}>
             <Paper sx={paperStyles} elevation={1}>
               <Box sx={paperContentStyles}>
                 <PaperHeading variant="h4">{'Systems'}</PaperHeading>
@@ -259,7 +259,7 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
               </Box>
             </Paper>
           </Grid>
-          <Grid sm={12} md={4}>
+          <Grid xs={12} md={4}>
             <Paper sx={paperStyles} elevation={1}>
               <Box sx={paperContentStyles}>
                 <PaperHeading variant="h4">{'Manufacturers'}</PaperHeading>
@@ -284,7 +284,7 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
               </Box>
             </Paper>
           </Grid>
-          <Grid sm={12} md={4}>
+          <Grid xs={12} md={4}>
             <Paper
               sx={{ ...paperStyles, backgroundColor: '#003088' }}
               elevation={1}

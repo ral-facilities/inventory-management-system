@@ -56,6 +56,7 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
   const [uppy] = React.useState<Uppy<UppyUploadMetadata, AwsBody>>(
     new Uppy<UppyUploadMetadata, AwsBody>({
       autoProceed: false,
+      infoTimeout: 10000,
       restrictions: {
         maxFileSize: maxAttachmentSizeBytes,
         requiredMetaFields: ['name'],
@@ -89,13 +90,11 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
       .use(ProgressBar<UppyUploadMetadata, AwsBody>)
   );
 
-  uppy
-    .getPlugin('DragDrop')
-    ?.setOptions({
-      locale: {
-        strings: { dropPasteFiles: `Drop attachments here or %{browseFiles}` },
-      },
-    });
+  uppy.getPlugin('DragDrop')?.setOptions({
+    locale: {
+      strings: { dropPasteFiles: `Drop attachments here or %{browseFiles}` },
+    },
+  });
   // This is necessary to prevent multiple calls of the delete endpoint.
   const deletedFileIds = React.useRef(new Set<string>());
 
