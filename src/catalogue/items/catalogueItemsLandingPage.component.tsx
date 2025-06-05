@@ -85,61 +85,60 @@ function CatalogueItemsLandingPage() {
             style={{ maxWidth: '80%' }}
           >
             {/* Image Section */}
-            <Grid container>
-              <Grid container xs={12}>
-                <Grid xs="auto">
-                  <PrimaryImage entityId={catalogueItemId ?? ''} />
-                </Grid>
-                {/* Title and Description Section */}
-                <Grid
-                  container
-                  xs={8}
-                  sm
-                  sx={{ alignItems: 'flex-start', pl: 2 }}
-                >
-                  <Grid xs={12}>
-                    <Typography
-                      variant="h4"
-                      gutterBottom
-                      sx={{
-                        fontWeight: 'bold',
-                        wordWrap: 'break-word',
-                      }}
-                    >
-                      {catalogueItemIdData.name}
-                    </Typography>
 
-                    <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
-                      Description:
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      sx={{ whiteSpace: 'pre-line', wordWrap: 'break-word' }}
-                      color="text.secondary"
-                    >
-                      {catalogueItemIdData.description ?? 'None'}
-                    </Typography>
-                  </Grid>
+            <Grid container xs={12}>
+              <Grid xs="auto">
+                <PrimaryImage entityId={catalogueItemId ?? ''} />
+              </Grid>
+              {/* Title and Description Section */}
+              <Grid
+                container
+                xs={8}
+                sm
+                sx={{ alignItems: 'flex-start', pl: 2 }}
+              >
+                <Grid xs={12}>
+                  <Typography
+                    variant="h4"
+                    gutterBottom
+                    sx={{
+                      fontWeight: 'bold',
+                      wordWrap: 'break-word',
+                    }}
+                  >
+                    {catalogueItemIdData.name}
+                  </Typography>
+
+                  <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
+                    Description:
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    sx={{ whiteSpace: 'pre-line', wordWrap: 'break-word' }}
+                    color="text.secondary"
+                  >
+                    {catalogueItemIdData.description ?? 'None'}
+                  </Typography>
                 </Grid>
-                <Grid container xs={4} sm justifyContent={'flex-end'}>
-                  {/* Actions Section */}
-                  <Grid>
-                    <CatalogueItemsActionMenu
-                      catalogueItem={catalogueItemIdData}
-                      catalogueCategory={catalogueCategoryData}
-                    />
-                  </Grid>
-                  <Grid>
-                    <Button
-                      sx={{ ml: 0.5, py: '5.75px' }}
-                      variant="outlined"
-                      component={Link}
-                      to={'items'}
-                      startIcon={<InventoryOutlinedIcon />}
-                    >
-                      Items
-                    </Button>
-                  </Grid>
+              </Grid>
+              <Grid container xs={4} sm justifyContent={'flex-end'}>
+                {/* Actions Section */}
+                <Grid>
+                  <CatalogueItemsActionMenu
+                    catalogueItem={catalogueItemIdData}
+                    catalogueCategory={catalogueCategoryData}
+                  />
+                </Grid>
+                <Grid>
+                  <Button
+                    sx={{ ml: 0.5, py: '5.75px' }}
+                    variant="outlined"
+                    component={Link}
+                    to={'items'}
+                    startIcon={<InventoryOutlinedIcon />}
+                  >
+                    Items
+                  </Button>
                 </Grid>
               </Grid>
             </Grid>

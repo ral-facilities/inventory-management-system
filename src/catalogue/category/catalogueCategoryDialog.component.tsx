@@ -348,7 +348,7 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
               </Grid>
             )}
           </Grid>
-          <Grid>
+          <Box>
             <Controller
               control={control}
               name="is_leaf"
@@ -387,13 +387,11 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
                 </FormControl>
               )}
             />
-          </Grid>
+          </Box>
           {isLeaf === 'true' && (
             <>
-              <Grid>
-                <Divider sx={{ minWidth: '700px' }} />
-              </Grid>
-              <Grid sx={{ paddingLeft: 1, paddingTop: 3 }}>
+              <Divider sx={{ minWidth: '700px' }} />
+              <Box sx={{ paddingLeft: 1 }}>
                 <Typography variant="h6">Catalogue Item Properties</Typography>
                 <Box mt={1}>
                   <FormProvider {...formMethods}>
@@ -403,7 +401,7 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
                     />
                   </FormProvider>
                 </Box>
-              </Grid>
+              </Box>
             </>
           )}
         </Stack>

@@ -660,8 +660,13 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               />
             </Grid>
 
-            <Grid xs={12} container style={{ display: 'flex', margin: 0 }}>
-              <Grid xs={11} padding={0}>
+            <Grid
+              xs={12}
+              container
+              spacing={0}
+              style={{ display: 'flex', margin: 0 }}
+            >
+              <Grid xs={11}>
                 <Controller
                   control={controlDetailsStep}
                   name="manufacturer_id"
@@ -704,7 +709,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                   )}
                 />
               </Grid>
-              <Grid xs={1} padding={0}>
+              <Grid xs={1}>
                 <Tooltip title="Add Manufacturer">
                   <span>
                     <IconButton
