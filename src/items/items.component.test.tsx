@@ -1,5 +1,5 @@
 import { screen, waitFor } from '@testing-library/react';
-import { paths } from '../Paths';
+import { urlPathKeyType } from '../paths';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import Items from './items.component';
 
@@ -11,7 +11,7 @@ vi.mock('react-router-dom', async () => ({
 }));
 
 describe('Items', () => {
-  const createView = (path: string, urlPathKey?: keyof typeof paths) => {
+  const createView = (path: string, urlPathKey?: urlPathKeyType) => {
     return renderComponentWithRouterProvider(
       <Items />,
       urlPathKey || 'items',

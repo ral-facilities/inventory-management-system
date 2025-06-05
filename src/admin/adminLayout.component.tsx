@@ -3,7 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { BreadcrumbsInfo } from '../api/api.types';
 import BaseLayoutHeader from '../common/baseLayoutHeader.component';
 import PageNotFoundComponent from '../common/pageNotFound/pageNotFound.component';
-import { paths } from '../Paths';
+import paths from '../paths';
 
 export const AdminErrorComponent = () => {
   return <PageNotFoundComponent homeLocation="Admin" />;

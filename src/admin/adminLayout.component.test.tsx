@@ -1,6 +1,6 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import { paths } from '../Paths';
+import { urlPathKeyType } from '../paths';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import AdminLayout, { AdminErrorComponent } from './adminLayout.component';
 
@@ -17,7 +17,7 @@ describe('Admin Layout', () => {
   beforeEach(() => {
     user = userEvent.setup();
   });
-  const createView = (path: string, urlPathKey: keyof typeof paths) => {
+  const createView = (path: string, urlPathKey: urlPathKeyType) => {
     return renderComponentWithRouterProvider(<AdminLayout />, urlPathKey, path);
   };
 

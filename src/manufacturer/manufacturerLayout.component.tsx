@@ -5,7 +5,7 @@ import { BreadcrumbsInfo } from '../api/api.types';
 import { getManufacturerQuery, useGetManufacturer } from '../api/manufacturers';
 import BaseLayoutHeader from '../common/baseLayoutHeader.component';
 import PageNotFoundComponent from '../common/pageNotFound/pageNotFound.component';
-import { paths } from '../Paths';
+import paths from '../paths';
 
 export const ManufacturerErrorComponent = () => {
   return <PageNotFoundComponent homeLocation="Manufacturers" />;

@@ -16,3 +16,7 @@ export const paths = {
   manufacturers: '/manufacturers',
   manufacturer: '/manufacturers/:manufacturer_id',
 };
+
+export type urlPathKeyType = keyof typeof paths;
+
+export default paths;

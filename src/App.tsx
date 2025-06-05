@@ -51,7 +51,7 @@ import ManufacturerLayout, {
   manufacturerLayoutLoader,
 } from './manufacturer/manufacturerLayout.component';
 import ManufacturerTable from './manufacturer/manufacturerTable.component';
-import { paths } from './Paths';
+import paths from './paths';
 import Preloader from './preloader/preloader.component';
 import retryIMS_APIErrors from './retryIMS_APIErrors';
 import {
