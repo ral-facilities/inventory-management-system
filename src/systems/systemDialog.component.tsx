@@ -13,7 +13,6 @@ import {
   Stack,
   TextField,
 } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
 import { AxiosError } from 'axios';
 import React from 'react';
 import {
@@ -200,7 +199,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
       </DialogTitle>
       <DialogContent>
         <Stack width="100%" spacing={2}>
-          <Grid sx={{ marginTop: '8px !important' }}>
+          <Box sx={{ marginTop: '8px !important' }}>
             <TextField
               id="system-name-input"
               label="Name"
@@ -210,8 +209,8 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
               helperText={errors.name?.message}
               fullWidth
             />
-          </Grid>
-          <Grid>
+          </Box>
+          <Box>
             <TextField
               id="system-description-input"
               label="Description"
@@ -219,24 +218,24 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
               multiline
               fullWidth
             />
-          </Grid>
-          <Grid>
+          </Box>
+          <Box>
             <TextField
               id="system-location-input"
               label="Location"
               {...register('location')}
               fullWidth
             />
-          </Grid>
-          <Grid>
+          </Box>
+          <Box>
             <TextField
               id="system-owner-input"
               label="Owner"
               {...register('owner')}
               fullWidth
             />
-          </Grid>
-          <Grid>
+          </Box>
+          <Box>
             <Controller
               control={control}
               name="importance"
@@ -291,7 +290,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
                 />
               )}
             />
-          </Grid>
+          </Box>
         </Stack>
       </DialogContent>
       <DialogActions sx={{ flexDirection: 'column', padding: 4 }}>

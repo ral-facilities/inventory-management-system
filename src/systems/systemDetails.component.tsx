@@ -101,73 +101,72 @@ function SystemDetails(props: SystemDetailsProps) {
           <Typography variant="h3">Please select a system</Typography>
         </Box>
       ) : (
-        <Grid>
+        <>
           <Stack width="100%" spacing={1} flexWrap={'nowrap'} display="flex">
             <Grid
               container
               direction="row"
               justifyContent="space-evenly"
               sx={{ margin: 0, marginTop: '8px !important' }}
+              spacing={2}
             >
-              <Grid container spacing={2}>
-                <Grid xs="auto">
-                  <PrimaryImage entityId={system.id} />
+              <Grid xs="auto">
+                <PrimaryImage entityId={system.id} />
+              </Grid>
+              <Grid container spacing={1} xs>
+                <Grid xs={12} sm={6}>
+                  <Typography color="text.primary">Location</Typography>
+                  <Typography
+                    variant="body1"
+                    color="text.secondary"
+                    sx={{ wordWrap: 'break-word' }}
+                  >
+                    {system.location ?? 'None'}
+                  </Typography>
                 </Grid>
-                <Grid container spacing={1} xs>
-                  <Grid xs={12} sm={6}>
-                    <Typography color="text.primary">Location</Typography>
-                    <Typography
-                      variant="body1"
-                      color="text.secondary"
-                      sx={{ wordWrap: 'break-word' }}
-                    >
-                      {system.location ?? 'None'}
-                    </Typography>
-                  </Grid>
-                  <Grid xs={12} sm={6} sx={{ display: 'inline-flex' }}>
-                    <Typography color="text.primary">Importance</Typography>
-                    <Chip
-                      label={system.importance}
-                      sx={() => {
-                        const colorName = getSystemImportanceColour(
-                          system.importance
-                        );
-                        return {
-                          margin: 0,
-                          marginLeft: 1,
-                          bgcolor: `${colorName}.main`,
-                          color: `${colorName}.contrastText`,
-                        };
-                      }}
-                    />
-                  </Grid>
-                  <Grid xs={12} sm={6}>
-                    <Typography color="text.primary">Owner</Typography>
-                    <Typography
-                      variant="body1"
-                      color="text.secondary"
-                      sx={{ wordWrap: 'break-word' }}
-                    >
-                      {system.owner ?? 'None'}
-                    </Typography>
-                  </Grid>
-                  <Grid xs={12} sm={6}>
-                    <Typography color="text.primary">Last modified</Typography>
-                    <Typography variant="body1" color="text.secondary">
-                      {formatDateTimeStrings(system.modified_time, true)}
-                    </Typography>
-                  </Grid>
+                <Grid xs={12} sm={6} sx={{ display: 'inline-flex' }}>
+                  <Typography color="text.primary">Importance</Typography>
+                  <Chip
+                    label={system.importance}
+                    sx={() => {
+                      const colorName = getSystemImportanceColour(
+                        system.importance
+                      );
+                      return {
+                        margin: 0,
+                        marginLeft: 1,
+                        bgcolor: `${colorName}.main`,
+                        color: `${colorName}.contrastText`,
+                      };
+                    }}
+                  />
+                </Grid>
+                <Grid xs={12} sm={6}>
+                  <Typography color="text.primary">Owner</Typography>
+                  <Typography
+                    variant="body1"
+                    color="text.secondary"
+                    sx={{ wordWrap: 'break-word' }}
+                  >
+                    {system.owner ?? 'None'}
+                  </Typography>
+                </Grid>
+                <Grid xs={12} sm={6}>
+                  <Typography color="text.primary">Last modified</Typography>
+                  <Typography variant="body1" color="text.secondary">
+                    {formatDateTimeStrings(system.modified_time, true)}
+                  </Typography>
+                </Grid>
 
-                  <Grid xs={12} sm={6}>
-                    <Typography color="text.primary">Created</Typography>
-                    <Typography variant="body1" color="text.secondary">
-                      {formatDateTimeStrings(system.created_time, true)}
-                    </Typography>
-                  </Grid>
+                <Grid xs={12} sm={6}>
+                  <Typography color="text.primary">Created</Typography>
+                  <Typography variant="body1" color="text.secondary">
+                    {formatDateTimeStrings(system.created_time, true)}
+                  </Typography>
                 </Grid>
               </Grid>
             </Grid>
-            <Grid>
+            <Box>
               <Typography color="text.primary">Description</Typography>
               <Typography
                 variant="body1"
@@ -176,8 +175,8 @@ function SystemDetails(props: SystemDetailsProps) {
               >
                 {system.description ?? 'None'}
               </Typography>
-            </Grid>
-            <Grid container sx={{ marginTop: 2, display: 'inline-block' }}>
+            </Box>
+            <Grid sx={{ marginTop: 2, display: 'inline-block' }}>
               <TabView
                 ariaLabelPrefix="systems page"
                 defaultTab="Items"
@@ -196,7 +195,7 @@ function SystemDetails(props: SystemDetailsProps) {
               />
             </Grid>
           </Stack>
-        </Grid>
+        </>
       )}
     </>
   );
