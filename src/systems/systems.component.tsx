@@ -458,8 +458,7 @@ function Systems() {
             item
             textAlign="left"
             padding={1}
-            sm
-            md={10}
+            md
             sx={{
               maxWidth: {
                 xs: '100%',
