@@ -19,7 +19,6 @@ describe('Systems', () => {
 
   beforeEach(() => {
     user = userEvent.setup();
-    // Test comment
   });
 
   const clickRowAction = async (rowIndex: number, buttonText: string) => {
