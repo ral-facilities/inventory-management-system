@@ -44,7 +44,7 @@ exports[`Systems Dialog > Add > renders correctly when adding 1`] = `
             class="MuiStack-root css-lbjakd-MuiStack-root"
           >
             <div
-              class="MuiGrid2-root MuiGrid2-direction-xs-row css-1x28njr-MuiGrid2-root"
+              class="MuiBox-root css-1aiyfsv"
             >
               <div
                 class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -94,7 +94,7 @@ exports[`Systems Dialog > Add > renders correctly when adding 1`] = `
               </div>
             </div>
             <div
-              class="MuiGrid2-root MuiGrid2-direction-xs-row css-27y2fm-MuiGrid2-root"
+              class="MuiBox-root css-0"
             >
               <div
                 class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -140,7 +140,7 @@ exports[`Systems Dialog > Add > renders correctly when adding 1`] = `
               </div>
             </div>
             <div
-              class="MuiGrid2-root MuiGrid2-direction-xs-row css-27y2fm-MuiGrid2-root"
+              class="MuiBox-root css-0"
             >
               <div
                 class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -180,7 +180,7 @@ exports[`Systems Dialog > Add > renders correctly when adding 1`] = `
               </div>
             </div>
             <div
-              class="MuiGrid2-root MuiGrid2-direction-xs-row css-27y2fm-MuiGrid2-root"
+              class="MuiBox-root css-0"
             >
               <div
                 class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -220,7 +220,7 @@ exports[`Systems Dialog > Add > renders correctly when adding 1`] = `
               </div>
             </div>
             <div
-              class="MuiGrid2-root MuiGrid2-direction-xs-row css-27y2fm-MuiGrid2-root"
+              class="MuiBox-root css-0"
             >
               <div
                 class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1x6bjyf-MuiAutocomplete-root"

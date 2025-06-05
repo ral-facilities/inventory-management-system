@@ -41,10 +41,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
           class="MuiDialogContent-root css-ypiqx9-MuiDialogContent-root"
         >
           <div
-            class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-182neuw-MuiGrid2-root-MuiPaper-root"
+            class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-5avsa6-MuiGrid2-root-MuiPaper-root"
           >
             <div
-              class="MuiGrid2-root MuiGrid2-direction-xs-row css-hottla-MuiGrid2-root"
+              class="MuiStack-root css-1t9msmh-MuiStack-root"
             >
               <div
                 class="MuiBox-root css-1tbggly"
@@ -231,15 +231,11 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                   </div>
                 </div>
               </div>
-            </div>
-            <div
-              class="MuiGrid2-root MuiGrid2-direction-xs-row css-eqd3hj-MuiGrid2-root"
-            >
               <div
-                class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-182z5mw-MuiGrid2-root"
+                class="MuiStack-root css-1ok1z05-MuiStack-root"
               >
                 <div
-                  class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-column css-1duc7bw-MuiGrid2-root"
+                  class="MuiBox-root css-12pz9uu"
                 >
                   <div
                     class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
@@ -663,16 +659,16 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                   </div>
                 </div>
                 <div
-                  class="MuiGrid2-root MuiGrid2-direction-xs-row css-bgdwck-MuiGrid2-root"
+                  class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-16h2n21-MuiGrid2-root"
                 >
                   <div
-                    class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-15qm9uj-MuiGrid2-root"
+                    class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-k3g1ub-MuiGrid2-root"
                   >
                     <div
-                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-ozd0v4-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
@@ -725,7 +721,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1szxpnv-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -757,10 +753,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-ozd0v4-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
@@ -813,7 +809,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1szxpnv-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -845,10 +841,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-ozd0v4-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
@@ -901,7 +897,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1szxpnv-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -933,10 +929,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-ozd0v4-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
@@ -989,7 +985,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1szxpnv-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -1021,10 +1017,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-ozd0v4-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
@@ -1077,7 +1073,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1szxpnv-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -1109,10 +1105,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-ozd0v4-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
@@ -1165,7 +1161,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1szxpnv-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -1197,10 +1193,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-ozd0v4-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
@@ -1253,7 +1249,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1szxpnv-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -1285,10 +1281,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-ozd0v4-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
@@ -1341,7 +1337,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1szxpnv-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -1373,10 +1369,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-ozd0v4-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
@@ -1429,7 +1425,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1szxpnv-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -1461,10 +1457,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-ozd0v4-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
@@ -1517,7 +1513,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1szxpnv-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -1549,10 +1545,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-ozd0v4-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
@@ -1605,7 +1601,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1szxpnv-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -1637,10 +1633,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-ozd0v4-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
@@ -1693,7 +1689,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1szxpnv-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -1725,10 +1721,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-ozd0v4-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
@@ -1781,7 +1777,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1szxpnv-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -1813,10 +1809,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-ozd0v4-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
@@ -1869,7 +1865,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1szxpnv-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -1901,10 +1897,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-ozd0v4-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
@@ -1957,7 +1953,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1szxpnv-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -1989,10 +1985,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-ozd0v4-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
@@ -2045,7 +2041,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1szxpnv-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -2077,10 +2073,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-ozd0v4-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
@@ -2133,7 +2129,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1szxpnv-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -2165,10 +2161,10 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid2-root MuiGrid2-direction-xs-row css-sux2ly-MuiGrid2-root"
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-tz4e07-MuiGrid2-root"
                     >
                       <div
-                        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-6qxatu-MuiGrid2-root-MuiPaper-root-MuiCard-root"
+                        class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-ozd0v4-MuiGrid2-root-MuiPaper-root-MuiCard-root"
                         style="cursor: pointer;"
                       >
                         <div
@@ -2221,7 +2217,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-true css-1tmva9c-MuiGrid2-root"
+                          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1szxpnv-MuiGrid2-root"
                         >
                           <div
                             class="MuiBox-root css-gmuwbf"
@@ -2255,10 +2251,6 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                   </div>
                 </div>
               </div>
-            </div>
-            <div
-              class="MuiGrid2-root MuiGrid2-direction-xs-row css-hottla-MuiGrid2-root"
-            >
               <div
                 class="MuiBox-root css-cg6jg"
               >
@@ -2631,10 +2623,10 @@ exports[`Primary Image Dialog > renders no results page correctly, and can still
           class="MuiDialogContent-root css-ypiqx9-MuiDialogContent-root"
         >
           <div
-            class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-182neuw-MuiGrid2-root-MuiPaper-root"
+            class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-5avsa6-MuiGrid2-root-MuiPaper-root"
           >
             <div
-              class="MuiGrid2-root MuiGrid2-direction-xs-row css-hottla-MuiGrid2-root"
+              class="MuiStack-root css-1t9msmh-MuiStack-root"
             >
               <div
                 class="MuiBox-root css-1tbggly"
@@ -2821,15 +2813,11 @@ exports[`Primary Image Dialog > renders no results page correctly, and can still
                   </div>
                 </div>
               </div>
-            </div>
-            <div
-              class="MuiGrid2-root MuiGrid2-direction-xs-row css-eqd3hj-MuiGrid2-root"
-            >
               <div
-                class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-182z5mw-MuiGrid2-root"
+                class="MuiStack-root css-1ok1z05-MuiStack-root"
               >
                 <div
-                  class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-column css-1duc7bw-MuiGrid2-root"
+                  class="MuiBox-root css-12pz9uu"
                 >
                   <div
                     class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
@@ -3253,7 +3241,7 @@ exports[`Primary Image Dialog > renders no results page correctly, and can still
                   </div>
                 </div>
                 <div
-                  class="MuiGrid2-root MuiGrid2-direction-xs-row css-bgdwck-MuiGrid2-root"
+                  class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-16h2n21-MuiGrid2-root"
                 >
                   <div
                     class="MuiBox-root css-5tbyhb"
@@ -3271,10 +3259,6 @@ exports[`Primary Image Dialog > renders no results page correctly, and can still
                   </div>
                 </div>
               </div>
-            </div>
-            <div
-              class="MuiGrid2-root MuiGrid2-direction-xs-row css-hottla-MuiGrid2-root"
-            >
               <div
                 class="MuiBox-root css-cg6jg"
               >

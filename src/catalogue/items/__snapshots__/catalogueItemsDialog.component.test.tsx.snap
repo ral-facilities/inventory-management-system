@@ -578,11 +578,11 @@ exports[`Catalogue Items Dialog > renders details step correctly 1`] = `
                 </div>
               </div>
               <div
-                class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-11135ck-MuiGrid2-root"
+                class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1921npo-MuiGrid2-root"
                 style="display: flex; margin: 0px;"
               >
                 <div
-                  class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-11 css-lmfdcf-MuiGrid2-root"
+                  class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-11 css-per675-MuiGrid2-root"
                 >
                   <div
                     class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1y8r37a-MuiAutocomplete-root"
@@ -667,7 +667,7 @@ exports[`Catalogue Items Dialog > renders details step correctly 1`] = `
                   </div>
                 </div>
                 <div
-                  class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-1 css-1e7w7c9-MuiGrid2-root"
+                  class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-1 css-1a4uq9n-MuiGrid2-root"
                 >
                   <span
                     aria-label="Add Manufacturer"
