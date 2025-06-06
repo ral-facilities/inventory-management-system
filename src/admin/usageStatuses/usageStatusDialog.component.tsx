@@ -76,7 +76,7 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
             id="usage-status-value-input"
             label="Value"
             required
-            sx={{ marginLeft: '4px', my: '8px' }}
+            sx={{ margin: '8px' }}
             {...register('value')}
             error={!!errors.value}
             helperText={errors.value?.message}

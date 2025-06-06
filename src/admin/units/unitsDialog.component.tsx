@@ -76,7 +76,7 @@ function UnitsDialog(props: UnitsDialogProps) {
             id="unit-value-input"
             label="Value"
             required
-            sx={{ marginLeft: '4px', mb: '8px', mt: '16px' }}
+            sx={{ margin: '8px' }}
             {...register('value')}
             error={!!errors.value}
             helperText={errors.value?.message}

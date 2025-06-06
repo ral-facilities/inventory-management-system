@@ -170,27 +170,23 @@ const EditFileDialog = (props: FileDialogProps) => {
               fullWidth
             />
           </Box>
-          <Box>
-            <TextField
-              id="object-description-input"
-              label="Description"
-              {...register('description')}
-              error={!!errors.description}
-              helperText={errors.description?.message}
-              fullWidth
-              multiline
-            />
-          </Box>
-          <Box>
-            <TextField
-              id="object-title-input"
-              label="Title"
-              {...register('title')}
-              error={!!errors.title}
-              helperText={errors.title?.message}
-              fullWidth
-            />
-          </Box>
+          <TextField
+            id="object-description-input"
+            label="Description"
+            {...register('description')}
+            error={!!errors.description}
+            helperText={errors.description?.message}
+            fullWidth
+            multiline
+          />
+          <TextField
+            id="object-title-input"
+            label="Title"
+            {...register('title')}
+            error={!!errors.title}
+            helperText={errors.title?.message}
+            fullWidth
+          />
         </Stack>
       </DialogContent>
       <DialogActions sx={{ flexDirection: 'column', padding: '0px 24px' }}>
