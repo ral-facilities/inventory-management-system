@@ -138,7 +138,7 @@ exports[`Home page component > homepage renders correctly 1`] = `
         class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-spacing-xs-2 css-ubb9a5-MuiGrid2-root"
       >
         <div
-          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-sm-12 MuiGrid2-grid-md-4 css-r1gsp2-MuiGrid2-root"
+          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-md-4 css-1ivfwkp-MuiGrid2-root"
         >
           <div
             class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1lsxlyj-MuiPaper-root"
@@ -173,7 +173,7 @@ exports[`Home page component > homepage renders correctly 1`] = `
           </div>
         </div>
         <div
-          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-sm-12 MuiGrid2-grid-md-4 css-r1gsp2-MuiGrid2-root"
+          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-md-4 css-1ivfwkp-MuiGrid2-root"
         >
           <div
             class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1lsxlyj-MuiPaper-root"
@@ -208,7 +208,7 @@ exports[`Home page component > homepage renders correctly 1`] = `
           </div>
         </div>
         <div
-          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-sm-12 MuiGrid2-grid-md-4 css-r1gsp2-MuiGrid2-root"
+          class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-md-4 css-1ivfwkp-MuiGrid2-root"
         >
           <div
             class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1egsplb-MuiPaper-root"

@@ -35,7 +35,7 @@ function ManufacturerLandingPage() {
         container
       >
         {manufacturerData && (
-          <Grid container sx={{ display: 'flex', py: 2 }}>
+          <Grid container sx={{ py: 2 }} size={12}>
             <Button
               sx={{ mx: 0.5 }}
               variant="outlined"
@@ -62,12 +62,11 @@ function ManufacturerLandingPage() {
       {manufacturerData && (
         <Grid
           container
-          spacing={1}
-          sx={{
-            alignContent: 'center',
-            flexDirection: "row",
-            px: '192px'
-          }}>
+          rowSpacing={1}
+          display="flex"
+          sx={{ px: '192px' }}
+          size={12}
+        >
           <Grid size={12}>
             <Typography
               sx={{ margin: 1, textAlign: 'center', wordWrap: 'break-word' }}
@@ -76,12 +75,18 @@ function ManufacturerLandingPage() {
               {manufacturerData.name}
             </Typography>
           </Grid>
-          <Grid size={12} sx={{
-            my: 2
-          }}>
-            <Typography variant="h6" sx={{
-              textAlign: 'center'
-            }}>
+          <Grid
+            size={12}
+            sx={{
+              my: 2,
+            }}
+          >
+            <Typography
+              variant="h6"
+              sx={{
+                textAlign: 'center',
+              }}
+            >
               URL:
             </Typography>
           </Grid>
@@ -91,9 +96,10 @@ function ManufacturerLandingPage() {
                 variant="body1"
                 sx={{
                   textAlign: 'center',
-                  color: "text.secondary",
-                  mx: '8px'
-                }}>
+                  color: 'text.secondary',
+                  mx: '8px',
+                }}
+              >
                 <MuiLink
                   underline="hover"
                   href={manufacturerData.url}
@@ -107,19 +113,26 @@ function ManufacturerLandingPage() {
                 variant="body1"
                 sx={{
                   textAlign: 'center',
-                  color: "text.secondary",
-                  mx: '8px'
-                }}>
+                  color: 'text.secondary',
+                  mx: '8px',
+                }}
+              >
                 {'None'}
               </Typography>
             )}
           </Grid>
-          <Grid size={12} sx={{
-            my: 2
-          }}>
-            <Typography variant="h6" sx={{
-              textAlign: 'center'
-            }}>
+          <Grid
+            size={12}
+            sx={{
+              my: 2,
+            }}
+          >
+            <Typography
+              variant="h6"
+              sx={{
+                textAlign: 'center',
+              }}
+            >
               Telephone number:
             </Typography>
           </Grid>
@@ -128,19 +141,26 @@ function ManufacturerLandingPage() {
               variant="body1"
               sx={{
                 textAlign: 'center',
-                color: "text.secondary",
+                color: 'text.secondary',
                 mx: '8px',
-                wordWrap: 'break-word'
-              }}>
+                wordWrap: 'break-word',
+              }}
+            >
               {manufacturerData.telephone ?? 'None'}
             </Typography>
           </Grid>
-          <Grid size={12} sx={{
-            my: 2
-          }}>
-            <Typography variant="h6" sx={{
-              textAlign: 'center'
-            }}>
+          <Grid
+            size={12}
+            sx={{
+              my: 2,
+            }}
+          >
+            <Typography
+              variant="h6"
+              sx={{
+                textAlign: 'center',
+              }}
+            >
               Address:
             </Typography>
           </Grid>
@@ -148,56 +168,67 @@ function ManufacturerLandingPage() {
             <Typography
               align="center"
               sx={{
-                color: "text.secondary",
+                color: 'text.secondary',
                 mx: '8px',
-                wordWrap: 'break-word'
-              }}>
+                wordWrap: 'break-word',
+              }}
+            >
               {manufacturerData.address.address_line}
             </Typography>
             <Typography
               align="center"
               sx={{
-                color: "text.secondary",
+                color: 'text.secondary',
                 mx: '8px',
-                wordWrap: 'break-word'
-              }}>
+                wordWrap: 'break-word',
+              }}
+            >
               {manufacturerData.address.town}
             </Typography>
             <Typography
               align="center"
               sx={{
-                color: "text.secondary",
+                color: 'text.secondary',
                 mx: '8px',
-                wordWrap: 'break-word'
-              }}>
+                wordWrap: 'break-word',
+              }}
+            >
               {manufacturerData.address.county}
             </Typography>
             <Typography
               align="center"
               sx={{
-                color: "text.secondary",
+                color: 'text.secondary',
                 mx: '8px',
-                wordWrap: 'break-word'
-              }}>
+                wordWrap: 'break-word',
+              }}
+            >
               {manufacturerData.address.postcode}
             </Typography>
             <Typography
               align="center"
               sx={{
-                color: "text.secondary",
+                color: 'text.secondary',
                 mx: '8px',
-                wordWrap: 'break-word'
-              }}>
+                wordWrap: 'break-word',
+              }}
+            >
               {manufacturerData.address.country}
             </Typography>
           </Grid>
 
-          <Grid size={12} sx={{
-            my: 2
-          }}>
-            <Typography variant="h6" sx={{
-              textAlign: 'center'
-            }}>
+          <Grid
+            size={12}
+            sx={{
+              my: 2,
+            }}
+          >
+            <Typography
+              variant="h6"
+              sx={{
+                textAlign: 'center',
+              }}
+            >
               Last modified:
             </Typography>
           </Grid>
@@ -206,19 +237,26 @@ function ManufacturerLandingPage() {
               variant="body1"
               sx={{
                 textAlign: 'center',
-                color: "text.secondary",
-                mx: '8px'
-              }}>
+                color: 'text.secondary',
+                mx: '8px',
+              }}
+            >
               {formatDateTimeStrings(manufacturerData.modified_time, true)}
             </Typography>
           </Grid>
 
-          <Grid size={12} sx={{
-            my: 2
-          }}>
-            <Typography variant="h6" sx={{
-              textAlign: 'center'
-            }}>
+          <Grid
+            size={12}
+            sx={{
+              my: 2,
+            }}
+          >
+            <Typography
+              variant="h6"
+              sx={{
+                textAlign: 'center',
+              }}
+            >
               Created:
             </Typography>
           </Grid>
@@ -227,9 +265,10 @@ function ManufacturerLandingPage() {
               variant="body1"
               sx={{
                 textAlign: 'center',
-                color: "text.secondary",
-                mx: '8px'
-              }}>
+                color: 'text.secondary',
+                mx: '8px',
+              }}
+            >
               {formatDateTimeStrings(manufacturerData.created_time, true)}
             </Typography>
           </Grid>

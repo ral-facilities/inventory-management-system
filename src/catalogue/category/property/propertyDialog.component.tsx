@@ -359,8 +359,9 @@ const PropertyDialog = (props: PropertyDialogProps) => {
           spacing={1}
           sx={{
             px: 0.5,
-            py: 1
-          }}>
+            py: 1,
+          }}
+        >
           <TextField
             id={crypto.randomUUID()}
             label="Property Name"
@@ -757,24 +758,16 @@ const PropertyDialog = (props: PropertyDialogProps) => {
         </Stack>
       </DialogContent>
       <DialogActions>
-        <Grid container sx={{
-          px: 1.5
-        }}>
+        <Grid container px={1.5} size={12}>
           {isMigration && (
-            <Grid sx={{ width: '100%' }}>
+            <Grid size={12}>
               <MigrationWarningMessage
                 isChecked={isMigrationWarningChecked}
                 setIsChecked={setIsMigrationWarningChecked}
               />
             </Grid>
           )}
-          <Grid
-            sx={{
-              display: "flex",
-              width: '100%',
-              marginTop: 2,
-              marginBottom: 1
-            }}>
+          <Grid display="flex" size={12} sx={{ marginTop: 2, marginBottom: 1 }}>
             <Button
               variant="outlined"
               sx={{ width: '50%', mx: 1 }}

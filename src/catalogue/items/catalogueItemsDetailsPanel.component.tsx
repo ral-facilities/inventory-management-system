@@ -1,4 +1,5 @@
 import {
+  Box,
   Collapse,
   Link as MuiLink,
   Tab,
@@ -60,7 +61,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
       // by clicks inside this grid
       onClick={(e) => e.stopPropagation()}
       sx={{
-        flexDirection: "column"
+        flexDirection: 'column',
       }}
     >
       <Grid sx={{ mb: 4 }} size={12}>
@@ -73,290 +74,183 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
       </Grid>
       <Grid sx={{ ml: 2 }} size={12}>
         <TabPanel value={tabValue} index={0}>
-          <Grid>
+          <Grid container spacing={0}>
+            <Grid size="auto" padding={1}>
+              <PrimaryImage entityId={catalogueItemIdData.id} isDetailsPanel />
+            </Grid>
+            <Grid size="grow">
+              <Typography variant="h4" sx={{ wordWrap: 'break-word' }}>
+                {catalogueItemIdData.name}
+              </Typography>
+              <Typography sx={{ my: 1 }} variant="h6">
+                Description:
+              </Typography>
+              <Typography
+                sx={{ mb: 1, whiteSpace: 'pre-line', wordWrap: 'break-word' }}
+                variant="body1"
+                color="text.secondary"
+              >
+                {catalogueItemIdData.description ?? 'None'}
+              </Typography>
+            </Grid>
             <Grid container spacing={0}>
-              <Grid size="auto" sx={{
-                padding: 1
-              }}>
-                <PrimaryImage
-                  entityId={catalogueItemIdData.id}
-                  isDetailsPanel
-                />
+              <Grid size={{ xs: 12, sm: 6 }} key={0}>
+                <Typography color="text.primary">Obsolete</Typography>
+                <Typography color="text.secondary">
+                  {catalogueItemIdData.is_obsolete ? 'Yes' : 'No'}
+                </Typography>
               </Grid>
-              <Grid size="grow">
-                <Typography variant="h4" sx={{ wordWrap: 'break-word' }}>
-                  {catalogueItemIdData.name}
+
+              <Grid size={{ xs: 12, sm: 6 }} key={1}>
+                <Typography color="text.primary">
+                  Obsolete replacement link
                 </Typography>
-                <Typography sx={{ my: 1 }} variant="h6">
-                  Description:
+                <Typography color="text.secondary">
+                  {catalogueItemIdData.obsolete_replacement_catalogue_item_id ? (
+                    <CatalogueLink
+                      catalogueItemId={
+                        catalogueItemIdData.obsolete_replacement_catalogue_item_id
+                      }
+                    >
+                      Click here
+                    </CatalogueLink>
+                  ) : (
+                    'None'
+                  )}
                 </Typography>
+              </Grid>
+
+              <Grid size={{ xs: 12, sm: 6 }} key={2}>
+                <Typography color="text.primary">Obsolete Reason</Typography>
                 <Typography
-                  variant="body1"
-                  sx={{
-                    color: "text.secondary",
-                    mb: 1,
-                    whiteSpace: 'pre-line',
-                    wordWrap: 'break-word'
-                  }}>
-                  {catalogueItemIdData.description ?? 'None'}
+                  color="text.secondary"
+                  sx={{ wordWrap: 'break-word' }}
+                >
+                  {catalogueItemIdData.obsolete_reason ?? 'None'}
                 </Typography>
               </Grid>
-              <Grid container spacing={0}>
-                <Grid
-                  key={0}
-                  size={{
-                    xs: 12,
-                    sm: 6
-                  }}>
-                  <Typography sx={{
-                    color: "text.primary"
-                  }}>Obsolete</Typography>
-                  <Typography sx={{
-                    color: "text.secondary"
-                  }}>
-                    {catalogueItemIdData.is_obsolete ? 'Yes' : 'No'}
-                  </Typography>
-                </Grid>
 
-                <Grid
-                  key={1}
-                  size={{
-                    xs: 12,
-                    sm: 6
-                  }}>
-                  <Typography sx={{
-                    color: "text.primary"
-                  }}>
-                    Obsolete replacement link
-                  </Typography>
-                  <Typography sx={{
-                    color: "text.secondary"
-                  }}>
-                    {catalogueItemIdData.obsolete_replacement_catalogue_item_id ? (
-                      <CatalogueLink
-                        catalogueItemId={
-                          catalogueItemIdData.obsolete_replacement_catalogue_item_id
-                        }
-                      >
-                        Click here
-                      </CatalogueLink>
-                    ) : (
-                      'None'
-                    )}
-                  </Typography>
-                </Grid>
+              <Grid size={{ xs: 12, sm: 6 }} key={3}>
+                <Typography color="text.primary">Cost (£)</Typography>
+                <Typography color="text.secondary">
+                  {catalogueItemIdData.cost_gbp ?? 'None'}
+                </Typography>
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6 }} key={4}>
+                <Typography color="text.primary">Cost to rework (£)</Typography>
+                <Typography color="text.secondary">
+                  {catalogueItemIdData.cost_to_rework_gbp ?? 'None'}
+                </Typography>
+              </Grid>
 
-                <Grid
-                  key={2}
-                  size={{
-                    xs: 12,
-                    sm: 6
-                  }}>
-                  <Typography sx={{
-                    color: "text.primary"
-                  }}>Obsolete Reason</Typography>
-                  <Typography
-                    sx={{
-                      color: "text.secondary",
-                      wordWrap: 'break-word'
-                    }}>
-                    {catalogueItemIdData.obsolete_reason ?? 'None'}
-                  </Typography>
-                </Grid>
+              <Grid size={{ xs: 12, sm: 6 }} key={5}>
+                <Typography color="text.primary">
+                  Time to replace (days)
+                </Typography>
+                <Typography color="text.secondary">
+                  {catalogueItemIdData.days_to_replace ?? 'None'}
+                </Typography>
+              </Grid>
 
-                <Grid
-                  key={3}
-                  size={{
-                    xs: 12,
-                    sm: 6
-                  }}>
-                  <Typography sx={{
-                    color: "text.primary"
-                  }}>Cost (£)</Typography>
-                  <Typography sx={{
-                    color: "text.secondary"
-                  }}>
-                    {catalogueItemIdData.cost_gbp ?? 'None'}
-                  </Typography>
-                </Grid>
-                <Grid
-                  key={4}
-                  size={{
-                    xs: 12,
-                    sm: 6
-                  }}>
-                  <Typography sx={{
-                    color: "text.primary"
-                  }}>
-                    Cost to rework (£)
-                  </Typography>
-                  <Typography sx={{
-                    color: "text.secondary"
-                  }}>
-                    {catalogueItemIdData.cost_to_rework_gbp ?? 'None'}
-                  </Typography>
-                </Grid>
+              <Grid size={{ xs: 12, sm: 6 }} key={6}>
+                <Typography color="text.primary">
+                  Time to rework (days)
+                </Typography>
+                <Typography color="text.secondary">
+                  {catalogueItemIdData.days_to_rework ?? 'None'}
+                </Typography>
+              </Grid>
 
-                <Grid
-                  key={5}
-                  size={{
-                    xs: 12,
-                    sm: 6
-                  }}>
-                  <Typography sx={{
-                    color: "text.primary"
-                  }}>
-                    Time to replace (days)
-                  </Typography>
-                  <Typography sx={{
-                    color: "text.secondary"
-                  }}>
-                    {catalogueItemIdData.days_to_replace ?? 'None'}
-                  </Typography>
-                </Grid>
+              <Grid size={{ xs: 12, sm: 6 }} key={8}>
+                <Typography color="text.primary">
+                  Expected Lifetime (days)
+                </Typography>
+                <Typography color="text.secondary">
+                  {catalogueItemIdData.expected_lifetime_days ?? 'None'}
+                </Typography>
+              </Grid>
 
-                <Grid
-                  key={6}
-                  size={{
-                    xs: 12,
-                    sm: 6
-                  }}>
-                  <Typography sx={{
-                    color: "text.primary"
-                  }}>
-                    Time to rework (days)
-                  </Typography>
-                  <Typography sx={{
-                    color: "text.secondary"
-                  }}>
-                    {catalogueItemIdData.days_to_rework ?? 'None'}
-                  </Typography>
-                </Grid>
+              <Grid size={{ xs: 12, sm: 6 }} key={7}>
+                <Typography color="text.primary">Drawing Number</Typography>
+                <Typography
+                  color="text.secondary"
+                  sx={{ wordWrap: 'break-word' }}
+                >
+                  {catalogueItemIdData.drawing_number ?? 'None'}
+                </Typography>
+              </Grid>
 
-                <Grid
-                  key={8}
-                  size={{
-                    xs: 12,
-                    sm: 6
-                  }}>
-                  <Typography sx={{
-                    color: "text.primary"
-                  }}>
-                    Expected Lifetime (days)
-                  </Typography>
-                  <Typography sx={{
-                    color: "text.secondary"
-                  }}>
-                    {catalogueItemIdData.expected_lifetime_days ?? 'None'}
-                  </Typography>
-                </Grid>
+              <Grid size={{ xs: 12, sm: 6 }} key={9}>
+                <Typography color="text.primary">Model Number</Typography>
+                <Typography
+                  color="text.secondary"
+                  sx={{ wordWrap: 'break-word' }}
+                >
+                  {catalogueItemIdData.item_model_number ?? 'None'}
+                </Typography>
+              </Grid>
 
-                <Grid
-                  key={7}
-                  size={{
-                    xs: 12,
-                    sm: 6
-                  }}>
-                  <Typography sx={{
-                    color: "text.primary"
-                  }}>Drawing Number</Typography>
-                  <Typography
-                    sx={{
-                      color: "text.secondary",
-                      wordWrap: 'break-word'
-                    }}>
-                    {catalogueItemIdData.drawing_number ?? 'None'}
-                  </Typography>
-                </Grid>
+              <Grid size={{ xs: 12, sm: 6 }} key={10}>
+                <Typography color="text.primary">Last Modified</Typography>
+                <Typography color="text.secondary">
+                  {formatDateTimeStrings(
+                    catalogueItemIdData.modified_time,
+                    true
+                  )}
+                </Typography>
+              </Grid>
 
-                <Grid
-                  key={9}
-                  size={{
-                    xs: 12,
-                    sm: 6
-                  }}>
-                  <Typography sx={{
-                    color: "text.primary"
-                  }}>Model Number</Typography>
-                  <Typography
-                    sx={{
-                      color: "text.secondary",
-                      wordWrap: 'break-word'
-                    }}>
-                    {catalogueItemIdData.item_model_number ?? 'None'}
-                  </Typography>
-                </Grid>
-
-                <Grid
-                  key={10}
-                  size={{
-                    xs: 12,
-                    sm: 6
-                  }}>
-                  <Typography sx={{
-                    color: "text.primary"
-                  }}>Last Modified</Typography>
-                  <Typography sx={{
-                    color: "text.secondary"
-                  }}>
-                    {formatDateTimeStrings(
-                      catalogueItemIdData.modified_time,
-                      true
-                    )}
-                  </Typography>
-                </Grid>
-
-                <Grid
-                  key={11}
-                  size={{
-                    xs: 12,
-                    sm: 6
-                  }}>
-                  <Typography sx={{
-                    color: "text.primary"
-                  }}>Created</Typography>
-                  <Typography sx={{
-                    color: "text.secondary"
-                  }}>
-                    {formatDateTimeStrings(
-                      catalogueItemIdData.created_time,
-                      true
-                    )}
-                  </Typography>
-                </Grid>
+              <Grid size={{ xs: 12, sm: 6 }} key={11}>
+                <Typography color="text.primary">Created</Typography>
+                <Typography color="text.secondary">
+                  {formatDateTimeStrings(
+                    catalogueItemIdData.created_time,
+                    true
+                  )}
+                </Typography>
               </Grid>
             </Grid>
           </Grid>
         </TabPanel>
 
         <TabPanel value={tabValue} index={1}>
-          <Grid container sx={{
-            justifyContent: "space-between"
-          }}>
+          <Grid
+            container
+            sx={{
+              justifyContent: 'space-between',
+            }}
+          >
             {catalogueItemIdData.properties.length === 0 ? (
-              <Typography sx={{
-                color: "text.secondary"
-              }}>None</Typography>
+              <Typography
+                sx={{
+                  color: 'text.secondary',
+                }}
+              >
+                None
+              </Typography>
             ) : (
               catalogueItemIdData.properties.map((property, index) => (
                 <Grid
                   key={index}
                   size={{
                     xs: 12,
-                    sm: 6
-                  }}>
+                    sm: 6,
+                  }}
+                >
                   <Typography
                     sx={{
-                      color: "text.primary",
-                      wordWrap: 'break-word'
-                    }}>{`${property.name} ${
+                      color: 'text.primary',
+                      wordWrap: 'break-word',
+                    }}
+                  >{`${property.name} ${
                     property.unit ? `(${property.unit})` : ''
                   }`}</Typography>
                   <Typography
                     sx={{
-                      color: "text.secondary",
-                      wordWrap: 'break-word'
-                    }}>
+                      color: 'text.secondary',
+                      wordWrap: 'break-word',
+                    }}
+                  >
                     {property.value !== null ? String(property.value) : 'None'}
                   </Typography>
                 </Grid>
@@ -371,16 +265,22 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
               key={0}
               size={{
                 xs: 12,
-                sm: 6
-              }}>
-              <Typography sx={{
-                color: "text.primary"
-              }}>Manufacturer Name</Typography>
+                sm: 6,
+              }}
+            >
               <Typography
                 sx={{
-                  color: "text.secondary",
-                  wordWrap: 'break-word'
-                }}>
+                  color: 'text.primary',
+                }}
+              >
+                Manufacturer Name
+              </Typography>
+              <Typography
+                sx={{
+                  color: 'text.secondary',
+                  wordWrap: 'break-word',
+                }}
+              >
                 <MuiLink
                   underline="hover"
                   component={Link}
@@ -394,16 +294,22 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
               key={1}
               size={{
                 xs: 12,
-                sm: 6
-              }}>
-              <Typography sx={{
-                color: "text.primary"
-              }}>Manufacturer URL</Typography>
+                sm: 6,
+              }}
+            >
               <Typography
                 sx={{
-                  color: "text.secondary",
-                  wordWrap: 'break-word'
-                }}>
+                  color: 'text.primary',
+                }}
+              >
+                Manufacturer URL
+              </Typography>
+              <Typography
+                sx={{
+                  color: 'text.secondary',
+                  wordWrap: 'break-word',
+                }}
+              >
                 {manufacturerData?.url ? (
                   <MuiLink
                     component={Link}
@@ -421,19 +327,24 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
             <Grid
               size={{
                 xs: 12,
-                sm: 6
-              }}>
-              <Typography align="left" sx={{
-                color: "text.primary"
-              }}>
+                sm: 6,
+              }}
+            >
+              <Typography
+                align="left"
+                sx={{
+                  color: 'text.primary',
+                }}
+              >
                 Telephone number
               </Typography>
               <Typography
                 align="left"
                 sx={{
-                  color: "text.secondary",
-                  wordWrap: 'break-word'
-                }}>
+                  color: 'text.secondary',
+                  wordWrap: 'break-word',
+                }}
+              >
                 {manufacturerData?.telephone ?? 'None'}
               </Typography>
             </Grid>
@@ -441,51 +352,60 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
               size={{
                 xs: 12,
                 sm: 6,
-                md: 4
-              }}>
-              <Typography align="left" sx={{
-                color: "text.primary"
-              }}>
+                md: 4,
+              }}
+            >
+              <Typography
+                align="left"
+                sx={{
+                  color: 'text.primary',
+                }}
+              >
                 Address
               </Typography>
               <Typography
                 align="left"
                 sx={{
-                  color: "text.secondary",
-                  wordWrap: 'break-word'
-                }}>
+                  color: 'text.secondary',
+                  wordWrap: 'break-word',
+                }}
+              >
                 {manufacturerData?.address.address_line}
               </Typography>
               <Typography
                 align="left"
                 sx={{
-                  color: "text.secondary",
-                  wordWrap: 'break-word'
-                }}>
+                  color: 'text.secondary',
+                  wordWrap: 'break-word',
+                }}
+              >
                 {manufacturerData?.address.town}
               </Typography>
               <Typography
                 align="left"
                 sx={{
-                  color: "text.secondary",
-                  wordWrap: 'break-word'
-                }}>
+                  color: 'text.secondary',
+                  wordWrap: 'break-word',
+                }}
+              >
                 {manufacturerData?.address.county}
               </Typography>
               <Typography
                 align="left"
                 sx={{
-                  color: "text.secondary",
-                  wordWrap: 'break-word'
-                }}>
+                  color: 'text.secondary',
+                  wordWrap: 'break-word',
+                }}
+              >
                 {manufacturerData?.address.country}
               </Typography>
               <Typography
                 align="left"
                 sx={{
-                  color: "text.secondary",
-                  wordWrap: 'break-word'
-                }}>
+                  color: 'text.secondary',
+                  wordWrap: 'break-word',
+                }}
+              >
                 {manufacturerData?.address.postcode}
               </Typography>
             </Grid>
@@ -493,16 +413,17 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
         </TabPanel>
 
         <TabPanel value={tabValue} index={3}>
-          <Grid size={12}>
+          <Box width="100%">
             <Typography
               sx={{
-                color: "text.secondary",
-                whiteSpace: "pre-line",
-                wordWrap: 'break-word'
-              }}>
+                color: 'text.secondary',
+                whiteSpace: 'pre-line',
+                wordWrap: 'break-word',
+              }}
+            >
               {catalogueItemIdData.notes ?? 'None'}
             </Typography>
-          </Grid>
+          </Box>
         </TabPanel>
       </Grid>
     </Grid>

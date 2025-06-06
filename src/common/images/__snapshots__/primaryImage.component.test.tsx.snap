@@ -3,39 +3,35 @@
 exports[`PrimaryImage Component > matches the snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="MuiGrid2-root MuiGrid2-direction-xs-row css-1fzlhpv-MuiGrid2-root"
+    class="MuiBox-root css-nnlis0"
   >
     <div
-      class="MuiBox-root css-nnlis0"
+      class="MuiBox-root css-10klw3m"
     >
-      <div
-        class="MuiBox-root css-10klw3m"
+      <span
+        aria-label="Primary Image Actions"
+        class=""
+        data-mui-internal-clone-element="true"
       >
-        <span
-          aria-label="Primary Image Actions"
-          class=""
-          data-mui-internal-clone-element="true"
+        <button
+          aria-label="primary images action menu"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-1c3nke9-MuiButtonBase-root-MuiIconButton-root"
+          tabindex="0"
+          type="button"
         >
-          <button
-            aria-label="primary images action menu"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-1c3nke9-MuiButtonBase-root-MuiIconButton-root"
-            tabindex="0"
-            type="button"
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+            data-testid="MoreHorizIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
           >
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-              data-testid="MoreHorizIcon"
-              focusable="false"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
-              />
-            </svg>
-          </button>
-        </span>
-      </div>
+            <path
+              d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
+            />
+          </svg>
+        </button>
+      </span>
     </div>
   </div>
 </DocumentFragment>

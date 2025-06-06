@@ -13,6 +13,7 @@ import {
   ListItemText,
   MenuItem,
   Paper,
+  Stack,
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import {
@@ -406,39 +407,38 @@ const ImageGallery = (props: ImageGalleryProps) => {
     React.useState<boolean>(false);
 
   const cardViewHeight = getPageHeightCalc('150px');
+  console.log(cardViewHeight);
 
   return (
     <Paper
       component={Grid}
       container
-      flexDirection={'column'}
-      height={dense ? '100%' : cardViewHeight}
-      maxHeight={dense ? '100%' : cardViewHeight}
+      height={dense || table.getState().isFullScreen ? '100%' : cardViewHeight}
+      maxHeight={
+        dense || table.getState().isFullScreen ? '100%' : cardViewHeight
+      }
       sx={{
         backgroundColor: baseBackgroundColor,
         ...(table.getState().isFullScreen && MRT_FULL_SCREEN_STYLES),
       }}
     >
-      <Grid
-        sx={{
-          width: "100%",
-          flexShrink: 0
-        }}>
+      <Stack
+        height={
+          dense || table.getState().isFullScreen ? '100%' : cardViewHeight
+        }
+        maxHeight={
+          dense || table.getState().isFullScreen ? '100%' : cardViewHeight
+        }
+        width="100%"
+      >
         <MRT_TopToolbar table={table} />
-      </Grid>
-      <Grid
-        sx={{
-          width: "100%",
-          flex: 1,
-          overflow: 'auto'
-        }}>
-        <Grid container>
-          <Grid
-            container
-            direction="column"
+        <Stack width="100%" sx={{ flex: 1, overflow: 'auto' }}>
+          <Box
+            display={!isCollapsed ? 'none' : undefined}
+            alignItems="center"
             sx={{
               display: !isCollapsed ? 'none' : undefined,
-              alignItems: "center",
+              alignItems: 'center',
               justifyContent: 'left',
               paddingLeft: 0.5,
               position: 'sticky',
@@ -447,20 +447,17 @@ const ImageGallery = (props: ImageGalleryProps) => {
               zIndex: 1000,
               width: '100%',
               paddingTop: 2.5,
-              height: 'fit-content'
-            }}>
+              height: 'fit-content',
+            }}
+          >
             <Collapse
               in={isCollapsed}
               style={{ width: '100%', height: 'fit-content' }}
             >
               <CardViewFilters table={table} />
             </Collapse>
-          </Grid>
-          <Grid
-            sx={{
-              padding: 1,
-              width: '100%'
-            }}>
+          </Box>
+          <Grid container padding={1} width={'100%'}>
             {images &&
               (images.length === 0 ? (
                 <ErrorPage
@@ -471,6 +468,9 @@ const ImageGallery = (props: ImageGalleryProps) => {
               ) : (
                 <Grid
                   container
+                  mt={2}
+                  gap={2}
+                  size={12}
                   sx={{
                     mt: 2,
                     gap: 2,
@@ -478,8 +478,9 @@ const ImageGallery = (props: ImageGalleryProps) => {
 
                     gridTemplateColumns: dense
                       ? 'repeat(auto-fit, minmax(200px, 1fr))'
-                      : 'repeat(auto-fit, minmax(350px, 1fr))'
-                  }}>
+                      : 'repeat(auto-fit, minmax(350px, 1fr))',
+                  }}
+                >
                   {displayedImages.map((card, index) => {
                     const lastPageIndex = Math.floor(
                       displayedImages.length /
@@ -491,9 +492,10 @@ const ImageGallery = (props: ImageGalleryProps) => {
                       (image) => image.id === card.row.original.id
                     );
                     return (
-                      <Grid key={`thumbnail-displayed-${index}`}>
+                      <Grid size={12} key={`thumbnail-displayed-${index}`}>
                         <Card
                           component={Grid}
+                          container
                           style={{
                             maxWidth:
                               data.length === 1 ||
@@ -521,12 +523,13 @@ const ImageGallery = (props: ImageGalleryProps) => {
                             container
                             size={12}
                             sx={{
-                              display: "flex",
-                              justifyContent: "flex-start",
-                              alignItems: "center",
-                              height: "fit-content",
-                              pt: !dense ? 5.25 : undefined
-                            }}>
+                              display: 'flex',
+                              justifyContent: 'flex-start',
+                              alignItems: 'center',
+                              height: 'fit-content',
+                              pt: !dense ? 5.25 : undefined,
+                            }}
+                          >
                             <Grid size={2}>
                               {dense && (
                                 <MRT_SelectCheckbox
@@ -541,13 +544,12 @@ const ImageGallery = (props: ImageGalleryProps) => {
                           </Grid>
 
                           <Grid
-                            size="grow"
-                            sx={{
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              minHeight: `${maxHeightThumbnail}px`
-                            }}>
+                            display="flex"
+                            justifyContent="center"
+                            alignItems="center"
+                            minHeight={`${maxHeightThumbnail}px`}
+                            size={12}
+                          >
                             <ThumbnailImage
                               onClick={
                                 !dense
@@ -566,11 +568,12 @@ const ImageGallery = (props: ImageGalleryProps) => {
                             container
                             size={12}
                             sx={{
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              height: "fit-content"
-                            }}>
+                              display: 'flex',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              height: 'fit-content',
+                            }}
+                          >
                             {!dense && (
                               <Grid size={2}>
                                 <MRT_ToggleRowActionMenuButton
@@ -605,18 +608,12 @@ const ImageGallery = (props: ImageGalleryProps) => {
                 </Grid>
               ))}
           </Grid>
-        </Grid>
-      </Grid>
-      <Grid
-        sx={{
-          width: "100%",
-          flexShrink: 0
-        }}>
+        </Stack>
         <MRT_BottomToolbar
           table={table}
           sx={{ width: '100%', bottom: undefined, position: 'relative' }}
         />
-      </Grid>
+      </Stack>
       <StyledUppyBox>
         <UploadImagesDialog
           open={openUploadDialog}

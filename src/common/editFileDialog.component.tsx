@@ -12,7 +12,6 @@ import {
   Stack,
   TextField,
 } from '@mui/material';
-import Grid from '@mui/material/Grid2';
 import { UseMutationResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import React from 'react';
@@ -154,47 +153,45 @@ const EditFileDialog = (props: FileDialogProps) => {
     <Dialog open={open} maxWidth="sm" fullWidth>
       <DialogTitle>{`Edit ${fileType}`}</DialogTitle>
       <DialogContent>
-        <Grid container spacing={1} component="form">
-          <Stack width="100%">
-            <Grid sx={{ mt: 1 }}>
-              <TextField
-                id="object-file-name-input"
-                label="File Name"
-                required
-                {...register('file_name')}
-                error={!!errors.file_name}
-                helperText={errors.file_name?.message}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">{extension}</InputAdornment>
-                  ),
-                }}
-                fullWidth
-              />
-            </Grid>
-            <Grid>
-              <TextField
-                id="object-description-input"
-                label="Description"
-                {...register('description')}
-                error={!!errors.description}
-                helperText={errors.description?.message}
-                fullWidth
-                multiline
-              />
-            </Grid>
-            <Grid>
-              <TextField
-                id="object-title-input"
-                label="Title"
-                {...register('title')}
-                error={!!errors.title}
-                helperText={errors.title?.message}
-                fullWidth
-              />
-            </Grid>
-          </Stack>
-        </Grid>
+        <Stack width="100%" spacing={1} component="form">
+          <Box sx={{ marginTop: '8px !important' }}>
+            <TextField
+              id="object-file-name-input"
+              label="File Name"
+              required
+              {...register('file_name')}
+              error={!!errors.file_name}
+              helperText={errors.file_name?.message}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">{extension}</InputAdornment>
+                ),
+              }}
+              fullWidth
+            />
+          </Box>
+          <Box>
+            <TextField
+              id="object-description-input"
+              label="Description"
+              {...register('description')}
+              error={!!errors.description}
+              helperText={errors.description?.message}
+              fullWidth
+              multiline
+            />
+          </Box>
+          <Box>
+            <TextField
+              id="object-title-input"
+              label="Title"
+              {...register('title')}
+              error={!!errors.title}
+              helperText={errors.title?.message}
+              fullWidth
+            />
+          </Box>
+        </Stack>
       </DialogContent>
       <DialogActions sx={{ flexDirection: 'column', padding: '0px 24px' }}>
         <Box
