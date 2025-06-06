@@ -407,7 +407,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
     React.useState<boolean>(false);
 
   const cardViewHeight = getPageHeightCalc('150px');
-  console.log(cardViewHeight);
 
   return (
     <Paper
