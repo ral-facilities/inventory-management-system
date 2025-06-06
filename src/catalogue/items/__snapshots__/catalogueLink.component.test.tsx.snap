@@ -29,7 +29,7 @@ exports[`ObsoleteReplacementLink > renders a link correctly (item) 1`] = `
 exports[`ObsoleteReplacementLink > renders nothing when data is undefined correctly (catalogue item) 1`] = `
 <body>
   <div>
-    test
+    Deleted Catalogue Item
   </div>
 </body>
 `;
@@ -37,7 +37,15 @@ exports[`ObsoleteReplacementLink > renders nothing when data is undefined correc
 exports[`ObsoleteReplacementLink > renders nothing when data is undefined correctly (item) 1`] = `
 <body>
   <div>
-    test
+    Deleted Item
+  </div>
+</body>
+`;
+
+exports[`ObsoleteReplacementLink > renders nothing when data is undefined correctly (item) 2`] = `
+<body>
+  <div>
+    Deleted Item
   </div>
 </body>
 `;

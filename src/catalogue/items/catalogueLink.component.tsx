@@ -27,15 +27,21 @@ export type CatalogueLinkProps =
 const CatalogueLink = (props: CatalogueLinkProps) => {
   const { catalogueItemId, itemId, children, sx } = props;
 
-  const { data: item } = useGetItem(itemId);
+  const { data: item } = useGetItem(itemId, false);
 
   const { data: catalogueItem } = useGetCatalogueItem(
-    catalogueItemId || item?.catalogue_item_id
+    catalogueItemId || item?.catalogue_item_id,
+    false
   );
 
-  if ((!catalogueItem && !item) || !catalogueItem) {
-    return children;
+  if (!item && !catalogueItemId) {
+    return 'Deleted Item';
   }
+
+  if (!catalogueItem) {
+    return 'Deleted Catalogue Item';
+  }
+
   let link: string = '';
 
   if (catalogueItem)
