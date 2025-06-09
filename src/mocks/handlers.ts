@@ -436,16 +436,22 @@ export const handlers = [
       (value) => value.id === id
     );
     if (validCatalogueItem) {
-      if (id === '6') {
+      if (id === '6')
         return HttpResponse.json(
           {
             detail: 'Catalogue item has child elements and cannot be deleted',
           },
           { status: 409 }
         );
-      } else {
-        return HttpResponse.json(undefined, { status: 204 });
-      }
+      else if (id === '7')
+        return HttpResponse.json(
+          {
+            detail:
+              'Catalogue item is the replacement for an obsolete catalogue item and cannot be deleted',
+          },
+          { status: 422 }
+        );
+      else return HttpResponse.json(undefined, { status: 204 });
     } else {
       return HttpResponse.json({ detail: '' }, { status: 400 });
     }

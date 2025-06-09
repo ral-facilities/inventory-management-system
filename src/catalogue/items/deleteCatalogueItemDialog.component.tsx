@@ -53,6 +53,15 @@ const DeleteCatalogueItemDialog = (props: DeleteCatalogueItemDialogProps) => {
               `${response.detail}, please delete the children elements first`
             );
             return;
+          } else if (
+            response &&
+            error.response?.status == 422 &&
+            response.detail.includes('replacement')
+          ) {
+            setError(true);
+            setErrorMessage(
+              `${response.detail}, please either change the replacement first, delete the item that is obsolete or contact support.`
+            );
           }
           handleIMS_APIError(error);
         });

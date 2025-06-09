@@ -141,7 +141,7 @@ describe('delete Catalogue Category dialogue', () => {
     });
   });
 
-  it('displays error message when user tries to delete a catalogue category that has children elements', async () => {
+  it('displays error message when user tries to delete a catalogue item that has children elements', async () => {
     catalogueItem.id = '6';
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
@@ -151,6 +151,21 @@ describe('delete Catalogue Category dialogue', () => {
       expect(
         screen.getByText(
           'Catalogue item has child elements and cannot be deleted, please delete the children elements first'
+        )
+      ).toBeInTheDocument();
+    });
+  });
+
+  it('displays error message when user tries to delete a catalogue item that is the replacement for an obsolete catalogue item', async () => {
+    catalogueItem.id = '7';
+    createView();
+    const continueButton = screen.getByRole('button', { name: 'Continue' });
+    await user.click(continueButton);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          'Catalogue item is the replacement for an obsolete catalogue item and cannot be deleted, please either change the replacement first, delete the item that is obsolete or contact support.'
         )
       ).toBeInTheDocument();
     });
