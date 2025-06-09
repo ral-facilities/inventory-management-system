@@ -423,21 +423,23 @@ const ImageGallery = (props: ImageGalleryProps) => {
     >
       <Stack
         sx={{
-          height: dense || table.getState().isFullScreen ? '100%' : cardViewHeight,
-          maxHeight: dense || table.getState().isFullScreen ? '100%' : cardViewHeight,
-          width: "100%"
-        }}>
+          height:
+            dense || table.getState().isFullScreen ? '100%' : cardViewHeight,
+          maxHeight:
+            dense || table.getState().isFullScreen ? '100%' : cardViewHeight,
+          width: '100%',
+        }}
+      >
         <MRT_TopToolbar table={table} />
         <Stack
           sx={{
-            width: "100%",
+            width: '100%',
             flex: 1,
-            overflow: 'auto'
-          }}>
+            overflow: 'auto',
+          }}
+        >
           <Box
             sx={{
-              display: !isCollapsed ? 'none' : undefined,
-              alignItems: "center",
               display: !isCollapsed ? 'none' : undefined,
               alignItems: 'center',
               justifyContent: 'left',
@@ -448,8 +450,9 @@ const ImageGallery = (props: ImageGalleryProps) => {
               zIndex: 1000,
               width: '100%',
               paddingTop: 2.5,
-              height: 'fit-content'
-            }}>
+              height: 'fit-content',
+            }}
+          >
             <Collapse
               in={isCollapsed}
               style={{ width: '100%', height: 'fit-content' }}
@@ -461,8 +464,9 @@ const ImageGallery = (props: ImageGalleryProps) => {
             container
             sx={{
               padding: 1,
-              width: '100%'
-            }}>
+              width: '100%',
+            }}
+          >
             {images &&
               (images.length === 0 ? (
                 <ErrorPage
@@ -477,14 +481,13 @@ const ImageGallery = (props: ImageGalleryProps) => {
                   sx={{
                     mt: 2,
                     gap: 2,
-                    mt: 2,
-                    gap: 2,
                     display: 'grid',
 
                     gridTemplateColumns: dense
                       ? 'repeat(auto-fit, minmax(200px, 1fr))'
-                      : 'repeat(auto-fit, minmax(350px, 1fr))'
-                  }}>
+                      : 'repeat(auto-fit, minmax(350px, 1fr))',
+                  }}
+                >
                   {displayedImages.map((card, index) => {
                     const lastPageIndex = Math.floor(
                       displayedImages.length /
@@ -550,11 +553,12 @@ const ImageGallery = (props: ImageGalleryProps) => {
                           <Grid
                             size={12}
                             sx={{
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              minHeight: `${maxHeightThumbnail}px`
-                            }}>
+                              display: 'flex',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              minHeight: `${maxHeightThumbnail}px`,
+                            }}
+                          >
                             <ThumbnailImage
                               onClick={
                                 !dense
