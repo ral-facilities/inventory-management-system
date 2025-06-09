@@ -50,7 +50,7 @@ const DeleteCatalogueItemDialog = (props: DeleteCatalogueItemDialogProps) => {
           if (response && error.response?.status === 409) {
             setError(true);
             setErrorMessage(
-              `${response.detail}, please delete the children elements first`
+              `Catalogue item has child elements and cannot be deleted, please delete the children elements first.`
             );
             return;
           } else if (
@@ -60,7 +60,7 @@ const DeleteCatalogueItemDialog = (props: DeleteCatalogueItemDialogProps) => {
           ) {
             setError(true);
             setErrorMessage(
-              `${response.detail}, please either change the replacement first, delete the item that is obsolete or contact support.`
+              `Catalogue item is the replacement for an obsolete catalogue item and cannot be deleted, please contact support.`
             );
           }
           handleIMS_APIError(error);
