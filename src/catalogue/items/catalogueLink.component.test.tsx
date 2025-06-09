@@ -76,20 +76,4 @@ describe('ObsoleteReplacementLink', () => {
 
     expect(baseElement).toMatchSnapshot();
   });
-
-  it('renders nothing when data is undefined correctly (item)', async () => {
-    props = { itemId: 'invalid', children: 'test' };
-    let baseElement;
-    await act(async () => {
-      baseElement = createView().baseElement;
-    });
-
-    await waitFor(() => {
-      expect(
-        screen.queryByRole('link', { name: 'test' })
-      ).not.toBeInTheDocument();
-    });
-
-    expect(baseElement).toMatchSnapshot();
-  });
 }, 15000);

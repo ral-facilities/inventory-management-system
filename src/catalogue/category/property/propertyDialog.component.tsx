@@ -516,8 +516,6 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                       disabled={
                         property.type ===
                           CatalogueCategoryPropertyType.Boolean ||
-                        propertyAdd?.properties?.[index].type ===
-                          CatalogueCategoryPropertyType.Boolean ||
                         (type === 'patch' && isMigration)
                       }
                     />
@@ -715,8 +713,6 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                     variant="outlined"
                     disabled={
                       property.type === CatalogueCategoryPropertyType.Boolean ||
-                      propertyAdd?.properties?.[index].type ===
-                        CatalogueCategoryPropertyType.Boolean ||
                       (type === 'patch' && isMigration)
                     }
                   />

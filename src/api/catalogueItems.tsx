@@ -84,8 +84,7 @@ const getCatalogueItem = async (
 
 export const getCatalogueItemQuery = (
   catalogueCategoryId: string | undefined,
-  loader?: boolean,
-  broadcastError?: boolean
+  loader?: boolean
 ) =>
   queryOptions<CatalogueItem, AxiosError>({
     queryKey: ['CatalogueItem', catalogueCategoryId],
@@ -94,18 +93,12 @@ export const getCatalogueItemQuery = (
     },
     enabled: catalogueCategoryId !== undefined,
     retry: loader ? false : undefined,
-    meta: {
-      broadcastError: broadcastError,
-    },
   });
 
 export const useGetCatalogueItem = (
-  catalogueCategoryId?: string,
-  broadcastError?: boolean
+  catalogueCategoryId: string | undefined
 ): UseQueryResult<CatalogueItem, AxiosError> => {
-  return useQuery(
-    getCatalogueItemQuery(catalogueCategoryId, undefined, broadcastError)
-  );
+  return useQuery(getCatalogueItemQuery(catalogueCategoryId));
 };
 
 export const useGetCatalogueItemIds = (

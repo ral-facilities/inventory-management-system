@@ -132,11 +132,7 @@ const getItem = async (id: string): Promise<Item> => {
     });
 };
 
-export const getItemQuery = (
-  id?: string | null,
-  loader?: boolean,
-  broadcastError?: boolean
-) =>
+export const getItemQuery = (id?: string | null, loader?: boolean) =>
   queryOptions<Item, AxiosError>({
     queryKey: ['Item', id],
     queryFn: () => {
@@ -144,16 +140,12 @@ export const getItemQuery = (
     },
     enabled: !!id,
     retry: loader ? false : undefined,
-    meta: {
-      broadcastError: broadcastError,
-    },
   });
 
 export const useGetItem = (
-  id?: string | null,
-  broadcastError?: boolean
+  id?: string | null
 ): UseQueryResult<Item, AxiosError> => {
-  return useQuery(getItemQuery(id, undefined, broadcastError));
+  return useQuery(getItemQuery(id));
 };
 
 const deleteItem = async (item: Item): Promise<void> => {

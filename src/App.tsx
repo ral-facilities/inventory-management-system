@@ -87,11 +87,8 @@ export const paths = {
 
 export const queryClient = new QueryClient({
   queryCache: new QueryCache({
-    onError: (error, query) => {
-      const broadcastError = query.options.meta?.broadcastError as
-        | boolean
-        | undefined;
-      handleIMS_APIError(error as AxiosError, broadcastError);
+    onError: (error) => {
+      handleIMS_APIError(error as AxiosError);
     },
   }),
   defaultOptions: {
