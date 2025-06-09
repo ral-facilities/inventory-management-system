@@ -773,7 +773,7 @@ exports[`Image Gallery > displays no images message and can open and close uploa
         </div>
       </div>
       <div
-        class="MuiBox-root css-p1ywr2"
+        class="css-1vr3ng5"
       >
         <div
           class="uppy-Container"
@@ -2847,7 +2847,7 @@ exports[`Image Gallery > renders correctly 1`] = `
         </div>
       </div>
       <div
-        class="MuiBox-root css-p1ywr2"
+        class="css-1vr3ng5"
       >
         <div
           class="uppy-Container"
@@ -5282,7 +5282,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
         </div>
       </div>
       <div
-        class="MuiBox-root css-p1ywr2"
+        class="css-1vr3ng5"
       >
         <div
           class="uppy-Container"
@@ -6194,7 +6194,7 @@ exports[`Image Gallery > renders no results page correctly 1`] = `
         </div>
       </div>
       <div
-        class="MuiBox-root css-p1ywr2"
+        class="css-1vr3ng5"
       >
         <div
           class="uppy-Container"

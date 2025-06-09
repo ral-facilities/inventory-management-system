@@ -63,10 +63,11 @@ function ManufacturerLandingPage() {
         <Grid
           container
           rowSpacing={1}
-          display="flex"
-          sx={{ px: '192px' }}
           size={12}
-        >
+          sx={{
+            display: "flex",
+            px: '192px'
+          }}>
           <Grid size={12}>
             <Typography
               sx={{ margin: 1, textAlign: 'center', wordWrap: 'break-word' }}

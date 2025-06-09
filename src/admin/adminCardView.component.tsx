@@ -35,7 +35,9 @@ function AdminCardView() {
                 minWidth: 0,
               }}
             >
-              <Grid position="relative">
+              <Grid sx={{
+                position: "relative"
+              }}>
                 <Typography>Units</Typography>
               </Grid>
             </CardContent>
@@ -72,7 +74,9 @@ function AdminCardView() {
                 minWidth: 0,
               }}
             >
-              <Grid position="relative">
+              <Grid sx={{
+                position: "relative"
+              }}>
                 <Typography>Usage Statuses</Typography>
               </Grid>
             </CardContent>

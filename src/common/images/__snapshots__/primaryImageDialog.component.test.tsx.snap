@@ -2349,7 +2349,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
               </div>
             </div>
             <div
-              class="MuiBox-root css-p1ywr2"
+              class="css-1vr3ng5"
             >
               <div
                 class="uppy-Container"
@@ -3308,7 +3308,7 @@ exports[`Primary Image Dialog > renders no results page correctly, and can still
               </div>
             </div>
             <div
-              class="MuiBox-root css-p1ywr2"
+              class="css-1vr3ng5"
             >
               <div
                 class="uppy-Container"

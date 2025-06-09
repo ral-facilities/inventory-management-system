@@ -539,7 +539,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                   class="MuiBox-root css-8atqhb"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-49y55y-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 css-1rwwn4c-MuiTypography-root"
                   >
                     TnB0SBoekEtWRijmClwV
                   </p>
@@ -1093,7 +1093,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (no dat
                   class="MuiBox-root css-8atqhb"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-49y55y-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 css-1rwwn4c-MuiTypography-root"
                   >
                     zolZDKKuvAoTFRUWeZNA
                   </p>
@@ -1647,7 +1647,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                   class="MuiBox-root css-8atqhb"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-49y55y-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 css-1rwwn4c-MuiTypography-root"
                   >
                     None
                   </p>
@@ -2201,7 +2201,7 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                   class="MuiBox-root css-8atqhb"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-49y55y-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 css-1rwwn4c-MuiTypography-root"
                   >
                     6Y5XTJfBrNNx8oltI9HE
                   </p>
@@ -2806,7 +2806,7 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                   class="MuiBox-root css-8atqhb"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-49y55y-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 css-1rwwn4c-MuiTypography-root"
                   >
                     6Y5XTJfBrNNx8oltI9HE
                   </p>
@@ -3411,7 +3411,7 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                   class="MuiBox-root css-8atqhb"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-49y55y-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 css-1rwwn4c-MuiTypography-root"
                   >
                     6Y5XTJfBrNNx8oltI9HE
                   </p>
@@ -3901,7 +3901,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly (emp
                   class="MuiBox-root css-8atqhb"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-49y55y-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 css-1rwwn4c-MuiTypography-root"
                   >
                     TnB0SBoekEtWRijmClwV
                   </p>
@@ -4506,7 +4506,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                   class="MuiBox-root css-8atqhb"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-49y55y-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 css-1rwwn4c-MuiTypography-root"
                   >
                     6Y5XTJfBrNNx8oltI9HE
                   </p>

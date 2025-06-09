@@ -528,7 +528,9 @@ function ItemDialog(props: ItemDialogProps) {
       case 0:
         return (
           <Grid container spacing={1.5} size={12}>
-            <Grid container margin={0} size={12}>
+            <Grid container size={12} sx={{
+              margin: 0
+            }}>
               <Grid size={12}>
                 <TextField
                   id="item-serial-number-input"
@@ -583,12 +585,15 @@ function ItemDialog(props: ItemDialogProps) {
                     >
                       <Grid
                         container
-                        margin={0}
-                        mt={0.25}
                         spacing={1.5}
                         size={12}
-                      >
-                        <Grid size={6} pl={0}>
+                        sx={{
+                          margin: 0,
+                          mt: 0.25
+                        }}>
+                        <Grid size={6} sx={{
+                          pl: 0
+                        }}>
                           <TextField
                             id="item-quantity-input"
                             label="Quantity"
@@ -601,7 +606,9 @@ function ItemDialog(props: ItemDialogProps) {
                             }
                           />
                         </Grid>
-                        <Grid size={6} pr={0}>
+                        <Grid size={6} sx={{
+                          pr: 0
+                        }}>
                           <TextField
                             id="item-starting-value-input"
                             label="Starting value"
@@ -855,7 +862,9 @@ function ItemDialog(props: ItemDialogProps) {
         return (
           <Grid container size={12}>
             {parentCatalogueItemPropertiesInfo.length >= 1 ? (
-              <Grid container size={12} margin={0} spacing={1.5}>
+              <Grid container size={12} spacing={1.5} sx={{
+                margin: 0
+              }}>
                 {parentCatalogueItemPropertiesInfo.map(
                   (property: CatalogueCategoryProperty, index: number) => (
                     <Grid container spacing={1.5} key={index} size={12}>

@@ -507,7 +507,12 @@ function CatalogueCardView() {
       container
     >
       {!catalogueCategoryDetailLoading ? (
-        <Stack height={cardViewHeight} maxHeight={cardViewHeight} width="100%">
+        <Stack
+          sx={{
+            height: cardViewHeight,
+            maxHeight: cardViewHeight,
+            width: "100%"
+          }}>
           <MRT_TopToolbar table={table} />
           <Stack
             sx={{
@@ -517,17 +522,16 @@ function CatalogueCardView() {
             }}
           >
             <Box
-              display={!isCollapsed ? 'none' : undefined}
               sx={{
+                display: !isCollapsed ? 'none' : undefined,
                 paddingLeft: 0.5,
                 position: 'sticky',
                 top: 0,
                 backgroundColor: 'background.default',
                 zIndex: 1000,
                 paddingTop: 2.5,
-                paddingBottom: 2.5,
-              }}
-            >
+                paddingBottom: 2.5
+              }}>
               <Collapse
                 in={isCollapsed}
                 style={{ width: '100%', height: 'fit-content' }}
@@ -536,7 +540,9 @@ function CatalogueCardView() {
               </Collapse>
             </Box>
 
-            <Grid container width="100%">
+            <Grid container sx={{
+              width: "100%"
+            }}>
               {!isLoading &&
                 (data.length !== 0 ? (
                   data.map((card, index) => (
