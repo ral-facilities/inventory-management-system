@@ -300,9 +300,12 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
           : 'Add Catalogue Category'}
       </DialogTitle>
       <DialogContent>
-        <Stack spacing={1} sx={{
-          width: "100%"
-        }}>
+        <Stack
+          spacing={1}
+          sx={{
+            width: '100%',
+          }}
+        >
           <Grid
             container
             sx={{ marginTop: '8px !important', alignItems: 'center' }}
@@ -395,9 +398,11 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
               <Divider sx={{ minWidth: '700px' }} />
               <Box sx={{ paddingLeft: 1 }}>
                 <Typography variant="h6">Catalogue Item Properties</Typography>
-                <Box sx={{
-                  mt: 1
-                }}>
+                <Box
+                  sx={{
+                    mt: 1,
+                  }}
+                >
                   <FormProvider {...formMethods}>
                     <CatalogueItemsPropertiesTable
                       requestType={requestType}

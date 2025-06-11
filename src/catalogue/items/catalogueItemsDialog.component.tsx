@@ -738,9 +738,14 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         return (
           <Grid container size={12}>
             {parentCatalogueItemPropertiesInfo.length >= 1 ? (
-              <Grid container size={12} spacing={1.5} sx={{
-                margin: 0
-              }}>
+              <Grid
+                container
+                size={12}
+                spacing={1.5}
+                sx={{
+                  margin: 0,
+                }}
+              >
                 {parentCatalogueItemPropertiesInfo.map(
                   (property: CatalogueCategoryProperty, index: number) => (
                     <Grid container size={12} key={index} spacing={1.5}>

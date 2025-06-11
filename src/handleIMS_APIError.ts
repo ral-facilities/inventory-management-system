@@ -7,7 +7,7 @@ import { NotificationType } from './state/actions/actions.types';
 const handleIMS_APIError = (error: AxiosError, broadcast = true): void => {
   const status = error.response?.status;
   const message = error.response?.data
-    ? (error.response.data as APIError).detail ?? error.message
+    ? ((error.response.data as APIError).detail ?? error.message)
     : error.message;
 
   log.error(message);

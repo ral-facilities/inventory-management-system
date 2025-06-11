@@ -98,9 +98,11 @@ function TabView<T extends string>(props: TabViewProps<T>) {
 
   return (
     <Stack>
-      <Box sx={{
-        width: "100%"
-      }}>
+      <Box
+        sx={{
+          width: '100%',
+        }}
+      >
         <Tabs
           value={tabValue}
           onChange={handleTabChange}
@@ -120,9 +122,11 @@ function TabView<T extends string>(props: TabViewProps<T>) {
           ))}
         </Tabs>
       </Box>
-      <Box sx={{
-        width: "100%"
-      }}>
+      <Box
+        sx={{
+          width: '100%',
+        }}
+      >
         {tabData.map(({ value, component }) => (
           <TabPanel key={value} value={tabValue} label={value}>
             {component}

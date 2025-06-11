@@ -164,9 +164,10 @@ const CatalogueItemDirectoryDialog = (
             container
             size={12}
             sx={{
-              flexDirection: "row",
-              alignItems: "center"
-            }}>
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+          >
             <>
               {requestType === 'moveTo' ? 'Move ' : 'Copy '}{' '}
               {selectedItems.length}{' '}

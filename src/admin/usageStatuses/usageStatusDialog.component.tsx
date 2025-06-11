@@ -73,9 +73,10 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
       <DialogContent>
         <Stack
           sx={{
-            width: "100%",
-            marginTop: 1
-          }}>
+            width: '100%',
+            marginTop: 1,
+          }}
+        >
           <TextField
             id="usage-status-value-input"
             label="Value"
