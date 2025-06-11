@@ -167,7 +167,6 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           (itemData) =>
             ({
               item: itemData,
-
               catalogueItem: catalogueItemList?.find(
                 (catalogueItem) =>
                   catalogueItem?.id === itemData.catalogue_item_id

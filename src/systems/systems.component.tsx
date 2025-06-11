@@ -476,7 +476,6 @@ function Systems() {
             sx={{
               textAlign: 'left',
               padding: 1,
-
               maxWidth: {
                 xs: '100%',
                 md: `calc(100% - ${MIN_SUBSYSTEMS_WIDTH})`,

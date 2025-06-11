@@ -29,12 +29,10 @@ const ThumbnailImage = (props: ThumbnailImageProps) => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-
         border:
           isPrimaryThumbnail && imageError && !imageLoading
             ? '1px dashed'
             : undefined,
-
         borderRadius:
           isPrimaryThumbnail && imageError && !imageLoading ? '8px' : undefined,
       }}
