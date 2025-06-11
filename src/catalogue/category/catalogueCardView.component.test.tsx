@@ -3,14 +3,14 @@ import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { CatalogueCategory } from '../../api/api.types';
 import { server } from '../../mocks/server';
-import { urlPathKeyType } from '../../paths';
+import { URLPathKeyType } from '../../paths';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 import CardView from './catalogueCardView.component';
 
 describe('CardView', () => {
   let user: UserEvent;
 
-  const createView = (path?: string, urlPathKey?: urlPathKeyType) => {
+  const createView = (path?: string, urlPathKey?: URLPathKeyType) => {
     return renderComponentWithRouterProvider(
       <CardView />,
       urlPathKey || 'catalogue',

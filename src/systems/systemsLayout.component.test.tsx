@@ -2,7 +2,7 @@ import { QueryClient } from '@tanstack/react-query';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import type { LoaderFunctionArgs } from 'react-router-dom';
-import { urlPathKeyType } from '../paths';
+import { URLPathKeyType } from '../paths';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import SystemsLayout, {
   SystemsLayoutErrorComponent,
@@ -26,7 +26,7 @@ describe('Systems Layout', () => {
     vi.clearAllMocks();
   });
 
-  const createView = (path: string, urlPathKey: urlPathKeyType) => {
+  const createView = (path: string, urlPathKey: URLPathKeyType) => {
     return renderComponentWithRouterProvider(
       <SystemsLayout />,
       urlPathKey,
