@@ -379,6 +379,7 @@ function CatalogueCardView() {
       variant: 'outlined',
     },
     // Functions
+    getRowId: (row) => row.id,
     ...onPreservedStatesChange,
     renderTopToolbarCustomActions: ({ table }) => (
       <Box sx={{ display: 'flex' }}>
