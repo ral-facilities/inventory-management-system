@@ -97,6 +97,10 @@ describe('delete Catalogue Category dialogue', () => {
     await waitFor(() => {
       expect(onClose).toHaveBeenCalled();
     });
+
+    expect(onClose).toHaveBeenCalledWith({
+      successfulDeletion: false,
+    });
   });
 
   it('does not close dialog on background click, or on escape key press', async () => {
@@ -138,6 +142,10 @@ describe('delete Catalogue Category dialogue', () => {
 
     await waitFor(() => {
       expect(onClose).toHaveBeenCalled();
+    });
+
+    expect(onClose).toHaveBeenCalledWith({
+      successfulDeletion: true,
     });
   });
 

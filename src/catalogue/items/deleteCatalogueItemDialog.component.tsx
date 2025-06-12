@@ -17,7 +17,7 @@ import handleIMS_APIError from '../../handleIMS_APIError';
 
 export interface DeleteCatalogueItemDialogProps {
   open: boolean;
-  onClose: () => void;
+  onClose: (props: { successfulDeletion: boolean }) => void;
   catalogueItem: CatalogueItem | undefined;
   onChangeCatalogueItem: (catalogueItem: CatalogueItem | undefined) => void;
 }
@@ -33,16 +33,19 @@ const DeleteCatalogueItemDialog = (props: DeleteCatalogueItemDialogProps) => {
   const { mutateAsync: deleteCatalogueItem, isPending: isDeletePending } =
     useDeleteCatalogueItem();
 
-  const handleClose = React.useCallback(() => {
-    onClose();
-    setError(false);
-    setErrorMessage('');
-  }, [onClose]);
+  const handleClose = React.useCallback(
+    (props: { successfulDeletion: boolean }) => {
+      onClose({ successfulDeletion: props.successfulDeletion });
+      setError(false);
+      setErrorMessage('');
+    },
+    [onClose]
+  );
   const handleDeleteCatalogueCategory = React.useCallback(() => {
     if (catalogueItem) {
       deleteCatalogueItem(catalogueItem.id)
         .then(() => {
-          onClose();
+          handleClose({ successfulDeletion: true });
           onChangeCatalogueItem(undefined);
         })
         .catch((error: AxiosError) => {
@@ -60,7 +63,7 @@ const DeleteCatalogueItemDialog = (props: DeleteCatalogueItemDialogProps) => {
       setError(true);
       setErrorMessage('No data provided, Please refresh and try again');
     }
-  }, [catalogueItem, deleteCatalogueItem, onChangeCatalogueItem, onClose]);
+  }, [catalogueItem, deleteCatalogueItem, handleClose, onChangeCatalogueItem]);
 
   return (
     <Dialog open={open} maxWidth="lg">
@@ -76,7 +79,9 @@ const DeleteCatalogueItemDialog = (props: DeleteCatalogueItemDialogProps) => {
         ?
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={() => handleClose({ successfulDeletion: false })}>
+          Cancel
+        </Button>
         <Button
           onClick={handleDeleteCatalogueCategory}
           disabled={isDeletePending || error}
