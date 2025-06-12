@@ -916,9 +916,11 @@ function ItemDialog(props: ItemDialogProps) {
                                   )}`}
                                   value={(propertyValue as string) ?? ''}
                                   size="small"
-                                  onChange={(_event, value) => {
-                                    onChange(String(value));
-                                  }}
+                                  onChange={(_event, value) =>
+                                    onChange(
+                                      value !== null ? String(value) : ''
+                                    )
+                                  }
                                   sx={{ alignItems: 'center' }}
                                   fullWidth
                                   options={
@@ -1058,7 +1060,7 @@ function ItemDialog(props: ItemDialogProps) {
     <Dialog
       open={open}
       maxWidth="lg"
-      PaperProps={{ sx: { height: '770px' } }}
+      PaperProps={{ sx: { height: '800px' } }}
       fullWidth
     >
       <DialogTitle>

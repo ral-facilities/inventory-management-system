@@ -554,50 +554,60 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                 <Controller
                   control={control}
                   name={`default_value`}
-                  render={({ field: { value: defaultValue, onChange } }) => {
-                    return (
-                      <Autocomplete
-                        disableClearable={property.mandatory === 'true'}
-                        componentsProps={{
-                          clearIndicator: { onClick: resetDefaultValue },
-                        }}
-                        id={crypto.randomUUID()}
-                        value={defaultValue?.value || ''}
-                        onChange={(_event, newValue) => {
-                          onChange({
-                            valueType: `${property.type}_${property.mandatory}`,
-                            value: newValue,
-                          });
-                        }}
-                        fullWidth
-                        options={
-                          property.allowed_values
-                            ? property.allowed_values.values.values.filter(
-                                (val) => val.value
-                              )
-                            : []
-                        }
-                        getOptionLabel={(option) => option.value}
-                        getOptionKey={(option) => option.av_placement_id}
-                        isOptionEqualToValue={(option, value) =>
-                          option.value === value.value || value.value === ''
-                        }
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            label="Select Default value"
-                            variant="outlined"
-                            required={property.mandatory === 'true'}
-                            error={!!errors?.default_value?.value?.value}
-                            helperText={
-                              errors?.default_value?.value?.value
-                                ?.message as string
-                            }
-                          />
-                        )}
-                      />
-                    );
-                  }}
+                  render={({ field: { value: defaultValue, onChange } }) => (
+                    <Autocomplete
+                      disableClearable={property.mandatory === 'true'}
+                      componentsProps={{
+                        clearIndicator: { onClick: resetDefaultValue },
+                      }}
+                      id={crypto.randomUUID()}
+                      value={defaultValue?.value || ''}
+                      onChange={(_event, newValue) => {
+                        onChange({
+                          valueType: `${property.type}_${property.mandatory}`,
+                          value:
+                            newValue !== null
+                              ? {
+                                  av_placement_id: newValue.av_placement_id,
+                                  value: newValue.value
+                                    ? String(newValue.value)
+                                    : '',
+                                }
+                              : null,
+                        });
+                      }}
+                      fullWidth
+                      options={
+                        property.allowed_values
+                          ? property.allowed_values.values.values.filter(
+                              (val) => val.value
+                            )
+                          : []
+                      }
+                      getOptionLabel={(option) =>
+                        option.value ? option.value.toString() : ''
+                      }
+                      getOptionKey={(option) => option.av_placement_id}
+                      isOptionEqualToValue={(option, value) =>
+                        option.value === value.value ||
+                        value.value === '' ||
+                        value.value === undefined
+                      }
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label="Select Default value"
+                          variant="outlined"
+                          required={property.mandatory === 'true'}
+                          error={!!errors?.default_value?.value?.value}
+                          helperText={
+                            errors?.default_value?.value?.value
+                              ?.message as string
+                          }
+                        />
+                      )}
+                    />
+                  )}
                 />
               ) : propertyType === CatalogueCategoryPropertyType.Boolean ? (
                 <Controller
