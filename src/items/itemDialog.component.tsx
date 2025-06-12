@@ -1084,7 +1084,7 @@ function ItemDialog(props: ItemDialogProps) {
     <Dialog
       open={open}
       maxWidth="lg"
-      PaperProps={{ sx: { height: '800px' } }}
+      PaperProps={{ sx: { height: '810px' } }}
       fullWidth
     >
       <DialogTitle>
