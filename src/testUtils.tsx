@@ -9,7 +9,6 @@ import {
   createBrowserRouter,
   createMemoryRouter,
 } from 'react-router-dom';
-import { paths } from './App';
 import {
   CatalogueCategory,
   CatalogueCategoryProperty,
@@ -21,6 +20,7 @@ import CatalogueCategoriesJSON from './mocks/CatalogueCategories.json';
 import CatalogueItemsJSON from './mocks/CatalogueItems.json';
 import ItemsJSON from './mocks/Items.json';
 import ManufacturersJSON from './mocks/Manufacturers.json';
+import { URLPathKeyType, paths } from './paths';
 
 export const createTestQueryClient = (): QueryClient =>
   new QueryClient({
@@ -39,7 +39,7 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
 function constructRouterProvider(
   ui: React.ReactNode,
   queryClient: QueryClient,
-  urlPathKey?: keyof typeof paths,
+  urlPathKey?: URLPathKeyType,
   initialEntry?: string
 ) {
   const Root: React.FunctionComponent = () => {
@@ -62,7 +62,7 @@ function constructRouterProvider(
 
 function constructRouterProviderWrapper(
   queryClient: QueryClient,
-  urlPathKey?: keyof typeof paths,
+  urlPathKey?: URLPathKeyType,
   initialEntry?: string
 ) {
   const wrapper = ({
@@ -82,7 +82,7 @@ function constructRouterProviderWrapper(
 
 export function renderComponentWithRouterProvider(
   ui: React.ReactElement,
-  urlPathKey?: keyof typeof paths,
+  urlPathKey?: URLPathKeyType,
   initialEntry?: string,
   {
     // Automatically create a query client instance if no query client was passed in
@@ -108,7 +108,7 @@ export function renderComponentWithRouterProvider(
 
 export const hooksWrapperWithProviders = (props?: {
   queryClient?: QueryClient;
-  urlPathKey?: keyof typeof paths;
+  urlPathKey?: URLPathKeyType;
   initialEntry?: string;
 }) => {
   const testQueryClient = props?.queryClient ?? createTestQueryClient();
