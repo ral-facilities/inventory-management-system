@@ -387,12 +387,17 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               if (response && error.response?.status === 409) {
                 if (response.detail.includes('child elements')) {
                   // find the name of the manufacturer, so it can be used in the error message
-                  const manufacturerName = manufacturerList?.find(
-                    (manufacturer) => manufacturer.id === selectedCatalogueItem?.manufacturer_id
-                  ) || null;
+                  const manufacturerName =
+                    manufacturerList?.find(
+                      (manufacturer) =>
+                        manufacturer.id ===
+                        selectedCatalogueItem?.manufacturer_id
+                    ) || null;
                   // add the manufacturer name into the error message
-                  const childElementsMessage = "Unable to update catalogue item properties and manufacturer ("
-                    + manufacturerName?.name + "), as the catalogue item has associated items.";
+                  const childElementsMessage =
+                    'Unable to update catalogue item properties and manufacturer (' +
+                    manufacturerName?.name +
+                    '), as the catalogue item has associated items.';
                   setErrorPropertiesStep('root.formError', {
                     message: childElementsMessage,
                   });
@@ -807,9 +812,11 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                   )}`}
                                   value={(propertyValue as string) ?? ''}
                                   size="small"
-                                  onChange={(_event, value) => {
-                                    onChange(String(value));
-                                  }}
+                                  onChange={(_event, value) =>
+                                    onChange(
+                                      value !== null ? String(value) : ''
+                                    )
+                                  }
                                   sx={{ alignItems: 'center' }}
                                   fullWidth
                                   options={
