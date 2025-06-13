@@ -13,11 +13,13 @@ import {
   ListItemText,
   MenuItem,
   Link as MuiLink,
+  Stack,
   TableCellBaseProps,
   TableRow,
   Typography,
 } from '@mui/material';
 import {
+  MRT_BottomToolbar,
   MRT_Row,
   MaterialReactTable,
   useMaterialReactTable,
@@ -166,6 +168,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   } = props;
   // Breadcrumbs + Mui table V2 + extra
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
+  const contentHeight = getPageHeightCalc('80px');
 
   const { data: catalogueItemsData, isLoading: isLoadingCatalogueItems } =
     useGetCatalogueItems(parentInfo.id);
@@ -723,6 +726,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     enableGlobalFilter: !dense,
     enableGrouping: !dense,
     enablePagination: true,
+    enableBottomToolbar: dense,
     // Other settings
     filterFns: customFilterFunctions,
     columnVirtualizerOptions: dense
@@ -786,7 +790,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           };
         },
     muiTableContainerProps: {
-      sx: { height: dense ? '360.4px' : tableHeight },
+      sx: { height: dense ? '360.4px' : tableHeight, flexShrink: 1 },
       // @ts-expect-error: MRT Table Container props does not have data-testid
       'data-testid': 'catalogue-items-table-container',
     },
@@ -803,7 +807,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       ];
       return (
         // ignore cells that render "click here"
-        (column.id === 'View Items' ||
+        column.id === 'View Items' ||
           column.id ===
             'catalogueItem.obsolete_replacement_catalogue_item_id' ||
           // Ignore MRT rendered cells e.g. expand , spacer etc
@@ -811,7 +815,9 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           // Ignore for grouped cells done manually
           ((disabledGroupedHeaderColumnIDs.some((id) => id === column.id) ||
             column.id.startsWith('catalogueItem.properties')) &&
-            column.getIsGrouped()) ? {} : {
+            column.getIsGrouped())
+          ? {}
+          : {
               component: (props: TableCellBaseProps) => {
                 return (
                   <TableBodyCellOverFlowTip
@@ -830,7 +836,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                   />
                 );
               },
-            })
+            }
       );
     },
     muiSelectCheckboxProps: dense
@@ -1020,8 +1026,17 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
 
   return (
     <div style={{ width: '100%' }}>
-      <MaterialReactTable table={table} />
-
+      <Stack
+        sx={{
+          width: '100%',
+          height: dense ? undefined : contentHeight,
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <MaterialReactTable table={table} />
+        {!dense && <MRT_BottomToolbar table={table} />}
+      </Stack>
       {!dense && (
         <>
           <DeleteCatalogueItemsDialog
