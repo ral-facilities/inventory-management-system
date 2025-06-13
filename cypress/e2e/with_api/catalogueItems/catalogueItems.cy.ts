@@ -86,7 +86,7 @@ describe('catalogue items', () => {
       'image',
       true
     );
-    setPrimaryImage(0, true);
+    setPrimaryImage(1, true);
     viewPrimaryImage();
     removePrimaryImage();
     editFile(
@@ -104,9 +104,10 @@ describe('catalogue items', () => {
     cy.findByText('Spherical Lenses').click();
     editCatalogueItem();
     duplicateCatalogueItem('Plano-Convex Lens 2');
+    duplicateCatalogueItem('Plano-Convex Lens 2');
     obsoleteCatalogueItem({
       name: 'Plano-Convex Lens 2',
-      obsolete_replacement: 'Plano-Convex Lens 2_copy_1',
+      obsolete_replacement: 'Plano-Convex Lens 2_copy_2',
       obsolete_reason: 'no longer manufactured',
       isObsolete: true,
     });
