@@ -25,14 +25,14 @@ import {
   COLUMN_FILTER_MODE_OPTIONS,
   COLUMN_FILTER_VARIANTS,
   TableBodyCellOverFlowTip,
-  TableHeaderOverflowTip,
   TableCellOverFlowTipProps,
+  TableHeaderOverflowTip,
+  customFilterFunctions,
   displayTableRowCountText,
   formatDateTimeStrings,
   getInitialColumnFilterFnState,
   getPageHeightCalc,
   mrtTheme,
-  customFilterFunctions,
 } from '../../utils';
 import DeleteUnitDialog from './deleteUnitsDialog.component.tsx';
 import UnitsDialog from './unitsDialog.component.tsx';
@@ -237,14 +237,14 @@ function Units() {
   });
 
   return (
-    <div style={{ width: '100%', height: '100%' }}>
+    <>
       <MaterialReactTable table={table} />
       <DeleteUnitDialog
         open={deleteUnitDialog}
         onClose={() => setDeleteUnitDialog(false)}
         unit={selectedUnit}
       />
-    </div>
+    </>
   );
 }
 

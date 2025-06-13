@@ -231,14 +231,14 @@ function UsageStatuses() {
   });
 
   return (
-    <div style={{ width: '100%', height: '100%' }}>
+    <>
       <MaterialReactTable table={table} />
       <DeleteUsageStatusDialog
         open={deleteUsageStatusDialog}
         onClose={() => setDeleteUsageStatusDialog(false)}
         usageStatus={selectedUsageStatus}
       />
-    </div>
+    </>
   );
 }
 
