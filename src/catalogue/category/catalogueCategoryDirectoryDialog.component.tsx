@@ -144,10 +144,11 @@ const CatalogueCategoryDirectoryDialog = (
           <Grid>
             <Box
               sx={{
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center"
-              }}>
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
               <>
                 {requestType === 'moveTo' ? 'Move ' : 'Copy '}{' '}
                 {selectedCategories.length}{' '}

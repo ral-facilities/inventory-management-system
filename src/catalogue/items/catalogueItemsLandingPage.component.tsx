@@ -77,15 +77,19 @@ function CatalogueItemsLandingPage() {
   return (
     <Stack sx={{ width: '100%' }}>
       {catalogueItemIdData && catalogueCategoryData && isParentCorrect && (
-        <Grid container size={12} sx={{
-          justifyContent: "center"
-        }}>
+        <Grid
+          container
+          size={12}
+          sx={{
+            justifyContent: 'center',
+          }}
+        >
           <Grid
             container
             size={10}
             style={{ maxWidth: '80%' }}
             sx={{
-              display: "inline-block"
+              display: 'inline-block',
             }}
           >
             {/* Image Section */}
@@ -118,10 +122,11 @@ function CatalogueItemsLandingPage() {
                   <Typography
                     variant="body1"
                     sx={{
-                      color: "text.secondary",
+                      color: 'text.secondary',
                       whiteSpace: 'pre-line',
-                      wordWrap: 'break-word'
-                    }}>
+                      wordWrap: 'break-word',
+                    }}
+                  >
                     {catalogueItemIdData.description ?? 'None'}
                   </Typography>
                 </Grid>
@@ -130,7 +135,7 @@ function CatalogueItemsLandingPage() {
                 container
                 size={{ xs: 4, sm: 'grow' }}
                 sx={{
-                  justifyContent: 'flex-end'
+                  justifyContent: 'flex-end',
                 }}
               >
                 {/* Actions Section */}
@@ -166,9 +171,14 @@ function CatalogueItemsLandingPage() {
                   value: 'Information',
                   icon: <InfoOutlinedIcon />,
                   component: (
-                    <Grid container spacing={1} size={12} sx={{
-                      mt: 1
-                    }}>
+                    <Grid
+                      container
+                      spacing={1}
+                      size={12}
+                      sx={{
+                        mt: 1,
+                      }}
+                    >
                       <Grid
                         size={12}
                         sx={{
@@ -184,26 +194,38 @@ function CatalogueItemsLandingPage() {
                       <Grid container size={12}>
                         <Grid container spacing={1}>
                           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-                            <Typography align="left" sx={{
-                              color: "text.primary"
-                            }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.primary',
+                              }}
+                            >
                               Obsolete
                             </Typography>
-                            <Typography align="left" sx={{
-                              color: "text.secondary"
-                            }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.secondary',
+                              }}
+                            >
                               {catalogueItemIdData.is_obsolete ? 'Yes' : 'No'}
                             </Typography>
                           </Grid>
                           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-                            <Typography align="left" sx={{
-                              color: "text.primary"
-                            }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.primary',
+                              }}
+                            >
                               Obsolete replacement link
                             </Typography>
-                            <Typography align="left" sx={{
-                              color: "text.secondary"
-                            }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.secondary',
+                              }}
+                            >
                               {catalogueItemIdData.obsolete_replacement_catalogue_item_id ? (
                                 <CatalogueLink
                                   catalogueItemId={
@@ -218,113 +240,155 @@ function CatalogueItemsLandingPage() {
                             </Typography>
                           </Grid>
                           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-                            <Typography align="left" sx={{
-                              color: "text.primary"
-                            }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.primary',
+                              }}
+                            >
                               Obsolete reason
                             </Typography>
                             <Typography
                               align="left"
                               sx={{
-                                color: "text.secondary",
-                                wordWrap: 'break-word'
-                              }}>
+                                color: 'text.secondary',
+                                wordWrap: 'break-word',
+                              }}
+                            >
                               {catalogueItemIdData.obsolete_reason ?? 'None'}
                             </Typography>
                           </Grid>
 
                           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-                            <Typography align="left" sx={{
-                              color: "text.primary"
-                            }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.primary',
+                              }}
+                            >
                               Cost (£)
                             </Typography>
-                            <Typography align="left" sx={{
-                              color: "text.secondary"
-                            }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.secondary',
+                              }}
+                            >
                               {catalogueItemIdData.cost_gbp ?? 'None'}
                             </Typography>
                           </Grid>
                           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-                            <Typography align="left" sx={{
-                              color: "text.primary"
-                            }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.primary',
+                              }}
+                            >
                               Cost to rework (£)
                             </Typography>
-                            <Typography align="left" sx={{
-                              color: "text.secondary"
-                            }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.secondary',
+                              }}
+                            >
                               {catalogueItemIdData.cost_to_rework_gbp ?? 'None'}
                             </Typography>
                           </Grid>
 
                           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-                            <Typography align="left" sx={{
-                              color: "text.primary"
-                            }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.primary',
+                              }}
+                            >
                               Time to replace (days)
                             </Typography>
-                            <Typography align="left" sx={{
-                              color: "text.secondary"
-                            }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.secondary',
+                              }}
+                            >
                               {catalogueItemIdData.days_to_replace ?? 'None'}
                             </Typography>
                           </Grid>
                           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-                            <Typography align="left" sx={{
-                              color: "text.primary"
-                            }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.primary',
+                              }}
+                            >
                               Time to rework (days)
                             </Typography>
-                            <Typography align="left" sx={{
-                              color: "text.secondary"
-                            }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.secondary',
+                              }}
+                            >
                               {catalogueItemIdData.days_to_rework ?? 'None'}
                             </Typography>
                           </Grid>
 
                           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-                            <Typography align="left" sx={{
-                              color: "text.primary"
-                            }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.primary',
+                              }}
+                            >
                               Expected Lifetime (days)
                             </Typography>
-                            <Typography align="left" sx={{
-                              color: "text.secondary"
-                            }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.secondary',
+                              }}
+                            >
                               {catalogueItemIdData.expected_lifetime_days ??
                                 'None'}
                             </Typography>
                           </Grid>
 
                           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-                            <Typography align="left" sx={{
-                              color: "text.primary"
-                            }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.primary',
+                              }}
+                            >
                               Drawing Number
                             </Typography>
                             <Typography
                               align="left"
                               sx={{
-                                color: "text.secondary",
-                                wordWrap: 'break-word'
-                              }}>
+                                color: 'text.secondary',
+                                wordWrap: 'break-word',
+                              }}
+                            >
                               {catalogueItemIdData.drawing_number ?? 'None'}
                             </Typography>
                           </Grid>
 
                           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-                            <Typography align="left" sx={{
-                              color: "text.primary"
-                            }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.primary',
+                              }}
+                            >
                               Drawing link
                             </Typography>
                             <Typography
                               align="left"
                               sx={{
-                                color: "text.secondary",
-                                wordWrap: 'break-word'
-                              }}>
+                                color: 'text.secondary',
+                                wordWrap: 'break-word',
+                              }}
+                            >
                               {catalogueItemIdData.drawing_link ? (
                                 <MuiLink
                                   underline="hover"
@@ -340,29 +404,39 @@ function CatalogueItemsLandingPage() {
                           </Grid>
 
                           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-                            <Typography align="left" sx={{
-                              color: "text.primary"
-                            }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.primary',
+                              }}
+                            >
                               Model Number
                             </Typography>
                             <Typography
                               align="left"
                               sx={{
-                                color: "text.secondary",
-                                wordWrap: 'break-word'
-                              }}>
+                                color: 'text.secondary',
+                                wordWrap: 'break-word',
+                              }}
+                            >
                               {catalogueItemIdData.item_model_number ?? 'None'}
                             </Typography>
                           </Grid>
                           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-                            <Typography align="left" sx={{
-                              color: "text.primary"
-                            }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.primary',
+                              }}
+                            >
                               Last Modified
                             </Typography>
-                            <Typography align="left" sx={{
-                              color: "text.secondary"
-                            }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.secondary',
+                              }}
+                            >
                               {formatDateTimeStrings(
                                 catalogueItemIdData.modified_time,
                                 true
@@ -370,14 +444,20 @@ function CatalogueItemsLandingPage() {
                             </Typography>
                           </Grid>
                           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-                            <Typography align="left" sx={{
-                              color: "text.primary"
-                            }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.primary',
+                              }}
+                            >
                               Created
                             </Typography>
-                            <Typography align="left" sx={{
-                              color: "text.secondary"
-                            }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.secondary',
+                              }}
+                            >
                               {formatDateTimeStrings(
                                 catalogueItemIdData.created_time,
                                 true
@@ -402,9 +482,12 @@ function CatalogueItemsLandingPage() {
                       <Grid container size={12} spacing={1}>
                         {catalogueItemIdData.properties.length === 0 ? (
                           <Grid>
-                            <Typography variant="body1" sx={{
-                              color: "text.secondary"
-                            }}>
+                            <Typography
+                              variant="body1"
+                              sx={{
+                                color: 'text.secondary',
+                              }}
+                            >
                               None
                             </Typography>
                           </Grid>
@@ -415,17 +498,19 @@ function CatalogueItemsLandingPage() {
                                 <Typography
                                   align="left"
                                   sx={{
-                                    color: "text.primary",
-                                    wordWrap: 'break-word'
-                                  }}>{`${property.name} ${
+                                    color: 'text.primary',
+                                    wordWrap: 'break-word',
+                                  }}
+                                >{`${property.name} ${
                                   property.unit ? `(${property.unit})` : ''
                                 }`}</Typography>
                                 <Typography
                                   align="left"
                                   sx={{
-                                    color: "text.secondary",
-                                    wordWrap: 'break-word'
-                                  }}>
+                                    color: 'text.secondary',
+                                    wordWrap: 'break-word',
+                                  }}
+                                >
                                   {property.value !== null
                                     ? String(property.value)
                                     : 'None'}
@@ -452,17 +537,21 @@ function CatalogueItemsLandingPage() {
                       {manufacturer && (
                         <Grid container size={12} spacing={1}>
                           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-                            <Typography align="left" sx={{
-                              color: "text.primary"
-                            }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.primary',
+                              }}
+                            >
                               Name
                             </Typography>
                             <Typography
                               align="left"
                               sx={{
-                                color: "text.secondary",
-                                wordWrap: 'break-word'
-                              }}>
+                                color: 'text.secondary',
+                                wordWrap: 'break-word',
+                              }}
+                            >
                               <MuiLink
                                 underline="hover"
                                 component={Link}
@@ -473,17 +562,21 @@ function CatalogueItemsLandingPage() {
                             </Typography>
                           </Grid>
                           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-                            <Typography align="left" sx={{
-                              color: "text.primary"
-                            }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.primary',
+                              }}
+                            >
                               URL
                             </Typography>
                             <Typography
                               align="left"
                               sx={{
-                                color: "text.secondary",
-                                wordWrap: 'break-word'
-                              }}>
+                                color: 'text.secondary',
+                                wordWrap: 'break-word',
+                              }}
+                            >
                               {manufacturer.url ? (
                                 <MuiLink
                                   component={Link}
@@ -499,64 +592,76 @@ function CatalogueItemsLandingPage() {
                             </Typography>
                           </Grid>
                           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-                            <Typography align="left" sx={{
-                              color: "text.primary"
-                            }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.primary',
+                              }}
+                            >
                               Telephone number
                             </Typography>
                             <Typography
                               align="left"
                               sx={{
-                                color: "text.secondary",
-                                wordWrap: 'break-word'
-                              }}>
+                                color: 'text.secondary',
+                                wordWrap: 'break-word',
+                              }}
+                            >
                               {manufacturer?.telephone ?? 'None'}
                             </Typography>
                           </Grid>
                           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-                            <Typography align="left" sx={{
-                              color: "text.primary"
-                            }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.primary',
+                              }}
+                            >
                               Address
                             </Typography>
                             <Typography
                               align="left"
                               sx={{
-                                color: "text.secondary",
-                                wordWrap: 'break-word'
-                              }}>
+                                color: 'text.secondary',
+                                wordWrap: 'break-word',
+                              }}
+                            >
                               {manufacturer?.address.address_line}
                             </Typography>
                             <Typography
                               align="left"
                               sx={{
-                                color: "text.secondary",
-                                wordWrap: 'break-word'
-                              }}>
+                                color: 'text.secondary',
+                                wordWrap: 'break-word',
+                              }}
+                            >
                               {manufacturer?.address.town}
                             </Typography>
                             <Typography
                               align="left"
                               sx={{
-                                color: "text.secondary",
-                                wordWrap: 'break-word'
-                              }}>
+                                color: 'text.secondary',
+                                wordWrap: 'break-word',
+                              }}
+                            >
                               {manufacturer?.address.county}
                             </Typography>
                             <Typography
                               align="left"
                               sx={{
-                                color: "text.secondary",
-                                wordWrap: 'break-word'
-                              }}>
+                                color: 'text.secondary',
+                                wordWrap: 'break-word',
+                              }}
+                            >
                               {manufacturer?.address.country}
                             </Typography>
                             <Typography
                               align="left"
                               sx={{
-                                color: "text.secondary",
-                                wordWrap: 'break-word'
-                              }}>
+                                color: 'text.secondary',
+                                wordWrap: 'break-word',
+                              }}
+                            >
                               {manufacturer?.address.postcode}
                             </Typography>
                           </Grid>
@@ -573,12 +678,13 @@ function CatalogueItemsLandingPage() {
                     <Typography
                       variant="body1"
                       sx={{
-                        color: "text.secondary",
+                        color: 'text.secondary',
                         mt: 1,
                         mb: 3,
                         whiteSpace: 'pre-line',
-                        wordWrap: 'break-word'
-                      }}>
+                        wordWrap: 'break-word',
+                      }}
+                    >
                       {catalogueItemIdData.notes ?? 'None'}
                     </Typography>
                   ),

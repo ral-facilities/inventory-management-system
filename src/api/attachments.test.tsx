@@ -1,7 +1,14 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import AttachmentsJSON from '../mocks/Attachments.json';
-import { CREATED_MODIFIED_TIME_VALUES, hooksWrapperWithProviders } from '../testUtils';
-import { AttachmentMetadata, AttachmentMetadataPatch, AttachmentPostMetadata } from './api.types';
+import {
+  CREATED_MODIFIED_TIME_VALUES,
+  hooksWrapperWithProviders,
+} from '../testUtils';
+import {
+  AttachmentMetadata,
+  AttachmentMetadataPatch,
+  AttachmentPostMetadata,
+} from './api.types';
 import {
   useDeleteAttachment,
   useGetAttachment,
@@ -22,7 +29,8 @@ describe('attachments api functions', () => {
         file_name: 'laser-calibration.txt',
         entity_id: '1',
         title: 'Laser Calibration',
-        description: 'Detailed report on the calibration of high-precision lasers used in experiments.',
+        description:
+          'Detailed report on the calibration of high-precision lasers used in experiments.',
       };
     });
 
@@ -80,7 +88,8 @@ describe('attachments api functions', () => {
 
       expect(result.current.data).toEqual({
         ...AttachmentsJSON[1],
-        download_url: 'http://localhost:3000/attachments/safety-protocols.pdf?text=1',
+        download_url:
+          'http://localhost:3000/attachments/safety-protocols.pdf?text=1',
       });
     });
   });

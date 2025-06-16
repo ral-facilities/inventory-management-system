@@ -85,12 +85,13 @@ function CatalogueCard(props: CatalogueCardProps) {
         </CardActions>
         <Typography
           sx={{
-            fontSize: "0.8rem",
-            color: "text.secondary",
+            fontSize: '0.8rem',
+            color: 'text.secondary',
             position: 'absolute',
             bottom: '8px',
-            right: '12px'
-          }}>
+            right: '12px',
+          }}
+        >
           {`Last modified: ${formatDateTimeStrings(card.row.original.modified_time, true)}`}
         </Typography>
       </Card>

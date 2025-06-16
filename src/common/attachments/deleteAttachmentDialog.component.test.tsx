@@ -25,7 +25,9 @@ describe('delete Attachment dialogue', () => {
   const onClose = vi.fn();
   let attachment: AttachmentMetadata;
   const createView = (): RenderResult => {
-    return renderComponentWithRouterProvider(<DeleteAttachmentDialog {...props} />);
+    return renderComponentWithRouterProvider(
+      <DeleteAttachmentDialog {...props} />
+    );
   };
 
   beforeEach(() => {

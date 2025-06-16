@@ -26,16 +26,17 @@ const ThumbnailImage = (props: ThumbnailImageProps) => {
       sx={{
         height: isPrimaryThumbnail ? '300px' : undefined,
         width: isPrimaryThumbnail ? '300px' : undefined,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-
-        border: isPrimaryThumbnail && imageError && !imageLoading
-          ? '1px dashed'
-          : undefined,
-
-        borderRadius: isPrimaryThumbnail && imageError && !imageLoading ? '8px' : undefined
-      }}>
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        border:
+          isPrimaryThumbnail && imageError && !imageLoading
+            ? '1px dashed'
+            : undefined,
+        borderRadius:
+          isPrimaryThumbnail && imageError && !imageLoading ? '8px' : undefined,
+      }}
+    >
       {imageLoading && isPrimaryThumbnail ? (
         <CircularProgress />
       ) : (

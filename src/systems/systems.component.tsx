@@ -332,27 +332,31 @@ function Systems() {
 
   return (
     <>
-      <Box sx={{
-        height: "100%"
-      }}>
+      <Box
+        sx={{
+          height: '100%',
+        }}
+      >
         <Grid
           container
           direction="row"
           sx={{
             margin: 0,
-            alignItems: "stretch"
-          }}>
+            alignItems: 'stretch',
+          }}
+        >
           <Grid
             size={{
               xs: 12,
-              md: "grow"
+              md: 'grow',
             }}
             sx={{
               minWidth: MIN_SUBSYSTEMS_WIDTH,
-              textAlign: "left",
+              textAlign: 'left',
               padding: 1,
-              paddingBottom: 0
-            }}>
+              paddingBottom: 0,
+            }}
+          >
             {subsystemsDataLoading ? (
               <Box
                 sx={{
@@ -466,18 +470,18 @@ function Systems() {
           </Grid>
           <Grid
             size={{
-              xs: "grow",
-              md: 10
+              xs: 'grow',
+              md: 10,
             }}
             sx={{
-              textAlign: "left",
+              textAlign: 'left',
               padding: 1,
-
               maxWidth: {
                 xs: '100%',
                 md: `calc(100% - ${MIN_SUBSYSTEMS_WIDTH})`,
-              }
-            }}>
+              },
+            }}
+          >
             <SystemDetails id={systemId} />
           </Grid>
         </Grid>

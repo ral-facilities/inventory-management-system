@@ -54,8 +54,9 @@ function ActionMenu(props: ActionMenuProps) {
       }}
       size={{
         xs: 12,
-        sm: "grow"
-      }}>
+        sm: 'grow',
+      }}
+    >
       <Grid>
         <Typography variant="body1" sx={{ display: 'inline-block', mr: 1 }}>
           Actions

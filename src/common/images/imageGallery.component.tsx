@@ -482,7 +482,6 @@ const ImageGallery = (props: ImageGalleryProps) => {
                     mt: 2,
                     gap: 2,
                     display: 'grid',
-
                     gridTemplateColumns: dense
                       ? 'repeat(auto-fit, minmax(200px, 1fr))'
                       : 'repeat(auto-fit, minmax(350px, 1fr))',

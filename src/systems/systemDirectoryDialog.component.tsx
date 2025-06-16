@@ -132,10 +132,11 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
           <Grid>
             <Box
               sx={{
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center"
-              }}>
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
               <>
                 {type === 'moveTo' ? 'Move ' : 'Copy '}
                 {selectedSystems.length > 1

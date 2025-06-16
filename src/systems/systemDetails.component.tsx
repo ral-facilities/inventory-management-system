@@ -104,40 +104,51 @@ function SystemDetails(props: SystemDetailsProps) {
         <Stack
           spacing={1}
           sx={{
-            width: "100%",
+            width: '100%',
             flexWrap: 'nowrap',
-            display: "flex"
-          }}>
+            display: 'flex',
+          }}
+        >
           <Grid
             container
             direction="row"
             spacing={2}
             sx={{
-              justifyContent: "space-evenly",
+              justifyContent: 'space-evenly',
               margin: 0,
-              marginTop: '8px !important'
-            }}>
+              marginTop: '8px !important',
+            }}
+          >
             <Grid size="auto">
               <PrimaryImage entityId={system.id} />
             </Grid>
             <Grid container spacing={1} size="grow">
               <Grid size={{ xs: 12, sm: 6 }}>
-                <Typography sx={{
-                  color: "text.primary"
-                }}>Location</Typography>
+                <Typography
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
+                  Location
+                </Typography>
                 <Typography
                   variant="body1"
                   sx={{
-                    color: "text.secondary",
-                    wordWrap: 'break-word'
-                  }}>
+                    color: 'text.secondary',
+                    wordWrap: 'break-word',
+                  }}
+                >
                   {system.location ?? 'None'}
                 </Typography>
               </Grid>
               <Grid size={{ xs: 12, sm: 6 }} sx={{ display: 'inline-flex' }}>
-                <Typography sx={{
-                  color: "text.primary"
-                }}>Importance</Typography>
+                <Typography
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
+                  Importance
+                </Typography>
                 <Chip
                   label={system.importance}
                   sx={() => {
@@ -154,52 +165,76 @@ function SystemDetails(props: SystemDetailsProps) {
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 6 }}>
-                <Typography sx={{
-                  color: "text.primary"
-                }}>Owner</Typography>
+                <Typography
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
+                  Owner
+                </Typography>
                 <Typography
                   variant="body1"
                   sx={{
-                    color: "text.secondary",
-                    wordWrap: 'break-word'
-                  }}>
+                    color: 'text.secondary',
+                    wordWrap: 'break-word',
+                  }}
+                >
                   {system.owner ?? 'None'}
                 </Typography>
               </Grid>
               <Grid size={{ xs: 12, sm: 6 }}>
-                <Typography sx={{
-                  color: "text.primary"
-                }}>Last modified</Typography>
-                <Typography variant="body1" sx={{
-                  color: "text.secondary"
-                }}>
+                <Typography
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
+                  Last modified
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: 'text.secondary',
+                  }}
+                >
                   {formatDateTimeStrings(system.modified_time, true)}
                 </Typography>
               </Grid>
 
               <Grid size={{ xs: 12, sm: 6 }}>
-                <Typography sx={{
-                  color: "text.primary"
-                }}>Created</Typography>
-                <Typography variant="body1" sx={{
-                  color: "text.secondary"
-                }}>
+                <Typography
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
+                  Created
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: 'text.secondary',
+                  }}
+                >
                   {formatDateTimeStrings(system.created_time, true)}
                 </Typography>
               </Grid>
             </Grid>
           </Grid>
           <Box>
-            <Typography sx={{
-              color: "text.primary"
-            }}>Description</Typography>
+            <Typography
+              sx={{
+                color: 'text.primary',
+              }}
+            >
+              Description
+            </Typography>
             <Typography
               variant="body1"
               sx={{
-                color: "text.secondary",
+                color: 'text.secondary',
                 whiteSpace: 'pre-line',
-                wordWrap: 'break-word'
-              }}>
+                wordWrap: 'break-word',
+              }}
+            >
               {system.description ?? 'None'}
             </Typography>
           </Box>
