@@ -180,7 +180,6 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           (itemData) =>
             ({
               item: itemData,
-
               catalogueItem: catalogueItemList?.find(
                 (catalogueItem) =>
                   catalogueItem?.id === itemData.catalogue_item_id
@@ -812,7 +811,6 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           : `Returned ${table.getFilteredRowModel().rows.length} out of ${(type == 'normal' ? itemsData : moveToSelectedItems)?.length} Items`}
       </Typography>
     ),
-
     renderDetailPanel: ({ row }) =>
       row.original.catalogueItem !== undefined ? (
         <ItemsDetailsPanel
