@@ -495,7 +495,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
 
   const setColumnOrder = useCallback(
     (updaterOrValue: Updater<MRT_ColumnOrderState>) => {
-      // Ignore first update (pagination and column order has a habit of being set in MRT
+      // Ignore first update (column order has a habit of being set in MRT
       // shortly after the first render with actual data even if disabled in the table itself)
       // similar to https://www.material-react-table.com/docs/guides/state-management
       if (
@@ -528,13 +528,6 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
 
   const setPagination = useCallback(
     (updaterOrValue: Updater<MRT_PaginationState>) => {
-      // Ignore first update (pagination and column order has a habit of being set in MRT
-      // shortly after the first render with actual data even if disabled in the table itself)
-      // similar to https://www.material-react-table.com/docs/guides/state-management
-      if (firstUpdate.current.p === undefined && !props?.paginationOnly) {
-        firstUpdate.current.p = getValueFromUpdater(updaterOrValue, state.p);
-        return;
-      }
       updateSearchParams((prevState: StatePartial) => {
         const newValue = getValueFromUpdater(
           updaterOrValue,
