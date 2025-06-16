@@ -113,7 +113,7 @@ exports[`Image Gallery > displays no images message and can open and close uploa
                           aria-invalid="false"
                           autocomplete="off"
                           class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12tjcea-MuiInputBase-input-MuiOutlinedInput-input"
-                          id=":r1dc:"
+                          id=":r1eg:"
                           placeholder="Search"
                           type="text"
                           value=""
@@ -683,7 +683,7 @@ exports[`Image Gallery > displays no images message and can open and close uploa
                 >
                   <label
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-10j3yc8-MuiFormLabel-root-MuiInputLabel-root"
-                    for="mrt-rows-per-page-:r1d9:"
+                    for="mrt-rows-per-page-:r1ed:"
                   >
                     Images per page
                   </label>
@@ -704,7 +704,7 @@ exports[`Image Gallery > displays no images message and can open and close uploa
                       aria-hidden="true"
                       aria-invalid="false"
                       class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
-                      id="mrt-rows-per-page-:r1d9:"
+                      id="mrt-rows-per-page-:r1ed:"
                       tabindex="-1"
                       value="18"
                     />
@@ -3092,7 +3092,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                           aria-invalid="false"
                           autocomplete="off"
                           class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12tjcea-MuiInputBase-input-MuiOutlinedInput-input"
-                          id=":r16t:"
+                          id=":r181:"
                           placeholder="Search"
                           type="text"
                           value=""
@@ -5182,7 +5182,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                 >
                   <label
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-10j3yc8-MuiFormLabel-root-MuiInputLabel-root"
-                    for="mrt-rows-per-page-:r16q:"
+                    for="mrt-rows-per-page-:r17u:"
                   >
                     Images per page
                   </label>
@@ -5203,7 +5203,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                       aria-hidden="true"
                       aria-invalid="false"
                       class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
-                      id="mrt-rows-per-page-:r16q:"
+                      id="mrt-rows-per-page-:r17u:"
                       tabindex="-1"
                       value="18"
                     />

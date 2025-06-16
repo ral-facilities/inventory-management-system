@@ -420,9 +420,9 @@ describe('CardView', () => {
 
       const dropdownButtons = await screen.findAllByTestId('FilterListIcon');
 
-      expect(dropdownButtons[3]).toBeInTheDocument();
+      expect(dropdownButtons[1]).toBeInTheDocument();
 
-      await user.click(dropdownButtons[3]);
+      await user.click(dropdownButtons[1]);
 
       const includeAnyText = await screen.findByRole('menuitem', {
         name: 'Includes any',

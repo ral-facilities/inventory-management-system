@@ -650,7 +650,7 @@ describe('Catalogue Items Table', () => {
     });
     expect(router.state.location.search).toBe('');
 
-    const globalFilter = screen.getByRole('textbox', { name: '' });
+    const globalFilter = screen.getAllByRole('textbox', { name: '' })[0];
     await user.type(globalFilter, '29');
 
     await waitFor(() => {
