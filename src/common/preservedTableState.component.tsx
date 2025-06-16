@@ -542,7 +542,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
         };
       });
     },
-    [defaultState.p, props?.paginationOnly, state.p, updateSearchParams]
+    [defaultState.p, updateSearchParams]
   );
 
   return {
