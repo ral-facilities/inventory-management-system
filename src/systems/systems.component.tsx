@@ -332,7 +332,7 @@ function Systems() {
 
   return (
     <>
-      <Box height="100%">
+      <Box>
         <Grid container margin={0} direction="row" alignItems="stretch">
           <Grid
             xs={12}
@@ -377,7 +377,7 @@ function Systems() {
                     marginBottom: 'auto',
                     flexWrap: 'no-wrap',
                     // Breadcrumbs and rest
-                    height: getPageHeightCalc('96px + 74px'),
+                    height: getPageHeightCalc('96px + 58px'),
                     // To prevent no subsystems being visible
                     minHeight: '200px',
                   }}

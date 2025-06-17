@@ -97,6 +97,10 @@ describe('delete Catalogue Category dialogue', () => {
     await waitFor(() => {
       expect(onClose).toHaveBeenCalled();
     });
+
+    expect(onClose).toHaveBeenCalledWith({
+      successfulDeletion: false,
+    });
   });
 
   it('does not close dialog on background click, or on escape key press', async () => {
@@ -139,9 +143,13 @@ describe('delete Catalogue Category dialogue', () => {
     await waitFor(() => {
       expect(onClose).toHaveBeenCalled();
     });
+
+    expect(onClose).toHaveBeenCalledWith({
+      successfulDeletion: true,
+    });
   });
 
-  it('displays error message when user tries to delete a catalogue category that has children elements', async () => {
+  it('displays error message when user tries to delete a catalogue item that has children elements', async () => {
     catalogueItem.id = '6';
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
@@ -150,7 +158,22 @@ describe('delete Catalogue Category dialogue', () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          'Catalogue item has child elements and cannot be deleted, please delete the children elements first'
+          'Catalogue item has child elements and cannot be deleted, please delete the children elements first.'
+        )
+      ).toBeInTheDocument();
+    });
+  });
+
+  it('displays error message when user tries to delete a catalogue item that is the replacement for an obsolete catalogue item', async () => {
+    catalogueItem.id = '7';
+    createView();
+    const continueButton = screen.getByRole('button', { name: 'Continue' });
+    await user.click(continueButton);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          'Catalogue item is the replacement for an obsolete catalogue item and cannot be deleted, please contact support.'
         )
       ).toBeInTheDocument();
     });

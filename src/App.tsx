@@ -51,6 +51,7 @@ import ManufacturerLayout, {
   manufacturerLayoutLoader,
 } from './manufacturer/manufacturerLayout.component';
 import ManufacturerTable from './manufacturer/manufacturerTable.component';
+import paths from './paths';
 import Preloader from './preloader/preloader.component';
 import retryIMS_APIErrors from './retryIMS_APIErrors';
 import {
@@ -65,25 +66,6 @@ import SystemsLayout, {
   systemsLayoutLoader,
 } from './systems/systemsLayout.component';
 import ViewTabs from './view/viewTabs.component';
-
-export const paths = {
-  any: '*',
-  root: '/',
-  admin: '/admin-ims',
-  adminUnits: '/admin-ims/units',
-  adminUsageStatuses: '/admin-ims/usage-statuses',
-  homepage: '/ims',
-  catalogue: '/catalogue',
-  catalogueCategories: '/catalogue/:catalogue_category_id',
-  catalogueItems: '/catalogue/:catalogue_category_id/items',
-  catalogueItem: '/catalogue/:catalogue_category_id/items/:catalogue_item_id',
-  items: '/catalogue/:catalogue_category_id/items/:catalogue_item_id/items',
-  item: '/catalogue/:catalogue_category_id/items/:catalogue_item_id/items/:item_id',
-  systems: '/systems',
-  system: '/systems/:system_id',
-  manufacturers: '/manufacturers',
-  manufacturer: '/manufacturers/:manufacturer_id',
-};
 
 export const queryClient = new QueryClient({
   queryCache: new QueryCache({

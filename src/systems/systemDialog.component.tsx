@@ -56,7 +56,13 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
   const initialSystem: SystemPost = React.useMemo(
     () =>
       isNotCreating
-        ? selectedSystem
+        ? {
+            name: selectedSystem.name,
+            description: selectedSystem.description ?? '',
+            location: selectedSystem.location ?? '',
+            owner: selectedSystem.owner ?? '',
+            importance: selectedSystem.importance,
+          }
         : {
             name: '',
             description: '',

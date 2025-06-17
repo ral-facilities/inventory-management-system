@@ -38,6 +38,7 @@ import {
   COLUMN_FILTER_MODE_OPTIONS,
   COLUMN_FILTER_VARIANTS,
   customFilterFunctions,
+  deselectRowById,
   displayTableRowCountText,
   generateUniqueName,
   getInitialColumnFilterFnState,
@@ -380,6 +381,7 @@ function CatalogueCardView() {
       variant: 'outlined',
     },
     // Functions
+    getRowId: (row) => row.id,
     ...onPreservedStatesChange,
     renderTopToolbarCustomActions: ({ table }) => (
       <Box sx={{ display: 'flex' }}>
@@ -499,7 +501,11 @@ function CatalogueCardView() {
   const isCollapsed = table.getState().showColumnFilters;
 
   const cardViewHeight = getPageHeightCalc('80px');
-
+  // Reset table sate when catalogueCategoryId changes
+  // This ensures that the table is reset when navigating to a different category
+  React.useEffect(() => {
+    table.reset();
+  }, [catalogueCategoryId, table]);
   return (
     <Paper
       component={Grid}
@@ -583,7 +589,12 @@ function CatalogueCardView() {
           />
           <DeleteCatalogueCategoryDialog
             open={menuDialogOpen === 'delete'}
-            onClose={() => setMenuDialogOpen(false)}
+            onClose={({ successfulDeletion }) => {
+              setMenuDialogOpen(false);
+              if (successfulDeletion && selectedCatalogueCategory) {
+                deselectRowById(selectedCatalogueCategory.id, table);
+              }
+            }}
             catalogueCategory={selectedCatalogueCategory}
             onChangeCatalogueCategory={setSelectedCatalogueCategory}
           />

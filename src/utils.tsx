@@ -575,3 +575,14 @@ export function parseErrorResponse(errorMessage: string): string {
 
   return returnMessage;
 }
+
+export const deselectRowById = <TData extends MRT_RowData>(
+  id: string,
+  table: MRT_TableInstance<TData>
+) => {
+  table.setRowSelection((old) => {
+    const updated: typeof old = { ...old };
+    delete updated[id];
+    return updated;
+  });
+};

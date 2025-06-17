@@ -50,7 +50,18 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   const initialManufacturer: ManufacturerPost = React.useMemo(
     () =>
       isNotCreating
-        ? selectedManufacturer
+        ? {
+            name: selectedManufacturer.name,
+            url: selectedManufacturer.url ?? '',
+            telephone: selectedManufacturer.telephone ?? '',
+            address: {
+              address_line: selectedManufacturer.address.address_line,
+              town: selectedManufacturer.address.town ?? '',
+              county: selectedManufacturer.address.county ?? '',
+              postcode: selectedManufacturer.address.postcode,
+              country: selectedManufacturer.address.country,
+            },
+          }
         : {
             name: '',
             url: '',
