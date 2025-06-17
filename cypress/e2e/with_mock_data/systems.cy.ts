@@ -216,7 +216,8 @@ describe('Systems', () => {
 
   it('should be able to navigate to an items catalogue item landing page', () => {
     cy.findByRole('cell', { name: 'Pulse Laser' }).click();
-    cy.findByText('Total Items: 57').scrollIntoView();
+    cy.findByRole('button', { name: 'Show/Hide filters' }).scrollIntoView();
+    cy.findByRole('button', { name: 'Show/Hide filters' }).click();
     cy.findAllByRole('link', { name: 'Cameras 8' }).first().click();
 
     // Check now on landing page for the catalogue item
@@ -226,6 +227,8 @@ describe('Systems', () => {
 
   it("should be able to navigate to an item's landing page", () => {
     cy.findByRole('cell', { name: 'Pulse Laser' }).click();
+    cy.findByRole('button', { name: 'Show/Hide filters' }).scrollIntoView();
+    cy.findByRole('button', { name: 'Show/Hide filters' }).click();
     cy.findAllByRole('button', { name: 'Expand' }).eq(1).scrollIntoView();
     cy.findAllByRole('button', { name: 'Expand' }).eq(1).click();
     cy.findByRole('link', { name: 'QnfSKahnQuze' }).scrollIntoView();
@@ -795,6 +798,8 @@ describe('Systems', () => {
   describe('Move', () => {
     it('moves items', () => {
       cy.findByRole('cell', { name: 'Pulse Laser' }).click();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).scrollIntoView();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).click();
       cy.findAllByRole('button', { name: 'Expand' }).eq(1).scrollIntoView();
       cy.findAllByRole('button', { name: 'Expand' }).eq(1).click();
 
@@ -857,6 +862,8 @@ describe('Systems', () => {
 
     it('display errors message and clears error message when resolved', () => {
       cy.findByRole('cell', { name: 'Pulse Laser' }).click();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).scrollIntoView();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).click();
       cy.findAllByRole('button', { name: 'Expand' }).eq(1).scrollIntoView();
       cy.findAllByRole('button', { name: 'Expand' }).eq(1).click();
 
