@@ -554,7 +554,7 @@ describe('Catalogue Items', () => {
       .should('be.visible')
       .within(() => {
         cy.contains(
-          'Catalogue item has child elements and cannot be deleted, please delete the children elements first'
+          'Catalogue item has child elements and cannot be deleted, please delete the children elements first.'
         );
       });
     cy.findByRole('button', { name: 'Continue' }).should('be.disabled');
@@ -607,12 +607,14 @@ describe('Catalogue Items', () => {
     cy.findByLabelText('Manufacturer *').type('Man{downArrow}{enter}');
     cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.findByRole('button', { name: 'Finish'}).click();
+    cy.findByRole('button', { name: 'Finish' }).click();
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.contains('Unable to update catalogue item properties and manufacturer '
-          + '(Manufacturer C), as the catalogue item has associated items.')
+        cy.contains(
+          'Unable to update catalogue item properties and manufacturer ' +
+            '(Manufacturer C), as the catalogue item has associated items.'
+        );
       });
     cy.findByRole('button', { name: 'Finish' }).should('be.disabled');
 
@@ -627,8 +629,10 @@ describe('Catalogue Items', () => {
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.contains('Unable to update catalogue item properties and manufacturer '
-          + '(Manufacturer C), as the catalogue item has associated items.')
+        cy.contains(
+          'Unable to update catalogue item properties and manufacturer ' +
+            '(Manufacturer C), as the catalogue item has associated items.'
+        );
       });
     cy.findByRole('button', { name: 'Finish' }).should('be.disabled');
   });

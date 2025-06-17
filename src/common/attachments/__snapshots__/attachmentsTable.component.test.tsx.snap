@@ -105,9 +105,9 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                       </svg>
                       <input
                         aria-invalid="false"
-                        autocomplete="off"
+                        autocomplete="new-password"
                         class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12tjcea-MuiInputBase-input-MuiOutlinedInput-input"
-                        id=":r5j:"
+                        id=":r5l:"
                         placeholder="Search"
                         type="text"
                         value=""
@@ -240,11 +240,10 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
             >
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1uucreh-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ns2vgf-MuiTableCell-root"
                 colspan="1"
                 data-index="0"
                 scope="col"
-                tabindex="0"
               >
                 <div
                   class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -265,12 +264,11 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
               </th>
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1b9izdo-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1w6iosy-MuiTableCell-root"
                 colspan="1"
                 data-can-sort="true"
                 data-index="1"
                 scope="col"
-                tabindex="0"
               >
                 <div
                   class="Mui-TableHeadCell-Content MuiBox-root css-c8wlay"
@@ -426,19 +424,19 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                             </span>
                           </div>
                           <input
-                            aria-describedby=":r62:-helper-text"
+                            aria-describedby=":r64:-helper-text"
                             aria-invalid="false"
                             aria-label="Filter by File name"
-                            autocomplete="off"
+                            autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                            id=":r62:"
+                            id=":r64:"
                             placeholder="Filter by File name"
                             title="Filter by File name"
                             type="text"
                             value=""
                           />
                           <div
-                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1exhmnf-MuiInputAdornment-root"
+                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-elo8k2-MuiInputAdornment-root"
                           >
                             <span
                               aria-label="Clear filter"
@@ -469,7 +467,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                          id=":r62:-helper-text"
+                          id=":r64:-helper-text"
                         >
                           <label>
                             Filter Mode: Fuzzy
@@ -482,12 +480,11 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
               </th>
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ul12j6-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-60dnoe-MuiTableCell-root"
                 colspan="1"
                 data-can-sort="true"
                 data-index="2"
                 scope="col"
-                tabindex="0"
               >
                 <div
                   class="Mui-TableHeadCell-Content MuiBox-root css-c8wlay"
@@ -643,19 +640,19 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                             </span>
                           </div>
                           <input
-                            aria-describedby=":r6d:-helper-text"
+                            aria-describedby=":r6f:-helper-text"
                             aria-invalid="false"
                             aria-label="Filter by Title"
-                            autocomplete="off"
+                            autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                            id=":r6d:"
+                            id=":r6f:"
                             placeholder="Filter by Title"
                             title="Filter by Title"
                             type="text"
                             value=""
                           />
                           <div
-                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1exhmnf-MuiInputAdornment-root"
+                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-elo8k2-MuiInputAdornment-root"
                           >
                             <span
                               aria-label="Clear filter"
@@ -686,7 +683,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                          id=":r6d:-helper-text"
+                          id=":r6f:-helper-text"
                         >
                           <label>
                             Filter Mode: Fuzzy
@@ -699,12 +696,11 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
               </th>
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-pp16yx-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-jwpkkx-MuiTableCell-root"
                 colspan="1"
                 data-can-sort="true"
                 data-index="3"
                 scope="col"
-                tabindex="0"
               >
                 <div
                   class="Mui-TableHeadCell-Content MuiBox-root css-c8wlay"
@@ -860,19 +856,19 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                             </span>
                           </div>
                           <input
-                            aria-describedby=":r6o:-helper-text"
+                            aria-describedby=":r6q:-helper-text"
                             aria-invalid="false"
                             aria-label="Filter by Description"
-                            autocomplete="off"
+                            autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                            id=":r6o:"
+                            id=":r6q:"
                             placeholder="Filter by Description"
                             title="Filter by Description"
                             type="text"
                             value=""
                           />
                           <div
-                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1exhmnf-MuiInputAdornment-root"
+                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-elo8k2-MuiInputAdornment-root"
                           >
                             <span
                               aria-label="Clear filter"
@@ -903,7 +899,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                          id=":r6o:-helper-text"
+                          id=":r6q:-helper-text"
                         >
                           <label>
                             Filter Mode: Fuzzy
@@ -916,12 +912,11 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
               </th>
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ls58rt-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-5b783-MuiTableCell-root"
                 colspan="1"
                 data-can-sort="true"
                 data-index="4"
                 scope="col"
-                tabindex="0"
               >
                 <div
                   class="Mui-TableHeadCell-Content MuiBox-root css-c8wlay"
@@ -1043,16 +1038,52 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                           class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w93hbh-MuiFormControl-root-MuiTextField-root"
                         >
                           <div
-                            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
+                            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                           >
+                            <div
+                              class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1nowbqt-MuiInputAdornment-root"
+                            >
+                              <span
+                                aria-hidden="true"
+                                class="notranslate"
+                              >
+                                ​
+                              </span>
+                              <span
+                                aria-label="Change filter mode"
+                                class=""
+                                data-mui-internal-clone-element="true"
+                              >
+                                <button
+                                  aria-label="Change filter mode"
+                                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-egflwm-MuiButtonBase-root-MuiIconButton-root"
+                                  tabindex="0"
+                                  type="button"
+                                >
+                                  <svg
+                                    aria-hidden="true"
+                                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                                    data-testid="FilterListIcon"
+                                    focusable="false"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <path
+                                      d="M10 18h4v-2h-4zM3 6v2h18V6zm3 7h12v-2H6z"
+                                    />
+                                  </svg>
+                                </button>
+                              </span>
+                            </div>
                             <input
-                              aria-describedby=":r73:-helper-text"
+                              aria-describedby=":r75:-helper-text"
                               aria-invalid="false"
-                              autocomplete="off"
-                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                              id=":r73:"
+                              aria-label="Min"
+                              autocomplete="new-password"
+                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
+                              id=":r75:"
                               inputmode="text"
                               placeholder="Min"
+                              title="Min"
                               type="text"
                               value=""
                             />
@@ -1080,8 +1111,8 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                             </div>
                           </div>
                           <p
-                            class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-18y2hez-MuiFormHelperText-root"
-                            id=":r73:-helper-text"
+                            class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
+                            id=":r75:-helper-text"
                           >
                             <label>
                               Filter Mode: Between Inclusive
@@ -1096,11 +1127,13 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                           >
                             <input
                               aria-invalid="false"
-                              autocomplete="off"
-                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                              id=":r76:"
+                              aria-label="Max"
+                              autocomplete="new-password"
+                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
+                              id=":r7a:"
                               inputmode="text"
                               placeholder="Max"
+                              title="Max"
                               type="text"
                               value=""
                             />
@@ -1135,12 +1168,11 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
               </th>
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1dlm72t-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1uixjsx-MuiTableCell-root"
                 colspan="1"
                 data-can-sort="true"
                 data-index="5"
                 scope="col"
-                tabindex="0"
               >
                 <div
                   class="Mui-TableHeadCell-Content MuiBox-root css-c8wlay"
@@ -1262,16 +1294,52 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                           class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w93hbh-MuiFormControl-root-MuiTextField-root"
                         >
                           <div
-                            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
+                            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                           >
+                            <div
+                              class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1nowbqt-MuiInputAdornment-root"
+                            >
+                              <span
+                                aria-hidden="true"
+                                class="notranslate"
+                              >
+                                ​
+                              </span>
+                              <span
+                                aria-label="Change filter mode"
+                                class=""
+                                data-mui-internal-clone-element="true"
+                              >
+                                <button
+                                  aria-label="Change filter mode"
+                                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-egflwm-MuiButtonBase-root-MuiIconButton-root"
+                                  tabindex="0"
+                                  type="button"
+                                >
+                                  <svg
+                                    aria-hidden="true"
+                                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                                    data-testid="FilterListIcon"
+                                    focusable="false"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <path
+                                      d="M10 18h4v-2h-4zM3 6v2h18V6zm3 7h12v-2H6z"
+                                    />
+                                  </svg>
+                                </button>
+                              </span>
+                            </div>
                             <input
-                              aria-describedby=":r7f:-helper-text"
+                              aria-describedby=":r7j:-helper-text"
                               aria-invalid="false"
-                              autocomplete="off"
-                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                              id=":r7f:"
+                              aria-label="Min"
+                              autocomplete="new-password"
+                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
+                              id=":r7j:"
                               inputmode="text"
                               placeholder="Min"
+                              title="Min"
                               type="text"
                               value=""
                             />
@@ -1299,8 +1367,8 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                             </div>
                           </div>
                           <p
-                            class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-18y2hez-MuiFormHelperText-root"
-                            id=":r7f:-helper-text"
+                            class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
+                            id=":r7j:-helper-text"
                           >
                             <label>
                               Filter Mode: Between Inclusive
@@ -1315,11 +1383,13 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                           >
                             <input
                               aria-invalid="false"
-                              autocomplete="off"
-                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                              id=":r7i:"
+                              aria-label="Max"
+                              autocomplete="new-password"
+                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
+                              id=":r7o:"
                               inputmode="text"
                               placeholder="Max"
+                              title="Max"
                               type="text"
                               value=""
                             />
@@ -1354,11 +1424,10 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
               </th>
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6pxal-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-k8m9vx-MuiTableCell-root"
                 colspan="1"
                 data-index="6"
                 scope="col"
-                tabindex="0"
               >
                 <div
                   class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -1395,6 +1464,9 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
               </td>
             </tr>
           </tbody>
+          <tfoot
+            class="MuiTableFooter-root css-13kpbyb-MuiTableFooter-root"
+          />
         </table>
       </div>
       <div
@@ -1451,7 +1523,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
               >
                 <label
                   class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-10j3yc8-MuiFormLabel-root-MuiInputLabel-root"
-                  for="mrt-rows-per-page-:r5g:"
+                  for="mrt-rows-per-page"
                 >
                   Rows per page
                 </label>
@@ -1472,7 +1544,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                     aria-hidden="true"
                     aria-invalid="false"
                     class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
-                    id="mrt-rows-per-page-:r5g:"
+                    id="mrt-rows-per-page"
                     tabindex="-1"
                     value="15"
                   />
@@ -1654,9 +1726,9 @@ exports[`Attachments Table > renders table correctly 1`] = `
                       </svg>
                       <input
                         aria-invalid="false"
-                        autocomplete="off"
+                        autocomplete="new-password"
                         class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12tjcea-MuiInputBase-input-MuiOutlinedInput-input"
-                        id=":r3:"
+                        id=":r2:"
                         placeholder="Search"
                         type="text"
                         value=""
@@ -1815,11 +1887,10 @@ exports[`Attachments Table > renders table correctly 1`] = `
             >
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1uucreh-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ns2vgf-MuiTableCell-root"
                 colspan="1"
                 data-index="0"
                 scope="col"
-                tabindex="0"
               >
                 <div
                   class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -1840,12 +1911,11 @@ exports[`Attachments Table > renders table correctly 1`] = `
               </th>
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1b9izdo-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1w6iosy-MuiTableCell-root"
                 colspan="1"
                 data-can-sort="true"
                 data-index="1"
                 scope="col"
-                tabindex="0"
               >
                 <div
                   class="Mui-TableHeadCell-Content MuiBox-root css-c8wlay"
@@ -2001,19 +2071,19 @@ exports[`Attachments Table > renders table correctly 1`] = `
                             </span>
                           </div>
                           <input
-                            aria-describedby=":ri:-helper-text"
+                            aria-describedby=":rh:-helper-text"
                             aria-invalid="false"
                             aria-label="Filter by File name"
-                            autocomplete="off"
+                            autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                            id=":ri:"
+                            id=":rh:"
                             placeholder="Filter by File name"
                             title="Filter by File name"
                             type="text"
                             value=""
                           />
                           <div
-                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1exhmnf-MuiInputAdornment-root"
+                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-elo8k2-MuiInputAdornment-root"
                           >
                             <span
                               aria-label="Clear filter"
@@ -2044,7 +2114,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                          id=":ri:-helper-text"
+                          id=":rh:-helper-text"
                         >
                           <label>
                             Filter Mode: Fuzzy
@@ -2057,12 +2127,11 @@ exports[`Attachments Table > renders table correctly 1`] = `
               </th>
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ul12j6-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-60dnoe-MuiTableCell-root"
                 colspan="1"
                 data-can-sort="true"
                 data-index="2"
                 scope="col"
-                tabindex="0"
               >
                 <div
                   class="Mui-TableHeadCell-Content MuiBox-root css-c8wlay"
@@ -2218,19 +2287,19 @@ exports[`Attachments Table > renders table correctly 1`] = `
                             </span>
                           </div>
                           <input
-                            aria-describedby=":rt:-helper-text"
+                            aria-describedby=":rs:-helper-text"
                             aria-invalid="false"
                             aria-label="Filter by Title"
-                            autocomplete="off"
+                            autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                            id=":rt:"
+                            id=":rs:"
                             placeholder="Filter by Title"
                             title="Filter by Title"
                             type="text"
                             value=""
                           />
                           <div
-                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1exhmnf-MuiInputAdornment-root"
+                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-elo8k2-MuiInputAdornment-root"
                           >
                             <span
                               aria-label="Clear filter"
@@ -2261,7 +2330,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                          id=":rt:-helper-text"
+                          id=":rs:-helper-text"
                         >
                           <label>
                             Filter Mode: Fuzzy
@@ -2274,12 +2343,11 @@ exports[`Attachments Table > renders table correctly 1`] = `
               </th>
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-pp16yx-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-jwpkkx-MuiTableCell-root"
                 colspan="1"
                 data-can-sort="true"
                 data-index="3"
                 scope="col"
-                tabindex="0"
               >
                 <div
                   class="Mui-TableHeadCell-Content MuiBox-root css-c8wlay"
@@ -2435,19 +2503,19 @@ exports[`Attachments Table > renders table correctly 1`] = `
                             </span>
                           </div>
                           <input
-                            aria-describedby=":r18:-helper-text"
+                            aria-describedby=":r17:-helper-text"
                             aria-invalid="false"
                             aria-label="Filter by Description"
-                            autocomplete="off"
+                            autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                            id=":r18:"
+                            id=":r17:"
                             placeholder="Filter by Description"
                             title="Filter by Description"
                             type="text"
                             value=""
                           />
                           <div
-                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1exhmnf-MuiInputAdornment-root"
+                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-elo8k2-MuiInputAdornment-root"
                           >
                             <span
                               aria-label="Clear filter"
@@ -2478,7 +2546,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                          id=":r18:-helper-text"
+                          id=":r17:-helper-text"
                         >
                           <label>
                             Filter Mode: Fuzzy
@@ -2491,12 +2559,11 @@ exports[`Attachments Table > renders table correctly 1`] = `
               </th>
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ls58rt-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-5b783-MuiTableCell-root"
                 colspan="1"
                 data-can-sort="true"
                 data-index="4"
                 scope="col"
-                tabindex="0"
               >
                 <div
                   class="Mui-TableHeadCell-Content MuiBox-root css-c8wlay"
@@ -2618,16 +2685,52 @@ exports[`Attachments Table > renders table correctly 1`] = `
                           class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w93hbh-MuiFormControl-root-MuiTextField-root"
                         >
                           <div
-                            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
+                            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                           >
+                            <div
+                              class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1nowbqt-MuiInputAdornment-root"
+                            >
+                              <span
+                                aria-hidden="true"
+                                class="notranslate"
+                              >
+                                ​
+                              </span>
+                              <span
+                                aria-label="Change filter mode"
+                                class=""
+                                data-mui-internal-clone-element="true"
+                              >
+                                <button
+                                  aria-label="Change filter mode"
+                                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-egflwm-MuiButtonBase-root-MuiIconButton-root"
+                                  tabindex="0"
+                                  type="button"
+                                >
+                                  <svg
+                                    aria-hidden="true"
+                                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                                    data-testid="FilterListIcon"
+                                    focusable="false"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <path
+                                      d="M10 18h4v-2h-4zM3 6v2h18V6zm3 7h12v-2H6z"
+                                    />
+                                  </svg>
+                                </button>
+                              </span>
+                            </div>
                             <input
-                              aria-describedby=":r1j:-helper-text"
+                              aria-describedby=":r1i:-helper-text"
                               aria-invalid="false"
-                              autocomplete="off"
-                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                              id=":r1j:"
+                              aria-label="Min"
+                              autocomplete="new-password"
+                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
+                              id=":r1i:"
                               inputmode="text"
                               placeholder="Min"
+                              title="Min"
                               type="text"
                               value=""
                             />
@@ -2655,8 +2758,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                             </div>
                           </div>
                           <p
-                            class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-18y2hez-MuiFormHelperText-root"
-                            id=":r1j:-helper-text"
+                            class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
+                            id=":r1i:-helper-text"
                           >
                             <label>
                               Filter Mode: Between Inclusive
@@ -2671,11 +2774,13 @@ exports[`Attachments Table > renders table correctly 1`] = `
                           >
                             <input
                               aria-invalid="false"
-                              autocomplete="off"
-                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                              id=":r1m:"
+                              aria-label="Max"
+                              autocomplete="new-password"
+                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
+                              id=":r1n:"
                               inputmode="text"
                               placeholder="Max"
+                              title="Max"
                               type="text"
                               value=""
                             />
@@ -2710,12 +2815,11 @@ exports[`Attachments Table > renders table correctly 1`] = `
               </th>
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1dlm72t-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1uixjsx-MuiTableCell-root"
                 colspan="1"
                 data-can-sort="true"
                 data-index="5"
                 scope="col"
-                tabindex="0"
               >
                 <div
                   class="Mui-TableHeadCell-Content MuiBox-root css-c8wlay"
@@ -2837,16 +2941,52 @@ exports[`Attachments Table > renders table correctly 1`] = `
                           class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w93hbh-MuiFormControl-root-MuiTextField-root"
                         >
                           <div
-                            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
+                            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                           >
+                            <div
+                              class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1nowbqt-MuiInputAdornment-root"
+                            >
+                              <span
+                                aria-hidden="true"
+                                class="notranslate"
+                              >
+                                ​
+                              </span>
+                              <span
+                                aria-label="Change filter mode"
+                                class=""
+                                data-mui-internal-clone-element="true"
+                              >
+                                <button
+                                  aria-label="Change filter mode"
+                                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-egflwm-MuiButtonBase-root-MuiIconButton-root"
+                                  tabindex="0"
+                                  type="button"
+                                >
+                                  <svg
+                                    aria-hidden="true"
+                                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                                    data-testid="FilterListIcon"
+                                    focusable="false"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <path
+                                      d="M10 18h4v-2h-4zM3 6v2h18V6zm3 7h12v-2H6z"
+                                    />
+                                  </svg>
+                                </button>
+                              </span>
+                            </div>
                             <input
-                              aria-describedby=":r1v:-helper-text"
+                              aria-describedby=":r20:-helper-text"
                               aria-invalid="false"
-                              autocomplete="off"
-                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                              id=":r1v:"
+                              aria-label="Min"
+                              autocomplete="new-password"
+                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
+                              id=":r20:"
                               inputmode="text"
                               placeholder="Min"
+                              title="Min"
                               type="text"
                               value=""
                             />
@@ -2874,8 +3014,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                             </div>
                           </div>
                           <p
-                            class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-18y2hez-MuiFormHelperText-root"
-                            id=":r1v:-helper-text"
+                            class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
+                            id=":r20:-helper-text"
                           >
                             <label>
                               Filter Mode: Between Inclusive
@@ -2890,11 +3030,13 @@ exports[`Attachments Table > renders table correctly 1`] = `
                           >
                             <input
                               aria-invalid="false"
-                              autocomplete="off"
-                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                              id=":r22:"
+                              aria-label="Max"
+                              autocomplete="new-password"
+                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
+                              id=":r25:"
                               inputmode="text"
                               placeholder="Max"
+                              title="Max"
                               type="text"
                               value=""
                             />
@@ -2929,11 +3071,10 @@ exports[`Attachments Table > renders table correctly 1`] = `
               </th>
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6pxal-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-k8m9vx-MuiTableCell-root"
                 colspan="1"
                 data-index="6"
                 scope="col"
-                tabindex="0"
               >
                 <div
                   class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -2962,9 +3103,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lcxgoh-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xsahdd-MuiTableCell-root"
                 data-index="0"
-                tabindex="0"
               >
                 <button
                   aria-label="Row Actions"
@@ -2987,9 +3127,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-renti5-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-lqmkki-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
-                tabindex="0"
               >
                 <div
                   aria-label="safety-protocols.pdf"
@@ -3001,9 +3140,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ovvc66-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1aw4u51-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
-                tabindex="0"
               >
                 <div
                   aria-label="Safety Protocols"
@@ -3015,9 +3153,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-25jm0l-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yk23ku-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
-                tabindex="0"
               >
                 <div
                   aria-label="Comprehensive guide outlining safety protocols and procedures for conducting experiments."
@@ -3029,9 +3166,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ygmulr-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-mqjoqz-MuiTableCell-root-MuiTableCell-root"
                 data-index="4"
-                tabindex="0"
               >
                 <div
                   class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
@@ -3042,9 +3178,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xbikvd-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1m94i54-MuiTableCell-root-MuiTableCell-root"
                 data-index="5"
-                tabindex="0"
               >
                 <div
                   class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
@@ -3055,9 +3190,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pcje0t-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-x1gmwg-MuiTableCell-root"
                 data-index="6"
-                tabindex="0"
               />
             </tr>
             <tr
@@ -3067,9 +3201,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lcxgoh-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xsahdd-MuiTableCell-root"
                 data-index="0"
-                tabindex="0"
               >
                 <button
                   aria-label="Row Actions"
@@ -3092,9 +3225,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-renti5-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-lqmkki-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
-                tabindex="0"
               >
                 <div
                   aria-label="camera-setup-guide.docx"
@@ -3106,9 +3238,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ovvc66-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1aw4u51-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
-                tabindex="0"
               >
                 <div
                   aria-label="Camera Setup Guide"
@@ -3120,9 +3251,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-25jm0l-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yk23ku-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
-                tabindex="0"
               >
                 <div
                   aria-label="Guide providing instructions for setting up and configuring cameras used in experiments."
@@ -3134,9 +3264,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ygmulr-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-mqjoqz-MuiTableCell-root-MuiTableCell-root"
                 data-index="4"
-                tabindex="0"
               >
                 <div
                   class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
@@ -3147,9 +3276,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xbikvd-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1m94i54-MuiTableCell-root-MuiTableCell-root"
                 data-index="5"
-                tabindex="0"
               >
                 <div
                   class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
@@ -3160,9 +3288,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pcje0t-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-x1gmwg-MuiTableCell-root"
                 data-index="6"
-                tabindex="0"
               />
             </tr>
             <tr
@@ -3172,9 +3299,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lcxgoh-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xsahdd-MuiTableCell-root"
                 data-index="0"
-                tabindex="0"
               >
                 <button
                   aria-label="Row Actions"
@@ -3197,9 +3323,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-renti5-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-lqmkki-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
-                tabindex="0"
               >
                 <div
                   aria-label="experiment-results.rtf"
@@ -3211,9 +3336,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ovvc66-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1aw4u51-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
-                tabindex="0"
               >
                 <div
                   aria-label="Experiment Results"
@@ -3225,9 +3349,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-25jm0l-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yk23ku-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
-                tabindex="0"
               >
                 <div
                   aria-label="Compilation of results from various experiments conducted, including data analysis and graphs"
@@ -3239,9 +3362,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ygmulr-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-mqjoqz-MuiTableCell-root-MuiTableCell-root"
                 data-index="4"
-                tabindex="0"
               >
                 <div
                   class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
@@ -3252,9 +3374,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xbikvd-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1m94i54-MuiTableCell-root-MuiTableCell-root"
                 data-index="5"
-                tabindex="0"
               >
                 <div
                   class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
@@ -3265,9 +3386,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pcje0t-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-x1gmwg-MuiTableCell-root"
                 data-index="6"
-                tabindex="0"
               />
             </tr>
             <tr
@@ -3277,9 +3397,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lcxgoh-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xsahdd-MuiTableCell-root"
                 data-index="0"
-                tabindex="0"
               >
                 <button
                   aria-label="Row Actions"
@@ -3302,9 +3421,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-renti5-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-lqmkki-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
-                tabindex="0"
               >
                 <div
                   aria-label="laser-calibration.txt"
@@ -3316,9 +3434,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ovvc66-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1aw4u51-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
-                tabindex="0"
               >
                 <div
                   aria-label="Laser Calibration"
@@ -3330,9 +3447,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-25jm0l-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yk23ku-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
-                tabindex="0"
               >
                 <div
                   aria-label="Detailed report on the calibration of high-precision lasers used in experiments."
@@ -3344,9 +3460,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ygmulr-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-mqjoqz-MuiTableCell-root-MuiTableCell-root"
                 data-index="4"
-                tabindex="0"
               >
                 <div
                   class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
@@ -3357,9 +3472,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xbikvd-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1m94i54-MuiTableCell-root-MuiTableCell-root"
                 data-index="5"
-                tabindex="0"
               >
                 <div
                   class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
@@ -3370,9 +3484,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pcje0t-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-x1gmwg-MuiTableCell-root"
                 data-index="6"
-                tabindex="0"
               />
             </tr>
             <tr
@@ -3382,9 +3495,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lcxgoh-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xsahdd-MuiTableCell-root"
                 data-index="0"
-                tabindex="0"
               >
                 <button
                   aria-label="Row Actions"
@@ -3407,9 +3519,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-renti5-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-lqmkki-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
-                tabindex="0"
               >
                 <div
                   aria-label="safety-protocols.pdf"
@@ -3421,9 +3532,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ovvc66-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1aw4u51-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
-                tabindex="0"
               >
                 <div
                   aria-label="Safety Protocols"
@@ -3435,9 +3545,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-25jm0l-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yk23ku-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
-                tabindex="0"
               >
                 <div
                   aria-label="Comprehensive guide outlining safety protocols and procedures for conducting experiments."
@@ -3449,9 +3558,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ygmulr-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-mqjoqz-MuiTableCell-root-MuiTableCell-root"
                 data-index="4"
-                tabindex="0"
               >
                 <div
                   class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
@@ -3462,9 +3570,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xbikvd-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1m94i54-MuiTableCell-root-MuiTableCell-root"
                 data-index="5"
-                tabindex="0"
               >
                 <div
                   class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
@@ -3475,9 +3582,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pcje0t-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-x1gmwg-MuiTableCell-root"
                 data-index="6"
-                tabindex="0"
               />
             </tr>
             <tr
@@ -3487,9 +3593,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lcxgoh-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xsahdd-MuiTableCell-root"
                 data-index="0"
-                tabindex="0"
               >
                 <button
                   aria-label="Row Actions"
@@ -3512,9 +3617,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-renti5-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-lqmkki-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
-                tabindex="0"
               >
                 <div
                   aria-label="camera-setup-guide.docx"
@@ -3526,9 +3630,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ovvc66-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1aw4u51-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
-                tabindex="0"
               >
                 <div
                   aria-label="Camera Setup Guide"
@@ -3540,9 +3643,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-25jm0l-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yk23ku-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
-                tabindex="0"
               >
                 <div
                   aria-label="Guide providing instructions for setting up and configuring cameras used in experiments."
@@ -3554,9 +3656,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ygmulr-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-mqjoqz-MuiTableCell-root-MuiTableCell-root"
                 data-index="4"
-                tabindex="0"
               >
                 <div
                   class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
@@ -3567,9 +3668,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xbikvd-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1m94i54-MuiTableCell-root-MuiTableCell-root"
                 data-index="5"
-                tabindex="0"
               >
                 <div
                   class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
@@ -3580,9 +3680,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pcje0t-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-x1gmwg-MuiTableCell-root"
                 data-index="6"
-                tabindex="0"
               />
             </tr>
             <tr
@@ -3592,9 +3691,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lcxgoh-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xsahdd-MuiTableCell-root"
                 data-index="0"
-                tabindex="0"
               >
                 <button
                   aria-label="Row Actions"
@@ -3617,9 +3715,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-renti5-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-lqmkki-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
-                tabindex="0"
               >
                 <div
                   aria-label="experiment-results.rtf"
@@ -3631,9 +3728,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ovvc66-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1aw4u51-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
-                tabindex="0"
               >
                 <div
                   aria-label="Experiment Results"
@@ -3645,9 +3741,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-25jm0l-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yk23ku-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
-                tabindex="0"
               >
                 <div
                   aria-label="Compilation of results from various experiments conducted, including data analysis and graphs"
@@ -3659,9 +3754,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ygmulr-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-mqjoqz-MuiTableCell-root-MuiTableCell-root"
                 data-index="4"
-                tabindex="0"
               >
                 <div
                   class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
@@ -3672,9 +3766,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xbikvd-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1m94i54-MuiTableCell-root-MuiTableCell-root"
                 data-index="5"
-                tabindex="0"
               >
                 <div
                   class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
@@ -3685,9 +3778,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pcje0t-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-x1gmwg-MuiTableCell-root"
                 data-index="6"
-                tabindex="0"
               />
             </tr>
             <tr
@@ -3697,9 +3789,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lcxgoh-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xsahdd-MuiTableCell-root"
                 data-index="0"
-                tabindex="0"
               >
                 <button
                   aria-label="Row Actions"
@@ -3722,9 +3813,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-renti5-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-lqmkki-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
-                tabindex="0"
               >
                 <div
                   aria-label="laser-calibration.txt"
@@ -3736,9 +3826,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ovvc66-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1aw4u51-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
-                tabindex="0"
               >
                 <div
                   aria-label="Laser Calibration"
@@ -3750,9 +3839,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-25jm0l-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yk23ku-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
-                tabindex="0"
               >
                 <div
                   aria-label="Detailed report on the calibration of high-precision lasers used in experiments."
@@ -3764,9 +3852,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ygmulr-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-mqjoqz-MuiTableCell-root-MuiTableCell-root"
                 data-index="4"
-                tabindex="0"
               >
                 <div
                   class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
@@ -3777,9 +3864,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xbikvd-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1m94i54-MuiTableCell-root-MuiTableCell-root"
                 data-index="5"
-                tabindex="0"
               >
                 <div
                   class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
@@ -3790,9 +3876,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pcje0t-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-x1gmwg-MuiTableCell-root"
                 data-index="6"
-                tabindex="0"
               />
             </tr>
             <tr
@@ -3802,9 +3887,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lcxgoh-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xsahdd-MuiTableCell-root"
                 data-index="0"
-                tabindex="0"
               >
                 <button
                   aria-label="Row Actions"
@@ -3827,9 +3911,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-renti5-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-lqmkki-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
-                tabindex="0"
               >
                 <div
                   aria-label="safety-protocols.pdf"
@@ -3841,9 +3924,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ovvc66-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1aw4u51-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
-                tabindex="0"
               >
                 <div
                   aria-label="Safety Protocols"
@@ -3855,9 +3937,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-25jm0l-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yk23ku-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
-                tabindex="0"
               >
                 <div
                   aria-label="Comprehensive guide outlining safety protocols and procedures for conducting experiments."
@@ -3869,9 +3950,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ygmulr-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-mqjoqz-MuiTableCell-root-MuiTableCell-root"
                 data-index="4"
-                tabindex="0"
               >
                 <div
                   class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
@@ -3882,9 +3962,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xbikvd-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1m94i54-MuiTableCell-root-MuiTableCell-root"
                 data-index="5"
-                tabindex="0"
               >
                 <div
                   class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
@@ -3895,9 +3974,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pcje0t-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-x1gmwg-MuiTableCell-root"
                 data-index="6"
-                tabindex="0"
               />
             </tr>
             <tr
@@ -3907,9 +3985,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lcxgoh-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xsahdd-MuiTableCell-root"
                 data-index="0"
-                tabindex="0"
               >
                 <button
                   aria-label="Row Actions"
@@ -3932,9 +4009,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-renti5-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-lqmkki-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
-                tabindex="0"
               >
                 <div
                   aria-label="camera-setup-guide.docx"
@@ -3946,9 +4022,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ovvc66-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1aw4u51-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
-                tabindex="0"
               >
                 <div
                   aria-label="Camera Setup Guide"
@@ -3960,9 +4035,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-25jm0l-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yk23ku-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
-                tabindex="0"
               >
                 <div
                   aria-label="Guide providing instructions for setting up and configuring cameras used in experiments."
@@ -3974,9 +4048,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ygmulr-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-mqjoqz-MuiTableCell-root-MuiTableCell-root"
                 data-index="4"
-                tabindex="0"
               >
                 <div
                   class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
@@ -3987,9 +4060,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xbikvd-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1m94i54-MuiTableCell-root-MuiTableCell-root"
                 data-index="5"
-                tabindex="0"
               >
                 <div
                   class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
@@ -4000,9 +4072,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pcje0t-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-x1gmwg-MuiTableCell-root"
                 data-index="6"
-                tabindex="0"
               />
             </tr>
             <tr
@@ -4012,9 +4083,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lcxgoh-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xsahdd-MuiTableCell-root"
                 data-index="0"
-                tabindex="0"
               >
                 <button
                   aria-label="Row Actions"
@@ -4037,9 +4107,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-renti5-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-lqmkki-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
-                tabindex="0"
               >
                 <div
                   aria-label="experiment-results.rtf"
@@ -4051,9 +4120,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ovvc66-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1aw4u51-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
-                tabindex="0"
               >
                 <div
                   aria-label="Experiment Results"
@@ -4065,9 +4133,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-25jm0l-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yk23ku-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
-                tabindex="0"
               >
                 <div
                   aria-label="Compilation of results from various experiments conducted, including data analysis and graphs"
@@ -4079,9 +4146,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ygmulr-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-mqjoqz-MuiTableCell-root-MuiTableCell-root"
                 data-index="4"
-                tabindex="0"
               >
                 <div
                   class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
@@ -4092,9 +4158,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xbikvd-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1m94i54-MuiTableCell-root-MuiTableCell-root"
                 data-index="5"
-                tabindex="0"
               >
                 <div
                   class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
@@ -4105,9 +4170,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pcje0t-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-x1gmwg-MuiTableCell-root"
                 data-index="6"
-                tabindex="0"
               />
             </tr>
             <tr
@@ -4117,9 +4181,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lcxgoh-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xsahdd-MuiTableCell-root"
                 data-index="0"
-                tabindex="0"
               >
                 <button
                   aria-label="Row Actions"
@@ -4142,9 +4205,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-renti5-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-lqmkki-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
-                tabindex="0"
               >
                 <div
                   aria-label="laser-calibration.txt"
@@ -4156,9 +4218,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ovvc66-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1aw4u51-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
-                tabindex="0"
               >
                 <div
                   aria-label="Laser Calibration"
@@ -4170,9 +4231,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-25jm0l-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yk23ku-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
-                tabindex="0"
               >
                 <div
                   aria-label="Detailed report on the calibration of high-precision lasers used in experiments."
@@ -4184,9 +4244,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ygmulr-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-mqjoqz-MuiTableCell-root-MuiTableCell-root"
                 data-index="4"
-                tabindex="0"
               >
                 <div
                   class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
@@ -4197,9 +4256,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xbikvd-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1m94i54-MuiTableCell-root-MuiTableCell-root"
                 data-index="5"
-                tabindex="0"
               >
                 <div
                   class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
@@ -4210,9 +4268,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pcje0t-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-x1gmwg-MuiTableCell-root"
                 data-index="6"
-                tabindex="0"
               />
             </tr>
             <tr
@@ -4222,9 +4279,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lcxgoh-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xsahdd-MuiTableCell-root"
                 data-index="0"
-                tabindex="0"
               >
                 <button
                   aria-label="Row Actions"
@@ -4247,9 +4303,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-renti5-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-lqmkki-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
-                tabindex="0"
               >
                 <div
                   aria-label="safety-protocols.pdf"
@@ -4261,9 +4316,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ovvc66-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1aw4u51-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
-                tabindex="0"
               >
                 <div
                   aria-label="Safety Protocols"
@@ -4275,9 +4329,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-25jm0l-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yk23ku-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
-                tabindex="0"
               >
                 <div
                   aria-label="Comprehensive guide outlining safety protocols and procedures for conducting experiments."
@@ -4289,9 +4342,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ygmulr-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-mqjoqz-MuiTableCell-root-MuiTableCell-root"
                 data-index="4"
-                tabindex="0"
               >
                 <div
                   class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
@@ -4302,9 +4354,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xbikvd-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1m94i54-MuiTableCell-root-MuiTableCell-root"
                 data-index="5"
-                tabindex="0"
               >
                 <div
                   class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
@@ -4315,9 +4366,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pcje0t-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-x1gmwg-MuiTableCell-root"
                 data-index="6"
-                tabindex="0"
               />
             </tr>
             <tr
@@ -4327,9 +4377,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lcxgoh-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xsahdd-MuiTableCell-root"
                 data-index="0"
-                tabindex="0"
               >
                 <button
                   aria-label="Row Actions"
@@ -4352,9 +4401,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-renti5-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-lqmkki-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
-                tabindex="0"
               >
                 <div
                   aria-label="camera-setup-guide.docx"
@@ -4366,9 +4414,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ovvc66-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1aw4u51-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
-                tabindex="0"
               >
                 <div
                   aria-label="Camera Setup Guide"
@@ -4380,9 +4427,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-25jm0l-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yk23ku-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
-                tabindex="0"
               >
                 <div
                   aria-label="Guide providing instructions for setting up and configuring cameras used in experiments."
@@ -4394,9 +4440,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ygmulr-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-mqjoqz-MuiTableCell-root-MuiTableCell-root"
                 data-index="4"
-                tabindex="0"
               >
                 <div
                   class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
@@ -4407,9 +4452,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xbikvd-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1m94i54-MuiTableCell-root-MuiTableCell-root"
                 data-index="5"
-                tabindex="0"
               >
                 <div
                   class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
@@ -4420,9 +4464,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pcje0t-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-x1gmwg-MuiTableCell-root"
                 data-index="6"
-                tabindex="0"
               />
             </tr>
             <tr
@@ -4432,9 +4475,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lcxgoh-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xsahdd-MuiTableCell-root"
                 data-index="0"
-                tabindex="0"
               >
                 <button
                   aria-label="Row Actions"
@@ -4457,9 +4499,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-renti5-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-lqmkki-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
-                tabindex="0"
               >
                 <div
                   aria-label="experiment-results.rtf"
@@ -4471,9 +4512,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ovvc66-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1aw4u51-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
-                tabindex="0"
               >
                 <div
                   aria-label="Experiment Results"
@@ -4485,9 +4525,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-25jm0l-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yk23ku-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
-                tabindex="0"
               >
                 <div
                   aria-label="Compilation of results from various experiments conducted, including data analysis and graphs"
@@ -4499,9 +4538,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ygmulr-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-mqjoqz-MuiTableCell-root-MuiTableCell-root"
                 data-index="4"
-                tabindex="0"
               >
                 <div
                   class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
@@ -4512,9 +4550,8 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xbikvd-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1m94i54-MuiTableCell-root-MuiTableCell-root"
                 data-index="5"
-                tabindex="0"
               >
                 <div
                   class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
@@ -4525,12 +4562,14 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pcje0t-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-x1gmwg-MuiTableCell-root"
                 data-index="6"
-                tabindex="0"
               />
             </tr>
           </tbody>
+          <tfoot
+            class="MuiTableFooter-root css-13kpbyb-MuiTableFooter-root"
+          />
         </table>
       </div>
       <div
@@ -4613,7 +4652,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
               >
                 <label
                   class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-10j3yc8-MuiFormLabel-root-MuiInputLabel-root"
-                  for="mrt-rows-per-page-:r0:"
+                  for="mrt-rows-per-page"
                 >
                   Rows per page
                 </label>
@@ -4634,7 +4673,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                     aria-hidden="true"
                     aria-invalid="false"
                     class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
-                    id="mrt-rows-per-page-:r0:"
+                    id="mrt-rows-per-page"
                     tabindex="-1"
                     value="15"
                   />

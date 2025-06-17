@@ -73,7 +73,9 @@ function SystemDetails(props: SystemDetailsProps) {
         sx={{
           display: 'flex',
           alignItems: 'center',
-          my: 0.625,
+          ...(system !== undefined
+            ? { mt: 0.525, mb: 0.755 }
+            : { mt: 0.525, mb: 1.455 }),
         }}
         spacing={1}
       >

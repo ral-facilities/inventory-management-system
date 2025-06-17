@@ -2,15 +2,15 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { CatalogueCategory } from '../../api/api.types';
-import { paths } from '../../App';
 import { server } from '../../mocks/server';
+import { URLPathKeyType } from '../../paths';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 import CardView from './catalogueCardView.component';
 
 describe('CardView', () => {
   let user: UserEvent;
 
-  const createView = (path?: string, urlPathKey?: keyof typeof paths) => {
+  const createView = (path?: string, urlPathKey?: URLPathKeyType) => {
     return renderComponentWithRouterProvider(
       <CardView />,
       urlPathKey || 'catalogue',

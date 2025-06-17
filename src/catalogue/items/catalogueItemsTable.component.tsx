@@ -49,6 +49,7 @@ import {
   TableGroupedCell,
   TableHeaderOverflowTip,
   customFilterFunctions,
+  deselectRowById,
   displayTableRowCountText,
   formatDateTimeStrings,
   generateUniqueName,
@@ -1041,7 +1042,12 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         <>
           <DeleteCatalogueItemsDialog
             open={deleteItemDialogOpen}
-            onClose={() => setDeleteItemDialogOpen(false)}
+            onClose={({ successfulDeletion }) => {
+              setDeleteItemDialogOpen(false);
+              if (successfulDeletion && selectedCatalogueItem) {
+                deselectRowById(selectedCatalogueItem.id, table);
+              }
+            }}
             catalogueItem={selectedCatalogueItem}
             onChangeCatalogueItem={setSelectedCatalogueItem}
           />

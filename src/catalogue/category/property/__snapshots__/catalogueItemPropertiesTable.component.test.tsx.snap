@@ -107,9 +107,9 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                       </svg>
                       <input
                         aria-invalid="false"
-                        autocomplete="off"
+                        autocomplete="new-password"
                         class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12tjcea-MuiInputBase-input-MuiOutlinedInput-input"
-                        id=":r3:"
+                        id=":r2:"
                         placeholder="Search"
                         type="text"
                         value=""
@@ -224,11 +224,10 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
             >
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1uucreh-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ns2vgf-MuiTableCell-root"
                 colspan="1"
                 data-index="0"
                 scope="col"
-                tabindex="0"
               >
                 <div
                   class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -249,12 +248,11 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
               </th>
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1b9izdo-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1w6iosy-MuiTableCell-root"
                 colspan="1"
                 data-can-sort="true"
                 data-index="1"
                 scope="col"
-                tabindex="0"
               >
                 <div
                   class="Mui-TableHeadCell-Content MuiBox-root css-c8wlay"
@@ -390,19 +388,19 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                             </span>
                           </div>
                           <input
-                            aria-describedby=":re:-helper-text"
+                            aria-describedby=":rd:-helper-text"
                             aria-invalid="false"
                             aria-label="Filter by Name"
-                            autocomplete="off"
+                            autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                            id=":re:"
+                            id=":rd:"
                             placeholder="Filter by Name"
                             title="Filter by Name"
                             type="text"
                             value=""
                           />
                           <div
-                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1exhmnf-MuiInputAdornment-root"
+                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-elo8k2-MuiInputAdornment-root"
                           >
                             <span
                               aria-label="Clear filter"
@@ -433,7 +431,7 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                          id=":re:-helper-text"
+                          id=":rd:-helper-text"
                         >
                           <label>
                             Filter Mode: Fuzzy
@@ -446,12 +444,11 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
               </th>
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1mf9tlw-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-gtbhql-MuiTableCell-root"
                 colspan="1"
                 data-can-sort="true"
                 data-index="2"
                 scope="col"
-                tabindex="0"
               >
                 <div
                   class="Mui-TableHeadCell-Content MuiBox-root css-c8wlay"
@@ -607,13 +604,13 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                             </span>
                           </div>
                           <div
-                            aria-describedby=":rp:-helper-text"
+                            aria-describedby=":ro:-helper-text"
                             aria-expanded="false"
                             aria-haspopup="listbox"
                             aria-label="Filter by Type"
-                            aria-labelledby=":rp:"
+                            aria-labelledby=":ro:"
                             class="MuiSelect-select MuiSelect-standard MuiSelect-multiple MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-10y8whu-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                            id=":rp:"
+                            id=":ro:"
                             role="combobox"
                             tabindex="0"
                           >
@@ -626,7 +623,7 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                           <input
                             aria-hidden="true"
                             aria-invalid="false"
-                            autocomplete="off"
+                            autocomplete="new-password"
                             class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
                             tabindex="-1"
                             title="Filter by Type"
@@ -644,7 +641,7 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                             />
                           </svg>
                           <div
-                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-atf1rt-MuiInputAdornment-root"
+                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-a3s2kv-MuiInputAdornment-root"
                           >
                             <span
                               aria-label="Clear filter"
@@ -675,7 +672,7 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                          id=":rp:-helper-text"
+                          id=":ro:-helper-text"
                         >
                           <label>
                             Filter Mode: Includes any
@@ -688,12 +685,11 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
               </th>
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-73zhjy-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1sa0t0n-MuiTableCell-root"
                 colspan="1"
                 data-can-sort="true"
                 data-index="3"
                 scope="col"
-                tabindex="0"
               >
                 <div
                   class="Mui-TableHeadCell-Content MuiBox-root css-c8wlay"
@@ -829,13 +825,13 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                             </span>
                           </div>
                           <div
-                            aria-describedby=":r13:-helper-text"
+                            aria-describedby=":r12:-helper-text"
                             aria-expanded="false"
                             aria-haspopup="listbox"
                             aria-label="Filter by Allowed values"
-                            aria-labelledby=":r13:"
+                            aria-labelledby=":r12:"
                             class="MuiSelect-select MuiSelect-standard MuiSelect-multiple MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-10y8whu-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                            id=":r13:"
+                            id=":r12:"
                             role="combobox"
                             tabindex="0"
                           >
@@ -848,7 +844,7 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                           <input
                             aria-hidden="true"
                             aria-invalid="false"
-                            autocomplete="off"
+                            autocomplete="new-password"
                             class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
                             tabindex="-1"
                             title="Filter by Allowed values"
@@ -866,7 +862,7 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                             />
                           </svg>
                           <div
-                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-atf1rt-MuiInputAdornment-root"
+                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-a3s2kv-MuiInputAdornment-root"
                           >
                             <span
                               aria-label="Clear filter"
@@ -897,7 +893,7 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                          id=":r13:-helper-text"
+                          id=":r12:-helper-text"
                         >
                           <label>
                             Filter Mode: Includes any
@@ -910,12 +906,11 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
               </th>
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17cycfv-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-18881ba-MuiTableCell-root"
                 colspan="1"
                 data-can-sort="true"
                 data-index="4"
                 scope="col"
-                tabindex="0"
               >
                 <div
                   class="Mui-TableHeadCell-Content MuiBox-root css-c8wlay"
@@ -1071,13 +1066,13 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                             </span>
                           </div>
                           <div
-                            aria-describedby=":r1f:-helper-text"
+                            aria-describedby=":r1e:-helper-text"
                             aria-expanded="false"
                             aria-haspopup="listbox"
                             aria-label="Filter by Unit"
-                            aria-labelledby=":r1f:"
+                            aria-labelledby=":r1e:"
                             class="MuiSelect-select MuiSelect-standard MuiSelect-multiple MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-10y8whu-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                            id=":r1f:"
+                            id=":r1e:"
                             role="combobox"
                             tabindex="0"
                           >
@@ -1090,7 +1085,7 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                           <input
                             aria-hidden="true"
                             aria-invalid="false"
-                            autocomplete="off"
+                            autocomplete="new-password"
                             class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
                             tabindex="-1"
                             title="Filter by Unit"
@@ -1108,7 +1103,7 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                             />
                           </svg>
                           <div
-                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-atf1rt-MuiInputAdornment-root"
+                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-a3s2kv-MuiInputAdornment-root"
                           >
                             <span
                               aria-label="Clear filter"
@@ -1139,7 +1134,7 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                          id=":r1f:-helper-text"
+                          id=":r1e:-helper-text"
                         >
                           <label>
                             Filter Mode: Includes any
@@ -1152,12 +1147,11 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
               </th>
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-no31v5-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-vxrlbq-MuiTableCell-root"
                 colspan="1"
                 data-can-sort="true"
                 data-index="5"
                 scope="col"
-                tabindex="0"
               >
                 <div
                   class="Mui-TableHeadCell-Content MuiBox-root css-c8wlay"
@@ -1282,9 +1276,9 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                             aria-expanded="false"
                             aria-haspopup="listbox"
                             aria-label="Filter by Mandatory"
-                            aria-labelledby=":r1r:"
+                            aria-labelledby=":r1q:"
                             class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-10y8whu-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                            id=":r1r:"
+                            id=":r1q:"
                             role="combobox"
                             tabindex="0"
                           >
@@ -1297,7 +1291,7 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                           <input
                             aria-hidden="true"
                             aria-invalid="false"
-                            autocomplete="off"
+                            autocomplete="new-password"
                             class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
                             tabindex="-1"
                             title="Filter by Mandatory"
@@ -1315,7 +1309,7 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                             />
                           </svg>
                           <div
-                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-atf1rt-MuiInputAdornment-root"
+                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-a3s2kv-MuiInputAdornment-root"
                           >
                             <span
                               aria-label="Clear filter"
@@ -1351,11 +1345,10 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
               </th>
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6pxal-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-k8m9vx-MuiTableCell-root"
                 colspan="1"
                 data-index="6"
                 scope="col"
-                tabindex="0"
               >
                 <div
                   class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -1384,9 +1377,8 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lcxgoh-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xsahdd-MuiTableCell-root"
                 data-index="0"
-                tabindex="0"
               >
                 <button
                   aria-label="Row Actions"
@@ -1409,9 +1401,8 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-renti5-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-lqmkki-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
-                tabindex="0"
               >
                 <div
                   aria-label="Pumping Speed"
@@ -1423,9 +1414,8 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17jrrcf-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1v8bdf1-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
-                tabindex="0"
               >
                 <div
                   aria-label="Number"
@@ -1437,9 +1427,8 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ph6hpx-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1556a81-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
-                tabindex="0"
               >
                 <div
                   aria-label="300, 400, 500"
@@ -1451,9 +1440,8 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1nt5y2w-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1qopi1u-MuiTableCell-root-MuiTableCell-root"
                 data-index="4"
-                tabindex="0"
               >
                 <div
                   aria-label="liters per second"
@@ -1465,9 +1453,8 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-hqw8ty-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-qz20t4-MuiTableCell-root-MuiTableCell-root"
                 data-index="5"
-                tabindex="0"
               >
                 <div
                   aria-label="Yes"
@@ -1479,9 +1466,8 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pcje0t-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-x1gmwg-MuiTableCell-root"
                 data-index="6"
-                tabindex="0"
               />
             </tr>
             <tr
@@ -1491,9 +1477,8 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lcxgoh-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xsahdd-MuiTableCell-root"
                 data-index="0"
-                tabindex="0"
               >
                 <button
                   aria-label="Row Actions"
@@ -1516,9 +1501,8 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-renti5-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-lqmkki-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
-                tabindex="0"
               >
                 <div
                   aria-label="Ultimate Pressure"
@@ -1530,9 +1514,8 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17jrrcf-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1v8bdf1-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
-                tabindex="0"
               >
                 <div
                   aria-label="Number"
@@ -1544,14 +1527,12 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ph6hpx-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1556a81-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
-                tabindex="0"
               />
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1nt5y2w-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1qopi1u-MuiTableCell-root-MuiTableCell-root"
                 data-index="4"
-                tabindex="0"
               >
                 <div
                   aria-label="millibar"
@@ -1563,9 +1544,8 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-hqw8ty-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-qz20t4-MuiTableCell-root-MuiTableCell-root"
                 data-index="5"
-                tabindex="0"
               >
                 <div
                   aria-label="Yes"
@@ -1577,9 +1557,8 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pcje0t-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-x1gmwg-MuiTableCell-root"
                 data-index="6"
-                tabindex="0"
               />
             </tr>
             <tr
@@ -1589,9 +1568,8 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lcxgoh-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xsahdd-MuiTableCell-root"
                 data-index="0"
-                tabindex="0"
               >
                 <button
                   aria-label="Row Actions"
@@ -1614,9 +1592,8 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-renti5-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-lqmkki-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
-                tabindex="0"
               >
                 <div
                   aria-label="Axis"
@@ -1628,9 +1605,8 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17jrrcf-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1v8bdf1-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
-                tabindex="0"
               >
                 <div
                   aria-label="Text"
@@ -1642,9 +1618,8 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ph6hpx-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1556a81-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
-                tabindex="0"
               >
                 <div
                   aria-label="y, x, z"
@@ -1656,14 +1631,12 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1nt5y2w-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1qopi1u-MuiTableCell-root-MuiTableCell-root"
                 data-index="4"
-                tabindex="0"
               />
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-hqw8ty-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-qz20t4-MuiTableCell-root-MuiTableCell-root"
                 data-index="5"
-                tabindex="0"
               >
                 <div
                   aria-label="No"
@@ -1675,12 +1648,14 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pcje0t-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-x1gmwg-MuiTableCell-root"
                 data-index="6"
-                tabindex="0"
               />
             </tr>
           </tbody>
+          <tfoot
+            class="MuiTableFooter-root css-13kpbyb-MuiTableFooter-root"
+          />
         </table>
       </div>
       <div
@@ -1737,7 +1712,7 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
               >
                 <label
                   class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-10j3yc8-MuiFormLabel-root-MuiInputLabel-root"
-                  for="mrt-rows-per-page-:r0:"
+                  for="mrt-rows-per-page"
                 >
                   Rows per page
                 </label>
@@ -1758,7 +1733,7 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                     aria-hidden="true"
                     aria-invalid="false"
                     class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
-                    id="mrt-rows-per-page-:r0:"
+                    id="mrt-rows-per-page"
                     tabindex="-1"
                     value="5"
                   />

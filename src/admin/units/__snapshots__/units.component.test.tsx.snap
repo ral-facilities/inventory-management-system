@@ -104,9 +104,9 @@ exports[`Units > renders table correctly 1`] = `
                     </svg>
                     <input
                       aria-invalid="false"
-                      autocomplete="off"
+                      autocomplete="new-password"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12tjcea-MuiInputBase-input-MuiOutlinedInput-input"
-                      id=":r3:"
+                      id=":r2:"
                       placeholder="Search"
                       type="text"
                       value=""
@@ -220,11 +220,10 @@ exports[`Units > renders table correctly 1`] = `
           >
             <th
               aria-sort="none"
-              class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1r25sur-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-59ho2q-MuiTableCell-root"
               colspan="1"
               data-index="0"
               scope="col"
-              tabindex="0"
             >
               <div
                 class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -245,12 +244,11 @@ exports[`Units > renders table correctly 1`] = `
             </th>
             <th
               aria-sort="none"
-              class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-3zz7vh-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-x5il41-MuiTableCell-root"
               colspan="1"
               data-can-sort="true"
               data-index="1"
               scope="col"
-              tabindex="0"
             >
               <div
                 class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -397,19 +395,19 @@ exports[`Units > renders table correctly 1`] = `
                           </span>
                         </div>
                         <input
-                          aria-describedby=":rg:-helper-text"
+                          aria-describedby=":rf:-helper-text"
                           aria-invalid="false"
                           aria-label="Filter by Value"
-                          autocomplete="off"
+                          autocomplete="new-password"
                           class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                          id=":rg:"
+                          id=":rf:"
                           placeholder="Filter by Value"
                           title="Filter by Value"
                           type="text"
                           value=""
                         />
                         <div
-                          class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1exhmnf-MuiInputAdornment-root"
+                          class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-elo8k2-MuiInputAdornment-root"
                         >
                           <span
                             aria-label="Clear filter"
@@ -440,7 +438,7 @@ exports[`Units > renders table correctly 1`] = `
                       </div>
                       <p
                         class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                        id=":rg:-helper-text"
+                        id=":rf:-helper-text"
                       >
                         <label>
                           Filter Mode: Fuzzy
@@ -453,12 +451,11 @@ exports[`Units > renders table correctly 1`] = `
             </th>
             <th
               aria-sort="none"
-              class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-14x66ne-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-5yqoyu-MuiTableCell-root"
               colspan="1"
               data-can-sort="true"
               data-index="2"
               scope="col"
-              tabindex="0"
             >
               <div
                 class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -571,16 +568,52 @@ exports[`Units > renders table correctly 1`] = `
                         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w93hbh-MuiFormControl-root-MuiTextField-root"
                       >
                         <div
-                          class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
+                          class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                         >
+                          <div
+                            class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1nowbqt-MuiInputAdornment-root"
+                          >
+                            <span
+                              aria-hidden="true"
+                              class="notranslate"
+                            >
+                              ​
+                            </span>
+                            <span
+                              aria-label="Change filter mode"
+                              class=""
+                              data-mui-internal-clone-element="true"
+                            >
+                              <button
+                                aria-label="Change filter mode"
+                                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-egflwm-MuiButtonBase-root-MuiIconButton-root"
+                                tabindex="0"
+                                type="button"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                                  data-testid="FilterListIcon"
+                                  focusable="false"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    d="M10 18h4v-2h-4zM3 6v2h18V6zm3 7h12v-2H6z"
+                                  />
+                                </svg>
+                              </button>
+                            </span>
+                          </div>
                           <input
-                            aria-describedby=":rr:-helper-text"
+                            aria-describedby=":rq:-helper-text"
                             aria-invalid="false"
-                            autocomplete="off"
-                            class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                            id=":rr:"
+                            aria-label="Min"
+                            autocomplete="new-password"
+                            class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
+                            id=":rq:"
                             inputmode="text"
                             placeholder="Min"
+                            title="Min"
                             type="text"
                             value=""
                           />
@@ -608,8 +641,8 @@ exports[`Units > renders table correctly 1`] = `
                           </div>
                         </div>
                         <p
-                          class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-18y2hez-MuiFormHelperText-root"
-                          id=":rr:-helper-text"
+                          class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
+                          id=":rq:-helper-text"
                         >
                           <label>
                             Filter Mode: Between Inclusive
@@ -624,11 +657,13 @@ exports[`Units > renders table correctly 1`] = `
                         >
                           <input
                             aria-invalid="false"
-                            autocomplete="off"
-                            class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                            id=":ru:"
+                            aria-label="Max"
+                            autocomplete="new-password"
+                            class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
+                            id=":rv:"
                             inputmode="text"
                             placeholder="Max"
+                            title="Max"
                             type="text"
                             value=""
                           />
@@ -663,12 +698,11 @@ exports[`Units > renders table correctly 1`] = `
             </th>
             <th
               aria-sort="none"
-              class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1qo7aed-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1onqjjp-MuiTableCell-root"
               colspan="1"
               data-can-sort="true"
               data-index="3"
               scope="col"
-              tabindex="0"
             >
               <div
                 class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -781,16 +815,52 @@ exports[`Units > renders table correctly 1`] = `
                         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w93hbh-MuiFormControl-root-MuiTextField-root"
                       >
                         <div
-                          class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
+                          class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                         >
+                          <div
+                            class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1nowbqt-MuiInputAdornment-root"
+                          >
+                            <span
+                              aria-hidden="true"
+                              class="notranslate"
+                            >
+                              ​
+                            </span>
+                            <span
+                              aria-label="Change filter mode"
+                              class=""
+                              data-mui-internal-clone-element="true"
+                            >
+                              <button
+                                aria-label="Change filter mode"
+                                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-egflwm-MuiButtonBase-root-MuiIconButton-root"
+                                tabindex="0"
+                                type="button"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                                  data-testid="FilterListIcon"
+                                  focusable="false"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    d="M10 18h4v-2h-4zM3 6v2h18V6zm3 7h12v-2H6z"
+                                  />
+                                </svg>
+                              </button>
+                            </span>
+                          </div>
                           <input
-                            aria-describedby=":r17:-helper-text"
+                            aria-describedby=":r18:-helper-text"
                             aria-invalid="false"
-                            autocomplete="off"
-                            class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                            id=":r17:"
+                            aria-label="Min"
+                            autocomplete="new-password"
+                            class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
+                            id=":r18:"
                             inputmode="text"
                             placeholder="Min"
+                            title="Min"
                             type="text"
                             value=""
                           />
@@ -818,8 +888,8 @@ exports[`Units > renders table correctly 1`] = `
                           </div>
                         </div>
                         <p
-                          class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-18y2hez-MuiFormHelperText-root"
-                          id=":r17:-helper-text"
+                          class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
+                          id=":r18:-helper-text"
                         >
                           <label>
                             Filter Mode: Between Inclusive
@@ -834,11 +904,13 @@ exports[`Units > renders table correctly 1`] = `
                         >
                           <input
                             aria-invalid="false"
-                            autocomplete="off"
-                            class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                            id=":r1a:"
+                            aria-label="Max"
+                            autocomplete="new-password"
+                            class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
+                            id=":r1d:"
                             inputmode="text"
                             placeholder="Max"
+                            title="Max"
                             type="text"
                             value=""
                           />
@@ -883,9 +955,8 @@ exports[`Units > renders table correctly 1`] = `
             role="row"
           >
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lqbg11-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pkwcky-MuiTableCell-root"
               data-index="0"
-              tabindex="0"
             >
               <button
                 aria-label="Row Actions"
@@ -908,9 +979,8 @@ exports[`Units > renders table correctly 1`] = `
               </button>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-g6dy6y-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ouuwtx-MuiTableCell-root-MuiTableCell-root"
               data-index="1"
-              tabindex="0"
             >
               <div
                 aria-label="megapixels"
@@ -922,9 +992,8 @@ exports[`Units > renders table correctly 1`] = `
               </div>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-uxzfde-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-wvydvf-MuiTableCell-root-MuiTableCell-root"
               data-index="2"
-              tabindex="0"
             >
               <div
                 class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
@@ -935,9 +1004,8 @@ exports[`Units > renders table correctly 1`] = `
               </div>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1msxyl2-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-2hkx67-MuiTableCell-root-MuiTableCell-root"
               data-index="3"
-              tabindex="0"
             >
               <div
                 class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
@@ -955,9 +1023,8 @@ exports[`Units > renders table correctly 1`] = `
             role="row"
           >
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lqbg11-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pkwcky-MuiTableCell-root"
               data-index="0"
-              tabindex="0"
             >
               <button
                 aria-label="Row Actions"
@@ -980,9 +1047,8 @@ exports[`Units > renders table correctly 1`] = `
               </button>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-g6dy6y-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ouuwtx-MuiTableCell-root-MuiTableCell-root"
               data-index="1"
-              tabindex="0"
             >
               <div
                 aria-label="fps"
@@ -994,9 +1060,8 @@ exports[`Units > renders table correctly 1`] = `
               </div>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-uxzfde-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-wvydvf-MuiTableCell-root-MuiTableCell-root"
               data-index="2"
-              tabindex="0"
             >
               <div
                 class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
@@ -1007,9 +1072,8 @@ exports[`Units > renders table correctly 1`] = `
               </div>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1msxyl2-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-2hkx67-MuiTableCell-root-MuiTableCell-root"
               data-index="3"
-              tabindex="0"
             >
               <div
                 class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
@@ -1027,9 +1091,8 @@ exports[`Units > renders table correctly 1`] = `
             role="row"
           >
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lqbg11-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pkwcky-MuiTableCell-root"
               data-index="0"
-              tabindex="0"
             >
               <button
                 aria-label="Row Actions"
@@ -1052,9 +1115,8 @@ exports[`Units > renders table correctly 1`] = `
               </button>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-g6dy6y-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ouuwtx-MuiTableCell-root-MuiTableCell-root"
               data-index="1"
-              tabindex="0"
             >
               <div
                 aria-label="Joules"
@@ -1066,9 +1128,8 @@ exports[`Units > renders table correctly 1`] = `
               </div>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-uxzfde-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-wvydvf-MuiTableCell-root-MuiTableCell-root"
               data-index="2"
-              tabindex="0"
             >
               <div
                 class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
@@ -1079,9 +1140,8 @@ exports[`Units > renders table correctly 1`] = `
               </div>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1msxyl2-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-2hkx67-MuiTableCell-root-MuiTableCell-root"
               data-index="3"
-              tabindex="0"
             >
               <div
                 class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
@@ -1099,9 +1159,8 @@ exports[`Units > renders table correctly 1`] = `
             role="row"
           >
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lqbg11-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pkwcky-MuiTableCell-root"
               data-index="0"
-              tabindex="0"
             >
               <button
                 aria-label="Row Actions"
@@ -1124,9 +1183,8 @@ exports[`Units > renders table correctly 1`] = `
               </button>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-g6dy6y-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ouuwtx-MuiTableCell-root-MuiTableCell-root"
               data-index="1"
-              tabindex="0"
             >
               <div
                 aria-label="micrometers"
@@ -1138,9 +1196,8 @@ exports[`Units > renders table correctly 1`] = `
               </div>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-uxzfde-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-wvydvf-MuiTableCell-root-MuiTableCell-root"
               data-index="2"
-              tabindex="0"
             >
               <div
                 class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
@@ -1151,9 +1208,8 @@ exports[`Units > renders table correctly 1`] = `
               </div>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1msxyl2-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-2hkx67-MuiTableCell-root-MuiTableCell-root"
               data-index="3"
-              tabindex="0"
             >
               <div
                 class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
@@ -1171,9 +1227,8 @@ exports[`Units > renders table correctly 1`] = `
             role="row"
           >
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lqbg11-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pkwcky-MuiTableCell-root"
               data-index="0"
-              tabindex="0"
             >
               <button
                 aria-label="Row Actions"
@@ -1196,9 +1251,8 @@ exports[`Units > renders table correctly 1`] = `
               </button>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-g6dy6y-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ouuwtx-MuiTableCell-root-MuiTableCell-root"
               data-index="1"
-              tabindex="0"
             >
               <div
                 aria-label="millimeters"
@@ -1210,9 +1264,8 @@ exports[`Units > renders table correctly 1`] = `
               </div>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-uxzfde-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-wvydvf-MuiTableCell-root-MuiTableCell-root"
               data-index="2"
-              tabindex="0"
             >
               <div
                 class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
@@ -1223,9 +1276,8 @@ exports[`Units > renders table correctly 1`] = `
               </div>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1msxyl2-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-2hkx67-MuiTableCell-root-MuiTableCell-root"
               data-index="3"
-              tabindex="0"
             >
               <div
                 class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
@@ -1243,9 +1295,8 @@ exports[`Units > renders table correctly 1`] = `
             role="row"
           >
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lqbg11-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pkwcky-MuiTableCell-root"
               data-index="0"
-              tabindex="0"
             >
               <button
                 aria-label="Row Actions"
@@ -1268,9 +1319,8 @@ exports[`Units > renders table correctly 1`] = `
               </button>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-g6dy6y-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ouuwtx-MuiTableCell-root-MuiTableCell-root"
               data-index="1"
-              tabindex="0"
             >
               <div
                 aria-label="kilograms"
@@ -1282,9 +1332,8 @@ exports[`Units > renders table correctly 1`] = `
               </div>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-uxzfde-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-wvydvf-MuiTableCell-root-MuiTableCell-root"
               data-index="2"
-              tabindex="0"
             >
               <div
                 class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
@@ -1295,9 +1344,8 @@ exports[`Units > renders table correctly 1`] = `
               </div>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1msxyl2-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-2hkx67-MuiTableCell-root-MuiTableCell-root"
               data-index="3"
-              tabindex="0"
             >
               <div
                 class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
@@ -1315,9 +1363,8 @@ exports[`Units > renders table correctly 1`] = `
             role="row"
           >
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lqbg11-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pkwcky-MuiTableCell-root"
               data-index="0"
-              tabindex="0"
             >
               <button
                 aria-label="Row Actions"
@@ -1340,9 +1387,8 @@ exports[`Units > renders table correctly 1`] = `
               </button>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-g6dy6y-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ouuwtx-MuiTableCell-root-MuiTableCell-root"
               data-index="1"
-              tabindex="0"
             >
               <div
                 aria-label="liters per second"
@@ -1354,9 +1400,8 @@ exports[`Units > renders table correctly 1`] = `
               </div>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-uxzfde-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-wvydvf-MuiTableCell-root-MuiTableCell-root"
               data-index="2"
-              tabindex="0"
             >
               <div
                 class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
@@ -1367,9 +1412,8 @@ exports[`Units > renders table correctly 1`] = `
               </div>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1msxyl2-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-2hkx67-MuiTableCell-root-MuiTableCell-root"
               data-index="3"
-              tabindex="0"
             >
               <div
                 class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
@@ -1387,9 +1431,8 @@ exports[`Units > renders table correctly 1`] = `
             role="row"
           >
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lqbg11-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pkwcky-MuiTableCell-root"
               data-index="0"
-              tabindex="0"
             >
               <button
                 aria-label="Row Actions"
@@ -1412,9 +1455,8 @@ exports[`Units > renders table correctly 1`] = `
               </button>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-g6dy6y-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ouuwtx-MuiTableCell-root-MuiTableCell-root"
               data-index="1"
-              tabindex="0"
             >
               <div
                 aria-label="millibar"
@@ -1426,9 +1468,8 @@ exports[`Units > renders table correctly 1`] = `
               </div>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-uxzfde-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-wvydvf-MuiTableCell-root-MuiTableCell-root"
               data-index="2"
-              tabindex="0"
             >
               <div
                 class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
@@ -1439,9 +1480,8 @@ exports[`Units > renders table correctly 1`] = `
               </div>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1msxyl2-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-2hkx67-MuiTableCell-root-MuiTableCell-root"
               data-index="3"
-              tabindex="0"
             >
               <div
                 class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
@@ -1459,9 +1499,8 @@ exports[`Units > renders table correctly 1`] = `
             role="row"
           >
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lqbg11-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pkwcky-MuiTableCell-root"
               data-index="0"
-              tabindex="0"
             >
               <button
                 aria-label="Row Actions"
@@ -1484,9 +1523,8 @@ exports[`Units > renders table correctly 1`] = `
               </button>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-g6dy6y-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ouuwtx-MuiTableCell-root-MuiTableCell-root"
               data-index="1"
-              tabindex="0"
             >
               <div
                 aria-label="volts"
@@ -1498,9 +1536,8 @@ exports[`Units > renders table correctly 1`] = `
               </div>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-uxzfde-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-wvydvf-MuiTableCell-root-MuiTableCell-root"
               data-index="2"
-              tabindex="0"
             >
               <div
                 class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
@@ -1511,9 +1548,8 @@ exports[`Units > renders table correctly 1`] = `
               </div>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1msxyl2-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-2hkx67-MuiTableCell-root-MuiTableCell-root"
               data-index="3"
-              tabindex="0"
             >
               <div
                 class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
@@ -1525,6 +1561,9 @@ exports[`Units > renders table correctly 1`] = `
             </td>
           </tr>
         </tbody>
+        <tfoot
+          class="MuiTableFooter-root css-1pwfv5b-MuiTableFooter-root"
+        />
       </table>
     </div>
     <div
@@ -1581,7 +1620,7 @@ exports[`Units > renders table correctly 1`] = `
             >
               <label
                 class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-10j3yc8-MuiFormLabel-root-MuiInputLabel-root"
-                for="mrt-rows-per-page-:r0:"
+                for="mrt-rows-per-page"
               >
                 Rows per page
               </label>
@@ -1602,7 +1641,7 @@ exports[`Units > renders table correctly 1`] = `
                   aria-hidden="true"
                   aria-invalid="false"
                   class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
-                  id="mrt-rows-per-page-:r0:"
+                  id="mrt-rows-per-page"
                   tabindex="-1"
                   value="15"
                 />

@@ -40,6 +40,7 @@ import UnitsDialog from './unitsDialog.component.tsx';
 function Units() {
   const { data: unitData, isLoading: unitDataLoading } = useGetUnits();
 
+  // Breadcrumbs + Mui table V2 + extra
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
 
   const [deleteUnitDialog, setDeleteUnitDialog] =

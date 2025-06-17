@@ -147,9 +147,9 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                               </svg>
                               <input
                                 aria-invalid="false"
-                                autocomplete="off"
+                                autocomplete="new-password"
                                 class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12tjcea-MuiInputBase-input-MuiOutlinedInput-input"
-                                id=":r4:"
+                                id=":r3:"
                                 placeholder="Search"
                                 type="text"
                                 value=""
@@ -256,12 +256,11 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                             >
                               <th
                                 aria-sort="none"
-                                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1u90982-MuiTableCell-root"
+                                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1j1a2m9-MuiTableCell-root"
                                 colspan="1"
                                 data-can-sort="true"
                                 data-index="1"
                                 scope="col"
-                                tabindex="0"
                               >
                                 <div
                                   class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -333,12 +332,11 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                               </th>
                               <th
                                 aria-sort="none"
-                                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ow32cm-MuiTableCell-root"
+                                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1xh0zhg-MuiTableCell-root"
                                 colspan="1"
                                 data-can-sort="true"
                                 data-index="2"
                                 scope="col"
-                                tabindex="0"
                               >
                                 <div
                                   class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -410,12 +408,11 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                               </th>
                               <th
                                 aria-sort="none"
-                                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1mndnlc-MuiTableCell-root"
+                                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1nrilkr-MuiTableCell-root"
                                 colspan="1"
                                 data-can-sort="true"
                                 data-index="3"
                                 scope="col"
-                                tabindex="0"
                               >
                                 <div
                                   class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -487,12 +484,11 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                               </th>
                               <th
                                 aria-sort="none"
-                                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xxavgr-MuiTableCell-root"
+                                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yrt1r8-MuiTableCell-root"
                                 colspan="1"
                                 data-can-sort="true"
                                 data-index="4"
                                 scope="col"
-                                tabindex="0"
                               >
                                 <div
                                   class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -564,12 +560,11 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                               </th>
                               <th
                                 aria-sort="none"
-                                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-nlbdjj-MuiTableCell-root"
+                                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-605d5e-MuiTableCell-root"
                                 colspan="1"
                                 data-can-sort="true"
                                 data-index="5"
                                 scope="col"
-                                tabindex="0"
                               >
                                 <div
                                   class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -2239,7 +2234,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                       >
                         <label
                           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-10j3yc8-MuiFormLabel-root-MuiInputLabel-root"
-                          for="mrt-rows-per-page-:r1:"
+                          for="mrt-rows-per-page"
                         >
                           Images per page
                         </label>
@@ -2260,7 +2255,7 @@ exports[`Primary Image Dialog > renders correctly 1`] = `
                             aria-hidden="true"
                             aria-invalid="false"
                             class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
-                            id="mrt-rows-per-page-:r1:"
+                            id="mrt-rows-per-page"
                             tabindex="-1"
                             value="18"
                           />
@@ -2531,7 +2526,7 @@ exports[`Primary Image Dialog > renders no results page correctly, and can still
       tabindex="-1"
     >
       <div
-        aria-labelledby=":r3u:"
+        aria-labelledby=":r3s:"
         aria-modal="true"
         class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthXl MuiDialog-paperFullWidth css-1vwbbub-MuiPaper-root-MuiDialog-paper"
         role="dialog"
@@ -2539,7 +2534,7 @@ exports[`Primary Image Dialog > renders no results page correctly, and can still
       >
         <h2
           class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-119fdvi-MuiTypography-root-MuiDialogTitle-root"
-          id=":r3u:"
+          id=":r3s:"
         >
           Select Primary Image
         </h2>
@@ -2651,9 +2646,9 @@ exports[`Primary Image Dialog > renders no results page correctly, and can still
                               </svg>
                               <input
                                 aria-invalid="false"
-                                autocomplete="off"
+                                autocomplete="new-password"
                                 class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12tjcea-MuiInputBase-input-MuiOutlinedInput-input"
-                                id=":r42:"
+                                id=":r3v:"
                                 placeholder="Search"
                                 type="text"
                                 value=""
@@ -2760,12 +2755,11 @@ exports[`Primary Image Dialog > renders no results page correctly, and can still
                             >
                               <th
                                 aria-sort="none"
-                                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1u90982-MuiTableCell-root"
+                                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1j1a2m9-MuiTableCell-root"
                                 colspan="1"
                                 data-can-sort="true"
                                 data-index="1"
                                 scope="col"
-                                tabindex="0"
                               >
                                 <div
                                   class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -2837,12 +2831,11 @@ exports[`Primary Image Dialog > renders no results page correctly, and can still
                               </th>
                               <th
                                 aria-sort="none"
-                                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ow32cm-MuiTableCell-root"
+                                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1xh0zhg-MuiTableCell-root"
                                 colspan="1"
                                 data-can-sort="true"
                                 data-index="2"
                                 scope="col"
-                                tabindex="0"
                               >
                                 <div
                                   class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -2914,12 +2907,11 @@ exports[`Primary Image Dialog > renders no results page correctly, and can still
                               </th>
                               <th
                                 aria-sort="none"
-                                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1mndnlc-MuiTableCell-root"
+                                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1nrilkr-MuiTableCell-root"
                                 colspan="1"
                                 data-can-sort="true"
                                 data-index="3"
                                 scope="col"
-                                tabindex="0"
                               >
                                 <div
                                   class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -2991,12 +2983,11 @@ exports[`Primary Image Dialog > renders no results page correctly, and can still
                               </th>
                               <th
                                 aria-sort="none"
-                                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xxavgr-MuiTableCell-root"
+                                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yrt1r8-MuiTableCell-root"
                                 colspan="1"
                                 data-can-sort="true"
                                 data-index="4"
                                 scope="col"
-                                tabindex="0"
                               >
                                 <div
                                   class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -3068,12 +3059,11 @@ exports[`Primary Image Dialog > renders no results page correctly, and can still
                               </th>
                               <th
                                 aria-sort="none"
-                                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-nlbdjj-MuiTableCell-root"
+                                class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-605d5e-MuiTableCell-root"
                                 colspan="1"
                                 data-can-sort="true"
                                 data-index="5"
                                 scope="col"
-                                tabindex="0"
                               >
                                 <div
                                   class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -3223,7 +3213,7 @@ exports[`Primary Image Dialog > renders no results page correctly, and can still
                       >
                         <label
                           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-10j3yc8-MuiFormLabel-root-MuiInputLabel-root"
-                          for="mrt-rows-per-page-:r3v:"
+                          for="mrt-rows-per-page"
                         >
                           Images per page
                         </label>
@@ -3244,7 +3234,7 @@ exports[`Primary Image Dialog > renders no results page correctly, and can still
                             aria-hidden="true"
                             aria-invalid="false"
                             class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
-                            id="mrt-rows-per-page-:r3v:"
+                            id="mrt-rows-per-page"
                             tabindex="-1"
                             value="18"
                           />
