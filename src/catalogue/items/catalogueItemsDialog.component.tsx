@@ -815,9 +815,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                 )}`}
                                 value={(propertyValue as string) ?? ''}
                                 size="small"
-                                onChange={(_event, value) => {
-                                  onChange(String(value));
-                                }}
+                                onChange={(_event, value) =>
+                                  onChange(value !== null ? String(value) : '')
+                                }
                                 sx={{ alignItems: 'center' }}
                                 fullWidth
                                 options={property.allowed_values?.values ?? []}
