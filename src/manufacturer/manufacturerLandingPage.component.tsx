@@ -1,5 +1,6 @@
 import EditIcon from '@mui/icons-material/Edit';
 import PrintIcon from '@mui/icons-material/Print';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import {
   Box,
   Button,
@@ -9,20 +10,30 @@ import {
   Typography,
 } from '@mui/material';
 import React from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetManufacturer } from '../api/manufacturers';
 import { formatDateTimeStrings } from '../utils';
 import ManufacturerDialog from './manufacturerDialog.component';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 function ManufacturerLandingPage() {
+
   const { manufacturer_id: manufacturerId } = useParams();
 
-  const { data: manufacturerData, isLoading: manufacturerDataLoading } =
+  const { data: manufacturerData, isLoading: manufacturerDataLoading , refetch: refreshManufacturer} =
     useGetManufacturer(manufacturerId);
 
   const [editManufacturerDialogOpen, setEditManufacturerDialogOpen] =
     React.useState<boolean>(false);
 
+  const [editRefreshDate, setRefreshDate] = useState(new Date())
+  
+  
+  const handleRefresh = () => {
+    setRefreshDate(new Date());
+    refreshManufacturer();
+  }  
   return (
     <Grid container>
       <Grid
@@ -36,7 +47,7 @@ function ManufacturerLandingPage() {
         container
       >
         {manufacturerData && (
-          <Grid item container sx={{ display: 'flex', py: 2 }}>
+          <Grid item container sx={{ display: 'flex', py: 3 }}>
             <Button
               sx={{ mx: 0.5 }}
               variant="outlined"
@@ -57,6 +68,19 @@ function ManufacturerLandingPage() {
             >
               Print
             </Button>
+            <Button
+              sx={{ mx: 0.5 }}
+              variant="outlined"
+              startIcon={<RefreshIcon />}
+              onClick={() => {
+                handleRefresh();
+              }}
+            >
+              Refresh
+          </Button>
+          <Typography textAlign={'center'} variant="h6">
+              {formatDateTimeStrings(editRefreshDate.toISOString(), true)}
+            </Typography>
           </Grid>
         )}
       </Grid>
@@ -215,5 +239,6 @@ function ManufacturerLandingPage() {
     </Grid>
   );
 }
+
 
 export default ManufacturerLandingPage;
