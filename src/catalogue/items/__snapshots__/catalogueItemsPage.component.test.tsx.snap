@@ -110,9 +110,9 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
                         </svg>
                         <input
                           aria-invalid="false"
-                          autocomplete="new-password"
+                          autocomplete="off"
                           class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12tjcea-MuiInputBase-input-MuiOutlinedInput-input"
-                          id=":r2:"
+                          id=":r3:"
                           placeholder="Search"
                           type="text"
                           value=""
@@ -320,9 +320,6 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
                 role="row"
               />
             </tbody>
-            <tfoot
-              class="MuiTableFooter-root css-13kpbyb-MuiTableFooter-root"
-            />
           </table>
         </div>
       </div>
@@ -380,7 +377,7 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
               >
                 <label
                   class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-10j3yc8-MuiFormLabel-root-MuiInputLabel-root"
-                  for="mrt-rows-per-page"
+                  for="mrt-rows-per-page-:r0:"
                 >
                   Rows per page
                 </label>
@@ -401,7 +398,7 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
                     aria-hidden="true"
                     aria-invalid="false"
                     class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
-                    id="mrt-rows-per-page"
+                    id="mrt-rows-per-page-:r0:"
                     tabindex="-1"
                     value="15"
                   />

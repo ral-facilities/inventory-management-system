@@ -14,11 +14,12 @@ exports[`CardViewFilters > renders dialog correctly 1`] = `
         >
           <th
             aria-sort="none"
-            class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1j1a2m9-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1u90982-MuiTableCell-root"
             colspan="1"
             data-can-sort="true"
             data-index="0"
             scope="col"
+            tabindex="0"
           >
             <div
               class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -90,11 +91,12 @@ exports[`CardViewFilters > renders dialog correctly 1`] = `
           </th>
           <th
             aria-sort="none"
-            class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-605d5e-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-nlbdjj-MuiTableCell-root"
             colspan="1"
             data-can-sort="true"
             data-index="1"
             scope="col"
+            tabindex="0"
           >
             <div
               class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
