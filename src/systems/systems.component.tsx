@@ -10,7 +10,6 @@ import {
   Box,
   CircularProgress,
   Divider,
-  Grid,
   IconButton,
   ListItemIcon,
   ListItemText,
@@ -25,6 +24,7 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
 import {
   // To resolve react/jsx-pascal-case
   MRT_GlobalFilterTextField as MRTGlobalFilterTextField,
@@ -332,10 +332,9 @@ function Systems() {
 
   return (
     <>
-      <Box height="100%">
+      <Box>
         <Grid container margin={0} direction="row" alignItems="stretch">
           <Grid
-            item
             xs={12}
             md
             minWidth={MIN_SUBSYSTEMS_WIDTH}
@@ -378,7 +377,7 @@ function Systems() {
                     marginBottom: 'auto',
                     flexWrap: 'no-wrap',
                     // Breadcrumbs and rest
-                    height: getPageHeightCalc('96px + 74px'),
+                    height: getPageHeightCalc('96px + 58px'),
                     // To prevent no subsystems being visible
                     minHeight: '200px',
                   }}
@@ -455,7 +454,6 @@ function Systems() {
             )}
           </Grid>
           <Grid
-            item
             textAlign="left"
             padding={1}
             xs

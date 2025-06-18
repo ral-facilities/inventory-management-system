@@ -1,8 +1,8 @@
 import { screen, waitFor } from '@testing-library/react';
 import { userEvent, type UserEvent } from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
-import type { paths } from '../App';
 import { server } from '../mocks/server';
+import { URLPathKeyType } from '../paths';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import SystemsTree from './systemsTree.component';
 
@@ -36,7 +36,7 @@ describe('SystemsTree', () => {
   // Quite a few of these take more than 5 seconds on CI
   vi.setConfig({ testTimeout: 14000 });
 
-  const createView = (path: string, urlPathKey?: keyof typeof paths) => {
+  const createView = (path: string, urlPathKey?: URLPathKeyType) => {
     return renderComponentWithRouterProvider(<SystemsTree />, urlPathKey, path);
   };
 

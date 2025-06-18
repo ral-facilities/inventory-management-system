@@ -3,9 +3,9 @@ import React from 'react';
 import { Outlet, useParams, type LoaderFunctionArgs } from 'react-router-dom';
 import { BreadcrumbsInfo } from '../api/api.types';
 import { getManufacturerQuery, useGetManufacturer } from '../api/manufacturers';
-import { paths } from '../App';
 import BaseLayoutHeader from '../common/baseLayoutHeader.component';
 import PageNotFoundComponent from '../common/pageNotFound/pageNotFound.component';
+import paths from '../paths';
 
 export const ManufacturerErrorComponent = () => {
   return <PageNotFoundComponent homeLocation="Manufacturers" />;

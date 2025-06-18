@@ -6,9 +6,9 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Grid,
   Tooltip,
 } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
 import React from 'react';
 import { CatalogueCategory } from '../../api/api.types';
 import {
@@ -141,7 +141,7 @@ const CatalogueCategoryDirectoryDialog = (
     >
       <DialogTitle sx={{ marginLeft: 2 }}>
         <Grid container spacing={2}>
-          <Grid item>
+          <Grid>
             <Box
               display="inline-flex"
               alignItems="center"
@@ -171,7 +171,7 @@ const CatalogueCategoryDirectoryDialog = (
               )}
             </Box>
           </Grid>
-          <Grid item xs={12}>
+          <Grid xs={12}>
             <Breadcrumbs
               breadcrumbsInfo={catalogueBreadcrumbs}
               onChangeNode={setParentCategoryId}

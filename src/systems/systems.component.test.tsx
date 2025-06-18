@@ -1,6 +1,6 @@
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import { paths } from '../App';
+import { URLPathKeyType } from '../paths';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import Systems from './systems.component';
 
@@ -9,7 +9,7 @@ describe('Systems', () => {
   vi.setConfig({ testTimeout: 14000 });
 
   let user: UserEvent;
-  const createView = (path: string, urlPathKey?: keyof typeof paths) => {
+  const createView = (path: string, urlPathKey?: URLPathKeyType) => {
     return renderComponentWithRouterProvider(
       <Systems />,
       urlPathKey ?? 'systems',

@@ -17,7 +17,7 @@ import handleIMS_APIError from '../../handleIMS_APIError';
 
 export interface DeleteCatalogueCategoryDialogProps {
   open: boolean;
-  onClose: () => void;
+  onClose: (props: { successfulDeletion: boolean }) => void;
   catalogueCategory: CatalogueCategory | undefined;
   onChangeCatalogueCategory: (
     catalogueCategory: CatalogueCategory | undefined
@@ -37,17 +37,20 @@ const DeleteCatalogueCategoryDialog = (
   const { mutateAsync: deleteCatalogueCategory, isPending: isDeletePending } =
     useDeleteCatalogueCategory();
 
-  const handleClose = React.useCallback(() => {
-    onClose();
-    setError(false);
-    setErrorMessage('');
-  }, [onClose]);
+  const handleClose = React.useCallback(
+    (props: { successfulDeletion: boolean }) => {
+      onClose({ successfulDeletion: props.successfulDeletion });
+      setError(false);
+      setErrorMessage('');
+    },
+    [onClose]
+  );
   const handleDeleteCatalogueCategory = React.useCallback(() => {
     if (catalogueCategory) {
       deleteCatalogueCategory(catalogueCategory.id)
         .then(() => {
           onChangeCatalogueCategory(undefined);
-          onClose();
+          handleClose({ successfulDeletion: true });
         })
         .catch((error: AxiosError) => {
           const response = error.response?.data as APIError;
@@ -67,8 +70,8 @@ const DeleteCatalogueCategoryDialog = (
   }, [
     catalogueCategory,
     deleteCatalogueCategory,
+    handleClose,
     onChangeCatalogueCategory,
-    onClose,
   ]);
 
   return (
@@ -85,7 +88,9 @@ const DeleteCatalogueCategoryDialog = (
         ?
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={() => handleClose({ successfulDeletion: false })}>
+          Cancel
+        </Button>
         <Button
           onClick={handleDeleteCatalogueCategory}
           disabled={isDeletePending || error}
