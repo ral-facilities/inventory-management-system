@@ -771,7 +771,7 @@ describe('ItemDialog', () => {
 
       const validDateMaxHelperText = await screen.findAllByText(
         'Date cannot be later than',
-        {exact: false}
+        { exact: false }
       );
       expect(validDateMaxHelperText.length).toEqual(2);
 
@@ -783,10 +783,7 @@ describe('ItemDialog', () => {
       });
 
       expect(
-        screen.queryByText(
-          'Date cannot be later than',
-          {exact: false}
-        )
+        screen.queryByText('Date cannot be later than', { exact: false })
       ).not.toBeInTheDocument();
       expect(
         screen.queryByText(

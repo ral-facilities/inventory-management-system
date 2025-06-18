@@ -15,7 +15,7 @@ import {
   Paper,
   Stack,
 } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Grid2';
 import {
   MRT_BottomToolbar,
   MRT_ColumnDef,
@@ -513,7 +513,13 @@ function CatalogueCardView() {
       container
     >
       {!catalogueCategoryDetailLoading ? (
-        <Stack height={cardViewHeight} maxHeight={cardViewHeight} width="100%">
+        <Stack
+          sx={{
+            height: cardViewHeight,
+            maxHeight: cardViewHeight,
+            width: '100%',
+          }}
+        >
           <MRT_TopToolbar table={table} />
           <Stack
             sx={{
@@ -523,8 +529,8 @@ function CatalogueCardView() {
             }}
           >
             <Box
-              display={!isCollapsed ? 'none' : undefined}
               sx={{
+                display: !isCollapsed ? 'none' : undefined,
                 paddingLeft: 0.5,
                 position: 'sticky',
                 top: 0,
@@ -542,11 +548,16 @@ function CatalogueCardView() {
               </Collapse>
             </Box>
 
-            <Grid container width="100%">
+            <Grid
+              container
+              sx={{
+                width: '100%',
+              }}
+            >
               {!isLoading &&
                 (data.length !== 0 ? (
                   data.map((card, index) => (
-                    <Grid key={index} xs={12} sm={6} md={4}>
+                    <Grid key={index} size={{ xs: 12, sm: 6, md: 4 }}>
                       <CatalogueCard
                         card={card as MRT_Cell<CatalogueCategory>}
                         table={table}
@@ -554,7 +565,7 @@ function CatalogueCardView() {
                     </Grid>
                   ))
                 ) : (
-                  <Grid xs={12}>
+                  <Grid size={12}>
                     <ErrorPage
                       sx={{ marginTop: 2 }}
                       boldErrorText="No results found"

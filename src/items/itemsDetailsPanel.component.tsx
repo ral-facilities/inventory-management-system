@@ -6,7 +6,7 @@ import {
   Tabs,
   Typography,
 } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Grid2';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { CatalogueItem, Item } from '../api/api.types';
@@ -56,12 +56,14 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
     <Grid
       container
       spacing={0}
-      flexDirection="column"
       // Stop any further propagation to prevent a table select from being triggered
       // by clicks inside this grid
       onClick={(e) => e.stopPropagation()}
+      sx={{
+        flexDirection: 'column',
+      }}
     >
-      <Grid sx={{ mb: 4 }} xs={12}>
+      <Grid sx={{ mb: 4 }} size={12}>
         <Tabs value={tabValue} onChange={handleTabChange}>
           <Tab label="Details" />
           <Tab label="Properties" />
@@ -69,13 +71,18 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
           <Tab label="Notes" />
         </Tabs>
       </Grid>
-      <Grid sx={{ ml: 2 }} xs={12}>
+      <Grid sx={{ ml: 2 }} size={12}>
         <TabPanel value={tabValue} index={0}>
           <Grid container spacing={0}>
-            <Grid xs={12} sm={6} padding={1}>
+            <Grid
+              size={{ xs: 12, sm: 6 }}
+              sx={{
+                padding: 1,
+              }}
+            >
               <PrimaryImage entityId={itemData.id} isDetailsPanel />
             </Grid>
-            <Grid xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <Typography variant="h4" sx={{ wordWrap: 'break-word' }}>
                 {catalogueItemIdData.name}
               </Typography>
@@ -83,85 +90,157 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                 Description:
               </Typography>
               <Typography
-                sx={{ mb: 1, whiteSpace: 'pre-line', wordWrap: 'break-word' }}
                 variant="body1"
-                color="text.secondary"
+                sx={{
+                  color: 'text.secondary',
+                  mb: 1,
+                  whiteSpace: 'pre-line',
+                  wordWrap: 'break-word',
+                }}
               >
                 {catalogueItemIdData.description ?? 'None'}
               </Typography>
             </Grid>
             <Grid container spacing={0}>
-              <Grid xs={12} sm={6} key={0}>
-                <Typography color="text.primary">Serial Number</Typography>
+              <Grid size={{ xs: 12, sm: 6 }} key={0}>
                 <Typography
-                  color="text.secondary"
-                  sx={{ wordWrap: 'break-word' }}
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
+                  Serial Number
+                </Typography>
+                <Typography
+                  sx={{
+                    color: 'text.secondary',
+                    wordWrap: 'break-word',
+                  }}
                 >
                   {itemData.serial_number ?? 'None'}
                 </Typography>
               </Grid>
 
-              <Grid xs={12} sm={6} key={1}>
-                <Typography color="text.primary">Asset Number</Typography>
+              <Grid size={{ xs: 12, sm: 6 }} key={1}>
                 <Typography
-                  color="text.secondary"
-                  sx={{ wordWrap: 'break-word' }}
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
+                  Asset Number
+                </Typography>
+                <Typography
+                  sx={{
+                    color: 'text.secondary',
+                    wordWrap: 'break-word',
+                  }}
                 >
                   {itemData.asset_number ?? 'None'}
                 </Typography>
               </Grid>
 
-              <Grid xs={12} sm={6} key={2}>
-                <Typography color="text.primary">
+              <Grid size={{ xs: 12, sm: 6 }} key={2}>
+                <Typography
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
                   Purchase Order Number
                 </Typography>
                 <Typography
-                  color="text.secondary"
-                  sx={{ wordWrap: 'break-word' }}
+                  sx={{
+                    color: 'text.secondary',
+                    wordWrap: 'break-word',
+                  }}
                 >
                   {itemData.purchase_order_number ?? 'None'}
                 </Typography>
               </Grid>
 
-              <Grid xs={12} sm={6} key={3}>
-                <Typography color="text.primary">Warranty End Date</Typography>
-                <Typography color="text.secondary">
+              <Grid size={{ xs: 12, sm: 6 }} key={3}>
+                <Typography
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
+                  Warranty End Date
+                </Typography>
+                <Typography
+                  sx={{
+                    color: 'text.secondary',
+                  }}
+                >
                   {itemData.warranty_end_date
                     ? formatDateTimeStrings(itemData.warranty_end_date, false)
                     : 'None'}
                 </Typography>
               </Grid>
-              <Grid xs={12} sm={6} key={4}>
-                <Typography color="text.primary">Delivered Date</Typography>
-                <Typography color="text.secondary">
+              <Grid size={{ xs: 12, sm: 6 }} key={4}>
+                <Typography
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
+                  Delivered Date
+                </Typography>
+                <Typography
+                  sx={{
+                    color: 'text.secondary',
+                  }}
+                >
                   {itemData.delivered_date
                     ? formatDateTimeStrings(itemData.delivered_date, false)
                     : 'None'}
                 </Typography>
               </Grid>
 
-              <Grid xs={12} sm={6} key={5}>
-                <Typography color="text.primary">Is Defective</Typography>
-                <Typography color="text.secondary">
+              <Grid size={{ xs: 12, sm: 6 }} key={5}>
+                <Typography
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
+                  Is Defective
+                </Typography>
+                <Typography
+                  sx={{
+                    color: 'text.secondary',
+                  }}
+                >
                   {itemData.is_defective ? 'Yes' : 'No'}
                 </Typography>
               </Grid>
 
-              <Grid xs={12} sm={6} key={6}>
-                <Typography color="text.primary">Usage Status</Typography>
+              <Grid size={{ xs: 12, sm: 6 }} key={6}>
                 <Typography
-                  color="text.secondary"
-                  sx={{ wordWrap: 'break-word' }}
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
+                  Usage Status
+                </Typography>
+                <Typography
+                  sx={{
+                    color: 'text.secondary',
+                    wordWrap: 'break-word',
+                  }}
                 >
                   {itemData.usage_status}
                 </Typography>
               </Grid>
 
-              <Grid xs={12} sm={6} key={7}>
-                <Typography color="text.primary">System</Typography>
+              <Grid size={{ xs: 12, sm: 6 }} key={7}>
                 <Typography
-                  color="text.secondary"
-                  sx={{ wordWrap: 'break-word' }}
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
+                  System
+                </Typography>
+                <Typography
+                  sx={{
+                    color: 'text.secondary',
+                    wordWrap: 'break-word',
+                  }}
                 >
                   <MuiLink
                     component={Link}
@@ -174,16 +253,36 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
-              <Grid xs={12} sm={6} key={8}>
-                <Typography color="text.primary">Last Modified</Typography>
-                <Typography color="text.secondary">
+              <Grid size={{ xs: 12, sm: 6 }} key={8}>
+                <Typography
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
+                  Last Modified
+                </Typography>
+                <Typography
+                  sx={{
+                    color: 'text.secondary',
+                  }}
+                >
                   {formatDateTimeStrings(itemData.modified_time, true)}
                 </Typography>
               </Grid>
 
-              <Grid xs={12} sm={6} key={9}>
-                <Typography color="text.primary">Created</Typography>
-                <Typography color="text.secondary">
+              <Grid size={{ xs: 12, sm: 6 }} key={9}>
+                <Typography
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
+                  Created
+                </Typography>
+                <Typography
+                  sx={{
+                    color: 'text.secondary',
+                  }}
+                >
                   {formatDateTimeStrings(itemData.created_time, true)}
                 </Typography>
               </Grid>
@@ -194,23 +293,39 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
         <TabPanel value={tabValue} index={1}>
           <Grid container spacing={0}>
             {itemData.properties.length === 0 ? (
-              <Typography color="text.secondary">None</Typography>
+              <Typography
+                sx={{
+                  color: 'text.secondary',
+                }}
+              >
+                None
+              </Typography>
             ) : (
               itemData.properties.map((property, index) => {
                 return (
-                  <Grid xs={12} sm={6} key={index}>
+                  <Grid
+                    key={index}
+                    size={{
+                      xs: 12,
+                      sm: 6,
+                    }}
+                  >
                     <Typography
                       align="left"
-                      color="text.primary"
-                      sx={{ wordWrap: 'break-word' }}
+                      sx={{
+                        color: 'text.primary',
+                        wordWrap: 'break-word',
+                      }}
                     >{`${property.name} ${
                       property.unit ? `(${property.unit})` : ''
                     }`}</Typography>
                     <Box sx={{ display: 'flex' }}>
                       <Typography
                         align="left"
-                        color="text.secondary"
-                        sx={{ wordWrap: 'break-word' }}
+                        sx={{
+                          color: 'text.secondary',
+                          wordWrap: 'break-word',
+                        }}
                       >
                         {property.value !== null
                           ? String(property.value)
@@ -226,11 +341,25 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
 
         <TabPanel value={tabValue} index={2}>
           <Grid container spacing={0}>
-            <Grid xs={12} sm={6} key={0}>
-              <Typography color="text.primary">Manufacturer Name</Typography>
+            <Grid
+              key={0}
+              size={{
+                xs: 12,
+                sm: 6,
+              }}
+            >
               <Typography
-                color="text.secondary"
-                sx={{ wordWrap: 'break-word' }}
+                sx={{
+                  color: 'text.primary',
+                }}
+              >
+                Manufacturer Name
+              </Typography>
+              <Typography
+                sx={{
+                  color: 'text.secondary',
+                  wordWrap: 'break-word',
+                }}
               >
                 <MuiLink
                   underline="hover"
@@ -241,11 +370,25 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                 </MuiLink>
               </Typography>
             </Grid>
-            <Grid xs={12} sm={6} key={1}>
-              <Typography color="text.primary">Manufacturer URL</Typography>
+            <Grid
+              key={1}
+              size={{
+                xs: 12,
+                sm: 6,
+              }}
+            >
               <Typography
-                color="text.secondary"
-                sx={{ wordWrap: 'break-word' }}
+                sx={{
+                  color: 'text.primary',
+                }}
+              >
+                Manufacturer URL
+              </Typography>
+              <Typography
+                sx={{
+                  color: 'text.secondary',
+                  wordWrap: 'break-word',
+                }}
               >
                 {manufacturerData?.url ? (
                   <MuiLink
@@ -261,54 +404,87 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                 )}
               </Typography>
             </Grid>
-            <Grid xs={12} sm={6}>
-              <Typography align="left" color="text.primary">
+            <Grid
+              size={{
+                xs: 12,
+                sm: 6,
+              }}
+            >
+              <Typography
+                align="left"
+                sx={{
+                  color: 'text.primary',
+                }}
+              >
                 Telephone number
               </Typography>
               <Typography
                 align="left"
-                color="text.secondary"
-                sx={{ wordWrap: 'break-word' }}
+                sx={{
+                  color: 'text.secondary',
+                  wordWrap: 'break-word',
+                }}
               >
                 {manufacturerData?.telephone ?? 'None'}
               </Typography>
             </Grid>
-            <Grid xs={12} sm={6} md={4}>
-              <Typography align="left" color="text.primary">
+            <Grid
+              size={{
+                xs: 12,
+                sm: 6,
+                md: 4,
+              }}
+            >
+              <Typography
+                align="left"
+                sx={{
+                  color: 'text.primary',
+                }}
+              >
                 Address
               </Typography>
               <Typography
                 align="left"
-                color="text.secondary"
-                sx={{ wordWrap: 'break-word' }}
+                sx={{
+                  color: 'text.secondary',
+                  wordWrap: 'break-word',
+                }}
               >
                 {manufacturerData?.address.address_line}
               </Typography>
               <Typography
                 align="left"
-                color="text.secondary"
-                sx={{ wordWrap: 'break-word' }}
+                sx={{
+                  color: 'text.secondary',
+                  wordWrap: 'break-word',
+                }}
               >
                 {manufacturerData?.address.town}
               </Typography>
               <Typography
                 align="left"
-                color="text.secondary"
-                sx={{ wordWrap: 'break-word' }}
+                sx={{
+                  color: 'text.secondary',
+                  wordWrap: 'break-word',
+                }}
               >
                 {manufacturerData?.address.county}
               </Typography>
               <Typography
                 align="left"
-                color="text.secondary"
-                sx={{ wordWrap: 'break-word' }}
+                sx={{
+                  color: 'text.secondary',
+                  wordWrap: 'break-word',
+                }}
               >
                 {manufacturerData?.address.country}
               </Typography>
               <Typography
                 align="left"
-                color="text.secondary"
-                sx={{ wordWrap: 'break-word' }}
+                sx={{
+                  color: 'text.secondary',
+                  wordWrap: 'break-word',
+                }}
               >
                 {manufacturerData?.address.postcode}
               </Typography>
@@ -317,8 +493,17 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
         </TabPanel>
 
         <TabPanel value={tabValue} index={3}>
-          <Box width="100%">
-            <Typography color="text.secondary" whiteSpace="pre-line">
+          <Box
+            sx={{
+              width: '100%',
+            }}
+          >
+            <Typography
+              sx={{
+                color: 'text.secondary',
+                whiteSpace: 'pre-line',
+              }}
+            >
               {itemData.notes ?? 'None'}
             </Typography>
           </Box>

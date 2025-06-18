@@ -14,7 +14,7 @@ import { MockInstance } from 'vitest';
 vi.mock('../handleIMS_APIError');
 
 describe('Download File dialog', () => {
-  let axiosGetSpy : MockInstance;
+  let axiosGetSpy: MockInstance;
   let props: DownloadFileProps;
   let user: UserEvent;
   const onClose = vi.fn();
@@ -55,7 +55,7 @@ describe('Download File dialog', () => {
 
       await user.click(continueButton);
 
-      expect(axiosGetSpy).toHaveBeenCalledWith('/images/1')
+      expect(axiosGetSpy).toHaveBeenCalledWith('/images/1');
 
       await waitFor(() => {
         expect(onClose).toHaveBeenCalled();
@@ -103,7 +103,7 @@ describe('Download File dialog', () => {
 
       await user.click(continueButton);
 
-      expect(axiosGetSpy).toHaveBeenCalledWith('/attachments/1')
+      expect(axiosGetSpy).toHaveBeenCalledWith('/attachments/1');
 
       await waitFor(() => {
         expect(onClose).toHaveBeenCalled();
@@ -136,5 +136,4 @@ describe('Download File dialog', () => {
 
     expect(axiosGetSpy).not.toHaveBeenCalled();
   });
-
 });

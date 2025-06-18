@@ -19,7 +19,7 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Grid2';
 import { AxiosError } from 'axios';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -543,8 +543,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     switch (step) {
       case 0:
         return (
-          <Grid container spacing={1.5} xs={12}>
-            <Grid xs={12}>
+          <Grid container spacing={1.5} size={12}>
+            <Grid size={12}>
               <TextField
                 id="catalogue-item-name-input"
                 label="Name"
@@ -556,7 +556,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 helperText={errorsDetailsStep.name?.message}
               />
             </Grid>
-            <Grid xs={12}>
+            <Grid size={12}>
               <TextField
                 id="catalogue-item-description-input"
                 label="Description"
@@ -566,7 +566,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 multiline
               />
             </Grid>
-            <Grid xs={12}>
+            <Grid size={12}>
               <TextField
                 id="catalogue-item-cost-input"
                 label="Cost (£)"
@@ -578,8 +578,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 fullWidth
               />
             </Grid>
-
-            <Grid xs={12}>
+            <Grid size={12}>
               <TextField
                 id="catalogue-item-cost-rework-input"
                 label="Cost to rework (£)"
@@ -590,8 +589,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 fullWidth
               />
             </Grid>
-
-            <Grid xs={12}>
+            <Grid size={12}>
               <TextField
                 id="catalogue-item-replace-input"
                 label="Time to replace (days)"
@@ -603,8 +601,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 fullWidth
               />
             </Grid>
-
-            <Grid xs={12}>
+            <Grid size={12}>
               <TextField
                 id="catalogue-item-rework-input"
                 label="Time to rework (days)"
@@ -615,8 +612,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 fullWidth
               />
             </Grid>
-
-            <Grid xs={12}>
+            <Grid size={12}>
               <TextField
                 id="catalogue-item-expected-lifetime-days-input"
                 label="Expected Lifetime (days)"
@@ -627,8 +623,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 fullWidth
               />
             </Grid>
-
-            <Grid xs={12}>
+            <Grid size={12}>
               <TextField
                 id="catalogue-item-drawing-number-input"
                 label="Drawing number"
@@ -637,8 +632,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 fullWidth
               />
             </Grid>
-
-            <Grid xs={12}>
+            <Grid size={12}>
               <TextField
                 id="catalogue-item-drawing-link-input"
                 label="Drawing link"
@@ -649,8 +643,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 fullWidth
               />
             </Grid>
-
-            <Grid xs={12}>
+            <Grid size={12}>
               <TextField
                 id="catalogue-item-model-input"
                 label="Model number"
@@ -661,12 +654,12 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             </Grid>
 
             <Grid
-              xs={12}
+              size={12}
               container
               spacing={0}
               style={{ display: 'flex', margin: 0 }}
             >
-              <Grid xs={11}>
+              <Grid size={11}>
                 <Controller
                   control={controlDetailsStep}
                   name="manufacturer_id"
@@ -709,7 +702,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                   )}
                 />
               </Grid>
-              <Grid xs={1}>
+              <Grid size={1}>
                 <Tooltip title="Add Manufacturer">
                   <span>
                     <IconButton
@@ -728,8 +721,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               onClose={() => setAddManufacturerDialogOpen(false)}
               type="post"
             />
-
-            <Grid xs={12}>
+            <Grid size={12}>
               <TextField
                 id="catalogue-item-notes-input"
                 label="Notes"
@@ -744,13 +736,20 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         );
       case 1:
         return (
-          <Grid container xs={12}>
+          <Grid container size={12}>
             {parentCatalogueItemPropertiesInfo.length >= 1 ? (
-              <Grid container xs={12} spacing={1.5} margin={0}>
+              <Grid
+                container
+                size={12}
+                spacing={1.5}
+                sx={{
+                  margin: 0,
+                }}
+              >
                 {parentCatalogueItemPropertiesInfo.map(
                   (property: CatalogueCategoryProperty, index: number) => (
-                    <Grid container xs={12} key={index} spacing={1.5}>
-                      <Grid xs={11} sx={{ display: 'flex' }}>
+                    <Grid container size={12} key={index} spacing={1.5}>
+                      <Grid size={11} sx={{ display: 'flex' }}>
                         {property.type === 'boolean' ? (
                           <Controller
                             control={controlPropertiesStep}
@@ -871,7 +870,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                         )}
                       </Grid>
                       <Grid
-                        xs={1}
+                        size={1}
                         sx={{ display: 'flex', alignItems: 'center' }}
                       >
                         <Tooltip

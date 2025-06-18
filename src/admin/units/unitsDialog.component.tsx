@@ -71,7 +71,12 @@ function UnitsDialog(props: UnitsDialogProps) {
     <Dialog open={open} maxWidth="sm" fullWidth>
       <DialogTitle>Add Unit</DialogTitle>
       <DialogContent>
-        <Stack width="100%" marginTop={1}>
+        <Stack
+          sx={{
+            width: '100%',
+            marginTop: 1,
+          }}
+        >
           <TextField
             id="unit-value-input"
             label="Value"

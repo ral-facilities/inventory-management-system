@@ -204,7 +204,12 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
         {requestType === 'patch' ? `Edit ${systemText}` : `Add ${systemText}`}
       </DialogTitle>
       <DialogContent>
-        <Stack width="100%" spacing={2}>
+        <Stack
+          spacing={2}
+          sx={{
+            width: '100%',
+          }}
+        >
           <Box sx={{ marginTop: '8px !important' }}>
             <TextField
               id="system-name-input"

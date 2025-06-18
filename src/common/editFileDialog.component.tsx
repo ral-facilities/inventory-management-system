@@ -153,7 +153,13 @@ const EditFileDialog = (props: FileDialogProps) => {
     <Dialog open={open} maxWidth="sm" fullWidth>
       <DialogTitle>{`Edit ${fileType}`}</DialogTitle>
       <DialogContent>
-        <Stack width="100%" spacing={1} component="form">
+        <Stack
+          spacing={1}
+          component="form"
+          sx={{
+            width: '100%',
+          }}
+        >
           <Box sx={{ marginTop: '8px !important' }}>
             <TextField
               id="object-file-name-input"
@@ -162,12 +168,14 @@ const EditFileDialog = (props: FileDialogProps) => {
               {...register('file_name')}
               error={!!errors.file_name}
               helperText={errors.file_name?.message}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">{extension}</InputAdornment>
-                ),
-              }}
               fullWidth
+              slotProps={{
+                input: {
+                  endAdornment: (
+                    <InputAdornment position="end">{extension}</InputAdornment>
+                  ),
+                },
+              }}
             />
           </Box>
           <TextField

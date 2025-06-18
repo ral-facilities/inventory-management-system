@@ -8,7 +8,7 @@ import {
   DialogTitle,
   Tooltip,
 } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Grid2';
 import React from 'react';
 import { CatalogueCategory } from '../../api/api.types';
 import {
@@ -143,9 +143,11 @@ const CatalogueCategoryDirectoryDialog = (
         <Grid container spacing={2}>
           <Grid>
             <Box
-              display="inline-flex"
-              alignItems="center"
-              justifyContent="center"
+              sx={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
             >
               <>
                 {requestType === 'moveTo' ? 'Move ' : 'Copy '}{' '}
@@ -171,7 +173,7 @@ const CatalogueCategoryDirectoryDialog = (
               )}
             </Box>
           </Grid>
-          <Grid xs={12}>
+          <Grid size={12}>
             <Breadcrumbs
               breadcrumbsInfo={catalogueBreadcrumbs}
               onChangeNode={setParentCategoryId}

@@ -10,7 +10,7 @@ import {
   Stepper,
   Typography,
 } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Grid2';
 import { MRT_RowSelectionState } from 'material-react-table';
 import React from 'react';
 import { Item } from '../api/api.types';
@@ -222,8 +222,8 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     switch (step) {
       case 0:
         return (
-          <Grid container spacing={1.5} xs={12}>
-            <Grid xs={12}>
+          <Grid container spacing={1.5} size={12}>
+            <Grid size={12}>
               <Breadcrumbs
                 breadcrumbsInfo={parentSystemBreadcrumbs}
                 onChangeNode={changeParentSystemId}
@@ -233,7 +233,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
                 homeLocation="Systems"
               />
             </Grid>
-            <Grid xs={12}>
+            <Grid size={12}>
               <SystemsTableView
                 systemsData={systemsData}
                 systemsDataLoading={systemsDataLoading}

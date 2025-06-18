@@ -24,7 +24,7 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Grid2';
 import {
   // To resolve react/jsx-pascal-case
   MRT_GlobalFilterTextField as MRTGlobalFilterTextField,
@@ -332,15 +332,30 @@ function Systems() {
 
   return (
     <>
-      <Box>
-        <Grid container margin={0} direction="row" alignItems="stretch">
+      <Box
+        sx={{
+          height: '100%',
+        }}
+      >
+        <Grid
+          container
+          direction="row"
+          sx={{
+            margin: 0,
+            alignItems: 'stretch',
+          }}
+        >
           <Grid
-            xs={12}
-            md
-            minWidth={MIN_SUBSYSTEMS_WIDTH}
-            textAlign="left"
-            padding={1}
-            paddingBottom={0}
+            size={{
+              xs: 12,
+              md: 'grow',
+            }}
+            sx={{
+              minWidth: MIN_SUBSYSTEMS_WIDTH,
+              textAlign: 'left',
+              padding: 1,
+              paddingBottom: 0,
+            }}
           >
             {subsystemsDataLoading ? (
               <Box
@@ -454,11 +469,13 @@ function Systems() {
             )}
           </Grid>
           <Grid
-            textAlign="left"
-            padding={1}
-            xs
-            md={10}
+            size={{
+              xs: 'grow',
+              md: 10,
+            }}
             sx={{
+              textAlign: 'left',
+              padding: 1,
               maxWidth: {
                 xs: '100%',
                 md: `calc(100% - ${MIN_SUBSYSTEMS_WIDTH})`,

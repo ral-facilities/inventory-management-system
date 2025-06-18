@@ -8,7 +8,7 @@ import {
   DialogTitle,
   Tooltip,
 } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Grid2';
 import { MRT_RowSelectionState } from 'material-react-table';
 import React from 'react';
 import { System } from '../api/api.types';
@@ -131,9 +131,11 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
         <Grid container spacing={2}>
           <Grid>
             <Box
-              display="inline-flex"
-              alignItems="center"
-              justifyContent="center"
+              sx={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
             >
               <>
                 {type === 'moveTo' ? 'Move ' : 'Copy '}
@@ -158,7 +160,7 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
               )}
             </Box>
           </Grid>
-          <Grid xs={12}>
+          <Grid size={12}>
             <Breadcrumbs
               breadcrumbsInfo={parentSystemBreadcrumbs}
               onChangeNode={setParentSystemId}

@@ -7,7 +7,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Grid2';
 import React from 'react';
 import { System } from '../api/api.types';
 import { getSystemImportanceColour, useGetSystem } from '../api/systems';
@@ -79,7 +79,7 @@ function SystemDetails(props: SystemDetailsProps) {
         }}
         spacing={1}
       >
-        <Grid xs={9}>
+        <Grid size={9}>
           <OverflowTip
             sx={{
               typography: 'h5',
@@ -103,30 +103,54 @@ function SystemDetails(props: SystemDetailsProps) {
           <Typography variant="h3">Please select a system</Typography>
         </Box>
       ) : (
-        <Stack width="100%" spacing={1} flexWrap={'nowrap'} display="flex">
+        <Stack
+          spacing={1}
+          sx={{
+            width: '100%',
+            flexWrap: 'nowrap',
+            display: 'flex',
+          }}
+        >
           <Grid
             container
             direction="row"
-            justifyContent="space-evenly"
-            sx={{ margin: 0, marginTop: '8px !important' }}
             spacing={2}
+            sx={{
+              justifyContent: 'space-evenly',
+              margin: 0,
+              marginTop: '8px !important',
+            }}
           >
-            <Grid xs="auto">
+            <Grid size="auto">
               <PrimaryImage entityId={system.id} />
             </Grid>
-            <Grid container spacing={1} xs>
-              <Grid xs={12} sm={6}>
-                <Typography color="text.primary">Location</Typography>
+            <Grid container spacing={1} size="grow">
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <Typography
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
+                  Location
+                </Typography>
                 <Typography
                   variant="body1"
-                  color="text.secondary"
-                  sx={{ wordWrap: 'break-word' }}
+                  sx={{
+                    color: 'text.secondary',
+                    wordWrap: 'break-word',
+                  }}
                 >
                   {system.location ?? 'None'}
                 </Typography>
               </Grid>
-              <Grid xs={12} sm={6} sx={{ display: 'inline-flex' }}>
-                <Typography color="text.primary">Importance</Typography>
+              <Grid size={{ xs: 12, sm: 6 }} sx={{ display: 'inline-flex' }}>
+                <Typography
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
+                  Importance
+                </Typography>
                 <Chip
                   label={system.importance}
                   sx={() => {
@@ -142,37 +166,76 @@ function SystemDetails(props: SystemDetailsProps) {
                   }}
                 />
               </Grid>
-              <Grid xs={12} sm={6}>
-                <Typography color="text.primary">Owner</Typography>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <Typography
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
+                  Owner
+                </Typography>
                 <Typography
                   variant="body1"
-                  color="text.secondary"
-                  sx={{ wordWrap: 'break-word' }}
+                  sx={{
+                    color: 'text.secondary',
+                    wordWrap: 'break-word',
+                  }}
                 >
                   {system.owner ?? 'None'}
                 </Typography>
               </Grid>
-              <Grid xs={12} sm={6}>
-                <Typography color="text.primary">Last modified</Typography>
-                <Typography variant="body1" color="text.secondary">
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <Typography
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
+                  Last modified
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: 'text.secondary',
+                  }}
+                >
                   {formatDateTimeStrings(system.modified_time, true)}
                 </Typography>
               </Grid>
 
-              <Grid xs={12} sm={6}>
-                <Typography color="text.primary">Created</Typography>
-                <Typography variant="body1" color="text.secondary">
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <Typography
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
+                  Created
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: 'text.secondary',
+                  }}
+                >
                   {formatDateTimeStrings(system.created_time, true)}
                 </Typography>
               </Grid>
             </Grid>
           </Grid>
           <Box>
-            <Typography color="text.primary">Description</Typography>
+            <Typography
+              sx={{
+                color: 'text.primary',
+              }}
+            >
+              Description
+            </Typography>
             <Typography
               variant="body1"
-              color="text.secondary"
-              sx={{ whiteSpace: 'pre-line', wordWrap: 'break-word' }}
+              sx={{
+                color: 'text.secondary',
+                whiteSpace: 'pre-line',
+                wordWrap: 'break-word',
+              }}
             >
               {system.description ?? 'None'}
             </Typography>

@@ -14,7 +14,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Grid2';
 import React from 'react';
 import {
   Control,
@@ -359,7 +359,14 @@ const PropertyDialog = (props: PropertyDialogProps) => {
         {type === 'post' ? 'Add Property' : 'Edit Property'}
       </DialogTitle>
       <DialogContent sx={{ pb: 0.5 }}>
-        <Stack direction="column" spacing={1} px={0.5} py={1}>
+        <Stack
+          direction="column"
+          spacing={1}
+          sx={{
+            px: 0.5,
+            py: 1,
+          }}
+        >
           <TextField
             id={crypto.randomUUID()}
             label="Property Name"
@@ -617,9 +624,6 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                     return (
                       <Autocomplete
                         disableClearable={property.mandatory === 'true'}
-                        componentsProps={{
-                          clearIndicator: { onClick: resetDefaultValue },
-                        }}
                         id={crypto.randomUUID()}
                         value={
                           defaultValue?.value?.value
@@ -658,6 +662,9 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                             }
                           />
                         )}
+                        slotProps={{
+                          clearIndicator: { onClick: resetDefaultValue },
+                        }}
                       />
                     );
                   }}
@@ -766,16 +773,29 @@ const PropertyDialog = (props: PropertyDialogProps) => {
         </Stack>
       </DialogContent>
       <DialogActions>
-        <Grid container px={1.5} xs={12}>
+        <Grid
+          container
+          size={12}
+          sx={{
+            px: 1.5,
+          }}
+        >
           {isMigration && (
-            <Grid xs={12}>
+            <Grid size={12}>
               <MigrationWarningMessage
                 isChecked={isMigrationWarningChecked}
                 setIsChecked={setIsMigrationWarningChecked}
               />
             </Grid>
           )}
-          <Grid display="flex" xs={12} sx={{ marginTop: 2, marginBottom: 1 }}>
+          <Grid
+            size={12}
+            sx={{
+              display: 'flex',
+              marginTop: 2,
+              marginBottom: 1,
+            }}
+          >
             <Button
               variant="outlined"
               sx={{ width: '50%', mx: 1 }}
