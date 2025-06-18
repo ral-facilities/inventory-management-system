@@ -1,4 +1,5 @@
-import { Box, Grid } from '@mui/material';
+import { Box } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { BreadcrumbsInfo } from '../api/api.types';
