@@ -15,7 +15,7 @@ import { useParams } from 'react-router-dom';
 import { useGetManufacturer } from '../api/manufacturers';
 import { formatDateTimeStrings } from '../utils';
 import ManufacturerDialog from './manufacturerDialog.component';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+
 
 function ManufacturerLandingPage() {
 
@@ -78,7 +78,7 @@ function ManufacturerLandingPage() {
             >
               Refresh
           </Button>
-          <Typography textAlign={'center'} variant="h6">
+          <Typography data-testid="refresh-timestamp" textAlign={'center'} variant="h6">
               {formatDateTimeStrings(editRefreshDate.toISOString(), true)}
             </Typography>
           </Grid>
