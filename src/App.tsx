@@ -65,6 +65,7 @@ import SystemsLayout, {
   SystemsLayoutErrorComponent,
   systemsLayoutLoader,
 } from './systems/systemsLayout.component';
+import SystemsTree from './systems/systemsTree.component';
 import ViewTabs from './view/viewTabs.component';
 
 export const queryClient = new QueryClient({
@@ -196,6 +197,15 @@ const routeObject: RouteObject[] = [
           {
             path: paths.system,
             Component: Systems,
+            loader: systemsLayoutLoader(queryClient),
+          },
+          {
+            path: paths.systemRootTree,
+            Component: SystemsTree,
+          },
+          {
+            path: paths.systemTree,
+            Component: SystemsTree,
             loader: systemsLayoutLoader(queryClient),
           },
           {

@@ -38,6 +38,7 @@ import {
   COLUMN_FILTER_MODE_OPTIONS,
   COLUMN_FILTER_VARIANTS,
   displayTableRowCountText,
+  FULL_SCREEN_STYLES,
   getInitialColumnFilterFnState,
   getPageHeightCalc,
   mrtTheme,
@@ -54,21 +55,6 @@ import GalleryLightBox from './galleryLightbox.component';
 import ImageInformationDialog from './imageInformationDialog.component';
 import ThumbnailImage from './thumbnailImage.component';
 import UploadImagesDialog from './uploadImagesDialog.component';
-
-const MRT_FULL_SCREEN_STYLES = {
-  bottom: 0,
-  height: '100dvh',
-  left: 0,
-  margin: 0,
-  maxHeight: '100dvh',
-  maxWidth: '100dvw',
-  padding: 0,
-  position: 'fixed',
-  right: 0,
-  top: 0,
-  width: '100dvw',
-  zIndex: 1210,
-};
 
 export interface ImageGalleryProps {
   entityId: string;
@@ -418,7 +404,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
       }
       sx={{
         backgroundColor: baseBackgroundColor,
-        ...(table.getState().isFullScreen && MRT_FULL_SCREEN_STYLES),
+        ...(table.getState().isFullScreen && FULL_SCREEN_STYLES),
       }}
     >
       <Stack

@@ -13,6 +13,8 @@ export const paths = {
   item: '/catalogue/:catalogue_category_id/items/:catalogue_item_id/items/:item_id',
   systems: '/systems',
   system: '/systems/:system_id',
+  systemTree: '/systems/:system_id/tree',
+  systemRootTree: '/systems/tree',
   manufacturers: '/manufacturers',
   manufacturer: '/manufacturers/:manufacturer_id',
 };

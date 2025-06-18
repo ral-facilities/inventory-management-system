@@ -6,9 +6,15 @@ import {
   useQueries,
   useQuery,
   useQueryClient,
+  type QueryClient,
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { CopyToSystem, MoveToSystem, TransferState } from '../app.types';
+import {
+  CopyToSystem,
+  MoveToSystem,
+  TransferState,
+  type GetQueryOptionsType,
+} from '../app.types';
 import { generateUniqueNameUsingCode } from '../utils';
 import { imsApi } from './api';
 import {
@@ -18,7 +24,10 @@ import {
   SystemImportanceType,
   SystemPatch,
   SystemPost,
+  type CatalogueItem,
 } from './api.types';
+import { getCatalogueItemQuery } from './catalogueItems';
+import { getItemsQuery } from './items';
 
 /** Utility for turning an importance into an MUI palette colour to display */
 export const getSystemImportanceColour = (
@@ -53,15 +62,22 @@ export const useGetSystemIds = (ids: string[]): UseQueryResult<System>[] => {
   });
 };
 
+export const getSystemsQuery = (
+  id?: string,
+  extraOptions?: GetQueryOptionsType<System[]>
+) =>
+  queryOptions<System[], AxiosError>({
+    queryKey: ['Systems', id],
+    queryFn: () => {
+      return getSystems(id);
+    },
+    ...extraOptions,
+  });
+
 export const useGetSystems = (
   parent_id?: string
 ): UseQueryResult<System[], AxiosError> => {
-  return useQuery({
-    queryKey: ['Systems', parent_id],
-    queryFn: () => {
-      return getSystems(parent_id);
-    },
-  });
+  return useQuery(getSystemsQuery(parent_id));
 };
 
 const getSystem = async (id: string): Promise<System> => {
@@ -70,14 +86,17 @@ const getSystem = async (id: string): Promise<System> => {
   });
 };
 
-export const getSystemQuery = (id?: string | null, loader?: boolean) =>
+export const getSystemQuery = (
+  id?: string | null,
+  extraOptions?: GetQueryOptionsType<System>
+) =>
   queryOptions<System, AxiosError>({
     queryKey: ['System', id],
     queryFn: () => {
       return getSystem(id ?? '');
     },
     enabled: !!id,
-    retry: loader ? false : undefined,
+    ...extraOptions,
   });
 
 // Allows a value of undefined or null to disable
@@ -85,6 +104,184 @@ export const useGetSystem = (
   id?: string | null
 ): UseQueryResult<System, AxiosError> => {
   return useQuery(getSystemQuery(id));
+};
+
+export interface SystemTree extends Partial<System> {
+  catalogueItems: (CatalogueItem & { itemsQuantity: number })[];
+  subsystems?: SystemTree[];
+}
+
+const GET_SYSTEM_TREE_QUERY_OPTIONS = {
+  staleTime: 1000 * 60 * 5,
+};
+
+const getSystemTree = async (
+  queryClient: QueryClient,
+  parent_id: string,
+  maxSubsystems: number,
+  maxDepth?: number,
+  currentDepth: number = 0,
+  subsystemsCutOffPoint?: number,
+  totalSubsystems: { count: number } = { count: 0 },
+  catalogueItemCache: Map<string, CatalogueItem> = new Map(),
+  systemsCache: Map<string, System> = new Map() // Cache for systems
+): Promise<SystemTree[]> => {
+  if (maxDepth !== undefined && currentDepth >= maxDepth) return [];
+
+  // Determine the root system from cache
+  let rootSystem: System;
+
+  if (parent_id === 'null') {
+    rootSystem = {
+      name: 'Root',
+      code: 'root',
+      id: 'root',
+      created_time: '',
+      modified_time: '',
+      description: null,
+      location: null,
+      owner: null,
+      importance: SystemImportanceType.LOW,
+      parent_id: null,
+    };
+  } else {
+    // Check cache for the parent system
+    if (!systemsCache.has(parent_id)) {
+      const fetchedSystem = await queryClient.fetchQuery(
+        getSystemQuery(parent_id, GET_SYSTEM_TREE_QUERY_OPTIONS)
+      );
+      systemsCache.set(parent_id, fetchedSystem); // Cache only the parent system
+    }
+    rootSystem = systemsCache.get(parent_id)!;
+  }
+
+  // Fetch systems at the current level
+  const systems = await queryClient.fetchQuery(
+    getSystemsQuery(parent_id, GET_SYSTEM_TREE_QUERY_OPTIONS)
+  );
+
+  // Store all fetched systems in cache
+  systems.forEach((system) => {
+    if (!systemsCache.has(system.id)) {
+      systemsCache.set(system.id, system);
+    }
+  });
+
+  totalSubsystems.count += systems.length;
+  if (maxSubsystems !== undefined && totalSubsystems.count > maxSubsystems) {
+    throw new Error(
+      `Total subsystems exceeded the maximum allowed limit of ${maxSubsystems}. Current count: ${totalSubsystems.count}`
+    );
+  }
+
+  if (
+    subsystemsCutOffPoint !== undefined &&
+    totalSubsystems.count > subsystemsCutOffPoint
+  ) {
+    return systems.map((system) => ({
+      ...system,
+      subsystems: [],
+      catalogueItems: [],
+    }));
+  }
+
+  // Fetch subsystems recursively
+  const systemsWithTree = await Promise.all(
+    systems.map(async (system) => ({
+      ...system,
+      subsystems: await getSystemTree(
+        queryClient,
+        system.id,
+        maxSubsystems,
+        maxDepth,
+        currentDepth + 1,
+        subsystemsCutOffPoint,
+        totalSubsystems,
+        catalogueItemCache,
+        systemsCache
+      ),
+      catalogueItems: await fetchCatalogueItems(
+        queryClient,
+        system.id,
+        catalogueItemCache
+      ),
+    }))
+  );
+
+  return [
+    {
+      ...rootSystem,
+      catalogueItems: await fetchCatalogueItems(
+        queryClient,
+        parent_id,
+        catalogueItemCache
+      ),
+      subsystems: systemsWithTree,
+    },
+  ];
+};
+
+// Helper function for fetching and caching catalogue items
+const fetchCatalogueItems = async (
+  queryClient: QueryClient,
+  systemId: string,
+  catalogueItemCache: Map<string, CatalogueItem>
+): Promise<SystemTree['catalogueItems']> => {
+  const items = await queryClient.fetchQuery(
+    getItemsQuery(systemId, undefined, GET_SYSTEM_TREE_QUERY_OPTIONS)
+  );
+
+  const catalogueItems: SystemTree['catalogueItems'] = [];
+  const catalogueItemIdSet = new Set(
+    items.map((item) => item.catalogue_item_id)
+  );
+
+  for (const id of Array.from(catalogueItemIdSet)) {
+    catalogueItemCache.set(
+      id,
+      catalogueItemCache.get(id) ||
+        (await queryClient.fetchQuery(
+          getCatalogueItemQuery(id, GET_SYSTEM_TREE_QUERY_OPTIONS)
+        ))
+    );
+    catalogueItems.push({
+      ...catalogueItemCache.get(id)!,
+      itemsQuantity: items.filter((item) => item.catalogue_item_id === id)
+        .length,
+    });
+  }
+
+  return catalogueItems;
+};
+
+export const useGetSystemsTree = (
+  parent_id?: string | null,
+  maxDepth?: number,
+  subsystemsCutOffPoint?: number, // Add cutoff point as a parameter
+  maxSubsystems?: number
+): UseQueryResult<SystemTree[], AxiosError> => {
+  const queryClient = useQueryClient();
+
+  return useQuery({
+    // eslint-disable-next-line @tanstack/query/exhaustive-deps
+    queryKey: [
+      'SystemsTree',
+      parent_id,
+      maxSubsystems,
+      maxDepth,
+      subsystemsCutOffPoint,
+    ],
+    queryFn: () =>
+      getSystemTree(
+        queryClient,
+        parent_id ?? 'null',
+        maxSubsystems ?? 150,
+        maxDepth,
+        0,
+        subsystemsCutOffPoint
+      ),
+    ...GET_SYSTEM_TREE_QUERY_OPTIONS,
+  });
 };
 
 const getSystemsBreadcrumbs = async (id: string): Promise<BreadcrumbsInfo> => {

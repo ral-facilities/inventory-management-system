@@ -899,6 +899,24 @@ exports[`Image Gallery > displays no images message and can open and close uploa
                     class="uppy-Dashboard-progressindicators"
                   >
                     <div
+                      aria-hidden="true"
+                      class="uppy-StatusBar is-waiting"
+                    >
+                      <div
+                        aria-label="0%"
+                        aria-valuemax="100"
+                        aria-valuemin="0"
+                        aria-valuenow="0"
+                        aria-valuetext="0%"
+                        class="uppy-StatusBar-progress"
+                        role="progressbar"
+                        style="width: 0%;"
+                      />
+                      <div
+                        class="uppy-StatusBar-actions"
+                      />
+                    </div>
+                    <div
                       class="uppy uppy-Informer"
                     >
                       <span />
@@ -3035,6 +3053,24 @@ exports[`Image Gallery > renders correctly 1`] = `
                   <div
                     class="uppy-Dashboard-progressindicators"
                   >
+                    <div
+                      aria-hidden="true"
+                      class="uppy-StatusBar is-waiting"
+                    >
+                      <div
+                        aria-label="0%"
+                        aria-valuemax="100"
+                        aria-valuemin="0"
+                        aria-valuenow="0"
+                        aria-valuetext="0%"
+                        class="uppy-StatusBar-progress"
+                        role="progressbar"
+                        style="width: 0%;"
+                      />
+                      <div
+                        class="uppy-StatusBar-actions"
+                      />
+                    </div>
                     <div
                       class="uppy uppy-Informer"
                     >
@@ -5553,6 +5589,24 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                     class="uppy-Dashboard-progressindicators"
                   >
                     <div
+                      aria-hidden="true"
+                      class="uppy-StatusBar is-waiting"
+                    >
+                      <div
+                        aria-label="0%"
+                        aria-valuemax="100"
+                        aria-valuemin="0"
+                        aria-valuenow="0"
+                        aria-valuetext="0%"
+                        class="uppy-StatusBar-progress"
+                        role="progressbar"
+                        style="width: 0%;"
+                      />
+                      <div
+                        class="uppy-StatusBar-actions"
+                      />
+                    </div>
+                    <div
                       class="uppy uppy-Informer"
                     >
                       <span />
@@ -6486,6 +6540,24 @@ exports[`Image Gallery > renders no results page correctly 1`] = `
                   <div
                     class="uppy-Dashboard-progressindicators"
                   >
+                    <div
+                      aria-hidden="true"
+                      class="uppy-StatusBar is-waiting"
+                    >
+                      <div
+                        aria-label="0%"
+                        aria-valuemax="100"
+                        aria-valuemin="0"
+                        aria-valuenow="0"
+                        aria-valuetext="0%"
+                        class="uppy-StatusBar-progress"
+                        role="progressbar"
+                        style="width: 0%;"
+                      />
+                      <div
+                        class="uppy-StatusBar-actions"
+                      />
+                    </div>
                     <div
                       class="uppy uppy-Informer"
                     >

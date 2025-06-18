@@ -11,6 +11,7 @@ import {
   CopyToCatalogueCategory,
   MoveToCatalogueCategory,
   TransferState,
+  type GetQueryOptionsType,
 } from '../app.types';
 
 import handleTransferState from '../handleTransferState';
@@ -475,7 +476,7 @@ const getCatalogueCategory = async (
 
 export const getCatalogueCategoryQuery = (
   id?: string | null,
-  loader?: boolean
+  extraOptions?: GetQueryOptionsType<CatalogueCategory>
 ) =>
   queryOptions<CatalogueCategory, AxiosError>({
     queryKey: ['CatalogueCategory', id],
@@ -483,7 +484,7 @@ export const getCatalogueCategoryQuery = (
       return getCatalogueCategory(id ?? '');
     },
     enabled: !!id,
-    retry: loader ? false : undefined,
+    ...extraOptions,
   });
 
 export const useGetCatalogueCategory = (

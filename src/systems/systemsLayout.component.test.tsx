@@ -74,6 +74,59 @@ describe('Systems Layout', () => {
     expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
     expect(mockedUseNavigate).toHaveBeenCalledWith('/systems');
   });
+
+  it('calls useNavigate when the home button is clicked (tree view)', async () => {
+    createView('/systems/65328f34a40ff5301575a4e3/tree', 'systemTree');
+
+    await waitFor(() => {
+      expect(screen.getByText('Giant laser')).toBeInTheDocument();
+    });
+
+    const homeButton = screen.getByRole('button', {
+      name: 'navigate to systems home',
+    });
+
+    await user.click(homeButton);
+
+    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
+    expect(mockedUseNavigate).toHaveBeenCalledWith('/systems/tree');
+  });
+
+  it('navigates between tree view and normal view when toggle buttons are clicked', async () => {
+    // Start in tree view
+    createView('/systems/65328f34a40ff5301575a4e3/tree', 'systemTree');
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: 'tree view' })
+      ).toBeInTheDocument();
+    });
+
+    const normalViewButton = screen.getByRole('button', {
+      name: 'normal view',
+    });
+
+    // Click to switch to normal view
+    await user.click(normalViewButton);
+
+    expect(mockedUseNavigate).toHaveBeenCalledWith(
+      '/systems/65328f34a40ff5301575a4e3'
+    );
+
+    // Simulate being in normal view now
+    createView('/systems/65328f34a40ff5301575a4e3', 'system');
+
+    const treeViewButton = screen.getAllByRole('button', {
+      name: 'tree view',
+    })[1];
+
+    // Click to switch back to tree view
+    await user.click(treeViewButton);
+
+    expect(mockedUseNavigate).toHaveBeenCalledWith(
+      '/systems/65328f34a40ff5301575a4e3/tree'
+    );
+  });
 });
 
 describe('Systems Layout Error Component', () => {
