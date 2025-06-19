@@ -375,7 +375,7 @@ describe('Manufacturer', () => {
     cy.findByRole('button', { name: 'Cancel' }).click();
   });
 
-  it('navigates to landing page, invalidates queries and displays current time', () => {
+  it('navigates to landing page and refresh button updates the page', () => {
 
     cy.visit('/manufacturers');
     cy.findByText('Manufacturer A').click();

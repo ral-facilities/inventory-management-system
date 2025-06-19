@@ -94,12 +94,13 @@ describe('Manufacturer Landing page', () => {
    // refresh button
   it('refreshes when the button is clicked', async () => {
   createView('/manufacturers/1');
-    await waitFor(() => {
-      expect(screen.getByTestId("refresh-timestamp")).toHaveTextContent(formatDateTimeStrings(new Date().toISOString(), true));
-    });
+    
 
     const refreshButton = screen.getByRole('button', { name: 'Refresh' });
 
     await user.click(refreshButton);
+    await waitFor(() => {
+      expect(screen.getByTestId("refresh-timestamp")).toHaveTextContent(formatDateTimeStrings(new Date().toISOString(), true));
+    });
   });
 });

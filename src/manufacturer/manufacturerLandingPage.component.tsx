@@ -46,7 +46,8 @@ function ManufacturerLandingPage() {
         container
       >
         {manufacturerData && (
-          <Grid container sx={{ display: 'flex', py: 3 }}>
+          <Grid container sx={{ justifyContent: 'space-between', alignItems: 'center', py: 2 }}>
+            <Grid sx={{ display: 'flex'}}>
             <Button
               sx={{ mx: 0.5 }}
               variant="outlined"
@@ -67,6 +68,9 @@ function ManufacturerLandingPage() {
             >
               Print
             </Button>
+            </Grid>
+
+            <Grid  sx={{ display: 'flex'}}>
             <Button
               sx={{ mx: 0.5 }}
               variant="outlined"
@@ -77,11 +81,12 @@ function ManufacturerLandingPage() {
             >
               Refresh
           </Button>
-          <Typography data-testid="refresh-timestamp" textAlign={'center'} variant="h6">
+          <Typography data-testid="refresh-timestamp" textAlign={'center'} variant="body1">
               {formatDateTimeStrings(editRefreshDate.toISOString(), true)}
             </Typography>
           </Grid>
-        )}
+        </Grid>
+       )}
       </Grid>
       {manufacturerData && (
         <Grid
