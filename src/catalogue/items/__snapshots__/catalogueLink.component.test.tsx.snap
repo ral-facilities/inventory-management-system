@@ -4,7 +4,7 @@ exports[`ObsoleteReplacementLink > renders a link correctly (catalogue item) 1`]
 <body>
   <div>
     <a
-      class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+      class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
       href="/catalogue/4/items/1"
     >
       Click here
@@ -17,7 +17,7 @@ exports[`ObsoleteReplacementLink > renders a link correctly (item) 1`] = `
 <body>
   <div>
     <a
-      class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+      class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
       href="/catalogue/4/items/1/items/KvT2Ox7n"
     >
       Click here

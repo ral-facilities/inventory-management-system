@@ -1,4 +1,4 @@
-import { Box, styled } from '@mui/material';
+import { styled } from '@mui/material';
 import { Body, Meta, type UppyFile } from '@uppy/core';
 import { DashboardState } from '@uppy/dashboard/lib/Dashboard';
 import type { DashboardModalProps } from '@uppy/react/lib/DashboardModal';
@@ -8,7 +8,7 @@ import type { VNode } from 'preact';
 import React from 'react';
 import { getNameAndExtension } from '../utils';
 
-export const StyledUppyBox = styled(Box)(({ theme }) => ({
+export const StyledUppyBox = styled(`div`)(({ theme }) => ({
   '& .uppy-Dashboard-inner': {
     height: '800px',
     // Matches MUI Dialog styles

@@ -6,7 +6,8 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
     style="width: 100%;"
   >
     <div
-      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-1atu56z-MuiPaper-root"
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-1hoqul-MuiPaper-root"
+      style="--Paper-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);"
     >
       <div
         class="MuiBox-root css-1tbggly"
@@ -16,7 +17,7 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
           style="opacity: 0; visibility: hidden;"
         >
           <p
-            class="MuiTypography-root MuiTypography-body1 css-p3gdy2-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 css-m4t3jl-MuiTypography-root"
           >
             Drop to group by 
           </p>
@@ -28,16 +29,16 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
             class="MuiBox-root css-k008qs"
           >
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1owl11-MuiButtonBase-root-MuiButton-root"
+              class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1ioyh7z-MuiButtonBase-root-MuiButton-root"
               tabindex="0"
               type="button"
             >
               <span
-                class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1d6wzja-MuiButton-startIcon"
+                class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1sh91j5-MuiButton-startIcon"
               >
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                   data-testid="AddIcon"
                   focusable="false"
                   viewBox="0 0 24 24"
@@ -48,22 +49,19 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                 </svg>
               </span>
               Add Catalogue Item
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
             </button>
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary Mui-disabled MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1owl11-MuiButtonBase-root-MuiButton-root"
+              class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary Mui-disabled MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1ioyh7z-MuiButtonBase-root-MuiButton-root"
               disabled=""
               tabindex="-1"
               type="button"
             >
               <span
-                class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1d6wzja-MuiButton-startIcon"
+                class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1sh91j5-MuiButton-startIcon"
               >
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                   data-testid="ClearIcon"
                   focusable="false"
                   viewBox="0 0 24 24"
@@ -84,14 +82,14 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
             >
               <button
                 aria-label="Show/Hide filters"
-                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
                 data-mui-internal-clone-element="true"
                 tabindex="0"
                 type="button"
               >
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                   data-testid="FilterListOffIcon"
                   focusable="false"
                   viewBox="0 0 24 24"
@@ -100,31 +98,28 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                     d="M10.83 8H21V6H8.83zm5 5H18v-2h-4.17zM14 16.83V18h-4v-2h3.17l-3-3H6v-2h2.17l-3-3H3V6h.17L1.39 4.22 2.8 2.81l18.38 18.38-1.41 1.41z"
                   />
                 </svg>
-                <span
-                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                />
               </button>
             </div>
           </div>
         </div>
       </div>
       <div
-        class="MuiTableContainer-root css-14c53ac-MuiTableContainer-root"
+        class="MuiTableContainer-root css-e8e8ar-MuiTableContainer-root"
         data-testid="catalogue-items-table-container"
       >
         <table
-          class="MuiTable-root MuiTable-stickyHeader css-1y6k1sx-MuiTable-root"
+          class="MuiTable-root MuiTable-stickyHeader css-ithv9-MuiTable-root"
           style="--header-mrt_row_expand-size: 60; --col-mrt_row_expand-size: 60; --header-mrt_row_select-size: 60; --col-mrt_row_select-size: 60; --header-catalogueItem_name-size: 150; --col-catalogueItem_name-size: 150; --header-catalogueItem_modified_time-size: 150; --col-catalogueItem_modified_time-size: 150;"
         >
           <thead
-            class="MuiTableHead-root css-dk8izd-MuiTableHead-root"
+            class="MuiTableHead-root css-1e5wupo-MuiTableHead-root"
           >
             <tr
-              class="MuiTableRow-root MuiTableRow-head css-7sv680-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-head css-1jx5a6f-MuiTableRow-root"
             >
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-14ibfyy-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-97js2d-MuiTableCell-root"
                 colspan="1"
                 data-index="0"
                 scope="col"
@@ -145,13 +140,13 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                       >
                         <button
                           aria-label="Expand all"
-                          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-1kc7if3-MuiButtonBase-root-MuiIconButton-root"
+                          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-6wf57b-MuiButtonBase-root-MuiIconButton-root"
                           tabindex="0"
                           type="button"
                         >
                           <svg
                             aria-hidden="true"
-                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                             data-testid="KeyboardDoubleArrowDownIcon"
                             focusable="false"
                             style="transform: rotate(0deg); transition: transform 150ms;"
@@ -164,9 +159,6 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                               d="m18 13-1.41-1.41L12 16.17l-4.59-4.58L6 13l6 6z"
                             />
                           </svg>
-                          <span
-                            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                          />
                         </button>
                       </span>
                     </div>
@@ -178,7 +170,7 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
               </th>
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-h8gbz7-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-146qn1-MuiTableCell-root"
                 colspan="1"
                 data-index="1"
                 scope="col"
@@ -202,7 +194,7 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
               </th>
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6tsrk2-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-klfydb-MuiTableCell-root"
                 colspan="1"
                 data-can-sort="true"
                 data-index="2"
@@ -219,7 +211,7 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                     >
                       <p
                         aria-label="Name"
-                        class="MuiTypography-root MuiTypography-body1 css-1jmsoko-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-1bnbo3v-MuiTypography-root"
                         data-mui-internal-clone-element="true"
                         role="tooltip"
                       >
@@ -228,18 +220,18 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                     </div>
                     <span
                       aria-label="Sort by Name ascending"
-                      class="MuiBadge-root css-1c32n2y-MuiBadge-root"
+                      class="MuiBadge-root css-63ezxx-MuiBadge-root"
                       data-mui-internal-clone-element="true"
                     >
                       <span
                         aria-label="Sort by Name ascending"
-                        class="MuiButtonBase-root MuiTableSortLabel-root Mui-active css-118d58w-MuiButtonBase-root-MuiTableSortLabel-root"
+                        class="MuiButtonBase-root MuiTableSortLabel-root Mui-active MuiTableSortLabel-directionAsc css-bgz9z4-MuiButtonBase-root-MuiTableSortLabel-root"
                         role="button"
                         tabindex="0"
                       >
                         <svg
                           aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-1vweko9-MuiSvgIcon-root-MuiTableSortLabel-icon"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-7ojauk-MuiSvgIcon-root-MuiTableSortLabel-icon"
                           data-testid="SyncAltIcon"
                           focusable="false"
                           style="transform: rotate(-90deg) scaleX(0.9) translateX(-1px);"
@@ -251,7 +243,7 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                         </svg>
                       </span>
                       <span
-                        class="MuiBadge-badge MuiBadge-standard MuiBadge-invisible MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightCircular MuiBadge-overlapCircular css-2v5rxe-MuiBadge-badge"
+                        class="MuiBadge-badge MuiBadge-standard MuiBadge-invisible MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightCircular MuiBadge-overlapCircular css-hkekw-MuiBadge-badge"
                       >
                         0
                       </span>
@@ -262,14 +254,14 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                   >
                     <button
                       aria-label="Column Actions"
-                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1p8dotb-MuiButtonBase-root-MuiIconButton-root"
+                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1a3u37w-MuiButtonBase-root-MuiIconButton-root"
                       data-mui-internal-clone-element="true"
                       tabindex="0"
                       type="button"
                     >
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                         data-testid="MoreVertIcon"
                         focusable="false"
                         style="transform: scale(0.9);"
@@ -279,32 +271,30 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                           d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                         />
                       </svg>
-                      <span
-                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                      />
                     </button>
                   </div>
                 </div>
                 <div
-                  class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-entered css-pwcg7p-MuiCollapse-root"
+                  class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-entered css-qr6njo-MuiCollapse-root"
                   style="min-height: 0px;"
                 >
                   <div
-                    class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+                    class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
                   >
                     <div
-                      class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+                      class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
                     >
                       <div
-                        class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-jk1t0h-MuiFormControl-root-MuiTextField-root"
+                        class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-p1we6z-MuiFormControl-root-MuiTextField-root"
                       >
                         <div
-                          class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
+                          class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                         >
                           <div
-                            class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-ittuaa-MuiInputAdornment-root"
+                            class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1nowbqt-MuiInputAdornment-root"
                           >
                             <span
+                              aria-hidden="true"
                               class="notranslate"
                             >
                               ​
@@ -316,13 +306,13 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                             >
                               <button
                                 aria-label="Change filter mode"
-                                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1cyhbc3-MuiButtonBase-root-MuiIconButton-root"
+                                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-egflwm-MuiButtonBase-root-MuiIconButton-root"
                                 tabindex="0"
                                 type="button"
                               >
                                 <svg
                                   aria-hidden="true"
-                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                                   data-testid="FilterListIcon"
                                   focusable="false"
                                   viewBox="0 0 24 24"
@@ -331,26 +321,23 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                                     d="M10 18h4v-2h-4zM3 6v2h18V6zm3 7h12v-2H6z"
                                   />
                                 </svg>
-                                <span
-                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                />
                               </button>
                             </span>
                           </div>
                           <input
-                            aria-describedby=":r2p3:-helper-text"
+                            aria-describedby=":r3ru:-helper-text"
                             aria-invalid="false"
                             aria-label="Filter by Name"
                             autocomplete="new-password"
-                            class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r2p3:"
+                            class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
+                            id=":r3ru:"
                             placeholder="Filter by Name"
                             title="Filter by Name"
                             type="text"
                             value=""
                           />
                           <div
-                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-elo8k2-MuiInputAdornment-root"
                           >
                             <span
                               aria-label="Clear filter"
@@ -359,14 +346,14 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                             >
                               <button
                                 aria-label="Clear filter"
-                                class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeSmall css-1so9ih7-MuiButtonBase-root-MuiIconButton-root"
+                                class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeSmall css-pqx1bi-MuiButtonBase-root-MuiIconButton-root"
                                 disabled=""
                                 tabindex="-1"
                                 type="button"
                               >
                                 <svg
                                   aria-hidden="true"
-                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                                   data-testid="CloseIcon"
                                   focusable="false"
                                   viewBox="0 0 24 24"
@@ -380,8 +367,8 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                           </div>
                         </div>
                         <p
-                          class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                          id=":r2p3:-helper-text"
+                          class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
+                          id=":r3ru:-helper-text"
                         >
                           <label>
                             Filter Mode: Fuzzy
@@ -394,7 +381,7 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
               </th>
               <th
                 aria-sort="none"
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6nbvx3-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1vqufkg-MuiTableCell-root"
                 colspan="1"
                 data-can-sort="true"
                 data-index="3"
@@ -411,7 +398,7 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                     >
                       <p
                         aria-label="Last modified"
-                        class="MuiTypography-root MuiTypography-body1 css-1jmsoko-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-1bnbo3v-MuiTypography-root"
                         data-mui-internal-clone-element="true"
                         role="tooltip"
                       >
@@ -420,18 +407,18 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                     </div>
                     <span
                       aria-label="Sort by Last modified descending"
-                      class="MuiBadge-root css-1c32n2y-MuiBadge-root"
+                      class="MuiBadge-root css-63ezxx-MuiBadge-root"
                       data-mui-internal-clone-element="true"
                     >
                       <span
                         aria-label="Sort by Last modified descending"
-                        class="MuiButtonBase-root MuiTableSortLabel-root Mui-active css-118d58w-MuiButtonBase-root-MuiTableSortLabel-root"
+                        class="MuiButtonBase-root MuiTableSortLabel-root Mui-active MuiTableSortLabel-directionAsc css-bgz9z4-MuiButtonBase-root-MuiTableSortLabel-root"
                         role="button"
                         tabindex="0"
                       >
                         <svg
                           aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-1vweko9-MuiSvgIcon-root-MuiTableSortLabel-icon"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-7ojauk-MuiSvgIcon-root-MuiTableSortLabel-icon"
                           data-testid="SyncAltIcon"
                           focusable="false"
                           style="transform: rotate(-90deg) scaleX(0.9) translateX(-1px);"
@@ -443,7 +430,7 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                         </svg>
                       </span>
                       <span
-                        class="MuiBadge-badge MuiBadge-standard MuiBadge-invisible MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightCircular MuiBadge-overlapCircular css-2v5rxe-MuiBadge-badge"
+                        class="MuiBadge-badge MuiBadge-standard MuiBadge-invisible MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightCircular MuiBadge-overlapCircular css-hkekw-MuiBadge-badge"
                       >
                         0
                       </span>
@@ -454,14 +441,14 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                   >
                     <button
                       aria-label="Column Actions"
-                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1p8dotb-MuiButtonBase-root-MuiIconButton-root"
+                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1a3u37w-MuiButtonBase-root-MuiIconButton-root"
                       data-mui-internal-clone-element="true"
                       tabindex="0"
                       type="button"
                     >
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                         data-testid="MoreVertIcon"
                         focusable="false"
                         style="transform: scale(0.9);"
@@ -471,35 +458,33 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                           d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                         />
                       </svg>
-                      <span
-                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                      />
                     </button>
                   </div>
                 </div>
                 <div
-                  class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-entered css-pwcg7p-MuiCollapse-root"
+                  class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-entered css-qr6njo-MuiCollapse-root"
                   style="min-height: 0px;"
                 >
                   <div
-                    class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+                    class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
                   >
                     <div
-                      class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+                      class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
                     >
                       <div
                         class="MuiBox-root css-8yqbvs"
                       >
                         <div
-                          class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1blq8rz-MuiFormControl-root-MuiTextField-root"
+                          class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w93hbh-MuiFormControl-root-MuiTextField-root"
                         >
                           <div
-                            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
+                            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                           >
                             <div
-                              class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-ittuaa-MuiInputAdornment-root"
+                              class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1nowbqt-MuiInputAdornment-root"
                             >
                               <span
+                                aria-hidden="true"
                                 class="notranslate"
                               >
                                 ​
@@ -511,13 +496,13 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                               >
                                 <button
                                   aria-label="Change filter mode"
-                                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1cyhbc3-MuiButtonBase-root-MuiIconButton-root"
+                                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-egflwm-MuiButtonBase-root-MuiIconButton-root"
                                   tabindex="0"
                                   type="button"
                                 >
                                   <svg
                                     aria-hidden="true"
-                                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                                     data-testid="FilterListIcon"
                                     focusable="false"
                                     viewBox="0 0 24 24"
@@ -526,19 +511,16 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                                       d="M10 18h4v-2h-4zM3 6v2h18V6zm3 7h12v-2H6z"
                                     />
                                   </svg>
-                                  <span
-                                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                  />
                                 </button>
                               </span>
                             </div>
                             <input
-                              aria-describedby=":r2p9:-helper-text"
+                              aria-describedby=":r3s7:-helper-text"
                               aria-invalid="false"
                               aria-label="Min"
                               autocomplete="new-password"
-                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r2p9:"
+                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
+                              id=":r3s7:"
                               inputmode="text"
                               placeholder="Min"
                               title="Min"
@@ -546,17 +528,17 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                               value=""
                             />
                             <div
-                              class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+                              class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-elo8k2-MuiInputAdornment-root"
                             >
                               <button
                                 aria-label="Choose date"
-                                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root"
+                                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1ysp02-MuiButtonBase-root-MuiIconButton-root"
                                 tabindex="0"
                                 type="button"
                               >
                                 <svg
                                   aria-hidden="true"
-                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                                   data-testid="CalendarIcon"
                                   focusable="false"
                                   viewBox="0 0 24 24"
@@ -565,15 +547,12 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                                     d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
                                   />
                                 </svg>
-                                <span
-                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                />
                               </button>
                             </div>
                           </div>
                           <p
-                            class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-jchqo4-MuiFormHelperText-root"
-                            id=":r2p9:-helper-text"
+                            class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
+                            id=":r3s7:-helper-text"
                           >
                             <label>
                               Filter Mode: Between Inclusive
@@ -581,17 +560,17 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                           </p>
                         </div>
                         <div
-                          class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1blq8rz-MuiFormControl-root-MuiTextField-root"
+                          class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w93hbh-MuiFormControl-root-MuiTextField-root"
                         >
                           <div
-                            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
+                            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                           >
                             <input
                               aria-invalid="false"
                               aria-label="Max"
                               autocomplete="new-password"
-                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r2pc:"
+                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
+                              id=":r3sc:"
                               inputmode="text"
                               placeholder="Max"
                               title="Max"
@@ -599,17 +578,17 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                               value=""
                             />
                             <div
-                              class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+                              class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-elo8k2-MuiInputAdornment-root"
                             >
                               <button
                                 aria-label="Choose date"
-                                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root"
+                                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1ysp02-MuiButtonBase-root-MuiIconButton-root"
                                 tabindex="0"
                                 type="button"
                               >
                                 <svg
                                   aria-hidden="true"
-                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                                   data-testid="CalendarIcon"
                                   focusable="false"
                                   viewBox="0 0 24 24"
@@ -618,9 +597,6 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                                     d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
                                   />
                                 </svg>
-                                <span
-                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                />
                               </button>
                             </div>
                           </div>
@@ -633,16 +609,16 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
             </tr>
           </thead>
           <tbody
-            class="MuiTableBody-root css-29nbga-MuiTableBody-root"
+            class="MuiTableBody-root css-1768eoe-MuiTableBody-root"
           >
             <tr
               aria-label="Energy Meters 26 row"
-              class="MuiTableRow-root MuiTableRow-root css-d8ckq8-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-ss9ywu-MuiTableRow-root-MuiTableRow-root"
               data-index="0"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1swstdu-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-14g7wu5-MuiTableCell-root"
                 data-index="0"
               >
                 <span
@@ -652,13 +628,13 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                 >
                   <button
                     aria-label="Expand"
-                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-ejxhte-MuiButtonBase-root-MuiIconButton-root"
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-hlzibf-MuiButtonBase-root-MuiIconButton-root"
                     tabindex="0"
                     type="button"
                   >
                     <svg
                       aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                       data-testid="ExpandMoreIcon"
                       focusable="false"
                       style="transform: rotate(0deg); transition: transform 150ms;"
@@ -668,33 +644,30 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                         d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
                       />
                     </svg>
-                    <span
-                      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                    />
                   </button>
                 </span>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1fyt7c0-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1kt79rh-MuiTableCell-root"
                 data-index="1"
               >
                 <span
                   aria-label="Toggle select row"
-                  class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-root MuiRadio-colorPrimary css-1ezkbdg-MuiButtonBase-root-MuiRadio-root"
+                  class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-root MuiRadio-colorPrimary css-13ccb50-MuiButtonBase-root-MuiRadio-root"
                   data-mui-internal-clone-element="true"
                 >
                   <input
                     aria-label="Toggle select row"
-                    class="PrivateSwitchBase-input css-1m9pwf3"
+                    class="PrivateSwitchBase-input css-j8yymo"
                     type="radio"
                     value=""
                   />
                   <span
-                    class="css-hyxlzm"
+                    class="css-1qiat4j"
                   >
                     <svg
                       aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1hbvpl3-MuiSvgIcon-root"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1bz1rr0-MuiSvgIcon-root"
                       data-testid="RadioButtonUncheckedIcon"
                       focusable="false"
                       viewBox="0 0 24 24"
@@ -705,7 +678,7 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                     </svg>
                     <svg
                       aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1hhw7if-MuiSvgIcon-root"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-o8rdeq-MuiSvgIcon-root"
                       data-testid="RadioButtonCheckedIcon"
                       focusable="false"
                       viewBox="0 0 24 24"
@@ -715,18 +688,15 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                       />
                     </svg>
                   </span>
-                  <span
-                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                  />
                 </span>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-mp3q8z-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-4lrpqd-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
               >
                 <div
                   aria-label="Energy Meters 26"
-                  class="MuiTypography-root MuiTypography-body1 css-2r6qxn-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-y1qza6-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -734,11 +704,11 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ajxj8u-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-hgv6u2-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
               >
                 <div
-                  class="MuiTypography-root MuiTypography-body1 css-2r6qxn-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-y1qza6-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -748,23 +718,23 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
             </tr>
             <tr
               aria-label="Energy Meters 26 row"
-              class="MuiTableRow-root MuiTableRow-root Mui-TableBodyCell-DetailPanel css-1jlps88-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root Mui-TableBodyCell-DetailPanel css-1bxbkbf-MuiTableRow-root-MuiTableRow-root"
               data-index="1"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium Mui-TableBodyCell-DetailPanel css-1ycogj1-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium Mui-TableBodyCell-DetailPanel css-qppand-MuiTableCell-root"
                 colspan="4"
               />
             </tr>
             <tr
               aria-label="Energy Meters 27 row"
-              class="MuiTableRow-root MuiTableRow-root css-d8ckq8-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-ss9ywu-MuiTableRow-root-MuiTableRow-root"
               data-index="2"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1swstdu-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-14g7wu5-MuiTableCell-root"
                 data-index="0"
               >
                 <span
@@ -774,13 +744,13 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                 >
                   <button
                     aria-label="Expand"
-                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-ejxhte-MuiButtonBase-root-MuiIconButton-root"
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-hlzibf-MuiButtonBase-root-MuiIconButton-root"
                     tabindex="0"
                     type="button"
                   >
                     <svg
                       aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                       data-testid="ExpandMoreIcon"
                       focusable="false"
                       style="transform: rotate(0deg); transition: transform 150ms;"
@@ -790,33 +760,30 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                         d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
                       />
                     </svg>
-                    <span
-                      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                    />
                   </button>
                 </span>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1fyt7c0-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1kt79rh-MuiTableCell-root"
                 data-index="1"
               >
                 <span
                   aria-label="Toggle select row"
-                  class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-root MuiRadio-colorPrimary css-1ezkbdg-MuiButtonBase-root-MuiRadio-root"
+                  class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-root MuiRadio-colorPrimary css-13ccb50-MuiButtonBase-root-MuiRadio-root"
                   data-mui-internal-clone-element="true"
                 >
                   <input
                     aria-label="Toggle select row"
-                    class="PrivateSwitchBase-input css-1m9pwf3"
+                    class="PrivateSwitchBase-input css-j8yymo"
                     type="radio"
                     value=""
                   />
                   <span
-                    class="css-hyxlzm"
+                    class="css-1qiat4j"
                   >
                     <svg
                       aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1hbvpl3-MuiSvgIcon-root"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1bz1rr0-MuiSvgIcon-root"
                       data-testid="RadioButtonUncheckedIcon"
                       focusable="false"
                       viewBox="0 0 24 24"
@@ -827,7 +794,7 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                     </svg>
                     <svg
                       aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1hhw7if-MuiSvgIcon-root"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-o8rdeq-MuiSvgIcon-root"
                       data-testid="RadioButtonCheckedIcon"
                       focusable="false"
                       viewBox="0 0 24 24"
@@ -837,18 +804,15 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                       />
                     </svg>
                   </span>
-                  <span
-                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                  />
                 </span>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-mp3q8z-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-4lrpqd-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
               >
                 <div
                   aria-label="Energy Meters 27"
-                  class="MuiTypography-root MuiTypography-body1 css-2r6qxn-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-y1qza6-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -856,11 +820,11 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ajxj8u-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-hgv6u2-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
               >
                 <div
-                  class="MuiTypography-root MuiTypography-body1 css-2r6qxn-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-y1qza6-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -870,23 +834,23 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
             </tr>
             <tr
               aria-label="Energy Meters 27 row"
-              class="MuiTableRow-root MuiTableRow-root Mui-TableBodyCell-DetailPanel css-1jlps88-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root Mui-TableBodyCell-DetailPanel css-1bxbkbf-MuiTableRow-root-MuiTableRow-root"
               data-index="3"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium Mui-TableBodyCell-DetailPanel css-1ycogj1-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium Mui-TableBodyCell-DetailPanel css-qppand-MuiTableCell-root"
                 colspan="4"
               />
             </tr>
             <tr
               aria-label="Energy Meters 28 row"
-              class="MuiTableRow-root MuiTableRow-root css-d8ckq8-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-ss9ywu-MuiTableRow-root-MuiTableRow-root"
               data-index="4"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1swstdu-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-14g7wu5-MuiTableCell-root"
                 data-index="0"
               >
                 <span
@@ -896,13 +860,13 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                 >
                   <button
                     aria-label="Expand"
-                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-ejxhte-MuiButtonBase-root-MuiIconButton-root"
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-hlzibf-MuiButtonBase-root-MuiIconButton-root"
                     tabindex="0"
                     type="button"
                   >
                     <svg
                       aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                       data-testid="ExpandMoreIcon"
                       focusable="false"
                       style="transform: rotate(0deg); transition: transform 150ms;"
@@ -912,33 +876,30 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                         d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
                       />
                     </svg>
-                    <span
-                      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                    />
                   </button>
                 </span>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1fyt7c0-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1kt79rh-MuiTableCell-root"
                 data-index="1"
               >
                 <span
                   aria-label="Toggle select row"
-                  class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-root MuiRadio-colorPrimary css-1ezkbdg-MuiButtonBase-root-MuiRadio-root"
+                  class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-root MuiRadio-colorPrimary css-13ccb50-MuiButtonBase-root-MuiRadio-root"
                   data-mui-internal-clone-element="true"
                 >
                   <input
                     aria-label="Toggle select row"
-                    class="PrivateSwitchBase-input css-1m9pwf3"
+                    class="PrivateSwitchBase-input css-j8yymo"
                     type="radio"
                     value=""
                   />
                   <span
-                    class="css-hyxlzm"
+                    class="css-1qiat4j"
                   >
                     <svg
                       aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1hbvpl3-MuiSvgIcon-root"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1bz1rr0-MuiSvgIcon-root"
                       data-testid="RadioButtonUncheckedIcon"
                       focusable="false"
                       viewBox="0 0 24 24"
@@ -949,7 +910,7 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                     </svg>
                     <svg
                       aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1hhw7if-MuiSvgIcon-root"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-o8rdeq-MuiSvgIcon-root"
                       data-testid="RadioButtonCheckedIcon"
                       focusable="false"
                       viewBox="0 0 24 24"
@@ -959,18 +920,15 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                       />
                     </svg>
                   </span>
-                  <span
-                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                  />
                 </span>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-mp3q8z-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-4lrpqd-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
               >
                 <div
                   aria-label="Energy Meters 28"
-                  class="MuiTypography-root MuiTypography-body1 css-2r6qxn-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-y1qza6-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -978,11 +936,11 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ajxj8u-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-hgv6u2-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
               >
                 <div
-                  class="MuiTypography-root MuiTypography-body1 css-2r6qxn-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-y1qza6-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -992,23 +950,23 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
             </tr>
             <tr
               aria-label="Energy Meters 28 row"
-              class="MuiTableRow-root MuiTableRow-root Mui-TableBodyCell-DetailPanel css-1jlps88-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root Mui-TableBodyCell-DetailPanel css-1bxbkbf-MuiTableRow-root-MuiTableRow-root"
               data-index="5"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium Mui-TableBodyCell-DetailPanel css-1ycogj1-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium Mui-TableBodyCell-DetailPanel css-qppand-MuiTableCell-root"
                 colspan="4"
               />
             </tr>
             <tr
               aria-label="Energy Meters 29 row"
-              class="MuiTableRow-root MuiTableRow-root css-d8ckq8-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-ss9ywu-MuiTableRow-root-MuiTableRow-root"
               data-index="6"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1swstdu-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-14g7wu5-MuiTableCell-root"
                 data-index="0"
               >
                 <span
@@ -1018,13 +976,13 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                 >
                   <button
                     aria-label="Expand"
-                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-ejxhte-MuiButtonBase-root-MuiIconButton-root"
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-hlzibf-MuiButtonBase-root-MuiIconButton-root"
                     tabindex="0"
                     type="button"
                   >
                     <svg
                       aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                       data-testid="ExpandMoreIcon"
                       focusable="false"
                       style="transform: rotate(0deg); transition: transform 150ms;"
@@ -1034,33 +992,30 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                         d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
                       />
                     </svg>
-                    <span
-                      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                    />
                   </button>
                 </span>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1fyt7c0-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1kt79rh-MuiTableCell-root"
                 data-index="1"
               >
                 <span
                   aria-label="Toggle select row"
-                  class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-root MuiRadio-colorPrimary css-1ezkbdg-MuiButtonBase-root-MuiRadio-root"
+                  class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary MuiRadio-root MuiRadio-colorPrimary css-13ccb50-MuiButtonBase-root-MuiRadio-root"
                   data-mui-internal-clone-element="true"
                 >
                   <input
                     aria-label="Toggle select row"
-                    class="PrivateSwitchBase-input css-1m9pwf3"
+                    class="PrivateSwitchBase-input css-j8yymo"
                     type="radio"
                     value=""
                   />
                   <span
-                    class="css-hyxlzm"
+                    class="css-1qiat4j"
                   >
                     <svg
                       aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1hbvpl3-MuiSvgIcon-root"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1bz1rr0-MuiSvgIcon-root"
                       data-testid="RadioButtonUncheckedIcon"
                       focusable="false"
                       viewBox="0 0 24 24"
@@ -1071,7 +1026,7 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                     </svg>
                     <svg
                       aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1hhw7if-MuiSvgIcon-root"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-o8rdeq-MuiSvgIcon-root"
                       data-testid="RadioButtonCheckedIcon"
                       focusable="false"
                       viewBox="0 0 24 24"
@@ -1081,18 +1036,15 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                       />
                     </svg>
                   </span>
-                  <span
-                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                  />
                 </span>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-mp3q8z-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-4lrpqd-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
               >
                 <div
                   aria-label="Energy Meters 29"
-                  class="MuiTypography-root MuiTypography-body1 css-2r6qxn-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-y1qza6-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -1100,11 +1052,11 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ajxj8u-MuiTableCell-root-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-hgv6u2-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
               >
                 <div
-                  class="MuiTypography-root MuiTypography-body1 css-2r6qxn-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-y1qza6-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
@@ -1114,18 +1066,18 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
             </tr>
             <tr
               aria-label="Energy Meters 29 row"
-              class="MuiTableRow-root MuiTableRow-root Mui-TableBodyCell-DetailPanel css-1jlps88-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root Mui-TableBodyCell-DetailPanel css-1bxbkbf-MuiTableRow-root-MuiTableRow-root"
               data-index="7"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium Mui-TableBodyCell-DetailPanel css-1ycogj1-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium Mui-TableBodyCell-DetailPanel css-qppand-MuiTableCell-root"
                 colspan="4"
               />
             </tr>
           </tbody>
           <tfoot
-            class="MuiTableFooter-root css-131pszo-MuiTableFooter-root"
+            class="MuiTableFooter-root css-1pwfv5b-MuiTableFooter-root"
           />
         </table>
       </div>
@@ -1133,21 +1085,22 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
         class="MuiBox-root css-10gei56"
       >
         <div
-          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-cwrbtg-MuiCollapse-root"
           style="min-height: 0px;"
         >
           <div
-            class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+            class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
           >
             <div
-              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
             >
               <div
-                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-3fnbcm-MuiPaper-root-MuiAlert-root"
+                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-ltczp2-MuiPaper-root-MuiAlert-root"
                 role="alert"
+                style="--Paper-shadow: none;"
               >
                 <div
-                  class="MuiAlert-message css-1pxa9xg-MuiAlert-message"
+                  class="MuiAlert-message css-zioonp-MuiAlert-message"
                 >
                   <div
                     class="MuiStack-root css-5kul5x-MuiStack-root"
@@ -1167,7 +1120,7 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
           class="MuiBox-root css-1llu0od"
         >
           <p
-            class="MuiTypography-root MuiTypography-body1 css-13zw5gk-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 css-110q72o-MuiTypography-root"
           >
             Total Catalogue Items: 4
           </p>
@@ -1181,20 +1134,19 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                 class="MuiBox-root css-exd1zr"
               >
                 <label
-                  class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-uqq6zz-MuiFormLabel-root-MuiInputLabel-root"
+                  class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-10j3yc8-MuiFormLabel-root-MuiInputLabel-root"
                   for="mrt-rows-per-page"
                 >
                   Rows per page
                 </label>
                 <div
-                  class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
+                  class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary MuiSelect-root css-1y2ya84-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
                   <div
-                    aria-controls=":r2pe:"
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-label="Rows per page"
-                    class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input"
+                    class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-5lvf42-MuiSelect-select-MuiInputBase-input-MuiInput-input"
                     role="combobox"
                     tabindex="0"
                   >
@@ -1203,14 +1155,14 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                   <input
                     aria-hidden="true"
                     aria-invalid="false"
-                    class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                    class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
                     id="mrt-rows-per-page"
                     tabindex="-1"
                     value="5"
                   />
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-1gpuzre-MuiSvgIcon-root-MuiSelect-icon"
                     data-testid="ArrowDropDownIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
@@ -1223,22 +1175,22 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
               </div>
               <nav
                 aria-label="pagination navigation"
-                class="MuiPagination-root MuiPagination-outlined css-1oj2twp-MuiPagination-root"
+                class="MuiPagination-root MuiPagination-outlined css-1xra8g6-MuiPagination-root"
               >
                 <ul
-                  class="MuiPagination-ul css-wjh20t-MuiPagination-ul"
+                  class="MuiPagination-ul css-1c5o7vy-MuiPagination-ul"
                 >
                   <li>
                     <button
                       aria-label="Go to previous page"
-                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
+                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-fpujy5-MuiButtonBase-root-MuiPaginationItem-root"
                       disabled=""
                       tabindex="-1"
                       type="button"
                     >
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiPaginationItem-icon css-g2z002-MuiSvgIcon-root-MuiPaginationItem-icon"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiPaginationItem-icon css-8uzxat-MuiSvgIcon-root-MuiPaginationItem-icon"
                         data-testid="ChevronLeftIcon"
                         focusable="false"
                         viewBox="0 0 24 24"
@@ -1251,29 +1203,26 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                   </li>
                   <li>
                     <button
-                      aria-current="true"
+                      aria-current="page"
                       aria-label="page 1"
-                      class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-selected MuiPaginationItem-page css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
+                      class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-selected MuiPaginationItem-page css-fpujy5-MuiButtonBase-root-MuiPaginationItem-root"
                       tabindex="0"
                       type="button"
                     >
                       1
-                      <span
-                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                      />
                     </button>
                   </li>
                   <li>
                     <button
                       aria-label="Go to next page"
-                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
+                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-fpujy5-MuiButtonBase-root-MuiPaginationItem-root"
                       disabled=""
                       tabindex="-1"
                       type="button"
                     >
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiPaginationItem-icon css-g2z002-MuiSvgIcon-root-MuiPaginationItem-icon"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiPaginationItem-icon css-8uzxat-MuiSvgIcon-root-MuiPaginationItem-icon"
                         data-testid="ChevronRightIcon"
                         focusable="false"
                         viewBox="0 0 24 24"
