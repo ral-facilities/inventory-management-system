@@ -94,6 +94,10 @@ describe('Manufacturer Landing page', () => {
    // refresh button
   it('refreshes when the button is clicked', async () => {
   createView('/manufacturers/1');
+
+  await waitFor(() => {
+      expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
+    });
     
 
     const refreshButton = screen.getByRole('button', { name: 'Refresh' });
