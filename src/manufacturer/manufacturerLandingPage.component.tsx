@@ -46,7 +46,7 @@ function ManufacturerLandingPage() {
         container
       >
         {manufacturerData && (
-          <Grid item container sx={{ display: 'flex', py: 3 }}>
+          <Grid container sx={{ display: 'flex', py: 3 }}>
             <Button
               sx={{ mx: 0.5 }}
               variant="outlined"
