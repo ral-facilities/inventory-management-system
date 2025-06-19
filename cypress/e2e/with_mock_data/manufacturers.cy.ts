@@ -380,26 +380,33 @@ describe('Manufacturer', () => {
     cy.visit('/manufacturers');
     cy.findByText('Manufacturer A').click();
     cy.findByText('Telephone number:').should('exist');
-    cy.findByLabelText('Name *').should('have.value', 'Manufacturer A');
-    cy.findByLabelText('URL').should('have.value', 'http://example.com');
-    cy.findByLabelText('Address Line *').should(
-      'have.value',
-      '1 Example Street'
-    );
-    cy.findByLabelText('Town').should('have.value', 'Oxford');
-    cy.findByLabelText('County').should('have.value', 'Oxfordshire');
-    cy.findByLabelText('Country *').should('have.value', 'United Kingdom');
-    cy.findByLabelText('Post/Zip code *').should('have.value', 'OX1 2AB');
-    cy.findByLabelText('Telephone number').should('have.value', '07334893348');
+
+    cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Refresh'}).click();
+
      cy.findBrowserMockedRequests({
       method: 'GET',
       url: '/v1/manufacturers/:id',
     }).should(async (getRequests) => {
       expect(getRequests.length).equal(1);
       const request = getRequests[0];
-      expect(JSON.stringify(await request.json())).equal('{"url":null}');
+      expect({
+      "id": "1",
+      "name": "Manufacturer A",
+      "code": "manufacturer-a",
+      "url": "http://example.com",
+      "address": {
+        "address_line": "1 Example Street",
+        "town": "Oxford",
+        "county": "Oxfordshire",
+        "postcode": "OX1 2AB",
+        "country": "United Kingdom"
+      },
+      "telephone": "07334893348",
+      "created_time": "2024-01-01T12:00:00.000+00:00",
+      "modified_time": "2024-01-02T13:10:10.000+00:00"
+    });
     });
    
   });
