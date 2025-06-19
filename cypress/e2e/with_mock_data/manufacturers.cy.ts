@@ -375,6 +375,35 @@ describe('Manufacturer', () => {
     cy.findByRole('button', { name: 'Cancel' }).click();
   });
 
+  it('navigates to landing page, invalidates queries and displays current time', () => {
+
+    cy.visit('/manufacturers');
+    cy.findByText('Manufacturer A').click();
+    cy.findByText('Telephone number:').should('exist');
+    cy.findByLabelText('Name *').should('have.value', 'Manufacturer A');
+    cy.findByLabelText('URL').should('have.value', 'http://example.com');
+    cy.findByLabelText('Address Line *').should(
+      'have.value',
+      '1 Example Street'
+    );
+    cy.findByLabelText('Town').should('have.value', 'Oxford');
+    cy.findByLabelText('County').should('have.value', 'Oxfordshire');
+    cy.findByLabelText('Country *').should('have.value', 'United Kingdom');
+    cy.findByLabelText('Post/Zip code *').should('have.value', 'OX1 2AB');
+    cy.findByLabelText('Telephone number').should('have.value', '07334893348');
+
+    cy.findByRole('button', { name: 'Refresh'}).click();
+     cy.findBrowserMockedRequests({
+      method: 'GET',
+      url: '/v1/manufacturers/:id',
+    }).should(async (getRequests) => {
+      expect(getRequests.length).equal(1);
+      const request = getRequests[0];
+      expect(JSON.stringify(await request.json())).equal('{"url":null}');
+    });
+   
+  });
+
   it('displays expired landing page message and navigates back to manufacturer table view', () => {
     cy.visit('/manufacturers/invalid');
 
