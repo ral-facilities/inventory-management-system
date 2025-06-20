@@ -82,7 +82,7 @@ function ManufacturerLandingPage() {
               Refresh
           </Button>
           <Typography data-testid="refresh-timestamp" textAlign={'center'} variant="body1">
-              {formatDateTimeStrings(editRefreshDate.toISOString(), true)}
+              Last refreshed at: {formatDateTimeStrings(editRefreshDate.toISOString(), true)}
             </Typography>
           </Grid>
         </Grid>
