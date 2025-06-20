@@ -1169,6 +1169,7 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
                 >
                   <a
                     class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                    data-discover="true"
                     href="/KvT2Ox7n"
                   >
                     5YUQDDjKpz2z
@@ -1261,6 +1262,7 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
                 >
                   <a
                     class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                    data-discover="true"
                     href="/G463gOIA"
                   >
                     vYs9Vxx6yWbn
@@ -1353,6 +1355,7 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
                 >
                   <a
                     class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                    data-discover="true"
                     href="/9yh39Mcg"
                   >
                     PcfCM1jp0SUV
@@ -1445,6 +1448,7 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
                 >
                   <a
                     class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                    data-discover="true"
                     href="/wKsFzrSq"
                   >
                     Zf7P8Qu8TD8c
@@ -3534,12 +3538,12 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                             </span>
                           </div>
                           <input
-                            aria-describedby=":r24o:-helper-text"
+                            aria-describedby=":r258:-helper-text"
                             aria-invalid="false"
                             aria-label="Filter by Serial Number"
                             autocomplete="off"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                            id=":r24o:"
+                            id=":r258:"
                             placeholder="Filter by Serial Number"
                             title="Filter by Serial Number"
                             type="text"
@@ -3577,7 +3581,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                          id=":r24o:-helper-text"
+                          id=":r258:-helper-text"
                         >
                           <label>
                             Filter Mode: Fuzzy
@@ -3691,11 +3695,11 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                             class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                           >
                             <input
-                              aria-describedby=":r251:-helper-text"
+                              aria-describedby=":r25h:-helper-text"
                               aria-invalid="false"
                               autocomplete="off"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                              id=":r251:"
+                              id=":r25h:"
                               inputmode="text"
                               placeholder="Min"
                               type="text"
@@ -3726,7 +3730,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                           </div>
                           <p
                             class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-18y2hez-MuiFormHelperText-root"
-                            id=":r251:-helper-text"
+                            id=":r25h:-helper-text"
                           >
                             <label>
                               Filter Mode: Between Inclusive
@@ -3743,7 +3747,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                               aria-invalid="false"
                               autocomplete="off"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                              id=":r254:"
+                              id=":r25k:"
                               inputmode="text"
                               placeholder="Max"
                               type="text"
@@ -3881,11 +3885,11 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                             class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                           >
                             <input
-                              aria-describedby=":r25b:-helper-text"
+                              aria-describedby=":r25r:-helper-text"
                               aria-invalid="false"
                               autocomplete="off"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                              id=":r25b:"
+                              id=":r25r:"
                               inputmode="text"
                               placeholder="Min"
                               type="text"
@@ -3916,7 +3920,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                           </div>
                           <p
                             class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-18y2hez-MuiFormHelperText-root"
-                            id=":r25b:-helper-text"
+                            id=":r25r:-helper-text"
                           >
                             <label>
                               Filter Mode: Between Inclusive
@@ -3933,7 +3937,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                               aria-invalid="false"
                               autocomplete="off"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                              id=":r25e:"
+                              id=":r25u:"
                               inputmode="text"
                               placeholder="Max"
                               type="text"
@@ -4071,11 +4075,11 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                             class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                           >
                             <input
-                              aria-describedby=":r25l:-helper-text"
+                              aria-describedby=":r265:-helper-text"
                               aria-invalid="false"
                               autocomplete="off"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                              id=":r25l:"
+                              id=":r265:"
                               inputmode="text"
                               placeholder="Min"
                               type="text"
@@ -4106,7 +4110,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                           </div>
                           <p
                             class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-18y2hez-MuiFormHelperText-root"
-                            id=":r25l:-helper-text"
+                            id=":r265:-helper-text"
                           >
                             <label>
                               Filter Mode: Between Inclusive
@@ -4123,7 +4127,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                               aria-invalid="false"
                               autocomplete="off"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                              id=":r25o:"
+                              id=":r268:"
                               inputmode="text"
                               placeholder="Max"
                               type="text"
@@ -4261,11 +4265,11 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                             class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                           >
                             <input
-                              aria-describedby=":r25v:-helper-text"
+                              aria-describedby=":r26f:-helper-text"
                               aria-invalid="false"
                               autocomplete="off"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                              id=":r25v:"
+                              id=":r26f:"
                               inputmode="text"
                               placeholder="Min"
                               type="text"
@@ -4296,7 +4300,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                           </div>
                           <p
                             class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-18y2hez-MuiFormHelperText-root"
-                            id=":r25v:-helper-text"
+                            id=":r26f:-helper-text"
                           >
                             <label>
                               Filter Mode: Between Inclusive
@@ -4313,7 +4317,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                               aria-invalid="false"
                               autocomplete="off"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                              id=":r262:"
+                              id=":r26i:"
                               inputmode="text"
                               placeholder="Max"
                               type="text"
@@ -4451,9 +4455,9 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                             aria-expanded="false"
                             aria-haspopup="listbox"
                             aria-label="Filter by Is Defective"
-                            aria-labelledby=":r269:"
+                            aria-labelledby=":r26p:"
                             class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-10y8whu-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                            id=":r269:"
+                            id=":r26p:"
                             role="combobox"
                             tabindex="0"
                           >
@@ -4571,6 +4575,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 >
                   <a
                     class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                    data-discover="true"
                     href="/KvT2Ox7n"
                   >
                     5YUQDDjKpz2z
@@ -4701,6 +4706,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 >
                   <a
                     class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                    data-discover="true"
                     href="/G463gOIA"
                   >
                     vYs9Vxx6yWbn
@@ -4831,6 +4837,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 >
                   <a
                     class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                    data-discover="true"
                     href="/9yh39Mcg"
                   >
                     PcfCM1jp0SUV
@@ -4961,6 +4968,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 >
                   <a
                     class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                    data-discover="true"
                     href="/wKsFzrSq"
                   >
                     Zf7P8Qu8TD8c
@@ -5100,7 +5108,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
               >
                 <label
                   class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-10j3yc8-MuiFormLabel-root-MuiInputLabel-root"
-                  for="mrt-rows-per-page-:r24h:"
+                  for="mrt-rows-per-page-:r251:"
                 >
                   Rows per page
                 </label>
@@ -5121,7 +5129,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                     aria-hidden="true"
                     aria-invalid="false"
                     class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
-                    id="mrt-rows-per-page-:r24h:"
+                    id="mrt-rows-per-page-:r251:"
                     tabindex="-1"
                     value="5"
                   />
