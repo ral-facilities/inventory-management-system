@@ -36,6 +36,10 @@ const modifyCatalogueCategory = (
     cy.findByRole('button', { name: 'Add Catalogue Category' }).click();
   }
 
+  cy.findByRole('dialog', {
+    name: `${values.editCatalogueCategoryName ? 'Edit' : 'Add'} Catalogue Category`,
+  }).should('exist');
+
   if (values.name !== undefined) {
     cy.findByLabelText('Name *').clear();
     cy.findByLabelText('Name *').type(values.name);
