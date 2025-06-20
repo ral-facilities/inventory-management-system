@@ -375,6 +375,29 @@ describe('Manufacturer', () => {
     cy.findByRole('button', { name: 'Cancel' }).click();
   });
 
+  it.only('navigates to landing page and refresh button updates the page', () => {
+
+    cy.visit('/manufacturers');
+    cy.findByText('Manufacturer A').click();
+    cy.findByText('Telephone number:').should('exist');
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Refresh'}).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'GET',
+      url: '/v1/manufacturers/:id',
+    }).should(async (getRequests) => {
+      expect(getRequests.length).equal(1);
+      const request = getRequests[0];
+      expect(JSON.stringify(await request.json())).equal(
+        '{"name":"test","address":{"address_line":"test","town":"test","county":"test","postcode":"test","country":"test"},"telephone":"0000000000"}'
+      );
+    });
+   
+  });
+
   it('displays expired landing page message and navigates back to manufacturer table view', () => {
     cy.visit('/manufacturers/invalid');
 

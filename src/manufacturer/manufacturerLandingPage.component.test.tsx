@@ -2,6 +2,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import ManufacturerLandingPage from './manufacturerLandingPage.component';
+import { formatDateTimeStrings } from '../utils';
 
 describe('Manufacturer Landing page', () => {
   let user: UserEvent;
@@ -89,5 +90,21 @@ describe('Manufacturer Landing page', () => {
 
     // Clean up the mock
     spy.mockRestore();
+  });
+   // refresh button
+  it('refreshes when the button is clicked', async () => {
+  createView('/manufacturers/1');
+
+  await waitFor(() => {
+      expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
+    });
+    
+
+    const refreshButton = screen.getByRole('button', { name: 'Refresh' });
+
+    await user.click(refreshButton);
+    await waitFor(() => {
+      expect(screen.getByTestId("refresh-timestamp")).toHaveTextContent(formatDateTimeStrings(new Date().toISOString(), true));
+    });
   });
 });

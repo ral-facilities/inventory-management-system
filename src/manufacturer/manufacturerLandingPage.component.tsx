@@ -1,5 +1,6 @@
 import EditIcon from '@mui/icons-material/Edit';
 import PrintIcon from '@mui/icons-material/Print';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import {
   Box,
   Button,
@@ -9,20 +10,30 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import React from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetManufacturer } from '../api/manufacturers';
 import { formatDateTimeStrings } from '../utils';
 import ManufacturerDialog from './manufacturerDialog.component';
 
+
 function ManufacturerLandingPage() {
+
   const { manufacturer_id: manufacturerId } = useParams();
 
-  const { data: manufacturerData, isLoading: manufacturerDataLoading } =
+  const { data: manufacturerData, isLoading: manufacturerDataLoading , refetch: refreshManufacturer} =
     useGetManufacturer(manufacturerId);
 
   const [editManufacturerDialogOpen, setEditManufacturerDialogOpen] =
     React.useState<boolean>(false);
 
+  const [editRefreshDate, setRefreshDate] = useState(new Date())
+  
+  
+  const handleRefresh = () => {
+    setRefreshDate(new Date());
+    refreshManufacturer();
+  }  
   return (
     <Grid container>
       <Grid
@@ -35,7 +46,8 @@ function ManufacturerLandingPage() {
         container
       >
         {manufacturerData && (
-          <Grid container sx={{ py: 2 }} size={12}>
+          <Grid container sx={{ justifyContent: 'space-between', alignItems: 'center', py: 2 }}>
+            <Grid sx={{ display: 'flex'}}>
             <Button
               sx={{ mx: 0.5 }}
               variant="outlined"
@@ -56,8 +68,25 @@ function ManufacturerLandingPage() {
             >
               Print
             </Button>
+            </Grid>
+
+            <Grid  sx={{ display: 'flex'}}>
+            <Button
+              sx={{ mx: 0.5 }}
+              variant="outlined"
+              startIcon={<RefreshIcon />}
+              onClick={() => {
+                handleRefresh();
+              }}
+            >
+              Refresh
+          </Button>
+          <Typography data-testid="refresh-timestamp" textAlign={'center'} variant="body1">
+              Last refreshed at: {formatDateTimeStrings(editRefreshDate.toISOString(), true)}
+            </Typography>
           </Grid>
-        )}
+        </Grid>
+       )}
       </Grid>
       {manufacturerData && (
         <Grid
@@ -290,5 +319,6 @@ function ManufacturerLandingPage() {
     </Grid>
   );
 }
+
 
 export default ManufacturerLandingPage;
