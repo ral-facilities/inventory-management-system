@@ -201,7 +201,6 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       // Get the expected unparsed state in the URL for the current internal state
       const parsedStateSearchParams = convertInternalState(parsedState);
       const newUnparsedState = JSON.stringify(parsedStateSearchParams);
-
       // Wait for a column order change if required
       if (unparsedState !== newUnparsedState) {
         // Only set the search params if its just a current page state change and not a browser level change
@@ -495,7 +494,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
 
   const setColumnOrder = useCallback(
     (updaterOrValue: Updater<MRT_ColumnOrderState>) => {
-      // Ignore first update (column order has a habit of being set in MRT
+      // Ignore first update (pagination and column order has a habit of being set in MRT
       // shortly after the first render with actual data even if disabled in the table itself)
       // similar to https://www.material-react-table.com/docs/guides/state-management
       if (
@@ -528,6 +527,17 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
 
   const setPagination = useCallback(
     (updaterOrValue: Updater<MRT_PaginationState>) => {
+      // Ignore first update (pagination and column order has a habit of being set in MRT
+      // shortly after the first render with actual data even if disabled in the table itself)
+      // similar to https://www.material-react-table.com/docs/guides/state-management
+      // In MRT v3 it sets pagination after first render if the pageIndex is not 0, otherwise
+      // behaves normally
+      if (firstUpdate.current.p === undefined && !props?.paginationOnly) {
+        firstUpdate.current.p = getValueFromUpdater(updaterOrValue, state.p);
+        if (state.p.pageIndex != 0) {
+          return;
+        }
+      }
       updateSearchParams((prevState: StatePartial) => {
         const newValue = getValueFromUpdater(
           updaterOrValue,
@@ -542,7 +552,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
         };
       });
     },
-    [defaultState.p, updateSearchParams]
+    [defaultState.p, props?.paginationOnly, state.p, updateSearchParams]
   );
 
   return {

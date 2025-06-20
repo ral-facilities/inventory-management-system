@@ -28,6 +28,8 @@
       "section": "homepage",
       "link": "/ims",
       "displayName": "Homepage",
+      "unauthorised": true,
+      "hideFromMenu": true,
       "order": 0
     },
     {
