@@ -200,6 +200,7 @@ const moveToCatalogueCategory = (values: { checkedCategories: string[] }) => {
 };
 
 export const addCatalogueCategories = (ignoreChecks?: boolean) => {
+  cy.findByRole('progressbar').should('not.exist');
   modifyCatalogueCategory(
     {
       name: 'Lenses',
@@ -208,6 +209,7 @@ export const addCatalogueCategories = (ignoreChecks?: boolean) => {
   );
 
   cy.findByText('Lenses').click();
+  cy.findByRole('progressbar').should('not.exist');
 
   modifyCatalogueCategory(
     {
@@ -247,6 +249,7 @@ export const addCatalogueCategories = (ignoreChecks?: boolean) => {
 
 export const editCatalogueCategories = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
+  cy.findByRole('progressbar').should('not.exist');
   modifyCatalogueCategory({
     editCatalogueCategoryName: 'Lenses',
     actionsIndex: 0,
@@ -254,6 +257,7 @@ export const editCatalogueCategories = () => {
   });
 
   cy.findByText('Lenses 2').click();
+  cy.findByRole('progressbar').should('not.exist');
 
   modifyCatalogueCategory({
     editCatalogueCategoryName: 'Spherical Lenses',
@@ -264,8 +268,10 @@ export const editCatalogueCategories = () => {
 
 export const duplicateCatalogueCategories = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
+  cy.findByRole('progressbar').should('not.exist');
   duplicateCatalogueCategory('Lenses 2', 0);
   cy.findByText('Lenses 2').click();
+  cy.findByRole('progressbar').should('not.exist');
   duplicateCatalogueCategory('Spherical Lenses 2', 0);
 };
 
@@ -280,7 +286,9 @@ export const copyToCatalogueCategories = () => {
 
 export const moveToCatalogueCategories = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
+  cy.findByRole('progressbar').should('not.exist');
   cy.findByText('Lenses 2').click();
+  cy.findByRole('progressbar').should('not.exist');
   moveToCatalogueCategory({
     checkedCategories: ['Spherical Lenses 2', 'Spherical Lenses 2_copy_1'],
   });
@@ -288,6 +296,7 @@ export const moveToCatalogueCategories = () => {
 
 export const deleteCatalogueCategories = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
+  cy.findByRole('progressbar').should('not.exist');
   deleteCatalogueCategory('Lenses 2', 0);
   deleteCatalogueCategory('Spherical Lenses 2', 0);
   deleteCatalogueCategory('Lenses 2_copy_1', 0);
