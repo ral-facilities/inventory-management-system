@@ -61,52 +61,49 @@ const modifyCatalogueCategory = (
         .within(() => {
           cy.findByText('Add Property').click();
         });
-      cy.findByRole('dialog', { name: 'Add Property' })
-        .should('exist')
-        .within(() => {
-          if (field.name) {
-            cy.findByLabelText('Property Name *').type(field.name);
-          }
 
-          if (field.type) {
-            cy.findByLabelText('Select Type *').click();
-            cy.findByRole('option', {
-              name: field.type.charAt(0).toUpperCase() + field.type.slice(1),
+      if (field.name) {
+        cy.findByLabelText('Property Name *').type(field.name);
+      }
+
+      if (field.type) {
+        cy.findByLabelText('Select Type *').click();
+        cy.findByRole('option', {
+          name: field.type.charAt(0).toUpperCase() + field.type.slice(1),
+        }).click();
+      }
+
+      if (field.unit) {
+        cy.findByLabelText('Select Unit').click();
+        cy.findByRole('option', { name: field.unit }).click();
+      }
+
+      cy.findByLabelText('Select is mandatory?').click();
+      cy.findByRole('option', {
+        name: field.mandatory ? 'Yes' : 'No',
+      }).click();
+
+      if (field.allowed_values) {
+        cy.findByLabelText('Select Allowed values *').click();
+        cy.findByRole('option', {
+          name: field.allowed_values.type === 'list' ? 'List' : 'Any',
+        }).click();
+
+        if (field.allowed_values.type === 'list') {
+          for (let j = 0; j < field.allowed_values.values.length; j++) {
+            cy.findByRole('button', {
+              name: `Add list item`,
             }).click();
+
+            cy.findAllByLabelText('List item')
+              .eq(j)
+              .type(field.allowed_values.values[j]);
           }
+        }
+      }
 
-          if (field.unit) {
-            cy.findByLabelText('Select Unit').click();
-            cy.findByRole('option', { name: field.unit }).click();
-          }
-
-          cy.findByLabelText('Select is mandatory?').click();
-          cy.findByRole('option', {
-            name: field.mandatory ? 'Yes' : 'No',
-          }).click();
-
-          if (field.allowed_values) {
-            cy.findByLabelText('Select Allowed values *').click();
-            cy.findByRole('option', {
-              name: field.allowed_values.type === 'list' ? 'List' : 'Any',
-            }).click();
-
-            if (field.allowed_values.type === 'list') {
-              for (let j = 0; j < field.allowed_values.values.length; j++) {
-                cy.findByRole('button', {
-                  name: `Add list item`,
-                }).click();
-
-                cy.findAllByLabelText('List item')
-                  .eq(j)
-                  .type(field.allowed_values.values[j]);
-              }
-            }
-          }
-
-          cy.findByRole('button', { name: 'Save' }).click();
-          cy.findByRole('dialog', { name: 'Add Property' }).should('not.exist');
-        });
+      cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('dialog', { name: 'Add Property' }).should('not.exist');
     }
   }
   cy.findByRole('dialog')
