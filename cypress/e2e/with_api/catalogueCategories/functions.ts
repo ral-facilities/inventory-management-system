@@ -18,10 +18,14 @@ const modifyCatalogueCategory = (
     values.editCatalogueCategoryName &&
     typeof values.actionsIndex === 'number'
   ) {
-    cy.findAllByLabelText('Card Actions').eq(values.actionsIndex).click();
+    cy.findAllByRole('button', { name: 'Card Actions' })
+      .eq(values.actionsIndex)
+      .click();
+    cy.findByRole('menu').should('be.visible');
 
     cy.findByRole('menuitem', {
       name: `edit ${values.editCatalogueCategoryName} catalogue category button`,
+      timeout: 5000,
     }).should('exist');
 
     cy.findByRole('menuitem', {
