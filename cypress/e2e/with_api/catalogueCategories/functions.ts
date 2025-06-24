@@ -258,7 +258,10 @@ export const addCatalogueCategories = (ignoreChecks?: boolean) => {
 
 export const editCatalogueCategories = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
+
+  cy.findByText('Spherical Lenses').should('not.exist');
   cy.findByRole('progressbar').should('not.exist');
+
   modifyCatalogueCategory({
     editCatalogueCategoryName: 'Lenses',
     actionsIndex: 0,
