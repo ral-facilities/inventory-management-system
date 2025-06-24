@@ -261,6 +261,7 @@ export const editCatalogueCategories = () => {
 
   cy.findByText('Spherical Lenses').should('not.exist');
   cy.findByRole('progressbar').should('not.exist');
+  cy.findByText('Lenses').should('exist');
 
   modifyCatalogueCategory({
     editCatalogueCategoryName: 'Lenses',
@@ -270,6 +271,7 @@ export const editCatalogueCategories = () => {
 
   cy.findByText('Lenses 2').click();
   cy.findByRole('progressbar').should('not.exist');
+  cy.findByText('Spherical Lenses').should('exist');
 
   modifyCatalogueCategory({
     editCatalogueCategoryName: 'Spherical Lenses',
@@ -280,10 +282,12 @@ export const editCatalogueCategories = () => {
 
 export const duplicateCatalogueCategories = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
+  cy.findByText('Spherical Lenses 2').should('not.exist');
   cy.findByRole('progressbar').should('not.exist');
   duplicateCatalogueCategory('Lenses 2', 0);
   cy.findByText('Lenses 2').click();
   cy.findByRole('progressbar').should('not.exist');
+  cy.findByText('Spherical Lenses 2').should('exist');
   duplicateCatalogueCategory('Spherical Lenses 2', 0);
 };
 
@@ -298,8 +302,10 @@ export const copyToCatalogueCategories = () => {
 
 export const moveToCatalogueCategories = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
+  cy.findByText('Spherical Lenses 2').should('not.exist');
   cy.findByRole('progressbar').should('not.exist');
   cy.findByText('Lenses 2').click();
+  cy.findByText('Spherical Lenses 2').should('exist');
   cy.findByRole('progressbar').should('not.exist');
   moveToCatalogueCategory({
     checkedCategories: ['Spherical Lenses 2', 'Spherical Lenses 2_copy_1'],
