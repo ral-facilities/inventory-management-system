@@ -53,8 +53,9 @@ describe('catalogue items', () => {
 
   it('CRUD for catalogue items, images and attachments', () => {
     addCatalogueItem();
-    cy.findAllByText('Plano-Convex Lens').first().click();
+    cy.findAllByText('Plano-Convex Lens').last().click();
     cy.wait(2000);
+    cy.findByRole('progressbar').should('not.exist');
     cy.findAllByText('Plano-Convex Lens').should('have.length', 2);
     addFile(
       {
