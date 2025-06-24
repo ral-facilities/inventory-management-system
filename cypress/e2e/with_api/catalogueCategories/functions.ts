@@ -37,6 +37,7 @@ const modifyCatalogueCategory = (
       cy.findByLabelText('Catalogue Items').click();
     }
   } else {
+    cy.wait(1000);
     cy.findByRole('button', { name: 'Add Catalogue Category' }).click();
   }
 
