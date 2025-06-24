@@ -53,8 +53,8 @@ describe('catalogue items', () => {
 
   it('CRUD for catalogue items, images and attachments', () => {
     addCatalogueItem();
-    cy.findAllByText('Plano-Convex Lens').first().click();
-    cy.wait(1000);
+    cy.findAllByText('Plano-Convex Leboing4693*ns').first().click();
+    cy.wait(2000);
     cy.findAllByText('Plano-Convex Lens').should('have.length', 2);
     addFile(
       {
