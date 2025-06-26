@@ -13,7 +13,7 @@ export const modifySystem = (
     cy.findAllByLabelText('Row Actions').eq(values.index).click();
     cy.findByText('Edit').click();
   } else {
-    cy.findByRole('button', { name: 'add system' }).click();
+    cy.findByRole('button', { name: 'Add System' }).click();
   }
   cy.findByLabelText('Name *').clear();
   cy.findByLabelText('Name *').type(values.name);
@@ -45,18 +45,18 @@ export const modifySystem = (
     cy.findByText(values.name).click();
 
     cy.findAllByText(values.name).should('have.length.gte', 1);
-    values.description && cy.findByText(values.description).should('exist');
-    values.owner && cy.findByText(values.owner).should('exist');
-    values.location && cy.findByText(values.location).should('exist');
+    if (values.description) cy.findByText(values.description).should('exist');
+    if (values.owner) cy.findByText(values.owner).should('exist');
+    if (values.location) cy.findByText(values.location).should('exist');
     cy.findByText(values.importance).should('exist');
 
     cy.go('back');
   }
 };
 
-export const saveAsSystem = (name: string, index: number) => {
+export const duplicateSystem = (name: string, index: number) => {
   cy.findAllByLabelText('Row Actions').eq(index).click();
-  cy.findByText(`Save as`).click();
+  cy.findByText(`Duplicate`).click();
 
   cy.findByRole('button', { name: 'Save' }).click();
 
@@ -81,7 +81,8 @@ export const copyToSystems = (values: {
       .click();
   }
 
-  cy.findByRole('button', { name: 'Copy to' }).click();
+  cy.findByRole('button', { name: 'Systems more options' }).click();
+  cy.findByRole('menuitem', { name: 'Copy to' }).click();
 
   cy.findByRole('dialog').within(() => {
     cy.findByText('Storage').click();
@@ -109,7 +110,8 @@ export const moveToSystems = (values: {
       .click();
   }
 
-  cy.findByRole('button', { name: 'Move to' }).click();
+  cy.findByRole('button', { name: 'Systems more options' }).click();
+  cy.findByRole('menuitem', { name: 'Move to' }).click();
 
   cy.findByRole('dialog').within(() => {
     cy.findByText('Storage').click();
@@ -155,7 +157,7 @@ export const moveItemToSystem = (values: {
 
   cy.findByRole('progressbar').should('not.exist');
 
-  cy.findAllByRole('combobox').eq(0).click();
+  cy.findAllByRole('combobox').eq(1).click();
   cy.findByText('Scrapped').click();
 
   cy.findByRole('button', { name: 'Finish' }).should('not.be.disabled');

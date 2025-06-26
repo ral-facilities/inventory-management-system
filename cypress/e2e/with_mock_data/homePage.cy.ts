@@ -24,4 +24,14 @@ describe('IMS HomePage', () => {
         'https://www.clf.stfc.ac.uk/Pages/EPAC-Applications.aspx'
       );
   });
+  it('displays error message for invalid homepage route', () => {
+    cy.visit('/ims/fdsf');
+
+    cy.findByText(
+      `We're sorry, the page you requested was not found on the server. If you entered the URL manually please check your spelling and try again. Otherwise, return to the`,
+      { exact: false }
+    ).should('exist');
+
+    cy.findByRole('link', { name: 'home page' }).should('exist');
+  });
 });

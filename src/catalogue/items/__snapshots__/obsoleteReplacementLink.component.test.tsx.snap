@@ -1,0 +1,14 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ObsoleteReplacementLink > renders a link correctly 1`] = `
+<DocumentFragment>
+  <a
+    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+    href="/catalogue/4/items/1"
+  >
+    Click here
+  </a>
+</DocumentFragment>
+`;
+
+exports[`ObsoleteReplacementLink > renders nothing when data is undefined correctly 1`] = `<DocumentFragment />`;

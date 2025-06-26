@@ -2,6 +2,7 @@ import { Box, Button, Grid, Paper, alpha, styled } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PageNotFoundComponent from '../common/pageNotFound/pageNotFound.component';
 import { InventoryManagementSystemSettingsContext } from '../configProvider.component';
 import BackgroundImage from '/images/background.jpg';
 import Decal1Image from '/images/decal1.svg';
@@ -12,6 +13,10 @@ import FacilityImage from '/images/facility.jpg';
 import GreenSwirl1Image from '/images/green-swirl1.png';
 import GreenSwirl2Image from '/images/green-swirl2.png';
 import DGLogo from '/images/scigateway-white-text-blue-mark-logo.svg';
+
+export const HomePageErrorComponent = () => {
+  return <PageNotFoundComponent />;
+};
 
 export interface BaseHomePageProps {
   logo: string;
@@ -226,7 +231,7 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
           </Grid>
         </Paper>
         <Grid container spacing={2}>
-          <Grid item sm={12} md={4}>
+          <Grid item xs={12} md={4}>
             <Paper sx={paperStyles} elevation={1}>
               <Box sx={paperContentStyles}>
                 <PaperHeading variant="h4">{'Systems'}</PaperHeading>
@@ -253,7 +258,7 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
               </Box>
             </Paper>
           </Grid>
-          <Grid item sm={12} md={4}>
+          <Grid item xs={12} md={4}>
             <Paper sx={paperStyles} elevation={1}>
               <Box sx={paperContentStyles}>
                 <PaperHeading variant="h4">{'Manufacturers'}</PaperHeading>
@@ -278,7 +283,7 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
               </Box>
             </Paper>
           </Grid>
-          <Grid item sm={12} md={4}>
+          <Grid item xs={12} md={4}>
             <Paper
               sx={{ ...paperStyles, backgroundColor: '#003088' }}
               elevation={1}

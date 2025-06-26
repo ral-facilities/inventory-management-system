@@ -12,10 +12,6 @@ For more details about the project's architecture, development guidelines and in
 
 This project uses [Vite](https://vitejs.dev/).
 
-## Code structure
-
-The project is structured as a monorepo. This means that the actual code packages are located under `inventory-management-system`
-
 ### Available Scripts
 
 In the project directory, you can run:
@@ -105,7 +101,7 @@ For development purposes, use `yarn preview:build:dev` to build in watch mode so
    ```
 4. Start the website
    ```bash
-   yarn inventory-management-system
+   yarn dev
    ```
 
 ### End-to-End Testing (Locally)

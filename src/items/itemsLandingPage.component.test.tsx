@@ -1,5 +1,8 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { http, HttpResponse } from 'msw';
+import ItemsJSON from '../mocks/Items.json';
+import { server } from '../mocks/server';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import ItemsLandingPage from './itemsLandingPage.component';
 
@@ -29,18 +32,10 @@ describe('Items Landing Page', () => {
   });
 
   it('renders text correctly (only basic details given)', async () => {
-    createView('/catalogue/item/1/items/KvT2Ox7n');
+    createView('/catalogue/4/items/1/items/KvT2Ox7n');
 
     await waitFor(() => {
       expect(screen.getByText('Cameras 1')).toBeInTheDocument();
-    });
-
-    await waitFor(() => {
-      expect(
-        screen.getByRole('link', {
-          name: 'beam-characterization',
-        })
-      ).toBeInTheDocument();
     });
 
     expect(screen.getByText('Description:')).toBeInTheDocument();
@@ -55,105 +50,52 @@ describe('Items Landing Page', () => {
     expect(screen.getByText('System')).toBeInTheDocument();
   });
 
-  it('navigates to the system when the system id is clicked', async () => {
-    createView('/catalogue/item/1/items/KvT2Ox7n');
+  it('renders text correctly (Notes)', async () => {
+    createView('/catalogue/4/items/1/items/KvT2Ox7n');
+
     await waitFor(() => {
       expect(screen.getByText('Cameras 1')).toBeInTheDocument();
     });
 
-    const systemName = screen.getByText('Giant laser');
+    await user.click(screen.getByText('Notes'));
+
+    expect(screen.getByText('6Y5XTJfBrNNx8oltI9HE')).toBeInTheDocument();
+  });
+
+  it('navigates to the system when the system id is clicked', async () => {
+    createView('/catalogue/4/items/1/items/KvT2Ox7n');
+    await waitFor(() => {
+      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
+    });
+
+    const systemName = await screen.findByText('Giant laser');
     expect(systemName).toHaveAttribute(
       'href',
       '/systems/65328f34a40ff5301575a4e3'
     );
   });
 
-  it('renders no item page correctly', async () => {
-    createView('/catalogue/item/1/items/KvT2');
-    await waitFor(() => {
-      expect(
-        screen.getByText(
-          `This item doesn't exist. Please click the Home button to navigate to the catalogue home`
-        )
-      ).toBeInTheDocument();
-    });
-
-    const homeButton = screen.getByRole('button', {
-      name: 'navigate to catalogue home',
-    });
-    expect(homeButton).toBeInTheDocument();
-  });
-
-  it('toggles the properties so it is either visible or hidden', async () => {
-    createView('/catalogue/item/1/items/pZT8K0aP');
-    await waitFor(() => {
-      expect(screen.getByText('Wavefront Sensors 31')).toBeInTheDocument();
-    });
-
-    expect(screen.getByLabelText('Close item properties')).toBeInTheDocument();
-
-    const toggleButton = screen.getByLabelText('Close item properties');
-
-    await user.click(toggleButton);
-    await waitFor(() => {
-      expect(screen.getByLabelText('Show item properties')).toBeInTheDocument();
-    });
-  });
-
-  it('toggles the details so it is either visible or hidden', async () => {
-    createView('/catalogue/item/1/items/KvT2Ox7n');
-    await waitFor(() => {
-      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
-    });
-
-    expect(screen.getByLabelText('Close item details')).toBeInTheDocument();
-
-    const toggleButton = screen.getByLabelText('Close item details');
-
-    await user.click(toggleButton);
-    await waitFor(() => {
-      expect(screen.getByLabelText('Show item details')).toBeInTheDocument();
-    });
-  });
-
   it('shows the loading indicator', async () => {
-    createView('/catalogue/item/1/items/KvT2Ox7n');
+    createView('/catalogue/4/items/1/items/KvT2Ox7n');
 
     await waitFor(() => {
       expect(screen.getByRole('progressbar')).toBeInTheDocument();
     });
   });
-  it('toggles the manufacturer so it is either visible or hidden', async () => {
-    createView('/catalogue/item/1/items/KvT2Ox7n');
-    await waitFor(() => {
-      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
-    });
-
-    expect(
-      screen.getByLabelText('Close item manufacturer details')
-    ).toBeInTheDocument();
-
-    const toggleButton = screen.getByLabelText(
-      'Close item manufacturer details'
-    );
-
-    await user.click(toggleButton);
-    await waitFor(() => {
-      expect(
-        screen.getByLabelText('Show item manufacturer details')
-      ).toBeInTheDocument();
-    });
-  });
 
   it('prints when the button is clicked', async () => {
     const spy = vi.spyOn(window, 'print').mockImplementation(() => {});
-    createView('/catalogue/item/1/items/KvT2Ox7n');
+    createView('/catalogue/4/items/1/items/KvT2Ox7n');
 
     await waitFor(() => {
       expect(screen.getByText('Cameras 1')).toBeInTheDocument();
     });
 
-    const printButton = screen.getByRole('button', { name: 'Print' });
+    await user.click(
+      screen.getByRole('button', { name: 'items landing page actions menu' })
+    );
+
+    const printButton = screen.getByText('Print');
 
     await user.click(printButton);
     // Assert that the window.print() function was called
@@ -163,77 +105,49 @@ describe('Items Landing Page', () => {
     spy.mockRestore();
   });
 
-  it('navigates to items table view', async () => {
-    createView('/catalogue/item/1/items/KvT2Ox7n');
-    await waitFor(() => {
-      expect(
-        screen.getByRole('link', { name: 'Cameras 1' })
-      ).toBeInTheDocument();
-    });
-
-    const breadcrumb = screen.getByRole('link', {
-      name: 'Cameras 1',
-    });
-    await user.click(breadcrumb);
-    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
-    expect(mockedUseNavigate).toHaveBeenCalledWith('/catalogue/item/1');
-  });
-
-  it('navigates back to the root directory', async () => {
-    createView('/catalogue/item/1/items/KvT2Ox7n');
-
-    await waitFor(() => {
-      expect(
-        screen.getByRole('link', { name: 'Cameras 1' })
-      ).toBeInTheDocument();
-    });
-
-    const homeButton = screen.getByRole('button', {
-      name: 'navigate to catalogue home',
-    });
-
-    await user.click(homeButton);
-
-    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
-    expect(mockedUseNavigate).toHaveBeenCalledWith('/catalogue');
-  });
   it('landing page renders data correctly when optional values are null', async () => {
-    createView('/catalogue/item/33/items/I26EJNJ0');
+    server.use(
+      http.get('/v1/items/:id', async ({ params }) => {
+        const { id } = params;
+
+        const data = ItemsJSON.find((items) => items.id === id);
+
+        if (!data) {
+          return HttpResponse.json(
+            { detail: 'Item not found' },
+            { status: 404 }
+          );
+        }
+
+        return HttpResponse.json({ ...data, properties: [] }, { status: 200 });
+      })
+    );
+
+    createView('/catalogue/4/items/33/items/I26EJNJ0');
 
     await waitFor(() => {
       expect(screen.getByText('Cameras 14')).toBeInTheDocument();
     });
 
-    expect(screen.getByLabelText('Close item details')).toBeInTheDocument();
-
-    const toggleButtonDetails = screen.getByLabelText('Close item details');
-
-    await user.click(toggleButtonDetails);
-
-    expect(screen.getByLabelText('Close item properties')).toBeInTheDocument();
-
-    const toggleButtonProperties = screen.getByLabelText(
-      'Close item properties'
-    );
-
-    await user.click(toggleButtonProperties);
-
     await waitFor(() => {
       expect(screen.getByText('Manufacturer D')).toBeInTheDocument();
     });
     expect(screen.getByText('URL')).toBeInTheDocument();
-    expect(screen.getAllByText('None')[0]).toBeInTheDocument();
+    expect(screen.getAllByText('None').length).toEqual(3);
     expect(screen.getByText('Telephone number')).toBeInTheDocument();
-    expect(screen.getAllByText('None')[1]).toBeInTheDocument();
   });
 
-  it('opens the edit item dialog for save as', async () => {
-    createView('/catalogue/item/1/items/KvT2Ox7n');
+  it('opens the edit item dialog', async () => {
+    createView('/catalogue/4/items/1/items/KvT2Ox7n');
 
     const serialNumber = '5YUQDDjKpz2z';
     await waitFor(() => {
       expect(screen.getByText(serialNumber)).toBeInTheDocument();
     });
+
+    await user.click(
+      screen.getByRole('button', { name: 'items landing page actions menu' })
+    );
 
     const editButton = screen.getByText('Edit');
     await user.click(editButton);
@@ -250,7 +164,7 @@ describe('Items Landing Page', () => {
   });
 
   it('navigates to manufacturer landing page', async () => {
-    createView('/catalogue/item/1/items/KvT2Ox7n');
+    createView('/catalogue/4/items/1/items/KvT2Ox7n');
     await waitFor(() => {
       expect(screen.getByText('Cameras 1')).toBeInTheDocument();
     });

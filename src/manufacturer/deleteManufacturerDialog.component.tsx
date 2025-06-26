@@ -11,8 +11,8 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
+import { APIError, Manufacturer } from '../api/api.types';
 import { useDeleteManufacturer } from '../api/manufacturers';
-import { APIError, Manufacturer } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
 
 export interface DeleteManufacturerProps {
@@ -40,7 +40,7 @@ const DeleteManufacturerDialog = (props: DeleteManufacturerProps) => {
 
   const handleDeleteManufacturer = React.useCallback(() => {
     if (manufacturer) {
-      deleteManufacturer(manufacturer)
+      deleteManufacturer(manufacturer.id)
         .then(() => {
           onClose();
         })

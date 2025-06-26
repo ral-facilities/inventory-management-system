@@ -1,17 +1,10 @@
 import axios from 'axios';
-import { APIError, MicroFrontendId } from '../app.types';
+import { MicroFrontendId } from '../app.types';
 import { readSciGatewayToken } from '../parseTokens';
-import { settings } from '../settings';
+import { InventoryManagementSystemSettings, settings } from '../settings';
 import { InvalidateTokenType } from '../state/actions/actions.types';
-
-export const imsApi = axios.create();
-
-imsApi.interceptors.request.use(async (config) => {
-  const apiUrl = (await settings)?.apiUrl || '';
-  config.baseURL = apiUrl;
-  config.headers['Authorization'] = `Bearer ${readSciGatewayToken()}`;
-  return config;
-});
+import { parseErrorResponse } from '../utils';
+import { APIError } from './api.types';
 
 // These are for ensuring refresh request is only sent once when multiple requests
 // are failing due to 403's at the same time
@@ -35,28 +28,85 @@ export const clearFailedAuthRequestsQueue = () => {
   failedAuthRequestQueue = [];
 };
 
-imsApi.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    const originalRequest = error.config;
-    const errorMessage: string = error.response?.data
-      ? (error.response.data as APIError).detail.toLocaleLowerCase() ??
-        error.message
-      : error.message;
+const createAuthenticatedClient = (props: {
+  getURL: (settings: InventoryManagementSystemSettings) => string;
+}) => {
+  const apiClient = axios.create();
+
+  apiClient.interceptors.request.use(async (config) => {
+    const settingsData = await settings;
+    config.baseURL = settingsData ? props.getURL(settingsData) : '';
+    config.headers['Authorization'] = `Bearer ${readSciGatewayToken()}`;
+    return config;
+  });
+
+  apiClient.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      const originalRequest = error.config;
+      const errorMessage: string = error.response?.data
+        ? ((error.response.data as APIError).detail.toLocaleLowerCase() ??
+          error.message)
+        : error.message;
+
+      // Check if the token is invalid and needs refreshing
+      // only allow a request to be retried once. Don't retry if not logged
+      // in, it should not have been accessible
+      if (
+        error.response?.status === 403 &&
+        errorMessage.includes('expired token') &&
+        !originalRequest._retried &&
+        localStorage.getItem('scigateway:token')
+      ) {
+        originalRequest._retried = true;
+
+        // Prevent other requests from also attempting to refresh while waiting for
+        // SciGateway to refresh the token
+        if (!isFetchingAccessToken) {
+          isFetchingAccessToken = true;
+
+          // Request SciGateway to refresh the token
+          document.dispatchEvent(
+            new CustomEvent(MicroFrontendId, {
+              detail: {
+                type: InvalidateTokenType,
+              },
+            })
+          );
+        }
+
+        // Add request to queue to be resolved only once SciGateway has successfully
+        // refreshed the token
+        return new Promise((resolve, reject) => {
+          failedAuthRequestQueue.push((shouldReject?: boolean) => {
+            if (shouldReject) reject(error);
+            else resolve(apiClient(originalRequest));
+          });
+        });
+      }
+      // Any other error
+      else return Promise.reject(error);
+    }
+  );
+
+  return apiClient;
+};
+
+export function uppyOnAfterResponse(xhr: XMLHttpRequest) {
+  if (xhr.status >= 400 && xhr.status < 600) {
+    const errorMessage: string = (
+      JSON.parse(xhr.responseText) as APIError
+    ).detail.toLocaleLowerCase();
 
     // Check if the token is invalid and needs refreshing
-    // only allow a request to be retried once. Don't retry if not logged
-    // in, it should not have been accessible
     if (
-      error.response?.status === 403 &&
+      xhr.status === 403 &&
       errorMessage.includes('expired token') &&
-      !originalRequest._retried &&
       localStorage.getItem('scigateway:token')
     ) {
-      originalRequest._retried = true;
-
       // Prevent other requests from also attempting to refresh while waiting for
       // SciGateway to refresh the token
+
       if (!isFetchingAccessToken) {
         isFetchingAccessToken = true;
 
@@ -70,16 +120,28 @@ imsApi.interceptors.response.use(
         );
       }
 
-      // Add request to queue to be resolved only once SciGateway has successfully
-      // refreshed the token
-      return new Promise((resolve, reject) => {
+      // Create a new promise to wait for the token to be refreshed
+      return new Promise<void>((resolve, reject) => {
         failedAuthRequestQueue.push((shouldReject?: boolean) => {
-          if (shouldReject) reject(error);
-          else resolve(imsApi(originalRequest));
+          if (shouldReject) reject(xhr);
+          else resolve();
         });
       });
+    } else {
+      const returnMessage = parseErrorResponse(errorMessage);
+      throw new Error(returnMessage);
     }
-    // Any other error
-    else return Promise.reject(error);
   }
-);
+}
+
+export function uppyOnBeforeRequest(xhr: XMLHttpRequest) {
+  xhr.setRequestHeader('Authorization', `Bearer ${readSciGatewayToken()}`);
+}
+
+export const imsApi = createAuthenticatedClient({
+  getURL: (settings) => settings.imsApiUrl,
+});
+
+export const storageApi = createAuthenticatedClient({
+  getURL: (settings) => settings.osApiUrl,
+});

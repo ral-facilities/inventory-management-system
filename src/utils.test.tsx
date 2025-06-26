@@ -1,12 +1,17 @@
 import { Link } from '@mui/material';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { MRT_ColumnDef } from 'material-react-table';
+import { UsageStatus } from './api/api.types';
 import { renderComponentWithRouterProvider } from './testUtils';
 import {
   OverflowTip,
+  checkForDuplicates,
   generateUniqueId,
   generateUniqueName,
   generateUniqueNameUsingCode,
+  getInitialColumnFilterFnState,
+  getNonEmptyTrimmedString,
   sortDataList,
   trimStringValues,
 } from './utils';
@@ -288,5 +293,95 @@ describe('Utility functions', () => {
       { name: 'John' },
       { name: 'Susan' },
     ]);
+  });
+
+  it('getInitialColumnFilterFnState correctly creates filterFns initial state', () => {
+    const expectedResult = { created_time: 'between', value: 'fuzzy' };
+
+    const columns: MRT_ColumnDef<UsageStatus>[] = [
+      {
+        header: 'Value',
+        filterVariant: 'text',
+        filterFn: 'fuzzy',
+        enableColumnFilterModes: false,
+        id: 'value',
+      },
+      {
+        header: 'Created',
+        filterVariant: 'datetime-range',
+        filterFn: 'between',
+        id: 'created_time',
+      },
+    ];
+
+    const actualResult = getInitialColumnFilterFnState(columns);
+    expect(actualResult).toEqual(expectedResult);
+  });
+});
+
+describe('checkForDuplicates', () => {
+  it('should return an empty array when there are no duplicates', () => {
+    const data = [
+      { id: '1', name: 'Alice' },
+      { id: '2', name: 'Bob' },
+      { id: '3', name: 'Charlie' },
+    ];
+
+    const result = checkForDuplicates({ data, idName: 'id', field: 'name' });
+    expect(result).toEqual([]);
+  });
+
+  it('should return duplicate ids when there are duplicates', () => {
+    const data = [
+      { id: '1', name: 'Alice' },
+      { id: '2', name: 'Bob' },
+      { id: '3', name: 'Alice' },
+    ];
+
+    const result = checkForDuplicates({ data, idName: 'id', field: 'name' });
+    expect(result).toEqual(['3', '1']);
+  });
+
+  it('should handle data with missing field values', () => {
+    const data = [
+      { id: '1', name: 'Alice' },
+      { id: '2', name: 'Bob' },
+      { id: '3' }, // Missing 'name' field
+    ];
+
+    const result = checkForDuplicates({ data, idName: 'id', field: 'name' });
+    expect(result).toEqual([]);
+  });
+
+  it('should return duplicate ids correctly when multiple duplicates exist', () => {
+    const data = [
+      { id: '1', name: 'Alice' },
+      { id: '2', name: 'Bob' },
+      { id: '3', name: 'Alice' },
+      { id: '4', name: 'Bob' },
+    ];
+
+    const result = checkForDuplicates({ data, idName: 'id', field: 'name' });
+    expect(result).toEqual(['3', '1', '4', '2']);
+  });
+});
+
+describe('getNonEmptyTrimmedString', () => {
+  it('should return the string for non-empty strings', () => {
+    expect(getNonEmptyTrimmedString('Hello')).toBe('Hello');
+    expect(getNonEmptyTrimmedString('   Hello   ')).toBe('Hello');
+  });
+
+  it('should return undefined for empty strings', () => {
+    expect(getNonEmptyTrimmedString('')).toBeUndefined();
+    expect(getNonEmptyTrimmedString('   ')).toBeUndefined();
+  });
+
+  it('should return undefined for non-string values', () => {
+    expect(getNonEmptyTrimmedString(123)).toBeUndefined();
+    expect(getNonEmptyTrimmedString(null)).toBeUndefined();
+    expect(getNonEmptyTrimmedString(undefined)).toBeUndefined();
+    expect(getNonEmptyTrimmedString({})).toBeUndefined();
+    expect(getNonEmptyTrimmedString([])).toBeUndefined();
   });
 });

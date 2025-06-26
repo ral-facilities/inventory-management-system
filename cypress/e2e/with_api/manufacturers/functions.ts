@@ -63,13 +63,13 @@ export const modifyManufacturer = (
     cy.findByText(values.name).should('exist');
     cy.findByText(values.name).click();
     cy.findAllByText(values.name).should('have.length.gte', 1);
-    values.url && cy.findByText(values.url).should('exist');
+    if (values.url) cy.findByText(values.url).should('exist');
     cy.findByText(values.country).should('exist');
     cy.findByText(values.address_line).should('exist');
-    values.town && cy.findByText(values.town).should('exist');
-    values.county && cy.findByText(values.county).should('exist');
+    if (values.town) cy.findByText(values.town).should('exist');
+    if (values.county) cy.findByText(values.county).should('exist');
     cy.findByText(values.postcode).should('exist');
-    values.telephone_number &&
+    if (values.telephone_number)
       cy.findByText(values.telephone_number).should('exist');
     cy.go('back');
   }

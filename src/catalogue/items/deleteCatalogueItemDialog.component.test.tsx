@@ -6,7 +6,7 @@ import {
 } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http } from 'msw';
-import { CatalogueItem } from '../../app.types';
+import { CatalogueItem } from '../../api/api.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { server } from '../../mocks/server';
 import {
@@ -42,6 +42,7 @@ describe('delete Catalogue Category dialogue', () => {
       cost_to_rework_gbp: null,
       days_to_replace: 0,
       days_to_rework: null,
+      expected_lifetime_days: null,
       drawing_link: null,
       drawing_number: null,
       notes: null,
@@ -96,6 +97,10 @@ describe('delete Catalogue Category dialogue', () => {
     await waitFor(() => {
       expect(onClose).toHaveBeenCalled();
     });
+
+    expect(onClose).toHaveBeenCalledWith({
+      successfulDeletion: false,
+    });
   });
 
   it('does not close dialog on background click, or on escape key press', async () => {
@@ -138,9 +143,13 @@ describe('delete Catalogue Category dialogue', () => {
     await waitFor(() => {
       expect(onClose).toHaveBeenCalled();
     });
+
+    expect(onClose).toHaveBeenCalledWith({
+      successfulDeletion: true,
+    });
   });
 
-  it('displays error message when user tries to delete a catalogue category that has children elements', async () => {
+  it('displays error message when user tries to delete a catalogue item that has children elements', async () => {
     catalogueItem.id = '6';
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
@@ -149,7 +158,22 @@ describe('delete Catalogue Category dialogue', () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          'Catalogue item has child elements and cannot be deleted, please delete the children elements first'
+          'Catalogue item has child elements and cannot be deleted, please delete the children elements first.'
+        )
+      ).toBeInTheDocument();
+    });
+  });
+
+  it('displays error message when user tries to delete a catalogue item that is the replacement for an obsolete catalogue item', async () => {
+    catalogueItem.id = '7';
+    createView();
+    const continueButton = screen.getByRole('button', { name: 'Continue' });
+    await user.click(continueButton);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          'Catalogue item is the replacement for an obsolete catalogue item and cannot be deleted, please contact support.'
         )
       ).toBeInTheDocument();
     });

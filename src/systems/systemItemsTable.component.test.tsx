@@ -1,6 +1,6 @@
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import { Item, System } from '../app.types';
+import { Item, System } from '../api/api.types';
 import ItemJSON from '../mocks/Items.json';
 import SystemsJSON from '../mocks/Systems.json';
 import { renderComponentWithRouterProvider } from '../testUtils';
@@ -104,7 +104,7 @@ describe('SystemItemsTable', () => {
         screen.getByRole('link', {
           name: `Turbomolecular Pumps 42`,
         })
-      ).toHaveAttribute('href', '/catalogue/item/21');
+      ).toHaveAttribute('href', '/catalogue/13/items/21');
     });
 
     it('can set a table filter and clear them again', async () => {
@@ -127,7 +127,7 @@ describe('SystemItemsTable', () => {
       });
       expect(clearFiltersButton).toBeDisabled();
 
-      await user.type(screen.getByLabelText('Filter by Catalogue Item'), '43');
+      await user.type(screen.getByLabelText('Filter by Serial Number'), '43');
 
       await waitFor(
         () => {
@@ -330,43 +330,43 @@ describe('SystemItemsTable', () => {
 
         if (values.cameras1Item1) {
           await selectUsageStatus({
-            index: 0,
+            index: 1,
             usage_status_id: values.cameras1Item1,
           });
         }
 
         if (values.cameras1Item2) {
           await selectUsageStatus({
-            index: 1,
+            index: 2,
             usage_status_id: values.cameras1Item2,
           });
         }
 
         if (values.cameras6Item1) {
           await selectUsageStatus({
-            index: 2,
+            index: 3,
             usage_status_id: values.cameras6Item1,
           });
         }
 
         if (values.cameras6Item2) {
           await selectUsageStatus({
-            index: 3,
+            index: 4,
             usage_status_id: values.cameras6Item2,
           });
         }
       }
-      values.cameras1 &&
-        (await selectUsageStatus({
-          index: 0,
-          usage_status_id: values.cameras1,
-        }));
-
-      values.cameras6 &&
-        (await selectUsageStatus({
+      if (values.cameras1)
+        await selectUsageStatus({
           index: 1,
+          usage_status_id: values.cameras1,
+        });
+
+      if (values.cameras6)
+        await selectUsageStatus({
+          index: 2,
           usage_status_id: values.cameras6,
-        }));
+        });
     };
 
     it('renders correctly', async () => {
@@ -486,8 +486,8 @@ describe('SystemItemsTable', () => {
         { timeout: 4000 }
       );
 
-      expect(screen.getAllByRole('combobox')[0]).toHaveValue('New');
-      expect(screen.getAllByRole('combobox')[1]).toHaveValue('In Use');
+      expect((await screen.findAllByRole('combobox'))[1]).toHaveValue('New');
+      expect(screen.getAllByRole('combobox')[2]).toHaveValue('In Use');
     });
 
     it('displays errors messages correctly', async () => {

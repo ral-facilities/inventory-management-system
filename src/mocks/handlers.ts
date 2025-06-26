@@ -1,32 +1,42 @@
-import { DefaultBodyType, http, HttpResponse, PathParams } from 'msw';
+import { DefaultBodyType, delay, http, HttpResponse, PathParams } from 'msw';
 import {
-  AddCatalogueCategory,
-  AddCatalogueItem,
-  AddItem,
-  AddManufacturer,
-  AddSystem,
-  AddUnit,
-  AddUsageStatus,
+  APIImage,
+  AttachmentMetadata,
+  AttachmentMetadataPatch,
+  AttachmentPostMetadata,
+  AttachmentPostMetadataResponse,
+  AttachmentUploadInfo,
   BreadcrumbsInfo,
   CatalogueCategory,
+  CatalogueCategoryPatch,
+  CatalogueCategoryPost,
   CatalogueCategoryProperty,
-  CatalogueCategoryPropertyMigration,
+  CatalogueCategoryPropertyPatch,
+  CatalogueCategoryPropertyPost,
   CatalogueItem,
-  EditCatalogueCategory,
-  EditCatalogueItem,
-  EditItem,
-  EditManufacturer,
-  EditSystem,
+  CatalogueItemPatch,
+  CatalogueItemPost,
+  ImageMetadataPatch,
   Item,
+  ItemPatch,
+  ItemPost,
   Manufacturer,
+  ManufacturerPatch,
+  ManufacturerPost,
   System,
+  SystemPatch,
+  SystemPost,
   Unit,
+  UnitPost,
   UsageStatus,
-} from '../app.types';
+  UsageStatusPost,
+} from '../api/api.types';
 import { generateUniqueId } from '../utils';
+import AttachmentsJSON from './Attachments.json';
 import CatalogueCategoriesJSON from './CatalogueCategories.json';
 import CatalogueCategoryBreadcrumbsJSON from './CatalogueCategoryBreadcrumbs.json';
 import CatalogueItemsJSON from './CatalogueItems.json';
+import ImagesJSON from './Images.json';
 import ItemsJSON from './Items.json';
 import ManufacturersJSON from './Manufacturers.json';
 import SystemBreadcrumbsJSON from './SystemBreadcrumbs.json';
@@ -45,7 +55,7 @@ export const handlers = [
 
   http.post<
     PathParams,
-    AddCatalogueCategory,
+    CatalogueCategoryPost,
     CatalogueCategory | ErrorResponse
   >('/v1/catalogue-categories', async ({ request }) => {
     let body = await request.json();
@@ -92,7 +102,7 @@ export const handlers = [
     );
   }),
 
-  http.get<{ id: string }, DefaultBodyType, CatalogueCategory>(
+  http.get<{ id: string }, DefaultBodyType, CatalogueCategory | ErrorResponse>(
     '/v1/catalogue-categories/:id',
     ({ params }) => {
       const { id } = params;
@@ -100,6 +110,12 @@ export const handlers = [
       const data = CatalogueCategoriesJSON.find(
         (catalogueCategory) => catalogueCategory.id === id
       );
+      if (!data) {
+        return HttpResponse.json(
+          { detail: 'Catalogue category not found' },
+          { status: 404 }
+        );
+      }
 
       return HttpResponse.json(data as CatalogueCategory, { status: 200 });
     }
@@ -129,13 +145,21 @@ export const handlers = [
     }
   ),
 
-  http.get<{ id: string }, DefaultBodyType, BreadcrumbsInfo>(
+  http.get<{ id: string }, DefaultBodyType, BreadcrumbsInfo | ErrorResponse>(
     '/v1/catalogue-categories/:id/breadcrumbs',
     ({ params }) => {
       const { id } = params;
       const data = CatalogueCategoryBreadcrumbsJSON.find(
         (catalogueBreadcrumbs) => catalogueBreadcrumbs.id === id
       ) as unknown as BreadcrumbsInfo;
+
+      if (!data) {
+        return HttpResponse.json(
+          { detail: 'Catalogue category not found' },
+          { status: 404 }
+        );
+      }
+
       return HttpResponse.json(data, {
         status: 200,
       });
@@ -144,7 +168,7 @@ export const handlers = [
 
   http.patch<
     { id: string },
-    EditCatalogueCategory,
+    CatalogueCategoryPatch,
     CatalogueCategory | ErrorResponse
   >('/v1/catalogue-categories/:id', async ({ request, params }) => {
     const { id } = params;
@@ -194,7 +218,7 @@ export const handlers = [
           { status: 409 }
         );
       } else {
-        return HttpResponse.json({ status: 204 });
+        return HttpResponse.json(undefined, { status: 204 });
       }
     } else {
       return HttpResponse.json({ detail: '' }, { status: 400 });
@@ -203,12 +227,16 @@ export const handlers = [
 
   http.post<
     PathParams,
-    CatalogueCategoryPropertyMigration,
+    CatalogueCategoryPropertyPost,
     CatalogueCategoryProperty | ErrorResponse
   >(
     '/v1/catalogue-categories/:catalogue_category_id/properties',
     async ({ request }) => {
       const body = await request.json();
+
+      const unitValue = UnitsJSON.find(
+        (unit) => body.unit_id === unit.id
+      )?.value;
 
       if (body.name == 'Error 500') {
         return HttpResponse.json(
@@ -221,6 +249,7 @@ export const handlers = [
         {
           id: '1',
           ...body,
+          unit: unitValue ?? null,
         } as CatalogueCategoryProperty,
         { status: 200 }
       );
@@ -229,7 +258,7 @@ export const handlers = [
 
   http.patch<
     PathParams,
-    Partial<CatalogueCategoryPropertyMigration>,
+    CatalogueCategoryPropertyPatch,
     CatalogueCategoryProperty | ErrorResponse
   >(
     '/v1/catalogue-categories/:catalogue_category_id/properties/:property_id',
@@ -258,7 +287,7 @@ export const handlers = [
 
   // ------------------------------------ CATALOGUE ITEMS ------------------------------------
 
-  http.post<PathParams, AddCatalogueItem, CatalogueItem | ErrorResponse>(
+  http.post<PathParams, CatalogueItemPost, CatalogueItem | ErrorResponse>(
     '/v1/catalogue-items',
     async ({ request }) => {
       let body = await request.json();
@@ -310,9 +339,16 @@ export const handlers = [
         const CatalogueItemData = CatalogueItemsJSON.find(
           (catalogueItem) => catalogueItem.id === id
         );
+
+        if (!CatalogueItemData) {
+          return HttpResponse.json(
+            { detail: 'Catalogue not found' },
+            { status: 404 }
+          );
+        }
+
         return HttpResponse.json(CatalogueItemData, { status: 200 });
       }
-      return HttpResponse.json({ detail: '' }, { status: 422 });
     }
   ),
 
@@ -335,7 +371,7 @@ export const handlers = [
     }
   ),
 
-  http.patch<{ id: string }, EditCatalogueItem, CatalogueItem | ErrorResponse>(
+  http.patch<{ id: string }, CatalogueItemPatch, CatalogueItem | ErrorResponse>(
     '/v1/catalogue-items/:id',
     async ({ request, params }) => {
       const body = await request.json();
@@ -355,9 +391,17 @@ export const handlers = [
       };
 
       if (body.name === 'test_has_children_elements') {
+        // find the name of the manufacturer, so it can be used in the error message
+        const manufacturerName = ManufacturersJSON?.find(
+          (manufacturer) =>
+            manufacturer.id === validCatalogueItem?.manufacturer_id
+        ) as Manufacturer;
         return HttpResponse.json(
           {
-            detail: 'Catalogue item has child elements and cannot be edited',
+            detail:
+              'Unable to update catalogue item properties and manufacturer (' +
+              manufacturerName?.name +
+              '), as the catalogue item has child elements.',
           },
           { status: 409 }
         );
@@ -392,16 +436,22 @@ export const handlers = [
       (value) => value.id === id
     );
     if (validCatalogueItem) {
-      if (id === '6') {
+      if (id === '6')
         return HttpResponse.json(
           {
             detail: 'Catalogue item has child elements and cannot be deleted',
           },
           { status: 409 }
         );
-      } else {
-        return HttpResponse.json({ status: 204 });
-      }
+      else if (id === '7')
+        return HttpResponse.json(
+          {
+            detail:
+              'Catalogue item is the replacement for an obsolete catalogue item and cannot be deleted',
+          },
+          { status: 422 }
+        );
+      else return HttpResponse.json(undefined, { status: 204 });
     } else {
       return HttpResponse.json({ detail: '' }, { status: 400 });
     }
@@ -409,7 +459,7 @@ export const handlers = [
 
   // ------------------------------------ MANUFACTURERS ------------------------------------
 
-  http.post<PathParams, AddManufacturer, Manufacturer | ErrorResponse>(
+  http.post<PathParams, ManufacturerPost, Manufacturer | ErrorResponse>(
     '/v1/manufacturers',
     async ({ request }) => {
       const body = await request.json();
@@ -456,7 +506,7 @@ export const handlers = [
     }
   ),
 
-  http.get<{ id: string }, DefaultBodyType, Manufacturer>(
+  http.get<{ id: string }, DefaultBodyType, Manufacturer | ErrorResponse>(
     '/v1/manufacturers/:id',
     ({ params }) => {
       const { id } = params;
@@ -465,11 +515,18 @@ export const handlers = [
         (manufacturer) => manufacturer.id === id
       ) as Manufacturer;
 
+      if (!data) {
+        return HttpResponse.json(
+          { detail: 'Manufacturer not found' },
+          { status: 404 }
+        );
+      }
+
       return HttpResponse.json(data, { status: 200 });
     }
   ),
 
-  http.patch<{ id: string }, EditManufacturer, Manufacturer | ErrorResponse>(
+  http.patch<{ id: string }, ManufacturerPatch, Manufacturer | ErrorResponse>(
     '/v1/manufacturers/:id',
     async ({ request }) => {
       const body = await request.json();
@@ -529,7 +586,7 @@ export const handlers = [
           { status: 409 }
         );
       } else {
-        return HttpResponse.json({ status: 204 });
+        return HttpResponse.json(undefined, { status: 204 });
       }
     } else {
       return HttpResponse.json({ detail: '' }, { status: 400 });
@@ -538,7 +595,7 @@ export const handlers = [
 
   // ------------------------------------ SYSTEMS ------------------------------------
 
-  http.post<PathParams, AddSystem, System | ErrorResponse>(
+  http.post<PathParams, SystemPost, System | ErrorResponse>(
     '/v1/systems',
     async ({ request }) => {
       const body = await request.json();
@@ -613,7 +670,7 @@ export const handlers = [
     }
   ),
 
-  http.patch<{ id: string }, EditSystem, System | ErrorResponse>(
+  http.patch<{ id: string }, SystemPatch, System | ErrorResponse>(
     '/v1/systems/:id',
     async ({ request, params }) => {
       const body = await request.json();
@@ -660,7 +717,7 @@ export const handlers = [
           { status: 409 }
         );
       } else {
-        return HttpResponse.json({ status: 204 });
+        return HttpResponse.json(undefined, { status: 204 });
       }
     } else {
       return HttpResponse.json({ detail: '' }, { status: 404 });
@@ -669,7 +726,7 @@ export const handlers = [
 
   // ------------------------------------ ITEMS ------------------------------------------------
 
-  http.post<PathParams, AddItem, Item | ErrorResponse>(
+  http.post<PathParams, ItemPost, Item | ErrorResponse>(
     '/v1/items',
     async ({ request }) => {
       let body = await request.json();
@@ -725,6 +782,10 @@ export const handlers = [
 
       const data = ItemsJSON.find((items) => items.id === id);
 
+      if (!data) {
+        return HttpResponse.json({ detail: 'Item not found' }, { status: 404 });
+      }
+
       return HttpResponse.json(data, { status: 200 });
     }
   ),
@@ -749,7 +810,7 @@ export const handlers = [
     return HttpResponse.json(data, { status: 200 });
   }),
 
-  http.patch<{ id: string }, EditItem, Item | ErrorResponse>(
+  http.patch<{ id: string }, ItemPatch, Item | ErrorResponse>(
     '/v1/items/:id',
     async ({ request, params }) => {
       const body = await request.json();
@@ -799,16 +860,16 @@ export const handlers = [
         { status: 500 }
       );
 
-    return HttpResponse.json({ status: 204 });
+    return HttpResponse.json(undefined, { status: 204 });
   }),
 
-  // ------------------------------------ Units ------------------------------------------------
+  // ------------------------------------ UNITS ------------------------------------------------
 
   http.get('/v1/units', () => {
     return HttpResponse.json(UnitsJSON, { status: 200 });
   }),
 
-  http.post<PathParams, AddUnit, Unit | ErrorResponse>(
+  http.post<PathParams, UnitPost, Unit | ErrorResponse>(
     '/v1/units',
     async ({ request }) => {
       const body = await request.json();
@@ -857,20 +918,20 @@ export const handlers = [
           { status: 409 }
         );
       } else {
-        return HttpResponse.json({ status: 204 });
+        return HttpResponse.json(undefined, { status: 204 });
       }
     } else {
       return HttpResponse.json({ detail: '' }, { status: 400 });
     }
   }),
 
-  // ------------------------------------ Usage Status ------------------------------------------------
+  // ------------------------------------ USAGE STATUSES ------------------------------------------------
 
   http.get('/v1/usage-statuses', () => {
     return HttpResponse.json(UsageStatusJSON, { status: 200 });
   }),
 
-  http.post<PathParams, AddUsageStatus, UsageStatus | ErrorResponse>(
+  http.post<PathParams, UsageStatusPost, UsageStatus | ErrorResponse>(
     '/v1/usage-statuses',
     async ({ request }) => {
       const body = await request.json();
@@ -919,10 +980,329 @@ export const handlers = [
           { status: 409 }
         );
       } else {
-        return HttpResponse.json({ status: 204 });
+        return HttpResponse.json(undefined, { status: 204 });
       }
     } else {
       return HttpResponse.json({ detail: '' }, { status: 400 });
     }
+  }),
+
+  // ------------------------------------ ATTACHMENTS ------------------------------------------------
+
+  http.post<
+    PathParams,
+    AttachmentPostMetadata,
+    AttachmentPostMetadataResponse | ErrorResponse
+  >('/attachments', async () => {
+    const body = AttachmentsJSON[0];
+
+    const upload_info: AttachmentUploadInfo = {
+      url: `http://localhost:3000/object-storage`,
+      fields: {
+        'Content-Type': 'multipart/form-data',
+        key: `attachments/test`,
+        AWSAccessKeyId: 'root',
+        policy: 'policy-test',
+        signature: 'signature-test',
+      },
+    };
+
+    return HttpResponse.json(
+      {
+        ...body,
+        upload_info: upload_info,
+      },
+      { status: 201 }
+    );
+  }),
+
+  http.get('/attachments', ({ request }) => {
+    const url = new URL(request.url);
+    const attachmentParams = url.searchParams;
+    const entityId = attachmentParams.get('entity_id');
+
+    const generateAttachments = () => {
+      return Array.from({ length: 20 }, (_, index) => {
+        const id = index + 1;
+        const attachment = { ...AttachmentsJSON[id % 4] };
+
+        return {
+          ...attachment,
+          id: String(id), // Ensure the id is a string
+          entity_id: entityId,
+        };
+      });
+    };
+
+    return HttpResponse.json(generateAttachments(), { status: 200 });
+  }),
+
+  http.get('/attachments/:id', ({ params }) => {
+    const { id } = params;
+    // This is needed otherwise the msw would intercept the
+    // mocked attachment get request for the object store
+    if (!isNaN(Number(id))) {
+      let attachment = undefined;
+      if (Number(id) % 4 === 0) {
+        attachment = {
+          ...AttachmentsJSON[0],
+          download_url: `${window.location.origin}/attachments/laser-calibration.txt?text=${encodeURIComponent(
+            id as string
+          )}`,
+        };
+      } else {
+        if (Number(id) % 4 === 1) {
+          attachment = {
+            ...AttachmentsJSON[1],
+            download_url: `${window.location.origin}/attachments/safety-protocols.pdf?text=${encodeURIComponent(
+              id as string
+            )}`,
+          };
+        } else {
+          if (Number(id) % 4 === 2) {
+            attachment = {
+              ...AttachmentsJSON[2],
+              download_url: `${window.location.origin}/attachments/camera-setup-guide.docx?text=${encodeURIComponent(
+                id as string
+              )}`,
+            };
+          } else {
+            if (id === '3') {
+              attachment = {
+                ...AttachmentsJSON[3],
+                download_url: 'invalid url',
+                description: undefined,
+              };
+            } else {
+              attachment = {
+                ...AttachmentsJSON[3],
+                download_url: `${window.location.origin}/attachments/experiment-results.rtf?text=${encodeURIComponent(
+                  id as string
+                )}`,
+              };
+            }
+          }
+        }
+      }
+
+      if (id === '5') {
+        return HttpResponse.error();
+      }
+
+      return HttpResponse.json(
+        {
+          ...attachment,
+          id: id,
+        },
+        { status: 200 }
+      );
+    }
+  }),
+
+  http.patch<
+    { id: string },
+    AttachmentMetadataPatch,
+    AttachmentMetadata | ErrorResponse
+  >('/attachments/:id', async ({ request, params }) => {
+    const { id } = params;
+
+    const obj = AttachmentsJSON.find((attachment) => attachment.id === id);
+    const body = await request.json();
+
+    const fullBody = { ...obj, ...body };
+
+    if (fullBody.file_name === 'Error_500.txt') {
+      return HttpResponse.json(
+        { detail: 'Something went wrong' },
+        { status: 500 }
+      );
+    } else if (fullBody.file_name?.includes('duplicate_file_name')) {
+      return HttpResponse.json(
+        {
+          detail:
+            'An image with the same file name already exists within the parent entity.',
+        },
+        { status: 409 }
+      );
+    }
+    return HttpResponse.json(fullBody as AttachmentMetadata, { status: 200 });
+  }),
+
+  http.delete<
+    { id: string },
+    DefaultBodyType,
+    ErrorResponse | NonNullable<unknown>
+  >('/attachments/:id', ({ params }) => {
+    const { id } = params;
+
+    if (id === 'Error 500')
+      return HttpResponse.json(
+        { detail: 'Something went wrong' },
+        { status: 500 }
+      );
+
+    return HttpResponse.json(undefined, { status: 204 });
+  }),
+
+  // ------------------------------------ OBJECT STORAGE ------------------------------------------------
+
+  http.post('/object-storage', async () => {
+    await delay(200);
+    return new HttpResponse(undefined, {
+      status: 204,
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+        // This is need for uppy
+        ETag: '"e76fe3d21078d7a3b9ec95edf437d010"',
+      },
+    });
+  }),
+
+  // ------------------------------------ IMAGES ------------------------------------------------
+
+  http.post('/images', async () => {
+    return HttpResponse.json(ImagesJSON[0], { status: 201 });
+  }),
+
+  http.get('/images', ({ request }) => {
+    const url = new URL(request.url);
+    const imageParams = url.searchParams;
+    const primary = imageParams.get('primary');
+    const entityId = imageParams.get('entity_id');
+
+    if (primary === 'true') {
+      if (entityId === '90') {
+        return HttpResponse.json([], { status: 200 });
+      } else {
+        return HttpResponse.json(
+          [
+            {
+              ...ImagesJSON[1],
+              primary: true,
+              entity_id: entityId,
+              ...(entityId === '3' && { thumbnail_base64: 'test' }),
+            },
+          ],
+          { status: 200 }
+        );
+      }
+    }
+
+    const generateImages = () => {
+      return Array.from({ length: 20 }, (_, index) => {
+        const id = index + 1;
+        let image;
+
+        if (Number(id) % 2 === 0) {
+          image = ImagesJSON[0];
+        } else {
+          image = {
+            ...ImagesJSON[1],
+            ...(id === 3 && {
+              thumbnail_base64: 'test',
+              description: undefined,
+            }),
+          };
+        }
+        return {
+          ...image,
+          id: String(id),
+        };
+      });
+    };
+
+    return HttpResponse.json(generateImages(), { status: 200 });
+  }),
+
+  http.get('/images/:id', ({ params }) => {
+    const { id } = params;
+    // This is needed otherwise the msw would intercept the
+    // mocked image get request for the object store
+    if (!isNaN(Number(id))) {
+      let image = undefined;
+      if (Number(id) % 2 === 0) {
+        image = {
+          ...ImagesJSON[0],
+          view_url: `${window.location.origin}/logo192.png?text=${encodeURIComponent(id as string)}`,
+          download_url: `${window.location.origin}/logo192.png?text=${encodeURIComponent(id as string)}`,
+        };
+      } else {
+        if (id === '3') {
+          image = {
+            ...ImagesJSON[1],
+            view_url: 'invalid url',
+            download_url: 'invalid url',
+            description: undefined,
+          };
+        } else {
+          image = {
+            ...ImagesJSON[1],
+            view_url: `${window.location.origin}/images/stfc-logo-blue-text.png?text=${encodeURIComponent(id as string)}`,
+            download_url: `${window.location.origin}/images/stfc-logo-blue-text.png?text=${encodeURIComponent(id as string)}`,
+          };
+        }
+      }
+
+      if (id === '5') {
+        return HttpResponse.error();
+      }
+
+      return HttpResponse.json(
+        {
+          ...image,
+          id: id,
+        },
+        { status: 200 }
+      );
+    }
+  }),
+
+  http.patch<{ id: string }, ImageMetadataPatch, APIImage | ErrorResponse>(
+    '/images/:id',
+    async ({ request, params }) => {
+      const { id } = params;
+
+      const obj = ImagesJSON.find((image) => image.id === id);
+      const body = await request.json();
+
+      const fullBody = { ...obj, ...body };
+
+      if (
+        // Test case for editing an image's metadata
+        fullBody.file_name === 'Error_500.png' ||
+        // Test case for setting an image to primary
+        (id === '17' && fullBody.primary === true)
+      ) {
+        return HttpResponse.json(
+          { detail: 'Something went wrong' },
+          { status: 500 }
+        );
+      } else if (fullBody.file_name?.includes('duplicate_file_name')) {
+        return HttpResponse.json(
+          {
+            detail:
+              'An image with the same file name already exists within the parent entity.',
+          },
+          { status: 409 }
+        );
+      }
+      return HttpResponse.json(fullBody as APIImage, { status: 200 });
+    }
+  ),
+
+  http.delete<
+    { id: string },
+    DefaultBodyType,
+    ErrorResponse | NonNullable<unknown>
+  >('/images/:id', ({ params }) => {
+    const { id } = params;
+
+    if (id === 'Error 500')
+      return HttpResponse.json(
+        { detail: 'Something went wrong' },
+        { status: 500 }
+      );
+
+    return HttpResponse.json(undefined, { status: 204 });
   }),
 ];

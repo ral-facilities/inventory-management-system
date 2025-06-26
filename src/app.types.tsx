@@ -1,3 +1,14 @@
+import type { Body, Meta } from '@uppy/core';
+import {
+  CatalogueCategory,
+  CatalogueItem,
+  Item,
+  ItemPost,
+  System,
+  type APIImage,
+  type ObjectFileUploadMetadata,
+} from './api/api.types';
+
 export const MicroFrontendId = 'scigateway';
 export const MicroFrontendToken = `${MicroFrontendId}:token`;
 
@@ -8,24 +19,72 @@ export const TAB_VALUES = [
   'Manufacturers',
   'Admin',
 ] as const;
+
 export type TabValue = (typeof TAB_VALUES)[number];
 
-export interface AddCatalogueCategory {
+export interface TransferState {
   name: string;
-  parent_id?: string | null;
-  is_leaf: boolean;
-  properties?: AddCatalogueCategoryProperty[];
+  message: string;
+  state: 'success' | 'error' | 'information';
 }
 
-export interface AddCatalogueCategoryWithPlacementIds
-  extends AddCatalogueCategory {
+export enum RoutesHomeLocation {
+  Catalogue = 'catalogue',
+  Admin = 'admin-ims',
+  Systems = 'systems',
+  Manufacturers = 'manufacturers',
+}
+export type RoutesHomeLocationType = keyof typeof RoutesHomeLocation;
+
+export interface AllowedValuesList {
+  type: 'list';
+  values: {
+    valueType: 'number' | 'string';
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    values: { av_placement_id: string; value: any }[];
+  };
+}
+
+// ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
+
+export type AllowedValues = AllowedValuesList;
+
+export interface AddCatalogueCategoryProperty {
+  name: string;
+  type: string;
+  unit_id?: string | null;
+  unit?: string | null;
+  mandatory: string;
+  allowed_values?: AllowedValues | null;
+}
+
+export interface AddCatalogueCategoryWithPlacementIds {
+  name: string;
+  parent_id?: string | null;
+  is_leaf: string;
   properties?: AddCatalogueCategoryPropertyWithPlacementIds[];
 }
 
-export interface EditCatalogueCategory {
+export interface AddCatalogueCategoryPropertyWithPlacementIds
+  extends AddCatalogueCategoryProperty {
+  cip_placement_id: string; // Catalogue item properties (cip)
+}
+
+export interface PropertyValue {
+  valueType: string;
+  // The "value" contains the av_placement_id because it could correspond to an option
+  // from the allowed values in the add migration. Since this option can potentially
+  // be a duplicate, the av_placement_id serves as a unique identifier to differentiate them.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  value: { av_placement_id: string; value: any };
+}
+export interface AddPropertyMigration extends AddCatalogueCategoryProperty {
+  default_value: PropertyValue;
+}
+
+export interface EditPropertyMigration {
   name?: string;
-  id: string;
-  parent_id?: string | null;
+  allowed_values?: AllowedValues | null;
 }
 
 export interface MoveToCatalogueCategory {
@@ -34,6 +93,41 @@ export interface MoveToCatalogueCategory {
   targetCategory: CatalogueCategory | null;
 }
 
+// ------------------------------------ CATALOGUE ITEM ------------------------------------
+
+export interface CatalogueItemDetailsStep {
+  manufacturer_id: string;
+  name: string;
+  description?: string | null;
+  cost_gbp: string;
+  cost_to_rework_gbp?: string | null;
+  days_to_replace: string;
+  days_to_rework?: string | null;
+  expected_lifetime_days?: string | null;
+  drawing_number?: string | null;
+  drawing_link?: string | null;
+  item_model_number?: string | null;
+  notes?: string | null;
+}
+
+export interface CatalogueItemDetailsStepPost {
+  manufacturer_id: string;
+  name: string;
+  description?: string | null;
+  cost_gbp: number;
+  cost_to_rework_gbp?: number | null;
+  days_to_replace: number;
+  days_to_rework?: number | null;
+  expected_lifetime_days?: number | null;
+  drawing_number?: string | null;
+  drawing_link?: string | null;
+  item_model_number?: string | null;
+  notes?: string | null;
+}
+
+export interface PropertiesStep {
+  properties: PropertyValue[];
+}
 export interface CopyToCatalogueCategory {
   selectedCategories: CatalogueCategory[];
   // Null if root
@@ -43,150 +137,10 @@ export interface CopyToCatalogueCategory {
   existingCategoryCodes: string[];
 }
 
-export interface CatalogueCategory {
-  id: string;
-  name: string;
-  parent_id: string | null;
-  code: string;
-  is_leaf: boolean;
-  properties?: CatalogueCategoryProperty[];
-  created_time: string;
-  modified_time: string;
-}
-
-export interface AddManufacturer {
-  name: string;
-  url?: string | null;
-  address: AddAddress;
-  telephone?: string | null;
-}
-
-export interface EditManufacturer {
-  name?: string;
-  url?: string | null;
-  address?: EditAddress;
-  telephone?: string | null;
-  id?: string | null;
-}
-
-export interface ManufacturerDetails {
-  name: string;
-  url: string | null;
-  address: AddAddress;
-  telephone: string | null;
-}
-
-export interface Manufacturer extends ManufacturerDetails {
-  id: string;
-  code: string;
-  created_time: string;
-  modified_time: string;
-}
-
-export interface AllowedValuesList {
-  type: 'list';
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  values: any[];
-}
-export type AllowedValues = AllowedValuesList;
-
-export interface AddCatalogueCategoryProperty {
-  name: string;
-  type: string;
-  unit_id?: string | null;
-  mandatory: boolean;
-  allowed_values?: AllowedValues | null;
-  default_value?: string | number | boolean;
-}
-
-export interface CatalogueCategoryPropertyMigration {
-  id?: string;
-  name: string;
-  type: string;
-  unit_id?: string | null;
-  mandatory: boolean;
-  allowed_values?: AllowedValues | null;
-  default_value?: string | number | boolean;
-}
-
-export interface AddPropertyMigration {
-  catalogueCategory: CatalogueCategory;
-  property: CatalogueCategoryPropertyMigration;
-}
-
-export interface EditPropertyMigration {
-  catalogueCategory: CatalogueCategory;
-  property: Partial<CatalogueCategoryPropertyMigration>;
-}
-
-export type AddCatalogueCategoryPropertyTypes =
-  | AddCatalogueCategoryProperty
-  | CatalogueCategoryPropertyMigration;
-
-export interface CatalogueCategoryProperty
-  extends AddCatalogueCategoryProperty {
-  id: string;
-  unit?: string | null;
-}
-
-export interface AddCatalogueCategoryPropertyWithPlacementIds
-  extends AddCatalogueCategoryProperty {
-  cip_placement_id: string; // Catalogue item properties (cip)
-}
-
 export interface ObsoleteDetails {
   is_obsolete: boolean;
   obsolete_replacement_catalogue_item_id: string | null;
   obsolete_reason: string | null;
-}
-export interface CatalogueItemDetails extends ObsoleteDetails {
-  catalogue_category_id: string;
-  name: string;
-  description: string | null;
-  cost_gbp: number;
-  cost_to_rework_gbp: number | null;
-  days_to_replace: number;
-  days_to_rework: number | null;
-  drawing_number: string | null;
-  drawing_link: string | null;
-  item_model_number: string | null;
-  manufacturer_id: string;
-  notes: string | null;
-}
-// need so we can cast string to number e.g for 10.50
-export type CatalogueItemDetailsPlaceholder = {
-  [K in keyof CatalogueItemDetails]: string | null;
-};
-
-export type CatalogueDetailsErrorMessages = {
-  [K in keyof CatalogueItemDetails]: string;
-};
-
-export interface CatalogueItemProperty {
-  id: string;
-  value: string | number | boolean | null;
-}
-
-export interface CatalogueItemPropertyResponse {
-  id: string;
-  name: string;
-  value: string | number | boolean | null;
-  unit: string | null;
-  unit_id?: string | null;
-}
-
-export interface CatalogueItem extends CatalogueItemDetails {
-  properties: CatalogueItemPropertyResponse[];
-  id: string;
-  created_time: string;
-  modified_time: string;
-}
-export interface AddCatalogueItem extends CatalogueItemDetails {
-  properties: CatalogueItemProperty[];
-}
-
-export interface EditCatalogueItem extends Partial<AddCatalogueItem> {
-  id: string;
 }
 
 // Used for the move to and copy to
@@ -196,65 +150,7 @@ export interface TransferToCatalogueItem {
   targetCatalogueCategory: CatalogueCategory | null;
 }
 
-export interface APIError {
-  detail: string;
-}
-
-interface AddAddress {
-  address_line: string;
-  town?: string | null;
-  county?: string | null;
-  postcode: string;
-  country: string;
-}
-interface EditAddress {
-  address_line?: string;
-  town?: string | null;
-  county?: string | null;
-  postcode?: string;
-  country?: string;
-}
-export interface TransferState {
-  name: string;
-  message: string;
-  state: 'success' | 'error' | 'information';
-}
-export interface BreadcrumbsInfo {
-  trail: [id: string, name: string][];
-  full_trail: boolean;
-}
-
-export enum SystemImportanceType {
-  LOW = 'low',
-  MEDIUM = 'medium',
-  HIGH = 'high',
-}
-
-export interface AddSystem {
-  name: string;
-  description?: string | null;
-  location?: string | null;
-  owner?: string | null;
-  importance: SystemImportanceType;
-  parent_id?: string | null;
-}
-
-export interface System {
-  id: string;
-  name: string;
-  description: string | null;
-  location: string | null;
-  owner: string | null;
-  importance: SystemImportanceType;
-  parent_id: string | null;
-  code: string;
-  created_time: string;
-  modified_time: string;
-}
-
-export interface EditSystem extends Partial<AddSystem> {
-  id: string;
-}
+// ------------------------------------ SYSTEM ---------------------------------
 
 export interface MoveToSystem {
   selectedSystems: System[];
@@ -271,49 +167,37 @@ export interface CopyToSystem {
   existingSystemCodes: string[];
 }
 
-export interface UsageStatus {
-  id: string;
-  value: string;
+// ------------------------------------ ITEMS ------------------------------------
+export interface ItemDetailsStep {
+  purchase_order_number?: string | null;
+  is_defective: string;
+  usage_status_id: string;
+  warranty_end_date?: string | null;
+  asset_number?: string | null;
+  serial_number: {
+    serial_number?: string | null;
+    quantity?: string;
+    starting_value?: string;
+  };
+  delivered_date?: string | null;
+  notes?: string | null;
 }
 
-export interface ItemDetails {
-  catalogue_item_id: string;
-  system_id: string;
-  purchase_order_number: string | null;
+export interface ItemDetailsStepPost {
+  purchase_order_number?: string | null;
   is_defective: boolean;
   usage_status_id: string;
-  warranty_end_date: string | null;
-  asset_number: string | null;
-  serial_number: string | null;
-  delivered_date: string | null;
-  notes: string | null;
-}
-export type ItemDetailsPlaceholder = {
-  [K in keyof ItemDetails]: K extends 'delivered_date' | 'warranty_end_date'
-    ? Date | null
-    : string | null;
-};
-
-export interface AddItem extends ItemDetails {
-  properties: CatalogueItemProperty[];
+  warranty_end_date?: string | null;
+  asset_number?: string | null;
+  serial_number?: string | null;
+  delivered_date?: string | null;
+  notes?: string | null;
 }
 
-export interface AddItems {
+export interface PostItems {
   quantity: number;
-  startingValue: number;
-  item: AddItem;
-}
-
-export interface Item extends ItemDetails {
-  properties: CatalogueItemPropertyResponse[];
-  id: string;
-  usage_status: string;
-  created_time: string;
-  modified_time: string;
-}
-
-export interface EditItem extends Partial<AddItem> {
-  id: string;
+  starting_value: number;
+  item: ItemPost;
 }
 
 export interface MoveItemsToSystemUsageStatus {
@@ -326,39 +210,18 @@ export interface MoveItemsToSystem {
   targetSystem: System;
 }
 
-export interface CatalogueItemPropertiesErrorsType {
-  cip_placement_id: string;
-  errors: {
-    fieldName: keyof AddCatalogueCategoryProperty;
-    errorMessage: string;
-  } | null;
-}
-
 export interface AdvancedSerialNumberOptionsType {
   quantity: string | null;
-  startingValue: string | null;
-}
-export interface AllowedValuesListErrorsType {
-  cip_placement_id: string | null;
-  errors: { av_placement_id: string; errorMessage: string }[] | null;
+  starting_value: string | null;
 }
 
-export interface AddUnit {
-  value: string;
-}
-export interface Unit extends AddUnit {
-  id: string;
-  code: string;
-  created_time: string;
-  modified_time: string;
-}
+// ------------------------------------ UPPY --------------------------------------------------------
 
-export interface AddUsageStatus {
-  value: string;
-}
-export interface UsageStatus extends AddUsageStatus {
-  id: string;
-  code: string;
-  created_time: string;
-  modified_time: string;
-}
+// These interfaces are extended to ensure compatibility with Uppy’s internal type constraints.
+// Uppy enforces that Meta and Body types conform to Record<string, unknown>. When using interfaces,
+// they don't automatically satisfy this constraint, which can cause TypeScript errors. By explicitly
+// extending Meta or Body, we ensure the types adhere to Uppy's expected structure while maintaining
+// the necessary specific properties for metadata and responses.
+export interface UppyImageUploadResponse extends APIImage, Body {}
+
+export interface UppyUploadMetadata extends ObjectFileUploadMetadata, Meta {}

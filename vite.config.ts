@@ -1,8 +1,10 @@
+import { codecovVitePlugin } from '@codecov/vite-plugin';
 import react from '@vitejs/plugin-react';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
 import fs from 'node:fs';
 import path from 'path';
 import { PluginOption, UserConfig, defineConfig, loadEnv } from 'vite';
+import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 
 /* See https://github.com/mswjs/msw/discussions/712 */
 function excludeMSWPlugin(): PluginOption {
@@ -27,13 +29,23 @@ function jsonHMR(): PluginOption {
       if (file.endsWith('.json')) {
         console.log('reloading json file...');
 
-        server.hot.send({
+        server.ws.send({
           type: 'full-reload',
           path: '*',
         });
       }
     },
   };
+}
+
+// Obtain default coverage config from vitest when not building for production
+// (to avoid importing vitest during build as its a dev dependency)
+let vitestCoverageConfigDefaultsExclude: string[] = [];
+if (process.env.NODE_ENV !== 'production') {
+  await import('vitest/config').then((vitestConfig) => {
+    vitestCoverageConfigDefaultsExclude =
+      vitestConfig.coverageConfigDefaults.exclude;
+  });
 }
 
 // https://vitejs.dev/config/
@@ -52,12 +64,20 @@ export default defineConfig(({ mode }) => {
   // Allow hot reloading of json files in public folder when in development
   if (env.NODE_ENV === 'development') plugins.push(jsonHMR());
 
+  // Allow codecov bundle analysis
+  if (env.VITE_APP_INCLUDE_CODECOV === 'true')
+    plugins.push(
+      codecovVitePlugin({
+        enableBundleAnalysis: env.CODECOV_TOKEN !== undefined,
+        bundleName: 'inventory-management-system',
+        uploadToken: env.CODECOV_TOKEN,
+      })
+    );
+
   const config: UserConfig = {
     plugins: plugins,
     server: {
       port: 3000,
-      // Don't open by default as Dockerfile wont run as it can't find a display
-      open: false,
     },
     preview: {
       port: 5001,
@@ -79,9 +99,14 @@ export default defineConfig(({ mode }) => {
 
   if (buildLibrary) {
     // Config for deployment in SciGateway
+    plugins.push(cssInjectedByJsPlugin());
     config.build = {
       lib: {
-        // https://github.com/vitejs/vite/issues/7130
+        // We use `umd` here as `es` causes some import statements to leak into the main.js, breaking the build
+        // removing this entirely uses a default of both, which for build results in `umd` taking precedence but when
+        // using --watch, `es` appears to replace it intermittently. Hopefully this can be fixed in the future and we
+        // can use `es` instead.
+        formats: ['umd'],
         entry: 'src/main.tsx',
         name: 'inventory-management-system',
       },
@@ -138,6 +163,7 @@ export default defineConfig(({ mode }) => {
           ['lcov', { outputFile: 'lcov.info', silent: true }],
         ],
         exclude: [
+          ...vitestCoverageConfigDefaultsExclude,
           'public/*',
           'server/*',
           // Leave handlers to show up unused code
@@ -147,6 +173,12 @@ export default defineConfig(({ mode }) => {
           'src/main.tsx',
         ],
       },
+      reporters: [
+        'default',
+        // Extra for codecov test analysis
+        ...(env.CI ? ['junit'] : []),
+      ],
+      outputFile: env.CI ? { junit: 'test-report.junit.xml' } : undefined,
     },
   };
 });
