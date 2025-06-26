@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import {
   getCatalogueCategoryById,
   getCatalogueItemById,
@@ -7,7 +7,7 @@ import {
 } from '../../testUtils';
 
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import { CatalogueCategory, CatalogueItem } from '../../app.types';
+import { CatalogueCategory, CatalogueItem } from '../../api/api.types';
 import CatalogueItemsDetailsPanel, {
   CatalogueItemsDetailsPanelProps,
 } from './catalogueItemsDetailsPanel.component';
@@ -33,6 +33,11 @@ describe('Catalogue Items details panel', () => {
 
   it('renders details panel correctly', async () => {
     const view = createView();
+    await waitFor(() => {
+      expect(
+        screen.getByRole('link', { name: 'Click here' })
+      ).toBeInTheDocument();
+    });
 
     expect(view.asFragment()).toMatchSnapshot();
   });
@@ -45,6 +50,12 @@ describe('Catalogue Items details panel', () => {
 
     props.manufacturerData = getManufacturerById('3');
     const view = createView();
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('link', { name: 'Click here' })
+      ).toBeInTheDocument();
+    });
 
     expect(view.asFragment()).toMatchSnapshot();
   });
@@ -61,6 +72,18 @@ describe('Catalogue Items details panel', () => {
   });
 
   it('renders properties panel correctly', async () => {
+    const view = createView();
+
+    await user.click(screen.getByText('Properties'));
+
+    expect(view.asFragment()).toMatchSnapshot();
+  });
+
+  it('renders properties panel correctly (empty property list)', async () => {
+    props.catalogueItemIdData = {
+      ...getCatalogueItemById('33'),
+      properties: [],
+    } as CatalogueItem;
     const view = createView();
 
     await user.click(screen.getByText('Properties'));

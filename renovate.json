@@ -8,7 +8,6 @@
   ],
   "postUpdateOptions": ["yarnDedupeHighest"],
   "labels": ["dependencies"],
-  "separateMinorPatch": true,
   "baseBranches": ["main", "develop"],
   "packageRules": [
     {
@@ -18,9 +17,9 @@
       }
     },
     {
-      "matchPackagePatterns": ["*"],
       "matchBaseBranches": ["main"],
-      "enabled": false
+      "enabled": false,
+      "matchPackageNames": ["*"]
     },
     {
       "matchManagers": ["dockerfile"],
@@ -31,21 +30,28 @@
       "matchManagers": ["github-actions"],
       "matchBaseBranches": ["main"],
       "enabled": true
+    },
+    {
+      "matchBaseBranches": ["main"],
+      "vulnerabilityAlerts": {
+        "enabled": true
+      }
     }
   ],
   "lockFileMaintenance": {
     "enabled": true,
-    "reviewers": ["@joshuadkitenge", "@joelvdavies"],
-    "assignees": ["@joshuadkitenge", "@joelvdavies"],
+    "reviewers": ["@joshdimanteto", "@joelvdavies"],
+    "assignees": ["@joshdimanteto", "@joelvdavies"],
     "prBodyNotes": ["- Please ensure that `yarn dev` works correctly."]
   },
   "vulnerabilityAlerts": {
     "enabled": true,
-    "labels": ["security"],
-    "reviewers": ["@joshuadkitenge", "@joelvdavies"],
-    "assignees": ["@joshuadkitenge", "@joelvdavies"],
+    "labels": ["security", "dependencies"],
+    "reviewers": ["@joshdimanteto", "@joelvdavies"],
+    "assignees": ["@joshdimanteto", "@joelvdavies"],
+    "baseBranches": ["main", "develop"],
     "prBodyNotes": [
-      "- Please ensure that `yarn dev` works correctly.<br>- Once this PR has been merged, please follow the release process instructions here: https://github.com/ral-facilities/inventory-management-system/wiki/Release-Process.<br><br>Additionally, please verify if this PR can be grouped with others before being released."
+      "<ul><li>Please ensure that `yarn dev` works correctly.</li><li>Once this PR has been merged, please follow the release process instructions here: https://github.com/ral-facilities/inventory-management-system/wiki/Release-Process.</li></ul><br>Additionally, please verify if this PR can be grouped with others before being released."
     ]
   }
 }

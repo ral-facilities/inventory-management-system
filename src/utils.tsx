@@ -7,14 +7,20 @@ import {
   Typography,
   type TableCellProps,
 } from '@mui/material';
+import { FilterFn, FilterMeta, Row } from '@tanstack/table-core';
 import { format, parseISO } from 'date-fns';
 import {
   MRT_Cell,
   MRT_Column,
+  MRT_ColumnDef,
+  MRT_ColumnFilterFnsState,
+  MRT_FilterFns,
+  MRT_FilterOption,
   MRT_Header,
   MRT_Row,
   MRT_RowData,
   MRT_TableInstance,
+  type MRT_Theme,
 } from 'material-react-table';
 import React from 'react';
 
@@ -135,13 +141,16 @@ const getTextContent = (
     } else if (React.isValidElement(children)) {
       if (children.props.children[0] && children.props.children[0].props.cell) {
         const childCell = children.props.children[0].props.cell;
-        if (childCell.renderValue() instanceof Date) {
+        const childCellRenderValue = childCell.renderValue();
+        if (childCellRenderValue instanceof Date) {
           return children;
         } else {
           if (childCell.getIsGrouped()) {
-            return `${String(childCell.renderValue())} (${childCell.row.subRows?.length})`;
+            return `${String(childCellRenderValue)} (${childCell.row.subRows?.length})`;
+          } else if (childCell.getIsAggregated()) {
+            return '';
           } else {
-            return String(childCell.renderValue());
+            return String(childCellRenderValue);
           }
         }
       }
@@ -210,11 +219,11 @@ export const OverflowTip: React.FC<OverflowTipProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [children]
   );
-
-  return (
+  const textContent = getTextContent(children, mrtCell);
+  return textContent === '' ? null : (
     <Tooltip
       role="tooltip"
-      title={getTextContent(children, mrtCell)}
+      title={textContent}
       disableHoverListener={!isOverflowed}
       placement="top"
       enterTouchDelay={0}
@@ -255,6 +264,7 @@ export const TableBodyCellOverFlowTip: React.FC<TableCellOverFlowTipProps> = (
       renderValue === undefined ||
       (typeof renderValue === 'string' && renderValue.trim() === '');
   }
+
   return (
     <TableCell {...tableCellProps}>
       {!isEmpty ? (
@@ -393,4 +403,186 @@ export const displayTableRowCountText = <TData extends MRT_RowData>(
       : `Returned ${tableRowCount} out of ${dataLength} ${dataName}`;
 
   return <Typography sx={{ ...sx }}>{tableRowCountText}</Typography>;
+};
+
+export const getInitialColumnFilterFnState = <TData extends MRT_RowData>(
+  columns: MRT_ColumnDef<TData>[]
+): MRT_ColumnFilterFnsState => {
+  const initialState = columns.reduce<MRT_ColumnFilterFnsState>(
+    (result, column) => {
+      if (column.id) {
+        result[column.id] = column.filterFn as MRT_FilterOption;
+      }
+      return result;
+    },
+    {}
+  );
+  return initialState;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const customFilterFunctions: Record<string, FilterFn<any>> = {
+  arrExcludesSome: (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    row: Row<any>,
+    id: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    filterValue: any,
+    addMeta: (meta: FilterMeta) => void
+  ) => {
+    return !MRT_FilterFns.arrIncludesSome(row, id, filterValue, addMeta);
+  },
+  arrExcludesAll: (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    row: Row<any>,
+    id: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    filterValue: any,
+    addMeta: (meta: FilterMeta) => void
+  ) => {
+    return !MRT_FilterFns.arrIncludesAll(row, id, filterValue, addMeta);
+  },
+};
+
+export const MRT_Functions_Localisation: Record<string, string> = {
+  filterArrIncludesSome: 'Includes any',
+  filterArrExcludesSome: 'Excludes any',
+  filterArrIncludesAll: 'Includes all',
+  filterArrExcludesAll: 'Excludes all',
+};
+
+type DataTypes = 'boolean' | 'string' | 'number' | 'null' | 'datetime' | 'date';
+
+type FilterVariantType = MRT_ColumnDef<MRT_RowData>['filterVariant'];
+
+export const COLUMN_FILTER_VARIANTS: Record<DataTypes, FilterVariantType> = {
+  boolean: 'select',
+  string: 'text',
+  number: 'text',
+  null: 'text',
+  datetime: 'datetime-range',
+  date: 'date',
+};
+export const COLUMN_FILTER_FUNCTIONS: Record<DataTypes, MRT_FilterOption> = {
+  boolean: 'fuzzy',
+  date: 'betweenInclusive',
+  datetime: 'betweenInclusive',
+  string: 'fuzzy',
+  number: 'betweenInclusive',
+  null: 'fuzzy',
+};
+export const COLUMN_FILTER_MODE_OPTIONS: Record<DataTypes, MRT_FilterOption[]> =
+  {
+    boolean: ['fuzzy'],
+    date: ['between', 'betweenInclusive', 'equals', 'notEquals'],
+    datetime: ['between', 'betweenInclusive'],
+    string: [
+      'fuzzy',
+      'contains',
+      'startsWith',
+      'endsWith',
+      'equals',
+      'notEquals',
+    ],
+    number: ['between', 'betweenInclusive', 'equals', 'notEquals'],
+    null: [
+      'fuzzy',
+      'contains',
+      'startsWith',
+      'endsWith',
+      'equals',
+      'notEquals',
+    ],
+  };
+
+export const OPTIONAL_FILTER_MODE_OPTIONS: MRT_FilterOption[] = [
+  'empty',
+  'notEmpty',
+];
+
+export const checkForDuplicates = (props: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any[];
+  idName: string;
+  field: string;
+}) => {
+  const { data, idName, field } = props;
+  const duplicateIds: Set<string> = new Set();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const seenValues: { [key: string]: { [key: string]: string; value: any } } =
+    {};
+
+  data.forEach((value) => {
+    const currentValue = value[field];
+    if (currentValue) {
+      if (seenValues[currentValue]) {
+        duplicateIds.add(value[idName]);
+        duplicateIds.add(seenValues[currentValue][idName]);
+      } else {
+        seenValues[currentValue] = value;
+      }
+    }
+  });
+
+  return Array.from(duplicateIds);
+};
+
+export function getNonEmptyTrimmedString(value: unknown): string | undefined {
+  return typeof value === 'string' && value.trim() !== ''
+    ? value.trim()
+    : undefined;
+}
+
+export const getNameAndExtension = (
+  filename: string
+): [name: string, extension: string] => {
+  const point = filename.lastIndexOf('.') ?? 0;
+  const extension = filename.slice(point) ?? '';
+  const name = filename.slice(0, point) ?? '';
+
+  return [name, extension];
+};
+
+export function downloadFileByLink(url: string, filename: string): void {
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+export const mrtTheme = (theme: Theme): Partial<MRT_Theme> => ({
+  baseBackgroundColor: theme.palette.background.default,
+});
+
+export function parseErrorResponse(errorMessage: string): string {
+  let returnMessage = 'There was an unexpected error.';
+  if (errorMessage.includes('limit for the maximum number of')) {
+    returnMessage = 'Maximum number of files reached.';
+  } else if (errorMessage.includes('does not contain the correct extension')) {
+    returnMessage = 'File extension does not match content type.';
+  } else if (errorMessage.includes('is not supported')) {
+    returnMessage = 'Content type not supported.';
+  } else if (errorMessage.includes('not a valid image')) {
+    returnMessage = 'File given is not a valid image.';
+  } else if (
+    errorMessage.includes('file name already exists within the parent entity.')
+  ) {
+    returnMessage =
+      'A file with this name already exists. To rename your file: remove it, add it back and click the edit icon below the file to change its name.';
+  }
+
+  return returnMessage;
+}
+
+export const deselectRowById = <TData extends MRT_RowData>(
+  id: string,
+  table: MRT_TableInstance<TData>
+) => {
+  table.setRowSelection((old) => {
+    const updated: typeof old = { ...old };
+    delete updated[id];
+    return updated;
+  });
 };

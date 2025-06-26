@@ -7,7 +7,7 @@ import {
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http } from 'msw';
 import { act } from 'react';
-import { Item } from '../app.types';
+import { Item } from '../api/api.types';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { server } from '../mocks/server';
 import { getItemById, renderComponentWithRouterProvider } from '../testUtils';

@@ -1,6 +1,7 @@
 const modifyCatalogueCategory = (
   values: {
     editCatalogueCategoryName?: string;
+    actionsIndex?: number;
     name: string;
     newFormFields?: {
       name: string;
@@ -13,13 +14,18 @@ const modifyCatalogueCategory = (
   },
   ignoreChecks?: boolean
 ) => {
-  if (values.editCatalogueCategoryName) {
-    cy.findByRole('button', {
-      name: `actions ${values.editCatalogueCategoryName} catalogue category button`,
-    }).click();
+  if (
+    values.editCatalogueCategoryName &&
+    typeof values.actionsIndex === 'number'
+  ) {
+    cy.findAllByRole('button', {
+      name: 'Card Actions',
+    })
+      .eq(values.actionsIndex)
+      .click();
 
     cy.findByRole('menuitem', {
-      name: `edit name ${values.editCatalogueCategoryName} catalogue category button`,
+      name: `edit ${values.editCatalogueCategoryName} catalogue category button`,
     }).click();
 
     if (values.newFormFields) {
@@ -27,7 +33,7 @@ const modifyCatalogueCategory = (
       cy.findByLabelText('Catalogue Items').click();
     }
   } else {
-    cy.findByRole('button', { name: 'add catalogue category' }).click();
+    cy.findByRole('button', { name: 'Add Catalogue Category' }).click();
   }
 
   if (values.name !== undefined) {
@@ -37,69 +43,66 @@ const modifyCatalogueCategory = (
 
   if (values.newFormFields) {
     // Assume want a leaf now
-    !values.editCatalogueCategoryName &&
+    if (!values.editCatalogueCategoryName)
       cy.findByLabelText('Catalogue Items').click();
-
-    // Add any required fields
-    for (let i = 0; i < values.newFormFields.length; i++) {
-      cy.findByRole('button', {
-        name: 'Add catalogue category field entry',
-      }).click();
-    }
-
-    cy.findAllByLabelText('Property Name *').should(
-      'have.length',
-      values.newFormFields.length
-    );
 
     for (let i = 0; i < values.newFormFields.length; i++) {
       const field = values.newFormFields[i];
 
+      cy.findByText('Add Property').click();
+      cy.findByRole('dialog', { name: 'Add Property' }).should('exist');
+
       if (field.name) {
-        cy.findAllByLabelText('Property Name *').eq(i).type(field.name);
+        cy.findByLabelText('Property Name *').type(field.name);
       }
 
       if (field.type) {
-        cy.findAllByLabelText('Select Type *').eq(i).click();
+        cy.findByLabelText('Select Type *').click();
         cy.findByRole('option', {
           name: field.type.charAt(0).toUpperCase() + field.type.slice(1),
         }).click();
       }
 
       if (field.unit) {
-        cy.findAllByLabelText('Select Unit').eq(i).click();
+        cy.findByLabelText('Select Unit').click();
         cy.findByRole('option', { name: field.unit }).click();
       }
 
-      cy.findAllByLabelText('Select is mandatory?').eq(i).click();
+      cy.findByLabelText('Select is mandatory?').click();
       cy.findByRole('option', {
         name: field.mandatory ? 'Yes' : 'No',
       }).click();
 
       if (field.allowed_values) {
-        cy.findAllByLabelText('Select Allowed values *').eq(i).click();
+        cy.findByLabelText('Select Allowed values *').click();
         cy.findByRole('option', {
           name: field.allowed_values.type === 'list' ? 'List' : 'Any',
         }).click();
 
         if (field.allowed_values.type === 'list') {
           for (let j = 0; j < field.allowed_values.values.length; j++) {
-            cy.findAllByRole('button', {
+            cy.findByRole('button', {
               name: `Add list item`,
-            })
-              .eq(i)
-              .click();
+            }).click();
 
-            cy.findAllByLabelText('List Item')
+            cy.findAllByLabelText('List item')
               .eq(j)
               .type(field.allowed_values.values[j]);
           }
         }
       }
+
+      cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('dialog', { name: 'Add Property' }).should('not.exist');
     }
   }
 
   cy.findByRole('button', { name: 'Save' }).click();
+  if (
+    values.editCatalogueCategoryName &&
+    typeof values.actionsIndex === 'number'
+  )
+    cy.findByRole('button', { name: 'Close' }).click();
   if (!ignoreChecks) {
     cy.findByText(values.name).should('exist');
 
@@ -122,10 +125,12 @@ const modifyCatalogueCategory = (
   }
 };
 
-const deleteCatalogueCategory = (name: string) => {
-  cy.findByRole('button', {
-    name: `actions ${name} catalogue category button`,
-  }).click();
+const deleteCatalogueCategory = (name: string, actionsIndex: number) => {
+  cy.findAllByRole('button', {
+    name: 'Card Actions',
+  })
+    .eq(actionsIndex)
+    .click();
 
   cy.findByRole('menuitem', {
     name: `delete ${name} catalogue category button`,
@@ -134,22 +139,29 @@ const deleteCatalogueCategory = (name: string) => {
   cy.findByRole('button', { name: 'Continue' }).click();
 };
 
-export const saveAsCatalogueCategory = (name: string) => {
-  cy.findByRole('button', {
-    name: `actions ${name} catalogue category button`,
-  }).click();
+export const duplicateCatalogueCategory = (
+  name: string,
+  actionsIndex: number
+) => {
+  cy.findAllByRole('button', {
+    name: 'Card Actions',
+  })
+    .eq(actionsIndex)
+    .click();
 
   cy.findByRole('menuitem', {
-    name: `save as ${name} catalogue category button`,
+    name: `duplicate ${name} catalogue category button`,
   }).click();
 
   cy.findByRole('button', { name: 'Save' }).click();
   cy.findByText(`${name}_copy_1`).should('exist');
 };
 
-const copyToCatalogueCategory = (values: { checkedCategories: string[] }) => {
+const copyToCatalogueCategory = (values: {
+  checkedCategories: { name: string; index: number }[];
+}) => {
   for (let i = 0; i < values.checkedCategories.length; i++) {
-    cy.findByLabelText(`${values.checkedCategories[i]} checkbox`).click();
+    cy.findAllByRole('checkbox', { name: 'Toggle select card' }).eq(i).click();
   }
   cy.findByRole('button', { name: 'Copy to' }).click();
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
@@ -159,14 +171,17 @@ const copyToCatalogueCategory = (values: { checkedCategories: string[] }) => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
 
   for (let i = 0; i < values.checkedCategories.length; i++) {
-    cy.findByText(`${values.checkedCategories[i]}`).should('exist');
-    deleteCatalogueCategory(`${values.checkedCategories[i]}`);
+    cy.findByText(`${values.checkedCategories[i].name}`).should('exist');
+    deleteCatalogueCategory(
+      `${values.checkedCategories[i].name}`,
+      values.checkedCategories[i].index
+    );
   }
 };
 
 const moveToCatalogueCategory = (values: { checkedCategories: string[] }) => {
   for (let i = 0; i < values.checkedCategories.length; i++) {
-    cy.findByLabelText(`${values.checkedCategories[i]} checkbox`).click();
+    cy.findAllByRole('checkbox', { name: 'Toggle select card' }).eq(i).click();
   }
   cy.findByRole('button', { name: 'Move to' }).click();
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
@@ -230,6 +245,7 @@ export const editCatalogueCategories = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
   modifyCatalogueCategory({
     editCatalogueCategoryName: 'Lenses',
+    actionsIndex: 0,
     name: 'Lenses 2',
   });
 
@@ -237,20 +253,24 @@ export const editCatalogueCategories = () => {
 
   modifyCatalogueCategory({
     editCatalogueCategoryName: 'Spherical Lenses',
+    actionsIndex: 0,
     name: 'Spherical Lenses 2',
   });
 };
 
-export const saveAsCatalogueCategories = () => {
+export const duplicateCatalogueCategories = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
-  saveAsCatalogueCategory('Lenses 2');
+  duplicateCatalogueCategory('Lenses 2', 0);
   cy.findByText('Lenses 2').click();
-  saveAsCatalogueCategory('Spherical Lenses 2');
+  duplicateCatalogueCategory('Spherical Lenses 2', 0);
 };
 
 export const copyToCatalogueCategories = () => {
   copyToCatalogueCategory({
-    checkedCategories: ['Spherical Lenses 2', 'Spherical Lenses 2_copy_1'],
+    checkedCategories: [
+      { name: 'Spherical Lenses 2', index: 2 },
+      { name: 'Spherical Lenses 2_copy_1', index: 2 },
+    ],
   });
 };
 
@@ -264,8 +284,8 @@ export const moveToCatalogueCategories = () => {
 
 export const deleteCatalogueCategories = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
-  deleteCatalogueCategory('Spherical Lenses 2');
-  deleteCatalogueCategory('Spherical Lenses 2_copy_1');
-  deleteCatalogueCategory('Lenses 2');
-  deleteCatalogueCategory('Lenses 2_copy_1');
+  deleteCatalogueCategory('Lenses 2', 0);
+  deleteCatalogueCategory('Spherical Lenses 2', 0);
+  deleteCatalogueCategory('Lenses 2_copy_1', 0);
+  deleteCatalogueCategory('Spherical Lenses 2_copy_1', 0);
 };

@@ -11,13 +11,13 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
+import { APIError, CatalogueItem } from '../../api/api.types';
 import { useDeleteCatalogueItem } from '../../api/catalogueItems';
-import { APIError, CatalogueItem } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 
 export interface DeleteCatalogueItemDialogProps {
   open: boolean;
-  onClose: () => void;
+  onClose: (props: { successfulDeletion: boolean }) => void;
   catalogueItem: CatalogueItem | undefined;
   onChangeCatalogueItem: (catalogueItem: CatalogueItem | undefined) => void;
 }
@@ -33,16 +33,19 @@ const DeleteCatalogueItemDialog = (props: DeleteCatalogueItemDialogProps) => {
   const { mutateAsync: deleteCatalogueItem, isPending: isDeletePending } =
     useDeleteCatalogueItem();
 
-  const handleClose = React.useCallback(() => {
-    onClose();
-    setError(false);
-    setErrorMessage('');
-  }, [onClose]);
+  const handleClose = React.useCallback(
+    (props: { successfulDeletion: boolean }) => {
+      onClose({ successfulDeletion: props.successfulDeletion });
+      setError(false);
+      setErrorMessage('');
+    },
+    [onClose]
+  );
   const handleDeleteCatalogueCategory = React.useCallback(() => {
     if (catalogueItem) {
-      deleteCatalogueItem(catalogueItem)
+      deleteCatalogueItem(catalogueItem.id)
         .then(() => {
-          onClose();
+          handleClose({ successfulDeletion: true });
           onChangeCatalogueItem(undefined);
         })
         .catch((error: AxiosError) => {
@@ -50,9 +53,18 @@ const DeleteCatalogueItemDialog = (props: DeleteCatalogueItemDialogProps) => {
           if (response && error.response?.status === 409) {
             setError(true);
             setErrorMessage(
-              `${response.detail}, please delete the children elements first`
+              `Catalogue item has child elements and cannot be deleted, please delete the children elements first.`
             );
             return;
+          } else if (
+            response &&
+            error.response?.status == 422 &&
+            response.detail.includes('replacement')
+          ) {
+            setError(true);
+            setErrorMessage(
+              `Catalogue item is the replacement for an obsolete catalogue item and cannot be deleted, please contact support.`
+            );
           }
           handleIMS_APIError(error);
         });
@@ -60,7 +72,7 @@ const DeleteCatalogueItemDialog = (props: DeleteCatalogueItemDialogProps) => {
       setError(true);
       setErrorMessage('No data provided, Please refresh and try again');
     }
-  }, [catalogueItem, deleteCatalogueItem, onChangeCatalogueItem, onClose]);
+  }, [catalogueItem, deleteCatalogueItem, handleClose, onChangeCatalogueItem]);
 
   return (
     <Dialog open={open} maxWidth="lg">
@@ -76,7 +88,9 @@ const DeleteCatalogueItemDialog = (props: DeleteCatalogueItemDialogProps) => {
         ?
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={() => handleClose({ successfulDeletion: false })}>
+          Cancel
+        </Button>
         <Button
           onClick={handleDeleteCatalogueCategory}
           disabled={isDeletePending || error}

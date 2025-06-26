@@ -14,17 +14,30 @@ describe('Units', () => {
     cy.findByText('megapixels').should('be.visible');
   });
 
+  it('sets and clears the table filters', () => {
+    cy.findByText('megapixels').should('exist');
+    cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
+
+    cy.findByLabelText('Filter by Value').type('kilogram');
+    cy.findByText('kilograms').should('exist');
+    cy.findAllByText('megapixels').should('not.exist');
+
+    cy.findByRole('button', { name: 'Clear Filters' }).click();
+    cy.findByText('megapixels').should('exist');
+    cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
+  });
+
   it('adds a unit and deals with errors correctly', () => {
     cy.findByRole('button', { name: 'Add Unit' }).click();
 
     cy.findByRole('button', { name: 'Save' }).click();
-    cy.findByText('Please enter a value').should('be.visible');
+    cy.findByText('Please enter a value.').should('be.visible');
 
     cy.findByLabelText('Value *').type('test_dup');
     cy.findByRole('button', { name: 'Save' }).click();
-    cy.findByText('A unit with the same value already exists').should(
-      'be.visible'
-    );
+    cy.findByText(
+      'A unit with the same value already exists. Please enter a different value.'
+    ).should('be.visible');
 
     cy.findByLabelText('Value *').clear();
     cy.findByLabelText('Value *').type('test');

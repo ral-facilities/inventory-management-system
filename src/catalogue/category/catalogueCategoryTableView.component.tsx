@@ -7,12 +7,16 @@ import {
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { CatalogueCategory } from '../../app.types';
+import { CatalogueCategory } from '../../api/api.types';
 import {
+  COLUMN_FILTER_FUNCTIONS,
+  COLUMN_FILTER_MODE_OPTIONS,
+  COLUMN_FILTER_VARIANTS,
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
   formatDateTimeStrings,
   generateUniqueName,
+  mrtTheme,
 } from '../../utils';
 import CatalogueCategoryDialog from './catalogueCategoryDialog.component';
 
@@ -53,17 +57,21 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
         header: 'Name',
         accessorFn: (row) => row.name,
         id: 'name',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
         size: 567.5,
       },
       {
         header: 'Last modified',
         accessorFn: (row) => new Date(row.modified_time),
         id: 'modified_time',
-        filterVariant: 'datetime-range',
+        filterVariant: COLUMN_FILTER_VARIANTS.datetime,
+        filterFn: COLUMN_FILTER_FUNCTIONS.datetime,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.datetime,
         size: 567.5,
         enableGrouping: false,
         Cell: ({ row }) =>
-          row.original.modified_time &&
           formatDateTimeStrings(row.original.modified_time, true),
       },
     ];
@@ -75,6 +83,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
     data: catalogueCategoryData ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     // Features
     enableColumnOrdering: false,
+    enableColumnFilterModes: true,
     enableColumnPinning: false,
     enableTopToolbar: true,
     enableFacetedValues: true,
@@ -105,6 +114,8 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
     state: {
       showProgressBars: catalogueCategoryDataLoading, //or showSkeletons
     },
+    //MRT
+    mrtTheme,
     // MUI
     muiTableBodyRowProps: ({ row }) => {
       const canPlaceHere =
@@ -115,7 +126,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
       return {
         component: TableRow,
         onClick: () => {
-          canPlaceHere && onChangeParentCategoryId(row.original.id);
+          if (canPlaceHere) onChangeParentCategoryId(row.original.id);
         },
         'aria-label': `${row.original.name} row`,
         style: {
@@ -167,7 +178,8 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
             open={true}
             onClose={() => table.setCreatingRow(null)}
             parentId={catalogueCategoryParentId ?? null}
-            type={requestOrigin === 'category' ? 'add' : 'save as'}
+            requestType="post"
+            duplicate={requestOrigin === 'item'}
             selectedCatalogueCategory={
               catalogueItemParentCategory
                 ? {

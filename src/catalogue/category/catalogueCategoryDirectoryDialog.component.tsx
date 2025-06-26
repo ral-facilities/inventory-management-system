@@ -10,14 +10,14 @@ import {
   Tooltip,
 } from '@mui/material';
 import React from 'react';
+import { CatalogueCategory } from '../../api/api.types';
 import {
-  useCatalogueBreadcrumbs,
-  useCatalogueCategories,
-  useCatalogueCategory,
   useCopyToCatalogueCategory,
+  useGetCatalogueBreadcrumbs,
+  useGetCatalogueCategories,
+  useGetCatalogueCategory,
   useMoveToCatalogueCategory,
 } from '../../api/catalogueCategories';
-import { CatalogueCategory } from '../../app.types';
 import handleTransferState from '../../handleTransferState';
 import Breadcrumbs from '../../view/breadcrumbs.component';
 import CatalogueCategoryTableView from './catalogueCategoryTableView.component';
@@ -26,7 +26,7 @@ export interface CatalogueCategoryDirectoryDialogProps {
   open: boolean;
   onClose: () => void;
   selectedCategories: CatalogueCategory[];
-  onChangeSelectedCategories: (selectedCategories: CatalogueCategory[]) => void;
+  resetSelectedCategories: () => void;
   parentCategoryId: string | null;
   requestType: 'moveTo' | 'copyTo';
 }
@@ -38,7 +38,7 @@ const CatalogueCategoryDirectoryDialog = (
     open,
     onClose,
     selectedCategories,
-    onChangeSelectedCategories,
+    resetSelectedCategories,
     requestType,
   } = props;
 
@@ -54,7 +54,7 @@ const CatalogueCategoryDirectoryDialog = (
   const {
     data: catalogueCategoryData,
     isLoading: catalogueCategoryDataLoading,
-  } = useCatalogueCategories(
+  } = useGetCatalogueCategories(
     false,
     parentCategoryId === null ? 'null' : parentCategoryId
   );
@@ -70,7 +70,7 @@ const CatalogueCategoryDirectoryDialog = (
     useCopyToCatalogueCategory();
 
   const { data: targetCategory, isLoading: targetCategoryLoading } =
-    useCatalogueCategory(parentCategoryId);
+    useGetCatalogueCategory(parentCategoryId);
 
   const handleMoveToCatalogueCategory = React.useCallback(() => {
     // Either ensure finished loading, or moving to root
@@ -83,7 +83,7 @@ const CatalogueCategoryDirectoryDialog = (
         targetCategory: targetCategory || null,
       }).then((response) => {
         handleTransferState(response);
-        onChangeSelectedCategories([]);
+        resetSelectedCategories();
         handleClose();
       });
     }
@@ -93,7 +93,7 @@ const CatalogueCategoryDirectoryDialog = (
     moveToCatalogueCategory,
     selectedCategories,
     targetCategory,
-    onChangeSelectedCategories,
+    resetSelectedCategories,
     handleClose,
   ]);
 
@@ -114,7 +114,7 @@ const CatalogueCategoryDirectoryDialog = (
         existingCategoryCodes: existingCategoryCodes,
       }).then((response) => {
         handleTransferState(response);
-        onChangeSelectedCategories([]);
+        resetSelectedCategories();
         handleClose();
       });
     }
@@ -125,12 +125,12 @@ const CatalogueCategoryDirectoryDialog = (
     copyToCatalogueCategory,
     selectedCategories,
     targetCategory,
-    onChangeSelectedCategories,
+    resetSelectedCategories,
     handleClose,
   ]);
 
   const { data: catalogueBreadcrumbs } =
-    useCatalogueBreadcrumbs(parentCategoryId);
+    useGetCatalogueBreadcrumbs(parentCategoryId);
 
   return (
     <Dialog
@@ -176,7 +176,7 @@ const CatalogueCategoryDirectoryDialog = (
               breadcrumbsInfo={catalogueBreadcrumbs}
               onChangeNode={setParentCategoryId}
               onChangeNavigateHome={() => setParentCategoryId(null)}
-              navigateHomeAriaLabel="navigate to catalogue home"
+              homeLocation="Catalogue"
             />
           </Grid>
         </Grid>

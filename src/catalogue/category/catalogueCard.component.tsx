@@ -1,60 +1,38 @@
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   Button,
   Card,
   CardActions,
   CardContent,
-  Checkbox,
-  IconButton,
-  ListItemIcon,
-  Menu,
-  MenuItem,
   Typography,
 } from '@mui/material';
-import React from 'react';
+import {
+  MRT_SelectCheckbox,
+  MRT_ToggleRowActionMenuButton,
+  type MRT_Cell,
+  type MRT_Row,
+  type MRT_TableInstance,
+} from 'material-react-table';
 import { Link } from 'react-router-dom';
-import { CatalogueCategory } from '../../app.types';
+import { CatalogueCategory } from '../../api/api.types';
 import { OverflowTip, formatDateTimeStrings } from '../../utils';
-export interface CatalogueCardProps extends CatalogueCategory {
-  onChangeOpenDeleteDialog: (catalogueCategory: CatalogueCategory) => void;
-  onChangeOpenEditNameDialog: (catalogueCategory: CatalogueCategory) => void;
-  onChangeOpenEditPropertiesDialog: (
-    catalogueCategory: CatalogueCategory
-  ) => void;
-  onChangeOpenSaveAsDialog: (catalogueCategory: CatalogueCategory) => void;
-  onToggleSelect: (catalogueCategory: CatalogueCategory) => void;
-  isSelected: boolean;
+export interface CatalogueCardProps {
+  table: MRT_TableInstance<CatalogueCategory>;
+  card: MRT_Cell<CatalogueCategory>;
 }
 
 function CatalogueCard(props: CatalogueCardProps) {
-  const {
-    onChangeOpenDeleteDialog,
-    onChangeOpenEditNameDialog,
-    onChangeOpenEditPropertiesDialog,
-    onChangeOpenSaveAsDialog,
-    onToggleSelect,
-    isSelected,
-    ...catalogueCategory
-  } = props;
+  const { table, card } = props;
+  const selectedCategories = table
+    .getSelectedRowModel()
+    .rows.map((row) => row.original);
 
-  const handleCheckboxClick = () => {
-    onToggleSelect(catalogueCategory);
-  };
-
-  const handleActionsClose = () => {
-    setMenuOpen(false);
-  };
-
-  const [menuOpen, setMenuOpen] = React.useState<boolean>(false);
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
+  const isSelected = selectedCategories.some(
+    (category) => category.id === card.row.original.id
+  );
   return (
     <Button
       component={Link}
-      to={catalogueCategory.id}
+      to={`/catalogue/${card.row.original.id}${card.row.original.is_leaf ? '/items' : ''}`}
       fullWidth
       sx={{
         display: 'flex',
@@ -70,19 +48,18 @@ function CatalogueCard(props: CatalogueCardProps) {
           display: 'flex',
           flexDirection: 'row',
           height: '100px',
+          backgroundColor: isSelected
+            ? table.options.mrtTheme.selectedRowBackgroundColor
+            : undefined,
         }}
       >
         <CardActions>
-          <Checkbox
-            onClick={(event) => {
-              event.preventDefault();
-              handleCheckboxClick();
+          <MRT_SelectCheckbox
+            row={card.row as MRT_Row<CatalogueCategory>}
+            table={table}
+            sx={{
+              margin: 0.5,
             }}
-            checked={isSelected}
-            inputProps={{
-              'aria-label': 'controlled',
-            }}
-            aria-label={`${catalogueCategory.name} checkbox`}
           />
         </CardActions>
         <CardContent
@@ -94,91 +71,17 @@ function CatalogueCard(props: CatalogueCardProps) {
             minWidth: 0,
           }}
         >
-          <OverflowTip>{catalogueCategory.name}</OverflowTip>
+          <OverflowTip>{card.row.original.name}</OverflowTip>
         </CardContent>
         <CardActions>
-          <IconButton
-            onClick={(event) => {
-              event.preventDefault();
-              setAnchorEl(event.currentTarget);
-              setMenuOpen(true);
+          <MRT_ToggleRowActionMenuButton
+            cell={card as MRT_Cell<CatalogueCategory>}
+            row={card.row as MRT_Row<CatalogueCategory>}
+            table={table}
+            sx={{
+              margin: 0.5,
             }}
-            aria-label={`actions ${catalogueCategory.name} catalogue category button`}
-          >
-            <MoreHorizIcon />
-          </IconButton>
-          <Menu
-            anchorEl={anchorEl}
-            open={menuOpen}
-            onClick={(event) => {
-              event.preventDefault();
-            }}
-            onClose={handleActionsClose}
-          >
-            <MenuItem
-              key={0}
-              onClick={(event) => {
-                event.preventDefault();
-                onChangeOpenEditNameDialog(catalogueCategory);
-                handleActionsClose();
-              }}
-              aria-label={`edit name ${catalogueCategory.name} catalogue category button`}
-              sx={{ m: 0 }}
-            >
-              <ListItemIcon>
-                <EditIcon />
-              </ListItemIcon>
-              Edit name
-            </MenuItem>
-
-            {catalogueCategory.is_leaf && (
-              <MenuItem
-                key={1}
-                onClick={(event) => {
-                  event.preventDefault();
-                  onChangeOpenEditPropertiesDialog(catalogueCategory);
-                  handleActionsClose();
-                }}
-                aria-label={`edit properties ${catalogueCategory.name} catalogue category button`}
-                sx={{ m: 0 }}
-              >
-                <ListItemIcon>
-                  <EditIcon />
-                </ListItemIcon>
-                Edit properties
-              </MenuItem>
-            )}
-            <MenuItem
-              key={2}
-              aria-label={`save as ${catalogueCategory.name} catalogue category button`}
-              onClick={(event) => {
-                event.preventDefault();
-                onChangeOpenSaveAsDialog(catalogueCategory);
-                handleActionsClose();
-              }}
-              sx={{ m: 0 }}
-            >
-              <ListItemIcon>
-                <SaveAsIcon />
-              </ListItemIcon>
-              Save as
-            </MenuItem>
-            <MenuItem
-              key={3}
-              onClick={(event) => {
-                event.preventDefault();
-                onChangeOpenDeleteDialog(catalogueCategory);
-                handleActionsClose();
-              }}
-              aria-label={`delete ${catalogueCategory.name} catalogue category button`}
-              sx={{ m: 0 }}
-            >
-              <ListItemIcon>
-                <DeleteIcon />
-              </ListItemIcon>
-              Delete
-            </MenuItem>
-          </Menu>
+          />
         </CardActions>
         <Typography
           fontSize="0.8rem"
@@ -189,7 +92,7 @@ function CatalogueCard(props: CatalogueCardProps) {
             right: '12px',
           }}
         >
-          {`Last modified: ${formatDateTimeStrings(catalogueCategory.modified_time, true)}`}
+          {`Last modified: ${formatDateTimeStrings(card.row.original.modified_time, true)}`}
         </Typography>
       </Card>
     </Button>

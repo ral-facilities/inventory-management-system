@@ -5,27 +5,33 @@ exports[`Channel Breadcrumbs > should render correctly for path 1`] = `
   <div
     class="MuiBox-root css-70qvj9"
   >
-    <button
-      aria-label="navigate to catalogue home"
-      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
-      tabindex="0"
-      type="button"
+    <span
+      aria-label="Catalogue Home"
+      class=""
+      data-mui-internal-clone-element="true"
     >
-      <svg
-        aria-hidden="true"
-        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-        data-testid="HomeIcon"
-        focusable="false"
-        viewBox="0 0 24 24"
+      <button
+        aria-label="navigate to catalogue home"
+        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+        tabindex="0"
+        type="button"
       >
-        <path
-          d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+          data-testid="HomeIcon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+          />
+        </svg>
+        <span
+          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
         />
-      </svg>
-      <span
-        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-      />
-    </button>
+      </button>
+    </span>
     <nav
       aria-label="breadcrumb"
       class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1mc59t7-MuiTypography-root-MuiBreadcrumbs-root"
@@ -113,27 +119,33 @@ exports[`Channel Breadcrumbs > should render correctly for path when the subtree
   <div
     class="MuiBox-root css-70qvj9"
   >
-    <button
-      aria-label="navigate to catalogue home"
-      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
-      tabindex="0"
-      type="button"
+    <span
+      aria-label="Catalogue Home"
+      class=""
+      data-mui-internal-clone-element="true"
     >
-      <svg
-        aria-hidden="true"
-        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-        data-testid="HomeIcon"
-        focusable="false"
-        viewBox="0 0 24 24"
+      <button
+        aria-label="navigate to catalogue home"
+        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+        tabindex="0"
+        type="button"
       >
-        <path
-          d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+          data-testid="HomeIcon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+          />
+        </svg>
+        <span
+          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
         />
-      </svg>
-      <span
-        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-      />
-    </button>
+      </button>
+    </span>
     <nav
       aria-label="breadcrumb"
       class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1mc59t7-MuiTypography-root-MuiBreadcrumbs-root"
@@ -358,27 +370,33 @@ exports[`Channel Breadcrumbs > should render correctly for root 1`] = `
   <div
     class="MuiBox-root css-70qvj9"
   >
-    <button
-      aria-label="navigate to catalogue home"
-      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
-      tabindex="0"
-      type="button"
+    <span
+      aria-label="Catalogue Home"
+      class=""
+      data-mui-internal-clone-element="true"
     >
-      <svg
-        aria-hidden="true"
-        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-        data-testid="HomeIcon"
-        focusable="false"
-        viewBox="0 0 24 24"
+      <button
+        aria-label="navigate to catalogue home"
+        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+        tabindex="0"
+        type="button"
       >
-        <path
-          d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+          data-testid="HomeIcon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+          />
+        </svg>
+        <span
+          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
         />
-      </svg>
-      <span
-        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-      />
-    </button>
+      </button>
+    </span>
     <nav
       aria-label="breadcrumb"
       class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1mc59t7-MuiTypography-root-MuiBreadcrumbs-root"

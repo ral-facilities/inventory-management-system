@@ -1,11 +1,5 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import {
-  AddCatalogueItem,
-  CatalogueCategory,
-  CatalogueItem,
-  EditCatalogueItem,
-  TransferToCatalogueItem,
-} from '../app.types';
+import { TransferToCatalogueItem } from '../app.types';
 import CatalogueItemsJSON from '../mocks/CatalogueItems.json';
 import {
   CREATED_MODIFIED_TIME_VALUES,
@@ -13,14 +7,21 @@ import {
   hooksWrapperWithProviders,
 } from '../testUtils';
 import {
-  useAddCatalogueItem,
-  useCatalogueItem,
-  useCatalogueItemIds,
-  useCatalogueItems,
+  CatalogueCategory,
+  CatalogueCategoryPropertyType,
+  CatalogueItem,
+  CatalogueItemPatch,
+  CatalogueItemPost,
+} from './api.types';
+import {
   useCopyToCatalogueItem,
   useDeleteCatalogueItem,
-  useEditCatalogueItem,
+  useGetCatalogueItem,
+  useGetCatalogueItemIds,
+  useGetCatalogueItems,
   useMoveToCatalogueItem,
+  usePatchCatalogueItem,
+  usePostCatalogueItem,
 } from './catalogueItems';
 
 describe('catalogue items api functions', () => {
@@ -28,10 +29,10 @@ describe('catalogue items api functions', () => {
     vi.clearAllMocks();
   });
 
-  describe('useAddCatalogueItem', () => {
-    let mockDataAdd: AddCatalogueItem;
+  describe('usePostCatalogueItem', () => {
+    let mockDataPost: CatalogueItemPost;
     beforeEach(() => {
-      mockDataAdd = {
+      mockDataPost = {
         name: 'test',
         description: '',
         catalogue_category_id: '1',
@@ -39,6 +40,7 @@ describe('catalogue items api functions', () => {
         cost_to_rework_gbp: null,
         days_to_replace: 0,
         days_to_rework: null,
+        expected_lifetime_days: null,
         drawing_link: null,
         drawing_number: null,
         notes: null,
@@ -55,11 +57,11 @@ describe('catalogue items api functions', () => {
       };
     });
     it('posts a request to add a catalogue item and returns successful response', async () => {
-      const { result } = renderHook(() => useAddCatalogueItem(), {
+      const { result } = renderHook(() => usePostCatalogueItem(), {
         wrapper: hooksWrapperWithProviders(),
       });
       expect(result.current.isIdle).toBe(true);
-      result.current.mutate(mockDataAdd);
+      result.current.mutate(mockDataPost);
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
@@ -72,6 +74,7 @@ describe('catalogue items api functions', () => {
         cost_to_rework_gbp: null,
         days_to_replace: 0,
         days_to_rework: null,
+        expected_lifetime_days: null,
         drawing_link: null,
         drawing_number: null,
         notes: null,
@@ -89,9 +92,9 @@ describe('catalogue items api functions', () => {
     });
   });
 
-  describe('useCatalogueItems', () => {
+  describe('useGetCatalogueItems', () => {
     it('sends request to fetch catalogue items data and returns successful response', async () => {
-      const { result } = renderHook(() => useCatalogueItems('5'), {
+      const { result } = renderHook(() => useGetCatalogueItems('5'), {
         wrapper: hooksWrapperWithProviders(),
       });
 
@@ -103,9 +106,9 @@ describe('catalogue items api functions', () => {
     });
   });
 
-  describe('useCatalogueItem', () => {
+  describe('useGetCatalogueItem', () => {
     it('sends request to fetch catalogue items data and returns successful response', async () => {
-      const { result } = renderHook(() => useCatalogueItem('1'), {
+      const { result } = renderHook(() => useGetCatalogueItem('1'), {
         wrapper: hooksWrapperWithProviders(),
       });
 
@@ -121,9 +124,9 @@ describe('catalogue items api functions', () => {
     });
   });
 
-  describe('useCatalogueItemIds', () => {
+  describe('useGetCatalogueItemIds', () => {
     it('sends requests to fetch multiple catalogue items data and returns successful response for each', async () => {
-      const { result } = renderHook(() => useCatalogueItemIds(['1', '2']), {
+      const { result } = renderHook(() => useGetCatalogueItemIds(['1', '2']), {
         wrapper: hooksWrapperWithProviders(),
       });
 
@@ -156,6 +159,7 @@ describe('catalogue items api functions', () => {
         cost_to_rework_gbp: null,
         days_to_replace: 0,
         days_to_rework: null,
+        expected_lifetime_days: null,
         drawing_link: null,
         drawing_number: null,
         notes: null,
@@ -174,28 +178,27 @@ describe('catalogue items api functions', () => {
         wrapper: hooksWrapperWithProviders(),
       });
       expect(result.current.isIdle).toBe(true);
-      result.current.mutate(mockDataView);
+      result.current.mutate(mockDataView.id);
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
-      expect(result.current.data).toEqual({ status: 204 });
+      expect(result.current.data).toEqual('');
     });
   });
 
-  describe('useEditCatalogueItem', () => {
-    let mockDataEdit: EditCatalogueItem;
+  describe('usePatchCatalogueItem', () => {
+    let mockDataPatch: CatalogueItemPatch;
     beforeEach(() => {
-      mockDataEdit = {
+      mockDataPatch = {
         name: 'test',
-        id: '90',
       };
     });
     it('posts a request to edit a catalogue item and returns successful response', async () => {
-      const { result } = renderHook(() => useEditCatalogueItem(), {
+      const { result } = renderHook(() => usePatchCatalogueItem(), {
         wrapper: hooksWrapperWithProviders(),
       });
       expect(result.current.isIdle).toBe(true);
-      result.current.mutate(mockDataEdit);
+      result.current.mutate({ id: '90', catalogueItem: mockDataPatch });
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
@@ -261,6 +264,7 @@ describe('catalogue items api functions', () => {
             cost_to_rework_gbp: null,
             days_to_replace: 2,
             days_to_rework: null,
+            expected_lifetime_days: null,
             drawing_number: null,
             drawing_link: null,
             item_model_number: null,
@@ -289,6 +293,7 @@ describe('catalogue items api functions', () => {
             cost_to_rework_gbp: null,
             days_to_replace: 2,
             days_to_rework: null,
+            expected_lifetime_days: null,
             drawing_number: null,
             drawing_link: null,
             item_model_number: null,
@@ -317,10 +322,11 @@ describe('catalogue items api functions', () => {
             {
               id: '91',
               name: 'center wavelength',
-              type: 'number',
+              type: CatalogueCategoryPropertyType.Number,
               unit: 'fps',
               unit_id: '2',
               mandatory: true,
+              allowed_values: null,
             },
           ],
           id: '657305bc1e468454e97b638a',
@@ -395,6 +401,7 @@ describe('catalogue items api functions', () => {
             cost_to_rework_gbp: null,
             days_to_replace: 2,
             days_to_rework: null,
+            expected_lifetime_days: null,
             drawing_number: null,
             drawing_link: null,
             item_model_number: null,
@@ -422,6 +429,7 @@ describe('catalogue items api functions', () => {
             cost_to_rework_gbp: null,
             days_to_replace: 2,
             days_to_rework: null,
+            expected_lifetime_days: null,
             drawing_number: null,
             drawing_link: null,
             item_model_number: null,
@@ -450,10 +458,11 @@ describe('catalogue items api functions', () => {
             {
               id: '90',
               name: 'center wavelength',
-              type: 'number',
+              type: CatalogueCategoryPropertyType.Number,
               unit: 'fps',
               unit_id: '2',
               mandatory: true,
+              allowed_values: null,
             },
           ],
           id: '657305bc1e468454e97b638a',

@@ -1,20 +1,20 @@
-import { NavigateNext } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   Box,
-  Button,
   CircularProgress,
   Divider,
   Grid,
   IconButton,
   ListItemIcon,
   ListItemText,
+  Menu,
   MenuItem,
   Stack,
   Table,
@@ -22,6 +22,7 @@ import {
   TableCell,
   TableContainer,
   TableRow,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import {
@@ -34,20 +35,20 @@ import {
   useMaterialReactTable,
 } from 'material-react-table';
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
-import { System } from '../app.types';
+import { useNavigate, useParams } from 'react-router-dom';
+import { System } from '../api/api.types';
+import { useGetSystems } from '../api/systems';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import {
   OverflowTip,
   displayTableRowCountText,
   generateUniqueName,
   getPageHeightCalc,
+  mrtTheme,
 } from '../utils';
-import Breadcrumbs from '../view/breadcrumbs.component';
 import { DeleteSystemDialog } from './deleteSystemDialog.component';
 import SystemDetails from './systemDetails.component';
-import SystemDialog, { SystemDialogType } from './systemDialog.component';
+import SystemDialog from './systemDialog.component';
 import { SystemDirectoryDialog } from './systemDirectoryDialog.component';
 
 /* Returns function that navigates to a specific system id (or to the root of all systems
@@ -63,104 +64,115 @@ export const useNavigateToSystem = () => {
   );
 };
 
-/* Returns the system id from the location pathname (null when not found) */
-export const useSystemId = (): string | null => {
-  // Navigation setup
-  const location = useLocation();
-
-  return React.useMemo(() => {
-    let systemId: string | null = location.pathname
-      .replace('/systems', '')
-      // In case of /systems/
-      .replace('/', '');
-    systemId = systemId === '' ? null : systemId;
-    return systemId;
-  }, [location.pathname]);
-};
+export type SystemMenuDialogType = 'edit' | 'duplicate' | 'delete';
 
 const AddSystemButton = (props: { systemId: string | null }) => {
   const [addSystemDialogOpen, setAddSystemDialogOpen] =
     React.useState<boolean>(false);
 
+  const ariaLabelText =
+    props.systemId === null ? 'Add System' : 'Add Subsystem';
   return (
     <>
-      <IconButton
-        aria-label={props.systemId === null ? 'add system' : 'add subsystem'}
-        onClick={() => setAddSystemDialogOpen(true)}
-      >
-        <AddIcon />
-      </IconButton>
+      <Tooltip title={ariaLabelText}>
+        <span>
+          <IconButton
+            aria-label={ariaLabelText}
+            onClick={() => setAddSystemDialogOpen(true)}
+          >
+            <AddIcon />
+          </IconButton>
+        </span>
+      </Tooltip>
       <SystemDialog
         open={addSystemDialogOpen}
         onClose={() => setAddSystemDialogOpen(false)}
         parentId={props.systemId}
-        type="add"
+        requestType="post"
       />
     </>
   );
 };
 
-const MoveSystemsButton = (props: {
+const SystemsActionMenu = (props: {
   selectedSystems: System[];
   onChangeSelectedSystems: (selectedSystems: MRT_RowSelectionState) => void;
   parentSystemId: string | null;
 }) => {
-  const [moveSystemsDialogOpen, setMoveSystemsDialogOpen] =
-    React.useState<boolean>(false);
+  const [menuAnchorEl, setMenuAnchorEl] = React.useState<null | HTMLElement>(
+    null
+  );
+  const [dialogType, setDialogType] = React.useState<
+    'moveTo' | 'copyTo' | null
+  >(null);
+
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setMenuAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setMenuAnchorEl(null);
+  };
+
+  const handleDialogOpen = (type: 'moveTo' | 'copyTo') => {
+    setDialogType(type);
+    handleMenuClose();
+  };
+
+  const handleDialogClose = () => {
+    setDialogType(null);
+  };
+
+  const ariaLabelText = props.parentSystemId
+    ? 'Subsystems more options'
+    : 'Systems more options';
 
   return (
     <>
-      <Button
-        sx={{ mx: 0.5 }}
-        variant="outlined"
-        startIcon={<DriveFileMoveOutlinedIcon />}
-        onClick={() => setMoveSystemsDialogOpen(true)}
+      <Tooltip title={ariaLabelText}>
+        <span>
+          <IconButton aria-label={ariaLabelText} onClick={handleMenuOpen}>
+            <MoreHorizIcon />
+          </IconButton>
+        </span>
+      </Tooltip>
+      <Menu
+        anchorEl={menuAnchorEl}
+        open={Boolean(menuAnchorEl)}
+        onClose={handleMenuClose}
       >
-        Move to
-      </Button>
-      <SystemDirectoryDialog
-        open={moveSystemsDialogOpen}
-        onClose={() => setMoveSystemsDialogOpen(false)}
-        selectedSystems={props.selectedSystems}
-        onChangeSelectedSystems={props.onChangeSelectedSystems}
-        parentSystemId={props.parentSystemId}
-        type="moveTo"
-      />
+        <MenuItem onClick={() => handleDialogOpen('moveTo')}>
+          <ListItemIcon>
+            <DriveFileMoveOutlinedIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>Move to</ListItemText>
+        </MenuItem>
+        <MenuItem onClick={() => handleDialogOpen('copyTo')}>
+          <ListItemIcon>
+            <FolderCopyOutlinedIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>Copy to</ListItemText>
+        </MenuItem>
+        <MenuItem onClick={() => props.onChangeSelectedSystems({})}>
+          <ListItemIcon>
+            <ClearIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>{props.selectedSystems.length} selected</ListItemText>
+        </MenuItem>
+      </Menu>
+      {dialogType && (
+        <SystemDirectoryDialog
+          open={Boolean(dialogType)}
+          onClose={handleDialogClose}
+          selectedSystems={props.selectedSystems}
+          onChangeSelectedSystems={props.onChangeSelectedSystems}
+          parentSystemId={props.parentSystemId}
+          type={dialogType}
+        />
+      )}
     </>
   );
 };
-
-const CopySystemsButton = (props: {
-  selectedSystems: System[];
-  onChangeSelectedSystems: (selectedSystems: MRT_RowSelectionState) => void;
-  parentSystemId: string | null;
-}) => {
-  const [copySystemsDialogOpen, setCopySystemsDialogOpen] =
-    React.useState<boolean>(false);
-
-  return (
-    <>
-      <Button
-        sx={{ mx: 0.5 }}
-        variant="outlined"
-        startIcon={<FolderCopyOutlinedIcon />}
-        onClick={() => setCopySystemsDialogOpen(true)}
-      >
-        Copy to
-      </Button>
-      <SystemDirectoryDialog
-        open={copySystemsDialogOpen}
-        onClose={() => setCopySystemsDialogOpen(false)}
-        selectedSystems={props.selectedSystems}
-        onChangeSelectedSystems={props.onChangeSelectedSystems}
-        parentSystemId={props.parentSystemId}
-        type="copyTo"
-      />
-    </>
-  );
-};
-
-type MenuDialogType = SystemDialogType | 'delete';
 
 const columns: MRT_ColumnDef<System>[] = [
   {
@@ -185,7 +197,7 @@ const MIN_SUBSYSTEMS_WIDTH = '320px';
 
 function Systems() {
   // Navigation
-  const systemId = useSystemId();
+  const { system_id: systemId = null } = useParams();
   const navigateToSystem = useNavigateToSystem();
 
   // States
@@ -200,15 +212,15 @@ function Systems() {
 
   // When all menu's closed will be undefined
   const [menuDialogType, setMenuDialogType] = React.useState<
-    MenuDialogType | undefined
+    SystemMenuDialogType | undefined
   >(undefined);
 
   // Data
-  const { data: systemsBreadcrumbs } = useSystemsBreadcrumbs(systemId);
-  const { data: subsystemsData, isLoading: subsystemsDataLoading } = useSystems(
-    // String value of null for filtering root systems
-    systemId === null ? 'null' : systemId
-  );
+  const { data: subsystemsData, isLoading: subsystemsDataLoading } =
+    useGetSystems(
+      // String value of null for filtering root systems
+      systemId === null ? 'null' : systemId
+    );
 
   // Obtain the selected system data, not just the selection state
   const selectedRowIds = Object.keys(rowSelection);
@@ -217,7 +229,7 @@ function Systems() {
       selectedRowIds.includes(subsystem.id)
     ) ?? [];
 
-  // Names for preventing duplicates in the save as dialog
+  // Names for preventing duplicates in the duplicate dialog
   const subsystemNames: string[] =
     subsystemsData?.map((subsystem) => subsystem.name) || [];
 
@@ -250,7 +262,9 @@ function Systems() {
       showGlobalFilter: true,
     },
     state: { ...preservedState, rowSelection: rowSelection },
-    // MUI
+    //MRT
+    mrtTheme,
+    //MUI
     muiPaginationProps: {
       color: 'secondary',
       shape: 'rounded',
@@ -282,10 +296,10 @@ function Systems() {
           <ListItemText>Edit</ListItemText>
         </MenuItem>,
         <MenuItem
-          key="save as"
-          aria-label={`Save system ${row.original.name} as new system`}
+          key="duplicate"
+          aria-label={`Duplicate system ${row.original.name}`}
           onClick={() => {
-            setMenuDialogType('save as');
+            setMenuDialogType('duplicate');
             setSelectedSystemForMenu({
               ...row.original,
               name: generateUniqueName(row.original.name, subsystemNames),
@@ -296,7 +310,7 @@ function Systems() {
           <ListItemIcon>
             <SaveAsIcon />
           </ListItemIcon>
-          <ListItemText>Save as</ListItemText>
+          <ListItemText>Duplicate</ListItemText>
         </MenuItem>,
         <MenuItem
           key="delete"
@@ -318,61 +332,7 @@ function Systems() {
 
   return (
     <>
-      <Box height="100%">
-        <Grid
-          container
-          alignItems="center"
-          justifyContent="space-between" // Align items and distribute space along the main axis
-          sx={{
-            display: 'flex',
-            paddingLeft: '4px', // Add some padding for spacing
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              paddingTop: '20px',
-              paddingBottom: '20px',
-            }}
-          >
-            <Breadcrumbs
-              breadcrumbsInfo={systemsBreadcrumbs}
-              onChangeNode={navigateToSystem}
-              onChangeNavigateHome={() => navigateToSystem(null)}
-              navigateHomeAriaLabel={'navigate to systems home'}
-            />
-            {systemsBreadcrumbs && (
-              <NavigateNext
-                fontSize="small"
-                sx={{ color: 'text.secondary', margin: 1 }}
-              />
-            )}
-          </div>
-          {selectedSystems.length > 0 && (
-            <Box>
-              <MoveSystemsButton
-                selectedSystems={selectedSystems}
-                onChangeSelectedSystems={setRowSelection}
-                parentSystemId={systemId}
-              />
-              <CopySystemsButton
-                selectedSystems={selectedSystems}
-                onChangeSelectedSystems={setRowSelection}
-                parentSystemId={systemId}
-              />
-              <Button
-                sx={{ mx: 0.5 }}
-                variant="outlined"
-                startIcon={<ClearIcon />}
-                onClick={() => setRowSelection({})}
-              >
-                {selectedSystems.length} selected
-              </Button>
-            </Box>
-          )}
-        </Grid>
-
+      <Box>
         <Grid container margin={0} direction="row" alignItems="stretch">
           <Grid
             item
@@ -402,6 +362,13 @@ function Systems() {
                   <Typography variant="h6" sx={{ marginRight: 'auto' }}>
                     {systemId === null ? 'Root systems' : 'Subsystems'}
                   </Typography>
+                  {selectedSystems.length > 0 && (
+                    <SystemsActionMenu
+                      selectedSystems={selectedSystems}
+                      onChangeSelectedSystems={setRowSelection}
+                      parentSystemId={systemId}
+                    />
+                  )}
                   <AddSystemButton systemId={systemId} />
                 </Box>
                 <Divider role="presentation" />
@@ -411,7 +378,7 @@ function Systems() {
                     marginBottom: 'auto',
                     flexWrap: 'no-wrap',
                     // Breadcrumbs and rest
-                    height: getPageHeightCalc('96px + 74px'),
+                    height: getPageHeightCalc('96px + 58px'),
                     // To prevent no subsystems being visible
                     minHeight: '200px',
                   }}
@@ -507,11 +474,8 @@ function Systems() {
       <SystemDialog
         open={menuDialogType !== undefined && menuDialogType !== 'delete'}
         onClose={() => setMenuDialogType(undefined)}
-        type={
-          menuDialogType !== undefined && menuDialogType !== 'delete'
-            ? menuDialogType
-            : 'edit'
-        }
+        requestType={menuDialogType === 'edit' ? 'patch' : 'post'}
+        duplicate={menuDialogType === 'duplicate'}
         selectedSystem={selectedSystemForMenu}
         parentId={systemId}
       />
