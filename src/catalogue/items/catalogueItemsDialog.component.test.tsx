@@ -12,7 +12,7 @@ import CatalogueItemsDialog, {
 import { http } from 'msw';
 import { MockInstance } from 'vitest';
 import { imsApi } from '../../api/api';
-import { CatalogueItem } from '../../app.types';
+import { CatalogueItem } from '../../api/api.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { server } from '../../mocks/server';
 
@@ -35,7 +35,8 @@ describe('Catalogue Items Dialog', () => {
       open: true,
       onClose: onClose,
       parentInfo: undefined,
-      type: 'create',
+      requestType: 'post',
+      duplicate: false,
     };
 
     user = userEvent.setup();
@@ -48,6 +49,7 @@ describe('Catalogue Items Dialog', () => {
     costToReworkGbp?: string;
     daysToReplace?: string;
     daysToRework?: string;
+    expectedLifetimeDays?: string;
     drawingNumber?: string;
     drawingLink?: string;
     itemModelNumber?: string;
@@ -60,47 +62,52 @@ describe('Catalogue Items Dialog', () => {
     manufacturer?: string;
     notes?: string;
   }) => {
-    values.name !== undefined &&
+    if (values.name !== undefined)
       fireEvent.change(screen.getByLabelText('Name *'), {
         target: { value: values.name },
       });
 
-    values.description !== undefined &&
+    if (values.description !== undefined)
       fireEvent.change(screen.getByLabelText('Description'), {
         target: { value: values.description },
       });
 
-    values.costGbp !== undefined &&
+    if (values.costGbp !== undefined)
       fireEvent.change(screen.getByLabelText('Cost (£) *'), {
         target: { value: values.costGbp },
       });
 
-    values.costToReworkGbp !== undefined &&
+    if (values.costToReworkGbp !== undefined)
       fireEvent.change(screen.getByLabelText('Cost to rework (£)'), {
         target: { value: values.costToReworkGbp },
       });
 
-    values.daysToReplace !== undefined &&
+    if (values.daysToReplace !== undefined)
       fireEvent.change(screen.getByLabelText('Time to replace (days) *'), {
         target: { value: values.daysToReplace },
       });
 
-    values.daysToRework !== undefined &&
+    if (values.daysToRework !== undefined)
       fireEvent.change(screen.getByLabelText('Time to rework (days)'), {
         target: { value: values.daysToRework },
       });
 
-    values.drawingNumber !== undefined &&
+    if (values.expectedLifetimeDays !== undefined)
+      fireEvent.change(screen.getByLabelText('Expected Lifetime (days)'), {
+        target: { value: values.expectedLifetimeDays },
+      });
+
+    if (values.drawingNumber !== undefined)
       fireEvent.change(screen.getByLabelText('Drawing number'), {
         target: { value: values.drawingNumber },
       });
 
-    values.drawingLink !== undefined &&
+    if (values.drawingLink !== undefined)
       fireEvent.change(screen.getByLabelText('Drawing link'), {
         target: { value: values.drawingLink },
       });
 
-    values.itemModelNumber !== undefined &&
+    if (values.itemModelNumber !== undefined)
       fireEvent.change(screen.getByLabelText('Model number'), {
         target: { value: values.itemModelNumber },
       });
@@ -110,17 +117,17 @@ describe('Catalogue Items Dialog', () => {
       await user.type(manufacturerPopup, values.manufacturer);
     }
 
-    values.notes !== undefined &&
+    if (values.notes !== undefined)
       fireEvent.change(screen.getByLabelText('Notes'), {
         target: { value: values.notes },
       });
 
-    values.resolution !== undefined &&
+    if (values.resolution !== undefined)
       fireEvent.change(screen.getByLabelText('Resolution (megapixels) *'), {
         target: { value: values.resolution },
       });
 
-    values.frameRate !== undefined &&
+    if (values.frameRate !== undefined)
       fireEvent.change(screen.getByLabelText('Frame Rate (fps)'), {
         target: { value: values.frameRate },
       });
@@ -135,12 +142,12 @@ describe('Catalogue Items Dialog', () => {
       await user.type(olderAutocomplete, values.older);
     }
 
-    values.sensorBrand !== undefined &&
+    if (values.sensorBrand !== undefined)
       fireEvent.change(screen.getByLabelText('Sensor brand'), {
         target: { value: values.sensorBrand },
       });
 
-    values.sensorType !== undefined &&
+    if (values.sensorType !== undefined)
       fireEvent.change(screen.getByLabelText('Sensor Type *'), {
         target: { value: values.sensorType },
       });
@@ -220,6 +227,7 @@ describe('Catalogue Items Dialog', () => {
       costToReworkGbp: '400',
       daysToReplace: '20',
       daysToRework: '2',
+      expectedLifetimeDays: '541',
       description: '',
       drawingLink: 'https://example.com',
       drawingNumber: 'mk4324',
@@ -248,6 +256,7 @@ describe('Catalogue Items Dialog', () => {
       cost_to_rework_gbp: 400,
       days_to_replace: 20,
       days_to_rework: 2,
+      expected_lifetime_days: 541,
       description: null,
       drawing_link: 'https://example.com',
       drawing_number: 'mk4324',
@@ -282,6 +291,7 @@ describe('Catalogue Items Dialog', () => {
       costToReworkGbp: '400',
       daysToReplace: '20',
       daysToRework: '2',
+      expectedLifetimeDays: '146',
       description: '',
       drawingLink: 'https://example.com',
       drawingNumber: 'mk4324',
@@ -310,6 +320,7 @@ describe('Catalogue Items Dialog', () => {
       cost_to_rework_gbp: 400,
       days_to_replace: 20,
       days_to_rework: 2,
+      expected_lifetime_days: 146,
       description: null,
       drawing_link: 'https://example.com',
       drawing_number: 'mk4324',
@@ -351,6 +362,7 @@ describe('Catalogue Items Dialog', () => {
       costToReworkGbp: '400',
       daysToReplace: '20',
       daysToRework: '2',
+      expectedLifetimeDays: '321',
       description: '',
       drawingLink: 'https://example.com',
       drawingNumber: 'mk4324',
@@ -372,7 +384,9 @@ describe('Catalogue Items Dialog', () => {
       broken: 'T{arrowdown}{enter}',
       older: 'F{arrowdown}{enter}',
     });
-    expect(screen.getByRole('button', { name: 'Finish' })).not.toBeDisabled();
+    expect(
+      await screen.findByRole('button', { name: 'Finish' })
+    ).not.toBeDisabled();
   }, 10000);
 
   it('displays an error if a mandatory catalogue item property is not defined (allowed list of values )', async () => {
@@ -388,6 +402,7 @@ describe('Catalogue Items Dialog', () => {
       costToReworkGbp: '400',
       daysToReplace: '20',
       daysToRework: '2',
+      expectedLifetimeDays: '524',
       description: '',
       drawingLink: 'https://example.com',
       drawingNumber: 'mk4324',
@@ -405,11 +420,11 @@ describe('Catalogue Items Dialog', () => {
     await user.click(screen.getByRole('button', { name: 'Finish' }));
 
     const mandatoryFieldHelperText = screen.getAllByText(
-      'Please enter a valid value as this field is mandatory'
+      'Please enter a valid value as this field is mandatory.'
     );
 
     expect(mandatoryFieldHelperText[0]).toHaveTextContent(
-      'Please enter a valid value as this field is mandatory'
+      'Please enter a valid value as this field is mandatory.'
     );
   }, 10000);
 
@@ -444,6 +459,7 @@ describe('Catalogue Items Dialog', () => {
       cost_to_rework_gbp: null,
       days_to_replace: 5,
       days_to_rework: null,
+      expected_lifetime_days: null,
       description: null,
       drawing_link: null,
       drawing_number: null,
@@ -468,7 +484,7 @@ describe('Catalogue Items Dialog', () => {
   it('displays error messages when mandatory fields are not filled in', async () => {
     props = {
       ...props,
-      type: 'create',
+      requestType: 'post',
       parentInfo: getCatalogueCategoryById('4'),
     };
 
@@ -478,14 +494,14 @@ describe('Catalogue Items Dialog', () => {
 
     expect(
       screen.getByText(
-        'Please choose a manufacturer, or add a new manufacturer'
+        'Please choose a manufacturer or add a new manufacturer. Then select a manufacturer.'
       )
     ).toBeInTheDocument();
 
-    const nameHelperText = screen.getByText('Please enter a name');
-    const costHelperText = screen.getByText('Please enter a cost');
+    const nameHelperText = screen.getByText('Please enter a name.');
+    const costHelperText = screen.getByText('Please enter a cost.');
     const daysToReplaceHelperText = screen.getByText(
-      'Please enter how many days it would take to replace'
+      'Please enter how many days it would take to replace.'
     );
     expect(nameHelperText).toBeInTheDocument();
     expect(costHelperText).toBeInTheDocument();
@@ -502,18 +518,18 @@ describe('Catalogue Items Dialog', () => {
     await user.click(screen.getByRole('button', { name: 'Finish' }));
 
     const mandatoryFieldHelperText = screen.getAllByText(
-      'Please enter a valid value as this field is mandatory'
+      'Please enter a valid value as this field is mandatory.'
     );
 
     const mandatoryFieldBooleanHelperText = screen.getByText(
-      'Please select either True or False'
+      'Please select either True or False.'
     );
 
     expect(mandatoryFieldBooleanHelperText).toBeInTheDocument();
 
     expect(mandatoryFieldHelperText.length).toBe(2);
     expect(mandatoryFieldHelperText[0]).toHaveTextContent(
-      'Please enter a valid value as this field is mandatory'
+      'Please enter a valid value as this field is mandatory.'
     );
   }, 6000);
 
@@ -530,6 +546,7 @@ describe('Catalogue Items Dialog', () => {
       costToReworkGbp: '400a',
       daysToReplace: '20a',
       daysToRework: '2a',
+      expectedLifetimeDays: '43ab',
       description: '',
       drawingLink: 'example.com',
       drawingNumber: 'mk4324',
@@ -540,17 +557,17 @@ describe('Catalogue Items Dialog', () => {
 
     await user.click(screen.getByRole('button', { name: 'Next' }));
     const validNumberDetailsHelperText = screen.getAllByText(
-      'Please enter a valid number'
+      'Please enter a valid number.'
     );
 
-    expect(validNumberDetailsHelperText.length).toBe(4);
+    expect(validNumberDetailsHelperText.length).toBe(5);
     expect(validNumberDetailsHelperText[0]).toHaveTextContent(
-      'Please enter a valid number'
+      'Please enter a valid number.'
     );
 
     expect(
       screen.getByText(
-        'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted'
+        'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted.'
       )
     ).toBeInTheDocument();
 
@@ -559,6 +576,7 @@ describe('Catalogue Items Dialog', () => {
       costToReworkGbp: '400',
       daysToReplace: '20',
       daysToRework: '2',
+      expectedLifetimeDays: '43',
       drawingLink: 'https://example.com',
     });
 
@@ -576,12 +594,57 @@ describe('Catalogue Items Dialog', () => {
     await user.click(screen.getByRole('button', { name: 'Finish' }));
 
     const validNumberPropertiesHelperText = screen.getAllByText(
-      'Please enter a valid number'
+      'Please enter a valid number.'
     );
     expect(validNumberPropertiesHelperText.length).toBe(2);
     expect(validNumberPropertiesHelperText[0]).toHaveTextContent(
-      'Please enter a valid number'
+      'Please enter a valid number.'
     );
+  }, 10000);
+
+  it('display error message when a value is invalid because it is negative', async () => {
+    props = {
+      ...props,
+      parentInfo: getCatalogueCategoryById('4'),
+    };
+
+    createView();
+
+    await modifyValues({
+      costGbp: '-5',
+      costToReworkGbp: '-5',
+      daysToReplace: '-5',
+      daysToRework: '-5',
+      description: '',
+      drawingLink: 'https://example.com',
+      drawingNumber: 'mk4324',
+      expectedLifetimeDays: '-5',
+      itemModelNumber: 'mk4324',
+      name: 'test',
+      manufacturer: 'Man{arrowdown}{enter}',
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Next' }));
+
+    const NegativeNumberErrorText = screen.getAllByText(
+      'Number must be greater than or equal to 0'
+    );
+
+    expect(NegativeNumberErrorText.length).toBe(5);
+    expect(NegativeNumberErrorText[0]).toHaveTextContent(
+      'Number must be greater than or equal to 0'
+    );
+
+    await modifyValues({
+      costGbp: '5',
+      costToReworkGbp: '5',
+      daysToReplace: '5',
+      daysToRework: '5',
+      expectedLifetimeDays: '5',
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Next' }));
+    await user.click(screen.getByRole('button', { name: 'Finish' }));
   }, 10000);
 
   it('displays warning message when an unknown error occurs', async () => {
@@ -596,6 +659,7 @@ describe('Catalogue Items Dialog', () => {
       costToReworkGbp: '400',
       daysToReplace: '20',
       daysToRework: '2',
+      expectedLifetimeDays: '421',
       description: '',
       drawingLink: 'https://example.com',
       drawingNumber: 'mk4324',
@@ -658,13 +722,44 @@ describe('Catalogue Items Dialog', () => {
     expect(onClose).not.toHaveBeenCalled();
   });
 
+  describe('Recently Added Section', () => {
+    beforeEach(() => {
+      vi.useFakeTimers();
+      vi.setSystemTime(new Date('2024-01-09T12:00:00.000+00:00'));
+    });
+
+    afterEach(() => {
+      vi.useRealTimers();
+    });
+
+    it('displays recently added section', async () => {
+      props = {
+        ...props,
+        parentInfo: getCatalogueCategoryById('4'),
+      };
+
+      createView();
+
+      const manufacturerPopup = screen.getAllByRole('combobox')[0];
+
+      vi.advanceTimersByTimeAsync(2000);
+      await user.type(manufacturerPopup, 'Man');
+
+      const options = await screen.findAllByRole('option');
+      expect(options).toHaveLength(5);
+      expect(screen.getAllByText('Manufacturer B')).toHaveLength(2);
+      expect(screen.getByText('A-Z')).toBeInTheDocument();
+      expect(screen.getByText('Recently Added')).toBeInTheDocument();
+    }, 10000);
+  });
+
   describe('Edit a catalogue item', () => {
     let axiosPatchSpy: MockInstance;
 
     beforeEach(() => {
       props = {
         ...props,
-        type: 'edit',
+        requestType: 'patch',
       };
 
       axiosPatchSpy = vi.spyOn(imsApi, 'patch');
@@ -711,6 +806,7 @@ describe('Catalogue Items Dialog', () => {
         costToReworkGbp: '89',
         daysToReplace: '78',
         daysToRework: '68',
+        expectedLifetimeDays: '486',
         description: ' ',
         drawingLink: 'http://example.com',
         drawingNumber: 'test',
@@ -728,6 +824,7 @@ describe('Catalogue Items Dialog', () => {
         cost_to_rework_gbp: 89,
         days_to_replace: 78,
         days_to_rework: 68,
+        expected_lifetime_days: 486,
         description: null,
         drawing_link: 'http://example.com',
         drawing_number: 'test',
@@ -828,6 +925,7 @@ describe('Catalogue Items Dialog', () => {
         costToReworkGbp: '',
         daysToReplace: '',
         daysToRework: '',
+        expectedLifetimeDays: '',
         description: '',
         drawingLink: '',
         drawingNumber: '',
@@ -838,10 +936,10 @@ describe('Catalogue Items Dialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
-      const nameHelperText = screen.getByText('Please enter a name');
-      const costHelperText = screen.getByText('Please enter a cost');
+      const nameHelperText = screen.getByText('Please enter a name.');
+      const costHelperText = screen.getByText('Please enter a cost.');
       const daysToReplaceHelperText = screen.getByText(
-        'Please enter how many days it would take to replace'
+        'Please enter how many days it would take to replace.'
       );
 
       expect(nameHelperText).toBeInTheDocument();
@@ -867,12 +965,12 @@ describe('Catalogue Items Dialog', () => {
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       const mandatoryFieldHelperText = screen.getAllByText(
-        'Please enter a valid value as this field is mandatory'
+        'Please enter a valid value as this field is mandatory.'
       );
 
       expect(mandatoryFieldHelperText.length).toBe(2);
       expect(mandatoryFieldHelperText[0]).toHaveTextContent(
-        'Please enter a valid value as this field is mandatory'
+        'Please enter a valid value as this field is mandatory.'
       );
     }, 6000);
 
@@ -949,7 +1047,9 @@ describe('Catalogue Items Dialog', () => {
 
       await waitFor(() => {
         expect(
-          screen.getByText('Please edit a form entry before clicking save')
+          screen.getByText(
+            "There have been no changes made. Please change a field's value or press Cancel to exit."
+          )
         ).toBeInTheDocument();
       });
 
@@ -977,12 +1077,46 @@ describe('Catalogue Items Dialog', () => {
 
       await waitFor(() => {
         expect(
-          screen.getByText('Please edit a form entry before clicking save')
+          screen.getByText(
+            "There have been no changes made. Please change a field's value or press Cancel to exit."
+          )
         ).toBeInTheDocument();
       });
     });
 
-    it('displays error message if catalogue item has children elements', async () => {
+    it('displays error message when editing manufacturer_id if catalogue item has child elements', async () => {
+      props = {
+        ...props,
+        parentInfo: getCatalogueCategoryById('4'),
+        selectedCatalogueItem: getCatalogueItemById('1'),
+      };
+
+      createView();
+
+      await modifyValues({
+        name: 'test_has_children_elements',
+        manufacturer: 'Man{arrowdown}{arrowdown}{enter}',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/1', {
+        name: 'test_has_children_elements',
+        manufacturer_id: '3',
+      });
+
+      await waitFor(() => {
+        expect(
+          screen.getByText(
+            'Unable to update catalogue item properties and manufacturer '
+              + '(Manufacturer A), as the catalogue item has associated items.'
+          )
+        ).toBeInTheDocument();
+      });
+    });
+
+    it('displays error message when editing properties if catalogue item has child elements', async () => {
       props = {
         ...props,
         parentInfo: getCatalogueCategoryById('4'),
@@ -996,16 +1130,30 @@ describe('Catalogue Items Dialog', () => {
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await modifyValues({
+        resolution: '24',
+      });
+
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/1', {
         name: 'test_has_children_elements',
+        properties: [
+          { id: '1', value: 24 },
+          { id: '2', value: 30 },
+          { id: '3', value: 'CMOS' },
+          { id: '4', value: null },
+          { id: '5', value: true },
+          { id: '6', value: false },
+        ],
       });
 
       await waitFor(() => {
         expect(
           screen.getByText(
-            'Catalogue item has child elements and cannot be edited'
+            'Unable to update catalogue item properties and manufacturer '
+              + '(Manufacturer A), as the catalogue item has associated items.'
           )
         ).toBeInTheDocument();
       });

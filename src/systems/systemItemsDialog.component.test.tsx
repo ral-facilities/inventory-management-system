@@ -2,7 +2,7 @@ import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { MockInstance } from 'vitest';
 import { imsApi } from '../api/api';
-import { Item } from '../app.types';
+import { Item } from '../api/api.types';
 import ItemsJSON from '../mocks/Items.json';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import SystemItemsDialog, {
@@ -286,7 +286,7 @@ describe('SystemItemsDialog', () => {
         expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
       );
 
-      await selectUsageStatus({ index: 0, usageStatus: 'Used' });
+      await selectUsageStatus({ index: 1, usageStatus: 'Used' });
 
       expect(
         await screen.findByRole('button', { name: 'Finish' })

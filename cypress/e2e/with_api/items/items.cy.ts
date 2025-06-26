@@ -8,9 +8,9 @@ import {
   addItem,
   addProperty,
   deleteItem,
+  duplicateItem,
   editItem,
   editProperty,
-  saveAsItem,
 } from './functions';
 
 describe('items', () => {
@@ -53,7 +53,7 @@ describe('items', () => {
   it('CRUD for items', () => {
     addItem();
     editItem();
-    saveAsItem('MX4332424', 0);
+    duplicateItem('MX4332424', 0);
     addProperty();
     editProperty();
     deleteItem('MX4332424', 0);

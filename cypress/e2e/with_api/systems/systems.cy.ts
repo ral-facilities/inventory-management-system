@@ -8,11 +8,11 @@ import {
   addSystems,
   copyToSystems,
   deleteSystem,
+  duplicateSystem,
   editSystems,
   modifySystem,
   moveItemToSystem,
   moveToSystems,
-  saveAsSystem,
 } from './functions';
 
 describe('systems', () => {
@@ -57,7 +57,7 @@ describe('systems', () => {
   it('CRUD for systems', () => {
     // add systems is in the before each as it is need for creating items
     editSystems();
-    saveAsSystem('optics 2', 1);
+    duplicateSystem('optics 2', 1);
     modifySystem({ name: 'Storage 2', importance: 'high' });
     moveItemToSystem({
       checkedItems: [1],

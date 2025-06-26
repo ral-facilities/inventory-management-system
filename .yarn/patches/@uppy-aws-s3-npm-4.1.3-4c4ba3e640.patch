@@ -1,0 +1,46 @@
+diff --git a/lib/index.js b/lib/index.js
+index 24921be0f280435c159a1f08e1a172e67f6e4147..8b43fd5a18cfb3f6b46db02813283293724bb158 100644
+--- a/lib/index.js
++++ b/lib/index.js
+@@ -495,23 +495,25 @@ export default class AwsS3Multipart extends BasePlugin {
+           const value = parts.join(': ');
+           headersMap[header] = value;
+         }
+-        const {
+-          etag,
+-          location
+-        } = headersMap;
++        // const {
++        //   etag,
++        //   location
++        // } = headersMap;
+ 
+-        // More info bucket settings when this is not present:
+-        // https://github.com/transloadit/uppy/issues/5388#issuecomment-2464885562
+-        if (method.toUpperCase() === 'POST' && location == null) {
+-          // Not being able to read the Location header is not a fatal error.
+-          // eslint-disable-next-line no-console
+-          console.error('@uppy/aws-s3: Could not read the Location header. This likely means CORS is not configured correctly on the S3 Bucket. See https://uppy.io/docs/aws-s3/#setting-up-your-s3-bucket');
+-        }
+-        if (etag == null) {
+-          // eslint-disable-next-line no-console
+-          console.error('@uppy/aws-s3: Could not read the ETag header. This likely means CORS is not configured correctly on the S3 Bucket. See https://uppy.io/docs/aws-s3/#setting-up-your-s3-bucket');
+-          return;
+-        }
++        const etag = '';
++
++        // // More info bucket settings when this is not present:
++        // // https://github.com/transloadit/uppy/issues/5388#issuecomment-2464885562
++        // if (method.toUpperCase() === 'POST' && location == null) {
++        //   // Not being able to read the Location header is not a fatal error.
++        //   // eslint-disable-next-line no-console
++        //   console.error('@uppy/aws-s3: Could not read the Location header. This likely means CORS is not configured correctly on the S3 Bucket. See https://uppy.io/docs/aws-s3/#setting-up-your-s3-bucket');
++        // }
++        // if (etag == null) {
++        //   // eslint-disable-next-line no-console
++        //   console.error('@uppy/aws-s3: Could not read the ETag header. This likely means CORS is not configured correctly on the S3 Bucket. See https://uppy.io/docs/aws-s3/#setting-up-your-s3-bucket');
++        //   return;
++        // }
+         onComplete == null || onComplete(etag);
+         resolve({
+           ...headersMap,

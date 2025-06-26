@@ -1,7 +1,7 @@
 import { RenderResult, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http } from 'msw';
-import { Unit } from '../../app.types';
+import { Unit } from '../../api/api.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { server } from '../../mocks/server';
 import { renderComponentWithRouterProvider } from '../../testUtils';
@@ -21,18 +21,19 @@ describe('delete Unit dialog', () => {
   };
 
   beforeEach(() => {
-    (unit = {
+    unit = {
       id: '1',
       value: 'test',
       code: 'test',
       created_time: '2024-01-01T12:00:00.000+00:00',
       modified_time: '2024-01-02T13:10:10.000+00:00',
-    }),
-      (props = {
-        open: true,
-        onClose: onClose,
-        unit: unit,
-      });
+    };
+
+    props = {
+      open: true,
+      onClose: onClose,
+      unit: unit,
+    };
     user = userEvent.setup();
   });
 

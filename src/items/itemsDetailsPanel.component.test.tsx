@@ -1,12 +1,11 @@
 import { screen, waitFor } from '@testing-library/react';
+import userEvent, { UserEvent } from '@testing-library/user-event';
+import { CatalogueItem, Item } from '../api/api.types';
 import {
   getCatalogueItemById,
   getItemById,
   renderComponentWithRouterProvider,
 } from '../testUtils';
-
-import userEvent, { UserEvent } from '@testing-library/user-event';
-import { CatalogueItem, Item } from '../app.types';
 import ItemsDetailsPanel, {
   ItemsDetailsPanelProps,
 } from './itemsDetailsPanel.component';
@@ -45,6 +44,15 @@ describe('Catalogue Items details panel', () => {
   });
 
   it('renders properties panel correctly', async () => {
+    const view = createView();
+
+    await user.click(screen.getByRole('tab', { name: 'Properties' }));
+
+    expect(view.asFragment()).toMatchSnapshot();
+  });
+
+  it('renders properties panel correctly (empty property list)', async () => {
+    props.itemData = { ...getItemById('I26EJNJ0'), properties: [] } as Item;
     const view = createView();
 
     await user.click(screen.getByRole('tab', { name: 'Properties' }));

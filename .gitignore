@@ -15,6 +15,7 @@ node_modules
 # testing
 **/cypress/logs/
 coverage
+cypress/downloads/
 cypress/screenshots/
 
 # development

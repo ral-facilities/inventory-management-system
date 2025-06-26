@@ -14,7 +14,30 @@ const ConfigTest: React.FC = (): React.ReactElement => {
 
 vi.mock('./settings', () => ({
   settings: Promise.resolve({
-    apiUrl: '',
+    imsApiUrl: '',
+    osApiUrl: '',
+    maxAttachmentSizeBytes: 104857600,
+    attachmentAllowedFileExtensions: [
+      '.csv',
+      '.doc',
+      '.docx',
+      '.pdf',
+      '.rtf',
+      '.txt',
+      '.xls',
+      '.xlsx',
+    ],
+    imageAllowedFileExtensions: [
+      '.bmp',
+      '.jpe',
+      '.jpeg',
+      '.jpg',
+      '.png',
+      '.tif',
+      '.tiff',
+      '.webp',
+    ],
+    maxImageSizeBytes: 52428800,
     routes: [
       {
         section: 'homepage',
@@ -48,7 +71,7 @@ vi.mock('./settings', () => ({
 describe('ConfigProvider', () => {
   beforeEach(() => {
     global.document.dispatchEvent = vi.fn();
-    global.CustomEvent<unknown> = vi.fn();
+    global.CustomEvent = vi.fn();
   });
 
   afterEach(() => {
@@ -76,7 +99,30 @@ describe('ConfigProvider', () => {
     expect(screen.getByTestId('settings')).toBeInTheDocument();
     expect(screen.getByTestId('settings')).toHaveTextContent(
       JSON.stringify({
-        apiUrl: '',
+        imsApiUrl: '',
+        osApiUrl: '',
+        maxAttachmentSizeBytes: 104857600,
+        attachmentAllowedFileExtensions: [
+          '.csv',
+          '.doc',
+          '.docx',
+          '.pdf',
+          '.rtf',
+          '.txt',
+          '.xls',
+          '.xlsx',
+        ],
+        imageAllowedFileExtensions: [
+          '.bmp',
+          '.jpe',
+          '.jpeg',
+          '.jpg',
+          '.png',
+          '.tif',
+          '.tiff',
+          '.webp',
+        ],
+        maxImageSizeBytes: 52428800,
         routes: [
           {
             section: 'homepage',

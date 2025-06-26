@@ -37,6 +37,7 @@ describe('Preserved table state functions', () => {
       expect(JSON.stringify(result.current.preservedState)).toBe(
         JSON.stringify({
           columnFilters: [],
+          columnFilterFns: {},
           sorting: [],
           columnVisibility: {},
           globalFilter: undefined,
@@ -59,6 +60,7 @@ describe('Preserved table state functions', () => {
       expect(JSON.stringify(result.current.preservedState)).toBe(
         JSON.stringify({
           columnFilters: [],
+          columnFilterFns: {},
           sorting: [],
           columnVisibility: {},
           globalFilter: undefined,
@@ -88,6 +90,7 @@ describe('Preserved table state functions', () => {
       expect(JSON.stringify(result.current.preservedState)).toBe(
         JSON.stringify({
           columnFilters: [],
+          columnFilterFns: {},
           sorting: [],
           columnVisibility: {},
           globalFilter: undefined,
@@ -109,6 +112,7 @@ describe('Preserved table state functions', () => {
               columnVisibility: { created_time: false },
               grouping: ['catalogue_item.name'],
               pagination: { pageSize: 20, pageIndex: 5 },
+              columnFilterFns: { 'catalogue_item.name': 'betweenInclusive' },
             },
             storeInUrl: true,
           }),
@@ -120,6 +124,7 @@ describe('Preserved table state functions', () => {
       expect(JSON.stringify(result.current.preservedState)).toBe(
         JSON.stringify({
           columnFilters: [],
+          columnFilterFns: { 'catalogue_item.name': 'betweenInclusive' },
           sorting: [],
           columnVisibility: { created_time: false },
           globalFilter: undefined,
@@ -207,6 +212,7 @@ describe('Preserved table state functions', () => {
               value: [null, '2024-06-11T23:00:00.000Z'],
             },
           ],
+          columnFilterFns: {},
           sorting: [{ id: 'catalogueItem.name', desc: true }],
           columnVisibility: {
             'catalogueItem.created_time': false,
@@ -238,6 +244,7 @@ describe('Preserved table state functions', () => {
       expect(JSON.stringify(result.current.preservedState)).toBe(
         JSON.stringify({
           columnFilters: [],
+          columnFilterFns: {},
           sorting: [],
           columnVisibility: {},
           globalFilter: undefined,
@@ -267,6 +274,7 @@ describe('Preserved table state functions', () => {
                 value: [null, '2024-06-11T23:00:00.000Z'],
               },
             ],
+            columnFilterFns: {},
             sorting: [{ id: 'catalogueItem.name', desc: true }],
             columnVisibility: {
               'catalogueItem.created_time': false,
@@ -311,6 +319,7 @@ describe('Preserved table state functions', () => {
               value: [null, '2024-06-11T23:00:00.000Z'],
             },
           ],
+          columnFilterFns: {},
           sorting: [{ id: 'catalogueItem.name', desc: true }],
           columnVisibility: {
             'catalogueItem.created_time': false,
@@ -342,6 +351,7 @@ describe('Preserved table state functions', () => {
       expect(JSON.stringify(result.current.preservedState)).toBe(
         JSON.stringify({
           columnFilters: [],
+          columnFilterFns: {},
           sorting: [],
           columnVisibility: {},
           globalFilter: undefined,
@@ -629,6 +639,186 @@ describe('Preserved table state functions', () => {
 
       expect(window.location.search).toBe(
         '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJMoGAngA5NoIAM4YATglr4W7TkJAUxIAL4qAuq37cQ-NPmIBlBAC8hAZgAMW-WVpJiADxiW1QA'
+      );
+    });
+
+    it('onColumnFilterFnsChange updates the state and url correctly', async () => {
+      const { result } = renderHookWithBrowserRouterURL(
+        () =>
+          usePreservedTableState({
+            storeInUrl: true,
+          }),
+        '/'
+      );
+
+      // Change the state to a non-default value
+      act(() =>
+        result.current.onPreservedStatesChange.onColumnFilterFnsChange({
+          'catalogueItem.modified_time': 'betweenInclusive',
+          'catalogueItem.created_time': 'between',
+        })
+      );
+
+      await waitFor(() =>
+        expect(
+          JSON.stringify(result.current.preservedState.columnFilterFns)
+        ).toBe(
+          JSON.stringify({
+            'catalogueItem.modified_time': 'betweenInclusive',
+            'catalogueItem.created_time': 'between',
+          })
+        )
+      );
+
+      expect(window.location.search).toBe(
+        '?state=N4IgxgYgdiBcpgIYBdEBsD2BzArgUwElk8BbAOhIwBMBLAMxryoH1kaS84QAjPZAdzx4oBKGDQ4AzjQBunADTgU6bPiKkyYAE54UTVu06wefQcJABfC0A'
+      );
+
+      // Now change back to a default value
+      act(() =>
+        result.current.onPreservedStatesChange.onColumnFilterFnsChange({})
+      );
+
+      await waitFor(() =>
+        expect(
+          JSON.stringify(result.current.preservedState.columnFilterFns)
+        ).toBe(JSON.stringify({}))
+      );
+      expect(window.location.search).toBe('');
+    });
+
+    it('onColumnFilterFnsChange updates the state and url correctly, when using an initial state', async () => {
+      const { result } = renderHookWithBrowserRouterURL(
+        () =>
+          usePreservedTableState({
+            storeInUrl: true,
+            initialState: {
+              columnFilterFns: {
+                'catalogueItem.modified_time': 'between',
+                'catalogueItem.created_time': 'between',
+              },
+            },
+          }),
+        '/'
+      );
+
+      // Change the state to a non-default value
+      act(() =>
+        result.current.onPreservedStatesChange.onColumnFilterFnsChange({
+          'catalogueItem.modified_time': 'betweenInclusive',
+          'catalogueItem.created_time': 'between',
+        })
+      );
+
+      await waitFor(() =>
+        expect(
+          JSON.stringify(result.current.preservedState.columnFilterFns)
+        ).toBe(
+          JSON.stringify({
+            'catalogueItem.modified_time': 'betweenInclusive',
+            'catalogueItem.created_time': 'between',
+          })
+        )
+      );
+
+      expect(window.location.search).toBe(
+        '?state=N4IgxgYgdiBcpgIYBdEBsD2BzArgUwElk8BbAOhIwBMBLAMxryoH1kaS84QAjPZAdzx4oBKGDQ4AzjQBunADTgU6bPiKkyYAE54UTVu06wefQcJABfC0A'
+      );
+
+      // Now change back to a default value
+      act(() =>
+        result.current.onPreservedStatesChange.onColumnFilterFnsChange({
+          'catalogueItem.modified_time': 'between',
+          'catalogueItem.created_time': 'between',
+        })
+      );
+
+      await waitFor(() =>
+        expect(
+          JSON.stringify(result.current.preservedState.columnFilterFns)
+        ).toBe(
+          JSON.stringify({
+            'catalogueItem.modified_time': 'between',
+            'catalogueItem.created_time': 'between',
+          })
+        )
+      );
+      expect(window.location.search).toBe('');
+    });
+
+    it('onColumnFilterFnsChange updates the state and url correctly when page index is different', async () => {
+      const { result } = renderHookWithBrowserRouterURL(
+        () =>
+          usePreservedTableState({
+            storeInUrl: true,
+          }),
+        '/'
+      );
+
+      // The first change should define the default order (MRT will call this once on page load, with the initial default
+      // state defined either inside the defaultState/the initialState given)
+      act(() =>
+        result.current.onPreservedStatesChange.onPaginationChange({
+          pageSize: 15,
+          pageIndex: 0,
+        })
+      );
+
+      await waitFor(() =>
+        expect(JSON.stringify(result.current.preservedState.pagination)).toBe(
+          JSON.stringify({
+            pageSize: 15,
+            pageIndex: 0,
+          })
+        )
+      );
+
+      // Change the page to a non-default value
+      act(() =>
+        result.current.onPreservedStatesChange.onPaginationChange({
+          pageSize: 30,
+          pageIndex: 5,
+        })
+      );
+
+      await waitFor(() =>
+        expect(JSON.stringify(result.current.preservedState.pagination)).toBe(
+          JSON.stringify({
+            pageSize: 30,
+            pageIndex: 5,
+          })
+        )
+      );
+
+      // Change the state to a non-default value
+      act(() =>
+        result.current.onPreservedStatesChange.onColumnFilterFnsChange({
+          'catalogueItem.modified_time': 'betweenInclusive',
+          'catalogueItem.created_time': 'between',
+        })
+      );
+
+      await waitFor(() =>
+        expect(
+          JSON.stringify(result.current.preservedState.columnFilterFns)
+        ).toBe(
+          JSON.stringify({
+            'catalogueItem.modified_time': 'betweenInclusive',
+            'catalogueItem.created_time': 'between',
+          })
+        )
+      );
+
+      // Should have kept the page size but reset the index
+      expect(JSON.stringify(result.current.preservedState.pagination)).toBe(
+        JSON.stringify({
+          pageSize: 30,
+          pageIndex: 0,
+        })
+      );
+
+      expect(window.location.search).toBe(
+        '?state=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF9CBjAMTKlCdgBdYAbAPbwArqW6IAtgDoJAiqgBmqRBQD63VBKyQQAI0TcA7okRlyTPsIDOqAG5ZmPfkNElx0pgCdEPFes3aegbGpiD09EA'
       );
     });
 

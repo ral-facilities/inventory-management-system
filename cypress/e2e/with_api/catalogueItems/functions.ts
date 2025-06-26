@@ -7,6 +7,7 @@ const modifyCatalogueItem = (
     costToReworkGbp?: string;
     daysToReplace: string;
     daysToRework?: string;
+    expectedLifetimeDays?: string;
     drawingNumber?: string;
     drawingLink?: string;
     itemModelNumber?: string;
@@ -62,6 +63,15 @@ const modifyCatalogueItem = (
         cy.findByLabelText('Time to rework (days)').clear();
       }
 
+      if (values.expectedLifetimeDays) {
+        cy.findByLabelText('Expected Lifetime (days)').clear();
+        cy.findByLabelText('Expected Lifetime (days)').type(
+          values.expectedLifetimeDays
+        );
+      } else {
+        cy.findByLabelText('Expected Lifetime (days)').clear();
+      }
+
       if (values.drawingNumber) {
         cy.findByLabelText('Drawing number').clear();
         cy.findByLabelText('Drawing number').type(values.drawingNumber);
@@ -91,8 +101,14 @@ const modifyCatalogueItem = (
       }
     });
 
-  cy.findByLabelText('Manufacturer *').click();
-  cy.findByRole('option', { name: values.manufacturer }).click();
+  cy.findAllByLabelText('Manufacturer *').first().click();
+  cy.contains('Recently Added').should('be.visible');
+  cy.contains('A-Z').should('be.visible');
+  cy.findAllByRole('option', { name: values.manufacturer }).should(
+    'have.length',
+    2
+  );
+  cy.findAllByRole('option', { name: values.manufacturer }).first().click();
 
   cy.findByRole('button', { name: 'Next' }).click();
 
@@ -122,31 +138,33 @@ const modifyCatalogueItem = (
     cy.findByText(values.name).should('exist');
     cy.findByText(values.name).click();
 
-    values.description && cy.findByText(values.description).should('exist');
+    if (values.description) cy.findByText(values.description).should('exist');
 
     cy.findByText(values.costGbp).should('exist');
 
-    values.costToReworkGbp &&
+    if (values.costToReworkGbp)
       cy.findByText(values.costToReworkGbp).should('exist');
 
     cy.findByText(values.daysToReplace).should('exist');
 
-    values.daysToRework && cy.findByText(values.daysToRework).should('exist');
+    if (values.daysToRework) cy.findByText(values.daysToRework).should('exist');
 
-    values.drawingNumber && cy.findByText(values.drawingNumber).should('exist');
+    if (values.expectedLifetimeDays)
+      cy.findByText(values.expectedLifetimeDays).should('exist');
 
-    values.drawingLink && cy.findByText(values.drawingLink).should('exist');
+    if (values.drawingNumber)
+      cy.findByText(values.drawingNumber).should('exist');
 
-    values.itemModelNumber &&
+    if (values.drawingLink) cy.findByText(values.drawingLink).should('exist');
+
+    if (values.itemModelNumber)
       cy.findByText(values.itemModelNumber).should('exist');
-
-    values.notes && cy.findByText(values.notes).should('exist');
 
     cy.findByText(values.manufacturer).should('exist');
 
     cy.findByText(values.substrate).should('exist');
 
-    values.diameter && cy.findByText(values.diameter).should('exist');
+    if (values.diameter) cy.findByText(values.diameter).should('exist');
 
     cy.findByText(values.wavelengthRange).should('exist');
 
@@ -161,19 +179,19 @@ const modifyCatalogueItem = (
     }
 
     if (values.notes) {
-      cy.findByText(values.notes).scrollIntoView();
-
+      cy.findByText('Notes').click();
       cy.findByText(values.notes).should('exist');
     }
+    cy.go('back');
     cy.go('back');
   }
 };
 
-export const saveAsCatalogueItem = (name: string) => {
+export const duplicateCatalogueItem = (name: string) => {
   cy.findByLabelText(`${name} row`).within(() => {
     cy.findByLabelText('Row Actions').click();
   });
-  cy.findByLabelText(`Save catalogue item ${name} as`).click();
+  cy.findByLabelText(`Duplicate catalogue item ${name}`).click();
 
   cy.findByRole('button', { name: 'Next' }).click();
   cy.findByRole('button', { name: 'Finish' }).click();
@@ -292,6 +310,7 @@ export const addCatalogueItem = (ignoreChecks?: boolean) => {
       costToReworkGbp: '20',
       daysToReplace: '5',
       daysToRework: '1',
+      expectedLifetimeDays: '365',
       drawingLink: 'https://example.com/',
       drawingNumber: 'GH45235324',
       itemModelNumber: 'rew5435453',
@@ -314,6 +333,7 @@ export const editCatalogueItem = () => {
     costGbp: '43.95',
     costToReworkGbp: '20',
     daysToReplace: '5',
+    expectedLifetimeDays: '365',
     drawingLink: 'https://example.com/',
     drawingNumber: 'GH4523566324',
     itemModelNumber: 'rew54359453',
@@ -324,4 +344,213 @@ export const editCatalogueItem = () => {
     wavelengthRange: '195 - 2100',
     broken: 'True',
   });
+};
+
+export const addFile = (
+  values: {
+    files: string[];
+  },
+  type: 'image' | 'attachment',
+  ignoreChecks?: boolean
+) => {
+  const tabValue = type === 'image' ? 'Gallery' : 'Attachments';
+  const uploadButton =
+    type === 'image' ? 'Upload Images' : 'Upload Attachments';
+  cy.findByText(tabValue).click();
+  cy.findByRole('button', {
+    name: uploadButton,
+  }).click();
+
+  cy.findAllByText('Files cannot be larger than', { exact: false }).should(
+    'exist'
+  );
+  cy.get('.uppy-Dashboard-input').as('fileInput');
+
+  if (type === 'image') {
+    cy.get('@fileInput').last().selectFile(values.files, { force: true });
+  } else {
+    cy.get('@fileInput').first().selectFile(values.files, { force: true });
+  }
+
+  cy.findByText(
+    `Upload ${values.files.length} file${values.files.length > 1 ? 's' : ''}`
+  ).click({ force: true });
+
+  cy.findByText('Uploading').should('not.exist');
+
+  cy.findAllByRole('dialog')
+    .first()
+    .within(() => {
+      cy.findAllByRole('button', {
+        name: 'Close Modal',
+      })
+        .last()
+        .click();
+    });
+
+  if (!ignoreChecks) {
+    cy.findByText(tabValue).click();
+    for (let i = 0; i++; i < values.files.length) {
+      const fileName = values.files[i].slice(
+        values.files[i].lastIndexOf('/') + 1
+      );
+      cy.findByText(fileName).should('exist');
+    }
+  }
+};
+
+export const editFile = (
+  values: {
+    originalFileName: string;
+    newFileName?: string;
+    description?: string;
+    title?: string;
+  },
+  type: 'image' | 'attachment',
+  ignoreChecks: boolean
+) => {
+  const tabValue = type === 'image' ? 'Gallery' : 'Attachments';
+  cy.findByText(tabValue).click();
+  cy.findAllByText(`${values.originalFileName}`).last().scrollIntoView();
+
+  cy.findAllByText(`${values.originalFileName}`).last().should('exist');
+
+  if (type === 'image') {
+    cy.findAllByLabelText('Card Actions').first().click();
+    cy.findAllByText('Edit').last().click();
+  } else {
+    cy.findByRole('row', { name: `${values.originalFileName} row` }).within(
+      () => {
+        cy.findByLabelText('Row Actions').click();
+      }
+    );
+    cy.findByLabelText(`Edit ${values.originalFileName} attachment`).click();
+  }
+
+  cy.findByRole('dialog')
+    .should('be.visible')
+    .within(() => {
+      if (values.newFileName) {
+        cy.findByLabelText('File Name *').clear();
+        cy.findByText(type === 'attachment' ? '.txt' : '.png').should('exist');
+        cy.findByLabelText('File Name *').type(values.newFileName);
+      }
+
+      if (values.title) {
+        cy.findByLabelText('Title').clear();
+        cy.findByLabelText('Title').type(values.title);
+      }
+
+      if (values.description) {
+        cy.findByLabelText('Description').clear();
+        cy.findByLabelText('Description').type(values.description);
+      }
+    });
+  cy.findByRole('button', { name: 'Save' }).click();
+  cy.findByRole('dialog').should('not.exist');
+
+  if (!ignoreChecks) {
+    cy.findByText(type).click();
+    cy.findByText(values.newFileName ?? values.originalFileName).should(
+      'exist'
+    );
+    if (values.description) {
+      cy.findByText(values.description).should('exist');
+    }
+    if (values.title) {
+      cy.findByText(values.title).should('exist');
+    }
+  }
+};
+
+export const downloadFile = (
+  fileName: string,
+  type: 'image' | 'attachment'
+) => {
+  const tabValue = type === 'image' ? 'Gallery' : 'Attachments';
+  cy.findByText(tabValue).click();
+  if (type === 'image') {
+    cy.findAllByLabelText('Card Actions').first().click();
+    cy.findAllByText('Download').last().click();
+  } else {
+    cy.findByLabelText(`${fileName} row`).within(() => {
+      cy.findByLabelText('Row Actions').click();
+    });
+    cy.findByLabelText(`Download ${fileName} attachment`).click();
+  }
+
+  cy.findByRole('dialog').should('be.visible');
+
+  cy.findByRole('button', { name: 'Continue' }).click();
+};
+
+export const deleteFile = (
+  fileNames: string[],
+  type: 'image' | 'attachment'
+) => {
+  const tabValue = type === 'image' ? 'Gallery' : 'Attachments';
+  cy.findByText(tabValue).click();
+  fileNames.forEach((fileName) => {
+    if (type === 'image') {
+      cy.findAllByLabelText('Card Actions').first().click();
+      cy.findAllByText('Delete').last().click();
+    } else {
+      cy.findByLabelText(`${fileName} row`).within(() => {
+        cy.findByLabelText('Row Actions').click();
+      });
+      cy.findByLabelText(`Delete attachment ${fileName}`).click();
+    }
+
+    cy.findByRole('dialog').should('be.visible');
+
+    cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.findByRole('dialog').should('not.exist');
+  });
+};
+
+export const setPrimaryImage = (index: number, ignoreChecks: boolean) => {
+  cy.findByRole('button', { name: 'primary images action menu' }).click();
+  cy.findByText('Set Primary Image').click();
+  cy.findByRole('dialog')
+    .should('be.visible')
+    .within(() => {
+      cy.findAllByRole('radio').eq(index).click();
+      cy.findByText('Save').click();
+    });
+  cy.findByRole('dialog').should('not.exist');
+  if (!ignoreChecks) {
+    cy.findByRole('img', { name: 'No Image' }).should('not.exist');
+  }
+};
+
+export const viewPrimaryImage = () => {
+  cy.findAllByRole('img', { name: 'No photo description available.' }).should(
+    'have.length',
+    3
+  );
+  cy.findByText('No Image').should('not.exist');
+  cy.findAllByRole('img', { name: 'No photo description available.' })
+    .first()
+    .click();
+  cy.findByTestId('galleryLightBox').within(() => {
+    cy.findByText('File name: logo2.png').should('exist');
+    cy.findByText('No description available').should('exist');
+
+    cy.findByRole('img', { name: 'No Image' }).should('not.exist');
+    cy.findAllByLabelText('Close').last().click();
+  });
+  cy.findByTestId('galleryLightBox').should('not.exist');
+};
+
+export const removePrimaryImage = () => {
+  cy.findByRole('button', { name: 'primary images action menu' }).click();
+  cy.findByText('Remove Primary Image').click();
+  cy.findByRole('dialog')
+    .should('be.visible')
+    .within(() => {
+      cy.findByText('Continue').click();
+    });
+  cy.findByRole('dialog').should('not.exist');
+  cy.findByRole('img', { name: 'No Image' }).should('exist');
 };

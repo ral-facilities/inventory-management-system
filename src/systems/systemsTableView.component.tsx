@@ -7,11 +7,15 @@ import {
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { System } from '../app.types';
+import { System } from '../api/api.types';
 import {
+  COLUMN_FILTER_FUNCTIONS,
+  COLUMN_FILTER_MODE_OPTIONS,
+  COLUMN_FILTER_VARIANTS,
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
   formatDateTimeStrings,
+  mrtTheme,
 } from '../utils';
 import SystemDialog from './systemDialog.component';
 
@@ -47,16 +51,20 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
         id: 'name',
         accessorKey: 'name',
         size: 400,
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
       },
       {
         header: 'Last modified',
         accessorFn: (row) => new Date(row.modified_time),
         id: 'modified_time',
-        filterVariant: 'datetime-range',
+        filterVariant: COLUMN_FILTER_VARIANTS.datetime,
+        filterFn: COLUMN_FILTER_FUNCTIONS.datetime,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.datetime,
         size: 400,
         enableGrouping: false,
         Cell: ({ row }) =>
-          row.original.modified_time &&
           formatDateTimeStrings(row.original.modified_time, true),
       },
     ],
@@ -68,6 +76,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
     data: systemsData ?? [],
     // Features
     enableColumnOrdering: false,
+    enableColumnFilterModes: true,
     enableColumnPinning: false,
     enableTopToolbar: true,
     enableColumnResizing: false,
@@ -98,7 +107,9 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
     state: {
       showProgressBars: systemsDataLoading,
     },
-    // MUI
+    //MRT
+    mrtTheme,
+    //MUI
     muiTableBodyRowProps: ({ row }) => {
       const canPlaceHere =
         type === 'copyTo' || !selectedSystemIds.includes(row.original.id);
@@ -145,10 +156,10 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
       return (
         <>
           <SystemDialog
-            open={true}
+            open
             onClose={() => table.setCreatingRow(null)}
             parentId={systemParentId}
-            type="add"
+            requestType="post"
           />
         </>
       );

@@ -103,7 +103,14 @@ describe('Manufacturer', () => {
       expect(postRequests.length).equal(1);
       const request = postRequests[0];
       expect(JSON.stringify(await request.json())).equal(
-        '{"name":"Manufacturer D","address":{"address_line":"4 Example Street","town":null,"county":null,"postcode":"OX1 2AB","country":"United Kingdom"},"telephone":null}'
+        JSON.stringify({
+          name: 'Manufacturer D',
+          address: {
+            address_line: '4 Example Street',
+            postcode: 'OX1 2AB',
+            country: 'United Kingdom',
+          },
+        })
       );
     });
 
@@ -134,7 +141,9 @@ describe('Manufacturer', () => {
 
           cy.findByRole('button', { name: 'Save' }).click();
 
-          cy.contains('A manufacturer with the same name already exists.');
+          cy.contains(
+            'A manufacturer with the same name has been found. Please enter a different name.'
+          );
         });
     });
     it('invalid url displays correct error message', () => {
@@ -249,7 +258,7 @@ describe('Manufacturer', () => {
       .should('be.visible')
       .within(() => {
         cy.contains(
-          'A manufacturer with the same name has been found. Please enter a different name'
+          'A manufacturer with the same name has been found. Please enter a different name.'
         );
       });
     cy.findByRole('button', { name: 'Save' }).should('be.disabled');
@@ -267,7 +276,7 @@ describe('Manufacturer', () => {
 
         cy.findByRole('button', { name: 'Save' }).click();
 
-        cy.contains('Please enter a valid URL');
+        cy.contains('Please enter a valid URL.');
       });
     cy.findByRole('button', { name: 'Save' }).should('be.disabled');
   });
@@ -308,7 +317,7 @@ describe('Manufacturer', () => {
       .should('be.visible')
       .within(() => {
         cy.contains(
-          "There have been no changes made. Please change a field's value or press Cancel to exit"
+          "There have been no changes made. Please change a field's value or press Cancel to exit."
         );
       });
     cy.findByRole('button', { name: 'Save' }).should('be.disabled');
@@ -339,7 +348,7 @@ describe('Manufacturer', () => {
     cy.findByText('Manufacturer A').click();
     cy.findByText('Telephone number:').should('exist');
 
-    cy.findByRole('button', { name: 'navigate to manufacturer home' }).click();
+    cy.findByRole('button', { name: 'navigate to manufacturers home' }).click();
 
     cy.findByText('Manufacturer A').should('exist');
     cy.findByText('Manufacturer B').should('exist');
@@ -370,16 +379,20 @@ describe('Manufacturer', () => {
     cy.visit('/manufacturers/invalid');
 
     cy.findByText(
-      `This manufacturer doesn't exist. Please click the Home button to navigate to the manufacturer table`
+      `We're sorry, the page you requested was not found on the server. If you entered the URL manually please check your spelling and try again. Otherwise, return to the`,
+      { exact: false }
     ).should('exist');
 
-    cy.findByRole('button', { name: 'navigate to manufacturer home' }).click();
+    cy.findByRole('link', { name: 'manufacturers home page' }).should('exist');
+
+    cy.findByRole('button', { name: 'navigate to manufacturers home' }).click();
 
     cy.findByText('Manufacturer A').should('exist');
     cy.findByText('Manufacturer B').should('exist');
     cy.findByText('Manufacturer C').should('exist');
   });
-  it('sets the table filters and clears the table filters', () => {
+
+  it('sets and clears the table filters', () => {
     cy.findByText('Manufacturer A').should('exist');
     cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
     cy.findByLabelText('Filter by Name').type('B');

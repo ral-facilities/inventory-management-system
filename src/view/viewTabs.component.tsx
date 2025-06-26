@@ -1,47 +1,12 @@
 import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-import { styled } from '@mui/material/styles';
 import React from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { paths } from '../App';
 import { TAB_VALUES, TabValue } from '../app.types';
+import { a11yProps, StyledTab } from '../common/tab/tab.utils';
+import TabPanel from '../common/tab/tabPanel.component';
 import { getSciGatewayPageHeightCalc, isRunningInDevelopment } from '../utils';
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  value: TabValue | false;
-  label: TabValue | false;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, label, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== label}
-      id={`${label}-tabpanel`}
-      aria-labelledby={`${label}-tab`}
-      style={{ height: '100%' }}
-      {...other}
-    >
-      {value === label && <Box height="100%">{children}</Box>}
-    </div>
-  );
-}
-function a11yProps(label: TabValue) {
-  return {
-    id: `${label}-tab`,
-    'aria-controls': `${label}-tabpanel`,
-  };
-}
-
-const StyledTab = styled(Tab)(({ theme }) => ({
-  textTransform: 'none',
-  fontWeight: theme.typography.fontWeightBold,
-  fontSize: theme.typography.pxToRem(16),
-}));
 
 function ViewTabs() {
   const [value, setValue] = React.useState<TabValue | false>('Catalogue');
