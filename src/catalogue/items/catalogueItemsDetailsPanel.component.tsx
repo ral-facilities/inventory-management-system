@@ -113,7 +113,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
                 <Typography
                   sx={{
-                    color: 'text.primary',
+                    color: 'text.secondary',
                   }}
                 >
                   {catalogueItemIdData.is_obsolete ? 'Yes' : 'No'}

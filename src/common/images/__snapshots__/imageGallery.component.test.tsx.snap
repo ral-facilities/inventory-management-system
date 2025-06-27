@@ -111,9 +111,9 @@ exports[`Image Gallery > displays no images message and can open and close uploa
                         </svg>
                         <input
                           aria-invalid="false"
-                          autocomplete="new-password"
+                          autocomplete="off"
                           class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12tjcea-MuiInputBase-input-MuiOutlinedInput-input"
-                          id=":r1e9:"
+                          id=":r1eg:"
                           placeholder="Search"
                           type="text"
                           value=""
@@ -210,21 +210,22 @@ exports[`Image Gallery > displays no images message and can open and close uploa
                   class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
                 >
                   <table
-                    class="MuiTable-root MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-16tczb-MuiTable-root-MuiGrid2-root"
+                    class="MuiTable-root MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-10ha4wk-MuiTable-root-MuiGrid2-root"
                   >
                     <thead
-                      class="MuiTableHead-root MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-nhfqov-MuiTableHead-root-MuiGrid2-root"
+                      class="MuiTableHead-root MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-13r68m6-MuiTableHead-root-MuiGrid2-root"
                     >
                       <tr
-                        class="MuiTableRow-root MuiTableRow-head MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1gfz8fy-MuiTableRow-root-MuiGrid2-root"
+                        class="MuiTableRow-root MuiTableRow-head MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-suiz1z-MuiTableRow-root-MuiGrid2-root"
                       >
                         <th
                           aria-sort="none"
-                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1j1a2m9-MuiTableCell-root"
+                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1u90982-MuiTableCell-root"
                           colspan="1"
                           data-can-sort="true"
                           data-index="1"
                           scope="col"
+                          tabindex="0"
                         >
                           <div
                             class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -296,11 +297,12 @@ exports[`Image Gallery > displays no images message and can open and close uploa
                         </th>
                         <th
                           aria-sort="none"
-                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1xh0zhg-MuiTableCell-root"
+                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ow32cm-MuiTableCell-root"
                           colspan="1"
                           data-can-sort="true"
                           data-index="2"
                           scope="col"
+                          tabindex="0"
                         >
                           <div
                             class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -372,11 +374,12 @@ exports[`Image Gallery > displays no images message and can open and close uploa
                         </th>
                         <th
                           aria-sort="none"
-                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1nrilkr-MuiTableCell-root"
+                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1mndnlc-MuiTableCell-root"
                           colspan="1"
                           data-can-sort="true"
                           data-index="3"
                           scope="col"
+                          tabindex="0"
                         >
                           <div
                             class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -448,11 +451,12 @@ exports[`Image Gallery > displays no images message and can open and close uploa
                         </th>
                         <th
                           aria-sort="none"
-                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yrt1r8-MuiTableCell-root"
+                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xxavgr-MuiTableCell-root"
                           colspan="1"
                           data-can-sort="true"
                           data-index="4"
                           scope="col"
+                          tabindex="0"
                         >
                           <div
                             class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -524,11 +528,12 @@ exports[`Image Gallery > displays no images message and can open and close uploa
                         </th>
                         <th
                           aria-sort="none"
-                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-605d5e-MuiTableCell-root"
+                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-nlbdjj-MuiTableCell-root"
                           colspan="1"
                           data-can-sort="true"
                           data-index="5"
                           scope="col"
+                          tabindex="0"
                         >
                           <div
                             class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -678,7 +683,7 @@ exports[`Image Gallery > displays no images message and can open and close uploa
                 >
                   <label
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-10j3yc8-MuiFormLabel-root-MuiInputLabel-root"
-                    for="mrt-rows-per-page"
+                    for="mrt-rows-per-page-:r1ed:"
                   >
                     Images per page
                   </label>
@@ -699,7 +704,7 @@ exports[`Image Gallery > displays no images message and can open and close uploa
                       aria-hidden="true"
                       aria-invalid="false"
                       class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
-                      id="mrt-rows-per-page"
+                      id="mrt-rows-per-page-:r1ed:"
                       tabindex="-1"
                       value="18"
                     />
@@ -1004,9 +1009,9 @@ exports[`Image Gallery > renders correctly 1`] = `
                         </svg>
                         <input
                           aria-invalid="false"
-                          autocomplete="new-password"
+                          autocomplete="off"
                           class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12tjcea-MuiInputBase-input-MuiOutlinedInput-input"
-                          id=":r2:"
+                          id=":r3:"
                           placeholder="Search"
                           type="text"
                           value=""
@@ -1122,21 +1127,22 @@ exports[`Image Gallery > renders correctly 1`] = `
                   class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
                 >
                   <table
-                    class="MuiTable-root MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-16tczb-MuiTable-root-MuiGrid2-root"
+                    class="MuiTable-root MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-10ha4wk-MuiTable-root-MuiGrid2-root"
                   >
                     <thead
-                      class="MuiTableHead-root MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-nhfqov-MuiTableHead-root-MuiGrid2-root"
+                      class="MuiTableHead-root MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-13r68m6-MuiTableHead-root-MuiGrid2-root"
                     >
                       <tr
-                        class="MuiTableRow-root MuiTableRow-head MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1gfz8fy-MuiTableRow-root-MuiGrid2-root"
+                        class="MuiTableRow-root MuiTableRow-head MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-suiz1z-MuiTableRow-root-MuiGrid2-root"
                       >
                         <th
                           aria-sort="none"
-                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1j1a2m9-MuiTableCell-root"
+                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1u90982-MuiTableCell-root"
                           colspan="1"
                           data-can-sort="true"
                           data-index="2"
                           scope="col"
+                          tabindex="0"
                         >
                           <div
                             class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -1208,11 +1214,12 @@ exports[`Image Gallery > renders correctly 1`] = `
                         </th>
                         <th
                           aria-sort="none"
-                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1xh0zhg-MuiTableCell-root"
+                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ow32cm-MuiTableCell-root"
                           colspan="1"
                           data-can-sort="true"
                           data-index="3"
                           scope="col"
+                          tabindex="0"
                         >
                           <div
                             class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -1284,11 +1291,12 @@ exports[`Image Gallery > renders correctly 1`] = `
                         </th>
                         <th
                           aria-sort="none"
-                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1nrilkr-MuiTableCell-root"
+                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1mndnlc-MuiTableCell-root"
                           colspan="1"
                           data-can-sort="true"
                           data-index="4"
                           scope="col"
+                          tabindex="0"
                         >
                           <div
                             class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -1360,11 +1368,12 @@ exports[`Image Gallery > renders correctly 1`] = `
                         </th>
                         <th
                           aria-sort="none"
-                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yrt1r8-MuiTableCell-root"
+                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xxavgr-MuiTableCell-root"
                           colspan="1"
                           data-can-sort="true"
                           data-index="5"
                           scope="col"
+                          tabindex="0"
                         >
                           <div
                             class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -1436,11 +1445,12 @@ exports[`Image Gallery > renders correctly 1`] = `
                         </th>
                         <th
                           aria-sort="none"
-                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-605d5e-MuiTableCell-root"
+                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-nlbdjj-MuiTableCell-root"
                           colspan="1"
                           data-can-sort="true"
                           data-index="6"
                           scope="col"
+                          tabindex="0"
                         >
                           <div
                             class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -2732,7 +2742,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                 >
                   <label
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-10j3yc8-MuiFormLabel-root-MuiInputLabel-root"
-                    for="mrt-rows-per-page"
+                    for="mrt-rows-per-page-:r0:"
                   >
                     Images per page
                   </label>
@@ -2753,7 +2763,7 @@ exports[`Image Gallery > renders correctly 1`] = `
                       aria-hidden="true"
                       aria-invalid="false"
                       class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
-                      id="mrt-rows-per-page"
+                      id="mrt-rows-per-page-:r0:"
                       tabindex="-1"
                       value="16"
                     />
@@ -3080,9 +3090,9 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                         </svg>
                         <input
                           aria-invalid="false"
-                          autocomplete="new-password"
+                          autocomplete="off"
                           class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12tjcea-MuiInputBase-input-MuiOutlinedInput-input"
-                          id=":r17n:"
+                          id=":r181:"
                           placeholder="Search"
                           type="text"
                           value=""
@@ -3179,21 +3189,22 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                   class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
                 >
                   <table
-                    class="MuiTable-root MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-16tczb-MuiTable-root-MuiGrid2-root"
+                    class="MuiTable-root MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-10ha4wk-MuiTable-root-MuiGrid2-root"
                   >
                     <thead
-                      class="MuiTableHead-root MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-nhfqov-MuiTableHead-root-MuiGrid2-root"
+                      class="MuiTableHead-root MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-13r68m6-MuiTableHead-root-MuiGrid2-root"
                     >
                       <tr
-                        class="MuiTableRow-root MuiTableRow-head MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1gfz8fy-MuiTableRow-root-MuiGrid2-root"
+                        class="MuiTableRow-root MuiTableRow-head MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-suiz1z-MuiTableRow-root-MuiGrid2-root"
                       >
                         <th
                           aria-sort="none"
-                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1j1a2m9-MuiTableCell-root"
+                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1u90982-MuiTableCell-root"
                           colspan="1"
                           data-can-sort="true"
                           data-index="1"
                           scope="col"
+                          tabindex="0"
                         >
                           <div
                             class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -3265,11 +3276,12 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                         </th>
                         <th
                           aria-sort="none"
-                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1xh0zhg-MuiTableCell-root"
+                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ow32cm-MuiTableCell-root"
                           colspan="1"
                           data-can-sort="true"
                           data-index="2"
                           scope="col"
+                          tabindex="0"
                         >
                           <div
                             class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -3341,11 +3353,12 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                         </th>
                         <th
                           aria-sort="none"
-                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1nrilkr-MuiTableCell-root"
+                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1mndnlc-MuiTableCell-root"
                           colspan="1"
                           data-can-sort="true"
                           data-index="3"
                           scope="col"
+                          tabindex="0"
                         >
                           <div
                             class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -3417,11 +3430,12 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                         </th>
                         <th
                           aria-sort="none"
-                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yrt1r8-MuiTableCell-root"
+                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xxavgr-MuiTableCell-root"
                           colspan="1"
                           data-can-sort="true"
                           data-index="4"
                           scope="col"
+                          tabindex="0"
                         >
                           <div
                             class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -3493,11 +3507,12 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                         </th>
                         <th
                           aria-sort="none"
-                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-605d5e-MuiTableCell-root"
+                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-nlbdjj-MuiTableCell-root"
                           colspan="1"
                           data-can-sort="true"
                           data-index="5"
                           scope="col"
+                          tabindex="0"
                         >
                           <div
                             class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -5167,7 +5182,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                 >
                   <label
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-10j3yc8-MuiFormLabel-root-MuiInputLabel-root"
-                    for="mrt-rows-per-page"
+                    for="mrt-rows-per-page-:r17u:"
                   >
                     Images per page
                   </label>
@@ -5188,7 +5203,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
                       aria-hidden="true"
                       aria-invalid="false"
                       class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
-                      id="mrt-rows-per-page"
+                      id="mrt-rows-per-page-:r17u:"
                       tabindex="-1"
                       value="18"
                     />
@@ -5513,9 +5528,9 @@ exports[`Image Gallery > renders no results page correctly 1`] = `
                         </svg>
                         <input
                           aria-invalid="false"
-                          autocomplete="new-password"
+                          autocomplete="off"
                           class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12tjcea-MuiInputBase-input-MuiOutlinedInput-input"
-                          id=":r2b:"
+                          id=":r2d:"
                           placeholder="Search"
                           type="text"
                           value=""
@@ -5631,21 +5646,22 @@ exports[`Image Gallery > renders no results page correctly 1`] = `
                   class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
                 >
                   <table
-                    class="MuiTable-root MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-16tczb-MuiTable-root-MuiGrid2-root"
+                    class="MuiTable-root MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-10ha4wk-MuiTable-root-MuiGrid2-root"
                   >
                     <thead
-                      class="MuiTableHead-root MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-nhfqov-MuiTableHead-root-MuiGrid2-root"
+                      class="MuiTableHead-root MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-13r68m6-MuiTableHead-root-MuiGrid2-root"
                     >
                       <tr
-                        class="MuiTableRow-root MuiTableRow-head MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1gfz8fy-MuiTableRow-root-MuiGrid2-root"
+                        class="MuiTableRow-root MuiTableRow-head MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-suiz1z-MuiTableRow-root-MuiGrid2-root"
                       >
                         <th
                           aria-sort="none"
-                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1j1a2m9-MuiTableCell-root"
+                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1u90982-MuiTableCell-root"
                           colspan="1"
                           data-can-sort="true"
                           data-index="2"
                           scope="col"
+                          tabindex="0"
                         >
                           <div
                             class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -5717,11 +5733,12 @@ exports[`Image Gallery > renders no results page correctly 1`] = `
                         </th>
                         <th
                           aria-sort="none"
-                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1xh0zhg-MuiTableCell-root"
+                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ow32cm-MuiTableCell-root"
                           colspan="1"
                           data-can-sort="true"
                           data-index="3"
                           scope="col"
+                          tabindex="0"
                         >
                           <div
                             class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -5793,11 +5810,12 @@ exports[`Image Gallery > renders no results page correctly 1`] = `
                         </th>
                         <th
                           aria-sort="none"
-                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1nrilkr-MuiTableCell-root"
+                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1mndnlc-MuiTableCell-root"
                           colspan="1"
                           data-can-sort="true"
                           data-index="4"
                           scope="col"
+                          tabindex="0"
                         >
                           <div
                             class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -5869,11 +5887,12 @@ exports[`Image Gallery > renders no results page correctly 1`] = `
                         </th>
                         <th
                           aria-sort="none"
-                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yrt1r8-MuiTableCell-root"
+                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xxavgr-MuiTableCell-root"
                           colspan="1"
                           data-can-sort="true"
                           data-index="5"
                           scope="col"
+                          tabindex="0"
                         >
                           <div
                             class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -5945,11 +5964,12 @@ exports[`Image Gallery > renders no results page correctly 1`] = `
                         </th>
                         <th
                           aria-sort="none"
-                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-605d5e-MuiTableCell-root"
+                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-nlbdjj-MuiTableCell-root"
                           colspan="1"
                           data-can-sort="true"
                           data-index="6"
                           scope="col"
+                          tabindex="0"
                         >
                           <div
                             class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
@@ -6099,7 +6119,7 @@ exports[`Image Gallery > renders no results page correctly 1`] = `
                 >
                   <label
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-10j3yc8-MuiFormLabel-root-MuiInputLabel-root"
-                    for="mrt-rows-per-page"
+                    for="mrt-rows-per-page-:r2a:"
                   >
                     Images per page
                   </label>
@@ -6120,7 +6140,7 @@ exports[`Image Gallery > renders no results page correctly 1`] = `
                       aria-hidden="true"
                       aria-invalid="false"
                       class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
-                      id="mrt-rows-per-page"
+                      id="mrt-rows-per-page-:r2a:"
                       tabindex="-1"
                       value="16"
                     />

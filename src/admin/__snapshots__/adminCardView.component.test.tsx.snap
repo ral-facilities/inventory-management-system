@@ -10,6 +10,7 @@ exports[`AdminCardView > renders admin card view correctly 1`] = `
     >
       <a
         class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-fullWidth css-yz7a7v-MuiButtonBase-root-MuiButton-root"
+        data-discover="true"
         href="/units"
         tabindex="0"
       >
@@ -38,6 +39,7 @@ exports[`AdminCardView > renders admin card view correctly 1`] = `
     >
       <a
         class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-fullWidth css-yz7a7v-MuiButtonBase-root-MuiButton-root"
+        data-discover="true"
         href="/usage-statuses"
         tabindex="0"
       >

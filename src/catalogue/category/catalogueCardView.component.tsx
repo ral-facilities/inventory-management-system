@@ -538,6 +538,7 @@ function CatalogueCardView() {
                 zIndex: 1000,
                 paddingTop: 2.5,
                 paddingBottom: 2.5,
+                width: '100%',
               }}
             >
               <Collapse

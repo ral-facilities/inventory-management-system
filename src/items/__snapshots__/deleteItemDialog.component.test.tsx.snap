@@ -243,6 +243,7 @@ exports[`delete item dialog > renders correctly when items has no serial number 
              
             <a
               class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+              data-discover="true"
               href="/systems/656ef565ed0773f82e44bc6d"
             >
               Pico Laser
@@ -344,6 +345,7 @@ exports[`delete item dialog > renders correctly when items has no serial number 
              
             <a
               class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+              data-discover="true"
               href="/systems/656ef565ed0773f82e44bc6d"
             >
               Pico Laser
@@ -452,6 +454,7 @@ exports[`delete item dialog > renders correctly when the item has an system id 1
              
             <a
               class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+              data-discover="true"
               href="/systems/656ef565ed0773f82e44bc6d"
             >
               Pico Laser

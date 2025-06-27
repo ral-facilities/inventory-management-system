@@ -297,11 +297,10 @@ const ObsoleteCatalogueItemDialog = (
         );
     }
   };
-
   return (
     <Dialog
       open={open}
-      PaperProps={{ sx: { height: '780px' } }}
+      PaperProps={{ sx: { height: '840px' } }}
       fullWidth
       maxWidth="xl"
     >
@@ -325,6 +324,19 @@ const ObsoleteCatalogueItemDialog = (
         <Box sx={{ textAlign: 'center', marginTop: 2 }}>
           {renderStepContent(activeStep)}
         </Box>
+        <Box
+          sx={{
+            mx: 3,
+            marginTop: 3,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
+            {formError}
+          </FormHelperText>
+        </Box>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} sx={{ mr: 'auto' }}>
@@ -345,21 +357,6 @@ const ObsoleteCatalogueItemDialog = (
           <Button onClick={handleNext}>Next</Button>
         )}
       </DialogActions>
-      {formError && (
-        <Box
-          sx={{
-            mx: 3,
-            marginBottom: 3,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
-            {formError}
-          </FormHelperText>
-        </Box>
-      )}
     </Dialog>
   );
 };

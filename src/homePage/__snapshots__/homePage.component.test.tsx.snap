@@ -37,6 +37,7 @@ exports[`Home Page Error Component > renders catalogue error page correctly 1`] 
         We're sorry, the page you requested was not found on the server. If you entered the URL manually please check your spelling and try again. Otherwise, return to the 
         <a
           class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1amp05l-MuiTypography-root-MuiLink-root"
+          data-discover="true"
           href="/"
         >
            home page
@@ -112,6 +113,7 @@ exports[`Home page component > homepage renders correctly 1`] = `
               >
                 <a
                   class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-74d805-MuiButtonBase-root-MuiButton-root"
+                  data-discover="true"
                   data-testid="catalogue-button"
                   href="/catalogue"
                   tabindex="0"
@@ -162,6 +164,7 @@ exports[`Home page component > homepage renders correctly 1`] = `
               >
                 <a
                   class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-74d805-MuiButtonBase-root-MuiButton-root"
+                  data-discover="true"
                   data-testid="systems-button"
                   href="/systems"
                   tabindex="0"
@@ -197,6 +200,7 @@ exports[`Home page component > homepage renders correctly 1`] = `
               >
                 <a
                   class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-74d805-MuiButtonBase-root-MuiButton-root"
+                  data-discover="true"
                   data-testid="manufacturer-button"
                   href="/manufacturers"
                   tabindex="0"

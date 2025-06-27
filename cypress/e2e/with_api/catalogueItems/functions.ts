@@ -534,7 +534,7 @@ export const viewPrimaryImage = () => {
     .first()
     .click();
   cy.findByTestId('galleryLightBox').within(() => {
-    cy.findByText('File name: logo2.png').should('exist');
+    cy.findByText('File name: logo1.png').should('exist');
     cy.findByText('No description available').should('exist');
 
     cy.findByRole('img', { name: 'No Image' }).should('not.exist');

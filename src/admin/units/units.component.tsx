@@ -238,14 +238,14 @@ function Units() {
   });
 
   return (
-    <div style={{ width: '100%' }}>
+    <>
       <MaterialReactTable table={table} />
       <DeleteUnitDialog
         open={deleteUnitDialog}
         onClose={() => setDeleteUnitDialog(false)}
         unit={selectedUnit}
       />
-    </div>
+    </>
   );
 }
 
