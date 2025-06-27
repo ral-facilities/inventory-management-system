@@ -1109,8 +1109,8 @@ describe('Catalogue Items Dialog', () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            'Unable to update catalogue item properties and manufacturer '
-              + '(Manufacturer A), as the catalogue item has associated items.'
+            'Unable to update catalogue item properties and manufacturer ' +
+              '(Manufacturer A), as the catalogue item has associated items.'
           )
         ).toBeInTheDocument();
       });
@@ -1152,8 +1152,8 @@ describe('Catalogue Items Dialog', () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            'Unable to update catalogue item properties and manufacturer '
-              + '(Manufacturer A), as the catalogue item has associated items.'
+            'Unable to update catalogue item properties and manufacturer ' +
+              '(Manufacturer A), as the catalogue item has associated items.'
           )
         ).toBeInTheDocument();
       });

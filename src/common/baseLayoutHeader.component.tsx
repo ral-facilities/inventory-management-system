@@ -1,4 +1,5 @@
-import { Box, Grid } from '@mui/material';
+import { Box } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { BreadcrumbsInfo } from '../api/api.types';
@@ -21,11 +22,16 @@ function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
     [homeLocation, navigate]
   );
   return (
-    <Box height="100%" width="100%">
+    <Box
+      sx={{
+        height: '100%',
+        width: '100%',
+      }}
+    >
       <Grid
         container
-        alignItems="center"
         sx={{
+          alignItems: 'center',
           justifyContent: 'left',
           paddingLeft: 0.5,
           position: 'sticky',

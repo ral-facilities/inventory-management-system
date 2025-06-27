@@ -1,4 +1,5 @@
-import { Box, Grid, LinearProgress } from '@mui/material';
+import { Box, LinearProgress } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import { useParams } from 'react-router-dom';
 import { useGetCatalogueCategory } from '../api/catalogueCategories';
 import { useGetCatalogueItem } from '../api/catalogueItems';

@@ -24,15 +24,11 @@ const StyledBreadcrumbs = styled(MuiBreadcrumbs)({
 });
 
 const Breadcrumbs = (props: BreadcrumbsProps) => {
-  const {
-    breadcrumbsInfo,
-    onChangeNode,
-    onChangeNavigateHome,
-    homeLocation,
-  } = props;
+  const { breadcrumbsInfo, onChangeNode, onChangeNavigateHome, homeLocation } =
+    props;
 
   const homeAriaLabel = `navigate to ${homeLocation.toLowerCase()} home`;
-  const tooltipLabel = `${homeLocation} Home`
+  const tooltipLabel = `${homeLocation} Home`;
 
   const emptyElement = ['', ''];
 
@@ -46,12 +42,9 @@ const Breadcrumbs = (props: BreadcrumbsProps) => {
   const breadcrumbMaxWidth = `${(100 - 10) / trailPrefix.concat(breadcrumbsInfo?.trail ?? emptyElement).length}vw`;
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <Tooltip title = {tooltipLabel}>
+      <Tooltip title={tooltipLabel}>
         <span>
-          <IconButton
-            onClick={onChangeNavigateHome}
-            aria-label={homeAriaLabel}
-          >
+          <IconButton onClick={onChangeNavigateHome} aria-label={homeAriaLabel}>
             <HomeIcon />
           </IconButton>
         </span>

@@ -3,11 +3,11 @@ import PrintIcon from '@mui/icons-material/Print';
 import {
   Box,
   Button,
-  Grid,
   LinearProgress,
   Link as MuiLink,
   Typography,
 } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetManufacturer } from '../api/manufacturers';
@@ -32,11 +32,10 @@ function ManufacturerLandingPage() {
             display: 'none',
           },
         }}
-        item
         container
       >
         {manufacturerData && (
-          <Grid item container sx={{ display: 'flex', py: 2 }}>
+          <Grid container sx={{ py: 2 }} size={12}>
             <Button
               sx={{ mx: 0.5 }}
               variant="outlined"
@@ -62,14 +61,15 @@ function ManufacturerLandingPage() {
       </Grid>
       {manufacturerData && (
         <Grid
-          item
           container
-          spacing={1}
-          sx={{ px: '192px' }}
-          alignContent={'center'}
-          flexDirection="row"
+          rowSpacing={1}
+          size={12}
+          sx={{
+            display: 'flex',
+            px: '192px',
+          }}
         >
-          <Grid item xs={12}>
+          <Grid size={12}>
             <Typography
               sx={{ margin: 1, textAlign: 'center', wordWrap: 'break-word' }}
               variant="h4"
@@ -77,18 +77,30 @@ function ManufacturerLandingPage() {
               {manufacturerData.name}
             </Typography>
           </Grid>
-          <Grid item xs={12} my={2}>
-            <Typography textAlign={'center'} variant="h6">
+          <Grid
+            size={12}
+            sx={{
+              my: 2,
+            }}
+          >
+            <Typography
+              variant="h6"
+              sx={{
+                textAlign: 'center',
+              }}
+            >
               URL:
             </Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={12}>
             {manufacturerData.url ? (
               <Typography
-                textAlign={'center'}
-                sx={{ mx: '8px' }}
                 variant="body1"
-                color="text.secondary"
+                sx={{
+                  textAlign: 'center',
+                  color: 'text.secondary',
+                  mx: '8px',
+                }}
               >
                 <MuiLink
                   underline="hover"
@@ -100,100 +112,164 @@ function ManufacturerLandingPage() {
               </Typography>
             ) : (
               <Typography
-                sx={{ mx: '8px' }}
-                textAlign={'center'}
                 variant="body1"
-                color="text.secondary"
+                sx={{
+                  textAlign: 'center',
+                  color: 'text.secondary',
+                  mx: '8px',
+                }}
               >
                 {'None'}
               </Typography>
             )}
           </Grid>
-          <Grid item xs={12} my={2}>
-            <Typography textAlign={'center'} variant="h6">
+          <Grid
+            size={12}
+            sx={{
+              my: 2,
+            }}
+          >
+            <Typography
+              variant="h6"
+              sx={{
+                textAlign: 'center',
+              }}
+            >
               Telephone number:
             </Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <Typography
-              sx={{ mx: '8px', wordWrap: 'break-word' }}
-              textAlign={'center'}
               variant="body1"
-              color="text.secondary"
+              sx={{
+                textAlign: 'center',
+                color: 'text.secondary',
+                mx: '8px',
+                wordWrap: 'break-word',
+              }}
             >
               {manufacturerData.telephone ?? 'None'}
             </Typography>
           </Grid>
-          <Grid item xs={12} my={2}>
-            <Typography textAlign={'center'} variant="h6">
+          <Grid
+            size={12}
+            sx={{
+              my: 2,
+            }}
+          >
+            <Typography
+              variant="h6"
+              sx={{
+                textAlign: 'center',
+              }}
+            >
               Address:
             </Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <Typography
               align="center"
-              sx={{ mx: '8px', wordWrap: 'break-word' }}
-              color="text.secondary"
+              sx={{
+                color: 'text.secondary',
+                mx: '8px',
+                wordWrap: 'break-word',
+              }}
             >
               {manufacturerData.address.address_line}
             </Typography>
             <Typography
               align="center"
-              sx={{ mx: '8px', wordWrap: 'break-word' }}
-              color="text.secondary"
+              sx={{
+                color: 'text.secondary',
+                mx: '8px',
+                wordWrap: 'break-word',
+              }}
             >
               {manufacturerData.address.town}
             </Typography>
             <Typography
               align="center"
-              sx={{ mx: '8px', wordWrap: 'break-word' }}
-              color="text.secondary"
+              sx={{
+                color: 'text.secondary',
+                mx: '8px',
+                wordWrap: 'break-word',
+              }}
             >
               {manufacturerData.address.county}
             </Typography>
             <Typography
               align="center"
-              sx={{ mx: '8px', wordWrap: 'break-word' }}
-              color="text.secondary"
+              sx={{
+                color: 'text.secondary',
+                mx: '8px',
+                wordWrap: 'break-word',
+              }}
             >
               {manufacturerData.address.postcode}
             </Typography>
             <Typography
               align="center"
-              sx={{ mx: '8px', wordWrap: 'break-word' }}
-              color="text.secondary"
+              sx={{
+                color: 'text.secondary',
+                mx: '8px',
+                wordWrap: 'break-word',
+              }}
             >
               {manufacturerData.address.country}
             </Typography>
           </Grid>
 
-          <Grid item xs={12} my={2}>
-            <Typography textAlign={'center'} variant="h6">
+          <Grid
+            size={12}
+            sx={{
+              my: 2,
+            }}
+          >
+            <Typography
+              variant="h6"
+              sx={{
+                textAlign: 'center',
+              }}
+            >
               Last modified:
             </Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <Typography
-              sx={{ mx: '8px' }}
-              textAlign={'center'}
               variant="body1"
-              color="text.secondary"
+              sx={{
+                textAlign: 'center',
+                color: 'text.secondary',
+                mx: '8px',
+              }}
             >
               {formatDateTimeStrings(manufacturerData.modified_time, true)}
             </Typography>
           </Grid>
 
-          <Grid item xs={12} my={2}>
-            <Typography textAlign={'center'} variant="h6">
+          <Grid
+            size={12}
+            sx={{
+              my: 2,
+            }}
+          >
+            <Typography
+              variant="h6"
+              sx={{
+                textAlign: 'center',
+              }}
+            >
               Created:
             </Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <Typography
-              sx={{ mx: '8px' }}
-              textAlign={'center'}
               variant="body1"
-              color="text.secondary"
+              sx={{
+                textAlign: 'center',
+                color: 'text.secondary',
+                mx: '8px',
+              }}
             >
               {formatDateTimeStrings(manufacturerData.created_time, true)}
             </Typography>
@@ -205,7 +281,6 @@ function ManufacturerLandingPage() {
           <LinearProgress />
         </Box>
       )}
-
       <ManufacturerDialog
         open={editManufacturerDialogOpen}
         onClose={() => setEditManufacturerDialogOpen(false)}

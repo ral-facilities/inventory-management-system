@@ -3,7 +3,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import {
   Box,
-  Grid,
   IconButton,
   ListItemIcon,
   ListItemText,
@@ -110,7 +109,7 @@ const PrimaryImage = (props: PrimaryImageProps) => {
   >(false);
 
   return (
-    <Grid>
+    <>
       {!imageLoading && (
         <ThumbnailImage
           image={imagesData?.[0]}
@@ -146,7 +145,7 @@ const PrimaryImage = (props: PrimaryImageProps) => {
           )}
         </>
       )}
-    </Grid>
+    </>
   );
 };
 

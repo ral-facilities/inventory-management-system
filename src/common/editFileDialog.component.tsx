@@ -8,8 +8,8 @@ import {
   DialogContent,
   DialogTitle,
   FormHelperText,
-  Grid,
   InputAdornment,
+  Stack,
   TextField,
 } from '@mui/material';
 import { UseMutationResult } from '@tanstack/react-query';
@@ -153,8 +153,14 @@ const EditFileDialog = (props: FileDialogProps) => {
     <Dialog open={open} maxWidth="sm" fullWidth>
       <DialogTitle>{`Edit ${fileType}`}</DialogTitle>
       <DialogContent>
-        <Grid container direction="column" spacing={1} component="form">
-          <Grid item sx={{ mt: 1 }}>
+        <Stack
+          spacing={1}
+          component="form"
+          sx={{
+            width: '100%',
+          }}
+        >
+          <Box sx={{ marginTop: '8px !important' }}>
             <TextField
               id="object-file-name-input"
               label="File Name"
@@ -162,36 +168,34 @@ const EditFileDialog = (props: FileDialogProps) => {
               {...register('file_name')}
               error={!!errors.file_name}
               helperText={errors.file_name?.message}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">{extension}</InputAdornment>
-                ),
+              fullWidth
+              slotProps={{
+                input: {
+                  endAdornment: (
+                    <InputAdornment position="end">{extension}</InputAdornment>
+                  ),
+                },
               }}
-              fullWidth
             />
-          </Grid>
-          <Grid item>
-            <TextField
-              id="object-description-input"
-              label="Description"
-              {...register('description')}
-              error={!!errors.description}
-              helperText={errors.description?.message}
-              fullWidth
-              multiline
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              id="object-title-input"
-              label="Title"
-              {...register('title')}
-              error={!!errors.title}
-              helperText={errors.title?.message}
-              fullWidth
-            />
-          </Grid>
-        </Grid>
+          </Box>
+          <TextField
+            id="object-description-input"
+            label="Description"
+            {...register('description')}
+            error={!!errors.description}
+            helperText={errors.description?.message}
+            fullWidth
+            multiline
+          />
+          <TextField
+            id="object-title-input"
+            label="Title"
+            {...register('title')}
+            error={!!errors.title}
+            helperText={errors.title?.message}
+            fullWidth
+          />
+        </Stack>
       </DialogContent>
       <DialogActions sx={{ flexDirection: 'column', padding: '0px 24px' }}>
         <Box
