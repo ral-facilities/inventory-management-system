@@ -226,7 +226,6 @@ exports[`Systems Layout Error Component > renders system error page correctly 1`
           We're sorry, the page you requested was not found on the server. If you entered the URL manually please check your spelling and try again. Otherwise, return to the 
           <a
             class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1amp05l-MuiTypography-root-MuiLink-root"
-            data-discover="true"
             href="/systems"
           >
             systems home page

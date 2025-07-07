@@ -92,7 +92,6 @@ exports[`Manufacturer Layout Error Component > renders manufacturer error page c
           We're sorry, the page you requested was not found on the server. If you entered the URL manually please check your spelling and try again. Otherwise, return to the 
           <a
             class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1amp05l-MuiTypography-root-MuiLink-root"
-            data-discover="true"
             href="/manufacturers"
           >
             manufacturers home page

@@ -39,7 +39,6 @@ exports[`Page Not Found Component > renders Admin 404 page 1`] = `
            
           <a
             class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1amp05l-MuiTypography-root-MuiLink-root"
-            data-discover="true"
             href="/admin-ims"
           >
             admin
@@ -93,7 +92,6 @@ exports[`Page Not Found Component > renders Catalogue 404 page 1`] = `
            
           <a
             class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1amp05l-MuiTypography-root-MuiLink-root"
-            data-discover="true"
             href="/catalogue"
           >
             catalogue
@@ -147,7 +145,6 @@ exports[`Page Not Found Component > renders Manufacturers 404 page 1`] = `
            
           <a
             class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1amp05l-MuiTypography-root-MuiLink-root"
-            data-discover="true"
             href="/manufacturers"
           >
             manufacturers
@@ -201,7 +198,6 @@ exports[`Page Not Found Component > renders Systems 404 page 1`] = `
            
           <a
             class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1amp05l-MuiTypography-root-MuiLink-root"
-            data-discover="true"
             href="/systems"
           >
             systems
@@ -255,7 +251,6 @@ exports[`Page Not Found Component > renders the basic 404 page 1`] = `
            
           <a
             class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1amp05l-MuiTypography-root-MuiLink-root"
-            data-discover="true"
             href="/"
           >
              home page
