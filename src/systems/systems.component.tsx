@@ -334,7 +334,7 @@ function Systems() {
     <>
       <Box
         sx={{
-          height: '100%',
+          height: getPageHeightCalc('80px'),
         }}
       >
         <Grid
