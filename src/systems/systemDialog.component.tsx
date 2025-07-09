@@ -20,9 +20,13 @@ import {
   SystemImportanceType,
   SystemPatch,
   SystemPost,
+  type APIError,
+  type SystemType,
 } from '../api/api.types';
 import {
   getSystemImportanceColour,
+  useGetSystem,
+  useGetSystemTypes,
   usePatchSystem,
   usePostSystem,
 } from '../api/systems';
@@ -53,6 +57,17 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
   const { mutateAsync: patchSystem, isPending: isEditPending } =
     usePatchSystem();
 
+  const { data: parentSystem } = useGetSystem(parentId);
+
+  const parentSystemTypeId = React.useMemo(() => {
+    if (parentSystem) {
+      return parentSystem.type_id;
+    }
+    return null;
+  }, [parentSystem]);
+
+  const { data: systemsTypes } = useGetSystemTypes();
+
   const initialSystem: SystemPost = React.useMemo(
     () =>
       isNotCreating
@@ -62,6 +77,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
             location: selectedSystem.location ?? '',
             owner: selectedSystem.owner ?? '',
             importance: selectedSystem.importance,
+            type_id: selectedSystem.type_id,
           }
         : {
             name: '',
@@ -69,8 +85,9 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
             location: '',
             owner: '',
             importance: SystemImportanceType.MEDIUM,
+            type_id: parentSystemTypeId ?? '',
           },
-    [isNotCreating, selectedSystem]
+    [isNotCreating, parentSystemTypeId, selectedSystem]
   );
 
   const {
@@ -111,14 +128,31 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
       postSystem(system)
         .then(() => handleClose())
         .catch((error: AxiosError) => {
-          // 409 occurs when there is a system with a duplicate name with the
-          // same parent
-          if (error.response?.status === 409) {
+          const status = error.response?.status;
+          const errorMessage = (error.response?.data as APIError).detail;
+          if (
+            status === 409 &&
+            errorMessage.includes(
+              'A system with the same name already exists within the parent system'
+            )
+          ) {
             setError('name', {
               message:
                 'A System with the same name already exists within the same parent System. Please enter a different name.',
             });
-          } else handleIMS_APIError(error);
+            return;
+          }
+          if (
+            status === 422 &&
+            errorMessage.includes('Specified system type not found')
+          ) {
+            setError('type_id', {
+              message:
+                'Specified system type not found. Please select a valid system type.',
+            });
+            return;
+          }
+          handleIMS_APIError(error);
         });
     },
     [postSystem, handleClose, setError]
@@ -137,13 +171,15 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
         const isOwnerUpdated = systemData.owner !== selectedSystem?.owner;
         const isImportanceUpdated =
           systemData.importance !== selectedSystem?.importance;
+        const isTypeUpdated = systemData.type_id !== selectedSystem?.type_id;
 
         if (
           isNameUpdated ||
           isDescriptionUpdated ||
           isLocationUpdated ||
           isOwnerUpdated ||
-          isImportanceUpdated
+          isImportanceUpdated ||
+          isTypeUpdated
         ) {
           const editSystemData: SystemPatch = {};
 
@@ -154,6 +190,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
           if (isOwnerUpdated) editSystemData.owner = systemData.owner;
           if (isImportanceUpdated)
             editSystemData.importance = systemData.importance;
+          if (isTypeUpdated) editSystemData.type_id = systemData.type_id;
 
           patchSystem({
             id: selectedSystem.id,
@@ -163,12 +200,39 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
               handleClose();
             })
             .catch((error: AxiosError) => {
-              // 409 occurs when there is a system with a duplicate name with the
-              // same parent
-              if (error.response?.status === 409) {
+              const status = error.response?.status;
+              const errorMessage = (error.response?.data as APIError).detail;
+              if (
+                status === 409 &&
+                errorMessage.includes(
+                  'A system with the same name already exists within the parent system'
+                )
+              ) {
                 setError('name', {
                   message:
                     'A System with the same name already exists within the same parent System. Please enter a different name.',
+                });
+                return;
+              }
+              if (
+                status === 422 &&
+                errorMessage.includes(
+                  'Cannot change the type of a system when it has children'
+                )
+              ) {
+                setError('type_id', {
+                  message:
+                    'Cannot change the type of a system that has child systems. Please remove all child systems before changing the type.',
+                });
+                return;
+              }
+              if (
+                status === 422 &&
+                errorMessage.includes('Specified system type not found')
+              ) {
+                setError('type_id', {
+                  message:
+                    'Specified system type not found. Please select a valid system type.',
                 });
                 return;
               }
@@ -221,6 +285,44 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
               fullWidth
             />
           </Box>
+          <Controller
+            control={control}
+            name="type_id"
+            render={({ field: { value, onChange } }) => (
+              <Autocomplete
+                disableClearable={value != null}
+                id="systems-type-id-input"
+                disabled={!!parentSystemTypeId}
+                value={
+                  parentSystemTypeId
+                    ? (systemsTypes?.find(
+                        (systemType) => systemType.id === parentSystemTypeId
+                      ) ?? null)
+                    : (systemsTypes?.find(
+                        (systemType) => systemType.id === value
+                      ) ?? null)
+                }
+                onChange={(_event, systemType: SystemType | null) => {
+                  onChange(systemType?.id ?? null);
+                }}
+                sx={{ alignItems: 'center' }}
+                fullWidth
+                options={systemsTypes ?? []}
+                isOptionEqualToValue={(option, value) => option.id == value.id}
+                getOptionLabel={(option) => option.value}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    required={true}
+                    disabled={!!parentSystemTypeId}
+                    label="Type"
+                    error={!!errors.type_id}
+                    helperText={errors.type_id?.message}
+                  />
+                )}
+              />
+            )}
+          />
           <TextField
             id="system-description-input"
             label="Description"

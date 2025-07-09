@@ -160,6 +160,7 @@ const SystemsActionMenu = (props: {
           <ListItemText>{props.selectedSystems.length} selected</ListItemText>
         </MenuItem>
       </Menu>
+
       {dialogType && (
         <SystemDirectoryDialog
           open={Boolean(dialogType)}
