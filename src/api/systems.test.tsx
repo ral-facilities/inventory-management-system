@@ -3,6 +3,7 @@ import { MockInstance } from 'vitest';
 import { CopyToSystem, MoveToSystem } from '../app.types';
 import SystemBreadcrumbsJSON from '../mocks/SystemBreadcrumbs.json';
 import SystemsJSON from '../mocks/Systems.json';
+import SystemTypesJSON from '../mocks/SystemTypes.json';
 import { hooksWrapperWithProviders } from '../testUtils';
 import { imsApi } from './api';
 import {
@@ -18,6 +19,7 @@ import {
   useGetSystemIds,
   useGetSystems,
   useGetSystemsBreadcrumbs,
+  useGetSystemTypes,
   useMoveToSystem,
   usePatchSystem,
   usePostSystem,
@@ -74,6 +76,20 @@ describe('System api functions', () => {
           (system) => system.parent_id === '65328f34a40ff5301575a4e3'
         )
       );
+    });
+  });
+
+  describe('useGetSystemTypes', () => {
+    it('sends request to fetch all system types and returns successful response', async () => {
+      const { result } = renderHook(() => useGetSystemTypes(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+
+      expect(result.current.data).toEqual(SystemTypesJSON);
     });
   });
 

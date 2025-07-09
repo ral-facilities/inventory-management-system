@@ -26,6 +26,7 @@ import {
   System,
   SystemPatch,
   SystemPost,
+  SystemType,
   Unit,
   UnitPost,
   UsageStatus,
@@ -41,6 +42,7 @@ import ItemsJSON from './Items.json';
 import ManufacturersJSON from './Manufacturers.json';
 import SystemBreadcrumbsJSON from './SystemBreadcrumbs.json';
 import SystemsJSON from './Systems.json';
+import SystemTypesJSON from './SystemTypes.json';
 import UnitsJSON from './Units.json';
 import UsageStatusJSON from './UsageStatuses.json';
 
@@ -634,6 +636,12 @@ export const handlers = [
           { detail: 'A System with such ID was not found' },
           { status: 404 }
         );
+    }
+  ),
+  http.get<PathParams, DefaultBodyType, SystemType[]>(
+    '/v1/systems-types',
+    () => {
+      return HttpResponse.json(SystemTypesJSON, { status: 200 });
     }
   ),
 

@@ -25,6 +25,7 @@ export const useGetAdminPageName = (): string | null => {
 const adminBreadCrumbsTrails: { [key: string]: BreadcrumbsInfo['trail'] } = {
   ['units']: [['units', 'Units']],
   ['usage-statuses']: [['usage-statuses', 'Usage statuses']],
+  ['system-types']: [['system-types', 'System types']],
 };
 
 function AdminLayout() {

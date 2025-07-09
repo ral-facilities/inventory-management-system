@@ -90,6 +90,11 @@ export interface System extends CreatedModifiedMixin, Required<SystemPost> {
   code: string;
 }
 
+export interface SystemType {
+  id: string;
+  value: string;
+}
+
 // ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
 
 export enum AllowedValuesListType {

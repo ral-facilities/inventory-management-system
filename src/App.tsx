@@ -20,6 +20,7 @@ import AdminCardView from './admin/adminCardView.component';
 import AdminLayout, {
   AdminErrorComponent,
 } from './admin/adminLayout.component';
+import SystemTypes from './admin/systemTypes/systemTypes.component';
 import Units from './admin/units/units.component';
 import UsageStatuses from './admin/usageStatuses/usageStatuses.component';
 import {
@@ -111,6 +112,7 @@ const routeObject: RouteObject[] = [
           { index: true, Component: AdminCardView },
           { path: paths.adminUnits, Component: Units },
           { path: paths.adminUsageStatuses, Component: UsageStatuses },
+          { path: paths.adminSystemTypes, Component: SystemTypes },
           {
             path: '*',
             Component: AdminErrorComponent,
