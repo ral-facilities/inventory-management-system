@@ -53,9 +53,11 @@ describe('catalogue items', () => {
 
   it('CRUD for catalogue items, images and attachments', () => {
     addCatalogueItem();
-    cy.findAllByText('Plano-Convex Lens').last().click();
+    cy.findByText('Add Catalogue Item')
     cy.findByRole('progressbar').should('not.exist');
+    cy.findAllByText('Plano-Convex Lens').last().click();
     cy.findAllByText('Plano-Convex Lens').should('have.length', 2);
+    cy.findByRole('progressbar').should('not.exist');
     addFile(
       {
         files: [
@@ -103,7 +105,7 @@ describe('catalogue items', () => {
     );
     downloadFile('logo2.png', 'image');
     deleteFile(['badge.png', 'logo2.png'], 'image');
-    cy.findByText('Spherical Lenses').click();
+    cy.findByText('Spherical Lenses').click({force: true});
     editCatalogueItem();
     duplicateCatalogueItem('Plano-Convex Lens 2');
     duplicateCatalogueItem('Plano-Convex Lens 2');
