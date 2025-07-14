@@ -36,14 +36,12 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
   const { open, onClose, selectedSystems, onChangeSelectedSystems, type } =
     props;
 
-  const { data: parentSystem } = useGetSystem(props.parentSystemId);
-
   const parentSystemTypeId = React.useMemo(() => {
-    if (parentSystem) {
-      return parentSystem.type_id;
+    if (selectedSystems.length > 0) {
+      return selectedSystems[0].type_id;
     }
     return null;
-  }, [parentSystem]);
+  }, [selectedSystems]);
 
   // Store here and update only if changed to reduce re-renders and allow
   // navigation
