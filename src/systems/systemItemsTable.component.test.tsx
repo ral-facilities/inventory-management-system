@@ -15,7 +15,7 @@ describe('SystemItemsTable', () => {
   let props: SystemItemsTableProps;
   let user: UserEvent;
 
-  const mockSystem: System = SystemsJSON[2] as System;
+  const mockSystem: System = SystemsJSON[3] as System;
 
   const createView = () => {
     return renderComponentWithRouterProvider(

@@ -115,8 +115,8 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
     muiTableBodyRowProps: ({ row }) => {
       const canPlaceHere =
         (type === 'copyTo' || !selectedSystemIds.includes(row.original.id)) &&
-        isSystemSelectable &&
-        isSystemSelectable(row.original);
+        (isSystemSelectable ? isSystemSelectable(row.original) : true);
+
       return {
         component: TableRow,
         onClick: () => canPlaceHere && onChangeParentId(row.original.id),
@@ -135,8 +135,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
               const canPlaceHere =
                 (type === 'copyTo' ||
                   !selectedSystemIds.includes(row.original.id)) &&
-                isSystemSelectable &&
-                isSystemSelectable(row.original);
+                (isSystemSelectable ? isSystemSelectable(row.original) : true);
               return (
                 <TableBodyCellOverFlowTip
                   {...({

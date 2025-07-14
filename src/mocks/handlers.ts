@@ -610,11 +610,19 @@ export const handlers = [
           },
           { status: 409 }
         );
-      } else if (body.name === 'Error 500')
+      } else if (body.name === 'Error 500') {
         return HttpResponse.json(
           { detail: 'Something went wrong' },
           { status: 500 }
         );
+      } else if (body.name === 'Error Not found type') {
+        return HttpResponse.json(
+          {
+            detail: 'Specified system type not found',
+          },
+          { status: 422 }
+        );
+      }
       return HttpResponse.json(
         {
           ...body,
@@ -693,11 +701,26 @@ export const handlers = [
           },
           { status: 409 }
         );
-      } else if (body.name === 'Error 500')
+      } else if (body.name === 'Error 500') {
         return HttpResponse.json(
           { detail: 'Something went wrong' },
           { status: 500 }
         );
+      } else if (body.name === 'Error Not found type') {
+        return HttpResponse.json(
+          {
+            detail: 'Specified system type not found',
+          },
+          { status: 422 }
+        );
+      } else if (body.name === 'Error editing type whilst having children') {
+        return HttpResponse.json(
+          {
+            detail: 'Cannot change the type of a system when it has children',
+          },
+          { status: 422 }
+        );
+      }
 
       const validSystem = SystemsJSON.find(
         (value) => value.id === id

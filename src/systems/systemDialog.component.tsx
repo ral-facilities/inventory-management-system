@@ -133,7 +133,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
           if (
             status === 409 &&
             errorMessage.includes(
-              'A system with the same name already exists within the parent system'
+              'A System with the same name already exists within the same parent System'
             )
           ) {
             setError('name', {
@@ -205,7 +205,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
               if (
                 status === 409 &&
                 errorMessage.includes(
-                  'A system with the same name already exists within the parent system'
+                  'A System with the same name already exists within the same parent System'
                 )
               ) {
                 setError('name', {
@@ -222,7 +222,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
               ) {
                 setError('type_id', {
                   message:
-                    'Cannot change the type of a system that has child systems. Please remove all child systems before changing the type.',
+                    'Cannot change the type of a system that has child systems and linked items. Please remove all child systems and linked items before changing the type.',
                 });
                 return;
               }
