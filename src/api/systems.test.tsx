@@ -191,6 +191,7 @@ describe('System api functions', () => {
       description: 'Description',
       location: 'Location',
       owner: 'Owner',
+      type_id: '1',
       importance: SystemImportanceType.MEDIUM,
     };
 

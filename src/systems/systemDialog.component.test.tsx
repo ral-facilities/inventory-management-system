@@ -235,6 +235,7 @@ describe('Systems Dialog', () => {
       description: 'Description',
       parent_id: null,
       id: '65328f34a40ff5301575a4e3',
+      type_id: '1',
       code: 'mock-laser',
       ...CREATED_MODIFIED_TIME_VALUES,
     };
@@ -419,6 +420,7 @@ describe('Systems Dialog', () => {
       parent_id: null,
       id: '65328f34a40ff5301575a4e3',
       code: 'mock-laser',
+      type_id: '2',
       ...CREATED_MODIFIED_TIME_VALUES,
     };
 
