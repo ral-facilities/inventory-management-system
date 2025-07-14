@@ -460,7 +460,7 @@ describe('Systems Dialog', () => {
       expect(mockOnClose).not.toHaveBeenCalled();
     });
 
-    it('displays error message system has child elements', async () => {
+    it('displays error message if user edits the type when system has child elements', async () => {
       createView();
 
       const values = {

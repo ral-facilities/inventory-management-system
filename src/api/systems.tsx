@@ -36,7 +36,7 @@ export const getSystemImportanceColour = (
 };
 
 const getSystemTypes = async (): Promise<SystemType[]> => {
-  return imsApi.get(`/v1/systems-types`).then((response) => {
+  return imsApi.get(`/v1/system-types`).then((response) => {
     return response.data;
   });
 };
