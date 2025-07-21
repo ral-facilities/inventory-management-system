@@ -93,8 +93,8 @@ export const copyToSystems = (values: {
   cy.findByRole('dialog').should('not.exist', { timeout: 10000 });
 
   cy.findByText('Storage').click();
-  cy.findByText('Importance').should('exist')
-  cy.findByRole('progressbar').should('not.exist')
+  cy.findByText('Importance').should('exist');
+  cy.findByRole('progressbar').should('not.exist');
 
   for (let i = 0; i < values.checkedSystems.length; i++) {
     deleteSystem(values.checkedSystemsNames[i], 0);
@@ -124,8 +124,8 @@ export const moveToSystems = (values: {
   cy.findByRole('dialog').should('not.exist', { timeout: 10000 });
 
   cy.findByText('Storage').click();
-  cy.findByText('Importance').should('exist')
-  cy.findByRole('progressbar').should('not.exist')
+  cy.findByText('Importance').should('exist');
+  cy.findByRole('progressbar').should('not.exist');
 
   for (let i = 0; i < values.checkedSystems.length; i++) {
     deleteSystem(values.checkedSystemsNames[i], 0);
@@ -138,8 +138,8 @@ export const moveItemToSystem = (values: {
   checkedItemsNames: string[];
 }) => {
   cy.findByText('Storage').click();
-  cy.findByText('Importance').should('exist')
-  cy.findByRole('progressbar').should('not.exist')
+  cy.findByText('Importance').should('exist');
+  cy.findByRole('progressbar').should('not.exist');
 
   for (let i = 0; i < values.checkedItems.length; i++) {
     cy.findAllByLabelText('Toggle select row')

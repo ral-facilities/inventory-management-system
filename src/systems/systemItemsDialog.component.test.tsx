@@ -296,68 +296,64 @@ describe('SystemItemsDialog', () => {
       ).not.toBeInTheDocument();
     }, 10000);
 
-    it(
-      'moves selected systems (to non-root system)',
-      async () => {
-        createView();
+    it('moves selected systems (to non-root system)', async () => {
+      createView();
 
-        await waitFor(() => {
-          expect(screen.getByText('Giant laser')).toBeInTheDocument();
-        });
+      await waitFor(() => {
+        expect(screen.getByText('Giant laser')).toBeInTheDocument();
+      });
 
-        await user.click(screen.getByText('Giant laser'));
+      await user.click(screen.getByText('Giant laser'));
 
-        await waitFor(() => {
-          expect(screen.getByText('Smaller laser')).toBeInTheDocument();
-        });
+      await waitFor(() => {
+        expect(screen.getByText('Smaller laser')).toBeInTheDocument();
+      });
 
-        await user.click(screen.getByRole('button', { name: 'Next' }));
+      await user.click(screen.getByRole('button', { name: 'Next' }));
 
-        await waitFor(
-          () => {
-            expect(
-              screen.getByRole('cell', {
-                name: `Cameras 1 (2)`,
-              })
-            ).toBeInTheDocument();
-          },
-          { timeout: 4000 }
-        );
+      await waitFor(
+        () => {
+          expect(
+            screen.getByRole('cell', {
+              name: `Cameras 1 (2)`,
+            })
+          ).toBeInTheDocument();
+        },
+        { timeout: 4000 }
+      );
 
-        // Ensure no loading bars visible
-        await waitFor(() =>
-          expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
-        );
-        await user.click(screen.getAllByLabelText('Expand all')[1]);
+      // Ensure no loading bars visible
+      await waitFor(() =>
+        expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+      );
+      await user.click(screen.getAllByLabelText('Expand all')[1]);
 
-        await selectUsageStatus({
-          index: 1,
-          usageStatus: 'Used',
-        });
+      await selectUsageStatus({
+        index: 1,
+        usageStatus: 'Used',
+      });
 
-        await selectUsageStatus({
-          index: 2,
-          usageStatus: 'Used',
-        });
+      await selectUsageStatus({
+        index: 2,
+        usageStatus: 'Used',
+      });
 
-        await user.click(screen.getByRole('button', { name: 'Back' }));
-        await user.click(screen.getByRole('button', { name: 'Next' }));
+      await user.click(screen.getByRole('button', { name: 'Back' }));
+      await user.click(screen.getByRole('button', { name: 'Next' }));
 
-        await user.click(screen.getByRole('button', { name: 'Finish' }));
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
 
-        expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/KvT2Ox7n', {
-          system_id: '65328f34a40ff5301575a4e3',
-          usage_status_id: '2',
-        });
-        expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
-          system_id: '65328f34a40ff5301575a4e3',
-          usage_status_id: '2',
-        });
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/KvT2Ox7n', {
+        system_id: '65328f34a40ff5301575a4e3',
+        usage_status_id: '2',
+      });
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
+        system_id: '65328f34a40ff5301575a4e3',
+        usage_status_id: '2',
+      });
 
-        expect(mockOnClose).toHaveBeenCalled();
-        expect(mockOnChangeSelectedItems).toHaveBeenCalledWith({});
-      },
-      { timeout: 10000 }
-    );
+      expect(mockOnClose).toHaveBeenCalled();
+      expect(mockOnChangeSelectedItems).toHaveBeenCalledWith({});
+    }, 10000);
   });
 });
