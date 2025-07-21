@@ -14,7 +14,7 @@ import {
   RouterProvider,
   createBrowserRouter,
   type RouteObject,
-} from 'react-router-dom';
+} from 'react-router';
 import AdminCardView from './admin/adminCardView.component';
 import AdminLayout, {
   AdminErrorComponent,

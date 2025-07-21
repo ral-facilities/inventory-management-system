@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import type { BreadcrumbsInfo } from '../api/api.types';
 import { RoutesHomeLocation, type RoutesHomeLocationType } from '../app.types';
 import Breadcrumbs from '../view/breadcrumbs.component';

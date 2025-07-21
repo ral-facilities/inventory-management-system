@@ -12,7 +12,7 @@ import {
   MRT_VisibilityState,
 } from 'material-react-table';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router';
 
 // State as will be stored after parsing from search params
 interface State {
