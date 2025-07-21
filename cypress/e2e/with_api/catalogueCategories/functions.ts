@@ -218,6 +218,7 @@ export const addCatalogueCategories = (ignoreChecks?: boolean) => {
   );
 
   cy.findByText('Lenses').click();
+  cy.findByText('No results found').should('exist');
   cy.findByRole('progressbar').should('not.exist');
 
   modifyCatalogueCategory(
