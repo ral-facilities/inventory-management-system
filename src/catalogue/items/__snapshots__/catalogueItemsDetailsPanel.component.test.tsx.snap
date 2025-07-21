@@ -121,7 +121,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                         Obsolete
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                       >
                         No
                       </p>
@@ -671,7 +671,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                         Obsolete
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                       >
                         No
                       </p>
@@ -1232,7 +1232,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                         Obsolete
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                       >
                         No
                       </p>
@@ -1752,7 +1752,7 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                         Obsolete
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                       >
                         Yes
                       </p>
@@ -2293,7 +2293,7 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                         Obsolete
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                       >
                         Yes
                       </p>
@@ -2833,7 +2833,7 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                         Obsolete
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                       >
                         Yes
                       </p>
@@ -3373,7 +3373,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly (emp
                         Obsolete
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                       >
                         No
                       </p>
@@ -3885,7 +3885,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                         Obsolete
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                       >
                         Yes
                       </p>
