@@ -2,7 +2,7 @@ import AttachmentOutlinedIcon from '@mui/icons-material/AttachmentOutlined';
 import CollectionsOutlinedIcon from '@mui/icons-material/CollectionsOutlined';
 import { Box, Stack, Tabs } from '@mui/material';
 import React from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 import { a11yProps, StyledTab } from '../../common/tab/tab.utils';
 import TabPanel from '../../common/tab/tabPanel.component';
 import AttachmentsTable from '../attachments/attachmentsTable.component';

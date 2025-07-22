@@ -2223,6 +2223,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                 >
                   <a
                     class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-19ok5lw-MuiTypography-root-MuiLink-root"
+                    data-discover="true"
                     href="/catalogue/13/items/21"
                   >
                     Turbomolecular Pumps 42
@@ -2417,6 +2418,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
               >
                 <a
                   class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                  data-discover="true"
                   href="/catalogue/13/items/21/items/13h6TOX6"
                 >
                   5xE1KSraISvu
@@ -2601,6 +2603,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
               >
                 <a
                   class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                  data-discover="true"
                   href="/catalogue/13/items/21/items/13h6TOX7"
                 >
                   5xE1KSraISvu
@@ -2715,6 +2718,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                 >
                   <a
                     class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-19ok5lw-MuiTypography-root-MuiLink-root"
+                    data-discover="true"
                     href="/catalogue/13/items/22"
                   >
                     Turbomolecular Pumps 43

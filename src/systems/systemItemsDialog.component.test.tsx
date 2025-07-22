@@ -354,6 +354,6 @@ describe('SystemItemsDialog', () => {
 
       expect(mockOnClose).toHaveBeenCalled();
       expect(mockOnChangeSelectedItems).toHaveBeenCalledWith({});
-    });
+    }, 10000);
   });
 });

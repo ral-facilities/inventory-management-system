@@ -35,7 +35,7 @@ import {
   useMaterialReactTable,
 } from 'material-react-table';
 import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router';
 import { System } from '../api/api.types';
 import { useGetSystems } from '../api/systems';
 import { usePreservedTableState } from '../common/preservedTableState.component';
