@@ -1,6 +1,6 @@
 import type { QueryClient } from '@tanstack/react-query';
 import React from 'react';
-import { Outlet, useParams, type LoaderFunctionArgs } from 'react-router-dom';
+import { Outlet, useParams, type LoaderFunctionArgs } from 'react-router';
 import { BreadcrumbsInfo } from '../api/api.types';
 import { getManufacturerQuery, useGetManufacturer } from '../api/manufacturers';
 import BaseLayoutHeader from '../common/baseLayoutHeader.component';

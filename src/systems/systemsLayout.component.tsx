@@ -1,5 +1,5 @@
 import type { QueryClient } from '@tanstack/react-query';
-import { Outlet, useParams, type LoaderFunctionArgs } from 'react-router-dom';
+import { Outlet, useParams, type LoaderFunctionArgs } from 'react-router';
 import { getSystemQuery, useGetSystemsBreadcrumbs } from '../api/systems';
 import BaseLayoutHeader from '../common/baseLayoutHeader.component';
 import PageNotFoundComponent from '../common/pageNotFound/pageNotFound.component';

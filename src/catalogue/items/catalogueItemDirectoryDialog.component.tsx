@@ -155,7 +155,7 @@ const CatalogueItemDirectoryDialog = (
     <Dialog
       open={open}
       maxWidth="lg"
-      PaperProps={{ sx: { height: '692px' } }}
+      PaperProps={{ sx: { height: '770px' } }}
       fullWidth
     >
       <DialogTitle sx={{ marginLeft: 2 }}>
@@ -221,6 +221,19 @@ const CatalogueItemDirectoryDialog = (
             catalogueCategoryParentId={parentCategoryId ?? undefined}
           />
         )}
+        <Box
+          sx={{
+            mx: 3,
+            marginTop: 3,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
+            {errorMessage}
+          </FormHelperText>
+        </Box>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
@@ -245,21 +258,6 @@ const CatalogueItemDirectoryDialog = (
           {requestType === 'moveTo' ? 'Move' : 'Copy'} here
         </Button>
       </DialogActions>
-      {errorMessage && (
-        <Box
-          sx={{
-            mx: 3,
-            marginBottom: 3,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
-            {errorMessage}
-          </FormHelperText>
-        </Box>
-      )}
     </Dialog>
   );
 };

@@ -768,6 +768,8 @@ describe('Items', () => {
       ).should('exist');
 
       cy.findByText('Attachments').click();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).scrollIntoView();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).click();
 
       cy.findAllByLabelText('Row Actions').first().click();
       cy.findByText('Download').click();
@@ -795,6 +797,8 @@ describe('Items', () => {
       ).should('exist');
 
       cy.findByText('Attachments').click();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).scrollIntoView();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).click();
 
       cy.findAllByLabelText('Row Actions').first().click();
       cy.findByText('Edit').click();
@@ -837,6 +841,8 @@ describe('Items', () => {
       ).should('exist');
 
       cy.findByText('Attachments').click();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).scrollIntoView();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).click();
 
       cy.findAllByLabelText('Row Actions').first().click();
       cy.findByText('Edit').click();
@@ -859,6 +865,8 @@ describe('Items', () => {
       ).should('exist');
 
       cy.findByText('Attachments').click();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).scrollIntoView();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).click();
 
       cy.findAllByLabelText('Row Actions').first().click();
       cy.findByText('Edit').click();
@@ -881,6 +889,8 @@ describe('Items', () => {
       ).should('exist');
 
       cy.findByText('Attachments').click();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).scrollIntoView();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).click();
 
       cy.findAllByLabelText('Row Actions').first().click();
       cy.findByText('Edit').click();
@@ -906,6 +916,8 @@ describe('Items', () => {
       ).should('exist');
 
       cy.findByText('Attachments').click();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).scrollIntoView();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).click();
 
       cy.findAllByLabelText('Row Actions').first().click();
       cy.findByText('Delete').click();

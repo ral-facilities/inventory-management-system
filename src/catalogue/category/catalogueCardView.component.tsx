@@ -25,7 +25,7 @@ import {
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router';
 import { CatalogueCategory } from '../../api/api.types';
 import {
   useGetCatalogueCategories,
@@ -538,6 +538,7 @@ function CatalogueCardView() {
                 zIndex: 1000,
                 paddingTop: 2.5,
                 paddingBottom: 2.5,
+                width: '100%',
               }}
             >
               <Collapse

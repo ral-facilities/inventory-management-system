@@ -2,7 +2,7 @@ import { Box, Button, Paper, alpha, styled } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import PageNotFoundComponent from '../common/pageNotFound/pageNotFound.component';
 import { InventoryManagementSystemSettingsContext } from '../configProvider.component';
 import BackgroundImage from '/images/background.jpg';

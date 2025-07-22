@@ -1,6 +1,5 @@
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
-import type { Router } from '@remix-run/router';
 import {
   QueryCache,
   QueryClient,
@@ -15,7 +14,7 @@ import {
   RouterProvider,
   createBrowserRouter,
   type RouteObject,
-} from 'react-router-dom';
+} from 'react-router';
 import AdminCardView from './admin/adminCardView.component';
 import AdminLayout, {
   AdminErrorComponent,
@@ -227,22 +226,15 @@ const routeObject: RouteObject[] = [
   },
 ];
 
-const reactRouterFutureFlags = {
-  future: {
-    v7_relativeSplatPath: true,
-    v7_fetcherPersist: true,
-    v7_normalizeFormMethod: true,
-    v7_partialHydration: true,
-    v7_skipActionErrorRevalidation: true,
-  },
-};
+//can no longer import from @remix-run/router
+//solution found here https://github.com/remix-run/react-router/discussions/9915
+type Router = ReturnType<typeof createBrowserRouter>;
 
 let router: Router;
 const isUsingMSW =
   import.meta.env.DEV || import.meta.env.VITE_APP_INCLUDE_MSW === 'true';
 
-if (!isUsingMSW)
-  router = createBrowserRouter(routeObject, reactRouterFutureFlags);
+if (!isUsingMSW) router = createBrowserRouter(routeObject);
 
 // If the application is using MSW (Mock Service Worker),
 // it creates the router using `createBrowserRouter` within the App so it can wait for MSW to load. This is necessary
@@ -250,17 +242,8 @@ if (!isUsingMSW)
 // environment, this is not needed.
 
 export default function App() {
-  if (isUsingMSW)
-    router = createBrowserRouter(routeObject, reactRouterFutureFlags);
-  return (
-    <RouterProvider
-      router={router}
-      future={{
-        // Disabled for now and will be addressed in #1259
-        v7_startTransition: false,
-      }}
-    />
-  );
+  if (isUsingMSW) router = createBrowserRouter(routeObject);
+  return <RouterProvider router={router} />;
 }
 
 export function Layout() {

@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { useGetManufacturer } from '../api/manufacturers';
 import { formatDateTimeStrings } from '../utils';
 import ManufacturerDialog from './manufacturerDialog.component';
