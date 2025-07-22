@@ -12,7 +12,7 @@ import {
   MRT_VisibilityState,
 } from 'material-react-table';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router';
 
 // State as will be stored after parsing from search params
 interface State {
@@ -201,7 +201,6 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       // Get the expected unparsed state in the URL for the current internal state
       const parsedStateSearchParams = convertInternalState(parsedState);
       const newUnparsedState = JSON.stringify(parsedStateSearchParams);
-
       // Wait for a column order change if required
       if (unparsedState !== newUnparsedState) {
         // Only set the search params if its just a current page state change and not a browser level change
@@ -531,9 +530,13 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       // Ignore first update (pagination and column order has a habit of being set in MRT
       // shortly after the first render with actual data even if disabled in the table itself)
       // similar to https://www.material-react-table.com/docs/guides/state-management
+      // In MRT v3 it sets pagination after first render if the pageIndex is not 0, otherwise
+      // behaves normally
       if (firstUpdate.current.p === undefined && !props?.paginationOnly) {
         firstUpdate.current.p = getValueFromUpdater(updaterOrValue, state.p);
-        return;
+        if (state.p.pageIndex != 0) {
+          return;
+        }
       }
       updateSearchParams((prevState: StatePartial) => {
         const newValue = getValueFromUpdater(

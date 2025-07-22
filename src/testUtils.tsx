@@ -8,7 +8,7 @@ import {
   RouterProvider,
   createBrowserRouter,
   createMemoryRouter,
-} from 'react-router-dom';
+} from 'react-router';
 import {
   CatalogueCategory,
   CatalogueCategoryProperty,

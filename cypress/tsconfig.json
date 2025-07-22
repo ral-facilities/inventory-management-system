@@ -1,18 +1,10 @@
 {
-    "compilerOptions": {
-        "strict": true,
-        "target": "es5",
-        "skipLibCheck": true,
-        "lib": [
-            "dom",
-            "esnext"
-        ],
-        "types": [
-            "cypress",
-            "@testing-library/cypress"
-        ]
-    },
-    "include": [
-        "**/*"
-    ],
+  "compilerOptions": {
+    "strict": true,
+    "target": "es5",
+    "skipLibCheck": true,
+    "lib": ["dom", "esnext"],
+    "types": ["cypress", "@testing-library/cypress"]
+  },
+  "include": ["**/*"]
 }

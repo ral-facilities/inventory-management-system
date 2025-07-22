@@ -12,7 +12,7 @@ import {
 import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router';
 import { CatalogueCategory, CatalogueItem } from '../../api/api.types';
 import { useGetCatalogueCategory } from '../../api/catalogueCategories';
 import { useGetCatalogueItem } from '../../api/catalogueItems';

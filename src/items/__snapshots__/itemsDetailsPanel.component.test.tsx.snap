@@ -223,6 +223,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                       >
                         <a
                           class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                          data-discover="true"
                           href="/systems/undefined"
                           target="_blank"
                         />
@@ -446,6 +447,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                     >
                       <a
                         class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                        data-discover="true"
                         href="/manufacturers/undefined"
                       />
                     </p>
@@ -777,6 +779,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (no dat
                       >
                         <a
                           class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                          data-discover="true"
                           href="/systems/undefined"
                           target="_blank"
                         />
@@ -1000,6 +1003,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (no dat
                     >
                       <a
                         class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                        data-discover="true"
                         href="/manufacturers/undefined"
                       />
                     </p>
@@ -1331,6 +1335,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                       >
                         <a
                           class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                          data-discover="true"
                           href="/systems/undefined"
                           target="_blank"
                         />
@@ -1554,6 +1559,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                     >
                       <a
                         class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                        data-discover="true"
                         href="/manufacturers/undefined"
                       />
                     </p>
@@ -1885,6 +1891,7 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                       >
                         <a
                           class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                          data-discover="true"
                           href="/systems/undefined"
                           target="_blank"
                         />
@@ -2108,6 +2115,7 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                     >
                       <a
                         class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                        data-discover="true"
                         href="/manufacturers/undefined"
                       />
                     </p>
@@ -2471,6 +2479,7 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                       >
                         <a
                           class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                          data-discover="true"
                           href="/systems/65328f34a40ff5301575a4e3"
                           target="_blank"
                         >
@@ -2695,6 +2704,7 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                     >
                       <a
                         class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                        data-discover="true"
                         href="/manufacturers/1"
                       >
                         Manufacturer A
@@ -3076,6 +3086,7 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                       >
                         <a
                           class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                          data-discover="true"
                           href="/systems/65328f34a40ff5301575a4e3"
                           target="_blank"
                         >
@@ -3301,6 +3312,7 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                     >
                       <a
                         class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                        data-discover="true"
                         href="/manufacturers/1"
                       >
                         Manufacturer A
@@ -3681,6 +3693,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly (emp
                       >
                         <a
                           class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                          data-discover="true"
                           href="/systems/656da8ef9cba7a76c6f81a5d"
                           target="_blank"
                         >
@@ -3790,6 +3803,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly (emp
                     >
                       <a
                         class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                        data-discover="true"
                         href="/manufacturers/1"
                       >
                         Manufacturer A
@@ -4171,6 +4185,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                       >
                         <a
                           class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                          data-discover="true"
                           href="/systems/65328f34a40ff5301575a4e3"
                           target="_blank"
                         >
@@ -4395,6 +4410,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                     >
                       <a
                         class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                        data-discover="true"
                         href="/manufacturers/1"
                       >
                         Manufacturer A

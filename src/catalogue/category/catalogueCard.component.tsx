@@ -12,7 +12,7 @@ import {
   type MRT_Row,
   type MRT_TableInstance,
 } from 'material-react-table';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { CatalogueCategory } from '../../api/api.types';
 import { OverflowTip, formatDateTimeStrings } from '../../utils';
 export interface CatalogueCardProps {

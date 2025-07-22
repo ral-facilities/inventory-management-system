@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import {
   CatalogueCategory,
   CatalogueItem,
@@ -113,7 +113,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
                 <Typography
                   sx={{
-                    color: 'text.primary',
+                    color: 'text.secondary',
                   }}
                 >
                   {catalogueItemIdData.is_obsolete ? 'Yes' : 'No'}

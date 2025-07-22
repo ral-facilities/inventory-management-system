@@ -75,8 +75,8 @@ function SystemDetails(props: SystemDetailsProps) {
           display: 'flex',
           alignItems: 'center',
           ...(system !== undefined
-            ? { mt: 0.525, mb: 0.755 }
-            : { mt: 0.525, mb: 1.455 }),
+            ? { mt: 1.5, mb: 0.755 }
+            : { mt: 1.5, mb: 1.455 }),
         }}
         spacing={1}
       >

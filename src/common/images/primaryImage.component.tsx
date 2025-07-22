@@ -11,7 +11,7 @@ import {
   Tooltip,
 } from '@mui/material';
 import React from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 import { useGetImages } from '../../api/images';
 import PrimaryImageDialog from './primaryImageDialog.component';
 import RemovePrimaryImageDialog from './removePrimaryImageDialog.component';
