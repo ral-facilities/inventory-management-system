@@ -18,6 +18,7 @@ import {
   SystemImportanceType,
   SystemPatch,
   SystemPost,
+  SystemType,
 } from './api.types';
 
 /** Utility for turning an importance into an MUI palette colour to display */
@@ -32,6 +33,22 @@ export const getSystemImportanceColour = (
     case SystemImportanceType.HIGH:
       return 'error';
   }
+};
+
+const getSystemTypes = async (): Promise<SystemType[]> => {
+  return imsApi.get(`/v1/system-types`).then((response) => {
+    return response.data;
+  });
+};
+
+export const useGetSystemTypes = (): UseQueryResult<
+  SystemType[],
+  AxiosError
+> => {
+  return useQuery({
+    queryKey: ['SystemTypes'],
+    queryFn: () => getSystemTypes(),
+  });
 };
 
 const getSystems = async (parent_id?: string): Promise<System[]> => {

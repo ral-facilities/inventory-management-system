@@ -4,6 +4,7 @@ export const paths = {
   admin: '/admin-ims',
   adminUnits: '/admin-ims/units',
   adminUsageStatuses: '/admin-ims/usage-statuses',
+  adminSystemTypes: '/admin-ims/system-types',
   homepage: '/ims',
   catalogue: '/catalogue',
   catalogueCategories: '/catalogue/:catalogue_category_id',

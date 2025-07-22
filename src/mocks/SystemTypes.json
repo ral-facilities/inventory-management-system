@@ -1,0 +1,11 @@
+[
+  {
+    "id": "1",
+    "value": "Storage"
+  },
+  {
+    "id": "2",
+    "value": "Operational"
+  },
+  { "id": "3", "value": "Scrapped" }
+]
