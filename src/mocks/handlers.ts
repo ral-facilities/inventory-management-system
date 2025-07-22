@@ -639,7 +639,7 @@ export const handlers = [
     }
   ),
   http.get<PathParams, DefaultBodyType, SystemType[]>(
-    '/v1/systems-types',
+    '/v1/system-types',
     () => {
       return HttpResponse.json(SystemTypesJSON, { status: 200 });
     }
