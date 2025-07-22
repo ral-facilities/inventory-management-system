@@ -1,5 +1,6 @@
 import { RenderResult, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { MockInstance } from 'vitest';
 import { storageApi } from '../api/api';
 import { APIImage, AttachmentMetadata } from '../api/api.types';
 import handleIMS_APIError from '../handleIMS_APIError';
@@ -9,7 +10,6 @@ import { renderComponentWithRouterProvider } from '../testUtils';
 import DownloadFileDialog, {
   DownloadFileProps,
 } from './downloadFileDialog.component';
-import { MockInstance } from 'vitest';
 
 vi.mock('../handleIMS_APIError');
 
@@ -24,6 +24,10 @@ describe('Download File dialog', () => {
 
   beforeEach(() => {
     axiosGetSpy = vi.spyOn(storageApi, 'get');
+    // Mocking <a>.click() to prevent JSDOM from trying to navigate,
+    // which throws "Not implemented: navigation (except hash changes)"
+    // because JSDOM doesn't support real browser navigation.
+    vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => {});
     user = userEvent.setup();
   });
 
