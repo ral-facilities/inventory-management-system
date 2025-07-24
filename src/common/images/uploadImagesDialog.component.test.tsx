@@ -154,63 +154,117 @@ describe('Upload image dialog', () => {
     );
   });
 
-  it(
-    'errors when maximum limit is reached',
-    async () => {
-      server.use(
-        http.post('/images', async () => {
-          await delay(1000);
-          return HttpResponse.json(
-            {
-              detail:
-                'Limit for the maximum number of images for the provided `entity_id` has been reached',
-            },
-            { status: 422 }
-          );
-        })
-      );
+  it('errors when maximum limit is reached', async () => {
+    server.use(
+      http.post('/images', async () => {
+        await delay(1000);
+        return HttpResponse.json(
+          {
+            detail:
+              'Limit for the maximum number of images for the provided `entity_id` has been reached',
+          },
+          { status: 422 }
+        );
+      })
+    );
 
-      createView();
+    createView();
 
-      const file1 = new File(['hello world'], 'image.png', {
-        type: 'image/png',
-      });
+    const file1 = new File(['hello world'], 'image.png', {
+      type: 'image/png',
+    });
 
-      const dropZone = screen.getByText('files cannot be larger than', {
-        exact: false,
-      });
+    const dropZone = screen.getByText('files cannot be larger than', {
+      exact: false,
+    });
 
-      Object.defineProperty(dropZone, 'files', {
-        value: [file1],
-      });
+    Object.defineProperty(dropZone, 'files', {
+      value: [file1],
+    });
 
-      fireEvent.drop(dropZone, {
-        dataTransfer: {
-          files: [file1],
-        },
-      });
+    fireEvent.drop(dropZone, {
+      dataTransfer: {
+        files: [file1],
+      },
+    });
 
-      await waitFor(() => {
-        expect(screen.getByText('image.png')).toBeInTheDocument();
-      });
+    await waitFor(() => {
+      expect(screen.getByText('image.png')).toBeInTheDocument();
+    });
 
-      await user.click(await screen.findByText('Upload 1 file'));
+    await user.click(await screen.findByText('Upload 1 file'));
 
-      expect(xhrPostSpy).toHaveBeenCalledWith('POST', '/images', true);
+    expect(xhrPostSpy).toHaveBeenCalledWith('POST', '/images', true);
 
-      await waitFor(
-        () => {
-          expect(screen.getByText('Upload failed')).toBeInTheDocument();
-        },
-        { timeout: 10000 }
-      );
+    await waitFor(
+      () => {
+        expect(screen.getByText('Upload failed')).toBeInTheDocument();
+      },
+      { timeout: 10000 }
+    );
 
-      await waitFor(() => {
-        expect(
-          screen.getAllByLabelText('Maximum number of files reached.').length
-        ).toBe(2);
-      });
-    },
-    { timeout: 15000 }
-  );
+    await waitFor(() => {
+      expect(
+        screen.getAllByLabelText('Maximum number of files reached.').length
+      ).toBe(2);
+    });
+  }, 15000);
+
+  it('should error when file name already exists', async () => {
+    server.use(
+      http.post('/images', async () => {
+        await delay(1000);
+        return HttpResponse.json(
+          {
+            detail:
+              'An attachment with the same file name already exists within the parent entity.',
+          },
+          { status: 409 }
+        );
+      })
+    );
+
+    createView();
+
+    const file1 = new File(['hello world'], 'image.png', {
+      type: 'image/png',
+    });
+
+    const dropZone = screen.getByText('files cannot be larger than', {
+      exact: false,
+    });
+
+    Object.defineProperty(dropZone, 'files', {
+      value: [file1],
+    });
+
+    fireEvent.drop(dropZone, {
+      dataTransfer: {
+        files: [file1],
+      },
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('image.png')).toBeInTheDocument();
+    });
+
+    await user.click(await screen.findByText('Upload 1 file'));
+
+    expect(xhrPostSpy).toHaveBeenCalledWith('POST', '/images', true);
+
+    await waitFor(
+      () => {
+        expect(screen.getByText('Upload failed')).toBeInTheDocument();
+      },
+      { timeout: 10000 }
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.getAllByLabelText(
+          'A file with this name already exists. To rename your file: remove it, add it back and click the edit icon below the file to change its name.'
+        ).length
+      ).toBe(2);
+    });
+  }, 15000);
 });

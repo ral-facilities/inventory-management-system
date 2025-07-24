@@ -6,9 +6,9 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Grid,
   Tooltip,
 } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import { MRT_RowSelectionState } from 'material-react-table';
 import React from 'react';
 import { System } from '../api/api.types';
@@ -35,6 +35,13 @@ export interface SystemDirectoryDialogProps {
 export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
   const { open, onClose, selectedSystems, onChangeSelectedSystems, type } =
     props;
+
+  const parentSystemTypeId = React.useMemo(() => {
+    if (selectedSystems.length > 0) {
+      return selectedSystems[0].type_id;
+    }
+    return null;
+  }, [selectedSystems]);
 
   // Store here and update only if changed to reduce re-renders and allow
   // navigation
@@ -124,16 +131,18 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
     <Dialog
       open={open}
       maxWidth="lg"
-      PaperProps={{ sx: { height: '692px' } }}
+      slotProps={{ paper: { sx: { height: '692px' } } }}
       fullWidth
     >
       <DialogTitle marginLeft={2}>
         <Grid container spacing={2}>
-          <Grid item>
+          <Grid>
             <Box
-              display="inline-flex"
-              alignItems="center"
-              justifyContent="center"
+              sx={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
             >
               <>
                 {type === 'moveTo' ? 'Move ' : 'Copy '}
@@ -158,7 +167,7 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
               )}
             </Box>
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <Breadcrumbs
               breadcrumbsInfo={parentSystemBreadcrumbs}
               onChangeNode={setParentSystemId}
@@ -175,6 +184,9 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
           systemParentId={parentSystemId ?? undefined}
           onChangeParentId={setParentSystemId}
           selectedSystems={selectedSystems}
+          isSystemSelectable={(system: System) => {
+            return parentSystemTypeId === system.type_id;
+          }}
           type={type}
         />
       </DialogContent>

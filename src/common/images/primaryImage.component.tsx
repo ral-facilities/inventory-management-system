@@ -3,7 +3,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import {
   Box,
-  Grid,
   IconButton,
   ListItemIcon,
   ListItemText,
@@ -12,7 +11,7 @@ import {
   Tooltip,
 } from '@mui/material';
 import React from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 import { useGetImages } from '../../api/images';
 import PrimaryImageDialog from './primaryImageDialog.component';
 import RemovePrimaryImageDialog from './removePrimaryImageDialog.component';
@@ -110,7 +109,7 @@ const PrimaryImage = (props: PrimaryImageProps) => {
   >(false);
 
   return (
-    <Grid>
+    <>
       {!imageLoading && (
         <ThumbnailImage
           image={imagesData?.[0]}
@@ -146,7 +145,7 @@ const PrimaryImage = (props: PrimaryImageProps) => {
           )}
         </>
       )}
-    </Grid>
+    </>
   );
 };
 

@@ -10,7 +10,6 @@ import {
   Box,
   CircularProgress,
   Divider,
-  Grid,
   IconButton,
   ListItemIcon,
   ListItemText,
@@ -25,6 +24,7 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import {
   // To resolve react/jsx-pascal-case
   MRT_GlobalFilterTextField as MRTGlobalFilterTextField,
@@ -35,7 +35,7 @@ import {
   useMaterialReactTable,
 } from 'material-react-table';
 import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router';
 import { System } from '../api/api.types';
 import { useGetSystems } from '../api/systems';
 import { usePreservedTableState } from '../common/preservedTableState.component';
@@ -160,6 +160,7 @@ const SystemsActionMenu = (props: {
           <ListItemText>{props.selectedSystems.length} selected</ListItemText>
         </MenuItem>
       </Menu>
+
       {dialogType && (
         <SystemDirectoryDialog
           open={Boolean(dialogType)}
@@ -275,6 +276,17 @@ function Systems() {
       showLastButton: false,
       size: 'small',
     },
+    muiSelectCheckboxProps: ({ row, table }) => {
+      const selectedSystems = table
+        .getSelectedRowModel()
+        .rows.map((row) => row.original);
+      const type_id = selectedSystems[0]?.type_id;
+      const isDisabled =
+        selectedSystems.length > 0 ? row.original.type_id !== type_id : false;
+      return {
+        disabled: isDisabled,
+      };
+    },
     // Functions
     ...onPreservedStatesChange,
     getRowId: (system) => system.id,
@@ -332,16 +344,30 @@ function Systems() {
 
   return (
     <>
-      <Box height="100%">
-        <Grid container margin={0} direction="row" alignItems="stretch">
+      <Box
+        sx={{
+          height: getPageHeightCalc('80px'),
+        }}
+      >
+        <Grid
+          container
+          direction="row"
+          sx={{
+            margin: 0,
+            alignItems: 'stretch',
+          }}
+        >
           <Grid
-            item
-            xs={12}
-            md
-            minWidth={MIN_SUBSYSTEMS_WIDTH}
-            textAlign="left"
-            padding={1}
-            paddingBottom={0}
+            size={{
+              xs: 12,
+              md: 'grow',
+            }}
+            sx={{
+              minWidth: MIN_SUBSYSTEMS_WIDTH,
+              textAlign: 'left',
+              padding: 1,
+              paddingBottom: 0,
+            }}
           >
             {subsystemsDataLoading ? (
               <Box
@@ -378,7 +404,7 @@ function Systems() {
                     marginBottom: 'auto',
                     flexWrap: 'no-wrap',
                     // Breadcrumbs and rest
-                    height: getPageHeightCalc('96px + 74px'),
+                    height: getPageHeightCalc('96px + 58px'),
                     // To prevent no subsystems being visible
                     minHeight: '200px',
                   }}
@@ -455,12 +481,13 @@ function Systems() {
             )}
           </Grid>
           <Grid
-            item
-            textAlign="left"
-            padding={1}
-            xs
-            md={10}
+            size={{
+              xs: 'grow',
+              md: 10,
+            }}
             sx={{
+              textAlign: 'left',
+              padding: 1,
               maxWidth: {
                 xs: '100%',
                 md: `calc(100% - ${MIN_SUBSYSTEMS_WIDTH})`,

@@ -12,7 +12,7 @@ import {
   type MRT_Row,
   type MRT_TableInstance,
 } from 'material-react-table';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { CatalogueCategory } from '../../api/api.types';
 import { OverflowTip, formatDateTimeStrings } from '../../utils';
 export interface CatalogueCardProps {
@@ -84,9 +84,9 @@ function CatalogueCard(props: CatalogueCardProps) {
           />
         </CardActions>
         <Typography
-          fontSize="0.8rem"
-          color="text.secondary"
           sx={{
+            fontSize: '0.8rem',
+            color: 'text.secondary',
             position: 'absolute',
             bottom: '8px',
             right: '12px',

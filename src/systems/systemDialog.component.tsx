@@ -9,8 +9,8 @@ import {
   DialogContent,
   DialogTitle,
   FormHelperText,
-  Grid,
   MenuItem,
+  Stack,
   TextField,
 } from '@mui/material';
 import { AxiosError } from 'axios';
@@ -20,9 +20,13 @@ import {
   SystemImportanceType,
   SystemPatch,
   SystemPost,
+  type APIError,
+  type SystemType,
 } from '../api/api.types';
 import {
   getSystemImportanceColour,
+  useGetSystem,
+  useGetSystemTypes,
   usePatchSystem,
   usePostSystem,
 } from '../api/systems';
@@ -53,18 +57,37 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
   const { mutateAsync: patchSystem, isPending: isEditPending } =
     usePatchSystem();
 
+  const { data: parentSystem } = useGetSystem(parentId);
+
+  const parentSystemTypeId = React.useMemo(() => {
+    if (parentSystem) {
+      return parentSystem.type_id;
+    }
+    return null;
+  }, [parentSystem]);
+
+  const { data: systemsTypes } = useGetSystemTypes();
+
   const initialSystem: SystemPost = React.useMemo(
     () =>
       isNotCreating
-        ? selectedSystem
+        ? {
+            name: selectedSystem.name,
+            description: selectedSystem.description ?? '',
+            location: selectedSystem.location ?? '',
+            owner: selectedSystem.owner ?? '',
+            importance: selectedSystem.importance,
+            type_id: selectedSystem.type_id,
+          }
         : {
             name: '',
             description: '',
             location: '',
             owner: '',
             importance: SystemImportanceType.MEDIUM,
+            type_id: parentSystemTypeId ?? '',
           },
-    [isNotCreating, selectedSystem]
+    [isNotCreating, parentSystemTypeId, selectedSystem]
   );
 
   const {
@@ -105,14 +128,31 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
       postSystem(system)
         .then(() => handleClose())
         .catch((error: AxiosError) => {
-          // 409 occurs when there is a system with a duplicate name with the
-          // same parent
-          if (error.response?.status === 409) {
+          const status = error.response?.status;
+          const errorMessage = (error.response?.data as APIError).detail;
+          if (
+            status === 409 &&
+            errorMessage.includes(
+              'A System with the same name already exists within the same parent System'
+            )
+          ) {
             setError('name', {
               message:
                 'A System with the same name already exists within the same parent System. Please enter a different name.',
             });
-          } else handleIMS_APIError(error);
+            return;
+          }
+          if (
+            status === 422 &&
+            errorMessage.includes('Specified system type not found')
+          ) {
+            setError('type_id', {
+              message:
+                'Specified system type not found. Please select a valid system type.',
+            });
+            return;
+          }
+          handleIMS_APIError(error);
         });
     },
     [postSystem, handleClose, setError]
@@ -131,13 +171,15 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
         const isOwnerUpdated = systemData.owner !== selectedSystem?.owner;
         const isImportanceUpdated =
           systemData.importance !== selectedSystem?.importance;
+        const isTypeUpdated = systemData.type_id !== selectedSystem?.type_id;
 
         if (
           isNameUpdated ||
           isDescriptionUpdated ||
           isLocationUpdated ||
           isOwnerUpdated ||
-          isImportanceUpdated
+          isImportanceUpdated ||
+          isTypeUpdated
         ) {
           const editSystemData: SystemPatch = {};
 
@@ -148,6 +190,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
           if (isOwnerUpdated) editSystemData.owner = systemData.owner;
           if (isImportanceUpdated)
             editSystemData.importance = systemData.importance;
+          if (isTypeUpdated) editSystemData.type_id = systemData.type_id;
 
           patchSystem({
             id: selectedSystem.id,
@@ -157,12 +200,39 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
               handleClose();
             })
             .catch((error: AxiosError) => {
-              // 409 occurs when there is a system with a duplicate name with the
-              // same parent
-              if (error.response?.status === 409) {
+              const status = error.response?.status;
+              const errorMessage = (error.response?.data as APIError).detail;
+              if (
+                status === 409 &&
+                errorMessage.includes(
+                  'A System with the same name already exists within the same parent System'
+                )
+              ) {
                 setError('name', {
                   message:
                     'A System with the same name already exists within the same parent System. Please enter a different name.',
+                });
+                return;
+              }
+              if (
+                status === 422 &&
+                errorMessage.includes(
+                  'Cannot change the type of a system when it has children'
+                )
+              ) {
+                setError('type_id', {
+                  message:
+                    'Cannot change the type of a system that has child systems and items. Please remove all child systems and items before changing the type.',
+                });
+                return;
+              }
+              if (
+                status === 422 &&
+                errorMessage.includes('Specified system type not found')
+              ) {
+                setError('type_id', {
+                  message:
+                    'Specified system type not found. Please select a valid system type.',
                 });
                 return;
               }
@@ -198,8 +268,13 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
         {requestType === 'patch' ? `Edit ${systemText}` : `Add ${systemText}`}
       </DialogTitle>
       <DialogContent>
-        <Grid container direction="column" spacing={2}>
-          <Grid item sx={{ mt: 1 }}>
+        <Stack
+          spacing={2}
+          sx={{
+            width: '100%',
+          }}
+        >
+          <Box sx={{ marginTop: '8px !important' }}>
             <TextField
               id="system-name-input"
               label="Name"
@@ -209,61 +284,106 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
               helperText={errors.name?.message}
               fullWidth
             />
-          </Grid>
-          <Grid item>
-            <TextField
-              id="system-description-input"
-              label="Description"
-              {...register('description')}
-              multiline
-              fullWidth
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              id="system-location-input"
-              label="Location"
-              {...register('location')}
-              fullWidth
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              id="system-owner-input"
-              label="Owner"
-              {...register('owner')}
-              fullWidth
-            />
-          </Grid>
-          <Grid item>
-            <Controller
-              control={control}
-              name="importance"
-              render={({ field: { value, onChange } }) => (
-                <Autocomplete
-                  multiple
-                  limitTags={1}
-                  disableClearable={true}
-                  id="importance-select"
-                  options={Object.values(SystemImportanceType)}
-                  getOptionLabel={(option) => option}
-                  value={[value]}
-                  onChange={(_event, value) => {
-                    if (value.length === 0) return;
-                    // as is a multiple autocomplete this removes original selection from list
-                    // therefore only the new option is in the array
-                    value.shift();
+          </Box>
+          <Controller
+            control={control}
+            name="type_id"
+            render={({ field: { value, onChange } }) => (
+              <Autocomplete
+                disableClearable={value != null}
+                id="systems-type-id-input"
+                disabled={!!parentSystemTypeId}
+                value={
+                  parentSystemTypeId
+                    ? (systemsTypes?.find(
+                        (systemType) => systemType.id === parentSystemTypeId
+                      ) ?? null)
+                    : (systemsTypes?.find(
+                        (systemType) => systemType.id === value
+                      ) ?? null)
+                }
+                onChange={(_event, systemType: SystemType | null) => {
+                  onChange(systemType?.id ?? null);
+                }}
+                sx={{ alignItems: 'center' }}
+                fullWidth
+                options={systemsTypes ?? []}
+                isOptionEqualToValue={(option, value) => option.id == value.id}
+                getOptionLabel={(option) => option.value}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    required={true}
+                    disabled={!!parentSystemTypeId}
+                    label="Type"
+                    error={!!errors.type_id}
+                    helperText={errors.type_id?.message}
+                  />
+                )}
+              />
+            )}
+          />
+          <TextField
+            id="system-description-input"
+            label="Description"
+            {...register('description')}
+            multiline
+            fullWidth
+          />
+          <TextField
+            id="system-location-input"
+            label="Location"
+            {...register('location')}
+            fullWidth
+          />
+          <TextField
+            id="system-owner-input"
+            label="Owner"
+            {...register('owner')}
+            fullWidth
+          />
+          <Controller
+            control={control}
+            name="importance"
+            render={({ field: { value, onChange } }) => (
+              <Autocomplete
+                multiple
+                limitTags={1}
+                disableClearable={true}
+                id="importance-select"
+                options={Object.values(SystemImportanceType)}
+                getOptionLabel={(option) => option}
+                value={[value]}
+                onChange={(_event, value) => {
+                  if (value.length === 0) return;
+                  // as is a multiple autocomplete this removes original selection from list
+                  // therefore only the new option is in the array
+                  value.shift();
 
-                    onChange(value[0]);
-                  }}
-                  renderInput={(params) => (
-                    <TextField label="Importance" {...params} />
-                  )}
-                  renderTags={() => (
+                  onChange(value[0]);
+                }}
+                renderInput={(params) => (
+                  <TextField label="Importance" {...params} />
+                )}
+                renderTags={() => (
+                  <Chip
+                    label={value}
+                    sx={() => {
+                      const colorName = getSystemImportanceColour(value);
+                      return {
+                        margin: 0,
+                        bgcolor: `${colorName}.main`,
+                        color: `${colorName}.contrastText`,
+                      };
+                    }}
+                  />
+                )}
+                renderOption={(props, option) => (
+                  <MenuItem {...props} key={option}>
                     <Chip
-                      label={value}
+                      label={option}
                       sx={() => {
-                        const colorName = getSystemImportanceColour(value);
+                        const colorName = getSystemImportanceColour(option);
                         return {
                           margin: 0,
                           bgcolor: `${colorName}.main`,
@@ -271,27 +391,12 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
                         };
                       }}
                     />
-                  )}
-                  renderOption={(props, option) => (
-                    <MenuItem {...props} key={option}>
-                      <Chip
-                        label={option}
-                        sx={() => {
-                          const colorName = getSystemImportanceColour(option);
-                          return {
-                            margin: 0,
-                            bgcolor: `${colorName}.main`,
-                            color: `${colorName}.contrastText`,
-                          };
-                        }}
-                      />
-                    </MenuItem>
-                  )}
-                />
-              )}
-            />
-          </Grid>
-        </Grid>
+                  </MenuItem>
+                )}
+              />
+            )}
+          />
+        </Stack>
       </DialogContent>
       <DialogActions sx={{ flexDirection: 'column', padding: 4 }}>
         <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>

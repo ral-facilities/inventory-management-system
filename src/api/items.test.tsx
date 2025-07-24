@@ -253,7 +253,7 @@ describe('items api functions', () => {
         // Prevent test interference if modifying the usage statuses or selected items
         usageStatuses: JSON.parse(JSON.stringify(mockUsageStatuses)),
         selectedItems: JSON.parse(JSON.stringify(mockItems)),
-        targetSystem: SystemsJSON[0] as System,
+        targetSystem: SystemsJSON[1] as System,
       };
 
       axiosPatchSpy = vi.spyOn(imsApi, 'patch');

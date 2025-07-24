@@ -1,9 +1,9 @@
 import React from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router';
 import { BreadcrumbsInfo } from '../api/api.types';
-import { paths } from '../App';
 import BaseLayoutHeader from '../common/baseLayoutHeader.component';
 import PageNotFoundComponent from '../common/pageNotFound/pageNotFound.component';
+import paths from '../paths';
 
 export const AdminErrorComponent = () => {
   return <PageNotFoundComponent homeLocation="Admin" />;
@@ -25,6 +25,7 @@ export const useGetAdminPageName = (): string | null => {
 const adminBreadCrumbsTrails: { [key: string]: BreadcrumbsInfo['trail'] } = {
   ['units']: [['units', 'Units']],
   ['usage-statuses']: [['usage-statuses', 'Usage statuses']],
+  ['system-types']: [['system-types', 'System types']],
 };
 
 function AdminLayout() {

@@ -58,7 +58,11 @@ describe('systems', () => {
     // add systems is in the before each as it is need for creating items
     editSystems();
     duplicateSystem('optics 2', 1);
-    modifySystem({ name: 'Storage 2', importance: 'high' });
+    modifySystem({
+      name: 'Storage 2',
+      importance: 'high',
+      type: 'Operational',
+    });
     moveItemToSystem({
       checkedItems: [1],
       checkedItemsNames: ['Plano-Convex Lens'],
@@ -72,5 +76,6 @@ describe('systems', () => {
       checkedSystemsNames: ['optics 2', 'optics 2_copy_1'],
     });
     deleteSystem('Storage', 0);
+    deleteSystem('Storage 2', 0);
   });
 });

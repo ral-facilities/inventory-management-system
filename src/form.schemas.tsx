@@ -272,6 +272,9 @@ export const SystemsSchema = (requestType: RequestType) =>
     location: OptionalOrNullableStringSchema({ requestType }),
     owner: OptionalOrNullableStringSchema({ requestType }),
     importance: z.nativeEnum(SystemImportanceType),
+    type_id: MandatoryStringSchema({
+      errorMessage: 'Please select a type.',
+    }),
   });
 
 // ------------------------------------ CATALOGUE CATEGORIES ------------------------------------

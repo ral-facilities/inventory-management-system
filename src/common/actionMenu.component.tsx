@@ -3,7 +3,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PrintIcon from '@mui/icons-material/Print';
 import UploadIcon from '@mui/icons-material/Upload';
 import { IconButton, Menu, MenuItem } from '@mui/material';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import UploadAttachmentsDialog from './attachments/uploadAttachmentsDialog.component';
@@ -43,9 +43,6 @@ function ActionMenu(props: ActionMenuProps) {
 
   return (
     <Grid
-      item
-      xs={12}
-      sm
       container
       sx={{
         textAlign: 'right',
@@ -55,8 +52,12 @@ function ActionMenu(props: ActionMenuProps) {
           display: 'none',
         },
       }}
+      size={{
+        xs: 12,
+        sm: 'grow',
+      }}
     >
-      <Grid item>
+      <Grid>
         <Typography variant="body1" sx={{ display: 'inline-block', mr: 1 }}>
           Actions
         </Typography>

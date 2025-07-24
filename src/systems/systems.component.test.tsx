@@ -1,6 +1,6 @@
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import { paths } from '../App';
+import { URLPathKeyType } from '../paths';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import Systems from './systems.component';
 
@@ -9,7 +9,7 @@ describe('Systems', () => {
   vi.setConfig({ testTimeout: 14000 });
 
   let user: UserEvent;
-  const createView = (path: string, urlPathKey?: keyof typeof paths) => {
+  const createView = (path: string, urlPathKey?: URLPathKeyType) => {
     return renderComponentWithRouterProvider(
       <Systems />,
       urlPathKey ?? 'systems',
@@ -37,7 +37,7 @@ describe('Systems', () => {
     });
 
     expect(screen.getByText('Giant laser')).toBeInTheDocument();
-    expect(screen.getByText('Total Systems: 3')).toBeInTheDocument();
+    expect(screen.getByText('Total Systems: 5')).toBeInTheDocument();
   });
 
   it('renders correctly when viewing a specific system', async () => {
@@ -58,7 +58,7 @@ describe('Systems', () => {
       expect(screen.getByText('Root systems')).toBeInTheDocument();
     });
 
-    expect(screen.getByText('Returned 1 out of 3 Systems')).toBeInTheDocument();
+    expect(screen.getByText('Returned 1 out of 5 Systems')).toBeInTheDocument();
   });
 
   it('renders correctly when filtering subsystems', async () => {

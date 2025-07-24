@@ -80,7 +80,7 @@ Cypress.Commands.add('dropIMSCollections', (collections: string[]) => {
       containerName = 'object-storage-api-mongodb';
       databaseName = 'object-storage';
     } else {
-      containerName = 'ims_api_mongodb_container';
+      containerName = 'ims-api-mongodb';
       databaseName = 'ims';
     }
     cy.exec(

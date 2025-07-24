@@ -1,6 +1,5 @@
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
-import type { Router } from '@remix-run/router';
 import {
   QueryCache,
   QueryClient,
@@ -15,11 +14,12 @@ import {
   RouterProvider,
   createBrowserRouter,
   type RouteObject,
-} from 'react-router-dom';
+} from 'react-router';
 import AdminCardView from './admin/adminCardView.component';
 import AdminLayout, {
   AdminErrorComponent,
 } from './admin/adminLayout.component';
+import SystemTypes from './admin/systemTypes/systemTypes.component';
 import Units from './admin/units/units.component';
 import UsageStatuses from './admin/usageStatuses/usageStatuses.component';
 import {
@@ -51,6 +51,7 @@ import ManufacturerLayout, {
   manufacturerLayoutLoader,
 } from './manufacturer/manufacturerLayout.component';
 import ManufacturerTable from './manufacturer/manufacturerTable.component';
+import paths from './paths';
 import Preloader from './preloader/preloader.component';
 import retryIMS_APIErrors from './retryIMS_APIErrors';
 import {
@@ -65,25 +66,6 @@ import SystemsLayout, {
   systemsLayoutLoader,
 } from './systems/systemsLayout.component';
 import ViewTabs from './view/viewTabs.component';
-
-export const paths = {
-  any: '*',
-  root: '/',
-  admin: '/admin-ims',
-  adminUnits: '/admin-ims/units',
-  adminUsageStatuses: '/admin-ims/usage-statuses',
-  homepage: '/ims',
-  catalogue: '/catalogue',
-  catalogueCategories: '/catalogue/:catalogue_category_id',
-  catalogueItems: '/catalogue/:catalogue_category_id/items',
-  catalogueItem: '/catalogue/:catalogue_category_id/items/:catalogue_item_id',
-  items: '/catalogue/:catalogue_category_id/items/:catalogue_item_id/items',
-  item: '/catalogue/:catalogue_category_id/items/:catalogue_item_id/items/:item_id',
-  systems: '/systems',
-  system: '/systems/:system_id',
-  manufacturers: '/manufacturers',
-  manufacturer: '/manufacturers/:manufacturer_id',
-};
 
 export const queryClient = new QueryClient({
   queryCache: new QueryCache({
@@ -129,6 +111,7 @@ const routeObject: RouteObject[] = [
           { index: true, Component: AdminCardView },
           { path: paths.adminUnits, Component: Units },
           { path: paths.adminUsageStatuses, Component: UsageStatuses },
+          { path: paths.adminSystemTypes, Component: SystemTypes },
           {
             path: '*',
             Component: AdminErrorComponent,
@@ -243,22 +226,15 @@ const routeObject: RouteObject[] = [
   },
 ];
 
-const reactRouterFutureFlags = {
-  future: {
-    v7_relativeSplatPath: true,
-    v7_fetcherPersist: true,
-    v7_normalizeFormMethod: true,
-    v7_partialHydration: true,
-    v7_skipActionErrorRevalidation: true,
-  },
-};
+//can no longer import from @remix-run/router
+//solution found here https://github.com/remix-run/react-router/discussions/9915
+type Router = ReturnType<typeof createBrowserRouter>;
 
 let router: Router;
 const isUsingMSW =
   import.meta.env.DEV || import.meta.env.VITE_APP_INCLUDE_MSW === 'true';
 
-if (!isUsingMSW)
-  router = createBrowserRouter(routeObject, reactRouterFutureFlags);
+if (!isUsingMSW) router = createBrowserRouter(routeObject);
 
 // If the application is using MSW (Mock Service Worker),
 // it creates the router using `createBrowserRouter` within the App so it can wait for MSW to load. This is necessary
@@ -266,17 +242,8 @@ if (!isUsingMSW)
 // environment, this is not needed.
 
 export default function App() {
-  if (isUsingMSW)
-    router = createBrowserRouter(routeObject, reactRouterFutureFlags);
-  return (
-    <RouterProvider
-      router={router}
-      future={{
-        // Disabled for now and will be addressed in #1259
-        v7_startTransition: false,
-      }}
-    />
-  );
+  if (isUsingMSW) router = createBrowserRouter(routeObject);
+  return <RouterProvider router={router} />;
 }
 
 export function Layout() {

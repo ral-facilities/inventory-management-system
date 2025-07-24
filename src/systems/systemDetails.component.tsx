@@ -4,9 +4,10 @@ import {
   Chip,
   CircularProgress,
   Divider,
-  Grid,
+  Stack,
   Typography,
 } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import React from 'react';
 import { System } from '../api/api.types';
 import { getSystemImportanceColour, useGetSystem } from '../api/systems';
@@ -36,6 +37,7 @@ const SystemDetailsActionMenu = (props: { system: System }) => {
           <SystemDialog
             open={editSystemDialogOpen}
             onClose={() => setEditSystemDialogOpen(false)}
+            parentId={system.parent_id}
             requestType="patch"
             selectedSystem={system}
           />
@@ -69,15 +71,16 @@ function SystemDetails(props: SystemDetailsProps) {
     <>
       <Grid
         container
-        item
         sx={{
           display: 'flex',
           alignItems: 'center',
-          my: 0.625,
+          ...(system !== undefined
+            ? { mt: 1.5, mb: 0.755 }
+            : { mt: 1.5, mb: 1.455 }),
         }}
         spacing={1}
       >
-        <Grid item xs={9}>
+        <Grid size={9}>
           <OverflowTip
             sx={{
               typography: 'h5',
@@ -101,103 +104,160 @@ function SystemDetails(props: SystemDetailsProps) {
           <Typography variant="h3">Please select a system</Typography>
         </Box>
       ) : (
-        <Grid item>
-          <Grid container direction="column" wrap="nowrap" spacing={1}>
-            <Grid
-              container
-              item
-              direction="row"
-              justifyContent="space-evenly"
-              sx={{ margin: 0, mt: 1 }}
-            >
-              <Grid item container spacing={2}>
-                <Grid item xs="auto">
-                  <PrimaryImage entityId={system.id} />
-                </Grid>
-                <Grid item container spacing={1} xs>
-                  <Grid item xs={12} sm={6}>
-                    <Typography color="text.primary">Location</Typography>
-                    <Typography
-                      variant="body1"
-                      color="text.secondary"
-                      sx={{ wordWrap: 'break-word' }}
-                    >
-                      {system.location ?? 'None'}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={6} sx={{ display: 'inline-flex' }}>
-                    <Typography color="text.primary">Importance</Typography>
-                    <Chip
-                      label={system.importance}
-                      sx={() => {
-                        const colorName = getSystemImportanceColour(
-                          system.importance
-                        );
-                        return {
-                          margin: 0,
-                          marginLeft: 1,
-                          bgcolor: `${colorName}.main`,
-                          color: `${colorName}.contrastText`,
-                        };
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Typography color="text.primary">Owner</Typography>
-                    <Typography
-                      variant="body1"
-                      color="text.secondary"
-                      sx={{ wordWrap: 'break-word' }}
-                    >
-                      {system.owner ?? 'None'}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Typography color="text.primary">Last modified</Typography>
-                    <Typography variant="body1" color="text.secondary">
-                      {formatDateTimeStrings(system.modified_time, true)}
-                    </Typography>
-                  </Grid>
+        <Stack
+          spacing={1}
+          sx={{
+            width: '100%',
+            flexWrap: 'nowrap',
+            display: 'flex',
+          }}
+        >
+          <Grid
+            container
+            direction="row"
+            spacing={2}
+            sx={{
+              justifyContent: 'space-evenly',
+              margin: 0,
+              marginTop: '8px !important',
+            }}
+          >
+            <Grid size="auto">
+              <PrimaryImage entityId={system.id} />
+            </Grid>
+            <Grid container spacing={1} size="grow">
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <Typography
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
+                  Location
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: 'text.secondary',
+                    wordWrap: 'break-word',
+                  }}
+                >
+                  {system.location ?? 'None'}
+                </Typography>
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6 }} sx={{ display: 'inline-flex' }}>
+                <Typography
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
+                  Importance
+                </Typography>
+                <Chip
+                  label={system.importance}
+                  sx={() => {
+                    const colorName = getSystemImportanceColour(
+                      system.importance
+                    );
+                    return {
+                      margin: 0,
+                      marginLeft: 1,
+                      bgcolor: `${colorName}.main`,
+                      color: `${colorName}.contrastText`,
+                    };
+                  }}
+                />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <Typography
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
+                  Owner
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: 'text.secondary',
+                    wordWrap: 'break-word',
+                  }}
+                >
+                  {system.owner ?? 'None'}
+                </Typography>
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <Typography
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
+                  Last modified
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: 'text.secondary',
+                  }}
+                >
+                  {formatDateTimeStrings(system.modified_time, true)}
+                </Typography>
+              </Grid>
 
-                  <Grid item xs={12} sm={6}>
-                    <Typography color="text.primary">Created</Typography>
-                    <Typography variant="body1" color="text.secondary">
-                      {formatDateTimeStrings(system.created_time, true)}
-                    </Typography>
-                  </Grid>
-                </Grid>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <Typography
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
+                  Created
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: 'text.secondary',
+                  }}
+                >
+                  {formatDateTimeStrings(system.created_time, true)}
+                </Typography>
               </Grid>
             </Grid>
-            <Grid item>
-              <Typography color="text.primary">Description</Typography>
-              <Typography
-                variant="body1"
-                color="text.secondary"
-                sx={{ whiteSpace: 'pre-line', wordWrap: 'break-word' }}
-              >
-                {system.description ?? 'None'}
-              </Typography>
-            </Grid>
-            <Grid item container sx={{ marginTop: 2, display: 'inline-block' }}>
-              <TabView
-                ariaLabelPrefix="systems page"
-                defaultTab="Items"
-                galleryEntityId={system.id}
-                attachmentsEntityId={system.id}
-                tabData={[
-                  {
-                    value: 'Items',
-                    icon: <InventoryOutlinedIcon />,
-                    component: (
-                      <SystemItemsTable system={system} type="normal" />
-                    ),
-                    order: 0,
-                  },
-                ]}
-              />
-            </Grid>
           </Grid>
-        </Grid>
+          <Box>
+            <Typography
+              sx={{
+                color: 'text.primary',
+              }}
+            >
+              Description
+            </Typography>
+            <Typography
+              variant="body1"
+              sx={{
+                color: 'text.secondary',
+                whiteSpace: 'pre-line',
+                wordWrap: 'break-word',
+              }}
+            >
+              {system.description ?? 'None'}
+            </Typography>
+          </Box>
+          <Grid sx={{ marginTop: 2, display: 'inline-block' }}>
+            <TabView
+              ariaLabelPrefix="systems page"
+              defaultTab="Items"
+              galleryEntityId={system.id}
+              attachmentsEntityId={system.id}
+              tabData={[
+                {
+                  value: 'Items',
+                  icon: <InventoryOutlinedIcon />,
+                  component: <SystemItemsTable system={system} type="normal" />,
+                  order: 0,
+                },
+              ]}
+            />
+          </Grid>
+        </Stack>
       )}
     </>
   );
