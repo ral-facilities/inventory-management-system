@@ -227,7 +227,7 @@ describe('Systems Dialog', () => {
       createView();
 
       const values = {
-        name: 'Error Not found type',
+        name: 'Error type not found',
         type: 'Storage',
       };
 
@@ -445,7 +445,7 @@ describe('Systems Dialog', () => {
       createView();
 
       const values = {
-        name: 'Error Not found type',
+        name: 'Error type not found',
       };
 
       await modifyValues(values);
@@ -473,7 +473,7 @@ describe('Systems Dialog', () => {
 
       expect(
         screen.getByText(
-          'Cannot change the type of a system that has child systems and linked items. Please remove all child systems and linked items before changing the type.'
+          'Cannot change the type of a system that has child systems and items. Please remove all child systems and items before changing the type.'
         )
       ).toBeInTheDocument();
       expect(mockOnClose).not.toHaveBeenCalled();

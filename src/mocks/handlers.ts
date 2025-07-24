@@ -615,7 +615,7 @@ export const handlers = [
           { detail: 'Something went wrong' },
           { status: 500 }
         );
-      } else if (body.name === 'Error Not found type') {
+      } else if (body.name === 'Error type not found') {
         return HttpResponse.json(
           {
             detail: 'Specified system type not found',
@@ -706,7 +706,7 @@ export const handlers = [
           { detail: 'Something went wrong' },
           { status: 500 }
         );
-      } else if (body.name === 'Error Not found type') {
+      } else if (body.name === 'Error type not found') {
         return HttpResponse.json(
           {
             detail: 'Specified system type not found',

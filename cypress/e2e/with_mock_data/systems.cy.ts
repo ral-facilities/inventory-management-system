@@ -390,7 +390,7 @@ describe('Systems', () => {
       cy.visit('/systems');
 
       cy.findByRole('button', { name: 'Add System' }).click();
-      cy.findByLabelText('Name *').type('Error Not found type');
+      cy.findByLabelText('Name *').type('Error type not found');
 
       cy.findByLabelText('Type *').click();
       cy.findByRole('option', { name: 'Operational' }).click();
@@ -521,7 +521,7 @@ describe('Systems', () => {
       );
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByText(
-        'Cannot change the type of a system that has child systems and linked items. Please remove all child systems and linked items before changing the type.'
+        'Cannot change the type of a system that has child systems and items. Please remove all child systems and items before changing the type.'
       ).should('exist');
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
@@ -530,7 +530,7 @@ describe('Systems', () => {
       cy.findByText('Edit').click();
 
       cy.findByText(
-        'Cannot change the type of a system that has child systems and linked items. Please remove all child systems and linked items before changing the type.'
+        'Cannot change the type of a system that has child systems and items. Please remove all child systems and items before changing the type.'
       ).should('not.exist');
     });
 
@@ -541,7 +541,7 @@ describe('Systems', () => {
       cy.findByText('Edit').click();
 
       cy.findByLabelText('Name *').clear();
-      cy.findByLabelText('Name *').type('Error Not found type');
+      cy.findByLabelText('Name *').type('Error type not found');
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByText(
         'Specified system type not found. Please select a valid system type.'

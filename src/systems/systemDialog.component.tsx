@@ -222,7 +222,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
               ) {
                 setError('type_id', {
                   message:
-                    'Cannot change the type of a system that has child systems and linked items. Please remove all child systems and linked items before changing the type.',
+                    'Cannot change the type of a system that has child systems and items. Please remove all child systems and items before changing the type.',
                 });
                 return;
               }
