@@ -24,6 +24,7 @@ export interface SystemsTableViewProps {
   systemsDataLoading: boolean;
   systemParentId?: string;
   onChangeParentId: (systemId: string | null) => void;
+  isSystemSelectable?: (system: System) => boolean;
   selectedSystems: System[];
   type: 'moveTo' | 'copyTo';
 }
@@ -35,6 +36,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
     systemParentId,
     onChangeParentId,
     selectedSystems,
+    isSystemSelectable,
     type,
   } = props;
 
@@ -112,7 +114,9 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
     //MUI
     muiTableBodyRowProps: ({ row }) => {
       const canPlaceHere =
-        type === 'copyTo' || !selectedSystemIds.includes(row.original.id);
+        (type === 'copyTo' || !selectedSystemIds.includes(row.original.id)) &&
+        (isSystemSelectable ? isSystemSelectable(row.original) : true);
+
       return {
         component: TableRow,
         onClick: () => canPlaceHere && onChangeParentId(row.original.id),
@@ -129,8 +133,9 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
         : {
             component: (props: TableCellBaseProps) => {
               const canPlaceHere =
-                type === 'copyTo' ||
-                !selectedSystemIds.includes(row.original.id);
+                (type === 'copyTo' ||
+                  !selectedSystemIds.includes(row.original.id)) &&
+                (isSystemSelectable ? isSystemSelectable(row.original) : true);
               return (
                 <TableBodyCellOverFlowTip
                   {...({

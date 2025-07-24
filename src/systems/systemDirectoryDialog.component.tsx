@@ -36,6 +36,13 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
   const { open, onClose, selectedSystems, onChangeSelectedSystems, type } =
     props;
 
+  const parentSystemTypeId = React.useMemo(() => {
+    if (selectedSystems.length > 0) {
+      return selectedSystems[0].type_id;
+    }
+    return null;
+  }, [selectedSystems]);
+
   // Store here and update only if changed to reduce re-renders and allow
   // navigation
   const [parentSystemId, setParentSystemId] = React.useState<string | null>(
@@ -124,7 +131,7 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
     <Dialog
       open={open}
       maxWidth="lg"
-      PaperProps={{ sx: { height: '692px' } }}
+      slotProps={{ paper: { sx: { height: '692px' } } }}
       fullWidth
     >
       <DialogTitle marginLeft={2}>
@@ -177,6 +184,9 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
           systemParentId={parentSystemId ?? undefined}
           onChangeParentId={setParentSystemId}
           selectedSystems={selectedSystems}
+          isSystemSelectable={(system: System) => {
+            return parentSystemTypeId === system.type_id;
+          }}
           type={type}
         />
       </DialogContent>

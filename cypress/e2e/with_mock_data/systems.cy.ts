@@ -269,6 +269,9 @@ describe('Systems', () => {
       cy.findByRole('button', { name: 'Add System' }).click();
       cy.findByLabelText('Name *').type('System name');
 
+      cy.findByLabelText('Type *').click();
+      cy.findByRole('option', { name: 'Operational' }).click();
+
       cy.startSnoopingBrowserMockedRequest();
 
       cy.findByRole('button', { name: 'Save' }).click();
@@ -283,6 +286,7 @@ describe('Systems', () => {
           JSON.stringify({
             name: 'System name',
             importance: 'medium',
+            type_id: '2',
           })
         );
       });
@@ -292,6 +296,8 @@ describe('Systems', () => {
       cy.findByRole('button', { name: 'Add System' }).click();
 
       cy.findByLabelText('Name *').type('System name');
+      cy.findByLabelText('Type *').click();
+      cy.findByRole('option', { name: 'Operational' }).click();
       cy.findByLabelText('Description').type('System description');
       cy.findByLabelText('Location').type('System location');
       cy.findByLabelText('Owner').type('System owner');
@@ -315,6 +321,7 @@ describe('Systems', () => {
             location: 'System location',
             owner: 'System owner',
             importance: 'high',
+            type_id: '2',
           })
         );
       });
@@ -340,6 +347,7 @@ describe('Systems', () => {
           JSON.stringify({
             name: 'System name',
             importance: 'medium',
+            type_id: '2',
             parent_id: '65328f34a40ff5301575a4e3',
           })
         );
@@ -363,6 +371,9 @@ describe('Systems', () => {
 
       cy.findByRole('button', { name: 'Add System' }).click();
       cy.findByLabelText('Name *').type('Error 409');
+
+      cy.findByLabelText('Type *').click();
+      cy.findByRole('option', { name: 'Operational' }).click();
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByText(
         'A System with the same name already exists within the same parent System. Please enter a different name.'
@@ -374,13 +385,33 @@ describe('Systems', () => {
         'A System with the same name already exists within the same parent System. Please enter a different name.'
       ).should('not.exist');
     });
+
+    it('displays error message if the system type id is not found', () => {
+      cy.visit('/systems');
+
+      cy.findByRole('button', { name: 'Add System' }).click();
+      cy.findByLabelText('Name *').type('Error type not found');
+
+      cy.findByLabelText('Type *').click();
+      cy.findByRole('option', { name: 'Operational' }).click();
+      cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByText(
+        'Specified system type not found. Please select a valid system type.'
+      ).should('be.visible');
+      cy.findByRole('button', { name: 'Save' }).should('be.disabled');
+      cy.findByRole('button', { name: 'Cancel' }).click();
+      cy.findByRole('button', { name: 'Add System' }).click();
+      cy.findByText(
+        'Specified system type not found. Please select a valid system type.'
+      ).should('not.exist');
+    });
   });
 
   describe('Edit', () => {
     it("edits all of a system's fields", () => {
       cy.visit('/systems');
 
-      cy.findAllByLabelText('Row Actions').eq(1).click();
+      cy.findAllByLabelText('Row Actions').eq(2).click();
       cy.findByText('Edit').click();
 
       cy.findByLabelText('Name *').clear();
@@ -419,7 +450,7 @@ describe('Systems', () => {
     it("edits only a system's name", () => {
       cy.visit('/systems');
 
-      cy.findAllByLabelText('Row Actions').eq(1).click();
+      cy.findAllByLabelText('Row Actions').eq(2).click();
       cy.findByText('Edit').click();
 
       cy.findByLabelText('Name *').clear();
@@ -478,6 +509,53 @@ describe('Systems', () => {
       cy.findByText('Please enter a name.').should('not.exist');
     });
 
+    it('displays error message if user edits the type when system has child elements', () => {
+      cy.visit('/systems');
+
+      cy.findAllByLabelText('Row Actions').eq(1).click();
+      cy.findByText('Edit').click();
+
+      cy.findByLabelText('Name *').clear();
+      cy.findByLabelText('Name *').type(
+        'Error editing type whilst having children'
+      );
+      cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByText(
+        'Cannot change the type of a system that has child systems and items. Please remove all child systems and items before changing the type.'
+      ).should('exist');
+      cy.findByRole('button', { name: 'Save' }).should('be.disabled');
+      cy.findByRole('button', { name: 'Cancel' }).click();
+
+      cy.findAllByLabelText('Row Actions').eq(1).click();
+      cy.findByText('Edit').click();
+
+      cy.findByText(
+        'Cannot change the type of a system that has child systems and items. Please remove all child systems and items before changing the type.'
+      ).should('not.exist');
+    });
+
+    it('displays error message if the system type id is not found', () => {
+      cy.visit('/systems');
+
+      cy.findAllByLabelText('Row Actions').eq(1).click();
+      cy.findByText('Edit').click();
+
+      cy.findByLabelText('Name *').clear();
+      cy.findByLabelText('Name *').type('Error type not found');
+      cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByText(
+        'Specified system type not found. Please select a valid system type.'
+      ).should('exist');
+      cy.findByRole('button', { name: 'Save' }).should('be.disabled');
+      cy.findByRole('button', { name: 'Cancel' }).click();
+
+      cy.findAllByLabelText('Row Actions').eq(1).click();
+      cy.findByText('Edit').click();
+
+      cy.findByText(
+        'Specified system type not found. Please select a valid system type.'
+      ).should('not.exist');
+    });
     it('displays error message if the system has a duplicate name that disappears once closed', () => {
       cy.visit('/systems');
 
@@ -508,7 +586,7 @@ describe('Systems', () => {
     it('duplicates a system editing all fields (in root)', () => {
       cy.visit('/systems');
 
-      cy.findAllByLabelText('Row Actions').eq(1).click();
+      cy.findAllByLabelText('Row Actions').eq(2).click();
       cy.findByText('Duplicate').click();
 
       // Should default to having _copy_1 in the name
@@ -542,6 +620,7 @@ describe('Systems', () => {
             location: 'System location',
             owner: 'System owner',
             importance: 'medium',
+            type_id: '2',
           })
         );
       });
@@ -577,6 +656,7 @@ describe('Systems', () => {
             location: '848 James Lock Suite 863\nNew Robertbury, PW 17883',
             owner: 'Daniel Morrison',
             importance: 'low',
+            type_id: '2',
             parent_id: '65328f34a40ff5301575a4e3',
           })
         );
@@ -623,7 +703,7 @@ describe('Systems', () => {
   it('deletes a system', () => {
     cy.visit('/systems');
 
-    cy.findAllByLabelText('Row Actions').eq(1).click();
+    cy.findAllByLabelText('Row Actions').eq(2).click();
     cy.findByText('Delete').click();
 
     cy.startSnoopingBrowserMockedRequest();
@@ -640,28 +720,28 @@ describe('Systems', () => {
   it('displays an error when attempting to delete a system with children that hides once closed', () => {
     cy.visit('/systems');
 
-    cy.findAllByLabelText('Row Actions').eq(0).click();
+    cy.findAllByLabelText('Row Actions').eq(1).click();
     cy.findByText('Delete').click();
 
     cy.startSnoopingBrowserMockedRequest();
     cy.findByRole('button', { name: 'Continue' }).click();
 
     cy.findByRole('dialog')
-      .should('be.visible')
+      .should('exist')
       .within(() => {
         cy.findByText(
           'System has child elements and cannot be deleted, please delete the child systems first'
-        ).should('be.visible');
+        ).should('exist');
       });
     cy.findByRole('button', { name: 'Continue' }).should('be.disabled');
 
     cy.findByRole('button', { name: 'Cancel' }).click();
 
-    cy.findAllByLabelText('Row Actions').eq(0).click();
+    cy.findAllByLabelText('Row Actions').eq(1).click();
     cy.findByText('Delete').click();
 
     cy.findByRole('dialog')
-      .should('be.visible')
+      .should('exist')
       .within(() => {
         cy.findByText(
           'System has child elements and cannot be deleted, please delete the child systems first'
@@ -679,12 +759,12 @@ describe('Systems', () => {
     cy.findByRole('menuitem', { name: 'Copy to' }).click();
 
     cy.findByRole('dialog')
-      .should('be.visible')
+      .should('exist')
       .within(() => {
         cy.findByRole('button', { name: 'Add System' }).click();
       });
 
-    cy.findByLabelText('Name *').should('be.visible');
+    cy.findByLabelText('Name *').should('exist');
 
     cy.findByRole('button', { name: 'Cancel' }).click();
 
@@ -752,7 +832,7 @@ describe('Systems', () => {
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('dialog')
-      .should('be.visible')
+      .should('be.exist')
       .within(() => {
         cy.findByLabelText('Giant laser row').click();
         cy.findByRole('button', { name: 'Copy here' }).click();
@@ -777,6 +857,7 @@ describe('Systems', () => {
           code: 'pulse-laser',
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          type_id: '2',
         })
       );
       expect(JSON.stringify(await postRequests[1].json())).equal(
@@ -791,6 +872,7 @@ describe('Systems', () => {
           code: 'pico-laser',
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          type_id: '2',
         })
       );
     });

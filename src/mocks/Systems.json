@@ -1,5 +1,18 @@
 [
   {
+    "parent_id": null,
+    "name": "Storage",
+    "description": "Storage system for various items.",
+    "location": "Warehouse 42\nSector 7\nGalactic Core",
+    "owner": "Prof Peter Jackson",
+    "importance": "medium",
+    "id": "657f8c3b2a1b4e5d8f9b3c4e5",
+    "code": "storage-system",
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "type_id": "1"
+  },
+  {
     "name": "Giant laser",
     "location": "80371 Alvarado Drive Apt. 272, Heatherhaven, MP 33307",
     "owner": "Juan Horton",
@@ -9,7 +22,8 @@
     "id": "65328f34a40ff5301575a4e3",
     "code": "giant-laser",
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "type_id": "2"
   },
   {
     "name": "Smaller laser",
@@ -21,7 +35,8 @@
     "id": "65328f34a40ff5301575a4e4",
     "code": "smaller-laser",
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "type_id": "2"
   },
   {
     "name": "Pulse Laser",
@@ -33,7 +48,8 @@
     "id": "65328f34a40ff5301575a4e5",
     "code": "pulse-laser",
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "type_id": "2"
   },
   {
     "name": "Laser Tech",
@@ -45,7 +61,8 @@
     "id": "65328f34a40ff5301575a4e6",
     "code": "laser-tech",
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "type_id": "2"
   },
   {
     "name": "Laser Star",
@@ -57,7 +74,8 @@
     "id": "65328f34a40ff5301575a4e7",
     "code": "laser-star",
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "type_id": "2"
   },
   {
     "name": "Laser Xpress",
@@ -69,7 +87,8 @@
     "id": "65328f34a40ff5301575a4e8",
     "code": "laser-xpress",
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "type_id": "2"
   },
   {
     "name": "Plasma Beam",
@@ -81,7 +100,8 @@
     "id": "65328f34a40ff5301575a4e9",
     "code": "plasma-beam",
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "type_id": "2"
   },
   {
     "parent_id": null,
@@ -93,7 +113,8 @@
     "id": "656da8ef9cba7a76c6f81a5d",
     "code": "pulse-laser",
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "type_id": "2"
   },
   {
     "parent_id": null,
@@ -105,6 +126,21 @@
     "id": "656ef565ed0773f82e44bc6d",
     "code": "pico-laser",
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "type_id": "2"
+  },
+
+  {
+    "parent_id": null,
+    "name": "Scrapped",
+    "description": "Scrapped system for various items.",
+    "location": "Warehouse 42\nSector 7\nGalactic Core",
+    "owner": "Mrs Jasmine Jackson",
+    "importance": "medium",
+    "id": "657f8c3b2a1b4e5d8f9b3c4e8",
+    "code": "scrapped",
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "type_id": "3"
   }
 ]

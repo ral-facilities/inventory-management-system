@@ -259,9 +259,12 @@ export const addCatalogueCategories = (ignoreChecks?: boolean) => {
 
 export const editCatalogueCategories = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
-
   cy.findByText('Spherical Lenses').should('not.exist');
-  cy.findByRole('progressbar').should('not.exist');
+  cy.intercept({
+    method: 'GET',
+    url: '**/catalogue-categories?parent_id=null',
+  }).as('getCatalogueCategoryDataRoot');
+  cy.wait('@getCatalogueCategoryDataRoot', { timeout: 10000 });
   cy.findByText('Lenses').should('exist');
 
   modifyCatalogueCategory({

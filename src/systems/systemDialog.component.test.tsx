@@ -27,12 +27,13 @@ describe('Systems Dialog', () => {
   };
 
   // Modifies values when given a value that is not undefined
-  const modifyValues = (values: {
+  const modifyValues = async (values: {
     name?: string;
     description?: string;
     location?: string;
     owner?: string;
     importance?: SystemImportanceType;
+    type?: string;
   }) => {
     if (values.name !== undefined)
       fireEvent.change(screen.getByLabelText('Name *'), {
@@ -55,6 +56,12 @@ describe('Systems Dialog', () => {
       fireEvent.mouseDown(screen.getByLabelText('Importance'));
       fireEvent.click(
         within(screen.getByRole('listbox')).getByText(values.importance)
+      );
+    }
+    if (values.type !== undefined) {
+      fireEvent.mouseDown(screen.getByLabelText('Type *'));
+      fireEvent.click(
+        within(await screen.findByRole('listbox')).getByText(values.type)
       );
     }
   };
@@ -89,11 +96,15 @@ describe('Systems Dialog', () => {
     });
 
     it('renders correctly when adding a subsystem', async () => {
-      props.parentId = 'parent-id';
+      props.parentId = '656ef565ed0773f82e44bc6d';
 
       createView();
 
       expect(screen.getByText('Add Subsystem')).toBeInTheDocument();
+
+      expect(
+        await screen.findByDisplayValue('Operational')
+      ).toBeInTheDocument();
     });
 
     it('disables save button and shows circular progress indicator when request is pending', async () => {
@@ -105,7 +116,7 @@ describe('Systems Dialog', () => {
 
       createView();
 
-      modifyValues({ name: 'test' });
+      await modifyValues({ name: 'test', type: 'Storage' });
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
@@ -151,13 +162,14 @@ describe('Systems Dialog', () => {
         owner: 'System owner',
         importance: SystemImportanceType.HIGH,
       };
-      modifyValues(values);
+      await modifyValues({ ...values, type: 'Operational' });
 
       await user.click(screen.getByRole('button', { name: 'Save' }));
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
         ...values,
         parent_id: 'parent-id',
+        type_id: '2',
       });
 
       expect(mockOnClose).toHaveBeenCalled();
@@ -170,13 +182,14 @@ describe('Systems Dialog', () => {
         name: 'System name',
       };
 
-      modifyValues(values);
+      await modifyValues({ ...values, type: 'Scrapped' });
 
       await user.click(screen.getByRole('button', { name: 'Save' }));
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
         ...values,
         importance: SystemImportanceType.MEDIUM,
+        type_id: '3',
       });
       expect(mockOnClose).toHaveBeenCalled();
     });
@@ -195,9 +208,10 @@ describe('Systems Dialog', () => {
 
       const values = {
         name: 'Error 409',
+        type: 'Storage',
       };
 
-      modifyValues(values);
+      await modifyValues(values);
 
       await user.click(screen.getByRole('button', { name: 'Save' }));
 
@@ -209,14 +223,35 @@ describe('Systems Dialog', () => {
       expect(mockOnClose).not.toHaveBeenCalled();
     });
 
+    it('displays error message when type id does not exist', async () => {
+      createView();
+
+      const values = {
+        name: 'Error type not found',
+        type: 'Storage',
+      };
+
+      await modifyValues(values);
+
+      await user.click(screen.getByRole('button', { name: 'Save' }));
+
+      expect(
+        screen.getByText(
+          'Specified system type not found. Please select a valid system type.'
+        )
+      ).toBeInTheDocument();
+      expect(mockOnClose).not.toHaveBeenCalled();
+    });
+
     it('displays error message when an unknown error occurs', async () => {
       createView();
 
       const values = {
         name: 'Error 500',
+        type: 'Operational',
       };
 
-      modifyValues(values);
+      await modifyValues(values);
 
       await user.click(screen.getByRole('button', { name: 'Save' }));
 
@@ -235,6 +270,7 @@ describe('Systems Dialog', () => {
       description: 'Description',
       parent_id: null,
       id: '65328f34a40ff5301575a4e3',
+      type_id: '1',
       code: 'mock-laser',
       ...CREATED_MODIFIED_TIME_VALUES,
     };
@@ -260,7 +296,7 @@ describe('Systems Dialog', () => {
 
       createView();
 
-      modifyValues({ name: 'test' });
+      await modifyValues({ name: 'test' });
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
@@ -288,7 +324,7 @@ describe('Systems Dialog', () => {
         owner: 'System owner',
         importance: SystemImportanceType.LOW,
       };
-      modifyValues(values);
+      await modifyValues(values);
 
       await user.click(screen.getByRole('button', { name: 'Save' }));
 
@@ -309,7 +345,7 @@ describe('Systems Dialog', () => {
         owner: '',
       };
 
-      modifyValues(values);
+      await modifyValues(values);
 
       await user.click(screen.getByRole('button', { name: 'Save' }));
 
@@ -326,7 +362,7 @@ describe('Systems Dialog', () => {
       const values = {
         name: 'System name',
       };
-      modifyValues(values);
+      await modifyValues(values);
 
       await user.click(screen.getByRole('button', { name: 'Save' }));
 
@@ -350,7 +386,7 @@ describe('Systems Dialog', () => {
       ).toBeInTheDocument();
       expect(mockOnClose).not.toHaveBeenCalled();
 
-      modifyValues({ description: 'New description' });
+      await modifyValues({ description: 'New description' });
 
       expect(
         screen.queryByText(
@@ -362,7 +398,7 @@ describe('Systems Dialog', () => {
     it('displays error message when name field is not filled in', async () => {
       createView();
 
-      modifyValues({ name: '' });
+      await modifyValues({ name: '' });
 
       await user.click(screen.getByRole('button', { name: 'Save' }));
 
@@ -377,7 +413,7 @@ describe('Systems Dialog', () => {
         name: 'Error 409',
       };
 
-      modifyValues(values);
+      await modifyValues(values);
 
       await user.click(screen.getByRole('button', { name: 'Save' }));
 
@@ -396,12 +432,50 @@ describe('Systems Dialog', () => {
         name: 'Error 500',
       };
 
-      modifyValues(values);
+      await modifyValues(values);
 
       await user.click(screen.getByRole('button', { name: 'Save' }));
 
       expect(handleIMS_APIError).toHaveBeenCalled();
 
+      expect(mockOnClose).not.toHaveBeenCalled();
+    });
+
+    it('displays error message when type does not exist', async () => {
+      createView();
+
+      const values = {
+        name: 'Error type not found',
+      };
+
+      await modifyValues(values);
+
+      await user.click(screen.getByRole('button', { name: 'Save' }));
+
+      expect(
+        screen.getByText(
+          'Specified system type not found. Please select a valid system type.'
+        )
+      ).toBeInTheDocument();
+      expect(mockOnClose).not.toHaveBeenCalled();
+    });
+
+    it('displays error message if user edits the type when system has child elements', async () => {
+      createView();
+
+      const values = {
+        name: 'Error editing type whilst having children',
+      };
+
+      await modifyValues(values);
+
+      await user.click(screen.getByRole('button', { name: 'Save' }));
+
+      expect(
+        screen.getByText(
+          'Cannot change the type of a system that has child systems and items. Please remove all child systems and items before changing the type.'
+        )
+      ).toBeInTheDocument();
       expect(mockOnClose).not.toHaveBeenCalled();
     });
   });
@@ -419,6 +493,7 @@ describe('Systems Dialog', () => {
       parent_id: null,
       id: '65328f34a40ff5301575a4e3',
       code: 'mock-laser',
+      type_id: '2',
       ...CREATED_MODIFIED_TIME_VALUES,
     };
 
@@ -459,7 +534,7 @@ describe('Systems Dialog', () => {
       const values = {
         name: 'System name',
       };
-      modifyValues(values);
+      await modifyValues(values);
 
       await user.click(screen.getByRole('button', { name: 'Save' }));
 
