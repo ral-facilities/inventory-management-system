@@ -79,6 +79,7 @@ export interface SystemPost {
   description?: string | null;
   location?: string | null;
   owner?: string | null;
+  type_id: string;
   importance: SystemImportanceType;
   parent_id?: string | null;
 }

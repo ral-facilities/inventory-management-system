@@ -27,6 +27,7 @@ describe('SystemsTableView', () => {
     props = {
       systemsData: mockSystemsData,
       systemsDataLoading: false,
+      isSystemSelectable: () => true,
       onChangeParentId: mockOnChangeParentId,
       selectedSystems: [mockSystemsData[1], mockSystemsData[2]],
       type: 'moveTo',

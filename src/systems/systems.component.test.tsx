@@ -37,7 +37,7 @@ describe('Systems', () => {
     });
 
     expect(screen.getByText('Giant laser')).toBeInTheDocument();
-    expect(screen.getByText('Total Systems: 3')).toBeInTheDocument();
+    expect(screen.getByText('Total Systems: 5')).toBeInTheDocument();
   });
 
   it('renders correctly when viewing a specific system', async () => {
@@ -58,7 +58,7 @@ describe('Systems', () => {
       expect(screen.getByText('Root systems')).toBeInTheDocument();
     });
 
-    expect(screen.getByText('Returned 1 out of 3 Systems')).toBeInTheDocument();
+    expect(screen.getByText('Returned 1 out of 5 Systems')).toBeInTheDocument();
   });
 
   it('renders correctly when filtering subsystems', async () => {

@@ -37,6 +37,7 @@ const SystemDetailsActionMenu = (props: { system: System }) => {
           <SystemDialog
             open={editSystemDialogOpen}
             onClose={() => setEditSystemDialogOpen(false)}
+            parentId={system.parent_id}
             requestType="patch"
             selectedSystem={system}
           />

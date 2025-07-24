@@ -160,6 +160,7 @@ const SystemsActionMenu = (props: {
           <ListItemText>{props.selectedSystems.length} selected</ListItemText>
         </MenuItem>
       </Menu>
+
       {dialogType && (
         <SystemDirectoryDialog
           open={Boolean(dialogType)}
@@ -274,6 +275,17 @@ function Systems() {
       showFirstButton: false,
       showLastButton: false,
       size: 'small',
+    },
+    muiSelectCheckboxProps: ({ row, table }) => {
+      const selectedSystems = table
+        .getSelectedRowModel()
+        .rows.map((row) => row.original);
+      const type_id = selectedSystems[0]?.type_id;
+      const isDisabled =
+        selectedSystems.length > 0 ? row.original.type_id !== type_id : false;
+      return {
+        disabled: isDisabled,
+      };
     },
     // Functions
     ...onPreservedStatesChange,
