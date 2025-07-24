@@ -12,5 +12,6 @@ export interface PluginRoute {
   displayName: string;
   admin?: boolean;
   hideFromMenu?: boolean;
+  unauthorised?: boolean;
   order: number;
 }
