@@ -155,7 +155,7 @@ describe('ItemDialog', () => {
     vi.clearAllMocks();
   });
 
-  describe.skip('Add Item', () => {
+  describe('Add Item', () => {
     let axiosPostSpy: MockInstance;
 
     beforeEach(() => {
@@ -975,7 +975,7 @@ describe('ItemDialog', () => {
       expect(await screen.findByRole('progressbar')).toBeInTheDocument();
     });
 
-    it.only('edit an item (all input values)', async () => {
+    it('edit an item (all input values)', async () => {
       createView();
 
       await modifyDetailsValues({

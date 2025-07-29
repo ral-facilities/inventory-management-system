@@ -119,7 +119,7 @@ describe('Systems', () => {
       expect(screen.getByText('Subsystems')).toBeInTheDocument();
     });
 
-    const checkboxes = screen.getAllByRole('checkbox', {
+    const checkboxes = await screen.findAllByRole('checkbox', {
       name: 'Toggle select row',
     });
 
@@ -149,7 +149,7 @@ describe('Systems', () => {
       expect(screen.getByText('Root systems')).toBeInTheDocument();
     });
 
-    const checkboxes = screen.getAllByRole('checkbox', {
+    const checkboxes = await screen.findAllByRole('checkbox', {
       name: 'Toggle select row',
     });
 
@@ -195,7 +195,7 @@ describe('Systems', () => {
       expect(screen.getByText('Root systems')).toBeInTheDocument();
     });
 
-    const checkboxes = screen.getAllByRole('checkbox', {
+    const checkboxes = await screen.findAllByRole('checkbox', {
       name: 'Toggle select row',
     });
 
@@ -232,7 +232,7 @@ describe('Systems', () => {
       expect(screen.getByText('Root systems')).toBeInTheDocument();
     });
 
-    const checkboxes = screen.getAllByRole('checkbox', {
+    const checkboxes = await screen.findAllByRole('checkbox', {
       name: 'Toggle select row',
     });
 

@@ -16,7 +16,7 @@ import { useGetCatalogueCategory } from '../api/catalogueCategories';
 import { useGetCatalogueItem } from '../api/catalogueItems';
 import { useGetItem } from '../api/items';
 import { useGetManufacturer } from '../api/manufacturers';
-import { useGetSystem } from '../api/systems';
+import { useGetSystem, useGetSystemTypes } from '../api/systems';
 import ActionMenu from '../common/actionMenu.component';
 import PrimaryImage from '../common/images/primaryImage.component';
 import TabView from '../common/tab/tabView.component';
@@ -78,6 +78,8 @@ function ItemsLandingPage() {
   } = useGetCatalogueCategory(catalogueCategoryId);
 
   const { data: systemData } = useGetSystem(itemData?.system_id);
+
+  const { data: systemTypesData } = useGetSystemTypes();
 
   const { data: manufacturer } = useGetManufacturer(
     catalogueItemData?.manufacturer_id
@@ -357,6 +359,27 @@ function ItemsLandingPage() {
                               >
                                 {systemData?.name}
                               </MuiLink>
+                            </Typography>
+                          </Grid>
+
+                          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.primary',
+                              }}
+                            >
+                              System Type
+                            </Typography>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.secondary',
+                              }}
+                            >
+                              {systemTypesData?.find(
+                                (type) => type.id === systemData?.type_id
+                              )?.value ?? 'Unknown'}
                             </Typography>
                           </Grid>
                           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
