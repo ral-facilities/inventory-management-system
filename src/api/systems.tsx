@@ -185,15 +185,17 @@ const deleteSystem = async (systemId: string): Promise<void> => {
 export const useDeleteSystem = (): UseMutationResult<
   void,
   AxiosError,
-  string
+  System
 > => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (systemId: string) => deleteSystem(systemId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['Systems'] });
-      queryClient.removeQueries({ queryKey: ['System'] });
+    mutationFn: (system: System) => deleteSystem(system.id),
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ['Systems', variables.parent_id],
+      });
+      queryClient.removeQueries({ queryKey: ['System', variables.id] });
     },
   });
 };

@@ -8,6 +8,8 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   Box,
+  Button,
+  Chip,
   CircularProgress,
   Divider,
   IconButton,
@@ -15,36 +17,49 @@ import {
   ListItemText,
   Menu,
   MenuItem,
-  Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
+  Link as MuiLink,
   Tooltip,
   Typography,
+  type TableCellBaseProps,
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import {
-  // To resolve react/jsx-pascal-case
-  MRT_GlobalFilterTextField as MRTGlobalFilterTextField,
-  MRT_TableBodyCellValue as MRTTableBodyCellValue,
+  MaterialReactTable,
   MRT_ColumnDef,
+  MRT_GlobalFilterTextField,
   MRT_RowSelectionState,
-  MRT_TablePagination,
+  MRT_ToggleFiltersButton,
+  MRT_ToggleFullScreenButton,
   useMaterialReactTable,
 } from 'material-react-table';
+import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { useNavigate, useParams } from 'react-router';
-import { System } from '../api/api.types';
-import { useGetSystems } from '../api/systems';
+import { Link, useNavigate, useParams } from 'react-router';
+import { System, SystemImportanceType } from '../api/api.types';
+import {
+  getSystemImportanceColour,
+  useGetSystems,
+  useGetSystemTypes,
+} from '../api/systems';
+import type { SystemTableType } from '../app.types';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import {
-  OverflowTip,
+  COLUMN_FILTER_FUNCTIONS,
+  COLUMN_FILTER_MODE_OPTIONS,
+  COLUMN_FILTER_VARIANTS,
+  customFilterFunctions,
+  deselectRowById,
   displayTableRowCountText,
+  formatDateTimeStrings,
   generateUniqueName,
+  getInitialColumnFilterFnState,
   getPageHeightCalc,
+  MRT_Functions_Localisation,
   mrtTheme,
+  OPTIONAL_FILTER_MODE_OPTIONS,
+  TableBodyCellOverFlowTip,
+  TableHeaderOverflowTip,
+  type TableCellOverFlowTipProps,
 } from '../utils';
 import { DeleteSystemDialog } from './deleteSystemDialog.component';
 import SystemDetails from './systemDetails.component';
@@ -66,24 +81,40 @@ export const useNavigateToSystem = () => {
 
 export type SystemMenuDialogType = 'edit' | 'duplicate' | 'delete';
 
-const AddSystemButton = (props: { systemId: string | null }) => {
+const AddSystemButton = (props: {
+  systemId: string | null;
+  isIcon?: boolean;
+}) => {
   const [addSystemDialogOpen, setAddSystemDialogOpen] =
     React.useState<boolean>(false);
 
   const ariaLabelText =
     props.systemId === null ? 'Add System' : 'Add Subsystem';
+
+  const renderedButton = props.isIcon ? (
+    <Tooltip title={ariaLabelText}>
+      <span>
+        <IconButton
+          aria-label={ariaLabelText}
+          onClick={() => setAddSystemDialogOpen(true)}
+        >
+          <AddIcon />
+        </IconButton>
+      </span>
+    </Tooltip>
+  ) : (
+    <Button
+      startIcon={<AddIcon />}
+      sx={{ mx: 0.5 }}
+      variant="outlined"
+      onClick={() => setAddSystemDialogOpen(true)}
+    >
+      {ariaLabelText}
+    </Button>
+  );
   return (
     <>
-      <Tooltip title={ariaLabelText}>
-        <span>
-          <IconButton
-            aria-label={ariaLabelText}
-            onClick={() => setAddSystemDialogOpen(true)}
-          >
-            <AddIcon />
-          </IconButton>
-        </span>
-      </Tooltip>
+      {renderedButton}
       <SystemDialog
         open={addSystemDialogOpen}
         onClose={() => setAddSystemDialogOpen(false)}
@@ -175,36 +206,11 @@ const SystemsActionMenu = (props: {
   );
 };
 
-const columns: MRT_ColumnDef<System>[] = [
-  {
-    accessorKey: 'name',
-    header: 'Name',
-    Cell: ({ row }) => {
-      return (
-        <OverflowTip
-          sx={{
-            fontSize: 'inherit',
-            maxWidth: { md: 'max(9vw, 180px)', xs: '68vw' },
-          }}
-        >
-          {row.original.name}
-        </OverflowTip>
-      );
-    },
-  },
-];
-
-const MIN_SUBSYSTEMS_WIDTH = '320px';
+const MIN_SUBSYSTEMS_WIDTH = '500px';
 
 function Systems() {
   // Navigation
   const { system_id: systemId = null } = useParams();
-  const navigateToSystem = useNavigateToSystem();
-
-  // States
-  const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
-    {}
-  );
 
   // Specifically for the drop down menus/dialogues
   const [selectedSystemForMenu, setSelectedSystemForMenu] = React.useState<
@@ -216,32 +222,219 @@ function Systems() {
     SystemMenuDialogType | undefined
   >(undefined);
 
-  // Data
+  const noResultsTxt = `No ${systemId === null ? 'systems' : 'subsystems'} found`;
+
+  const hiddenColumns = React.useMemo(
+    () => [
+      'modified_time',
+      'created_time',
+      'importance',
+      'description',
+      'owner',
+      'location',
+    ],
+    []
+  );
+
+  const { data: systemTypesData, isLoading: systemTypesLoading } =
+    useGetSystemTypes();
+
   const { data: subsystemsData, isLoading: subsystemsDataLoading } =
     useGetSystems(
       // String value of null for filtering root systems
       systemId === null ? 'null' : systemId
     );
 
-  // Obtain the selected system data, not just the selection state
-  const selectedRowIds = Object.keys(rowSelection);
-  const selectedSystems =
-    subsystemsData?.filter((subsystem) =>
-      selectedRowIds.includes(subsystem.id)
-    ) ?? [];
+  const isLoading = systemTypesLoading || subsystemsDataLoading;
+  const [tableRows, setTableRows] = React.useState<SystemTableType[]>([]);
+
+  React.useEffect(() => {
+    if (!isLoading && subsystemsData) {
+      setTableRows(
+        subsystemsData.map((system) => ({
+          ...system,
+          type: systemTypesData?.find((type) => type.id === system.type_id),
+        }))
+      );
+    } else {
+      setTableRows([]);
+    }
+    //Purposefully leave out systemTypesList from dependencies for same reasons as catalogueItemsTable
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [subsystemsData, isLoading]);
+
+  const columns = React.useMemo<MRT_ColumnDef<SystemTableType>[]>(() => {
+    const systemTypeValues = systemTypesData?.map((type) => type.value);
+    return [
+      {
+        header: 'Name',
+        accessorFn: (row) => row.name,
+        id: 'name',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
+        size: 180,
+        Cell: ({ row }) => {
+          return (
+            <MuiLink
+              underline="hover"
+              component={Link}
+              to={`/systems/${row.original.id}`}
+            >
+              {row.original.name}
+            </MuiLink>
+          );
+        },
+      },
+      {
+        header: 'Type',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => row.type?.value,
+        id: 'type.value',
+        filterVariant: 'multi-select',
+        filterFn: 'arrIncludesSome',
+        columnFilterModeOptions: ['arrIncludesSome', 'arrExcludesSome'],
+        renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) => [
+          <MenuItem
+            key="arrIncludesSome"
+            onClick={() => onSelectFilterMode('arrIncludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrIncludesSome}
+          </MenuItem>,
+          <MenuItem
+            key="arrExcludesSome"
+            onClick={() => onSelectFilterMode('arrExcludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrExcludesSome}
+          </MenuItem>,
+        ],
+        size: 150,
+        filterSelectOptions: systemTypeValues,
+      },
+      {
+        header: 'Last modified',
+        accessorFn: (row) => new Date(row.modified_time),
+        id: 'modified_time',
+        filterVariant: COLUMN_FILTER_VARIANTS.datetime,
+        filterFn: COLUMN_FILTER_FUNCTIONS.datetime,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.datetime,
+        size: 400,
+        enableGrouping: false,
+        Cell: ({ row }) =>
+          formatDateTimeStrings(row.original.modified_time, true),
+      },
+      {
+        header: 'Created Time',
+        accessorFn: (row) => new Date(row.created_time),
+        id: 'created_time',
+        filterVariant: COLUMN_FILTER_VARIANTS.datetime,
+        filterFn: COLUMN_FILTER_FUNCTIONS.datetime,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.datetime,
+        size: 400,
+        enableGrouping: false,
+        Cell: ({ row }) =>
+          formatDateTimeStrings(row.original.created_time, true),
+      },
+      {
+        header: 'Description',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => row.description ?? '',
+        id: 'description',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS.string,
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
+        ],
+        size: 250,
+        enableGrouping: false,
+      },
+      {
+        header: 'Importance',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => row.importance,
+        id: 'importance',
+        filterVariant: 'multi-select',
+        filterFn: 'arrIncludesSome',
+        columnFilterModeOptions: ['arrIncludesSome', 'arrExcludesSome'],
+        renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) => [
+          <MenuItem
+            key="arrIncludesSome"
+            onClick={() => onSelectFilterMode('arrIncludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrIncludesSome}
+          </MenuItem>,
+          <MenuItem
+            key="arrExcludesSome"
+            onClick={() => onSelectFilterMode('arrExcludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrExcludesSome}
+          </MenuItem>,
+        ],
+        size: 250,
+        Cell: ({ row }) => (
+          <Chip
+            label={row.original.importance}
+            sx={() => {
+              const colorName = getSystemImportanceColour(
+                row.original.importance
+              );
+              return {
+                margin: 0,
+                marginLeft: 1,
+                bgcolor: `${colorName}.main`,
+                color: `${colorName}.contrastText`,
+              };
+            }}
+          />
+        ),
+        filterSelectOptions: Object.values(SystemImportanceType),
+      },
+      {
+        header: 'Owner',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => row.owner ?? '',
+        id: 'owner',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS.string,
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
+        ],
+        size: 250,
+      },
+      {
+        header: 'Location',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => row.location ?? '',
+        id: 'location',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS.string,
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
+        ],
+        size: 250,
+      },
+    ];
+  }, [systemTypesData]);
+  // Data
 
   // Names for preventing duplicates in the duplicate dialog
   const subsystemNames: string[] =
     subsystemsData?.map((subsystem) => subsystem.name) || [];
 
-  // Clear selected system when user navigates to a different page
-  React.useEffect(() => {
-    setRowSelection({});
-  }, [systemId]);
+  const initialColumnFilterFnState = React.useMemo(() => {
+    return getInitialColumnFilterFnState(columns);
+  }, [columns]);
 
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
+      columnVisibility: Object.fromEntries(
+        hiddenColumns.map((col) => [col, false])
+      ),
       pagination: { pageSize: 15, pageIndex: 0 },
+      columnFilterFns: initialColumnFilterFnState,
     },
     storeInUrl: true,
     urlParamName: 'subState',
@@ -250,19 +443,37 @@ function Systems() {
   const subsystemsTable = useMaterialReactTable({
     // Data
     columns: columns,
-    data: subsystemsData !== undefined ? subsystemsData : [],
+    data: tableRows,
     // Enables
     enableRowSelection: true,
     enableRowActions: true,
+    enableDensityToggle: false,
+    enableColumnResizing: false,
+    enableGlobalFilter: true,
+    enableHiding: true,
+    enableColumnFilterModes: true,
+    enableStickyHeader: true,
+    enableGrouping: true,
     // Other settings
-    positionActionsColumn: 'last',
     paginationDisplayMode: 'pages',
     autoResetPageIndex: false,
+    positionToolbarAlertBanner: 'bottom',
     // State
     initialState: {
       showGlobalFilter: true,
+      showColumnFilters: false,
     },
-    state: { ...preservedState, rowSelection: rowSelection },
+    state: {
+      ...preservedState,
+      showProgressBars: subsystemsDataLoading,
+    },
+    filterFns: customFilterFunctions,
+    // Localisation
+    localization: {
+      ...MRT_Localization_EN,
+      ...MRT_Functions_Localisation,
+      noRecordsToDisplay: noResultsTxt,
+    },
     //MRT
     mrtTheme,
     //MUI
@@ -276,6 +487,25 @@ function Systems() {
       showLastButton: false,
       size: 'small',
     },
+    muiTablePaperProps: ({ table }) => ({
+      elevation: 0,
+      style: {
+        maxWidth: '100%',
+        // SciGateway navigation drawer is 1200, modal is 1300
+        zIndex: table.getState().isFullScreen ? 1210 : undefined,
+      },
+    }),
+    muiBottomToolbarProps: ({ table }) =>
+      table.getState().isFullScreen ? {} : { sx: { boxShadow: 0 } },
+    muiTableContainerProps: ({ table }) => ({
+      // main app bar + breadcrumbs + title + top toolbar + column heading
+      sx: {
+        height: table.getState().isFullScreen
+          ? '100%'
+          : getPageHeightCalc('64px + 80px + 40px + 47px + 40px'),
+      },
+    }),
+    muiSelectAllCheckboxProps: { disabled: systemId === null },
     muiSelectCheckboxProps: ({ row, table }) => {
       const selectedSystems = table
         .getSelectedRowModel()
@@ -287,10 +517,107 @@ function Systems() {
         disabled: isDisabled,
       };
     },
+    muiTableBodyCellProps: ({ table, column }) =>
+      // Ignore MRT rendered cells e.g. expand , spacer etc
+      column.id.startsWith('mrt')
+        ? {}
+        : {
+            component: (props: TableCellBaseProps) => {
+              return (
+                <TableBodyCellOverFlowTip
+                  {...({
+                    ...props,
+                    overFlowTipSx: {
+                      maxWidth: table.getState().isFullScreen
+                        ? undefined
+                        : { md: 'max(8vw, 155px)', xs: '68vw' },
+                      width: table.getState().isFullScreen ? '25vw' : undefined,
+                    },
+                  } as TableCellOverFlowTipProps)}
+                />
+              );
+            },
+          },
     // Functions
     ...onPreservedStatesChange,
     getRowId: (system) => system.id,
-    onRowSelectionChange: setRowSelection,
+    renderBottomToolbarCustomActions: ({ table }) =>
+      displayTableRowCountText(
+        table,
+        subsystemsData,
+        systemId ? 'Subsystems' : 'Systems',
+        {
+          paddingLeft: '8px',
+        }
+      ),
+    renderTopToolbar: ({ table }) => {
+      if (table.getState().isFullScreen) {
+        return undefined;
+      }
+
+      const selectedSystems = table
+        .getSelectedRowModel()
+        .rows.map((row) => row.original);
+
+      return (
+        <>
+          <Box
+            sx={{ display: 'flex', alignItems: 'center', margin: 0.5, my: 1 }}
+          >
+            <Typography variant="h6" sx={{ marginRight: 'auto' }}>
+              {systemId === null ? 'Root systems' : 'Subsystems'}
+            </Typography>
+
+            <AddSystemButton systemId={systemId} isIcon />
+          </Box>
+          <Divider role="presentation" />
+          <Box sx={{ display: 'flex', alignItems: 'center', margin: 1 }}>
+            <Box>
+              <MRT_GlobalFilterTextField table={table} />
+            </Box>
+            <Box sx={{ marginLeft: 'auto' }}>
+              {selectedSystems.length > 0 && (
+                <SystemsActionMenu
+                  selectedSystems={selectedSystems}
+                  onChangeSelectedSystems={table.setRowSelection}
+                  parentSystemId={systemId}
+                />
+              )}
+              <Tooltip title={'Clear Filters'}>
+                <span>
+                  <IconButton
+                    disabled={preservedState.columnFilters.length === 0}
+                    onClick={() => {
+                      table.resetColumnFilters();
+                    }}
+                  >
+                    <ClearIcon />
+                  </IconButton>
+                </span>
+              </Tooltip>
+              <MRT_ToggleFiltersButton table={table} />
+              <MRT_ToggleFullScreenButton table={table} />
+            </Box>
+          </Box>
+        </>
+      );
+    },
+    renderTopToolbarCustomActions: ({ table }) => (
+      <Box sx={{ display: 'flex' }}>
+        <Button
+          startIcon={<ClearIcon />}
+          sx={{ mx: 0.5 }}
+          variant="outlined"
+          disabled={preservedState.columnFilters.length === 0}
+          onClick={() => {
+            table.resetColumnFilters();
+          }}
+        >
+          Clear Filters
+        </Button>
+        <AddSystemButton systemId={systemId} />
+      </Box>
+    ),
     renderRowActionMenuItems: ({ closeMenu, row }) => {
       return [
         <MenuItem
@@ -341,163 +668,93 @@ function Systems() {
       ];
     },
   });
+  const isFullScreen = subsystemsTable.getState().isFullScreen;
+  React.useEffect(() => {
+    if (isFullScreen) {
+      subsystemsTable.setShowColumnFilters(true);
+      subsystemsTable.setColumnVisibility(
+        Object.fromEntries(hiddenColumns.map((col) => [col, true]))
+      );
+    } else {
+      subsystemsTable.setShowColumnFilters(false);
+      subsystemsTable.setColumnVisibility(
+        Object.fromEntries(hiddenColumns.map((col) => [col, false]))
+      );
+
+      // Filter out filters and sorting related to hidden columns
+      const remainingFilters = subsystemsTable
+        .getState()
+        .columnFilters.filter((filter) => !hiddenColumns.includes(filter.id));
+      const remainingSorting = subsystemsTable
+        .getState()
+        .sorting.filter((sort) => !hiddenColumns.includes(sort.id));
+
+      subsystemsTable.setColumnFilters(remainingFilters);
+      subsystemsTable.setSorting(remainingSorting);
+      subsystemsTable.setGrouping([]);
+      subsystemsTable.setColumnOrder([]);
+    }
+  }, [subsystemsTable, isFullScreen, hiddenColumns]);
+
+  // Reset table sate when systemId changes
+  // This ensures that the table is reset when navigating to a different system
+  React.useEffect(() => {
+    subsystemsTable.reset();
+    setSelectedSystemForMenu(undefined);
+    setMenuDialogType(undefined);
+  }, [systemId, subsystemsTable]);
 
   return (
     <>
-      <Box
-        sx={{
-          height: getPageHeightCalc('80px'),
-        }}
-      >
+      <Grid container direction="row" sx={{ margin: 0, alignItems: 'stretch' }}>
         <Grid
-          container
-          direction="row"
+          size={{
+            xs: 12,
+            md: 'grow',
+          }}
           sx={{
-            margin: 0,
-            alignItems: 'stretch',
+            minWidth: MIN_SUBSYSTEMS_WIDTH,
+            textAlign: 'left',
+            padding: 1,
+            paddingRight: 2,
+            paddingBottom: 0,
           }}
         >
-          <Grid
-            size={{
-              xs: 12,
-              md: 'grow',
-            }}
-            sx={{
-              minWidth: MIN_SUBSYSTEMS_WIDTH,
-              textAlign: 'left',
-              padding: 1,
-              paddingBottom: 0,
-            }}
-          >
-            {subsystemsDataLoading ? (
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  width: '100%',
-                  height: '100%',
-                  minHeight: 200,
-                }}
-              >
-                <CircularProgress />
-              </Box>
-            ) : (
-              <>
-                <Box sx={{ display: 'flex', alignItems: 'center', margin: 1 }}>
-                  <Typography variant="h6" sx={{ marginRight: 'auto' }}>
-                    {systemId === null ? 'Root systems' : 'Subsystems'}
-                  </Typography>
-                  {selectedSystems.length > 0 && (
-                    <SystemsActionMenu
-                      selectedSystems={selectedSystems}
-                      onChangeSelectedSystems={setRowSelection}
-                      parentSystemId={systemId}
-                    />
-                  )}
-                  <AddSystemButton systemId={systemId} />
-                </Box>
-                <Divider role="presentation" />
-                <Stack
-                  sx={{
-                    marginTop: 1,
-                    marginBottom: 'auto',
-                    flexWrap: 'no-wrap',
-                    // Breadcrumbs and rest
-                    height: getPageHeightCalc('96px + 58px'),
-                    // To prevent no subsystems being visible
-                    minHeight: '200px',
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'left',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <MRTGlobalFilterTextField table={subsystemsTable} />
-                  </Box>
-                  <TableContainer sx={{ height: '100%' }}>
-                    <Table sx={{ width: '100%' }}>
-                      <TableBody sx={{ width: '100%' }}>
-                        {subsystemsTable.getRowModel().rows.map((row) => (
-                          <TableRow
-                            key={row.id}
-                            selected={row.getIsSelected()}
-                            onClick={() => navigateToSystem(row.id)}
-                            hover={true}
-                            sx={{ cursor: 'pointer' }}
-                          >
-                            {row.getVisibleCells().map((cell) => (
-                              <TableCell
-                                align={
-                                  cell.column.id === 'mrt-row-actions'
-                                    ? 'right'
-                                    : 'left'
-                                }
-                                variant="body"
-                                key={cell.id}
-                                sx={{
-                                  margin: 0,
-                                  padding: 1,
-                                  paddingRight:
-                                    cell.column.id === 'mrt-row-actions'
-                                      ? 1.5
-                                      : 0,
-                                  width:
-                                    // Make name take up as much space as possible to make other cells
-                                    // as small as possible
-                                    cell.column.id === 'name'
-                                      ? '100%'
-                                      : undefined,
-                                }}
-                              >
-                                <MRTTableBodyCellValue
-                                  cell={cell}
-                                  table={subsystemsTable}
-                                />
-                              </TableCell>
-                            ))}
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                  <Box sx={{ paddingTop: '8px' }}>
-                    {displayTableRowCountText(
-                      subsystemsTable,
-                      subsystemsData,
-                      systemId === null ? 'Systems' : 'Subsystems',
-                      {
-                        paddingLeft: '8px',
-                        textAlign: { sm: 'center', md: 'left' },
-                      }
-                    )}
-                    <MRT_TablePagination table={subsystemsTable} />
-                  </Box>
-                </Stack>
-              </>
-            )}
-          </Grid>
-          <Grid
-            size={{
-              xs: 'grow',
-              md: 10,
-            }}
-            sx={{
-              textAlign: 'left',
-              padding: 1,
-              maxWidth: {
-                xs: '100%',
-                md: `calc(100% - ${MIN_SUBSYSTEMS_WIDTH})`,
-              },
-            }}
-          >
-            <SystemDetails id={systemId} />
-          </Grid>
+          {isLoading ? (
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '100%',
+                height: '100%',
+                minHeight: 200,
+              }}
+            >
+              <CircularProgress />
+            </Box>
+          ) : (
+            <MaterialReactTable table={subsystemsTable} />
+          )}
         </Grid>
-      </Box>
+        <Grid
+          size={{
+            xs: 'grow',
+            md: 10,
+          }}
+          sx={{
+            textAlign: 'left',
+            padding: 1,
+            maxWidth: {
+              xs: '100%',
+              md: `calc(100% - ${MIN_SUBSYSTEMS_WIDTH})`,
+            },
+          }}
+        >
+          <SystemDetails id={systemId} />
+        </Grid>
+      </Grid>
+
       <SystemDialog
         open={menuDialogType !== undefined && menuDialogType !== 'delete'}
         onClose={() => setMenuDialogType(undefined)}
@@ -508,7 +765,12 @@ function Systems() {
       />
       <DeleteSystemDialog
         open={menuDialogType === 'delete'}
-        onClose={() => setMenuDialogType(undefined)}
+        onClose={({ successfulDeletion }) => {
+          setMenuDialogType(undefined);
+          if (successfulDeletion && selectedSystemForMenu) {
+            deselectRowById(selectedSystemForMenu.id, subsystemsTable);
+          }
+        }}
         system={selectedSystemForMenu}
       />
     </>

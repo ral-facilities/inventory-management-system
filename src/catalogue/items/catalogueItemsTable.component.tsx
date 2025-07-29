@@ -48,6 +48,7 @@ import {
   TableCellOverFlowTipProps,
   TableGroupedCell,
   TableHeaderOverflowTip,
+  booleanSelectFilterOptions,
   customFilterFunctions,
   deselectRowById,
   displayTableRowCountText,
@@ -324,6 +325,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         filterFn: COLUMN_FILTER_FUNCTIONS.boolean,
         enableColumnFilterModes: false,
         size: 200,
+        filterSelectOptions: booleanSelectFilterOptions,
       },
       {
         header: 'Obsolete replacement link',
@@ -409,7 +411,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
               ? false
               : true
             : true,
-        filterSelectOptions: ['Yes', 'No'],
+        filterSelectOptions: booleanSelectFilterOptions,
       })),
       {
         header: 'Cost (£)',

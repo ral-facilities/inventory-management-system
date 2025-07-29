@@ -1,5 +1,11 @@
 import AddIcon from '@mui/icons-material/Add';
-import { Box, Button, TableCellBaseProps, TableRow } from '@mui/material';
+import {
+  Box,
+  Button,
+  MenuItem,
+  TableCellBaseProps,
+  TableRow,
+} from '@mui/material';
 import {
   MRT_ColumnDef,
   MaterialReactTable,
@@ -8,12 +14,17 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { System } from '../api/api.types';
+import { useGetSystemTypes } from '../api/systems';
+import type { SystemTableType } from '../app.types';
 import {
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
   COLUMN_FILTER_VARIANTS,
+  MRT_Functions_Localisation,
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
+  TableHeaderOverflowTip,
+  customFilterFunctions,
   formatDateTimeStrings,
   mrtTheme,
 } from '../utils';
@@ -45,8 +56,27 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
     [selectedSystems]
   );
 
+  const { data: systemTypesData, isLoading: systemTypesLoading } =
+    useGetSystemTypes();
+
+  const isLoading = systemsDataLoading || systemTypesLoading;
+  const [tableRows, setTableRows] = React.useState<SystemTableType[]>([]);
+
+  React.useEffect(() => {
+    if (!isLoading && systemsData) {
+      setTableRows(
+        systemsData.map((system) => ({
+          ...system,
+          type: systemTypesData?.find((type) => type.id === system.type_id),
+        }))
+      );
+    }
+    //Purposefully leave out systemTypesList from dependencies for same reasons as catalogueItemsTable
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [systemsData, isLoading]);
+
   const noResultsText = 'No systems found';
-  const columns = React.useMemo<MRT_ColumnDef<System>[]>(
+  const columns = React.useMemo<MRT_ColumnDef<SystemTableType>[]>(
     () => [
       {
         header: 'Name',
@@ -56,6 +86,38 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
+      },
+      {
+        header: 'Type',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => row.type?.value,
+        id: 'type',
+        filterVariant: 'multi-select',
+        filterFn: 'arrIncludesSome',
+        columnFilterModeOptions: ['arrIncludesSome', 'arrExcludesSome'],
+        renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) => [
+          <MenuItem
+            key="arrIncludesSome"
+            onClick={() => onSelectFilterMode('arrIncludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrIncludesSome}
+          </MenuItem>,
+          <MenuItem
+            key="arrExcludesSome"
+            onClick={() => onSelectFilterMode('arrExcludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrExcludesSome}
+          </MenuItem>,
+        ],
+        size: 350,
+        Cell: ({ row }) => {
+          return (
+            <>
+              {systemTypesData?.find((type) => type.id === row.original.type_id)
+                ?.value ?? ''}
+            </>
+          );
+        },
       },
       {
         header: 'Last modified',
@@ -70,12 +132,12 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
           formatDateTimeStrings(row.original.modified_time, true),
       },
     ],
-    []
+    [systemTypesData]
   );
   const table = useMaterialReactTable({
     // Data
     columns: columns,
-    data: systemsData ?? [],
+    data: tableRows ?? [],
     // Features
     enableColumnOrdering: false,
     enableColumnFilterModes: true,
@@ -92,12 +154,14 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
     enableHiding: false,
     enableFullScreenToggle: false,
     enablePagination: true,
+    filterFns: customFilterFunctions,
     // Other settings
     autoResetPageIndex: false,
     paginationDisplayMode: 'pages',
     // Localisation
     localization: {
       ...MRT_Localization_EN,
+      ...MRT_Functions_Localisation,
       noRecordsToDisplay: noResultsText,
     },
     // State

@@ -17,7 +17,7 @@ import handleIMS_APIError from '../handleIMS_APIError';
 
 export interface DeleteSystemDialogProps {
   open: boolean;
-  onClose: () => void;
+  onClose: (props: { successfulDeletion: boolean }) => void;
   system?: System;
 }
 
@@ -31,16 +31,19 @@ export const DeleteSystemDialog = (props: DeleteSystemDialogProps) => {
   const { mutateAsync: deleteSystem, isPending: isDeletePending } =
     useDeleteSystem();
 
-  const handleClose = () => {
-    onClose();
-    setErrorMessage(undefined);
-  };
+  const handleClose = React.useCallback(
+    (props: { successfulDeletion: boolean }) => {
+      onClose({ successfulDeletion: props.successfulDeletion });
+      setErrorMessage(undefined);
+    },
+    [onClose]
+  );
 
   const handleDeleteSystem = React.useCallback(() => {
     if (system)
-      deleteSystem(system.id)
+      deleteSystem(system)
         .then(() => {
-          onClose();
+          handleClose({ successfulDeletion: true });
         })
         .catch((error: AxiosError) => {
           const response = error.response?.data as APIError;
@@ -53,7 +56,7 @@ export const DeleteSystemDialog = (props: DeleteSystemDialogProps) => {
           }
           handleIMS_APIError(error);
         });
-  }, [deleteSystem, onClose, system]);
+  }, [deleteSystem, handleClose, system]);
 
   return (
     <Dialog open={open} maxWidth="lg">
@@ -66,7 +69,9 @@ export const DeleteSystemDialog = (props: DeleteSystemDialogProps) => {
         <strong data-testid="delete-system-name">{system?.name}</strong>?
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={() => handleClose({ successfulDeletion: false })}>
+          Cancel
+        </Button>
         <Button
           onClick={handleDeleteSystem}
           disabled={isDeletePending || errorMessage !== undefined}

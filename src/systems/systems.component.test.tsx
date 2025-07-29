@@ -1,4 +1,4 @@
-import { screen, waitFor, within } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { URLPathKeyType } from '../paths';
 import { renderComponentWithRouterProvider } from '../testUtils';
@@ -63,7 +63,7 @@ describe('Systems', () => {
 
   it('renders correctly when filtering subsystems', async () => {
     createView(
-      '/systems/65328f34a40ff5301575a4e3?subState=N4Ig5gYglgNiBcIAqBTAzgFxAXyA',
+      '/systems/65328f34a40ff5301575a4e3?subState=N4Ig5gYglgNiBcIAOUBeqCGIC%2BQ',
       'system'
     );
 
@@ -119,9 +119,11 @@ describe('Systems', () => {
       expect(screen.getByText('Subsystems')).toBeInTheDocument();
     });
 
-    const smallerLaserCheckbox = within(
-      screen.getByRole('row', { name: 'Toggle select row Smaller laser' })
-    ).getByRole('checkbox');
+    const checkboxes = screen.getAllByRole('checkbox', {
+      name: 'Toggle select row',
+    });
+
+    const smallerLaserCheckbox = checkboxes[0];
 
     await user.click(smallerLaserCheckbox);
 
@@ -147,12 +149,13 @@ describe('Systems', () => {
       expect(screen.getByText('Root systems')).toBeInTheDocument();
     });
 
-    const giantLaserCheckbox = within(
-      screen.getByRole('row', { name: 'Toggle select row Giant laser' })
-    ).getByRole('checkbox');
-    const pulseLaserCheckbox = within(
-      screen.getByRole('row', { name: 'Toggle select row Pulse Laser' })
-    ).getByRole('checkbox');
+    const checkboxes = screen.getAllByRole('checkbox', {
+      name: 'Toggle select row',
+    });
+
+    const giantLaserCheckbox = checkboxes[1];
+
+    const pulseLaserCheckbox = checkboxes[2];
 
     await user.click(giantLaserCheckbox);
     await user.click(pulseLaserCheckbox);
@@ -192,9 +195,11 @@ describe('Systems', () => {
       expect(screen.getByText('Root systems')).toBeInTheDocument();
     });
 
-    const giantLaserCheckbox = within(
-      screen.getByRole('row', { name: 'Toggle select row Giant laser' })
-    ).getByRole('checkbox');
+    const checkboxes = screen.getAllByRole('checkbox', {
+      name: 'Toggle select row',
+    });
+
+    const giantLaserCheckbox = checkboxes[1];
     await user.click(giantLaserCheckbox);
 
     await waitFor(() => {
@@ -227,9 +232,11 @@ describe('Systems', () => {
       expect(screen.getByText('Root systems')).toBeInTheDocument();
     });
 
-    const giantLaserCheckbox = within(
-      screen.getByRole('row', { name: 'Toggle select row Giant laser' })
-    ).getByRole('checkbox');
+    const checkboxes = screen.getAllByRole('checkbox', {
+      name: 'Toggle select row',
+    });
+
+    const giantLaserCheckbox = checkboxes[1];
     await user.click(giantLaserCheckbox);
 
     await waitFor(() => {

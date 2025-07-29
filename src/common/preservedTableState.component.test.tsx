@@ -47,6 +47,7 @@ describe('Preserved table state functions', () => {
             pageSize: 15,
             pageIndex: 0,
           },
+          isFullScreen: false,
         })
       );
     });
@@ -70,6 +71,7 @@ describe('Preserved table state functions', () => {
             pageSize: 15,
             pageIndex: 0,
           },
+          isFullScreen: false,
         })
       );
     });
@@ -100,6 +102,7 @@ describe('Preserved table state functions', () => {
             pageSize: 15,
             pageIndex: 0,
           },
+          isFullScreen: false,
         })
       );
     });
@@ -134,6 +137,7 @@ describe('Preserved table state functions', () => {
             pageSize: 20,
             pageIndex: 5,
           },
+          isFullScreen: false,
         })
       );
     });
@@ -179,7 +183,8 @@ describe('Preserved table state functions', () => {
       //   g: ['catalogueItem.is_obsolete'],
       //   cO: ['mrt-row-expand', 'mrt-row-actions'],
       //   p: { pageSize: 30, pageIndex: 5 },
-      // };
+      //   fS: true,
+      // // };
       // console.log(
       //   LZString.compressToEncodedURIComponent(JSON.stringify(testState))
       // );
@@ -193,7 +198,7 @@ describe('Preserved table state functions', () => {
           wrapper: hooksWrapperWithProviders({
             urlPathKey: 'any',
             initialEntry:
-              '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJMoGAngA5NoIAM4YATglr4W7TkJD1GEBNgriQAX03NEKYWEw4CJclWqVcSBADMExJAH0MCRrI7Yu0HgIVJMTKweXiAATAAMoQAsALThAGwxAIxJACqhAMzQ4eHZ4dQ54QBaWjp6qIZYeERkFDT+vCLOuI7ixADuuOIA1u7yMPAgfIKoYpLSfZ4KEVq6Q76jElIymgC6ZSDIFUbVpnXUYG0BTi5uQf1wPiPCY8uzV34BkyER0XGJKelZOXkFOSVrNasETiDADcoGHYmWrmJSBEBIYgiMAwCQkIHgABqCBE3HQVWhZhoh2Ix2criENhwImIrEqxhqROoiORkn4LlwtBgVOwNJ0IHwKmwqHweAARjghepZDI4PiGXtzDjHLgxSJcNhiBQQKs6QB5AYgSigmLiXDtGLEAAe-DQtBQrGNGFN5piaDAHNouN1IH4eNt+GIAGUEAAvIQZcKsANke3WmAAVm0QA',
+              '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJMoGAngA5NoIAM4YATglr4W7TkJD1GEBNgriQAX03NEKYWEw4CJclWqVcSBADMExJAH0MCRrI7Yu0HgIVJMTKweXiAATAAMoQAsALThAGwxAIxJACqhAMzQ4eHZ4dQ54QBaWjp6qIZYeERkFDT+vCLOuI7ixADuuOIA1u7yMPAgfIKoYpLSfZ4KEVq6Q76jElIymgC6ZSDIFUbVpnXUYG0BTi5uQf1wPiPCY8uzV34BkyER0XGJKelZOXkFOSVrNasETiDADcoGHYmWrmJSBEBIYgiMAwCQkIHgABqCBE3HQVWhZhoh2Ix2criENhwImIrEqxhqROoiORkn4LlwtBgVOwNJ0IHwKmwqHweAARjghepZDI4PiGXtzDjHLgxSJcNhiBQQKs6QB5AYgSigmLiXDtGLEAAe-DQtBQrGNGFN5piaDAHNouN1IH4eNt+GIAGUEAAvIQZcKsANke3WmAAVn5NiDqPE6KAA',
           }),
         }
       );
@@ -222,6 +227,7 @@ describe('Preserved table state functions', () => {
           grouping: ['catalogueItem.is_obsolete'],
           columnOrder: ['mrt-row-expand', 'mrt-row-actions'],
           pagination: { pageSize: 30, pageIndex: 5 },
+          isFullScreen: true,
         })
       );
     });
@@ -254,6 +260,7 @@ describe('Preserved table state functions', () => {
             pageSize: 15,
             pageIndex: 0,
           },
+          isFullScreen: false,
         })
       );
 
@@ -284,6 +291,7 @@ describe('Preserved table state functions', () => {
             grouping: ['catalogueItem.is_obsolete'],
             columnOrder: ['mrt-row-expand', 'mrt-row-actions'],
             pagination: { pageSize: 30, pageIndex: 5 },
+            isFullScreen: false,
           })
         )
       );
@@ -329,6 +337,7 @@ describe('Preserved table state functions', () => {
           grouping: ['catalogueItem.is_obsolete'],
           columnOrder: ['mrt-row-expand', 'mrt-row-actions'],
           pagination: { pageSize: 30, pageIndex: 5 },
+          isFullScreen: false,
         })
       );
     });
@@ -361,6 +370,7 @@ describe('Preserved table state functions', () => {
             pageSize: 15,
             pageIndex: 0,
           },
+          isFullScreen: false,
         })
       );
     });
@@ -1576,6 +1586,41 @@ describe('Preserved table state functions', () => {
             pageSize: 15,
             pageIndex: 0,
           })
+        )
+      );
+      expect(window.location.search).toBe('');
+    });
+
+    it('onIsFullScreenChange updates the state and url correctly using an initial state and when loading an initial state from the url', async () => {
+      const { result } = renderHookWithBrowserRouterURL(
+        () =>
+          usePreservedTableState({
+            initialState: { isFullScreen: false },
+            storeInUrl: true,
+          }),
+        '/'
+      );
+
+      act(() =>
+        result.current.onPreservedStatesChange.onIsFullScreenChange(true)
+      );
+
+      await waitFor(() =>
+        expect(JSON.stringify(result.current.preservedState.isFullScreen)).toBe(
+          'true'
+        )
+      );
+
+      expect(window.location.search).toBe('?state=N4IgZgyiBcAuBOBXApgXyA');
+
+      // Now change back to a default value
+      act(() =>
+        result.current.onPreservedStatesChange.onIsFullScreenChange(false)
+      );
+
+      await waitFor(() =>
+        expect(JSON.stringify(result.current.preservedState.isFullScreen)).toBe(
+          'false'
         )
       );
       expect(window.location.search).toBe('');
