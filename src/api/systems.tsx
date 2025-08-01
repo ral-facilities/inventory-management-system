@@ -193,7 +193,7 @@ export const useDeleteSystem = (): UseMutationResult<
     mutationFn: (system: System) => deleteSystem(system.id),
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({
-        queryKey: ['Systems', variables.parent_id],
+        queryKey: ['Systems', variables.parent_id ?? 'null'],
       });
       queryClient.removeQueries({ queryKey: ['System', variables.id] });
     },
