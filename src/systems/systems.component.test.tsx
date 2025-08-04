@@ -51,6 +51,109 @@ describe('Systems', () => {
     expect(screen.getByText('Total Subsystems: 1')).toBeInTheDocument();
   });
 
+  it('opens subsystems fullscreen table view ', async () => {
+    const { router } = createView(
+      '/systems/65328f34a40ff5301575a4e3',
+      'system'
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('Subsystems')).toBeInTheDocument();
+    });
+
+    expect(screen.getByText('Smaller laser')).toBeInTheDocument();
+    expect(screen.getByText('Total Subsystems: 1')).toBeInTheDocument();
+
+    const toggleFullScreenButton = screen.getAllByRole('button', {
+      name: 'Toggle full screen',
+    })[0];
+
+    await user.click(toggleFullScreenButton);
+
+    expect(router.state.location.search).toBe(
+      '?subState=N4IgxgaglgziBcoC2B7AJlAZlApmg%2BgC5RI4KEBOArjgDTgU4CGheRJZ8lN9JADigqEmAOzCdudEGhwwwFKH2IoR5alJQB3ETgpqeIADYowLKCv04AvvUwBlS1aA'
+    );
+  });
+
+  it('clear filters subsystems table in fullscreen mode', async () => {
+    const { router } = createView('/systems');
+    await waitFor(() => {
+      expect(screen.getByText('Root systems')).toBeInTheDocument();
+    });
+
+    expect(screen.getByText('Giant laser')).toBeInTheDocument();
+    expect(screen.getByText('Total Systems: 5')).toBeInTheDocument();
+
+    const toggleFullScreenButton = screen.getAllByRole('button', {
+      name: 'Toggle full screen',
+    })[0];
+
+    await user.click(toggleFullScreenButton);
+
+    expect(router.state.location.search).toBe(
+      '?subState=N4IgxgaglgziBcoC2B7AJlAZlApmg%2BgC5RI4KEBOArjgDTgU4CGheRJZ8lN9JADigqEmAOzCdudEGhwwwFKH2IoR5alJQB3ETgpqeIADYowLKCv04AvvUwBlS1aA'
+    );
+
+    const clearFiltersButton = screen.getByRole('button', {
+      name: 'Clear Filters',
+    });
+
+    expect(clearFiltersButton).toBeDisabled();
+
+    const nameInput = await screen.findByLabelText('Filter by Name');
+
+    expect(nameInput).toBeVisible();
+    await user.type(nameInput, 'Stor');
+
+    await waitFor(() => {
+      expect(screen.queryByText('Giant Laser')).not.toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(clearFiltersButton).not.toBeDisabled();
+    });
+    await user.click(clearFiltersButton);
+
+    await waitFor(() => {
+      expect(screen.getByText('Giant laser')).toBeInTheDocument();
+    });
+  });
+
+  it('clear filters in subsystems table', async () => {
+    createView('/systems');
+    await waitFor(() => {
+      expect(screen.getByText('Root systems')).toBeInTheDocument();
+    });
+
+    expect(screen.getByText('Giant laser')).toBeInTheDocument();
+    expect(screen.getByText('Total Systems: 5')).toBeInTheDocument();
+
+    const clearFiltersButton = screen.getByLabelText('Clear Filters');
+
+    await user.click(screen.getByRole('button', { name: 'Show/Hide filters' }));
+
+    const nameInput = await screen.findByLabelText('Filter by Name');
+
+    expect(nameInput).toBeVisible();
+    await user.type(nameInput, 'Stor');
+
+    await waitFor(() => {
+      expect(screen.queryByText('Giant Laser')).not.toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(clearFiltersButton).not.toBeDisabled();
+    });
+    await user.click(clearFiltersButton);
+
+    await waitFor(
+      () => {
+        expect(screen.getByText('Giant laser')).toBeInTheDocument();
+      },
+      { timeout: 5000 }
+    );
+  });
+
   it('renders correctly when filtering systems', async () => {
     createView('/systems?subState=N4Ig5gYglgNiBcIDiUCGA7ALiAvkA');
 
@@ -323,7 +426,7 @@ describe('Systems', () => {
       expect(screen.getByTestId('delete-system-name')).toBeInTheDocument();
     });
 
-    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+    await user.click(screen.getByRole('button', { name: 'Continue' }));
 
     await waitFor(() => {
       expect(

@@ -34,7 +34,7 @@ import {
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { Link, useNavigate, useParams } from 'react-router';
+import { Link, useParams } from 'react-router';
 import { System, SystemImportanceType } from '../api/api.types';
 import {
   getSystemImportanceColour,
@@ -65,19 +65,6 @@ import { DeleteSystemDialog } from './deleteSystemDialog.component';
 import SystemDetails from './systemDetails.component';
 import SystemDialog from './systemDialog.component';
 import { SystemDirectoryDialog } from './systemDirectoryDialog.component';
-
-/* Returns function that navigates to a specific system id (or to the root of all systems
-   if given null) */
-export const useNavigateToSystem = () => {
-  const navigate = useNavigate();
-
-  return React.useCallback(
-    (newId: string | null) => {
-      navigate(`/systems${newId ? `/${newId}` : ''}`);
-    },
-    [navigate]
-  );
-};
 
 export type SystemMenuDialogType = 'edit' | 'duplicate' | 'delete';
 
@@ -739,15 +726,15 @@ function Systems() {
         </Grid>
         <Grid
           size={{
-            xs: 'grow',
-            md: 10,
+            xs: 12,
+            lg: 10,
           }}
           sx={{
             textAlign: 'left',
             padding: 1,
             maxWidth: {
               xs: '100%',
-              md: `calc(100% - ${MIN_SUBSYSTEMS_WIDTH})`,
+              lg: `calc(100% - ${MIN_SUBSYSTEMS_WIDTH})`,
             },
           }}
         >
