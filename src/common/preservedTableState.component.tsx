@@ -50,7 +50,10 @@ interface StateSearchParams extends StatePartial {
 type Updater<T> = T | ((old: T) => T);
 
 /* Returns correctly types value from an updater */
-const getValueFromUpdater = <T,>(updater: Updater<T>, currentValue: T) =>
+export const getValueFromUpdater = <T,>(
+  updater: Updater<T>,
+  currentValue: T
+) =>
   updater instanceof Function ? (updater(currentValue) as T) : (updater as T);
 
 /* Attempts to decompress state from URL, returns '{}' if its null or not de-compressible
@@ -561,17 +564,19 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
     [defaultState.p, props?.paginationOnly, state.p, updateSearchParams]
   );
   const setIsFullScreen = useCallback(
-    (value: React.SetStateAction<boolean>) => {
+    (updaterOrValue: React.SetStateAction<boolean>) => {
       updateSearchParams((prevState: StatePartial) => {
-        const newValue =
-          typeof value === 'function' ? value(prevState.fS ?? false) : value;
+        const newValue = getValueFromUpdater(
+          updaterOrValue,
+          prevState.fS || defaultState.fS
+        );
         return {
           ...prevState,
           fS: newValue ? newValue : undefined,
         };
       });
     },
-    [updateSearchParams]
+    [defaultState.fS, updateSearchParams]
   );
 
   return {

@@ -42,7 +42,10 @@ import {
   useGetSystemTypes,
 } from '../api/systems';
 import type { SystemTableType } from '../app.types';
-import { usePreservedTableState } from '../common/preservedTableState.component';
+import {
+  getValueFromUpdater,
+  usePreservedTableState,
+} from '../common/preservedTableState.component';
 import {
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
@@ -527,6 +530,38 @@ function Systems() {
           },
     // Functions
     ...onPreservedStatesChange,
+    onIsFullScreenChange: (updaterOrValue: React.SetStateAction<boolean>) => {
+      onPreservedStatesChange.onIsFullScreenChange(updaterOrValue);
+
+      const newValue = getValueFromUpdater(
+        updaterOrValue,
+        preservedState.isFullScreen
+      );
+
+      if (newValue) {
+        subsystemsTable.setShowColumnFilters(true);
+        subsystemsTable.setColumnVisibility(
+          Object.fromEntries(hiddenColumns.map((col) => [col, true]))
+        );
+      } else {
+        subsystemsTable.setShowColumnFilters(false);
+        subsystemsTable.setColumnVisibility(
+          Object.fromEntries(hiddenColumns.map((col) => [col, false]))
+        );
+
+        const remainingFilters = subsystemsTable
+          .getState()
+          .columnFilters.filter((filter) => !hiddenColumns.includes(filter.id));
+        const remainingSorting = subsystemsTable
+          .getState()
+          .sorting.filter((sort) => !hiddenColumns.includes(sort.id));
+
+        subsystemsTable.setColumnFilters(remainingFilters);
+        subsystemsTable.setSorting(remainingSorting);
+        subsystemsTable.setGrouping([]);
+        subsystemsTable.setColumnOrder([]);
+      }
+    },
     getRowId: (system) => system.id,
     renderBottomToolbarCustomActions: ({ table }) =>
       displayTableRowCountText(
@@ -577,6 +612,7 @@ function Systems() {
                     onClick={() => {
                       table.resetColumnFilters();
                     }}
+                    data-testid="clear-filters-button"
                   >
                     <ClearIcon />
                   </IconButton>
@@ -655,33 +691,6 @@ function Systems() {
       ];
     },
   });
-  const isFullScreen = subsystemsTable.getState().isFullScreen;
-  React.useEffect(() => {
-    if (isFullScreen) {
-      subsystemsTable.setShowColumnFilters(true);
-      subsystemsTable.setColumnVisibility(
-        Object.fromEntries(hiddenColumns.map((col) => [col, true]))
-      );
-    } else {
-      subsystemsTable.setShowColumnFilters(false);
-      subsystemsTable.setColumnVisibility(
-        Object.fromEntries(hiddenColumns.map((col) => [col, false]))
-      );
-
-      // Filter out filters and sorting related to hidden columns
-      const remainingFilters = subsystemsTable
-        .getState()
-        .columnFilters.filter((filter) => !hiddenColumns.includes(filter.id));
-      const remainingSorting = subsystemsTable
-        .getState()
-        .sorting.filter((sort) => !hiddenColumns.includes(sort.id));
-
-      subsystemsTable.setColumnFilters(remainingFilters);
-      subsystemsTable.setSorting(remainingSorting);
-      subsystemsTable.setGrouping([]);
-      subsystemsTable.setColumnOrder([]);
-    }
-  }, [subsystemsTable, isFullScreen, hiddenColumns]);
 
   // Reset table sate when systemId changes
   // This ensures that the table is reset when navigating to a different system

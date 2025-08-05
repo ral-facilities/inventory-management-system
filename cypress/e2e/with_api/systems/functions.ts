@@ -48,7 +48,7 @@ export const modifySystem = (
   }
   cy.findByRole('button', { name: 'Save' }).click();
   if (!ignoreChecks) {
-    cy.findByRole('link',{name:values.name}).click();
+    cy.findByRole('link', { name: values.name }).click();
 
     cy.findAllByText(values.name).should('have.length.gte', 1);
     if (values.description) cy.findByText(values.description).should('exist');
@@ -143,7 +143,7 @@ export const moveItemToSystem = (values: {
   checkedItems: number[];
   checkedItemsNames: string[];
 }) => {
-  cy.findByRole('link',{name:'Storage'}).click();
+  cy.findByRole('link', { name: 'Storage' }).click();
   cy.findByText('Importance').should('exist');
   cy.findByRole('progressbar').should('not.exist');
 

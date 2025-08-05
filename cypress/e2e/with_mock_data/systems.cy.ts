@@ -44,6 +44,37 @@ describe('Systems', () => {
     cy.findByText('Description').should('be.visible');
   });
 
+  it('should be able to open the systems table in full screen, close it, and navigate back to the fullscreen mode', () => {
+    cy.visit('/systems');
+
+    cy.findByText('Giant laser').should('be.visible');
+
+    // Rows per page (subsystems)
+    cy.findAllByRole('button', { name: 'Toggle full screen' }).eq(0).click();
+
+    cy.location('search').should(
+      'eq',
+      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuhvMgIaw32PM4SNCEYAHEvFhcAdhkGsRZZHg44xDEjJbD0JAO4zk8HWxAAbEhh44tp5AF8HQA'
+    );
+    cy.findByText('Storage system for various items.').scrollIntoView();
+    cy.findByText('Storage system for various items.').should('be.visible');
+
+    cy.findAllByRole('button', { name: 'Toggle full screen' }).eq(0).click();
+
+    cy.findByText('Storage system for various items.').should('not.exist');
+    cy.location('search').should('eq', '');
+
+    // Ensure the same state is recovered
+    cy.go('back');
+
+    cy.location('search').should(
+      'eq',
+      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuhvMgIaw32PM4SNCEYAHEvFhcAdhkGsRZZHg44xDEjJbD0JAO4zk8HWxAAbEhh44tp5AF8HQA'
+    );
+    cy.findByText('Storage system for various items.').scrollIntoView();
+    cy.findByText('Storage system for various items.').should('be.visible');
+  });
+
   it('should be able to use browser back to undo a pagination state change', () => {
     cy.visit('/systems/65328f34a40ff5301575a4e3');
 
@@ -71,7 +102,7 @@ describe('Systems', () => {
       });
 
     // Rows per page (items)
-     // To be addressed in #1492
+    // To be addressed in #1492
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(5000);
     cy.findAllByRole('combobox', { name: 'Rows per page' })
@@ -79,11 +110,13 @@ describe('Systems', () => {
       .within(() => {
         cy.findByText('15').should('be.visible');
       });
-    cy.findAllByRole('combobox', { name: 'Rows per page' }).eq(1).click({force:true});
+    cy.findAllByRole('combobox', { name: 'Rows per page' })
+      .eq(1)
+      .click({ force: true });
     cy.findByRole('listbox').within(() => {
       cy.findByText(30).click();
     });
-    cy.location('search',{timeout:10000}).should(
+    cy.location('search', { timeout: 10000 }).should(
       'eq',
       '?subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g&state=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
     );
@@ -135,7 +168,7 @@ describe('Systems', () => {
   it('should be able to navigate through subsystems while preserving the table states when going back', () => {
     cy.visit('/systems/65328f34a40ff5301575a4e3');
 
-    cy.findAllByRole('progressbar',{timeout:10000}).should('not.exist');
+    cy.findAllByRole('progressbar', { timeout: 10000 }).should('not.exist');
 
     cy.findByText('Smaller laser').should('be.visible');
 
@@ -170,7 +203,9 @@ describe('Systems', () => {
       .within(() => {
         cy.findByText('15').should('be.visible');
       });
-    cy.findAllByRole('combobox', { name: 'Rows per page' }).eq(1).click({force:true});
+    cy.findAllByRole('combobox', { name: 'Rows per page' })
+      .eq(1)
+      .click({ force: true });
     cy.findByRole('listbox').within(() => {
       cy.findByText(30).click();
     });
@@ -184,10 +219,10 @@ describe('Systems', () => {
         cy.findByText('15').should('not.exist');
         cy.findByText('30').should('be.visible');
       });
-      
+
     // Navigate deeper
-    cy.findByText('Smaller laser').click({force:true});
-    cy.findAllByRole('progressbar',{timeout:10000}).should('not.exist');
+    cy.findByText('Smaller laser').click({ force: true });
+    cy.findAllByRole('progressbar', { timeout: 10000 }).should('not.exist');
     cy.url().should('include', '/systems/65328f34a40ff5301575a4e4');
     cy.location('search').should('eq', '');
     cy.findByText('Pulse Laser').should('be.visible');
@@ -201,7 +236,7 @@ describe('Systems', () => {
 
     //Ensure same state is recovered
     cy.go('back');
-    cy.findAllByRole('progressbar',{timeout:10000}).should('not.exist');
+    cy.findAllByRole('progressbar', { timeout: 10000 }).should('not.exist');
 
     cy.findByText('Smaller laser').should('be.visible');
     cy.findByText('Pulse Laser').should('not.exist');
@@ -228,11 +263,15 @@ describe('Systems', () => {
   it('should be able to navigate to an items catalogue item landing page', () => {
     cy.findByRole('link', { name: 'Pulse Laser' }).click();
 
-    cy.findAllByRole('button', { name: 'Show/Hide filters' }).eq(1).scrollIntoView();
+    cy.findAllByRole('button', { name: 'Show/Hide filters' })
+      .eq(1)
+      .scrollIntoView();
     cy.findAllByRole('button', { name: 'Show/Hide filters' }).eq(1).click();
-    
+
     cy.findAllByRole('link', { name: 'Cameras 8' }).first().scrollIntoView();
-    cy.findAllByRole('link', { name: 'Cameras 8' }).first().click({force: true});
+    cy.findAllByRole('link', { name: 'Cameras 8' })
+      .first()
+      .click({ force: true });
 
     // Check now on landing page for the catalogue item
     cy.url().should('include', '/catalogue/4/items/27');
@@ -241,16 +280,18 @@ describe('Systems', () => {
 
   it("should be able to navigate to an item's landing page", () => {
     cy.findByRole('link', { name: 'Pulse Laser' }).click();
-    cy.findAllByRole('button', { name: 'Show/Hide filters' }).eq(1).scrollIntoView();
+    cy.findAllByRole('button', { name: 'Show/Hide filters' })
+      .eq(1)
+      .scrollIntoView();
     cy.findAllByRole('button', { name: 'Show/Hide filters' }).eq(1).click();
 
     // Wait for progress bar to disappear before interacting with filters
-    cy.findAllByRole('progressbar',{timeout:10000}).should('not.exist');
+    cy.findAllByRole('progressbar', { timeout: 10000 }).should('not.exist');
 
     cy.findAllByRole('button', { name: 'Expand' }).eq(1).scrollIntoView();
     cy.findAllByRole('button', { name: 'Expand' }).eq(1).click();
     cy.findByRole('link', { name: 'QnfSKahnQuze' }).scrollIntoView();
-    cy.findByRole('link', { name: 'QnfSKahnQuze' }).click({force:true});
+    cy.findByRole('link', { name: 'QnfSKahnQuze' }).click({ force: true });
 
     // Check now on landing page for the item
     cy.url().should('include', '/catalogue/4/items/28/items/z1hJvV8Z');
@@ -769,9 +810,7 @@ describe('Systems', () => {
 
   it('opens add dialog from directory and then closes it', () => {
     cy.visit('/systems');
-    cy.findAllByRole('checkbox', { name: 'Toggle select row' })
-      .eq(1)
-      .click();
+    cy.findAllByRole('checkbox', { name: 'Toggle select row' }).eq(1).click();
 
     cy.findByRole('button', { name: 'Systems more options' }).click();
     cy.findByRole('menuitem', { name: 'Copy to' }).click();
@@ -792,12 +831,8 @@ describe('Systems', () => {
 
   it('moves systems', () => {
     cy.visit('/systems');
-    cy.findAllByRole('checkbox', { name: 'Toggle select row' })
-      .eq(2)
-      .click();
-          cy.findAllByRole('checkbox', { name: 'Toggle select row' })
-      .eq(3)
-      .click();
+    cy.findAllByRole('checkbox', { name: 'Toggle select row' }).eq(2).click();
+    cy.findAllByRole('checkbox', { name: 'Toggle select row' }).eq(3).click();
     cy.findByRole('button', { name: 'Systems more options' }).click();
     cy.findByRole('menuitem', { name: 'Move to' }).click();
 
@@ -835,12 +870,8 @@ describe('Systems', () => {
   it('copies systems', () => {
     cy.visit('/systems');
 
-    cy.findAllByRole('checkbox', { name: 'Toggle select row' })
-      .eq(2)
-      .click();
-          cy.findAllByRole('checkbox', { name: 'Toggle select row' })
-      .eq(3)
-      .click();
+    cy.findAllByRole('checkbox', { name: 'Toggle select row' }).eq(2).click();
+    cy.findAllByRole('checkbox', { name: 'Toggle select row' }).eq(3).click();
 
     cy.findByRole('button', { name: 'Systems more options' }).click();
     cy.findByRole('menuitem', { name: 'Copy to' }).click();
@@ -873,7 +904,8 @@ describe('Systems', () => {
           code: 'pulse-laser',
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
-          type_id: '2',"type":{"id":"2","value":"Operational"}
+          type_id: '2',
+          type: { id: '2', value: 'Operational' },
         })
       );
       expect(JSON.stringify(await postRequests[1].json())).equal(
@@ -888,7 +920,8 @@ describe('Systems', () => {
           code: 'pico-laser',
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
-          type_id: '2',"type":{"id":"2","value":"Operational"}
+          type_id: '2',
+          type: { id: '2', value: 'Operational' },
         })
       );
     });
@@ -896,16 +929,16 @@ describe('Systems', () => {
   describe('Move', () => {
     it('moves items', () => {
       cy.findByRole('link', { name: 'Pulse Laser' }).click();
-      cy.findAllByRole('button', { name: 'Show/Hide filters' }).eq(1).scrollIntoView();
+      cy.findAllByRole('button', { name: 'Show/Hide filters' })
+        .eq(1)
+        .scrollIntoView();
       cy.findAllByRole('button', { name: 'Show/Hide filters' }).eq(1).click();
 
-              // Wait for progress bar to disappear before interacting with filters
+      // Wait for progress bar to disappear before interacting with filters
       cy.findAllByRole('progressbar').should('not.exist');
 
       cy.findAllByRole('button', { name: 'Expand' }).eq(1).scrollIntoView();
       cy.findAllByRole('button', { name: 'Expand' }).eq(1).click();
-
-
 
       // Second table, first checkbox
       cy.findAllByRole('table')
@@ -915,13 +948,13 @@ describe('Systems', () => {
             name: 'Toggle select row',
           })
             .eq(1)
-            .click({force:true});
-            
+            .click({ force: true });
+
           cy.findAllByRole('checkbox', {
             name: 'Toggle select row',
           })
             .eq(2)
-            .click({force:true});
+            .click({ force: true });
         });
 
       cy.findByRole('button', { name: 'Move to' }).click();
@@ -967,15 +1000,16 @@ describe('Systems', () => {
 
     it('display errors message and clears error message when resolved', () => {
       cy.findByRole('link', { name: 'Pulse Laser' }).click();
-      cy.findAllByRole('button', { name: 'Show/Hide filters' }).eq(1).scrollIntoView();
+      cy.findAllByRole('button', { name: 'Show/Hide filters' })
+        .eq(1)
+        .scrollIntoView();
       cy.findAllByRole('button', { name: 'Show/Hide filters' }).eq(1).click();
 
-              // Wait for progress bar to disappear before interacting with filters
+      // Wait for progress bar to disappear before interacting with filters
       cy.findAllByRole('progressbar').should('not.exist');
 
       cy.findAllByRole('button', { name: 'Expand' }).eq(1).scrollIntoView();
       cy.findAllByRole('button', { name: 'Expand' }).eq(1).click();
-
 
       // Second table, first checkbox
       cy.findAllByRole('table')
@@ -985,12 +1019,12 @@ describe('Systems', () => {
             name: 'Toggle select row',
           })
             .eq(1)
-            .click({force:true});
+            .click({ force: true });
           cy.findAllByRole('checkbox', {
             name: 'Toggle select row',
           })
             .eq(2)
-            .click({force:true});
+            .click({ force: true });
         });
 
       cy.findByRole('button', { name: 'Move to' }).click();

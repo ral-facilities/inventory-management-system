@@ -237,7 +237,7 @@ describe('Preserved table state functions', () => {
       window.history.pushState(
         {},
         '',
-        '/?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJMoGAngA5NoIAM4YATglr4W7TkJD1GEBNgriQAX03NEKYWEw4CJclWqVcSBADMExJAH0MCRrI7Yu0HgIVJMTKweXiAATAAMoQAsALThAGwxAIxJACqhAMzQ4eHZ4dQ54QBaWjp6qIZYeERkFDT+vCLOuI7ixADuuOIA1u7yMPAgfIKoYpLSfZ4KEVq6Q76jElIymgC6ZSDIFUbVpnXUYG0BTi5uQf1wPiPCY8uzV34BkyER0XGJKelZOXkFOSVrNasETiDADcoGHYmWrmJSBEBIYgiMAwCQkIHgABqCBE3HQVWhZhoh2Ix2criENhwImIrEqxhqROoiORkn4LlwtBgVOwNJ0IHwKmwqHweAARjghepZDI4PiGXtzDjHLgxSJcNhiBQQKs6QB5AYgSigmLiXDtGLEAAe-DQtBQrGNGFN5piaDAHNouN1IH4eNt+GIAGUEAAvIQZcKsANke3WmAAVm0QA'
+        '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJMoGAngA5NoIAM4YATglr4W7TkJD1GEBNgriQAX03NEKYWEw4CJclWqVcSBADMExJAH0MCRrI7Yu0HgIVJMTKweXiAATAAMoQAsALThAGwxAIxJACqhAMzQ4eHZ4dQ54QBaWjp6qIZYeERkFDT+vCLOuI7ixADuuOIA1u7yMPAgfIKoYpLSfZ4KEVq6Q76jElIymgC6ZSDIFUbVpnXUYG0BTi5uQf1wPiPCY8uzV34BkyER0XGJKelZOXkFOSVrNasETiDADcoGHYmWrmJSBEBIYgiMAwCQkIHgABqCBE3HQVWhZhoh2Ix2criENhwImIrEqxhqROoiORkn4LlwtBgVOwNJ0IHwKmwqHweAARjghepZDI4PiGXtzDjHLgxSJcNhiBQQKs6QB5AYgSigmLiXDtGLEAAe-DQtBQrGNGFN5piaDAHNouN1IH4eNt+GIAGUEAAvIQZcKsANke3WmAAVn5NiDqPE6KAA'
       );
       const { result } = renderHookWithBrowserRouterURL(
         () =>
@@ -291,7 +291,7 @@ describe('Preserved table state functions', () => {
             grouping: ['catalogueItem.is_obsolete'],
             columnOrder: ['mrt-row-expand', 'mrt-row-actions'],
             pagination: { pageSize: 30, pageIndex: 5 },
-            isFullScreen: false,
+            isFullScreen: true,
           })
         )
       );

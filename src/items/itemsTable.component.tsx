@@ -33,7 +33,7 @@ import type { SystemTableType } from '../app.types';
 import { findPropertyValue } from '../catalogue/items/catalogueItemsTable.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import {
-  booleanSelectFilterOptions,
+  COLUMN_FILTER_BOOLEAN_OPTIONS,
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
   COLUMN_FILTER_VARIANTS,
@@ -84,7 +84,7 @@ export function ItemsTable(props: ItemTableProps) {
     undefined
   );
 
-  const { data: systemTypesData, isLoading: systemTypesLoading } =
+  const { data: systemTypesData, isLoading: isLoadingSystemTypes } =
     useGetSystemTypes();
 
   const { data: usageStatusData } = useGetUsageStatuses();
@@ -92,7 +92,7 @@ export function ItemsTable(props: ItemTableProps) {
     itemsData?.map((item) => item.system_id) ?? []
   );
 
-  let isLoading = isLoadingItems || systemTypesLoading;
+  let isLoading = isLoadingItems || isLoadingSystemTypes;
   const systemList: (System | undefined)[] = useGetSystemIds(
     Array.from(systemIdSet.values())
   ).map((query) => {
@@ -260,7 +260,7 @@ export function ItemsTable(props: ItemTableProps) {
         filterVariant: COLUMN_FILTER_VARIANTS.boolean,
         enableColumnFilterModes: false,
         size: 200,
-        filterSelectOptions: booleanSelectFilterOptions,
+        filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
       },
       {
         header: 'Usage Status',
@@ -411,7 +411,7 @@ export function ItemsTable(props: ItemTableProps) {
               ? false
               : true
             : true,
-        filterSelectOptions: booleanSelectFilterOptions,
+        filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
       })),
     ];
   }, [catalogueCategory, systemTypesData, usageStatusData]);

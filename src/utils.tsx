@@ -587,4 +587,4 @@ export const deselectRowById = <TData extends MRT_RowData>(
   });
 };
 
-export const booleanSelectFilterOptions = ['Yes', 'No'];
+export const COLUMN_FILTER_BOOLEAN_OPTIONS = ['Yes', 'No'];

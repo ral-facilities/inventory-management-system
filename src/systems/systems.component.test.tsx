@@ -51,18 +51,21 @@ describe('Systems', () => {
     expect(screen.getByText('Total Subsystems: 1')).toBeInTheDocument();
   });
 
-  it('opens subsystems fullscreen table view ', async () => {
-    const { router } = createView(
-      '/systems/65328f34a40ff5301575a4e3',
-      'system'
-    );
+  it('opens and closes the subsystems fullscreen table view ', async () => {
+    const { router } = createView('/systems');
 
     await waitFor(() => {
-      expect(screen.getByText('Subsystems')).toBeInTheDocument();
+      expect(screen.getByText('Root systems')).toBeInTheDocument();
     });
 
-    expect(screen.getByText('Smaller laser')).toBeInTheDocument();
-    expect(screen.getByText('Total Subsystems: 1')).toBeInTheDocument();
+    expect(screen.getByText('Giant laser')).toBeInTheDocument();
+    expect(screen.getByText('Total Systems: 5')).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(
+        screen.queryByText('Scrapped system for various items.')
+      ).not.toBeInTheDocument();
+    });
 
     const toggleFullScreenButton = screen.getAllByRole('button', {
       name: 'Toggle full screen',
@@ -71,8 +74,31 @@ describe('Systems', () => {
     await user.click(toggleFullScreenButton);
 
     expect(router.state.location.search).toBe(
-      '?subState=N4IgxgaglgziBcoC2B7AJlAZlApmg%2BgC5RI4KEBOArjgDTgU4CGheRJZ8lN9JADigqEmAOzCdudEGhwwwFKH2IoR5alJQB3ETgpqeIADYowLKCv04AvvUwBlS1aA'
+      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuhvMgIaw32PM4SNCEYAHEvFhcAdhkGsRZZHg44xDEjJbD0JAO4zk8HWxAAbEhh44tp5AF8HQA'
     );
+
+    await waitFor(() => {
+      expect(screen.queryByText('Root systems')).not.toBeInTheDocument();
+    });
+    expect(
+      await screen.findByText('Scrapped system for various items.')
+    ).toBeInTheDocument();
+
+    await user.click(
+      (
+        await screen.findAllByRole('button', {
+          name: 'Toggle full screen',
+        })
+      )[0]
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.queryByText('Scrapped system for various items.')
+      ).not.toBeInTheDocument();
+    });
+
+    expect(router.state.location.search).toBe('');
   });
 
   it('clear filters subsystems table in fullscreen mode', async () => {
@@ -91,10 +117,10 @@ describe('Systems', () => {
     await user.click(toggleFullScreenButton);
 
     expect(router.state.location.search).toBe(
-      '?subState=N4IgxgaglgziBcoC2B7AJlAZlApmg%2BgC5RI4KEBOArjgDTgU4CGheRJZ8lN9JADigqEmAOzCdudEGhwwwFKH2IoR5alJQB3ETgpqeIADYowLKCv04AvvUwBlS1aA'
+      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuhvMgIaw32PM4SNCEYAHEvFhcAdhkGsRZZHg44xDEjJbD0JAO4zk8HWxAAbEhh44tp5AF8HQA'
     );
 
-    const clearFiltersButton = screen.getByRole('button', {
+    const clearFiltersButton = await screen.findByRole('button', {
       name: 'Clear Filters',
     });
 
@@ -128,9 +154,13 @@ describe('Systems', () => {
     expect(screen.getByText('Giant laser')).toBeInTheDocument();
     expect(screen.getByText('Total Systems: 5')).toBeInTheDocument();
 
-    const clearFiltersButton = screen.getByLabelText('Clear Filters');
+    const clearFiltersButton = await screen.findByTestId(
+      'clear-filters-button'
+    );
 
-    await user.click(screen.getByRole('button', { name: 'Show/Hide filters' }));
+    await user.click(
+      await screen.findByRole('button', { name: 'Show/Hide filters' })
+    );
 
     const nameInput = await screen.findByLabelText('Filter by Name');
 
