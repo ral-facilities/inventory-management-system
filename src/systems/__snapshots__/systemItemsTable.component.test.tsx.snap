@@ -3102,7 +3102,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                       aria-invalid="false"
                       autocomplete="off"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12tjcea-MuiInputBase-input-MuiOutlinedInput-input"
-                      id=":ru9:"
+                      id=":ruj:"
                       placeholder="Search"
                       type="text"
                       value=""
@@ -3329,13 +3329,13 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                           </span>
                         </div>
                         <div
-                          aria-describedby=":rui:-helper-text"
+                          aria-describedby=":rus:-helper-text"
                           aria-expanded="false"
                           aria-haspopup="listbox"
                           aria-label="Filter by Catalogue Item"
-                          aria-labelledby=":rui:"
+                          aria-labelledby=":rus:"
                           class="MuiSelect-select MuiSelect-standard MuiSelect-multiple MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-10y8whu-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                          id=":rui:"
+                          id=":rus:"
                           role="combobox"
                           tabindex="0"
                         >
@@ -3397,7 +3397,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                       </div>
                       <p
                         class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                        id=":rui:-helper-text"
+                        id=":rus:-helper-text"
                       >
                         <label>
                           Filter Mode: Includes any
@@ -3594,12 +3594,12 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                           </span>
                         </div>
                         <input
-                          aria-describedby=":ruu:-helper-text"
+                          aria-describedby=":rv8:-helper-text"
                           aria-invalid="false"
                           aria-label="Filter by Serial Number"
                           autocomplete="off"
                           class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                          id=":ruu:"
+                          id=":rv8:"
                           placeholder="Filter by Serial Number"
                           title="Filter by Serial Number"
                           type="text"
@@ -3637,7 +3637,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                       </div>
                       <p
                         class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                        id=":ruu:-helper-text"
+                        id=":rv8:-helper-text"
                       >
                         <label>
                           Filter Mode: Fuzzy
@@ -4096,7 +4096,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
             >
               <label
                 class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-10j3yc8-MuiFormLabel-root-MuiInputLabel-root"
-                for="mrt-rows-per-page-:ru7:"
+                for="mrt-rows-per-page-:ruh:"
               >
                 Rows per page
               </label>
@@ -4117,7 +4117,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                   aria-hidden="true"
                   aria-invalid="false"
                   class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
-                  id="mrt-rows-per-page-:ru7:"
+                  id="mrt-rows-per-page-:ruh:"
                   tabindex="-1"
                   value="15"
                 />

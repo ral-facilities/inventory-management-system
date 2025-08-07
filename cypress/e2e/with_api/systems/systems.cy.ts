@@ -76,6 +76,5 @@ describe('systems', () => {
       checkedSystemsNames: ['optics 2', 'optics 2_copy_1'],
     });
     deleteSystem('Storage', 0);
-    deleteSystem('Storage 2', 0);
   });
 });

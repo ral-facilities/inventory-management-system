@@ -24,6 +24,7 @@ interface State {
   g: MRT_GroupingState;
   cO: MRT_ColumnOrderState;
   p: MRT_PaginationState;
+  fS: boolean;
 }
 
 /* State but where undefined => should not be present in the url */
@@ -49,7 +50,10 @@ interface StateSearchParams extends StatePartial {
 type Updater<T> = T | ((old: T) => T);
 
 /* Returns correctly types value from an updater */
-const getValueFromUpdater = <T,>(updater: Updater<T>, currentValue: T) =>
+export const getValueFromUpdater = <T,>(
+  updater: Updater<T>,
+  currentValue: T
+) =>
   updater instanceof Function ? (updater(currentValue) as T) : (updater as T);
 
 /* Attempts to decompress state from URL, returns '{}' if its null or not de-compressible
@@ -259,6 +263,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       cO: firstUpdate.current?.cO || [],
       p: props?.initialState?.pagination ||
         firstUpdate.current?.p || { pageSize: 15, pageIndex: 0 },
+      fS: false,
     }),
     // Need to also update when firstUpdate.current?.x changes, for some reason it claims its not used here when it is
     // We also need to intentionally ignore props?.initialState?.x as these may not be in a memo, and are only set
@@ -281,6 +286,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       g: parsedState.g || defaultState.g,
       cO: parsedState.cO || defaultState.cO,
       p: parsedState.p || defaultState.p,
+      fS: parsedState.fS || defaultState.fS,
     }),
     [
       defaultState.cF,
@@ -291,6 +297,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       defaultState.gFil,
       defaultState.p,
       defaultState.srt,
+      defaultState.fS,
       parsedState.cF,
       parsedState.cFn,
       parsedState.cO,
@@ -299,9 +306,9 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       parsedState.gFil,
       parsedState.p,
       parsedState.srt,
+      parsedState.fS,
     ]
   );
-
   const updateSearchParams = useCallback(
     (stateUpdater: Updater<StatePartial>) => {
       // Use function version to ensure multiple can be changed in the same render
@@ -507,11 +514,13 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
         firstUpdate.current.cO = getValueFromUpdater(updaterOrValue, state.cO);
         return;
       }
+
       updateSearchParams((prevState: StatePartial): StatePartial => {
         const newValue = getValueFromUpdater(
           updaterOrValue,
           prevState.cO || defaultState.cO
         );
+
         return {
           ...prevState,
           cO:
@@ -554,6 +563,21 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
     },
     [defaultState.p, props?.paginationOnly, state.p, updateSearchParams]
   );
+  const setIsFullScreen = useCallback(
+    (updaterOrValue: React.SetStateAction<boolean>) => {
+      updateSearchParams((prevState: StatePartial) => {
+        const newValue = getValueFromUpdater(
+          updaterOrValue,
+          prevState.fS || defaultState.fS
+        );
+        return {
+          ...prevState,
+          fS: newValue ? newValue : undefined,
+        };
+      });
+    },
+    [defaultState.fS, updateSearchParams]
+  );
 
   return {
     preservedState: {
@@ -565,6 +589,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       grouping: state.g,
       columnOrder: state.cO,
       pagination: state.p,
+      isFullScreen: state.fS,
     },
     onPreservedStatesChange: {
       onColumnFiltersChange: setColumnFilters,
@@ -575,6 +600,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       onGroupingChange: setGroupingState,
       onColumnOrderChange: setColumnOrder,
       onPaginationChange: setPagination,
+      onIsFullScreenChange: setIsFullScreen,
     },
   };
 };

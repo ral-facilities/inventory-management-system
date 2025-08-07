@@ -39,6 +39,7 @@ import { useGetCatalogueItems } from '../../api/catalogueItems';
 import { useGetManufacturerIds } from '../../api/manufacturers';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import {
+  COLUMN_FILTER_BOOLEAN_OPTIONS,
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
   COLUMN_FILTER_VARIANTS,
@@ -324,6 +325,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         filterFn: COLUMN_FILTER_FUNCTIONS.boolean,
         enableColumnFilterModes: false,
         size: 200,
+        filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
       },
       {
         header: 'Obsolete replacement link',
@@ -409,7 +411,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
               ? false
               : true
             : true,
-        filterSelectOptions: ['Yes', 'No'],
+        filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
       })),
       {
         header: 'Cost (£)',

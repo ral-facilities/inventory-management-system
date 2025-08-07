@@ -10,7 +10,11 @@ import {
 import Grid from '@mui/material/Grid2';
 import React from 'react';
 import { System } from '../api/api.types';
-import { getSystemImportanceColour, useGetSystem } from '../api/systems';
+import {
+  getSystemImportanceColour,
+  useGetSystem,
+  useGetSystemTypes,
+} from '../api/systems';
 import ActionMenu from '../common/actionMenu.component';
 import PrimaryImage from '../common/images/primaryImage.component';
 import TabView from '../common/tab/tabView.component';
@@ -53,6 +57,7 @@ export interface SystemDetailsProps {
 
 function SystemDetails(props: SystemDetailsProps) {
   const { data: system, isLoading: systemLoading } = useGetSystem(props.id);
+  const { data: systemTypesData } = useGetSystemTypes();
 
   return systemLoading && props.id !== null ? (
     <Box
@@ -132,7 +137,7 @@ function SystemDetails(props: SystemDetailsProps) {
                     color: 'text.primary',
                   }}
                 >
-                  Location
+                  Type
                 </Typography>
                 <Typography
                   variant="body1"
@@ -141,9 +146,11 @@ function SystemDetails(props: SystemDetailsProps) {
                     wordWrap: 'break-word',
                   }}
                 >
-                  {system.location ?? 'None'}
+                  {systemTypesData?.find((type) => type.id === system.type_id)
+                    ?.value ?? 'Unknown'}
                 </Typography>
               </Grid>
+
               <Grid size={{ xs: 12, sm: 6 }} sx={{ display: 'inline-flex' }}>
                 <Typography
                   sx={{
@@ -166,6 +173,24 @@ function SystemDetails(props: SystemDetailsProps) {
                     };
                   }}
                 />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <Typography
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
+                  Location
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: 'text.secondary',
+                    wordWrap: 'break-word',
+                  }}
+                >
+                  {system.location ?? 'None'}
+                </Typography>
               </Grid>
               <Grid size={{ xs: 12, sm: 6 }}>
                 <Typography

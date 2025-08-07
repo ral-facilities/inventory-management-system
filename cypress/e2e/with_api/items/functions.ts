@@ -102,7 +102,7 @@ const modifyItem = (
 
   cy.findByLabelText('navigate to systems home').click();
 
-  cy.findByText(values.system).click();
+  cy.findAllByText(values.system).first().click();
 
   cy.findByRole('button', { name: 'Finish' }).click();
 

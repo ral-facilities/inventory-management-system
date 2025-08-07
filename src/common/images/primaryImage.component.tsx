@@ -110,15 +110,13 @@ const PrimaryImage = (props: PrimaryImageProps) => {
 
   return (
     <>
-      {!imageLoading && (
-        <ThumbnailImage
-          image={imagesData?.[0]}
-          dense={isDetailsPanel}
-          isPrimaryThumbnail
-          imageLoading={imageLoading}
-          onClick={isDetailsPanel ? undefined : handleViewPrimary}
-        />
-      )}
+      <ThumbnailImage
+        image={imagesData?.[0]}
+        dense={isDetailsPanel}
+        isPrimaryThumbnail
+        imageLoading={imageLoading}
+        onClick={isDetailsPanel ? undefined : handleViewPrimary}
+      />
       {!isDetailsPanel && (
         <>
           <Box sx={{ height: '20%' }}>

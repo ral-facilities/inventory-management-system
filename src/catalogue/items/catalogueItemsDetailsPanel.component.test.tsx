@@ -39,6 +39,9 @@ describe('Catalogue Items details panel', () => {
       ).toBeInTheDocument();
     });
 
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
     expect(view.asFragment()).toMatchSnapshot();
   });
 
@@ -56,7 +59,9 @@ describe('Catalogue Items details panel', () => {
         screen.getByRole('link', { name: 'Click here' })
       ).toBeInTheDocument();
     });
-
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
     expect(view.asFragment()).toMatchSnapshot();
   });
 
@@ -75,7 +80,9 @@ describe('Catalogue Items details panel', () => {
     const view = createView();
 
     await user.click(screen.getByText('Properties'));
-
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
     expect(view.asFragment()).toMatchSnapshot();
   });
 
@@ -87,21 +94,27 @@ describe('Catalogue Items details panel', () => {
     const view = createView();
 
     await user.click(screen.getByText('Properties'));
-
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
     expect(view.asFragment()).toMatchSnapshot();
   });
 
   it('renders manufacturer panel correctly', async () => {
     const view = createView();
     await user.click(screen.getByText('Manufacturer'));
-
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
     expect(view.asFragment()).toMatchSnapshot();
   });
 
   it('renders notes panel correctly', async () => {
     const view = createView();
     await user.click(screen.getByText('Notes'));
-
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
     expect(view.asFragment()).toMatchSnapshot();
   });
 
@@ -113,7 +126,9 @@ describe('Catalogue Items details panel', () => {
     props.manufacturerData = getManufacturerById('4');
 
     const view = createView();
-
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
     expect(view.asFragment()).toMatchSnapshot();
   });
 });

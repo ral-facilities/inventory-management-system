@@ -241,7 +241,7 @@ describe('System api functions', () => {
         wrapper: hooksWrapperWithProviders(),
       });
 
-      result.current.mutate('65328f34a40ff5301575a4e9');
+      result.current.mutate(SystemsJSON[7] as System);
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
 
       expect(result.current.data).toEqual('');

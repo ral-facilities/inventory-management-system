@@ -147,7 +147,7 @@ describe('ItemDialog', () => {
 
   const modifySystemValue = async (values: { system?: string }) => {
     if (values.system !== undefined) {
-      await user.click(screen.getByText(values.system));
+      await user.click(await screen.findByText(values.system));
     }
   };
 

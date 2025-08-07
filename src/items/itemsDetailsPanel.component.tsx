@@ -11,7 +11,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import { CatalogueItem, Item } from '../api/api.types';
 import { useGetManufacturer } from '../api/manufacturers';
-import { useGetSystem } from '../api/systems';
+import { useGetSystem, useGetSystemTypes } from '../api/systems';
 import PrimaryImage from '../common/images/primaryImage.component';
 import { formatDateTimeStrings } from '../utils';
 
@@ -48,6 +48,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
     catalogueItemIdData.manufacturer_id
   );
   const { data: systemData } = useGetSystem(itemData.system_id);
+  const { data: systemTypesData } = useGetSystemTypes();
 
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
@@ -259,6 +260,26 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                     color: 'text.primary',
                   }}
                 >
+                  System Type
+                </Typography>
+                <Typography
+                  sx={{
+                    color: 'text.secondary',
+                    wordWrap: 'break-word',
+                  }}
+                >
+                  {systemTypesData?.find(
+                    (type) => type.id === systemData?.type_id
+                  )?.value ?? 'Unknown'}
+                </Typography>
+              </Grid>
+
+              <Grid size={{ xs: 12, sm: 6 }} key={9}>
+                <Typography
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
                   Last Modified
                 </Typography>
                 <Typography
@@ -270,7 +291,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
-              <Grid size={{ xs: 12, sm: 6 }} key={9}>
+              <Grid size={{ xs: 12, sm: 6 }} key={10}>
                 <Typography
                   sx={{
                     color: 'text.primary',
