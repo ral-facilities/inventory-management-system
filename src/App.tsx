@@ -19,6 +19,7 @@ import AdminCardView from './admin/adminCardView.component';
 import AdminLayout, {
   AdminErrorComponent,
 } from './admin/adminLayout.component';
+import Rules from './admin/rules/rules.component';
 import SystemTypes from './admin/systemTypes/systemTypes.component';
 import Units from './admin/units/units.component';
 import UsageStatuses from './admin/usageStatuses/usageStatuses.component';
@@ -112,6 +113,7 @@ const routeObject: RouteObject[] = [
           { path: paths.adminUnits, Component: Units },
           { path: paths.adminUsageStatuses, Component: UsageStatuses },
           { path: paths.adminSystemTypes, Component: SystemTypes },
+          { path: paths.adminRules, Component: Rules },
           {
             path: '*',
             Component: AdminErrorComponent,

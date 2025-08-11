@@ -31,7 +31,9 @@ import {
   UnitPost,
   UsageStatus,
   UsageStatusPost,
+  type Rule,
 } from '../api/api.types';
+import { getSystemTypeByValue, getUsageStatusByValue } from '../testUtils';
 import { generateUniqueId } from '../utils';
 import AttachmentsJSON from './Attachments.json';
 import CatalogueCategoriesJSON from './CatalogueCategories.json';
@@ -52,6 +54,38 @@ interface ErrorResponse {
   detail?: string;
 }
 
+export const rulesJSON: Rule[] = [
+  {
+    id: '1',
+    src_system_type: null,
+    dst_system_type: getSystemTypeByValue('Storage'),
+    dst_usage_status: getUsageStatusByValue('New'),
+  },
+  {
+    id: '2',
+    src_system_type: getSystemTypeByValue('Storage'),
+    dst_system_type: null,
+    dst_usage_status: null,
+  },
+  {
+    id: '3',
+    src_system_type: getSystemTypeByValue('Storage'),
+    dst_system_type: getSystemTypeByValue('Operational'),
+    dst_usage_status: getUsageStatusByValue('In Use'),
+  },
+  {
+    id: '4',
+    src_system_type: getSystemTypeByValue('Operational'),
+    dst_system_type: getSystemTypeByValue('Storage'),
+    dst_usage_status: getUsageStatusByValue('Used'),
+  },
+  {
+    id: '5',
+    src_system_type: getSystemTypeByValue('Operational'),
+    dst_system_type: getSystemTypeByValue('Scrapped'),
+    dst_usage_status: getUsageStatusByValue('Scrapped'),
+  },
+];
 export const handlers = [
   // ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
 
@@ -1335,5 +1369,27 @@ export const handlers = [
       );
 
     return HttpResponse.json(undefined, { status: 204 });
+  }),
+
+  // ------------------------------------ RULES ------------------------------------------------
+
+  http.get<PathParams, DefaultBodyType, Rule[]>('/v1/rules', ({ request }) => {
+    const url = new URL(request.url);
+    const systemsParams = url.searchParams;
+    const src_system_type_id = systemsParams.get('src_system_type_id');
+    const dst_system_type_id = systemsParams.get('dst_system_type_id');
+
+    let rules: Rule[] = rulesJSON;
+    if (src_system_type_id) {
+      rules = rules.filter(
+        (rule) => rule.src_system_type?.id === src_system_type_id
+      );
+    }
+    if (dst_system_type_id) {
+      rules = rules.filter(
+        (rule) => rule.dst_system_type?.id === dst_system_type_id
+      );
+    }
+    return HttpResponse.json(rules, { status: 200 });
   }),
 ];

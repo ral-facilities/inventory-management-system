@@ -26,6 +26,7 @@ const adminBreadCrumbsTrails: { [key: string]: BreadcrumbsInfo['trail'] } = {
   ['units']: [['units', 'Units']],
   ['usage-statuses']: [['usage-statuses', 'Usage statuses']],
   ['system-types']: [['system-types', 'System types']],
+  ['rules']: [['rules', 'Rules']],
 };
 
 function AdminLayout() {

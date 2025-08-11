@@ -15,11 +15,15 @@ import {
   CatalogueItem,
   Item,
   Manufacturer,
+  type SystemType,
+  type UsageStatus,
 } from './api/api.types';
 import CatalogueCategoriesJSON from './mocks/CatalogueCategories.json';
 import CatalogueItemsJSON from './mocks/CatalogueItems.json';
 import ItemsJSON from './mocks/Items.json';
 import ManufacturersJSON from './mocks/Manufacturers.json';
+import SystemTypesJSON from './mocks/SystemTypes.json';
+import UsageStatusJSON from './mocks/UsageStatuses.json';
 import { URLPathKeyType, paths } from './paths';
 
 export const createTestQueryClient = (): QueryClient =>
@@ -176,6 +180,14 @@ export const getItemById = (itemId: string): Item | undefined => {
 
 export const getItemsBySystemId = (systemId: string): Item[] => {
   return ItemsJSON.filter((item) => item.system_id === systemId);
+};
+
+export const getSystemTypeByValue = (value: string): SystemType => {
+  return SystemTypesJSON.find((type) => type.value === value)!;
+};
+
+export const getUsageStatusByValue = (value: string): UsageStatus => {
+  return UsageStatusJSON.find((status) => status.value === value)!;
 };
 
 export const CREATED_MODIFIED_TIME_VALUES = {
