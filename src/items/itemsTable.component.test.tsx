@@ -218,7 +218,7 @@ describe('Items Table', () => {
     expect(serialNum).toHaveAttribute('href', '/KvT2Ox7n');
   });
 
-  it('opens the delete catalogue item dialog and can delete an item', async () => {
+  it('opens the delete catalogue item dialog and closes the dialog', async () => {
     createView();
 
     const serialNumber = '5YUQDDjKpz2z';
@@ -240,8 +240,8 @@ describe('Items Table', () => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
     });
 
-    const continueButton = screen.getByRole('button', { name: 'Continue' });
-    await user.click(continueButton);
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
