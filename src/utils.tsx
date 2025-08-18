@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import { FilterFn, FilterMeta, Row } from '@tanstack/table-core';
 import { format, parseISO } from 'date-fns';
+import LZString from 'lz-string';
 import {
   MRT_Cell,
   MRT_Column,
@@ -20,9 +21,11 @@ import {
   MRT_Row,
   MRT_RowData,
   MRT_TableInstance,
+  type MRT_ColumnFiltersState,
   type MRT_Theme,
 } from 'material-react-table';
 import React from 'react';
+import { useGetSparesDefinition } from './api/settings';
 
 /* Returns a name avoiding duplicates by appending _copy_n for nth copy */
 export const generateUniqueName = (
@@ -364,6 +367,8 @@ export const TableGroupedCell = <TData extends MRT_RowData>(
         ) : (
           cellData
         )
+      ) : typeof cellData === 'number' ? (
+        cellData
       ) : (
         `No ${column.columnDef.header}`
       )}{' '}
@@ -588,3 +593,28 @@ export const deselectRowById = <TData extends MRT_RowData>(
 };
 
 export const COLUMN_FILTER_BOOLEAN_OPTIONS = ['Yes', 'No'];
+
+export const useSparesFilterState = (
+  urlParamName?: string
+): { sparesFilterState: string; isLoading: boolean } => {
+  const {
+    data: sparesDefinition = { system_types: [] },
+    isLoading: isLoadingSparesDefinition,
+  } = useGetSparesDefinition();
+
+  const urlParam = urlParamName || 'state';
+  const sparesFilter = sparesDefinition.system_types.map((type) => ({
+    type: 'string',
+    value: type.value,
+  }));
+
+  const sparesColumnsFilters: { cF: MRT_ColumnFiltersState } = React.useMemo(
+    () => ({
+      cF: [{ id: 'system.type.value', value: sparesFilter ?? [] }],
+    }),
+    [sparesFilter]
+  );
+
+  const sparesFilterState = `?${urlParam}=${LZString.compressToEncodedURIComponent(JSON.stringify(sparesColumnsFilters))}`;
+  return { sparesFilterState, isLoading: isLoadingSparesDefinition };
+};

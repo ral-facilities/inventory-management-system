@@ -20,7 +20,7 @@ describe('settings api functions', () => {
       });
 
       expect(result.current.data).toEqual({
-        system_type_ids: [SystemTypesJSON[0]],
+        system_types: [SystemTypesJSON[0]],
       });
     });
   });

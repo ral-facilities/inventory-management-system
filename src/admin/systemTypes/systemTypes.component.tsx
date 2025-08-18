@@ -47,8 +47,8 @@ function SystemTypes() {
         systemTypesData.map((type) => ({
           ...type,
           isSpare:
-            sparesDefinition?.system_type_ids.some(
-              (def) => def.id === type.id
+            sparesDefinition?.system_types.some(
+              (defType) => defType.id === type.id
             ) ?? false,
         }))
       );

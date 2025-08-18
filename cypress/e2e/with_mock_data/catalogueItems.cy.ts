@@ -87,6 +87,16 @@ describe('Catalogue Items', () => {
     });
   });
 
+  it('navigates to items page with spares definition applied', () => {
+    cy.visit('/catalogue/9/items');
+
+    cy.findByRole('link', { name: '1' }).click();
+
+    cy.findByText('dfzqkOJbqifO').should('exist');
+
+    cy.findAllByLabelText('Row Actions').should('have.length', 1);
+  });
+
   it('"duplicate" a catalogue item', () => {
     cy.visit('/catalogue/5');
 

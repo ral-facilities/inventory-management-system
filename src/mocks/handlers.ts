@@ -1407,7 +1407,7 @@ export const handlers = [
     '/v1/settings/spares_definition',
     () => {
       return HttpResponse.json(
-        { system_type_ids: [SystemTypesJSON[0]] },
+        { system_types: [SystemTypesJSON[0]] },
         { status: 200 }
       );
     }

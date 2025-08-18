@@ -24,7 +24,7 @@ export interface Rule {
 // ------------------------------------- SPARES -----------------------------------------------------
 
 export interface SparesDefinition {
-  system_type_ids: SystemType[];
+  system_types: SystemType[];
 }
 // ------------------------------------ MANUFACTURERS -----------------------------------------------
 
@@ -211,6 +211,7 @@ export interface CatalogueItem
     Required<Omit<CatalogueItemPost, 'properties'>> {
   id: string;
   properties: Property[];
+  number_of_spares: number | null;
 }
 
 // ------------------------------------ ITEMS ------------------------------------------------
