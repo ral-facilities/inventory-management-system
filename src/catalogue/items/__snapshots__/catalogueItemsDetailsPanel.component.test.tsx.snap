@@ -142,6 +142,26 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
                       >
+                        Number of spares
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+                      >
+                        <a
+                          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                          data-discover="true"
+                          href="/33/items?state=N4IgxgYiBcDaoEsAmMQGcCeaAuBTAtgHTYYAOuhAbgIYA2ArriADQg0NNwC6Avr0A"
+                        >
+                          0
+                        </a>
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                      >
                         Obsolete
                       </p>
                       <p
@@ -698,6 +718,26 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                   <div
                     class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-18e7u9k-MuiGrid2-root"
                   >
+                    <div
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                      >
+                        Number of spares
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+                      >
+                        <a
+                          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                          data-discover="true"
+                          href="/33/items?state=N4IgxgYiBcDaoEsAmMQGcCeaAuBTAtgHTYYAOuhAbgIYA2ArriADQg0NNygnmo4BOCAHYBzFmzqNUAZWwB7ftRFMAvgF11KoA"
+                        >
+                          0
+                        </a>
+                      </p>
+                    </div>
                     <div
                       class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
                     >
@@ -1266,6 +1306,26 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
                       >
+                        Number of spares
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+                      >
+                        <a
+                          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                          data-discover="true"
+                          href="/11/items?state=N4IgxgYiBcDaoEsAmMQGcCeaAuBTAtgHTYYAOuhAbgIYA2ArriADQg0NNygnmo4BOCAHYBzFmzqNUAZWwB7ftRFMAvgF11KoA"
+                        >
+                          1
+                        </a>
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                      >
                         Obsolete
                       </p>
                       <p
@@ -1782,6 +1842,26 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                   <div
                     class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-18e7u9k-MuiGrid2-root"
                   >
+                    <div
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                      >
+                        Number of spares
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+                      >
+                        <a
+                          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                          data-discover="true"
+                          href="/89/items?state=N4IgxgYiBcDaoEsAmMQGcCeaAuBTAtgHTYYAOuhAbgIYA2ArriADQg0NNygnmo4BOCAHYBzFmzqNUAZWwB7ftRFMAvgF11KoA"
+                        >
+                          0
+                        </a>
+                      </p>
+                    </div>
                     <div
                       class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
                     >
@@ -2331,6 +2411,26 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
                       >
+                        Number of spares
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+                      >
+                        <a
+                          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                          data-discover="true"
+                          href="/89/items?state=N4IgxgYiBcDaoEsAmMQGcCeaAuBTAtgHTYYAOuhAbgIYA2ArriADQg0NNygnmo4BOCAHYBzFmzqNUAZWwB7ftRFMAvgF11KoA"
+                        >
+                          0
+                        </a>
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                      >
                         Obsolete
                       </p>
                       <p
@@ -2867,6 +2967,26 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                   <div
                     class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-18e7u9k-MuiGrid2-root"
                   >
+                    <div
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                      >
+                        Number of spares
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+                      >
+                        <a
+                          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                          data-discover="true"
+                          href="/89/items?state=N4IgxgYiBcDaoEsAmMQGcCeaAuBTAtgHTYYAOuhAbgIYA2ArriADQg0NNygnmo4BOCAHYBzFmzqNUAZWwB7ftRFMAvgF11KoA"
+                        >
+                          0
+                        </a>
+                      </p>
+                    </div>
                     <div
                       class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
                     >
@@ -3415,6 +3535,26 @@ exports[`Catalogue Items details panel > renders properties panel correctly (emp
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
                       >
+                        Number of spares
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+                      >
+                        <a
+                          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                          data-discover="true"
+                          href="/33/items?state=N4IgxgYiBcDaoEsAmMQGcCeaAuBTAtgHTYYAOuhAbgIYA2ArriADQg0NNygnmo4BOCAHYBzFmzqNUAZWwB7ftRFMAvgF11KoA"
+                        >
+                          0
+                        </a>
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                      >
                         Obsolete
                       </p>
                       <p
@@ -3922,6 +4062,26 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                   <div
                     class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-18e7u9k-MuiGrid2-root"
                   >
+                    <div
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                      >
+                        Number of spares
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+                      >
+                        <a
+                          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                          data-discover="true"
+                          href="/89/items?state=N4IgxgYiBcDaoEsAmMQGcCeaAuBTAtgHTYYAOuhAbgIYA2ArriADQg0NNygnmo4BOCAHYBzFmzqNUAZWwB7ftRFMAvgF11KoA"
+                        >
+                          0
+                        </a>
+                      </p>
+                    </div>
                     <div
                       class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
                     >

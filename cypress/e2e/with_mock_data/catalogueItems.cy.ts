@@ -97,6 +97,33 @@ describe('Catalogue Items', () => {
     cy.findAllByLabelText('Row Actions').should('have.length', 1);
   });
 
+  it('navigates to items page with spares definition applied (from landing page)', () => {
+    cy.visit('/catalogue/9/items/11');
+
+    cy.findByRole('link', { name: '1' }).click();
+
+    cy.findByText('dfzqkOJbqifO').should('exist');
+
+    cy.findAllByLabelText('Row Actions').should('have.length', 1);
+  });
+
+  it('navigates to items page with spares definition applied (from details panel on catalogue items table)', () => {
+    cy.visit('/catalogue/9/items');
+
+    cy.findAllByLabelText('Toggle select row').first().click();
+    cy.findAllByLabelText('Toggle select row').eq(2).click();
+
+    cy.findByRole('button', { name: 'Move to' }).click();
+
+    cy.findAllByLabelText('Expand').eq(1).click();
+
+    cy.findByRole('link', { name: '1' }).click();
+
+    cy.findByText('dfzqkOJbqifO').should('exist');
+
+    cy.findAllByLabelText('Row Actions').should('have.length', 1);
+  });
+
   it('"duplicate" a catalogue item', () => {
     cy.visit('/catalogue/5');
 

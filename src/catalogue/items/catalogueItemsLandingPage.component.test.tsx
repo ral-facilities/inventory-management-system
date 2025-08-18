@@ -227,6 +227,21 @@ describe('Catalogue Items Landing Page', () => {
     expect(url).toHaveAttribute('href', '/catalogue/5/items/89/items');
   });
 
+  it('navigates to items table view (spares definition)', async () => {
+    createView('/catalogue/5/items/89');
+    await waitFor(() => {
+      expect(screen.getByRole('link', { name: '0' })).toBeInTheDocument();
+    });
+
+    const url = screen.getByRole('link', {
+      name: '0',
+    });
+    expect(url).toHaveAttribute(
+      'href',
+      '/catalogue/5/items/89/items?state=N4IgxgYiBcDaoEsAmMQGcCeaAuBTAtgHTYYAOuhAbgIYA2ArriADQg0NNygnmo4BOCAHYBzFmzqNUAZWwB7ftRFMAvgF11KoA'
+    );
+  });
+
   it('landing page renders data correctly when optional values are null', async () => {
     createView('/catalogue/4/items/33');
 
