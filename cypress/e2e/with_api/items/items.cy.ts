@@ -10,6 +10,7 @@ import {
   duplicateItem,
   editItem,
   editProperty,
+  modifyItem,
 } from './functions';
 
 describe('items', () => {
@@ -51,6 +52,14 @@ describe('items', () => {
     duplicateItem('MX4332424', 0);
     addProperty();
     editProperty();
+    modifyItem({
+      edit: 0,
+      system: 'Storage',
+    });
+    modifyItem({
+      edit: 0,
+      system: 'Storage',
+    });
     deleteItem('MX4332424', 0);
     deleteItem('MX4332424', 0);
   });

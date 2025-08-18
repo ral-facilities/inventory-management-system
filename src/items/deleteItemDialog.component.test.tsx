@@ -9,6 +9,7 @@ import { http } from 'msw';
 import { act } from 'react';
 import { Item } from '../api/api.types';
 import handleIMS_APIError from '../handleIMS_APIError';
+import SystemJSON from '../mocks/Systems.json';
 import { server } from '../mocks/server';
 import { getItemById, renderComponentWithRouterProvider } from '../testUtils';
 import DeleteItemDialog, {
@@ -22,7 +23,7 @@ describe('delete item dialog', () => {
   let user: UserEvent;
   const onClose = vi.fn();
   const onChangeItem = vi.fn();
-  let item: Item | undefined;
+  let item: Item;
 
   const createView = (): RenderResult => {
     return renderComponentWithRouterProvider(<DeleteItemDialog {...props} />);
@@ -68,6 +69,7 @@ describe('delete item dialog', () => {
   });
 
   it('disables continue button and shows circular progress indicator when request is pending', async () => {
+    item.system_id = SystemJSON[0].id;
     server.use(
       http.delete('/v1/items/:id', () => {
         return new Promise(() => {});
@@ -110,20 +112,8 @@ describe('delete item dialog', () => {
     expect(onClose).not.toHaveBeenCalled();
   });
 
-  it('displays warning message when session data is not loaded', async () => {
-    props.item = undefined;
-
-    createView();
-    const continueButton = screen.getByRole('button', { name: 'Continue' });
-    await user.click(continueButton);
-    const helperTexts = screen.getByText(
-      'No data provided, Please refresh and try again'
-    );
-    expect(helperTexts).toBeInTheDocument();
-    expect(onClose).not.toHaveBeenCalled();
-  });
-
   it('calls handleDeleteSession when continue button is clicked with', async () => {
+    item.system_id = SystemJSON[0].id;
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
     await user.click(continueButton);
@@ -134,7 +124,8 @@ describe('delete item dialog', () => {
   });
 
   it('displays error message if an unknown error occurs', async () => {
-    if (item) item.id = 'Error 500';
+    item.id = 'Error 500';
+    item.system_id = SystemJSON[0].id;
 
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
@@ -143,6 +134,20 @@ describe('delete item dialog', () => {
     expect(handleIMS_APIError).toHaveBeenCalled();
     expect(onClose).not.toHaveBeenCalled();
   });
+
+  it('displays error message user tries delete item from a system type which is not allowed', async () => {
+    createView();
+    const continueButton = screen.getByRole('button', { name: 'Continue' });
+    await user.click(continueButton);
+
+    expect(
+      await screen.findByText(
+        'Please move item to a system with Type: Storage before trying to delete.'
+      )
+    ).toBeInTheDocument();
+    expect(onClose).not.toHaveBeenCalled();
+  });
+
   it('renders correctly when items has no serial number', async () => {
     props.item = { ...getItemById('wKsFzrSq'), serial_number: null } as Item;
     createView();
