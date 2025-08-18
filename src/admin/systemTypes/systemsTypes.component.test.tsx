@@ -58,4 +58,38 @@ describe('SystemTypes', () => {
 
     expect(clearFiltersButton).toBeDisabled();
   }, 10000);
+
+  it('sets and clears the spares definition', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Storage')).toBeInTheDocument();
+    });
+
+    const sparesDefinitionButton = screen.getByRole('button', {
+      name: 'Spares Definition',
+    });
+
+    expect(sparesDefinitionButton).not.toBeDisabled();
+
+    await user.click(sparesDefinitionButton);
+
+    await waitFor(() => {
+      expect(screen.queryByText('Operational')).not.toBeInTheDocument();
+    });
+
+    expect(sparesDefinitionButton).toBeDisabled();
+
+    const clearFiltersButton = screen.getByRole('button', {
+      name: 'Clear Filters',
+    });
+
+    await user.click(clearFiltersButton);
+
+    await waitFor(() => {
+      expect(screen.getByText('Operational')).toBeInTheDocument();
+    });
+
+    expect(clearFiltersButton).toBeDisabled();
+  }, 10000);
 });

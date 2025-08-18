@@ -48,6 +48,13 @@ exports[`SystemTypes > renders table correctly 1`] = `
             </span>
             Clear Filters
           </button>
+          <button
+            class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1ioyh7z-MuiButtonBase-root-MuiButton-root"
+            tabindex="0"
+            type="button"
+          >
+            Spares Definition
+          </button>
         </div>
         <div
           class="MuiBox-root css-1p0wbhh"
@@ -84,7 +91,7 @@ exports[`SystemTypes > renders table correctly 1`] = `
                       aria-invalid="false"
                       autocomplete="off"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12tjcea-MuiInputBase-input-MuiOutlinedInput-input"
-                      id=":r2:"
+                      id=":r3:"
                       placeholder="Search"
                       type="text"
                       value=""
@@ -188,7 +195,7 @@ exports[`SystemTypes > renders table correctly 1`] = `
     >
       <table
         class="MuiTable-root MuiTable-stickyHeader css-ithv9-MuiTable-root"
-        style="--header-value-size: 180; --col-value-size: 180;"
+        style="--header-value-size: 180; --col-value-size: 180; --header-isSpare-size: 200; --col-isSpare-size: 200;"
       >
         <thead
           class="MuiTableHead-root css-1e5wupo-MuiTableHead-root"
@@ -350,12 +357,12 @@ exports[`SystemTypes > renders table correctly 1`] = `
                           </span>
                         </div>
                         <input
-                          aria-describedby=":rf:-helper-text"
+                          aria-describedby=":rg:-helper-text"
                           aria-invalid="false"
                           aria-label="Filter by Value"
                           autocomplete="off"
                           class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                          id=":rf:"
+                          id=":rg:"
                           placeholder="Filter by Value"
                           title="Filter by Value"
                           type="text"
@@ -393,12 +400,202 @@ exports[`SystemTypes > renders table correctly 1`] = `
                       </div>
                       <p
                         class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                        id=":rf:-helper-text"
+                        id=":rg:-helper-text"
                       >
                         <label>
                           Filter Mode: Fuzzy
                         </label>
                       </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </th>
+            <th
+              aria-sort="none"
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-5zadi0-MuiTableCell-root"
+              colspan="1"
+              data-can-sort="true"
+              data-index="1"
+              scope="col"
+              tabindex="0"
+            >
+              <div
+                class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
+              >
+                <div
+                  class="Mui-TableHeadCell-Content-Labels MuiBox-root css-68rqdf"
+                >
+                  <div
+                    class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
+                  >
+                    <p
+                      aria-label="Is Spare"
+                      class="MuiTypography-root MuiTypography-body1 css-1bnbo3v-MuiTypography-root"
+                      data-mui-internal-clone-element="true"
+                      role="tooltip"
+                    >
+                      Is Spare
+                    </p>
+                  </div>
+                  <span
+                    aria-label="Sort by Is Spare ascending"
+                    class="MuiBadge-root css-63ezxx-MuiBadge-root"
+                    data-mui-internal-clone-element="true"
+                  >
+                    <span
+                      aria-label="Sort by Is Spare ascending"
+                      class="MuiButtonBase-root MuiTableSortLabel-root Mui-active MuiTableSortLabel-directionAsc css-bgz9z4-MuiButtonBase-root-MuiTableSortLabel-root"
+                      role="button"
+                      tabindex="0"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-7ojauk-MuiSvgIcon-root-MuiTableSortLabel-icon"
+                        data-testid="SyncAltIcon"
+                        focusable="false"
+                        style="transform: rotate(-90deg) scaleX(0.9) translateX(-1px);"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="m18 12 4-4-4-4v3H3v2h15zM6 12l-4 4 4 4v-3h15v-2H6z"
+                        />
+                      </svg>
+                    </span>
+                    <span
+                      class="MuiBadge-badge MuiBadge-standard MuiBadge-invisible MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightCircular MuiBadge-overlapCircular css-hkekw-MuiBadge-badge"
+                    >
+                      0
+                    </span>
+                  </span>
+                </div>
+                <div
+                  class="Mui-TableHeadCell-Content-Actions MuiBox-root css-epvm6"
+                >
+                  <button
+                    aria-label="Move"
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-498d1l-MuiButtonBase-root-MuiIconButton-root"
+                    data-mui-internal-clone-element="true"
+                    draggable="true"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                      data-testid="DragHandleIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M20 9H4v2h16zM4 15h16v-2H4z"
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    aria-label="Column Actions"
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1a3u37w-MuiButtonBase-root-MuiIconButton-root"
+                    data-mui-internal-clone-element="true"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                      data-testid="MoreVertIcon"
+                      focusable="false"
+                      style="transform: scale(0.9);"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div
+                class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-entered css-qr6njo-MuiCollapse-root"
+                style="min-height: 0px;"
+              >
+                <div
+                  class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
+                >
+                  <div
+                    class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
+                  >
+                    <div
+                      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-p1we6z-MuiFormControl-root-MuiTextField-root"
+                    >
+                      <div
+                        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiSelect-root css-6h9cc6-MuiInputBase-root-MuiInput-root"
+                      >
+                        <div
+                          aria-expanded="false"
+                          aria-haspopup="listbox"
+                          aria-label="Filter by Is Spare"
+                          aria-labelledby=":rr:"
+                          class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-10y8whu-MuiSelect-select-MuiInputBase-input-MuiInput-input"
+                          id=":rr:"
+                          role="combobox"
+                          tabindex="0"
+                        >
+                          <div
+                            class="MuiBox-root css-1tzeee1"
+                          >
+                            Filter by Is Spare
+                          </div>
+                        </div>
+                        <input
+                          aria-hidden="true"
+                          aria-invalid="false"
+                          autocomplete="off"
+                          class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
+                          tabindex="-1"
+                          title="Filter by Is Spare"
+                          value=""
+                        />
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-1gpuzre-MuiSvgIcon-root-MuiSelect-icon"
+                          data-testid="ArrowDropDownIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M7 10l5 5 5-5z"
+                          />
+                        </svg>
+                        <div
+                          class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-atf1rt-MuiInputAdornment-root"
+                        >
+                          <span
+                            aria-label="Clear filter"
+                            class=""
+                            data-mui-internal-clone-element="true"
+                          >
+                            <button
+                              aria-label="Clear filter"
+                              class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeSmall css-pqx1bi-MuiButtonBase-root-MuiIconButton-root"
+                              disabled=""
+                              tabindex="-1"
+                              type="button"
+                            >
+                              <svg
+                                aria-hidden="true"
+                                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                                data-testid="CloseIcon"
+                                focusable="false"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                                />
+                              </svg>
+                            </button>
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -429,6 +626,20 @@ exports[`SystemTypes > renders table correctly 1`] = `
                 Storage
               </div>
             </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1dpflpq-MuiTableCell-root-MuiTableCell-root"
+              data-index="1"
+              tabindex="0"
+            >
+              <div
+                aria-label="Yes"
+                class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
+                data-mui-internal-clone-element="true"
+                role="tooltip"
+              >
+                Yes
+              </div>
+            </td>
           </tr>
           <tr
             aria-label="Operational row"
@@ -450,6 +661,20 @@ exports[`SystemTypes > renders table correctly 1`] = `
                 Operational
               </div>
             </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1dpflpq-MuiTableCell-root-MuiTableCell-root"
+              data-index="1"
+              tabindex="0"
+            >
+              <div
+                aria-label="No"
+                class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
+                data-mui-internal-clone-element="true"
+                role="tooltip"
+              >
+                No
+              </div>
+            </td>
           </tr>
           <tr
             aria-label="Scrapped row"
@@ -469,6 +694,20 @@ exports[`SystemTypes > renders table correctly 1`] = `
                 role="tooltip"
               >
                 Scrapped
+              </div>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1dpflpq-MuiTableCell-root-MuiTableCell-root"
+              data-index="1"
+              tabindex="0"
+            >
+              <div
+                aria-label="No"
+                class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
+                data-mui-internal-clone-element="true"
+                role="tooltip"
+              >
+                No
               </div>
             </td>
           </tr>
