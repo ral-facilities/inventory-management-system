@@ -8,9 +8,11 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import type { SystemType } from '../../api/api.types';
+import { useGetSparesDefinition } from '../../api/settings';
 import { useGetSystemTypes } from '../../api/systems';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import {
+  COLUMN_FILTER_BOOLEAN_OPTIONS,
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
   COLUMN_FILTER_VARIANTS,
@@ -24,14 +26,39 @@ import {
   mrtTheme,
 } from '../../utils';
 
+interface TableRowData extends SystemType {
+  isSpare: boolean;
+}
+
 function SystemTypes() {
   const { data: systemTypesData, isLoading: isLoadingSystemTypes } =
     useGetSystemTypes();
 
+  const { data: sparesDefinition, isLoading: isLoadingSparesDefinition } =
+    useGetSparesDefinition();
+
+  const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
+
+  const isLoading = isLoadingSystemTypes || isLoadingSparesDefinition;
+  //Once loading finished - use same logic as catalogueItemsTable to pair up data
+  React.useEffect(() => {
+    if (!isLoading && systemTypesData) {
+      setTableRows(
+        systemTypesData.map((type) => ({
+          ...type,
+          isSpare:
+            sparesDefinition?.system_type_ids.some(
+              (def) => def.id === type.id
+            ) ?? false,
+        }))
+      );
+    }
+  }, [systemTypesData, isLoading, sparesDefinition]);
+
   // Breadcrumbs + Mui table V2 + extra
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
 
-  const columns = React.useMemo<MRT_ColumnDef<SystemType>[]>(() => {
+  const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     return [
       {
         header: 'Value',
@@ -42,6 +69,16 @@ function SystemTypes() {
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
         Cell: ({ row }) => row.original.value,
+      },
+      {
+        header: 'Is Spare',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => (row.isSpare === true ? 'Yes' : 'No'),
+        id: 'isSpare',
+        filterVariant: COLUMN_FILTER_VARIANTS.boolean,
+        enableColumnFilterModes: false,
+        size: 200,
+        filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
       },
     ];
   }, []);
@@ -62,7 +99,7 @@ function SystemTypes() {
 
   const table = useMaterialReactTable({
     columns: columns,
-    data: systemTypesData ?? [],
+    data: tableRows ?? [],
     // Features
     enableColumnOrdering: true,
     enableColumnFilterModes: true,
@@ -130,21 +167,64 @@ function SystemTypes() {
     // Functions
     ...onPreservedStatesChange,
 
-    renderTopToolbarCustomActions: ({ table }) => (
-      <Box>
-        <Button
-          startIcon={<ClearIcon />}
-          sx={{ mx: '4px' }}
-          variant="outlined"
-          disabled={preservedState.columnFilters.length === 0}
-          onClick={() => {
-            table.resetColumnFilters();
-          }}
-        >
-          Clear Filters
-        </Button>
-      </Box>
-    ),
+    renderTopToolbarCustomActions: ({ table }) => {
+      function isExactFilterActive(
+        expectedFilters: { id: string; filterFn?: string; value: string }[]
+      ) {
+        const actualFilters = table.getState().columnFilters;
+        const actualFilterFns = table.getState().columnFilterFns;
+
+        // Check length matches
+        if (actualFilters.length !== expectedFilters.length) return false;
+
+        // Check every expected filter matches actual filter and filterFn
+        return expectedFilters.every(({ id, filterFn, value }) => {
+          const actualFilter = actualFilters.find((f) => f.id === id);
+          if (!actualFilter) return false;
+          if (actualFilterFns[id] !== filterFn) return false;
+          // Compare values stringified (arrays)
+
+          return JSON.stringify(actualFilter.value) === JSON.stringify(value);
+        });
+      }
+      return (
+        <Box>
+          <Button
+            startIcon={<ClearIcon />}
+            sx={{ mx: '4px' }}
+            variant="outlined"
+            disabled={preservedState.columnFilters.length === 0}
+            onClick={() => {
+              table.resetColumnFilters();
+            }}
+          >
+            Clear Filters
+          </Button>
+
+          <Button
+            sx={{ mx: 0.5 }}
+            variant="outlined"
+            disabled={isExactFilterActive([
+              {
+                id: 'isSpare',
+                value: COLUMN_FILTER_BOOLEAN_OPTIONS[0],
+              },
+            ])}
+            onClick={() => {
+              table.resetGlobalFilter();
+              table.setColumnFilters([
+                {
+                  id: 'isSpare',
+                  value: COLUMN_FILTER_BOOLEAN_OPTIONS[0],
+                },
+              ]);
+            }}
+          >
+            Spares Definition
+          </Button>
+        </Box>
+      );
+    },
 
     renderBottomToolbarCustomActions: ({ table }) =>
       displayTableRowCountText(table, systemTypesData, 'System Types', {

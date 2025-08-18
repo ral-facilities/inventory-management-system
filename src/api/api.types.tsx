@@ -21,6 +21,11 @@ export interface Rule {
   dst_usage_status: UsageStatus | null;
 }
 
+// ------------------------------------- SPARES -----------------------------------------------------
+
+export interface SparesDefinition {
+  system_type_ids: SystemType[];
+}
 // ------------------------------------ MANUFACTURERS -----------------------------------------------
 
 interface AddressPost {
