@@ -33,7 +33,6 @@ import {
   UsageStatusPost,
   type Rule,
 } from '../api/api.types';
-import { getSystemTypeByValue, getUsageStatusByValue } from '../testUtils';
 import { generateUniqueId } from '../utils';
 import AttachmentsJSON from './Attachments.json';
 import CatalogueCategoriesJSON from './CatalogueCategories.json';
@@ -54,6 +53,13 @@ interface ErrorResponse {
   detail?: string;
 }
 
+const getSystemTypeByValue = (value: string): SystemType => {
+  return SystemTypesJSON.find((type) => type.value === value)!;
+};
+
+const getUsageStatusByValue = (value: string): UsageStatus => {
+  return UsageStatusJSON.find((status) => status.value === value)!;
+};
 export const rulesJSON: Rule[] = [
   {
     id: '1',
