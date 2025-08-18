@@ -18,4 +18,11 @@ describe('Admin Page', () => {
 
     cy.findByRole('link', { name: 'admin home page' }).should('exist');
   });
+
+  it('should navigate to the filtered systems types page for the spares definition', () => {
+    cy.findByText('Spares Definition').click();
+    cy.findByRole('button', { name: 'Spares Definition' }).should(
+      'be.disabled'
+    );
+  });
 });
