@@ -1112,6 +1112,7 @@ describe('Catalogue Items', () => {
           notes: 'Need to find new manufacturer. 26',
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          number_of_spares: 0,
         })
       );
       expect(JSON.stringify(await patchRequests[1].json())).equal(
@@ -1139,6 +1140,7 @@ describe('Catalogue Items', () => {
           notes: 'Need to find new manufacturer. 27',
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          number_of_spares: 0,
         })
       );
     });
