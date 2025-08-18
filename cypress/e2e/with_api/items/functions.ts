@@ -234,6 +234,17 @@ export const duplicateItem = (serialNumber: string, index: number) => {
   cy.findAllByLabelText('Row Actions').eq(index).click();
   cy.findByText(`Duplicate`).click();
 
+  cy.findByRole('button', { name: 'navigate to systems home' }).click();
+
+  cy.findAllByText('Storage').first().click();
+
+  cy.findByText('No systems found').should('exist');
+
+  cy.findAllByText('Storage').should('have.length', 1);
+
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.wait(4000);
+
   cy.findByRole('button', { name: 'Next' }).click();
   cy.findByRole('button', { name: 'Next' }).click();
   cy.findByRole('button', { name: 'Finish' }).click();
