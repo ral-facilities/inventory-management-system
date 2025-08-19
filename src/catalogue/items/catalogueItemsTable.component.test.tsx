@@ -324,6 +324,21 @@ describe('Catalogue Items Table', () => {
     expect(url[0]).toHaveAttribute('href', '/catalogue/5/items/6');
   });
 
+  it('navigates to items pages with the spare definition applied', async () => {
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+    await ensureColumnsVisible(['Number of spares']);
+
+    const url = await screen.findAllByText('0');
+
+    expect(url[1]).toHaveAttribute(
+      'href',
+      '/89/items?state=N4IgxgYiBcDaoEsAmMQGcCeaAuBTAtgHTYYAOuhAbgIYA2ArriADQg0NNygnmo4BOCAHYBzFmzqNUAZWwB7ftRFMAvgF11KoA'
+    );
+  });
+
   it('navigates to catalogue item landing page', async () => {
     createView();
     await waitFor(() => {
@@ -566,10 +581,10 @@ describe('Catalogue Items Table', () => {
     );
 
     // Do max first, as it technically has no effect on the outcome of the filter
-    const maxInput = screen.getByLabelText('Max');
+    const maxInput = screen.getAllByLabelText('Max')[1];
     await user.type(maxInput, '1000');
 
-    const minInput = screen.getByLabelText('Min');
+    const minInput = screen.getAllByLabelText('Min')[1];
     await user.type(minInput, '800');
 
     await waitFor(() => {
@@ -687,7 +702,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Grouped by')).toBeInTheDocument();
     });
     expect(router.state.location.search).toBe(
-      '?state=N4Ig5iBcDaIMYEMAuCA2B7MBXApgSSRwFsA6AOwSJxAF0AaeAeSliICckBaN9Ad05wAPAA4IyAExAN2XHvwRwkAS3RkAzlJAzufTmpyocizYhQZs%2BQqQpUTyNJlwFiJIunFKAZkpziA%2Bsq2DKYOFs6kcGw4yL4BSkEgAGo%2BvAAE4RrB9uZOViTiOGqRSsLKqnZmjpYuSmp%2B6ABGauiGhBWhuS6Nza04flHCqArEOGRIfiE5fUpWfkqSWZVhed0tOIT90c1k7VPhJMI8wjgcPmokAOy7VfuH6MenhSQAHNfLLnDoauNgDcJvnQiX3GSHQm146DYAGs-L9-osOtVSOIEABPOqgzaDYYApH5NEYsFRCHQ3H7ITHRSxVBedbxPoo9FkvLiNgIXhKMhgPxkLBEBonZkuVnszncmlkKFC0gzYh%2BNwFVA8vkCtiaIhiLCeBRILBRNjkSjUaSa7WKPUnEh61Dq006i0GhDiVmFTJaO3m-UkQiGYQAC1Uxvg2RueTI6EIbu0cj0ojggpoAF8gA'
+      '?state=N4Ig5iBcDaIMYEMAuCA2B7MBXApgSSRwFsA6AOwSJxAF0AaeAeSliICckBaN9Ad05wAPAA4IyAExAN2XHvwRwkAS3RkAzlJAzufTmpyocizYhQZs%2BQqQpUTyNJlwFiJIunFKAZkpziA%2Bsq2DKYOFs6kcGw4yL4BSkEgAGo%2BvAAE4RrB9uZOVuRYRABGOGx%2B6J5%2BaqJRmfDZjpYu4jhqkUrCyqp2Zg3hJEpqZYVq6IaE3aG5LujDoziEflHCqArEOGRIfiE5OH5KVnuSWT1heTMjY7tRCCNkEzt9wjzCJcotJADs9715T%2BgvHB8ahIAA5vqcXHB0GpNmBCsJwVMItDNkh0IscLx0GwANZ%2BOEI46TRqkcQIACegzRGOWq0RJJIZMpAXRUSxuPpfSEL0UsVQXnm8V2TNq2x%2BTTYCF4SjIYD8ZAKxTYnLy4kl0tlfn5ZBxKpc%2B2IfjczVQ8sVJU0RDEWE8CiQWCibHIlGo0mttsUDpKJAdqEt7rtXqdCHEapatStCo99sdJEIhmEAAtVK66ickeR0IQIxwdPwqqtlTQAL5AA'
     );
 
     // Reset
@@ -698,7 +713,7 @@ describe('Catalogue Items Table', () => {
     });
     // Expect this to still be here as have now modified the order in some way (as MRT doesn't revert back to its original state in this case)
     expect(router.state.location.search).toBe(
-      '?state=N4Igxg8iBcDaIFsBOAXAtEg9gdzQQzBQEtMA7AZxABpFUMc1yBTAGycOtvS1yYA8ADnlIATTmDwo8LTAHMArkwCSKJggB0pPAibjJ0uYpVr1CTCKIAzIkxEB9Yjr1SZC5ao1gkTSbYdEnGgA1G2wAAmMEShoJF0N3ExEmci8iAWIyZwM3SPUicjtMACNyTDZVLNcjD3Vi0vKmO28BFgI1JlIUO1jsxTsiD36xGP0qhI06sqZVJp9S0kr43IEsASZUG3J1AHZFnJqVzDWN5PUADj3qkzBMci7ZIoFL8fUbu4dMWexMJABrOweTxGcX2iTwAE8CihPs1WmBdMDei8RBCoTCmN8-s9cvw1oQ-CwrNMAo0UZDsTUREg8NgiKRZHZSPIEEV1hTEtTafS7ITSL92RoBmo7GYkixGczWUhOAhhPJLAQUPJvEhNNoEYg5QrCMr1uplSwZVrFbrVXgRFTktFNUztUqVepVGwBAALMganpjXKkTCqa3IbgMchCeHSgC6AF8gA'
+      '?state=N4Igxg8iBcDaIFsBOAXAtEg9gdzQQzBQEtMA7AZxABpFUMc1yBTAGycOtvS1yYA8ADnlIATTmDwo8LTAHMArkwCSKJggB0pPAibjJ0uYpVr1CTCKIAzIkxEB9Yjr1SZC5ao1gkTSbYdEnGgA1G2wAAmMEShoJF0N3E1J5BAAjJiQ7TEs7ciFvaPB9VyMPdREmci8iAWIyZwM3SPUickyU8kw2VXrihI1Mds6mVTtvARYCNSZSFDtYhsU7Ig8lsRii%2BKaBjq6mUZ8O0h7N0oEsAXTiCvUAdmPG0-PLm3J1AA57kpMwTHJZ2RSAk%2BfXUPz%2BDkw%2B2wmCQAGs7ACges4g8TCI8ABPVooSFjCZgXTIhYg9FYiFQmGw4FNfgXQh%2BFhWYYBPakgrzXpNERIPDYIikWR2JKpdLU0rc3n8wWM0hUomc0rLNR2MzlFhC5JpJCcBDCeSWAgoeTeJCabSExB6g2EY3pdTGlg6q2G22mvAibkVAq6pLWo0m9SqNgCAAWZAtHJOiUwqm9dB4jCEBO1AF0AL5AA'
     );
   });
 
@@ -754,7 +769,7 @@ describe('Catalogue Items Table', () => {
 
     //  accuracy column action button
     await user.click(
-      screen.getAllByRole('button', { name: 'Column Actions' })[7]
+      screen.getAllByRole('button', { name: 'Column Actions' })[8]
     );
 
     await user.click(await screen.findByText('Group by Accuracy'));
@@ -798,7 +813,7 @@ describe('Catalogue Items Table', () => {
 
     //  drawing link column action button
     await user.click(
-      screen.getAllByRole('button', { name: 'Column Actions' })[8]
+      screen.getAllByRole('button', { name: 'Column Actions' })[9]
     );
 
     await user.click(await screen.findByText('Group by Drawing Link'));
@@ -835,14 +850,14 @@ describe('Catalogue Items Table', () => {
     // Get the table element (assuming it has a specific class or role)
     const table = screen.getByTestId('catalogue-items-table-container');
 
-    fireEvent.scroll(table, { target: { scrollLeft: 3300 } });
+    fireEvent.scroll(table, { target: { scrollLeft: 3650 } });
 
     // Check if the manufacturer url cell is visible after scrolling
     expect(await screen.findByText(manufacturerUrl)).toBeInTheDocument();
 
     // manufacturer url column action button
     await user.click(
-      screen.getAllByRole('button', { name: 'Column Actions' })[8]
+      screen.getAllByRole('button', { name: 'Column Actions' })[7]
     );
 
     await user.click(await screen.findByText('Group by Manufacturer URL'));
@@ -851,7 +866,7 @@ describe('Catalogue Items Table', () => {
       screen.queryByRole('tooltip', { name: 'Manufacturer URL' })
     ).not.toBeInTheDocument();
 
-    fireEvent.scroll(table, { target: { scrollLeft: -3000 } });
+    fireEvent.scroll(table, { target: { scrollLeft: -3350 } });
 
     expect(
       await screen.findByRole('tooltip', { name: 'Manufacturer URL' })
