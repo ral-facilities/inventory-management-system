@@ -596,7 +596,11 @@ export const COLUMN_FILTER_BOOLEAN_OPTIONS = ['Yes', 'No'];
 
 export const useSparesFilterState = (
   urlParamName?: string
-): { sparesFilterState: string; isLoading: boolean } => {
+): {
+  sparesFilterState: string;
+  encodedSparesFilter: string;
+  isLoading: boolean;
+} => {
   const {
     data: sparesDefinition = { system_types: [] },
     isLoading: isLoadingSparesDefinition,
@@ -614,7 +618,14 @@ export const useSparesFilterState = (
     }),
     [sparesFilter]
   );
+  const encodedSparesFilter = LZString.compressToEncodedURIComponent(
+    JSON.stringify(sparesColumnsFilters)
+  );
+  const sparesFilterState = `?${urlParam}=${encodedSparesFilter}`;
 
-  const sparesFilterState = `?${urlParam}=${LZString.compressToEncodedURIComponent(JSON.stringify(sparesColumnsFilters))}`;
-  return { sparesFilterState, isLoading: isLoadingSparesDefinition };
+  return {
+    sparesFilterState,
+    encodedSparesFilter,
+    isLoading: isLoadingSparesDefinition,
+  };
 };
