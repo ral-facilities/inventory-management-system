@@ -206,6 +206,38 @@ describe('Items Table', () => {
     });
   });
 
+  it('sets the spares definition filter and clears the table filters', async () => {
+    props.catalogueCategory = getCatalogueCategoryById(
+      '9'
+    ) as CatalogueCategory;
+    props.catalogueItem = getCatalogueItemById('11') as CatalogueItem;
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Serial Number')).toBeInTheDocument();
+    });
+    const showSparesButton = screen.getByRole('button', {
+      name: 'Show Spare Items',
+    });
+    expect(showSparesButton).not.toBeDisabled();
+
+    await user.click(showSparesButton);
+
+    await waitFor(() => {
+      expect(screen.queryByText('tenrMn1KOmIg')).not.toBeInTheDocument();
+    });
+
+    const clearFiltersButton = screen.getByRole('button', {
+      name: 'Clear Filters',
+    });
+
+    await user.click(clearFiltersButton);
+
+    await waitFor(() => {
+      expect(screen.getByText('tenrMn1KOmIg')).toBeInTheDocument();
+    });
+  });
+
   it('navigates to catalogue item landing page', async () => {
     createView();
     const serialNumber = '5YUQDDjKpz2z';

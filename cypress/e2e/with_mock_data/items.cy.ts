@@ -490,6 +490,28 @@ describe('Items', () => {
     cy.findByText('Zf7P8Qu8TD8c').should('exist');
   });
 
+  it('set spares definition filter and clears the table filters', () => {
+    cy.visit('/catalogue/9/items/11/items');
+    cy.findByText('dfzqkOJbqifO').should('exist');
+    cy.findByText('tenrMn1KOmIg').should('exist');
+    cy.findByText('eUc80U7FqJum').should('exist');
+    cy.findByText('WrgqAVk3qUQK').should('exist');
+    cy.findByRole('button', { name: 'Show Spare Items' }).should(
+      'not.be.disabled'
+    );
+    cy.findByRole('button', { name: 'Show Spare Items' }).click();
+    cy.findByText('dfzqkOJbqifO').should('exist');
+    cy.findByText('tenrMn1KOmIg').should('not.exist');
+    cy.findByText('eUc80U7FqJum').should('not.exist');
+    cy.findByText('WrgqAVk3qUQK').should('not.exist');
+    cy.findByRole('button', { name: 'Show Spare Items' }).should('be.disabled');
+    cy.findByRole('button', { name: 'Clear Filters' }).click();
+    cy.findByText('dfzqkOJbqifO').should('exist');
+    cy.findByText('tenrMn1KOmIg').should('exist');
+    cy.findByText('eUc80U7FqJum').should('exist');
+    cy.findByText('WrgqAVk3qUQK').should('exist');
+  });
+
   it('navigates to the landing page and navigates back to the table view', () => {
     cy.findByText('5YUQDDjKpz2z').click();
     cy.findByText(

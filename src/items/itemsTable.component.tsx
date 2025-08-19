@@ -19,7 +19,7 @@ import {
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 import {
   CatalogueCategory,
   CatalogueItem,
@@ -49,6 +49,7 @@ import {
   TableCellOverFlowTipProps,
   TableGroupedCell,
   TableHeaderOverflowTip,
+  useSparesFilterState,
 } from '../utils';
 import DeleteItemDialog from './deleteItemDialog.component';
 import ItemDialog from './itemDialog.component';
@@ -67,6 +68,8 @@ interface TableRowData {
 
 export function ItemsTable(props: ItemTableProps) {
   const { catalogueCategory, catalogueItem, dense } = props;
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
 
@@ -87,12 +90,21 @@ export function ItemsTable(props: ItemTableProps) {
   const { data: systemTypesData, isLoading: isLoadingSystemTypes } =
     useGetSystemTypes();
 
-  const { data: usageStatusData } = useGetUsageStatuses();
+  const { data: usageStatusData, isLoading: isLoadingUsageStatus } =
+    useGetUsageStatuses();
+
+  const { encodedSparesFilter, isLoading: isLoadingSparesDefinition } =
+    useSparesFilterState();
+
   const systemIdSet = new Set<string>(
     itemsData?.map((item) => item.system_id) ?? []
   );
 
-  let isLoading = isLoadingItems || isLoadingSystemTypes;
+  let isLoading =
+    isLoadingItems ||
+    isLoadingSystemTypes ||
+    isLoadingUsageStatus ||
+    isLoadingSparesDefinition;
   const systemList: (System | undefined)[] = useGetSystemIds(
     Array.from(systemIdSet.values())
   ).map((query) => {
@@ -595,6 +607,18 @@ export function ItemsTable(props: ItemTableProps) {
           }}
         >
           Clear Filters
+        </Button>
+        <Button
+          sx={{ mx: 0.5 }}
+          variant="outlined"
+          disabled={searchParams.get('state') === encodedSparesFilter}
+          onClick={() => {
+            const newParams = new URLSearchParams(searchParams);
+            newParams.set('state', encodedSparesFilter);
+            setSearchParams(newParams, { replace: false });
+          }}
+        >
+          Show Spare Items
         </Button>
       </Box>
     ),
