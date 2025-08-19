@@ -325,7 +325,7 @@ describe('catalogue item directory Dialog', () => {
       vi.clearAllMocks();
     });
 
-    it.only('copies multiple catalogue items (new catalogue category)', async () => {
+    it('copies multiple catalogue items (new catalogue category)', async () => {
       props.parentCategoryId = '8967';
 
       createView();
