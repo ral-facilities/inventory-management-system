@@ -20,7 +20,7 @@ import { useGetManufacturer } from '../../api/manufacturers';
 import ActionMenu from '../../common/actionMenu.component';
 import PrimaryImage from '../../common/images/primaryImage.component';
 import TabView from '../../common/tab/tabView.component';
-import { formatDateTimeStrings } from '../../utils';
+import { formatDateTimeStrings, useSparesFilterState } from '../../utils';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import CatalogueLink from './catalogueLink.component';
 
@@ -66,6 +66,9 @@ function CatalogueItemsLandingPage() {
     data: catalogueCategoryData,
     isLoading: catalogueCategoryDataLoading,
   } = useGetCatalogueCategory(catalogueCategoryId);
+
+  const { sparesFilterState, isLoading: isLoadingSparesDefinition } =
+    useSparesFilterState();
 
   const isParentCorrect =
     catalogueItemIdData?.catalogue_category_id === catalogueCategoryId;
@@ -200,8 +203,34 @@ function CatalogueItemsLandingPage() {
                                 color: 'text.primary',
                               }}
                             >
+                              Number of spares
+                            </Typography>
+
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.secondary',
+                              }}
+                            >
+                              <MuiLink
+                                underline="hover"
+                                component={Link}
+                                to={`items${sparesFilterState}`}
+                              >
+                                {catalogueItemIdData.number_of_spares}
+                              </MuiLink>
+                            </Typography>
+                          </Grid>
+                          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.primary',
+                              }}
+                            >
                               Obsolete
                             </Typography>
+
                             <Typography
                               align="left"
                               sx={{
@@ -695,7 +724,9 @@ function CatalogueItemsLandingPage() {
           </Grid>
         </Grid>
       )}
-      {(catalogueItemIdDataLoading || catalogueCategoryDataLoading) && (
+      {(catalogueItemIdDataLoading ||
+        catalogueCategoryDataLoading ||
+        isLoadingSparesDefinition) && (
         <Box sx={{ width: '100%' }}>
           <LinearProgress />
         </Box>

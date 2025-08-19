@@ -15,7 +15,7 @@ import {
   Manufacturer,
 } from '../../api/api.types';
 import PrimaryImage from '../../common/images/primaryImage.component';
-import { formatDateTimeStrings } from '../../utils';
+import { formatDateTimeStrings, useSparesFilterState } from '../../utils';
 import CatalogueLink from './catalogueLink.component';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -48,6 +48,8 @@ export interface CatalogueItemsDetailsPanelProps {
 function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
   const { catalogueItemIdData, manufacturerData } = props;
   const [tabValue, setTabValue] = React.useState(0);
+
+  const { sparesFilterState } = useSparesFilterState();
 
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
@@ -103,7 +105,29 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
               </Typography>
             </Grid>
             <Grid container spacing={0}>
-              <Grid size={{ xs: 12, sm: 6 }} key={0}>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <Typography
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
+                  Number of spares
+                </Typography>
+                <Typography
+                  sx={{
+                    color: 'text.secondary',
+                  }}
+                >
+                  <MuiLink
+                    underline="hover"
+                    component={Link}
+                    to={`${catalogueItemIdData.id}/items${sparesFilterState}`}
+                  >
+                    {catalogueItemIdData.number_of_spares}
+                  </MuiLink>
+                </Typography>
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Typography
                   sx={{
                     color: 'text.primary',
@@ -120,7 +144,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
-              <Grid size={{ xs: 12, sm: 6 }} key={1}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Typography
                   sx={{
                     color: 'text.primary',
@@ -147,7 +171,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
-              <Grid size={{ xs: 12, sm: 6 }} key={2}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Typography
                   sx={{
                     color: 'text.primary',
@@ -165,7 +189,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
-              <Grid size={{ xs: 12, sm: 6 }} key={3}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Typography
                   sx={{
                     color: 'text.primary',
@@ -181,7 +205,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                   {catalogueItemIdData.cost_gbp ?? 'None'}
                 </Typography>
               </Grid>
-              <Grid size={{ xs: 12, sm: 6 }} key={4}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Typography
                   sx={{
                     color: 'text.primary',
@@ -198,7 +222,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
-              <Grid size={{ xs: 12, sm: 6 }} key={5}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Typography
                   sx={{
                     color: 'text.primary',
@@ -215,7 +239,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
-              <Grid size={{ xs: 12, sm: 6 }} key={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Typography
                   sx={{
                     color: 'text.primary',
@@ -232,7 +256,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
-              <Grid size={{ xs: 12, sm: 6 }} key={8}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Typography
                   sx={{
                     color: 'text.primary',
@@ -249,7 +273,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
-              <Grid size={{ xs: 12, sm: 6 }} key={7}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Typography
                   sx={{
                     color: 'text.primary',
@@ -267,7 +291,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
-              <Grid size={{ xs: 12, sm: 6 }} key={9}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Typography
                   sx={{
                     color: 'text.primary',
@@ -285,7 +309,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
-              <Grid size={{ xs: 12, sm: 6 }} key={10}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Typography
                   sx={{
                     color: 'text.primary',
@@ -305,7 +329,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
-              <Grid size={{ xs: 12, sm: 6 }} key={11}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Typography
                   sx={{
                     color: 'text.primary',
@@ -377,7 +401,6 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
         <TabPanel value={tabValue} index={2}>
           <Grid container spacing={0}>
             <Grid
-              key={0}
               size={{
                 xs: 12,
                 sm: 6,
@@ -406,7 +429,6 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
               </Typography>
             </Grid>
             <Grid
-              key={1}
               size={{
                 xs: 12,
                 sm: 6,
