@@ -8,7 +8,7 @@
     "@date-io/date-fns": "^3.2.1",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
-    "@hookform/resolvers": "^3.6.0",
+    "@hookform/resolvers": "^5.0.0",
     "@mui/icons-material": "^6.0.0",
     "@mui/material": "^6.0.0",
     "@mui/x-date-pickers": "^7.15.0",
@@ -48,7 +48,7 @@
     "typescript": "^5.4.5",
     "vite": "^5.2.12",
     "vite-plugin-css-injected-by-js": "^3.5.2",
-    "zod": "^3.23.8"
+    "zod": "^3.25.0"
   },
   "scripts": {
     "dev": "vite --open",
