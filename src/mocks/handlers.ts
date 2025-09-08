@@ -41,6 +41,7 @@ import CatalogueItemsJSON from './CatalogueItems.json';
 import ImagesJSON from './Images.json';
 import ItemsJSON from './Items.json';
 import ManufacturersJSON from './Manufacturers.json';
+import RulesJSON from './rules';
 import SystemBreadcrumbsJSON from './SystemBreadcrumbs.json';
 import SystemsJSON from './Systems.json';
 import SystemTypesJSON from './SystemTypes.json';
@@ -53,45 +54,6 @@ interface ErrorResponse {
   detail?: string;
 }
 
-const getSystemTypeByValue = (value: string): SystemType => {
-  return SystemTypesJSON.find((type) => type.value === value)!;
-};
-
-const getUsageStatusByValue = (value: string): UsageStatus => {
-  return UsageStatusJSON.find((status) => status.value === value)!;
-};
-export const rulesJSON: Rule[] = [
-  {
-    id: '1',
-    src_system_type: null,
-    dst_system_type: getSystemTypeByValue('Storage'),
-    dst_usage_status: getUsageStatusByValue('New'),
-  },
-  {
-    id: '2',
-    src_system_type: getSystemTypeByValue('Storage'),
-    dst_system_type: null,
-    dst_usage_status: null,
-  },
-  {
-    id: '3',
-    src_system_type: getSystemTypeByValue('Storage'),
-    dst_system_type: getSystemTypeByValue('Operational'),
-    dst_usage_status: getUsageStatusByValue('In Use'),
-  },
-  {
-    id: '4',
-    src_system_type: getSystemTypeByValue('Operational'),
-    dst_system_type: getSystemTypeByValue('Storage'),
-    dst_usage_status: getUsageStatusByValue('Used'),
-  },
-  {
-    id: '5',
-    src_system_type: getSystemTypeByValue('Operational'),
-    dst_system_type: getSystemTypeByValue('Scrapped'),
-    dst_usage_status: getUsageStatusByValue('Scrapped'),
-  },
-];
 export const handlers = [
   // ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
 
@@ -1385,7 +1347,7 @@ export const handlers = [
     const src_system_type_id = systemsParams.get('src_system_type_id');
     const dst_system_type_id = systemsParams.get('dst_system_type_id');
 
-    let rules: Rule[] = rulesJSON;
+    let rules: Rule[] = RulesJSON;
     if (src_system_type_id) {
       rules = rules.filter(
         (rule) => rule.src_system_type?.id === src_system_type_id
