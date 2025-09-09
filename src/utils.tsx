@@ -25,6 +25,7 @@ import {
 import React from 'react';
 import {
   createFormControl,
+  Path,
   type FieldValues,
   type UseFormReturn,
 } from 'react-hook-form';
@@ -597,7 +598,7 @@ export const COLUMN_FILTER_BOOLEAN_OPTIONS = ['Yes', 'No'];
 export function createFormControlWithRootErrorClearing<
   T extends FieldValues,
 >(options?: {
-  name?: string;
+  name?: Path<T>;
   customCallback?: Parameters<
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     Omit<UseFormReturn<T, any, T>, 'formState'>['subscribe']

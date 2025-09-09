@@ -20,7 +20,7 @@ import {
 import Grid from '@mui/material/Grid2';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { Controller, FormProvider, useForm } from 'react-hook-form';
+import { Controller, FormProvider, Path, useForm } from 'react-hook-form';
 import {
   AllowedValues,
   APIError,
@@ -165,10 +165,9 @@ function getProperty<T extends Record<string, unknown>>(
 
 const formControl =
   createFormControlWithRootErrorClearing<AddCatalogueCategoryWithPlacementIds>({
-    // @ts-expect-error: The callback is missing name, when the type exist
     customCallback: ({ name, errors }) => {
       if (errors && !!getProperty(errors, name)) {
-        formControl.clearErrors(name);
+        formControl.clearErrors(name as Path<unknown>);
       }
     },
   });
