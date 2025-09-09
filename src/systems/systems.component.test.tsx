@@ -1,6 +1,6 @@
-import { screen, waitFor, within } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import { paths } from '../App';
+import { URLPathKeyType } from '../paths';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import Systems from './systems.component';
 
@@ -9,7 +9,7 @@ describe('Systems', () => {
   vi.setConfig({ testTimeout: 14000 });
 
   let user: UserEvent;
-  const createView = (path: string, urlPathKey?: keyof typeof paths) => {
+  const createView = (path: string, urlPathKey?: URLPathKeyType) => {
     return renderComponentWithRouterProvider(
       <Systems />,
       urlPathKey ?? 'systems',
@@ -37,7 +37,7 @@ describe('Systems', () => {
     });
 
     expect(screen.getByText('Giant laser')).toBeInTheDocument();
-    expect(screen.getByText('Total Systems: 3')).toBeInTheDocument();
+    expect(screen.getByText('Total Systems: 5')).toBeInTheDocument();
   });
 
   it('renders correctly when viewing a specific system', async () => {
@@ -51,6 +51,139 @@ describe('Systems', () => {
     expect(screen.getByText('Total Subsystems: 1')).toBeInTheDocument();
   });
 
+  it('opens and closes the subsystems fullscreen table view ', async () => {
+    const { router } = createView('/systems');
+
+    await waitFor(() => {
+      expect(screen.getByText('Root systems')).toBeInTheDocument();
+    });
+
+    expect(screen.getByText('Giant laser')).toBeInTheDocument();
+    expect(screen.getByText('Total Systems: 5')).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(
+        screen.queryByText('Scrapped system for various items.')
+      ).not.toBeInTheDocument();
+    });
+
+    const toggleFullScreenButton = screen.getAllByRole('button', {
+      name: 'Toggle full screen',
+    })[0];
+
+    await user.click(toggleFullScreenButton);
+
+    expect(router.state.location.search).toBe(
+      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuhvMgIaw32PM4SNCEYAHEvFhcAdhkGsRZZHg44xDEjJbD0JAO4zk8HWxAAbEhh44tp5AF8HQA'
+    );
+
+    await waitFor(() => {
+      expect(screen.queryByText('Root systems')).not.toBeInTheDocument();
+    });
+    expect(
+      await screen.findByText('Scrapped system for various items.')
+    ).toBeInTheDocument();
+
+    await user.click(
+      (
+        await screen.findAllByRole('button', {
+          name: 'Toggle full screen',
+        })
+      )[0]
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.queryByText('Scrapped system for various items.')
+      ).not.toBeInTheDocument();
+    });
+
+    expect(router.state.location.search).toBe('');
+  });
+
+  it('clear filters subsystems table in fullscreen mode', async () => {
+    const { router } = createView('/systems');
+    await waitFor(() => {
+      expect(screen.getByText('Root systems')).toBeInTheDocument();
+    });
+
+    expect(screen.getByText('Giant laser')).toBeInTheDocument();
+    expect(screen.getByText('Total Systems: 5')).toBeInTheDocument();
+
+    const toggleFullScreenButton = screen.getAllByRole('button', {
+      name: 'Toggle full screen',
+    })[0];
+
+    await user.click(toggleFullScreenButton);
+
+    expect(router.state.location.search).toBe(
+      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuhvMgIaw32PM4SNCEYAHEvFhcAdhkGsRZZHg44xDEjJbD0JAO4zk8HWxAAbEhh44tp5AF8HQA'
+    );
+
+    const clearFiltersButton = await screen.findByRole('button', {
+      name: 'Clear Filters',
+    });
+
+    expect(clearFiltersButton).toBeDisabled();
+
+    const nameInput = await screen.findByLabelText('Filter by Name');
+
+    expect(nameInput).toBeVisible();
+    await user.type(nameInput, 'Stor');
+
+    await waitFor(() => {
+      expect(screen.queryByText('Giant Laser')).not.toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(clearFiltersButton).not.toBeDisabled();
+    });
+    await user.click(clearFiltersButton);
+
+    await waitFor(() => {
+      expect(screen.getByText('Giant laser')).toBeInTheDocument();
+    });
+  });
+
+  it('clear filters in subsystems table', async () => {
+    createView('/systems');
+    await waitFor(() => {
+      expect(screen.getByText('Root systems')).toBeInTheDocument();
+    });
+
+    expect(screen.getByText('Giant laser')).toBeInTheDocument();
+    expect(screen.getByText('Total Systems: 5')).toBeInTheDocument();
+
+    const clearFiltersButton = await screen.findByTestId(
+      'clear-filters-button'
+    );
+
+    await user.click(
+      await screen.findByRole('button', { name: 'Show/Hide filters' })
+    );
+
+    const nameInput = await screen.findByLabelText('Filter by Name');
+
+    expect(nameInput).toBeVisible();
+    await user.type(nameInput, 'Stor');
+
+    await waitFor(() => {
+      expect(screen.queryByText('Giant Laser')).not.toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(clearFiltersButton).not.toBeDisabled();
+    });
+    await user.click(clearFiltersButton);
+
+    await waitFor(
+      () => {
+        expect(screen.getByText('Giant laser')).toBeInTheDocument();
+      },
+      { timeout: 5000 }
+    );
+  });
+
   it('renders correctly when filtering systems', async () => {
     createView('/systems?subState=N4Ig5gYglgNiBcIDiUCGA7ALiAvkA');
 
@@ -58,12 +191,12 @@ describe('Systems', () => {
       expect(screen.getByText('Root systems')).toBeInTheDocument();
     });
 
-    expect(screen.getByText('Returned 1 out of 3 Systems')).toBeInTheDocument();
+    expect(screen.getByText('Returned 1 out of 5 Systems')).toBeInTheDocument();
   });
 
   it('renders correctly when filtering subsystems', async () => {
     createView(
-      '/systems/65328f34a40ff5301575a4e3?subState=N4Ig5gYglgNiBcIAqBTAzgFxAXyA',
+      '/systems/65328f34a40ff5301575a4e3?subState=N4Ig5gYglgNiBcIAOUBeqCGIC%2BQ',
       'system'
     );
 
@@ -119,9 +252,11 @@ describe('Systems', () => {
       expect(screen.getByText('Subsystems')).toBeInTheDocument();
     });
 
-    const smallerLaserCheckbox = within(
-      screen.getByRole('row', { name: 'Toggle select row Smaller laser' })
-    ).getByRole('checkbox');
+    const checkboxes = await screen.findAllByRole('checkbox', {
+      name: 'Toggle select row',
+    });
+
+    const smallerLaserCheckbox = checkboxes[0];
 
     await user.click(smallerLaserCheckbox);
 
@@ -147,12 +282,13 @@ describe('Systems', () => {
       expect(screen.getByText('Root systems')).toBeInTheDocument();
     });
 
-    const giantLaserCheckbox = within(
-      screen.getByRole('row', { name: 'Toggle select row Giant laser' })
-    ).getByRole('checkbox');
-    const pulseLaserCheckbox = within(
-      screen.getByRole('row', { name: 'Toggle select row Pulse Laser' })
-    ).getByRole('checkbox');
+    const checkboxes = await screen.findAllByRole('checkbox', {
+      name: 'Toggle select row',
+    });
+
+    const giantLaserCheckbox = checkboxes[1];
+
+    const pulseLaserCheckbox = checkboxes[2];
 
     await user.click(giantLaserCheckbox);
     await user.click(pulseLaserCheckbox);
@@ -192,9 +328,11 @@ describe('Systems', () => {
       expect(screen.getByText('Root systems')).toBeInTheDocument();
     });
 
-    const giantLaserCheckbox = within(
-      screen.getByRole('row', { name: 'Toggle select row Giant laser' })
-    ).getByRole('checkbox');
+    const checkboxes = await screen.findAllByRole('checkbox', {
+      name: 'Toggle select row',
+    });
+
+    const giantLaserCheckbox = checkboxes[1];
     await user.click(giantLaserCheckbox);
 
     await waitFor(() => {
@@ -227,9 +365,11 @@ describe('Systems', () => {
       expect(screen.getByText('Root systems')).toBeInTheDocument();
     });
 
-    const giantLaserCheckbox = within(
-      screen.getByRole('row', { name: 'Toggle select row Giant laser' })
-    ).getByRole('checkbox');
+    const checkboxes = await screen.findAllByRole('checkbox', {
+      name: 'Toggle select row',
+    });
+
+    const giantLaserCheckbox = checkboxes[1];
     await user.click(giantLaserCheckbox);
 
     await waitFor(() => {
@@ -316,7 +456,7 @@ describe('Systems', () => {
       expect(screen.getByTestId('delete-system-name')).toBeInTheDocument();
     });
 
-    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+    await user.click(screen.getByRole('button', { name: 'Continue' }));
 
     await waitFor(() => {
       expect(

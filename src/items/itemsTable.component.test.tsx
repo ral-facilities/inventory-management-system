@@ -79,7 +79,12 @@ describe('Items Table', () => {
 
   it('renders correctly part 3 due column virtualisation and checks that the href is correct for the system ID', async () => {
     createView();
-    await ensureColumnsVisible(['Warranty End Date', 'System', 'Created']);
+    await ensureColumnsVisible([
+      'Warranty End Date',
+      'System',
+      'System Type',
+      'Created',
+    ]);
 
     const systemID = screen.getAllByText('Giant laser');
     expect(systemID[0]).toHaveAttribute(

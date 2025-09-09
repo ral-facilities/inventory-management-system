@@ -5,12 +5,12 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Grid,
   Step,
   StepLabel,
   Stepper,
   Typography,
 } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import { MRT_RowSelectionState } from 'material-react-table';
 import React from 'react';
 import { Item } from '../api/api.types';
@@ -222,8 +222,8 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     switch (step) {
       case 0:
         return (
-          <Grid item container spacing={1.5} xs={12}>
-            <Grid item xs={12}>
+          <Grid container spacing={1.5} size={12}>
+            <Grid size={12}>
               <Breadcrumbs
                 breadcrumbsInfo={parentSystemBreadcrumbs}
                 onChangeNode={changeParentSystemId}
@@ -233,7 +233,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
                 homeLocation="Systems"
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <SystemsTableView
                 systemsData={systemsData}
                 systemsDataLoading={systemsDataLoading}
@@ -266,7 +266,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     <Dialog open={open} maxWidth="lg" fullWidth>
       <DialogTitle marginLeft={2}>
         <Grid container spacing={2}>
-          <Grid item>
+          <Grid>
             Move{' '}
             {selectedItems.length > 1
               ? `${selectedItems.length} items`

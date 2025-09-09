@@ -7,9 +7,9 @@ import {
   DialogContent,
   DialogTitle,
   FormHelperText,
-  Grid,
   Tooltip,
 } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import { MRT_RowSelectionState } from 'material-react-table';
 import React from 'react';
 import { CatalogueCategory, CatalogueItem } from '../../api/api.types';
@@ -155,12 +155,19 @@ const CatalogueItemDirectoryDialog = (
     <Dialog
       open={open}
       maxWidth="lg"
-      PaperProps={{ sx: { height: '692px' } }}
+      PaperProps={{ sx: { height: '770px' } }}
       fullWidth
     >
       <DialogTitle sx={{ marginLeft: 2 }}>
         <Grid container spacing={2}>
-          <Grid container item flexDirection="row" alignItems="center" xs={12}>
+          <Grid
+            container
+            size={12}
+            sx={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+          >
             <>
               {requestType === 'moveTo' ? 'Move ' : 'Copy '}{' '}
               {selectedItems.length}{' '}
@@ -184,7 +191,7 @@ const CatalogueItemDirectoryDialog = (
               </Tooltip>
             )}
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <Breadcrumbs
               breadcrumbsInfo={catalogueBreadcrumbs}
               onChangeNode={setParentCategoryId}
@@ -214,6 +221,19 @@ const CatalogueItemDirectoryDialog = (
             catalogueCategoryParentId={parentCategoryId ?? undefined}
           />
         )}
+        <Box
+          sx={{
+            mx: 3,
+            marginTop: 3,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
+            {errorMessage}
+          </FormHelperText>
+        </Box>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
@@ -238,21 +258,6 @@ const CatalogueItemDirectoryDialog = (
           {requestType === 'moveTo' ? 'Move' : 'Copy'} here
         </Button>
       </DialogActions>
-      {errorMessage && (
-        <Box
-          sx={{
-            mx: 3,
-            marginBottom: 3,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
-            {errorMessage}
-          </FormHelperText>
-        </Box>
-      )}
     </Dialog>
   );
 };

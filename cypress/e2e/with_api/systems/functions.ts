@@ -6,6 +6,7 @@ export const modifySystem = (
     location?: string;
     owner?: string;
     importance: string;
+    type?: string;
   },
   ignoreChecks?: boolean
 ) => {
@@ -40,9 +41,14 @@ export const modifySystem = (
 
   cy.findByLabelText('Importance').click();
   cy.findByRole('option', { name: values.importance }).click();
+
+  if (values.type) {
+    cy.findByLabelText('Type *').click();
+    cy.findByRole('option', { name: values.type }).click();
+  }
   cy.findByRole('button', { name: 'Save' }).click();
   if (!ignoreChecks) {
-    cy.findByText(values.name).click();
+    cy.findByRole('link', { name: values.name }).click();
 
     cy.findAllByText(values.name).should('have.length.gte', 1);
     if (values.description) cy.findByText(values.description).should('exist');
@@ -85,14 +91,16 @@ export const copyToSystems = (values: {
   cy.findByRole('menuitem', { name: 'Copy to' }).click();
 
   cy.findByRole('dialog').within(() => {
-    cy.findByText('Storage').click();
+    cy.findByText('Storage 2').click();
   });
 
   cy.findByRole('button', { name: 'Copy here' }).should('not.be.disabled');
   cy.findByRole('button', { name: 'Copy here' }).click();
   cy.findByRole('dialog').should('not.exist', { timeout: 10000 });
 
-  cy.findByText('Storage').click();
+  cy.findByText('Storage 2').click();
+  cy.findByText('Importance').should('exist');
+  cy.findByRole('progressbar').should('not.exist');
 
   for (let i = 0; i < values.checkedSystems.length; i++) {
     deleteSystem(values.checkedSystemsNames[i], 0);
@@ -114,14 +122,16 @@ export const moveToSystems = (values: {
   cy.findByRole('menuitem', { name: 'Move to' }).click();
 
   cy.findByRole('dialog').within(() => {
-    cy.findByText('Storage').click();
+    cy.findByText('Storage 2').click();
   });
 
   cy.findByRole('button', { name: 'Move here' }).should('not.be.disabled');
   cy.findByRole('button', { name: 'Move here' }).click();
   cy.findByRole('dialog').should('not.exist', { timeout: 10000 });
 
-  cy.findByText('Storage').click();
+  cy.findByText('Storage 2').click();
+  cy.findByText('Importance').should('exist');
+  cy.findByRole('progressbar').should('not.exist');
 
   for (let i = 0; i < values.checkedSystems.length; i++) {
     deleteSystem(values.checkedSystemsNames[i], 0);
@@ -133,7 +143,9 @@ export const moveItemToSystem = (values: {
   checkedItems: number[];
   checkedItemsNames: string[];
 }) => {
-  cy.findByText('Storage').click();
+  cy.findByRole('link', { name: 'Storage' }).click();
+  cy.findByText('Importance').should('exist');
+  cy.findByRole('progressbar').should('not.exist');
 
   for (let i = 0; i < values.checkedItems.length; i++) {
     cy.findAllByLabelText('Toggle select row')
@@ -175,7 +187,10 @@ export const moveItemToSystem = (values: {
 };
 
 export const addSystems = (ignoreChecks?: boolean) => {
-  modifySystem({ name: 'Storage', importance: 'high' }, ignoreChecks);
+  modifySystem(
+    { name: 'Storage', importance: 'high', type: 'Storage' },
+    ignoreChecks
+  );
   modifySystem(
     {
       name: 'optics 1',
@@ -183,6 +198,7 @@ export const addSystems = (ignoreChecks?: boolean) => {
       owner: 'Tim',
       location: 'R100, room 4 bench 5',
       description: 'optics for experiment RE3213',
+      type: 'Operational',
     },
     ignoreChecks
   );
@@ -196,5 +212,6 @@ export const editSystems = () => {
     owner: 'John',
     location: 'R90, room 4 bench 5',
     description: 'optics for experiment RY434',
+    type: 'Operational',
   });
 };

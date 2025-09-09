@@ -650,7 +650,7 @@ describe('Catalogue Items Table', () => {
     });
     expect(router.state.location.search).toBe('');
 
-    const globalFilter = screen.getByRole('textbox', { name: '' });
+    const globalFilter = screen.getAllByRole('textbox', { name: '' })[0];
     await user.type(globalFilter, '29');
 
     await waitFor(() => {
@@ -698,7 +698,7 @@ describe('Catalogue Items Table', () => {
     });
     // Expect this to still be here as have now modified the order in some way (as MRT doesn't revert back to its original state in this case)
     expect(router.state.location.search).toBe(
-      '?state=N4Igxg8iBcDaIFsBOAXAtEg9gdzQUwA8AHAQwDsATEAGkVQx32PKtuXS1xLBQEtMyAZxp0OjQXgA2eHiLAkUJSZgDmAVzwBJFHgQA6MiQR45Cpao3bdehJgq8AZrzwUA%2Bn2OnFy9Vp36wJDwFF3deT1oANWdsAAIrBGFaeW8LP2sKPEFA3iI%2BAS9zXwS9XkFXTAAjQUxpHUKfS389Kpq6vFcgokluXTwyFFcUoo1XXn8x1nAzRvT9Vtq8HU7gmrIGtJKiLCI8VGdBPQB2DeLm7cxd-ay9AA5TpuswTEFBlUqiB7m9Z9f3TBW2EwSAA1q53p9kjNNs0KCQAJ7lFAAro9MAmKGpM4ZBFIlF4IGgr4lQi7HihSSOJbhDpwxHE2FIEjYXhkFSuMhqBCVPYMjJMlls1yUsggvn6ca6Vy2TKSDlcnlIEQIchqBzcFBqIJIAxGDGIVXqnhavZ6LWSZWGjUmnUkCgUIKCJIGzlGzXavQ6aREAAWAn1w1mJTImB0zvYDFwglI6KVAF0AL5AA'
+      '?state=N4Igxg8iBcDaIFsBOAXAtEg9gdzQQzBQEtMA7AZxABpFUMc1yBTAGycOtvS1yYA8ADnlIATTmDwo8LTAHMArkwCSKJggB0pPAibjJ0uYpVr1CTCKIAzIkxEB9Yjr1SZC5ao1gkTSbYdEnGgA1G2wAAmMEShoJF0N3ExEmci8iAWIyZwM3SPUicjtMACNyTDZVLNcjD3Vi0vKmO28BFgI1JlIUO1jsxTsiD36xGP0qhI06sqZVJp9S0kr43IEsASZUG3J1AHZFnJqVzDWN5PUADj3qkzBMci7ZIoFL8fUbu4dMWexMJABrOweTxGcX2iTwAE8CihPs1WmBdMDei8RBCoTCmN8-s9cvw1oQ-CwrNMAo0UZDsTUREg8NgiKRZHZSPIEEV1hTEtTafS7ITSL92RoBmo7GYkixGczWUhOAhhPJLAQUPJvEhNNoEYg5QrCMr1uplSwZVrFbrVXgRFTktFNUztUqVepVGwBAALMganpjXKkTCqa3IbgMchCeHSgC6AF8gA'
     );
   });
 

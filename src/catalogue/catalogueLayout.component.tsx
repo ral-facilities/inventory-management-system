@@ -5,7 +5,7 @@ import {
   useLocation,
   useParams,
   type LoaderFunctionArgs,
-} from 'react-router-dom';
+} from 'react-router';
 import { BreadcrumbsInfo } from '../api/api.types';
 import {
   getCatalogueCategoryQuery,

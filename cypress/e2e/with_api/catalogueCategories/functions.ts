@@ -18,11 +18,15 @@ const modifyCatalogueCategory = (
     values.editCatalogueCategoryName &&
     typeof values.actionsIndex === 'number'
   ) {
-    cy.findAllByRole('button', {
-      name: 'Card Actions',
-    })
+    cy.findAllByRole('button', { name: 'Card Actions' })
       .eq(values.actionsIndex)
       .click();
+    cy.findByRole('menu').should('be.visible');
+
+    cy.findByRole('menuitem', {
+      name: `edit ${values.editCatalogueCategoryName} catalogue category button`,
+      timeout: 5000,
+    }).should('exist');
 
     cy.findByRole('menuitem', {
       name: `edit ${values.editCatalogueCategoryName} catalogue category button`,
@@ -36,21 +40,27 @@ const modifyCatalogueCategory = (
     cy.findByRole('button', { name: 'Add Catalogue Category' }).click();
   }
 
-  if (values.name !== undefined) {
-    cy.findByLabelText('Name *').clear();
-    cy.findByLabelText('Name *').type(values.name);
-  }
-
+  cy.findByRole('dialog')
+    .should('be.visible')
+    .within(() => {
+      if (values.name !== undefined) {
+        cy.findByLabelText('Name *').clear();
+        cy.findByLabelText('Name *').type(values.name);
+      }
+      if (values.newFormFields) {
+        // Assume want a leaf now
+        if (!values.editCatalogueCategoryName)
+          cy.findByLabelText('Catalogue Items').click();
+      }
+    });
   if (values.newFormFields) {
-    // Assume want a leaf now
-    if (!values.editCatalogueCategoryName)
-      cy.findByLabelText('Catalogue Items').click();
-
     for (let i = 0; i < values.newFormFields.length; i++) {
       const field = values.newFormFields[i];
-
-      cy.findByText('Add Property').click();
-      cy.findByRole('dialog', { name: 'Add Property' }).should('exist');
+      cy.findByRole('dialog')
+        .should('be.visible')
+        .within(() => {
+          cy.findByText('Add Property').click();
+        });
 
       if (field.name) {
         cy.findByLabelText('Property Name *').type(field.name);
@@ -96,13 +106,16 @@ const modifyCatalogueCategory = (
       cy.findByRole('dialog', { name: 'Add Property' }).should('not.exist');
     }
   }
-
-  cy.findByRole('button', { name: 'Save' }).click();
-  if (
-    values.editCatalogueCategoryName &&
-    typeof values.actionsIndex === 'number'
-  )
-    cy.findByRole('button', { name: 'Close' }).click();
+  cy.findByRole('dialog')
+    .should('be.visible')
+    .within(() => {
+      cy.findByRole('button', { name: 'Save' }).click();
+      if (
+        values.editCatalogueCategoryName &&
+        typeof values.actionsIndex === 'number'
+      )
+        cy.findByRole('button', { name: 'Close' }).click();
+    });
   if (!ignoreChecks) {
     cy.findByText(values.name).should('exist');
 
@@ -196,6 +209,7 @@ const moveToCatalogueCategory = (values: { checkedCategories: string[] }) => {
 };
 
 export const addCatalogueCategories = (ignoreChecks?: boolean) => {
+  cy.findByRole('progressbar').should('not.exist');
   modifyCatalogueCategory(
     {
       name: 'Lenses',
@@ -204,6 +218,8 @@ export const addCatalogueCategories = (ignoreChecks?: boolean) => {
   );
 
   cy.findByText('Lenses').click();
+  cy.findByText('No results found').should('exist');
+  cy.findByRole('progressbar').should('not.exist');
 
   modifyCatalogueCategory(
     {
@@ -243,6 +259,14 @@ export const addCatalogueCategories = (ignoreChecks?: boolean) => {
 
 export const editCatalogueCategories = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
+  cy.findByText('Spherical Lenses').should('not.exist');
+  cy.intercept({
+    method: 'GET',
+    url: '**/catalogue-categories?parent_id=null',
+  }).as('getCatalogueCategoryDataRoot');
+  cy.wait('@getCatalogueCategoryDataRoot', { timeout: 10000 });
+  cy.findByText('Lenses').should('exist');
+
   modifyCatalogueCategory({
     editCatalogueCategoryName: 'Lenses',
     actionsIndex: 0,
@@ -250,6 +274,8 @@ export const editCatalogueCategories = () => {
   });
 
   cy.findByText('Lenses 2').click();
+  cy.findByRole('progressbar').should('not.exist');
+  cy.findByText('Spherical Lenses').should('exist');
 
   modifyCatalogueCategory({
     editCatalogueCategoryName: 'Spherical Lenses',
@@ -260,8 +286,12 @@ export const editCatalogueCategories = () => {
 
 export const duplicateCatalogueCategories = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
+  cy.findByText('Spherical Lenses 2').should('not.exist');
+  cy.findByRole('progressbar').should('not.exist');
   duplicateCatalogueCategory('Lenses 2', 0);
   cy.findByText('Lenses 2').click();
+  cy.findByRole('progressbar').should('not.exist');
+  cy.findByText('Spherical Lenses 2').should('exist');
   duplicateCatalogueCategory('Spherical Lenses 2', 0);
 };
 
@@ -276,7 +306,11 @@ export const copyToCatalogueCategories = () => {
 
 export const moveToCatalogueCategories = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
+  cy.findByText('Spherical Lenses 2').should('not.exist');
+  cy.findByRole('progressbar').should('not.exist');
   cy.findByText('Lenses 2').click();
+  cy.findByText('Spherical Lenses 2').should('exist');
+  cy.findByRole('progressbar').should('not.exist');
   moveToCatalogueCategory({
     checkedCategories: ['Spherical Lenses 2', 'Spherical Lenses 2_copy_1'],
   });
@@ -284,6 +318,7 @@ export const moveToCatalogueCategories = () => {
 
 export const deleteCatalogueCategories = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
+  cy.findByRole('progressbar').should('not.exist');
   deleteCatalogueCategory('Lenses 2', 0);
   deleteCatalogueCategory('Spherical Lenses 2', 0);
   deleteCatalogueCategory('Lenses 2_copy_1', 0);

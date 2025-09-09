@@ -11,7 +11,6 @@ import {
   DialogContent,
   DialogTitle,
   FormHelperText,
-  Grid,
   IconButton,
   Step,
   StepLabel,
@@ -20,6 +19,7 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import { AxiosError } from 'axios';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -534,8 +534,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     switch (step) {
       case 0:
         return (
-          <Grid item container spacing={1.5} xs={12}>
-            <Grid item xs={12}>
+          <Grid container spacing={1.5} size={12}>
+            <Grid size={12}>
               <TextField
                 id="catalogue-item-name-input"
                 label="Name"
@@ -547,7 +547,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 helperText={errorsDetailsStep.name?.message}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <TextField
                 id="catalogue-item-description-input"
                 label="Description"
@@ -557,7 +557,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 multiline
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <TextField
                 id="catalogue-item-cost-input"
                 label="Cost (£)"
@@ -569,8 +569,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 fullWidth
               />
             </Grid>
-
-            <Grid item xs={12}>
+            <Grid size={12}>
               <TextField
                 id="catalogue-item-cost-rework-input"
                 label="Cost to rework (£)"
@@ -581,8 +580,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 fullWidth
               />
             </Grid>
-
-            <Grid item xs={12}>
+            <Grid size={12}>
               <TextField
                 id="catalogue-item-replace-input"
                 label="Time to replace (days)"
@@ -594,8 +592,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 fullWidth
               />
             </Grid>
-
-            <Grid item xs={12}>
+            <Grid size={12}>
               <TextField
                 id="catalogue-item-rework-input"
                 label="Time to rework (days)"
@@ -606,8 +603,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 fullWidth
               />
             </Grid>
-
-            <Grid item xs={12}>
+            <Grid size={12}>
               <TextField
                 id="catalogue-item-expected-lifetime-days-input"
                 label="Expected Lifetime (days)"
@@ -618,8 +614,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 fullWidth
               />
             </Grid>
-
-            <Grid item xs={12}>
+            <Grid size={12}>
               <TextField
                 id="catalogue-item-drawing-number-input"
                 label="Drawing number"
@@ -628,8 +623,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 fullWidth
               />
             </Grid>
-
-            <Grid item xs={12}>
+            <Grid size={12}>
               <TextField
                 id="catalogue-item-drawing-link-input"
                 label="Drawing link"
@@ -640,8 +634,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 fullWidth
               />
             </Grid>
-
-            <Grid item xs={12}>
+            <Grid size={12}>
               <TextField
                 id="catalogue-item-model-input"
                 label="Model number"
@@ -651,8 +644,13 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               />
             </Grid>
 
-            <Grid item xs={12} style={{ display: 'flex' }}>
-              <Grid item xs={11}>
+            <Grid
+              size={12}
+              container
+              spacing={0}
+              style={{ display: 'flex', margin: 0 }}
+            >
+              <Grid size={11}>
                 <Controller
                   control={controlDetailsStep}
                   name="manufacturer_id"
@@ -695,7 +693,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                   )}
                 />
               </Grid>
-              <Grid item xs={1}>
+              <Grid size={1}>
                 <Tooltip title="Add Manufacturer">
                   <span>
                     <IconButton
@@ -714,8 +712,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               onClose={() => setAddManufacturerDialogOpen(false)}
               type="post"
             />
-
-            <Grid item xs={12}>
+            <Grid size={12}>
               <TextField
                 id="catalogue-item-notes-input"
                 label="Notes"
@@ -730,168 +727,166 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         );
       case 1:
         return (
-          <Grid item xs={12}>
+          <Grid container size={12}>
             {parentCatalogueItemPropertiesInfo.length >= 1 ? (
-              <Grid container spacing={1.5}>
+              <Grid
+                container
+                size={12}
+                spacing={1.5}
+                sx={{
+                  margin: 0,
+                }}
+              >
                 {parentCatalogueItemPropertiesInfo.map(
                   (property: CatalogueCategoryProperty, index: number) => (
-                    <Grid item xs={12} key={index}>
-                      <Grid container spacing={1.5}>
-                        <Grid item xs={11} sx={{ display: 'flex' }}>
-                          {property.type === 'boolean' ? (
-                            <Controller
-                              control={controlPropertiesStep}
-                              name={`properties.${index}.value.value`}
-                              render={({
-                                field: { value: propertyValue, onChange },
-                              }) => (
-                                <Autocomplete
-                                  disableClearable={property.mandatory ?? false}
-                                  id={`catalogue-item-property-${property.name.replace(
-                                    /\s+/g,
-                                    '-'
-                                  )}`}
-                                  value={
-                                    propertyValue
-                                      ? propertyValue.charAt(0).toUpperCase() +
-                                        propertyValue.slice(1)
-                                      : ''
-                                  }
-                                  size="small"
-                                  onChange={(_event, value) => {
-                                    onChange(value);
-                                  }}
-                                  sx={{ alignItems: 'center' }}
-                                  fullWidth
-                                  options={['True', 'False']}
-                                  isOptionEqualToValue={(option, value) =>
-                                    option.toLowerCase() ==
-                                      value.toLowerCase() || value == ''
-                                  }
-                                  renderInput={(params) => (
-                                    <TextField
-                                      {...params}
-                                      required={property.mandatory ?? false}
-                                      label={property.name}
-                                      error={
-                                        !!errorsPropertiesStep?.properties?.[
-                                          index
-                                        ]?.value?.value
-                                      }
-                                      helperText={
-                                        errorsPropertiesStep?.properties?.[
-                                          index
-                                        ]?.value?.value?.message as string
-                                      }
-                                    />
-                                  )}
-                                />
-                              )}
-                            />
-                          ) : property.allowed_values ? (
-                            <Controller
-                              control={controlPropertiesStep}
-                              name={`properties.${index}.value.value`}
-                              render={({
-                                field: { value: propertyValue, onChange },
-                              }) => (
-                                <Autocomplete
-                                  disableClearable={property.mandatory ?? false}
-                                  id={`catalogue-item-property-${property.name.replace(
-                                    /\s+/g,
-                                    '-'
-                                  )}`}
-                                  value={(propertyValue as string) ?? ''}
-                                  size="small"
-                                  onChange={(_event, value) => {
-                                    onChange(String(value));
-                                  }}
-                                  sx={{ alignItems: 'center' }}
-                                  fullWidth
-                                  options={
-                                    property.allowed_values?.values ?? []
-                                  }
-                                  getOptionLabel={(option) => option.toString()}
-                                  isOptionEqualToValue={(option, value) =>
-                                    option.toString() === value.toString() ||
-                                    value === ''
-                                  }
-                                  renderInput={(params) => (
-                                    <TextField
-                                      {...params}
-                                      required={property.mandatory ?? false}
-                                      label={`${property.name} ${
-                                        property.unit
-                                          ? `(${property.unit})`
-                                          : ''
-                                      }`}
-                                      error={
-                                        !!errorsPropertiesStep?.properties?.[
-                                          index
-                                        ]?.value?.value
-                                      }
-                                      helperText={
-                                        errorsPropertiesStep?.properties?.[
-                                          index
-                                        ]?.value?.value?.message as string
-                                      }
-                                    />
-                                  )}
-                                />
-                              )}
-                            />
-                          ) : (
-                            <TextField
-                              id={`catalogue-item-${property.name}-input`}
-                              label={`${property.name} ${
-                                property.unit ? `(${property.unit})` : ''
-                              }`}
-                              size="small"
-                              {...registerPropertiesStep(
-                                `properties.${index}.value.value`
-                              )}
-                              required={property.mandatory ?? false}
-                              fullWidth
-                              error={
-                                !!errorsPropertiesStep?.properties?.[index]
-                                  ?.value?.value
-                              }
-                              helperText={
-                                errorsPropertiesStep?.properties?.[index]?.value
-                                  ?.value?.message as string
-                              }
-                            />
-                          )}
-                        </Grid>
-                        <Grid
-                          item
-                          xs={1}
-                          sx={{ display: 'flex', alignItems: 'center' }}
-                        >
-                          <Tooltip
-                            aria-label={`${property.name} details`}
-                            title={
-                              <div>
-                                <Typography>Name: {property.name}</Typography>
-                                <Typography>
-                                  Unit: {property.unit ?? 'None'}
-                                </Typography>
-                                <Typography>
-                                  Type:{' '}
-                                  {property.type === 'string'
-                                    ? 'text'
-                                    : property.type}
-                                </Typography>
-                              </div>
+                    <Grid container size={12} key={index} spacing={1.5}>
+                      <Grid size={11} sx={{ display: 'flex' }}>
+                        {property.type === 'boolean' ? (
+                          <Controller
+                            control={controlPropertiesStep}
+                            name={`properties.${index}.value.value`}
+                            render={({
+                              field: { value: propertyValue, onChange },
+                            }) => (
+                              <Autocomplete
+                                disableClearable={property.mandatory ?? false}
+                                id={`catalogue-item-property-${property.name.replace(
+                                  /\s+/g,
+                                  '-'
+                                )}`}
+                                value={
+                                  propertyValue
+                                    ? propertyValue.charAt(0).toUpperCase() +
+                                      propertyValue.slice(1)
+                                    : ''
+                                }
+                                size="small"
+                                onChange={(_event, value) => {
+                                  onChange(value);
+                                }}
+                                sx={{ alignItems: 'center' }}
+                                fullWidth
+                                options={['True', 'False']}
+                                isOptionEqualToValue={(option, value) =>
+                                  option.toLowerCase() == value.toLowerCase() ||
+                                  value == ''
+                                }
+                                renderInput={(params) => (
+                                  <TextField
+                                    {...params}
+                                    required={property.mandatory ?? false}
+                                    label={property.name}
+                                    error={
+                                      !!errorsPropertiesStep?.properties?.[
+                                        index
+                                      ]?.value?.value
+                                    }
+                                    helperText={
+                                      errorsPropertiesStep?.properties?.[index]
+                                        ?.value?.value?.message as string
+                                    }
+                                  />
+                                )}
+                              />
+                            )}
+                          />
+                        ) : property.allowed_values ? (
+                          <Controller
+                            control={controlPropertiesStep}
+                            name={`properties.${index}.value.value`}
+                            render={({
+                              field: { value: propertyValue, onChange },
+                            }) => (
+                              <Autocomplete
+                                disableClearable={property.mandatory ?? false}
+                                id={`catalogue-item-property-${property.name.replace(
+                                  /\s+/g,
+                                  '-'
+                                )}`}
+                                value={(propertyValue as string) ?? ''}
+                                size="small"
+                                onChange={(_event, value) =>
+                                  onChange(value !== null ? String(value) : '')
+                                }
+                                sx={{ alignItems: 'center' }}
+                                fullWidth
+                                options={property.allowed_values?.values ?? []}
+                                getOptionLabel={(option) => option.toString()}
+                                isOptionEqualToValue={(option, value) =>
+                                  option.toString() === value.toString() ||
+                                  value === ''
+                                }
+                                renderInput={(params) => (
+                                  <TextField
+                                    {...params}
+                                    required={property.mandatory ?? false}
+                                    label={`${property.name} ${
+                                      property.unit ? `(${property.unit})` : ''
+                                    }`}
+                                    error={
+                                      !!errorsPropertiesStep?.properties?.[
+                                        index
+                                      ]?.value?.value
+                                    }
+                                    helperText={
+                                      errorsPropertiesStep?.properties?.[index]
+                                        ?.value?.value?.message as string
+                                    }
+                                  />
+                                )}
+                              />
+                            )}
+                          />
+                        ) : (
+                          <TextField
+                            id={`catalogue-item-${property.name}-input`}
+                            label={`${property.name} ${
+                              property.unit ? `(${property.unit})` : ''
+                            }`}
+                            size="small"
+                            {...registerPropertiesStep(
+                              `properties.${index}.value.value`
+                            )}
+                            required={property.mandatory ?? false}
+                            fullWidth
+                            error={
+                              !!errorsPropertiesStep?.properties?.[index]?.value
+                                ?.value
                             }
-                            placement="right"
-                            enterTouchDelay={0}
-                          >
-                            <IconButton size="small">
-                              <InfoOutlinedIcon />
-                            </IconButton>
-                          </Tooltip>
-                        </Grid>
+                            helperText={
+                              errorsPropertiesStep?.properties?.[index]?.value
+                                ?.value?.message as string
+                            }
+                          />
+                        )}
+                      </Grid>
+                      <Grid
+                        size={1}
+                        sx={{ display: 'flex', alignItems: 'center' }}
+                      >
+                        <Tooltip
+                          aria-label={`${property.name} details`}
+                          title={
+                            <div>
+                              <Typography>Name: {property.name}</Typography>
+                              <Typography>
+                                Unit: {property.unit ?? 'None'}
+                              </Typography>
+                              <Typography>
+                                Type:{' '}
+                                {property.type === 'string'
+                                  ? 'text'
+                                  : property.type}
+                              </Typography>
+                            </div>
+                          }
+                          placement="right"
+                          enterTouchDelay={0}
+                        >
+                          <IconButton size="small">
+                            <InfoOutlinedIcon />
+                          </IconButton>
+                        </Tooltip>
                       </Grid>
                     </Grid>
                   )

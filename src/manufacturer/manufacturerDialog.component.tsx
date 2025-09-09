@@ -8,7 +8,7 @@ import {
   DialogContent,
   DialogTitle,
   FormHelperText,
-  Grid,
+  Stack,
   TextField,
   Typography,
 } from '@mui/material';
@@ -50,7 +50,18 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   const initialManufacturer: ManufacturerPost = React.useMemo(
     () =>
       isNotCreating
-        ? selectedManufacturer
+        ? {
+            name: selectedManufacturer.name,
+            url: selectedManufacturer.url ?? '',
+            telephone: selectedManufacturer.telephone ?? '',
+            address: {
+              address_line: selectedManufacturer.address.address_line,
+              town: selectedManufacturer.address.town ?? '',
+              county: selectedManufacturer.address.county ?? '',
+              postcode: selectedManufacturer.address.postcode,
+              country: selectedManufacturer.address.country,
+            },
+          }
         : {
             name: '',
             url: '',
@@ -244,8 +255,14 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     <Dialog open={open} maxWidth="lg" fullWidth>
       <DialogTitle>{`${type === 'post' ? 'Add' : 'Edit'} Manufacturer`}</DialogTitle>
       <DialogContent>
-        <Grid container direction="column" spacing={1} component="form">
-          <Grid item sx={{ mt: 1 }}>
+        <Stack
+          spacing={1}
+          component="form"
+          sx={{
+            width: '100%',
+          }}
+        >
+          <Box sx={{ marginTop: '8px !important' }}>
             <TextField
               id="manufacturer-name-input"
               label="Name"
@@ -255,78 +272,62 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               helperText={errors.name?.message}
               fullWidth
             />
-          </Grid>
-          <Grid item>
-            <TextField
-              id="manufacturer-url-input"
-              label="URL"
-              {...register('url')}
-              error={!!errors.url}
-              helperText={errors.url?.message}
-              fullWidth
-            />
-          </Grid>
-          <Grid item>
-            <Typography>Address</Typography>
-          </Grid>
-          <Grid item>
-            <TextField
-              id="manufacturer-address-line-input"
-              label="Address Line"
-              required
-              {...register('address.address_line')}
-              error={!!errors?.address?.address_line}
-              helperText={errors?.address?.address_line?.message}
-              fullWidth
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              id="manufacturer-town-input"
-              label="Town"
-              {...register('address.town')}
-              fullWidth
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              id="manufacturer-county-input"
-              label="County"
-              {...register('address.county')}
-              fullWidth
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              id="manufacturer-country-input"
-              label="Country"
-              required
-              {...register('address.country')}
-              error={!!errors?.address?.country}
-              helperText={errors?.address?.country?.message}
-              fullWidth
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              id="manufacturer-postcode-input"
-              label="Post/Zip code"
-              required
-              {...register('address.postcode')}
-              error={!!errors?.address?.postcode}
-              helperText={errors?.address?.postcode?.message}
-              fullWidth
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              id="manufacturer-telephone-input"
-              label="Telephone number"
-              {...register('telephone')}
-              fullWidth
-            />
-          </Grid>
-        </Grid>
+          </Box>
+          <TextField
+            id="manufacturer-url-input"
+            label="URL"
+            {...register('url')}
+            error={!!errors.url}
+            helperText={errors.url?.message}
+            fullWidth
+          />
+          <Typography>Address</Typography>
+          <TextField
+            id="manufacturer-address-line-input"
+            label="Address Line"
+            required
+            {...register('address.address_line')}
+            error={!!errors?.address?.address_line}
+            helperText={errors?.address?.address_line?.message}
+            fullWidth
+          />
+          <TextField
+            id="manufacturer-town-input"
+            label="Town"
+            {...register('address.town')}
+            fullWidth
+          />
+          <TextField
+            id="manufacturer-county-input"
+            label="County"
+            {...register('address.county')}
+            fullWidth
+          />
+          <TextField
+            id="manufacturer-country-input"
+            label="Country"
+            required
+            {...register('address.country')}
+            error={!!errors?.address?.country}
+            helperText={errors?.address?.country?.message}
+            fullWidth
+          />
+          <TextField
+            id="manufacturer-postcode-input"
+            label="Post/Zip code"
+            required
+            {...register('address.postcode')}
+            error={!!errors?.address?.postcode}
+            helperText={errors?.address?.postcode?.message}
+            fullWidth
+          />
+          <TextField
+            id="manufacturer-telephone-input"
+            label="Telephone number"
+            {...register('telephone')}
+            fullWidth
+          />
+        </Stack>
       </DialogContent>
       <DialogActions sx={{ flexDirection: 'column', padding: '0px 24px' }}>
         <Box

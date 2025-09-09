@@ -96,7 +96,7 @@ describe('Units', () => {
 
     const valueInput = screen.getByLabelText('Filter by Value');
 
-    await user.type(valueInput, 'k')
+    await user.type(valueInput, 'k');
 
     await waitFor(() => {
       expect(screen.queryByText('megapixels')).not.toBeInTheDocument();

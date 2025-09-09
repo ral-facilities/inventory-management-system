@@ -19,7 +19,7 @@ import {
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import {
   CatalogueCategory,
   CatalogueItem,
@@ -27,10 +27,13 @@ import {
   System,
 } from '../api/api.types';
 import { useGetItems } from '../api/items';
-import { useGetSystemIds } from '../api/systems';
+import { useGetSystemIds, useGetSystemTypes } from '../api/systems';
+import { useGetUsageStatuses } from '../api/usageStatuses';
+import type { SystemTableType } from '../app.types';
 import { findPropertyValue } from '../catalogue/items/catalogueItemsTable.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import {
+  COLUMN_FILTER_BOOLEAN_OPTIONS,
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
   COLUMN_FILTER_VARIANTS,
@@ -59,7 +62,7 @@ export interface ItemTableProps {
 
 interface TableRowData {
   item: Item;
-  system?: System;
+  system?: SystemTableType;
 }
 
 export function ItemsTable(props: ItemTableProps) {
@@ -81,11 +84,15 @@ export function ItemsTable(props: ItemTableProps) {
     undefined
   );
 
+  const { data: systemTypesData, isLoading: isLoadingSystemTypes } =
+    useGetSystemTypes();
+
+  const { data: usageStatusData } = useGetUsageStatuses();
   const systemIdSet = new Set<string>(
     itemsData?.map((item) => item.system_id) ?? []
   );
 
-  let isLoading = isLoadingItems;
+  let isLoading = isLoadingItems || isLoadingSystemTypes;
   const systemList: (System | undefined)[] = useGetSystemIds(
     Array.from(systemIdSet.values())
   ).map((query) => {
@@ -97,12 +104,22 @@ export function ItemsTable(props: ItemTableProps) {
   React.useEffect(() => {
     if (!isLoading && itemsData) {
       setTableRows(
-        itemsData.map((itemData) => ({
-          item: itemData,
-          system: systemList?.find(
+        itemsData.map((itemData) => {
+          const system = systemList?.find(
             (system) => system?.id === itemData.system_id
-          ),
-        }))
+          );
+          return {
+            item: itemData,
+            system: system
+              ? {
+                  ...system,
+                  type: systemTypesData?.find(
+                    (type) => type.id === system.type_id
+                  ),
+                }
+              : undefined,
+          };
+        })
       );
     }
     //Purposefully leave out systemList from dependencies for same reasons as catalogueItemsTable
@@ -117,6 +134,8 @@ export function ItemsTable(props: ItemTableProps) {
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     const viewCatalogueItemProperties = catalogueCategory?.properties ?? [];
+    const systemTypeValues = systemTypesData?.map((type) => type.value);
+    const usageStatusValues = usageStatusData?.map((val) => val.value);
     return [
       {
         header: 'Serial Number',
@@ -241,6 +260,7 @@ export function ItemsTable(props: ItemTableProps) {
         filterVariant: COLUMN_FILTER_VARIANTS.boolean,
         enableColumnFilterModes: false,
         size: 200,
+        filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
       },
       {
         header: 'Usage Status',
@@ -265,6 +285,7 @@ export function ItemsTable(props: ItemTableProps) {
           </MenuItem>,
         ],
         size: 350,
+        filterSelectOptions: usageStatusValues,
       },
       {
         header: 'System',
@@ -301,6 +322,31 @@ export function ItemsTable(props: ItemTableProps) {
             {row.original.system?.name}
           </MuiLink>
         ),
+      },
+      {
+        header: 'System Type',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => row.system?.type?.value,
+        id: 'system.type.value',
+        filterVariant: 'multi-select',
+        filterFn: 'arrIncludesSome',
+        columnFilterModeOptions: ['arrIncludesSome', 'arrExcludesSome'],
+        renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) => [
+          <MenuItem
+            key="arrIncludesSome"
+            onClick={() => onSelectFilterMode('arrIncludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrIncludesSome}
+          </MenuItem>,
+          <MenuItem
+            key="arrExcludesSome"
+            onClick={() => onSelectFilterMode('arrExcludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrExcludesSome}
+          </MenuItem>,
+        ],
+        size: 350,
+        filterSelectOptions: systemTypeValues,
       },
       {
         header: 'Notes',
@@ -365,10 +411,10 @@ export function ItemsTable(props: ItemTableProps) {
               ? false
               : true
             : true,
-        filterSelectOptions: ['Yes', 'No'],
+        filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
       })),
     ];
-  }, [catalogueCategory]);
+  }, [catalogueCategory, systemTypesData, usageStatusData]);
 
   const initialColumnFilterFnState = React.useMemo(() => {
     return getInitialColumnFilterFnState(columns);

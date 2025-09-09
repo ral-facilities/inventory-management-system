@@ -40,6 +40,10 @@ describe('Catalogue Items details panel', () => {
     } as Item;
     const view = createView();
 
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
     expect(view.asFragment()).toMatchSnapshot();
   });
 
@@ -47,6 +51,10 @@ describe('Catalogue Items details panel', () => {
     const view = createView();
 
     await user.click(screen.getByRole('tab', { name: 'Properties' }));
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
 
     expect(view.asFragment()).toMatchSnapshot();
   });
@@ -57,6 +65,10 @@ describe('Catalogue Items details panel', () => {
 
     await user.click(screen.getByRole('tab', { name: 'Properties' }));
 
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
     expect(view.asFragment()).toMatchSnapshot();
   });
 
@@ -64,6 +76,10 @@ describe('Catalogue Items details panel', () => {
     props.itemData = getItemById('I26EJNJ0') as Item;
 
     const view = createView();
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
 
     expect(view.asFragment()).toMatchSnapshot();
   });
@@ -75,6 +91,9 @@ describe('Catalogue Items details panel', () => {
     await waitFor(() => {
       expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
     });
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
 
     expect(view.asFragment()).toMatchSnapshot();
   });
@@ -83,6 +102,10 @@ describe('Catalogue Items details panel', () => {
     const view = createView();
     await user.click(screen.getByRole('tab', { name: 'Notes' }));
 
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
     expect(view.asFragment()).toMatchSnapshot();
   });
 
@@ -90,6 +113,9 @@ describe('Catalogue Items details panel', () => {
     props.itemData = getItemById('3lmRHP8q') as Item;
 
     const view = createView();
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
 
     expect(view.asFragment()).toMatchSnapshot();
   });

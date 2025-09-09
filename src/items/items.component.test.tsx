@@ -1,17 +1,17 @@
 import { screen, waitFor } from '@testing-library/react';
-import { paths } from '../App';
+import { URLPathKeyType } from '../paths';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import Items from './items.component';
 
 const mockedUseNavigate = vi.fn();
 
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')),
+vi.mock('react-router', async () => ({
+  ...(await vi.importActual('react-router')),
   useNavigate: () => mockedUseNavigate,
 }));
 
 describe('Items', () => {
-  const createView = (path: string, urlPathKey?: keyof typeof paths) => {
+  const createView = (path: string, urlPathKey?: URLPathKeyType) => {
     return renderComponentWithRouterProvider(
       <Items />,
       urlPathKey || 'items',

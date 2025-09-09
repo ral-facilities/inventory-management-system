@@ -3,9 +3,9 @@ import {
   addCatalogueCategories,
   copyToCatalogueCategories,
   deleteCatalogueCategories,
+  duplicateCatalogueCategories,
   editCatalogueCategories,
   moveToCatalogueCategories,
-  duplicateCatalogueCategories,
 } from './functions';
 
 describe('Catalogue Category', () => {

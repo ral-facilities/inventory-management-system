@@ -8,22 +8,21 @@ import {
   DialogContent,
   DialogTitle,
   FormHelperText,
-  Grid,
   InputAdornment,
+  Stack,
   TextField,
 } from '@mui/material';
-import { useForm } from 'react-hook-form';
-
-import React from 'react';
-
 import { UseMutationResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 import {
   APIImage,
   AttachmentMetadata,
   AttachmentMetadataPatch,
   ImageMetadataPatch,
   ObjectFilePatchBase,
+  type APIError,
 } from '../api/api.types';
 import { FileSchemaPatch } from '../form.schemas';
 import handleIMS_APIError from '../handleIMS_APIError';
@@ -123,6 +122,18 @@ const EditFileDialog = (props: FileDialogProps) => {
         })
           .then(() => handleClose())
           .catch((error: AxiosError) => {
+            const response = error.response?.data as APIError;
+            if (
+              response.detail.includes(
+                'file name already exists within the parent entity.'
+              )
+            ) {
+              setError('file_name', {
+                message:
+                  'A file with the same name has been found. Please enter a different name.',
+              });
+              return;
+            }
             handleIMS_APIError(error);
           });
       } else {
@@ -139,8 +150,14 @@ const EditFileDialog = (props: FileDialogProps) => {
     <Dialog open={open} maxWidth="sm" fullWidth>
       <DialogTitle>{`Edit ${fileType}`}</DialogTitle>
       <DialogContent>
-        <Grid container direction="column" spacing={1} component="form">
-          <Grid item sx={{ mt: 1 }}>
+        <Stack
+          spacing={1}
+          component="form"
+          sx={{
+            width: '100%',
+          }}
+        >
+          <Box sx={{ marginTop: '8px !important' }}>
             <TextField
               id="object-file-name-input"
               label="File Name"
@@ -148,36 +165,34 @@ const EditFileDialog = (props: FileDialogProps) => {
               {...register('file_name')}
               error={!!errors.file_name}
               helperText={errors.file_name?.message}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">{extension}</InputAdornment>
-                ),
+              fullWidth
+              slotProps={{
+                input: {
+                  endAdornment: (
+                    <InputAdornment position="end">{extension}</InputAdornment>
+                  ),
+                },
               }}
-              fullWidth
             />
-          </Grid>
-          <Grid item>
-            <TextField
-              id="object-description-input"
-              label="Description"
-              {...register('description')}
-              error={!!errors.description}
-              helperText={errors.description?.message}
-              fullWidth
-              multiline
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              id="object-title-input"
-              label="Title"
-              {...register('title')}
-              error={!!errors.title}
-              helperText={errors.title?.message}
-              fullWidth
-            />
-          </Grid>
-        </Grid>
+          </Box>
+          <TextField
+            id="object-description-input"
+            label="Description"
+            {...register('description')}
+            error={!!errors.description}
+            helperText={errors.description?.message}
+            fullWidth
+            multiline
+          />
+          <TextField
+            id="object-title-input"
+            label="Title"
+            {...register('title')}
+            error={!!errors.title}
+            helperText={errors.title?.message}
+            fullWidth
+          />
+        </Stack>
       </DialogContent>
       <DialogActions sx={{ flexDirection: 'column', padding: '0px 24px' }}>
         <Box

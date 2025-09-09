@@ -167,6 +167,9 @@ export interface CopyToSystem {
   existingSystemCodes: string[];
 }
 
+export interface SystemTableType extends System {
+  type?: { id: string; value: string };
+}
 // ------------------------------------ ITEMS ------------------------------------
 export interface ItemDetailsStep {
   purchase_order_number?: string | null;

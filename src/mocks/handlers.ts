@@ -26,6 +26,7 @@ import {
   System,
   SystemPatch,
   SystemPost,
+  SystemType,
   Unit,
   UnitPost,
   UsageStatus,
@@ -41,6 +42,7 @@ import ItemsJSON from './Items.json';
 import ManufacturersJSON from './Manufacturers.json';
 import SystemBreadcrumbsJSON from './SystemBreadcrumbs.json';
 import SystemsJSON from './Systems.json';
+import SystemTypesJSON from './SystemTypes.json';
 import UnitsJSON from './Units.json';
 import UsageStatusJSON from './UsageStatuses.json';
 
@@ -436,16 +438,22 @@ export const handlers = [
       (value) => value.id === id
     );
     if (validCatalogueItem) {
-      if (id === '6') {
+      if (id === '6')
         return HttpResponse.json(
           {
             detail: 'Catalogue item has child elements and cannot be deleted',
           },
           { status: 409 }
         );
-      } else {
-        return HttpResponse.json(undefined, { status: 204 });
-      }
+      else if (id === '7')
+        return HttpResponse.json(
+          {
+            detail:
+              'Catalogue item is the replacement for an obsolete catalogue item and cannot be deleted',
+          },
+          { status: 422 }
+        );
+      else return HttpResponse.json(undefined, { status: 204 });
     } else {
       return HttpResponse.json({ detail: '' }, { status: 400 });
     }
@@ -602,11 +610,19 @@ export const handlers = [
           },
           { status: 409 }
         );
-      } else if (body.name === 'Error 500')
+      } else if (body.name === 'Error 500') {
         return HttpResponse.json(
           { detail: 'Something went wrong' },
           { status: 500 }
         );
+      } else if (body.name === 'Error type not found') {
+        return HttpResponse.json(
+          {
+            detail: 'Specified system type not found',
+          },
+          { status: 422 }
+        );
+      }
       return HttpResponse.json(
         {
           ...body,
@@ -628,6 +644,12 @@ export const handlers = [
           { detail: 'A System with such ID was not found' },
           { status: 404 }
         );
+    }
+  ),
+  http.get<PathParams, DefaultBodyType, SystemType[]>(
+    '/v1/system-types',
+    () => {
+      return HttpResponse.json(SystemTypesJSON, { status: 200 });
     }
   ),
 
@@ -679,11 +701,26 @@ export const handlers = [
           },
           { status: 409 }
         );
-      } else if (body.name === 'Error 500')
+      } else if (body.name === 'Error 500') {
         return HttpResponse.json(
           { detail: 'Something went wrong' },
           { status: 500 }
         );
+      } else if (body.name === 'Error type not found') {
+        return HttpResponse.json(
+          {
+            detail: 'Specified system type not found',
+          },
+          { status: 422 }
+        );
+      } else if (body.name === 'Error editing type whilst having children') {
+        return HttpResponse.json(
+          {
+            detail: 'Cannot change the type of a system when it has children',
+          },
+          { status: 422 }
+        );
+      }
 
       const validSystem = SystemsJSON.find(
         (value) => value.id === id
@@ -1040,25 +1077,25 @@ export const handlers = [
       if (Number(id) % 4 === 0) {
         attachment = {
           ...AttachmentsJSON[0],
-          download_url: `${window.location.origin}/attachments/laser-calibration.txt?text=${
-            encodeURIComponent(id as string)
-          }`,
+          download_url: `${window.location.origin}/attachments/laser-calibration.txt?text=${encodeURIComponent(
+            id as string
+          )}`,
         };
       } else {
         if (Number(id) % 4 === 1) {
           attachment = {
             ...AttachmentsJSON[1],
-            download_url: `${window.location.origin}/attachments/safety-protocols.pdf?text=${
-              encodeURIComponent(id as string)
-            }`,
+            download_url: `${window.location.origin}/attachments/safety-protocols.pdf?text=${encodeURIComponent(
+              id as string
+            )}`,
           };
         } else {
           if (Number(id) % 4 === 2) {
             attachment = {
               ...AttachmentsJSON[2],
-              download_url: `${window.location.origin}/attachments/camera-setup-guide.docx?text=${
-                encodeURIComponent(id as string)
-              }`,
+              download_url: `${window.location.origin}/attachments/camera-setup-guide.docx?text=${encodeURIComponent(
+                id as string
+              )}`,
             };
           } else {
             if (id === '3') {
@@ -1070,9 +1107,9 @@ export const handlers = [
             } else {
               attachment = {
                 ...AttachmentsJSON[3],
-                download_url: `${window.location.origin}/attachments/experiment-results.rtf?text=${
-                  encodeURIComponent(id as string)
-                }`,
+                download_url: `${window.location.origin}/attachments/experiment-results.rtf?text=${encodeURIComponent(
+                  id as string
+                )}`,
               };
             }
           }
@@ -1109,6 +1146,14 @@ export const handlers = [
       return HttpResponse.json(
         { detail: 'Something went wrong' },
         { status: 500 }
+      );
+    } else if (fullBody.file_name?.includes('duplicate_file_name')) {
+      return HttpResponse.json(
+        {
+          detail:
+            'An image with the same file name already exists within the parent entity.',
+        },
+        { status: 409 }
       );
     }
     return HttpResponse.json(fullBody as AttachmentMetadata, { status: 200 });
@@ -1262,6 +1307,14 @@ export const handlers = [
         return HttpResponse.json(
           { detail: 'Something went wrong' },
           { status: 500 }
+        );
+      } else if (fullBody.file_name?.includes('duplicate_file_name')) {
+        return HttpResponse.json(
+          {
+            detail:
+              'An image with the same file name already exists within the parent entity.',
+          },
+          { status: 409 }
         );
       }
       return HttpResponse.json(fullBody as APIImage, { status: 200 });

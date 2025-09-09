@@ -1,13 +1,13 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import { paths } from '../App';
+import { URLPathKeyType } from '../paths';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import AdminLayout, { AdminErrorComponent } from './adminLayout.component';
 
 const mockedUseNavigate = vi.fn();
 
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')),
+vi.mock('react-router', async () => ({
+  ...(await vi.importActual('react-router')),
   useNavigate: () => mockedUseNavigate,
 }));
 
@@ -17,7 +17,7 @@ describe('Admin Layout', () => {
   beforeEach(() => {
     user = userEvent.setup();
   });
-  const createView = (path: string, urlPathKey: keyof typeof paths) => {
+  const createView = (path: string, urlPathKey: URLPathKeyType) => {
     return renderComponentWithRouterProvider(<AdminLayout />, urlPathKey, path);
   };
 

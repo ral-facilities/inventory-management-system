@@ -18,6 +18,7 @@ import {
   SystemImportanceType,
   SystemPatch,
   SystemPost,
+  SystemType,
 } from './api.types';
 
 /** Utility for turning an importance into an MUI palette colour to display */
@@ -32,6 +33,22 @@ export const getSystemImportanceColour = (
     case SystemImportanceType.HIGH:
       return 'error';
   }
+};
+
+const getSystemTypes = async (): Promise<SystemType[]> => {
+  return imsApi.get(`/v1/system-types`).then((response) => {
+    return response.data;
+  });
+};
+
+export const useGetSystemTypes = (): UseQueryResult<
+  SystemType[],
+  AxiosError
+> => {
+  return useQuery({
+    queryKey: ['SystemTypes'],
+    queryFn: () => getSystemTypes(),
+  });
 };
 
 const getSystems = async (parent_id?: string): Promise<System[]> => {
@@ -168,15 +185,17 @@ const deleteSystem = async (systemId: string): Promise<void> => {
 export const useDeleteSystem = (): UseMutationResult<
   void,
   AxiosError,
-  string
+  System
 > => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (systemId: string) => deleteSystem(systemId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['Systems'] });
-      queryClient.removeQueries({ queryKey: ['System'] });
+    mutationFn: (system: System) => deleteSystem(system.id),
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ['Systems', variables.parent_id ?? 'null'],
+      });
+      queryClient.removeQueries({ queryKey: ['System', variables.id] });
     },
   });
 };

@@ -1,7 +1,7 @@
 import { QueryClient } from '@tanstack/react-query';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import type { LoaderFunctionArgs } from 'react-router-dom';
+import type { LoaderFunctionArgs } from 'react-router';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import ManufacturerLayout, {
   ManufacturerLayoutErrorComponent,
@@ -10,8 +10,8 @@ import ManufacturerLayout, {
 
 const mockedUseNavigate = vi.fn();
 
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')),
+vi.mock('react-router', async () => ({
+  ...(await vi.importActual('react-router')),
   useNavigate: () => mockedUseNavigate,
 }));
 

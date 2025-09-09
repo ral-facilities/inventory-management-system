@@ -13,11 +13,13 @@ import {
   ListItemText,
   MenuItem,
   Link as MuiLink,
+  Stack,
   TableCellBaseProps,
   TableRow,
   Typography,
 } from '@mui/material';
 import {
+  MRT_BottomToolbar,
   MRT_Row,
   MaterialReactTable,
   useMaterialReactTable,
@@ -26,7 +28,7 @@ import {
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import {
   CatalogueCategory,
   CatalogueItem,
@@ -37,6 +39,7 @@ import { useGetCatalogueItems } from '../../api/catalogueItems';
 import { useGetManufacturerIds } from '../../api/manufacturers';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import {
+  COLUMN_FILTER_BOOLEAN_OPTIONS,
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
   COLUMN_FILTER_VARIANTS,
@@ -47,6 +50,7 @@ import {
   TableGroupedCell,
   TableHeaderOverflowTip,
   customFilterFunctions,
+  deselectRowById,
   displayTableRowCountText,
   formatDateTimeStrings,
   generateUniqueName,
@@ -166,6 +170,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   } = props;
   // Breadcrumbs + Mui table V2 + extra
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
+  const contentHeight = getPageHeightCalc('80px');
 
   const { data: catalogueItemsData, isLoading: isLoadingCatalogueItems } =
     useGetCatalogueItems(parentInfo.id);
@@ -320,6 +325,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         filterFn: COLUMN_FILTER_FUNCTIONS.boolean,
         enableColumnFilterModes: false,
         size: 200,
+        filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
       },
       {
         header: 'Obsolete replacement link',
@@ -405,7 +411,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
               ? false
               : true
             : true,
-        filterSelectOptions: ['Yes', 'No'],
+        filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
       })),
       {
         header: 'Cost (£)',
@@ -723,6 +729,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     enableGlobalFilter: !dense,
     enableGrouping: !dense,
     enablePagination: true,
+    enableBottomToolbar: dense,
     // Other settings
     filterFns: customFilterFunctions,
     columnVirtualizerOptions: dense
@@ -786,7 +793,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           };
         },
     muiTableContainerProps: {
-      sx: { height: dense ? '360.4px' : tableHeight },
+      sx: { height: dense ? '360.4px' : tableHeight, flexShrink: 1 },
       // @ts-expect-error: MRT Table Container props does not have data-testid
       'data-testid': 'catalogue-items-table-container',
     },
@@ -1022,13 +1029,27 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
 
   return (
     <div style={{ width: '100%' }}>
-      <MaterialReactTable table={table} />
-
+      <Stack
+        sx={{
+          width: '100%',
+          height: dense ? undefined : contentHeight,
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <MaterialReactTable table={table} />
+        {!dense && <MRT_BottomToolbar table={table} />}
+      </Stack>
       {!dense && (
         <>
           <DeleteCatalogueItemsDialog
             open={deleteItemDialogOpen}
-            onClose={() => setDeleteItemDialogOpen(false)}
+            onClose={({ successfulDeletion }) => {
+              setDeleteItemDialogOpen(false);
+              if (successfulDeletion && selectedCatalogueItem) {
+                deselectRowById(selectedCatalogueItem.id, table);
+              }
+            }}
             catalogueItem={selectedCatalogueItem}
             onChangeCatalogueItem={setSelectedCatalogueItem}
           />
