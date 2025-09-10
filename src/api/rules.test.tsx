@@ -1,5 +1,5 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { rulesJSON } from '../mocks/handlers';
+import rulesJSON from '../mocks/rules';
 import {
   getSystemTypeByValue,
   getUsageStatusByValue,
@@ -25,7 +25,7 @@ describe('rules api functions', () => {
       expect(result.current.data).toEqual(rulesJSON);
     });
 
-    it('sends request with src_system_type_id and dst_system_type_id', async () => {
+    it('sends request with src_system_type_id and dst_system_type_id and returns successful response', async () => {
       const srcSystemTypeId = '1';
       const dstSystemTypeId = '2';
 

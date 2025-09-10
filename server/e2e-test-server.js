@@ -28,7 +28,7 @@ app.use(
   serveStatic(path.resolve('./dist'), { index: ['index.html', 'index.htm'] })
 );
 
-app.get('/*', function (req, res) {
+app.get('/*splat', function (req, res) {
   res.sendFile(path.resolve('./dist/index.html'));
 });
 
