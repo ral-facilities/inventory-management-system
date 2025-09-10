@@ -5,6 +5,7 @@ export const paths = {
   adminUnits: '/admin-ims/units',
   adminUsageStatuses: '/admin-ims/usage-statuses',
   adminSystemTypes: '/admin-ims/system-types',
+  adminRules: '/admin-ims/rules',
   homepage: '/ims',
   catalogue: '/catalogue',
   catalogueCategories: '/catalogue/:catalogue_category_id',

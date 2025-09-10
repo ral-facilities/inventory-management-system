@@ -7,6 +7,7 @@ function AdminCardView() {
       <AdminCard title="Units" to="units" />
       <AdminCard title="Usage Statuses" to="usage-statuses" />
       <AdminCard title="System Types" to="system-types" />
+      <AdminCard title="Rules" to="rules" />
     </Grid>
   );
 }

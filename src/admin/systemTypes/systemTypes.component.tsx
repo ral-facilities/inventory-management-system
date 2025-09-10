@@ -25,7 +25,7 @@ import {
 } from '../../utils';
 
 function SystemTypes() {
-  const { data: systemTypesData, isLoading: systemTypesDataLoading } =
+  const { data: systemTypesData, isLoading: isLoadingSystemTypes } =
     useGetSystemTypes();
 
   // Breadcrumbs + Mui table V2 + extra
@@ -91,7 +91,7 @@ function SystemTypes() {
     },
     state: {
       ...preservedState,
-      showProgressBars: systemTypesDataLoading, //or showSkeletons
+      showProgressBars: isLoadingSystemTypes, //or showSkeletons
     },
     //MRT
     mrtTheme,

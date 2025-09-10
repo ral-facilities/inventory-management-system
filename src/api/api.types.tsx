@@ -12,6 +12,15 @@ export interface BreadcrumbsInfo {
   full_trail: boolean;
 }
 
+// ------------------------------------ RULE -------------------------------------------------------
+
+export interface Rule {
+  id: string;
+  src_system_type: SystemType | null;
+  dst_system_type: SystemType | null;
+  dst_usage_status: UsageStatus | null;
+}
+
 // ------------------------------------ MANUFACTURERS -----------------------------------------------
 
 interface AddressPost {

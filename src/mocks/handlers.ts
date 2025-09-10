@@ -31,6 +31,7 @@ import {
   UnitPost,
   UsageStatus,
   UsageStatusPost,
+  type Rule,
 } from '../api/api.types';
 import { generateUniqueId } from '../utils';
 import AttachmentsJSON from './Attachments.json';
@@ -40,6 +41,7 @@ import CatalogueItemsJSON from './CatalogueItems.json';
 import ImagesJSON from './Images.json';
 import ItemsJSON from './Items.json';
 import ManufacturersJSON from './Manufacturers.json';
+import RulesJSON from './rules';
 import SystemBreadcrumbsJSON from './SystemBreadcrumbs.json';
 import SystemsJSON from './Systems.json';
 import SystemTypesJSON from './SystemTypes.json';
@@ -1335,5 +1337,27 @@ export const handlers = [
       );
 
     return HttpResponse.json(undefined, { status: 204 });
+  }),
+
+  // ------------------------------------ RULES ------------------------------------------------
+
+  http.get<PathParams, DefaultBodyType, Rule[]>('/v1/rules', ({ request }) => {
+    const url = new URL(request.url);
+    const systemsParams = url.searchParams;
+    const src_system_type_id = systemsParams.get('src_system_type_id');
+    const dst_system_type_id = systemsParams.get('dst_system_type_id');
+
+    let rules: Rule[] = RulesJSON;
+    if (src_system_type_id) {
+      rules = rules.filter(
+        (rule) => rule.src_system_type?.id === src_system_type_id
+      );
+    }
+    if (dst_system_type_id) {
+      rules = rules.filter(
+        (rule) => rule.dst_system_type?.id === dst_system_type_id
+      );
+    }
+    return HttpResponse.json(rules, { status: 200 });
   }),
 ];
