@@ -39,6 +39,7 @@ import {
   getInitialColumnFilterFnState,
   getPageHeightCalc,
   mrtTheme,
+  useSparesFilterState,
 } from '../utils';
 import SystemItemsDialog from './systemItemsDialog.component';
 
@@ -75,7 +76,7 @@ const MoveItemsButton = (props: {
 /* Each table row needs the item and catalogue item */
 interface TableRowData {
   item: Item;
-  catalogueItem?: CatalogueItem;
+  catalogueItem: CatalogueItem;
 }
 
 export interface SystemItemsTableProps {
@@ -99,6 +100,9 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
   const { data: usageStatusData, isLoading: isLoadingUsageStatuses } =
     useGetUsageStatuses();
 
+  const { sparesFilterState, isLoading: isLoadingSparesDefinition } =
+    useSparesFilterState();
+
   // Obtain the selected system data, not just the selection state
   const selectedRowIds = Object.keys(rowSelection);
   const selectedItems =
@@ -109,7 +113,8 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       new Set<string>(itemsData?.map((item) => item.catalogue_item_id) ?? []),
     [itemsData]
   );
-  let isLoading = isLoadingItems || isLoadingUsageStatuses;
+  let isLoading =
+    isLoadingItems || isLoadingUsageStatuses || isLoadingSparesDefinition;
 
   const catalogueItemList: (CatalogueItem | undefined)[] =
     useGetCatalogueItemIds(Array.from(catalogueItemIdSet.values())).map(
@@ -211,6 +216,29 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
             </Box>
           );
         },
+      },
+      {
+        header: 'Number of Spares',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => Number(row.catalogueItem.number_of_spares),
+        id: 'catalogueItem.number_of_spares',
+        filterVariant: COLUMN_FILTER_VARIANTS.number,
+        filterFn: COLUMN_FILTER_FUNCTIONS.number,
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS.number,
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
+        ],
+        GroupedCell: TableGroupedCell,
+        size: 300,
+        Cell: ({ row }) => (
+          <MuiLink
+            underline="hover"
+            component={Link}
+            to={`/catalogue/${row.original.catalogueItem?.catalogue_category_id}/items/${row.original?.catalogueItem?.id}/items${sparesFilterState}`}
+          >
+            {row.original?.catalogueItem?.number_of_spares}
+          </MuiLink>
+        ),
       },
       {
         header: 'Serial Number',
@@ -330,7 +358,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         size: 300,
       },
     ];
-  }, [usageStatusData]);
+  }, [sparesFilterState, usageStatusData]);
 
   const initialColumnFilterFnState = React.useMemo(() => {
     return getInitialColumnFilterFnState(columns);
@@ -400,6 +428,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     muiTableBodyCellProps: ({ column }) =>
       // The overflow of these column groups is done manually in the column definition
       ((column.id === 'catalogueItem.name' ||
+        column.id === 'catalogueItem.number_of_spares' ||
         column.id === 'item.delivered_date') &&
         column.getIsGrouped()) ||
       // Ignore MRT rendered cells e.g. expand , spacer etc
