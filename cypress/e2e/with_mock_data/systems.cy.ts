@@ -298,6 +298,29 @@ describe('Systems', () => {
     cy.findByText('Properties').should('be.visible');
   });
 
+  it("should be able to navigate to an filtered item's table using the spares value", () => {
+    cy.findByRole('link', { name: 'Pulse Laser' }).click();
+    cy.findAllByRole('button', { name: 'Show/Hide filters' })
+      .eq(1)
+      .scrollIntoView();
+    cy.findAllByRole('button', { name: 'Show/Hide filters' }).eq(1).click();
+
+    // Wait for progress bar to disappear before interacting with filters
+    cy.findAllByRole('progressbar', { timeout: 10000 }).should('not.exist');
+
+    cy.findAllByRole('button', { name: 'Expand' }).eq(1).scrollIntoView();
+    cy.findAllByRole('button', { name: 'Expand' }).eq(1).click();
+    cy.findAllByRole('link', { name: '0' }).first().scrollIntoView();
+    cy.findAllByRole('link', { name: '0' }).first().click({ force: true });
+
+    // Check now on landing page for the item
+    cy.url().should(
+      'include',
+      '/catalogue/4/items/28/items?state=N4IgxgYiBcDaoEsAmMQGcCeaAuBTAtgHTYYAOuhAbgIYA2ArriADQg0NNygnmo4BOCAHYBzFmzqNUAZWwB7ftRFMAvgF11KoA'
+    );
+    cy.findByRole('button', { name: 'Show Spare Items' }).should('be.disabled');
+  });
+
   it('breadcrumbs should work correctly', () => {
     cy.visit('/systems/65328f34a40ff5301575a4e9');
 
