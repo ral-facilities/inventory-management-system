@@ -276,7 +276,7 @@ function SystemDetails(props: SystemDetailsProps) {
                 {
                   value: 'Items',
                   icon: <InventoryOutlinedIcon />,
-                  component: <SystemItemsTable system={system} type="normal" />,
+                  component: <SystemItemsTable system={system} />,
                   order: 0,
                 },
               ]}

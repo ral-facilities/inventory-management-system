@@ -5,16 +5,14 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Step,
-  StepLabel,
-  Stepper,
-  Typography,
+  FormHelperText,
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import { MRT_RowSelectionState } from 'material-react-table';
 import React from 'react';
 import { Item } from '../api/api.types';
 import { useMoveItemsToSystem } from '../api/items';
+import { useGetRules } from '../api/rules';
 import {
   useGetSystem,
   useGetSystems,
@@ -23,7 +21,6 @@ import {
 import { MoveItemsToSystemUsageStatus } from '../app.types';
 import handleTransferState from '../handleTransferState';
 import Breadcrumbs from '../view/breadcrumbs.component';
-import { SystemItemsTable } from './systemItemsTable.component';
 import { SystemsTableView } from './systemsTableView.component';
 
 export interface SystemItemsDialogProps {
@@ -50,14 +47,13 @@ export interface ItemUsageStatusesErrorStateType {
 }
 
 const convertToSystemUsageStatuses = (
-  list: UsageStatusesType[]
+  selectedItems: Item[],
+  usage_status_id: string
 ): MoveItemsToSystemUsageStatus[] => {
-  return list
-    .filter((item) => item.usage_status_id !== '') // Exclude items with empty usageStatus
-    .map((item) => ({
-      item_id: item.item_id,
-      usage_status_id: item.usage_status_id,
-    }));
+  return selectedItems.map((item) => ({
+    item_id: item.id,
+    usage_status_id: usage_status_id,
+  }));
 };
 
 const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
@@ -68,27 +64,20 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   const [parentSystemId, setParentSystemId] = React.useState<string | null>(
     props.parentSystemId
   );
-  const [usageStatuses, setUsageStatuses] = React.useState<UsageStatusesType[]>(
-    []
-  );
 
-  const [aggregatedCellUsageStatus, setAggregatedCellUsageStatus] =
-    React.useState<Omit<UsageStatusesType, 'item_id'>[]>([]);
+  const { data: dstSystem } = useGetSystem(parentSystemId);
+  const { data: srcSystem } = useGetSystem(props.parentSystemId);
+  const srcSystemTypeId = srcSystem?.type_id ?? 'null';
 
-  const [placeIntoSystemError, setPlaceIntoSystemError] = React.useState(false);
-  React.useEffect(() => {
-    if (open) {
-      const initialUsageStatuses: UsageStatusesType[] = selectedItems.map(
-        (item) => ({
-          item_id: item.id,
-          catalogue_item_id: item.catalogue_item_id,
-          usage_status_id: '',
-        })
-      );
+  const dstSystemTypeId = dstSystem?.type_id ?? 'null';
+  const { data: tableRules } = useGetRules(srcSystemTypeId);
 
-      setUsageStatuses(initialUsageStatuses);
-    }
-  }, [open, selectedItems]);
+  // This should be a list of 1 rule
+  const { data: SelectedRule } = useGetRules(srcSystemTypeId, dstSystemTypeId);
+
+  const [placeIntoSystemError, setPlaceIntoSystemError] = React.useState<
+    string | undefined
+  >(undefined);
 
   React.useEffect(() => {
     setParentSystemId(props.parentSystemId);
@@ -96,7 +85,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
 
   const changeParentSystemId = (newParentSystemId: string | null) => {
     setParentSystemId(newParentSystemId);
-    setPlaceIntoSystemError(false);
+    setPlaceIntoSystemError(undefined);
   };
 
   const { data: parentSystemBreadcrumbs } =
@@ -112,33 +101,8 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   const { mutateAsync: moveItemsToSystem, isPending: isMovePending } =
     useMoveItemsToSystem();
 
-  const [itemUsageStatusesErrorState, setItemUsageStatusesErrorState] =
-    React.useState<ItemUsageStatusesErrorStateType>({});
-
-  const validateUsageStatus = React.useCallback(() => {
-    let hasUsageStatusErrors: boolean = false;
-    usageStatuses.forEach((status) => {
-      if (status.usage_status_id === '') {
-        setItemUsageStatusesErrorState((prev) => ({
-          ...prev,
-          [status.item_id]: {
-            message: 'Please select a usage status',
-            catalogue_item_id: status.catalogue_item_id,
-          },
-        }));
-
-        hasUsageStatusErrors = true;
-      }
-    });
-    return hasUsageStatusErrors;
-  }, [usageStatuses]);
-
   const handleClose = React.useCallback(() => {
-    setAggregatedCellUsageStatus([]);
-    setUsageStatuses([]);
-    setItemUsageStatusesErrorState({});
-    setPlaceIntoSystemError(false);
-    setActiveStep(0);
+    setPlaceIntoSystemError(undefined);
     setParentSystemId(props.parentSystemId);
     onClose();
   }, [onClose, props.parentSystemId]);
@@ -149,9 +113,11 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     props.parentSystemId === parentSystemId || parentSystemId === null;
 
   const handleMoveTo = React.useCallback(() => {
-    const hasUsageStatusErrors = validateUsageStatus();
-    if (hasSystemErrors || hasUsageStatusErrors) {
-      if (hasSystemErrors) setPlaceIntoSystemError(hasSystemErrors);
+    if (hasSystemErrors) {
+      if (hasSystemErrors)
+        setPlaceIntoSystemError(
+          'Please move items from current location or root to another system.'
+        );
       return;
     }
 
@@ -159,7 +125,10 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     // (where we don't need to load anything as the name is known)
     if (!targetSystemLoading && targetSystem !== undefined) {
       moveItemsToSystem({
-        usageStatuses: convertToSystemUsageStatuses(usageStatuses),
+        usageStatuses: convertToSystemUsageStatuses(
+          selectedItems,
+          SelectedRule?.[0].dst_usage_status?.id ?? ''
+        ),
         selectedItems: selectedItems,
         // Only reason for targetSystem to be undefined here is if not loading at all
         // which happens when at root
@@ -171,6 +140,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
       });
     }
   }, [
+    SelectedRule,
     handleClose,
     hasSystemErrors,
     moveItemsToSystem,
@@ -178,89 +148,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     selectedItems,
     targetSystem,
     targetSystemLoading,
-    usageStatuses,
-    validateUsageStatus,
   ]);
-
-  // Stepper
-  const STEPS = ['Place into a system', 'Set usage statuses'];
-  const [activeStep, setActiveStep] = React.useState<number>(0);
-
-  const handleNext = React.useCallback(
-    (step: number) => {
-      switch (step) {
-        case 0: {
-          setPlaceIntoSystemError(hasSystemErrors);
-          return (
-            !hasSystemErrors &&
-            setActiveStep((prevActiveStep) => prevActiveStep + 1)
-          );
-        }
-      }
-    },
-    [hasSystemErrors]
-  );
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const isStepFailed = React.useCallback(
-    (step: number) => {
-      switch (step) {
-        case 0: {
-          return placeIntoSystemError;
-        }
-        case 1:
-          return Object.keys(itemUsageStatusesErrorState).length !== 0;
-      }
-    },
-    [itemUsageStatusesErrorState, placeIntoSystemError]
-  );
-
-  const renderStepContent = (step: number) => {
-    switch (step) {
-      case 0:
-        return (
-          <Grid container spacing={1.5} size={12}>
-            <Grid size={12}>
-              <Breadcrumbs
-                breadcrumbsInfo={parentSystemBreadcrumbs}
-                onChangeNode={changeParentSystemId}
-                onChangeNavigateHome={() => {
-                  changeParentSystemId(null);
-                }}
-                homeLocation="Systems"
-              />
-            </Grid>
-            <Grid size={12}>
-              <SystemsTableView
-                systemsData={systemsData}
-                systemsDataLoading={systemsDataLoading}
-                onChangeParentId={changeParentSystemId}
-                systemParentId={parentSystemId ?? undefined}
-                // Use most unrestricted variant (i.e. copy with no selection)
-                selectedSystems={[]}
-                type="copyTo"
-              />
-            </Grid>
-          </Grid>
-        );
-      case 1:
-        return (
-          <SystemItemsTable
-            moveToSelectedItems={selectedItems}
-            type="usageStatus"
-            onChangeUsageStatuses={setUsageStatuses}
-            usageStatuses={usageStatuses}
-            aggregatedCellUsageStatus={aggregatedCellUsageStatus}
-            onChangeAggregatedCellUsageStatus={setAggregatedCellUsageStatus}
-            itemUsageStatusesErrorState={itemUsageStatusesErrorState}
-            onChangeItemUsageStatusesErrorState={setItemUsageStatusesErrorState}
-          />
-        );
-    }
-  };
 
   return (
     <Dialog open={open} maxWidth="lg" fullWidth>
@@ -276,76 +164,65 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
         </Grid>
       </DialogTitle>
       <DialogContent>
-        <Stepper
-          nonLinear
-          activeStep={activeStep}
-          orientation="horizontal"
-          sx={{ marginTop: 2 }}
-        >
-          {STEPS.map((label, index) => {
-            const labelProps: {
-              optional?: React.ReactNode;
-              error?: boolean;
-            } = {};
-
-            if (isStepFailed(index)) {
-              labelProps.optional = (
-                <Typography variant="caption" color="error">
-                  {index === 1 && 'Please select a usage status for all items'}
-                  {index === 0 &&
-                    'Move items from current location or root to another system'}
-                </Typography>
-              );
-              labelProps.error = true;
-            }
-
-            return (
-              <Step sx={{ cursor: 'pointer' }} key={label}>
-                <StepLabel {...labelProps} onClick={() => setActiveStep(index)}>
-                  {label}
-                </StepLabel>
-              </Step>
-            );
-          })}
-        </Stepper>
-
-        <Box sx={{ marginTop: 2 }}>{renderStepContent(activeStep)}</Box>
+        <Grid container spacing={1.5} size={12}>
+          <Grid size={12}>
+            <Breadcrumbs
+              breadcrumbsInfo={parentSystemBreadcrumbs}
+              onChangeNode={changeParentSystemId}
+              onChangeNavigateHome={() => {
+                changeParentSystemId(null);
+              }}
+              homeLocation="Systems"
+            />
+          </Grid>
+          <Grid size={12}>
+            <SystemsTableView
+              systemsData={systemsData}
+              systemsDataLoading={systemsDataLoading}
+              onChangeParentId={changeParentSystemId}
+              systemParentId={parentSystemId ?? undefined}
+              isSystemSelectable={(system) => {
+                return (
+                  tableRules?.some(
+                    (rule) => rule.dst_system_type?.id === system.type_id
+                  ) || false
+                );
+              }}
+              // Use most unrestricted variant (i.e. copy with no selection)
+              selectedSystems={[]}
+              type="copyTo"
+            />
+          </Grid>
+        </Grid>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} sx={{ mr: 'auto' }}>
           Cancel
         </Button>
-        <Button disabled={activeStep === 0} onClick={handleBack} sx={{ mr: 2 }}>
-          Back
-        </Button>
 
-        {activeStep === STEPS.length - 1 ? (
-          <Button
-            disabled={
-              isMovePending ||
-              // Disable when not moving anywhere different
-              // or when attempting to move to root i.e. no system
-              placeIntoSystemError ||
-              Object.keys(itemUsageStatusesErrorState).length !== 0 ||
-              !(parentSystemId === null
-                ? true
-                : !targetSystemLoading && targetSystem !== undefined)
-            }
-            onClick={handleMoveTo}
-            sx={{ mr: 3 }}
-          >
-            Finish
-          </Button>
-        ) : (
-          <Button
-            disabled={isStepFailed(activeStep)}
-            onClick={() => handleNext(activeStep)}
-            sx={{ mr: 3 }}
-          >
-            Next
-          </Button>
-        )}
+        <Button
+          disabled={
+            isMovePending ||
+            // Disable when not moving anywhere different
+            // or when attempting to move to root i.e. no system
+            !!placeIntoSystemError ||
+            !(parentSystemId === null
+              ? true
+              : !targetSystemLoading && targetSystem !== undefined)
+          }
+          onClick={handleMoveTo}
+          sx={{ mr: 3 }}
+        >
+          Move here
+        </Button>
       </DialogActions>
+      {placeIntoSystemError && (
+        <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+          <FormHelperText sx={{ mb: 4 }} error>
+            {placeIntoSystemError}
+          </FormHelperText>
+        </Box>
+      )}
     </Dialog>
   );
 });
