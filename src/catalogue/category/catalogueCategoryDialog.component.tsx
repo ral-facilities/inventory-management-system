@@ -20,10 +20,16 @@ import {
 import Grid from '@mui/material/Grid2';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { Controller, FormProvider, useForm } from 'react-hook-form';
 import {
-  APIError,
+  Controller,
+  FormProvider,
+  Path,
+  Resolver,
+  useForm,
+} from 'react-hook-form';
+import {
   AllowedValues,
+  APIError,
   CatalogueCategory,
   CatalogueCategoryPost,
   CatalogueCategoryPostProperty,
@@ -41,6 +47,7 @@ import {
 } from '../../app.types';
 import { CatalogueCategorySchema, RequestType } from '../../form.schemas';
 import handleIMS_APIError from '../../handleIMS_APIError';
+import { createFormControlWithRootErrorClearing } from '../../utils';
 import CatalogueItemsPropertiesTable from './property/catalogueItemPropertiesTable.component';
 
 // Function to convert a list of strings to a list of numbers
@@ -140,6 +147,37 @@ function transformPostPropertyToAddProperty(
   return modifiedCatalogueItemProperty;
 }
 
+// Using `any` instead of `FieldPath` to avoid circular dependencies
+function getProperty<T extends Record<string, unknown>>(
+  obj: T,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  key: any
+) {
+  if (key === undefined) return undefined;
+
+  const keys = key.toString().split('.');
+  let current: unknown = obj;
+
+  for (const part of keys) {
+    if (current && typeof current === 'object' && part in current) {
+      current = (current as Record<string, unknown>)[part];
+    } else {
+      return undefined;
+    }
+  }
+
+  return current;
+}
+
+const formControl =
+  createFormControlWithRootErrorClearing<AddCatalogueCategoryWithPlacementIds>({
+    customCallback: ({ name, errors }) => {
+      if (errors && !!getProperty(errors, name)) {
+        formControl.clearErrors(name as Path<unknown>);
+      }
+    },
+  });
+
 export interface CatalogueCategoryDialogProps {
   open: boolean;
   onClose: () => void;
@@ -188,7 +226,10 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
     }, [requestType, duplicate, selectedCatalogueCategory]);
 
   const formMethods = useForm<AddCatalogueCategoryWithPlacementIds>({
-    resolver: zodResolver(CatalogueCategorySchema),
+    formControl,
+    resolver: zodResolver(
+      CatalogueCategorySchema
+    ) as unknown as Resolver<AddCatalogueCategoryWithPlacementIds>,
     defaultValues: initialCatalogueCategory,
   });
 
@@ -286,9 +327,7 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
     if (requestType === 'patch') {
       handleEditCatalogueCategory(transformedData);
     } else {
-      handleAddCatalogueCategory({
-        ...transformedData,
-      });
+      handleAddCatalogueCategory({ ...transformedData });
     }
   };
 

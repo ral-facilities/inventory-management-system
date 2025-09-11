@@ -1165,6 +1165,21 @@ describe('ItemDialog', () => {
           )
         ).toBeInTheDocument();
       });
+
+      await user.click(screen.getByRole('button', { name: 'Back' }));
+      await user.click(screen.getByRole('button', { name: 'Back' }));
+
+      await modifyDetailsValues({
+        serialNumber: 'test',
+      });
+
+      await waitFor(() =>
+        expect(
+          screen.queryByText(
+            "There have been no changes made. Please change a field's value or press Cancel to exit."
+          )
+        ).not.toBeInTheDocument()
+      );
     });
 
     it('displays warning message when an unknown error occurs', async () => {

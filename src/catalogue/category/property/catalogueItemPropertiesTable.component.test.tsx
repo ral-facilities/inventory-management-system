@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, Resolver, useForm } from 'react-hook-form';
 import { CatalogueCategory } from '../../../api/api.types';
 import { AddCatalogueCategoryWithPlacementIds } from '../../../app.types';
 import { CatalogueCategorySchema } from '../../../form.schemas';
@@ -16,7 +16,9 @@ import PropertiesTable, {
 
 const TestComponent = (props: PropertiesTableProps) => {
   const formMethods = useForm<AddCatalogueCategoryWithPlacementIds>({
-    resolver: zodResolver(CatalogueCategorySchema),
+    resolver: zodResolver(
+      CatalogueCategorySchema
+    ) as unknown as Resolver<AddCatalogueCategoryWithPlacementIds>,
     defaultValues: transformToAddCatalogueCategoryWithPlacementIds(
       getCatalogueCategoryById('12') as CatalogueCategory
     ),

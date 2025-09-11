@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, Resolver, useForm } from 'react-hook-form';
 import { MockInstance } from 'vitest';
 import { imsApi } from '../../../api/api';
 import { AllowedValues, CatalogueCategory } from '../../../api/api.types';
@@ -35,7 +35,9 @@ interface TestEditPropertyMigration
 
 const TestComponent = (props: PropertyDialogProps) => {
   const formMethods = useForm<AddCatalogueCategoryWithPlacementIds>({
-    resolver: zodResolver(CatalogueCategorySchema),
+    resolver: zodResolver(
+      CatalogueCategorySchema
+    ) as unknown as Resolver<AddCatalogueCategoryWithPlacementIds>,
   });
 
   return (

@@ -23,6 +23,12 @@ import {
   type MRT_Theme,
 } from 'material-react-table';
 import React from 'react';
+import {
+  createFormControl,
+  Path,
+  type FieldValues,
+  type UseFormReturn,
+} from 'react-hook-form';
 
 /* Returns a name avoiding duplicates by appending _copy_n for nth copy */
 export const generateUniqueName = (
@@ -588,3 +594,29 @@ export const deselectRowById = <TData extends MRT_RowData>(
 };
 
 export const COLUMN_FILTER_BOOLEAN_OPTIONS = ['Yes', 'No'];
+
+export function createFormControlWithRootErrorClearing<
+  T extends FieldValues,
+>(options?: {
+  name?: Path<T>;
+  customCallback?: Parameters<
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    Omit<UseFormReturn<T, any, T>, 'formState'>['subscribe']
+  >[0]['callback'];
+}) {
+  const { formControl } = createFormControl<T>();
+  formControl.subscribe({
+    name: options?.name,
+    // In React Hook Form, isDirty becomes true as soon as the user changes
+    // the value of any field from its default value.
+    formState: { isDirty: true },
+    callback: (data) => {
+      if (options?.customCallback) {
+        options.customCallback(data);
+      } else {
+        formControl.clearErrors('root.formError');
+      }
+    },
+  });
+  return formControl;
+}

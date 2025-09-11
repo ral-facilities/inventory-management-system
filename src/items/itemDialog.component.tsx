@@ -23,7 +23,7 @@ import Grid from '@mui/material/Grid2';
 import { DatePicker, DateValidationError } from '@mui/x-date-pickers';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, Resolver, useForm } from 'react-hook-form';
 import {
   CatalogueCategory,
   CatalogueCategoryProperty,
@@ -57,6 +57,7 @@ import {
 import handleIMS_APIError from '../handleIMS_APIError';
 import handleTransferState from '../handleTransferState';
 import { SystemsTableView } from '../systems/systemsTableView.component';
+import { createFormControlWithRootErrorClearing } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 
 function toItemDetailsStep(item: Item | undefined): ItemDetailsStep {
@@ -130,6 +131,15 @@ const dateErrorMessageHandler = (props: {
   }
 };
 
+const formControlPropertiesStep =
+  createFormControlWithRootErrorClearing<PropertiesStep>();
+
+const formControlDetailsStep =
+  createFormControlWithRootErrorClearing<ItemDetailsStep>({
+    customCallback: () =>
+      formControlPropertiesStep.clearErrors('root.formError'),
+  });
+
 export interface ItemDialogProps {
   open: boolean;
   onClose: () => void;
@@ -186,7 +196,10 @@ function ItemDialog(props: ItemDialogProps) {
     useGetSystemsBreadcrumbs(parentSystemId);
 
   const ItemDetailsStepFormMethods = useForm<ItemDetailsStep>({
-    resolver: zodResolver(ItemDetailsStepSchema(requestType)),
+    formControl: formControlDetailsStep,
+    resolver: zodResolver(
+      ItemDetailsStepSchema(requestType)
+    ) as unknown as Resolver<ItemDetailsStep>,
     defaultValues: toItemDetailsStep(selectedItem),
   });
 
@@ -202,7 +215,10 @@ function ItemDialog(props: ItemDialogProps) {
   } = ItemDetailsStepFormMethods;
 
   const itemPropertiesStepFormMethods = useForm<PropertiesStep>({
-    resolver: zodResolver(PropertiesStepSchema),
+    formControl: formControlPropertiesStep,
+    resolver: zodResolver(
+      PropertiesStepSchema
+    ) as unknown as Resolver<PropertiesStep>,
     defaultValues: {
       properties: convertToPropertyValueList(
         catalogueCategory,
@@ -218,7 +234,6 @@ function ItemDialog(props: ItemDialogProps) {
     control: controlPropertiesStep,
     clearErrors: clearErrorsPropertiesStep,
     reset: resetPropertiesStep,
-    watch: watchPropertiesStep,
     setError: setErrorPropertiesStep,
   } = itemPropertiesStepFormMethods;
 
@@ -246,21 +261,6 @@ function ItemDialog(props: ItemDialogProps) {
     selectedItem,
     selectedItem?.properties,
   ]);
-
-  // Clears form errors when a value has been changed
-  React.useEffect(() => {
-    const subscription = watchDetailsStep(() =>
-      clearErrorsPropertiesStep('root.formError')
-    );
-    return () => subscription.unsubscribe();
-  }, [clearErrorsPropertiesStep, watchDetailsStep]);
-
-  React.useEffect(() => {
-    const subscription = watchPropertiesStep(() =>
-      clearErrorsPropertiesStep('root.formError')
-    );
-    return () => subscription.unsubscribe();
-  }, [clearErrorsPropertiesStep, watchPropertiesStep]);
 
   React.useEffect(() => {
     if (parentSystemId !== selectedItem?.system_id)

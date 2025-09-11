@@ -1082,6 +1082,20 @@ describe('Catalogue Items Dialog', () => {
           )
         ).toBeInTheDocument();
       });
+
+      await user.click(screen.getByRole('button', { name: 'Back' }));
+
+      await modifyValues({
+        name: 'test',
+      });
+
+      await waitFor(() =>
+        expect(
+          screen.queryByText(
+            "There have been no changes made. Please change a field's value or press Cancel to exit."
+          )
+        ).not.toBeInTheDocument()
+      );
     });
 
     it('displays error message when editing manufacturer_id if catalogue item has child elements', async () => {
