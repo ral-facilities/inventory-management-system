@@ -20,6 +20,7 @@ import {
   Control,
   Controller,
   FormProvider,
+  Resolver,
   UseFormReturn,
   useForm,
   useFormContext,
@@ -148,7 +149,7 @@ const PropertyDialog = (props: PropertyDialogProps) => {
       type === 'post'
         ? CatalogueCategoryPropertyPostSchema
         : CatalogueCategoryPropertyPatchSchema
-    ),
+    ) as unknown as Resolver<AddPropertyMigration>,
     defaultValues: {
       ...(type === 'post'
         ? {

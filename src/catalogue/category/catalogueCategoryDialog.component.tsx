@@ -20,7 +20,13 @@ import {
 import Grid from '@mui/material/Grid2';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { Controller, FormProvider, Path, useForm } from 'react-hook-form';
+import {
+  Controller,
+  FormProvider,
+  Path,
+  Resolver,
+  useForm,
+} from 'react-hook-form';
 import {
   AllowedValues,
   APIError,
@@ -221,7 +227,9 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
 
   const formMethods = useForm<AddCatalogueCategoryWithPlacementIds>({
     formControl,
-    resolver: zodResolver(CatalogueCategorySchema),
+    resolver: zodResolver(
+      CatalogueCategorySchema
+    ) as unknown as Resolver<AddCatalogueCategoryWithPlacementIds>,
     defaultValues: initialCatalogueCategory,
   });
 

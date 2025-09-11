@@ -22,7 +22,7 @@ import {
 import Grid from '@mui/material/Grid2';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, Resolver, useForm } from 'react-hook-form';
 import {
   APIError,
   CatalogueCategory,
@@ -196,7 +196,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   const catalogueItemDetailsStepFormMethods = useForm<CatalogueItemDetailsStep>(
     {
       formControl: formControlDetailsStep,
-      resolver: zodResolver(CatalogueItemDetailsStepSchema(requestType)),
+      resolver: zodResolver(
+        CatalogueItemDetailsStepSchema(requestType)
+      ) as unknown as Resolver<CatalogueItemDetailsStep>,
       defaultValues: toCatalogueItemDetailsStep(selectedCatalogueItem),
     }
   );
@@ -212,7 +214,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
   const catalogueItemPropertiesStepFormMethods = useForm<PropertiesStep>({
     formControl: formControlPropertiesStep,
-    resolver: zodResolver(PropertiesStepSchema),
+    resolver: zodResolver(
+      PropertiesStepSchema
+    ) as unknown as Resolver<PropertiesStep>,
     defaultValues: {
       properties: convertToPropertyValueList(
         parentInfo,

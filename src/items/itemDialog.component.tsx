@@ -23,7 +23,7 @@ import Grid from '@mui/material/Grid2';
 import { DatePicker, DateValidationError } from '@mui/x-date-pickers';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, Resolver, useForm } from 'react-hook-form';
 import {
   CatalogueCategory,
   CatalogueCategoryProperty,
@@ -197,7 +197,9 @@ function ItemDialog(props: ItemDialogProps) {
 
   const ItemDetailsStepFormMethods = useForm<ItemDetailsStep>({
     formControl: formControlDetailsStep,
-    resolver: zodResolver(ItemDetailsStepSchema(requestType)),
+    resolver: zodResolver(
+      ItemDetailsStepSchema(requestType)
+    ) as unknown as Resolver<ItemDetailsStep>,
     defaultValues: toItemDetailsStep(selectedItem),
   });
 
@@ -214,7 +216,9 @@ function ItemDialog(props: ItemDialogProps) {
 
   const itemPropertiesStepFormMethods = useForm<PropertiesStep>({
     formControl: formControlPropertiesStep,
-    resolver: zodResolver(PropertiesStepSchema),
+    resolver: zodResolver(
+      PropertiesStepSchema
+    ) as unknown as Resolver<PropertiesStep>,
     defaultValues: {
       properties: convertToPropertyValueList(
         catalogueCategory,

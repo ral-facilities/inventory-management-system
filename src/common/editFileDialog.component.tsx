@@ -15,7 +15,7 @@ import {
 import { UseMutationResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { Resolver, useForm } from 'react-hook-form';
 import {
   APIImage,
   AttachmentMetadata,
@@ -84,7 +84,7 @@ const EditFileDialog = (props: FileDialogProps) => {
     reset,
   } = useForm<ObjectFilePatchBase>({
     formControl,
-    resolver: zodResolver(FileSchemaPatch),
+    resolver: zodResolver(FileSchemaPatch) as Resolver<ObjectFilePatchBase>,
     defaultValues: initialFile,
   });
 
