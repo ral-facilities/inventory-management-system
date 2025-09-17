@@ -8,7 +8,7 @@
   ],
   "postUpdateOptions": ["yarnDedupeHighest"],
   "labels": ["dependencies"],
-  "baseBranches": ["main", "develop"],
+  "baseBranchPatterns": ["main", "develop"],
   "packageRules": [
     {
       "matchBaseBranches": ["main"],
@@ -49,7 +49,7 @@
     "labels": ["security", "dependencies"],
     "reviewers": ["@joshdimanteto", "@joelvdavies"],
     "assignees": ["@joshdimanteto", "@joelvdavies"],
-    "baseBranches": ["main", "develop"],
+    "baseBranchPatterns": ["main", "develop"],
     "prBodyNotes": [
       "<ul><li>Please ensure that `yarn dev` works correctly.</li><li>Once this PR has been merged, please follow the release process instructions here: https://github.com/ral-facilities/inventory-management-system/wiki/Release-Process.</li></ul><br>Additionally, please verify if this PR can be grouped with others before being released."
     ]
