@@ -1487,6 +1487,50 @@ describe('Catalogue Category', () => {
     cy.findAllByText('Please enter a value.').should('have.length', 3);
   });
 
+  it('Adds a property to a catalogue category with no properties', () => {
+    cy.visit('/catalogue/15');
+
+    cy.findAllByRole('button', {
+      name: 'Card Actions',
+    })
+      .first()
+      .click();
+
+    cy.findByRole('menuitem', {
+      name: 'edit Frequency catalogue category button',
+    }).click();
+
+    cy.findByRole('button', {
+      name: 'Add Property',
+    }).click();
+    cy.findByLabelText('Property Name *').type('test 1');
+    cy.findByLabelText('Select Type *').click();
+    cy.findByText('Boolean').click();
+
+    cy.findByRole('checkbox', {
+      name: 'Confirm understanding and proceed checkbox',
+    }).click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'POST',
+      url: '/v1/catalogue-categories/:catalogue_category_id/properties',
+    }).should(async (patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      const request = patchRequests[0];
+      expect(JSON.stringify(await request.json())).equal(
+        JSON.stringify({
+          name: 'test 1',
+          type: 'boolean',
+          mandatory: false,
+        })
+      );
+    });
+  });
+
   it('display edit form errors on property dialog', () => {
     cy.visit('/catalogue/10');
 
