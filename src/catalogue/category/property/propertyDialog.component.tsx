@@ -185,7 +185,7 @@ const PropertyDialog = (props: PropertyDialogProps) => {
     propertyAdd.properties &&
     propertyAdd?.properties[index]?.allowed_values?.type;
 
-  const typeAdd = propertyAdd.properties && propertyAdd.properties[index].type;
+  const typeAdd = propertyAdd.properties && propertyAdd.properties[index]?.type;
 
   const formMethods = useForm<AddPropertyMigration>({
     resolver: zodResolver(
