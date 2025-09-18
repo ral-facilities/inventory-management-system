@@ -57,15 +57,15 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
   const { mutateAsync: patchSystem, isPending: isEditPending } =
     usePatchSystem();
 
-  const { data: parentSystem, isLoading: isLoadingParentSystemType } =
+  const { data: parentSystem, isLoading: isLoadingParentSystem } =
     useGetSystem(parentId);
 
   const parentSystemTypeId = React.useMemo(() => {
-    if (!isLoadingParentSystemType && parentSystem) {
+    if (!isLoadingParentSystem && parentSystem) {
       return parentSystem.type_id;
     }
     return null;
-  }, [parentSystem, isLoadingParentSystemType]);
+  }, [parentSystem, isLoadingParentSystem]);
 
   const { data: systemsTypes } = useGetSystemTypes();
 
