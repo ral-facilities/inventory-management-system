@@ -7,7 +7,7 @@ const modifyItem = (
     warrantyEndDate?: string;
     deliveredDate?: string;
     isDefective: string;
-    usageStatus: string;
+    usageStatus?: string;
     notes?: string;
     substrate: string;
     diameter?: string;
@@ -24,6 +24,15 @@ const modifyItem = (
   } else {
     cy.findByRole('button', { name: 'Add Item' }).click();
   }
+
+  cy.findByLabelText('navigate to systems home').click();
+
+  cy.findAllByText(values.system).first().click();
+
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.wait(4000);
+
+  cy.findByRole('button', { name: 'Next' }).click();
 
   if (values.serialNumber) {
     cy.findByLabelText('Serial number').clear();
@@ -62,8 +71,10 @@ const modifyItem = (
     cy.findByLabelText('Delivered date').clear();
   }
 
-  cy.findByLabelText('Usage status *').click();
-  cy.findByRole('option', { name: values.usageStatus }).click();
+  if (values.usageStatus) {
+    cy.findByLabelText('Usage status *').click();
+    cy.findByRole('option', { name: values.usageStatus }).click();
+  }
 
   cy.findByLabelText('Is defective *').click();
   cy.findByRole('option', { name: values.isDefective }).click();
@@ -97,12 +108,6 @@ const modifyItem = (
     cy.findByLabelText('Broken').click();
     cy.findByRole('option', { name: 'None' }).click();
   }
-
-  cy.findByRole('button', { name: 'Next' }).click();
-
-  cy.findByLabelText('navigate to systems home').click();
-
-  cy.findAllByText(values.system).first().click();
 
   cy.findByRole('button', { name: 'Finish' }).click();
 
@@ -229,6 +234,17 @@ export const duplicateItem = (serialNumber: string, index: number) => {
   cy.findAllByLabelText('Row Actions').eq(index).click();
   cy.findByText(`Duplicate`).click();
 
+  cy.findByRole('button', { name: 'navigate to systems home' }).click();
+
+  cy.findAllByText('Storage').first().click();
+
+  cy.findByText('No systems found').should('exist');
+
+  cy.findAllByText('Storage').should('have.length', 1);
+
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.wait(4000);
+
   cy.findByRole('button', { name: 'Next' }).click();
   cy.findByRole('button', { name: 'Next' }).click();
   cy.findByRole('button', { name: 'Finish' }).click();
@@ -254,7 +270,6 @@ export const addItem = (ignoreChecks?: boolean) => {
       warrantyEndDate: '17/02/2029',
       deliveredDate: '19/03/2022',
       isDefective: 'Yes',
-      usageStatus: 'New',
       notes: 'test',
       substrate: 'N-BK7',
       diameter: '10',
@@ -275,7 +290,6 @@ export const editItem = () => {
     warrantyEndDate: '17/02/2030',
     deliveredDate: '19/03/2024',
     isDefective: 'No',
-    usageStatus: 'Used',
     notes: 'tests',
     substrate: 'Fused Silica',
     diameter: '100',

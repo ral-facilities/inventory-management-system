@@ -1349,15 +1349,16 @@ export const handlers = [
 
     let rules: Rule[] = RulesJSON;
     if (src_system_type_id) {
-      rules = rules.filter(
-        (rule) => rule.src_system_type?.id === src_system_type_id
-      );
+      const value =
+        src_system_type_id === 'null' ? undefined : src_system_type_id;
+      rules = rules.filter((rule) => rule.src_system_type?.id === value);
     }
     if (dst_system_type_id) {
-      rules = rules.filter(
-        (rule) => rule.dst_system_type?.id === dst_system_type_id
-      );
+      const value =
+        dst_system_type_id === 'null' ? undefined : dst_system_type_id;
+      rules = rules.filter((rule) => rule.dst_system_type?.id === value);
     }
+
     return HttpResponse.json(rules, { status: 200 });
   }),
 ];
