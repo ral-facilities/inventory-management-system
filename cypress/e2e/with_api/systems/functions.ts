@@ -170,7 +170,7 @@ export const moveItemToSystem = (values: {
   cy.findByRole('progressbar').should('not.exist');
 
   cy.findAllByRole('combobox').eq(1).click();
-  cy.findByText('Scrapped').click();
+  cy.findByText('In Use').click();
 
   cy.findByRole('button', { name: 'Finish' }).should('not.be.disabled');
   cy.findByRole('button', { name: 'Finish' }).click();
