@@ -57,14 +57,15 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
   const { mutateAsync: patchSystem, isPending: isEditPending } =
     usePatchSystem();
 
-  const { data: parentSystem } = useGetSystem(parentId);
+  const { data: parentSystem, isLoading: isLoadingParentSystem } =
+    useGetSystem(parentId);
 
   const parentSystemTypeId = React.useMemo(() => {
-    if (parentSystem) {
+    if (!isLoadingParentSystem && parentSystem) {
       return parentSystem.type_id;
     }
     return null;
-  }, [parentSystem]);
+  }, [parentSystem, isLoadingParentSystem]);
 
   const { data: systemsTypes } = useGetSystemTypes();
 
@@ -285,6 +286,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
               fullWidth
             />
           </Box>
+
           <Controller
             control={control}
             name="type_id"

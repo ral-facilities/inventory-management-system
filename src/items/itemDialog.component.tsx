@@ -34,7 +34,12 @@ import {
   UsageStatus,
 } from '../api/api.types';
 import { usePatchItem, usePostItem, usePostItems } from '../api/items';
-import { useGetSystems, useGetSystemsBreadcrumbs } from '../api/systems';
+import { useGetRules } from '../api/rules';
+import {
+  useGetSystem,
+  useGetSystems,
+  useGetSystemsBreadcrumbs,
+} from '../api/systems';
 import { useGetUsageStatuses } from '../api/usageStatuses';
 import {
   ItemDetailsStep,
@@ -159,6 +164,7 @@ function ItemDialog(props: ItemDialogProps) {
     React.useState(false);
 
   const { data: usageStatuses } = useGetUsageStatuses();
+
   const { mutateAsync: addItem, isPending: isAddItemPending } = usePostItem();
   const { mutateAsync: postItems, isPending: isAddItemsPending } =
     usePostItems();
@@ -175,8 +181,26 @@ function ItemDialog(props: ItemDialogProps) {
     selectedItem?.system_id ?? null
   );
 
-  const [parentSystemIdError, setParentSystemIdError] =
-    React.useState<boolean>(false);
+  // Rules
+  const { data: dstSystem } = useGetSystem(parentSystemId);
+  const { data: srcSystem } = useGetSystem(selectedItem?.system_id);
+  const srcSystemTypeId =
+    requestType === 'post' ? 'null' : (srcSystem?.type_id ?? 'null');
+
+  const dstSystemTypeId = dstSystem?.type_id ?? 'null';
+  const { data: tableRules } = useGetRules(srcSystemTypeId);
+
+  // This should be a list of 1 rule
+  const { data: selectedRule } = useGetRules(srcSystemTypeId, dstSystemTypeId);
+
+  const isDstSystemTypeSameAsSrcSystemType = React.useMemo(() => {
+    if (!dstSystem || !srcSystem) return false;
+    return dstSystemTypeId === srcSystemTypeId;
+  }, [dstSystemTypeId, srcSystemTypeId, dstSystem, srcSystem]);
+
+  const [parentSystemIdError, setParentSystemIdError] = React.useState<
+    string | undefined
+  >(undefined);
 
   const { data: systemsData, isLoading: systemsDataLoading } = useGetSystems(
     parentSystemId === null ? 'null' : parentSystemId
@@ -224,7 +248,6 @@ function ItemDialog(props: ItemDialogProps) {
 
   const itemDetails = watchDetailsStep();
   const serialNumberAdvancedOptions = itemDetails.serial_number;
-
   // Load the values for editing.
   React.useEffect(() => {
     resetDetailsStep(toItemDetailsStep(selectedItem));
@@ -246,6 +269,20 @@ function ItemDialog(props: ItemDialogProps) {
     selectedItem,
     selectedItem?.properties,
   ]);
+
+  // Set usage status based on the selected Rule
+  React.useEffect(() => {
+    if (selectedRule && selectedRule.length > 0) {
+      const usageStatus = usageStatuses?.find(
+        (status) => status.id === selectedRule[0].dst_usage_status?.id
+      );
+      if (usageStatus) {
+        ItemDetailsStepFormMethods.setValue('usage_status_id', usageStatus.id, {
+          shouldValidate: true,
+        });
+      }
+    }
+  }, [selectedRule, usageStatuses, ItemDetailsStepFormMethods]);
 
   // Clears form errors when a value has been changed
   React.useEffect(() => {
@@ -285,10 +322,10 @@ function ItemDialog(props: ItemDialogProps) {
   ]);
 
   React.useEffect(() => {
-    if (parentSystemIdError && parentSystemId) {
-      setParentSystemIdError(false);
+    if (parentSystemId) {
+      setParentSystemIdError(undefined);
     }
-  }, [parentSystemId, parentSystemIdError]);
+  }, [parentSystemId]);
 
   const handleAddItem = React.useCallback(
     (data: ItemPost, quantity?: number, starting_value?: number) => {
@@ -400,9 +437,9 @@ function ItemDialog(props: ItemDialogProps) {
 
   // Stepper
   const STEPS = [
+    'Place into a system',
     (requestType === 'patch' ? 'Edit' : 'Add') + ' item details',
     (requestType === 'patch' ? 'Edit' : 'Add') + ' item properties',
-    'Place into a system',
   ];
   const [activeStep, setActiveStep] = React.useState<number>(0);
 
@@ -439,22 +476,39 @@ function ItemDialog(props: ItemDialogProps) {
   const handleNext = React.useCallback(
     async (event: React.SyntheticEvent, step: number) => {
       switch (step) {
-        case 0:
+        case 0: {
+          if (!parentSystemId) {
+            setParentSystemIdError('Please select a parent system');
+            return;
+          } else if (
+            !isDstSystemTypeSameAsSrcSystemType &&
+            (!selectedRule || selectedRule.length === 0)
+          ) {
+            const allowedDstSystemTypes =
+              tableRules?.map((rule) => rule.dst_system_type?.value) || [];
+            setParentSystemIdError(
+              `Please select a valid parent system. Allowed types: ${allowedDstSystemTypes.join(', ')}.`
+            );
+            return;
+          }
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
+          break;
+        }
+        case 1:
           return handleSubmitDetailsStep(() => {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
           })(event);
 
-        case 1: {
-          const { hasErrors } = await handlePropertiesStep(event);
-          if (hasErrors) return;
-          setActiveStep((prevActiveStep) => prevActiveStep + 1);
-          break;
-        }
         default:
-          setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }
     },
-    [handlePropertiesStep, handleSubmitDetailsStep]
+    [
+      selectedRule,
+      handleSubmitDetailsStep,
+      isDstSystemTypeSameAsSrcSystemType,
+      parentSystemId,
+      tableRules,
+    ]
   );
 
   const handleBack = () => {
@@ -463,12 +517,31 @@ function ItemDialog(props: ItemDialogProps) {
 
   const handleFinish = React.useCallback(
     async (event: React.SyntheticEvent) => {
-      const { detailsStepData, propertiesStepData } =
-        await handlePropertiesStep(event);
+      let hasErrors = false;
+      const {
+        detailsStepData,
+        propertiesStepData,
+        hasErrors: hasErrorProperties,
+      } = await handlePropertiesStep(event);
 
       if (!parentSystemId) {
-        setParentSystemIdError(true);
+        setParentSystemIdError('Please select a parent system');
+        hasErrors = true;
+      } else if (
+        !isDstSystemTypeSameAsSrcSystemType &&
+        (!selectedRule || selectedRule.length === 0)
+      ) {
+        const allowedDstSystemTypes =
+          tableRules?.map((rule) => rule.dst_system_type?.value) || [];
+        setParentSystemIdError(
+          `Please select a valid parent system. Allowed types: ${allowedDstSystemTypes.join(', ')}.`
+        );
+        hasErrors = true;
       }
+      if (hasErrorProperties) {
+        hasErrors = true;
+      }
+      if (hasErrors) return;
 
       if (detailsStepData && propertiesStepData && parentSystemId) {
         const data: ItemPost = {
@@ -496,13 +569,16 @@ function ItemDialog(props: ItemDialogProps) {
       }
     },
     [
+      selectedRule,
       catalogueItem?.id,
       duplicate,
       handleAddItem,
       handleEditItem,
       handlePropertiesStep,
+      isDstSystemTypeSameAsSrcSystemType,
       parentSystemId,
       requestType,
+      tableRules,
     ]
   );
 
@@ -510,14 +586,14 @@ function ItemDialog(props: ItemDialogProps) {
     (step: number) => {
       switch (step) {
         case 0:
-          return Object.values(errorsDetailsStep).length !== 0;
+          return !!parentSystemIdError;
         case 1:
+          return Object.values(errorsDetailsStep).length !== 0;
+        case 2:
           return (
             Object.keys(errorsPropertiesStep).filter((val) => val !== 'root')
               .length !== 0
           );
-        case 2:
-          return parentSystemIdError;
       }
     },
     [errorsDetailsStep, errorsPropertiesStep, parentSystemIdError]
@@ -526,6 +602,35 @@ function ItemDialog(props: ItemDialogProps) {
   const renderStepContent = (step: number) => {
     switch (step) {
       case 0:
+        return (
+          <Grid size={12}>
+            <Breadcrumbs
+              breadcrumbsInfo={parentSystemBreadcrumbs}
+              onChangeNode={setParentSystemId}
+              onChangeNavigateHome={() => {
+                setParentSystemId(null);
+              }}
+              homeLocation="Systems"
+            />
+            <SystemsTableView
+              systemsData={systemsData}
+              systemsDataLoading={systemsDataLoading}
+              onChangeParentId={setParentSystemId}
+              systemParentId={parentSystemId ?? undefined}
+              isSystemSelectable={(system) => {
+                return (
+                  tableRules?.some(
+                    (rule) => rule.dst_system_type?.id === system.type_id
+                  ) || false
+                );
+              }}
+              // Use most unrestricted variant (i.e. copy with no selection)
+              selectedSystems={[]}
+              type="copyTo"
+            />
+          </Grid>
+        );
+      case 1:
         return (
           <Grid container spacing={1.5} size={12}>
             <Grid
@@ -800,6 +905,7 @@ function ItemDialog(props: ItemDialogProps) {
                 render={({ field: { value, onChange } }) => (
                   <Autocomplete
                     disableClearable={value != null}
+                    disabled
                     id="item-usage-status-input"
                     value={
                       usageStatuses?.find(
@@ -821,6 +927,7 @@ function ItemDialog(props: ItemDialogProps) {
                       <TextField
                         {...params}
                         required={true}
+                        disabled
                         label="Usage status"
                         error={!!errorsDetailsStep.usage_status_id}
                         helperText={errorsDetailsStep.usage_status_id?.message}
@@ -869,7 +976,7 @@ function ItemDialog(props: ItemDialogProps) {
             </Grid>
           </Grid>
         );
-      case 1:
+      case 2:
         return (
           <Grid container size={12}>
             {parentCatalogueItemPropertiesInfo.length >= 1 ? (
@@ -1055,28 +1162,6 @@ function ItemDialog(props: ItemDialogProps) {
             )}
           </Grid>
         );
-      case 2:
-        return (
-          <Grid size={12}>
-            <Breadcrumbs
-              breadcrumbsInfo={parentSystemBreadcrumbs}
-              onChangeNode={setParentSystemId}
-              onChangeNavigateHome={() => {
-                setParentSystemId(null);
-              }}
-              homeLocation="Systems"
-            />
-            <SystemsTableView
-              systemsData={systemsData}
-              systemsDataLoading={systemsDataLoading}
-              onChangeParentId={setParentSystemId}
-              systemParentId={parentSystemId ?? undefined}
-              // Use most unrestricted variant (i.e. copy with no selection)
-              selectedSystems={[]}
-              type="copyTo"
-            />
-          </Grid>
-        );
     }
   };
 
@@ -1106,8 +1191,9 @@ function ItemDialog(props: ItemDialogProps) {
             if (isStepFailed(index)) {
               labelProps.optional = (
                 <Typography variant="caption" color="error">
-                  {index === 1 && 'Invalid item properties'}
-                  {index === 0 && 'Invalid item details'}
+                  {index === 0 && parentSystemIdError}
+                  {index === 2 && 'Invalid item properties'}
+                  {index === 1 && 'Invalid item details'}
                 </Typography>
               );
               labelProps.error = true;
@@ -1142,7 +1228,7 @@ function ItemDialog(props: ItemDialogProps) {
               Object.keys(errorsPropertiesStep).filter((val) => val !== 'root')
                 .length !== 0 ||
               Object.values(errorsDetailsStep).length !== 0 ||
-              parentSystemIdError
+              !!parentSystemIdError
             }
             onClick={handleFinish}
             sx={{ mr: 3 }}

@@ -147,7 +147,7 @@ describe('ItemDialog', () => {
 
   const modifySystemValue = async (values: { system?: string }) => {
     if (values.system !== undefined) {
-      await user.click(await screen.findByText(values.system));
+      await user.click((await screen.findAllByText(values.system))[0]);
     }
   };
 
@@ -171,17 +171,14 @@ describe('ItemDialog', () => {
 
       createView();
 
-      await modifyDetailsValues({
-        usageStatus: 'U{arrowdown}{enter}',
+      await modifySystemValue({
+        system: 'Storage',
       });
 
       //navigate through stepper
       await user.click(screen.getByRole('button', { name: 'Next' }));
-      await user.click(screen.getByRole('button', { name: 'Next' }));
 
-      await modifySystemValue({
-        system: 'Giant laser',
-      });
+      await user.click(screen.getByRole('button', { name: 'Next' }));
 
       const finishButton = screen.getByRole('button', { name: 'Finish' });
       await user.click(finishButton);
@@ -212,20 +209,17 @@ describe('ItemDialog', () => {
         ).toBeInTheDocument();
       });
     });
+
     it('adds an item with just the default values', async () => {
       createView();
-
-      await modifyDetailsValues({
-        usageStatus: 'U{arrowdown}{enter}',
+      await modifySystemValue({
+        system: 'Storage',
       });
 
       //navigate through stepper
       await user.click(screen.getByRole('button', { name: 'Next' }));
-      await user.click(screen.getByRole('button', { name: 'Next' }));
 
-      await modifySystemValue({
-        system: 'Giant laser',
-      });
+      await user.click(screen.getByRole('button', { name: 'Next' }));
 
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
@@ -245,14 +239,21 @@ describe('ItemDialog', () => {
         ],
         purchase_order_number: null,
         serial_number: null,
-        system_id: '65328f34a40ff5301575a4e3',
-        usage_status_id: '1',
+        system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
+        usage_status_id: '0',
         warranty_end_date: null,
       });
     });
 
     it('adds multiple items with just the default values', async () => {
       createView();
+
+      await modifySystemValue({
+        system: 'Storage',
+      });
+
+      //navigate through stepper
+      await user.click(screen.getByRole('button', { name: 'Next' }));
 
       await modifyDetailsValues({
         serialNumber: 'test12 %s',
@@ -262,11 +263,6 @@ describe('ItemDialog', () => {
 
       //navigate through stepper
       await user.click(screen.getByRole('button', { name: 'Next' }));
-      await user.click(screen.getByRole('button', { name: 'Next' }));
-
-      await modifySystemValue({
-        system: 'Giant laser',
-      });
 
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
@@ -305,8 +301,8 @@ describe('ItemDialog', () => {
           ],
           purchase_order_number: null,
           serial_number: `test12 ${i + 10}`,
-          system_id: '65328f34a40ff5301575a4e3',
-          usage_status_id: '1',
+          system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
+          usage_status_id: '0',
           warranty_end_date: null,
         });
       }
@@ -355,6 +351,7 @@ describe('ItemDialog', () => {
         expect(screen.getByLabelText('Serial number')).toBeInTheDocument();
       });
     });
+
     it('adds an item where the item property has an allowed list of values', async () => {
       props = {
         ...props,
@@ -363,8 +360,8 @@ describe('ItemDialog', () => {
       };
       createView();
 
-      await modifyDetailsValues({
-        usageStatus: 'U{arrowdown}{enter}',
+      await modifySystemValue({
+        system: 'Storage',
       });
 
       await user.click(screen.getByText('Add item properties'));
@@ -381,12 +378,6 @@ describe('ItemDialog', () => {
 
       const axisAutocomplete = screen.getAllByRole('combobox')[1];
       await user.type(axisAutocomplete, 'z{arrowdown}{enter}');
-
-      await user.click(screen.getByRole('button', { name: 'Next' }));
-
-      await modifySystemValue({
-        system: 'Giant laser',
-      });
 
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
@@ -406,8 +397,8 @@ describe('ItemDialog', () => {
         ],
         purchase_order_number: null,
         serial_number: null,
-        system_id: '65328f34a40ff5301575a4e3',
-        usage_status_id: '1',
+        system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
+        usage_status_id: '0',
         warranty_end_date: null,
       });
     });
@@ -415,6 +406,11 @@ describe('ItemDialog', () => {
     it('adds an item (all input values)', async () => {
       createView();
 
+      await modifySystemValue({
+        system: 'Storage',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
       await modifyDetailsValues({
         serialNumber: 'test12',
         assetNumber: 'test43',
@@ -423,7 +419,6 @@ describe('ItemDialog', () => {
         warrantyEndDate: '17/02/2035',
         deliveredDate: '23/09/2024',
         isDefective: 'Y{arrowdown}{enter}',
-        usageStatus: 'U{arrowdown}{enter}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -435,12 +430,6 @@ describe('ItemDialog', () => {
         sensorBrand: 'pixel',
         broken: 'T{arrowdown}{enter}',
         older: 'F{arrowdown}{enter}',
-      });
-
-      await user.click(screen.getByRole('button', { name: 'Next' }));
-
-      await modifySystemValue({
-        system: 'Giant laser',
       });
 
       await user.click(screen.getByRole('button', { name: 'Finish' }));
@@ -461,14 +450,26 @@ describe('ItemDialog', () => {
         ],
         purchase_order_number: 'test21',
         serial_number: 'test12',
-        system_id: '65328f34a40ff5301575a4e3',
-        usage_status_id: '1',
+        system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
+        usage_status_id: '0',
         warranty_end_date: '2035-02-17T00:00:00.000Z',
       });
     }, 10000);
 
     it('displays an error message if a step is disabled and clears the errors until the finish button is enabled', async () => {
       createView();
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
+      expect(
+        screen.getByText('Please select a parent system')
+      ).toBeInTheDocument();
+
+      await modifySystemValue({
+        system: 'Storage',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
 
       await modifyDetailsValues({
         serialNumber: 'test12',
@@ -478,51 +479,63 @@ describe('ItemDialog', () => {
         warrantyEndDate: '17/02/',
         deliveredDate: '23/09/',
         isDefective: 'Y{arrowdown}{enter}',
-        usageStatus: 'U{arrowdown}{enter}',
       });
 
       expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
       expect(screen.getByText('Invalid item details')).toBeInTheDocument();
 
-      await user.click(screen.getByText('Add item properties'));
+      await modifyDetailsValues({
+        serialNumber: 'test12',
+        assetNumber: 'test43',
+        purchaseOrderNumber: 'test21',
+        notes: 'test',
+        warrantyEndDate: '17/02/2024',
+        deliveredDate: '23/09/2024',
+        isDefective: 'Y{arrowdown}{enter}',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
 
       await modifyPropertiesValues({
         resolution: 'ds',
       });
 
-      await user.click(screen.getByRole('button', { name: 'Next' }));
-      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      expect(screen.getByRole('button', { name: 'Finish' })).toBeDisabled();
       expect(screen.getByText('Invalid item properties')).toBeInTheDocument();
 
-      await user.click(screen.getByText('Place into a system'));
-
-      await modifySystemValue({
-        system: 'Giant laser',
-      });
-
       expect(screen.getByRole('button', { name: 'Finish' })).toBeDisabled();
-
-      await user.click(screen.getByText('Add item properties'));
 
       await modifyPropertiesValues({
         resolution: '12',
       });
 
-      await user.click(screen.getByRole('button', { name: 'Next' }));
+      expect(
+        await screen.findByRole('button', { name: 'Finish' })
+      ).not.toBeDisabled();
+    }, 10000);
 
-      await user.click(screen.getByText('Add item details'));
-      await modifyDetailsValues({
-        warrantyEndDate: '17/02/2000',
-        deliveredDate: '23/09/2000',
-      });
+    it('displays placement and items details error message user skips to last step and presses finish', async () => {
+      createView();
 
-      await user.click(screen.getByRole('button', { name: 'Next' }));
-      await user.click(screen.getByRole('button', { name: 'Next' }));
-      expect(screen.getByRole('button', { name: 'Finish' })).not.toBeDisabled();
+      await user.click(screen.getByText('Add item properties'));
+
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+
+      expect(
+        screen.getByText('Please select a parent system')
+      ).toBeInTheDocument();
+      expect(screen.getByText('Invalid item details')).toBeInTheDocument();
+      expect(
+        await screen.findByRole('button', { name: 'Finish' })
+      ).toBeDisabled();
     }, 10000);
 
     it('displays error messages for serial number advanced options', async () => {
       createView();
+
+      await user.click(screen.getByText('Add item details'));
+
       await modifyDetailsValues({
         serialNumberAdvancedOptions: { starting_value: '10' },
       });
@@ -616,6 +629,12 @@ describe('ItemDialog', () => {
     it('adds an item (case empty string with spaces returns null and change property boolean values)', async () => {
       createView();
 
+      await modifySystemValue({
+        system: 'Storage',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
       await modifyDetailsValues({
         serialNumber: '   ',
         assetNumber: 'test43',
@@ -638,12 +657,6 @@ describe('ItemDialog', () => {
         older: 'T{arrowdown}{enter}',
       });
 
-      await user.click(screen.getByRole('button', { name: 'Next' }));
-
-      await modifySystemValue({
-        system: 'Giant laser',
-      });
-
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
@@ -662,8 +675,8 @@ describe('ItemDialog', () => {
         ],
         purchase_order_number: 'test21',
         serial_number: null,
-        system_id: '65328f34a40ff5301575a4e3',
-        usage_status_id: '1',
+        system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
+        usage_status_id: '0',
         warranty_end_date: '2035-02-17T00:00:00.000Z',
       });
     }, 10000);
@@ -671,20 +684,27 @@ describe('ItemDialog', () => {
     it('displays error message when usage status not selected', async () => {
       createView();
 
+      await user.click(screen.getByText('Add item details'));
+
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
       expect(screen.getByText('Invalid item details')).toBeInTheDocument();
 
       expect(
-        await screen.findByText('Please select a usage status.')
+        await screen.findByText(
+          'Please navigate back and select a system. This field will then be prepopulated.'
+        )
       ).toBeInTheDocument();
 
-      await modifyDetailsValues({
-        usageStatus: 'U{arrowdown}{enter}',
+      await user.click(screen.getByText('Place into a system'));
+
+      await modifySystemValue({
+        system: 'Storage',
       });
 
       expect(screen.queryByRole('button', { name: 'Next' })).not.toBeDisabled();
+      await user.click(screen.getByRole('button', { name: 'Next' }));
       expect(
         screen.queryByText('Invalid item details')
       ).not.toBeInTheDocument();
@@ -696,6 +716,13 @@ describe('ItemDialog', () => {
     it('displays error message when mandatory property values missing', async () => {
       createView();
 
+      await modifySystemValue({
+        system: 'Storage',
+      });
+
+      //navigate through stepper
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
       await modifyDetailsValues({
         serialNumber: '   ',
         assetNumber: 'test43',
@@ -704,7 +731,6 @@ describe('ItemDialog', () => {
         warrantyEndDate: '17/02/2035',
         deliveredDate: '23/09/2024',
         isDefective: 'Y{arrowdown}{enter}',
-        usageStatus: 'U{arrowdown}{enter}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -714,7 +740,7 @@ describe('ItemDialog', () => {
         sensorType: '',
       });
 
-      await user.click(screen.getByRole('button', { name: 'Next' }));
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       const mandatoryFieldHelperText = screen.getAllByText(
         'Please enter a valid value as this field is mandatory.'
@@ -722,7 +748,7 @@ describe('ItemDialog', () => {
 
       expect(mandatoryFieldHelperText.length).toBe(2);
 
-      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Finish' })).toBeDisabled();
 
       await modifyPropertiesValues({
         broken: 'F{arrowdown}{enter}',
@@ -740,12 +766,18 @@ describe('ItemDialog', () => {
         ).not.toBeInTheDocument();
       });
 
-      expect(screen.getByRole('button', { name: 'Next' })).not.toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Finish' })).not.toBeDisabled();
     }, 10000);
 
     it('displays error message when property values type is incorrect', async () => {
       createView();
 
+      await modifySystemValue({
+        system: 'Storage',
+      });
+
+      //navigate through stepper
+      await user.click(screen.getByRole('button', { name: 'Next' }));
       await modifyDetailsValues({
         serialNumber: '   ',
         assetNumber: 'test43',
@@ -754,7 +786,6 @@ describe('ItemDialog', () => {
         warrantyEndDate: '17',
         deliveredDate: '23',
         isDefective: 'Y{arrowdown}{enter}',
-        usageStatus: 'U{arrowdown}{enter}',
       });
 
       const validDateHelperText = screen.getAllByText(
@@ -799,7 +830,7 @@ describe('ItemDialog', () => {
         broken: 'None',
       });
 
-      await user.click(screen.getByRole('button', { name: 'Next' }));
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       const validNumberHelperText = screen.getByText(
         'Please enter a valid number.'
@@ -807,7 +838,7 @@ describe('ItemDialog', () => {
 
       expect(validNumberHelperText).toBeInTheDocument();
 
-      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Finish' })).toBeDisabled();
 
       await modifyPropertiesValues({
         resolution: '12',
@@ -828,16 +859,19 @@ describe('ItemDialog', () => {
       };
       createView();
 
-      await modifyDetailsValues({
-        usageStatus: 'U{arrowdown}{enter}',
+      await modifySystemValue({
+        system: 'Storage',
       });
+
+      //navigate through stepper
+      await user.click(screen.getByRole('button', { name: 'Next' }));
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       const ultimatePressureTextBox = screen.getAllByRole('textbox')[0];
       await user.clear(ultimatePressureTextBox);
 
-      await user.click(screen.getByRole('button', { name: 'Next' }));
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       const mandatoryFieldHelperText = screen.getByText(
         'Please enter a valid value as this field is mandatory.'
@@ -845,25 +879,29 @@ describe('ItemDialog', () => {
 
       expect(mandatoryFieldHelperText).toBeInTheDocument();
 
-      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Finish' })).toBeDisabled();
 
       await user.type(ultimatePressureTextBox, '10');
 
       expect(mandatoryFieldHelperText).not.toBeInTheDocument();
-      expect(screen.getByRole('button', { name: 'Next' })).not.toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Finish' })).not.toBeDisabled();
     });
 
     it('displays warning message when an unknown error occurs', async () => {
       createView();
+
+      await modifySystemValue({
+        system: 'Storage',
+      });
+
+      //navigate through stepper
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
       await modifyDetailsValues({
         serialNumber: 'Error 500',
-        usageStatus: 'U{arrowdown}{enter}',
       });
       await user.click(screen.getByRole('button', { name: 'Next' }));
-      await user.click(screen.getByRole('button', { name: 'Next' }));
-      await modifySystemValue({
-        system: 'Giant laser',
-      });
+
       await user.click(screen.getByRole('button', { name: 'Finish' }));
       expect(handleIMS_APIError).toHaveBeenCalled();
       expect(onClose).not.toHaveBeenCalled();
@@ -876,6 +914,22 @@ describe('ItemDialog', () => {
       createView();
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      expect(
+        screen.getByText(
+          'Please select a valid parent system. Allowed types: Storage.'
+        )
+      ).toBeInTheDocument();
+
+      await user.click(
+        screen.getByRole('button', { name: 'navigate to systems home' })
+      );
+
+      await modifySystemValue({
+        system: 'Storage',
+      });
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
       await user.click(screen.getByRole('button', { name: 'Next' }));
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
@@ -895,14 +949,31 @@ describe('ItemDialog', () => {
         ],
         purchase_order_number: 'tIWiCOow',
         serial_number: 'vYs9Vxx6yWbn',
-        system_id: '656ef565ed0773f82e44bc6d',
-        usage_status_id: '2',
+        system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
+        usage_status_id: '0',
         warranty_end_date: '2023-05-18T23:00:00.000Z',
       });
     }, 10000);
 
+    it('display placement step error when duplicating a item', async () => {
+      props.selectedItem = getItemById('G463gOIA');
+      props.requestType = 'post';
+      props.duplicate = true;
+      createView();
+
+      await user.click(screen.getByText('Add item properties'));
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+
+      expect(
+        screen.getByText(
+          'Please select a valid parent system. Allowed types: Storage.'
+        )
+      ).toBeInTheDocument();
+    }, 10000);
     it('displays catalogue item notes tooltip on hover', async () => {
       createView();
+
+      await user.click(screen.getByText('Add item details'));
       await waitFor(() => {
         expect(
           screen.getByLabelText('Catalogue item note: None')
@@ -960,8 +1031,12 @@ describe('ItemDialog', () => {
 
       createView();
 
-      await modifyDetailsValues({
-        usageStatus: 'U{arrowdown}{enter}',
+      await user.click(
+        screen.getByRole('button', { name: 'navigate to systems home' })
+      );
+
+      await modifySystemValue({
+        system: 'Storage',
       });
 
       //navigate through stepper
@@ -977,6 +1052,16 @@ describe('ItemDialog', () => {
 
     it('edit an item (all input values)', async () => {
       createView();
+
+      await user.click(
+        screen.getByRole('button', { name: 'navigate to systems home' })
+      );
+
+      await modifySystemValue({
+        system: 'Storage',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
 
       await modifyDetailsValues({
         serialNumber: 'test12',
@@ -1000,17 +1085,6 @@ describe('ItemDialog', () => {
         older: 'F{arrowdown}{enter}',
       });
 
-      await user.click(screen.getByRole('button', { name: 'Next' }));
-
-      //navigate to home for systems table to then be able to change system
-      await user.click(
-        screen.getByRole('button', { name: 'navigate to systems home' })
-      );
-
-      await modifySystemValue({
-        system: 'Giant laser',
-      });
-
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
@@ -1029,7 +1103,8 @@ describe('ItemDialog', () => {
         purchase_order_number: 'test21',
         serial_number: 'test12',
         warranty_end_date: '2035-02-17T23:00:00.000Z',
-        system_id: '65328f34a40ff5301575a4e3',
+        system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
+        usage_status_id: '2',
       });
     }, 10000);
 
@@ -1055,8 +1130,6 @@ describe('ItemDialog', () => {
 
       const axisAutocomplete = screen.getAllByRole('combobox')[1];
       await user.type(axisAutocomplete, 'z{arrowdown}{enter}');
-
-      await user.click(screen.getByRole('button', { name: 'Next' }));
 
       await user.click(screen.getByRole('button', { name: 'Finish' }));
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
@@ -1094,8 +1167,6 @@ describe('ItemDialog', () => {
       const axisAutocomplete = screen.getAllByRole('combobox')[1];
       await user.type(axisAutocomplete, 'N{enter}');
 
-      await user.click(screen.getByRole('button', { name: 'Next' }));
-
       await user.click(screen.getByRole('button', { name: 'Finish' }));
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
         properties: [
@@ -1112,6 +1183,7 @@ describe('ItemDialog', () => {
     it('displays error message when property values type is incorrect', async () => {
       createView();
 
+      await user.click(screen.getByText('Edit item details'));
       await modifyDetailsValues({
         serialNumber: '   ',
         assetNumber: 'test43',
@@ -1131,7 +1203,7 @@ describe('ItemDialog', () => {
         broken: 'N{arrowdown}{enter}',
       });
 
-      await user.click(screen.getByRole('button', { name: 'Next' }));
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       const validNumberHelperText = screen.getByText(
         'Please enter a valid number.'
@@ -1139,7 +1211,7 @@ describe('ItemDialog', () => {
 
       expect(validNumberHelperText).toBeInTheDocument();
 
-      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Finish' })).toBeDisabled();
 
       await modifyPropertiesValues({
         resolution: '12',
@@ -1169,10 +1241,11 @@ describe('ItemDialog', () => {
 
     it('displays warning message when an unknown error occurs', async () => {
       createView();
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
       await modifyDetailsValues({
         serialNumber: 'Error 500',
       });
-      await user.click(screen.getByRole('button', { name: 'Next' }));
       await user.click(screen.getByRole('button', { name: 'Next' }));
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
