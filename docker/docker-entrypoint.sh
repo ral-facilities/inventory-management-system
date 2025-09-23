@@ -18,6 +18,7 @@ jq \
    .attachmentAllowedFileExtensions = $attachmentAllowedFileExtensions |
    .imageAllowedFileExtensions = $imageAllowedFileExtensions |
    .maxImageSizeBytes = $maxImageSizeBytes |
+   .privilegedRoles = $privilegedRoles |
    .pluginHost = $pluginHost' \
   /usr/local/apache2/htdocs/inventory-management-system-settings.json > "$TEMPFILE"
 
