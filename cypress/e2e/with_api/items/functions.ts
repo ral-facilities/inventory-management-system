@@ -169,6 +169,7 @@ export const editProperty = () => {
   cy.findByRole('button', { name: 'items landing page actions menu' }).click();
   cy.findByText('Edit').click();
   cy.findByRole('button', { name: 'Next' }).click();
+  cy.findByRole('button', { name: 'Next' }).click();
   cy.findByLabelText('Type *').click();
   cy.findByRole('option', { name: 'flat' }).click();
   cy.findByDisplayValue('flat').should('exist');

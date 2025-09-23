@@ -191,7 +191,7 @@ function ItemDialog(props: ItemDialogProps) {
   const { data: tableRules } = useGetRules(srcSystemTypeId);
 
   // This should be a list of 1 rule
-  const { data: SelectedRule } = useGetRules(srcSystemTypeId, dstSystemTypeId);
+  const { data: selectedRule } = useGetRules(srcSystemTypeId, dstSystemTypeId);
 
   const isDstSystemTypeSameAsSrcSystemType = React.useMemo(() => {
     if (!dstSystem || !srcSystem) return false;
@@ -272,9 +272,9 @@ function ItemDialog(props: ItemDialogProps) {
 
   // Set usage status based on the selected Rule
   React.useEffect(() => {
-    if (SelectedRule && SelectedRule.length > 0) {
+    if (selectedRule && selectedRule.length > 0) {
       const usageStatus = usageStatuses?.find(
-        (status) => status.id === SelectedRule[0].dst_usage_status?.id
+        (status) => status.id === selectedRule[0].dst_usage_status?.id
       );
       if (usageStatus) {
         ItemDetailsStepFormMethods.setValue('usage_status_id', usageStatus.id, {
@@ -282,7 +282,7 @@ function ItemDialog(props: ItemDialogProps) {
         });
       }
     }
-  }, [SelectedRule, usageStatuses, ItemDetailsStepFormMethods]);
+  }, [selectedRule, usageStatuses, ItemDetailsStepFormMethods]);
 
   // Clears form errors when a value has been changed
   React.useEffect(() => {
@@ -482,7 +482,7 @@ function ItemDialog(props: ItemDialogProps) {
             return;
           } else if (
             !isDstSystemTypeSameAsSrcSystemType &&
-            (!SelectedRule || SelectedRule.length === 0)
+            (!selectedRule || selectedRule.length === 0)
           ) {
             const allowedDstSystemTypes =
               tableRules?.map((rule) => rule.dst_system_type?.value) || [];
@@ -503,7 +503,7 @@ function ItemDialog(props: ItemDialogProps) {
       }
     },
     [
-      SelectedRule,
+      selectedRule,
       handleSubmitDetailsStep,
       isDstSystemTypeSameAsSrcSystemType,
       parentSystemId,
@@ -529,7 +529,7 @@ function ItemDialog(props: ItemDialogProps) {
         hasErrors = true;
       } else if (
         !isDstSystemTypeSameAsSrcSystemType &&
-        (!SelectedRule || SelectedRule.length === 0)
+        (!selectedRule || selectedRule.length === 0)
       ) {
         const allowedDstSystemTypes =
           tableRules?.map((rule) => rule.dst_system_type?.value) || [];
@@ -569,7 +569,7 @@ function ItemDialog(props: ItemDialogProps) {
       }
     },
     [
-      SelectedRule,
+      selectedRule,
       catalogueItem?.id,
       duplicate,
       handleAddItem,
