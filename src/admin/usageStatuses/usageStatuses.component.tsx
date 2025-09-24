@@ -34,10 +34,13 @@ import {
 } from '../../utils.tsx';
 import DeleteUsageStatusDialog from './deleteUsageStatusDialog.component.tsx';
 import UsageStatusDialog from './usageStatusDialog.component.tsx';
+import { useAuthorised } from '../../authProvider.component.tsx';
 
 function UsageStatuses() {
   const { data: usageStatusData, isLoading: usageStatusDataLoading } =
     useGetUsageStatuses();
+
+  const userAuthorised = useAuthorised();
 
   // Breadcrumbs + Mui table V2 + extra
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
@@ -109,7 +112,7 @@ function UsageStatuses() {
     enableColumnOrdering: true,
     enableColumnFilterModes: true,
     enableFacetedValues: true,
-    enableRowActions: true,
+    enableRowActions: userAuthorised,
     enableStickyHeader: true,
     enableRowSelection: false,
     enableDensityToggle: false,
@@ -184,16 +187,18 @@ function UsageStatuses() {
     },
     renderTopToolbarCustomActions: ({ table }) => (
       <Box>
-        <Button
-          startIcon={<AddIcon />}
-          sx={{ mx: '4px' }}
-          variant="outlined"
-          onClick={() => {
-            table.setCreatingRow(true);
-          }}
-        >
-          Add Usage Status
-        </Button>
+        {userAuthorised && (
+          <Button
+            startIcon={<AddIcon />}
+            sx={{ mx: '4px' }}
+            variant="outlined"
+            onClick={() => {
+              table.setCreatingRow(true);
+            }}
+          >
+            Add Usage Status
+          </Button>
+        )}
         <Button
           startIcon={<ClearIcon />}
           sx={{ mx: '4px' }}
