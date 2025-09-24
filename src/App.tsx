@@ -67,6 +67,7 @@ import SystemsLayout, {
   systemsLayoutLoader,
 } from './systems/systemsLayout.component';
 import ViewTabs from './view/viewTabs.component';
+import { AuthProvider } from './authProvider.component';
 
 export const queryClient = new QueryClient({
   queryCache: new QueryCache({
@@ -274,16 +275,18 @@ export function Layout() {
       <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
         <IMSThemeProvider>
           <ConfigProvider>
-            <QueryClientProvider client={queryClient}>
-              <React.Suspense
-                fallback={
-                  <Preloader loading={true}>Finished loading</Preloader>
-                }
-              >
-                <ViewTabs />
-                <ReactQueryDevtools initialIsOpen={false} />
-              </React.Suspense>
-            </QueryClientProvider>
+            <AuthProvider>
+              <QueryClientProvider client={queryClient}>
+                <React.Suspense
+                  fallback={
+                    <Preloader loading={true}>Finished loading</Preloader>
+                  }
+                >
+                  <ViewTabs />
+                  <ReactQueryDevtools initialIsOpen={false} />
+                </React.Suspense>
+              </QueryClientProvider>
+            </AuthProvider>
           </ConfigProvider>
         </IMSThemeProvider>
       </LocalizationProvider>

@@ -39,7 +39,7 @@ export const isUserAuthorised = async (): Promise<boolean> => {
     );
 
     if (Array.isArray(parsedToken.roles)) {
-      return (parsedToken.roles as Array<string>).every((token_role) =>
+      return (parsedToken.roles as Array<string>).some((token_role) =>
         new Set(privilegedRoles).has(token_role)
       );
     }
