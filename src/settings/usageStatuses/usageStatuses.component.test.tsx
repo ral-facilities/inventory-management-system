@@ -2,6 +2,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 import UsageStatusComponent from './usageStatuses.component';
+import * as authProvider from '../../authProvider.component';
 
 describe('Usage statuses', () => {
   let user: UserEvent;
@@ -10,6 +11,7 @@ describe('Usage statuses', () => {
   };
   beforeEach(() => {
     user = userEvent.setup();
+    vi.spyOn(authProvider, 'useAuthorised').mockReturnValue(true);
   });
 
   it('renders table correctly', async () => {
