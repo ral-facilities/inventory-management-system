@@ -15,14 +15,14 @@ import {
   createBrowserRouter,
   type RouteObject,
 } from 'react-router';
-import AdminCardView from './admin/adminCardView.component';
-import AdminLayout, {
-  AdminErrorComponent,
-} from './admin/adminLayout.component';
-import Rules from './admin/rules/rules.component';
-import SystemTypes from './admin/systemTypes/systemTypes.component';
-import Units from './admin/units/units.component';
-import UsageStatuses from './admin/usageStatuses/usageStatuses.component';
+import SettingsCardView from './settings/settingsCardView.component';
+import SettingsLayout, {
+  SettingsErrorComponent,
+} from './settings/settingsLayout.component';
+import Rules from './settings/rules/rules.component';
+import SystemTypes from './settings/systemTypes/systemTypes.component';
+import Units from './settings/units/units.component';
+import UsageStatuses from './settings/usageStatuses/usageStatuses.component';
 import {
   clearFailedAuthRequestsQueue,
   retryFailedAuthRequests,
@@ -107,17 +107,17 @@ const routeObject: RouteObject[] = [
         ],
       },
       {
-        path: paths.admin,
-        Component: AdminLayout,
+        path: paths.settings,
+        Component: SettingsLayout,
         children: [
-          { index: true, Component: AdminCardView },
-          { path: paths.adminUnits, Component: Units },
-          { path: paths.adminUsageStatuses, Component: UsageStatuses },
-          { path: paths.adminSystemTypes, Component: SystemTypes },
-          { path: paths.adminRules, Component: Rules },
+          { index: true, Component: SettingsCardView },
+          { path: paths.settingsUnits, Component: Units },
+          { path: paths.settingsUsageStatuses, Component: UsageStatuses },
+          { path: paths.settingsSystemTypes, Component: SystemTypes },
+          { path: paths.settingsRules, Component: Rules },
           {
             path: '*',
-            Component: AdminErrorComponent,
+            Component: SettingsErrorComponent,
           },
         ],
       },

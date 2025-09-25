@@ -33,7 +33,7 @@ describe('catalogue items', () => {
     // Prepare relevant data for catalogue items
     cy.visit('/manufacturers');
     addManufacturer(true);
-    cy.visit('/admin-ims/units');
+    cy.visit('/settings/units');
     addUnits(['mm', 'nm'], true);
     cy.visit('/catalogue');
     addCatalogueCategories(true);

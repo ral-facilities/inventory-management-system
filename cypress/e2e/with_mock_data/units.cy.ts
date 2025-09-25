@@ -1,6 +1,6 @@
 describe('Units', () => {
   beforeEach(() => {
-    cy.visit('/admin-ims/units');
+    cy.visit('/settings/units');
   });
   afterEach(() => {
     cy.clearMocks();

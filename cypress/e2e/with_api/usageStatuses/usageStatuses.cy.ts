@@ -2,7 +2,7 @@ import { addUsageStatuses, deleteUsageStatuses } from './functions';
 
 describe('Usage Statuses', () => {
   beforeEach(() => {
-    cy.visit('/admin-ims/usage-statuses');
+    cy.visit('/settings/usage-statuses');
   });
   afterEach(() => {
     cy.clearMocks();

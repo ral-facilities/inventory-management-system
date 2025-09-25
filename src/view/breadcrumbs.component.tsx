@@ -16,7 +16,7 @@ export interface BreadcrumbsProps {
   breadcrumbsInfo?: BreadcrumbsInfo;
   onChangeNode: (newId: string) => void;
   onChangeNavigateHome: () => void;
-  homeLocation: 'Systems' | 'Admin' | 'Manufacturers' | 'Catalogue';
+  homeLocation: 'Systems' | 'Settings' | 'Manufacturers' | 'Catalogue';
 }
 
 const StyledBreadcrumbs = styled(MuiBreadcrumbs)({

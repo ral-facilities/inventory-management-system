@@ -19,7 +19,7 @@ import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Unit } from '../../api/api.types.tsx';
 import { useGetUnits } from '../../api/units.tsx';
-import { usePreservedTableState } from '../../common/preservedTableState.component';
+import { usePreservedTableState } from '../../common/preservedTableState.component.tsx';
 import {
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
@@ -33,7 +33,7 @@ import {
   getInitialColumnFilterFnState,
   getPageHeightCalc,
   mrtTheme,
-} from '../../utils';
+} from '../../utils.tsx';
 import DeleteUnitDialog from './deleteUnitsDialog.component.tsx';
 import UnitsDialog from './unitsDialog.component.tsx';
 import { useAuthorised } from '../../authProvider.component.tsx';
