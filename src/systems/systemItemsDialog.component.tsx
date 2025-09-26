@@ -18,7 +18,6 @@ import {
   useGetSystems,
   useGetSystemsBreadcrumbs,
 } from '../api/systems';
-import { MoveItemsToSystemUsageStatus } from '../app.types';
 import handleTransferState from '../handleTransferState';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { SystemsTableView } from './systemsTableView.component';
@@ -45,17 +44,6 @@ export interface UsageStatusesErrorType
 export interface ItemUsageStatusesErrorStateType {
   [item_id: string]: { message: string; catalogue_item_id: string };
 }
-
-const convertToSystemUsageStatuses = (
-  selectedItems: Item[],
-  usage_status_id: string
-): MoveItemsToSystemUsageStatus[] => {
-  return selectedItems.map((item) => ({
-    item_id: item.id,
-    usage_status_id: usage_status_id,
-  }));
-};
-
 const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   const { open, onClose, selectedItems, onChangeSelectedItems } = props;
 
@@ -121,14 +109,16 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
       return;
     }
 
+    const usageStatusId =
+      srcSystemTypeId === dstSystemTypeId
+        ? undefined
+        : SelectedRule?.[0]?.dst_usage_status?.id;
+
     // Ensure finished loading and not moving to root
     // (where we don't need to load anything as the name is known)
     if (!targetSystemLoading && targetSystem !== undefined) {
       moveItemsToSystem({
-        usageStatuses: convertToSystemUsageStatuses(
-          selectedItems,
-          SelectedRule?.[0].dst_usage_status?.id ?? ''
-        ),
+        usageStatusId: usageStatusId,
         selectedItems: selectedItems,
         // Only reason for targetSystem to be undefined here is if not loading at all
         // which happens when at root
@@ -148,6 +138,8 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     selectedItems,
     targetSystem,
     targetSystemLoading,
+    dstSystemTypeId,
+    srcSystemTypeId,
   ]);
 
   return (
@@ -184,7 +176,9 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
               isSystemSelectable={(system) => {
                 return (
                   tableRules?.some(
-                    (rule) => rule.dst_system_type?.id === system.type_id
+                    (rule) =>
+                      rule.dst_system_type?.id === system.type_id ||
+                      system.type_id === srcSystemTypeId
                   ) || false
                 );
               }}

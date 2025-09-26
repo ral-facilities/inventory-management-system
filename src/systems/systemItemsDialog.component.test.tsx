@@ -181,7 +181,7 @@ describe('SystemItemsDialog', () => {
       expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
     });
 
-    it('cannot move selected items to root and resets back to an non error state after error have been resolved', async () => {
+    it('cannot move selected items to root and resets back to an non error state after error has been resolved', async () => {
       props.parentSystemId = SystemsJSON[1].id;
 
       createView();
@@ -240,6 +240,39 @@ describe('SystemItemsDialog', () => {
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
         system_id: '65328f34a40ff5301575a4e3',
         usage_status_id: '1',
+      });
+
+      expect(mockOnClose).toHaveBeenCalled();
+      expect(mockOnChangeSelectedItems).toHaveBeenCalledWith({});
+    }, 10000);
+
+    it('moves selected systems (to non-root system)', async () => {
+      props.parentSystemId = SystemsJSON[2].id;
+      createView();
+
+      await waitFor(() =>
+        expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+      );
+
+      await user.click(screen.getByLabelText('navigate to systems home'));
+
+      await waitFor(() => {
+        expect(screen.getByText('Giant laser')).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByText('Giant laser'));
+
+      await waitFor(() => {
+        expect(screen.getByText('Smaller laser')).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Move here' }));
+
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/KvT2Ox7n', {
+        system_id: '65328f34a40ff5301575a4e3',
+      });
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
+        system_id: '65328f34a40ff5301575a4e3',
       });
 
       expect(mockOnClose).toHaveBeenCalled();
