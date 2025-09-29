@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router';
 import type { BreadcrumbsInfo } from '../api/api.types';
 import { RoutesHomeLocation, type RoutesHomeLocationType } from '../app.types';
 import Breadcrumbs from '../view/breadcrumbs.component';
+import { useAuthorised } from '../authProvider.component';
+import AuthRoleStatus from './authRoleStatus.component';
 
 export interface BaseLayoutHeaderProps {
   breadcrumbsInfo?: BreadcrumbsInfo;
@@ -21,6 +23,8 @@ function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
     },
     [homeLocation, navigate]
   );
+  const isUserAuthorised = useAuthorised();
+
   return (
     <Box
       sx={{
@@ -32,7 +36,7 @@ function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
         container
         sx={{
           alignItems: 'center',
-          justifyContent: 'left',
+          justifyContent: 'space-between',
           paddingLeft: 0.5,
           position: 'sticky',
           top: 0,
@@ -49,6 +53,7 @@ function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
           breadcrumbsInfo={breadcrumbsInfo}
           homeLocation={homeLocation}
         />
+        {isUserAuthorised && <AuthRoleStatus />}
       </Grid>
       {children}
     </Box>
