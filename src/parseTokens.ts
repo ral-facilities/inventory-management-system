@@ -54,7 +54,7 @@ export const getUserRole = (): string | undefined => {
     const parsedToken = JSON.parse(parseJwt(token));
     if (parsedToken.roles?.length > 0) {
       const role =
-        parsedToken.roles[0].toUpperCase() + parsedToken.roles[0].slice(1);
+        parsedToken.roles[0][0].toUpperCase() + parsedToken.roles[0].slice(1);
       return parsedToken.userIsAdmin ? 'Admin' : role; // default to admin even if other roles exist
     }
   }

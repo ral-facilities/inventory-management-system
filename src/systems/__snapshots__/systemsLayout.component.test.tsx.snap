@@ -6,7 +6,7 @@ exports[`Systems Layout > renders root systems correctly 1`] = `
     class="MuiBox-root css-v2kfba"
   >
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1gc5pr5-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-icdi9z-MuiGrid2-root"
     >
       <div
         class="MuiBox-root css-70qvj9"
@@ -55,7 +55,7 @@ exports[`Systems Layout > renders units breadcrumbs correctly 1`] = `
     class="MuiBox-root css-v2kfba"
   >
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1gc5pr5-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-icdi9z-MuiGrid2-root"
     >
       <div
         class="MuiBox-root css-70qvj9"
@@ -140,7 +140,7 @@ exports[`Systems Layout Error Component > renders system error page correctly 1`
     class="MuiBox-root css-v2kfba"
   >
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1gc5pr5-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-icdi9z-MuiGrid2-root"
     >
       <div
         class="MuiBox-root css-70qvj9"
