@@ -15,7 +15,7 @@ import {
 import { UseMutationResult } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { Resolver, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import {
   APIImage,
   AttachmentMetadata,
@@ -30,9 +30,10 @@ import {
   createFormControlWithRootErrorClearing,
   getNameAndExtension,
 } from '../utils';
+import z from 'zod';
 
 const formControl =
-  createFormControlWithRootErrorClearing<ObjectFilePatchBase>();
+  createFormControlWithRootErrorClearing<z.infer<typeof FileSchemaPatch>>();
 export interface BaseFileDialogProps {
   open: boolean;
   onClose: () => void;
@@ -82,9 +83,9 @@ const EditFileDialog = (props: FileDialogProps) => {
     setError,
     clearErrors,
     reset,
-  } = useForm<ObjectFilePatchBase>({
+  } = useForm<z.infer<typeof FileSchemaPatch>>({
     formControl,
-    resolver: zodResolver(FileSchemaPatch) as Resolver<ObjectFilePatchBase>,
+    resolver: zodResolver(FileSchemaPatch),
     defaultValues: initialFile,
   });
 
