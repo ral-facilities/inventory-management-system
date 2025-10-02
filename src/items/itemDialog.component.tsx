@@ -654,7 +654,9 @@ function ItemDialog(props: ItemDialogProps) {
                 return (
                   isUserAuthorised ||
                   tableRules?.some(
-                    (rule) => rule.dst_system_type?.id === system.type_id
+                    (rule) =>
+                      rule.dst_system_type?.id === system.type_id ||
+                      system.type_id === srcSystemTypeId
                   ) ||
                   false
                 );
