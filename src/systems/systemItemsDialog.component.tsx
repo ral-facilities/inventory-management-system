@@ -142,7 +142,6 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     dstSystemTypeId,
     targetSystemLoading,
     targetSystem,
-    tableRules,
     moveItemsToSystem,
     selectedItems,
     onChangeSelectedItems,
