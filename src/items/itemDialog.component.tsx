@@ -64,7 +64,7 @@ import handleIMS_APIError from '../handleIMS_APIError';
 import handleTransferState from '../handleTransferState';
 import { SystemsTableView } from '../systems/systemsTableView.component';
 import Breadcrumbs from '../view/breadcrumbs.component';
-// import { useAuthorised } from '../authProvider.component';
+import { useAuthorised } from '../authProvider.component';
 
 function toItemDetailsStep(item: Item | undefined): ItemDetailsStep {
   if (!item) {
@@ -162,7 +162,7 @@ function ItemDialog(props: ItemDialogProps) {
     [catalogueCategory]
   );
 
-  const isUserAuthorised = true;
+  const isUserAuthorised = useAuthorised();
 
   const [showAdvancedSerialNumberOptions, setShowAdvancedSerialNumberOptions] =
     React.useState(false);
