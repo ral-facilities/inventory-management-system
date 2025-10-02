@@ -19,6 +19,7 @@ import { useDeleteItem } from '../api/items';
 import { useGetRules } from '../api/rules';
 import { useGetSystem } from '../api/systems';
 import handleIMS_APIError from '../handleIMS_APIError';
+import { useAuthorised } from '../authProvider.component';
 
 export interface DeleteItemDialogProps {
   open: boolean;
@@ -29,6 +30,8 @@ export interface DeleteItemDialogProps {
 
 const DeleteItemDialog = (props: DeleteItemDialogProps) => {
   const { open, onClose, item, onChangeItem } = props;
+
+  const isUserAuthorised = useAuthorised();
 
   const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
     undefined
@@ -58,7 +61,7 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
         ?.map((rule) => rule.src_system_type?.value ?? '')
         .filter((value): value is string => value !== '') || [];
 
-    if (SelectedRule && SelectedRule.length > 0) {
+    if ((SelectedRule && SelectedRule.length > 0) || isUserAuthorised) {
       deleteItem(item)
         .then(() => {
           onClose();
@@ -72,7 +75,15 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
         `Please move item to a system with Type: ${allowedSystemTypes.join(', ')} before trying to delete.`
       );
     }
-  }, [SelectedRule, deleteItem, deletionRules, item, onChangeItem, onClose]);
+  }, [
+    SelectedRule,
+    deleteItem,
+    deletionRules,
+    isUserAuthorised,
+    item,
+    onChangeItem,
+    onClose,
+  ]);
 
   return (
     <Dialog open={open} maxWidth="lg">
@@ -81,6 +92,12 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
         Delete Item
       </DialogTitle>
       <DialogContent>
+        {isUserAuthorised && (
+          <Typography sx={{ color: '#FFA500', pr: 0.5, pb: 1.5 }}>
+            You are an admin and will be able to bypass any rules that may block
+            other users to delete this item
+          </Typography>
+        )}
         {systemData && (
           <Typography sx={{ pr: 0.5, pb: 1 }}>
             This item is currently in the{' '}

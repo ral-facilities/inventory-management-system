@@ -4,6 +4,7 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
+  DialogContentText,
   DialogTitle,
   FormHelperText,
 } from '@mui/material';
@@ -21,6 +22,7 @@ import {
 import handleTransferState from '../handleTransferState';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { SystemsTableView } from './systemsTableView.component';
+import { useAuthorised } from '../authProvider.component';
 
 export interface SystemItemsDialogProps {
   open: boolean;
@@ -52,6 +54,8 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   const [parentSystemId, setParentSystemId] = React.useState<string | null>(
     props.parentSystemId
   );
+
+  const isUserAuthorised = useAuthorised();
 
   const { data: dstSystem } = useGetSystem(parentSystemId);
   const { data: srcSystem } = useGetSystem(props.parentSystemId);
@@ -102,21 +106,36 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
 
   const handleMoveTo = React.useCallback(() => {
     if (hasSystemErrors) {
-      if (hasSystemErrors)
-        setPlaceIntoSystemError(
-          'Please move items from current location or root to another system.'
-        );
+      setPlaceIntoSystemError(
+        'Please move items from current location or root to another system.'
+      );
+      return;
+    }
+
+    if (SelectedRule?.length === 0 && !isUserAuthorised) {
+      console.log(tableRules);
+
+      const allowedSystemTypes: string[] =
+        tableRules
+          ?.map((rule) => rule.dst_system_type?.value ?? '')
+          .filter((value): value is string => value !== '') || [];
+
+      setPlaceIntoSystemError(
+        `Please move item to a system with Type: ${allowedSystemTypes.join(', ')}.`
+      );
       return;
     }
 
     const usageStatusId =
-      srcSystemTypeId === dstSystemTypeId
+      srcSystemTypeId === dstSystemTypeId ||
+      (SelectedRule?.length === 0 && isUserAuthorised)
         ? undefined
         : SelectedRule?.[0]?.dst_usage_status?.id;
 
     // Ensure finished loading and not moving to root
     // (where we don't need to load anything as the name is known)
     if (!targetSystemLoading && targetSystem !== undefined) {
+      console.log(SelectedRule);
       moveItemsToSystem({
         usageStatusId: usageStatusId,
         selectedItems: selectedItems,
@@ -130,16 +149,18 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
       });
     }
   }, [
-    SelectedRule,
-    handleClose,
     hasSystemErrors,
-    moveItemsToSystem,
-    onChangeSelectedItems,
-    selectedItems,
-    targetSystem,
-    targetSystemLoading,
-    dstSystemTypeId,
+    SelectedRule,
+    isUserAuthorised,
     srcSystemTypeId,
+    dstSystemTypeId,
+    targetSystemLoading,
+    targetSystem,
+    tableRules,
+    moveItemsToSystem,
+    selectedItems,
+    onChangeSelectedItems,
+    handleClose,
   ]);
 
   return (
@@ -158,6 +179,14 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
       <DialogContent>
         <Grid container spacing={1.5} size={12}>
           <Grid size={12}>
+            {isUserAuthorised && (
+              <DialogContentText sx={{ color: '#FFA500' }}>
+                You are an admin and will be able to move an item into{' '}
+                <strong>ANY</strong> system.
+              </DialogContentText>
+            )}
+          </Grid>
+          <Grid size={12}>
             <Breadcrumbs
               breadcrumbsInfo={parentSystemBreadcrumbs}
               onChangeNode={changeParentSystemId}
@@ -175,11 +204,11 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
               systemParentId={parentSystemId ?? undefined}
               isSystemSelectable={(system) => {
                 return (
+                  !isUserAuthorised ||
                   tableRules?.some(
-                    (rule) =>
-                      rule.dst_system_type?.id === system.type_id ||
-                      system.type_id === srcSystemTypeId
-                  ) || false
+                    (rule) => rule.dst_system_type?.id === system.type_id
+                  ) ||
+                  false
                 );
               }}
               // Use most unrestricted variant (i.e. copy with no selection)
