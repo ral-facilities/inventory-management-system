@@ -112,20 +112,6 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
       return;
     }
 
-    if (SelectedRule?.length === 0 && !isUserAuthorised) {
-      console.log(tableRules);
-
-      const allowedSystemTypes: string[] =
-        tableRules
-          ?.map((rule) => rule.dst_system_type?.value ?? '')
-          .filter((value): value is string => value !== '') || [];
-
-      setPlaceIntoSystemError(
-        `Please move item to a system with Type: ${allowedSystemTypes.join(', ')}.`
-      );
-      return;
-    }
-
     const usageStatusId =
       srcSystemTypeId === dstSystemTypeId ||
       (SelectedRule?.length === 0 && isUserAuthorised)
