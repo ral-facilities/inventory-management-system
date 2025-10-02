@@ -965,14 +965,12 @@ describe('Systems', () => {
         .should('be.visible')
         .within(() => {
           cy.findByRole('button', { name: 'navigate to systems home' }).click();
-          cy.findByLabelText('Giant laser row').click();
-          cy.findByRole('button', { name: 'Next' }).click();
+          cy.findByLabelText('Storage row').click();
+
+          // eslint-disable-next-line cypress/no-unnecessary-waiting
+          cy.wait(4000);
+          cy.findByRole('button', { name: 'Move here' }).click();
         });
-
-      cy.findAllByRole('combobox').eq(1).click();
-      cy.findByRole('option', { name: 'Scrapped' }).click();
-
-      cy.findByRole('button', { name: 'Finish' }).click();
 
       cy.findByRole('dialog').should('not.exist');
 
@@ -984,15 +982,15 @@ describe('Systems', () => {
         expect(patchRequests[0].url.toString()).to.contain('/z1hJvV8Z');
         expect(JSON.stringify(await patchRequests[0].json())).equal(
           JSON.stringify({
-            system_id: '65328f34a40ff5301575a4e3',
-            usage_status_id: '3',
+            system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
+            usage_status_id: '2',
           })
         );
         expect(patchRequests[1].url.toString()).to.contain('/4mYoI7pr');
         expect(JSON.stringify(await patchRequests[1].json())).equal(
           JSON.stringify({
-            system_id: '65328f34a40ff5301575a4e3',
-            usage_status_id: '3',
+            system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
+            usage_status_id: '2',
           })
         );
       });
@@ -1028,40 +1026,16 @@ describe('Systems', () => {
         });
 
       cy.findByRole('button', { name: 'Move to' }).click();
-
-      cy.findByText('Set usage statuses').click();
-      cy.findByRole('button', { name: 'Finish' }).click();
-
-      cy.findByText(
-        'Move items from current location or root to another system'
-      ).should('exist');
-      cy.findByText('Please select a usage status for all items').should(
-        'exist'
-      );
-      cy.findAllByLabelText('Expand all').eq(2).click();
-      cy.findAllByText('Please select a usage status').should('have.length', 2);
-      cy.findAllByRole('combobox').eq(1).click();
-      cy.findByRole('option', { name: 'Scrapped' }).click();
-      cy.findAllByText('Please select a usage status').should('have.length', 0);
-      cy.findByText('Please select a usage status for all items').should(
-        'not.exist'
-      );
-      cy.findByText('Place into a system').click();
+      const errorMessage =
+        'Please move items from current location or root to another system.';
       cy.findByRole('button', { name: 'navigate to systems home' }).click();
-      cy.findByText(
-        'Move items from current location or root to another system'
-      ).should('not.exist');
-      cy.findByRole('button', { name: 'Next' }).click();
-      cy.findByText(
-        'Move items from current location or root to another system'
-      ).should('exist');
+      cy.findByText(errorMessage).should('not.exist');
+      cy.findByRole('button', { name: 'Move here' }).click();
+      cy.findByText(errorMessage).should('exist');
 
-      cy.findByText('Pico Laser').click();
-      cy.findByRole('button', { name: 'Next' }).click();
-      cy.findByText(
-        'Move items from current location or root to another system'
-      ).should('not.exist');
-      cy.findByRole('button', { name: 'Finish' }).should('not.be.disabled');
+      cy.findAllByText('Storage').first().click();
+      cy.findByRole('button', { name: 'Move here' }).should('not.be.disabled');
+      cy.findByText(errorMessage).should('not.exist');
     });
   });
 });

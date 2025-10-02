@@ -1578,11 +1578,27 @@ describe('Items', () => {
     });
   });
 
-  it('deletes an item', () => {
+  it('displays error message user tries delete item from a system type which is not allowed', () => {
     cy.findAllByLabelText('Row Actions').first().click();
     cy.findByText('Delete').click();
 
     cy.findByText('Serial Number: 5YUQDDjKpz2z').should('exist');
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.findByText(
+      'Please move item to a system with Type: Storage before trying to delete.'
+    ).should('exist');
+  });
+
+  it('deletes an item', () => {
+    cy.visit('/catalogue/9/items/11/items');
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByText('Delete').click();
+
+    cy.findByText('Serial Number: dfzqkOJbqifO').should('exist');
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -1594,7 +1610,7 @@ describe('Items', () => {
     }).should((deleteRequests) => {
       expect(deleteRequests.length).equal(1);
       const request = deleteRequests[0];
-      expect(request.url.toString()).to.contain('KvT2Ox7n');
+      expect(request.url.toString()).to.contain('RuUxShkg');
     });
   });
 

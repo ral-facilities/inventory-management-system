@@ -665,7 +665,7 @@ export function ItemsTable(props: ItemTableProps) {
   return (
     <div style={{ width: '100%' }}>
       <MaterialReactTable table={table} />
-      {!dense && (
+      {!dense && selectedItem && (
         <DeleteItemDialog
           open={deleteItemDialogOpen}
           onClose={() => setDeleteItemDialogOpen(false)}

@@ -1,10 +1,6 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { MockInstance } from 'vitest';
-import {
-  MoveItemsToSystem,
-  MoveItemsToSystemUsageStatus,
-  PostItems,
-} from '../app.types';
+import { MoveItemsToSystem, PostItems } from '../app.types';
 import SystemsJSON from '../mocks/Systems.json';
 import {
   getItemById,
@@ -237,11 +233,6 @@ describe('items api functions', () => {
       getItemById('G463gOIA') as Item,
     ];
 
-    const mockUsageStatuses: MoveItemsToSystemUsageStatus[] = [
-      { item_id: 'KvT2Ox7n', usage_status_id: '0' },
-      { item_id: 'G463gOIA', usage_status_id: '0' },
-    ];
-
     let moveItemsToSystem: MoveItemsToSystem;
 
     // Use patch spy for testing since response is not actual data in this case
@@ -251,7 +242,7 @@ describe('items api functions', () => {
     beforeEach(() => {
       moveItemsToSystem = {
         // Prevent test interference if modifying the usage statuses or selected items
-        usageStatuses: JSON.parse(JSON.stringify(mockUsageStatuses)),
+        usageStatusId: '0',
         selectedItems: JSON.parse(JSON.stringify(mockItems)),
         targetSystem: SystemsJSON[1] as System,
       };
@@ -278,9 +269,7 @@ describe('items api functions', () => {
       moveItemsToSystem.selectedItems.map((item) =>
         expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/items/${item.id}`, {
           system_id: moveItemsToSystem.targetSystem.id,
-          usage_status_id: moveItemsToSystem.usageStatuses.find(
-            (status) => status.item_id === item.id
-          )?.usage_status_id,
+          usage_status_id: moveItemsToSystem.usageStatusId,
         })
       );
       expect(result.current.data).toEqual(
@@ -298,10 +287,7 @@ describe('items api functions', () => {
         name: 'New system name',
         id: 'new_system_id',
       };
-      moveItemsToSystem.usageStatuses = [
-        ...moveItemsToSystem.usageStatuses,
-        { item_id: 'Error 409', usage_status_id: '2' },
-      ];
+      moveItemsToSystem.usageStatusId = '2';
 
       // Fail just the 1st system
       moveItemsToSystem.selectedItems[0].id = 'Error 409';
@@ -321,9 +307,7 @@ describe('items api functions', () => {
       moveItemsToSystem.selectedItems.map((item) =>
         expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/items/${item.id}`, {
           system_id: 'new_system_id',
-          usage_status_id: moveItemsToSystem.usageStatuses.find(
-            (status) => status.item_id === item.id
-          )?.usage_status_id,
+          usage_status_id: moveItemsToSystem.usageStatusId,
         })
       );
       expect(result.current.data).toEqual(
