@@ -276,13 +276,19 @@ function ItemDialog(props: ItemDialogProps) {
       const usageStatus = usageStatuses?.find(
         (status) => status.id === selectedRule[0].dst_usage_status?.id
       );
-      if (usageStatus) {
+      if (usageStatus && srcSystemTypeId !== dstSystemTypeId) {
         ItemDetailsStepFormMethods.setValue('usage_status_id', usageStatus.id, {
           shouldValidate: true,
         });
       }
     }
-  }, [selectedRule, usageStatuses, ItemDetailsStepFormMethods]);
+  }, [
+    selectedRule,
+    usageStatuses,
+    ItemDetailsStepFormMethods,
+    srcSystemTypeId,
+    dstSystemTypeId,
+  ]);
 
   // Clears form errors when a value has been changed
   React.useEffect(() => {
@@ -620,7 +626,9 @@ function ItemDialog(props: ItemDialogProps) {
               isSystemSelectable={(system) => {
                 return (
                   tableRules?.some(
-                    (rule) => rule.dst_system_type?.id === system.type_id
+                    (rule) =>
+                      rule.dst_system_type?.id === system.type_id ||
+                      system.type_id === srcSystemTypeId
                   ) || false
                 );
               }}
