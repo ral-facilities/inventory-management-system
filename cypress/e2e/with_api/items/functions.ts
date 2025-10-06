@@ -1,20 +1,20 @@
-const modifyItem = (
-  values: {
-    edit?: number;
-    serialNumber?: string;
-    assetNumber?: string;
-    purchaseOrderNumber?: string;
-    warrantyEndDate?: string;
-    deliveredDate?: string;
+export const modifyItem = (
+  values: Partial<{
+    edit: number;
+    serialNumber: string;
+    assetNumber: string;
+    purchaseOrderNumber: string;
+    warrantyEndDate: string;
+    deliveredDate: string;
     isDefective: string;
-    usageStatus?: string;
-    notes?: string;
+    usageStatus: string;
+    notes: string;
     substrate: string;
-    diameter?: string;
+    diameter: string;
     wavelengthRange: string;
-    broken?: string;
+    broken: string;
     system: string;
-  },
+  }>,
   ignoreChecks?: boolean
 ) => {
   if (typeof values.edit === 'number') {
@@ -27,7 +27,7 @@ const modifyItem = (
 
   cy.findByLabelText('navigate to systems home').click();
 
-  cy.findAllByText(values.system).first().click();
+  if (values.system) cy.findAllByText(values.system).first().click();
 
   // eslint-disable-next-line cypress/no-unnecessary-waiting
   cy.wait(4000);
@@ -76,8 +76,10 @@ const modifyItem = (
     cy.findByRole('option', { name: values.usageStatus }).click();
   }
 
-  cy.findByLabelText('Is defective *').click();
-  cy.findByRole('option', { name: values.isDefective }).click();
+  if (values.isDefective) {
+    cy.findByLabelText('Is defective *').click();
+    cy.findByRole('option', { name: values.isDefective }).click();
+  }
 
   if (values.notes) {
     cy.findByLabelText('Notes').clear();
@@ -88,8 +90,10 @@ const modifyItem = (
 
   cy.findByRole('button', { name: 'Next' }).click();
 
-  cy.findByLabelText('Substrate *').click();
-  cy.findByRole('option', { name: values.substrate }).click();
+  if (values.substrate) {
+    cy.findByLabelText('Substrate *').click();
+    cy.findByRole('option', { name: values.substrate }).click();
+  }
 
   if (values.diameter) {
     cy.findByLabelText('Diameter (mm)').clear();
@@ -98,15 +102,14 @@ const modifyItem = (
     cy.findByLabelText('Diameter (mm)').clear();
   }
 
-  cy.findByLabelText('Wavelength Range (nm) *').clear();
-  cy.findByLabelText('Wavelength Range (nm) *').type(values.wavelengthRange);
+  if (values.wavelengthRange) {
+    cy.findByLabelText('Wavelength Range (nm) *').clear();
+    cy.findByLabelText('Wavelength Range (nm) *').type(values.wavelengthRange);
+  }
 
   if (values.broken) {
     cy.findByLabelText('Broken').click();
     cy.findByRole('option', { name: values.broken }).click();
-  } else {
-    cy.findByLabelText('Broken').click();
-    cy.findByRole('option', { name: 'None' }).click();
   }
 
   cy.findByRole('button', { name: 'Finish' }).click();

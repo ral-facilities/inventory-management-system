@@ -174,8 +174,8 @@ export const getItemsByCatalogueItemId = (catalogueItemId: string): Item[] => {
   return ItemsJSON.filter((item) => item.catalogue_item_id === catalogueItemId);
 };
 
-export const getItemById = (itemId: string): Item | undefined => {
-  return ItemsJSON.find((item) => item.id === itemId);
+export const getItemById = (itemId: string): Item => {
+  return ItemsJSON.find((item) => item.id === itemId)!;
 };
 
 export const getItemsBySystemId = (systemId: string): Item[] => {

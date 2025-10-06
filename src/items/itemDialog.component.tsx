@@ -191,7 +191,7 @@ function ItemDialog(props: ItemDialogProps) {
   const { data: tableRules } = useGetRules(srcSystemTypeId);
 
   // This should be a list of 1 rule
-  const { data: selectedRule } = useGetRules(srcSystemTypeId, dstSystemTypeId);
+  const { data: selectedRules } = useGetRules(srcSystemTypeId, dstSystemTypeId);
 
   const isDstSystemTypeSameAsSrcSystemType = React.useMemo(() => {
     if (!dstSystem || !srcSystem) return false;
@@ -272,9 +272,9 @@ function ItemDialog(props: ItemDialogProps) {
 
   // Set usage status based on the selected Rule
   React.useEffect(() => {
-    if (selectedRule && selectedRule.length > 0) {
+    if (selectedRules && selectedRules.length > 0) {
       const usageStatus = usageStatuses?.find(
-        (status) => status.id === selectedRule[0].dst_usage_status?.id
+        (status) => status.id === selectedRules[0].dst_usage_status?.id
       );
       if (usageStatus && srcSystemTypeId !== dstSystemTypeId) {
         ItemDetailsStepFormMethods.setValue('usage_status_id', usageStatus.id, {
@@ -283,7 +283,7 @@ function ItemDialog(props: ItemDialogProps) {
       }
     }
   }, [
-    selectedRule,
+    selectedRules,
     usageStatuses,
     ItemDetailsStepFormMethods,
     srcSystemTypeId,
@@ -488,7 +488,7 @@ function ItemDialog(props: ItemDialogProps) {
             return;
           } else if (
             !isDstSystemTypeSameAsSrcSystemType &&
-            (!selectedRule || selectedRule.length === 0)
+            (!selectedRules || selectedRules.length === 0)
           ) {
             const allowedDstSystemTypes =
               tableRules?.map((rule) => rule.dst_system_type?.value) || [];
@@ -509,7 +509,7 @@ function ItemDialog(props: ItemDialogProps) {
       }
     },
     [
-      selectedRule,
+      selectedRules,
       handleSubmitDetailsStep,
       isDstSystemTypeSameAsSrcSystemType,
       parentSystemId,
@@ -535,7 +535,7 @@ function ItemDialog(props: ItemDialogProps) {
         hasErrors = true;
       } else if (
         !isDstSystemTypeSameAsSrcSystemType &&
-        (!selectedRule || selectedRule.length === 0)
+        (!selectedRules || selectedRules.length === 0)
       ) {
         const allowedDstSystemTypes =
           tableRules?.map((rule) => rule.dst_system_type?.value) || [];
@@ -575,7 +575,7 @@ function ItemDialog(props: ItemDialogProps) {
       }
     },
     [
-      selectedRule,
+      selectedRules,
       catalogueItem?.id,
       duplicate,
       handleAddItem,
