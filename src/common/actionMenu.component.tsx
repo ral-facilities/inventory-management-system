@@ -12,10 +12,14 @@ import { StyledUppyBox } from './uppy.utils';
 
 export interface ActionMenuProps {
   ariaLabelPrefix: string;
-  editMenuItem: { onClick: () => void; dialog: React.ReactNode };
+  editMenuItem: {
+    onClick: (isAdmin?: boolean) => void;
+    dialog: React.ReactNode;
+  };
   printMenuItem?: boolean;
   uploadAttachmentsEntityId?: string;
   uploadImagesEntityId?: string;
+  showAdminEdit?: boolean;
 }
 function ActionMenu(props: ActionMenuProps) {
   const {
@@ -24,6 +28,7 @@ function ActionMenu(props: ActionMenuProps) {
     ariaLabelPrefix,
     uploadAttachmentsEntityId,
     uploadImagesEntityId,
+    showAdminEdit,
   } = props;
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -95,6 +100,17 @@ function ActionMenu(props: ActionMenuProps) {
             <EditIcon fontSize="small" sx={{ mr: 1 }} />
             Edit
           </MenuItem>
+          {showAdminEdit && (
+            <MenuItem
+              onClick={() => {
+                editMenuItem.onClick(true);
+                handleMenuClose();
+              }}
+            >
+              <EditIcon fontSize="small" sx={{ mr: 1 }} />
+              Edit as admin
+            </MenuItem>
+          )}
           {uploadImagesEntityId && (
             <MenuItem
               onClick={() => {

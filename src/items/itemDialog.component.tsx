@@ -9,6 +9,7 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
+  DialogContentText,
   DialogTitle,
   FormHelperText,
   IconButton,
@@ -143,6 +144,7 @@ export interface ItemDialogProps {
   catalogueItem?: CatalogueItem;
   catalogueCategory?: CatalogueCategory;
   selectedItem?: Item;
+  isUserAuthorised: boolean;
 }
 
 function ItemDialog(props: ItemDialogProps) {
@@ -154,6 +156,7 @@ function ItemDialog(props: ItemDialogProps) {
     catalogueItem,
     catalogueCategory,
     selectedItem,
+    isUserAuthorised,
   } = props;
   const parentCatalogueItemPropertiesInfo = React.useMemo(
     () => catalogueCategory?.properties ?? [],
@@ -210,7 +213,12 @@ function ItemDialog(props: ItemDialogProps) {
     useGetSystemsBreadcrumbs(parentSystemId);
 
   const ItemDetailsStepFormMethods = useForm<ItemDetailsStep>({
-    resolver: zodResolver(ItemDetailsStepSchema(requestType)),
+    resolver: zodResolver(
+      ItemDetailsStepSchema(
+        requestType,
+        isUserAuthorised && parentSystemId !== null
+      )
+    ),
     defaultValues: toItemDetailsStep(selectedItem),
   });
 
@@ -306,9 +314,23 @@ function ItemDialog(props: ItemDialogProps) {
   }, [clearErrorsPropertiesStep, watchPropertiesStep]);
 
   React.useEffect(() => {
-    if (parentSystemId !== selectedItem?.system_id)
+    if (parentSystemId !== selectedItem?.system_id) {
       clearErrorsPropertiesStep('root.formError');
-  }, [clearErrorsPropertiesStep, parentSystemId, selectedItem?.system_id]);
+
+      // Clears usage status error even when they pick a system with no defined rule
+      // which can only be done by authorised users, therefore the usage status dropdown
+      // shows the correct/no error message
+      if (isUserAuthorised) {
+        clearErrorsDetailsStep(['usage_status_id']);
+      }
+    }
+  }, [
+    clearErrorsDetailsStep,
+    clearErrorsPropertiesStep,
+    isUserAuthorised,
+    parentSystemId,
+    selectedItem?.system_id,
+  ]);
 
   React.useEffect(() => {
     if (
@@ -488,7 +510,8 @@ function ItemDialog(props: ItemDialogProps) {
             return;
           } else if (
             !isDstSystemTypeSameAsSrcSystemType &&
-            (!selectedRules || selectedRules.length === 0)
+            (!selectedRules || selectedRules.length === 0) &&
+            !isUserAuthorised
           ) {
             const allowedDstSystemTypes =
               tableRules?.map((rule) => rule.dst_system_type?.value) || [];
@@ -514,6 +537,7 @@ function ItemDialog(props: ItemDialogProps) {
       isDstSystemTypeSameAsSrcSystemType,
       parentSystemId,
       tableRules,
+      isUserAuthorised,
     ]
   );
 
@@ -535,7 +559,8 @@ function ItemDialog(props: ItemDialogProps) {
         hasErrors = true;
       } else if (
         !isDstSystemTypeSameAsSrcSystemType &&
-        (!selectedRules || selectedRules.length === 0)
+        (!selectedRules || selectedRules.length === 0) &&
+        !isUserAuthorised
       ) {
         const allowedDstSystemTypes =
           tableRules?.map((rule) => rule.dst_system_type?.value) || [];
@@ -585,6 +610,7 @@ function ItemDialog(props: ItemDialogProps) {
       parentSystemId,
       requestType,
       tableRules,
+      isUserAuthorised,
     ]
   );
 
@@ -625,11 +651,13 @@ function ItemDialog(props: ItemDialogProps) {
               systemParentId={parentSystemId ?? undefined}
               isSystemSelectable={(system) => {
                 return (
+                  isUserAuthorised ||
                   tableRules?.some(
                     (rule) =>
                       rule.dst_system_type?.id === system.type_id ||
                       system.type_id === srcSystemTypeId
-                  ) || false
+                  ) ||
+                  false
                 );
               }}
               // Use most unrestricted variant (i.e. copy with no selection)
@@ -913,7 +941,7 @@ function ItemDialog(props: ItemDialogProps) {
                 render={({ field: { value, onChange } }) => (
                   <Autocomplete
                     disableClearable={value != null}
-                    disabled
+                    disabled={!isUserAuthorised}
                     id="item-usage-status-input"
                     value={
                       usageStatuses?.find(
@@ -935,7 +963,7 @@ function ItemDialog(props: ItemDialogProps) {
                       <TextField
                         {...params}
                         required={true}
-                        disabled
+                        disabled={!isUserAuthorised}
                         label="Usage status"
                         error={!!errorsDetailsStep.usage_status_id}
                         helperText={errorsDetailsStep.usage_status_id?.message}
@@ -1183,7 +1211,15 @@ function ItemDialog(props: ItemDialogProps) {
       <DialogTitle>
         {`${requestType === 'patch' ? 'Edit' : 'Add'} Item`}
       </DialogTitle>
+
       <DialogContent>
+        {isUserAuthorised && (
+          <DialogContentText sx={{ color: '#FFA500' }}>
+            {`Warning: You are ${requestType === 'patch' ? 'editing' : 'creating'} an item as an admin, and will be to able place an item in `}
+            <strong>ANY</strong> system, and optionally edit it&apos;s usage
+            status
+          </DialogContentText>
+        )}
         <Stepper
           nonLinear
           activeStep={activeStep}

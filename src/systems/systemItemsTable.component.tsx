@@ -35,11 +35,13 @@ import {
   mrtTheme,
 } from '../utils';
 import SystemItemsDialog from './systemItemsDialog.component';
+import { useAuthorised } from '../authProvider.component';
 
 const MoveItemsButton = (props: {
   selectedItems: Item[];
   system: System;
   onChangeSelectedItems: (selectedItems: MRT_RowSelectionState) => void;
+  isUserAuthorised: boolean;
 }) => {
   const [moveItemsDialogOpen, setMoveItemsDialogOpen] =
     React.useState<boolean>(false);
@@ -61,6 +63,7 @@ const MoveItemsButton = (props: {
         selectedItems={props.selectedItems}
         onChangeSelectedItems={props.onChangeSelectedItems}
         parentSystemId={props.system.id}
+        isUserAuthorised={props.isUserAuthorised}
       />
     </>
   );
@@ -78,6 +81,8 @@ export interface SystemItemsTableProps {
 
 export function SystemItemsTable(props: SystemItemsTableProps) {
   const { system } = props;
+
+  const isUserAuthorised = useAuthorised();
 
   // States
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
@@ -466,6 +471,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
             selectedItems={selectedItems}
             system={system}
             onChangeSelectedItems={setRowSelection}
+            isUserAuthorised={isUserAuthorised}
           />
         )}
       </Box>

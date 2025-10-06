@@ -53,6 +53,7 @@ import {
 import DeleteItemDialog from './deleteItemDialog.component';
 import ItemDialog from './itemDialog.component';
 import ItemsDetailsPanel from './itemsDetailsPanel.component';
+import { useAuthorised } from '../authProvider.component';
 
 export interface ItemTableProps {
   catalogueCategory: CatalogueCategory;
@@ -67,6 +68,8 @@ interface TableRowData {
 
 export function ItemsTable(props: ItemTableProps) {
   const { catalogueCategory, catalogueItem, dense } = props;
+
+  const isUserAuthorised = useAuthorised();
 
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
 
@@ -129,6 +132,9 @@ export function ItemsTable(props: ItemTableProps) {
   const [itemDialogType, setItemsDialogType] = React.useState<
     'create' | 'duplicate' | 'edit'
   >('create');
+
+  const [openDialogAsAdmin, setOpenDialogAsAdmin] =
+    React.useState<boolean>(false);
 
   // Breadcrumbs + Mui table V2 + extra
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
@@ -551,7 +557,9 @@ export function ItemsTable(props: ItemTableProps) {
             open={true}
             onClose={() => {
               table.setCreatingRow(null);
+              setOpenDialogAsAdmin(false);
             }}
+            isUserAuthorised={openDialogAsAdmin}
             duplicate={itemDialogType === 'duplicate'}
             requestType={itemDialogType === 'edit' ? 'patch' : 'post'}
             catalogueCategory={catalogueCategory}
@@ -579,11 +587,27 @@ export function ItemsTable(props: ItemTableProps) {
           variant="outlined"
           onClick={() => {
             setItemsDialogType('create');
+            setOpenDialogAsAdmin(false);
             table.setCreatingRow(true);
           }}
         >
           Add Item
         </Button>
+
+        {isUserAuthorised && (
+          <Button
+            startIcon={<AddIcon />}
+            sx={{ mx: 0.5 }}
+            variant="outlined"
+            onClick={() => {
+              setItemsDialogType('create');
+              setOpenDialogAsAdmin(true);
+              table.setCreatingRow(true);
+            }}
+          >
+            Add Item as admin
+          </Button>
+        )}
 
         <Button
           startIcon={<ClearIcon />}
@@ -605,6 +629,7 @@ export function ItemsTable(props: ItemTableProps) {
           aria-label={`Edit item ${row.original.item.id}`}
           onClick={() => {
             setItemsDialogType('edit');
+            setOpenDialogAsAdmin(false);
             table.setCreatingRow(row);
             closeMenu();
           }}
@@ -615,6 +640,24 @@ export function ItemsTable(props: ItemTableProps) {
           </ListItemIcon>
           <ListItemText>Edit</ListItemText>
         </MenuItem>,
+        isUserAuthorised && (
+          <MenuItem
+            key="edit"
+            aria-label={`Edit item ${row.original.item.id}`}
+            onClick={() => {
+              setItemsDialogType('edit');
+              setOpenDialogAsAdmin(true);
+              table.setCreatingRow(row);
+              closeMenu();
+            }}
+            sx={{ m: 0 }}
+          >
+            <ListItemIcon>
+              <EditIcon />
+            </ListItemIcon>
+            <ListItemText>Edit as admin</ListItemText>
+          </MenuItem>
+        ),
         <MenuItem
           key="duplicate"
           aria-label={`Duplicate item ${row.original.item.id}`}
@@ -635,6 +678,7 @@ export function ItemsTable(props: ItemTableProps) {
           aria-label={`Delete item ${row.original.item.id}`}
           onClick={() => {
             setDeleteItemDialogOpen(true);
+            setOpenDialogAsAdmin(false);
             setSelectedItem(row.original.item);
             closeMenu();
           }}
@@ -645,6 +689,24 @@ export function ItemsTable(props: ItemTableProps) {
           </ListItemIcon>
           <ListItemText>Delete</ListItemText>
         </MenuItem>,
+        isUserAuthorised && (
+          <MenuItem
+            key="delete"
+            aria-label={`Delete item ${row.original.item.id}`}
+            onClick={() => {
+              setDeleteItemDialogOpen(true);
+              setOpenDialogAsAdmin(true);
+              setSelectedItem(row.original.item);
+              closeMenu();
+            }}
+            sx={{ m: 0 }}
+          >
+            <ListItemIcon>
+              <DeleteIcon />
+            </ListItemIcon>
+            <ListItemText>Delete as admin</ListItemText>
+          </MenuItem>
+        ),
       ];
     },
     renderBottomToolbarCustomActions: ({ table }) =>
@@ -668,9 +730,13 @@ export function ItemsTable(props: ItemTableProps) {
       {!dense && selectedItem && (
         <DeleteItemDialog
           open={deleteItemDialogOpen}
-          onClose={() => setDeleteItemDialogOpen(false)}
+          onClose={() => {
+            setDeleteItemDialogOpen(false);
+            setOpenDialogAsAdmin(false);
+          }}
           item={selectedItem}
           onChangeItem={setSelectedItem}
+          isUserAuthorised={openDialogAsAdmin}
         />
       )}
     </div>

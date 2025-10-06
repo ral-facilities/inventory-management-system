@@ -4,6 +4,7 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
+  DialogContentText,
   DialogTitle,
   FormHelperText,
 } from '@mui/material';
@@ -28,6 +29,7 @@ export interface SystemItemsDialogProps {
   selectedItems: Item[];
   onChangeSelectedItems: (selectedItems: MRT_RowSelectionState) => void;
   parentSystemId: string | null;
+  isUserAuthorised: boolean;
 }
 
 export interface UsageStatusesType {
@@ -45,7 +47,13 @@ export interface ItemUsageStatusesErrorStateType {
   [item_id: string]: { message: string; catalogue_item_id: string };
 }
 const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
-  const { open, onClose, selectedItems, onChangeSelectedItems } = props;
+  const {
+    open,
+    onClose,
+    selectedItems,
+    onChangeSelectedItems,
+    isUserAuthorised,
+  } = props;
 
   // Store here and update only if changed to reduce re-renders and allow
   // navigation
@@ -102,21 +110,22 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
 
   const handleMoveTo = React.useCallback(() => {
     if (hasSystemErrors) {
-      if (hasSystemErrors)
-        setPlaceIntoSystemError(
-          'Please move items from current location or root to another system.'
-        );
+      setPlaceIntoSystemError(
+        'Please move items from current location or root to another system.'
+      );
       return;
     }
 
     const usageStatusId =
-      srcSystemTypeId === dstSystemTypeId
+      srcSystemTypeId === dstSystemTypeId ||
+      (selectedRules?.length === 0 && isUserAuthorised)
         ? undefined
         : selectedRules?.[0]?.dst_usage_status?.id;
 
     // Ensure finished loading and not moving to root
     // (where we don't need to load anything as the name is known)
     if (!targetSystemLoading && targetSystem !== undefined) {
+      console.log(selectedRules);
       moveItemsToSystem({
         usageStatusId: usageStatusId,
         selectedItems: selectedItems,
@@ -140,6 +149,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     targetSystemLoading,
     dstSystemTypeId,
     srcSystemTypeId,
+    isUserAuthorised,
   ]);
 
   return (
@@ -158,6 +168,14 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
       <DialogContent>
         <Grid container spacing={1.5} size={12}>
           <Grid size={12}>
+            {isUserAuthorised && (
+              <DialogContentText sx={{ color: '#FFA500' }}>
+                Warning: You are moving as an admin and will be able to move an
+                item into <strong>ANY</strong> system.
+              </DialogContentText>
+            )}
+          </Grid>
+          <Grid size={12}>
             <Breadcrumbs
               breadcrumbsInfo={parentSystemBreadcrumbs}
               onChangeNode={changeParentSystemId}
@@ -175,11 +193,13 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
               systemParentId={parentSystemId ?? undefined}
               isSystemSelectable={(system) => {
                 return (
+                  isUserAuthorised ||
                   tableRules?.some(
                     (rule) =>
                       rule.dst_system_type?.id === system.type_id ||
                       system.type_id === srcSystemTypeId
-                  ) || false
+                  ) ||
+                  false
                 );
               }}
               // Use most unrestricted variant (i.e. copy with no selection)

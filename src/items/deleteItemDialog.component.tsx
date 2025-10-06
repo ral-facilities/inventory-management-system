@@ -25,11 +25,11 @@ export interface DeleteItemDialogProps {
   onClose: () => void;
   item: Item;
   onChangeItem: (Item: Item | undefined) => void;
+  isUserAuthorised: boolean;
 }
 
 const DeleteItemDialog = (props: DeleteItemDialogProps) => {
-  const { open, onClose, item, onChangeItem } = props;
-
+  const { open, onClose, item, onChangeItem, isUserAuthorised } = props;
   const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
     undefined
   );
@@ -58,7 +58,7 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
         ?.map((rule) => rule.src_system_type?.value ?? '')
         .filter((value): value is string => value !== '') || [];
 
-    if (selectedRules && selectedRules.length > 0) {
+    if ((selectedRules && selectedRules.length > 0) || isUserAuthorised) {
       deleteItem(item)
         .then(() => {
           onClose();
@@ -72,7 +72,15 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
         `Please move item to a system with Type: ${allowedSystemTypes.join(', ')} before trying to delete.`
       );
     }
-  }, [selectedRules, deleteItem, deletionRules, item, onChangeItem, onClose]);
+  }, [
+    selectedRules,
+    deleteItem,
+    deletionRules,
+    isUserAuthorised,
+    item,
+    onChangeItem,
+    onClose,
+  ]);
 
   return (
     <Dialog open={open} maxWidth="lg">
@@ -81,6 +89,12 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
         Delete Item
       </DialogTitle>
       <DialogContent>
+        {isUserAuthorised && (
+          <Typography sx={{ color: '#FFA500', pr: 0.5, pb: 1.5 }}>
+            Warning: You are deleting this item as an admin, you may be
+            bypassing rules blocking other users from deleting this item
+          </Typography>
+        )}
         {systemData && (
           <Typography sx={{ pr: 0.5, pb: 1 }}>
             This item is currently in the{' '}
