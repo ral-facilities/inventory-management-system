@@ -7,7 +7,7 @@ export default defineConfig({
     video: false,
     retries: {
       runMode: 3,
-      openMode: 0,
+      openMode: 1,
     },
   },
 });

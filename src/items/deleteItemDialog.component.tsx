@@ -37,7 +37,7 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
   const { data: systemData } = useGetSystem(item?.system_id);
 
   // This should be a list of 1 rule
-  const { data: SelectedRule } = useGetRules(
+  const { data: selectedRules } = useGetRules(
     systemData?.type_id ?? 'null',
     'null'
   );
@@ -58,7 +58,7 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
         ?.map((rule) => rule.src_system_type?.value ?? '')
         .filter((value): value is string => value !== '') || [];
 
-    if (SelectedRule && SelectedRule.length > 0) {
+    if (selectedRules && selectedRules.length > 0) {
       deleteItem(item)
         .then(() => {
           onClose();
@@ -72,7 +72,7 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
         `Please move item to a system with Type: ${allowedSystemTypes.join(', ')} before trying to delete.`
       );
     }
-  }, [SelectedRule, deleteItem, deletionRules, item, onChangeItem, onClose]);
+  }, [selectedRules, deleteItem, deletionRules, item, onChangeItem, onClose]);
 
   return (
     <Dialog open={open} maxWidth="lg">

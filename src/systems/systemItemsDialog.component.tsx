@@ -61,7 +61,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   const { data: tableRules } = useGetRules(srcSystemTypeId);
 
   // This should be a list of 1 rule
-  const { data: SelectedRule } = useGetRules(srcSystemTypeId, dstSystemTypeId);
+  const { data: selectedRules } = useGetRules(srcSystemTypeId, dstSystemTypeId);
 
   const [placeIntoSystemError, setPlaceIntoSystemError] = React.useState<
     string | undefined
@@ -112,7 +112,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     const usageStatusId =
       srcSystemTypeId === dstSystemTypeId
         ? undefined
-        : SelectedRule?.[0]?.dst_usage_status?.id;
+        : selectedRules?.[0]?.dst_usage_status?.id;
 
     // Ensure finished loading and not moving to root
     // (where we don't need to load anything as the name is known)
@@ -130,7 +130,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
       });
     }
   }, [
-    SelectedRule,
+    selectedRules,
     handleClose,
     hasSystemErrors,
     moveItemsToSystem,
