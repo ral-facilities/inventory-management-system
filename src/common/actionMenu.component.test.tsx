@@ -23,6 +23,7 @@ describe('ActionMenu Component', () => {
       uploadImagesEntityId: '1',
       editMenuItem: mockEditMenuItem,
       printMenuItem: true,
+      showAdminEdit: false,
     };
     user = userEvent.setup();
     // Mock the window.print function

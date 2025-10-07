@@ -34,6 +34,7 @@ describe('SystemItemsDialog', () => {
       selectedItems: mockSelectedItems,
       onChangeSelectedItems: mockOnChangeSelectedItems,
       parentSystemId: SystemsJSON[0].id,
+      isUserAuthorised: false,
     };
 
     user = userEvent.setup();
@@ -69,6 +70,19 @@ describe('SystemItemsDialog', () => {
     });
 
     expect(mockOnClose).not.toHaveBeenCalled();
+  });
+
+  it('displays warning when in admin mode', async () => {
+    props.isUserAuthorised = true;
+    const view = createView();
+
+    await waitFor(() => {
+      expect(
+        screen.getByText('Warning: You are moving as an admin')
+      ).toBeInTheDocument();
+    });
+
+    expect(view.asFragment()).toMatchSnapshot();
   });
 
   it('renders the breadcrumbs and navigates correctly', async () => {

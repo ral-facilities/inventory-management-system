@@ -41,7 +41,7 @@ const MoveItemsButton = (props: {
   selectedItems: Item[];
   system: System;
   onChangeSelectedItems: (selectedItems: MRT_RowSelectionState) => void;
-  isUserAuthorised: boolean;
+  openDialogAsAdmin: boolean;
 }) => {
   const [moveItemsDialogOpen, setMoveItemsDialogOpen] =
     React.useState<boolean>(false);
@@ -55,7 +55,7 @@ const MoveItemsButton = (props: {
         disabled={props.selectedItems.length === 0}
         onClick={() => setMoveItemsDialogOpen(true)}
       >
-        Move to
+        {`Move to ${props.openDialogAsAdmin ? 'as admin' : ''}`}
       </Button>
       <SystemItemsDialog
         open={moveItemsDialogOpen}
@@ -63,7 +63,7 @@ const MoveItemsButton = (props: {
         selectedItems={props.selectedItems}
         onChangeSelectedItems={props.onChangeSelectedItems}
         parentSystemId={props.system.id}
-        isUserAuthorised={props.isUserAuthorised}
+        isUserAuthorised={props.openDialogAsAdmin}
       />
     </>
   );
@@ -467,12 +467,22 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           Clear Filters
         </Button>
         {system && (
-          <MoveItemsButton
-            selectedItems={selectedItems}
-            system={system}
-            onChangeSelectedItems={setRowSelection}
-            isUserAuthorised={isUserAuthorised}
-          />
+          <>
+            <MoveItemsButton
+              selectedItems={selectedItems}
+              system={system}
+              onChangeSelectedItems={setRowSelection}
+              openDialogAsAdmin={false}
+            />
+            {isUserAuthorised && (
+              <MoveItemsButton
+                selectedItems={selectedItems}
+                system={system}
+                onChangeSelectedItems={setRowSelection}
+                openDialogAsAdmin={true}
+              />
+            )}
+          </>
         )}
       </Box>
     ),
