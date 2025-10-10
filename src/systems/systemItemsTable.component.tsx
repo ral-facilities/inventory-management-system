@@ -99,8 +99,8 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     {}
   );
   const [itemDialogType, setItemsDialogType] = React.useState<
-    'create' | 'duplicate' | 'edit'
-  >('create');
+    'edit' | 'duplicate'
+  >('edit');
   const [deleteItemDialogOpen, setDeleteItemDialogOpen] =
     React.useState<boolean>(false);
   const [selectedItem, setSelectedItem] = React.useState<Item | undefined>(
@@ -532,17 +532,13 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           // Intentionally left undefined here as will fetch inside dialog only when needed instead
           catalogueCategory={undefined}
           catalogueItem={row.original.catalogueItem}
-          selectedItem={
-            itemDialogType === 'create'
-              ? undefined
-              : {
-                  ...row.original.item,
-                  notes:
-                    itemDialogType === 'duplicate'
-                      ? `${row.original.item.notes || ''}\n\nThis is a copy of the item with this Serial Number: ${row.original.item.serial_number ?? 'No serial number'}`
-                      : row.original.item.notes,
-                }
-          }
+          selectedItem={{
+            ...row.original.item,
+            notes:
+              itemDialogType === 'duplicate'
+                ? `${row.original.item.notes || ''}\n\nThis is a copy of the item with this Serial Number: ${row.original.item.serial_number ?? 'No serial number'}`
+                : row.original.item.notes,
+          }}
         />
       );
     },
