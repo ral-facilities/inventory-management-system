@@ -250,7 +250,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
     >
       <table
         class="MuiTable-root MuiTable-stickyHeader css-1gcyac0-MuiTable-root"
-        style="--header-catalogueItem_name-size: 350; --col-catalogueItem_name-size: 350; --header-mrt_row_expand-size: 100; --col-mrt_row_expand-size: 100; --header-mrt_row_select-size: 60; --col-mrt_row_select-size: 60; --header-catalogueItem_number_of_spares-size: 300; --col-catalogueItem_number_of_spares-size: 300; --header-item_serial_number-size: 250; --col-item_serial_number-size: 250; --header-item_modified_time-size: 350; --col-item_modified_time-size: 350; --header-item_delivered_date-size: 350; --col-item_delivered_date-size: 350; --header-item_is_defective-size: 200; --col-item_is_defective-size: 200; --header-item_usage_status-size: 350; --col-item_usage_status-size: 350; --header-catalogueItem_expected_lifetime_days-size: 300; --col-catalogueItem_expected_lifetime_days-size: 300; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40; --header-item_created_time-size: 350; --col-item_created_time-size: 350;"
+        style="--header-catalogueItem_name-size: 350; --col-catalogueItem_name-size: 350; --header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-mrt_row_expand-size: 100; --col-mrt_row_expand-size: 100; --header-mrt_row_select-size: 60; --col-mrt_row_select-size: 60; --header-catalogueItem_number_of_spares-size: 300; --col-catalogueItem_number_of_spares-size: 300; --header-item_serial_number-size: 250; --col-item_serial_number-size: 250; --header-item_modified_time-size: 350; --col-item_modified_time-size: 350; --header-item_delivered_date-size: 350; --col-item_delivered_date-size: 350; --header-item_is_defective-size: 200; --col-item_is_defective-size: 200; --header-item_usage_status-size: 350; --col-item_usage_status-size: 350; --header-catalogueItem_expected_lifetime_days-size: 300; --col-catalogueItem_expected_lifetime_days-size: 300; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40; --header-item_created_time-size: 350; --col-item_created_time-size: 350;"
       >
         <thead
           class="MuiTableHead-root css-7psuou-MuiTableHead-root"
@@ -502,9 +502,34 @@ exports[`SystemItemsTable > renders correctly 1`] = `
             </th>
             <th
               aria-sort="none"
-              class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1fwqcga-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1uucreh-MuiTableCell-root"
               colspan="1"
               data-index="1"
+              scope="col"
+              tabindex="0"
+            >
+              <div
+                class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
+              >
+                <div
+                  class="Mui-TableHeadCell-Content-Labels MuiBox-root css-4ng264"
+                >
+                  <div
+                    class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-bbxzxe"
+                  >
+                    Actions
+                  </div>
+                </div>
+                <div
+                  class="Mui-TableHeadCell-Content-Actions MuiBox-root css-epvm6"
+                />
+              </div>
+            </th>
+            <th
+              aria-sort="none"
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1fwqcga-MuiTableCell-root"
+              colspan="1"
+              data-index="2"
               scope="col"
               tabindex="0"
             >
@@ -565,7 +590,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
               aria-sort="none"
               class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-10hwnpz-MuiTableCell-root"
               colspan="1"
-              data-index="2"
+              data-index="3"
               scope="col"
               tabindex="0"
             >
@@ -613,7 +638,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
               class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-19hibp8-MuiTableCell-root"
               colspan="1"
               data-can-sort="true"
-              data-index="3"
+              data-index="4"
               scope="col"
               tabindex="0"
             >
@@ -882,7 +907,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
               class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1b1m5zq-MuiTableCell-root"
               colspan="1"
               data-can-sort="true"
-              data-index="4"
+              data-index="5"
               scope="col"
               tabindex="0"
             >
@@ -1099,7 +1124,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
               class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-embzyj-MuiTableCell-root"
               colspan="1"
               data-can-sort="true"
-              data-index="5"
+              data-index="6"
               scope="col"
               tabindex="0"
             >
@@ -1318,7 +1343,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
               class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ovw139-MuiTableCell-root"
               colspan="1"
               data-can-sort="true"
-              data-index="6"
+              data-index="7"
               scope="col"
               tabindex="0"
             >
@@ -1445,11 +1470,11 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                           class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                         >
                           <input
-                            aria-describedby=":r5n:-helper-text"
+                            aria-describedby=":r5s:-helper-text"
                             aria-invalid="false"
                             autocomplete="off"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                            id=":r5n:"
+                            id=":r5s:"
                             inputmode="text"
                             placeholder="Min"
                             type="text"
@@ -1480,7 +1505,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-18y2hez-MuiFormHelperText-root"
-                          id=":r5n:-helper-text"
+                          id=":r5s:-helper-text"
                         >
                           <label>
                             Filter Mode: Between Inclusive
@@ -1497,7 +1522,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                             aria-invalid="false"
                             autocomplete="off"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                            id=":r5q:"
+                            id=":r5v:"
                             inputmode="text"
                             placeholder="Max"
                             type="text"
@@ -1537,7 +1562,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
               class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yxmz51-MuiTableCell-root"
               colspan="1"
               data-can-sort="true"
-              data-index="7"
+              data-index="8"
               scope="col"
               tabindex="0"
             >
@@ -1756,7 +1781,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
               class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-vucueh-MuiTableCell-root"
               colspan="1"
               data-can-sort="true"
-              data-index="8"
+              data-index="9"
               scope="col"
               tabindex="0"
             >
@@ -1955,7 +1980,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
               class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-v4m05o-MuiTableCell-root"
               colspan="1"
               data-can-sort="true"
-              data-index="9"
+              data-index="10"
               scope="col"
               tabindex="0"
             >
@@ -2197,7 +2222,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
               class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ftm9c1-MuiTableCell-root"
               colspan="1"
               data-can-sort="true"
-              data-index="10"
+              data-index="11"
               scope="col"
               tabindex="0"
             >
@@ -2465,7 +2490,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
               aria-sort="none"
               class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6pxal-MuiTableCell-root"
               colspan="1"
-              data-index="11"
+              data-index="12"
               scope="col"
               tabindex="0"
             >
@@ -2519,8 +2544,13 @@ exports[`SystemItemsTable > renders correctly 1`] = `
               </div>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-g3fwv7-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lcxgoh-MuiTableCell-root"
               data-index="1"
+              tabindex="0"
+            />
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-g3fwv7-MuiTableCell-root"
+              data-index="2"
               tabindex="0"
             >
               <span
@@ -2548,22 +2578,13 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                   </svg>
                   <span
                     class="MuiTouchRipple-root css-r3djoj-MuiTouchRipple-root"
-                  >
-                    <span
-                      class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible MuiTouchRipple-ripplePulsate"
-                      style="width: 173.20508075688772px; height: 173.20508075688772px; top: -36.60254037844386px; left: 13.397459621556138px;"
-                    >
-                      <span
-                        class="MuiTouchRipple-child MuiTouchRipple-childLeaving MuiTouchRipple-childPulsate"
-                      />
-                    </span>
-                  </span>
+                  />
                 </button>
               </span>
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1nkgy02-MuiTableCell-root"
-              data-index="2"
+              data-index="3"
               tabindex="0"
             >
               <span
@@ -2592,7 +2613,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1nmfjnu-MuiTableCell-root-MuiTableCell-root"
-              data-index="3"
+              data-index="4"
               tabindex="0"
             >
               <a
@@ -2605,42 +2626,42 @@ exports[`SystemItemsTable > renders correctly 1`] = `
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-13ijx5r-MuiTableCell-root-MuiTableCell-root"
-              data-index="4"
-              tabindex="0"
-            />
-            <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yk4w0b-MuiTableCell-root-MuiTableCell-root"
               data-index="5"
               tabindex="0"
             />
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17uk59c-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yk4w0b-MuiTableCell-root-MuiTableCell-root"
               data-index="6"
               tabindex="0"
             />
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-hh8yic-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17uk59c-MuiTableCell-root-MuiTableCell-root"
               data-index="7"
               tabindex="0"
             />
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6b6hlb-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-hh8yic-MuiTableCell-root-MuiTableCell-root"
               data-index="8"
               tabindex="0"
             />
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1wtd31k-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6b6hlb-MuiTableCell-root-MuiTableCell-root"
               data-index="9"
               tabindex="0"
             />
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-vnyo2w-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1wtd31k-MuiTableCell-root-MuiTableCell-root"
               data-index="10"
               tabindex="0"
             />
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pcje0t-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-vnyo2w-MuiTableCell-root-MuiTableCell-root"
               data-index="11"
+              tabindex="0"
+            />
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pcje0t-MuiTableCell-root"
+              data-index="12"
               tabindex="0"
             />
           </tr>
@@ -2654,8 +2675,33 @@ exports[`SystemItemsTable > renders correctly 1`] = `
               tabindex="0"
             />
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-g3fwv7-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lcxgoh-MuiTableCell-root"
               data-index="1"
+              tabindex="0"
+            >
+              <button
+                aria-label="Row Actions"
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-ctvy04-MuiButtonBase-root-MuiIconButton-root"
+                data-mui-internal-clone-element="true"
+                tabindex="0"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                  data-testid="MoreHorizIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
+                  />
+                </svg>
+              </button>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-g3fwv7-MuiTableCell-root"
+              data-index="2"
               tabindex="0"
             >
               <span
@@ -2686,7 +2732,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1nkgy02-MuiTableCell-root"
-              data-index="2"
+              data-index="3"
               tabindex="0"
             >
               <span
@@ -2715,7 +2761,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1nmfjnu-MuiTableCell-root-MuiTableCell-root"
-              data-index="3"
+              data-index="4"
               tabindex="0"
             >
               <div
@@ -2735,7 +2781,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-13ijx5r-MuiTableCell-root-MuiTableCell-root"
-              data-index="4"
+              data-index="5"
               tabindex="0"
             >
               <div
@@ -2755,7 +2801,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yk4w0b-MuiTableCell-root-MuiTableCell-root"
-              data-index="5"
+              data-index="6"
               tabindex="0"
             >
               <div
@@ -2768,7 +2814,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17uk59c-MuiTableCell-root-MuiTableCell-root"
-              data-index="6"
+              data-index="7"
               tabindex="0"
             >
               <div
@@ -2781,7 +2827,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-hh8yic-MuiTableCell-root-MuiTableCell-root"
-              data-index="7"
+              data-index="8"
               tabindex="0"
             >
               <div
@@ -2794,7 +2840,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6b6hlb-MuiTableCell-root-MuiTableCell-root"
-              data-index="8"
+              data-index="9"
               tabindex="0"
             >
               <div
@@ -2808,7 +2854,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1wtd31k-MuiTableCell-root-MuiTableCell-root"
-              data-index="9"
+              data-index="10"
               tabindex="0"
             >
               <div
@@ -2822,7 +2868,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-vnyo2w-MuiTableCell-root-MuiTableCell-root"
-              data-index="10"
+              data-index="11"
               tabindex="0"
             >
               <div
@@ -2836,7 +2882,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pcje0t-MuiTableCell-root"
-              data-index="11"
+              data-index="12"
               tabindex="0"
             />
           </tr>
@@ -2846,7 +2892,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
           >
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium Mui-TableBodyCell-DetailPanel css-1hlo8z1-MuiTableCell-root"
-              colspan="12"
+              colspan="13"
             />
           </tr>
           <tr
@@ -2859,8 +2905,33 @@ exports[`SystemItemsTable > renders correctly 1`] = `
               tabindex="0"
             />
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-g3fwv7-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lcxgoh-MuiTableCell-root"
               data-index="1"
+              tabindex="0"
+            >
+              <button
+                aria-label="Row Actions"
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-ctvy04-MuiButtonBase-root-MuiIconButton-root"
+                data-mui-internal-clone-element="true"
+                tabindex="0"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                  data-testid="MoreHorizIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
+                  />
+                </svg>
+              </button>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-g3fwv7-MuiTableCell-root"
+              data-index="2"
               tabindex="0"
             >
               <span
@@ -2891,7 +2962,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1nkgy02-MuiTableCell-root"
-              data-index="2"
+              data-index="3"
               tabindex="0"
             >
               <span
@@ -2920,7 +2991,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1nmfjnu-MuiTableCell-root-MuiTableCell-root"
-              data-index="3"
+              data-index="4"
               tabindex="0"
             >
               <div
@@ -2940,7 +3011,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-13ijx5r-MuiTableCell-root-MuiTableCell-root"
-              data-index="4"
+              data-index="5"
               tabindex="0"
             >
               <div
@@ -2960,7 +3031,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yk4w0b-MuiTableCell-root-MuiTableCell-root"
-              data-index="5"
+              data-index="6"
               tabindex="0"
             >
               <div
@@ -2973,7 +3044,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17uk59c-MuiTableCell-root-MuiTableCell-root"
-              data-index="6"
+              data-index="7"
               tabindex="0"
             >
               <div
@@ -2986,12 +3057,12 @@ exports[`SystemItemsTable > renders correctly 1`] = `
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-hh8yic-MuiTableCell-root-MuiTableCell-root"
-              data-index="7"
+              data-index="8"
               tabindex="0"
             />
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6b6hlb-MuiTableCell-root-MuiTableCell-root"
-              data-index="8"
+              data-index="9"
               tabindex="0"
             >
               <div
@@ -3005,7 +3076,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1wtd31k-MuiTableCell-root-MuiTableCell-root"
-              data-index="9"
+              data-index="10"
               tabindex="0"
             >
               <div
@@ -3019,7 +3090,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-vnyo2w-MuiTableCell-root-MuiTableCell-root"
-              data-index="10"
+              data-index="11"
               tabindex="0"
             >
               <div
@@ -3033,7 +3104,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pcje0t-MuiTableCell-root"
-              data-index="11"
+              data-index="12"
               tabindex="0"
             />
           </tr>
@@ -3043,7 +3114,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
           >
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium Mui-TableBodyCell-DetailPanel css-1hlo8z1-MuiTableCell-root"
-              colspan="12"
+              colspan="13"
             />
           </tr>
           <tr
@@ -3076,8 +3147,13 @@ exports[`SystemItemsTable > renders correctly 1`] = `
               </div>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-g3fwv7-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lcxgoh-MuiTableCell-root"
               data-index="1"
+              tabindex="0"
+            />
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-g3fwv7-MuiTableCell-root"
+              data-index="2"
               tabindex="0"
             >
               <span
@@ -3108,7 +3184,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1nkgy02-MuiTableCell-root"
-              data-index="2"
+              data-index="3"
               tabindex="0"
             >
               <span
@@ -3137,7 +3213,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1nmfjnu-MuiTableCell-root-MuiTableCell-root"
-              data-index="3"
+              data-index="4"
               tabindex="0"
             >
               <a
@@ -3150,42 +3226,42 @@ exports[`SystemItemsTable > renders correctly 1`] = `
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-13ijx5r-MuiTableCell-root-MuiTableCell-root"
-              data-index="4"
-              tabindex="0"
-            />
-            <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yk4w0b-MuiTableCell-root-MuiTableCell-root"
               data-index="5"
               tabindex="0"
             />
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17uk59c-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yk4w0b-MuiTableCell-root-MuiTableCell-root"
               data-index="6"
               tabindex="0"
             />
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-hh8yic-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17uk59c-MuiTableCell-root-MuiTableCell-root"
               data-index="7"
               tabindex="0"
             />
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6b6hlb-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-hh8yic-MuiTableCell-root-MuiTableCell-root"
               data-index="8"
               tabindex="0"
             />
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1wtd31k-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6b6hlb-MuiTableCell-root-MuiTableCell-root"
               data-index="9"
               tabindex="0"
             />
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-vnyo2w-MuiTableCell-root-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1wtd31k-MuiTableCell-root-MuiTableCell-root"
               data-index="10"
               tabindex="0"
             />
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pcje0t-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-vnyo2w-MuiTableCell-root-MuiTableCell-root"
               data-index="11"
+              tabindex="0"
+            />
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pcje0t-MuiTableCell-root"
+              data-index="12"
               tabindex="0"
             />
           </tr>
