@@ -1050,6 +1050,28 @@ describe('ItemDialog', () => {
       expect(await screen.findByRole('progressbar')).toBeInTheDocument();
     });
 
+    it('edit an item (move item across systems with same system type)', async () => {
+      createView();
+
+      await user.click(
+        screen.getByRole('button', { name: 'navigate to systems home' })
+      );
+
+      await modifySystemValue({
+        system: 'Giant laser',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
+        system_id: '65328f34a40ff5301575a4e3',
+      });
+    }, 10000);
+
     it('edit an item (all input values)', async () => {
       createView();
 
