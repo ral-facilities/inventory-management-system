@@ -135,7 +135,7 @@ describe('delete item dialog', () => {
     expect(onClose).not.toHaveBeenCalled();
   });
 
-  it('displays error message user tries delete item from a system type which is not allowed', async () => {
+  it('displays error message when a user tries delete an item from a system type which is not allowed', async () => {
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
     await user.click(continueButton);
