@@ -15,6 +15,7 @@ import {
   CatalogueItem,
   Item,
   Manufacturer,
+  System,
   type SystemType,
   type UsageStatus,
 } from './api/api.types';
@@ -23,6 +24,7 @@ import CatalogueItemsJSON from './mocks/CatalogueItems.json';
 import ItemsJSON from './mocks/Items.json';
 import ManufacturersJSON from './mocks/Manufacturers.json';
 import SystemTypesJSON from './mocks/SystemTypes.json';
+import SystemsJSON from './mocks/Systems.json';
 import UsageStatusJSON from './mocks/UsageStatuses.json';
 import { URLPathKeyType, paths } from './paths';
 
@@ -180,6 +182,12 @@ export const getItemById = (itemId: string): Item => {
 
 export const getItemsBySystemId = (systemId: string): Item[] => {
   return ItemsJSON.filter((item) => item.system_id === systemId);
+};
+
+export const getSystemById = (id: string): System | undefined => {
+  return (
+    (SystemsJSON.find((system) => system.id === id) as System) || undefined
+  );
 };
 
 export const getSystemTypeByValue = (value: string): SystemType => {

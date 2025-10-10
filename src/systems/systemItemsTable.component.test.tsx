@@ -2,7 +2,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { System } from '../api/api.types';
 import SystemsJSON from '../mocks/Systems.json';
-import { renderComponentWithRouterProvider } from '../testUtils';
+import { getSystemById, renderComponentWithRouterProvider } from '../testUtils';
 import {
   SystemItemsTable,
   SystemItemsTableProps,
@@ -344,6 +344,145 @@ describe('SystemItemsTable', () => {
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
+  });
+
+  it('can open the duplicate dialog and checks that the notes have been updated', async () => {
+    createView();
+
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Turbomolecular Pumps 42 (2)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    const expandButtons = screen.getAllByRole('button', {
+      name: 'Expand',
+    });
+    await user.click(expandButtons[0]);
+
+    const serialNumber = '5xE1KSraISvu';
+    await waitFor(() => {
+      expect(screen.getAllByText(serialNumber)).toHaveLength(2);
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Duplicate')).toBeInTheDocument();
+    });
+
+    const duplicateButton = screen.getByText('Duplicate');
+    await user.click(duplicateButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByText('Add item details'));
+
+    expect(screen.getByLabelText('Notes')).toHaveValue(
+      'ihwCjMdJ4n7KKcaM34Lj\n\nThis is a copy of the item with this Serial Number: 5xE1KSraISvu'
+    );
+  });
+
+  it('can open the duplicate dialog and checks that the notes have been updated when notes is null', async () => {
+    props.system = getSystemById('656da8ef9cba7a76c6f81a5d');
+
+    createView();
+
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Cameras 13 (4)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    const expandButtons = screen.getAllByRole('button', {
+      name: 'Expand',
+    });
+    await user.click(expandButtons[5]);
+
+    const serialNumber = 'RncNJlDk1pXC';
+    await waitFor(() => {
+      expect(screen.getByText(serialNumber)).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Duplicate')).toBeInTheDocument();
+    });
+
+    const duplicateButton = screen.getByText('Duplicate');
+    await user.click(duplicateButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByText('Add item details'));
+
+    expect(screen.getByLabelText('Notes')).toHaveValue(
+      '\n\nThis is a copy of the item with this Serial Number: RncNJlDk1pXC'
+    );
+  });
+
+  it('can open the duplicate dialog and checks that the notes have been updated with no serial number', async () => {
+    props.system = getSystemById('656da8ef9cba7a76c6f81a5d');
+
+    createView();
+
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Cameras 13 (4)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    const expandButtons = screen.getAllByRole('button', {
+      name: 'Expand',
+    });
+    await user.click(expandButtons[5]);
+
+    const serialNumber = 'No serial number';
+    await waitFor(() => {
+      expect(screen.getByText(serialNumber)).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[3]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Duplicate')).toBeInTheDocument();
+    });
+
+    const duplicateButton = screen.getByText('Duplicate');
+    await user.click(duplicateButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByText('Add item details'));
+
+    expect(screen.getByLabelText('Notes')).toHaveValue(
+      'MJuSPgXEiXmBbf1Vlq4B\n\nThis is a copy of the item with this Serial Number: No serial number'
+    );
   });
 
   it('can open the delete dialog and close it again', async () => {
