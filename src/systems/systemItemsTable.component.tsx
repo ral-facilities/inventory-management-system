@@ -103,7 +103,6 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
   >('create');
   const [deleteItemDialogOpen, setDeleteItemDialogOpen] =
     React.useState<boolean>(false);
-
   const [selectedItem, setSelectedItem] = React.useState<Item | undefined>(
     undefined
   );
@@ -113,7 +112,6 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     system?.id,
     undefined
   );
-
   const { data: usageStatusData, isLoading: isLoadingUsageStatuses } =
     useGetUsageStatuses();
 
@@ -124,6 +122,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
   const selectedRowIds = Object.keys(rowSelection);
   const selectedItems =
     itemsData?.filter((item) => selectedRowIds.includes(item.id)) ?? [];
+
   // Fetch catalogue items for each item to display in the table
   const catalogueItemIdSet = React.useMemo(
     () =>
@@ -530,7 +529,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           }}
           duplicate={itemDialogType === 'duplicate'}
           requestType={itemDialogType === 'edit' ? 'patch' : 'post'}
-          // TODO: Do I need category... yes for the list, but don't want to fetch until later...
+          // Intentionally left undefined here as will fetch inside dialog only when needed instead
           catalogueCategory={undefined}
           catalogueItem={row.original.catalogueItem}
           selectedItem={
