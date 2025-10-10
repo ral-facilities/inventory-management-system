@@ -546,29 +546,27 @@ export function ItemsTable(props: ItemTableProps) {
     getRowId: (row) => row.item.id,
     renderCreateRowDialogContent: ({ table, row }) => {
       return (
-        <>
-          <ItemDialog
-            open={true}
-            onClose={() => {
-              table.setCreatingRow(null);
-            }}
-            duplicate={itemDialogType === 'duplicate'}
-            requestType={itemDialogType === 'edit' ? 'patch' : 'post'}
-            catalogueCategory={catalogueCategory}
-            catalogueItem={catalogueItem}
-            selectedItem={
-              itemDialogType === 'create'
-                ? undefined
-                : {
-                    ...row.original.item,
-                    notes:
-                      itemDialogType === 'duplicate'
-                        ? `${row.original.item.notes || ''}\n\nThis is a copy of the item with this Serial Number: ${row.original.item.serial_number ?? 'No serial number'}`
-                        : row.original.item.notes,
-                  }
-            }
-          />
-        </>
+        <ItemDialog
+          open={true}
+          onClose={() => {
+            table.setCreatingRow(null);
+          }}
+          duplicate={itemDialogType === 'duplicate'}
+          requestType={itemDialogType === 'edit' ? 'patch' : 'post'}
+          catalogueCategory={catalogueCategory}
+          catalogueItem={catalogueItem}
+          selectedItem={
+            itemDialogType === 'create'
+              ? undefined
+              : {
+                  ...row.original.item,
+                  notes:
+                    itemDialogType === 'duplicate'
+                      ? `${row.original.item.notes || ''}\n\nThis is a copy of the item with this Serial Number: ${row.original.item.serial_number ?? 'No serial number'}`
+                      : row.original.item.notes,
+                }
+          }
+        />
       );
     },
     renderTopToolbarCustomActions: ({ table }) => (
@@ -651,7 +649,6 @@ export function ItemsTable(props: ItemTableProps) {
       displayTableRowCountText(table, itemsData, 'Items', {
         paddingLeft: '8px',
       }),
-
     renderDetailPanel: dense
       ? ({ row }) => (
           <ItemsDetailsPanel
