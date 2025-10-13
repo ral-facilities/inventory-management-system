@@ -216,5 +216,15 @@ export const navigateToItemTableForSparesDefinition = () => {
   cy.findByText('Number of spares').should('exist');
   cy.findByRole('link', { name: '1' }).click();
   cy.findByText('MX432424').should('exist');
+
+  // Catalogue items landing page
+
+  cy.findByRole('link', { name: 'Plano-Convex Lens' }).click();
+  cy.findByText('Actions').should('exist');
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.wait(100);
+  cy.findByText('Number of spares').should('exist');
+  cy.findByRole('link', { name: '1' }).click();
+  cy.findByText('MX432424').should('exist');
   cy.visit('/systems');
 };
