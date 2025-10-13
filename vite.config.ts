@@ -69,7 +69,7 @@ export default defineConfig(({ mode }) => {
     plugins.push(
       codecovVitePlugin({
         enableBundleAnalysis: env.CODECOV_TOKEN !== undefined,
-        bundleName: 'inventory-management-system',
+        bundleName: 'prod-build',
         uploadToken: env.CODECOV_TOKEN,
       })
     );
