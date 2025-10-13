@@ -322,9 +322,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codecov/bundler-plugin-core@npm:^1.9.0":
-  version: 1.9.0
-  resolution: "@codecov/bundler-plugin-core@npm:1.9.0"
+"@codecov/bundler-plugin-core@npm:^1.9.1":
+  version: 1.9.1
+  resolution: "@codecov/bundler-plugin-core@npm:1.9.1"
   dependencies:
     "@actions/core": "npm:^1.10.1"
     "@actions/github": "npm:^6.0.0"
@@ -332,19 +332,19 @@ __metadata:
     semver: "npm:^7.5.4"
     unplugin: "npm:^1.10.1"
     zod: "npm:^3.22.4"
-  checksum: 10c0/c29c5e0cc40151d499c779e44f54b36f82e28dad66dcb005ec226b35c8e7c80145e136b4d880cd454071f3233c6334e154dd228ff30dec5ce7d4b2d637d2bb9e
+  checksum: 10c0/82366e6a0c7ee1c1c810b71c1773ea12ba3c395d812d3172f3155cf2930eae1bb8d2fe660be3d0c2e60eb0f6db2bbf4b5d327344d846523d3e54848549b55aee
   languageName: node
   linkType: hard
 
 "@codecov/vite-plugin@npm:^1.9.0":
-  version: 1.9.0
-  resolution: "@codecov/vite-plugin@npm:1.9.0"
+  version: 1.9.1
+  resolution: "@codecov/vite-plugin@npm:1.9.1"
   dependencies:
-    "@codecov/bundler-plugin-core": "npm:^1.9.0"
+    "@codecov/bundler-plugin-core": "npm:^1.9.1"
     unplugin: "npm:^1.10.1"
   peerDependencies:
     vite: 4.x || 5.x || 6.x
-  checksum: 10c0/fcab778bbbc8d8d190f40d7108d0dc5e6bff0179a8bcc4218c4fd5bfcc32e25b6a1d9e431d8b142ea16c2335857c9dd8e2d2b0e49a0fe3e856e7cb197f363145
+  checksum: 10c0/b4e640a23f4af4a140038a68a1fbc8d4de555d7064c68d8f5dbd0d99c983a66113f9262035f98f4fd8ecadf93f4d7daf1aafd1f138f947edf4f6c24c26475571
   languageName: node
   linkType: hard
 
