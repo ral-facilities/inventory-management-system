@@ -11,6 +11,7 @@ import type { SystemType } from '../../api/api.types';
 import { useGetSparesDefinition } from '../../api/settings';
 import { useGetSystemTypes } from '../../api/systems';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
+
 import {
   COLUMN_FILTER_BOOLEAN_OPTIONS,
   COLUMN_FILTER_FUNCTIONS,
@@ -31,7 +32,7 @@ interface TableRowData extends SystemType {
 }
 
 function SystemTypes() {
-  const { data: systemTypesData, isLoading: isLoadingSystemTypes } =
+  const { data: systemTypesData = [], isLoading: isLoadingSystemTypes } =
     useGetSystemTypes();
 
   const { data: sparesDefinition, isLoading: isLoadingSparesDefinition } =
@@ -46,9 +47,9 @@ function SystemTypes() {
       setTableRows(
         systemTypesData.map((type) => ({
           ...type,
-          isSpare:
-            sparesDefinition?.system_types.some((def) => def.id === type.id) ??
-            false,
+          isSpare: !sparesDefinition
+            ? false
+            : sparesDefinition.system_types.some((def) => def.id === type.id),
         }))
       );
     }
@@ -70,7 +71,7 @@ function SystemTypes() {
         Cell: ({ row }) => row.original.value,
       },
       {
-        header: 'Is Spare',
+        header: 'Used For Spares',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => (row.isSpare === true ? 'Yes' : 'No'),
         id: 'isSpare',
@@ -181,8 +182,8 @@ function SystemTypes() {
           const actualFilter = actualFilters.find((f) => f.id === id);
           if (!actualFilter) return false;
           if (actualFilterFns[id] !== filterFn) return false;
-          // Compare values stringified (arrays)
 
+          // Compare values stringified (arrays)
           return JSON.stringify(actualFilter.value) === JSON.stringify(value);
         });
       }
@@ -190,7 +191,7 @@ function SystemTypes() {
         <Box>
           <Button
             startIcon={<ClearIcon />}
-            sx={{ mx: '4px' }}
+            sx={{ mx: 0.5 }}
             variant="outlined"
             disabled={preservedState.columnFilters.length === 0}
             onClick={() => {
@@ -219,7 +220,7 @@ function SystemTypes() {
               ]);
             }}
           >
-            Spares Definition
+            Show Spares Definition
           </Button>
         </Box>
       );
