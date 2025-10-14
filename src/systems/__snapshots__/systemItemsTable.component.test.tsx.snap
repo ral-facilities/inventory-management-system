@@ -69,7 +69,30 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                 />
               </svg>
             </span>
-            Move to
+            Move to 
+          </button>
+          <button
+            class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary Mui-disabled MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1ioyh7z-MuiButtonBase-root-MuiButton-root"
+            disabled=""
+            tabindex="-1"
+            type="button"
+          >
+            <span
+              class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1sh91j5-MuiButton-startIcon"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                data-testid="DriveFileMoveOutlinedIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2m0 12H4V6h5.17l1.41 1.41.59.59H20zm-7.84-6H8v2h4.16l-1.59 1.59L11.99 17 16 13.01 11.99 9l-1.41 1.41z"
+                />
+              </svg>
+            </span>
+            Move to as admin
           </button>
         </div>
         <div
@@ -107,7 +130,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                       aria-invalid="false"
                       autocomplete="off"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12tjcea-MuiInputBase-input-MuiOutlinedInput-input"
-                      id=":r4:"
+                      id=":r6:"
                       placeholder="Search"
                       type="text"
                       value=""
@@ -404,13 +427,13 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                           </span>
                         </div>
                         <div
-                          aria-describedby=":rj:-helper-text"
+                          aria-describedby=":rl:-helper-text"
                           aria-expanded="false"
                           aria-haspopup="listbox"
                           aria-label="Filter by Catalogue Item"
-                          aria-labelledby=":rj:"
+                          aria-labelledby=":rl:"
                           class="MuiSelect-select MuiSelect-standard MuiSelect-multiple MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-10y8whu-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                          id=":rj:"
+                          id=":rl:"
                           role="combobox"
                           tabindex="0"
                         >
@@ -472,7 +495,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                       </div>
                       <p
                         class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                        id=":rj:-helper-text"
+                        id=":rl:-helper-text"
                       >
                         <label>
                           Filter Mode: Includes any
@@ -754,12 +777,12 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                           </span>
                         </div>
                         <input
-                          aria-describedby=":r12:-helper-text"
+                          aria-describedby=":r14:-helper-text"
                           aria-invalid="false"
                           aria-label="Filter by Serial Number"
                           autocomplete="off"
                           class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                          id=":r12:"
+                          id=":r14:"
                           placeholder="Filter by Serial Number"
                           title="Filter by Serial Number"
                           type="text"
@@ -797,7 +820,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                       </div>
                       <p
                         class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                        id=":r12:-helper-text"
+                        id=":r14:-helper-text"
                       >
                         <label>
                           Filter Mode: Fuzzy
@@ -940,11 +963,11 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                           class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                         >
                           <input
-                            aria-describedby=":r1d:-helper-text"
+                            aria-describedby=":r1f:-helper-text"
                             aria-invalid="false"
                             autocomplete="off"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                            id=":r1d:"
+                            id=":r1f:"
                             inputmode="text"
                             placeholder="Min"
                             type="text"
@@ -975,7 +998,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-18y2hez-MuiFormHelperText-root"
-                          id=":r1d:-helper-text"
+                          id=":r1f:-helper-text"
                         >
                           <label>
                             Filter Mode: Between Inclusive
@@ -992,7 +1015,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                             aria-invalid="false"
                             autocomplete="off"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                            id=":r1g:"
+                            id=":r1i:"
                             inputmode="text"
                             placeholder="Max"
                             type="text"
@@ -1159,11 +1182,11 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                           class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                         >
                           <input
-                            aria-describedby=":r54:-helper-text"
+                            aria-describedby=":r56:-helper-text"
                             aria-invalid="false"
                             autocomplete="off"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                            id=":r54:"
+                            id=":r56:"
                             inputmode="text"
                             placeholder="Min"
                             type="text"
@@ -1194,7 +1217,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-18y2hez-MuiFormHelperText-root"
-                          id=":r54:-helper-text"
+                          id=":r56:-helper-text"
                         >
                           <label>
                             Filter Mode: Between Inclusive
@@ -1211,7 +1234,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                             aria-invalid="false"
                             autocomplete="off"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                            id=":r57:"
+                            id=":r59:"
                             inputmode="text"
                             placeholder="Max"
                             type="text"
@@ -1378,11 +1401,11 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                           class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                         >
                           <input
-                            aria-describedby=":r1p:-helper-text"
+                            aria-describedby=":r1r:-helper-text"
                             aria-invalid="false"
                             autocomplete="off"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                            id=":r1p:"
+                            id=":r1r:"
                             inputmode="text"
                             placeholder="Min"
                             type="text"
@@ -1413,7 +1436,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-18y2hez-MuiFormHelperText-root"
-                          id=":r1p:-helper-text"
+                          id=":r1r:-helper-text"
                         >
                           <label>
                             Filter Mode: Between Inclusive
@@ -1430,7 +1453,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                             aria-invalid="false"
                             autocomplete="off"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                            id=":r1s:"
+                            id=":r1u:"
                             inputmode="text"
                             placeholder="Max"
                             type="text"
@@ -1597,9 +1620,9 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                           aria-expanded="false"
                           aria-haspopup="listbox"
                           aria-label="Filter by Is Defective"
-                          aria-labelledby=":r25:"
+                          aria-labelledby=":r27:"
                           class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-10y8whu-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                          id=":r25:"
+                          id=":r27:"
                           role="combobox"
                           tabindex="0"
                         >
@@ -1827,13 +1850,13 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                           </span>
                         </div>
                         <div
-                          aria-describedby=":r2f:-helper-text"
+                          aria-describedby=":r2h:-helper-text"
                           aria-expanded="false"
                           aria-haspopup="listbox"
                           aria-label="Filter by Usage Status"
-                          aria-labelledby=":r2f:"
+                          aria-labelledby=":r2h:"
                           class="MuiSelect-select MuiSelect-standard MuiSelect-multiple MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-10y8whu-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                          id=":r2f:"
+                          id=":r2h:"
                           role="combobox"
                           tabindex="0"
                         >
@@ -1895,7 +1918,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                       </div>
                       <p
                         class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                        id=":r2f:-helper-text"
+                        id=":r2h:-helper-text"
                       >
                         <label>
                           Filter Mode: Includes any
@@ -2072,12 +2095,12 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                             </span>
                           </div>
                           <input
-                            aria-describedby=":r2r:-helper-text"
+                            aria-describedby=":r2t:-helper-text"
                             aria-invalid="false"
                             aria-label="Min"
                             autocomplete="off"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                            id=":r2r:"
+                            id=":r2t:"
                             placeholder="Min"
                             title="Min"
                             type="text"
@@ -2115,7 +2138,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                          id=":r2r:-helper-text"
+                          id=":r2t:-helper-text"
                         >
                           <label>
                             Filter Mode: Between Inclusive
@@ -2133,7 +2156,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                             aria-label="Max"
                             autocomplete="off"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                            id=":r30:"
+                            id=":r32:"
                             placeholder="Max"
                             title="Max"
                             type="text"

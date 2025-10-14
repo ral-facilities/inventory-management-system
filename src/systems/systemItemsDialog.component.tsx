@@ -26,10 +26,8 @@ import {
   useGetSystems,
   useGetSystemsBreadcrumbs,
 } from '../api/systems';
-// import { MoveItemsToSystemUsageStatus } from '../app.types';
 import handleTransferState from '../handleTransferState';
 import Breadcrumbs from '../view/breadcrumbs.component';
-// import { SystemItemsTable } from './systemItemsTable.component';
 import { SystemsTableView } from './systemsTableView.component';
 import { SystemItemsUsageStatusTable } from './systemItemsUsageStatuses.component';
 import { MoveItemsToSystemUsageStatus } from '../app.types';
@@ -120,6 +118,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   const changeParentSystemId = (newParentSystemId: string | null) => {
     setParentSystemId(newParentSystemId);
     setPlaceIntoSystemError(undefined);
+    populateUsageStatuses();
   };
 
   const { data: parentSystemBreadcrumbs } =
@@ -155,6 +154,36 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     });
     return hasUsageStatusErrors;
   }, [usageStatuses]);
+
+  const populateUsageStatuses = React.useCallback(() => {
+    setItemUsageStatusesErrorState({});
+
+    const usageStatusId =
+      srcSystemTypeId === dstSystemTypeId ||
+      (selectedRules?.length === 0 && isAdminUser)
+        ? undefined
+        : selectedRules?.[0]?.dst_usage_status?.id;
+
+    setUsageStatuses(
+      usageStatuses.map((usage_status) => {
+        return {
+          ...usage_status,
+          usage_status_id:
+            usageStatusId ??
+            selectedItems.find((item) => item.id === usage_status.item_id)
+              ?.usage_status_id ??
+            '',
+        };
+      })
+    );
+  }, [
+    dstSystemTypeId,
+    isAdminUser,
+    selectedItems,
+    selectedRules,
+    srcSystemTypeId,
+    usageStatuses,
+  ]);
 
   const handleClose = React.useCallback(() => {
     setAggregatedCellUsageStatus([]);
@@ -236,25 +265,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
               'Please move items from current location or root to another system.'
             );
           } else {
-            const usageStatusId =
-              srcSystemTypeId === dstSystemTypeId ||
-              (selectedRules?.length === 0 && isAdminUser)
-                ? undefined
-                : selectedRules?.[0]?.dst_usage_status?.id;
-
-            setUsageStatuses(
-              usageStatuses.map((usage_status) => {
-                return {
-                  ...usage_status,
-                  usage_status_id:
-                    usageStatusId ??
-                    selectedItems.find(
-                      (item) => item.id === usage_status.item_id
-                    )?.usage_status_id ??
-                    '',
-                };
-              })
-            );
+            populateUsageStatuses();
           }
           return (
             !hasSystemErrors &&
@@ -263,15 +274,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
         }
       }
     },
-    [
-      dstSystemTypeId,
-      hasSystemErrors,
-      isAdminUser,
-      selectedItems,
-      selectedRules,
-      srcSystemTypeId,
-      usageStatuses,
-    ]
+    [hasSystemErrors, populateUsageStatuses]
   );
 
   const handleBack = () => {
@@ -354,7 +357,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
             {selectedItems.length > 1
               ? `${selectedItems.length} items`
               : '1 item'}{' '}
-            to a different system {isAdminUser ? 'as admin' : ''}
+            to a different system{isAdminUser ? ' as admin' : ''}
           </Grid>
           <Grid>
             {isAdminUser && (
@@ -363,7 +366,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
                   <h4>
                     As an admin, you can bypass system rules that restrict item
                     placement for other users and modify the item&apos;s usage
-                    status.
+                    status
                   </h4>
                 }
                 disableHoverListener={false}

@@ -89,13 +89,13 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
     <Dialog open={open} maxWidth="lg">
       <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
         <WarningIcon sx={{ marginRight: 1 }} />
-        Delete Item {isAdminUser ? 'as admin' : ''}
+        Delete Item{isAdminUser ? ' as admin' : ''}
         {isAdminUser && (
           <Tooltip
             title={
               <h4>
-                As an admin, you can bypass system rules that prevent other
-                users from deleting an item
+                As an admin, you can bypass rules that prevent other users from
+                deleting an item
               </h4>
             }
             disableHoverListener={false}

@@ -55,17 +55,26 @@ describe('delete item dialog', () => {
     expect(baseElement).toMatchSnapshot();
   });
 
-  it('renders correctly when in admin mode', async () => {
+  it('renders correctly when in admin mode with tooltip', async () => {
     props.isAdminUser = true;
     const view = createView();
 
     await waitFor(() => {
+      expect(screen.getByText('Delete Item as admin')).toBeInTheDocument();
+    });
+
+    const infoIcon = screen.getByLabelText('admin-status-tooltip');
+
+    await user.hover(infoIcon);
+
+    await waitFor(() => {
       expect(
         screen.getByText(
-          'Warning: You are deleting this item as an admin, you may be bypassing rules blocking other users from deleting this item'
+          'As an admin, you can bypass rules that prevent other users from deleting an item'
         )
       ).toBeInTheDocument();
     });
+
     expect(view.asFragment()).toMatchSnapshot();
   });
 

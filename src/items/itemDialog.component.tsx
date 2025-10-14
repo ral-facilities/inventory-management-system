@@ -1205,14 +1205,14 @@ function ItemDialog(props: ItemDialogProps) {
       fullWidth
     >
       <DialogTitle>
-        {`${requestType === 'patch' ? 'Edit' : 'Add'} Item ${isAdminUser ? 'as admin' : ''}`}
+        {`${requestType === 'patch' ? 'Edit' : 'Add'} Item${isAdminUser ? ' as admin' : ''}`}
         {isAdminUser && (
           <Tooltip
             title={
               <h4>
                 As an admin, you can bypass system rules that restrict item
                 placement for other users and modify the item&apos;s usage
-                status.
+                status
               </h4>
             }
             disableHoverListener={false}

@@ -216,8 +216,18 @@ describe('ItemDialog', () => {
       const view = createView();
 
       await waitFor(() => {
+        expect(screen.getByText('Add Item as admin')).toBeInTheDocument();
+      });
+
+      const infoIcon = screen.getByLabelText('admin-status-tooltip');
+
+      await user.hover(infoIcon);
+
+      await waitFor(() => {
         expect(
-          screen.getByText('Warning: You are creating an item as an admin')
+          screen.getByText(
+            "As an admin, you can bypass system rules that restrict item placement for other users and modify the item's usage status"
+          )
         ).toBeInTheDocument();
       });
 
@@ -1128,8 +1138,18 @@ describe('ItemDialog', () => {
       const view = createView();
 
       await waitFor(() => {
+        expect(screen.getByText('Edit Item as admin')).toBeInTheDocument();
+      });
+
+      const infoIcon = screen.getByLabelText('admin-status-tooltip');
+
+      await user.hover(infoIcon);
+
+      await waitFor(() => {
         expect(
-          screen.getByText('Warning: You are editing an item as an admin')
+          screen.getByText(
+            "As an admin, you can bypass system rules that restrict item placement for other users and modify the item's usage status"
+          )
         ).toBeInTheDocument();
       });
 
@@ -1188,7 +1208,6 @@ describe('ItemDialog', () => {
 
     it('edit an item (case admin mode placing into not allowed system', async () => {
       props.isAdminUser = true;
-      props.selectedItem = getItemById('RuUxShkg');
 
       createView();
 
@@ -1204,8 +1223,9 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
-      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/RuUxShkg', {
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
         system_id: '657f8c3b2a1b4e5d8f9b3c4e8',
+        usage_status_id: '3',
       });
     });
 
