@@ -12,7 +12,7 @@ import {
   modifySystem,
   moveItemToSystem,
   moveToSystems,
-  navigateToItemTableForSparesDefinition,
+  navigateToItemsTableViaSpares,
 } from './functions';
 
 describe('systems', () => {
@@ -59,7 +59,7 @@ describe('systems', () => {
       importance: 'high',
       type: 'Operational',
     });
-    navigateToItemTableForSparesDefinition();
+    navigateToItemsTableViaSpares();
     moveItemToSystem({
       checkedItems: [1],
       checkedItemsNames: ['Plano-Convex Lens'],

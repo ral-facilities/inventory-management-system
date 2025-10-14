@@ -207,7 +207,7 @@ export const editSystems = () => {
   });
 };
 
-export const navigateToItemTableForSparesDefinition = () => {
+export const navigateToItemsTableViaSpares = () => {
   // Catalogue items table
   cy.findByRole('link', { name: 'Storage' }).click();
   cy.findByRole('link', { name: 'Plano-Convex Lens' }).click();
