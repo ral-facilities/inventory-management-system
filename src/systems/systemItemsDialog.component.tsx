@@ -4,14 +4,16 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   FormHelperText,
+  IconButton,
   Step,
   StepLabel,
   Stepper,
+  Tooltip,
   Typography,
 } from '@mui/material';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Grid from '@mui/material/Grid2';
 import { MRT_RowSelectionState } from 'material-react-table';
 import React from 'react';
@@ -351,25 +353,44 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   return (
     <Dialog open={open} maxWidth="lg" fullWidth>
       <DialogTitle marginLeft={2}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} alignItems={'center'}>
           <Grid>
             Move{' '}
             {selectedItems.length > 1
               ? `${selectedItems.length} items`
               : '1 item'}{' '}
-            to a different system
+            to a different system {isUserAuthorised ? 'as admin' : ''}
+          </Grid>
+          <Grid>
+            {isUserAuthorised && (
+              <Tooltip
+                title={
+                  <h4>
+                    As an admin, you can bypass system rules that restrict item
+                    placement for other users and modify the item&apos;s usage
+                    status.
+                  </h4>
+                }
+                disableHoverListener={false}
+                aria-label={'admin-status-tooltip'}
+              >
+                <IconButton
+                  disableRipple
+                  sx={{ backgroundColor: 'transparent' }}
+                  size="large"
+                >
+                  <InfoOutlinedIcon
+                    sx={{
+                      color: '#003088',
+                    }}
+                  />
+                </IconButton>
+              </Tooltip>
+            )}
           </Grid>
         </Grid>
       </DialogTitle>
       <DialogContent>
-        <Grid size={12}>
-          {isUserAuthorised && (
-            <DialogContentText sx={{ color: '#FFA500' }}>
-              Warning: You are moving as an admin and will be able to move an
-              item into <strong>ANY</strong> system.
-            </DialogContentText>
-          )}
-        </Grid>
         {isUserAuthorised && (
           <Stepper
             nonLinear

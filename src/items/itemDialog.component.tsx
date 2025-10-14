@@ -9,7 +9,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   FormHelperText,
   IconButton,
@@ -1209,17 +1208,35 @@ function ItemDialog(props: ItemDialogProps) {
       fullWidth
     >
       <DialogTitle>
-        {`${requestType === 'patch' ? 'Edit' : 'Add'} Item`}
+        {`${requestType === 'patch' ? 'Edit' : 'Add'} Item ${isUserAuthorised ? 'as admin' : ''}`}
+        {isUserAuthorised && (
+          <Tooltip
+            title={
+              <h4>
+                As an admin, you can bypass system rules that restrict item
+                placement for other users and modify the item&apos;s usage
+                status.
+              </h4>
+            }
+            disableHoverListener={false}
+            aria-label={'admin-status-tooltip'}
+          >
+            <IconButton
+              disableRipple
+              sx={{ backgroundColor: 'transparent' }}
+              size="large"
+            >
+              <InfoOutlinedIcon
+                sx={{
+                  color: '#003088',
+                }}
+              />
+            </IconButton>
+          </Tooltip>
+        )}
       </DialogTitle>
 
       <DialogContent>
-        {isUserAuthorised && (
-          <DialogContentText sx={{ color: '#FFA500' }}>
-            {`Warning: You are ${requestType === 'patch' ? 'editing' : 'creating'} an item as an admin, and will be to able place an item in `}
-            <strong>ANY</strong> system, and optionally edit it&apos;s usage
-            status
-          </DialogContentText>
-        )}
         <Stepper
           nonLinear
           activeStep={activeStep}

@@ -1,4 +1,5 @@
 import WarningIcon from '@mui/icons-material/Warning';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {
   Box,
   Button,
@@ -8,7 +9,9 @@ import {
   DialogContent,
   DialogTitle,
   FormHelperText,
+  IconButton,
   Link as MuiLink,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import { AxiosError } from 'axios';
@@ -86,15 +89,33 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
     <Dialog open={open} maxWidth="lg">
       <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
         <WarningIcon sx={{ marginRight: 1 }} />
-        Delete Item
+        Delete Item {isUserAuthorised ? 'as admin' : ''}
+        {isUserAuthorised && (
+          <Tooltip
+            title={
+              <h4>
+                As an admin, you can bypass system rules that prevent other
+                users from deleting an item
+              </h4>
+            }
+            disableHoverListener={false}
+            aria-label={'admin-status-tooltip'}
+          >
+            <IconButton
+              disableRipple
+              sx={{ backgroundColor: 'transparent' }}
+              size="large"
+            >
+              <InfoOutlinedIcon
+                sx={{
+                  color: '#003088',
+                }}
+              />
+            </IconButton>
+          </Tooltip>
+        )}
       </DialogTitle>
       <DialogContent>
-        {isUserAuthorised && (
-          <Typography sx={{ color: '#FFA500', pr: 0.5, pb: 1.5 }}>
-            Warning: You are deleting this item as an admin, you may be
-            bypassing rules blocking other users from deleting this item
-          </Typography>
-        )}
         {systemData && (
           <Typography sx={{ pr: 0.5, pb: 1 }}>
             This item is currently in the{' '}
