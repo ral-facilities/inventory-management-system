@@ -57,7 +57,7 @@ export interface SystemDetailsProps {
 
 function SystemDetails(props: SystemDetailsProps) {
   const { data: system, isLoading: systemLoading } = useGetSystem(props.id);
-  const { data: systemTypesData } = useGetSystemTypes();
+  const { data: systemTypesData = [] } = useGetSystemTypes();
 
   return systemLoading && props.id !== null ? (
     <Box

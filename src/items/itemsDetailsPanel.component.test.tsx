@@ -10,7 +10,7 @@ import ItemsDetailsPanel, {
   ItemsDetailsPanelProps,
 } from './itemsDetailsPanel.component';
 
-describe('Catalogue Items details panel', () => {
+describe('Items details panel', () => {
   let user: UserEvent;
   let props: ItemsDetailsPanelProps;
   const createView = () => {

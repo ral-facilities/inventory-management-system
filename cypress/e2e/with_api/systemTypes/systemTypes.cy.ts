@@ -13,7 +13,7 @@ describe('Usage Statuses', () => {
     cy.findByText('Scrapped').should('exist');
 
     // Check that spares defintion button filters the table
-    cy.findByRole('button', { name: 'Spares Definition' }).click();
+    cy.findByRole('button', { name: 'Show Spares Definition' }).click();
 
     cy.findByText('Operational').should('not.exist');
     cy.findByText('Scrapped').should('not.exist');
