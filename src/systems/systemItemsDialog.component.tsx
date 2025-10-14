@@ -40,7 +40,7 @@ export interface SystemItemsDialogProps {
   selectedItems: Item[];
   onChangeSelectedItems: (selectedItems: MRT_RowSelectionState) => void;
   parentSystemId: string | null;
-  isUserAuthorised: boolean;
+  isAdminUser: boolean;
 }
 
 export interface UsageStatusesType {
@@ -70,13 +70,8 @@ const convertToSystemUsageStatuses = (
 };
 
 const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
-  const {
-    open,
-    onClose,
-    selectedItems,
-    onChangeSelectedItems,
-    isUserAuthorised,
-  } = props;
+  const { open, onClose, selectedItems, onChangeSelectedItems, isAdminUser } =
+    props;
 
   // Store here and update only if changed to reduce re-renders and allow
   // navigation
@@ -189,7 +184,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
 
     const usageStatusId =
       srcSystemTypeId === dstSystemTypeId ||
-      (selectedRules?.length === 0 && isUserAuthorised)
+      (selectedRules?.length === 0 && isAdminUser)
         ? undefined
         : selectedRules?.[0]?.dst_usage_status?.id;
 
@@ -198,8 +193,8 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     if (!targetSystemLoading && targetSystem !== undefined) {
       moveItemsToSystem({
         // Different implementations based on if user is selecting usage statuses or it is done via a rule
-        usageStatusId: isUserAuthorised ? undefined : usageStatusId,
-        usageStatuses: isUserAuthorised
+        usageStatusId: isAdminUser ? undefined : usageStatusId,
+        usageStatuses: isAdminUser
           ? convertToSystemUsageStatuses(usageStatuses)
           : undefined,
         selectedItems: selectedItems,
@@ -218,7 +213,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     srcSystemTypeId,
     dstSystemTypeId,
     selectedRules,
-    isUserAuthorised,
+    isAdminUser,
     targetSystemLoading,
     targetSystem,
     moveItemsToSystem,
@@ -243,7 +238,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
           } else {
             const usageStatusId =
               srcSystemTypeId === dstSystemTypeId ||
-              (selectedRules?.length === 0 && isUserAuthorised)
+              (selectedRules?.length === 0 && isAdminUser)
                 ? undefined
                 : selectedRules?.[0]?.dst_usage_status?.id;
 
@@ -271,7 +266,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     [
       dstSystemTypeId,
       hasSystemErrors,
-      isUserAuthorised,
+      isAdminUser,
       selectedItems,
       selectedRules,
       srcSystemTypeId,
@@ -319,7 +314,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
                 systemParentId={parentSystemId ?? undefined}
                 isSystemSelectable={(system) => {
                   return (
-                    isUserAuthorised ||
+                    isAdminUser ||
                     tableRules?.some(
                       (rule) =>
                         rule.dst_system_type?.id === system.type_id ||
@@ -359,10 +354,10 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
             {selectedItems.length > 1
               ? `${selectedItems.length} items`
               : '1 item'}{' '}
-            to a different system {isUserAuthorised ? 'as admin' : ''}
+            to a different system {isAdminUser ? 'as admin' : ''}
           </Grid>
           <Grid>
-            {isUserAuthorised && (
+            {isAdminUser && (
               <Tooltip
                 title={
                   <h4>
@@ -391,7 +386,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
         </Grid>
       </DialogTitle>
       <DialogContent>
-        {isUserAuthorised && (
+        {isAdminUser && (
           <Stepper
             nonLinear
             activeStep={activeStep}
@@ -435,7 +430,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
         <Button onClick={handleClose} sx={{ mr: 'auto' }}>
           Cancel
         </Button>
-        {isUserAuthorised && (
+        {isAdminUser && (
           <Button
             disabled={activeStep === 0}
             onClick={handleBack}
@@ -444,7 +439,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
             Back
           </Button>
         )}
-        {isUserAuthorised ? (
+        {isAdminUser ? (
           activeStep === STEPS.length - 1 ? (
             <Button
               disabled={

@@ -31,7 +31,7 @@ describe('ItemDialog', () => {
       requestType: 'post',
       catalogueCategory: getCatalogueCategoryById('4'),
       catalogueItem: getCatalogueItemById('1'),
-      isUserAuthorised: false,
+      isAdminUser: false,
     };
     user = userEvent.setup();
   });
@@ -212,7 +212,7 @@ describe('ItemDialog', () => {
     });
 
     it('displays warning when in admin mode', async () => {
-      props.isUserAuthorised = true;
+      props.isAdminUser = true;
       const view = createView();
 
       await waitFor(() => {
@@ -696,7 +696,7 @@ describe('ItemDialog', () => {
     }, 10000);
 
     it('adds an item (case admin mode, placing in system which is not allowed)', async () => {
-      props.isUserAuthorised = true;
+      props.isAdminUser = true;
       createView();
 
       await modifySystemValue({
@@ -767,7 +767,7 @@ describe('ItemDialog', () => {
     });
 
     it('displays error message when usage status not selected (case admin mode selecting not allowed system)', async () => {
-      props.isUserAuthorised = true;
+      props.isAdminUser = true;
       createView();
 
       await user.click(screen.getByText('Add item details'));
@@ -1124,7 +1124,7 @@ describe('ItemDialog', () => {
     });
 
     it('displays warning when in admin mode', async () => {
-      props.isUserAuthorised = true;
+      props.isAdminUser = true;
       const view = createView();
 
       await waitFor(() => {
@@ -1187,7 +1187,7 @@ describe('ItemDialog', () => {
     }, 10000);
 
     it('edit an item (case admin mode placing into not allowed system', async () => {
-      props.isUserAuthorised = true;
+      props.isAdminUser = true;
       props.selectedItem = getItemById('RuUxShkg');
 
       createView();

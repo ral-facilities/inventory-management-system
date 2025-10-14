@@ -37,7 +37,7 @@ describe('delete item dialog', () => {
       onClose: onClose,
       item: item,
       onChangeItem: onChangeItem,
-      isUserAuthorised: false,
+      isAdminUser: false,
     };
     user = userEvent.setup(); // Assigning userEvent to 'user'
   });
@@ -56,7 +56,7 @@ describe('delete item dialog', () => {
   });
 
   it('renders correctly when in admin mode', async () => {
-    props.isUserAuthorised = true;
+    props.isAdminUser = true;
     const view = createView();
 
     await waitFor(() => {
@@ -165,7 +165,7 @@ describe('delete item dialog', () => {
   });
 
   it('in admin mode allows deletion of item from a system type which is not allowed', async () => {
-    props.isUserAuthorised = true;
+    props.isAdminUser = true;
     createView();
 
     const continueButton = screen.getByRole('button', { name: 'Continue' });

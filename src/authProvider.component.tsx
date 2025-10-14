@@ -1,5 +1,5 @@
 import React from 'react';
-import { isUserAuthorised } from './parseTokens';
+import { isUserAdmin } from './parseTokens';
 import Preloader from './preloader/preloader.component';
 
 const AuthContext = React.createContext<boolean>(false);
@@ -12,7 +12,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   React.useEffect(() => {
     const setAuthorisationState = async () => {
-      const authResult = await isUserAuthorised();
+      const authResult = await isUserAdmin();
       setLoading(false);
       setAuthorised(authResult);
     };

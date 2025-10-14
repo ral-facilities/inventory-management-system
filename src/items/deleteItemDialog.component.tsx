@@ -28,11 +28,11 @@ export interface DeleteItemDialogProps {
   onClose: () => void;
   item: Item;
   onChangeItem: (Item: Item | undefined) => void;
-  isUserAuthorised: boolean;
+  isAdminUser: boolean;
 }
 
 const DeleteItemDialog = (props: DeleteItemDialogProps) => {
-  const { open, onClose, item, onChangeItem, isUserAuthorised } = props;
+  const { open, onClose, item, onChangeItem, isAdminUser } = props;
   const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
     undefined
   );
@@ -61,7 +61,7 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
         ?.map((rule) => rule.src_system_type?.value ?? '')
         .filter((value): value is string => value !== '') || [];
 
-    if ((selectedRules && selectedRules.length > 0) || isUserAuthorised) {
+    if ((selectedRules && selectedRules.length > 0) || isAdminUser) {
       deleteItem(item)
         .then(() => {
           onClose();
@@ -79,7 +79,7 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
     selectedRules,
     deleteItem,
     deletionRules,
-    isUserAuthorised,
+    isAdminUser,
     item,
     onChangeItem,
     onClose,
@@ -89,8 +89,8 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
     <Dialog open={open} maxWidth="lg">
       <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
         <WarningIcon sx={{ marginRight: 1 }} />
-        Delete Item {isUserAuthorised ? 'as admin' : ''}
-        {isUserAuthorised && (
+        Delete Item {isAdminUser ? 'as admin' : ''}
+        {isAdminUser && (
           <Tooltip
             title={
               <h4>

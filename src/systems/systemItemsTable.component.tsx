@@ -63,7 +63,7 @@ const MoveItemsButton = (props: {
         selectedItems={props.selectedItems}
         onChangeSelectedItems={props.onChangeSelectedItems}
         parentSystemId={props.system.id}
-        isUserAuthorised={props.openDialogAsAdmin}
+        isAdminUser={props.openDialogAsAdmin}
       />
     </>
   );
@@ -82,7 +82,7 @@ export interface SystemItemsTableProps {
 export function SystemItemsTable(props: SystemItemsTableProps) {
   const { system } = props;
 
-  const isUserAuthorised = useAuthorised();
+  const isAdminUser = useAuthorised();
 
   // States
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
@@ -474,7 +474,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
               onChangeSelectedItems={setRowSelection}
               openDialogAsAdmin={false}
             />
-            {isUserAuthorised && (
+            {isAdminUser && (
               <MoveItemsButton
                 selectedItems={selectedItems}
                 system={system}

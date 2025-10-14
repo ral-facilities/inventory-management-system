@@ -23,7 +23,7 @@ function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
     },
     [homeLocation, navigate]
   );
-  const isUserAuthorised = useAuthorised();
+  const isAdminUser = useAuthorised();
 
   return (
     <Box
@@ -53,7 +53,7 @@ function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
           breadcrumbsInfo={breadcrumbsInfo}
           homeLocation={homeLocation}
         />
-        {isUserAuthorised && <AuthRoleStatus />}
+        {isAdminUser && <AuthRoleStatus />}
       </Grid>
       {children}
     </Box>

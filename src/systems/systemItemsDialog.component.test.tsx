@@ -34,7 +34,7 @@ describe('SystemItemsDialog', () => {
       selectedItems: mockSelectedItems,
       onChangeSelectedItems: mockOnChangeSelectedItems,
       parentSystemId: SystemsJSON[0].id,
-      isUserAuthorised: false,
+      isAdminUser: false,
     };
 
     user = userEvent.setup();
@@ -73,7 +73,7 @@ describe('SystemItemsDialog', () => {
   });
 
   it('displays warning when in admin mode', async () => {
-    props.isUserAuthorised = true;
+    props.isAdminUser = true;
     const view = createView();
 
     await waitFor(() => {

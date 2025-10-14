@@ -1,8 +1,4 @@
-import {
-  getUserRole,
-  isUserAuthorised,
-  readSciGatewayToken,
-} from './parseTokens';
+import { getUserRole, isUserAdmin, readSciGatewayToken } from './parseTokens';
 
 describe('parseTokens', () => {
   const localStorageGetItemMock = vi.spyOn(
@@ -42,7 +38,7 @@ describe('parseTokens', () => {
     });
   });
 
-  describe('isUserAuthorised', () => {
+  describe('isUserAdmin', () => {
     // only mocked setting the function cares about
     vi.mock('./settings', () => ({
       settings: Promise.resolve({
@@ -59,7 +55,7 @@ describe('parseTokens', () => {
         () =>
           'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwicm9sZXMiOlsiYWRtaW4iXSwidXNlcklzQWRtaW4iOnRydWUsImV4cCI6MjUzNDAyMzAwNzk5fQ.gWXkZNeLCgNA04KhkGcAUB8WwrrVr8HMKp8yd9BUEBfDuiN1yekPxwKJ7LZDndHqYL4z9WWfVsDE5vYyWfjDJjhoymuP-VYTAI2GxbmazRmknsl9L-vRo31oPX3v2Cs5V2tcBv7dM49gzY7w-dS0b9QsOrn4Y1z9zLj4kLpVtNm0EhtbwThxMk8qVNNtEu76TAnYrdWAoz7_IedBh9NRf48EKJFfoh4CSbfXhHsGRZjvAKnjU-khaibWP3aWuMzN1nwQJ8WasgvhPaxMxd1qzKTbfpMMjg2eo3hDcQogU545P8zO4PcfzIid1g9hF1vMgRsAtQNK385oqBjYfOOWZw'
       );
-      const result = await isUserAuthorised();
+      const result = await isUserAdmin();
       expect(result).toEqual(true);
     });
 
@@ -68,13 +64,13 @@ describe('parseTokens', () => {
         () =>
           'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwicm9sZXMiOltdLCJ1c2VySXNBZG1pbiI6ZmFsc2UsImV4cCI6MjUzNDAyMzAwNzk5fQ.JTdyZHZTU2Vd1cZPzsBGBB_hs72KS4LODyhAyKdNTPWMnp_lEs2fmVSqJjSx3mOTW4J40c7LnJcw6ALlCGuEG3DShQKdoYTtH8JLNyzXi9yNYtPlBTEfWqFKK_IYY9sA_WzlQwYDGLD7jsvCvm92CdWjoNtcfDZ0eIfRjHuIRsW5XllerFFE7ouv9awulGCEHv-zl2m0SpMF-mHUYJV9JbB5bgrqs635vYL-IJg_qdr10Cn11BUhO1ulrFrk1QLhty-_L8LC2d2j11xqEuIMlEcVkQ6w79U1uzg-NEYcHzcuuaitQjZzKsDD8eMDT-dBkIPZxDWzlUuySkGUKDJPzw'
       );
-      const result = await isUserAuthorised();
+      const result = await isUserAdmin();
       expect(result).toEqual(false);
     });
 
     it("should return false if token doesn't exist", async () => {
       localStorageGetItemMock.mockImplementationOnce(() => null);
-      const result = await isUserAuthorised();
+      const result = await isUserAdmin();
       expect(result).toEqual(false);
     });
   });

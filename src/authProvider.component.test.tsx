@@ -45,7 +45,7 @@ describe('AuthProvider', () => {
   });
 
   it('provides true when user is authorised', async () => {
-    vi.spyOn(parseTokens, 'isUserAuthorised').mockResolvedValue(true);
+    vi.spyOn(parseTokens, 'isUserAdmin').mockResolvedValue(true);
 
     renderComponent();
 
@@ -55,7 +55,7 @@ describe('AuthProvider', () => {
   });
 
   it('provides false when user is not authorised', async () => {
-    vi.spyOn(parseTokens, 'isUserAuthorised').mockResolvedValue(false);
+    vi.spyOn(parseTokens, 'isUserAdmin').mockResolvedValue(false);
 
     renderComponent();
 

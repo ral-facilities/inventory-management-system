@@ -69,7 +69,7 @@ interface TableRowData {
 export function ItemsTable(props: ItemTableProps) {
   const { catalogueCategory, catalogueItem, dense } = props;
 
-  const isUserAuthorised = useAuthorised();
+  const isAdminUser = useAuthorised();
 
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
 
@@ -559,7 +559,7 @@ export function ItemsTable(props: ItemTableProps) {
               table.setCreatingRow(null);
               setOpenDialogAsAdmin(false);
             }}
-            isUserAuthorised={openDialogAsAdmin}
+            isAdminUser={openDialogAsAdmin}
             duplicate={itemDialogType === 'duplicate'}
             requestType={itemDialogType === 'edit' ? 'patch' : 'post'}
             catalogueCategory={catalogueCategory}
@@ -594,7 +594,7 @@ export function ItemsTable(props: ItemTableProps) {
           Add Item
         </Button>
 
-        {isUserAuthorised && (
+        {isAdminUser && (
           <Button
             startIcon={<AddIcon />}
             sx={{ mx: 0.5 }}
@@ -640,7 +640,7 @@ export function ItemsTable(props: ItemTableProps) {
           </ListItemIcon>
           <ListItemText>Edit</ListItemText>
         </MenuItem>,
-        isUserAuthorised && (
+        isAdminUser && (
           <MenuItem
             key="edit"
             aria-label={`Edit item ${row.original.item.id}`}
@@ -689,7 +689,7 @@ export function ItemsTable(props: ItemTableProps) {
           </ListItemIcon>
           <ListItemText>Delete</ListItemText>
         </MenuItem>,
-        isUserAuthorised && (
+        isAdminUser && (
           <MenuItem
             key="delete"
             aria-label={`Delete item ${row.original.item.id}`}
@@ -736,7 +736,7 @@ export function ItemsTable(props: ItemTableProps) {
           }}
           item={selectedItem}
           onChangeItem={setSelectedItem}
-          isUserAuthorised={openDialogAsAdmin}
+          isAdminUser={openDialogAsAdmin}
         />
       )}
     </div>
