@@ -324,7 +324,7 @@ describe('Catalogue Items Table', () => {
     expect(url[0]).toHaveAttribute('href', '/catalogue/5/items/6');
   });
 
-  it('navigates to items pages with the spare definition applied', async () => {
+  it('navigates to items pages with the spares definition applied', async () => {
     createView();
     await waitFor(() => {
       expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();

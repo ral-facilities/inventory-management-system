@@ -79,7 +79,7 @@ function ItemsLandingPage() {
 
   const { data: systemData } = useGetSystem(itemData?.system_id);
 
-  const { data: systemTypesData } = useGetSystemTypes();
+  const { data: systemTypesData = [] } = useGetSystemTypes();
 
   const { data: manufacturer } = useGetManufacturer(
     catalogueItemData?.manufacturer_id

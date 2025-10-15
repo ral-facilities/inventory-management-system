@@ -53,7 +53,7 @@ exports[`SystemTypes > renders table correctly 1`] = `
             tabindex="0"
             type="button"
           >
-            Spares Definition
+            Show Spares Definition
           </button>
         </div>
         <div
@@ -430,21 +430,21 @@ exports[`SystemTypes > renders table correctly 1`] = `
                     class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                   >
                     <p
-                      aria-label="Is Spare"
+                      aria-label="Used For Spares"
                       class="MuiTypography-root MuiTypography-body1 css-1bnbo3v-MuiTypography-root"
                       data-mui-internal-clone-element="true"
                       role="tooltip"
                     >
-                      Is Spare
+                      Used For Spares
                     </p>
                   </div>
                   <span
-                    aria-label="Sort by Is Spare ascending"
+                    aria-label="Sort by Used For Spares ascending"
                     class="MuiBadge-root css-63ezxx-MuiBadge-root"
                     data-mui-internal-clone-element="true"
                   >
                     <span
-                      aria-label="Sort by Is Spare ascending"
+                      aria-label="Sort by Used For Spares ascending"
                       class="MuiButtonBase-root MuiTableSortLabel-root Mui-active MuiTableSortLabel-directionAsc css-bgz9z4-MuiButtonBase-root-MuiTableSortLabel-root"
                       role="button"
                       tabindex="0"
@@ -533,7 +533,7 @@ exports[`SystemTypes > renders table correctly 1`] = `
                         <div
                           aria-expanded="false"
                           aria-haspopup="listbox"
-                          aria-label="Filter by Is Spare"
+                          aria-label="Filter by Used For Spares"
                           aria-labelledby=":rr:"
                           class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-10y8whu-MuiSelect-select-MuiInputBase-input-MuiInput-input"
                           id=":rr:"
@@ -543,7 +543,7 @@ exports[`SystemTypes > renders table correctly 1`] = `
                           <div
                             class="MuiBox-root css-1tzeee1"
                           >
-                            Filter by Is Spare
+                            Filter by Used For Spares
                           </div>
                         </div>
                         <input
@@ -552,7 +552,7 @@ exports[`SystemTypes > renders table correctly 1`] = `
                           autocomplete="off"
                           class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
                           tabindex="-1"
-                          title="Filter by Is Spare"
+                          title="Filter by Used For Spares"
                           value=""
                         />
                         <svg

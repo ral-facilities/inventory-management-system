@@ -207,13 +207,15 @@ export const editSystems = () => {
   });
 };
 
-export const navigateToItemTableForSparesDefinition = () => {
+export const navigateToItemsTableViaSpares = () => {
   // Catalogue items table
   cy.findByRole('link', { name: 'Storage' }).click();
   cy.findByRole('link', { name: 'Plano-Convex Lens' }).click();
   cy.findByText('Actions').should('exist');
   cy.findByRole('link', { name: 'Spherical Lenses' }).click();
   cy.findByText('Number of spares').should('exist');
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.wait(1000);
   cy.findByRole('link', { name: '1' }).click();
   cy.findByText('MX432424').should('exist');
 
