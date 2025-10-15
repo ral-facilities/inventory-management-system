@@ -996,6 +996,85 @@ describe('Systems', () => {
       });
     });
 
+    it('moves items (admin mode)', () => {
+      cy.window().then((win) => {
+        win.localStorage.setItem(
+          'scigateway:token',
+          'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwicm9sZXMiOlsiYWRtaW4iXSwidXNlcklzQWRtaW4iOnRydWUsImV4cCI6MjUzNDAyMzAwNzk5fQ.gWXkZNeLCgNA04KhkGcAUB8WwrrVr8HMKp8yd9BUEBfDuiN1yekPxwKJ7LZDndHqYL4z9WWfVsDE5vYyWfjDJjhoymuP-VYTAI2GxbmazRmknsl9L-vRo31oPX3v2Cs5V2tcBv7dM49gzY7w-dS0b9QsOrn4Y1z9zLj4kLpVtNm0EhtbwThxMk8qVNNtEu76TAnYrdWAoz7_IedBh9NRf48EKJFfoh4CSbfXhHsGRZjvAKnjU-khaibWP3aWuMzN1nwQJ8WasgvhPaxMxd1qzKTbfpMMjg2eo3hDcQogU545P8zO4PcfzIid1g9hF1vMgRsAtQNK385oqBjYfOOWZw'
+        );
+      });
+      cy.visit('/systems');
+
+      cy.findByRole('link', { name: 'Pulse Laser' }).click();
+      cy.findAllByRole('button', { name: 'Show/Hide filters' })
+        .eq(1)
+        .scrollIntoView();
+      cy.findAllByRole('button', { name: 'Show/Hide filters' }).eq(1).click();
+
+      // Wait for progress bar to disappear before interacting with filters
+      cy.findAllByRole('progressbar').should('not.exist');
+
+      cy.findAllByRole('button', { name: 'Expand' }).eq(1).scrollIntoView();
+      cy.findAllByRole('button', { name: 'Expand' }).eq(1).click();
+
+      // Second table, first checkbox
+      cy.findAllByRole('table')
+        .eq(1)
+        .within(() => {
+          cy.findAllByRole('checkbox', {
+            name: 'Toggle select row',
+          })
+            .eq(1)
+            .click({ force: true });
+
+          cy.findAllByRole('checkbox', {
+            name: 'Toggle select row',
+          })
+            .eq(2)
+            .click({ force: true });
+        });
+
+      cy.findByRole('button', { name: 'Move to as admin' }).click();
+
+      cy.startSnoopingBrowserMockedRequest();
+
+      cy.findByRole('dialog')
+        .should('be.visible')
+        .within(() => {
+          cy.findByRole('button', { name: 'navigate to systems home' }).click();
+          cy.findByLabelText('Giant laser row').click();
+          cy.findByRole('button', { name: 'Next' }).click();
+        });
+
+      cy.findAllByRole('combobox').eq(1).click();
+      cy.findByRole('option', { name: 'Scrapped' }).click();
+
+      cy.findByRole('button', { name: 'Finish' }).click();
+
+      cy.findByRole('dialog').should('not.exist');
+
+      cy.findBrowserMockedRequests({
+        method: 'PATCH',
+        url: '/v1/items/:id',
+      }).should(async (patchRequests) => {
+        expect(patchRequests.length).eq(2);
+        expect(patchRequests[0].url.toString()).to.contain('/z1hJvV8Z');
+        expect(JSON.stringify(await patchRequests[0].json())).equal(
+          JSON.stringify({
+            system_id: '65328f34a40ff5301575a4e3',
+            usage_status_id: '3',
+          })
+        );
+        expect(patchRequests[1].url.toString()).to.contain('/4mYoI7pr');
+        expect(JSON.stringify(await patchRequests[1].json())).equal(
+          JSON.stringify({
+            system_id: '65328f34a40ff5301575a4e3',
+            usage_status_id: '3',
+          })
+        );
+      });
+    });
+
     it('display errors message and clears error message when resolved', () => {
       cy.findByRole('link', { name: 'Pulse Laser' }).click();
       cy.findAllByRole('button', { name: 'Show/Hide filters' })
