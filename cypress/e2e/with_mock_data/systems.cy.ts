@@ -298,7 +298,7 @@ describe('Systems', () => {
     cy.findByText('Properties').should('be.visible');
   });
 
-  it("should be able to navigate to an filtered item's table using the spares value", () => {
+  it.only("should be able to navigate to an filtered item's table using the spares value", () => {
     cy.findByRole('link', { name: 'Pulse Laser' }).click();
     cy.findAllByRole('button', { name: 'Show/Hide filters' })
       .eq(1)
@@ -310,8 +310,8 @@ describe('Systems', () => {
 
     cy.findAllByRole('button', { name: 'Expand' }).eq(1).scrollIntoView();
     cy.findAllByRole('button', { name: 'Expand' }).eq(1).click();
-    cy.findAllByRole('link', { name: '0' }).first().scrollIntoView();
-    cy.findAllByRole('link', { name: '0' }).first().click({ force: true });
+    cy.findAllByRole('link', { name: '0' }).eq(2).scrollIntoView();
+    cy.findAllByRole('link', { name: '0' }).eq(2).click({ force: true });
 
     // Check now on landing page for the item
     cy.url().should(

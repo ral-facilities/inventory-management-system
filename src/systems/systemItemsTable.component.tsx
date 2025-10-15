@@ -220,7 +220,9 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       {
         header: 'Number of Spares',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => Number(row.catalogueItem.number_of_spares),
+        // This needs to be a string to allow the AggregatedCell to render correctly.
+        // If not, it does not display. This seems to be a Material React Table (MRT) issue.
+        accessorFn: (row) => String(row.catalogueItem.number_of_spares ?? 0),
         id: 'catalogueItem.number_of_spares',
         filterVariant: COLUMN_FILTER_VARIANTS.number,
         filterFn: COLUMN_FILTER_FUNCTIONS.number,
@@ -229,6 +231,15 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           ...OPTIONAL_FILTER_MODE_OPTIONS,
         ],
         GroupedCell: TableGroupedCell,
+        AggregatedCell: ({ row }) => (
+          <MuiLink
+            underline="hover"
+            component={Link}
+            to={`/catalogue/${row.original.catalogueItem?.catalogue_category_id}/items/${row.original?.catalogueItem?.id}/items${sparesFilterState}`}
+          >
+            {row.original?.catalogueItem?.number_of_spares}
+          </MuiLink>
+        ),
         size: 300,
         Cell: ({ row }) => (
           <MuiLink

@@ -203,7 +203,24 @@ exports[`SystemItemsTable > renders correctly 1`] = `
               </svg>
               <span
                 class="MuiTouchRipple-root css-r3djoj-MuiTouchRipple-root"
-              />
+              >
+                <span
+                  class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible"
+                  style="width: 173.20508075688772px; height: 173.20508075688772px; top: -36.60254037844386px; left: 13.397459621556138px;"
+                >
+                  <span
+                    class="MuiTouchRipple-child MuiTouchRipple-childLeaving"
+                  />
+                </span>
+                <span
+                  class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible MuiTouchRipple-ripplePulsate"
+                  style="width: 173.20508075688772px; height: 173.20508075688772px; top: -36.60254037844386px; left: 13.397459621556138px;"
+                >
+                  <span
+                    class="MuiTouchRipple-child MuiTouchRipple-childLeaving MuiTouchRipple-childPulsate"
+                  />
+                </span>
+              </span>
             </button>
             <button
               aria-label="Toggle full screen"
@@ -619,12 +636,12 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                     </p>
                   </div>
                   <span
-                    aria-label="Sort by Number of Spares descending"
+                    aria-label="Sort by Number of Spares ascending"
                     class="MuiBadge-root css-63ezxx-MuiBadge-root"
                     data-mui-internal-clone-element="true"
                   >
                     <span
-                      aria-label="Sort by Number of Spares descending"
+                      aria-label="Sort by Number of Spares ascending"
                       class="MuiButtonBase-root MuiTableSortLabel-root Mui-active MuiTableSortLabel-directionAsc css-bgz9z4-MuiButtonBase-root-MuiTableSortLabel-root"
                       role="button"
                       tabindex="0"
@@ -2531,7 +2548,16 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                   </svg>
                   <span
                     class="MuiTouchRipple-root css-r3djoj-MuiTouchRipple-root"
-                  />
+                  >
+                    <span
+                      class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible MuiTouchRipple-ripplePulsate"
+                      style="width: 173.20508075688772px; height: 173.20508075688772px; top: -36.60254037844386px; left: 13.397459621556138px;"
+                    >
+                      <span
+                        class="MuiTouchRipple-child MuiTouchRipple-childLeaving MuiTouchRipple-childPulsate"
+                      />
+                    </span>
+                  </span>
                 </button>
               </span>
             </td>
@@ -2568,7 +2594,15 @@ exports[`SystemItemsTable > renders correctly 1`] = `
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1nmfjnu-MuiTableCell-root-MuiTableCell-root"
               data-index="3"
               tabindex="0"
-            />
+            >
+              <a
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                data-discover="true"
+                href="/catalogue/13/items/21/items?state=N4IgxgYiBcDaoEsAmMQGcCeaAuBTAtgHTYYAOuhAbgIYA2ArriADQg0NNygnmo4BOCAHYBzFmzqNUAZWwB7ftRFMAvgF11KoA"
+              >
+                0
+              </a>
+            </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-13ijx5r-MuiTableCell-root-MuiTableCell-root"
               data-index="4"
@@ -3105,7 +3139,15 @@ exports[`SystemItemsTable > renders correctly 1`] = `
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1nmfjnu-MuiTableCell-root-MuiTableCell-root"
               data-index="3"
               tabindex="0"
-            />
+            >
+              <a
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                data-discover="true"
+                href="/catalogue/13/items/22/items?state=N4IgxgYiBcDaoEsAmMQGcCeaAuBTAtgHTYYAOuhAbgIYA2ArriADQg0NNygnmo4BOCAHYBzFmzqNUAZWwB7ftRFMAvgF11KoA"
+              >
+                0
+              </a>
+            </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-13ijx5r-MuiTableCell-root-MuiTableCell-root"
               data-index="4"
