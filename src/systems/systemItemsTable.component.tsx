@@ -9,6 +9,7 @@ import {
   ListItemIcon,
   ListItemText,
   MenuItem,
+  Link as MuiLink,
   TableCellBaseProps,
 } from '@mui/material';
 import {
@@ -19,11 +20,11 @@ import {
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
+import { Link } from 'react-router';
 import { CatalogueItem, Item, System } from '../api/api.types';
 import { useGetCatalogueItemIds } from '../api/catalogueItems';
 import { useGetItems } from '../api/items';
 import { useGetUsageStatuses } from '../api/usageStatuses';
-import CatalogueLink from '../catalogue/items/catalogueLink.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import DeleteItemDialog from '../items/deleteItemDialog.component';
 import ItemDialog from '../items/itemDialog.component';
@@ -186,12 +187,14 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           </MenuItem>,
         ],
         Cell: ({ row }) => (
-          <CatalogueLink
-            catalogueItemId={row.original.item.catalogue_item_id}
-            sx={{ marginRight: 0.5 }}
+          <MuiLink
+            underline="hover"
+            component={Link}
+            sx={{ mr: 0.5 }}
+            to={`/catalogue/${row.original.catalogueItem?.catalogue_category_id}/items/${row.original.catalogueItem?.id}`}
           >
             {row.original.catalogueItem?.name}
-          </CatalogueLink>
+          </MuiLink>
         ),
         size: 350,
         GroupedCell: ({ row }) => {
@@ -211,12 +214,14 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                   mx: 0.5,
                 }}
               >
-                <CatalogueLink
-                  catalogueItemId={row.original.item.catalogue_item_id}
-                  sx={{ mx: 0.5, fontSize: 'inherit' }}
+                <MuiLink
+                  underline="hover"
+                  component={Link}
+                  sx={{ mr: 0.5 }}
+                  to={`/catalogue/${row.original.catalogueItem?.catalogue_category_id}/items/${row.original.catalogueItem?.id}`}
                 >
                   {row.original.catalogueItem?.name}
-                </CatalogueLink>
+                </MuiLink>
                 {`(${row.subRows?.length})`}
               </OverflowTip>
             </Box>
@@ -236,9 +241,14 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         ],
         size: 250,
         Cell: ({ row }) => (
-          <CatalogueLink itemId={row.original.item.id}>
+          <MuiLink
+            underline="hover"
+            component={Link}
+            sx={{ mr: 0.5 }}
+            to={`/catalogue/${row.original.catalogueItem?.catalogue_category_id}/items/${row.original.catalogueItem?.id}/items/${row.original.item.id}`}
+          >
             {row.original.item.serial_number ?? 'No serial number'}
-          </CatalogueLink>
+          </MuiLink>
         ),
         enableGrouping: false,
       },

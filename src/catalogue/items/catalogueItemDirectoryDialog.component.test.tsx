@@ -96,6 +96,7 @@ describe('catalogue item directory Dialog', () => {
           notes: null,
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          number_of_spares: 0,
         },
         {
           catalogue_category_id: '5',
@@ -133,6 +134,7 @@ describe('catalogue item directory Dialog', () => {
           notes: null,
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          number_of_spares: 0,
         },
       ],
     };
@@ -356,6 +358,7 @@ describe('catalogue item directory Dialog', () => {
         obsolete_reason: 'The item is no longer being manufactured',
         obsolete_replacement_catalogue_item_id: '6',
         notes: null,
+        number_of_spares: 0,
         created_time: '2024-01-01T12:00:00.000+00:00',
         modified_time: '2024-01-02T13:10:10.000+00:00',
         properties: [
@@ -381,6 +384,7 @@ describe('catalogue item directory Dialog', () => {
         obsolete_reason: null,
         obsolete_replacement_catalogue_item_id: null,
         notes: null,
+        number_of_spares: 0,
         created_time: '2024-01-01T12:00:00.000+00:00',
         modified_time: '2024-01-02T13:10:10.000+00:00',
         properties: [
@@ -423,6 +427,7 @@ describe('catalogue item directory Dialog', () => {
         obsolete_reason: 'The item is no longer being manufactured',
         obsolete_replacement_catalogue_item_id: '6',
         notes: null,
+        number_of_spares: 0,
         created_time: '2024-01-01T12:00:00.000+00:00',
         modified_time: '2024-01-02T13:10:10.000+00:00',
         properties: [
@@ -448,6 +453,7 @@ describe('catalogue item directory Dialog', () => {
         obsolete_reason: null,
         obsolete_replacement_catalogue_item_id: null,
         notes: null,
+        number_of_spares: 0,
         created_time: '2024-01-01T12:00:00.000+00:00',
         modified_time: '2024-01-02T13:10:10.000+00:00',
         properties: [

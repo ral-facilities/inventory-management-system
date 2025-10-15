@@ -2247,7 +2247,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                   role="tooltip"
                 >
                   <a
-                    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-19ok5lw-MuiTypography-root-MuiLink-root"
+                    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-9zqwoa-MuiTypography-root-MuiLink-root"
                     data-discover="true"
                     href="/catalogue/13/items/21"
                   >
@@ -2472,7 +2472,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                 role="tooltip"
               >
                 <a
-                  class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                  class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-9zqwoa-MuiTypography-root-MuiLink-root"
                   data-discover="true"
                   href="/catalogue/13/items/21/items/13h6TOX6"
                 >
@@ -2682,7 +2682,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                 role="tooltip"
               >
                 <a
-                  class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                  class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-9zqwoa-MuiTypography-root-MuiLink-root"
                   data-discover="true"
                   href="/catalogue/13/items/21/items/13h6TOX7"
                 >
@@ -2797,7 +2797,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                   role="tooltip"
                 >
                   <a
-                    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-19ok5lw-MuiTypography-root-MuiLink-root"
+                    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-9zqwoa-MuiTypography-root-MuiLink-root"
                     data-discover="true"
                     href="/catalogue/13/items/22"
                   >
