@@ -127,3 +127,7 @@ This guide outlines the steps to perform end-to-end testing for the Inventory Ma
 By following these instructions, you can effectively conduct end-to-end testing for the Inventory Management System. Choose the method that best suits your testing requirements and development environment.
 
 **Note:** On the CI environment, the IMS-API is accessed via `127.0.0.1` due to issues with `localhost`.
+
+#### Authorisation
+
+The current implementation of authorisation utilises an `AuthProvider` component to check if the user is an admin or not. A user is deemed an admin if the role within their access token is one of the `privilegedRoles` defined in `inventory-management-system-settings.json`. Currently this is just `admin`, therefore the boolean variables used across the repository to signify admin functionality are named `isAdminUser`.

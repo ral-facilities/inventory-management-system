@@ -30,7 +30,7 @@ export const readSciGatewayToken = (): SciGatewayToken => {
   return null;
 };
 
-export const isUserAuthorised = async (): Promise<boolean> => {
+export const isUserAdmin = async (): Promise<boolean> => {
   const token = localStorage.getItem(MicroFrontendToken);
   if (token) {
     const parsedToken = JSON.parse(parseJwt(token));
