@@ -59,7 +59,7 @@ describe('SystemTypes', () => {
     expect(clearFiltersButton).toBeDisabled();
   }, 10000);
 
-  it('sets and clears the spares definition', async () => {
+  it('sets and clears the spares definition filter', async () => {
     createView();
 
     await waitFor(() => {
@@ -67,7 +67,7 @@ describe('SystemTypes', () => {
     });
 
     const sparesDefinitionButton = screen.getByRole('button', {
-      name: 'Spares Definition',
+      name: 'Show Spares Definition',
     });
 
     expect(sparesDefinitionButton).not.toBeDisabled();

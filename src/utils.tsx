@@ -607,10 +607,12 @@ export const useSparesFilterState = (
   } = useGetSparesDefinition();
 
   const urlParam = urlParamName || 'state';
-  const sparesFilter = sparesDefinition.system_types.map((type) => ({
-    type: 'string',
-    value: type.value,
-  }));
+  const sparesFilter = sparesDefinition
+    ? sparesDefinition.system_types.map((type) => ({
+        type: 'string',
+        value: type.value,
+      }))
+    : false;
 
   const sparesColumnsFilters: { cF: MRT_ColumnFiltersState } = React.useMemo(
     () => ({

@@ -76,8 +76,10 @@ export const modifyItem = (
     cy.findByRole('option', { name: values.usageStatus }).click();
   }
 
-  cy.findByLabelText('Is defective *').click();
-  cy.findByRole('option', { name: values.isDefective }).click();
+  if (values.isDefective) {
+    cy.findByLabelText('Is defective *').click();
+    cy.findByRole('option', { name: values.isDefective }).click();
+  }
 
   if (values.notes) {
     cy.findByLabelText('Notes').clear();
@@ -88,8 +90,10 @@ export const modifyItem = (
 
   cy.findByRole('button', { name: 'Next' }).click();
 
-  cy.findByLabelText('Substrate *').click();
-  cy.findByRole('option', { name: values.substrate }).click();
+  if (values.substrate) {
+    cy.findByLabelText('Substrate *').click();
+    cy.findByRole('option', { name: values.substrate }).click();
+  }
 
   if (values.diameter) {
     cy.findByLabelText('Diameter (mm)').clear();
@@ -106,9 +110,6 @@ export const modifyItem = (
   if (values.broken) {
     cy.findByLabelText('Broken').click();
     cy.findByRole('option', { name: values.broken }).click();
-  } else {
-    cy.findByLabelText('Broken').click();
-    cy.findByRole('option', { name: 'None' }).click();
   }
 
   cy.findByRole('button', { name: 'Finish' }).click();
@@ -170,6 +171,7 @@ export const editProperty = () => {
   cy.findByText('Type').should('exist');
   cy.findByRole('button', { name: 'items landing page actions menu' }).click();
   cy.findByText('Edit').click();
+  cy.findByRole('button', { name: 'Next' }).click();
   cy.findByRole('button', { name: 'Next' }).click();
   cy.findByLabelText('Type *').click();
   cy.findByRole('option', { name: 'flat' }).click();

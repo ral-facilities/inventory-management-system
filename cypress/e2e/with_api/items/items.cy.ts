@@ -10,7 +10,6 @@ import {
   duplicateItem,
   editItem,
   editProperty,
-  modifyItem,
 } from './functions';
 
 describe('items', () => {
@@ -52,15 +51,11 @@ describe('items', () => {
     duplicateItem('MX4332424', 0);
     addProperty();
     editProperty();
-    modifyItem({
-      edit: 0,
-      system: 'Storage',
-    });
-    modifyItem({
-      edit: 0,
-      system: 'Storage',
-    });
-    deleteItem('MX4332424', 0);
-    deleteItem('MX4332424', 0);
+    cy.findByText('Total Items: 2').should('exist');
+    cy.findByRole('progressbar').should('not.exist');
+    cy.findAllByText('MX4332424').should('have.length', 2);
+    deleteItem('MX4332424', 1);
+    cy.findByRole('progressbar').should('not.exist');
+    cy.findAllByText('MX4332424').should('have.length', 1);
   });
 });

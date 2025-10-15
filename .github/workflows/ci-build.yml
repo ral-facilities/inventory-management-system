@@ -89,11 +89,6 @@ jobs:
           repository: ral-facilities/inventory-management-system-api
           ref: develop
 
-      - name: Set up Python
-        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
-        with:
-          python-version: '3.12'
-
       # This is required as need to setup api in a different directory as checkout will attempt delete
       # all existing files which in this case will include a data directory created by docker causing
       # a permission error (checkout action also can't specify a different directory to clone into)
@@ -254,7 +249,8 @@ jobs:
       - name: Build app for production
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        run: yarn build
+        # Override the value used in the .env.production
+        run: VITE_APP_INCLUDE_CODECOV=true yarn build
 
   docker:
     # This job triggers only if all the other jobs succeed. It builds the Docker image and if successful,

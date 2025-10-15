@@ -160,25 +160,16 @@ export const moveItemToSystem = (values: {
     cy.findByText('Storage 2').click();
   });
 
-  cy.findByRole('button', { name: 'Next' }).should('not.be.disabled');
-  cy.findByRole('button', { name: 'Next' }).click();
-
-  cy.findByRole('cell', {
-    name: `Plano-Convex Lens (1)`,
-  }).should('exist');
-
-  cy.findByRole('progressbar').should('not.exist');
-
-  cy.findAllByRole('combobox').eq(1).click();
-  cy.findByText('Scrapped').click();
-
-  cy.findByRole('button', { name: 'Finish' }).should('not.be.disabled');
-  cy.findByRole('button', { name: 'Finish' }).click();
-
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.wait(4000);
+  cy.findByRole('button', { name: 'Move here' }).should('not.be.disabled');
+  cy.findByRole('button', { name: 'Move here' }).click();
   cy.findByRole('dialog').should('not.exist', { timeout: 10000 });
 
   cy.findByRole('button', { name: 'navigate to systems home' }).click();
   cy.findByText('Storage 2').click();
+
+  cy.findByText('Serial Number').should('exist');
 
   for (let i = 0; i < values.checkedItems.length; i++) {
     cy.findByText(values.checkedItemsNames[i]).should('exist');
@@ -214,4 +205,28 @@ export const editSystems = () => {
     description: 'optics for experiment RY434',
     type: 'Operational',
   });
+};
+
+export const navigateToItemsTableViaSpares = () => {
+  // Catalogue items table
+  cy.findByRole('link', { name: 'Storage' }).click();
+  cy.findByRole('link', { name: 'Plano-Convex Lens' }).click();
+  cy.findByText('Actions').should('exist');
+  cy.findByRole('link', { name: 'Spherical Lenses' }).click();
+  cy.findByText('Number of spares').should('exist');
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.wait(1000);
+  cy.findByRole('link', { name: '1' }).click();
+  cy.findByText('MX432424').should('exist');
+
+  // Catalogue items landing page
+
+  cy.findByRole('link', { name: 'Plano-Convex Lens' }).click();
+  cy.findByText('Actions').should('exist');
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.wait(100);
+  cy.findByText('Number of spares').should('exist');
+  cy.findByRole('link', { name: '1' }).click();
+  cy.findByText('MX432424').should('exist');
+  cy.visit('/systems');
 };

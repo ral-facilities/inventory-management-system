@@ -24,15 +24,15 @@ describe('System Types', () => {
     cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
   });
 
-  it('sets and clears the spares definition', () => {
+  it('sets and clears the spares definition filter', () => {
     cy.findByText('Storage').should('exist');
     cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
 
-    cy.findByRole('button', { name: 'Spares Definition' }).click();
+    cy.findByRole('button', { name: 'Show Spares Definition' }).click();
     cy.findByText('Operational').should('not.exist');
     cy.findAllByText('Storage').should('exist');
 
-    cy.findByRole('button', { name: 'Spares Definition' }).should(
+    cy.findByRole('button', { name: 'Show Spares Definition' }).should(
       'be.disabled'
     );
 
