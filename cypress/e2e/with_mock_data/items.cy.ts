@@ -413,7 +413,7 @@ describe('Items', () => {
     });
   });
 
-  it.only('should display add dialog in admin view when user is admin', () => {
+  it('should display add dialog in admin view when user is admin', () => {
     cy.window().then((win) => {
       win.localStorage.setItem(
         'scigateway:token',
