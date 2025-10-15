@@ -3,14 +3,15 @@ import { AxiosError } from 'axios';
 import { imsApi } from './api';
 import { SparesDefinition } from './api.types';
 
-const getSparesDefinition = async (): Promise<SparesDefinition> => {
-  return imsApi.get('/v1/settings/spares_definition').then((response) => {
+// This request can return a 204 status, in which case it returns an empty string.
+const getSparesDefinition = async (): Promise<SparesDefinition | ''> => {
+  return imsApi.get('/v1/settings/spares-definition').then((response) => {
     return response.data;
   });
 };
 
 export const useGetSparesDefinition = (): UseQueryResult<
-  SparesDefinition,
+  SparesDefinition | '',
   AxiosError
 > => {
   return useQuery({

@@ -1600,7 +1600,7 @@ describe('Items', () => {
     });
   });
 
-  it('displays error message user tries delete item from a system type which is not allowed', () => {
+  it('displays error message when a user tries delete an item from a system type which is not allowed', () => {
     cy.findAllByLabelText('Row Actions').first().click();
     cy.findByText('Delete').click();
 
