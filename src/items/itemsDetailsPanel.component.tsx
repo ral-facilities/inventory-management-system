@@ -48,7 +48,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
     catalogueItemIdData.manufacturer_id
   );
   const { data: systemData } = useGetSystem(itemData.system_id);
-  const { data: systemTypesData } = useGetSystemTypes();
+  const { data: systemTypesData = [] } = useGetSystemTypes();
 
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
