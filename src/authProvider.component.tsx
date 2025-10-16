@@ -1,30 +1,38 @@
 import React from 'react';
-import { isUserAdmin } from './parseTokens';
-import Preloader from './preloader/preloader.component';
+import { getUserRole } from './parseTokens';
+import { InventoryManagementSystemSettingsContext } from './configProvider.component';
 
-const AuthContext = React.createContext<boolean>(false);
+const AuthContext = React.createContext<{
+  role: string;
+  isAdmin: boolean;
+}>({ role: 'default', isAdmin: false });
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [loading, setLoading] = React.useState(true);
-  const [authorised, setAuthorised] = React.useState(false);
+  const [authorisation, setAuthorisation] = React.useState({
+    role: 'default',
+    isAdmin: false,
+  });
+  const { privilegedRoles } = React.useContext(
+    InventoryManagementSystemSettingsContext
+  );
 
   React.useEffect(() => {
     const setAuthorisationState = async () => {
-      const authResult = await isUserAdmin();
-      setLoading(false);
-      setAuthorised(authResult);
+      const role = getUserRole();
+
+      setAuthorisation({ role: role, isAdmin: privilegedRoles.includes(role) });
     };
 
     setAuthorisationState();
-  }, [authorised]);
+  }, [privilegedRoles]);
 
   return (
-    <Preloader loading={loading}>
-      <AuthContext.Provider value={authorised}>{children}</AuthContext.Provider>
-    </Preloader>
+    <AuthContext.Provider value={authorisation}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 
-export const useAuthorised = () => React.useContext(AuthContext);
+export const useAuthorisationState = () => React.useContext(AuthContext);

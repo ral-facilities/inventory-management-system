@@ -2,7 +2,6 @@
 // so that callers can inform TypeScript the type of their payload
 
 import { MicroFrontendToken } from './app.types';
-import { settings } from './settings';
 
 // when they JSON.parse the result of this function
 const parseJwt = (token: string): string => {
@@ -30,26 +29,14 @@ export const readSciGatewayToken = (): SciGatewayToken => {
   return null;
 };
 
-export const isUserAdmin = async (): Promise<boolean> => {
-  const token = localStorage.getItem(MicroFrontendToken);
-  if (token) {
-    const parsedToken = JSON.parse(parseJwt(token));
-    const privilegedRoles = await settings.then(
-      (imsSettings) => imsSettings?.privilegedRoles ?? []
-    );
-
-    return privilegedRoles.includes(parsedToken.role);
-  }
-
-  return false;
-};
-
-export const getUserRole = (): string | undefined => {
+export const getUserRole = (): string => {
   const token = localStorage.getItem(MicroFrontendToken);
   if (token) {
     const parsedToken = JSON.parse(parseJwt(token));
     if (parsedToken.role) {
-      return parsedToken.role;
+      return parsedToken.role ?? 'default';
     }
   }
+
+  return 'default';
 };

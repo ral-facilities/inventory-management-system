@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 import type { BreadcrumbsInfo } from '../api/api.types';
 import { RoutesHomeLocation, type RoutesHomeLocationType } from '../app.types';
 import Breadcrumbs from '../view/breadcrumbs.component';
-import { useAuthorised } from '../authProvider.component';
+import { useAuthorisationState } from '../authProvider.component';
 import AuthRoleStatus from './authRoleStatus.component';
 
 export interface BaseLayoutHeaderProps {
@@ -23,7 +23,7 @@ function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
     },
     [homeLocation, navigate]
   );
-  const isAdminUser = useAuthorised();
+  const isAdminUser = useAuthorisationState().isAdmin;
 
   return (
     <Box
