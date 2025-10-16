@@ -1,8 +1,13 @@
 import ClearIcon from '@mui/icons-material/Clear';
+import DeleteIcon from '@mui/icons-material/Delete';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
+import EditIcon from '@mui/icons-material/Edit';
+import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   Box,
   Button,
+  ListItemIcon,
+  ListItemText,
   MenuItem,
   Link as MuiLink,
   TableCellBaseProps,
@@ -21,6 +26,8 @@ import { useGetCatalogueItemIds } from '../api/catalogueItems';
 import { useGetItems } from '../api/items';
 import { useGetUsageStatuses } from '../api/usageStatuses';
 import { usePreservedTableState } from '../common/preservedTableState.component';
+import DeleteItemDialog from '../items/deleteItemDialog.component';
+import ItemDialog from '../items/itemDialog.component';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
 import {
   COLUMN_FILTER_FUNCTIONS,
@@ -90,12 +97,20 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
   const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
     {}
   );
+  const [itemDialogType, setItemsDialogType] = React.useState<
+    'edit' | 'duplicate'
+  >('edit');
+  const [deleteItemDialogOpen, setDeleteItemDialogOpen] =
+    React.useState<boolean>(false);
+  const [selectedItem, setSelectedItem] = React.useState<Item | undefined>(
+    undefined
+  );
+
   // Data
   const { data: itemsData, isLoading: isLoadingItems } = useGetItems(
     system?.id,
     undefined
   );
-
   const { data: usageStatusData, isLoading: isLoadingUsageStatuses } =
     useGetUsageStatuses();
 
@@ -103,6 +118,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
   const selectedRowIds = Object.keys(rowSelection);
   const selectedItems =
     itemsData?.filter((item) => selectedRowIds.includes(item.id)) ?? [];
+
   // Fetch catalogue items for each item to display in the table
   const catalogueItemIdSet = React.useMemo(
     () =>
@@ -356,6 +372,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     enableFacetedValues: true,
     enableColumnFilterModes: true,
     enableColumnResizing: true,
+    enableRowActions: true,
     enableStickyHeader: true,
     enableDensityToggle: false,
     enableHiding: true,
@@ -366,8 +383,8 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     enableRowSelection: true,
     enableGrouping: true,
     enablePagination: true,
-    filterFns: customFilterFunctions,
     // Other settings
+    filterFns: customFilterFunctions,
     manualFiltering: false,
     paginationDisplayMode: 'pages',
     positionToolbarAlertBanner: 'bottom',
@@ -463,6 +480,28 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     ...onPreservedStatesChange,
     getRowId: (row) => row.item.id,
     onRowSelectionChange: setRowSelection,
+    renderCreateRowDialogContent: ({ table, row }) => {
+      return (
+        <ItemDialog
+          open={true}
+          onClose={() => {
+            table.setCreatingRow(null);
+          }}
+          duplicate={itemDialogType === 'duplicate'}
+          requestType={itemDialogType === 'edit' ? 'patch' : 'post'}
+          // Intentionally left undefined here as will fetch inside dialog only when needed instead
+          catalogueCategory={undefined}
+          catalogueItem={row.original.catalogueItem}
+          selectedItem={{
+            ...row.original.item,
+            notes:
+              itemDialogType === 'duplicate'
+                ? `${row.original.item.notes || ''}\n\nThis is a copy of the item with this Serial Number: ${row.original.item.serial_number ?? 'No serial number'}`
+                : row.original.item.notes,
+          }}
+        />
+      );
+    },
     renderTopToolbarCustomActions: ({ table }) => (
       <Box sx={{ display: 'flex' }}>
         <Button
@@ -485,6 +524,55 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         )}
       </Box>
     ),
+    renderRowActionMenuItems: ({ closeMenu, row, table }) => {
+      return [
+        <MenuItem
+          key="edit"
+          aria-label={`Edit item ${row.original.item.id}`}
+          onClick={() => {
+            setItemsDialogType('edit');
+            table.setCreatingRow(row);
+            closeMenu();
+          }}
+          sx={{ m: 0 }}
+        >
+          <ListItemIcon>
+            <EditIcon />
+          </ListItemIcon>
+          <ListItemText>Edit</ListItemText>
+        </MenuItem>,
+        <MenuItem
+          key="duplicate"
+          aria-label={`Duplicate item ${row.original.item.id}`}
+          onClick={() => {
+            setItemsDialogType('duplicate');
+            table.setCreatingRow(row);
+            closeMenu();
+          }}
+          sx={{ m: 0 }}
+        >
+          <ListItemIcon>
+            <SaveAsIcon />
+          </ListItemIcon>
+          <ListItemText>Duplicate</ListItemText>
+        </MenuItem>,
+        <MenuItem
+          key="delete"
+          aria-label={`Delete item ${row.original.item.id}`}
+          onClick={() => {
+            setDeleteItemDialogOpen(true);
+            setSelectedItem(row.original.item);
+            closeMenu();
+          }}
+          sx={{ m: 0 }}
+        >
+          <ListItemIcon>
+            <DeleteIcon />
+          </ListItemIcon>
+          <ListItemText>Delete</ListItemText>
+        </MenuItem>,
+      ];
+    },
     renderBottomToolbarCustomActions: ({ table }) =>
       displayTableRowCountText(table, itemsData, 'Items', {
         paddingLeft: '8px',
@@ -498,5 +586,17 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       ) : undefined,
   });
 
-  return <MaterialReactTable table={table} />;
+  return (
+    <>
+      <MaterialReactTable table={table} />
+      {selectedItem && (
+        <DeleteItemDialog
+          open={deleteItemDialogOpen}
+          onClose={() => setDeleteItemDialogOpen(false)}
+          item={selectedItem}
+          onChangeItem={setSelectedItem}
+        />
+      )}
+    </>
+  );
 }

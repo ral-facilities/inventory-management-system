@@ -1038,4 +1038,110 @@ describe('Systems', () => {
       cy.findByText(errorMessage).should('not.exist');
     });
   });
+
+  it("edits an item", () => {
+    cy.visit('/systems/657f8c3b2a1b4e5d8f9b3c4e5')
+
+    cy.findByRole("button", {name: "Expand"}).click()
+    cy.findByLabelText('Row Actions').first().click();
+    cy.findByText('Edit').click();
+
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100);
+
+    cy.findByRole('button', { name: 'Next' }).click();
+
+    // Only edit serial number here, same tests are effectively repeated inside the items table (as the same dialogue is used)
+    cy.findByLabelText('Serial number').type('test1234');
+
+    cy.findByRole('button', { name: 'Next' }).click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('dialog').should('not.exist');
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/items/:id',
+    }).should(async (patchRequests) => {
+      expect(patchRequests.length).eq(1);
+      expect(JSON.stringify(await patchRequests[0].json())).equal(
+        JSON.stringify({ serial_number: 'dfzqkOJbqifOtest1234' })
+      );
+    });
+  })
+
+  it("duplicates an item", () => {
+    cy.visit('/systems/657f8c3b2a1b4e5d8f9b3c4e5')
+
+    cy.findByRole("button", {name: "Expand"}).click()
+    cy.findByLabelText('Row Actions').first().click();
+    cy.findByText('Duplicate').click();
+
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100);
+
+    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByRole('button', { name: 'Next' }).click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('dialog').should('not.exist');
+
+    cy.findBrowserMockedRequests({
+      method: 'POST',
+      url: '/v1/items',
+    }).should(async (postRequests) => {
+      expect(postRequests.length).eq(1);
+      expect(JSON.stringify(await postRequests[0].json())).equal(
+        JSON.stringify({
+            purchase_order_number: "wteR6vsp",
+            is_defective: true,
+            usage_status_id: "0",
+            warranty_end_date: "2023-04-01T23:00:00.000Z",
+            asset_number: "DEAbxBGr2M",
+            serial_number: "dfzqkOJbqifO",
+            delivered_date: "2023-06-15T23:00:00.000Z",
+            notes: "uaw8BqYE3vMI5CmOJgFP\n\nThis is a copy of the item with this Serial Number: dfzqkOJbqifO",
+            properties: [
+                {
+                    id: "13",
+                    value: 100
+                },
+                {
+                    id: "14",
+                    value: 10
+                }
+            ],
+            catalogue_item_id: "11",
+            system_id: "657f8c3b2a1b4e5d8f9b3c4e5"
+        })
+      );
+    });
+  })
+
+  it("deletes an item", () => {
+    cy.visit('/systems/657f8c3b2a1b4e5d8f9b3c4e5')
+
+    cy.findByRole("button", {name: "Expand"}).click()
+    cy.findByLabelText('Row Actions').first().click();
+    cy.findByText('Delete').click();
+
+    cy.findByText('Serial Number: dfzqkOJbqifO').should('exist');
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'DELETE',
+      url: '/v1/items/:id',
+    }).should((deleteRequests) => {
+      expect(deleteRequests.length).equal(1);
+      const request = deleteRequests[0];
+      expect(request.url.toString()).to.contain('RuUxShkg');
+    });
+  })
 });
