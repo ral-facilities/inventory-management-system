@@ -53,7 +53,7 @@ import {
 import DeleteItemDialog from './deleteItemDialog.component';
 import ItemDialog from './itemDialog.component';
 import ItemsDetailsPanel from './itemsDetailsPanel.component';
-import { useAuthorised } from '../authProvider.component';
+import { useAuthorisationState } from '../authProvider.component';
 
 export interface ItemTableProps {
   catalogueCategory: CatalogueCategory;
@@ -69,7 +69,7 @@ interface TableRowData {
 export function ItemsTable(props: ItemTableProps) {
   const { catalogueCategory, catalogueItem, dense } = props;
 
-  const isAdminUser = useAuthorised();
+  const { isAdminUser } = useAuthorisationState();
 
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
 
@@ -713,7 +713,6 @@ export function ItemsTable(props: ItemTableProps) {
       displayTableRowCountText(table, itemsData, 'Items', {
         paddingLeft: '8px',
       }),
-
     renderDetailPanel: dense
       ? ({ row }) => (
           <ItemsDetailsPanel

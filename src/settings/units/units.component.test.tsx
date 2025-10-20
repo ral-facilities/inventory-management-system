@@ -11,7 +11,10 @@ describe('Units', () => {
   };
   beforeEach(() => {
     user = userEvent.setup();
-    vi.spyOn(authProvider, 'useAuthorised').mockReturnValue(true);
+    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
+      role: 'admin',
+      isAdminUser: true,
+    });
   });
 
   it('renders table correctly', async () => {

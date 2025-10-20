@@ -33,6 +33,7 @@ import {
   ItemPost,
   UsageStatus,
 } from '../api/api.types';
+import { useGetCatalogueCategory } from '../api/catalogueCategories';
 import { usePatchItem, usePostItem, usePostItems } from '../api/items';
 import { useGetRules } from '../api/rules';
 import {
@@ -153,10 +154,19 @@ function ItemDialog(props: ItemDialogProps) {
     requestType,
     duplicate,
     catalogueItem,
-    catalogueCategory,
     selectedItem,
     isAdminUser,
   } = props;
+
+  // Fetch the catalogue category if it hasn't already been given (as required to know what properties are available)
+  const { data: fetchedCatalogueCategory } = useGetCatalogueCategory(
+    props.catalogueCategory ? undefined : catalogueItem?.catalogue_category_id
+  );
+  const catalogueCategory = React.useMemo(
+    () => props.catalogueCategory || fetchedCatalogueCategory,
+    [fetchedCatalogueCategory, props.catalogueCategory]
+  );
+
   const parentCatalogueItemPropertiesInfo = React.useMemo(
     () => catalogueCategory?.properties ?? [],
     [catalogueCategory]
@@ -178,7 +188,7 @@ function ItemDialog(props: ItemDialogProps) {
     setActiveStep(0);
   }, [onClose]);
 
-  //move to systems
+  // Move to systems
   const [parentSystemId, setParentSystemId] = React.useState<string | null>(
     selectedItem?.system_id ?? null
   );
@@ -403,7 +413,7 @@ function ItemDialog(props: ItemDialogProps) {
 
         const isNotesUpdated = data.notes !== selectedItem.notes;
 
-        const isCatalogueItemPropertiesUpdated =
+        const isItemPropertiesUpdated =
           JSON.stringify(data.properties) !==
           JSON.stringify(
             selectedItem.properties.map(({ unit, name, ...rest }) => ({
@@ -427,7 +437,7 @@ function ItemDialog(props: ItemDialogProps) {
         if (isDeliveredDateUpdated) item.delivered_date = data.delivered_date;
         if (isNotesUpdated) item.notes = data.notes;
         if (isSystemIdUpdated) item.system_id = data.system_id;
-        if (isCatalogueItemPropertiesUpdated) item.properties = data.properties;
+        if (isItemPropertiesUpdated) item.properties = data.properties;
 
         if (
           selectedItem.id &&
@@ -440,7 +450,7 @@ function ItemDialog(props: ItemDialogProps) {
             isSerialNumberUpdated ||
             isDeliveredDateUpdated ||
             isNotesUpdated ||
-            isCatalogueItemPropertiesUpdated ||
+            isItemPropertiesUpdated ||
             isSystemIdUpdated)
         ) {
           editItem({ id: selectedItem.id, item: item })

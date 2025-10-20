@@ -1639,137 +1639,6 @@ describe('Items', () => {
     });
   });
 
-  it('displays error message when a user tries delete an item from a system type which is not allowed', () => {
-    cy.findAllByLabelText('Row Actions').first().click();
-    cy.findByText('Delete').click();
-
-    cy.findByText('Serial Number: 5YUQDDjKpz2z').should('exist');
-
-    cy.startSnoopingBrowserMockedRequest();
-
-    cy.findByRole('button', { name: 'Continue' }).click();
-
-    cy.findByText(
-      'Please move item to a system with Type: Storage before trying to delete.'
-    ).should('exist');
-  });
-
-  it('deletes an item', () => {
-    cy.visit('/catalogue/9/items/11/items');
-    cy.findAllByLabelText('Row Actions').first().click();
-    cy.findByText('Delete').click();
-
-    cy.findByText('Serial Number: dfzqkOJbqifO').should('exist');
-
-    cy.startSnoopingBrowserMockedRequest();
-
-    cy.findByRole('button', { name: 'Continue' }).click();
-
-    cy.findBrowserMockedRequests({
-      method: 'DELETE',
-      url: '/v1/items/:id',
-    }).should((deleteRequests) => {
-      expect(deleteRequests.length).equal(1);
-      const request = deleteRequests[0];
-      expect(request.url.toString()).to.contain('RuUxShkg');
-    });
-  });
-
-  it('when user is admin they can bypass delete rules and delete dialog is in admin mode', () => {
-    cy.window().then((win) => {
-      win.localStorage.setItem(
-        'scigateway:token',
-        'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwicm9sZXMiOlsiYWRtaW4iXSwidXNlcklzQWRtaW4iOnRydWUsImV4cCI6MjUzNDAyMzAwNzk5fQ.gWXkZNeLCgNA04KhkGcAUB8WwrrVr8HMKp8yd9BUEBfDuiN1yekPxwKJ7LZDndHqYL4z9WWfVsDE5vYyWfjDJjhoymuP-VYTAI2GxbmazRmknsl9L-vRo31oPX3v2Cs5V2tcBv7dM49gzY7w-dS0b9QsOrn4Y1z9zLj4kLpVtNm0EhtbwThxMk8qVNNtEu76TAnYrdWAoz7_IedBh9NRf48EKJFfoh4CSbfXhHsGRZjvAKnjU-khaibWP3aWuMzN1nwQJ8WasgvhPaxMxd1qzKTbfpMMjg2eo3hDcQogU545P8zO4PcfzIid1g9hF1vMgRsAtQNK385oqBjYfOOWZw'
-      );
-    });
-    cy.visit('/catalogue/4/items/1/items');
-
-    cy.findAllByLabelText('Row Actions').first().click();
-    cy.findByText('Delete as admin').click();
-
-    cy.findByText('Serial Number: 5YUQDDjKpz2z').should('exist');
-    cy.findByText('Delete Item as admin').should('exist');
-
-    cy.startSnoopingBrowserMockedRequest();
-
-    cy.findByRole('button', { name: 'Continue' }).click();
-
-    cy.findBrowserMockedRequests({
-      method: 'DELETE',
-      url: '/v1/items/:id',
-    }).should((deleteRequests) => {
-      expect(deleteRequests.length).equal(1);
-      const request = deleteRequests[0];
-      expect(request.url.toString()).to.contain('KvT2Ox7n');
-    });
-  });
-
-  it('duplicates an item', () => {
-    cy.findAllByLabelText('Row Actions').first().click();
-    cy.findByText('Duplicate').click();
-
-    cy.startSnoopingBrowserMockedRequest();
-
-    cy.findByRole('button', { name: 'Next' }).click();
-
-    cy.findByText(
-      'Please select a valid parent system. Allowed types: Storage.'
-    ).should('exist');
-
-    cy.findByRole('button', { name: 'navigate to systems home' }).click();
-
-    cy.findAllByText('Storage').first().click();
-
-    cy.findByText('No systems found').should('exist');
-
-    cy.findAllByText('Storage').should('have.length', 1);
-
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
-
-    cy.findByRole('button', { name: 'Next' }).click();
-    cy.findByRole('button', { name: 'Next' }).click();
-    cy.findByRole('button', { name: 'Finish' }).click();
-    cy.findByRole('dialog').should('not.exist');
-
-    cy.findBrowserMockedRequests({
-      method: 'POST',
-      url: '/v1/items',
-    }).should(async (postRequests) => {
-      expect(postRequests.length).eq(1);
-      expect(JSON.stringify(await postRequests[0].json())).equal(
-        JSON.stringify({
-          purchase_order_number: '6JYHEjwN',
-          is_defective: false,
-          usage_status_id: '0',
-          warranty_end_date: '2023-04-04T23:00:00.000Z',
-          asset_number: 'LyH8yp1FHf',
-          serial_number: '5YUQDDjKpz2z',
-          delivered_date: '2023-03-17T00:00:00.000Z',
-          notes:
-            '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this Serial Number: 5YUQDDjKpz2z',
-          properties: [
-            { id: '1', value: 0 },
-            { id: '2', value: null },
-            { id: '3', value: 'CMOS' },
-            { id: '4', value: null },
-            { id: '5', value: true },
-            { id: '6', value: null },
-          ],
-          catalogue_item_id: '1',
-          system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
-        })
-      );
-    });
-  });
-
-  it('should display a link a system in the delete dialog when the item has a system id', () => {
-    cy.findAllByLabelText('Row Actions').last().click();
-    cy.findByText('Delete').click();
-
-    cy.findByRole('link', { name: 'Pico Laser' }).should('exist');
-  });
-
   it('edits an item with all fields altered', () => {
     cy.findAllByLabelText('Row Actions').last().click();
     cy.findByText('Edit').click();
@@ -1957,5 +1826,136 @@ describe('Items', () => {
     cy.findByText(
       "There have been no changes made. Please change a field's value or press Cancel to exit."
     ).should('exist');
+  });
+
+  it('duplicates an item', () => {
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByText('Duplicate').click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Next' }).click();
+
+    cy.findByText(
+      'Please select a valid parent system. Allowed types: Storage.'
+    ).should('exist');
+
+    cy.findByRole('button', { name: 'navigate to systems home' }).click();
+
+    cy.findAllByText('Storage').first().click();
+
+    cy.findByText('No systems found').should('exist');
+
+    cy.findAllByText('Storage').should('have.length', 1);
+
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100);
+
+    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('dialog').should('not.exist');
+
+    cy.findBrowserMockedRequests({
+      method: 'POST',
+      url: '/v1/items',
+    }).should(async (postRequests) => {
+      expect(postRequests.length).eq(1);
+      expect(JSON.stringify(await postRequests[0].json())).equal(
+        JSON.stringify({
+          purchase_order_number: '6JYHEjwN',
+          is_defective: false,
+          usage_status_id: '0',
+          warranty_end_date: '2023-04-04T23:00:00.000Z',
+          asset_number: 'LyH8yp1FHf',
+          serial_number: '5YUQDDjKpz2z',
+          delivered_date: '2023-03-17T00:00:00.000Z',
+          notes:
+            '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this Serial Number: 5YUQDDjKpz2z',
+          properties: [
+            { id: '1', value: 0 },
+            { id: '2', value: null },
+            { id: '3', value: 'CMOS' },
+            { id: '4', value: null },
+            { id: '5', value: true },
+            { id: '6', value: null },
+          ],
+          catalogue_item_id: '1',
+          system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
+        })
+      );
+    });
+  });
+
+  it('deletes an item', () => {
+    cy.visit('/catalogue/9/items/11/items');
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByText('Delete').click();
+
+    cy.findByText('Serial Number: dfzqkOJbqifO').should('exist');
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'DELETE',
+      url: '/v1/items/:id',
+    }).should((deleteRequests) => {
+      expect(deleteRequests.length).equal(1);
+      const request = deleteRequests[0];
+      expect(request.url.toString()).to.contain('RuUxShkg');
+    });
+  });
+
+  it('should display a link a system in the delete dialog when the item has a system id', () => {
+    cy.findAllByLabelText('Row Actions').last().click();
+    cy.findByText('Delete').click();
+
+    cy.findByRole('link', { name: 'Pico Laser' }).should('exist');
+  });
+
+  it('displays error message when a user tries delete an item from a system type which is not allowed', () => {
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByText('Delete').click();
+
+    cy.findByText('Serial Number: 5YUQDDjKpz2z').should('exist');
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.findByText(
+      'Please move item to a system with Type: Storage before trying to delete.'
+    ).should('exist');
+  });
+
+  it('when user is admin they can bypass delete rules and delete dialog is in admin mode', () => {
+    cy.window().then((win) => {
+      win.localStorage.setItem(
+        'scigateway:token',
+        'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwicm9sZXMiOlsiYWRtaW4iXSwidXNlcklzQWRtaW4iOnRydWUsImV4cCI6MjUzNDAyMzAwNzk5fQ.gWXkZNeLCgNA04KhkGcAUB8WwrrVr8HMKp8yd9BUEBfDuiN1yekPxwKJ7LZDndHqYL4z9WWfVsDE5vYyWfjDJjhoymuP-VYTAI2GxbmazRmknsl9L-vRo31oPX3v2Cs5V2tcBv7dM49gzY7w-dS0b9QsOrn4Y1z9zLj4kLpVtNm0EhtbwThxMk8qVNNtEu76TAnYrdWAoz7_IedBh9NRf48EKJFfoh4CSbfXhHsGRZjvAKnjU-khaibWP3aWuMzN1nwQJ8WasgvhPaxMxd1qzKTbfpMMjg2eo3hDcQogU545P8zO4PcfzIid1g9hF1vMgRsAtQNK385oqBjYfOOWZw'
+      );
+    });
+    cy.visit('/catalogue/4/items/1/items');
+
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByText('Delete as admin').click();
+
+    cy.findByText('Serial Number: 5YUQDDjKpz2z').should('exist');
+    cy.findByText('Delete Item as admin').should('exist');
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'DELETE',
+      url: '/v1/items/:id',
+    }).should((deleteRequests) => {
+      expect(deleteRequests.length).equal(1);
+      const request = deleteRequests[0];
+      expect(request.url.toString()).to.contain('KvT2Ox7n');
+    });
   });
 });

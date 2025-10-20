@@ -182,7 +182,10 @@ describe('Items Table', () => {
   });
 
   it('opens and closes the add item as admin dialog', async () => {
-    vi.spyOn(authProvider, 'useAuthorised').mockReturnValue(true);
+    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
+      role: 'admin',
+      isAdminUser: true,
+    });
 
     createView();
 
@@ -246,65 +249,6 @@ describe('Items Table', () => {
     expect(serialNum).toHaveAttribute('href', '/KvT2Ox7n');
   });
 
-  it('opens the delete item dialog and closes the dialog', async () => {
-    createView();
-
-    const serialNumber = '5YUQDDjKpz2z';
-    await waitFor(() => {
-      expect(screen.getByText(serialNumber)).toBeInTheDocument();
-    });
-    const rowActionsButton = screen.getAllByLabelText('Row Actions');
-    await user.click(rowActionsButton[0]);
-
-    await waitFor(() => {
-      expect(screen.getByText('Delete')).toBeInTheDocument();
-    });
-
-    const deleteButton = screen.getByText('Delete');
-
-    await user.click(deleteButton);
-
-    await waitFor(() => {
-      expect(screen.getByRole('dialog')).toBeInTheDocument();
-    });
-
-    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
-    await user.click(cancelButton);
-    await waitFor(() => {
-      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-    });
-  });
-
-  it('opens the delete item as admin dialog and closes the dialog', async () => {
-    vi.spyOn(authProvider, 'useAuthorised').mockReturnValue(true);
-    createView();
-
-    const serialNumber = '5YUQDDjKpz2z';
-    await waitFor(() => {
-      expect(screen.getByText(serialNumber)).toBeInTheDocument();
-    });
-    const rowActionsButton = screen.getAllByLabelText('Row Actions');
-    await user.click(rowActionsButton[0]);
-
-    await waitFor(() => {
-      expect(screen.getByText('Delete as admin')).toBeInTheDocument();
-    });
-
-    const deleteButton = screen.getByText('Delete as admin');
-
-    await user.click(deleteButton);
-
-    await waitFor(() => {
-      expect(screen.getByRole('dialog')).toBeInTheDocument();
-    });
-
-    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
-    await user.click(cancelButton);
-    await waitFor(() => {
-      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-    });
-  });
-
   it('can open the edit dialog and close it again', async () => {
     createView();
 
@@ -334,7 +278,10 @@ describe('Items Table', () => {
   });
 
   it('can open the edit as admin dialog and close it again', async () => {
-    vi.spyOn(authProvider, 'useAuthorised').mockReturnValue(true);
+    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
+      role: 'admin',
+      isAdminUser: true,
+    });
 
     createView();
 
@@ -503,6 +450,35 @@ describe('Items Table', () => {
 
     const duplicateButton = screen.getByText('Duplicate');
     await user.click(duplicateButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('can opens the delete dialog and close it again', async () => {
+    createView();
+
+    const serialNumber = '5YUQDDjKpz2z';
+    await waitFor(() => {
+      expect(screen.getByText(serialNumber)).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Delete')).toBeInTheDocument();
+    });
+
+    const deleteButton = screen.getByText('Delete');
+
+    await user.click(deleteButton);
 
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();

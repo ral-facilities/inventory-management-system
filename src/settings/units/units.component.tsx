@@ -36,12 +36,12 @@ import {
 } from '../../utils.tsx';
 import DeleteUnitDialog from './deleteUnitsDialog.component.tsx';
 import UnitsDialog from './unitsDialog.component.tsx';
-import { useAuthorised } from '../../authProvider.component.tsx';
+import { useAuthorisationState } from '../../authProvider.component.tsx';
 
 function Units() {
   const { data: unitData, isLoading: unitDataLoading } = useGetUnits();
 
-  const userAuthorised = useAuthorised();
+  const { isAdminUser } = useAuthorisationState();
 
   // Breadcrumbs + Mui table V2 + extra
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
@@ -117,7 +117,7 @@ function Units() {
     enableColumnOrdering: true,
     enableColumnFilterModes: true,
     enableFacetedValues: true,
-    enableRowActions: userAuthorised,
+    enableRowActions: isAdminUser,
     enableStickyHeader: true,
     enableRowSelection: false,
     enableDensityToggle: false,
@@ -193,7 +193,7 @@ function Units() {
     },
     renderTopToolbarCustomActions: ({ table }) => (
       <Box>
-        {userAuthorised && (
+        {isAdminUser && (
           <Button
             startIcon={<AddIcon />}
             sx={{ mx: '4px' }}

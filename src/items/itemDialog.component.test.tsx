@@ -269,6 +269,44 @@ describe('ItemDialog', () => {
       });
     });
 
+    it('adds an item with just the default values when there is no catalogue category given', async () => {
+      // Force the catalogue category to be fetched
+      props.catalogueCategory = undefined;
+
+      createView();
+      await modifySystemValue({
+        system: 'Storage',
+      });
+
+      //navigate through stepper
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
+        asset_number: null,
+        catalogue_item_id: '1',
+        delivered_date: null,
+        is_defective: false,
+        notes: null,
+        properties: [
+          { id: '1', value: 12 },
+          { id: '2', value: 30 },
+          { id: '3', value: 'CMOS' },
+          { id: '4', value: null },
+          { id: '5', value: true },
+          { id: '6', value: false },
+        ],
+        purchase_order_number: null,
+        serial_number: null,
+        system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
+        usage_status_id: '0',
+        warranty_end_date: null,
+      });
+    });
+
     it('adds multiple items with just the default values', async () => {
       createView();
 
@@ -1066,6 +1104,57 @@ describe('ItemDialog', () => {
       });
     }, 10000);
 
+    it('duplicate an item when there is no catalogue category given', async () => {
+      props.selectedItem = getItemById('G463gOIA');
+      props.requestType = 'post';
+      props.duplicate = true;
+      // Force the catalogue category to be fetched
+      props.catalogueCategory = undefined;
+
+      createView();
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      expect(
+        screen.getByText(
+          'Please select a valid parent system. Allowed types: Storage.'
+        )
+      ).toBeInTheDocument();
+
+      await user.click(
+        screen.getByRole('button', { name: 'navigate to systems home' })
+      );
+
+      await modifySystemValue({
+        system: 'Storage',
+      });
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
+        asset_number: '03MXnOfP5C',
+        catalogue_item_id: '1',
+        delivered_date: '2023-05-11T23:00:00.000Z',
+        is_defective: false,
+        notes: 'rRXBHQFbF3zts6XS279k',
+        properties: [
+          { id: '1', value: 12 },
+          { id: '2', value: 30 },
+          { id: '3', value: 'CMOS' },
+          { id: '4', value: null },
+          { id: '5', value: true },
+          { id: '6', value: false },
+        ],
+        purchase_order_number: 'tIWiCOow',
+        serial_number: 'vYs9Vxx6yWbn',
+        system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
+        usage_status_id: '0',
+        warranty_end_date: '2023-05-18T23:00:00.000Z',
+      });
+    }, 10000);
+
     it('display placement step error when duplicating a item', async () => {
       props.selectedItem = getItemById('G463gOIA');
       props.requestType = 'post';
@@ -1230,6 +1319,67 @@ describe('ItemDialog', () => {
     });
 
     it('edit an item (all input values)', async () => {
+      createView();
+
+      await user.click(
+        screen.getByRole('button', { name: 'navigate to systems home' })
+      );
+
+      await modifySystemValue({
+        system: 'Storage',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await modifyDetailsValues({
+        serialNumber: 'test12',
+        assetNumber: 'test43',
+        purchaseOrderNumber: 'test21',
+        notes: 'test',
+        warrantyEndDate: '17/02/2035',
+        deliveredDate: '23/09/2024',
+        isDefective: 'Y{arrowdown}{enter}',
+        usageStatus: 'U{enter}',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await modifyPropertiesValues({
+        resolution: '12',
+        frameRate: '60',
+        sensorType: 'IO',
+        sensorBrand: 'pixel',
+        broken: 'T{arrowdown}{enter}',
+        older: 'F{arrowdown}{enter}',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
+        asset_number: 'test43',
+        delivered_date: '2024-09-23T23:00:00.000Z',
+        is_defective: true,
+        notes: 'test',
+        properties: [
+          { id: '1', value: 12 },
+          { id: '2', value: 60 },
+          { id: '3', value: 'IO' },
+          { id: '4', value: 'pixel' },
+          { id: '5', value: true },
+          { id: '6', value: false },
+        ],
+        purchase_order_number: 'test21',
+        serial_number: 'test12',
+        warranty_end_date: '2035-02-17T23:00:00.000Z',
+        system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
+        usage_status_id: '2',
+      });
+    }, 10000);
+
+    it('edit an item (all input values) when there is no catalogue category given', async () => {
+      // Force the catalogue category to be fetched
+      props.catalogueCategory = undefined;
+
       createView();
 
       await user.click(

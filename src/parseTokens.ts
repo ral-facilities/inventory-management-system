@@ -2,7 +2,6 @@
 // so that callers can inform TypeScript the type of their payload
 
 import { MicroFrontendToken } from './app.types';
-import { settings } from './settings';
 
 // when they JSON.parse the result of this function
 const parseJwt = (token: string): string => {
@@ -30,32 +29,14 @@ export const readSciGatewayToken = (): SciGatewayToken => {
   return null;
 };
 
-export const isUserAdmin = async (): Promise<boolean> => {
+export const getUserRole = (): string => {
   const token = localStorage.getItem(MicroFrontendToken);
   if (token) {
     const parsedToken = JSON.parse(parseJwt(token));
-    const privilegedRoles = await settings.then(
-      (imsSettings) => imsSettings?.privilegedRoles ?? []
-    );
-
-    if (Array.isArray(parsedToken.roles)) {
-      return (parsedToken.roles as Array<string>).some((token_role) =>
-        new Set(privilegedRoles).has(token_role)
-      );
+    if (parsedToken.role) {
+      return parsedToken.role ?? 'default';
     }
   }
 
-  return false;
-};
-
-export const getUserRole = (): string | undefined => {
-  const token = localStorage.getItem(MicroFrontendToken);
-  if (token) {
-    const parsedToken = JSON.parse(parseJwt(token));
-    if (parsedToken.roles?.length > 0) {
-      const role =
-        parsedToken.roles[0][0].toUpperCase() + parsedToken.roles[0].slice(1);
-      return parsedToken.userIsAdmin ? 'Admin' : role; // default to admin even if other roles exist
-    }
-  }
+  return 'default';
 };

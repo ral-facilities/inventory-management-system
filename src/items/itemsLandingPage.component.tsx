@@ -22,7 +22,7 @@ import PrimaryImage from '../common/images/primaryImage.component';
 import TabView from '../common/tab/tabView.component';
 import { formatDateTimeStrings } from '../utils';
 import ItemDialog from './itemDialog.component';
-import { useAuthorised } from '../authProvider.component';
+import { useAuthorisationState } from '../authProvider.component';
 
 const ItemsActionMenu = (props: {
   catalogueItem: CatalogueItem;
@@ -30,7 +30,7 @@ const ItemsActionMenu = (props: {
   item: Item;
 }) => {
   const { catalogueItem, catalogueCategory, item } = props;
-  const isAdminUser = useAuthorised();
+  const { isAdminUser } = useAuthorisationState();
   const [editItemDialogOpen, setEditItemDialogOpen] =
     React.useState<boolean>(false);
   const [openDialogAsAdmin, setOpenDialogAsAdmin] =
@@ -89,7 +89,7 @@ function ItemsLandingPage() {
 
   const { data: systemData } = useGetSystem(itemData?.system_id);
 
-  const { data: systemTypesData } = useGetSystemTypes();
+  const { data: systemTypesData = [] } = useGetSystemTypes();
 
   const { data: manufacturer } = useGetManufacturer(
     catalogueItemData?.manufacturer_id
