@@ -4,15 +4,15 @@ import { InventoryManagementSystemSettingsContext } from './configProvider.compo
 
 const AuthContext = React.createContext<{
   role: string;
-  isAdmin: boolean;
-}>({ role: 'default', isAdmin: false });
+  isAdminUser: boolean;
+}>({ role: 'default', isAdminUser: false });
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [authorisation, setAuthorisation] = React.useState({
     role: 'default',
-    isAdmin: false,
+    isAdminUser: false,
   });
   const { privilegedRoles } = React.useContext(
     InventoryManagementSystemSettingsContext
@@ -22,7 +22,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     const setAuthorisationState = async () => {
       const role = getUserRole();
 
-      setAuthorisation({ role: role, isAdmin: privilegedRoles.includes(role) });
+      setAuthorisation({
+        role: role,
+        isAdminUser: privilegedRoles.includes(role),
+      });
     };
 
     setAuthorisationState();

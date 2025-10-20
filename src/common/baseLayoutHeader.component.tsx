@@ -23,7 +23,7 @@ function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
     },
     [homeLocation, navigate]
   );
-  const isAdminUser = useAuthorisationState().isAdmin;
+  const { isAdminUser } = useAuthorisationState();
 
   return (
     <Box

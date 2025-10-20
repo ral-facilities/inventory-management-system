@@ -41,7 +41,7 @@ import { useAuthorisationState } from '../../authProvider.component.tsx';
 function Units() {
   const { data: unitData, isLoading: unitDataLoading } = useGetUnits();
 
-  const userIsAdmin = useAuthorisationState().isAdmin;
+  const { isAdminUser } = useAuthorisationState();
 
   // Breadcrumbs + Mui table V2 + extra
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
@@ -117,7 +117,7 @@ function Units() {
     enableColumnOrdering: true,
     enableColumnFilterModes: true,
     enableFacetedValues: true,
-    enableRowActions: userIsAdmin,
+    enableRowActions: isAdminUser,
     enableStickyHeader: true,
     enableRowSelection: false,
     enableDensityToggle: false,
@@ -193,7 +193,7 @@ function Units() {
     },
     renderTopToolbarCustomActions: ({ table }) => (
       <Box>
-        {userIsAdmin && (
+        {isAdminUser && (
           <Button
             startIcon={<AddIcon />}
             sx={{ mx: '4px' }}

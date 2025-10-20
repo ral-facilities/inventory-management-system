@@ -40,7 +40,7 @@ function UsageStatuses() {
   const { data: usageStatusData, isLoading: usageStatusDataLoading } =
     useGetUsageStatuses();
 
-  const userIsAdmin = useAuthorisationState().isAdmin;
+  const { isAdminUser } = useAuthorisationState();
 
   // Breadcrumbs + Mui table V2 + extra
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
@@ -112,7 +112,7 @@ function UsageStatuses() {
     enableColumnOrdering: true,
     enableColumnFilterModes: true,
     enableFacetedValues: true,
-    enableRowActions: userIsAdmin,
+    enableRowActions: isAdminUser,
     enableStickyHeader: true,
     enableRowSelection: false,
     enableDensityToggle: false,
@@ -187,7 +187,7 @@ function UsageStatuses() {
     },
     renderTopToolbarCustomActions: ({ table }) => (
       <Box>
-        {userIsAdmin && (
+        {isAdminUser && (
           <Button
             startIcon={<AddIcon />}
             sx={{ mx: '4px' }}
