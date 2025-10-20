@@ -1000,7 +1000,7 @@ describe('Systems', () => {
       cy.window().then((win) => {
         win.localStorage.setItem(
           'scigateway:token',
-          'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwicm9sZXMiOlsiYWRtaW4iXSwidXNlcklzQWRtaW4iOnRydWUsImV4cCI6MjUzNDAyMzAwNzk5fQ.gWXkZNeLCgNA04KhkGcAUB8WwrrVr8HMKp8yd9BUEBfDuiN1yekPxwKJ7LZDndHqYL4z9WWfVsDE5vYyWfjDJjhoymuP-VYTAI2GxbmazRmknsl9L-vRo31oPX3v2Cs5V2tcBv7dM49gzY7w-dS0b9QsOrn4Y1z9zLj4kLpVtNm0EhtbwThxMk8qVNNtEu76TAnYrdWAoz7_IedBh9NRf48EKJFfoh4CSbfXhHsGRZjvAKnjU-khaibWP3aWuMzN1nwQJ8WasgvhPaxMxd1qzKTbfpMMjg2eo3hDcQogU545P8zO4PcfzIid1g9hF1vMgRsAtQNK385oqBjYfOOWZw'
+          'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwicm9sZSI6ImFkbWluIiwidXNlcklzQWRtaW4iOmZhbHNlLCJleHAiOjI1MzQwMjMwMDc5OX0.FrsDUqnKskhIvmIjtYVgC9im-cSu1dFlwVQ4cFJf2BgCaSh82XuEngOLkbtQuuXWC1wiipsGP4Y-usq7Q_R68vwXqGYusHo4fXw6AcBcwplgXZ3n60wsTegpBxKZY5foOre0Ng1GpK-7rrx9H-YQUCHSBOtzWOw_eLzu-eNTwMnMnnpGM9L91_hj0dAKiP90Z3Hp0UelnYydc0sf6msOs7RKI2Sij-13vFSL8LToIbfUTZYwKZHbBPD5glce_gsW6_W5W-iGemt7yyhfyf7IxKWq3Q02HCiSkI0uCcBal44sabPrsQ4EaPRwyUnH0X25MC00IAPRHh-1KqabV7IA9w'
         );
       });
       cy.visit('/systems');
@@ -1118,10 +1118,10 @@ describe('Systems', () => {
     });
   });
 
-  it("edits an item", () => {
-    cy.visit('/systems/657f8c3b2a1b4e5d8f9b3c4e5')
+  it('edits an item', () => {
+    cy.visit('/systems/657f8c3b2a1b4e5d8f9b3c4e5');
 
-    cy.findByRole("button", {name: "Expand"}).click()
+    cy.findByRole('button', { name: 'Expand' }).click();
     cy.findByLabelText('Row Actions').first().click();
     cy.findByText('Edit').click();
 
@@ -1149,12 +1149,12 @@ describe('Systems', () => {
         JSON.stringify({ serial_number: 'dfzqkOJbqifOtest1234' })
       );
     });
-  })
+  });
 
-  it("duplicates an item", () => {
-    cy.visit('/systems/657f8c3b2a1b4e5d8f9b3c4e5')
+  it('duplicates an item', () => {
+    cy.visit('/systems/657f8c3b2a1b4e5d8f9b3c4e5');
 
-    cy.findByRole("button", {name: "Expand"}).click()
+    cy.findByRole('button', { name: 'Expand' }).click();
     cy.findByLabelText('Row Actions').first().click();
     cy.findByText('Duplicate').click();
 
@@ -1176,35 +1176,36 @@ describe('Systems', () => {
       expect(postRequests.length).eq(1);
       expect(JSON.stringify(await postRequests[0].json())).equal(
         JSON.stringify({
-            purchase_order_number: "wteR6vsp",
-            is_defective: true,
-            usage_status_id: "0",
-            warranty_end_date: "2023-04-01T23:00:00.000Z",
-            asset_number: "DEAbxBGr2M",
-            serial_number: "dfzqkOJbqifO",
-            delivered_date: "2023-06-15T23:00:00.000Z",
-            notes: "uaw8BqYE3vMI5CmOJgFP\n\nThis is a copy of the item with this Serial Number: dfzqkOJbqifO",
-            properties: [
-                {
-                    id: "13",
-                    value: 100
-                },
-                {
-                    id: "14",
-                    value: 10
-                }
-            ],
-            catalogue_item_id: "11",
-            system_id: "657f8c3b2a1b4e5d8f9b3c4e5"
+          purchase_order_number: 'wteR6vsp',
+          is_defective: true,
+          usage_status_id: '0',
+          warranty_end_date: '2023-04-01T23:00:00.000Z',
+          asset_number: 'DEAbxBGr2M',
+          serial_number: 'dfzqkOJbqifO',
+          delivered_date: '2023-06-15T23:00:00.000Z',
+          notes:
+            'uaw8BqYE3vMI5CmOJgFP\n\nThis is a copy of the item with this Serial Number: dfzqkOJbqifO',
+          properties: [
+            {
+              id: '13',
+              value: 100,
+            },
+            {
+              id: '14',
+              value: 10,
+            },
+          ],
+          catalogue_item_id: '11',
+          system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
         })
       );
     });
-  })
+  });
 
-  it("deletes an item", () => {
-    cy.visit('/systems/657f8c3b2a1b4e5d8f9b3c4e5')
+  it('deletes an item', () => {
+    cy.visit('/systems/657f8c3b2a1b4e5d8f9b3c4e5');
 
-    cy.findByRole("button", {name: "Expand"}).click()
+    cy.findByRole('button', { name: 'Expand' }).click();
     cy.findByLabelText('Row Actions').first().click();
     cy.findByText('Delete').click();
 
@@ -1222,5 +1223,5 @@ describe('Systems', () => {
       const request = deleteRequests[0];
       expect(request.url.toString()).to.contain('RuUxShkg');
     });
-  })
+  });
 });
