@@ -4,15 +4,15 @@ import { InventoryManagementSystemSettingsContext } from './configProvider.compo
 
 const AuthContext = React.createContext<{
   role: string;
-  isAdminUser: boolean;
-}>({ role: 'default', isAdminUser: false });
+  isPrivilegedUser: boolean;
+}>({ role: 'default', isPrivilegedUser: false });
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [authorisation, setAuthorisation] = React.useState({
     role: 'default',
-    isAdminUser: false,
+    isPrivilegedUser: false,
   });
   const { privilegedRoles } = React.useContext(
     InventoryManagementSystemSettingsContext
@@ -24,11 +24,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
       setAuthorisation({
         role: role,
-        isAdminUser: privilegedRoles.includes(role),
+        isPrivilegedUser: privilegedRoles.includes(role),
       });
     };
-
     setAuthorisationState();
+
+    // add event listener for if token in localstorage changes
+    window.addEventListener('tokenChanged', (_) => {
+      setAuthorisationState();
+    });
   }, [privilegedRoles]);
 
   return (

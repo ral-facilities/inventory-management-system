@@ -130,4 +130,11 @@ By following these instructions, you can effectively conduct end-to-end testing 
 
 #### Authorisation
 
-The current implementation of authorisation utilises an `AuthProvider` component to check if the user is an admin or not. A user is deemed an admin if the role within their access token is one of the `privilegedRoles` defined in `inventory-management-system-settings.json`. Currently this is just `admin`, therefore the boolean variables used across the repository to signify admin functionality are named `isAdminUser`.
+To set up authorisation correctly, make sure the `privilegedRoles` field in `inventory-management-system-settings.json` is properly configured.
+
+The system checks the role associated with the access token — whether it's obtained via manual setup, the development toggle (see `baseLayoutHeader.component.tsx`), or through SciGateway authentication — against the `privilegedRoles`. This determines whether the current user is a privileged user.
+
+**Privileged users are allowed to:**
+
+- Create and delete units and usage statuses
+- Bypass rules when creating, deleting, editing, or moving items

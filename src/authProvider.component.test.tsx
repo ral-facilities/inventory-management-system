@@ -42,7 +42,7 @@ describe('AuthProvider', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText(`Authorised: {"role":"admin","isAdminUser":true}`)
+        screen.getByText(`Authorised: {"role":"admin","isPrivilegedUser":true}`)
       ).toBeInTheDocument();
     });
   });
@@ -58,7 +58,9 @@ describe('AuthProvider', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText(`Authorised: {"role":"default","isAdminUser":false}`)
+        screen.getByText(
+          `Authorised: {"role":"default","isPrivilegedUser":false}`
+        )
       ).toBeInTheDocument();
     });
   });
