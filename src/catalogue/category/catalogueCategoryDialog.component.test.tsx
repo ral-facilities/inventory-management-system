@@ -787,6 +787,55 @@ describe('Catalogue Category Dialog', () => {
       expect(onClose).toHaveBeenCalled();
     }, 15000);
 
+    it('create a catalogue category with content being catalogue items (allowed_values list of strings) and trims the extra white space around the text', async () => {
+      createView();
+
+      await modifyValues({
+        name: 'test',
+        newFormFields: [
+          {
+            name: 'radius',
+            type: 'text',
+            unit: 'millimeters',
+            allowed_values: {
+              type: 'list',
+              values: {
+                valueType: 'number',
+                values: [
+                  { av_placement_id: '1', value: '  1 ' },
+                  { av_placement_id: '2', value: '   2 ' },
+                  { av_placement_id: '3', value: '  8  ' },
+                ],
+              },
+            },
+            mandatory: 'true',
+          },
+        ],
+      });
+
+      expect(screen.getByText('Catalogue Item Properties')).toBeInTheDocument();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await waitFor(() => user.click(saveButton));
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
+        properties: [
+          {
+            allowed_values: { type: 'list', values: ['1', '2', '8'] },
+            mandatory: true,
+            name: 'radius',
+            type: 'string',
+            unit_id: '5',
+          },
+        ],
+        is_leaf: true,
+        name: 'test',
+      });
+
+      expect(onClose).toHaveBeenCalled();
+    }, 15000);
+
     it('displays an error message when the name field are not filled', async () => {
       createView();
 

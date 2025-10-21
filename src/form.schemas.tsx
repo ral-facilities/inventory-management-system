@@ -431,7 +431,9 @@ const propertiesTypeList: [
 ];
 
 const allowedValuesObject = z.object({
-  value: z.any(),
+  value: z.any().transform((val) => {
+    return typeof val === 'string' ? val.trim() : val;
+  }),
   av_placement_id: z.string(),
 });
 
