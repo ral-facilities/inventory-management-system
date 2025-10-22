@@ -42,7 +42,7 @@ describe('SystemItemsTable', () => {
   it('renders correctly', async () => {
     vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
       role: 'admin',
-      isAdminUser: true,
+      isPrivilegedUser: true,
     });
 
     const view = createView();

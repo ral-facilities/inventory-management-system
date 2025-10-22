@@ -13,7 +13,7 @@ describe('Units', () => {
     user = userEvent.setup();
     vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
       role: 'admin',
-      isAdminUser: true,
+      isPrivilegedUser: true,
     });
   });
 

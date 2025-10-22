@@ -69,7 +69,7 @@ interface TableRowData {
 export function ItemsTable(props: ItemTableProps) {
   const { catalogueCategory, catalogueItem, dense } = props;
 
-  const { isAdminUser } = useAuthorisationState();
+  const { isPrivilegedUser } = useAuthorisationState();
 
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
 
@@ -559,7 +559,7 @@ export function ItemsTable(props: ItemTableProps) {
               table.setCreatingRow(null);
               setOpenDialogAsAdmin(false);
             }}
-            isAdminUser={openDialogAsAdmin}
+            isPrivilegedUser={openDialogAsAdmin}
             duplicate={itemDialogType === 'duplicate'}
             requestType={itemDialogType === 'edit' ? 'patch' : 'post'}
             catalogueCategory={catalogueCategory}
@@ -594,7 +594,7 @@ export function ItemsTable(props: ItemTableProps) {
           Add Item
         </Button>
 
-        {isAdminUser && (
+        {isPrivilegedUser && (
           <Button
             startIcon={<AddIcon />}
             sx={{ mx: 0.5 }}
@@ -640,7 +640,7 @@ export function ItemsTable(props: ItemTableProps) {
           </ListItemIcon>
           <ListItemText>Edit</ListItemText>
         </MenuItem>,
-        isAdminUser && (
+        isPrivilegedUser && (
           <MenuItem
             key="edit"
             aria-label={`Edit item ${row.original.item.id}`}
@@ -689,7 +689,7 @@ export function ItemsTable(props: ItemTableProps) {
           </ListItemIcon>
           <ListItemText>Delete</ListItemText>
         </MenuItem>,
-        isAdminUser && (
+        isPrivilegedUser && (
           <MenuItem
             key="delete"
             aria-label={`Delete item ${row.original.item.id}`}
@@ -735,7 +735,7 @@ export function ItemsTable(props: ItemTableProps) {
           }}
           item={selectedItem}
           onChangeItem={setSelectedItem}
-          isAdminUser={openDialogAsAdmin}
+          isPrivilegedUser={openDialogAsAdmin}
         />
       )}
     </div>

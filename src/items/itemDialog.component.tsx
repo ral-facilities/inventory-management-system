@@ -144,7 +144,7 @@ export interface ItemDialogProps {
   catalogueItem?: CatalogueItem;
   catalogueCategory?: CatalogueCategory;
   selectedItem?: Item;
-  isAdminUser: boolean;
+  isPrivilegedUser: boolean;
 }
 
 function ItemDialog(props: ItemDialogProps) {
@@ -155,7 +155,7 @@ function ItemDialog(props: ItemDialogProps) {
     duplicate,
     catalogueItem,
     selectedItem,
-    isAdminUser,
+    isPrivilegedUser,
   } = props;
 
   // Fetch the catalogue category if it hasn't already been given (as required to know what properties are available)
@@ -223,7 +223,10 @@ function ItemDialog(props: ItemDialogProps) {
 
   const ItemDetailsStepFormMethods = useForm<ItemDetailsStep>({
     resolver: zodResolver(
-      ItemDetailsStepSchema(requestType, isAdminUser && parentSystemId !== null)
+      ItemDetailsStepSchema(
+        requestType,
+        isPrivilegedUser && parentSystemId !== null
+      )
     ),
     defaultValues: toItemDetailsStep(selectedItem),
   });
@@ -326,14 +329,14 @@ function ItemDialog(props: ItemDialogProps) {
       // Clears usage status error even when they pick a system with no defined rule
       // which can only be done by authorised users, therefore the usage status dropdown
       // shows the correct/no error message
-      if (isAdminUser) {
+      if (isPrivilegedUser) {
         clearErrorsDetailsStep(['usage_status_id']);
       }
     }
   }, [
     clearErrorsDetailsStep,
     clearErrorsPropertiesStep,
-    isAdminUser,
+    isPrivilegedUser,
     parentSystemId,
     selectedItem?.system_id,
   ]);
@@ -517,7 +520,7 @@ function ItemDialog(props: ItemDialogProps) {
           } else if (
             !isDstSystemTypeSameAsSrcSystemType &&
             (!selectedRules || selectedRules.length === 0) &&
-            !isAdminUser
+            !isPrivilegedUser
           ) {
             const allowedDstSystemTypes =
               tableRules?.map((rule) => rule.dst_system_type?.value) || [];
@@ -543,7 +546,7 @@ function ItemDialog(props: ItemDialogProps) {
       isDstSystemTypeSameAsSrcSystemType,
       parentSystemId,
       tableRules,
-      isAdminUser,
+      isPrivilegedUser,
     ]
   );
 
@@ -566,7 +569,7 @@ function ItemDialog(props: ItemDialogProps) {
       } else if (
         !isDstSystemTypeSameAsSrcSystemType &&
         (!selectedRules || selectedRules.length === 0) &&
-        !isAdminUser
+        !isPrivilegedUser
       ) {
         const allowedDstSystemTypes =
           tableRules?.map((rule) => rule.dst_system_type?.value) || [];
@@ -616,7 +619,7 @@ function ItemDialog(props: ItemDialogProps) {
       parentSystemId,
       requestType,
       tableRules,
-      isAdminUser,
+      isPrivilegedUser,
     ]
   );
 
@@ -657,7 +660,7 @@ function ItemDialog(props: ItemDialogProps) {
               systemParentId={parentSystemId ?? undefined}
               isSystemSelectable={(system) => {
                 return (
-                  isAdminUser ||
+                  isPrivilegedUser ||
                   tableRules?.some(
                     (rule) =>
                       rule.dst_system_type?.id === system.type_id ||
@@ -947,7 +950,7 @@ function ItemDialog(props: ItemDialogProps) {
                 render={({ field: { value, onChange } }) => (
                   <Autocomplete
                     disableClearable={value != null}
-                    disabled={!isAdminUser}
+                    disabled={!isPrivilegedUser}
                     id="item-usage-status-input"
                     value={
                       usageStatuses?.find(
@@ -969,7 +972,7 @@ function ItemDialog(props: ItemDialogProps) {
                       <TextField
                         {...params}
                         required={true}
-                        disabled={!isAdminUser}
+                        disabled={!isPrivilegedUser}
                         label="Usage status"
                         error={!!errorsDetailsStep.usage_status_id}
                         helperText={errorsDetailsStep.usage_status_id?.message}
@@ -1215,8 +1218,8 @@ function ItemDialog(props: ItemDialogProps) {
       fullWidth
     >
       <DialogTitle>
-        {`${requestType === 'patch' ? 'Edit' : 'Add'} Item${isAdminUser ? ' as admin' : ''}`}
-        {isAdminUser && (
+        {`${requestType === 'patch' ? 'Edit' : 'Add'} Item${isPrivilegedUser ? ' as admin' : ''}`}
+        {isPrivilegedUser && (
           <Tooltip
             title={
               <h4>

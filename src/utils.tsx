@@ -26,6 +26,7 @@ import {
 } from 'material-react-table';
 import React from 'react';
 import { useGetSparesDefinition } from './api/settings';
+import { MicroFrontendToken } from './app.types';
 
 /* Returns a name avoiding duplicates by appending _copy_n for nth copy */
 export const generateUniqueName = (
@@ -65,6 +66,19 @@ export const generateUniqueNameUsingCode = (
 /* Returns whether running in development mode */
 export const isRunningInDevelopment = (): boolean => {
   return import.meta.env.DEV;
+};
+
+/* Sets the token in localstorage to either be an admin or default role */
+export const setLocalStorageToken = (useAdminToken: boolean) => {
+  localStorage.setItem(
+    MicroFrontendToken,
+    useAdminToken
+      ? 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwicm9sZSI6ImFkbWluIiwidXNlcklzQWRtaW4iOmZhbHNlLCJleHAiOjI1MzQwMjMwMDc5OX0.FrsDUqnKskhIvmIjtYVgC9im-cSu1dFlwVQ4cFJf2BgCaSh82XuEngOLkbtQuuXWC1wiipsGP4Y-usq7Q_R68vwXqGYusHo4fXw6AcBcwplgXZ3n60wsTegpBxKZY5foOre0Ng1GpK-7rrx9H-YQUCHSBOtzWOw_eLzu-eNTwMnMnnpGM9L91_hj0dAKiP90Z3Hp0UelnYydc0sf6msOs7RKI2Sij-13vFSL8LToIbfUTZYwKZHbBPD5glce_gsW6_W5W-iGemt7yyhfyf7IxKWq3Q02HCiSkI0uCcBal44sabPrsQ4EaPRwyUnH0X25MC00IAPRHh-1KqabV7IA9w'
+      : 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwicm9sZSI6ImRlZmF1bHQiLCJ1c2VySXNBZG1pbiI6ZmFsc2UsImV4cCI6MjUzNDAyMzAwNzk5fQ.KRtAMZnaB-CQTDV4PGLgQ3yI-9dzMIy0g3SBaThszSjH-ZaoRTuGuJPXlskhuVMpJ8WEbsim3pNU9gSUD3VuEbFekKSubxeZSqLUQSGmJjLppsPayGgX_SVXyZZYJnnLyTCR2nlC-MGX33PUfjIGWkn3f9kjPUNxN0A6aoVBAhTyxTEw-jBTNRYzrzLTzI_nZ0bN1bx3XcTO6Y19__IwGLFUlBn4wDPj-tL-pJro0qedcCWVRhLoHsyVVGTJJk7AZGda2BKJap2y4Jc7SwcOZ5Uyg0fgbl_SvC9BcLIKEE-c41UiG-cjm0_1Jjb6mZU0FOmHXSuNpSo05E8_Vc6Bzw'
+  );
+
+  // notify the authProvider class via new window event. This will trigger a reload.
+  window.dispatchEvent(new CustomEvent('tokenChanged'));
 };
 
 /* Returns a calc function giving the page height excluding SciGateway related components

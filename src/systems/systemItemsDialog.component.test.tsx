@@ -34,7 +34,7 @@ describe('SystemItemsDialog', () => {
       selectedItems: mockSelectedItems,
       onChangeSelectedItems: mockOnChangeSelectedItems,
       parentSystemId: SystemsJSON[0].id,
-      isAdminUser: false,
+      isPrivilegedUser: false,
     };
 
     user = userEvent.setup();
@@ -73,7 +73,7 @@ describe('SystemItemsDialog', () => {
   });
 
   it('displays correctly when in admin mode', async () => {
-    props.isAdminUser = true;
+    props.isPrivilegedUser = true;
     const view = createView();
 
     await waitFor(() => {
@@ -311,7 +311,7 @@ describe('SystemItemsDialog', () => {
   // These tests do not extensively test the actual table as they are covered in systemItemsUsageStatus.component.test.tsx
   describe('Move to as admin', () => {
     beforeEach(() => {
-      props.isAdminUser = true;
+      props.isPrivilegedUser = true;
     });
 
     afterEach(() => {

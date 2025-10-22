@@ -30,7 +30,7 @@ const ItemsActionMenu = (props: {
   item: Item;
 }) => {
   const { catalogueItem, catalogueCategory, item } = props;
-  const { isAdminUser } = useAuthorisationState();
+  const { isPrivilegedUser } = useAuthorisationState();
   const [editItemDialogOpen, setEditItemDialogOpen] =
     React.useState<boolean>(false);
   const [openDialogAsAdmin, setOpenDialogAsAdmin] =
@@ -38,7 +38,7 @@ const ItemsActionMenu = (props: {
 
   return (
     <ActionMenu
-      showAdminEdit={isAdminUser}
+      showAdminEdit={isPrivilegedUser}
       ariaLabelPrefix="items landing page"
       printMenuItem
       uploadAttachmentsEntityId={item.id}
@@ -56,7 +56,7 @@ const ItemsActionMenu = (props: {
                 onClose={() => {
                   setEditItemDialogOpen(false);
                 }}
-                isAdminUser={openDialogAsAdmin}
+                isPrivilegedUser={openDialogAsAdmin}
                 requestType="patch"
                 catalogueCategory={catalogueCategory}
                 catalogueItem={catalogueItem}

@@ -184,7 +184,7 @@ describe('Items Table', () => {
   it('opens and closes the add item as admin dialog', async () => {
     vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
       role: 'admin',
-      isAdminUser: true,
+      isPrivilegedUser: true,
     });
 
     createView();
@@ -280,7 +280,7 @@ describe('Items Table', () => {
   it('can open the edit as admin dialog and close it again', async () => {
     vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
       role: 'admin',
-      isAdminUser: true,
+      isPrivilegedUser: true,
     });
 
     createView();
