@@ -76,7 +76,7 @@ const MoveItemsButton = (props: {
         selectedItems={props.selectedItems}
         onChangeSelectedItems={props.onChangeSelectedItems}
         parentSystemId={props.system.id}
-        isAdminUser={props.openDialogAsAdmin}
+        isPrivilegedUser={props.openDialogAsAdmin}
       />
     </>
   );
@@ -95,7 +95,7 @@ export interface SystemItemsTableProps {
 export function SystemItemsTable(props: SystemItemsTableProps) {
   const { system } = props;
 
-  const { isAdminUser } = useAuthorisationState();
+  const { isPrivilegedUser } = useAuthorisationState();
 
   // States
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
@@ -492,7 +492,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           onClose={() => {
             table.setCreatingRow(null);
           }}
-          isAdminUser={isAdminUser}
+          isPrivilegedUser={isPrivilegedUser}
           duplicate={itemDialogType === 'duplicate'}
           requestType={itemDialogType === 'edit' ? 'patch' : 'post'}
           // Intentionally left undefined here as will fetch inside dialog only when needed instead
@@ -529,7 +529,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
               onChangeSelectedItems={setRowSelection}
               openDialogAsAdmin={false}
             />
-            {isAdminUser && (
+            {isPrivilegedUser && (
               <MoveItemsButton
                 selectedItems={selectedItems}
                 system={system}
@@ -610,7 +610,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         <DeleteItemDialog
           open={deleteItemDialogOpen}
           onClose={() => setDeleteItemDialogOpen(false)}
-          isAdminUser={isAdminUser}
+          isPrivilegedUser={isPrivilegedUser}
           item={selectedItem}
           onChangeItem={setSelectedItem}
         />
