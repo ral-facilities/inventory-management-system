@@ -620,3 +620,32 @@ export function createFormControlWithRootErrorClearing<
   });
   return formControl;
 }
+
+// name to be changed to above when all dialogs are fixed
+export function createFormControlWithRootErrorClearingUpdated<
+  TInput extends FieldValues,
+  TOutput extends FieldValues,
+>(options?: {
+  name?: Path<TInput>;
+  customCallback?: Parameters<
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    Omit<UseFormReturn<TInput, any, TOutput>, 'formState'>['subscribe']
+  >[0]['callback'];
+}) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { formControl } = createFormControl<TInput, any, TOutput>();
+  formControl.subscribe({
+    name: options?.name,
+    // In React Hook Form, isDirty becomes true as soon as the user changes
+    // the value of any field from its default value.
+    formState: { isDirty: true },
+    callback: (data) => {
+      if (options?.customCallback) {
+        options.customCallback(data);
+      } else {
+        formControl.clearErrors('root.formError');
+      }
+    },
+  });
+  return formControl;
+}

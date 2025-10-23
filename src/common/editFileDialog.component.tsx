@@ -27,13 +27,15 @@ import {
 import { FileSchemaPatch } from '../form.schemas';
 import handleIMS_APIError from '../handleIMS_APIError';
 import {
-  createFormControlWithRootErrorClearing,
+  createFormControlWithRootErrorClearingUpdated,
   getNameAndExtension,
 } from '../utils';
 import z from 'zod';
 
-const formControl =
-  createFormControlWithRootErrorClearing<z.infer<typeof FileSchemaPatch>>();
+const formControl = createFormControlWithRootErrorClearingUpdated<
+  z.input<typeof FileSchemaPatch>,
+  ObjectFilePatchBase
+>();
 export interface BaseFileDialogProps {
   open: boolean;
   onClose: () => void;
@@ -83,7 +85,8 @@ const EditFileDialog = (props: FileDialogProps) => {
     setError,
     clearErrors,
     reset,
-  } = useForm<z.infer<typeof FileSchemaPatch>>({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } = useForm<z.input<typeof FileSchemaPatch>, any, ObjectFilePatchBase>({
     formControl,
     resolver: zodResolver(FileSchemaPatch),
     defaultValues: initialFile,
