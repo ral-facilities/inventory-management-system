@@ -227,7 +227,7 @@ describe('Catalogue Items Landing Page', () => {
     expect(url).toHaveAttribute('href', '/catalogue/5/items/89/items');
   });
 
-  it('navigates to items table view (spares definition)', async () => {
+  it('navigates to items page with spares definition applied', async () => {
     createView('/catalogue/5/items/89');
     await waitFor(() => {
       expect(screen.getByRole('link', { name: '0' })).toBeInTheDocument();
