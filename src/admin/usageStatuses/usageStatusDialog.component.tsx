@@ -17,6 +17,7 @@ import { UsageStatusPost } from '../../api/api.types';
 import { usePostUsageStatus } from '../../api/usageStatuses';
 import { UsageStatusSchema } from '../../form.schemas';
 import handleIMS_APIError from '../../handleIMS_APIError';
+import z from 'zod';
 
 export interface UsageStatusDialogProps {
   open: boolean;
@@ -33,7 +34,11 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
     setError,
     clearErrors,
     reset,
-  } = useForm<UsageStatusPost>({
+  } = useForm<
+    z.input<typeof UsageStatusSchema>,
+    undefined,
+    z.output<typeof UsageStatusSchema>
+  >({
     resolver: zodResolver(UsageStatusSchema),
   });
 

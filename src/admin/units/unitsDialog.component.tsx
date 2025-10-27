@@ -17,6 +17,7 @@ import { UnitPost } from '../../api/api.types';
 import { usePostUnit } from '../../api/units';
 import { UnitSchema } from '../../form.schemas';
 import handleIMS_APIError from '../../handleIMS_APIError';
+import z from 'zod';
 
 export interface UnitsDialogProps {
   open: boolean;
@@ -33,7 +34,11 @@ function UnitsDialog(props: UnitsDialogProps) {
     setError,
     clearErrors,
     reset,
-  } = useForm<UnitPost>({
+  } = useForm<
+    z.input<typeof UnitSchema>,
+    undefined,
+    z.output<typeof UnitSchema>
+  >({
     resolver: zodResolver(UnitSchema),
   });
 
