@@ -11,6 +11,7 @@ jq \
   --argjson attachmentAllowedFileExtensions "$ATTACHMENT_ALLOWED_FILE_EXTENSIONS" \
   --argjson imageAllowedFileExtensions "$IMAGE_ALLOWED_FILE_EXTENSIONS" \
   --argjson maxImageSizeBytes $MAX_IMAGE_SIZE_BYTES \
+  --argjson privilegedRoles $PRIVILEGED_ROLES \
   --arg pluginHost "$PLUGIN_HOST" \
   '.imsApiUrl = $imsApiUrl |
    .osApiUrl = $osApiUrl |

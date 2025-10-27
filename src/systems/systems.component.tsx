@@ -492,7 +492,7 @@ function Systems() {
       sx: {
         height: table.getState().isFullScreen
           ? '100%'
-          : getPageHeightCalc('64px + 80px + 40px + 47px + 40px'),
+          : getPageHeightCalc('64px + 80px + 40px + 47px + 40px + 8px'),
       },
     }),
     muiSelectAllCheckboxProps: { disabled: systemId === null },

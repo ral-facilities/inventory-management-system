@@ -9,14 +9,15 @@ function AuthRoleStatus() {
   return (
     role && (
       <Paper
-        square
+        square={false}
         sx={{
+          maxHeight: '40px',
           backgroundColor: '#FFA500',
           display: 'flex',
-          flexDirection: 'column',
           paddingLeft: 0,
           paddingRight: 5,
           justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
         <Grid
@@ -29,10 +30,7 @@ function AuthRoleStatus() {
           <Grid>
             <Tooltip
               title={
-                <h4>
-                  As a privileged user, you can create/edit settings, and bypass
-                  moving rules for items.
-                </h4>
+                'As a privileged user you can create/delete units and usage statuses, and bypass rules when creating, deleting, editing, or moving items.'
               }
               disableHoverListener={false}
               aria-label={'admin-status-tooltip'}
@@ -55,7 +53,7 @@ function AuthRoleStatus() {
               variant="h6"
               sx={{ color: '#000000', fontSize: '16px' }}
             >
-              {role}
+              {role.charAt(0).toUpperCase() + role.slice(1)}
             </Typography>
           </Grid>
         </Grid>

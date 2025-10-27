@@ -31,6 +31,28 @@ describe('Usage statuses', () => {
     expect(view.asFragment()).toMatchSnapshot();
   });
 
+  it('renders table for non privileged user without add or delete buttons', async () => {
+    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
+      role: 'default',
+      isPrivilegedUser: false,
+    });
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('New')).toBeInTheDocument();
+    });
+    // Ensure no loading bars visible
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
+    // assert there is no add button or row actions
+    expect(
+      screen.queryByRole('button', { name: 'Add Usage Status' })
+    ).not.toBeInTheDocument();
+    expect(screen.queryAllByLabelText('Row Actions')).toHaveLength(0);
+  });
+
   it('opens and closes the add usage status dialog', async () => {
     createView();
 

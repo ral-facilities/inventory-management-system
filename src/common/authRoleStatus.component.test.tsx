@@ -56,7 +56,7 @@ describe('AuthRoleStatus', () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          'As a privileged user, you can create/edit settings, and bypass moving rules for items.'
+          'As a privileged user you can create/delete units and usage statuses, and bypass rules when creating, deleting, editing, or moving items.'
         )
       ).toBeInTheDocument();
     });
