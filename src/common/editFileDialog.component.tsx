@@ -34,7 +34,7 @@ import z from 'zod';
 
 const formControl = createFormControlWithRootErrorClearingUpdated<
   z.input<typeof FileSchemaPatch>,
-  ObjectFilePatchBase
+  z.output<typeof FileSchemaPatch>
 >();
 export interface BaseFileDialogProps {
   open: boolean;
@@ -85,8 +85,11 @@ const EditFileDialog = (props: FileDialogProps) => {
     setError,
     clearErrors,
     reset,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } = useForm<z.input<typeof FileSchemaPatch>, any, ObjectFilePatchBase>({
+  } = useForm<
+    z.input<typeof FileSchemaPatch>,
+    undefined,
+    z.output<typeof FileSchemaPatch>
+  >({
     formControl,
     resolver: zodResolver(FileSchemaPatch),
     defaultValues: initialFile,
@@ -104,7 +107,7 @@ const EditFileDialog = (props: FileDialogProps) => {
   }, [clearErrors, onClose, reset]);
 
   const handleEditFile = React.useCallback(
-    (fileData: ObjectFilePatchBase) => {
+    (fileData: z.output<typeof FileSchemaPatch>) => {
       const isFileNameUpdated = fileData.file_name !== initialFile.file_name;
 
       const isDescriptionUpdated =

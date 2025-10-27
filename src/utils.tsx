@@ -600,8 +600,7 @@ export function createFormControlWithRootErrorClearing<
 >(options?: {
   name?: Path<T>;
   customCallback?: Parameters<
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    Omit<UseFormReturn<T, any, T>, 'formState'>['subscribe']
+    Omit<UseFormReturn<T, undefined, T>, 'formState'>['subscribe']
   >[0]['callback'];
 }) {
   const { formControl } = createFormControl<T>();
@@ -628,12 +627,10 @@ export function createFormControlWithRootErrorClearingUpdated<
 >(options?: {
   name?: Path<TInput>;
   customCallback?: Parameters<
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    Omit<UseFormReturn<TInput, any, TOutput>, 'formState'>['subscribe']
+    Omit<UseFormReturn<TInput, undefined, TOutput>, 'formState'>['subscribe']
   >[0]['callback'];
 }) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { formControl } = createFormControl<TInput, any, TOutput>();
+  const { formControl } = createFormControl<TInput, undefined, TOutput>();
   formControl.subscribe({
     name: options?.name,
     // In React Hook Form, isDirty becomes true as soon as the user changes
