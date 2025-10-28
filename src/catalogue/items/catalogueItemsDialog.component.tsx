@@ -56,6 +56,7 @@ import {
   createFormControlWithRootErrorClearing,
   sortDataList,
 } from '../../utils';
+import z from 'zod';
 
 const RECENT_MANUFACTURER_CUTOFF_TIME = 10 * 60 * 1000;
 
@@ -127,7 +128,7 @@ export function convertToPropertyValueList(
 }
 
 export function convertToPropertyPost(
-  propertyValues: PropertyValue[]
+  propertyValues: z.output<typeof PropertiesStepSchema>['properties']
 ): PropertyPost[] {
   return propertyValues.map((propertyValue) => {
     return {

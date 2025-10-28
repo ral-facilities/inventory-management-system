@@ -23,7 +23,7 @@ import Grid from '@mui/material/Grid2';
 import { DatePicker, DateValidationError } from '@mui/x-date-pickers';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { Controller, Resolver, useForm } from 'react-hook-form';
+import { Controller, FieldError, useForm } from 'react-hook-form';
 import {
   CatalogueCategory,
   CatalogueCategoryProperty,
@@ -36,11 +36,7 @@ import {
 import { usePatchItem, usePostItem, usePostItems } from '../api/items';
 import { useGetSystems, useGetSystemsBreadcrumbs } from '../api/systems';
 import { useGetUsageStatuses } from '../api/usageStatuses';
-import {
-  ItemDetailsStep,
-  ItemDetailsStepPost,
-  PropertiesStep,
-} from '../app.types';
+import { ItemDetailsStep, ItemDetailsStepPost } from '../app.types';
 import {
   convertToPropertyPost,
   convertToPropertyValueList,
@@ -57,8 +53,9 @@ import {
 import handleIMS_APIError from '../handleIMS_APIError';
 import handleTransferState from '../handleTransferState';
 import { SystemsTableView } from '../systems/systemsTableView.component';
-import { createFormControlWithRootErrorClearing } from '../utils';
+import { createFormControlWithRootErrorClearingUpdated } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
+import z from 'zod';
 
 function toItemDetailsStep(item: Item | undefined): ItemDetailsStep {
   if (!item) {
@@ -95,7 +92,7 @@ function toItemDetailsStep(item: Item | undefined): ItemDetailsStep {
 }
 
 function convertToItemDetailsStepPost(
-  item: ItemDetailsStep
+  item: z.output<ReturnType<typeof ItemDetailsStepSchema>>
 ): ItemDetailsStepPost {
   return {
     purchase_order_number: item.purchase_order_number ?? null,
@@ -131,14 +128,17 @@ const dateErrorMessageHandler = (props: {
   }
 };
 
-const formControlPropertiesStep =
-  createFormControlWithRootErrorClearing<PropertiesStep>();
+const formControlPropertiesStep = createFormControlWithRootErrorClearingUpdated<
+  z.input<typeof PropertiesStepSchema>,
+  z.output<typeof PropertiesStepSchema>
+>();
 
-const formControlDetailsStep =
-  createFormControlWithRootErrorClearing<ItemDetailsStep>({
-    customCallback: () =>
-      formControlPropertiesStep.clearErrors('root.formError'),
-  });
+const formControlDetailsStep = createFormControlWithRootErrorClearingUpdated<
+  z.input<ReturnType<typeof ItemDetailsStepSchema>>,
+  z.output<ReturnType<typeof ItemDetailsStepSchema>>
+>({
+  customCallback: () => formControlPropertiesStep.clearErrors('root.formError'),
+});
 
 export interface ItemDialogProps {
   open: boolean;
@@ -195,11 +195,13 @@ function ItemDialog(props: ItemDialogProps) {
   const { data: parentSystemBreadcrumbs } =
     useGetSystemsBreadcrumbs(parentSystemId);
 
-  const ItemDetailsStepFormMethods = useForm<ItemDetailsStep>({
+  const ItemDetailsStepFormMethods = useForm<
+    z.input<ReturnType<typeof ItemDetailsStepSchema>>,
+    undefined,
+    z.output<ReturnType<typeof ItemDetailsStepSchema>>
+  >({
     formControl: formControlDetailsStep,
-    resolver: zodResolver(
-      ItemDetailsStepSchema(requestType)
-    ) as unknown as Resolver<ItemDetailsStep>,
+    resolver: zodResolver(ItemDetailsStepSchema(requestType)),
     defaultValues: toItemDetailsStep(selectedItem),
   });
 
@@ -214,11 +216,13 @@ function ItemDialog(props: ItemDialogProps) {
     setError: setErrorDetailsStep,
   } = ItemDetailsStepFormMethods;
 
-  const itemPropertiesStepFormMethods = useForm<PropertiesStep>({
+  const itemPropertiesStepFormMethods = useForm<
+    z.input<typeof PropertiesStepSchema>,
+    undefined,
+    z.output<typeof PropertiesStepSchema>
+  >({
     formControl: formControlPropertiesStep,
-    resolver: zodResolver(
-      PropertiesStepSchema
-    ) as unknown as Resolver<PropertiesStep>,
+    resolver: zodResolver(PropertiesStepSchema),
     defaultValues: {
       properties: convertToPropertyValueList(
         catalogueCategory,
@@ -411,12 +415,16 @@ function ItemDialog(props: ItemDialogProps) {
       event: React.SyntheticEvent
     ): Promise<{
       hasErrors: boolean;
-      detailsStepData: ItemDetailsStep | undefined;
-      propertiesStepData: PropertiesStep | undefined;
+      detailsStepData:
+        | z.output<ReturnType<typeof ItemDetailsStepSchema>>
+        | undefined;
+      propertiesStepData: z.output<typeof PropertiesStepSchema> | undefined;
     }> => {
       let hasErrors: boolean = false;
-      let detailsStepData: ItemDetailsStep | undefined;
-      let propertiesStepData: PropertiesStep | undefined;
+      let detailsStepData:
+        | z.output<ReturnType<typeof ItemDetailsStepSchema>>
+        | undefined;
+      let propertiesStepData: z.output<typeof PropertiesStepSchema> | undefined;
 
       // Handle the submission for Step 1
       await handleSubmitDetailsStep((validData) => {
@@ -691,8 +699,8 @@ function ItemDialog(props: ItemDialogProps) {
                         size: 'small',
                         fullWidth: true,
                         error: !!errorsDetailsStep.warranty_end_date,
-                        helperText:
-                          errorsDetailsStep.warranty_end_date?.message,
+                        helperText: errorsDetailsStep.warranty_end_date
+                          ?.message as string | undefined,
                       },
                       field: { clearable: true },
                       clearButton: { size: 'small' },
@@ -743,7 +751,8 @@ function ItemDialog(props: ItemDialogProps) {
                         size: 'small',
                         fullWidth: true,
                         error: !!errorsDetailsStep.delivered_date,
-                        helperText: errorsDetailsStep.delivered_date?.message,
+                        helperText: errorsDetailsStep.delivered_date
+                          ?.message as string | undefined,
                       }),
                       field: { clearable: true },
                       clearButton: { size: 'small' },
@@ -920,14 +929,27 @@ function ItemDialog(props: ItemDialogProps) {
                                     {...params}
                                     required={property.mandatory ?? false}
                                     label={property.name}
+                                    // Typescript at runtime cannot infer the nested types of a discrimminated union (which is what errorsPropertiesStep is)
+                                    // so we need to cast the first findable value as FieldError, so that the nested value and message are findable.
                                     error={
-                                      !!errorsPropertiesStep?.properties?.[
-                                        index
-                                      ]?.value?.value
+                                      !!(
+                                        errorsPropertiesStep?.properties?.[
+                                          index
+                                        ]?.value as
+                                          | { value?: FieldError }
+                                          | undefined
+                                      )?.value
                                     }
                                     helperText={
-                                      errorsPropertiesStep?.properties?.[index]
-                                        ?.value?.value?.message as string
+                                      (
+                                        errorsPropertiesStep?.properties?.[
+                                          index
+                                        ]?.value as
+                                          | { value?: FieldError }
+                                          | undefined
+                                      )?.value?.message
+                                      // errorsPropertiesStep?.properties?.[index]
+                                      //   ?.value?.value?.message as string
                                     }
                                   />
                                 )}
@@ -968,13 +990,22 @@ function ItemDialog(props: ItemDialogProps) {
                                       property.unit ? `(${property.unit})` : ''
                                     }`}
                                     error={
-                                      !!errorsPropertiesStep?.properties?.[
-                                        index
-                                      ]?.value?.value
+                                      !!(
+                                        errorsPropertiesStep?.properties?.[
+                                          index
+                                        ]?.value as
+                                          | { value?: FieldError }
+                                          | undefined
+                                      )?.value
                                     }
                                     helperText={
-                                      errorsPropertiesStep?.properties?.[index]
-                                        ?.value?.value?.message as string
+                                      (
+                                        errorsPropertiesStep?.properties?.[
+                                          index
+                                        ]?.value as
+                                          | { value?: FieldError }
+                                          | undefined
+                                      )?.value?.message as string
                                     }
                                   />
                                 )}
@@ -994,12 +1025,16 @@ function ItemDialog(props: ItemDialogProps) {
                             required={property.mandatory ?? false}
                             fullWidth
                             error={
-                              !!errorsPropertiesStep?.properties?.[index]?.value
-                                ?.value
+                              !!(
+                                errorsPropertiesStep?.properties?.[index]
+                                  ?.value as { value?: FieldError } | undefined
+                              )?.value
                             }
                             helperText={
-                              errorsPropertiesStep?.properties?.[index]?.value
-                                ?.value?.message as string
+                              (
+                                errorsPropertiesStep?.properties?.[index]
+                                  ?.value as { value?: FieldError } | undefined
+                              )?.value?.message as string
                             }
                           />
                         )}
