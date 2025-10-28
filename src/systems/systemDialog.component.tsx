@@ -34,7 +34,8 @@ import {
 } from '../api/systems';
 import { RequestType, SystemsSchema } from '../form.schemas';
 import handleIMS_APIError from '../handleIMS_APIError';
-import { createFormControlWithRootErrorClearing } from '../utils';
+import { createFormControlWithRootErrorClearingUpdated } from '../utils';
+import z from 'zod';
 
 export interface SystemDialogProps {
   open: boolean;
@@ -89,7 +90,10 @@ const SystemDialog = (props: SystemDialogProps) => {
     [isNotCreating, parentSystemTypeId, selectedSystem]
   );
   // This is within the React Component as this dialog is used in multiple places in the systems page
-  const formControl = createFormControlWithRootErrorClearing<SystemPost>();
+  const formControl = createFormControlWithRootErrorClearingUpdated<
+    z.input<ReturnType<typeof SystemsSchema>>,
+    z.output<ReturnType<typeof SystemsSchema>>
+  >();
 
   const {
     handleSubmit,
@@ -99,7 +103,11 @@ const SystemDialog = (props: SystemDialogProps) => {
     setError,
     clearErrors,
     reset,
-  } = useForm<SystemPost>({
+  } = useForm<
+    z.input<ReturnType<typeof SystemsSchema>>,
+    undefined,
+    z.output<ReturnType<typeof SystemsSchema>>
+  >({
     formControl,
     resolver: zodResolver(SystemsSchema(requestType)),
     defaultValues: initialSystem,
@@ -117,6 +125,7 @@ const SystemDialog = (props: SystemDialogProps) => {
   }, [clearErrors, onClose, reset]);
 
   const handleAddSaveSystem = React.useCallback(
+    // stays as system post as onSubmit uses spread to map to post type from z.output
     (system: SystemPost) => {
       postSystem(system)
         .then(() => handleClose())
@@ -152,7 +161,7 @@ const SystemDialog = (props: SystemDialogProps) => {
   );
 
   const handleEditSystem = React.useCallback(
-    (systemData: SystemPost) => {
+    (systemData: z.output<ReturnType<typeof SystemsSchema>>) => {
       // Validate the entered fields
       if (selectedSystem) {
         // Now ensure there is actually something to update
@@ -241,7 +250,7 @@ const SystemDialog = (props: SystemDialogProps) => {
     [selectedSystem, setError, patchSystem, handleClose]
   );
 
-  const onSubmit = (data: SystemPost) => {
+  const onSubmit = (data: z.output<ReturnType<typeof SystemsSchema>>) => {
     if (requestType === 'patch') {
       handleEditSystem(data);
     } else {
