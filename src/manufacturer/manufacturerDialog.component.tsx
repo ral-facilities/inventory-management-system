@@ -27,9 +27,13 @@ import {
 } from '../api/manufacturers';
 import { ManufacturerSchema, RequestType } from '../form.schemas';
 import handleIMS_APIError from '../handleIMS_APIError';
-import { createFormControlWithRootErrorClearing } from '../utils';
+import { createFormControlWithRootErrorClearingUpdated } from '../utils';
+import z from 'zod';
 
-const formControl = createFormControlWithRootErrorClearing<ManufacturerPost>();
+const formControl = createFormControlWithRootErrorClearingUpdated<
+  z.input<ReturnType<typeof ManufacturerSchema>>,
+  z.output<ReturnType<typeof ManufacturerSchema>>
+>();
 export interface ManufacturerDialogProps {
   open: boolean;
   onClose: () => void;
@@ -84,7 +88,13 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     setError,
     clearErrors,
     reset,
-  } = useForm<ManufacturerPost>({
+  } = useForm<
+    // is the ReturnType as `ManufacturerSchema` is a parametised zodObject, therefore it needs to evaluated
+    // to be used as a type, otherwise it is techincally a function call.
+    z.input<ReturnType<typeof ManufacturerSchema>>,
+    undefined,
+    z.output<ReturnType<typeof ManufacturerSchema>>
+  >({
     formControl,
     resolver: zodResolver(ManufacturerSchema(type)),
     defaultValues: initialManufacturer,
@@ -102,7 +112,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   }, [clearErrors, onClose, reset]);
 
   const handleAddManufacturer = React.useCallback(
-    (manufacturerData: ManufacturerPost) => {
+    (manufacturerData: z.output<ReturnType<typeof ManufacturerSchema>>) => {
       postManufacturer(manufacturerData)
         .then(() => handleClose())
         .catch((error: AxiosError) => {
@@ -120,7 +130,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   );
 
   const handleEditManufacturer = React.useCallback(
-    (manufacturerData: ManufacturerPost) => {
+    (manufacturerData: z.output<ReturnType<typeof ManufacturerSchema>>) => {
       if (selectedManufacturer) {
         const isNameUpdated =
           manufacturerData.name !== selectedManufacturer.name;
