@@ -6,10 +6,10 @@ exports[`Systems Layout > renders root systems correctly 1`] = `
     class="MuiBox-root css-v2kfba"
   >
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-icdi9z-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-19q0i9b-MuiGrid2-root"
     >
       <div
-        class="MuiBox-root css-70qvj9"
+        class="MuiBox-root css-n4uj7i"
       >
         <span
           aria-label="Systems Home"
@@ -86,10 +86,10 @@ exports[`Systems Layout > renders units breadcrumbs correctly 1`] = `
     class="MuiBox-root css-v2kfba"
   >
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-icdi9z-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-19q0i9b-MuiGrid2-root"
     >
       <div
-        class="MuiBox-root css-70qvj9"
+        class="MuiBox-root css-n4uj7i"
       >
         <span
           aria-label="Systems Home"
@@ -202,10 +202,10 @@ exports[`Systems Layout Error Component > renders system error page correctly 1`
     class="MuiBox-root css-v2kfba"
   >
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-icdi9z-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-19q0i9b-MuiGrid2-root"
     >
       <div
-        class="MuiBox-root css-70qvj9"
+        class="MuiBox-root css-n4uj7i"
       >
         <span
           aria-label="Systems Home"
