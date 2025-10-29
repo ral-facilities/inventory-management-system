@@ -41,7 +41,7 @@ const Breadcrumbs = (props: BreadcrumbsProps) => {
   // dynamically adjusting based on the number of breadcrumbs available.
   const breadcrumbMaxWidth = `${(100 - 10) / trailPrefix.concat(breadcrumbsInfo?.trail ?? emptyElement).length}vw`;
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+    <Box sx={{ display: 'flex', alignItems: 'center', paddingTop: 2.5 }}>
       <Tooltip title={tooltipLabel}>
         <span>
           <IconButton onClick={onChangeNavigateHome} aria-label={homeAriaLabel}>

@@ -43,7 +43,6 @@ function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
       <Grid
         container
         sx={{
-          alignItems: 'center',
           justifyContent: 'space-between',
           paddingLeft: 0.5,
           position: 'sticky',
@@ -51,7 +50,6 @@ function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
           backgroundColor: 'background.default',
           zIndex: 1000,
           width: '100%',
-          paddingTop: 2.5,
           paddingBottom: 2.5,
         }}
       >

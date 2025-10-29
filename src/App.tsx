@@ -68,7 +68,6 @@ import SystemsLayout, {
 } from './systems/systemsLayout.component';
 import ViewTabs from './view/viewTabs.component';
 import { AuthProvider } from './authProvider.component';
-import { setLocalStorageToken } from './utils';
 
 export const queryClient = new QueryClient({
   queryCache: new QueryCache({
@@ -246,7 +245,6 @@ if (!isUsingMSW) router = createBrowserRouter(routeObject);
 // environment, this is not needed.
 
 export default function App() {
-  setLocalStorageToken(true);
   if (isUsingMSW) router = createBrowserRouter(routeObject);
   return <RouterProvider router={router} />;
 }

@@ -9,7 +9,7 @@ function AuthRoleStatus() {
   return (
     role && (
       <Paper
-        square={false}
+        square
         sx={{
           maxHeight: '40px',
           backgroundColor: '#FFA500',
