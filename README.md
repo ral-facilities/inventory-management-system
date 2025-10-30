@@ -128,13 +128,15 @@ By following these instructions, you can effectively conduct end-to-end testing 
 
 **Note:** On the CI environment, the IMS-API is accessed via `127.0.0.1` due to issues with `localhost`.
 
-#### Authorisation
+### Authorisation
 
-To set up authorisation correctly, make sure the `privilegedRoles` field in `inventory-management-system-settings.json` is properly configured.
+The system checks the role associated with the access token against the `privilegedRoles`. This determines whether the current user is a privileged user, and so has extra functionality available to them (see below).
 
-The system checks the role associated with the access token — whether it's obtained via manual setup, the development toggle (see `baseLayoutHeader.component.tsx`), or through SciGateway authentication — against the `privilegedRoles`. This determines whether the current user is a privileged user.
+**Note** Currently the only privileged role is `admin`.
 
-**Privileged users are allowed to:**
+For development an admin access token can be set via the `Privileged user` toggle (top right-hand corner of screen in dev mode), or through SciGateway authentication. To setup admin users please follow the instructions on [ldap-jwt-auth](https://github.com/ral-facilities/ldap-jwt-auth?tab=readme-ov-file#how-to-add-or-remove-a-user-from-the-system) and [inventory-management-system-api](https://github.com/ral-facilities/inventory-management-system-api?tab=readme-ov-file#jwt-authenticationauthorization)
+
+**Privileged users have the following functionality avaiable to them**
 
 - Create and delete units and usage statuses
 - Bypass rules when creating, deleting, editing, or moving items

@@ -1,4 +1,4 @@
-import { Box, FormControlLabel, Switch } from '@mui/material';
+import { Box } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import React from 'react';
 import { useNavigate } from 'react-router';
@@ -7,7 +7,6 @@ import { RoutesHomeLocation, type RoutesHomeLocationType } from '../app.types';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { useAuthorisationState } from '../authProvider.component';
 import AuthRoleStatus from './authRoleStatus.component';
-import { isRunningInDevelopment, setLocalStorageToken } from '../utils';
 
 export interface BaseLayoutHeaderProps {
   breadcrumbsInfo?: BreadcrumbsInfo;
@@ -16,7 +15,7 @@ export interface BaseLayoutHeaderProps {
 }
 
 function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
-  const isDevMode = isRunningInDevelopment();
+  const { isPrivilegedUser } = useAuthorisationState();
 
   const { breadcrumbsInfo, children, homeLocation } = props;
   const navigate = useNavigate();
@@ -26,12 +25,6 @@ function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
     },
     [homeLocation, navigate]
   );
-
-  const { isPrivilegedUser } = useAuthorisationState();
-
-  const handleChangeRole = React.useCallback(() => {
-    setLocalStorageToken(!isPrivilegedUser);
-  }, [isPrivilegedUser]);
 
   return (
     <Box
@@ -59,21 +52,7 @@ function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
           breadcrumbsInfo={breadcrumbsInfo}
           homeLocation={homeLocation}
         />
-        <Grid container flexDirection={'row'}>
-          {isDevMode && (
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={isPrivilegedUser}
-                  onChange={handleChangeRole}
-                />
-              }
-              label="Privileged user"
-              labelPlacement="end"
-            />
-          )}
-          {isPrivilegedUser && <AuthRoleStatus />}
-        </Grid>
+        {isPrivilegedUser && <AuthRoleStatus />}
       </Grid>
       {children}
     </Box>

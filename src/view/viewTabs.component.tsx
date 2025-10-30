@@ -7,6 +7,8 @@ import { a11yProps, StyledTab } from '../common/tab/tab.utils';
 import TabPanel from '../common/tab/tabPanel.component';
 import paths from '../paths';
 import { getSciGatewayPageHeightCalc, isRunningInDevelopment } from '../utils';
+import Grid from '@mui/material/Grid2';
+import AuthToggle from './authToggle.component';
 
 function ViewTabs() {
   const [value, setValue] = React.useState<TabValue | false>('Catalogue');
@@ -48,16 +50,27 @@ function ViewTabs() {
     >
       {isRunningInDevelopment() ? (
         <>
-          <Tabs value={value} onChange={handleChange} aria-label="view tabs">
-            {TAB_VALUES.map((value) => (
-              <StyledTab
-                value={value}
-                label={value}
-                key={value}
-                {...a11yProps(value)}
-              />
-            ))}
-          </Tabs>
+          <Grid
+            container
+            display={'flex'}
+            flexDirection={'row'}
+            justifyContent={'space-between'}
+          >
+            <Tabs value={value} onChange={handleChange} aria-label="view tabs">
+              {TAB_VALUES.map((value) => (
+                <StyledTab
+                  value={value}
+                  label={value}
+                  key={value}
+                  {...a11yProps(value)}
+                />
+              ))}
+            </Tabs>
+
+            {/* Also render authorisation state toggle so it is inline with tabs, but not on home page */}
+            {value && value !== 'Ims' && <AuthToggle />}
+          </Grid>
+
           <Box
             sx={{
               height: 'calc(100% - 48px)',

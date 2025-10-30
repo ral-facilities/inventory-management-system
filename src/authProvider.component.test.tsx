@@ -10,7 +10,7 @@ const localStorageGetItemMock = vi.spyOn(
 const ConfigTest: React.FC = (): React.ReactElement => {
   const authorisationState = useAuthorisationState();
 
-  // return authorised as a string to inspect later in tests
+  // return authorisationState as a string to inspect later in tests
   return (
     <div data-testid="authorisationState">
       Authorised: {JSON.stringify(authorisationState)}
