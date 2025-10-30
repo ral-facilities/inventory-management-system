@@ -54,10 +54,10 @@ export default defineConfig(({ mode }) => {
 
   // Whether to output build files in a way SciGateway can load (the default for production unless e2e testing)
   const buildLibrary =
-    env.NODE_ENV === 'production' && env.VITE_APP_BUILD_STANDALONE !== 'true';
+    env.NODE_ENV === 'production' && env.VITE_BUILD_STANDALONE !== 'true';
 
   // Whether to exclude MSW from the build
-  const excludeMSW = env.VITE_APP_INCLUDE_MSW !== 'true';
+  const excludeMSW = env.VITE_INCLUDE_MSW !== 'true';
 
   const plugins: PluginOption[] = [react()];
 
@@ -65,7 +65,7 @@ export default defineConfig(({ mode }) => {
   if (env.NODE_ENV === 'development') plugins.push(jsonHMR());
 
   // Allow codecov bundle analysis
-  if (env.VITE_APP_INCLUDE_CODECOV === 'true')
+  if (env.VITE_INCLUDE_CODECOV === 'true')
     plugins.push(
       codecovVitePlugin({
         enableBundleAnalysis: env.CODECOV_TOKEN !== undefined,
