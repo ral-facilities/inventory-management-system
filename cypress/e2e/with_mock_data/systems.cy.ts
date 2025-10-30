@@ -298,7 +298,7 @@ describe('Systems', () => {
     cy.findByText('Properties').should('be.visible');
   });
 
-  it("should be able to navigate to an filtered item's table using the spares value", () => {
+  it("should be able to navigate to a filtered item's table using the spares value", () => {
     cy.findByRole('link', { name: 'Pulse Laser' }).click();
     cy.findAllByRole('button', { name: 'Show/Hide filters' })
       .eq(1)
@@ -313,7 +313,7 @@ describe('Systems', () => {
     cy.findAllByRole('link', { name: '0' }).eq(2).scrollIntoView();
     cy.findAllByRole('link', { name: '0' }).eq(2).click({ force: true });
 
-    // Check now on landing page for the item
+    // Check now on table view for the item
     cy.url().should(
       'include',
       '/catalogue/4/items/28/items?state=N4IgxgYiBcDaoEsAmMQGcCeaAuBTAtgHTYYAOuhAbgIYA2ArriADQg0NNygnmo4BOCAHYBzFmzqNUAZWwB7ftRFMAvgF11KoA'
