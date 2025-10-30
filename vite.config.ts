@@ -179,6 +179,22 @@ export default defineConfig(({ mode }) => {
         ...(env.CI ? ['junit'] : []),
       ],
       outputFile: env.CI ? { junit: 'test-report.junit.xml' } : undefined,
+      deps: {
+        optimizer: {
+          web: {
+            enabled: true,
+            include: [
+              '@mui/material',
+              '@mui/icons-material',
+              '@mui/x-date-pickers',
+              'react/jsx-runtime',
+              '@emotion/react',
+              '@emotion/styled',
+              'material-react-table',
+            ],
+          },
+        },
+      },
     },
   };
 });
