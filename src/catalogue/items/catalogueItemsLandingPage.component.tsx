@@ -153,7 +153,7 @@ function CatalogueItemsLandingPage() {
                     sx={{ ml: 0.5, py: '5.75px' }}
                     variant="outlined"
                     component={Link}
-                    to={'items'}
+                    to="items"
                     startIcon={<InventoryOutlinedIcon />}
                   >
                     Items
