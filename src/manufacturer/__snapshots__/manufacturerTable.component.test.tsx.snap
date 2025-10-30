@@ -106,7 +106,7 @@ exports[`Manufacturer Table > renders table data correctly 1`] = `
                       aria-invalid="false"
                       autocomplete="off"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12tjcea-MuiInputBase-input-MuiOutlinedInput-input"
-                      id=":r3:"
+                      id=":r27:"
                       placeholder="Search"
                       type="text"
                       value=""
@@ -202,24 +202,7 @@ exports[`Manufacturer Table > renders table data correctly 1`] = `
               </svg>
               <span
                 class="MuiTouchRipple-root css-r3djoj-MuiTouchRipple-root"
-              >
-                <span
-                  class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible"
-                  style="width: 1px; height: 1px; top: -0.5px; left: -0.5px;"
-                >
-                  <span
-                    class="MuiTouchRipple-child MuiTouchRipple-childLeaving"
-                  />
-                </span>
-                <span
-                  class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible MuiTouchRipple-ripplePulsate"
-                  style="width: 1px; height: 1px; top: -0.5px; left: -0.5px;"
-                >
-                  <span
-                    class="MuiTouchRipple-child MuiTouchRipple-childLeaving MuiTouchRipple-childPulsate"
-                  />
-                </span>
-              </span>
+              />
             </button>
           </div>
         </div>
@@ -426,12 +409,12 @@ exports[`Manufacturer Table > renders table data correctly 1`] = `
                           </span>
                         </div>
                         <input
-                          aria-describedby=":rg:-helper-text"
+                          aria-describedby=":r2k:-helper-text"
                           aria-invalid="false"
                           aria-label="Filter by Name"
                           autocomplete="off"
                           class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                          id=":rg:"
+                          id=":r2k:"
                           placeholder="Filter by Name"
                           title="Filter by Name"
                           type="text"
@@ -469,7 +452,7 @@ exports[`Manufacturer Table > renders table data correctly 1`] = `
                       </div>
                       <p
                         class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                        id=":rg:-helper-text"
+                        id=":r2k:-helper-text"
                       >
                         <label>
                           Filter Mode: Fuzzy
@@ -612,11 +595,11 @@ exports[`Manufacturer Table > renders table data correctly 1`] = `
                           class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                         >
                           <input
-                            aria-describedby=":rr:-helper-text"
+                            aria-describedby=":r2v:-helper-text"
                             aria-invalid="false"
                             autocomplete="off"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                            id=":rr:"
+                            id=":r2v:"
                             inputmode="text"
                             placeholder="Min"
                             type="text"
@@ -647,7 +630,7 @@ exports[`Manufacturer Table > renders table data correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-18y2hez-MuiFormHelperText-root"
-                          id=":rr:-helper-text"
+                          id=":r2v:-helper-text"
                         >
                           <label>
                             Filter Mode: Between Inclusive
@@ -664,7 +647,7 @@ exports[`Manufacturer Table > renders table data correctly 1`] = `
                             aria-invalid="false"
                             autocomplete="off"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                            id=":ru:"
+                            id=":r32:"
                             inputmode="text"
                             placeholder="Max"
                             type="text"
@@ -831,11 +814,11 @@ exports[`Manufacturer Table > renders table data correctly 1`] = `
                           class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                         >
                           <input
-                            aria-describedby=":r3q:-helper-text"
+                            aria-describedby=":r5u:-helper-text"
                             aria-invalid="false"
                             autocomplete="off"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                            id=":r3q:"
+                            id=":r5u:"
                             inputmode="text"
                             placeholder="Min"
                             type="text"
@@ -866,7 +849,7 @@ exports[`Manufacturer Table > renders table data correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-18y2hez-MuiFormHelperText-root"
-                          id=":r3q:-helper-text"
+                          id=":r5u:-helper-text"
                         >
                           <label>
                             Filter Mode: Between Inclusive
@@ -883,7 +866,7 @@ exports[`Manufacturer Table > renders table data correctly 1`] = `
                             aria-invalid="false"
                             autocomplete="off"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                            id=":r3t:"
+                            id=":r61:"
                             inputmode="text"
                             placeholder="Max"
                             type="text"
@@ -1081,12 +1064,12 @@ exports[`Manufacturer Table > renders table data correctly 1`] = `
                           </span>
                         </div>
                         <input
-                          aria-describedby=":r17:-helper-text"
+                          aria-describedby=":r3b:-helper-text"
                           aria-invalid="false"
                           aria-label="Filter by URL"
                           autocomplete="off"
                           class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                          id=":r17:"
+                          id=":r3b:"
                           placeholder="Filter by URL"
                           title="Filter by URL"
                           type="text"
@@ -1124,7 +1107,7 @@ exports[`Manufacturer Table > renders table data correctly 1`] = `
                       </div>
                       <p
                         class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                        id=":r17:-helper-text"
+                        id=":r3b:-helper-text"
                       >
                         <label>
                           Filter Mode: Fuzzy
@@ -1298,12 +1281,12 @@ exports[`Manufacturer Table > renders table data correctly 1`] = `
                           </span>
                         </div>
                         <input
-                          aria-describedby=":r1i:-helper-text"
+                          aria-describedby=":r3m:-helper-text"
                           aria-invalid="false"
                           aria-label="Filter by Address"
                           autocomplete="off"
                           class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                          id=":r1i:"
+                          id=":r3m:"
                           placeholder="Filter by Address"
                           title="Filter by Address"
                           type="text"
@@ -1341,7 +1324,7 @@ exports[`Manufacturer Table > renders table data correctly 1`] = `
                       </div>
                       <p
                         class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                        id=":r1i:-helper-text"
+                        id=":r3m:-helper-text"
                       >
                         <label>
                           Filter Mode: Fuzzy
@@ -1515,12 +1498,12 @@ exports[`Manufacturer Table > renders table data correctly 1`] = `
                           </span>
                         </div>
                         <input
-                          aria-describedby=":r1t:-helper-text"
+                          aria-describedby=":r41:-helper-text"
                           aria-invalid="false"
                           aria-label="Filter by Telephone number"
                           autocomplete="off"
                           class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                          id=":r1t:"
+                          id=":r41:"
                           placeholder="Filter by Telephone number"
                           title="Filter by Telephone number"
                           type="text"
@@ -1558,7 +1541,7 @@ exports[`Manufacturer Table > renders table data correctly 1`] = `
                       </div>
                       <p
                         class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                        id=":r1t:-helper-text"
+                        id=":r41:-helper-text"
                       >
                         <label>
                           Filter Mode: Fuzzy
@@ -2262,7 +2245,7 @@ exports[`Manufacturer Table > renders table data correctly 1`] = `
             >
               <label
                 class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-10j3yc8-MuiFormLabel-root-MuiInputLabel-root"
-                for="mrt-rows-per-page-:r0:"
+                for="mrt-rows-per-page-:r24:"
               >
                 Rows per page
               </label>
@@ -2283,7 +2266,7 @@ exports[`Manufacturer Table > renders table data correctly 1`] = `
                   aria-hidden="true"
                   aria-invalid="false"
                   class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
-                  id="mrt-rows-per-page-:r0:"
+                  id="mrt-rows-per-page-:r24:"
                   tabindex="-1"
                   value="15"
                 />

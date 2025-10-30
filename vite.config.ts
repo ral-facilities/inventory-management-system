@@ -194,8 +194,6 @@ export default defineConfig(({ mode }) => {
               '@hookform/resolvers',
               '@reduxjs/toolkit',
               '@tanstack/react-query',
-              '@uppy/react',
-              '@uppy/core',
               'axios',
             ],
           },
