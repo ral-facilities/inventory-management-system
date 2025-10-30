@@ -605,7 +605,7 @@ function Systems() {
                   parentSystemId={systemId}
                 />
               )}
-              <Tooltip title={'Clear Filters'}>
+              <Tooltip title="Clear Filters">
                 <span>
                   <IconButton
                     disabled={preservedState.columnFilters.length === 0}
