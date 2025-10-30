@@ -221,7 +221,7 @@ function Units() {
     renderRowActionMenuItems: ({ closeMenu, row }) => {
       return [
         <MenuItem
-          key={'delete'}
+          key="delete"
           aria-label={`Delete unit ${row.original.value}`}
           onClick={() => {
             closeMenu();

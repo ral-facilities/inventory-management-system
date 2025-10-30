@@ -35,12 +35,12 @@ const CardViewFilters = <TData extends MRT_RowData>(
       }}
       container
     >
-      <Grid component={TableHead} width={'100%'} container>
+      <Grid component={TableHead} width="100%" container>
         {table.getHeaderGroups().map((headerGroup) => (
           <Grid
             component={TableRow}
             key={headerGroup.id}
-            width={'100%'}
+            width="100%"
             container
           >
             {headerGroup.headers.map(

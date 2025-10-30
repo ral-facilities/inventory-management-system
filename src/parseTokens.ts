@@ -33,9 +33,7 @@ export const getUserRole = (): string => {
   const token = localStorage.getItem(MicroFrontendToken);
   if (token) {
     const parsedToken = JSON.parse(parseJwt(token));
-    if (parsedToken.role) {
-      return parsedToken.role ?? 'default';
-    }
+    return parsedToken.role ?? 'default';
   }
 
   return 'default';

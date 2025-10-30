@@ -184,7 +184,7 @@ const CatalogueItemDirectoryDialog = (
                 placement="top"
                 enterTouchDelay={0}
                 arrow
-                aria-label={'Copy Warning'}
+                aria-label="Copy Warning"
                 sx={{ mx: 2 }}
               >
                 <InfoOutlinedIcon />
@@ -213,7 +213,7 @@ const CatalogueItemDirectoryDialog = (
           <CatalogueCategoryTableView
             selectedCategories={[]}
             onChangeParentCategoryId={setParentCategoryId}
-            requestType={'standard'}
+            requestType="standard"
             catalogueCategoryData={catalogueCategoryData}
             catalogueCategoryDataLoading={catalogueCategoryDataLoading}
             requestOrigin="item"

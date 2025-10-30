@@ -165,7 +165,7 @@ const CatalogueCategoryDirectoryDialog = (
                   placement="top"
                   enterTouchDelay={0}
                   arrow
-                  aria-label={'Copy Warning'}
+                  aria-label="Copy Warning"
                   sx={{ mx: 2 }}
                 >
                   <InfoOutlinedIcon />

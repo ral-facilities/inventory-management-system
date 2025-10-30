@@ -6,7 +6,7 @@ exports[`Catalogue Layout > renders a catalogue categories page correctly 1`] = 
     class="MuiBox-root css-v2kfba"
   >
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-icdi9z-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1uwyv35-MuiGrid2-root"
     >
       <div
         class="MuiBox-root css-70qvj9"
@@ -122,7 +122,7 @@ exports[`Catalogue Layout > renders a catalogue items landing page correctly 1`]
     class="MuiBox-root css-v2kfba"
   >
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-icdi9z-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1uwyv35-MuiGrid2-root"
     >
       <div
         class="MuiBox-root css-70qvj9"
@@ -306,7 +306,7 @@ exports[`Catalogue Layout > renders a catalogue items page correctly 1`] = `
     class="MuiBox-root css-v2kfba"
   >
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-icdi9z-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1uwyv35-MuiGrid2-root"
     >
       <div
         class="MuiBox-root css-70qvj9"
@@ -456,7 +456,7 @@ exports[`Catalogue Layout > renders catalogue home page correctly 1`] = `
     class="MuiBox-root css-v2kfba"
   >
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-icdi9z-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1uwyv35-MuiGrid2-root"
     >
       <div
         class="MuiBox-root css-70qvj9"
@@ -536,7 +536,7 @@ exports[`Catalogue Layout > renders the item landing page page correctly 1`] = `
     class="MuiBox-root css-v2kfba"
   >
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-icdi9z-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1uwyv35-MuiGrid2-root"
     >
       <div
         class="MuiBox-root css-70qvj9"
@@ -788,7 +788,7 @@ exports[`Catalogue Layout > renders the items page correctly 1`] = `
     class="MuiBox-root css-v2kfba"
   >
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-icdi9z-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1uwyv35-MuiGrid2-root"
     >
       <div
         class="MuiBox-root css-70qvj9"
@@ -1006,7 +1006,7 @@ exports[`Catalogue Layout Error Component > renders catalogue error page correct
     class="MuiBox-root css-v2kfba"
   >
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-icdi9z-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1uwyv35-MuiGrid2-root"
     >
       <div
         class="MuiBox-root css-70qvj9"

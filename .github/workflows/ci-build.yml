@@ -250,7 +250,7 @@ jobs:
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         # Override the value used in the .env.production
-        run: VITE_APP_INCLUDE_CODECOV=true yarn build
+        run: VITE_INCLUDE_CODECOV=true yarn build
 
   docker:
     # This job triggers only if all the other jobs succeed. It builds the Docker image and if successful,

@@ -8,16 +8,9 @@ describe('AuthRoleStatus', () => {
 
   const renderComponent = (): RenderResult => render(<AuthRoleStatus />);
 
-  // only mock relevant setting
-  vi.mock('./settings', () => ({
-    settings: Promise.resolve({
-      privilegedRoles: ['admin'],
-    }),
-  }));
-
   beforeEach(() => {
     user = userEvent.setup();
-    vi.spyOn(parseTokens, 'getUserRole').mockReturnValue('Admin');
+    vi.spyOn(parseTokens, 'getUserRole').mockReturnValue('admin');
   });
 
   afterEach(() => {
@@ -49,14 +42,14 @@ describe('AuthRoleStatus', () => {
       ).toBeInTheDocument();
     });
 
-    const infoIcon = screen.getByLabelText('admin-status-tooltip');
+    const infoIcon = screen.getByLabelText('auth-role-status-tooltip');
 
     await user.hover(infoIcon);
 
     await waitFor(() => {
       expect(
         screen.getByText(
-          'As a privileged user, you can create/edit settings, and bypass moving rules for items.'
+          'The admin role enables extra functionality. You can create/delete units and usage statuses, and bypass rules when creating, deleting, editing, or moving items.'
         )
       ).toBeInTheDocument();
     });

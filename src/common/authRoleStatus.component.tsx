@@ -1,22 +1,30 @@
-import { IconButton, Paper, Tooltip, Typography } from '@mui/material';
+import {
+  IconButton,
+  Paper,
+  Tooltip,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { getUserRole } from '../parseTokens';
 
 function AuthRoleStatus() {
   const role = getUserRole();
+  const theme = useTheme();
 
   return (
     role && (
       <Paper
         square
         sx={{
-          backgroundColor: '#FFA500',
+          height: '100%',
+          backgroundColor: theme.palette?.warning.light,
           display: 'flex',
-          flexDirection: 'column',
-          paddingLeft: 0,
           paddingRight: 5,
           justifyContent: 'center',
+          alignItems: 'center',
+          py: 0.5,
         }}
       >
         <Grid
@@ -24,18 +32,13 @@ function AuthRoleStatus() {
           direction="row"
           alignItems="center"
           justifyContent="center"
-          aria-label="admin-status-info"
+          aria-label="auth-role-status-info"
         >
           <Grid>
             <Tooltip
-              title={
-                <h4>
-                  As a privileged user, you can create/edit settings, and bypass
-                  moving rules for items.
-                </h4>
-              }
+              title={`The ${role} role enables extra functionality. You can create/delete units and usage statuses, and bypass rules when creating, deleting, editing, or moving items.`}
               disableHoverListener={false}
-              aria-label={'admin-status-tooltip'}
+              aria-label={'auth-role-status-tooltip'}
             >
               <IconButton
                 disableRipple
@@ -44,18 +47,15 @@ function AuthRoleStatus() {
               >
                 <InfoOutlinedIcon
                   sx={{
-                    color: '#003088',
+                    color: theme.palette?.info.dark,
                   }}
                 />
               </IconButton>
             </Tooltip>
           </Grid>
           <Grid>
-            <Typography
-              variant="h6"
-              sx={{ color: '#000000', fontSize: '16px' }}
-            >
-              {role}
+            <Typography variant="h6" sx={{ fontSize: '16px' }}>
+              {role.charAt(0).toUpperCase() + role.slice(1)}
             </Typography>
           </Grid>
         </Grid>
