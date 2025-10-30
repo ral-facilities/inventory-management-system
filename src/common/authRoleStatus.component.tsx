@@ -24,6 +24,7 @@ function AuthRoleStatus() {
           paddingRight: 5,
           justifyContent: 'center',
           alignItems: 'center',
+          py: 0.5,
         }}
       >
         <Grid

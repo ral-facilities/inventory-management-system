@@ -6,10 +6,10 @@ exports[`Manufacturer Layout Error Component > renders manufacturer error page c
     class="MuiBox-root css-v2kfba"
   >
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-19q0i9b-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1uwyv35-MuiGrid2-root"
     >
       <div
-        class="MuiBox-root css-n4uj7i"
+        class="MuiBox-root css-70qvj9"
       >
         <span
           aria-label="Manufacturers Home"

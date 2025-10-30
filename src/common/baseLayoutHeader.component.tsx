@@ -43,7 +43,7 @@ function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
           backgroundColor: 'background.default',
           zIndex: 1000,
           width: '100%',
-          paddingBottom: 2.5,
+          py: 0.5,
         }}
       >
         <Breadcrumbs
