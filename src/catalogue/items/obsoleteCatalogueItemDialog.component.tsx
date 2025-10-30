@@ -211,7 +211,7 @@ const ObsoleteCatalogueItemDialog = (
         return (
           <Autocomplete
             disableClearable={true}
-            id={'is-obsolete'}
+            id="is-obsolete"
             value={obsoleteDetails.is_obsolete ? 'Yes' : 'No'}
             onChange={(_event, value) => {
               handleObsoleteChange(value === 'Yes' ? true : false);
@@ -286,7 +286,7 @@ const ObsoleteCatalogueItemDialog = (
               <CatalogueCategoryTableView
                 selectedCategories={[]}
                 onChangeParentCategoryId={setCatalogueCurrDirId}
-                requestType={'standard'}
+                requestType="standard"
                 catalogueCategoryData={catalogueCategoryDataList}
                 catalogueCategoryDataLoading={catalogueCategoryDataListLoading}
                 requestOrigin="item"

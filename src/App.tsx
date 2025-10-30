@@ -234,7 +234,7 @@ type Router = ReturnType<typeof createBrowserRouter>;
 
 let router: Router;
 const isUsingMSW =
-  import.meta.env.DEV || import.meta.env.VITE_APP_INCLUDE_MSW === 'true';
+  import.meta.env.DEV || import.meta.env.VITE_INCLUDE_MSW === 'true';
 
 if (!isUsingMSW) router = createBrowserRouter(routeObject);
 

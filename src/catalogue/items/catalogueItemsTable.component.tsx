@@ -91,7 +91,7 @@ const MoveCatalogueItemsButton = (props: {
         selectedItems={props.selectedItems}
         onChangeSelectedItems={props.onChangeSelectedItems}
         parentCategoryId={props.parentCategoryId}
-        requestType={'moveTo'}
+        requestType="moveTo"
         parentInfo={props.parentInfo}
       />
     </>
@@ -123,7 +123,7 @@ const CopyCatalogueItemsButton = (props: {
         selectedItems={props.selectedItems}
         onChangeSelectedItems={props.onChangeSelectedItems}
         parentCategoryId={props.parentCategoryId}
-        requestType={'copyTo'}
+        requestType="copyTo"
         parentInfo={props.parentInfo}
       />
     </>
