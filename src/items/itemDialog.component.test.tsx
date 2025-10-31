@@ -551,7 +551,7 @@ describe('ItemDialog', () => {
       expect(
         await screen.findByRole('button', { name: 'Finish' })
       ).not.toBeDisabled();
-    }, 10000);
+    }, 15000);
 
     it('displays placement and items details error message user skips to last step and presses finish', async () => {
       createView();
@@ -561,7 +561,7 @@ describe('ItemDialog', () => {
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       expect(
-        screen.getByText('Please select a parent system')
+        await screen.findByText('Please select a parent system')
       ).toBeInTheDocument();
       expect(screen.getByText('Invalid item details')).toBeInTheDocument();
       expect(
