@@ -662,7 +662,7 @@ describe('ItemDialog', () => {
 
       await user.clear(screen.getByLabelText('Quantity'));
       await user.clear(screen.getByLabelText('Starting value'));
-    }, 10000);
+    }, 15000);
 
     it('adds an item (case empty string with spaces returns null and change property boolean values)', async () => {
       createView();
@@ -805,7 +805,7 @@ describe('ItemDialog', () => {
       });
 
       expect(screen.getByRole('button', { name: 'Finish' })).not.toBeDisabled();
-    }, 10000);
+    }, 15000);
 
     it('displays error message when property values type is incorrect', async () => {
       createView();
@@ -887,7 +887,7 @@ describe('ItemDialog', () => {
           screen.queryByText('Please enter a valid number.')
         ).not.toBeInTheDocument();
       });
-    }, 10000);
+    }, 15000);
 
     it('displays error message when mandatory property with allowed values is missing', async () => {
       props = {

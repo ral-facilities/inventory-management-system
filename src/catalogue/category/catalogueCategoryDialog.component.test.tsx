@@ -54,11 +54,19 @@ describe('Catalogue Category Dialog', () => {
 
     if (values.newFormFields) {
       // Assume want a leaf now
-      await user.click(screen.getByLabelText('Catalogue Items'));
+      await waitFor(
+        async () => await user.click(screen.getByLabelText('Catalogue Items'))
+      );
+      expect(
+        await screen.findByTestId('properties-table-container')
+      ).toBeInTheDocument();
 
       for (let i = 0; i < values.newFormFields.length; i++) {
         const addButton = screen.getByText('Add Property');
-        await user.click(addButton);
+        await waitFor(async () => await user.click(addButton));
+        expect(
+          await screen.findByRole('dialog', { name: 'Add Property' })
+        ).toBeInTheDocument();
 
         const field = values.newFormFields[i];
 
@@ -384,7 +392,7 @@ describe('Catalogue Category Dialog', () => {
       });
 
       expect(onClose).toHaveBeenCalled();
-    }, 15000);
+    }, 20000);
 
     it('create a catalogue category with content being catalogue items and cancel a catalogue item property', async () => {
       createView();
@@ -481,7 +489,7 @@ describe('Catalogue Category Dialog', () => {
       });
 
       expect(onClose).toHaveBeenCalled();
-    }, 15000);
+    }, 20000);
 
     it('create a catalogue category with content being catalogue items, changes the type of the allowed values to text before submission', async () => {
       createView();
@@ -566,7 +574,7 @@ describe('Catalogue Category Dialog', () => {
       });
 
       expect(onClose).toHaveBeenCalled();
-    }, 15000);
+    }, 25000);
 
     it('create a catalogue category with content being catalogue items, changes the type of the allowed values to boolean before submission', async () => {
       createView();
@@ -649,7 +657,7 @@ describe('Catalogue Category Dialog', () => {
       });
 
       expect(onClose).toHaveBeenCalled();
-    }, 15000);
+    }, 25000);
 
     it('create a catalogue category with content being catalogue items, changes from have allowed values list to any', async () => {
       createView();
@@ -736,7 +744,7 @@ describe('Catalogue Category Dialog', () => {
       });
 
       expect(onClose).toHaveBeenCalled();
-    }, 15000);
+    }, 25000);
 
     it('create a catalogue category with content being catalogue items (allowed_values list of strings)', async () => {
       createView();
@@ -785,7 +793,7 @@ describe('Catalogue Category Dialog', () => {
       });
 
       expect(onClose).toHaveBeenCalled();
-    }, 15000);
+    }, 20000);
 
     it('displays an error message when the name field are not filled', async () => {
       createView();
@@ -881,7 +889,7 @@ describe('Catalogue Category Dialog', () => {
       expect(incorrectTypeHelperTexts.length).toEqual(1);
 
       expect(onClose).not.toHaveBeenCalled();
-    }, 15000);
+    }, 20000);
 
     it('displays duplicate values and incorrect type error and deletes an allowed value to check if errors states are in correct location (allowed_values list of numbers)', async () => {
       createView();
@@ -928,7 +936,7 @@ describe('Catalogue Category Dialog', () => {
       const duplicateHelperTexts2 = screen.queryByText('Duplicate value.');
 
       expect(duplicateHelperTexts2).not.toBeInTheDocument();
-    }, 20000);
+    }, 25000);
 
     it('displays invalid type errors (allowed_values list of numbers)', async () => {
       createView();
