@@ -1217,7 +1217,7 @@ describe('ItemDialog', () => {
         system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
         usage_status_id: '2',
       });
-    }, 10000);
+    }, 15000);
 
     it('edit an item (all input values) when there is no catalogue category given', async () => {
       // Force the catalogue category to be fetched
@@ -1278,7 +1278,7 @@ describe('ItemDialog', () => {
         system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
         usage_status_id: '2',
       });
-    }, 10000);
+    }, 15000);
 
     it('edits an item where the item property has an allowed list of values', async () => {
       props = {

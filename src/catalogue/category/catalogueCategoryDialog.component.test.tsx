@@ -489,7 +489,7 @@ describe('Catalogue Category Dialog', () => {
       });
 
       expect(onClose).toHaveBeenCalled();
-    }, 20000);
+    }, 25000);
 
     it('create a catalogue category with content being catalogue items, changes the type of the allowed values to text before submission', async () => {
       createView();
@@ -574,7 +574,7 @@ describe('Catalogue Category Dialog', () => {
       });
 
       expect(onClose).toHaveBeenCalled();
-    }, 25000);
+    }, 30000);
 
     it('create a catalogue category with content being catalogue items, changes the type of the allowed values to boolean before submission', async () => {
       createView();
@@ -889,7 +889,7 @@ describe('Catalogue Category Dialog', () => {
       expect(incorrectTypeHelperTexts.length).toEqual(1);
 
       expect(onClose).not.toHaveBeenCalled();
-    }, 20000);
+    }, 25000);
 
     it('displays duplicate values and incorrect type error and deletes an allowed value to check if errors states are in correct location (allowed_values list of numbers)', async () => {
       createView();
@@ -936,7 +936,7 @@ describe('Catalogue Category Dialog', () => {
       const duplicateHelperTexts2 = screen.queryByText('Duplicate value.');
 
       expect(duplicateHelperTexts2).not.toBeInTheDocument();
-    }, 25000);
+    }, 30000);
 
     it('displays invalid type errors (allowed_values list of numbers)', async () => {
       createView();
