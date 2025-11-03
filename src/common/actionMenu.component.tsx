@@ -13,7 +13,7 @@ import { StyledUppyBox } from './uppy.utils';
 export interface ActionMenuProps {
   ariaLabelPrefix: string;
   editMenuItem: {
-    onClick: (isAdmin?: boolean) => void;
+    onClick: (isPrivilegedUser?: boolean) => void;
     dialog: React.ReactNode;
   };
   printMenuItem?: boolean;

@@ -54,7 +54,7 @@ const MoveItemsButton = (props: {
   selectedItems: Item[];
   system: System;
   onChangeSelectedItems: (selectedItems: MRT_RowSelectionState) => void;
-  openDialogAsAdmin: boolean;
+  openDialogAsPrivilegedUser: boolean;
 }) => {
   const [moveItemsDialogOpen, setMoveItemsDialogOpen] =
     React.useState<boolean>(false);
@@ -68,7 +68,7 @@ const MoveItemsButton = (props: {
         disabled={props.selectedItems.length === 0}
         onClick={() => setMoveItemsDialogOpen(true)}
       >
-        {`Move to ${props.openDialogAsAdmin ? 'as admin' : ''}`}
+        {`Move to ${props.openDialogAsPrivilegedUser ? 'as admin' : ''}`}
       </Button>
       <SystemItemsDialog
         open={moveItemsDialogOpen}
@@ -76,7 +76,7 @@ const MoveItemsButton = (props: {
         selectedItems={props.selectedItems}
         onChangeSelectedItems={props.onChangeSelectedItems}
         parentSystemId={props.system.id}
-        isPrivilegedUser={props.openDialogAsAdmin}
+        isPrivilegedUser={props.openDialogAsPrivilegedUser}
       />
     </>
   );
@@ -527,14 +527,14 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
               selectedItems={selectedItems}
               system={system}
               onChangeSelectedItems={setRowSelection}
-              openDialogAsAdmin={false}
+              openDialogAsPrivilegedUser={false}
             />
             {isPrivilegedUser && (
               <MoveItemsButton
                 selectedItems={selectedItems}
                 system={system}
                 onChangeSelectedItems={setRowSelection}
-                openDialogAsAdmin={true}
+                openDialogAsPrivilegedUser={true}
               />
             )}
           </>

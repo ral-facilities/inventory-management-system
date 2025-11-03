@@ -208,8 +208,7 @@ export interface MoveItemsToSystemUsageStatus {
   usage_status_id: string;
 }
 export interface MoveItemsToSystem {
-  usageStatusId?: string;
-  usageStatuses?: MoveItemsToSystemUsageStatus[];
+  usageStatusConfig?: MoveItemsToSystemUsageStatus[] | string;
   selectedItems: Item[];
   targetSystem: System;
 }

@@ -226,7 +226,7 @@ describe('ItemDialog', () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            "As an admin, you can bypass system rules that restrict item placement for other users and modify the item's usage status"
+            "As an admin, you can bypass rules that restrict item placement for other users, and you can modify the item's usage status"
           )
         ).toBeInTheDocument();
       });
@@ -1237,7 +1237,7 @@ describe('ItemDialog', () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            "As an admin, you can bypass system rules that restrict item placement for other users and modify the item's usage status"
+            "As an admin, you can bypass rules that restrict item placement for other users, and you can modify the item's usage status"
           )
         ).toBeInTheDocument();
       });

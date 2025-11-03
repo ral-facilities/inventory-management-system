@@ -94,10 +94,8 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
 
   // This should be a list of 1 rule
   const { data: selectedRules } = useGetRules(srcSystemTypeId, dstSystemTypeId);
-
   const [aggregatedCellUsageStatus, setAggregatedCellUsageStatus] =
     React.useState<Omit<UsageStatusesType, 'item_id'>[]>([]);
-
   const [placeIntoSystemError, setPlaceIntoSystemError] = React.useState<
     string | undefined
   >(undefined);
@@ -108,7 +106,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
         (item) => ({
           item_id: item.id,
           catalogue_item_id: item.catalogue_item_id,
-          usage_status_id: '',
+          usage_status_id: item.usage_status_id,
         })
       );
 
@@ -164,8 +162,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     setItemUsageStatusesErrorState({});
 
     const usageStatusId =
-      srcSystemTypeId === dstSystemTypeId ||
-      (selectedRules?.length === 0 && isPrivilegedUser)
+      srcSystemTypeId === dstSystemTypeId || selectedRules?.length === 0
         ? undefined
         : selectedRules?.[0]?.dst_usage_status?.id;
 
@@ -175,7 +172,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
           ...usage_status,
           usage_status_id:
             usageStatusId ??
-            selectedItems.find((item) => item.id === usage_status.item_id)
+            selectedItems.find((item) => item.id == usage_status.item_id)
               ?.usage_status_id ??
             '',
         };
@@ -183,7 +180,6 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     );
   }, [
     dstSystemTypeId,
-    isPrivilegedUser,
     selectedItems,
     selectedRules,
     srcSystemTypeId,
@@ -206,19 +202,25 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     props.parentSystemId === parentSystemId || parentSystemId === null;
 
   const handleMoveTo = React.useCallback(() => {
-    const hasUsageStatusErrors = validateUsageStatus();
+    const hasUsageStatusErrors = isPrivilegedUser
+      ? validateUsageStatus()
+      : false;
+
     if (hasSystemErrors || hasUsageStatusErrors) {
       if (hasSystemErrors) {
         setPlaceIntoSystemError(
           'Please move items from current location or root to another system.'
         );
-        return;
       }
+      return;
     }
+    // The configuration of usage statuses depends on if the user is privileged
+    // If they are, then it should be a list, as the usage statuses may not have been prepopulated.
+    // This assumption is made as one would think a user would 'move as admin' to bypass a rule, which means that there is no dst_usage_status specified for the move.
 
-    const usageStatusId =
-      srcSystemTypeId === dstSystemTypeId ||
-      (selectedRules?.length === 0 && isPrivilegedUser)
+    const usageStatusConfig = isPrivilegedUser
+      ? convertToSystemUsageStatuses(usageStatuses)
+      : srcSystemTypeId === dstSystemTypeId || selectedRules?.length === 0
         ? undefined
         : selectedRules?.[0]?.dst_usage_status?.id;
 
@@ -226,11 +228,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     // (where we don't need to load anything as the name is known)
     if (!targetSystemLoading && targetSystem !== undefined) {
       moveItemsToSystem({
-        // Different implementations based on if user is selecting usage statuses or it is done via a rule
-        usageStatusId: isPrivilegedUser ? undefined : usageStatusId,
-        usageStatuses: isPrivilegedUser
-          ? convertToSystemUsageStatuses(usageStatuses)
-          : undefined,
+        usageStatusConfig: usageStatusConfig,
         selectedItems: selectedItems,
         // Only reason for targetSystem to be undefined here is if not loading at all
         // which happens when at root
@@ -242,16 +240,16 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
       });
     }
   }, [
+    isPrivilegedUser,
     validateUsageStatus,
     hasSystemErrors,
+    usageStatuses,
     srcSystemTypeId,
     dstSystemTypeId,
     selectedRules,
-    isPrivilegedUser,
     targetSystemLoading,
     targetSystem,
     moveItemsToSystem,
-    usageStatuses,
     selectedItems,
     onChangeSelectedItems,
     handleClose,
@@ -354,7 +352,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   };
 
   return (
-    <Dialog open={open} maxWidth="lg" fullWidth>
+    <Dialog open={open} maxWidth="xl" fullWidth>
       <DialogTitle marginLeft={2}>
         <Grid container spacing={2} alignItems={'center'}>
           <Grid>
@@ -368,11 +366,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
             {isPrivilegedUser && (
               <Tooltip
                 title={
-                  <h4>
-                    As an admin, you can bypass system rules that restrict item
-                    placement for other users and modify the item&apos;s usage
-                    status
-                  </h4>
+                  "As an admin, you can bypass rules that restrict item placement for other users, and you can modify the item's usage status"
                 }
                 disableHoverListener={false}
                 aria-label={'admin-status-tooltip'}
@@ -383,9 +377,9 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
                   size="large"
                 >
                   <InfoOutlinedIcon
-                    sx={{
-                      color: '#003088',
-                    }}
+                    sx={(theme) => ({
+                      color: theme.palette?.info.dark,
+                    })}
                   />
                 </IconButton>
               </Tooltip>

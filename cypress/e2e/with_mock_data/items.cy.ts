@@ -413,7 +413,7 @@ describe('Items', () => {
     });
   });
 
-  it('should display add dialog in admin view when user is admin', () => {
+  it('displays add dialog in admin view when user is admin', () => {
     cy.setCurrentUserToAdmin();
     cy.visit('/catalogue/4/items/1/items');
 
@@ -1792,7 +1792,7 @@ describe('Items', () => {
     });
   });
 
-  it('should display edit dialog in admin view when user is admin', () => {
+  it('displays edit dialog in admin view when user is admin', () => {
     cy.setCurrentUserToAdmin();
     cy.visit('/catalogue/9/items/11/items');
     cy.findAllByLabelText('Row Actions').first().click();
@@ -1942,13 +1942,8 @@ describe('Items', () => {
     ).should('exist');
   });
 
-  it('when user is admin they can bypass delete rules and delete dialog is in admin mode', () => {
-    cy.window().then((win) => {
-      win.localStorage.setItem(
-        'scigateway:token',
-        'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwicm9sZSI6ImFkbWluIiwidXNlcklzQWRtaW4iOmZhbHNlLCJleHAiOjI1MzQwMjMwMDc5OX0.FrsDUqnKskhIvmIjtYVgC9im-cSu1dFlwVQ4cFJf2BgCaSh82XuEngOLkbtQuuXWC1wiipsGP4Y-usq7Q_R68vwXqGYusHo4fXw6AcBcwplgXZ3n60wsTegpBxKZY5foOre0Ng1GpK-7rrx9H-YQUCHSBOtzWOw_eLzu-eNTwMnMnnpGM9L91_hj0dAKiP90Z3Hp0UelnYydc0sf6msOs7RKI2Sij-13vFSL8LToIbfUTZYwKZHbBPD5glce_gsW6_W5W-iGemt7yyhfyf7IxKWq3Q02HCiSkI0uCcBal44sabPrsQ4EaPRwyUnH0X25MC00IAPRHh-1KqabV7IA9w'
-      );
-    });
+  it('admin user can bypass delete rules and delete dialog is in admin view', () => {
+    cy.setCurrentUserToAdmin();
     cy.visit('/catalogue/4/items/1/items');
 
     cy.findAllByLabelText('Row Actions').first().click();

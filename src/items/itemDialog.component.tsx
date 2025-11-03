@@ -327,7 +327,7 @@ function ItemDialog(props: ItemDialogProps) {
       clearErrorsPropertiesStep('root.formError');
 
       // Clears usage status error even when they pick a system with no defined rule
-      // which can only be done by authorised users, therefore the usage status dropdown
+      // which can only be done by privileged users, therefore the usage status dropdown
       // shows the correct/no error message
       if (isPrivilegedUser) {
         clearErrorsDetailsStep(['usage_status_id']);
@@ -1213,7 +1213,7 @@ function ItemDialog(props: ItemDialogProps) {
   return (
     <Dialog
       open={open}
-      maxWidth="lg"
+      maxWidth="xl"
       PaperProps={{ sx: { height: '810px' } }}
       fullWidth
     >
@@ -1222,11 +1222,7 @@ function ItemDialog(props: ItemDialogProps) {
         {isPrivilegedUser && (
           <Tooltip
             title={
-              <h4>
-                As an admin, you can bypass system rules that restrict item
-                placement for other users and modify the item&apos;s usage
-                status
-              </h4>
+              "As an admin, you can bypass rules that restrict item placement for other users, and you can modify the item's usage status"
             }
             disableHoverListener={false}
             aria-label={'admin-status-tooltip'}
@@ -1237,9 +1233,9 @@ function ItemDialog(props: ItemDialogProps) {
               size="large"
             >
               <InfoOutlinedIcon
-                sx={{
-                  color: '#003088',
-                }}
+                sx={(theme) => ({
+                  color: theme.palette?.info.dark,
+                })}
               />
             </IconButton>
           </Tooltip>

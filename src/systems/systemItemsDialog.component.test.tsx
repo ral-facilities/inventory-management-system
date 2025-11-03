@@ -89,7 +89,7 @@ describe('SystemItemsDialog', () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          "As an admin, you can bypass system rules that restrict item placement for other users and modify the item's usage status"
+          "As an admin, you can bypass rules that restrict item placement for other users, and you can modify the item's usage status"
         )
       ).toBeInTheDocument();
     });
@@ -394,15 +394,6 @@ describe('SystemItemsDialog', () => {
         )
       ).toBeInTheDocument();
 
-      // usage statuses should also have error
-      await user.click(screen.getAllByLabelText('Expand all')[1]);
-      expect(
-        screen.getByText('Please select a usage status for all items')
-      ).toBeInTheDocument();
-      expect(screen.getAllByText('Please select a usage status')).toHaveLength(
-        2
-      );
-
       await user.click(screen.getByRole('button', { name: 'Back' }));
 
       await user.click(screen.getByLabelText('navigate to systems home'));
@@ -422,12 +413,6 @@ describe('SystemItemsDialog', () => {
           'Please move items for current location or root to another system'
         )
       ).not.toBeInTheDocument();
-      expect(
-        screen.queryByText('Please select a usage status for all items')
-      ).not.toBeInTheDocument();
-      expect(
-        screen.queryAllByText('Please select a usage status')
-      ).toHaveLength(0);
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
 

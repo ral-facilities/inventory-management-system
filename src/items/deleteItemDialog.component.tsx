@@ -93,10 +93,7 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
         {isPrivilegedUser && (
           <Tooltip
             title={
-              <h4>
-                As an admin, you can bypass rules that prevent other users from
-                deleting an item
-              </h4>
+              'As an admin, you can bypass rules that prevent other users from deleting an item'
             }
             disableHoverListener={false}
             aria-label={'admin-status-tooltip'}
@@ -107,9 +104,9 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
               size="large"
             >
               <InfoOutlinedIcon
-                sx={{
-                  color: '#003088',
-                }}
+                sx={(theme) => ({
+                  color: theme.palette?.info.dark,
+                })}
               />
             </IconButton>
           </Tooltip>

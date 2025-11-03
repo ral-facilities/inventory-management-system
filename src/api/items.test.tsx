@@ -1,6 +1,10 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { MockInstance } from 'vitest';
-import { MoveItemsToSystem, PostItems } from '../app.types';
+import {
+  MoveItemsToSystem,
+  MoveItemsToSystemUsageStatus,
+  PostItems,
+} from '../app.types';
 import SystemsJSON from '../mocks/Systems.json';
 import {
   getItemById,
@@ -242,7 +246,7 @@ describe('items api functions', () => {
     beforeEach(() => {
       moveItemsToSystem = {
         // Prevent test interference if modifying the usage statuses or selected items
-        usageStatusId: '0',
+        usageStatusConfig: '0',
         selectedItems: JSON.parse(JSON.stringify(mockItems)),
         targetSystem: SystemsJSON[1] as System,
       };
@@ -254,7 +258,7 @@ describe('items api functions', () => {
       vi.clearAllMocks();
     });
 
-    it('sends requests to move multiple items to a system and returns a successful response for each', async () => {
+    it('sends requests to move multiple items to a system and returns a successful response for each (config as string)', async () => {
       const { result } = renderHook(() => useMoveItemsToSystem(), {
         wrapper: hooksWrapperWithProviders(),
       });
@@ -269,7 +273,40 @@ describe('items api functions', () => {
       moveItemsToSystem.selectedItems.map((item) =>
         expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/items/${item.id}`, {
           system_id: moveItemsToSystem.targetSystem.id,
-          usage_status_id: moveItemsToSystem.usageStatusId,
+          usage_status_id: moveItemsToSystem.usageStatusConfig,
+        })
+      );
+      expect(result.current.data).toEqual(
+        moveItemsToSystem.selectedItems.map((item) => ({
+          message: `Successfully moved to Giant laser`,
+          name: item.serial_number,
+          state: 'success',
+        }))
+      );
+    });
+
+    it('sends requests to move multiple items to a system and returns a successful response for each (config as list)', async () => {
+      moveItemsToSystem.usageStatusConfig = [
+        { item_id: 'KvT2Ox7n', usage_status_id: '0' },
+        { item_id: 'G463gOIA', usage_status_id: '0' },
+      ];
+      const { result } = renderHook(() => useMoveItemsToSystem(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      expect(result.current.isIdle).toBe(true);
+
+      result.current.mutate(moveItemsToSystem);
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      moveItemsToSystem.selectedItems.map((item) =>
+        expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/items/${item.id}`, {
+          system_id: moveItemsToSystem.targetSystem.id,
+          usage_status_id: (
+            moveItemsToSystem.usageStatusConfig as Array<MoveItemsToSystemUsageStatus>
+          ).find((status) => status.item_id === item.id)?.usage_status_id,
         })
       );
       expect(result.current.data).toEqual(
@@ -287,7 +324,7 @@ describe('items api functions', () => {
         name: 'New system name',
         id: 'new_system_id',
       };
-      moveItemsToSystem.usageStatusId = '2';
+      moveItemsToSystem.usageStatusConfig = '2';
 
       // Fail just the 1st system
       moveItemsToSystem.selectedItems[0].id = 'Error 409';
@@ -307,7 +344,7 @@ describe('items api functions', () => {
       moveItemsToSystem.selectedItems.map((item) =>
         expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/items/${item.id}`, {
           system_id: 'new_system_id',
-          usage_status_id: moveItemsToSystem.usageStatusId,
+          usage_status_id: moveItemsToSystem.usageStatusConfig,
         })
       );
       expect(result.current.data).toEqual(

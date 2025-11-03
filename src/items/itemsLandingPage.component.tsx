@@ -33,7 +33,7 @@ const ItemsActionMenu = (props: {
   const { isPrivilegedUser } = useAuthorisationState();
   const [editItemDialogOpen, setEditItemDialogOpen] =
     React.useState<boolean>(false);
-  const [openDialogAsAdmin, setOpenDialogAsAdmin] =
+  const [openDialogAsPrivilegedUser, setOpenDialogAsPrivilegedUser] =
     React.useState<boolean>(false);
 
   return (
@@ -44,9 +44,9 @@ const ItemsActionMenu = (props: {
       uploadAttachmentsEntityId={item.id}
       uploadImagesEntityId={item.id}
       editMenuItem={{
-        onClick: (asAdmin) => {
+        onClick: (asPrivilegedUser) => {
           setEditItemDialogOpen(true);
-          setOpenDialogAsAdmin(asAdmin === true);
+          setOpenDialogAsPrivilegedUser(asPrivilegedUser === true);
         },
         dialog: (
           <>
@@ -56,7 +56,7 @@ const ItemsActionMenu = (props: {
                 onClose={() => {
                   setEditItemDialogOpen(false);
                 }}
-                isPrivilegedUser={openDialogAsAdmin}
+                isPrivilegedUser={openDialogAsPrivilegedUser}
                 requestType="patch"
                 catalogueCategory={catalogueCategory}
                 catalogueItem={catalogueItem}
