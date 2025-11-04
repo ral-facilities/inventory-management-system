@@ -90,6 +90,15 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
       .use(ProgressBar<UppyUploadMetadata, AwsBody>)
   );
 
+  // Destroy uppy instance on unmount (Should also avoid errors in tests e.g. 'ReferenceError: window is not defined' from code
+  // executing after tests have completed)
+  React.useEffect(
+    () => () => {
+      uppy.destroy();
+    },
+    [uppy]
+  );
+
   uppy.getPlugin('DragDrop')?.setOptions({
     locale: {
       strings: { dropPasteFiles: `Drop attachments here or %{browseFiles}` },

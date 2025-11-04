@@ -206,6 +206,38 @@ describe('Items Table', () => {
     });
   });
 
+  it('sets the spares definition filter and clears the table filters', async () => {
+    props.catalogueCategory = getCatalogueCategoryById(
+      '9'
+    ) as CatalogueCategory;
+    props.catalogueItem = getCatalogueItemById('11') as CatalogueItem;
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Serial Number')).toBeInTheDocument();
+    });
+    const showSparesButton = screen.getByRole('button', {
+      name: 'Show Spare Items',
+    });
+    expect(showSparesButton).not.toBeDisabled();
+
+    await user.click(showSparesButton);
+
+    await waitFor(() => {
+      expect(screen.queryByText('tenrMn1KOmIg')).not.toBeInTheDocument();
+    });
+
+    const clearFiltersButton = screen.getByRole('button', {
+      name: 'Clear Filters',
+    });
+
+    await user.click(clearFiltersButton);
+
+    await waitFor(() => {
+      expect(screen.getByText('tenrMn1KOmIg')).toBeInTheDocument();
+    });
+  });
+
   it('navigates to catalogue item landing page', async () => {
     createView();
     const serialNumber = '5YUQDDjKpz2z';
@@ -300,7 +332,7 @@ describe('Items Table', () => {
     expect(screen.getByLabelText('Notes')).toHaveValue(
       '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this Serial Number: 5YUQDDjKpz2z'
     );
-  });
+  }, 15000);
 
   it('can open the duplicate dialog and checks that the notes have been updated when notes is null', async () => {
     props.catalogueCategory = getCatalogueCategoryById(

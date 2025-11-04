@@ -210,7 +210,7 @@ function UsageStatuses() {
     renderRowActionMenuItems: ({ closeMenu, row }) => {
       return [
         <MenuItem
-          key={'delete'}
+          key="delete"
           aria-label={`Delete usage status ${row.original.value}`}
           onClick={() => {
             closeMenu();

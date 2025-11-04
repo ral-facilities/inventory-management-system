@@ -206,7 +206,7 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
                     color="primary"
                     variant="contained"
                     component={Link}
-                    to={'/catalogue'}
+                    to="/catalogue"
                     data-testid="catalogue-button"
                   >
                     {'Explore'}
@@ -258,7 +258,7 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
                     color="primary"
                     variant="contained"
                     component={Link}
-                    to={'/systems'}
+                    to="/systems"
                     data-testid="systems-button"
                   >
                     {'Explore'}
@@ -287,7 +287,7 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
                     color="primary"
                     variant="contained"
                     component={Link}
-                    to={'/manufacturers'}
+                    to="/manufacturers"
                     data-testid="manufacturer-button"
                   >
                     {'Explore'}
