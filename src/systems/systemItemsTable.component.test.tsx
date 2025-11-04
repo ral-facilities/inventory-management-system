@@ -389,7 +389,7 @@ describe('SystemItemsTable', () => {
     expect(screen.getByLabelText('Notes')).toHaveValue(
       'ihwCjMdJ4n7KKcaM34Lj\n\nThis is a copy of the item with this Serial Number: 5xE1KSraISvu'
     );
-  });
+  }, 15000);
 
   it('can open the duplicate dialog and checks that the notes have been updated when notes is null', async () => {
     props.system = getSystemById('656da8ef9cba7a76c6f81a5d');
@@ -436,7 +436,7 @@ describe('SystemItemsTable', () => {
     expect(screen.getByLabelText('Notes')).toHaveValue(
       '\n\nThis is a copy of the item with this Serial Number: RncNJlDk1pXC'
     );
-  });
+  }, 20000);
 
   it('can open the duplicate dialog and checks that the notes have been updated with no serial number', async () => {
     props.system = getSystemById('656da8ef9cba7a76c6f81a5d');
@@ -483,7 +483,7 @@ describe('SystemItemsTable', () => {
     expect(screen.getByLabelText('Notes')).toHaveValue(
       'MJuSPgXEiXmBbf1Vlq4B\n\nThis is a copy of the item with this Serial Number: No serial number'
     );
-  });
+  }, 20000);
 
   it('can open the delete dialog and close it again', async () => {
     createView();

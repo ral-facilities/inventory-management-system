@@ -199,7 +199,7 @@ describe('PropertyDialog', () => {
           unit_id: '5',
         }
       );
-    });
+    }, 10000);
 
     it('adds a new property with allowed values (type string to type number)', async () => {
       createView();

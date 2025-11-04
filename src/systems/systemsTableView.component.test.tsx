@@ -51,9 +51,8 @@ describe('SystemsTableView', () => {
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
 
-    mockSystemsData.forEach((system) =>
-      expect(screen.getByText(system.name)).toBeInTheDocument()
-    );
+    for (const system of mockSystemsData)
+      expect(await screen.findByText(system.name)).toBeInTheDocument();
   });
 
   it('renders no results page correctly', async () => {
