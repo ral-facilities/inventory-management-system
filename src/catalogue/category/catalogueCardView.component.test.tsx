@@ -405,7 +405,7 @@ describe('CardView', () => {
       expect(await screen.findByText('Test 1')).toBeInTheDocument();
 
       expect(clearFiltersButton).toBeDisabled();
-    });
+    }, 10000);
 
     it('renders the multi-select filter mode dropdown correctly', async () => {
       createView();

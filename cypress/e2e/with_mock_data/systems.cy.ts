@@ -298,6 +298,29 @@ describe('Systems', () => {
     cy.findByText('Properties').should('be.visible');
   });
 
+  it("should be able to navigate to a filtered item's table using the spares value", () => {
+    cy.findByRole('link', { name: 'Pulse Laser' }).click();
+    cy.findAllByRole('button', { name: 'Show/Hide filters' })
+      .eq(1)
+      .scrollIntoView();
+    cy.findAllByRole('button', { name: 'Show/Hide filters' }).eq(1).click();
+
+    // Wait for progress bar to disappear before interacting with filters
+    cy.findAllByRole('progressbar', { timeout: 10000 }).should('not.exist');
+
+    cy.findAllByRole('button', { name: 'Expand' }).eq(1).scrollIntoView();
+    cy.findAllByRole('button', { name: 'Expand' }).eq(1).click();
+    cy.findAllByRole('link', { name: '0' }).eq(2).scrollIntoView();
+    cy.findAllByRole('link', { name: '0' }).eq(2).click({ force: true });
+
+    // Check now on table view for the item
+    cy.url().should(
+      'include',
+      '/catalogue/4/items/28/items?state=N4IgxgYiBcDaoEsAmMQGcCeaAuBTAtgHTYYAOuhAbgIYA2ArriADQg0NNygnmo4BOCAHYBzFmzqNUAZWwB7ftRFMAvgF11KoA'
+    );
+    cy.findByRole('button', { name: 'Show Spare Items' }).should('be.disabled');
+  });
+
   it('breadcrumbs should work correctly', () => {
     cy.visit('/systems/65328f34a40ff5301575a4e9');
 
@@ -1039,10 +1062,10 @@ describe('Systems', () => {
     });
   });
 
-  it("edits an item", () => {
-    cy.visit('/systems/657f8c3b2a1b4e5d8f9b3c4e5')
+  it('edits an item', () => {
+    cy.visit('/systems/657f8c3b2a1b4e5d8f9b3c4e5');
 
-    cy.findByRole("button", {name: "Expand"}).click()
+    cy.findByRole('button', { name: 'Expand' }).click();
     cy.findByLabelText('Row Actions').first().click();
     cy.findByText('Edit').click();
 
@@ -1070,12 +1093,12 @@ describe('Systems', () => {
         JSON.stringify({ serial_number: 'dfzqkOJbqifOtest1234' })
       );
     });
-  })
+  });
 
-  it("duplicates an item", () => {
-    cy.visit('/systems/657f8c3b2a1b4e5d8f9b3c4e5')
+  it('duplicates an item', () => {
+    cy.visit('/systems/657f8c3b2a1b4e5d8f9b3c4e5');
 
-    cy.findByRole("button", {name: "Expand"}).click()
+    cy.findByRole('button', { name: 'Expand' }).click();
     cy.findByLabelText('Row Actions').first().click();
     cy.findByText('Duplicate').click();
 
@@ -1097,35 +1120,36 @@ describe('Systems', () => {
       expect(postRequests.length).eq(1);
       expect(JSON.stringify(await postRequests[0].json())).equal(
         JSON.stringify({
-            purchase_order_number: "wteR6vsp",
-            is_defective: true,
-            usage_status_id: "0",
-            warranty_end_date: "2023-04-01T23:00:00.000Z",
-            asset_number: "DEAbxBGr2M",
-            serial_number: "dfzqkOJbqifO",
-            delivered_date: "2023-06-15T23:00:00.000Z",
-            notes: "uaw8BqYE3vMI5CmOJgFP\n\nThis is a copy of the item with this Serial Number: dfzqkOJbqifO",
-            properties: [
-                {
-                    id: "13",
-                    value: 100
-                },
-                {
-                    id: "14",
-                    value: 10
-                }
-            ],
-            catalogue_item_id: "11",
-            system_id: "657f8c3b2a1b4e5d8f9b3c4e5"
+          purchase_order_number: 'wteR6vsp',
+          is_defective: true,
+          usage_status_id: '0',
+          warranty_end_date: '2023-04-01T23:00:00.000Z',
+          asset_number: 'DEAbxBGr2M',
+          serial_number: 'dfzqkOJbqifO',
+          delivered_date: '2023-06-15T23:00:00.000Z',
+          notes:
+            'uaw8BqYE3vMI5CmOJgFP\n\nThis is a copy of the item with this Serial Number: dfzqkOJbqifO',
+          properties: [
+            {
+              id: '13',
+              value: 100,
+            },
+            {
+              id: '14',
+              value: 10,
+            },
+          ],
+          catalogue_item_id: '11',
+          system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
         })
       );
     });
-  })
+  });
 
-  it("deletes an item", () => {
-    cy.visit('/systems/657f8c3b2a1b4e5d8f9b3c4e5')
+  it('deletes an item', () => {
+    cy.visit('/systems/657f8c3b2a1b4e5d8f9b3c4e5');
 
-    cy.findByRole("button", {name: "Expand"}).click()
+    cy.findByRole('button', { name: 'Expand' }).click();
     cy.findByLabelText('Row Actions').first().click();
     cy.findByText('Delete').click();
 
@@ -1143,5 +1167,5 @@ describe('Systems', () => {
       const request = deleteRequests[0];
       expect(request.url.toString()).to.contain('RuUxShkg');
     });
-  })
+  });
 });
