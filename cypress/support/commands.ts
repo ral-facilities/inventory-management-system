@@ -126,7 +126,7 @@ Cypress.Commands.add('findBrowserMockedRequests', ({ method, url }) => {
 /**
  * Sets the current token in localstorage to one that contains an admin role
  * The relevant part of the token's payload is: {role: 'admin', userIsAdmin: false}
- * This is used whereever specific admin functionality needs to be tested
+ * This is used wherever specific admin functionality needs to be tested
  */
 Cypress.Commands.add('setCurrentUserToAdmin', () => {
   cy.window().then((win) => {
