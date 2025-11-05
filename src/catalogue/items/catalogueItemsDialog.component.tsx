@@ -108,8 +108,7 @@ export function convertToPropertyValueList(
       (catProp) => catProp.id === property.id
     );
 
-    const valueType = `${property.type}_${property.mandatory}`;
-
+    const valueType = `${property.type}_${property.mandatory}${property.allowed_values && property.type === 'string' ? '_av' : ''}`;
     return {
       valueType: valueType,
       value: {
