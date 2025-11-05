@@ -55,7 +55,7 @@ exports[`Settings Layout > renders settings layout page correctly 1`] = `
     class="MuiBox-root css-v2kfba"
   >
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1uwyv35-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1cqsvym-MuiGrid2-root"
     >
       <div
         class="MuiBox-root css-70qvj9"
@@ -104,7 +104,7 @@ exports[`Settings Layout > renders units breadcrumbs correctly 1`] = `
     class="MuiBox-root css-v2kfba"
   >
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1uwyv35-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1cqsvym-MuiGrid2-root"
     >
       <div
         class="MuiBox-root css-70qvj9"
@@ -189,7 +189,7 @@ exports[`Settings Layout > renders usage statuses breadcrumbs correctly 1`] = `
     class="MuiBox-root css-v2kfba"
   >
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1uwyv35-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1cqsvym-MuiGrid2-root"
     >
       <div
         class="MuiBox-root css-70qvj9"

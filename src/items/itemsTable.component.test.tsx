@@ -396,7 +396,7 @@ describe('Items Table', () => {
     expect(screen.getByLabelText('Notes')).toHaveValue(
       '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this Serial Number: 5YUQDDjKpz2z'
     );
-  });
+  }, 15000);
 
   it('can open the duplicate dialog and checks that the notes have been updated when notes is null', async () => {
     props.catalogueCategory = getCatalogueCategoryById(

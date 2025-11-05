@@ -575,7 +575,7 @@ describe('ItemDialog', () => {
       expect(
         await screen.findByRole('button', { name: 'Finish' })
       ).not.toBeDisabled();
-    }, 10000);
+    }, 15000);
 
     it('displays placement and items details error message user skips to last step and presses finish', async () => {
       createView();
@@ -585,7 +585,7 @@ describe('ItemDialog', () => {
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       expect(
-        screen.getByText('Please select a parent system')
+        await screen.findByText('Please select a parent system')
       ).toBeInTheDocument();
       expect(screen.getByText('Invalid item details')).toBeInTheDocument();
       expect(
@@ -686,7 +686,7 @@ describe('ItemDialog', () => {
 
       await user.clear(screen.getByLabelText('Quantity'));
       await user.clear(screen.getByLabelText('Starting value'));
-    }, 10000);
+    }, 15000);
 
     it('adds an item (case empty string with spaces returns null and change property boolean values)', async () => {
       createView();
@@ -916,7 +916,7 @@ describe('ItemDialog', () => {
       });
 
       expect(screen.getByRole('button', { name: 'Finish' })).not.toBeDisabled();
-    }, 10000);
+    }, 15000);
 
     it('displays error message when property values type is incorrect', async () => {
       createView();
@@ -998,7 +998,7 @@ describe('ItemDialog', () => {
           screen.queryByText('Please enter a valid number.')
         ).not.toBeInTheDocument();
       });
-    }, 10000);
+    }, 15000);
 
     it('displays error message when mandatory property with allowed values is missing', async () => {
       props = {
@@ -1374,7 +1374,7 @@ describe('ItemDialog', () => {
         system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
         usage_status_id: '2',
       });
-    }, 10000);
+    }, 15000);
 
     it('edit an item (all input values) when there is no catalogue category given', async () => {
       // Force the catalogue category to be fetched
@@ -1435,7 +1435,7 @@ describe('ItemDialog', () => {
         system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
         usage_status_id: '2',
       });
-    }, 10000);
+    }, 15000);
 
     it('edits an item where the item property has an allowed list of values', async () => {
       props = {

@@ -74,6 +74,15 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
     return newUppy;
   });
 
+  // Destroy uppy instance on unmount (Should also avoid errors in tests e.g. 'ReferenceError: window is not defined' from code
+  // executing after tests have completed)
+  React.useEffect(
+    () => () => {
+      uppy.destroy();
+    },
+    [uppy]
+  );
+
   const { files = {}, error, recoveredState } = uppy.getState();
   const { isAllComplete } = uppy.getObjectOfFilesPerState();
 
