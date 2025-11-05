@@ -345,7 +345,7 @@ describe('Catalogue Items Dialog', () => {
     });
   }, 10000);
 
-  it('adds a catalogue item where the catalogue item property has an allowed list of values', async () => {
+  it('adds a catalogue item where the catalogue item property has an allowed list of values that includes extra spaces', async () => {
     props = {
       ...props,
       parentInfo: {

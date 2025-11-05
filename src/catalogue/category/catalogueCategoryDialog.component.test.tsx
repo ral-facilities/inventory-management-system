@@ -795,7 +795,7 @@ describe('Catalogue Category Dialog', () => {
       expect(onClose).toHaveBeenCalled();
     }, 20000);
 
-    it('create a catalogue category with content being catalogue items (allowed_values list of strings) and trims the extra white space around the text', async () => {
+    it('create a catalogue category with content being catalogue items (allowed_values list of strings) that includes extra spaces in the allowed values', async () => {
       createView();
 
       await modifyValues({
