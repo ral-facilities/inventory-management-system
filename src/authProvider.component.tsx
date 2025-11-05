@@ -19,24 +19,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     InventoryManagementSystemSettingsContext
   );
 
-  React.useEffect(() => {
-    const setAuthorisationState = async () => {
-      const role = getUserRole();
+  const setAuthorisationState = React.useCallback(() => {
+    const role = getUserRole();
 
-      setAuthorisation({
-        role: role,
-        isPrivilegedUser: privilegedRoles.includes(role),
-      });
-    };
+    setAuthorisation({
+      role: role,
+      isPrivilegedUser: privilegedRoles.includes(role),
+    });
+  }, [privilegedRoles]);
+
+  React.useEffect(() => {
     setAuthorisationState();
 
     // if dev mode add event listener for if token in localstorage changes
     if (isRunningInDevelopment()) {
-      window.addEventListener('tokenChanged', (_) => {
-        setAuthorisationState();
-      });
+      window.addEventListener('tokenChanged', setAuthorisationState);
+
+      return () => {
+        window.removeEventListener('tokenChanged', setAuthorisationState);
+      };
     }
-  }, [privilegedRoles]);
+  }, [setAuthorisationState]);
 
   return (
     <AuthContext.Provider value={authorisation}>
