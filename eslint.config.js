@@ -7,10 +7,11 @@ import noOnlyTestsPlugin from 'eslint-plugin-no-only-tests';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import reactTestingLibraryPlugin from 'eslint-plugin-testing-library';
+import { defineConfig } from 'eslint/config';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
-export default tseslint.config(
+export default defineConfig(
   {
     files: ['**/*.{js,ts,jsx,tsx}'],
     languageOptions: {
