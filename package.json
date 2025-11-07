@@ -100,7 +100,7 @@
     "express": "5.1.0",
     "globals": "16.0.0",
     "jsdom": "26.1.0",
-    "prettier": "3.5.3",
+    "prettier": "3.6.2",
     "serve": "14.2.4",
     "serve-static": "1.16.2",
     "start-server-and-test": "2.1.2",
