@@ -238,18 +238,20 @@ export function SystemItemsUsageStatusTable(
               <Autocomplete
                 id={`usage-statuses-${row.original.catalogueItem?.name}`}
                 size="small"
-                value={usageStatusesData?.find(
-                  (usageStatus) =>
-                    usageStatus.id ==
-                    aggregatedCellUsageStatus?.find(
-                      (status) =>
-                        status.catalogue_item_id ===
-                        row.original.catalogueItem?.id
-                    )?.usage_status_id
-                )}
+                value={
+                  usageStatusesData?.find(
+                    (usageStatus) =>
+                      usageStatus.id ==
+                      aggregatedCellUsageStatus?.find(
+                        (status) =>
+                          status.catalogue_item_id ===
+                          row.original.catalogueItem?.id
+                      )?.usage_status_id
+                  ) ?? null
+                }
                 options={usageStatusesData ?? []}
                 getOptionLabel={(usageStatus) => usageStatus.value}
-                onChange={(_event, usageStatus: UsageStatus) => {
+                onChange={(_event, usageStatus: UsageStatus | null) => {
                   if (aggregatedCellUsageStatus) {
                     const itemIndex = aggregatedCellUsageStatus.findIndex(
                       (status: Omit<UsageStatusesType, 'item_id'>) =>
@@ -312,7 +314,11 @@ export function SystemItemsUsageStatusTable(
                 }}
                 sx={{ alignItems: 'center' }}
                 fullWidth
-                disableClearable
+                disableClearable={
+                  !!usageStatuses?.find(
+                    (status) => status.item_id === row.original.item.id
+                  )?.usage_status_id
+                }
                 renderInput={(params) => (
                   <TextField {...params} label="Usage statuses" />
                 )}
@@ -330,16 +336,18 @@ export function SystemItemsUsageStatusTable(
               <Autocomplete
                 id={`usage-statuses-${row.original.item?.serial_number ?? 'no-serial-number'}`}
                 size="small"
-                value={usageStatusesData?.find(
-                  (usageStatus) =>
-                    usageStatus.id ==
-                    usageStatuses?.find(
-                      (status) => status.item_id === row.original.item.id
-                    )?.usage_status_id
-                )}
+                value={
+                  usageStatusesData?.find(
+                    (usageStatus) =>
+                      usageStatus.id ==
+                      usageStatuses?.find(
+                        (status) => status.item_id === row.original.item.id
+                      )?.usage_status_id
+                  ) ?? null
+                }
                 options={usageStatusesData ?? []}
                 getOptionLabel={(usageStatus) => usageStatus.value}
-                onChange={(_event, usageStatus: UsageStatus) => {
+                onChange={(_event, usageStatus: UsageStatus | null) => {
                   if (onChangeUsageStatuses && usageStatuses) {
                     const itemIndex = usageStatuses.findIndex(
                       (status: UsageStatusesType) =>
@@ -383,7 +391,11 @@ export function SystemItemsUsageStatusTable(
                 }}
                 sx={{ alignItems: 'center' }}
                 fullWidth
-                disableClearable
+                disableClearable={
+                  !!usageStatuses?.find(
+                    (status) => status.item_id === row.original.item.id
+                  )?.usage_status_id
+                }
                 renderInput={(params) => (
                   <TextField
                     {...params}

@@ -24,7 +24,6 @@ describe('SystemItemsUsageStatusTable', () => {
 
   const onChangeUsageStatuses = vi.fn();
   const onChangeItemUsageStatusesErrorState = vi.fn();
-  const onChangeAggregatedCellUsageStatus = vi.fn();
   const moveToSelectedItems: Item[] = [
     ItemJSON[0],
     ItemJSON[1],
@@ -34,13 +33,8 @@ describe('SystemItemsUsageStatusTable', () => {
 
   beforeEach(() => {
     props = {
-      onChangeAggregatedCellUsageStatus,
       onChangeUsageStatuses,
       onChangeItemUsageStatusesErrorState,
-      aggregatedCellUsageStatus: [
-        { catalogue_item_id: '1', usage_status_id: '' },
-        { catalogue_item_id: '25', usage_status_id: '' },
-      ],
       usageStatuses: [
         { item_id: 'KvT2Ox7n', catalogue_item_id: '1', usage_status_id: '' },
         { item_id: 'G463gOIA', catalogue_item_id: '1', usage_status_id: '' },
@@ -185,10 +179,6 @@ describe('SystemItemsUsageStatusTable', () => {
       { item_id: '7Lrj9KVu', catalogue_item_id: '25', usage_status_id: '' },
       { item_id: 'QQen23yW', catalogue_item_id: '25', usage_status_id: '' },
     ]);
-    expect(onChangeAggregatedCellUsageStatus).toHaveBeenCalledWith([
-      { catalogue_item_id: '1', usage_status_id: '2' },
-      { catalogue_item_id: '25', usage_status_id: '' },
-    ]);
 
     await modifyUsageStatus({ cameras6: 'Used' });
 
@@ -199,58 +189,6 @@ describe('SystemItemsUsageStatusTable', () => {
       { item_id: '7Lrj9KVu', catalogue_item_id: '25', usage_status_id: '2' },
       { item_id: 'QQen23yW', catalogue_item_id: '25', usage_status_id: '2' },
     ]);
-    expect(onChangeAggregatedCellUsageStatus).toHaveBeenCalledWith([
-      { catalogue_item_id: '1', usage_status_id: '2' },
-      { catalogue_item_id: '25', usage_status_id: '2' },
-    ]);
-  });
-
-  it('set the initial aggregated Cell Usage Status  ', async () => {
-    props.aggregatedCellUsageStatus = [];
-    createView();
-
-    // Name (obtained from catalogue category item)
-    await waitFor(
-      () => {
-        expect(
-          screen.getByRole('cell', {
-            name: `Cameras 1 (2)`,
-          })
-        ).toBeInTheDocument();
-      },
-      { timeout: 4000 }
-    );
-
-    await waitFor(() => {
-      expect(onChangeAggregatedCellUsageStatus).toHaveBeenCalledWith([
-        { catalogue_item_id: '1', usage_status_id: '' },
-        { catalogue_item_id: '25', usage_status_id: '' },
-      ]);
-    });
-  });
-
-  it('selects the correct usage status text value according to the number value', async () => {
-    props.aggregatedCellUsageStatus = [
-      { catalogue_item_id: '1', usage_status_id: '0' },
-      { catalogue_item_id: '25', usage_status_id: '1' },
-    ];
-
-    createView();
-
-    // Name (obtained from catalogue category item)
-    await waitFor(
-      () => {
-        expect(
-          screen.getByRole('cell', {
-            name: `Cameras 1 (2)`,
-          })
-        ).toBeInTheDocument();
-      },
-      { timeout: 4000 }
-    );
-
-    expect((await screen.findAllByRole('combobox'))[1]).toHaveValue('New');
-    expect(screen.getAllByRole('combobox')[2]).toHaveValue('In Use');
   });
 
   it('displays errors messages correctly', async () => {
