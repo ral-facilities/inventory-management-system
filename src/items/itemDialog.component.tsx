@@ -326,9 +326,9 @@ function ItemDialog(props: ItemDialogProps) {
     if (parentSystemId !== selectedItem?.system_id) {
       clearErrorsPropertiesStep('root.formError');
 
-      // Clears usage status error even when they pick a system with no defined rule
-      // which can only be done by privileged users, therefore the usage status dropdown
-      // shows the correct/no error message
+      // Clears usage status error if privileged user as they may be selecting
+      // a system with no rule, and so no usage status. Therefore we want to
+      // ensure the error is always cleared to behave as other dialogs.
       if (isPrivilegedUser) {
         clearErrorsDetailsStep(['usage_status_id']);
       }
