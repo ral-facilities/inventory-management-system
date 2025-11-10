@@ -289,6 +289,7 @@ function ItemDialog(props: ItemDialogProps) {
 
   // Set usage status based on the selected Rule
   React.useEffect(() => {
+    console.log(selectedRules);
     if (selectedRules && selectedRules.length > 0) {
       const usageStatus = usageStatuses?.find(
         (status) => status.id === selectedRules[0].dst_usage_status?.id
@@ -298,6 +299,10 @@ function ItemDialog(props: ItemDialogProps) {
           shouldValidate: true,
         });
       }
+    } else if (isPrivilegedUser) {
+      ItemDetailsStepFormMethods.setValue('usage_status_id', '', {
+        shouldValidate: false, // so error does not instantly appear
+      });
     }
   }, [
     selectedRules,
@@ -305,6 +310,7 @@ function ItemDialog(props: ItemDialogProps) {
     ItemDetailsStepFormMethods,
     srcSystemTypeId,
     dstSystemTypeId,
+    isPrivilegedUser,
   ]);
 
   // Clears form errors when a value has been changed
