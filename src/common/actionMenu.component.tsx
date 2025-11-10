@@ -2,7 +2,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PrintIcon from '@mui/icons-material/Print';
 import UploadIcon from '@mui/icons-material/Upload';
-import { IconButton, Menu, MenuItem } from '@mui/material';
+import { Divider, IconButton, Menu, MenuItem } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
 import React from 'react';
@@ -100,17 +100,7 @@ function ActionMenu(props: ActionMenuProps) {
             <EditIcon fontSize="small" sx={{ mr: 1 }} />
             Edit
           </MenuItem>
-          {showAdminEdit && (
-            <MenuItem
-              onClick={() => {
-                editMenuItem.onClick(true);
-                handleMenuClose();
-              }}
-            >
-              <EditIcon fontSize="small" sx={{ mr: 1 }} />
-              Edit as Admin
-            </MenuItem>
-          )}
+
           {uploadImagesEntityId && (
             <MenuItem
               onClick={() => {
@@ -144,6 +134,21 @@ function ActionMenu(props: ActionMenuProps) {
               <PrintIcon fontSize="small" sx={{ mr: 1 }} />
               Print
             </MenuItem>
+          )}
+
+          {showAdminEdit && (
+            <>
+              <Divider />
+              <MenuItem
+                onClick={() => {
+                  editMenuItem.onClick(true);
+                  handleMenuClose();
+                }}
+              >
+                <EditIcon fontSize="small" sx={{ mr: 1 }} />
+                Edit as Admin
+              </MenuItem>
+            </>
           )}
         </Menu>
       </Grid>

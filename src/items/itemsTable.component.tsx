@@ -6,6 +6,7 @@ import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   Box,
   Button,
+  Divider,
   ListItemIcon,
   ListItemText,
   MenuItem,
@@ -663,24 +664,6 @@ export function ItemsTable(props: ItemTableProps) {
           </ListItemIcon>
           <ListItemText>Edit</ListItemText>
         </MenuItem>,
-        isPrivilegedUser && (
-          <MenuItem
-            key="edit"
-            aria-label={`Edit item ${row.original.item.id}`}
-            onClick={() => {
-              setItemsDialogType('edit');
-              setOpenDialogAsPrivilegedUser(true);
-              table.setCreatingRow(row);
-              closeMenu();
-            }}
-            sx={{ m: 0 }}
-          >
-            <ListItemIcon>
-              <EditIcon />
-            </ListItemIcon>
-            <ListItemText>Edit as Admin</ListItemText>
-          </MenuItem>
-        ),
         <MenuItem
           key="duplicate"
           aria-label={`Duplicate item ${row.original.item.id}`}
@@ -712,24 +695,60 @@ export function ItemsTable(props: ItemTableProps) {
           </ListItemIcon>
           <ListItemText>Delete</ListItemText>
         </MenuItem>,
-        isPrivilegedUser && (
-          <MenuItem
-            key="delete"
-            aria-label={`Delete item ${row.original.item.id}`}
-            onClick={() => {
-              setDeleteItemDialogOpen(true);
-              setOpenDialogAsPrivilegedUser(true);
-              setSelectedItem(row.original.item);
-              closeMenu();
-            }}
-            sx={{ m: 0 }}
-          >
-            <ListItemIcon>
-              <DeleteIcon />
-            </ListItemIcon>
-            <ListItemText>Delete as Admin</ListItemText>
-          </MenuItem>
-        ),
+
+        ...(isPrivilegedUser
+          ? [
+              <Divider key="divider" />,
+              <MenuItem
+                key="edit-as-admin"
+                aria-label={`Edit item ${row.original.item.id}`}
+                onClick={() => {
+                  setItemsDialogType('edit');
+                  setOpenDialogAsPrivilegedUser(true);
+                  table.setCreatingRow(row);
+                  closeMenu();
+                }}
+                sx={{ m: 0 }}
+              >
+                <ListItemIcon>
+                  <EditIcon />
+                </ListItemIcon>
+                <ListItemText>Edit as Admin</ListItemText>
+              </MenuItem>,
+              <MenuItem
+                key="duplicate-as-admin"
+                aria-label={`Duplicate item ${row.original.item.id} as Admin`}
+                onClick={() => {
+                  setItemsDialogType('duplicate');
+                  setOpenDialogAsPrivilegedUser(true);
+                  table.setCreatingRow(row);
+                  closeMenu();
+                }}
+                sx={{ m: 0 }}
+              >
+                <ListItemIcon>
+                  <SaveAsIcon />
+                </ListItemIcon>
+                <ListItemText>Duplicate as Admin</ListItemText>
+              </MenuItem>,
+              <MenuItem
+                key="delete-as-admin"
+                aria-label={`Delete item ${row.original.item.id}`}
+                onClick={() => {
+                  setDeleteItemDialogOpen(true);
+                  setOpenDialogAsPrivilegedUser(true);
+                  setSelectedItem(row.original.item);
+                  closeMenu();
+                }}
+                sx={{ m: 0 }}
+              >
+                <ListItemIcon>
+                  <DeleteIcon />
+                </ListItemIcon>
+                <ListItemText>Delete as Admin</ListItemText>
+              </MenuItem>,
+            ]
+          : []),
       ];
     },
     renderBottomToolbarCustomActions: ({ table }) =>
