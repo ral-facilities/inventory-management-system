@@ -65,6 +65,7 @@ import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import CatalogueLink from './catalogueLink.component';
 import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
 import ObsoleteCatalogueItemDialog from './obsoleteCatalogueItemDialog.component';
+import { useAuthorisationState } from '../../authProvider.component';
 
 const MoveCatalogueItemsButton = (props: {
   selectedItems: CatalogueItem[];
@@ -169,9 +170,14 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     isItemSelectable,
     requestOrigin,
   } = props;
+  const { isPrivilegedUser } = useAuthorisationState();
+
   // Breadcrumbs + Mui table V2 + extra
-  const tableHeight = getPageHeightCalc('50px + 110px + 48px');
-  const contentHeight = getPageHeightCalc('80px');
+  const tableHeight = getPageHeightCalc(
+    isPrivilegedUser,
+    '50px + 110px + 48px'
+  );
+  const contentHeight = getPageHeightCalc(false, '80px');
 
   const { data: catalogueItemsData, isLoading: isLoadingCatalogueItems } =
     useGetCatalogueItems(parentInfo.id);

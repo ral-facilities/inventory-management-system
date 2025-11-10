@@ -41,10 +41,12 @@ import {
 } from '../utils';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 import ManufacturerDialog from './manufacturerDialog.component';
+import { useAuthorisationState } from '../authProvider.component';
 
 function ManufacturerTable() {
   const { data: manufacturerData, isLoading: manufacturerDataLoading } =
     useGetManufacturers();
+  const { isPrivilegedUser } = useAuthorisationState();
 
   const [deleteManufacturerDialog, setDeleteManufacturerDialog] =
     React.useState<boolean>(false);
@@ -53,7 +55,10 @@ function ManufacturerTable() {
     Manufacturer | undefined
   >(undefined);
 
-  const tableHeight = getPageHeightCalc('50px + 110px + 48px');
+  const tableHeight = getPageHeightCalc(
+    isPrivilegedUser,
+    '50px + 110px + 48px'
+  );
 
   const [manufacturerDialogType, setManufacturerDialogType] =
     React.useState<RequestType>('post');

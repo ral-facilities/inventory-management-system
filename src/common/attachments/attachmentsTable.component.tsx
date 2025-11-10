@@ -40,6 +40,7 @@ import { usePreservedTableState } from '../preservedTableState.component';
 import { StyledUppyBox } from '../uppy.utils';
 import DeleteAttachmentDialog from './deleteAttachmentDialog.component';
 import UploadAttachmentsDialog from './uploadAttachmentsDialog.component';
+import { useAuthorisationState } from '../../authProvider.component';
 
 export interface AttachmentTableProps {
   entityId: string;
@@ -47,6 +48,7 @@ export interface AttachmentTableProps {
 
 function AttachmentsTable(props: AttachmentTableProps) {
   const { entityId } = props;
+  const { isPrivilegedUser } = useAuthorisationState();
   const { data: attachments, isLoading: attachmentIsLoading } =
     useGetAttachments(entityId);
 
@@ -190,7 +192,10 @@ function AttachmentsTable(props: AttachmentTableProps) {
         sx: {
           height: table.getState().isFullScreen
             ? '100%'
-            : getPageHeightCalc(`272px  ${showAlert ? '+ 72px' : ''}`),
+            : getPageHeightCalc(
+                isPrivilegedUser,
+                `272px  ${showAlert ? '+ 72px' : ''}`
+              ),
         },
       };
     },

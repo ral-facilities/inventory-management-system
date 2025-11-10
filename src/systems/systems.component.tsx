@@ -68,6 +68,7 @@ import { DeleteSystemDialog } from './deleteSystemDialog.component';
 import SystemDetails from './systemDetails.component';
 import SystemDialog from './systemDialog.component';
 import { SystemDirectoryDialog } from './systemDirectoryDialog.component';
+import { useAuthorisationState } from '../authProvider.component';
 
 export type SystemMenuDialogType = 'edit' | 'duplicate' | 'delete';
 
@@ -206,6 +207,8 @@ function Systems() {
   const [selectedSystemForMenu, setSelectedSystemForMenu] = React.useState<
     System | undefined
   >();
+
+  const { isPrivilegedUser } = useAuthorisationState();
 
   // When all menu's closed will be undefined
   const [menuDialogType, setMenuDialogType] = React.useState<
@@ -492,7 +495,10 @@ function Systems() {
       sx: {
         height: table.getState().isFullScreen
           ? '100%'
-          : getPageHeightCalc('64px + 88px + 40px + 47px + 40px'),
+          : getPageHeightCalc(
+              isPrivilegedUser,
+              '64px + 88px + 40px + 47px + 40px'
+            ),
       },
     }),
     muiSelectAllCheckboxProps: { disabled: systemId === null },

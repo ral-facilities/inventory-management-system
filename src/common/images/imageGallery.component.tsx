@@ -54,6 +54,7 @@ import GalleryLightBox from './galleryLightbox.component';
 import ImageInformationDialog from './imageInformationDialog.component';
 import ThumbnailImage from './thumbnailImage.component';
 import UploadImagesDialog from './uploadImagesDialog.component';
+import { useAuthorisationState } from '../../authProvider.component';
 
 const MRT_FULL_SCREEN_STYLES = {
   bottom: 0,
@@ -78,6 +79,7 @@ export interface ImageGalleryProps {
 
 const ImageGallery = (props: ImageGalleryProps) => {
   const { entityId, dense, setSelectedPrimaryID } = props;
+  const { isPrivilegedUser } = useAuthorisationState();
 
   const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
     {}
@@ -406,7 +408,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
   const [openUploadDialog, setOpenUploadDialog] =
     React.useState<boolean>(false);
 
-  const cardViewHeight = getPageHeightCalc('150px');
+  const cardViewHeight = getPageHeightCalc(isPrivilegedUser, '150px');
 
   return (
     <Paper
