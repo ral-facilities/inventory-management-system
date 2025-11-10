@@ -69,7 +69,7 @@ const MoveItemsButton = (props: {
         disabled={props.selectedItems.length === 0}
         onClick={() => setMoveItemsDialogOpen(true)}
       >
-        {`Move to ${props.openDialogAsPrivilegedUser ? 'as admin' : ''}`}
+        {`Move to ${props.openDialogAsPrivilegedUser ? 'as Admin' : ''}`}
       </Button>
       <SystemItemsDialog
         open={moveItemsDialogOpen}

@@ -181,7 +181,7 @@ describe('Items Table', () => {
     });
   });
 
-  it('opens and closes the add item as admin dialog', async () => {
+  it('opens and closes the add item as Admin dialog', async () => {
     vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
       role: 'admin',
       isPrivilegedUser: true,
@@ -191,12 +191,12 @@ describe('Items Table', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByRole('button', { name: 'Add Item as admin' })
+        screen.getByRole('button', { name: 'Add Item as Admin' })
       ).toBeInTheDocument();
     });
 
     const addButton = screen.getByRole('button', {
-      name: 'Add Item as admin',
+      name: 'Add Item as Admin',
     });
     await user.click(addButton);
 
@@ -309,7 +309,7 @@ describe('Items Table', () => {
     });
   });
 
-  it('can open the edit as admin dialog and close it again', async () => {
+  it('can open the edit as Admin dialog and close it again', async () => {
     vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
       role: 'admin',
       isPrivilegedUser: true,
@@ -325,10 +325,10 @@ describe('Items Table', () => {
     await user.click(rowActionsButton[0]);
 
     await waitFor(() => {
-      expect(screen.getByText('Edit as admin')).toBeInTheDocument();
+      expect(screen.getByText('Edit as Admin')).toBeInTheDocument();
     });
 
-    const editButton = screen.getByText('Edit as admin');
+    const editButton = screen.getByText('Edit as Admin');
     await user.click(editButton);
 
     await waitFor(() => {

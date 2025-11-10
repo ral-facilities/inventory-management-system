@@ -108,7 +108,7 @@ function ActionMenu(props: ActionMenuProps) {
               }}
             >
               <EditIcon fontSize="small" sx={{ mr: 1 }} />
-              Edit as admin
+              Edit as Admin
             </MenuItem>
           )}
           {uploadImagesEntityId && (

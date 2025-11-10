@@ -78,11 +78,11 @@ describe('SystemItemsDialog', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText('Move 2 items to a different system as admin')
+        screen.getByText('Move 2 items to a different system as Admin')
       ).toBeInTheDocument();
     });
 
-    const infoIcon = screen.getByLabelText('admin-status-tooltip');
+    const infoIcon = screen.getByTestId('admin-status-tooltip');
 
     await user.hover(infoIcon);
 
@@ -309,7 +309,7 @@ describe('SystemItemsDialog', () => {
   });
 
   // These tests do not extensively test the actual table as they are covered in systemItemsUsageStatus.component.test.tsx
-  describe('Move to as admin', () => {
+  describe('Move to as Admin', () => {
     beforeEach(() => {
       props.isPrivilegedUser = true;
     });

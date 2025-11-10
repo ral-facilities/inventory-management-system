@@ -60,10 +60,10 @@ describe('delete item dialog', () => {
     const view = createView();
 
     await waitFor(() => {
-      expect(screen.getByText('Delete Item as admin')).toBeInTheDocument();
+      expect(screen.getByText('Delete Item as Admin')).toBeInTheDocument();
     });
 
-    const infoIcon = screen.getByLabelText('admin-status-tooltip');
+    const infoIcon = screen.getByTestId('admin-status-tooltip');
 
     await user.hover(infoIcon);
 

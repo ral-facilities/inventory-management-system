@@ -1052,7 +1052,7 @@ describe('Systems', () => {
             .click({ force: true });
         });
 
-      cy.findByRole('button', { name: 'Move to as admin' }).click();
+      cy.findByRole('button', { name: 'Move to as Admin' }).click();
 
       cy.startSnoopingBrowserMockedRequest();
 

@@ -92,7 +92,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                 />
               </svg>
             </span>
-            Move to as admin
+            Move to as Admin
           </button>
         </div>
         <div

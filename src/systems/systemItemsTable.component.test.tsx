@@ -66,7 +66,7 @@ describe('SystemItemsTable', () => {
 
     // Check admin move to button exists
     expect(
-      screen.getByRole('button', { name: 'Move to as admin' })
+      screen.getByRole('button', { name: 'Move to as Admin' })
     ).toBeInTheDocument();
 
     // Expand a group so all columns are rendered to improve test coverage

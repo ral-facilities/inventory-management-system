@@ -89,25 +89,21 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
     <Dialog open={open} maxWidth="lg">
       <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
         <WarningIcon sx={{ marginRight: 1 }} />
-        Delete Item{isPrivilegedUser ? ' as admin' : ''}
+        Delete Item{isPrivilegedUser ? ' as Admin' : ''}
         {isPrivilegedUser && (
           <Tooltip
             title={
               'As an admin, you can bypass rules that prevent other users from deleting an item'
             }
             disableHoverListener={false}
-            aria-label={'admin-status-tooltip'}
+            data-testid={'admin-status-tooltip'}
           >
             <IconButton
               disableRipple
               sx={{ backgroundColor: 'transparent' }}
               size="large"
             >
-              <InfoOutlinedIcon
-                sx={(theme) => ({
-                  color: theme.palette?.info.dark,
-                })}
-              />
+              <InfoOutlinedIcon />
             </IconButton>
           </Tooltip>
         )}

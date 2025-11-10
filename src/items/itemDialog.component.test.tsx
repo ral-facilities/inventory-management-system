@@ -216,10 +216,10 @@ describe('ItemDialog', () => {
       const view = createView();
 
       await waitFor(() => {
-        expect(screen.getByText('Add Item as admin')).toBeInTheDocument();
+        expect(screen.getByText('Add Item as Admin')).toBeInTheDocument();
       });
 
-      const infoIcon = screen.getByLabelText('admin-status-tooltip');
+      const infoIcon = screen.getByTestId('admin-status-tooltip');
 
       await user.hover(infoIcon);
 
@@ -1227,10 +1227,10 @@ describe('ItemDialog', () => {
       const view = createView();
 
       await waitFor(() => {
-        expect(screen.getByText('Edit Item as admin')).toBeInTheDocument();
+        expect(screen.getByText('Edit Item as Admin')).toBeInTheDocument();
       });
 
-      const infoIcon = screen.getByLabelText('admin-status-tooltip');
+      const infoIcon = screen.getByTestId('admin-status-tooltip');
 
       await user.hover(infoIcon);
 

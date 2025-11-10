@@ -1214,29 +1214,26 @@ function ItemDialog(props: ItemDialogProps) {
     <Dialog
       open={open}
       maxWidth="xl"
-      PaperProps={{ sx: { height: '810px' } }}
+      // PaperProps={{ sx: { height: '810px' } }}
       fullWidth
     >
-      <DialogTitle>
-        {`${requestType === 'patch' ? 'Edit' : 'Add'} Item${isPrivilegedUser ? ' as admin' : ''}`}
+      <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
+        {`${requestType === 'patch' ? 'Edit' : 'Add'} Item${isPrivilegedUser ? ' as Admin' : ''}`}
+
         {isPrivilegedUser && (
           <Tooltip
             title={
               "As an admin, you can bypass rules that restrict item placement for other users, and you can modify the item's usage status"
             }
             disableHoverListener={false}
-            aria-label={'admin-status-tooltip'}
+            data-testid={'admin-status-tooltip'}
           >
             <IconButton
               disableRipple
               sx={{ backgroundColor: 'transparent' }}
               size="large"
             >
-              <InfoOutlinedIcon
-                sx={(theme) => ({
-                  color: theme.palette?.info.dark,
-                })}
-              />
+              <InfoOutlinedIcon />
             </IconButton>
           </Tooltip>
         )}

@@ -616,7 +616,7 @@ export function ItemsTable(props: ItemTableProps) {
               table.setCreatingRow(true);
             }}
           >
-            Add Item as admin
+            Add Item as Admin
           </Button>
         )}
 
@@ -678,7 +678,7 @@ export function ItemsTable(props: ItemTableProps) {
             <ListItemIcon>
               <EditIcon />
             </ListItemIcon>
-            <ListItemText>Edit as admin</ListItemText>
+            <ListItemText>Edit as Admin</ListItemText>
           </MenuItem>
         ),
         <MenuItem
@@ -727,7 +727,7 @@ export function ItemsTable(props: ItemTableProps) {
             <ListItemIcon>
               <DeleteIcon />
             </ListItemIcon>
-            <ListItemText>Delete as admin</ListItemText>
+            <ListItemText>Delete as Admin</ListItemText>
           </MenuItem>
         ),
       ];

@@ -216,7 +216,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     }
     // The configuration of usage statuses depends on if the user is privileged
     // If they are, then it should be a list, as the usage statuses may not have been prepopulated.
-    // This assumption is made as one would think a user would 'move as admin' to bypass a rule, which means that there is no dst_usage_status specified for the move.
+    // This assumption is made as one would think a user would 'move as Admin' to bypass a rule, which means that there is no dst_usage_status specified for the move.
 
     const usageStatusConfig = isPrivilegedUser
       ? convertToSystemUsageStatuses(usageStatuses)
@@ -353,39 +353,27 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
 
   return (
     <Dialog open={open} maxWidth="xl" fullWidth>
-      <DialogTitle marginLeft={2}>
-        <Grid container spacing={2} alignItems={'center'}>
-          <Grid>
-            Move{' '}
-            {selectedItems.length > 1
-              ? `${selectedItems.length} items`
-              : '1 item'}{' '}
-            to a different system{isPrivilegedUser ? ' as admin' : ''}
-          </Grid>
-          <Grid>
-            {isPrivilegedUser && (
-              <Tooltip
-                title={
-                  "As an admin, you can bypass rules that restrict item placement for other users, and you can modify the item's usage status"
-                }
-                disableHoverListener={false}
-                aria-label={'admin-status-tooltip'}
-              >
-                <IconButton
-                  disableRipple
-                  sx={{ backgroundColor: 'transparent' }}
-                  size="large"
-                >
-                  <InfoOutlinedIcon
-                    sx={(theme) => ({
-                      color: theme.palette?.info.dark,
-                    })}
-                  />
-                </IconButton>
-              </Tooltip>
-            )}
-          </Grid>
-        </Grid>
+      <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
+        Move{' '}
+        {selectedItems.length > 1 ? `${selectedItems.length} items` : '1 item'}{' '}
+        to a different system{isPrivilegedUser ? ' as Admin' : ''}
+        {isPrivilegedUser && (
+          <Tooltip
+            title={
+              "As an admin, you can bypass rules that restrict item placement for other users, and you can modify the item's usage status"
+            }
+            disableHoverListener={false}
+            data-testid={'admin-status-tooltip'}
+          >
+            <IconButton
+              disableRipple
+              sx={{ backgroundColor: 'transparent' }}
+              size="large"
+            >
+              <InfoOutlinedIcon />
+            </IconButton>
+          </Tooltip>
+        )}
       </DialogTitle>
       <DialogContent>
         {isPrivilegedUser && (

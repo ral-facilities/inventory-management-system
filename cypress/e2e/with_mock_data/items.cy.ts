@@ -417,7 +417,7 @@ describe('Items', () => {
     cy.setCurrentUserToAdmin();
     cy.visit('/catalogue/4/items/1/items');
 
-    cy.findByRole('button', { name: 'Add Item as admin' }).click();
+    cy.findByRole('button', { name: 'Add Item as Admin' }).click();
 
     cy.findByRole('progressbar').should('not.exist');
 
@@ -1796,10 +1796,10 @@ describe('Items', () => {
     cy.setCurrentUserToAdmin();
     cy.visit('/catalogue/9/items/11/items');
     cy.findAllByLabelText('Row Actions').first().click();
-    cy.findByText('Edit as admin').click();
+    cy.findByText('Edit as Admin').click();
 
     cy.findByRole('progressbar').should('not.exist');
-    cy.findByText('Edit Item as admin').should('exist');
+    cy.findByText('Edit Item as Admin').should('exist');
 
     // Scrapped is 'not allowed' by rules so admin user should be able to bypass this and override usasge status
     cy.findByRole('button', { name: 'navigate to systems home' }).click();
@@ -1947,10 +1947,10 @@ describe('Items', () => {
     cy.visit('/catalogue/4/items/1/items');
 
     cy.findAllByLabelText('Row Actions').first().click();
-    cy.findByText('Delete as admin').click();
+    cy.findByText('Delete as Admin').click();
 
     cy.findByText('Serial Number: 5YUQDDjKpz2z').should('exist');
-    cy.findByText('Delete Item as admin').should('exist');
+    cy.findByText('Delete Item as Admin').should('exist');
 
     cy.startSnoopingBrowserMockedRequest();
 

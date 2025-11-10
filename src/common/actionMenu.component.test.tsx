@@ -52,8 +52,8 @@ describe('ActionMenu Component', () => {
     // Check if the "Edit" option is visible
     expect(screen.getByText('Edit')).toBeVisible();
 
-    // Check if the "Edit as admin" option is visible
-    expect(screen.getByText('Edit as admin')).toBeVisible();
+    // Check if the "Edit as Admin" option is visible
+    expect(screen.getByText('Edit as Admin')).toBeVisible();
 
     // Check if the "Print" option is visible
     expect(screen.getByText('Print')).toBeVisible();
