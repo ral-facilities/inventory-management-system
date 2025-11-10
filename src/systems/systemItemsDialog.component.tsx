@@ -94,8 +94,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
 
   // This should be a list of 1 rule
   const { data: selectedRules } = useGetRules(srcSystemTypeId, dstSystemTypeId);
-  const [aggregatedCellUsageStatus, setAggregatedCellUsageStatus] =
-    React.useState<Omit<UsageStatusesType, 'item_id'>[]>([]);
+
   const [placeIntoSystemError, setPlaceIntoSystemError] = React.useState<
     string | undefined
   >(undefined);
@@ -106,7 +105,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
         (item) => ({
           item_id: item.id,
           catalogue_item_id: item.catalogue_item_id,
-          usage_status_id: item.usage_status_id,
+          usage_status_id: '',
         })
       );
 
@@ -170,24 +169,13 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
       usageStatuses.map((usage_status) => {
         return {
           ...usage_status,
-          usage_status_id:
-            usageStatusId ??
-            selectedItems.find((item) => item.id == usage_status.item_id)
-              ?.usage_status_id ??
-            '',
+          usage_status_id: usageStatusId ?? '',
         };
       })
     );
-  }, [
-    dstSystemTypeId,
-    selectedItems,
-    selectedRules,
-    srcSystemTypeId,
-    usageStatuses,
-  ]);
+  }, [dstSystemTypeId, selectedRules, srcSystemTypeId, usageStatuses]);
 
   const handleClose = React.useCallback(() => {
-    setAggregatedCellUsageStatus([]);
     setUsageStatuses([]);
     setItemUsageStatusesErrorState({});
     setPlaceIntoSystemError(undefined);
@@ -342,8 +330,6 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
             items={selectedItems}
             onChangeUsageStatuses={setUsageStatuses}
             usageStatuses={usageStatuses}
-            aggregatedCellUsageStatus={aggregatedCellUsageStatus}
-            onChangeAggregatedCellUsageStatus={setAggregatedCellUsageStatus}
             itemUsageStatusesErrorState={itemUsageStatusesErrorState}
             onChangeItemUsageStatusesErrorState={setItemUsageStatusesErrorState}
           />

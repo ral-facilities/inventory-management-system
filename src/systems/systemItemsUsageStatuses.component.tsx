@@ -51,10 +51,6 @@ export interface SystemItemsUsageStatusTableProps {
   items: Item[];
   usageStatuses?: UsageStatusesType[];
   onChangeUsageStatuses?: (usageStatuses: UsageStatusesType[]) => void;
-  aggregatedCellUsageStatus?: Omit<UsageStatusesType, 'item_id'>[];
-  onChangeAggregatedCellUsageStatus?: (
-    aggregatedCellUsageStatus: Omit<UsageStatusesType, 'item_id'>[]
-  ) => void;
   itemUsageStatusesErrorState?: ItemUsageStatusesErrorStateType;
   onChangeItemUsageStatusesErrorState?: (
     itemUsageStatusesErrorState: ItemUsageStatusesErrorStateType
@@ -68,8 +64,6 @@ export function SystemItemsUsageStatusTable(
     items,
     usageStatuses,
     onChangeUsageStatuses,
-    aggregatedCellUsageStatus,
-    onChangeAggregatedCellUsageStatus,
     itemUsageStatusesErrorState,
     onChangeItemUsageStatusesErrorState,
   } = props;
@@ -79,6 +73,8 @@ export function SystemItemsUsageStatusTable(
   const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
     {}
   );
+  const [aggregatedCellUsageStatus, setAggregatedCellUsageStatus] =
+    React.useState<Omit<UsageStatusesType, 'item_id'>[]>([]);
 
   const { data: usageStatusesData } = useGetUsageStatuses();
 
@@ -123,23 +119,19 @@ export function SystemItemsUsageStatusTable(
   }, [isLoading, items]);
 
   React.useEffect(() => {
-    if (
-      onChangeAggregatedCellUsageStatus &&
-      aggregatedCellUsageStatus &&
-      aggregatedCellUsageStatus.length === 0
-    ) {
+    if (aggregatedCellUsageStatus && aggregatedCellUsageStatus.length === 0) {
       const initialUsageStatuses: Omit<UsageStatusesType, 'item_id'>[] =
         Array.from(catalogueItemIdSet).map((catalogue_item_id) => ({
           catalogue_item_id: catalogue_item_id,
           usage_status_id: '',
         }));
 
-      onChangeAggregatedCellUsageStatus(initialUsageStatuses);
+      setAggregatedCellUsageStatus(initialUsageStatuses);
     }
   }, [
     aggregatedCellUsageStatus,
     catalogueItemIdSet,
-    onChangeAggregatedCellUsageStatus,
+    setAggregatedCellUsageStatus,
   ]);
 
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
@@ -246,24 +238,19 @@ export function SystemItemsUsageStatusTable(
               <Autocomplete
                 id={`usage-statuses-${row.original.catalogueItem?.name}`}
                 size="small"
-                value={
-                  usageStatusesData?.find(
-                    (usageStatus) =>
-                      usageStatus.id ==
-                      aggregatedCellUsageStatus?.find(
-                        (status) =>
-                          status.catalogue_item_id ===
-                          row.original.catalogueItem?.id
-                      )?.usage_status_id
-                  ) ?? null
-                }
+                value={usageStatusesData?.find(
+                  (usageStatus) =>
+                    usageStatus.id ==
+                    aggregatedCellUsageStatus?.find(
+                      (status) =>
+                        status.catalogue_item_id ===
+                        row.original.catalogueItem?.id
+                    )?.usage_status_id
+                )}
                 options={usageStatusesData ?? []}
                 getOptionLabel={(usageStatus) => usageStatus.value}
-                onChange={(_event, usageStatus: UsageStatus | null) => {
-                  if (
-                    onChangeAggregatedCellUsageStatus &&
-                    aggregatedCellUsageStatus
-                  ) {
+                onChange={(_event, usageStatus: UsageStatus) => {
+                  if (aggregatedCellUsageStatus) {
                     const itemIndex = aggregatedCellUsageStatus.findIndex(
                       (status: Omit<UsageStatusesType, 'item_id'>) =>
                         status.catalogue_item_id ===
@@ -277,7 +264,7 @@ export function SystemItemsUsageStatusTable(
                       itemIndex
                     ].usage_status_id = usageStatus?.id ?? '';
 
-                    onChangeAggregatedCellUsageStatus(
+                    setAggregatedCellUsageStatus(
                       updatedAggregatedCellUsageStatus
                     );
                   }
@@ -325,12 +312,9 @@ export function SystemItemsUsageStatusTable(
                 }}
                 sx={{ alignItems: 'center' }}
                 fullWidth
+                disableClearable
                 renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    required={true}
-                    label="Usage statuses"
-                  />
+                  <TextField {...params} label="Usage statuses" />
                 )}
               />
             </FormControl>
@@ -346,18 +330,16 @@ export function SystemItemsUsageStatusTable(
               <Autocomplete
                 id={`usage-statuses-${row.original.item?.serial_number ?? 'no-serial-number'}`}
                 size="small"
-                value={
-                  usageStatusesData?.find(
-                    (usageStatus) =>
-                      usageStatus.id ==
-                      usageStatuses?.find(
-                        (status) => status.item_id === row.original.item.id
-                      )?.usage_status_id
-                  ) ?? null
-                }
+                value={usageStatusesData?.find(
+                  (usageStatus) =>
+                    usageStatus.id ==
+                    usageStatuses?.find(
+                      (status) => status.item_id === row.original.item.id
+                    )?.usage_status_id
+                )}
                 options={usageStatusesData ?? []}
                 getOptionLabel={(usageStatus) => usageStatus.value}
-                onChange={(_event, usageStatus: UsageStatus | null) => {
+                onChange={(_event, usageStatus: UsageStatus) => {
                   if (onChangeUsageStatuses && usageStatuses) {
                     const itemIndex = usageStatuses.findIndex(
                       (status: UsageStatusesType) =>
@@ -386,10 +368,7 @@ export function SystemItemsUsageStatusTable(
                     );
                   }
 
-                  if (
-                    onChangeAggregatedCellUsageStatus &&
-                    aggregatedCellUsageStatus
-                  ) {
+                  if (aggregatedCellUsageStatus) {
                     const itemIndex = aggregatedCellUsageStatus.findIndex(
                       (status: Omit<UsageStatusesType, 'item_id'>) =>
                         status.catalogue_item_id ===
@@ -399,11 +378,12 @@ export function SystemItemsUsageStatusTable(
 
                     updatedUsageStatuses[itemIndex].usage_status_id = '';
 
-                    onChangeAggregatedCellUsageStatus(updatedUsageStatuses);
+                    setAggregatedCellUsageStatus(updatedUsageStatuses);
                   }
                 }}
                 sx={{ alignItems: 'center' }}
                 fullWidth
+                disableClearable
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -425,7 +405,7 @@ export function SystemItemsUsageStatusTable(
   }, [
     aggregatedCellUsageStatus,
     itemUsageStatusesErrorState,
-    onChangeAggregatedCellUsageStatus,
+    setAggregatedCellUsageStatus,
     onChangeItemUsageStatusesErrorState,
     onChangeUsageStatuses,
     usageStatuses,
