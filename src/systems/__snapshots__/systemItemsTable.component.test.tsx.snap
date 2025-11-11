@@ -252,7 +252,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
       </div>
     </div>
     <div
-      class="MuiTableContainer-root css-a2igxe-MuiTableContainer-root"
+      class="MuiTableContainer-root css-15d08kk-MuiTableContainer-root"
     >
       <table
         class="MuiTable-root MuiTable-stickyHeader css-1gcyac0-MuiTable-root"

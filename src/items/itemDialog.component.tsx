@@ -289,7 +289,6 @@ function ItemDialog(props: ItemDialogProps) {
 
   // Set usage status based on the selected Rule
   React.useEffect(() => {
-    console.log(selectedRules);
     if (selectedRules && selectedRules.length > 0) {
       const usageStatus = usageStatuses?.find(
         (status) => status.id === selectedRules[0].dst_usage_status?.id
