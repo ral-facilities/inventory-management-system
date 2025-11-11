@@ -50,6 +50,7 @@ import {
   useSparesFilterState,
 } from '../utils';
 import SystemItemsDialog from './systemItemsDialog.component';
+import { useAuthorisationState } from '../authProvider.component';
 
 const MoveItemsButton = (props: {
   selectedItems: Item[];
@@ -95,6 +96,8 @@ export interface SystemItemsTableProps {
 
 export function SystemItemsTable(props: SystemItemsTableProps) {
   const { system } = props;
+
+  const { isPrivilegedUser } = useAuthorisationState();
 
   // States
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);

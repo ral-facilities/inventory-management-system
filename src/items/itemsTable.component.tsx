@@ -55,6 +55,7 @@ import {
 import DeleteItemDialog from './deleteItemDialog.component';
 import ItemDialog from './itemDialog.component';
 import ItemsDetailsPanel from './itemsDetailsPanel.component';
+import { useAuthorisationState } from '../authProvider.component';
 
 export interface ItemTableProps {
   catalogueCategory: CatalogueCategory;
