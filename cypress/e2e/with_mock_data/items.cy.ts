@@ -1808,6 +1808,9 @@ describe('Items', () => {
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(100);
 
+    cy.findByLabelText('Usage status *').click();
+    cy.findByRole('option', { name: 'Used' }).click();
+
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Next' }).click();
@@ -1822,7 +1825,10 @@ describe('Items', () => {
     }).should(async (patchRequests) => {
       expect(patchRequests.length).eq(1);
       expect(JSON.stringify(await patchRequests[0].json())).equal(
-        JSON.stringify({ system_id: '657f8c3b2a1b4e5d8f9b3c4e8' })
+        JSON.stringify({
+          usage_status_id: '2',
+          system_id: '657f8c3b2a1b4e5d8f9b3c4e8',
+        })
       );
     });
   });
