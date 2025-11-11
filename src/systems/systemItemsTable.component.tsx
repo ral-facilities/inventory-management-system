@@ -501,7 +501,10 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         sx: {
           height: table.getState().isFullScreen
             ? '100%'
-            : getPageHeightCalc(`272px  ${showAlert ? '+ 72px' : ''}`),
+            : getPageHeightCalc(
+                isPrivilegedUser,
+                `272px  ${showAlert ? '+ 72px' : ''}`
+              ),
         },
       };
     },

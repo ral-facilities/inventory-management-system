@@ -1,17 +1,10 @@
-import {
-  IconButton,
-  Paper,
-  Tooltip,
-  Typography,
-  useTheme,
-} from '@mui/material';
+import { IconButton, Paper, Theme, Tooltip, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { getUserRole } from '../parseTokens';
 
 function AuthRoleStatus() {
   const role = getUserRole();
-  const theme = useTheme();
 
   return (
     role && (
@@ -19,7 +12,10 @@ function AuthRoleStatus() {
         square
         sx={{
           height: '100%',
-          backgroundColor: theme.palette?.warning.light,
+          backgroundColor: (theme: Theme) =>
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (theme as any).colours?.warning,
+
           display: 'flex',
           paddingRight: 5,
           justifyContent: 'center',
@@ -36,6 +32,7 @@ function AuthRoleStatus() {
         >
           <Grid>
             <Tooltip
+              sx={{ color: 'black' }}
               title={`The ${role} role enables extra functionality. You can create/delete units and usage statuses, and bypass rules when creating, deleting, editing, or moving items.`}
               disableHoverListener={false}
               aria-label={'auth-role-status-tooltip'}
@@ -47,7 +44,9 @@ function AuthRoleStatus() {
               >
                 <InfoOutlinedIcon
                   sx={{
-                    color: theme.palette?.info.dark,
+                    color: (theme: Theme) =>
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      (theme as any).colours?.information,
                   }}
                 />
               </IconButton>

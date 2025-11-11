@@ -70,6 +70,7 @@ interface TableRowData {
 
 export function ItemsTable(props: ItemTableProps) {
   const { catalogueCategory, catalogueItem, dense } = props;
+  const { isPrivilegedUser } = useAuthorisationState();
 
   const { isPrivilegedUser } = useAuthorisationState();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -149,7 +150,10 @@ export function ItemsTable(props: ItemTableProps) {
     React.useState<boolean>(false);
 
   // Breadcrumbs + Mui table V2 + extra
-  const tableHeight = getPageHeightCalc('50px + 110px + 48px');
+  const tableHeight = getPageHeightCalc(
+    isPrivilegedUser,
+    '50px + 110px + 48px'
+  );
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     const viewCatalogueItemProperties = catalogueCategory?.properties ?? [];
     const systemTypeValues = systemTypesData?.map((type) => type.value);
