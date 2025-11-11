@@ -52,7 +52,6 @@ import CatalogueCategoryDialog from './catalogueCategoryDialog.component';
 import ErrorPage from '../../common/errorPage.component';
 import CatalogueCategoryDirectoryDialog from './catalogueCategoryDirectoryDialog.component';
 import DeleteCatalogueCategoryDialog from './deleteCatalogueCategoryDialog.component';
-import { useAuthorisationState } from '../../authProvider.component';
 
 export interface AddCatalogueButtonProps {
   parentId: string | null;
@@ -152,8 +151,6 @@ const CopyCategoriesButton = (props: {
 };
 
 function CatalogueCardView() {
-  const { isPrivilegedUser } = useAuthorisationState();
-
   const { catalogue_category_id: catalogueCategoryId = null } = useParams();
   const {
     data: catalogueCategoryDetail,
@@ -503,7 +500,7 @@ function CatalogueCardView() {
 
   const isCollapsed = table.getState().showColumnFilters;
 
-  const cardViewHeight = getPageHeightCalc(isPrivilegedUser, '80px');
+  const cardViewHeight = getPageHeightCalc('80px');
   // Reset table sate when catalogueCategoryId changes
   // This ensures that the table is reset when navigating to a different category
   React.useEffect(() => {

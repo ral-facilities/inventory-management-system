@@ -95,19 +95,12 @@ export const getSciGatewayPageHeightCalc = (
 
 /* Returns a calc function giving the page height excluding the optional view tabs component
    that only appears in development */
-export const getPageHeightCalc = (
-  authBannerActive: boolean,
-  additionalSubtraction?: string
-): string => {
+export const getPageHeightCalc = (additionalSubtraction?: string): string => {
   // SciGateway heights - view tabs (if in development) - additional
   let newAdditional: string | undefined = undefined;
 
   if (isRunningInDevelopment()) newAdditional = '48px';
 
-  if (authBannerActive) {
-    if (newAdditional === undefined) newAdditional = '-20px';
-    else newAdditional += ' + ' + '-20px';
-  }
   if (additionalSubtraction !== undefined) {
     if (newAdditional === undefined) newAdditional = additionalSubtraction;
     else newAdditional += ' + ' + additionalSubtraction;
