@@ -32,7 +32,6 @@ function AuthRoleStatus() {
         >
           <Grid>
             <Tooltip
-              sx={{ color: 'black' }}
               title={`The ${role} role enables extra functionality. You can create/delete units and usage statuses, and bypass rules when creating, deleting, editing, or moving items.`}
               disableHoverListener={false}
               aria-label={'auth-role-status-tooltip'}
@@ -53,7 +52,7 @@ function AuthRoleStatus() {
             </Tooltip>
           </Grid>
           <Grid>
-            <Typography variant="h6" sx={{ fontSize: '16px' }}>
+            <Typography variant="h6" sx={{ fontSize: '16px', color: 'black' }}>
               {role.charAt(0).toUpperCase() + role.slice(1)}
             </Typography>
           </Grid>
