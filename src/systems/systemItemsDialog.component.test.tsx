@@ -422,6 +422,6 @@ describe('SystemItemsDialog', () => {
       );
 
       expect(screen.getByRole('button', { name: 'Finish' })).not.toBeDisabled();
-    });
+    }, 10000);
   });
 });

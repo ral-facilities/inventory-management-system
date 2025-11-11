@@ -1808,12 +1808,13 @@ describe('Items', () => {
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(100);
 
+    cy.findByRole('button', { name: 'Next' }).click();
+
     cy.findByLabelText('Usage status *').click();
     cy.findByRole('option', { name: 'Used' }).click();
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Next' }).click();
     cy.findByRole('button', { name: 'Next' }).click();
 
     cy.findByRole('button', { name: 'Finish' }).click();
