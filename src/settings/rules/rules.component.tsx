@@ -22,7 +22,6 @@ import {
   getPageHeightCalc,
   mrtTheme,
 } from '../../utils';
-import { useAuthorisationState } from '../../authProvider.component';
 
 function Rules() {
   const { data: rulesData, isLoading: isLoadingRules } = useGetRules();
@@ -32,16 +31,11 @@ function Rules() {
   const { data: usageStatusData, isLoading: isLoadingUsageStatus } =
     useGetUsageStatuses();
 
-  const { isPrivilegedUser } = useAuthorisationState();
-
   const isLoading =
     isLoadingRules || isLoadingSystemTypes || isLoadingUsageStatus;
 
   // Breadcrumbs + Mui table V2 + extra
-  const tableHeight = getPageHeightCalc(
-    isPrivilegedUser,
-    '50px + 110px + 48px'
-  );
+  const tableHeight = getPageHeightCalc('50px + 110px + 48px');
 
   const columns = React.useMemo<MRT_ColumnDef<Rule>[]>(() => {
     const systemTypeValues = systemTypesData?.map((type) => type.value);

@@ -26,7 +26,6 @@ import {
   getPageHeightCalc,
   mrtTheme,
 } from '../../utils';
-import { useAuthorisationState } from '../../authProvider.component';
 
 interface TableRowData extends SystemType {
   isSpare: boolean;
@@ -38,8 +37,6 @@ function SystemTypes() {
 
   const { data: sparesDefinition, isLoading: isLoadingSparesDefinition } =
     useGetSparesDefinition();
-
-  const { isPrivilegedUser } = useAuthorisationState();
 
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
 
@@ -59,10 +56,7 @@ function SystemTypes() {
   }, [systemTypesData, isLoading, sparesDefinition]);
 
   // Breadcrumbs + Mui table V2 + extra
-  const tableHeight = getPageHeightCalc(
-    isPrivilegedUser,
-    '50px + 110px + 48px'
-  );
+  const tableHeight = getPageHeightCalc('50px + 110px + 48px');
 
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     return [

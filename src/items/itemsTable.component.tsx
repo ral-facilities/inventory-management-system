@@ -54,7 +54,6 @@ import {
 import DeleteItemDialog from './deleteItemDialog.component';
 import ItemDialog from './itemDialog.component';
 import ItemsDetailsPanel from './itemsDetailsPanel.component';
-import { useAuthorisationState } from '../authProvider.component';
 
 export interface ItemTableProps {
   catalogueCategory: CatalogueCategory;
@@ -69,7 +68,6 @@ interface TableRowData {
 
 export function ItemsTable(props: ItemTableProps) {
   const { catalogueCategory, catalogueItem, dense } = props;
-  const { isPrivilegedUser } = useAuthorisationState();
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -145,10 +143,7 @@ export function ItemsTable(props: ItemTableProps) {
   >('create');
 
   // Breadcrumbs + Mui table V2 + extra
-  const tableHeight = getPageHeightCalc(
-    isPrivilegedUser,
-    '50px + 110px + 48px'
-  );
+  const tableHeight = getPageHeightCalc('50px + 110px + 48px');
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     const viewCatalogueItemProperties = catalogueCategory?.properties ?? [];
     const systemTypeValues = systemTypesData?.map((type) => type.value);

@@ -44,10 +44,7 @@ function Units() {
   const { isPrivilegedUser } = useAuthorisationState();
 
   // Breadcrumbs + Mui table V2 + extra
-  const tableHeight = getPageHeightCalc(
-    isPrivilegedUser,
-    '50px + 110px + 48px'
-  );
+  const tableHeight = getPageHeightCalc('50px + 110px + 48px');
 
   const [deleteUnitDialog, setDeleteUnitDialog] =
     React.useState<boolean>(false);
