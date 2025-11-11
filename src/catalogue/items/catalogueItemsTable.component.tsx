@@ -169,8 +169,6 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     isItemSelectable,
     requestOrigin,
   } = props;
-  // Breadcrumbs + Mui table V2 + extra
-  const tableHeight = getPageHeightCalc('50px + 110px + 48px');
   const contentHeight = getPageHeightCalc('80px');
 
   const { data: catalogueItemsData, isLoading: isLoadingCatalogueItems } =
@@ -819,10 +817,23 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             'aria-label': `${row.original.catalogueItem.name} row`,
           };
         },
-    muiTableContainerProps: {
-      sx: { height: dense ? '360.4px' : tableHeight, flexShrink: 1 },
-      // @ts-expect-error: MRT Table Container props does not have data-testid
-      'data-testid': 'catalogue-items-table-container',
+    muiTableContainerProps: ({ table }) => {
+      const showAlert =
+        table.getState().showAlertBanner ||
+        table.getFilteredSelectedRowModel().rows.length > 0 ||
+        table.getState().grouping.length > 0;
+      return {
+        // Breadcrumbs + Mui table V2 + extra
+        sx: {
+          height: dense
+            ? '360.4px'
+            : getPageHeightCalc(
+                `50px + 110px + 48px ${showAlert ? '+ 58.75px' : ''}`
+              ),
+          flexShrink: 1,
+        },
+        'data-testid': 'catalogue-items-table-container',
+      };
     },
     muiTableBodyCellProps: ({ column, row }) => {
       const disabledGroupedHeaderColumnIDs = [
