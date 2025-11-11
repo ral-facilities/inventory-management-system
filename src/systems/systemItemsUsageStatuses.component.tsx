@@ -437,6 +437,13 @@ export function SystemItemsUsageStatusTable(
     },
   });
 
+  const initialExpanded = Object.fromEntries(
+    Array.from(catalogueItemIdSet).map((id) => [
+      `catalogueItem.name:${id}`,
+      true,
+    ])
+  );
+
   const noResultsText = 'No items found';
   const table = useMaterialReactTable({
     // Data
@@ -479,6 +486,7 @@ export function SystemItemsUsageStatusTable(
     initialState: {
       showColumnFilters: true,
       showGlobalFilter: true,
+      expanded: initialExpanded,
     },
     state: {
       ...preservedState,

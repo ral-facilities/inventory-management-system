@@ -70,9 +70,9 @@ interface TableRowData {
 
 export function ItemsTable(props: ItemTableProps) {
   const { catalogueCategory, catalogueItem, dense } = props;
-  const { isPrivilegedUser } = useAuthorisationState();
 
   const { isPrivilegedUser } = useAuthorisationState();
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
