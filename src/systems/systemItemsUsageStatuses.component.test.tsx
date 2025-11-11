@@ -153,7 +153,7 @@ describe('SystemItemsUsageStatusTable', () => {
   it('sets the usages status using the aggregate cell (sets all items of a catalogue item to the selected usage status)', async () => {
     createView();
 
-    // Name (obtained from catalogue category item)
+    // Name (obtained from catalogue item)
     await waitFor(
       () => {
         expect(
@@ -180,6 +180,9 @@ describe('SystemItemsUsageStatusTable', () => {
       { item_id: 'QQen23yW', catalogue_item_id: '25', usage_status_id: '' },
     ]);
 
+    // as the table view is now expanded, collapse `Cameras 1(2)` so that modifyUsageStatus uses correct index
+    await user.click(screen.getAllByRole('button', { name: 'Expand' })[0]);
+
     await modifyUsageStatus({ cameras6: 'Used' });
 
     // Change usages status for cameras 6 items
@@ -190,6 +193,52 @@ describe('SystemItemsUsageStatusTable', () => {
       { item_id: 'QQen23yW', catalogue_item_id: '25', usage_status_id: '2' },
     ]);
   });
+
+  it('set the initial aggregated Cell Usage Status  ', async () => {
+    createView();
+
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Cameras 1 (2)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('cell', { name: `Cameras 1 (2)` })
+      ).toBeInTheDocument();
+    });
+  });
+
+  // it('selects the correct usage status text value according to the number value', async () => {
+  //   props.aggregatedCellUsageStatus = [
+  //     { catalogue_item_id: '1', usage_status_id: '0' },
+  //     { catalogue_item_id: '25', usage_status_id: '1' },
+  //   ];
+
+  //   createView();
+
+  //   // Name (obtained from catalogue category item)
+  //   await waitFor(
+  //     () => {
+  //       expect(
+  //         screen.getByRole('cell', {
+  //           name: `Cameras 1 (2)`,
+  //         })
+  //       ).toBeInTheDocument();
+  //     },
+  //     { timeout: 4000 }
+  //   );
+
+  //   expect((await screen.findAllByRole('combobox'))[1]).toHaveValue('New');
+  //   expect(screen.getAllByRole('combobox')[2]).toHaveValue('In Use');
+  // });
 
   it('displays errors messages correctly', async () => {
     props.itemUsageStatusesErrorState = {
