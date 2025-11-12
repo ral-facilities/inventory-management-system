@@ -1,5 +1,5 @@
 import ClearIcon from '@mui/icons-material/Clear';
-import ErrorIcon from '@mui/icons-material/Error';
+// import ErrorIcon from '@mui/icons-material/Error';
 import {
   Autocomplete,
   Box,
@@ -36,10 +36,7 @@ import {
   getInitialColumnFilterFnState,
   mrtTheme,
 } from '../utils';
-import {
-  ItemUsageStatusesErrorStateType,
-  UsageStatusesType,
-} from './systemItemsDialog.component';
+import { UsageStatusesType } from './systemItemsDialog.component';
 
 /* Each table row needs the item and catalogue item */
 interface TableRowData {
@@ -51,22 +48,12 @@ export interface SystemItemsUsageStatusTableProps {
   items: Item[];
   usageStatuses?: UsageStatusesType[];
   onChangeUsageStatuses?: (usageStatuses: UsageStatusesType[]) => void;
-  itemUsageStatusesErrorState?: ItemUsageStatusesErrorStateType;
-  onChangeItemUsageStatusesErrorState?: (
-    itemUsageStatusesErrorState: ItemUsageStatusesErrorStateType
-  ) => void;
 }
 
 export function SystemItemsUsageStatusTable(
   props: SystemItemsUsageStatusTableProps
 ) {
-  const {
-    items,
-    usageStatuses,
-    onChangeUsageStatuses,
-    itemUsageStatusesErrorState,
-    onChangeItemUsageStatusesErrorState,
-  } = props;
+  const { items, usageStatuses, onChangeUsageStatuses } = props;
 
   // States
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
@@ -161,26 +148,15 @@ export function SystemItemsUsageStatusTable(
         ],
         size: 350,
         GroupedCell: ({ row }) => {
-          const nameGroupedCellError = itemUsageStatusesErrorState
-            ? Object.values(itemUsageStatusesErrorState).filter(
-                (errorState) =>
-                  errorState.catalogue_item_id ===
-                  row.original.item.catalogue_item_id
-              ).length !== 0
-            : false;
-
           return (
             <Box
               sx={{
                 display: 'flex',
                 alignItems: 'center',
-                color: nameGroupedCellError ? 'error.main' : 'inherit',
+                color: 'inherit',
                 width: '100%',
               }}
             >
-              {nameGroupedCellError && (
-                <ErrorIcon sx={{ color: 'error.main' }} />
-              )}
               <OverflowTip
                 disableParagraph
                 sx={{
@@ -288,29 +264,6 @@ export function SystemItemsUsageStatusTable(
 
                     onChangeUsageStatuses(updatedUsageStatuses);
                   }
-
-                  if (
-                    itemUsageStatusesErrorState &&
-                    onChangeItemUsageStatusesErrorState
-                  ) {
-                    const updatedItemUsageStatusesErrorState = {
-                      ...itemUsageStatusesErrorState,
-                    };
-                    Object.entries(itemUsageStatusesErrorState).forEach(
-                      ([item_id, status]) => {
-                        if (
-                          status.catalogue_item_id ===
-                          row.original.item.catalogue_item_id
-                        ) {
-                          delete updatedItemUsageStatusesErrorState[item_id];
-                        }
-                      }
-                    );
-
-                    onChangeItemUsageStatusesErrorState(
-                      updatedItemUsageStatusesErrorState
-                    );
-                  }
                 }}
                 sx={{ alignItems: 'center' }}
                 fullWidth
@@ -327,10 +280,6 @@ export function SystemItemsUsageStatusTable(
           );
         },
         Cell: ({ row }) => {
-          const usageStatusCellError = !!(
-            itemUsageStatusesErrorState &&
-            itemUsageStatusesErrorState[row.original.item.id]
-          );
           return (
             <FormControl size="small" fullWidth>
               <Autocomplete
@@ -361,21 +310,6 @@ export function SystemItemsUsageStatusTable(
                     onChangeUsageStatuses(updatedUsageStatuses);
                   }
 
-                  if (
-                    itemUsageStatusesErrorState &&
-                    onChangeItemUsageStatusesErrorState
-                  ) {
-                    const updatedItemUsageStatusesErrorState = {
-                      ...itemUsageStatusesErrorState,
-                    };
-                    delete updatedItemUsageStatusesErrorState[
-                      row.original.item.id
-                    ];
-                    onChangeItemUsageStatusesErrorState(
-                      updatedItemUsageStatusesErrorState
-                    );
-                  }
-
                   if (aggregatedCellUsageStatus) {
                     const itemIndex = aggregatedCellUsageStatus.findIndex(
                       (status: Omit<UsageStatusesType, 'item_id'>) =>
@@ -401,11 +335,11 @@ export function SystemItemsUsageStatusTable(
                     {...params}
                     required={true}
                     label="Usage statuses"
-                    error={usageStatusCellError}
-                    helperText={
-                      usageStatusCellError &&
-                      itemUsageStatusesErrorState[row.original.item.id].message
-                    }
+                    // error={usageStatusCellError}
+                    // helperText={
+                    //   usageStatusCellError &&
+                    //   itemUsageStatusesErrorState[row.original.item.id].message
+                    // }
                   />
                 )}
               />
@@ -416,9 +350,9 @@ export function SystemItemsUsageStatusTable(
     ];
   }, [
     aggregatedCellUsageStatus,
-    itemUsageStatusesErrorState,
+    // itemUsageStatusesErrorState,
     setAggregatedCellUsageStatus,
-    onChangeItemUsageStatusesErrorState,
+    // onChangeItemUsageStatusesErrorState,
     onChangeUsageStatuses,
     usageStatuses,
     usageStatusesData,

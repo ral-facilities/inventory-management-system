@@ -105,7 +105,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
         (item) => ({
           item_id: item.id,
           catalogue_item_id: item.catalogue_item_id,
-          usage_status_id: '',
+          usage_status_id: item.usage_status_id,
         })
       );
 
@@ -136,30 +136,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   const { mutateAsync: moveItemsToSystem, isPending: isMovePending } =
     useMoveItemsToSystem();
 
-  const [itemUsageStatusesErrorState, setItemUsageStatusesErrorState] =
-    React.useState<ItemUsageStatusesErrorStateType>({});
-
-  const validateUsageStatus = React.useCallback(() => {
-    let hasUsageStatusErrors: boolean = false;
-    usageStatuses.forEach((status) => {
-      if (status.usage_status_id === '') {
-        setItemUsageStatusesErrorState((prev) => ({
-          ...prev,
-          [status.item_id]: {
-            message: 'Please select a usage status',
-            catalogue_item_id: status.catalogue_item_id,
-          },
-        }));
-
-        hasUsageStatusErrors = true;
-      }
-    });
-    return hasUsageStatusErrors;
-  }, [usageStatuses]);
-
   const populateUsageStatuses = React.useCallback(() => {
-    setItemUsageStatusesErrorState({});
-
     const usageStatusId =
       srcSystemTypeId === dstSystemTypeId || selectedRules?.length === 0
         ? undefined
@@ -169,15 +146,24 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
       usageStatuses.map((usage_status) => {
         return {
           ...usage_status,
-          usage_status_id: usageStatusId ?? '',
+          usage_status_id:
+            usageStatusId ??
+            selectedItems.find((item) => item.id == usage_status.item_id)
+              ?.usage_status_id ??
+            '',
         };
       })
     );
-  }, [dstSystemTypeId, selectedRules, srcSystemTypeId, usageStatuses]);
+  }, [
+    dstSystemTypeId,
+    selectedItems,
+    selectedRules,
+    srcSystemTypeId,
+    usageStatuses,
+  ]);
 
   const handleClose = React.useCallback(() => {
     setUsageStatuses([]);
-    setItemUsageStatusesErrorState({});
     setPlaceIntoSystemError(undefined);
     setActiveStep(0);
     setParentSystemId(props.parentSystemId);
@@ -190,18 +176,13 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     props.parentSystemId === parentSystemId || parentSystemId === null;
 
   const handleMoveTo = React.useCallback(() => {
-    const hasUsageStatusErrors = isPrivilegedUser
-      ? validateUsageStatus()
-      : false;
-
-    if (hasSystemErrors || hasUsageStatusErrors) {
-      if (hasSystemErrors) {
-        setPlaceIntoSystemError(
-          'Please move items from current location or root to another system.'
-        );
-      }
+    if (hasSystemErrors) {
+      setPlaceIntoSystemError(
+        'Please move items from current location or root to another system.'
+      );
       return;
     }
+
     // The configuration of usage statuses depends on if the user is privileged
     // If they are, then it should be a list, as the usage statuses may not have been prepopulated.
     // This assumption is made as one would think a user would 'move as Admin' to bypass a rule, which means that there is no dst_usage_status specified for the move.
@@ -229,7 +210,6 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     }
   }, [
     isPrivilegedUser,
-    validateUsageStatus,
     hasSystemErrors,
     usageStatuses,
     srcSystemTypeId,
@@ -271,19 +251,6 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
-
-  const isStepFailed = React.useCallback(
-    (step: number) => {
-      switch (step) {
-        case 0: {
-          return placeIntoSystemError !== undefined;
-        }
-        case 1:
-          return Object.keys(itemUsageStatusesErrorState).length !== 0;
-      }
-    },
-    [itemUsageStatusesErrorState, placeIntoSystemError]
-  );
 
   const renderStepContent = (step: number) => {
     switch (step) {
@@ -330,8 +297,6 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
             items={selectedItems}
             onChangeUsageStatuses={setUsageStatuses}
             usageStatuses={usageStatuses}
-            itemUsageStatusesErrorState={itemUsageStatusesErrorState}
-            onChangeItemUsageStatusesErrorState={setItemUsageStatusesErrorState}
           />
         );
     }
@@ -375,13 +340,12 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
                 error?: boolean;
               } = {};
 
-              if (isStepFailed(index)) {
+              if (placeIntoSystemError !== undefined && index == 0) {
                 labelProps.optional = (
                   <Typography variant="caption" color="error">
-                    {index === 1 &&
-                      'Please select a usage status for all items'}
-                    {index === 0 &&
-                      'Move items from current location or root to another system'}
+                    {
+                      'Move items from current location or root to another system'
+                    }
                   </Typography>
                 );
                 labelProps.error = true;
@@ -423,7 +387,6 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
                 // Disable when not moving anywhere different
                 // or when attempting to move to root i.e. no system
                 placeIntoSystemError !== undefined ||
-                Object.keys(itemUsageStatusesErrorState).length !== 0 ||
                 !(parentSystemId === null
                   ? true
                   : !targetSystemLoading && targetSystem !== undefined)
@@ -434,11 +397,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
               Finish
             </Button>
           ) : (
-            <Button
-              disabled={isStepFailed(activeStep)}
-              onClick={() => handleNext(activeStep)}
-              sx={{ mr: 3 }}
-            >
+            <Button onClick={() => handleNext(activeStep)} sx={{ mr: 3 }}>
               Next
             </Button>
           )

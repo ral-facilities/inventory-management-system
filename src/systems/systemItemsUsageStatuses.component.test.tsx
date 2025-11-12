@@ -23,7 +23,6 @@ describe('SystemItemsUsageStatusTable', () => {
   };
 
   const onChangeUsageStatuses = vi.fn();
-  const onChangeItemUsageStatusesErrorState = vi.fn();
   const moveToSelectedItems: Item[] = [
     ItemJSON[0],
     ItemJSON[1],
@@ -34,14 +33,12 @@ describe('SystemItemsUsageStatusTable', () => {
   beforeEach(() => {
     props = {
       onChangeUsageStatuses,
-      onChangeItemUsageStatusesErrorState,
       usageStatuses: [
         { item_id: 'KvT2Ox7n', catalogue_item_id: '1', usage_status_id: '' },
         { item_id: 'G463gOIA', catalogue_item_id: '1', usage_status_id: '' },
         { item_id: '7Lrj9KVu', catalogue_item_id: '25', usage_status_id: '' },
         { item_id: 'QQen23yW', catalogue_item_id: '25', usage_status_id: '' },
       ],
-      itemUsageStatusesErrorState: {},
       items: moveToSelectedItems,
     };
 
@@ -216,49 +213,11 @@ describe('SystemItemsUsageStatusTable', () => {
     });
   });
 
-  // it('selects the correct usage status text value according to the number value', async () => {
-  //   props.aggregatedCellUsageStatus = [
-  //     { catalogue_item_id: '1', usage_status_id: '0' },
-  //     { catalogue_item_id: '25', usage_status_id: '1' },
-  //   ];
-
-  //   createView();
-
-  //   // Name (obtained from catalogue category item)
-  //   await waitFor(
-  //     () => {
-  //       expect(
-  //         screen.getByRole('cell', {
-  //           name: `Cameras 1 (2)`,
-  //         })
-  //       ).toBeInTheDocument();
-  //     },
-  //     { timeout: 4000 }
-  //   );
-
-  //   expect((await screen.findAllByRole('combobox'))[1]).toHaveValue('New');
-  //   expect(screen.getAllByRole('combobox')[2]).toHaveValue('In Use');
-  // });
-
-  it('displays errors messages correctly', async () => {
-    props.itemUsageStatusesErrorState = {
-      ['KvT2Ox7n']: {
-        catalogue_item_id: '1',
-        message: 'Please select a usage status',
-      },
-      ['G463gOIA']: {
-        catalogue_item_id: '1',
-        message: 'Please select a usage status',
-      },
-      ['7Lrj9KVu']: {
-        catalogue_item_id: '25',
-        message: 'Please select a usage status',
-      },
-      ['QQen23yW']: {
-        catalogue_item_id: '25',
-        message: 'Please select a usage status',
-      },
-    };
+  it('selects the correct usage status text value according to the number value', async () => {
+    props.usageStatuses = [
+      { item_id: 'KvT2Ox7n', catalogue_item_id: '1', usage_status_id: '0' },
+      { item_id: 'G463gOIA', catalogue_item_id: '1', usage_status_id: '1' },
+    ];
 
     createView();
 
@@ -274,31 +233,8 @@ describe('SystemItemsUsageStatusTable', () => {
       { timeout: 4000 }
     );
 
-    // Ensure no loading bars visible
-    await waitFor(() =>
-      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
-    );
-
-    const errorIcon = screen.getAllByTestId('ErrorIcon');
-
-    expect(errorIcon.length).toEqual(2);
-
-    await user.click(screen.getAllByRole('button', { name: 'Expand' })[0]);
-    const helperTexts = screen.getAllByText('Please select a usage status');
-    expect(helperTexts.length).toEqual(2);
-
-    await modifyUsageStatus({ cameras1: 'Used' });
-
-    expect(onChangeItemUsageStatusesErrorState).toHaveBeenCalledWith({
-      ['7Lrj9KVu']: {
-        catalogue_item_id: '25',
-        message: 'Please select a usage status',
-      },
-      ['QQen23yW']: {
-        catalogue_item_id: '25',
-        message: 'Please select a usage status',
-      },
-    });
+    expect((await screen.findAllByRole('combobox'))[2]).toHaveValue('New');
+    expect(screen.getAllByRole('combobox')[3]).toHaveValue('In Use');
   });
 
   it('sets the usages status one by one', async () => {
