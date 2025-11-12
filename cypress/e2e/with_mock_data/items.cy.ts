@@ -505,6 +505,12 @@ describe('Items', () => {
     cy.findByText('eUc80U7FqJum').should('not.exist');
     cy.findByText('WrgqAVk3qUQK').should('not.exist');
     cy.findByRole('button', { name: 'Show Spare Items' }).should('be.disabled');
+
+    cy.findByText('Spares Definition Filter Applied').should('exist');
+    cy.findByLabelText(
+      'Items that are contained within the system type Storage are classified as spares'
+    ).should('exist');
+
     cy.findByRole('button', { name: 'Clear Filters' }).click();
     cy.findByText('dfzqkOJbqifO').should('exist');
     cy.findByText('tenrMn1KOmIg').should('exist');

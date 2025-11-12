@@ -1,3 +1,4 @@
+import { InfoOutlined } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -6,12 +7,16 @@ import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   Box,
   Button,
+  IconButton,
   ListItemIcon,
   ListItemText,
   MenuItem,
   Link as MuiLink,
   TableCellBaseProps,
+  Tooltip,
+  Typography,
 } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import {
   MaterialReactTable,
   useMaterialReactTable,
@@ -93,8 +98,14 @@ export function ItemsTable(props: ItemTableProps) {
   const { data: usageStatusData, isLoading: isLoadingUsageStatus } =
     useGetUsageStatuses();
 
-  const { encodedSparesFilter, isLoading: isLoadingSparesDefinition } =
-    useSparesFilterState();
+  const {
+    encodedSparesFilter,
+    isLoading: isLoadingSparesDefinition,
+    sparesDefinition,
+  } = useSparesFilterState();
+
+  const isSparesDefinitionDefined =
+    sparesDefinition !== '' && sparesDefinition.system_types.length !== 0;
 
   const systemIdSet = new Set<string>(
     itemsData?.map((item) => item.system_id) ?? []
@@ -142,8 +153,6 @@ export function ItemsTable(props: ItemTableProps) {
     'create' | 'duplicate' | 'edit'
   >('create');
 
-  // Breadcrumbs + Mui table V2 + extra
-  const tableHeight = getPageHeightCalc('50px + 110px + 48px');
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     const viewCatalogueItemProperties = catalogueCategory?.properties ?? [];
     const systemTypeValues = systemTypesData?.map((type) => type.value);
@@ -479,7 +488,7 @@ export function ItemsTable(props: ItemTableProps) {
         },
     manualFiltering: false,
     paginationDisplayMode: 'pages',
-    positionToolbarAlertBanner: 'bottom',
+    positionToolbarAlertBanner: 'top',
     autoResetPageIndex: false,
     displayColumnDefOptions: dense
       ? undefined
@@ -507,10 +516,31 @@ export function ItemsTable(props: ItemTableProps) {
     //MRT
     mrtTheme,
     //MUI
-    muiTableContainerProps: {
-      sx: { height: dense ? '360.4px' : tableHeight },
-      // @ts-expect-error: MRT Table Container props does not have data-testid
-      'data-testid': 'items-table-container',
+    muiToolbarAlertBannerProps: {
+      sx: {
+        '& .MuiAlert-message': {
+          maxWidth: undefined,
+          width: '100%',
+        },
+      },
+    },
+    muiTableContainerProps: ({ table }) => {
+      const showAlert =
+        table.getState().showAlertBanner ||
+        table.getFilteredSelectedRowModel().rows.length > 0 ||
+        table.getState().grouping.length > 0;
+      return {
+        sx: {
+          height: dense
+            ? '360.4px'
+            : getPageHeightCalc(
+                // Breadcrumbs + Mui table V2 + extra
+                `50px + 110px + 48px ${showAlert ? '+ 54px' : ''}`
+              ),
+          flexShrink: 1,
+        },
+        'data-testid': 'items-table-container',
+      };
     },
     muiTableBodyCellProps: ({ column }) => {
       const disabledGroupedHeaderColumnIDs = [
@@ -606,18 +636,20 @@ export function ItemsTable(props: ItemTableProps) {
         >
           Clear Filters
         </Button>
-        <Button
-          sx={{ mx: 0.5 }}
-          variant="outlined"
-          disabled={searchParams.get('state') === encodedSparesFilter}
-          onClick={() => {
-            const newParams = new URLSearchParams(searchParams);
-            newParams.set('state', encodedSparesFilter);
-            setSearchParams(newParams, { replace: false });
-          }}
-        >
-          Show Spare Items
-        </Button>
+        {isSparesDefinitionDefined && (
+          <Button
+            sx={{ mx: 0.5 }}
+            variant="outlined"
+            disabled={searchParams.get('state') === encodedSparesFilter}
+            onClick={() => {
+              const newParams = new URLSearchParams(searchParams);
+              newParams.set('state', encodedSparesFilter);
+              setSearchParams(newParams, { replace: false });
+            }}
+          >
+            Show Spare Items
+          </Button>
+        )}
       </Box>
     ),
     renderRowActionMenuItems: ({ closeMenu, row, table }) => {
@@ -669,6 +701,51 @@ export function ItemsTable(props: ItemTableProps) {
         </MenuItem>,
       ];
     },
+    renderToolbarAlertBannerContent:
+      isSparesDefinitionDefined &&
+      searchParams.get('state') === encodedSparesFilter
+        ? ({ table }) => (
+            <Grid container alignItems="center" sx={{ px: 1, py: 0.5 }}>
+              <Grid size={2} />
+              <Grid size={8}>
+                <Box display="flex" alignItems="center" justifyContent="center">
+                  <Typography variant="inherit" sx={{ pr: 1 }}>
+                    Spares Definition Filter Applied
+                  </Typography>
+                  <Tooltip
+                    title={
+                      sparesDefinition.system_types.length === 1
+                        ? `Items that are contained within the system type ${sparesDefinition.system_types[0].value} are classified as spares`
+                        : `Items that are contained within a system type of one of ${sparesDefinition.system_types
+                            .map((sys) => sys.value)
+                            .join(', ')
+                            .replace(
+                              /, ([^,]*)$/,
+                              ' or $1'
+                            )} are classified as spares`
+                    }
+                  >
+                    <InfoOutlined fontSize="small" />
+                  </Tooltip>
+                </Box>
+              </Grid>
+              <Grid size={2} display="flex" justifyContent="flex-end">
+                <Tooltip title="Clear Spares Definition Filter">
+                  <span>
+                    <IconButton
+                      size="small"
+                      aria-label="Clear Spares Definition Filter"
+                      onClick={() => table.resetColumnFilters()}
+                      sx={{ color: 'inherit' }}
+                    >
+                      <ClearIcon fontSize="small" />
+                    </IconButton>
+                  </span>
+                </Tooltip>
+              </Grid>
+            </Grid>
+          )
+        : undefined,
     renderBottomToolbarCustomActions: ({ table }) =>
       displayTableRowCountText(table, itemsData, 'Items', {
         paddingLeft: '8px',
@@ -682,6 +759,13 @@ export function ItemsTable(props: ItemTableProps) {
         )
       : undefined,
   });
+
+  React.useEffect(() => {
+    if (isSparesDefinitionDefined)
+      table.setShowAlertBanner(
+        searchParams.get('state') === encodedSparesFilter
+      );
+  }, [encodedSparesFilter, isSparesDefinitionDefined, searchParams, table]);
 
   return (
     <div style={{ width: '100%' }}>

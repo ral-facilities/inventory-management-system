@@ -26,6 +26,7 @@ import {
 } from 'material-react-table';
 import React from 'react';
 import { useGetSparesDefinition } from './api/settings';
+import { SparesDefinition } from './api/api.types';
 
 /* Returns a name avoiding duplicates by appending _copy_n for nth copy */
 export const generateUniqueName = (
@@ -597,6 +598,7 @@ export const COLUMN_FILTER_BOOLEAN_OPTIONS = ['Yes', 'No'];
 export const useSparesFilterState = (
   urlParamName?: string
 ): {
+  sparesDefinition: '' | SparesDefinition;
   sparesFilterState: string;
   encodedSparesFilter: string;
   isLoading: boolean;
@@ -629,5 +631,6 @@ export const useSparesFilterState = (
     sparesFilterState,
     encodedSparesFilter,
     isLoading: isLoadingSparesDefinition,
+    sparesDefinition,
   };
 };
