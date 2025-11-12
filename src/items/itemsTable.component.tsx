@@ -1,3 +1,4 @@
+import { InfoOutlined } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -60,7 +61,6 @@ import {
 import DeleteItemDialog from './deleteItemDialog.component';
 import ItemDialog from './itemDialog.component';
 import ItemsDetailsPanel from './itemsDetailsPanel.component';
-import { InfoOutlined } from '@mui/icons-material';
 
 export interface ItemTableProps {
   catalogueCategory: CatalogueCategory;
@@ -536,25 +536,17 @@ export function ItemsTable(props: ItemTableProps) {
     //MRT
     mrtTheme,
     //MUI
-    muiToolbarAlertBannerProps: {
-      sx: {
-        '& .MuiAlert-message': {
-          maxWidth: undefined,
-          width: '100%',
-        },
-      },
-    },
     muiTableContainerProps: ({ table }) => {
       const showAlert =
         table.getState().showAlertBanner ||
         table.getFilteredSelectedRowModel().rows.length > 0 ||
         table.getState().grouping.length > 0;
       return {
-        // Breadcrumbs + Mui table V2 + extra
         sx: {
           height: dense
             ? '360.4px'
             : getPageHeightCalc(
+                // Breadcrumbs + Mui table V2 + extra
                 `50px + 110px + 48px ${showAlert ? '+ 64px' : ''} ${isSparesFilterApplied ? ' + 54px' : ''}`
               ),
           flexShrink: 1,
@@ -761,20 +753,24 @@ export function ItemsTable(props: ItemTableProps) {
           })}
         >
           <Grid container alignItems="center" sx={{ px: 1, py: 0.5 }}>
-            <Grid size={2}> </Grid>
+            <Grid size={2} />
             <Grid size={8}>
               <Box display="flex" alignItems="center" justifyContent="center">
                 <Typography variant="inherit" sx={{ pr: 1 }}>
                   Spares Definition Filter Applied
                 </Typography>
                 <Tooltip
-                  title={`Items that are contained within ${
+                  title={
                     sparesDefinition.system_types.length === 1
-                      ? 'this system type'
-                      : 'these system types'
-                  } ${sparesDefinition.system_types
-                    .map((sys) => sys.value)
-                    .join(', ')} are classified as spares`}
+                      ? `Items that are contained within the system type ${sparesDefinition.system_types[0].value} are classified as spares`
+                      : `Items that are contained within a system type of one of ${sparesDefinition.system_types
+                          .map((sys) => sys.value)
+                          .join(', ')
+                          .replace(
+                            /, ([^,]*)$/,
+                            ' or $1'
+                          )} are classified as spares`
+                  }
                 >
                   <InfoOutlined fontSize="small" />
                 </Tooltip>
