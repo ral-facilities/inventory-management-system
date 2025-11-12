@@ -35,6 +35,7 @@ import {
 import { useGetItems } from '../api/items';
 import { useGetSystemIds, useGetSystemTypes } from '../api/systems';
 import { useGetUsageStatuses } from '../api/usageStatuses';
+import { APISettingsContext } from '../apiConfigProvider.component';
 import type { SystemTableType } from '../app.types';
 import { findPropertyValue } from '../catalogue/items/catalogueItemsTable.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
@@ -56,7 +57,6 @@ import {
   TableCellOverFlowTipProps,
   TableGroupedCell,
   TableHeaderOverflowTip,
-  useSparesFilterState,
 } from '../utils';
 import DeleteItemDialog from './deleteItemDialog.component';
 import ItemDialog from './itemDialog.component';
@@ -98,24 +98,18 @@ export function ItemsTable(props: ItemTableProps) {
   const { data: usageStatusData, isLoading: isLoadingUsageStatus } =
     useGetUsageStatuses();
 
-  const {
-    isLoading: isLoadingSparesDefinition,
-    sparesDefinition,
-    sparesColumnsFilters,
-  } = useSparesFilterState();
+  const apiSettings = React.useContext(APISettingsContext);
+  const sparesDefinition = apiSettings?.spares?.sparesDefinition;
+  const sparesColumnsFilters = apiSettings?.spares?.sparesColumnsFilters;
 
-  const isSparesDefinitionDefined =
-    sparesDefinition !== '' && sparesDefinition.system_types.length !== 0;
+  const isSparesDefinitionDefined = !!apiSettings?.spares;
 
   const systemIdSet = new Set<string>(
     itemsData?.map((item) => item.system_id) ?? []
   );
 
   let isLoading =
-    isLoadingItems ||
-    isLoadingSystemTypes ||
-    isLoadingUsageStatus ||
-    isLoadingSparesDefinition;
+    isLoadingItems || isLoadingSystemTypes || isLoadingUsageStatus;
   const systemList: (System | undefined)[] = useGetSystemIds(
     Array.from(systemIdSet.values())
   ).map((query) => {
@@ -452,6 +446,7 @@ export function ItemsTable(props: ItemTableProps) {
 
   const isSparesFilterApplied = React.useMemo(() => {
     if (sparesDefinition === '') return false;
+    if (sparesDefinition === undefined) return false;
     if (preservedState.columnFilters.length !== 1) return false;
     if (preservedState.columnFilters[0].id !== 'system.type.value')
       return false;
@@ -459,9 +454,9 @@ export function ItemsTable(props: ItemTableProps) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       preservedState.columnFilters[0].value as any[]
     );
-    const sparesSystemTypeValues = sparesDefinition.system_types.map(
-      (type) => type.value
-    );
+    const sparesSystemTypeValues = sparesDefinition
+      ? sparesDefinition.system_types.map((type) => type.value)
+      : [];
     const orderedSparesDefinitionValues = sortDataList(sparesSystemTypeValues);
 
     return (
@@ -655,11 +650,13 @@ export function ItemsTable(props: ItemTableProps) {
             disabled={isSparesFilterApplied}
             onClick={() => {
               onPreservedStatesChange.onColumnFiltersChange(
-                sparesColumnsFilters.cF.map((filter) => ({
-                  id: filter.id,
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  value: (filter.value as any[]).map((val) => val.value),
-                }))
+                sparesColumnsFilters
+                  ? sparesColumnsFilters.cF.map((filter) => ({
+                      id: filter.id,
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      value: (filter.value as any[]).map((val) => val.value),
+                    }))
+                  : []
               );
             }}
           >

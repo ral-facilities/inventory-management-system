@@ -21,12 +21,11 @@ import {
   MRT_Row,
   MRT_RowData,
   MRT_TableInstance,
-  type MRT_ColumnFiltersState,
   type MRT_Theme,
 } from 'material-react-table';
 import React from 'react';
 import { useGetSparesDefinition } from './api/settings';
-import { SparesDefinition } from './api/api.types';
+import { SparesFilterStateType } from './app.types';
 
 /* Returns a name avoiding duplicates by appending _copy_n for nth copy */
 export const generateUniqueName = (
@@ -601,40 +600,49 @@ export const COLUMN_FILTER_BOOLEAN_OPTIONS = ['Yes', 'No'];
 
 export const useSparesFilterState = (
   urlParamName?: string
-): {
-  sparesDefinition: '' | SparesDefinition;
-  sparesFilterState: string;
-  sparesColumnsFilters: { cF: MRT_ColumnFiltersState };
-  isLoading: boolean;
-} => {
+): SparesFilterStateType => {
   const {
     data: sparesDefinition = { system_types: [] },
     isLoading: isLoadingSparesDefinition,
   } = useGetSparesDefinition();
 
   const urlParam = urlParamName || 'state';
-  const sparesFilter = sparesDefinition
-    ? sparesDefinition.system_types.map((type) => ({
-        type: 'string',
-        value: type.value,
-      }))
-    : false;
 
-  const sparesColumnsFilters: { cF: MRT_ColumnFiltersState } = React.useMemo(
+  const sparesFilter = React.useMemo(() => {
+    return sparesDefinition
+      ? sparesDefinition.system_types.map((type) => ({
+          type: 'string',
+          value: type.value,
+        }))
+      : [];
+  }, [sparesDefinition]);
+
+  const sparesColumnsFilters = React.useMemo(
     () => ({
-      cF: [{ id: 'system.type.value', value: sparesFilter ?? [] }],
+      cF: [{ id: 'system.type.value', value: sparesFilter }],
     }),
     [sparesFilter]
   );
-  const encodedSparesFilter = LZString.compressToEncodedURIComponent(
-    JSON.stringify(sparesColumnsFilters)
-  );
-  const sparesFilterState = `?${urlParam}=${encodedSparesFilter}`;
 
-  return {
-    sparesFilterState,
-    sparesColumnsFilters,
-    isLoading: isLoadingSparesDefinition,
-    sparesDefinition,
-  };
+  const sparesFilterState = React.useMemo(() => {
+    const encoded = LZString.compressToEncodedURIComponent(
+      JSON.stringify(sparesColumnsFilters)
+    );
+    return `?${urlParam}=${encoded}`;
+  }, [urlParam, sparesColumnsFilters]);
+
+  return React.useMemo(
+    () => ({
+      sparesFilterState,
+      sparesColumnsFilters,
+      isLoading: isLoadingSparesDefinition,
+      sparesDefinition,
+    }),
+    [
+      sparesFilterState,
+      sparesColumnsFilters,
+      isLoadingSparesDefinition,
+      sparesDefinition,
+    ]
+  );
 };

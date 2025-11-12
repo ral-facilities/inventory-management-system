@@ -1,6 +1,7 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { System } from '../api/api.types';
+import APIConfigProvider from '../apiConfigProvider.component';
 import SystemsJSON from '../mocks/Systems.json';
 import { getSystemById, renderComponentWithRouterProvider } from '../testUtils';
 import {
@@ -18,7 +19,9 @@ describe('SystemItemsTable', () => {
 
   const createView = () => {
     return renderComponentWithRouterProvider(
-      <SystemItemsTable {...props} />,
+      <APIConfigProvider>
+        <SystemItemsTable {...props} />
+      </APIConfigProvider>,
       'any',
       '/'
     );
@@ -76,7 +79,7 @@ describe('SystemItemsTable', () => {
 
     createView();
 
-    expect(screen.getByText('No items found')).toBeInTheDocument();
+    expect(await screen.findByText('No items found')).toBeInTheDocument();
   });
 
   it('links to catalogue item landing page', async () => {
