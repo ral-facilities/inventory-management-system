@@ -212,7 +212,7 @@ exports[`delete item dialog > renders correctly when items has no serial number 
       tabindex="-1"
     >
       <div
-        aria-labelledby=":r15:"
+        aria-labelledby=":r13:"
         aria-modal="true"
         class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthLg css-1kxic87-MuiPaper-root-MuiDialog-paper"
         role="dialog"
@@ -220,7 +220,7 @@ exports[`delete item dialog > renders correctly when items has no serial number 
       >
         <h2
           class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-19csis5-MuiTypography-root-MuiDialogTitle-root"
-          id=":r15:"
+          id=":r13:"
         >
           <svg
             aria-hidden="true"
@@ -314,7 +314,7 @@ exports[`delete item dialog > renders correctly when items has no serial number 
       tabindex="-1"
     >
       <div
-        aria-labelledby=":r18:"
+        aria-labelledby=":r16:"
         aria-modal="true"
         class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthLg css-1kxic87-MuiPaper-root-MuiDialog-paper"
         role="dialog"
@@ -322,7 +322,7 @@ exports[`delete item dialog > renders correctly when items has no serial number 
       >
         <h2
           class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-19csis5-MuiTypography-root-MuiDialogTitle-root"
-          id=":r18:"
+          id=":r16:"
         >
           <svg
             aria-hidden="true"
@@ -423,7 +423,7 @@ exports[`delete item dialog > renders correctly when the item has an system id 1
       tabindex="-1"
     >
       <div
-        aria-labelledby=":rb:"
+        aria-labelledby=":ra:"
         aria-modal="true"
         class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthLg css-1kxic87-MuiPaper-root-MuiDialog-paper"
         role="dialog"
@@ -431,7 +431,7 @@ exports[`delete item dialog > renders correctly when the item has an system id 1
       >
         <h2
           class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-19csis5-MuiTypography-root-MuiDialogTitle-root"
-          id=":rb:"
+          id=":ra:"
         >
           <svg
             aria-hidden="true"

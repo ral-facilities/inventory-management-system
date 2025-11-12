@@ -6,7 +6,6 @@ import {
   DialogContent,
   DialogTitle,
   FormHelperText,
-  IconButton,
   Step,
   StepLabel,
   Stepper,
@@ -315,14 +314,12 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
             }
             disableHoverListener={false}
             data-testid={'admin-status-tooltip'}
+            placement="top"
+            enterTouchDelay={0}
+            arrow
+            sx={{ mx: 2 }}
           >
-            <IconButton
-              disableRipple
-              sx={{ backgroundColor: 'transparent' }}
-              size="large"
-            >
-              <InfoOutlinedIcon />
-            </IconButton>
+            <InfoOutlinedIcon />
           </Tooltip>
         )}
       </DialogTitle>

@@ -331,16 +331,7 @@ export function SystemItemsUsageStatusTable(
                   )?.usage_status_id
                 }
                 renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    required={true}
-                    label="Usage statuses"
-                    // error={usageStatusCellError}
-                    // helperText={
-                    //   usageStatusCellError &&
-                    //   itemUsageStatusesErrorState[row.original.item.id].message
-                    // }
-                  />
+                  <TextField {...params} required={true} label="Usage status" />
                 )}
               />
             </FormControl>
@@ -350,9 +341,7 @@ export function SystemItemsUsageStatusTable(
     ];
   }, [
     aggregatedCellUsageStatus,
-    // itemUsageStatusesErrorState,
     setAggregatedCellUsageStatus,
-    // onChangeItemUsageStatusesErrorState,
     onChangeUsageStatuses,
     usageStatuses,
     usageStatusesData,

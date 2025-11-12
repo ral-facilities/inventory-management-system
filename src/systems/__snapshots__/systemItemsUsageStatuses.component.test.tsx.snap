@@ -919,7 +919,7 @@ exports[`SystemItemsUsageStatusTable > renders correctly 1`] = `
                       for="usage-statuses-5YUQDDjKpz2z"
                       id="usage-statuses-5YUQDDjKpz2z-label"
                     >
-                      Usage statuses
+                      Usage status
                       <span
                         aria-hidden="true"
                         class="MuiFormLabel-asterisk MuiInputLabel-asterisk css-1ljffdk-MuiFormLabel-asterisk"
@@ -975,7 +975,7 @@ exports[`SystemItemsUsageStatusTable > renders correctly 1`] = `
                           class="css-81qg8w"
                         >
                           <span>
-                            Usage statuses *
+                            Usage status *
                           </span>
                         </legend>
                       </fieldset>
@@ -1068,7 +1068,7 @@ exports[`SystemItemsUsageStatusTable > renders correctly 1`] = `
                       for="usage-statuses-vYs9Vxx6yWbn"
                       id="usage-statuses-vYs9Vxx6yWbn-label"
                     >
-                      Usage statuses
+                      Usage status
                       <span
                         aria-hidden="true"
                         class="MuiFormLabel-asterisk MuiInputLabel-asterisk css-1ljffdk-MuiFormLabel-asterisk"
@@ -1124,7 +1124,7 @@ exports[`SystemItemsUsageStatusTable > renders correctly 1`] = `
                           class="css-81qg8w"
                         >
                           <span>
-                            Usage statuses *
+                            Usage status *
                           </span>
                         </legend>
                       </fieldset>
@@ -1354,7 +1354,7 @@ exports[`SystemItemsUsageStatusTable > renders correctly 1`] = `
                       for="usage-statuses-Gws8RHwYVLCQ"
                       id="usage-statuses-Gws8RHwYVLCQ-label"
                     >
-                      Usage statuses
+                      Usage status
                       <span
                         aria-hidden="true"
                         class="MuiFormLabel-asterisk MuiInputLabel-asterisk css-1ljffdk-MuiFormLabel-asterisk"
@@ -1410,7 +1410,7 @@ exports[`SystemItemsUsageStatusTable > renders correctly 1`] = `
                           class="css-81qg8w"
                         >
                           <span>
-                            Usage statuses *
+                            Usage status *
                           </span>
                         </legend>
                       </fieldset>
@@ -1503,7 +1503,7 @@ exports[`SystemItemsUsageStatusTable > renders correctly 1`] = `
                       for="usage-statuses-uMMiTk14HzbX"
                       id="usage-statuses-uMMiTk14HzbX-label"
                     >
-                      Usage statuses
+                      Usage status
                       <span
                         aria-hidden="true"
                         class="MuiFormLabel-asterisk MuiInputLabel-asterisk css-1ljffdk-MuiFormLabel-asterisk"
@@ -1559,7 +1559,7 @@ exports[`SystemItemsUsageStatusTable > renders correctly 1`] = `
                           class="css-81qg8w"
                         >
                           <span>
-                            Usage statuses *
+                            Usage status *
                           </span>
                         </legend>
                       </fieldset>
