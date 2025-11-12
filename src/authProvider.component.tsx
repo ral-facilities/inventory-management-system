@@ -7,7 +7,7 @@ const AuthContext = React.createContext<{
   role: string;
   isPrivilegedUser: boolean;
 }>({ role: 'default', isPrivilegedUser: false });
-
+// comment
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
