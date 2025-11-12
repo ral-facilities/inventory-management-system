@@ -6,7 +6,6 @@ import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   Box,
   Button,
-  Divider,
   ListItemIcon,
   ListItemText,
   MenuItem,
@@ -50,13 +49,11 @@ import {
   useSparesFilterState,
 } from '../utils';
 import SystemItemsDialog from './systemItemsDialog.component';
-import { useAuthorisationState } from '../authProvider.component';
 
 const MoveItemsButton = (props: {
   selectedItems: Item[];
   system: System;
   onChangeSelectedItems: (selectedItems: MRT_RowSelectionState) => void;
-  openDialogAsPrivilegedUser: boolean;
 }) => {
   const [moveItemsDialogOpen, setMoveItemsDialogOpen] =
     React.useState<boolean>(false);
@@ -70,7 +67,7 @@ const MoveItemsButton = (props: {
         disabled={props.selectedItems.length === 0}
         onClick={() => setMoveItemsDialogOpen(true)}
       >
-        {`Move to ${props.openDialogAsPrivilegedUser ? 'as Admin' : ''}`}
+        Move to
       </Button>
       <SystemItemsDialog
         open={moveItemsDialogOpen}
@@ -78,7 +75,6 @@ const MoveItemsButton = (props: {
         selectedItems={props.selectedItems}
         onChangeSelectedItems={props.onChangeSelectedItems}
         parentSystemId={props.system.id}
-        isPrivilegedUser={props.openDialogAsPrivilegedUser}
       />
     </>
   );
@@ -97,8 +93,6 @@ export interface SystemItemsTableProps {
 export function SystemItemsTable(props: SystemItemsTableProps) {
   const { system } = props;
 
-  const { isPrivilegedUser } = useAuthorisationState();
-
   // States
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
   const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
@@ -108,9 +102,6 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     'edit' | 'duplicate'
   >('edit');
   const [deleteItemDialogOpen, setDeleteItemDialogOpen] =
-    React.useState<boolean>(false);
-
-  const [openDialogAsPrivilegedUser, setOpenDialogAsPrivilegedUser] =
     React.useState<boolean>(false);
   const [selectedItem, setSelectedItem] = React.useState<Item | undefined>(
     undefined
@@ -535,9 +526,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           open={true}
           onClose={() => {
             table.setCreatingRow(null);
-            setOpenDialogAsPrivilegedUser(false);
           }}
-          isPrivilegedUser={openDialogAsPrivilegedUser}
           duplicate={itemDialogType === 'duplicate'}
           requestType={itemDialogType === 'edit' ? 'patch' : 'post'}
           // Intentionally left undefined here as will fetch inside dialog only when needed instead
@@ -567,22 +556,11 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           Clear Filters
         </Button>
         {system && (
-          <>
-            <MoveItemsButton
-              selectedItems={selectedItems}
-              system={system}
-              onChangeSelectedItems={setRowSelection}
-              openDialogAsPrivilegedUser={false}
-            />
-            {isPrivilegedUser && (
-              <MoveItemsButton
-                selectedItems={selectedItems}
-                system={system}
-                onChangeSelectedItems={setRowSelection}
-                openDialogAsPrivilegedUser={true}
-              />
-            )}
-          </>
+          <MoveItemsButton
+            selectedItems={selectedItems}
+            system={system}
+            onChangeSelectedItems={setRowSelection}
+          />
         )}
       </Box>
     ),
@@ -633,59 +611,6 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           </ListItemIcon>
           <ListItemText>Delete</ListItemText>
         </MenuItem>,
-        ...(isPrivilegedUser
-          ? [
-              <Divider key="divider" />,
-              <MenuItem
-                key="edit-as-admin"
-                aria-label={`Edit item ${row.original.item.id}`}
-                onClick={() => {
-                  setItemsDialogType('edit');
-                  setOpenDialogAsPrivilegedUser(true);
-                  table.setCreatingRow(row);
-                  closeMenu();
-                }}
-                sx={{ m: 0 }}
-              >
-                <ListItemIcon>
-                  <EditIcon />
-                </ListItemIcon>
-                <ListItemText>Edit as Admin</ListItemText>
-              </MenuItem>,
-              <MenuItem
-                key="duplicate-as-admin"
-                aria-label={`Duplicate item ${row.original.item.id} as Admin`}
-                onClick={() => {
-                  setItemsDialogType('duplicate');
-                  setOpenDialogAsPrivilegedUser(true);
-                  table.setCreatingRow(row);
-                  closeMenu();
-                }}
-                sx={{ m: 0 }}
-              >
-                <ListItemIcon>
-                  <SaveAsIcon />
-                </ListItemIcon>
-                <ListItemText>Duplicate as Admin</ListItemText>
-              </MenuItem>,
-              <MenuItem
-                key="delete-as-admin"
-                aria-label={`Delete item ${row.original.item.id}`}
-                onClick={() => {
-                  setDeleteItemDialogOpen(true);
-                  setOpenDialogAsPrivilegedUser(true);
-                  setSelectedItem(row.original.item);
-                  closeMenu();
-                }}
-                sx={{ m: 0 }}
-              >
-                <ListItemIcon>
-                  <DeleteIcon />
-                </ListItemIcon>
-                <ListItemText>Delete as Admin</ListItemText>
-              </MenuItem>,
-            ]
-          : []),
       ];
     },
     renderBottomToolbarCustomActions: ({ table }) =>
@@ -707,11 +632,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       {selectedItem && (
         <DeleteItemDialog
           open={deleteItemDialogOpen}
-          onClose={() => {
-            setDeleteItemDialogOpen(false);
-            setOpenDialogAsPrivilegedUser(false);
-          }}
-          isPrivilegedUser={openDialogAsPrivilegedUser}
+          onClose={() => setDeleteItemDialogOpen(false)}
           item={selectedItem}
           onChangeItem={setSelectedItem}
         />

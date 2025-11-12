@@ -2,7 +2,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PrintIcon from '@mui/icons-material/Print';
 import UploadIcon from '@mui/icons-material/Upload';
-import { Divider, IconButton, Menu, MenuItem } from '@mui/material';
+import { IconButton, Menu, MenuItem } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
 import React from 'react';
@@ -12,14 +12,10 @@ import { StyledUppyBox } from './uppy.utils';
 
 export interface ActionMenuProps {
   ariaLabelPrefix: string;
-  editMenuItem: {
-    onClick: (isPrivilegedUser?: boolean) => void;
-    dialog: React.ReactNode;
-  };
+  editMenuItem: { onClick: () => void; dialog: React.ReactNode };
   printMenuItem?: boolean;
   uploadAttachmentsEntityId?: string;
   uploadImagesEntityId?: string;
-  showAdminEdit?: boolean;
 }
 function ActionMenu(props: ActionMenuProps) {
   const {
@@ -28,7 +24,6 @@ function ActionMenu(props: ActionMenuProps) {
     ariaLabelPrefix,
     uploadAttachmentsEntityId,
     uploadImagesEntityId,
-    showAdminEdit,
   } = props;
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -100,7 +95,6 @@ function ActionMenu(props: ActionMenuProps) {
             <EditIcon fontSize="small" sx={{ mr: 1 }} />
             Edit
           </MenuItem>
-
           {uploadImagesEntityId && (
             <MenuItem
               onClick={() => {
@@ -134,21 +128,6 @@ function ActionMenu(props: ActionMenuProps) {
               <PrintIcon fontSize="small" sx={{ mr: 1 }} />
               Print
             </MenuItem>
-          )}
-
-          {showAdminEdit && (
-            <>
-              <Divider />
-              <MenuItem
-                onClick={() => {
-                  editMenuItem.onClick(true);
-                  handleMenuClose();
-                }}
-              >
-                <EditIcon fontSize="small" sx={{ mr: 1 }} />
-                Edit as Admin
-              </MenuItem>
-            </>
           )}
         </Menu>
       </Grid>

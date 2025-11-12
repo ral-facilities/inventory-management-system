@@ -558,17 +558,13 @@ export const PropertiesStepSchema = z.object({
 
 // ------------------------------------ ITEMS ------------------------------------
 
-export const ItemDetailsStepSchema = (
-  requestType: RequestType,
-  isPrivilegedUser: boolean // privileged users get shown a different dialog so require different error messages
-) => {
+export const ItemDetailsStepSchema = (requestType: RequestType) => {
   return z.object({
     purchase_order_number: OptionalOrNullableStringSchema({ requestType }),
     is_defective: MandatoryBooleanSchema({}),
     usage_status_id: MandatoryStringSchema({
-      errorMessage: isPrivilegedUser
-        ? 'Please select a usage status.'
-        : 'Please navigate back and select a system. This field will then be prepopulated.',
+      errorMessage:
+        'Please navigate back and select a system. This field will then be prepopulated.',
     }),
     warranty_end_date: OptionalOrNullableDateSchema({
       requestType: requestType,

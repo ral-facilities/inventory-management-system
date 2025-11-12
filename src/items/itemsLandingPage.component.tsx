@@ -22,7 +22,6 @@ import PrimaryImage from '../common/images/primaryImage.component';
 import TabView from '../common/tab/tabView.component';
 import { formatDateTimeStrings } from '../utils';
 import ItemDialog from './itemDialog.component';
-import { useAuthorisationState } from '../authProvider.component';
 
 const ItemsActionMenu = (props: {
   catalogueItem: CatalogueItem;
@@ -30,24 +29,16 @@ const ItemsActionMenu = (props: {
   item: Item;
 }) => {
   const { catalogueItem, catalogueCategory, item } = props;
-  const { isPrivilegedUser } = useAuthorisationState();
   const [editItemDialogOpen, setEditItemDialogOpen] =
     React.useState<boolean>(false);
-  const [openDialogAsPrivilegedUser, setOpenDialogAsPrivilegedUser] =
-    React.useState<boolean>(false);
-
   return (
     <ActionMenu
-      showAdminEdit={isPrivilegedUser}
       ariaLabelPrefix="items landing page"
       printMenuItem
       uploadAttachmentsEntityId={item.id}
       uploadImagesEntityId={item.id}
       editMenuItem={{
-        onClick: (asPrivilegedUser) => {
-          setEditItemDialogOpen(true);
-          setOpenDialogAsPrivilegedUser(asPrivilegedUser === true);
-        },
+        onClick: () => setEditItemDialogOpen(true),
         dialog: (
           <>
             {editItemDialogOpen && (
@@ -56,7 +47,6 @@ const ItemsActionMenu = (props: {
                 onClose={() => {
                   setEditItemDialogOpen(false);
                 }}
-                isPrivilegedUser={openDialogAsPrivilegedUser}
                 requestType="patch"
                 catalogueCategory={catalogueCategory}
                 catalogueItem={catalogueItem}
