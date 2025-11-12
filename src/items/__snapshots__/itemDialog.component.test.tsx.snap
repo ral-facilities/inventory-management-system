@@ -1,0 +1,5 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ItemDialog > Add Item > displays warning when in admin mode 1`] = `<DocumentFragment />`;
+
+exports[`ItemDialog > Edit Item > displays warning when in admin mode 1`] = `<DocumentFragment />`;

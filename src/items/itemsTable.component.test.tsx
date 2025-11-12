@@ -7,6 +7,7 @@ import {
   renderComponentWithRouterProvider,
 } from '../testUtils';
 import ItemsTable, { ItemTableProps } from './itemsTable.component';
+import * as authProvider from '../authProvider.component';
 
 describe('Items Table', () => {
   vi.setConfig({ testTimeout: 10000 });
@@ -180,6 +181,36 @@ describe('Items Table', () => {
     });
   });
 
+  it('opens and closes the add item as Admin dialog', async () => {
+    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
+      role: 'admin',
+      isPrivilegedUser: true,
+    });
+
+    createView();
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: 'Add Item as Admin' })
+      ).toBeInTheDocument();
+    });
+
+    const addButton = screen.getByRole('button', {
+      name: 'Add Item as Admin',
+    });
+    await user.click(addButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
   it('sets the table filters and clears the table filters', async () => {
     createView();
 
@@ -265,6 +296,39 @@ describe('Items Table', () => {
     });
 
     const editButton = screen.getByText('Edit');
+    await user.click(editButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('can open the edit as Admin dialog and close it again', async () => {
+    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
+      role: 'admin',
+      isPrivilegedUser: true,
+    });
+
+    createView();
+
+    const serialNumber = '5YUQDDjKpz2z';
+    await waitFor(() => {
+      expect(screen.getByText(serialNumber)).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Edit as Admin')).toBeInTheDocument();
+    });
+
+    const editButton = screen.getByText('Edit as Admin');
     await user.click(editButton);
 
     await waitFor(() => {

@@ -144,11 +144,19 @@ export interface ItemDialogProps {
   catalogueItem?: CatalogueItem;
   catalogueCategory?: CatalogueCategory;
   selectedItem?: Item;
+  isPrivilegedUser: boolean;
 }
 
 function ItemDialog(props: ItemDialogProps) {
-  const { open, onClose, requestType, duplicate, catalogueItem, selectedItem } =
-    props;
+  const {
+    open,
+    onClose,
+    requestType,
+    duplicate,
+    catalogueItem,
+    selectedItem,
+    isPrivilegedUser,
+  } = props;
 
   // Fetch the catalogue category if it hasn't already been given (as required to know what properties are available)
   const { data: fetchedCatalogueCategory } = useGetCatalogueCategory(
@@ -214,7 +222,12 @@ function ItemDialog(props: ItemDialogProps) {
     useGetSystemsBreadcrumbs(parentSystemId);
 
   const ItemDetailsStepFormMethods = useForm<ItemDetailsStep>({
-    resolver: zodResolver(ItemDetailsStepSchema(requestType)),
+    resolver: zodResolver(
+      ItemDetailsStepSchema(
+        requestType,
+        isPrivilegedUser && parentSystemId !== null
+      )
+    ),
     defaultValues: toItemDetailsStep(selectedItem),
   });
 
@@ -285,6 +298,14 @@ function ItemDialog(props: ItemDialogProps) {
           shouldValidate: true,
         });
       }
+    } else if (isPrivilegedUser) {
+      ItemDetailsStepFormMethods.setValue(
+        'usage_status_id',
+        selectedItem?.usage_status_id ?? '', // sets to current usage status if editing
+        {
+          shouldValidate: false, // so error does not instantly appear
+        }
+      );
     }
   }, [
     selectedRules,
@@ -292,6 +313,8 @@ function ItemDialog(props: ItemDialogProps) {
     ItemDetailsStepFormMethods,
     srcSystemTypeId,
     dstSystemTypeId,
+    isPrivilegedUser,
+    selectedItem?.usage_status_id,
   ]);
 
   // Clears form errors when a value has been changed
@@ -310,9 +333,23 @@ function ItemDialog(props: ItemDialogProps) {
   }, [clearErrorsPropertiesStep, watchPropertiesStep]);
 
   React.useEffect(() => {
-    if (parentSystemId !== selectedItem?.system_id)
+    if (parentSystemId !== selectedItem?.system_id) {
       clearErrorsPropertiesStep('root.formError');
-  }, [clearErrorsPropertiesStep, parentSystemId, selectedItem?.system_id]);
+
+      // Clears usage status error if privileged user as they may be selecting
+      // a system with no rule, and so no usage status. Therefore we want to
+      // ensure the error is always cleared to behave as other dialogs.
+      if (isPrivilegedUser) {
+        clearErrorsDetailsStep(['usage_status_id']);
+      }
+    }
+  }, [
+    clearErrorsDetailsStep,
+    clearErrorsPropertiesStep,
+    isPrivilegedUser,
+    parentSystemId,
+    selectedItem?.system_id,
+  ]);
 
   React.useEffect(() => {
     if (
@@ -492,7 +529,8 @@ function ItemDialog(props: ItemDialogProps) {
             return;
           } else if (
             !isDstSystemTypeSameAsSrcSystemType &&
-            (!selectedRules || selectedRules.length === 0)
+            (!selectedRules || selectedRules.length === 0) &&
+            !isPrivilegedUser
           ) {
             const allowedDstSystemTypes =
               tableRules?.map((rule) => rule.dst_system_type?.value) || [];
@@ -518,6 +556,7 @@ function ItemDialog(props: ItemDialogProps) {
       isDstSystemTypeSameAsSrcSystemType,
       parentSystemId,
       tableRules,
+      isPrivilegedUser,
     ]
   );
 
@@ -539,7 +578,8 @@ function ItemDialog(props: ItemDialogProps) {
         hasErrors = true;
       } else if (
         !isDstSystemTypeSameAsSrcSystemType &&
-        (!selectedRules || selectedRules.length === 0)
+        (!selectedRules || selectedRules.length === 0) &&
+        !isPrivilegedUser
       ) {
         const allowedDstSystemTypes =
           tableRules?.map((rule) => rule.dst_system_type?.value) || [];
@@ -589,6 +629,7 @@ function ItemDialog(props: ItemDialogProps) {
       parentSystemId,
       requestType,
       tableRules,
+      isPrivilegedUser,
     ]
   );
 
@@ -629,11 +670,13 @@ function ItemDialog(props: ItemDialogProps) {
               systemParentId={parentSystemId ?? undefined}
               isSystemSelectable={(system) => {
                 return (
+                  isPrivilegedUser ||
                   tableRules?.some(
                     (rule) =>
                       rule.dst_system_type?.id === system.type_id ||
                       system.type_id === srcSystemTypeId
-                  ) || false
+                  ) ||
+                  false
                 );
               }}
               // Use most unrestricted variant (i.e. copy with no selection)
@@ -917,7 +960,7 @@ function ItemDialog(props: ItemDialogProps) {
                 render={({ field: { value, onChange } }) => (
                   <Autocomplete
                     disableClearable={value != null}
-                    disabled
+                    disabled={!isPrivilegedUser}
                     id="item-usage-status-input"
                     value={
                       usageStatuses?.find(
@@ -939,7 +982,7 @@ function ItemDialog(props: ItemDialogProps) {
                       <TextField
                         {...params}
                         required={true}
-                        disabled
+                        disabled={!isPrivilegedUser}
                         label="Usage status"
                         error={!!errorsDetailsStep.usage_status_id}
                         helperText={errorsDetailsStep.usage_status_id?.message}
@@ -1180,13 +1223,30 @@ function ItemDialog(props: ItemDialogProps) {
   return (
     <Dialog
       open={open}
-      maxWidth="lg"
-      PaperProps={{ sx: { height: '810px' } }}
+      maxWidth="xl"
+      // PaperProps={{ sx: { height: '810px' } }}
       fullWidth
     >
-      <DialogTitle>
-        {`${requestType === 'patch' ? 'Edit' : 'Add'} Item`}
+      <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
+        {`${requestType === 'patch' ? 'Edit' : 'Add'} Item${isPrivilegedUser ? ' as Admin' : ''}`}
+
+        {isPrivilegedUser && (
+          <Tooltip
+            title={
+              "As an admin, you can bypass rules that restrict item placement for other users, and you can modify the item's usage status"
+            }
+            disableHoverListener={false}
+            data-testid={'admin-status-tooltip'}
+            placement="top"
+            enterTouchDelay={0}
+            arrow
+            sx={{ mx: 2 }}
+          >
+            <InfoOutlinedIcon />
+          </Tooltip>
+        )}
       </DialogTitle>
+
       <DialogContent>
         <Stepper
           nonLinear

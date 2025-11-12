@@ -30,12 +30,14 @@ describe('delete item dialog', () => {
   };
 
   beforeEach(() => {
-    item = getItemById('KvT2Ox7n');
+    item = { ...getItemById('KvT2Ox7n') }; // prevents item state leaking between tests when mutating it's properties
+
     props = {
       open: true,
       onClose: onClose,
       item: item,
       onChangeItem: onChangeItem,
+      isPrivilegedUser: false,
     };
     user = userEvent.setup(); // Assigning userEvent to 'user'
   });
@@ -51,6 +53,29 @@ describe('delete item dialog', () => {
       baseElement = createView().baseElement;
     });
     expect(baseElement).toMatchSnapshot();
+  });
+
+  it('renders correctly when in admin mode with tooltip', async () => {
+    props.isPrivilegedUser = true;
+    const view = createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Delete Item as Admin')).toBeInTheDocument();
+    });
+
+    const infoIcon = screen.getByTestId('admin-status-tooltip');
+
+    await user.hover(infoIcon);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          'As an admin, you can bypass rules that prevent other users from deleting an item'
+        )
+      ).toBeInTheDocument();
+    });
+
+    expect(view.asFragment()).toMatchSnapshot();
   });
 
   it('renders correctly when the item has an system id', async () => {
@@ -146,6 +171,18 @@ describe('delete item dialog', () => {
       )
     ).toBeInTheDocument();
     expect(onClose).not.toHaveBeenCalled();
+  });
+
+  it('in admin mode allows deletion of item from a system type which is not allowed', async () => {
+    props.isPrivilegedUser = true;
+    createView();
+
+    const continueButton = screen.getByRole('button', { name: 'Continue' });
+    await user.click(continueButton);
+
+    await waitFor(() => {
+      expect(onClose).toHaveBeenCalled();
+    });
   });
 
   it('renders correctly when items has no serial number', async () => {

@@ -203,8 +203,12 @@ export interface PostItems {
   item: ItemPost;
 }
 
+export interface MoveItemsToSystemUsageStatus {
+  item_id: string;
+  usage_status_id: string;
+}
 export interface MoveItemsToSystem {
-  usageStatusId?: string;
+  usageStatusConfig?: MoveItemsToSystemUsageStatus[] | string;
   selectedItems: Item[];
   targetSystem: System;
 }
