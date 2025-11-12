@@ -390,8 +390,12 @@ export const resetUniqueIdCounter = () => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function sortDataList(data: any[], sortedValue: string) {
-  return data.sort((a, b) => a[sortedValue].localeCompare(b[sortedValue]));
+export function sortDataList(data: any[], sortedValue?: string) {
+  return data.sort((a, b) => {
+    const valueA = sortedValue ? a[sortedValue] : a;
+    const valueB = sortedValue ? b[sortedValue] : b;
+    return valueA.localeCompare(valueB);
+  });
 }
 
 export const displayTableRowCountText = <TData extends MRT_RowData>(
@@ -600,7 +604,7 @@ export const useSparesFilterState = (
 ): {
   sparesDefinition: '' | SparesDefinition;
   sparesFilterState: string;
-  encodedSparesFilter: string;
+  sparesColumnsFilters: { cF: MRT_ColumnFiltersState };
   isLoading: boolean;
 } => {
   const {
@@ -629,7 +633,7 @@ export const useSparesFilterState = (
 
   return {
     sparesFilterState,
-    encodedSparesFilter,
+    sparesColumnsFilters,
     isLoading: isLoadingSparesDefinition,
     sparesDefinition,
   };
