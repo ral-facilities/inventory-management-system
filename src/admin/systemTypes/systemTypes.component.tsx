@@ -8,10 +8,10 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import type { SystemType } from '../../api/api.types';
-import { useGetSparesDefinition } from '../../api/settings';
 import { useGetSystemTypes } from '../../api/systems';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 
+import { APISettingsContext } from '../../apiConfigProvider.component';
 import {
   COLUMN_FILTER_BOOLEAN_OPTIONS,
   COLUMN_FILTER_FUNCTIONS,
@@ -35,12 +35,12 @@ function SystemTypes() {
   const { data: systemTypesData = [], isLoading: isLoadingSystemTypes } =
     useGetSystemTypes();
 
-  const { data: sparesDefinition, isLoading: isLoadingSparesDefinition } =
-    useGetSparesDefinition();
+  const apiSettings = React.useContext(APISettingsContext);
+  const sparesDefinition = apiSettings?.spares?.sparesDefinition;
 
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
 
-  const isLoading = isLoadingSystemTypes || isLoadingSparesDefinition;
+  const isLoading = isLoadingSystemTypes;
   //Once loading finished - use same logic as catalogueItemsTable to pair up data
   React.useEffect(() => {
     if (!isLoading && systemTypesData) {

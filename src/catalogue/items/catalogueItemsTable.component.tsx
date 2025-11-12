@@ -37,6 +37,7 @@ import {
 } from '../../api/api.types';
 import { useGetCatalogueItems } from '../../api/catalogueItems';
 import { useGetManufacturerIds } from '../../api/manufacturers';
+import { APISettingsContext } from '../../apiConfigProvider.component';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import {
   COLUMN_FILTER_BOOLEAN_OPTIONS,
@@ -57,7 +58,6 @@ import {
   getInitialColumnFilterFnState,
   getPageHeightCalc,
   mrtTheme,
-  useSparesFilterState,
 } from '../../utils';
 import CatalogueItemDirectoryDialog from './catalogueItemDirectoryDialog.component';
 import CatalogueItemsDetailsPanel from './catalogueItemsDetailsPanel.component';
@@ -174,8 +174,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   const { data: catalogueItemsData, isLoading: isLoadingCatalogueItems } =
     useGetCatalogueItems(parentInfo.id);
 
-  const { sparesFilterState, isLoading: isLoadingSparesDefinition } =
-    useSparesFilterState();
+  const apiSettings = React.useContext(APISettingsContext);
+  const sparesFilterState = apiSettings?.spares?.sparesFilterState;
 
   // States
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
@@ -195,7 +195,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       (catalogue_item) => catalogue_item.manufacturer_id
     ) ?? []
   );
-  let isLoading = isLoadingCatalogueItems || isLoadingSparesDefinition;
+  let isLoading = isLoadingCatalogueItems;
   const manufacturerList: (Manufacturer | undefined)[] = useGetManufacturerIds(
     Array.from(manufacturerIdSet.values())
   ).map((query) => {
