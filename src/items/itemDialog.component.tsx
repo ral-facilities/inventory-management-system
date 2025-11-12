@@ -299,9 +299,13 @@ function ItemDialog(props: ItemDialogProps) {
         });
       }
     } else if (isPrivilegedUser) {
-      ItemDetailsStepFormMethods.setValue('usage_status_id', '', {
-        shouldValidate: false, // so error does not instantly appear
-      });
+      ItemDetailsStepFormMethods.setValue(
+        'usage_status_id',
+        selectedItem?.usage_status_id ?? '', // sets to current usage status if editing
+        {
+          shouldValidate: false, // so error does not instantly appear
+        }
+      );
     }
   }, [
     selectedRules,
@@ -310,6 +314,7 @@ function ItemDialog(props: ItemDialogProps) {
     srcSystemTypeId,
     dstSystemTypeId,
     isPrivilegedUser,
+    selectedItem?.usage_status_id,
   ]);
 
   // Clears form errors when a value has been changed
@@ -1232,14 +1237,12 @@ function ItemDialog(props: ItemDialogProps) {
             }
             disableHoverListener={false}
             data-testid={'admin-status-tooltip'}
+            placement="top"
+            enterTouchDelay={0}
+            arrow
+            sx={{ mx: 2 }}
           >
-            <IconButton
-              disableRipple
-              sx={{ backgroundColor: 'transparent' }}
-              size="large"
-            >
-              <InfoOutlinedIcon />
-            </IconButton>
+            <InfoOutlinedIcon />
           </Tooltip>
         )}
       </DialogTitle>
