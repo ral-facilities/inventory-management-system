@@ -505,11 +505,50 @@ describe('Items', () => {
     cy.findByText('eUc80U7FqJum').should('not.exist');
     cy.findByText('WrgqAVk3qUQK').should('not.exist');
     cy.findByRole('button', { name: 'Show Spare Items' }).should('be.disabled');
+
+    cy.findByText('Spares Definition Filter Applied').should('exist');
+    cy.findByLabelText(
+      'Items that are contained within the system type Storage are classified as spares'
+    ).should('exist');
+
     cy.findByRole('button', { name: 'Clear Filters' }).click();
     cy.findByText('dfzqkOJbqifO').should('exist');
     cy.findByText('tenrMn1KOmIg').should('exist');
     cy.findByText('eUc80U7FqJum').should('exist');
     cy.findByText('WrgqAVk3qUQK').should('exist');
+  });
+
+  it('set spares definition filter and checks the banner is still visible when grouped and then and clears the table filters', () => {
+    cy.visit('/catalogue/9/items/11/items');
+    cy.findByText('dfzqkOJbqifO').should('exist');
+    cy.findByText('tenrMn1KOmIg').should('exist');
+    cy.findByText('eUc80U7FqJum').should('exist');
+    cy.findByText('WrgqAVk3qUQK').should('exist');
+    cy.findByRole('button', { name: 'Show Spare Items' }).should(
+      'not.be.disabled'
+    );
+    cy.findByRole('button', { name: 'Show Spare Items' }).click();
+    cy.findByText('dfzqkOJbqifO').should('exist');
+    cy.findByText('tenrMn1KOmIg').should('not.exist');
+    cy.findByText('eUc80U7FqJum').should('not.exist');
+    cy.findByText('WrgqAVk3qUQK').should('not.exist');
+    cy.findByRole('button', { name: 'Show Spare Items' }).should('be.disabled');
+
+    cy.findByText('Spares Definition Filter Applied').should('exist');
+    cy.findByLabelText(
+      'Items that are contained within the system type Storage are classified as spares'
+    ).should('exist');
+
+    cy.findAllByRole('button', { name: 'Column Actions' }).eq(3).click();
+    cy.findByText('Group by Asset Number').click();
+
+    cy.findByText('Spares Definition Filter Applied').should('exist');
+    cy.findByLabelText(
+      'Items that are contained within the system type Storage are classified as spares'
+    ).should('exist');
+
+    cy.findByRole('button', { name: 'Clear Filters' }).click();
+    cy.findByText('DEAbxBGr2M', { exact: false }).should('exist');
   });
 
   it('navigates to the landing page and navigates back to the table view', () => {

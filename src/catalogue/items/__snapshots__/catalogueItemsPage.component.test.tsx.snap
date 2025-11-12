@@ -212,7 +212,7 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
           </div>
         </div>
         <div
-          class="MuiTableContainer-root css-13mblvd-MuiTableContainer-root"
+          class="MuiTableContainer-root css-1h4z99x-MuiTableContainer-root"
           data-testid="catalogue-items-table-container"
         >
           <table

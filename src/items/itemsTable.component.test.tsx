@@ -1,6 +1,13 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import { CatalogueCategory, CatalogueItem } from '../api/api.types';
+import { DefaultBodyType, http, HttpResponse, PathParams } from 'msw';
+import {
+  CatalogueCategory,
+  CatalogueItem,
+  SparesDefinition,
+} from '../api/api.types';
+import { server } from '../mocks/server';
+import SystemTypesJSON from '../mocks/SystemTypes.json';
 import {
   getCatalogueCategoryById,
   getCatalogueItemById,
@@ -227,11 +234,133 @@ describe('Items Table', () => {
       expect(screen.queryByText('tenrMn1KOmIg')).not.toBeInTheDocument();
     });
 
+    expect(
+      await screen.findByText('Spares Definition Filter Applied')
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByLabelText(
+        'Items that are contained within the system type Storage are classified as spares'
+      )
+    ).toBeInTheDocument();
+
     const clearFiltersButton = screen.getByRole('button', {
       name: 'Clear Filters',
     });
 
     await user.click(clearFiltersButton);
+
+    await waitFor(() => {
+      expect(screen.getByText('tenrMn1KOmIg')).toBeInTheDocument();
+    });
+  });
+
+  it('sets the spares definition filter and checks the banner is still visible when grouped and then clears the table filters', async () => {
+    props.catalogueCategory = getCatalogueCategoryById(
+      '9'
+    ) as CatalogueCategory;
+    props.catalogueItem = getCatalogueItemById('11') as CatalogueItem;
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Serial Number')).toBeInTheDocument();
+    });
+    const showSparesButton = screen.getByRole('button', {
+      name: 'Show Spare Items',
+    });
+    expect(showSparesButton).not.toBeDisabled();
+
+    await user.click(showSparesButton);
+
+    await waitFor(() => {
+      expect(screen.queryByText('tenrMn1KOmIg')).not.toBeInTheDocument();
+    });
+
+    expect(
+      await screen.findByText('Spares Definition Filter Applied')
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByLabelText(
+        'Items that are contained within the system type Storage are classified as spares'
+      )
+    ).toBeInTheDocument();
+
+    // Delivered date column action button
+    await user.click(
+      screen.getAllByRole('button', { name: 'Column Actions' })[3]
+    );
+
+    await user.click(await screen.findByText('Group by Asset Number'));
+
+    expect(
+      await screen.findByText('Spares Definition Filter Applied')
+    ).toBeInTheDocument();
+
+    const clearFiltersButton = screen.getByRole('button', {
+      name: 'Clear Filters',
+    });
+
+    await user.click(clearFiltersButton);
+
+    await waitFor(() => {
+      expect(
+        screen.queryByText('Spares Definition Filter Applied')
+      ).not.toBeInTheDocument();
+    });
+
+    expect(
+      await screen.findByText('DEAbxBGr2M', { exact: false })
+    ).toBeInTheDocument();
+  });
+
+  it('sets the spares definition filter and clears the spares filters (multiple systems types in spares definition)', async () => {
+    server.use(
+      http.get<PathParams, DefaultBodyType, SparesDefinition>(
+        '/v1/settings/spares-definition',
+        () => {
+          return HttpResponse.json(
+            { system_types: [SystemTypesJSON[0], SystemTypesJSON[2]] },
+            { status: 200 }
+          );
+        }
+      )
+    );
+    props.catalogueCategory = getCatalogueCategoryById(
+      '9'
+    ) as CatalogueCategory;
+    props.catalogueItem = getCatalogueItemById('11') as CatalogueItem;
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Serial Number')).toBeInTheDocument();
+    });
+    const showSparesButton = screen.getByRole('button', {
+      name: 'Show Spare Items',
+    });
+    expect(showSparesButton).not.toBeDisabled();
+
+    await user.click(showSparesButton);
+
+    await waitFor(() => {
+      expect(screen.queryByText('tenrMn1KOmIg')).not.toBeInTheDocument();
+    });
+
+    expect(
+      await screen.findByText('Spares Definition Filter Applied')
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByLabelText(
+        'Items that are contained within a system type of one of Storage or Scrapped are classified as spares'
+      )
+    ).toBeInTheDocument();
+
+    const clearSparesFiltersButton = screen.getByRole('button', {
+      name: 'Clear Spares Definition Filter',
+    });
+
+    await user.click(clearSparesFiltersButton);
 
     await waitFor(() => {
       expect(screen.getByText('tenrMn1KOmIg')).toBeInTheDocument();
