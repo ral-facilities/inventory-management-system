@@ -140,14 +140,10 @@ export const getCatalogueItemsPropertiesById = (
   return properties as CatalogueCategoryProperty[];
 };
 
-export const getCatalogueCategoryById = (
-  id: string
-): CatalogueCategory | undefined => {
-  return (
-    (CatalogueCategoriesJSON.find(
-      (catalogueCategory) => catalogueCategory.id === id
-    ) as CatalogueCategory) || undefined
-  );
+export const getCatalogueCategoryById = (id: string): CatalogueCategory => {
+  return CatalogueCategoriesJSON.find(
+    (catalogueCategory) => catalogueCategory.id === id
+  ) as CatalogueCategory;
 };
 
 export const getCatalogueItemById = (id: string): CatalogueItem | undefined => {
