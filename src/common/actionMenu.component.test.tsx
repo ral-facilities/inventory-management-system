@@ -23,7 +23,6 @@ describe('ActionMenu Component', () => {
       uploadImagesEntityId: '1',
       editMenuItem: mockEditMenuItem,
       printMenuItem: true,
-      showAdminEdit: true, // true to check it renders the option correctly
     };
     user = userEvent.setup();
     // Mock the window.print function
@@ -51,9 +50,6 @@ describe('ActionMenu Component', () => {
 
     // Check if the "Edit" option is visible
     expect(screen.getByText('Edit')).toBeVisible();
-
-    // Check if the "Edit as Admin" option is visible
-    expect(screen.getByText('Edit as Admin')).toBeVisible();
 
     // Check if the "Print" option is visible
     expect(screen.getByText('Print')).toBeVisible();

@@ -1,3 +1,0 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
-
-exports[`SystemItemsDialog > displays correctly when in admin mode 1`] = `<DocumentFragment />`;

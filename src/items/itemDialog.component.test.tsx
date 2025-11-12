@@ -31,7 +31,6 @@ describe('ItemDialog', () => {
       requestType: 'post',
       catalogueCategory: getCatalogueCategoryById('4'),
       catalogueItem: getCatalogueItemById('1'),
-      isPrivilegedUser: false,
     };
     user = userEvent.setup();
   });
@@ -209,29 +208,6 @@ describe('ItemDialog', () => {
           )
         ).toBeInTheDocument();
       });
-    });
-
-    it('displays warning when in admin mode', async () => {
-      props.isPrivilegedUser = true;
-      const view = createView();
-
-      await waitFor(() => {
-        expect(screen.getByText('Add Item as Admin')).toBeInTheDocument();
-      });
-
-      const infoIcon = screen.getByTestId('admin-status-tooltip');
-
-      await user.hover(infoIcon);
-
-      await waitFor(() => {
-        expect(
-          screen.getByText(
-            "As an admin, you can bypass rules that restrict item placement for other users, and you can modify the item's usage status"
-          )
-        ).toBeInTheDocument();
-      });
-
-      expect(view.asFragment()).toMatchSnapshot();
     });
 
     it('adds an item with just the default values', async () => {
@@ -743,45 +719,6 @@ describe('ItemDialog', () => {
       });
     }, 10000);
 
-    it('adds an item (case admin mode, placing in system which is not allowed)', async () => {
-      props.isPrivilegedUser = true;
-      createView();
-
-      await modifySystemValue({
-        system: 'Operational',
-      });
-
-      await user.click(screen.getByRole('button', { name: 'Next' }));
-
-      await modifyDetailsValues({
-        usageStatus: 'U{arrowdown}{enter}',
-      });
-
-      await user.click(screen.getByRole('button', { name: 'Next' }));
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
-
-      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
-        asset_number: null,
-        catalogue_item_id: '1',
-        delivered_date: null,
-        is_defective: false,
-        notes: null,
-        properties: [
-          { id: '1', value: 12 },
-          { id: '2', value: 30 },
-          { id: '3', value: 'CMOS' },
-          { id: '4', value: null },
-          { id: '5', value: true },
-          { id: '6', value: false },
-        ],
-        purchase_order_number: null,
-        serial_number: null,
-        system_id: '65328f34a40ff5301575a4e3',
-        usage_status_id: '1',
-        warranty_end_date: null,
-      });
-    }, 10000);
-
     it('displays error message when usage status not selected', async () => {
       createView();
 
@@ -813,54 +750,6 @@ describe('ItemDialog', () => {
         screen.queryByText('Please select a usage status.')
       ).not.toBeInTheDocument();
     });
-
-    it('displays error message when usage status not selected (case admin mode selecting not allowed system)', async () => {
-      props.isPrivilegedUser = true;
-      createView();
-
-      await user.click(screen.getByText('Add item details'));
-
-      await user.click(screen.getByRole('button', { name: 'Next' }));
-
-      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
-      expect(screen.getByText('Invalid item details')).toBeInTheDocument();
-
-      expect(
-        await screen.findByText(
-          'Please navigate back and select a system. This field will then be prepopulated.'
-        )
-      ).toBeInTheDocument();
-
-      await user.click(screen.getByText('Place into a system'));
-
-      await modifySystemValue({
-        system: 'Operational',
-      });
-
-      expect(screen.queryByRole('button', { name: 'Next' })).not.toBeDisabled();
-      await user.click(screen.getByRole('button', { name: 'Next' }));
-      expect(
-        screen.queryByText('Invalid item details')
-      ).not.toBeInTheDocument();
-
-      await user.click(screen.getByRole('button', { name: 'Next' }));
-
-      expect(
-        screen.getByText('Please select a usage status.')
-      ).toBeInTheDocument();
-
-      await modifyDetailsValues({
-        usageStatus: 'U{arrowdown}{enter}',
-      });
-
-      expect(screen.queryByRole('button', { name: 'Next' })).not.toBeDisabled();
-      expect(
-        screen.queryByText('Invalid item details')
-      ).not.toBeInTheDocument();
-      expect(
-        screen.queryByText('Please select a usage status.')
-      ).not.toBeInTheDocument();
-    }, 10000);
 
     it('displays error message when mandatory property values missing', async () => {
       createView();
@@ -1222,29 +1111,6 @@ describe('ItemDialog', () => {
       props.requestType = 'patch';
     });
 
-    it('displays warning when in admin mode', async () => {
-      props.isPrivilegedUser = true;
-      const view = createView();
-
-      await waitFor(() => {
-        expect(screen.getByText('Edit Item as Admin')).toBeInTheDocument();
-      });
-
-      const infoIcon = screen.getByTestId('admin-status-tooltip');
-
-      await user.hover(infoIcon);
-
-      await waitFor(() => {
-        expect(
-          screen.getByText(
-            "As an admin, you can bypass rules that restrict item placement for other users, and you can modify the item's usage status"
-          )
-        ).toBeInTheDocument();
-      });
-
-      expect(view.asFragment()).toMatchSnapshot();
-    });
-
     it('disables finish button and shows circular progress indicator when request is pending', async () => {
       server.use(
         http.patch('/v1/items/:id', () => {
@@ -1294,29 +1160,6 @@ describe('ItemDialog', () => {
         system_id: '65328f34a40ff5301575a4e3',
       });
     }, 10000);
-
-    it('edit an item (case admin mode placing into not allowed system', async () => {
-      props.isPrivilegedUser = true;
-
-      createView();
-
-      await user.click(
-        screen.getByRole('button', { name: 'navigate to systems home' })
-      );
-
-      await user.click((await screen.findAllByText('Scrapped'))[1]);
-
-      await user.click(screen.getByRole('button', { name: 'Next' }));
-
-      await user.click(screen.getByRole('button', { name: 'Next' }));
-
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
-
-      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
-        system_id: '657f8c3b2a1b4e5d8f9b3c4e8',
-        usage_status_id: '3',
-      });
-    });
 
     it('edit an item (all input values)', async () => {
       createView();

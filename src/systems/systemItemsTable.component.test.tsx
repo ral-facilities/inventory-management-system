@@ -7,7 +7,6 @@ import {
   SystemItemsTable,
   SystemItemsTableProps,
 } from './systemItemsTable.component';
-import * as authProvider from '../authProvider.component';
 
 describe('SystemItemsTable', () => {
   vi.setConfig({ testTimeout: 10000 });
@@ -40,11 +39,6 @@ describe('SystemItemsTable', () => {
   });
 
   it('renders correctly', async () => {
-    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
-      role: 'admin',
-      isPrivilegedUser: true,
-    });
-
     const view = createView();
 
     // Name (obtained from catalogue category item)
@@ -63,11 +57,6 @@ describe('SystemItemsTable', () => {
     await waitFor(() =>
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
-
-    // Check admin move to button exists
-    expect(
-      screen.getByRole('button', { name: 'Move to as Admin' })
-    ).toBeInTheDocument();
 
     // Expand a group so all columns are rendered to improve test coverage
     // (expanding all causes an infinite loop due to an issue with details panels)

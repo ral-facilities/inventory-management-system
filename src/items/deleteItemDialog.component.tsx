@@ -1,5 +1,4 @@
 import WarningIcon from '@mui/icons-material/Warning';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {
   Box,
   Button,
@@ -10,7 +9,6 @@ import {
   DialogTitle,
   FormHelperText,
   Link as MuiLink,
-  Tooltip,
   Typography,
 } from '@mui/material';
 import { AxiosError } from 'axios';
@@ -27,11 +25,11 @@ export interface DeleteItemDialogProps {
   onClose: () => void;
   item: Item;
   onChangeItem: (Item: Item | undefined) => void;
-  isPrivilegedUser: boolean;
 }
 
 const DeleteItemDialog = (props: DeleteItemDialogProps) => {
-  const { open, onClose, item, onChangeItem, isPrivilegedUser } = props;
+  const { open, onClose, item, onChangeItem } = props;
+
   const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
     undefined
   );
@@ -60,7 +58,7 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
         ?.map((rule) => rule.src_system_type?.value ?? '')
         .filter((value): value is string => value !== '') || [];
 
-    if ((selectedRules && selectedRules.length > 0) || isPrivilegedUser) {
+    if (selectedRules && selectedRules.length > 0) {
       deleteItem(item)
         .then(() => {
           onClose();
@@ -74,36 +72,13 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
         `Please move item to a system with Type: ${allowedSystemTypes.join(', ')} before trying to delete.`
       );
     }
-  }, [
-    selectedRules,
-    deleteItem,
-    deletionRules,
-    isPrivilegedUser,
-    item,
-    onChangeItem,
-    onClose,
-  ]);
+  }, [selectedRules, deleteItem, deletionRules, item, onChangeItem, onClose]);
 
   return (
     <Dialog open={open} maxWidth="lg">
       <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
         <WarningIcon sx={{ marginRight: 1 }} />
-        Delete Item{isPrivilegedUser ? ' as Admin' : ''}
-        {isPrivilegedUser && (
-          <Tooltip
-            title={
-              'As an admin, you can bypass rules that prevent other users from deleting an item'
-            }
-            disableHoverListener={false}
-            data-testid={'admin-status-tooltip'}
-            placement="top"
-            enterTouchDelay={0}
-            arrow
-            sx={{ mx: 2 }}
-          >
-            <InfoOutlinedIcon />
-          </Tooltip>
-        )}
+        Delete Item
       </DialogTitle>
       <DialogContent>
         {systemData && (
