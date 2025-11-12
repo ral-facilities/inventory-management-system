@@ -14,6 +14,7 @@ export const INVALID_DATE_FORMAT_MESSAGE = 'Date format: dd/MM/yyyy';
 
 interface BaseZodSchemaProps {
   errorMessage?: string;
+  disableTrim?: boolean;
 }
 
 interface NumberZodSchemaProps {
@@ -42,28 +43,31 @@ interface PostPatchZodDateSchemaProps extends DateZodSchemaProps {
   requestType: RequestType;
 }
 
-const OptionalStringSchema = z
-  .string()
-  .trim()
-  .transform((val) => (!val ? undefined : val))
-  .optional();
+const withOptionalTrim = (schema: z.ZodString, disableTrim?: boolean) =>
+  disableTrim ? schema : schema.trim();
 
-const NullableStringSchema = z
-  .string()
-  .trim()
-  .transform((val) => (!val ? null : val))
-  .nullable();
+const OptionalStringSchema = (props?: BaseZodSchemaProps) =>
+  withOptionalTrim(z.string(), props?.disableTrim)
+    .transform((val) => (!val ? undefined : val))
+    .optional();
+
+const NullableStringSchema = (props?: BaseZodSchemaProps) =>
+  withOptionalTrim(z.string(), props?.disableTrim)
+    .transform((val) => (!val ? null : val))
+    .nullable();
 
 const OptionalOrNullableStringSchema = (props: PostPatchZodSchemaProps) =>
-  props.requestType === 'post' ? OptionalStringSchema : NullableStringSchema;
+  props.requestType === 'post'
+    ? OptionalStringSchema(props)
+    : NullableStringSchema(props);
 
 const MandatoryStringSchema = (props: BaseZodSchemaProps) =>
-  z
-    .string({
+  withOptionalTrim(
+    z.string({
       required_error: props.errorMessage,
-    })
-    .trim()
-    .min(1, { message: props.errorMessage });
+    }),
+    props.disableTrim
+  ).min(1, { message: props.errorMessage });
 
 const MandatoryBooleanSchema = (props: BaseZodSchemaProps) =>
   z
@@ -397,6 +401,16 @@ const propertiesTypeList: [
     }),
   }),
   z.object({
+    valueType: z.literal('string_true_av'),
+    value: z.object({
+      value: MandatoryStringSchema({
+        errorMessage: 'Please enter a valid value as this field is mandatory.',
+        disableTrim: true,
+      }),
+      av_placement_id: z.string(),
+    }),
+  }),
+  z.object({
     valueType: z.literal('boolean_true'),
     value: z.object({
       value: MandatoryBooleanSchema({
@@ -417,7 +431,14 @@ const propertiesTypeList: [
   z.object({
     valueType: z.literal('string_false'),
     value: z.object({
-      value: OptionalStringSchema,
+      value: OptionalStringSchema(),
+      av_placement_id: z.string(),
+    }),
+  }),
+  z.object({
+    valueType: z.literal('string_false_av'),
+    value: z.object({
+      value: OptionalStringSchema({ disableTrim: true }),
       av_placement_id: z.string(),
     }),
   }),
@@ -431,7 +452,9 @@ const propertiesTypeList: [
 ];
 
 const allowedValuesObject = z.object({
-  value: z.any(),
+  value: z.any().transform((val) => {
+    return typeof val === 'string' ? val.trim() : val;
+  }),
   av_placement_id: z.string(),
 });
 
@@ -631,6 +654,6 @@ export const FileSchemaPatch = z.object({
   file_name: MandatoryStringSchema({
     errorMessage: 'Please enter a file name.',
   }),
-  title: NullableStringSchema,
-  description: NullableStringSchema,
+  title: NullableStringSchema(),
+  description: NullableStringSchema(),
 });
