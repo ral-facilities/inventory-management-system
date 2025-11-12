@@ -1,19 +1,19 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { DefaultBodyType, http, HttpResponse, PathParams } from 'msw';
 import {
   CatalogueCategory,
   CatalogueItem,
   SparesDefinition,
 } from '../api/api.types';
+import { server } from '../mocks/server';
+import SystemTypesJSON from '../mocks/SystemTypes.json';
 import {
   getCatalogueCategoryById,
   getCatalogueItemById,
   renderComponentWithRouterProvider,
 } from '../testUtils';
 import ItemsTable, { ItemTableProps } from './itemsTable.component';
-import { server } from '../mocks/server';
-import { DefaultBodyType, http, HttpResponse, PathParams } from 'msw';
-import SystemTypesJSON from '../mocks/SystemTypes.json';
 
 describe('Items Table', () => {
   vi.setConfig({ testTimeout: 10000 });
@@ -240,7 +240,7 @@ describe('Items Table', () => {
 
     expect(
       screen.getByLabelText(
-        'Items that are contained within this system type Storage are classified as spares'
+        'Items that are contained within the system type Storage are classified as spares'
       )
     ).toBeInTheDocument();
 
@@ -255,7 +255,7 @@ describe('Items Table', () => {
     });
   });
 
-  it('sets the spares definition filter and clears the spares filters (multiples systems types in spares definition)', async () => {
+  it('sets the spares definition filter and clears the spares filters (multiple systems types in spares definition)', async () => {
     server.use(
       http.get<PathParams, DefaultBodyType, SparesDefinition>(
         '/v1/settings/spares-definition',
@@ -293,7 +293,7 @@ describe('Items Table', () => {
 
     expect(
       screen.getByLabelText(
-        'Items that are contained within these system types Storage, Scrapped are classified as spares'
+        'Items that are contained within a system type of one of Storage or Scrapped are classified as spares'
       )
     ).toBeInTheDocument();
 

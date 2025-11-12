@@ -508,7 +508,7 @@ describe('Items', () => {
 
     cy.findByText('Spares Definition Filter Applied').should('exist');
     cy.findByLabelText(
-      'Items that are contained within this system type Storage are classified as spares'
+      'Items that are contained within the system type Storage are classified as spares'
     ).should('exist');
 
     cy.findByRole('button', { name: 'Clear Filters' }).click();

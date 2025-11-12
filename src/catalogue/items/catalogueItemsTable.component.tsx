@@ -823,11 +823,11 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         table.getFilteredSelectedRowModel().rows.length > 0 ||
         table.getState().grouping.length > 0;
       return {
-        // Breadcrumbs + Mui table V2 + extra
         sx: {
           height: dense
             ? '360.4px'
             : getPageHeightCalc(
+                // Breadcrumbs + Mui table V2 + extra
                 `50px + 110px + 48px ${showAlert ? '+ 58.75px' : ''}`
               ),
           flexShrink: 1,
