@@ -218,9 +218,11 @@ describe('ItemDialog', () => {
         baseElement = createView().baseElement;
       });
 
-      await waitFor(() => {
-        expect(screen.getByText('Add Item as Admin')).toBeInTheDocument();
-      });
+      await waitFor(() =>
+        expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+      );
+
+      expect(screen.getByText('Add Item as Admin')).toBeInTheDocument();
 
       const infoIcon = screen.getByTestId('admin-status-tooltip');
 
@@ -1232,9 +1234,11 @@ describe('ItemDialog', () => {
         baseElement = createView().baseElement;
       });
 
-      await waitFor(() => {
-        expect(screen.getByText('Edit Item as Admin')).toBeInTheDocument();
-      });
+      await waitFor(() =>
+        expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+      );
+
+      expect(screen.getByText('Edit Item as Admin')).toBeInTheDocument();
 
       const infoIcon = screen.getByTestId('admin-status-tooltip');
 
