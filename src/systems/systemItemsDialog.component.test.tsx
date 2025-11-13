@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { MockInstance } from 'vitest';
 import { imsApi } from '../api/api';
@@ -74,7 +74,7 @@ describe('SystemItemsDialog', () => {
 
   it('displays correctly when in admin mode', async () => {
     props.isPrivilegedUser = true;
-    const view = createView();
+    createView();
 
     await waitFor(() => {
       expect(
@@ -96,7 +96,12 @@ describe('SystemItemsDialog', () => {
 
     expect(screen.getByRole('button', { name: 'Next' })).toBeInTheDocument();
 
-    expect(view.asFragment()).toMatchSnapshot();
+    let baseElement;
+    await act(async () => {
+      baseElement = createView().baseElement;
+    });
+
+    expect(baseElement).toMatchSnapshot();
   });
 
   it('renders the breadcrumbs and navigates correctly', async () => {

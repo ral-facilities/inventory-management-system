@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http } from 'msw';
 import { MockInstance } from 'vitest';
@@ -213,7 +213,7 @@ describe('ItemDialog', () => {
 
     it('displays warning when in admin mode', async () => {
       props.isPrivilegedUser = true;
-      const view = createView();
+      createView();
 
       await waitFor(() => {
         expect(screen.getByText('Add Item as Admin')).toBeInTheDocument();
@@ -231,7 +231,12 @@ describe('ItemDialog', () => {
         ).toBeInTheDocument();
       });
 
-      expect(view.asFragment()).toMatchSnapshot();
+      let baseElement;
+      await act(async () => {
+        baseElement = createView().baseElement;
+      });
+
+      expect(baseElement).toMatchSnapshot();
     });
 
     it('adds an item with just the default values', async () => {
@@ -1224,7 +1229,7 @@ describe('ItemDialog', () => {
 
     it('displays warning when in admin mode', async () => {
       props.isPrivilegedUser = true;
-      const view = createView();
+      createView();
 
       await waitFor(() => {
         expect(screen.getByText('Edit Item as Admin')).toBeInTheDocument();
@@ -1242,7 +1247,12 @@ describe('ItemDialog', () => {
         ).toBeInTheDocument();
       });
 
-      expect(view.asFragment()).toMatchSnapshot();
+      let baseElement;
+      await act(async () => {
+        baseElement = createView().baseElement;
+      });
+
+      expect(baseElement).toMatchSnapshot();
     });
 
     it('disables finish button and shows circular progress indicator when request is pending', async () => {

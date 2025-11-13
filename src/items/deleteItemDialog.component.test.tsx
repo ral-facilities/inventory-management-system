@@ -57,7 +57,7 @@ describe('delete item dialog', () => {
 
   it('renders correctly when in admin mode with tooltip', async () => {
     props.isPrivilegedUser = true;
-    const view = createView();
+    createView();
 
     await waitFor(() => {
       expect(screen.getByText('Delete Item as Admin')).toBeInTheDocument();
@@ -75,7 +75,12 @@ describe('delete item dialog', () => {
       ).toBeInTheDocument();
     });
 
-    expect(view.asFragment()).toMatchSnapshot();
+    let baseElement;
+    await act(async () => {
+      baseElement = createView().baseElement;
+    });
+
+    expect(baseElement).toMatchSnapshot();
   });
 
   it('renders correctly when the item has an system id', async () => {
