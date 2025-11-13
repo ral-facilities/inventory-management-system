@@ -18,6 +18,7 @@ import {
   useGetSystems,
   useGetSystemsBreadcrumbs,
 } from '../api/systems';
+import MRTTopTableAlert from '../common/mrtTopTableAlert.component';
 import handleTransferState from '../handleTransferState';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { SystemsTableView } from './systemsTableView.component';
@@ -61,7 +62,8 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   const { data: tableRules } = useGetRules(srcSystemTypeId);
 
   // This should be a list of 1 rule
-  const { data: selectedRules } = useGetRules(srcSystemTypeId, dstSystemTypeId);
+  const { data: selectedRules, isLoading: isSelectedRulesLoading } =
+    useGetRules(srcSystemTypeId, dstSystemTypeId);
 
   const [placeIntoSystemError, setPlaceIntoSystemError] = React.useState<
     string | undefined
@@ -168,6 +170,22 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
             />
           </Grid>
           <Grid size={12}>
+            {parentSystemId &&
+              selectedItems.length !== 0 &&
+              parentSystemId !== selectedItems[0].system_id &&
+              !isSelectedRulesLoading &&
+              !systemsDataLoading && (
+                <MRTTopTableAlert
+                  title="Item Moving Rule Applied"
+                  showInfoTooltip
+                  infoTooltipTitle={
+                    selectedRules && selectedRules[0]
+                      ? `The items usage statuses will be updated to ${selectedRules[0].dst_usage_status?.value}, as defined by the rules`
+                      : 'The items usage statuses we remain the same, as defined by the rules'
+                  }
+                  alertProps={{ elevation: 1 }}
+                />
+              )}
             <SystemsTableView
               systemsData={systemsData}
               systemsDataLoading={systemsDataLoading}

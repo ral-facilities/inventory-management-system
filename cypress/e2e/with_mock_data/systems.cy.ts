@@ -990,8 +990,7 @@ describe('Systems', () => {
           cy.findByRole('button', { name: 'navigate to systems home' }).click();
           cy.findByLabelText('Storage row').click();
 
-          // eslint-disable-next-line cypress/no-unnecessary-waiting
-          cy.wait(4000);
+          cy.findByText('Item Moving Rule Applied').should('exist');
           cy.findByRole('button', { name: 'Move here' }).click();
         });
 
@@ -1069,8 +1068,7 @@ describe('Systems', () => {
     cy.findByLabelText('Row Actions').first().click();
     cy.findByText('Edit').click();
 
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.findByText('Item Moving Rule Applied').should('exist');
 
     cy.findByRole('button', { name: 'Next' }).click();
 
@@ -1102,8 +1100,7 @@ describe('Systems', () => {
     cy.findByLabelText('Row Actions').first().click();
     cy.findByText('Duplicate').click();
 
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.findByText('Item Creation Rule Applied').should('exist');
 
     cy.findByRole('button', { name: 'Next' }).click();
     cy.findByRole('button', { name: 'Next' }).click();
