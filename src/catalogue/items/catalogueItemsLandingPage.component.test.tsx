@@ -245,6 +245,23 @@ describe('Catalogue Items Landing Page', () => {
     );
   });
 
+  it('should not display spares number if spares definition is not defined', async () => {
+    server.use(
+      http.get('/v1/settings/spares-definition', () => {
+        return HttpResponse.json({ system_types: [] }, { status: 200 });
+      })
+    );
+
+    createView('/catalogue/5/items/89');
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
+    await waitFor(() => {
+      expect(screen.queryByText('Number of spares')).not.toBeInTheDocument();
+    });
+  });
+
   it('landing page renders data correctly when optional values are null', async () => {
     createView('/catalogue/4/items/33');
 

@@ -319,6 +319,34 @@ describe('Items Table', () => {
     ).toBeInTheDocument();
   });
 
+  it('does not display spares definition button when spares is not defined', async () => {
+    server.use(
+      http.get<PathParams, DefaultBodyType, SparesDefinition>(
+        '/v1/settings/spares-definition',
+        () => {
+          return HttpResponse.json({ system_types: [] }, { status: 200 });
+        }
+      )
+    );
+    props.catalogueCategory = getCatalogueCategoryById(
+      '9'
+    ) as CatalogueCategory;
+    props.catalogueItem = getCatalogueItemById('11') as CatalogueItem;
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Serial Number')).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.queryByRole('button', {
+          name: 'Show Spare Items',
+        })
+      ).not.toBeInTheDocument();
+    });
+  });
+
   it('sets the spares definition filter and clears the spares filters (multiple systems types in spares definition)', async () => {
     server.use(
       http.get<PathParams, DefaultBodyType, SparesDefinition>(
