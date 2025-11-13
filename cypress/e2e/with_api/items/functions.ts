@@ -28,9 +28,11 @@ export const modifyItem = (
   cy.findByLabelText('navigate to systems home').click();
 
   if (values.system) cy.findAllByText(values.system).first().click();
-
-  // eslint-disable-next-line cypress/no-unnecessary-waiting
-  cy.wait(4000);
+  if (typeof values.edit === 'number') {
+    cy.findByText('Item Moving Rule Applied').should('exist');
+  } else {
+    cy.findByText('Item Creation Rule Applied').should('exist');
+  }
 
   cy.findByRole('button', { name: 'Next' }).click();
 
@@ -246,8 +248,7 @@ export const duplicateItem = (serialNumber: string, index: number) => {
 
   cy.findAllByText('Storage').should('have.length', 1);
 
-  // eslint-disable-next-line cypress/no-unnecessary-waiting
-  cy.wait(4000);
+  cy.findByText('Item Creation Rule Applied').should('exist');
 
   cy.findByRole('button', { name: 'Next' }).click();
   cy.findByRole('button', { name: 'Next' }).click();
