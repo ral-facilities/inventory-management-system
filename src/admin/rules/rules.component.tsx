@@ -33,6 +33,9 @@ function Rules() {
   const { data: usageStatusData, isLoading: isLoadingUsageStatus } =
     useGetUsageStatuses();
 
+  const allSystemTypeValues = React.useMemo(() => {
+    return systemTypesData?.map((type) => type.value) ?? [];
+  }, [systemTypesData]);
   const isLoading =
     isLoadingRules || isLoadingSystemTypes || isLoadingUsageStatus;
 
@@ -187,8 +190,6 @@ function Rules() {
     muiTablePaperProps: { sx: { maxHeight: '100%' } },
 
     muiTableContainerProps: ({ table }) => {
-      const allSystemTypeValues =
-        systemTypesData?.map((type) => type.value) ?? [];
       const isRuleApplied =
         isExactFilterActive(table, [
           {
@@ -239,8 +240,6 @@ function Rules() {
     ...onPreservedStatesChange,
 
     renderTopToolbarCustomActions: ({ table }) => {
-      const allSystemTypeValues =
-        systemTypesData?.map((type) => type.value) ?? [];
       return (
         <Box>
           <Button
@@ -355,9 +354,6 @@ function Rules() {
   });
 
   const getAppliedRuleType = React.useCallback(() => {
-    const allSystemTypeValues =
-      systemTypesData?.map((type) => type.value) ?? [];
-
     if (
       isExactFilterActive(table, [
         {
@@ -396,7 +392,7 @@ function Rules() {
     else {
       return undefined;
     }
-  }, [systemTypesData, table]);
+  }, [allSystemTypeValues, table]);
 
   return (
     <div style={{ width: '100%' }}>
