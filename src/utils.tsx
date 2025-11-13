@@ -646,3 +646,32 @@ export const useSparesFilterState = (
     ]
   );
 };
+
+export function isExactFilterActive<TData extends MRT_RowData>(
+  table: MRT_TableInstance<TData>,
+  expectedFilters: { id: string; filterFn?: string; value: unknown }[]
+) {
+  const actualFilters = table.getState().columnFilters;
+  const actualFilterFns = table.getState().columnFilterFns;
+
+  // Check length matches
+  if (actualFilters.length !== expectedFilters.length) return false;
+
+  // Check every expected filter matches actual filter and filterFn
+  return expectedFilters.every(({ id, filterFn, value }) => {
+    const actualFilter = actualFilters.find((f) => f.id === id);
+    if (!actualFilter) return false;
+    if (actualFilterFns[id] !== filterFn) return false;
+
+    // Compare values stringified (arrays or value)
+
+    if (Array.isArray(value)) {
+      return (
+        JSON.stringify(sortDataList(actualFilter.value as string[])) ===
+        JSON.stringify(sortDataList(value))
+      );
+    } else {
+      return JSON.stringify(actualFilter.value) === JSON.stringify(value);
+    }
+  });
+}

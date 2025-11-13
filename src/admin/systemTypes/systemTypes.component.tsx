@@ -2,7 +2,6 @@ import ClearIcon from '@mui/icons-material/Clear';
 import { Box, Button, TableCellBaseProps, TableRow } from '@mui/material';
 import {
   MRT_ColumnDef,
-  MRT_TableInstance,
   MaterialReactTable,
   useMaterialReactTable,
 } from 'material-react-table';
@@ -26,32 +25,12 @@ import {
   displayTableRowCountText,
   getInitialColumnFilterFnState,
   getPageHeightCalc,
+  isExactFilterActive,
   mrtTheme,
 } from '../../utils';
 
 interface TableRowData extends SystemType {
   isSpare: boolean;
-}
-
-function isExactFilterActive(
-  table: MRT_TableInstance<TableRowData>,
-  expectedFilters: { id: string; filterFn?: string; value: string }[]
-) {
-  const actualFilters = table.getState().columnFilters;
-  const actualFilterFns = table.getState().columnFilterFns;
-
-  // Check length matches
-  if (actualFilters.length !== expectedFilters.length) return false;
-
-  // Check every expected filter matches actual filter and filterFn
-  return expectedFilters.every(({ id, filterFn, value }) => {
-    const actualFilter = actualFilters.find((f) => f.id === id);
-    if (!actualFilter) return false;
-    if (actualFilterFns[id] !== filterFn) return false;
-
-    // Compare values stringified (arrays)
-    return JSON.stringify(actualFilter.value) === JSON.stringify(value);
-  });
 }
 
 function SystemTypes() {
@@ -189,7 +168,6 @@ function SystemTypes() {
         },
       };
     },
-
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',
