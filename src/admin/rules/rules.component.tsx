@@ -2,6 +2,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import { Box, Button, MenuItem, TableCellBaseProps } from '@mui/material';
 import {
   MRT_ColumnDef,
+  MRT_TableInstance,
   MaterialReactTable,
   useMaterialReactTable,
 } from 'material-react-table';
@@ -38,6 +39,50 @@ function Rules() {
   }, [systemTypesData]);
   const isLoading =
     isLoadingRules || isLoadingSystemTypes || isLoadingUsageStatus;
+
+  const getAppliedRuleType = React.useCallback(
+    (table: MRT_TableInstance<Rule>) => {
+      if (
+        isExactFilterActive(table, [
+          {
+            id: 'src_system_type.value',
+            filterFn: 'arrExcludesSome',
+            value: allSystemTypeValues,
+          },
+        ])
+      )
+        return 'Creation Rules';
+      else if (
+        isExactFilterActive(table, [
+          {
+            id: 'src_system_type.value',
+            filterFn: 'arrIncludesSome',
+            value: allSystemTypeValues,
+          },
+          {
+            id: 'dst_system_type.value',
+            filterFn: 'arrIncludesSome',
+            value: allSystemTypeValues,
+          },
+        ])
+      )
+        return 'Moving Rules';
+      else if (
+        isExactFilterActive(table, [
+          {
+            id: 'dst_system_type.value',
+            filterFn: 'arrExcludesSome',
+            value: allSystemTypeValues,
+          },
+        ])
+      )
+        return 'Deletion Rules';
+      else {
+        return undefined;
+      }
+    },
+    [allSystemTypeValues]
+  );
 
   const columns = React.useMemo<MRT_ColumnDef<Rule>[]>(() => {
     const systemTypeValues = systemTypesData?.map((type) => type.value);
@@ -188,35 +233,8 @@ function Rules() {
             },
           },
     muiTablePaperProps: { sx: { maxHeight: '100%' } },
-
     muiTableContainerProps: ({ table }) => {
-      const isRuleApplied =
-        isExactFilterActive(table, [
-          {
-            id: 'src_system_type.value',
-            filterFn: 'arrExcludesSome',
-            value: allSystemTypeValues,
-          },
-        ]) ||
-        isExactFilterActive(table, [
-          {
-            id: 'src_system_type.value',
-            filterFn: 'arrIncludesSome',
-            value: allSystemTypeValues,
-          },
-          {
-            id: 'dst_system_type.value',
-            filterFn: 'arrIncludesSome',
-            value: allSystemTypeValues,
-          },
-        ]) ||
-        isExactFilterActive(table, [
-          {
-            id: 'dst_system_type.value',
-            filterFn: 'arrExcludesSome',
-            value: allSystemTypeValues,
-          },
-        ]);
+      const isRuleApplied = !!getAppliedRuleType(table);
       return {
         sx: {
           height: getPageHeightCalc(
@@ -353,54 +371,13 @@ function Rules() {
       }),
   });
 
-  const getAppliedRuleType = React.useCallback(() => {
-    if (
-      isExactFilterActive(table, [
-        {
-          id: 'src_system_type.value',
-          filterFn: 'arrExcludesSome',
-          value: allSystemTypeValues,
-        },
-      ])
-    )
-      return 'Creation Rules';
-    else if (
-      isExactFilterActive(table, [
-        {
-          id: 'src_system_type.value',
-          filterFn: 'arrIncludesSome',
-          value: allSystemTypeValues,
-        },
-        {
-          id: 'dst_system_type.value',
-          filterFn: 'arrIncludesSome',
-          value: allSystemTypeValues,
-        },
-      ])
-    )
-      return 'Moving Rules';
-    else if (
-      isExactFilterActive(table, [
-        {
-          id: 'dst_system_type.value',
-          filterFn: 'arrExcludesSome',
-          value: allSystemTypeValues,
-        },
-      ])
-    )
-      return 'Deletion Rules';
-    else {
-      return undefined;
-    }
-  }, [allSystemTypeValues, table]);
-
   return (
     <div style={{ width: '100%' }}>
-      {getAppliedRuleType() && (
+      {getAppliedRuleType(table) && (
         <MRTTopTableAlert
-          title={`${getAppliedRuleType()} Filter Applied`}
+          title={`${getAppliedRuleType(table)} Filter Applied`}
           clearFilters={table.resetColumnFilters}
-          clearFiltersAriaLabel={`Clear ${getAppliedRuleType()} Filter`}
+          clearFiltersAriaLabel={`Clear ${getAppliedRuleType(table)} Filter`}
         />
       )}
       <MaterialReactTable table={table} />
