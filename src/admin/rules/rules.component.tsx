@@ -267,6 +267,7 @@ function Rules() {
             disabled={preservedState.columnFilters.length === 0}
             onClick={() => {
               table.resetColumnFilters();
+              table.setColumnFilterFns(initialColumnFilterFnState);
             }}
           >
             Clear Filters
@@ -282,6 +283,7 @@ function Rules() {
               },
             ])}
             onClick={() => {
+              table.setColumnFilterFns(initialColumnFilterFnState);
               table.resetGlobalFilter();
               table.setColumnFilterFns((prev) => ({
                 ...prev,
@@ -314,6 +316,7 @@ function Rules() {
               },
             ])}
             onClick={() => {
+              table.setColumnFilterFns(initialColumnFilterFnState);
               table.resetGlobalFilter();
               table.setColumnFilterFns((prev) => ({
                 ...prev,
@@ -346,6 +349,7 @@ function Rules() {
               },
             ])}
             onClick={() => {
+              table.setColumnFilterFns(initialColumnFilterFnState);
               table.resetGlobalFilter();
               table.setColumnFilterFns((prev) => ({
                 ...prev,
@@ -370,13 +374,15 @@ function Rules() {
         paddingLeft: '8px',
       }),
   });
-
   return (
     <div style={{ width: '100%' }}>
       {getAppliedRuleType(table) && (
         <MRTTopTableAlert
           title={`${getAppliedRuleType(table)} Filter Applied`}
-          clearFilters={table.resetColumnFilters}
+          clearFilters={() => {
+            table.resetColumnFilters();
+            table.setColumnFilterFns(initialColumnFilterFnState);
+          }}
           clearFiltersAriaLabel={`Clear ${getAppliedRuleType(table)} Filter`}
         />
       )}
