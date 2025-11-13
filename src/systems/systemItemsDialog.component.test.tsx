@@ -74,7 +74,10 @@ describe('SystemItemsDialog', () => {
 
   it('displays correctly when in admin mode', async () => {
     props.isPrivilegedUser = true;
-    createView();
+    let baseElement;
+    await act(async () => {
+      baseElement = createView().baseElement;
+    });
 
     await waitFor(() => {
       expect(
@@ -95,11 +98,6 @@ describe('SystemItemsDialog', () => {
     });
 
     expect(screen.getByRole('button', { name: 'Next' })).toBeInTheDocument();
-
-    let baseElement;
-    await act(async () => {
-      baseElement = createView().baseElement;
-    });
 
     expect(baseElement).toMatchSnapshot();
   });

@@ -57,7 +57,11 @@ describe('delete item dialog', () => {
 
   it('renders correctly when in admin mode with tooltip', async () => {
     props.isPrivilegedUser = true;
-    createView();
+
+    let baseElement;
+    await act(async () => {
+      baseElement = createView().baseElement;
+    });
 
     await waitFor(() => {
       expect(screen.getByText('Delete Item as Admin')).toBeInTheDocument();
@@ -73,11 +77,6 @@ describe('delete item dialog', () => {
           'As an admin, you can bypass rules that prevent other users from deleting an item'
         )
       ).toBeInTheDocument();
-    });
-
-    let baseElement;
-    await act(async () => {
-      baseElement = createView().baseElement;
     });
 
     expect(baseElement).toMatchSnapshot();

@@ -213,7 +213,10 @@ describe('ItemDialog', () => {
 
     it('displays warning when in admin mode', async () => {
       props.isPrivilegedUser = true;
-      createView();
+      let baseElement;
+      await act(async () => {
+        baseElement = createView().baseElement;
+      });
 
       await waitFor(() => {
         expect(screen.getByText('Add Item as Admin')).toBeInTheDocument();
@@ -229,11 +232,6 @@ describe('ItemDialog', () => {
             "As an admin, you can bypass rules that restrict item placement for other users, and you can modify the item's usage status"
           )
         ).toBeInTheDocument();
-      });
-
-      let baseElement;
-      await act(async () => {
-        baseElement = createView().baseElement;
       });
 
       expect(baseElement).toMatchSnapshot();
@@ -1229,7 +1227,10 @@ describe('ItemDialog', () => {
 
     it('displays warning when in admin mode', async () => {
       props.isPrivilegedUser = true;
-      createView();
+      let baseElement;
+      await act(async () => {
+        baseElement = createView().baseElement;
+      });
 
       await waitFor(() => {
         expect(screen.getByText('Edit Item as Admin')).toBeInTheDocument();
@@ -1245,11 +1246,6 @@ describe('ItemDialog', () => {
             "As an admin, you can bypass rules that restrict item placement for other users, and you can modify the item's usage status"
           )
         ).toBeInTheDocument();
-      });
-
-      let baseElement;
-      await act(async () => {
-        baseElement = createView().baseElement;
       });
 
       expect(baseElement).toMatchSnapshot();
