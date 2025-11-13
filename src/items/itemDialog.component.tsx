@@ -1221,12 +1221,7 @@ function ItemDialog(props: ItemDialogProps) {
   };
 
   return (
-    <Dialog
-      open={open}
-      maxWidth="xl"
-      // PaperProps={{ sx: { height: '810px' } }}
-      fullWidth
-    >
+    <Dialog open={open} maxWidth="xl" fullWidth>
       <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
         {`${requestType === 'patch' ? 'Edit' : 'Add'} Item${isPrivilegedUser ? ' as Admin' : ''}`}
 

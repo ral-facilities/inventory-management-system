@@ -1,5 +1,4 @@
 import ClearIcon from '@mui/icons-material/Clear';
-// import ErrorIcon from '@mui/icons-material/Error';
 import {
   Autocomplete,
   Box,
