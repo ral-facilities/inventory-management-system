@@ -32,6 +32,7 @@ describe('System Types', () => {
     cy.findByText('Operational').should('not.exist');
     cy.findAllByText('Storage').should('exist');
 
+    cy.findByText('Spares Definition Filter Applied').should('exist');
     cy.findByRole('button', { name: 'Show Spares Definition' }).should(
       'be.disabled'
     );
@@ -39,5 +40,6 @@ describe('System Types', () => {
     cy.findByRole('button', { name: 'Clear Filters' }).click();
     cy.findByText('Operational').should('exist');
     cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
+    cy.findByText('Spares Definition Filter Applied').should('not.exist');
   });
 });
