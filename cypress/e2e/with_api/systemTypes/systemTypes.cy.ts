@@ -27,6 +27,6 @@ describe('Usage Statuses', () => {
     cy.findByText('Operational').should('not.exist');
     cy.findByText('Scrapped').should('not.exist');
     cy.findByText('Storage').should('exist');
-    cy.findByText('Spares Definition Filter Applied').should('not.exist');
+    cy.findByText('Spares Definition Filter Applied').should('exist');
   });
 });
