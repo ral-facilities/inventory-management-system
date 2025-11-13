@@ -14,8 +14,9 @@ import {
   CatalogueItem,
   Manufacturer,
 } from '../../api/api.types';
+import { APISettingsContext } from '../../apiConfigProvider.component';
 import PrimaryImage from '../../common/images/primaryImage.component';
-import { formatDateTimeStrings, useSparesFilterState } from '../../utils';
+import { formatDateTimeStrings } from '../../utils';
 import CatalogueLink from './catalogueLink.component';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -49,7 +50,8 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
   const { catalogueItemIdData, manufacturerData } = props;
   const [tabValue, setTabValue] = React.useState(0);
 
-  const { sparesFilterState } = useSparesFilterState();
+  const apiSettings = React.useContext(APISettingsContext);
+  const sparesFilterState = apiSettings?.spares?.sparesFilterState;
 
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);

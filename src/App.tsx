@@ -27,6 +27,7 @@ import {
   clearFailedAuthRequestsQueue,
   retryFailedAuthRequests,
 } from './api/api';
+import APIConfigProvider from './apiConfigProvider.component';
 import { MicroFrontendId } from './app.types';
 import CatalogueLayout, {
   CatalogueErrorComponent,
@@ -277,14 +278,16 @@ export function Layout() {
           <ConfigProvider>
             <AuthProvider>
               <QueryClientProvider client={queryClient}>
-                <React.Suspense
-                  fallback={
-                    <Preloader loading={true}>Finished loading</Preloader>
-                  }
-                >
-                  <ViewTabs />
-                  <ReactQueryDevtools initialIsOpen={false} />
-                </React.Suspense>
+                <APIConfigProvider>
+                  <React.Suspense
+                    fallback={
+                      <Preloader loading={true}>Finished loading</Preloader>
+                    }
+                  >
+                    <ViewTabs />
+                    <ReactQueryDevtools initialIsOpen={false} />
+                  </React.Suspense>
+                </APIConfigProvider>
               </QueryClientProvider>
             </AuthProvider>
           </ConfigProvider>

@@ -1,6 +1,7 @@
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
+import APIConfigProvider from '../../apiConfigProvider.component';
 import CatalogueItemsJSON from '../../mocks/CatalogueItems.json';
 import { server } from '../../mocks/server';
 import { renderComponentWithRouterProvider } from '../../testUtils';
@@ -16,7 +17,9 @@ describe('Catalogue Items Landing Page', () => {
   let user: UserEvent;
   const createView = (path: string) => {
     return renderComponentWithRouterProvider(
-      <CatalogueItemsLandingPage />,
+      <APIConfigProvider>
+        <CatalogueItemsLandingPage />
+      </APIConfigProvider>,
       'catalogueItem',
       path
     );

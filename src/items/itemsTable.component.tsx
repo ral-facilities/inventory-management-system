@@ -36,6 +36,7 @@ import {
 import { useGetItems } from '../api/items';
 import { useGetSystemIds, useGetSystemTypes } from '../api/systems';
 import { useGetUsageStatuses } from '../api/usageStatuses';
+import { APISettingsContext } from '../apiConfigProvider.component';
 import type { SystemTableType } from '../app.types';
 import { findPropertyValue } from '../catalogue/items/catalogueItemsTable.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
@@ -57,7 +58,6 @@ import {
   TableCellOverFlowTipProps,
   TableGroupedCell,
   TableHeaderOverflowTip,
-  useSparesFilterState,
 } from '../utils';
 import DeleteItemDialog from './deleteItemDialog.component';
 import ItemDialog from './itemDialog.component';
@@ -102,24 +102,18 @@ export function ItemsTable(props: ItemTableProps) {
   const { data: usageStatusData, isLoading: isLoadingUsageStatus } =
     useGetUsageStatuses();
 
-  const {
-    isLoading: isLoadingSparesDefinition,
-    sparesDefinition,
-    sparesColumnsFilters,
-  } = useSparesFilterState();
+  const apiSettings = React.useContext(APISettingsContext);
+  const sparesDefinition = apiSettings?.spares?.sparesDefinition;
+  const sparesColumnsFilters = apiSettings?.spares?.sparesColumnsFilters;
 
-  const isSparesDefinitionDefined =
-    sparesDefinition !== '' && sparesDefinition.system_types.length !== 0;
+  const isSparesDefinitionDefined = !!apiSettings?.spares;
 
   const systemIdSet = new Set<string>(
     itemsData?.map((item) => item.system_id) ?? []
   );
 
   let isLoading =
-    isLoadingItems ||
-    isLoadingSystemTypes ||
-    isLoadingUsageStatus ||
-    isLoadingSparesDefinition;
+    isLoadingItems || isLoadingSystemTypes || isLoadingUsageStatus;
   const systemList: (System | undefined)[] = useGetSystemIds(
     Array.from(systemIdSet.values())
   ).map((query) => {
@@ -460,6 +454,7 @@ export function ItemsTable(props: ItemTableProps) {
 
   const isSparesFilterApplied = React.useMemo(() => {
     if (sparesDefinition === '') return false;
+    if (sparesDefinition === undefined) return false;
     if (preservedState.columnFilters.length !== 1) return false;
     if (preservedState.columnFilters[0].id !== 'system.type.value')
       return false;
@@ -676,7 +671,7 @@ export function ItemsTable(props: ItemTableProps) {
         >
           Clear Filters
         </Button>
-        {isSparesDefinitionDefined && (
+        {isSparesDefinitionDefined && sparesColumnsFilters && (
           <Button
             sx={{ mx: 0.5 }}
             variant="outlined"
@@ -817,66 +812,68 @@ export function ItemsTable(props: ItemTableProps) {
 
   return (
     <div style={{ width: '100%' }}>
-      {isSparesDefinitionDefined && isSparesFilterApplied && (
-        <Alert
-          color="info"
-          icon={false}
-          sx={() => ({
-            '& .MuiAlert-message': {
+      {isSparesDefinitionDefined &&
+        sparesDefinition &&
+        isSparesFilterApplied && (
+          <Alert
+            color="info"
+            icon={false}
+            sx={() => ({
+              '& .MuiAlert-message': {
+                width: '100%',
+              },
+              borderRadius: 0,
+              fontSize: '1rem',
+              left: 0,
+              p: 0,
+              position: 'relative',
+              right: 0,
+              top: 0,
               width: '100%',
-            },
-            borderRadius: 0,
-            fontSize: '1rem',
-            left: 0,
-            p: 0,
-            position: 'relative',
-            right: 0,
-            top: 0,
-            width: '100%',
-            zIndex: 2,
-          })}
-        >
-          <Grid container alignItems="center" sx={{ px: 1, py: 0.5 }}>
-            <Grid size={2} />
-            <Grid size={8}>
-              <Box display="flex" alignItems="center" justifyContent="center">
-                <Typography variant="inherit" sx={{ pr: 1 }}>
-                  Spares Definition Filter Applied
-                </Typography>
-                <Tooltip
-                  title={
-                    sparesDefinition.system_types.length === 1
-                      ? `Items that are contained within the system type ${sparesDefinition.system_types[0].value} are classified as spares`
-                      : `Items that are contained within a system type of one of ${sparesDefinition.system_types
-                          .map((sys) => sys.value)
-                          .join(', ')
-                          .replace(
-                            /, ([^,]*)$/,
-                            ' or $1'
-                          )} are classified as spares`
-                  }
-                >
-                  <InfoOutlined fontSize="small" />
-                </Tooltip>
-              </Box>
-            </Grid>
-            <Grid size={2} display="flex" justifyContent="flex-end">
-              <Tooltip title="Clear Spares Definition Filter">
-                <span>
-                  <IconButton
-                    size="small"
-                    aria-label="Clear Spares Definition Filter"
-                    onClick={() => table.resetColumnFilters()}
-                    sx={{ color: 'inherit' }}
+              zIndex: 2,
+            })}
+          >
+            <Grid container alignItems="center" sx={{ px: 1, py: 0.5 }}>
+              <Grid size={2} />
+              <Grid size={8}>
+                <Box display="flex" alignItems="center" justifyContent="center">
+                  <Typography variant="inherit" sx={{ pr: 1 }}>
+                    Spares Definition Filter Applied
+                  </Typography>
+                  <Tooltip
+                    title={
+                      sparesDefinition.system_types.length === 1
+                        ? `Items that are contained within the system type ${sparesDefinition.system_types[0].value} are classified as spares`
+                        : `Items that are contained within a system type of one of ${sparesDefinition.system_types
+                            .map((sys) => sys.value)
+                            .join(', ')
+                            .replace(
+                              /, ([^,]*)$/,
+                              ' or $1'
+                            )} are classified as spares`
+                    }
                   >
-                    <ClearIcon fontSize="small" />
-                  </IconButton>
-                </span>
-              </Tooltip>
+                    <InfoOutlined fontSize="small" />
+                  </Tooltip>
+                </Box>
+              </Grid>
+              <Grid size={2} display="flex" justifyContent="flex-end">
+                <Tooltip title="Clear Spares Definition Filter">
+                  <span>
+                    <IconButton
+                      size="small"
+                      aria-label="Clear Spares Definition Filter"
+                      onClick={() => table.resetColumnFilters()}
+                      sx={{ color: 'inherit' }}
+                    >
+                      <ClearIcon fontSize="small" />
+                    </IconButton>
+                  </span>
+                </Tooltip>
+              </Grid>
             </Grid>
-          </Grid>
-        </Alert>
-      )}
+          </Alert>
+        )}
       <MaterialReactTable table={table} />
       {!dense && selectedItem && (
         <DeleteItemDialog

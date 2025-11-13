@@ -1,6 +1,7 @@
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { CatalogueCategory } from '../../api/api.types';
+import APIConfigProvider from '../../apiConfigProvider.component';
 import {
   getCatalogueCategoryById,
   renderComponentWithRouterProvider,
@@ -17,7 +18,9 @@ describe('Catalogue Items Table', () => {
 
   const createView = (initialEntry?: string) => {
     return renderComponentWithRouterProvider(
-      <CatalogueItemsTable {...props} />,
+      <APIConfigProvider>
+        <CatalogueItemsTable {...props} />
+      </APIConfigProvider>,
       'any',
       initialEntry ?? '/'
     );

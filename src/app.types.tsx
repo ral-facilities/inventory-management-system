@@ -1,9 +1,11 @@
 import type { Body, Meta } from '@uppy/core';
+import { MRT_ColumnFiltersState } from 'material-react-table';
 import {
   CatalogueCategory,
   CatalogueItem,
   Item,
   ItemPost,
+  SparesDefinition,
   System,
   type APIImage,
   type ObjectFileUploadMetadata,
@@ -228,3 +230,12 @@ export interface AdvancedSerialNumberOptionsType {
 export interface UppyImageUploadResponse extends APIImage, Body {}
 
 export interface UppyUploadMetadata extends ObjectFileUploadMetadata, Meta {}
+
+// --------------------------------- SPARES -----------------------------------------------------------
+
+export interface SparesFilterStateType {
+  sparesDefinition: '' | SparesDefinition;
+  sparesFilterState: string;
+  sparesColumnsFilters: { cF: MRT_ColumnFiltersState };
+  isLoading: boolean;
+}

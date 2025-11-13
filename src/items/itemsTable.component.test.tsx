@@ -6,6 +6,7 @@ import {
   CatalogueItem,
   SparesDefinition,
 } from '../api/api.types';
+import APIConfigProvider from '../apiConfigProvider.component';
 import { server } from '../mocks/server';
 import SystemTypesJSON from '../mocks/SystemTypes.json';
 import {
@@ -23,14 +24,18 @@ describe('Items Table', () => {
   let user: UserEvent;
   const createView = () => {
     return renderComponentWithRouterProvider(
-      <ItemsTable {...props} />,
+      <APIConfigProvider>
+        <ItemsTable {...props} />
+      </APIConfigProvider>,
       'any',
       '/'
     );
   };
 
   const ensureColumnsVisible = async (columns: string[]) => {
-    await user.click(screen.getByRole('button', { name: 'Show/Hide columns' }));
+    await user.click(
+      await screen.findByRole('button', { name: 'Show/Hide columns' })
+    );
     await user.click(screen.getByText('Hide all'));
 
     for (const column of columns) {
