@@ -17,10 +17,11 @@ import { CatalogueCategory, CatalogueItem } from '../../api/api.types';
 import { useGetCatalogueCategory } from '../../api/catalogueCategories';
 import { useGetCatalogueItem } from '../../api/catalogueItems';
 import { useGetManufacturer } from '../../api/manufacturers';
+import { APISettingsContext } from '../../apiConfigProvider.component';
 import ActionMenu from '../../common/actionMenu.component';
 import PrimaryImage from '../../common/images/primaryImage.component';
 import TabView from '../../common/tab/tabView.component';
-import { formatDateTimeStrings, useSparesFilterState } from '../../utils';
+import { formatDateTimeStrings } from '../../utils';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import CatalogueLink from './catalogueLink.component';
 
@@ -67,8 +68,8 @@ function CatalogueItemsLandingPage() {
     isLoading: catalogueCategoryDataLoading,
   } = useGetCatalogueCategory(catalogueCategoryId);
 
-  const { sparesFilterState, isLoading: isLoadingSparesDefinition } =
-    useSparesFilterState();
+  const apiSettings = React.useContext(APISettingsContext);
+  const sparesFilterState = apiSettings?.spares?.sparesFilterState;
 
   const isParentCorrect =
     catalogueItemIdData?.catalogue_category_id === catalogueCategoryId;
@@ -724,9 +725,7 @@ function CatalogueItemsLandingPage() {
           </Grid>
         </Grid>
       )}
-      {(catalogueItemIdDataLoading ||
-        catalogueCategoryDataLoading ||
-        isLoadingSparesDefinition) && (
+      {(catalogueItemIdDataLoading || catalogueCategoryDataLoading) && (
         <Box sx={{ width: '100%' }}>
           <LinearProgress />
         </Box>
