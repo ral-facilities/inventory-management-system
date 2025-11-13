@@ -1,12 +1,17 @@
 import { screen, waitFor } from '@testing-library/react';
 import { userEvent, type UserEvent } from '@testing-library/user-event';
+import APIConfigProvider from '../../apiConfigProvider.component';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 import SystemTypes from './systemTypes.component';
 
 describe('SystemTypes', () => {
   let user: UserEvent;
   const createView = () => {
-    return renderComponentWithRouterProvider(<SystemTypes />);
+    return renderComponentWithRouterProvider(
+      <APIConfigProvider>
+        <SystemTypes />
+      </APIConfigProvider>
+    );
   };
 
   beforeEach(() => {
@@ -16,16 +21,16 @@ describe('SystemTypes', () => {
   it('renders table correctly', async () => {
     const view = createView();
 
+    await waitFor(() => {
+      expect(screen.getByText('Storage')).toBeInTheDocument();
+    });
+
     await waitFor(
       () => {
         expect(screen.queryByRole('progressbar')).not.toBeInTheDocument();
       },
       { timeout: 10000 }
     );
-
-    await waitFor(() => {
-      expect(screen.getByText('Storage')).toBeInTheDocument();
-    });
     expect(view.asFragment()).toMatchSnapshot();
   });
 

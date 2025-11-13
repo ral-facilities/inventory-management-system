@@ -25,6 +25,7 @@ import { CatalogueItem, Item, System } from '../api/api.types';
 import { useGetCatalogueItemIds } from '../api/catalogueItems';
 import { useGetItems } from '../api/items';
 import { useGetUsageStatuses } from '../api/usageStatuses';
+import { APISettingsContext } from '../apiConfigProvider.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import DeleteItemDialog from '../items/deleteItemDialog.component';
 import ItemDialog from '../items/itemDialog.component';
@@ -46,7 +47,6 @@ import {
   getInitialColumnFilterFnState,
   getPageHeightCalc,
   mrtTheme,
-  useSparesFilterState,
 } from '../utils';
 import SystemItemsDialog from './systemItemsDialog.component';
 
@@ -115,8 +115,8 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
   const { data: usageStatusData, isLoading: isLoadingUsageStatuses } =
     useGetUsageStatuses();
 
-  const { sparesFilterState, isLoading: isLoadingSparesDefinition } =
-    useSparesFilterState();
+  const apiSettings = React.useContext(APISettingsContext);
+  const sparesFilterState = apiSettings?.spares?.sparesFilterState;
 
   // Obtain the selected system data, not just the selection state
   const selectedRowIds = Object.keys(rowSelection);
@@ -129,8 +129,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       new Set<string>(itemsData?.map((item) => item.catalogue_item_id) ?? []),
     [itemsData]
   );
-  let isLoading =
-    isLoadingItems || isLoadingUsageStatuses || isLoadingSparesDefinition;
+  let isLoading = isLoadingItems || isLoadingUsageStatuses;
 
   const catalogueItemList: (CatalogueItem | undefined)[] =
     useGetCatalogueItemIds(Array.from(catalogueItemIdSet.values())).map(
