@@ -916,7 +916,7 @@ describe('Catalogue Items Table', () => {
   it('renders table correctly (section 1 due to column virtualisation without spares)', async () => {
     server.use(
       http.get('/v1/settings/spares-definition', () => {
-        return HttpResponse.json({ system_types: [] }, { status: 200 });
+        return HttpResponse.json(undefined, { status: 204 });
       })
     );
 

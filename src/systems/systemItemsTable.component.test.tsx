@@ -1,7 +1,7 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import { DefaultBodyType, http, HttpResponse, PathParams } from 'msw';
-import { SparesDefinition, System } from '../api/api.types';
+import { http, HttpResponse } from 'msw';
+import { System } from '../api/api.types';
 import APIConfigProvider from '../apiConfigProvider.component';
 import { server } from '../mocks/server';
 import SystemsJSON from '../mocks/Systems.json';
@@ -78,12 +78,9 @@ describe('SystemItemsTable', () => {
 
   it('renders correctly (without spares)', async () => {
     server.use(
-      http.get<PathParams, DefaultBodyType, SparesDefinition>(
-        '/v1/settings/spares-definition',
-        () => {
-          return HttpResponse.json({ system_types: [] }, { status: 200 });
-        }
-      )
+      http.get('/v1/settings/spares-definition', () => {
+        return HttpResponse.json(undefined, { status: 204 });
+      })
     );
     const view = createView();
 

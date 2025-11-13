@@ -321,12 +321,9 @@ describe('Items Table', () => {
 
   it('does not display spares definition button when spares is not defined', async () => {
     server.use(
-      http.get<PathParams, DefaultBodyType, SparesDefinition>(
-        '/v1/settings/spares-definition',
-        () => {
-          return HttpResponse.json({ system_types: [] }, { status: 200 });
-        }
-      )
+      http.get('/v1/settings/spares-definition', () => {
+        return HttpResponse.json(undefined, { status: 204 });
+      })
     );
     props.catalogueCategory = getCatalogueCategoryById(
       '9'

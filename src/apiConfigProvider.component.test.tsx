@@ -64,27 +64,6 @@ describe('APIConfigProvider', () => {
     );
   });
 
-  it('settings are loaded (without spares)', async () => {
-    server.use(
-      http.get('/v1/settings/spares-definition', () => {
-        return HttpResponse.json({ system_types: [] }, { status: 200 });
-      })
-    );
-    renderComponent();
-
-    // Preloader is in a loading state when ConfigProvider is
-    // loading the configuration.
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
-
-    await waitFor(() => {
-      expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
-    });
-    expect(screen.getByTestId('settings')).toBeInTheDocument();
-    expect(screen.getByTestId('settings')).toHaveTextContent(
-      JSON.stringify({})
-    );
-  });
-
   it('settings are loaded (without spares 204 no content)', async () => {
     server.use(
       http.get('/v1/settings/spares-definition', () => {

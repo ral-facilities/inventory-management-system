@@ -156,7 +156,7 @@ describe('Catalogue Items details panel', () => {
   it('renders details panel correctly (without spares)', async () => {
     server.use(
       http.get('/v1/settings/spares-definition', () => {
-        return HttpResponse.json({ system_types: [] }, { status: 200 });
+        return HttpResponse.json(undefined, { status: 204 });
       })
     );
 
