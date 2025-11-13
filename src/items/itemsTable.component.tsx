@@ -449,9 +449,9 @@ export function ItemsTable(props: ItemTableProps) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       preservedState.columnFilters[0].value as any[]
     );
-    const sparesSystemTypeValues = sparesDefinition
-      ? sparesDefinition.system_types.map((type) => type.value)
-      : [];
+    const sparesSystemTypeValues = sparesDefinition.system_types.map(
+      (type) => type.value
+    );
     const orderedSparesDefinitionValues = sortDataList(sparesSystemTypeValues);
 
     return (
@@ -645,13 +645,11 @@ export function ItemsTable(props: ItemTableProps) {
             disabled={isSparesFilterApplied}
             onClick={() => {
               onPreservedStatesChange.onColumnFiltersChange(
-                sparesColumnsFilters
-                  ? sparesColumnsFilters.cF.map((filter) => ({
-                      id: filter.id,
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      value: (filter.value as any[]).map((val) => val.value),
-                    }))
-                  : []
+                sparesColumnsFilters.cF.map((filter) => ({
+                  id: filter.id,
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  value: (filter.value as any[]).map((val) => val.value),
+                }))
               );
             }}
           >
