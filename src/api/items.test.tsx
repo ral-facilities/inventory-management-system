@@ -1,8 +1,9 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { MockInstance } from 'vitest';
 import {
+  MoveItemsPopulatedUsageStatus,
+  MoveItemsSelectingUsageStatus,
   MoveItemsToSystem,
-  MoveItemsToSystemUsageStatus,
   PostItems,
 } from '../app.types';
 import SystemsJSON from '../mocks/Systems.json';
@@ -246,7 +247,8 @@ describe('items api functions', () => {
     beforeEach(() => {
       moveItemsToSystem = {
         // Prevent test interference if modifying the usage statuses or selected items
-        usageStatusConfig: '0',
+        usesSingleUsageStatus: true,
+        usage_status_config: { id: '0' },
         selectedItems: JSON.parse(JSON.stringify(mockItems)),
         targetSystem: SystemsJSON[1] as System,
       };
@@ -273,7 +275,8 @@ describe('items api functions', () => {
       moveItemsToSystem.selectedItems.map((item) =>
         expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/items/${item.id}`, {
           system_id: moveItemsToSystem.targetSystem.id,
-          usage_status_id: moveItemsToSystem.usageStatusConfig,
+          usage_status_id: (moveItemsToSystem as MoveItemsPopulatedUsageStatus)
+            .usage_status_config.id,
         })
       );
       expect(result.current.data).toEqual(
@@ -286,10 +289,13 @@ describe('items api functions', () => {
     });
 
     it('sends requests to move multiple items to a system and returns a successful response for each (config as list)', async () => {
-      moveItemsToSystem.usageStatusConfig = [
-        { item_id: 'KvT2Ox7n', usage_status_id: '0' },
-        { item_id: 'G463gOIA', usage_status_id: '0' },
-      ];
+      moveItemsToSystem.usesSingleUsageStatus = false;
+      moveItemsToSystem.usage_status_config = {
+        usage_statuses: [
+          { item_id: 'KvT2Ox7n', usage_status_id: '0' },
+          { item_id: 'G463gOIA', usage_status_id: '0' },
+        ],
+      };
       const { result } = renderHook(() => useMoveItemsToSystem(), {
         wrapper: hooksWrapperWithProviders(),
       });
@@ -305,8 +311,10 @@ describe('items api functions', () => {
         expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/items/${item.id}`, {
           system_id: moveItemsToSystem.targetSystem.id,
           usage_status_id: (
-            moveItemsToSystem.usageStatusConfig as Array<MoveItemsToSystemUsageStatus>
-          ).find((status) => status.item_id === item.id)?.usage_status_id,
+            moveItemsToSystem as MoveItemsSelectingUsageStatus
+          ).usage_status_config.usage_statuses.find(
+            (status) => status.item_id === item.id
+          )?.usage_status_id,
         })
       );
       expect(result.current.data).toEqual(
@@ -324,7 +332,7 @@ describe('items api functions', () => {
         name: 'New system name',
         id: 'new_system_id',
       };
-      moveItemsToSystem.usageStatusConfig = '2';
+      moveItemsToSystem.usage_status_config = { id: '2' };
 
       // Fail just the 1st system
       moveItemsToSystem.selectedItems[0].id = 'Error 409';
@@ -344,7 +352,8 @@ describe('items api functions', () => {
       moveItemsToSystem.selectedItems.map((item) =>
         expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/items/${item.id}`, {
           system_id: 'new_system_id',
-          usage_status_id: moveItemsToSystem.usageStatusConfig,
+          usage_status_id: (moveItemsToSystem as MoveItemsPopulatedUsageStatus)
+            .usage_status_config.id,
         })
       );
       expect(result.current.data).toEqual(

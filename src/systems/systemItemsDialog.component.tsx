@@ -182,21 +182,20 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
       return;
     }
 
-    // The configuration of usage statuses depends on if the user is privileged
-    // If they are, then it should be a list, as the usage statuses may not have been prepopulated.
-    // This assumption is made as one would think a user would 'move as Admin' to bypass a rule, which means that there is no dst_usage_status specified for the move.
-
-    const usageStatusConfig = isPrivilegedUser
-      ? convertToSystemUsageStatuses(usageStatuses)
-      : srcSystemTypeId === dstSystemTypeId || selectedRules?.length === 0
-        ? undefined
-        : selectedRules?.[0]?.dst_usage_status?.id;
+    const usage_status_config = {
+      usage_statuses: convertToSystemUsageStatuses(usageStatuses),
+      id:
+        srcSystemTypeId === dstSystemTypeId || selectedRules?.length === 0
+          ? undefined
+          : selectedRules?.[0]?.dst_usage_status?.id,
+    };
 
     // Ensure finished loading and not moving to root
     // (where we don't need to load anything as the name is known)
     if (!targetSystemLoading && targetSystem !== undefined) {
       moveItemsToSystem({
-        usageStatusConfig: usageStatusConfig,
+        usesSingleUsageStatus: !isPrivilegedUser,
+        usage_status_config: usage_status_config,
         selectedItems: selectedItems,
         // Only reason for targetSystem to be undefined here is if not loading at all
         // which happens when at root
@@ -208,7 +207,6 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
       });
     }
   }, [
-    isPrivilegedUser,
     hasSystemErrors,
     usageStatuses,
     srcSystemTypeId,
@@ -217,6 +215,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     targetSystemLoading,
     targetSystem,
     moveItemsToSystem,
+    isPrivilegedUser,
     selectedItems,
     onChangeSelectedItems,
     handleClose,
@@ -309,10 +308,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
         to a different system{isPrivilegedUser ? ' as Admin' : ''}
         {isPrivilegedUser && (
           <Tooltip
-            title={
-              "As an admin, you can bypass rules that restrict item placement for other users, and you can modify the item's usage status"
-            }
-            disableHoverListener={false}
+            title="As an admin, you can bypass rules that restrict item placement for other users, and you can modify the item's usage status"
             data-testid={'admin-status-tooltip'}
             placement="top"
             enterTouchDelay={0}

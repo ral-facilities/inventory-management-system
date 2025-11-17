@@ -151,10 +151,9 @@ export function ItemsTable(props: ItemTableProps) {
     'create' | 'duplicate' | 'edit'
   >('create');
 
-  const [openDialogAsPrivilegedUser, setOpenDialogAsPrivilegedUser] =
+  const [isPrivilegedUserOpeningDialog, setIsPrivilegedUserOpeningDialog] =
     React.useState<boolean>(false);
 
-  // Breadcrumbs + Mui table V2 + extra
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     const viewCatalogueItemProperties = catalogueCategory?.properties ?? [];
     const systemTypeValues = systemTypesData?.map((type) => type.value);
@@ -608,9 +607,9 @@ export function ItemsTable(props: ItemTableProps) {
             open={true}
             onClose={() => {
               table.setCreatingRow(null);
-              setOpenDialogAsPrivilegedUser(false);
+              setIsPrivilegedUserOpeningDialog(false);
             }}
-            isPrivilegedUser={openDialogAsPrivilegedUser}
+            isPrivilegedUser={isPrivilegedUserOpeningDialog}
             duplicate={itemDialogType === 'duplicate'}
             requestType={itemDialogType === 'edit' ? 'patch' : 'post'}
             catalogueCategory={catalogueCategory}
@@ -638,7 +637,7 @@ export function ItemsTable(props: ItemTableProps) {
           variant="outlined"
           onClick={() => {
             setItemsDialogType('create');
-            setOpenDialogAsPrivilegedUser(false);
+            setIsPrivilegedUserOpeningDialog(false);
             table.setCreatingRow(true);
           }}
         >
@@ -652,7 +651,7 @@ export function ItemsTable(props: ItemTableProps) {
             variant="outlined"
             onClick={() => {
               setItemsDialogType('create');
-              setOpenDialogAsPrivilegedUser(true);
+              setIsPrivilegedUserOpeningDialog(true);
               table.setCreatingRow(true);
             }}
           >
@@ -698,7 +697,7 @@ export function ItemsTable(props: ItemTableProps) {
           aria-label={`Edit item ${row.original.item.id}`}
           onClick={() => {
             setItemsDialogType('edit');
-            setOpenDialogAsPrivilegedUser(false);
+            setIsPrivilegedUserOpeningDialog(false);
             table.setCreatingRow(row);
             closeMenu();
           }}
@@ -729,7 +728,7 @@ export function ItemsTable(props: ItemTableProps) {
           aria-label={`Delete item ${row.original.item.id}`}
           onClick={() => {
             setDeleteItemDialogOpen(true);
-            setOpenDialogAsPrivilegedUser(false);
+            setIsPrivilegedUserOpeningDialog(false);
             setSelectedItem(row.original.item);
             closeMenu();
           }}
@@ -749,7 +748,7 @@ export function ItemsTable(props: ItemTableProps) {
                 aria-label={`Edit item ${row.original.item.id}`}
                 onClick={() => {
                   setItemsDialogType('edit');
-                  setOpenDialogAsPrivilegedUser(true);
+                  setIsPrivilegedUserOpeningDialog(true);
                   table.setCreatingRow(row);
                   closeMenu();
                 }}
@@ -765,7 +764,7 @@ export function ItemsTable(props: ItemTableProps) {
                 aria-label={`Duplicate item ${row.original.item.id} as Admin`}
                 onClick={() => {
                   setItemsDialogType('duplicate');
-                  setOpenDialogAsPrivilegedUser(true);
+                  setIsPrivilegedUserOpeningDialog(true);
                   table.setCreatingRow(row);
                   closeMenu();
                 }}
@@ -781,7 +780,7 @@ export function ItemsTable(props: ItemTableProps) {
                 aria-label={`Delete item ${row.original.item.id}`}
                 onClick={() => {
                   setDeleteItemDialogOpen(true);
-                  setOpenDialogAsPrivilegedUser(true);
+                  setIsPrivilegedUserOpeningDialog(true);
                   setSelectedItem(row.original.item);
                   closeMenu();
                 }}
@@ -880,11 +879,11 @@ export function ItemsTable(props: ItemTableProps) {
           open={deleteItemDialogOpen}
           onClose={() => {
             setDeleteItemDialogOpen(false);
-            setOpenDialogAsPrivilegedUser(false);
+            setIsPrivilegedUserOpeningDialog(false);
           }}
           item={selectedItem}
           onChangeItem={setSelectedItem}
-          isPrivilegedUser={openDialogAsPrivilegedUser}
+          isPrivilegedUser={isPrivilegedUserOpeningDialog}
         />
       )}
     </div>

@@ -301,7 +301,7 @@ function ItemDialog(props: ItemDialogProps) {
     } else if (isPrivilegedUser) {
       ItemDetailsStepFormMethods.setValue(
         'usage_status_id',
-        selectedItem?.usage_status_id ?? '', // sets to current usage status if editing
+        selectedItem?.usage_status_id ?? '', // sets to current usage status if editing or duplicating item
         {
           shouldValidate: false, // so error does not instantly appear
         }
@@ -1227,10 +1227,7 @@ function ItemDialog(props: ItemDialogProps) {
 
         {isPrivilegedUser && (
           <Tooltip
-            title={
-              "As an admin, you can bypass rules that restrict item placement for other users, and you can modify the item's usage status"
-            }
-            disableHoverListener={false}
+            title="As an admin, you can bypass rules that restrict item placement for other users, and you can modify the item's usage status"
             data-testid={'admin-status-tooltip'}
             placement="top"
             enterTouchDelay={0}

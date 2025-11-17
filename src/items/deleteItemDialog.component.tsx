@@ -91,10 +91,7 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
         Delete Item{isPrivilegedUser ? ' as Admin' : ''}
         {isPrivilegedUser && (
           <Tooltip
-            title={
-              'As an admin, you can bypass rules that prevent other users from deleting an item'
-            }
-            disableHoverListener={false}
+            title="As an admin, you can bypass rules that prevent other users from deleting an item"
             data-testid={'admin-status-tooltip'}
             placement="top"
             enterTouchDelay={0}

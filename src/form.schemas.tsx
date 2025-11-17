@@ -560,7 +560,7 @@ export const PropertiesStepSchema = z.object({
 
 export const ItemDetailsStepSchema = (
   requestType: RequestType,
-  isPrivilegedUser: boolean // privileged users get shown a different dialog so require different error messages
+  isPrivilegedUser: boolean
 ) => {
   return z.object({
     purchase_order_number: OptionalOrNullableStringSchema({ requestType }),

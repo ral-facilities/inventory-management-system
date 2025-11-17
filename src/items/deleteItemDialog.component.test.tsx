@@ -30,7 +30,7 @@ describe('delete item dialog', () => {
   };
 
   beforeEach(() => {
-    item = { ...getItemById('KvT2Ox7n') }; // prevents item state leaking between tests when mutating it's properties
+    item = { ...getItemById('KvT2Ox7n') };
 
     props = {
       open: true,

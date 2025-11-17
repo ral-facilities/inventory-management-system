@@ -44,9 +44,9 @@ const ItemsActionMenu = (props: {
       uploadAttachmentsEntityId={item.id}
       uploadImagesEntityId={item.id}
       editMenuItem={{
-        onClick: (asPrivilegedUser) => {
+        onClick: (props) => {
           setEditItemDialogOpen(true);
-          setOpenDialogAsPrivilegedUser(asPrivilegedUser === true);
+          setOpenDialogAsPrivilegedUser(props?.isPrivilegedUser === true);
         },
         dialog: (
           <>

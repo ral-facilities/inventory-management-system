@@ -33,7 +33,6 @@ function AuthRoleStatus() {
           <Grid>
             <Tooltip
               title={`The ${role} role enables extra functionality. You can create/delete units and usage statuses, and bypass rules when creating, deleting, editing, or moving items.`}
-              disableHoverListener={false}
               aria-label={'auth-role-status-tooltip'}
             >
               <IconButton

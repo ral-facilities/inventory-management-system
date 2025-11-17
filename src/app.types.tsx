@@ -209,11 +209,25 @@ export interface MoveItemsToSystemUsageStatus {
   item_id: string;
   usage_status_id: string;
 }
-export interface MoveItemsToSystem {
-  usageStatusConfig?: MoveItemsToSystemUsageStatus[] | string;
+
+export interface BaseMoveItemsToSystem {
+  usesSingleUsageStatus: boolean;
   selectedItems: Item[];
   targetSystem: System;
 }
+export interface MoveItemsSelectingUsageStatus extends BaseMoveItemsToSystem {
+  usesSingleUsageStatus: false;
+  usage_status_config: { usage_statuses: MoveItemsToSystemUsageStatus[] };
+}
+
+export interface MoveItemsPopulatedUsageStatus extends BaseMoveItemsToSystem {
+  usesSingleUsageStatus: true;
+  usage_status_config: { id?: string };
+}
+
+export type MoveItemsToSystem =
+  | MoveItemsSelectingUsageStatus
+  | MoveItemsPopulatedUsageStatus;
 
 export interface AdvancedSerialNumberOptionsType {
   quantity: string | null;

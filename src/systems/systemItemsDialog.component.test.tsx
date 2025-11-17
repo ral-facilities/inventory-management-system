@@ -311,7 +311,6 @@ describe('SystemItemsDialog', () => {
     }, 10000);
   });
 
-  // These tests do not extensively test the actual table as they are covered in systemItemsUsageStatus.component.test.tsx
   describe('Move to as Admin', () => {
     beforeEach(() => {
       props.isPrivilegedUser = true;
