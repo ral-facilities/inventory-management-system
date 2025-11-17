@@ -1227,7 +1227,7 @@ describe('ItemDialog', () => {
       props.requestType = 'patch';
     });
 
-    it('displays warning when in admin mode', async () => {
+    it('displays warning when in admin mode for edit', async () => {
       props.isPrivilegedUser = true;
       let baseElement;
       await act(async () => {
