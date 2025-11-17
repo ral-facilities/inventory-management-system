@@ -1,7 +1,6 @@
 import React from 'react';
 import { getUserRole } from './parseTokens';
 import { InventoryManagementSystemSettingsContext } from './configProvider.component';
-import { isRunningInDevelopment } from './utils';
 
 const AuthContext = React.createContext<{
   role: string;
@@ -31,14 +30,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   React.useEffect(() => {
     setAuthorisationState();
 
-    // if dev mode add event listener for if token in localstorage changes
-    if (isRunningInDevelopment()) {
-      window.addEventListener('tokenChanged', setAuthorisationState);
-
-      return () => {
-        window.removeEventListener('tokenChanged', setAuthorisationState);
-      };
-    }
+    // add event listener for if token in localstorage changes
+    window.addEventListener('tokenChanged', setAuthorisationState);
+    return () => {
+      window.removeEventListener('tokenChanged', setAuthorisationState);
+    };
   }, [setAuthorisationState]);
 
   return (
