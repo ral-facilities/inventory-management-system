@@ -1252,6 +1252,8 @@ describe('ItemDialog', () => {
         ).toBeInTheDocument();
       });
 
+      await user.unhover(infoIcon);
+
       expect(baseElement).toMatchSnapshot();
     });
 
