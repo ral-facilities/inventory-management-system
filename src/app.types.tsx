@@ -211,23 +211,23 @@ export interface MoveItemsToSystemUsageStatus {
 }
 
 export interface BaseMoveItemsToSystem {
-  usesSingleUsageStatus: boolean;
+  mode: 'single' | 'multiple';
   selectedItems: Item[];
   targetSystem: System;
 }
-export interface MoveItemsSelectingUsageStatus extends BaseMoveItemsToSystem {
-  usesSingleUsageStatus: false;
-  usage_status_config: { usage_statuses: MoveItemsToSystemUsageStatus[] };
+export interface MoveItemsMultipleUsageStatus extends BaseMoveItemsToSystem {
+  mode: 'multiple';
+  usageStatuses: MoveItemsToSystemUsageStatus[];
 }
 
-export interface MoveItemsPopulatedUsageStatus extends BaseMoveItemsToSystem {
-  usesSingleUsageStatus: true;
-  usage_status_config: { id?: string };
+export interface MoveItemsSingleUsageStatus extends BaseMoveItemsToSystem {
+  mode: 'single';
+  usageStatusId?: string;
 }
 
 export type MoveItemsToSystem =
-  | MoveItemsSelectingUsageStatus
-  | MoveItemsPopulatedUsageStatus;
+  | MoveItemsMultipleUsageStatus
+  | MoveItemsSingleUsageStatus;
 
 export interface AdvancedSerialNumberOptionsType {
   quantity: string | null;

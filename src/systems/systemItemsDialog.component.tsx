@@ -37,7 +37,7 @@ export interface SystemItemsDialogProps {
   selectedItems: Item[];
   onChangeSelectedItems: (selectedItems: MRT_RowSelectionState) => void;
   parentSystemId: string | null;
-  isPrivilegedUser: boolean;
+  isPrivilegedMode: boolean;
 }
 
 export interface UsageStatusesType {
@@ -72,7 +72,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     onClose,
     selectedItems,
     onChangeSelectedItems,
-    isPrivilegedUser,
+    isPrivilegedMode,
   } = props;
 
   // Store here and update only if changed to reduce re-renders and allow
@@ -182,29 +182,39 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
       return;
     }
 
-    const usage_status_config = {
-      usage_statuses: convertToSystemUsageStatuses(usageStatuses),
-      id:
-        srcSystemTypeId === dstSystemTypeId || selectedRules?.length === 0
-          ? undefined
-          : selectedRules?.[0]?.dst_usage_status?.id,
-    };
-
     // Ensure finished loading and not moving to root
     // (where we don't need to load anything as the name is known)
     if (!targetSystemLoading && targetSystem !== undefined) {
-      moveItemsToSystem({
-        usesSingleUsageStatus: !isPrivilegedUser,
-        usage_status_config: usage_status_config,
-        selectedItems: selectedItems,
-        // Only reason for targetSystem to be undefined here is if not loading at all
-        // which happens when at root
-        targetSystem: targetSystem,
-      }).then((response) => {
-        handleTransferState(response);
-        onChangeSelectedItems({});
-        handleClose();
-      });
+      if (isPrivilegedMode) {
+        moveItemsToSystem({
+          mode: 'multiple',
+          usageStatuses: convertToSystemUsageStatuses(usageStatuses),
+          selectedItems: selectedItems,
+          // Only reason for targetSystem to be undefined here is if not loading at all
+          // which happens when at root
+          targetSystem: targetSystem,
+        }).then((response) => {
+          handleTransferState(response);
+          onChangeSelectedItems({});
+          handleClose();
+        });
+      } else {
+        moveItemsToSystem({
+          mode: 'single',
+          usageStatusId:
+            srcSystemTypeId === dstSystemTypeId || selectedRules?.length === 0
+              ? undefined
+              : selectedRules?.[0]?.dst_usage_status?.id,
+          selectedItems: selectedItems,
+          // Only reason for targetSystem to be undefined here is if not loading at all
+          // which happens when at root
+          targetSystem: targetSystem,
+        }).then((response) => {
+          handleTransferState(response);
+          onChangeSelectedItems({});
+          handleClose();
+        });
+      }
     }
   }, [
     hasSystemErrors,
@@ -215,7 +225,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     targetSystemLoading,
     targetSystem,
     moveItemsToSystem,
-    isPrivilegedUser,
+    isPrivilegedMode,
     selectedItems,
     onChangeSelectedItems,
     handleClose,
@@ -273,7 +283,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
                 systemParentId={parentSystemId ?? undefined}
                 isSystemSelectable={(system) => {
                   return (
-                    isPrivilegedUser ||
+                    isPrivilegedMode ||
                     tableRules?.some(
                       (rule) =>
                         rule.dst_system_type?.id === system.type_id ||
@@ -305,8 +315,8 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
       <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
         Move{' '}
         {selectedItems.length > 1 ? `${selectedItems.length} items` : '1 item'}{' '}
-        to a different system{isPrivilegedUser ? ' as Admin' : ''}
-        {isPrivilegedUser && (
+        to a different system{isPrivilegedMode ? ' as Admin' : ''}
+        {isPrivilegedMode && (
           <Tooltip
             title="As an admin, you can bypass rules that restrict item placement for other users, and you can modify the item's usage status"
             data-testid={'admin-status-tooltip'}
@@ -320,7 +330,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
         )}
       </DialogTitle>
       <DialogContent>
-        {isPrivilegedUser && (
+        {isPrivilegedMode && (
           <Stepper
             nonLinear
             activeStep={activeStep}
@@ -363,7 +373,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
         <Button onClick={handleClose} sx={{ mr: 'auto' }}>
           Cancel
         </Button>
-        {isPrivilegedUser && (
+        {isPrivilegedMode && (
           <Button
             disabled={activeStep === 0}
             onClick={handleBack}
@@ -372,7 +382,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
             Back
           </Button>
         )}
-        {isPrivilegedUser ? (
+        {isPrivilegedMode ? (
           activeStep === STEPS.length - 1 ? (
             <Button
               disabled={

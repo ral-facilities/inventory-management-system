@@ -218,11 +218,12 @@ export const useMoveItemsToSystem = (): UseMutationResult<
 
       const promises = moveItemsToSystem.selectedItems.map(
         async (item: Item) => {
-          const usage_status_id = moveItemsToSystem.usesSingleUsageStatus
-            ? moveItemsToSystem.usage_status_config.id
-            : moveItemsToSystem.usage_status_config.usage_statuses.find(
-                (status) => status.item_id === item.id
-              )?.usage_status_id;
+          const usage_status_id =
+            moveItemsToSystem.mode === 'single'
+              ? moveItemsToSystem.usageStatusId
+              : moveItemsToSystem.usageStatuses.find(
+                  (status) => status.item_id === item.id
+                )?.usage_status_id;
 
           return patchItem(item.id, {
             system_id: moveItemsToSystem.targetSystem?.id || '',

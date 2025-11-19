@@ -1,11 +1,6 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { MockInstance } from 'vitest';
-import {
-  MoveItemsPopulatedUsageStatus,
-  MoveItemsSelectingUsageStatus,
-  MoveItemsToSystem,
-  PostItems,
-} from '../app.types';
+import { MoveItemsToSystem, PostItems } from '../app.types';
 import SystemsJSON from '../mocks/Systems.json';
 import {
   getItemById,
@@ -247,8 +242,8 @@ describe('items api functions', () => {
     beforeEach(() => {
       moveItemsToSystem = {
         // Prevent test interference if modifying the usage statuses or selected items
-        usesSingleUsageStatus: true,
-        usage_status_config: { id: '0' },
+        mode: 'single',
+        usageStatusId: '0',
         selectedItems: JSON.parse(JSON.stringify(mockItems)),
         targetSystem: SystemsJSON[1] as System,
       };
@@ -272,13 +267,16 @@ describe('items api functions', () => {
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
-      moveItemsToSystem.selectedItems.map((item) =>
-        expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/items/${item.id}`, {
-          system_id: moveItemsToSystem.targetSystem.id,
-          usage_status_id: (moveItemsToSystem as MoveItemsPopulatedUsageStatus)
-            .usage_status_config.id,
-        })
-      );
+
+      moveItemsToSystem.selectedItems.map((item) => {
+        if (moveItemsToSystem.mode === 'single') {
+          expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/items/${item.id}`, {
+            system_id: moveItemsToSystem.targetSystem.id,
+            usage_status_id: moveItemsToSystem.usageStatusId,
+          });
+        }
+      });
+
       expect(result.current.data).toEqual(
         moveItemsToSystem.selectedItems.map((item) => ({
           message: `Successfully moved to Giant laser`,
@@ -289,9 +287,10 @@ describe('items api functions', () => {
     });
 
     it('sends requests to move multiple items to a system and returns a successful response for each (config as list)', async () => {
-      moveItemsToSystem.usesSingleUsageStatus = false;
-      moveItemsToSystem.usage_status_config = {
-        usage_statuses: [
+      moveItemsToSystem = {
+        ...moveItemsToSystem,
+        mode: 'multiple',
+        usageStatuses: [
           { item_id: 'KvT2Ox7n', usage_status_id: '0' },
           { item_id: 'G463gOIA', usage_status_id: '0' },
         ],
@@ -307,16 +306,18 @@ describe('items api functions', () => {
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
-      moveItemsToSystem.selectedItems.map((item) =>
-        expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/items/${item.id}`, {
-          system_id: moveItemsToSystem.targetSystem.id,
-          usage_status_id: (
-            moveItemsToSystem as MoveItemsSelectingUsageStatus
-          ).usage_status_config.usage_statuses.find(
-            (status) => status.item_id === item.id
-          )?.usage_status_id,
-        })
-      );
+
+      moveItemsToSystem.selectedItems.map((item) => {
+        if (moveItemsToSystem.mode === 'multiple') {
+          expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/items/${item.id}`, {
+            system_id: moveItemsToSystem.targetSystem.id,
+            usage_status_id: moveItemsToSystem.usageStatuses.find(
+              (status) => status.item_id === item.id
+            )?.usage_status_id,
+          });
+        }
+      });
+
       expect(result.current.data).toEqual(
         moveItemsToSystem.selectedItems.map((item) => ({
           message: `Successfully moved to Giant laser`,
@@ -327,12 +328,16 @@ describe('items api functions', () => {
     });
 
     it('handles a failed request to move items to a system correctly', async () => {
-      moveItemsToSystem.targetSystem = {
-        ...(SystemsJSON[0] as System),
-        name: 'New system name',
-        id: 'new_system_id',
+      moveItemsToSystem = {
+        ...moveItemsToSystem,
+        targetSystem: {
+          ...(SystemsJSON[0] as System),
+          name: 'New system name',
+          id: 'new_system_id',
+        },
+        mode: 'single',
+        usageStatusId: '2',
       };
-      moveItemsToSystem.usage_status_config = { id: '2' };
 
       // Fail just the 1st system
       moveItemsToSystem.selectedItems[0].id = 'Error 409';
@@ -349,13 +354,16 @@ describe('items api functions', () => {
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
-      moveItemsToSystem.selectedItems.map((item) =>
-        expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/items/${item.id}`, {
-          system_id: 'new_system_id',
-          usage_status_id: (moveItemsToSystem as MoveItemsPopulatedUsageStatus)
-            .usage_status_config.id,
-        })
-      );
+
+      moveItemsToSystem.selectedItems.map((item) => {
+        if (moveItemsToSystem.mode === 'single') {
+          expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/items/${item.id}`, {
+            system_id: 'new_system_id',
+            usage_status_id: moveItemsToSystem.usageStatusId,
+          });
+        }
+      });
+
       expect(result.current.data).toEqual(
         moveItemsToSystem.selectedItems
           .map((item, index) =>
