@@ -176,6 +176,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
 
   const apiSettings = React.useContext(APISettingsContext);
   const sparesFilterState = apiSettings?.spares?.sparesFilterState;
+  const isSparesDefinitionDefined = !!apiSettings.spares;
 
   // States
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
@@ -303,29 +304,34 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           </MuiLink>
         ),
       },
-      {
-        header: 'Number of spares',
-        Header: TableHeaderOverflowTip,
-        size: 350,
-        accessorFn: (row: TableRowData) => row.catalogueItem.number_of_spares,
-        id: 'catalogueItem.number_of_spares',
-        filterVariant: COLUMN_FILTER_VARIANTS.number,
-        filterFn: COLUMN_FILTER_FUNCTIONS.number,
-        columnFilterModeOptions: [
-          ...COLUMN_FILTER_MODE_OPTIONS.number,
-          ...OPTIONAL_FILTER_MODE_OPTIONS,
-        ],
-        GroupedCell: TableGroupedCell,
-        Cell: ({ row }) => (
-          <MuiLink
-            underline="hover"
-            component={Link}
-            to={`${row.original.catalogueItem.id}/items${sparesFilterState}`}
-          >
-            {row.original.catalogueItem.number_of_spares}
-          </MuiLink>
-        ),
-      },
+      ...(isSparesDefinitionDefined
+        ? [
+            {
+              header: 'Number of spares',
+              Header: TableHeaderOverflowTip,
+              size: 350,
+              accessorFn: (row: TableRowData) =>
+                row.catalogueItem.number_of_spares,
+              id: 'catalogueItem.number_of_spares',
+              filterVariant: COLUMN_FILTER_VARIANTS.number,
+              filterFn: COLUMN_FILTER_FUNCTIONS.number,
+              columnFilterModeOptions: [
+                ...COLUMN_FILTER_MODE_OPTIONS.number,
+                ...OPTIONAL_FILTER_MODE_OPTIONS,
+              ],
+              GroupedCell: TableGroupedCell,
+              Cell: ({ row }: { row: MRT_Row<TableRowData> }) => (
+                <MuiLink
+                  underline="hover"
+                  component={Link}
+                  to={`${row.original.catalogueItem.id}/items${sparesFilterState}`}
+                >
+                  {row.original.catalogueItem.number_of_spares}
+                </MuiLink>
+              ),
+            },
+          ]
+        : []),
       {
         header: 'Description',
         Header: TableHeaderOverflowTip,
@@ -674,7 +680,12 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         enableGrouping: false,
       },
     ];
-  }, [dense, parentInfo.properties, sparesFilterState]);
+  }, [
+    dense,
+    isSparesDefinitionDefined,
+    parentInfo.properties,
+    sparesFilterState,
+  ]);
 
   const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
     selectedRowState ?? {}
