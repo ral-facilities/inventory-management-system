@@ -18,7 +18,6 @@ const handleIMS_APIError = (error: AxiosError, broadcast = true): void => {
   // should not be possible due to SciGateway verifying the user itself, so we follow DataGateway's
   // approach and don't display any of these errors.
 
-  // see https://github.com/ral-facilities/inventory-management-system/issues/1622 about 403 error
   if (broadcast && status !== 403) {
     let broadcastMessage;
     if (!error.response)
