@@ -34,7 +34,7 @@ describe('SystemItemsDialog', () => {
       selectedItems: mockSelectedItems,
       onChangeSelectedItems: mockOnChangeSelectedItems,
       parentSystemId: SystemsJSON[0].id,
-      isPrivilegedUser: false,
+      isPrivilegedMode: false,
     };
 
     user = userEvent.setup();
@@ -73,7 +73,7 @@ describe('SystemItemsDialog', () => {
   });
 
   it('displays correctly when in admin mode', async () => {
-    props.isPrivilegedUser = true;
+    props.isPrivilegedMode = true;
     let baseElement;
     await act(async () => {
       baseElement = createView().baseElement;
@@ -313,7 +313,7 @@ describe('SystemItemsDialog', () => {
 
   describe('Move to as Admin', () => {
     beforeEach(() => {
-      props.isPrivilegedUser = true;
+      props.isPrivilegedMode = true;
     });
 
     afterEach(() => {

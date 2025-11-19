@@ -151,7 +151,7 @@ export function ItemsTable(props: ItemTableProps) {
     'create' | 'duplicate' | 'edit'
   >('create');
 
-  const [isPrivilegedUserOpeningDialog, setIsPrivilegedUserOpeningDialog] =
+  const [isPrivilegedMode, setIsPrivilegedMode] =
     React.useState<boolean>(false);
 
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
@@ -607,9 +607,9 @@ export function ItemsTable(props: ItemTableProps) {
             open={true}
             onClose={() => {
               table.setCreatingRow(null);
-              setIsPrivilegedUserOpeningDialog(false);
+              setIsPrivilegedMode(false);
             }}
-            isPrivilegedUser={isPrivilegedUserOpeningDialog}
+            isPrivilegedMode={isPrivilegedMode}
             duplicate={itemDialogType === 'duplicate'}
             requestType={itemDialogType === 'edit' ? 'patch' : 'post'}
             catalogueCategory={catalogueCategory}
@@ -637,7 +637,7 @@ export function ItemsTable(props: ItemTableProps) {
           variant="outlined"
           onClick={() => {
             setItemsDialogType('create');
-            setIsPrivilegedUserOpeningDialog(false);
+            setIsPrivilegedMode(false);
             table.setCreatingRow(true);
           }}
         >
@@ -651,7 +651,7 @@ export function ItemsTable(props: ItemTableProps) {
             variant="outlined"
             onClick={() => {
               setItemsDialogType('create');
-              setIsPrivilegedUserOpeningDialog(true);
+              setIsPrivilegedMode(true);
               table.setCreatingRow(true);
             }}
           >
@@ -697,7 +697,7 @@ export function ItemsTable(props: ItemTableProps) {
           aria-label={`Edit item ${row.original.item.id}`}
           onClick={() => {
             setItemsDialogType('edit');
-            setIsPrivilegedUserOpeningDialog(false);
+            setIsPrivilegedMode(false);
             table.setCreatingRow(row);
             closeMenu();
           }}
@@ -728,7 +728,7 @@ export function ItemsTable(props: ItemTableProps) {
           aria-label={`Delete item ${row.original.item.id}`}
           onClick={() => {
             setDeleteItemDialogOpen(true);
-            setIsPrivilegedUserOpeningDialog(false);
+            setIsPrivilegedMode(false);
             setSelectedItem(row.original.item);
             closeMenu();
           }}
@@ -748,7 +748,7 @@ export function ItemsTable(props: ItemTableProps) {
                 aria-label={`Edit item ${row.original.item.id}`}
                 onClick={() => {
                   setItemsDialogType('edit');
-                  setIsPrivilegedUserOpeningDialog(true);
+                  setIsPrivilegedMode(true);
                   table.setCreatingRow(row);
                   closeMenu();
                 }}
@@ -764,7 +764,7 @@ export function ItemsTable(props: ItemTableProps) {
                 aria-label={`Duplicate item ${row.original.item.id} as Admin`}
                 onClick={() => {
                   setItemsDialogType('duplicate');
-                  setIsPrivilegedUserOpeningDialog(true);
+                  setIsPrivilegedMode(true);
                   table.setCreatingRow(row);
                   closeMenu();
                 }}
@@ -780,7 +780,7 @@ export function ItemsTable(props: ItemTableProps) {
                 aria-label={`Delete item ${row.original.item.id}`}
                 onClick={() => {
                   setDeleteItemDialogOpen(true);
-                  setIsPrivilegedUserOpeningDialog(true);
+                  setIsPrivilegedMode(true);
                   setSelectedItem(row.original.item);
                   closeMenu();
                 }}
@@ -879,11 +879,11 @@ export function ItemsTable(props: ItemTableProps) {
           open={deleteItemDialogOpen}
           onClose={() => {
             setDeleteItemDialogOpen(false);
-            setIsPrivilegedUserOpeningDialog(false);
+            setIsPrivilegedMode(false);
           }}
           item={selectedItem}
           onChangeItem={setSelectedItem}
-          isPrivilegedUser={isPrivilegedUserOpeningDialog}
+          isPrivilegedMode={isPrivilegedMode}
         />
       )}
     </div>

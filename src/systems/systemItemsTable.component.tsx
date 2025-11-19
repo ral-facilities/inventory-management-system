@@ -56,7 +56,7 @@ const MoveItemsButton = (props: {
   selectedItems: Item[];
   system: System;
   onChangeSelectedItems: (selectedItems: MRT_RowSelectionState) => void;
-  openDialogAsPrivilegedUser: boolean;
+  isPrivilegedMode: boolean;
 }) => {
   const [moveItemsDialogOpen, setMoveItemsDialogOpen] =
     React.useState<boolean>(false);
@@ -70,7 +70,7 @@ const MoveItemsButton = (props: {
         disabled={props.selectedItems.length === 0}
         onClick={() => setMoveItemsDialogOpen(true)}
       >
-        {`Move to ${props.openDialogAsPrivilegedUser ? 'as Admin' : ''}`}
+        {`Move to ${props.isPrivilegedMode ? 'as Admin' : ''}`}
       </Button>
       <SystemItemsDialog
         open={moveItemsDialogOpen}
@@ -78,7 +78,7 @@ const MoveItemsButton = (props: {
         selectedItems={props.selectedItems}
         onChangeSelectedItems={props.onChangeSelectedItems}
         parentSystemId={props.system.id}
-        isPrivilegedUser={props.openDialogAsPrivilegedUser}
+        isPrivilegedMode={props.isPrivilegedMode}
       />
     </>
   );
@@ -110,7 +110,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
   const [deleteItemDialogOpen, setDeleteItemDialogOpen] =
     React.useState<boolean>(false);
 
-  const [openDialogAsPrivilegedUser, setOpenDialogAsPrivilegedUser] =
+  const [isPrivilegedMode, setIsPrivilegedMode] =
     React.useState<boolean>(false);
   const [selectedItem, setSelectedItem] = React.useState<Item | undefined>(
     undefined
@@ -534,9 +534,9 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           open={true}
           onClose={() => {
             table.setCreatingRow(null);
-            setOpenDialogAsPrivilegedUser(false);
+            setIsPrivilegedMode(false);
           }}
-          isPrivilegedUser={openDialogAsPrivilegedUser}
+          isPrivilegedMode={isPrivilegedMode}
           duplicate={itemDialogType === 'duplicate'}
           requestType={itemDialogType === 'edit' ? 'patch' : 'post'}
           // Intentionally left undefined here as will fetch inside dialog only when needed instead
@@ -571,14 +571,14 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
               selectedItems={selectedItems}
               system={system}
               onChangeSelectedItems={setRowSelection}
-              openDialogAsPrivilegedUser={false}
+              isPrivilegedMode={false}
             />
             {isPrivilegedUser && (
               <MoveItemsButton
                 selectedItems={selectedItems}
                 system={system}
                 onChangeSelectedItems={setRowSelection}
-                openDialogAsPrivilegedUser={true}
+                isPrivilegedMode={true}
               />
             )}
           </>
@@ -640,7 +640,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                 aria-label={`Edit item ${row.original.item.id}`}
                 onClick={() => {
                   setItemsDialogType('edit');
-                  setOpenDialogAsPrivilegedUser(true);
+                  setIsPrivilegedMode(true);
                   table.setCreatingRow(row);
                   closeMenu();
                 }}
@@ -656,7 +656,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                 aria-label={`Duplicate item ${row.original.item.id} as Admin`}
                 onClick={() => {
                   setItemsDialogType('duplicate');
-                  setOpenDialogAsPrivilegedUser(true);
+                  setIsPrivilegedMode(true);
                   table.setCreatingRow(row);
                   closeMenu();
                 }}
@@ -672,7 +672,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                 aria-label={`Delete item ${row.original.item.id}`}
                 onClick={() => {
                   setDeleteItemDialogOpen(true);
-                  setOpenDialogAsPrivilegedUser(true);
+                  setIsPrivilegedMode(true);
                   setSelectedItem(row.original.item);
                   closeMenu();
                 }}
@@ -708,9 +708,9 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           open={deleteItemDialogOpen}
           onClose={() => {
             setDeleteItemDialogOpen(false);
-            setOpenDialogAsPrivilegedUser(false);
+            setIsPrivilegedMode(false);
           }}
-          isPrivilegedUser={openDialogAsPrivilegedUser}
+          isPrivilegedMode={isPrivilegedMode}
           item={selectedItem}
           onChangeItem={setSelectedItem}
         />

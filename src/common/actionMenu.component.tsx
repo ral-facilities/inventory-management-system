@@ -13,7 +13,7 @@ import { StyledUppyBox } from './uppy.utils';
 export interface ActionMenuProps {
   ariaLabelPrefix: string;
   editMenuItem: {
-    onClick: (props?: { isPrivilegedUser?: boolean }) => void;
+    onClick: (props?: { isPrivilegedMode?: boolean }) => void;
     dialog: React.ReactNode;
   };
   printMenuItem?: boolean;
@@ -141,7 +141,7 @@ function ActionMenu(props: ActionMenuProps) {
               <Divider />
               <MenuItem
                 onClick={() => {
-                  editMenuItem.onClick({ isPrivilegedUser: true });
+                  editMenuItem.onClick({ isPrivilegedMode: true });
                   handleMenuClose();
                 }}
               >

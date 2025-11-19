@@ -144,7 +144,7 @@ export interface ItemDialogProps {
   catalogueItem?: CatalogueItem;
   catalogueCategory?: CatalogueCategory;
   selectedItem?: Item;
-  isPrivilegedUser: boolean;
+  isPrivilegedMode: boolean;
 }
 
 function ItemDialog(props: ItemDialogProps) {
@@ -155,7 +155,7 @@ function ItemDialog(props: ItemDialogProps) {
     duplicate,
     catalogueItem,
     selectedItem,
-    isPrivilegedUser,
+    isPrivilegedMode,
   } = props;
 
   // Fetch the catalogue category if it hasn't already been given (as required to know what properties are available)
@@ -225,7 +225,7 @@ function ItemDialog(props: ItemDialogProps) {
     resolver: zodResolver(
       ItemDetailsStepSchema(
         requestType,
-        isPrivilegedUser && parentSystemId !== null
+        isPrivilegedMode && parentSystemId !== null
       )
     ),
     defaultValues: toItemDetailsStep(selectedItem),
@@ -298,7 +298,7 @@ function ItemDialog(props: ItemDialogProps) {
           shouldValidate: true,
         });
       }
-    } else if (isPrivilegedUser) {
+    } else if (isPrivilegedMode) {
       ItemDetailsStepFormMethods.setValue(
         'usage_status_id',
         selectedItem?.usage_status_id ?? '', // sets to current usage status if editing or duplicating item
@@ -313,7 +313,7 @@ function ItemDialog(props: ItemDialogProps) {
     ItemDetailsStepFormMethods,
     srcSystemTypeId,
     dstSystemTypeId,
-    isPrivilegedUser,
+    isPrivilegedMode,
     selectedItem?.usage_status_id,
   ]);
 
@@ -339,14 +339,14 @@ function ItemDialog(props: ItemDialogProps) {
       // Clears usage status error if privileged user as they may be selecting
       // a system with no rule, and so no usage status. Therefore we want to
       // ensure the error is always cleared to behave as other dialogs.
-      if (isPrivilegedUser) {
+      if (isPrivilegedMode) {
         clearErrorsDetailsStep(['usage_status_id']);
       }
     }
   }, [
     clearErrorsDetailsStep,
     clearErrorsPropertiesStep,
-    isPrivilegedUser,
+    isPrivilegedMode,
     parentSystemId,
     selectedItem?.system_id,
   ]);
@@ -530,7 +530,7 @@ function ItemDialog(props: ItemDialogProps) {
           } else if (
             !isDstSystemTypeSameAsSrcSystemType &&
             (!selectedRules || selectedRules.length === 0) &&
-            !isPrivilegedUser
+            !isPrivilegedMode
           ) {
             const allowedDstSystemTypes =
               tableRules?.map((rule) => rule.dst_system_type?.value) || [];
@@ -556,7 +556,7 @@ function ItemDialog(props: ItemDialogProps) {
       isDstSystemTypeSameAsSrcSystemType,
       parentSystemId,
       tableRules,
-      isPrivilegedUser,
+      isPrivilegedMode,
     ]
   );
 
@@ -579,7 +579,7 @@ function ItemDialog(props: ItemDialogProps) {
       } else if (
         !isDstSystemTypeSameAsSrcSystemType &&
         (!selectedRules || selectedRules.length === 0) &&
-        !isPrivilegedUser
+        !isPrivilegedMode
       ) {
         const allowedDstSystemTypes =
           tableRules?.map((rule) => rule.dst_system_type?.value) || [];
@@ -629,7 +629,7 @@ function ItemDialog(props: ItemDialogProps) {
       parentSystemId,
       requestType,
       tableRules,
-      isPrivilegedUser,
+      isPrivilegedMode,
     ]
   );
 
@@ -670,7 +670,7 @@ function ItemDialog(props: ItemDialogProps) {
               systemParentId={parentSystemId ?? undefined}
               isSystemSelectable={(system) => {
                 return (
-                  isPrivilegedUser ||
+                  isPrivilegedMode ||
                   tableRules?.some(
                     (rule) =>
                       rule.dst_system_type?.id === system.type_id ||
@@ -960,7 +960,7 @@ function ItemDialog(props: ItemDialogProps) {
                 render={({ field: { value, onChange } }) => (
                   <Autocomplete
                     disableClearable={value != null}
-                    disabled={!isPrivilegedUser}
+                    disabled={!isPrivilegedMode}
                     id="item-usage-status-input"
                     value={
                       usageStatuses?.find(
@@ -982,7 +982,7 @@ function ItemDialog(props: ItemDialogProps) {
                       <TextField
                         {...params}
                         required={true}
-                        disabled={!isPrivilegedUser}
+                        disabled={!isPrivilegedMode}
                         label="Usage status"
                         error={!!errorsDetailsStep.usage_status_id}
                         helperText={errorsDetailsStep.usage_status_id?.message}
@@ -1223,9 +1223,9 @@ function ItemDialog(props: ItemDialogProps) {
   return (
     <Dialog open={open} maxWidth="xl" fullWidth>
       <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
-        {`${requestType === 'patch' ? 'Edit' : 'Add'} Item${isPrivilegedUser ? ' as Admin' : ''}`}
+        {`${requestType === 'patch' ? 'Edit' : 'Add'} Item${isPrivilegedMode ? ' as Admin' : ''}`}
 
-        {isPrivilegedUser && (
+        {isPrivilegedMode && (
           <Tooltip
             title="As an admin, you can bypass rules that restrict item placement for other users, and you can modify the item's usage status"
             data-testid={'admin-status-tooltip'}
