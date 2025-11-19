@@ -259,11 +259,10 @@ export function Layout() {
   function handler(e: Event): void {
     // attempt to re-render the plugin if we get told to
     const action = (e as CustomEvent).detail;
-    console.log(action);
     if (requestPluginRerender.match(action)) forceUpdate();
     else if (tokenRefreshed.match(action)) {
       retryFailedAuthRequests();
-      window.dispatchEvent(new CustomEvent('tokenChanged')); // triggers refresh in authProvider
+      window.dispatchEvent(new CustomEvent('token_updated')); // triggers refresh in authProvider
     } else if (broadcastSignOut.match(action)) clearFailedAuthRequestsQueue();
   }
 

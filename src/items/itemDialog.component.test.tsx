@@ -1242,8 +1242,6 @@ describe('ItemDialog', () => {
 
       const infoIcon = screen.getByTestId('admin-status-tooltip');
 
-      await user.hover(infoIcon);
-
       await waitFor(() => {
         expect(
           screen.getByText(

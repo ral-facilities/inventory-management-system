@@ -1,8 +1,6 @@
 import React from 'react';
 import { getUserRole } from './parseTokens';
 import { InventoryManagementSystemSettingsContext } from './configProvider.component';
-import { MicroFrontendId } from './app.types';
-// import { tokenRefreshed } from './state/scigateway.actions';
 
 const AuthContext = React.createContext<{
   role: string;
@@ -33,12 +31,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setAuthorisationState();
 
     // add event listener for if token in localstorage changes
-
-    window.addEventListener(MicroFrontendId, setAuthorisationState);
+    window.addEventListener('token_updated', setAuthorisationState);
     return () => {
-      window.removeEventListener(MicroFrontendId, setAuthorisationState);
+      window.removeEventListener('token_updated', setAuthorisationState);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setAuthorisationState]);
 
   return (
