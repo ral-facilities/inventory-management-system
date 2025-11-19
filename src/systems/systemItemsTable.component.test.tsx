@@ -315,6 +315,56 @@ describe('SystemItemsTable', () => {
     });
   });
 
+  it('can open the edit as admin dialog and close it again', async () => {
+    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
+      role: 'admin',
+      isPrivilegedUser: true,
+    });
+
+    createView();
+
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Turbomolecular Pumps 42 (2)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    const expandButtons = screen.getAllByRole('button', {
+      name: 'Expand',
+    });
+    await user.click(expandButtons[0]);
+
+    const serialNumber = '5xE1KSraISvu';
+    await waitFor(() => {
+      expect(screen.getAllByText(serialNumber)).toHaveLength(2);
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Edit as Admin')).toBeInTheDocument();
+    });
+
+    const editButton = screen.getByText('Edit as Admin');
+    await user.click(editButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
   it('can open the duplicate dialog and close it again', async () => {
     createView();
 
@@ -347,6 +397,56 @@ describe('SystemItemsTable', () => {
     });
 
     const duplicateButton = screen.getByText('Duplicate');
+    await user.click(duplicateButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('can open the duplicate dialog as admin and close it again', async () => {
+    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
+      role: 'admin',
+      isPrivilegedUser: true,
+    });
+
+    createView();
+
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Turbomolecular Pumps 42 (2)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    const expandButtons = screen.getAllByRole('button', {
+      name: 'Expand',
+    });
+    await user.click(expandButtons[0]);
+
+    const serialNumber = '5xE1KSraISvu';
+    await waitFor(() => {
+      expect(screen.getAllByText(serialNumber)).toHaveLength(2);
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Duplicate as Admin')).toBeInTheDocument();
+    });
+
+    const duplicateButton = screen.getByText('Duplicate as Admin');
     await user.click(duplicateButton);
 
     await waitFor(() => {
@@ -531,6 +631,56 @@ describe('SystemItemsTable', () => {
     });
 
     const deleteButton = screen.getByText('Delete');
+    await user.click(deleteButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('can open the delete as admin dialog and close it again', async () => {
+    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
+      role: 'admin',
+      isPrivilegedUser: true,
+    });
+
+    createView();
+
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Turbomolecular Pumps 42 (2)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    const expandButtons = screen.getAllByRole('button', {
+      name: 'Expand',
+    });
+    await user.click(expandButtons[0]);
+
+    const serialNumber = '5xE1KSraISvu';
+    await waitFor(() => {
+      expect(screen.getAllByText(serialNumber)).toHaveLength(2);
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Delete as Admin')).toBeInTheDocument();
+    });
+
+    const deleteButton = screen.getByText('Delete as Admin');
     await user.click(deleteButton);
 
     await waitFor(() => {

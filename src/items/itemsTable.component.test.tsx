@@ -504,6 +504,39 @@ describe('Items Table', () => {
     });
   });
 
+  it('can open the duplicate as admin dialog and close it again', async () => {
+    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
+      role: 'admin',
+      isPrivilegedUser: true,
+    });
+
+    createView();
+
+    const serialNumber = '5YUQDDjKpz2z';
+    await waitFor(() => {
+      expect(screen.getByText(serialNumber)).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Duplicate as Admin')).toBeInTheDocument();
+    });
+
+    const duplicateButton = screen.getByText('Duplicate as Admin');
+    await user.click(duplicateButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
   it('can open the duplicate dialog and checks that the notes have been updated', async () => {
     createView();
 
@@ -643,6 +676,40 @@ describe('Items Table', () => {
     });
 
     const deleteButton = screen.getByText('Delete');
+
+    await user.click(deleteButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('can opens the delete as admin dialog and close it again', async () => {
+    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
+      role: 'admin',
+      isPrivilegedUser: true,
+    });
+
+    createView();
+
+    const serialNumber = '5YUQDDjKpz2z';
+    await waitFor(() => {
+      expect(screen.getByText(serialNumber)).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Delete as Admin')).toBeInTheDocument();
+    });
+
+    const deleteButton = screen.getByText('Delete as Admin');
 
     await user.click(deleteButton);
 

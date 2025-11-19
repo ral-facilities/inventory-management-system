@@ -79,6 +79,28 @@ describe('ActionMenu Component', () => {
     expect(screen.getByTestId('edit-dialog')).toBeInTheDocument();
   });
 
+  it('triggers edit as admin action and closes menu on clicking Edit', async () => {
+    createView();
+
+    // Open the menu
+    const actionButton = screen.getByLabelText(
+      'catalogue items landing page actions menu'
+    );
+    await user.click(actionButton);
+
+    // Click on the "Edit as Admin" option
+    const editButton = screen.getByText('Edit as Admin');
+    await user.click(editButton);
+
+    // Verify that the mock edit function was called
+    expect(mockEditMenuItem.onClick).toHaveBeenCalledWith({
+      isPrivilegedMode: true,
+    });
+
+    // Check if the dialog is displayed
+    expect(screen.getByTestId('edit-dialog')).toBeInTheDocument();
+  });
+
   it('triggers window print and closes menu on clicking Print', async () => {
     createView();
 
