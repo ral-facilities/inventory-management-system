@@ -1,23 +1,17 @@
-import { InfoOutlined } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
-  Alert,
   Box,
   Button,
-  IconButton,
   ListItemIcon,
   ListItemText,
   MenuItem,
   Link as MuiLink,
   TableCellBaseProps,
-  Tooltip,
-  Typography,
 } from '@mui/material';
-import Grid from '@mui/material/Grid2';
 import {
   MaterialReactTable,
   useMaterialReactTable,
@@ -38,6 +32,7 @@ import { useGetUsageStatuses } from '../api/usageStatuses';
 import { APISettingsContext } from '../apiConfigProvider.component';
 import type { SystemTableType } from '../app.types';
 import { findPropertyValue } from '../catalogue/items/catalogueItemsTable.component';
+import MRTTopTableAlert from '../common/mrtTopTableAlert.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import {
   COLUMN_FILTER_BOOLEAN_OPTIONS,
@@ -731,64 +726,20 @@ export function ItemsTable(props: ItemTableProps) {
       {isSparesDefinitionDefined &&
         sparesDefinition &&
         isSparesFilterApplied && (
-          <Alert
-            color="info"
-            icon={false}
-            sx={() => ({
-              '& .MuiAlert-message': {
-                width: '100%',
-              },
-              borderRadius: 0,
-              fontSize: '1rem',
-              left: 0,
-              p: 0,
-              position: 'relative',
-              right: 0,
-              top: 0,
-              width: '100%',
-              zIndex: 2,
-            })}
-          >
-            <Grid container alignItems="center" sx={{ px: 1, py: 0.5 }}>
-              <Grid size={2} />
-              <Grid size={8}>
-                <Box display="flex" alignItems="center" justifyContent="center">
-                  <Typography variant="inherit" sx={{ pr: 1 }}>
-                    Spares Definition Filter Applied
-                  </Typography>
-                  <Tooltip
-                    title={
-                      sparesDefinition.system_types.length === 1
-                        ? `Items that are contained within the system type ${sparesDefinition.system_types[0].value} are classified as spares`
-                        : `Items that are contained within a system type of one of ${sparesDefinition.system_types
-                            .map((sys) => sys.value)
-                            .join(', ')
-                            .replace(
-                              /, ([^,]*)$/,
-                              ' or $1'
-                            )} are classified as spares`
-                    }
-                  >
-                    <InfoOutlined fontSize="small" />
-                  </Tooltip>
-                </Box>
-              </Grid>
-              <Grid size={2} display="flex" justifyContent="flex-end">
-                <Tooltip title="Clear Spares Definition Filter">
-                  <span>
-                    <IconButton
-                      size="small"
-                      aria-label="Clear Spares Definition Filter"
-                      onClick={() => table.resetColumnFilters()}
-                      sx={{ color: 'inherit' }}
-                    >
-                      <ClearIcon fontSize="small" />
-                    </IconButton>
-                  </span>
-                </Tooltip>
-              </Grid>
-            </Grid>
-          </Alert>
+          <MRTTopTableAlert
+            title="Spares Definition Filter Applied"
+            clearFilters={table.resetColumnFilters}
+            clearFiltersAriaLabel="Clear Spares Definition Filter"
+            showInfoTooltip
+            infoTooltipTitle={
+              sparesDefinition.system_types.length === 1
+                ? `Items that are contained within the system type ${sparesDefinition.system_types[0].value} are classified as spares`
+                : `Items that are contained within a system type of one of ${sparesDefinition.system_types
+                    .map((sys) => sys.value)
+                    .join(', ')
+                    .replace(/, ([^,]*)$/, ' or $1')} are classified as spares`
+            }
+          />
         )}
       <MaterialReactTable table={table} />
       {!dense && selectedItem && (
