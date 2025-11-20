@@ -17,8 +17,8 @@ const APIConfigTest: React.FC = (): React.ReactElement => {
 
 describe('APIConfigProvider', () => {
   beforeEach(() => {
-    global.document.dispatchEvent = vi.fn();
-    global.CustomEvent = vi.fn();
+    globalThis.document.dispatchEvent = vi.fn();
+    globalThis.CustomEvent = vi.fn();
   });
 
   afterEach(() => {

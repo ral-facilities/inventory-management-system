@@ -29,7 +29,7 @@ describe('Upload image dialog', () => {
     };
     user = userEvent.setup();
     xhrPostSpy = vi.spyOn(window.XMLHttpRequest.prototype, 'open');
-    global.URL.createObjectURL = vi.fn(() => 'mocked-url');
+    globalThis.URL.createObjectURL = vi.fn(() => 'mocked-url');
     vi.spyOn(console, 'error').mockImplementation(() => {});
   });
 
