@@ -85,7 +85,7 @@
     "@testing-library/react": "16.3.0",
     "@testing-library/user-event": "14.6.1",
     "@types/eslint-plugin-jsx-a11y": "6.10.0",
-    "@vitest/coverage-v8": "4.0.9",
+    "@vitest/coverage-v8": "4.0.12",
     "cross-env": "10.1.0",
     "cypress": "14.5.4",
     "eslint": "9.39.1",
@@ -105,7 +105,7 @@
     "serve-static": "2.2.0",
     "start-server-and-test": "2.1.2",
     "typescript-eslint": "8.46.3",
-    "vitest": "4.0.9"
+    "vitest": "4.0.12"
   },
   "msw": {
     "workerDirectory": "public"
