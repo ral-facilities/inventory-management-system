@@ -37,8 +37,8 @@ function isExactFilterActive(
   table: MRT_TableInstance<TableRowData>,
   expectedFilters: { id: string; filterFn?: string; value: string }[]
 ) {
-  const actualFilters = table.getState().columnFilters;
-  const actualFilterFns = table.getState().columnFilterFns;
+  const { columnFilters: actualFilters, columnFilterFns: actualFilterFns } =
+    table.getState();
 
   // Check length matches
   if (actualFilters.length !== expectedFilters.length) return false;
