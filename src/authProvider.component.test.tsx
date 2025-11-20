@@ -59,7 +59,7 @@ describe('AuthProvider', () => {
     });
   });
 
-  it('re calculates auth state on token update', async () => {
+  it('recalculates auth state on token update', async () => {
     localStorageGetItemMock.mockImplementationOnce(() => DEFAULT_ROLE_TOKEN);
     renderComponent();
 

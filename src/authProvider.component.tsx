@@ -1,6 +1,7 @@
 import React from 'react';
 import { getUserRole } from './parseTokens';
 import { InventoryManagementSystemSettingsContext } from './configProvider.component';
+import { TokenUpdatedType } from './state/actions/actions.types';
 
 const AuthContext = React.createContext<{
   role: string;
@@ -31,9 +32,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setAuthorisationState();
 
     // add event listener for if token in localstorage changes
-    window.addEventListener('token_updated', setAuthorisationState);
+    window.addEventListener(TokenUpdatedType, setAuthorisationState);
     return () => {
-      window.removeEventListener('token_updated', setAuthorisationState);
+      window.removeEventListener(TokenUpdatedType, setAuthorisationState);
     };
   }, [setAuthorisationState]);
 

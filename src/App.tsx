@@ -69,6 +69,7 @@ import SystemsLayout, {
 } from './systems/systemsLayout.component';
 import ViewTabs from './view/viewTabs.component';
 import { AuthProvider } from './authProvider.component';
+import { TokenUpdatedType } from './state/actions/actions.types';
 
 export const queryClient = new QueryClient({
   queryCache: new QueryCache({
@@ -262,7 +263,7 @@ export function Layout() {
     if (requestPluginRerender.match(action)) forceUpdate();
     else if (tokenRefreshed.match(action)) {
       retryFailedAuthRequests();
-      window.dispatchEvent(new CustomEvent('token_updated')); // triggers refresh in authProvider
+      window.dispatchEvent(new CustomEvent(TokenUpdatedType)); // triggers refresh in authProvider
     } else if (broadcastSignOut.match(action)) clearFailedAuthRequestsQueue();
   }
 
