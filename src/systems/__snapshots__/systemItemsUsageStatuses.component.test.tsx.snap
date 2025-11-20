@@ -680,26 +680,6 @@ exports[`SystemItemsUsageStatusTable > renders correctly 1`] = `
                       />
                     </svg>
                   </button>
-                  <button
-                    aria-label="Column Actions"
-                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1a3u37w-MuiButtonBase-root-MuiIconButton-root"
-                    data-mui-internal-clone-element="true"
-                    tabindex="0"
-                    type="button"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                      data-testid="MoreVertIcon"
-                      focusable="false"
-                      style="transform: scale(0.9);"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
-                      />
-                    </svg>
-                  </button>
                 </div>
               </div>
             </th>

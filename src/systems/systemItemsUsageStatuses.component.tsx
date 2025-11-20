@@ -190,6 +190,7 @@ export function SystemItemsUsageStatusTable(
         Header: TableHeaderOverflowTip,
         id: 'item.usage_status',
         size: 350,
+        enableColumnActions: false,
         AggregatedCell: ({ row }) => {
           return (
             <FormControl size="small" fullWidth>
