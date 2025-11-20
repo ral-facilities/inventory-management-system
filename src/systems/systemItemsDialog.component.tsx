@@ -400,7 +400,16 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
               Finish
             </Button>
           ) : (
-            <Button onClick={() => handleNext(activeStep)} sx={{ mr: 3 }}>
+            <Button
+              disabled={
+                placeIntoSystemError !== undefined ||
+                !(parentSystemId === null
+                  ? true
+                  : !targetSystemLoading && targetSystem !== undefined)
+              }
+              onClick={() => handleNext(activeStep)}
+              sx={{ mr: 3 }}
+            >
               Next
             </Button>
           )

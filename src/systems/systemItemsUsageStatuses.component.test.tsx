@@ -271,4 +271,43 @@ describe('SystemItemsUsageStatusTable', () => {
       { item_id: 'QQen23yW', catalogue_item_id: '25', usage_status_id: '2' },
     ]);
   });
+
+  it('sets the table filters and clears the table filters', async () => {
+    createView();
+
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Cameras 1 (2)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    // Ensure no loading bars visible
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
+    const clearFiltersButton = screen.getByRole('button', {
+      name: 'Clear Filters',
+    });
+    expect(clearFiltersButton).toBeDisabled();
+
+    const nameInput = screen.getByLabelText('Filter by Serial Number');
+
+    await user.type(nameInput, '5y');
+
+    await waitFor(() => {
+      expect(screen.queryByText('vYs9Vxx6yWbn')).not.toBeInTheDocument();
+    });
+
+    await user.click(clearFiltersButton);
+
+    await waitFor(() => {
+      expect(screen.getByText('vYs9Vxx6yWbn')).toBeInTheDocument();
+    });
+  });
 });
