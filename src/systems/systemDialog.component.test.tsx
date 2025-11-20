@@ -217,7 +217,7 @@ describe('Systems Dialog', () => {
 
       expect(
         screen.getByText(
-          'A System with the same name already exists within the same parent System. Please enter a different name.'
+          'A system with the same name already exists within the same parent System. Please enter a different name.'
         )
       ).toBeInTheDocument();
       expect(mockOnClose).not.toHaveBeenCalled();
@@ -419,7 +419,7 @@ describe('Systems Dialog', () => {
 
       expect(
         screen.getByText(
-          'A System with the same name already exists within the same parent System. Please enter a different name.'
+          'A system with the same name already exists within the same parent System. Please enter a different name.'
         )
       ).toBeInTheDocument();
       expect(mockOnClose).not.toHaveBeenCalled();
