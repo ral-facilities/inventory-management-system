@@ -458,13 +458,13 @@ describe('Systems', () => {
       cy.findByRole('option', { name: 'Operational' }).click();
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByText(
-        'A system with the same name already exists within the same parent System. Please enter a different name.'
+        'A system with the same name already exists within the parent system. Please enter a different name.'
       ).should('be.visible');
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
       cy.findByRole('button', { name: 'Add System' }).click();
       cy.findByText(
-        'A system with the same name already exists within the same parent System. Please enter a different name.'
+        'A system with the same name already exists within the parent system. Please enter a different name.'
       ).should('not.exist');
     });
 
@@ -648,7 +648,7 @@ describe('Systems', () => {
       cy.findByLabelText('Name *').type('Error 409');
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByText(
-        'A system with the same name already exists within the same parent System. Please enter a different name.'
+        'A system with the same name already exists within the parent system. Please enter a different name.'
       ).should('be.visible');
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
@@ -657,7 +657,7 @@ describe('Systems', () => {
       cy.findByText('Edit').click();
 
       cy.findByText(
-        'A system with the same name already exists within the same parent System. Please enter a different name.'
+        'A system with the same name already exists within the parent system. Please enter a different name.'
       ).should('not.exist');
     });
   });
