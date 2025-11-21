@@ -170,7 +170,8 @@ export default defineConfig(({ mode }) => {
       deps: {
         optimizer: {
           client: {
-            enabled: true,
+            // See https://github.com/vitest-dev/vitest/issues/7950, seems this doesn't work right now
+            enabled: false,
             include: [
               '@mui/material',
               '@mui/icons-material',

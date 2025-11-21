@@ -4,13 +4,13 @@ exports[`CardViewFilters > renders dialog correctly 1`] = `
 <body>
   <div>
     <table
-      class="MuiTable-root MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1ku6z9h-MuiGrid2-root css-1xwxv7r-MuiTable-root"
+      class="MuiTable-root MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-10ha4wk-MuiTable-root-MuiGrid2-root"
     >
       <thead
-        class="MuiTableHead-root MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-18r0zme-MuiGrid2-root css-1a7iywq-MuiTableHead-root"
+        class="MuiTableHead-root MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-13r68m6-MuiTableHead-root-MuiGrid2-root"
       >
         <tr
-          class="MuiTableRow-root MuiTableRow-head MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-18r0zme-MuiGrid2-root css-1xtozoh-MuiTableRow-root"
+          class="MuiTableRow-root MuiTableRow-head MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-suiz1z-MuiTableRow-root-MuiGrid2-root"
         >
           <th
             aria-sort="none"

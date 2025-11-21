@@ -104,7 +104,7 @@ exports[`Home page component > homepage renders correctly 1`] = `
                 Catalogue
               </h3>
               <p
-                class="MuiTypography-root MuiTypography-body1 css-1i0o32f css-rizt0-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 css-zfzl7o-MuiTypography-root"
               >
                 Browse catalogue categories, sub categories and catalogue items to locate specific items or add new ones.
               </p>
@@ -150,12 +150,12 @@ exports[`Home page component > homepage renders correctly 1`] = `
               class="MuiBox-root css-bvoom2"
             >
               <h4
-                class="MuiTypography-root MuiTypography-h4 css-13wasa5 css-f84ov1-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-h4 css-stzmw-MuiTypography-root"
               >
                 Systems
               </h4>
               <p
-                class="MuiTypography-root MuiTypography-body1 css-1i0o32f css-rizt0-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 css-zfzl7o-MuiTypography-root"
               >
                 Navigate through systems and their sub systems to view their component items.
               </p>
@@ -186,12 +186,12 @@ exports[`Home page component > homepage renders correctly 1`] = `
               class="MuiBox-root css-bvoom2"
             >
               <h4
-                class="MuiTypography-root MuiTypography-h4 css-13wasa5 css-f84ov1-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-h4 css-stzmw-MuiTypography-root"
               >
                 Manufacturers
               </h4>
               <p
-                class="MuiTypography-root MuiTypography-body1 css-1i0o32f css-rizt0-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 css-zfzl7o-MuiTypography-root"
               >
                 View the manufacturers of parts used by EPAC.
               </p>
@@ -225,12 +225,12 @@ exports[`Home page component > homepage renders correctly 1`] = `
                 class="MuiBox-root css-bvoom2"
               >
                 <h4
-                  class="MuiTypography-root MuiTypography-h4 css-1yppny8 css-f84ov1-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-h4 css-1998a9a-MuiTypography-root"
                 >
                   EPAC
                 </h4>
                 <p
-                  class="MuiTypography-root MuiTypography-body1 css-1i0o32f css-uksnwd-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-1pkra2e-MuiTypography-root"
                 >
                   World-leading centre for scientific and industrial research.
                 </p>
