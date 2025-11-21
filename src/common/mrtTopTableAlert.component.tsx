@@ -69,7 +69,7 @@ const MRTTopTableAlert = (props: MRTTopTableAlertProps) => {
                 <IconButton
                   size="small"
                   aria-label={clearFiltersAriaLabel}
-                  onClick={() => clearFilters()}
+                  onClick={clearFilters}
                   sx={{ color: 'inherit' }}
                 >
                   <ClearIcon fontSize="small" />
