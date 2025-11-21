@@ -1,7 +1,9 @@
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { http, HttpResponse } from 'msw';
 import { CatalogueCategory } from '../../api/api.types';
 import APIConfigProvider from '../../apiConfigProvider.component';
+import { server } from '../../mocks/server';
 import {
   getCatalogueCategoryById,
   renderComponentWithRouterProvider,
@@ -52,12 +54,18 @@ describe('Catalogue Items Table', () => {
     vi.clearAllMocks();
   });
 
-  it('renders table correctly (section 1 due to column virtualisation )', async () => {
+  it('renders table correctly (section 1 due to column virtualisation) and checks for number of spares column', async () => {
     createView();
     await waitFor(() => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
     expect(screen.getByText('Last modified')).toBeInTheDocument();
+    expect(screen.getByText('View Items')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Show/Hide columns' }));
+    await user.click(screen.getByText('Hide all'));
+
+    expect(screen.getByText('Number of spares')).toBeInTheDocument();
   });
 
   it('renders table correctly (Cameras more details)', async () => {
@@ -902,6 +910,26 @@ describe('Catalogue Items Table', () => {
 
     await waitFor(() => {
       expect(screen.getByDisplayValue('Details')).toBeInTheDocument();
+    });
+  });
+
+  it('renders table correctly (section 1 due to column virtualisation) without spares', async () => {
+    server.use(
+      http.get('/v1/settings/spares-definition', () => {
+        return HttpResponse.json(undefined, { status: 204 });
+      })
+    );
+
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Name')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Show/Hide columns' }));
+    await user.click(screen.getByText('Hide all'));
+
+    await waitFor(() => {
+      expect(screen.queryByText('Number of spares')).not.toBeInTheDocument();
     });
   });
 });

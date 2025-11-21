@@ -1,7 +1,9 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { http, HttpResponse } from 'msw';
 import { System } from '../api/api.types';
 import APIConfigProvider from '../apiConfigProvider.component';
+import { server } from '../mocks/server';
 import SystemsJSON from '../mocks/Systems.json';
 import { getSystemById, renderComponentWithRouterProvider } from '../testUtils';
 import {
@@ -42,6 +44,44 @@ describe('SystemItemsTable', () => {
   });
 
   it('renders correctly', async () => {
+    const view = createView();
+
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Turbomolecular Pumps 42 (2)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    // Ensure no loading bars visible
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
+    // Expand a group so all columns are rendered to improve test coverage
+    // (expanding all causes an infinite loop due to an issue with details panels)
+    await user.click(screen.getAllByRole('button', { name: 'Expand' })[0]);
+    //also unhide created column
+    await user.click(
+      await screen.findByRole('button', { name: 'Show/Hide columns' })
+    );
+    await user.click(screen.getByText('Created'));
+
+    // Rest in a snapshot
+    expect(view.asFragment()).toMatchSnapshot();
+  });
+
+  it('renders correctly (without spares)', async () => {
+    server.use(
+      http.get('/v1/settings/spares-definition', () => {
+        return HttpResponse.json(undefined, { status: 204 });
+      })
+    );
     const view = createView();
 
     // Name (obtained from catalogue category item)

@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import {
   MRT_ColumnDef,
+  MRT_Row,
   MRT_RowSelectionState,
   MaterialReactTable,
   useMaterialReactTable,
@@ -117,6 +118,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
 
   const apiSettings = React.useContext(APISettingsContext);
   const sparesFilterState = apiSettings?.spares?.sparesFilterState;
+  const isSparesDefinitionDefined = !!apiSettings.spares;
 
   // Obtain the selected system data, not just the selection state
   const selectedRowIds = Object.keys(rowSelection);
@@ -232,40 +234,45 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           );
         },
       },
-      {
-        header: 'Number of Spares',
-        Header: TableHeaderOverflowTip,
-        // This needs to be a string to allow the AggregatedCell to render correctly.
-        // If not, it does not display. This seems to be a Material React Table (MRT) issue.
-        accessorFn: (row) => String(row.catalogueItem.number_of_spares ?? 0),
-        id: 'catalogueItem.number_of_spares',
-        filterVariant: COLUMN_FILTER_VARIANTS.number,
-        filterFn: COLUMN_FILTER_FUNCTIONS.number,
-        columnFilterModeOptions: [
-          ...COLUMN_FILTER_MODE_OPTIONS.number,
-          ...OPTIONAL_FILTER_MODE_OPTIONS,
-        ],
-        GroupedCell: TableGroupedCell,
-        AggregatedCell: ({ row }) => (
-          <MuiLink
-            underline="hover"
-            component={Link}
-            to={`/catalogue/${row.original.catalogueItem?.catalogue_category_id}/items/${row.original?.catalogueItem?.id}/items${sparesFilterState}`}
-          >
-            {row.original?.catalogueItem?.number_of_spares}
-          </MuiLink>
-        ),
-        size: 300,
-        Cell: ({ row }) => (
-          <MuiLink
-            underline="hover"
-            component={Link}
-            to={`/catalogue/${row.original.catalogueItem?.catalogue_category_id}/items/${row.original?.catalogueItem?.id}/items${sparesFilterState}`}
-          >
-            {row.original?.catalogueItem?.number_of_spares}
-          </MuiLink>
-        ),
-      },
+      ...(isSparesDefinitionDefined
+        ? [
+            {
+              header: 'Number of Spares',
+              Header: TableHeaderOverflowTip,
+              // This needs to be a string to allow the AggregatedCell to render correctly.
+              // If not, it does not display. This seems to be a Material React Table (MRT) issue.
+              accessorFn: (row: TableRowData) =>
+                String(row.catalogueItem.number_of_spares ?? 0),
+              id: 'catalogueItem.number_of_spares',
+              filterVariant: COLUMN_FILTER_VARIANTS.number,
+              filterFn: COLUMN_FILTER_FUNCTIONS.number,
+              columnFilterModeOptions: [
+                ...COLUMN_FILTER_MODE_OPTIONS.number,
+                ...OPTIONAL_FILTER_MODE_OPTIONS,
+              ],
+              GroupedCell: TableGroupedCell,
+              AggregatedCell: ({ row }: { row: MRT_Row<TableRowData> }) => (
+                <MuiLink
+                  underline="hover"
+                  component={Link}
+                  to={`/catalogue/${row.original.catalogueItem?.catalogue_category_id}/items/${row.original?.catalogueItem?.id}/items${sparesFilterState}`}
+                >
+                  {row.original?.catalogueItem?.number_of_spares}
+                </MuiLink>
+              ),
+              size: 300,
+              Cell: ({ row }: { row: MRT_Row<TableRowData> }) => (
+                <MuiLink
+                  underline="hover"
+                  component={Link}
+                  to={`/catalogue/${row.original.catalogueItem?.catalogue_category_id}/items/${row.original?.catalogueItem?.id}/items${sparesFilterState}`}
+                >
+                  {row.original?.catalogueItem?.number_of_spares}
+                </MuiLink>
+              ),
+            },
+          ]
+        : []),
       {
         header: 'Serial Number',
         Header: TableHeaderOverflowTip,
@@ -384,7 +391,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         size: 300,
       },
     ];
-  }, [sparesFilterState, usageStatusData]);
+  }, [isSparesDefinitionDefined, sparesFilterState, usageStatusData]);
 
   const initialColumnFilterFnState = React.useMemo(() => {
     return getInitialColumnFilterFnState(columns);
