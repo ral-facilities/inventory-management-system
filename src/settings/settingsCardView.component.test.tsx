@@ -1,12 +1,12 @@
 import { screen, waitFor } from '@testing-library/react';
 import { renderComponentWithRouterProvider } from '../testUtils';
-import AdminCardView from './adminCardView.component';
+import SettingsCardView from './settingsCardView.component';
 
-describe('AdminCardView', () => {
+describe('SettingsCardView', () => {
   const createView = () => {
-    return renderComponentWithRouterProvider(<AdminCardView />);
+    return renderComponentWithRouterProvider(<SettingsCardView />);
   };
-  it('renders admin card view correctly', async () => {
+  it('renders settings card view correctly', async () => {
     const view = createView();
 
     await waitFor(() => {

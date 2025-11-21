@@ -1,6 +1,6 @@
 describe('Rules page', () => {
   beforeEach(() => {
-    cy.visit('/admin-ims/rules');
+    cy.visit('/settings/rules');
   });
 
   it('renders table correctly', () => {

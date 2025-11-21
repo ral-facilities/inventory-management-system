@@ -19,7 +19,7 @@ export const TAB_VALUES = [
   'Catalogue',
   'Systems',
   'Manufacturers',
-  'Admin',
+  'Settings',
 ] as const;
 
 export type TabValue = (typeof TAB_VALUES)[number];
@@ -32,7 +32,7 @@ export interface TransferState {
 
 export enum RoutesHomeLocation {
   Catalogue = 'catalogue',
-  Admin = 'admin-ims',
+  Settings = 'settings',
   Systems = 'systems',
   Manufacturers = 'manufacturers',
 }

@@ -28,3 +28,13 @@ export const readSciGatewayToken = (): SciGatewayToken => {
   }
   return null;
 };
+
+export const getUserRole = (): string => {
+  const token = localStorage.getItem(MicroFrontendToken);
+  if (token) {
+    const parsedToken = JSON.parse(parseJwt(token));
+    return parsedToken.role ?? 'default';
+  }
+
+  return 'default';
+};

@@ -2,12 +2,12 @@ import { Button, Card, CardContent, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import { Link } from 'react-router';
 
-export interface AdminCardProps {
+export interface SettingsCardProps {
   title: string;
   to: string;
 }
 
-function AdminCard(props: AdminCardProps) {
+function SettingsCard(props: SettingsCardProps) {
   const { title, to } = props;
   return (
     <Grid size={{ xs: 12, sm: 6 }}>
@@ -50,4 +50,4 @@ function AdminCard(props: AdminCardProps) {
   );
 }
 
-export default AdminCard;
+export default SettingsCard;
