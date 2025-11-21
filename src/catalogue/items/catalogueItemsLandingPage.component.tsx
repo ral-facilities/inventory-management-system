@@ -70,6 +70,7 @@ function CatalogueItemsLandingPage() {
 
   const apiSettings = React.useContext(APISettingsContext);
   const sparesFilterState = apiSettings?.spares?.sparesFilterState;
+  const isSparesDefinitionDefined = !!apiSettings.spares;
 
   const isParentCorrect =
     catalogueItemIdData?.catalogue_category_id === catalogueCategoryId;
@@ -197,31 +198,33 @@ function CatalogueItemsLandingPage() {
 
                       <Grid container size={12}>
                         <Grid container spacing={1}>
-                          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-                            <Typography
-                              align="left"
-                              sx={{
-                                color: 'text.primary',
-                              }}
-                            >
-                              Number of spares
-                            </Typography>
-
-                            <Typography
-                              align="left"
-                              sx={{
-                                color: 'text.secondary',
-                              }}
-                            >
-                              <MuiLink
-                                underline="hover"
-                                component={Link}
-                                to={`items${sparesFilterState}`}
+                          {isSparesDefinitionDefined && (
+                            <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+                              <Typography
+                                align="left"
+                                sx={{
+                                  color: 'text.primary',
+                                }}
                               >
-                                {catalogueItemIdData.number_of_spares}
-                              </MuiLink>
-                            </Typography>
-                          </Grid>
+                                Number of spares
+                              </Typography>
+
+                              <Typography
+                                align="left"
+                                sx={{
+                                  color: 'text.secondary',
+                                }}
+                              >
+                                <MuiLink
+                                  underline="hover"
+                                  component={Link}
+                                  to={`items${sparesFilterState}`}
+                                >
+                                  {catalogueItemIdData.number_of_spares}
+                                </MuiLink>
+                              </Typography>
+                            </Grid>
+                          )}
                           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
                             <Typography
                               align="left"

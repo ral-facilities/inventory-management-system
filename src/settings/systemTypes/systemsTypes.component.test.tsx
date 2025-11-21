@@ -85,6 +85,10 @@ describe('SystemTypes', () => {
 
     expect(sparesDefinitionButton).toBeDisabled();
 
+    expect(
+      await screen.findByText('Spares Definition Filter Applied')
+    ).toBeInTheDocument();
+
     const clearFiltersButton = screen.getByRole('button', {
       name: 'Clear Filters',
     });
@@ -93,6 +97,12 @@ describe('SystemTypes', () => {
 
     await waitFor(() => {
       expect(screen.getByText('Operational')).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.queryByText('Spares Definition Filter Applied')
+      ).not.toBeInTheDocument();
     });
 
     expect(clearFiltersButton).toBeDisabled();
