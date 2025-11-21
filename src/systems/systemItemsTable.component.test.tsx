@@ -3,6 +3,7 @@ import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { System } from '../api/api.types';
 import APIConfigProvider from '../apiConfigProvider.component';
+import * as authProvider from '../authProvider.component';
 import { server } from '../mocks/server';
 import SystemsJSON from '../mocks/Systems.json';
 import { getSystemById, renderComponentWithRouterProvider } from '../testUtils';
@@ -10,7 +11,6 @@ import {
   SystemItemsTable,
   SystemItemsTableProps,
 } from './systemItemsTable.component';
-import * as authProvider from '../authProvider.component';
 
 describe('SystemItemsTable', () => {
   vi.setConfig({ testTimeout: 10000 });
@@ -82,6 +82,8 @@ describe('SystemItemsTable', () => {
       await screen.findByRole('button', { name: 'Show/Hide columns' })
     );
     await user.click(screen.getByText('Created'));
+
+    expect(await screen.findByText('Clear Filters')).toBeInTheDocument();
 
     // Rest in a snapshot
     expect(view.asFragment()).toMatchSnapshot();
