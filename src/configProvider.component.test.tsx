@@ -38,6 +38,7 @@ vi.mock('./settings', () => ({
       '.webp',
     ],
     maxImageSizeBytes: 52428800,
+    privilegedRoles: ['admin'],
     routes: [
       {
         section: 'homepage',
@@ -123,6 +124,7 @@ describe('ConfigProvider', () => {
           '.webp',
         ],
         maxImageSizeBytes: 52428800,
+        privilegedRoles: ['admin'],
         routes: [
           {
             section: 'homepage',

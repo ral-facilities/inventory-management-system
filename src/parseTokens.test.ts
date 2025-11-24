@@ -1,34 +1,55 @@
-import { readSciGatewayToken } from './parseTokens';
+import { getUserRole, readSciGatewayToken } from './parseTokens';
+import {
+  ADMIN_ROLE_TOKEN,
+  DEFAULT_ROLE_TOKEN,
+  NO_USERNAME_TOKEN,
+} from './testUtils';
 
-describe('readSciGatewayToken', () => {
+describe('parseTokens', () => {
   const localStorageGetItemMock = vi.spyOn(
     window.localStorage.__proto__,
     'getItem'
   );
 
-  it('should read token from local storage', () => {
-    localStorageGetItemMock.mockImplementationOnce(
-      () =>
-        'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJhdXRob3Jpc2VkX3JvdXRlcyI6bnVsbCwiZXhwIjoxNjQwOTk1MjAwfQ.Qar3mbQ_a4Ih6InEgT-Yk-86-77uoRltjv5m0M7Yp-4OhatXJ93nHJ-CNDGVCcXV2gfsiNfuXc7GOJs3vQ31XqWELU04L27E9T4ZrihIS7WUNlIGo18vFbL3IOnOqkDgvnPvHqFxa-Bk3Acppgn8yq9_fqoDWNLaGNhKKZovwobkxoNJF6wgj12OjJz4_-hHlHeMfEamosIivh0SHkGs_gAJdXBltfX4uqUStXKZmkW8TfPTU07iMzp9csCUbp3IDLMEcEN9H7V1QSnTFSjoeenXnXitrUY1ygmy1nreKGGfhhFkCBFWe6h65bEsbtVMWIJjq0JnefCQ8rsamJHXsw'
-    );
-    const result = readSciGatewayToken();
-    expect(result).toEqual(
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJhdXRob3Jpc2VkX3JvdXRlcyI6bnVsbCwiZXhwIjoxNjQwOTk1MjAwfQ.Qar3mbQ_a4Ih6InEgT-Yk-86-77uoRltjv5m0M7Yp-4OhatXJ93nHJ-CNDGVCcXV2gfsiNfuXc7GOJs3vQ31XqWELU04L27E9T4ZrihIS7WUNlIGo18vFbL3IOnOqkDgvnPvHqFxa-Bk3Acppgn8yq9_fqoDWNLaGNhKKZovwobkxoNJF6wgj12OjJz4_-hHlHeMfEamosIivh0SHkGs_gAJdXBltfX4uqUStXKZmkW8TfPTU07iMzp9csCUbp3IDLMEcEN9H7V1QSnTFSjoeenXnXitrUY1ygmy1nreKGGfhhFkCBFWe6h65bEsbtVMWIJjq0JnefCQ8rsamJHXsw'
-    );
+  describe('readSciGatewayToken', () => {
+    afterEach(() => {
+      vi.clearAllMocks();
+    });
+
+    it('should read token from local storage', () => {
+      localStorageGetItemMock.mockImplementationOnce(() => ADMIN_ROLE_TOKEN);
+      const result = readSciGatewayToken();
+      expect(result).toEqual(ADMIN_ROLE_TOKEN);
+    });
+
+    it("should return null if token doesn't contain username field", () => {
+      localStorageGetItemMock.mockImplementationOnce(() => NO_USERNAME_TOKEN);
+      const result = readSciGatewayToken();
+      expect(result).toEqual(null);
+    });
+
+    it("should return null if token doesn't exist", () => {
+      localStorageGetItemMock.mockImplementationOnce(() => null);
+      const result = readSciGatewayToken();
+      expect(result).toEqual(null);
+    });
   });
 
-  it("should return null if token doesn't contain username field", () => {
-    localStorageGetItemMock.mockImplementationOnce(
-      () =>
-        'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdXRob3Jpc2VkX3JvdXRlcyI6bnVsbCwiZXhwIjoxNjQwOTk1MjAwfQ.Qar3mbQ_a4Ih6InEgT-Yk-86-77uoRltjv5m0M7Yp-4OhatXJ93nHJ-CNDGVCcXV2gfsiNfuXc7GOJs3vQ31XqWELU04L27E9T4ZrihIS7WUNlIGo18vFbL3IOnOqkDgvnPvHqFxa-Bk3Acppgn8yq9_fqoDWNLaGNhKKZovwobkxoNJF6wgj12OjJz4_-hHlHeMfEamosIivh0SHkGs_gAJdXBltfX4uqUStXKZmkW8TfPTU07iMzp9csCUbp3IDLMEcEN9H7V1QSnTFSjoeenXnXitrUY1ygmy1nreKGGfhhFkCBFWe6h65bEsbtVMWIJjq0JnefCQ8rsamJHXsw'
-    );
-    const result = readSciGatewayToken();
-    expect(result).toEqual(null);
-  });
+  describe('getUserRole', () => {
+    afterEach(() => {
+      vi.clearAllMocks();
+    });
 
-  it("should return null if token doesn't exist", () => {
-    localStorageGetItemMock.mockImplementationOnce(() => null);
-    const result = readSciGatewayToken();
-    expect(result).toEqual(null);
+    it('should return `default` if user has no role in token', () => {
+      localStorageGetItemMock.mockImplementationOnce(() => DEFAULT_ROLE_TOKEN);
+      const result = getUserRole();
+      expect(result).toEqual('default');
+    });
+
+    it('should return admin if user has admin role', () => {
+      localStorageGetItemMock.mockImplementationOnce(() => ADMIN_ROLE_TOKEN);
+      const result = getUserRole();
+      expect(result).toEqual('admin');
+    });
   });
 });

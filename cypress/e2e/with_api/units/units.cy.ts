@@ -2,8 +2,9 @@ import { addUnits, deleteUnits } from './functions';
 
 describe('Units', () => {
   beforeEach(() => {
+    cy.setCurrentUserToAdmin();
     cy.dropIMSCollections(['units']);
-    cy.visit('/admin-ims/units');
+    cy.visit('/settings/units');
   });
   afterEach(() => {
     cy.clearMocks();

@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Admin Error Component > renders Admin error page correctly 1`] = `
+exports[`Settings Error Component > renders Settings error page correctly 1`] = `
 <DocumentFragment>
   <div>
     <div
@@ -38,9 +38,9 @@ exports[`Admin Error Component > renders Admin error page correctly 1`] = `
         <a
           class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1amp05l-MuiTypography-root-MuiLink-root"
           data-discover="true"
-          href="/admin-ims"
+          href="/settings"
         >
-          admin home page
+          settings home page
         </a>
          .
       </p>
@@ -49,24 +49,24 @@ exports[`Admin Error Component > renders Admin error page correctly 1`] = `
 </DocumentFragment>
 `;
 
-exports[`Admin Layout > renders admin layout page correctly 1`] = `
+exports[`Settings Layout > renders settings layout page correctly 1`] = `
 <DocumentFragment>
   <div
     class="MuiBox-root css-v2kfba"
   >
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1gc5pr5-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-12ucijv-MuiGrid2-root"
     >
       <div
-        class="MuiBox-root css-70qvj9"
+        class="MuiBox-root css-1ko6z0"
       >
         <span
-          aria-label="Admin Home"
+          aria-label="Settings Home"
           class=""
           data-mui-internal-clone-element="true"
         >
           <button
-            aria-label="navigate to admin home"
+            aria-label="navigate to settings home"
             class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
             tabindex="0"
             type="button"
@@ -98,24 +98,24 @@ exports[`Admin Layout > renders admin layout page correctly 1`] = `
 </DocumentFragment>
 `;
 
-exports[`Admin Layout > renders units breadcrumbs correctly 1`] = `
+exports[`Settings Layout > renders units breadcrumbs correctly 1`] = `
 <DocumentFragment>
   <div
     class="MuiBox-root css-v2kfba"
   >
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1gc5pr5-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-12ucijv-MuiGrid2-root"
     >
       <div
-        class="MuiBox-root css-70qvj9"
+        class="MuiBox-root css-1ko6z0"
       >
         <span
-          aria-label="Admin Home"
+          aria-label="Settings Home"
           class=""
           data-mui-internal-clone-element="true"
         >
           <button
-            aria-label="navigate to admin home"
+            aria-label="navigate to settings home"
             class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
             tabindex="0"
             type="button"
@@ -183,24 +183,24 @@ exports[`Admin Layout > renders units breadcrumbs correctly 1`] = `
 </DocumentFragment>
 `;
 
-exports[`Admin Layout > renders usage statuses breadcrumbs correctly 1`] = `
+exports[`Settings Layout > renders usage statuses breadcrumbs correctly 1`] = `
 <DocumentFragment>
   <div
     class="MuiBox-root css-v2kfba"
   >
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1gc5pr5-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-12ucijv-MuiGrid2-root"
     >
       <div
-        class="MuiBox-root css-70qvj9"
+        class="MuiBox-root css-1ko6z0"
       >
         <span
-          aria-label="Admin Home"
+          aria-label="Settings Home"
           class=""
           data-mui-internal-clone-element="true"
         >
           <button
-            aria-label="navigate to admin home"
+            aria-label="navigate to settings home"
             class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
             tabindex="0"
             type="button"

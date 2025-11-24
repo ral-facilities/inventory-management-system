@@ -151,6 +151,11 @@ export const fetchSettings =
           throw new Error('maxImageSizeBytes is undefined in settings');
         }
 
+        // Ensure the privilegedRoles value exists.
+        if (!('privilegedRoles' in settings)) {
+          throw new Error('privilegedRoles is undefined in settings');
+        }
+
         if (Array.isArray(settings['routes']) && settings['routes'].length) {
           settings['routes'].forEach((route: PluginRoute, index: number) => {
             if (
