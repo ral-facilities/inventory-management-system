@@ -1,6 +1,6 @@
 describe('System Types', () => {
   beforeEach(() => {
-    cy.visit('/admin-ims/system-types');
+    cy.visit('/settings/system-types');
   });
   afterEach(() => {
     cy.clearMocks();

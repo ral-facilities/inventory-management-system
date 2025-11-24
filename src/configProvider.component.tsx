@@ -30,6 +30,7 @@ const initialConfiguration: InventoryManagementSystemSettings = {
     '.webp',
   ],
   maxImageSizeBytes: 52428800,
+  privilegedRoles: ['admin'],
   routes: [],
   pluginHost: '',
 };

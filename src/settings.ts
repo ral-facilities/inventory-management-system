@@ -7,6 +7,7 @@ export interface InventoryManagementSystemSettings {
   attachmentAllowedFileExtensions: string[];
   imageAllowedFileExtensions: string[];
   maxImageSizeBytes: number;
+  privilegedRoles: string[];
   routes: PluginRoute[];
   pluginHost?: string;
 }

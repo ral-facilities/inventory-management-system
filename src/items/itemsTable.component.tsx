@@ -6,6 +6,7 @@ import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   Box,
   Button,
+  Divider,
   ListItemIcon,
   ListItemText,
   MenuItem,
@@ -31,6 +32,7 @@ import { useGetSystemIds, useGetSystemTypes } from '../api/systems';
 import { useGetUsageStatuses } from '../api/usageStatuses';
 import { APISettingsContext } from '../apiConfigProvider.component';
 import type { SystemTableType } from '../app.types';
+import { useAuthorisationState } from '../authProvider.component';
 import { findPropertyValue } from '../catalogue/items/catalogueItemsTable.component';
 import MRTTopTableAlert from '../common/mrtTopTableAlert.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
@@ -70,6 +72,8 @@ interface TableRowData {
 
 export function ItemsTable(props: ItemTableProps) {
   const { catalogueCategory, catalogueItem, dense } = props;
+
+  const { isPrivilegedUser } = useAuthorisationState();
 
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
 
@@ -141,6 +145,9 @@ export function ItemsTable(props: ItemTableProps) {
   const [itemDialogType, setItemsDialogType] = React.useState<
     'create' | 'duplicate' | 'edit'
   >('create');
+
+  const [isPrivilegedMode, setIsPrivilegedMode] =
+    React.useState<boolean>(false);
 
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     const viewCatalogueItemProperties = catalogueCategory?.properties ?? [];
@@ -590,27 +597,31 @@ export function ItemsTable(props: ItemTableProps) {
     getRowId: (row) => row.item.id,
     renderCreateRowDialogContent: ({ table, row }) => {
       return (
-        <ItemDialog
-          open={true}
-          onClose={() => {
-            table.setCreatingRow(null);
-          }}
-          duplicate={itemDialogType === 'duplicate'}
-          requestType={itemDialogType === 'edit' ? 'patch' : 'post'}
-          catalogueCategory={catalogueCategory}
-          catalogueItem={catalogueItem}
-          selectedItem={
-            itemDialogType === 'create'
-              ? undefined
-              : {
-                  ...row.original.item,
-                  notes:
-                    itemDialogType === 'duplicate'
-                      ? `${row.original.item.notes || ''}\n\nThis is a copy of the item with this Serial Number: ${row.original.item.serial_number ?? 'No serial number'}`
-                      : row.original.item.notes,
-                }
-          }
-        />
+        <>
+          <ItemDialog
+            open={true}
+            onClose={() => {
+              table.setCreatingRow(null);
+              setIsPrivilegedMode(false);
+            }}
+            isPrivilegedMode={isPrivilegedMode}
+            duplicate={itemDialogType === 'duplicate'}
+            requestType={itemDialogType === 'edit' ? 'patch' : 'post'}
+            catalogueCategory={catalogueCategory}
+            catalogueItem={catalogueItem}
+            selectedItem={
+              itemDialogType === 'create'
+                ? undefined
+                : {
+                    ...row.original.item,
+                    notes:
+                      itemDialogType === 'duplicate'
+                        ? `${row.original.item.notes || ''}\n\nThis is a copy of the item with this Serial Number: ${row.original.item.serial_number ?? 'No serial number'}`
+                        : row.original.item.notes,
+                  }
+            }
+          />
+        </>
       );
     },
     renderTopToolbarCustomActions: ({ table }) => (
@@ -621,11 +632,27 @@ export function ItemsTable(props: ItemTableProps) {
           variant="outlined"
           onClick={() => {
             setItemsDialogType('create');
+            setIsPrivilegedMode(false);
             table.setCreatingRow(true);
           }}
         >
           Add Item
         </Button>
+
+        {isPrivilegedUser && (
+          <Button
+            startIcon={<AddIcon />}
+            sx={{ mx: 0.5 }}
+            variant="outlined"
+            onClick={() => {
+              setItemsDialogType('create');
+              setIsPrivilegedMode(true);
+              table.setCreatingRow(true);
+            }}
+          >
+            Add Item as Admin
+          </Button>
+        )}
 
         <Button
           startIcon={<ClearIcon />}
@@ -665,6 +692,7 @@ export function ItemsTable(props: ItemTableProps) {
           aria-label={`Edit item ${row.original.item.id}`}
           onClick={() => {
             setItemsDialogType('edit');
+            setIsPrivilegedMode(false);
             table.setCreatingRow(row);
             closeMenu();
           }}
@@ -695,6 +723,7 @@ export function ItemsTable(props: ItemTableProps) {
           aria-label={`Delete item ${row.original.item.id}`}
           onClick={() => {
             setDeleteItemDialogOpen(true);
+            setIsPrivilegedMode(false);
             setSelectedItem(row.original.item);
             closeMenu();
           }}
@@ -705,6 +734,60 @@ export function ItemsTable(props: ItemTableProps) {
           </ListItemIcon>
           <ListItemText>Delete</ListItemText>
         </MenuItem>,
+
+        ...(isPrivilegedUser
+          ? [
+              <Divider key="divider" />,
+              <MenuItem
+                key="edit-as-admin"
+                aria-label={`Edit item ${row.original.item.id}`}
+                onClick={() => {
+                  setItemsDialogType('edit');
+                  setIsPrivilegedMode(true);
+                  table.setCreatingRow(row);
+                  closeMenu();
+                }}
+                sx={{ m: 0 }}
+              >
+                <ListItemIcon>
+                  <EditIcon />
+                </ListItemIcon>
+                <ListItemText>Edit as Admin</ListItemText>
+              </MenuItem>,
+              <MenuItem
+                key="duplicate-as-admin"
+                aria-label={`Duplicate item ${row.original.item.id} as Admin`}
+                onClick={() => {
+                  setItemsDialogType('duplicate');
+                  setIsPrivilegedMode(true);
+                  table.setCreatingRow(row);
+                  closeMenu();
+                }}
+                sx={{ m: 0 }}
+              >
+                <ListItemIcon>
+                  <SaveAsIcon />
+                </ListItemIcon>
+                <ListItemText>Duplicate as Admin</ListItemText>
+              </MenuItem>,
+              <MenuItem
+                key="delete-as-admin"
+                aria-label={`Delete item ${row.original.item.id}`}
+                onClick={() => {
+                  setDeleteItemDialogOpen(true);
+                  setIsPrivilegedMode(true);
+                  setSelectedItem(row.original.item);
+                  closeMenu();
+                }}
+                sx={{ m: 0 }}
+              >
+                <ListItemIcon>
+                  <DeleteIcon />
+                </ListItemIcon>
+                <ListItemText>Delete as Admin</ListItemText>
+              </MenuItem>,
+            ]
+          : []),
       ];
     },
     renderBottomToolbarCustomActions: ({ table }) =>
@@ -745,9 +828,13 @@ export function ItemsTable(props: ItemTableProps) {
       {!dense && selectedItem && (
         <DeleteItemDialog
           open={deleteItemDialogOpen}
-          onClose={() => setDeleteItemDialogOpen(false)}
+          onClose={() => {
+            setDeleteItemDialogOpen(false);
+            setIsPrivilegedMode(false);
+          }}
           item={selectedItem}
           onChangeItem={setSelectedItem}
+          isPrivilegedMode={isPrivilegedMode}
         />
       )}
     </div>
