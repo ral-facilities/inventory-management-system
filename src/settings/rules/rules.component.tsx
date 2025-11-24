@@ -2,6 +2,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import { Box, Button, MenuItem, TableCellBaseProps } from '@mui/material';
 import {
   MRT_ColumnDef,
+  MRT_TableInstance,
   MaterialReactTable,
   useMaterialReactTable,
 } from 'material-react-table';
@@ -10,6 +11,7 @@ import type { Rule } from '../../api/api.types';
 import { useGetRules } from '../../api/rules';
 import { useGetSystemTypes } from '../../api/systems';
 import { useGetUsageStatuses } from '../../api/usageStatuses';
+import MRTTopTableAlert from '../../common/mrtTopTableAlert.component';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import {
   MRT_Functions_Localisation,
@@ -20,6 +22,7 @@ import {
   displayTableRowCountText,
   getInitialColumnFilterFnState,
   getPageHeightCalc,
+  isExactFilterActive,
   mrtTheme,
 } from '../../utils';
 
@@ -31,11 +34,55 @@ function Rules() {
   const { data: usageStatusData, isLoading: isLoadingUsageStatus } =
     useGetUsageStatuses();
 
+  const allSystemTypeValues = React.useMemo(() => {
+    return systemTypesData?.map((type) => type.value) ?? [];
+  }, [systemTypesData]);
   const isLoading =
     isLoadingRules || isLoadingSystemTypes || isLoadingUsageStatus;
 
-  // Breadcrumbs + Mui table V2 + extra
-  const tableHeight = getPageHeightCalc('50px + 110px + 48px');
+  const getAppliedRuleType = React.useCallback(
+    (table: MRT_TableInstance<Rule>) => {
+      if (
+        isExactFilterActive(table, [
+          {
+            id: 'src_system_type.value',
+            filterFn: 'arrExcludesSome',
+            value: allSystemTypeValues,
+          },
+        ])
+      )
+        return 'Creation Rules';
+      else if (
+        isExactFilterActive(table, [
+          {
+            id: 'src_system_type.value',
+            filterFn: 'arrIncludesSome',
+            value: allSystemTypeValues,
+          },
+          {
+            id: 'dst_system_type.value',
+            filterFn: 'arrIncludesSome',
+            value: allSystemTypeValues,
+          },
+        ])
+      )
+        return 'Moving Rules';
+      else if (
+        isExactFilterActive(table, [
+          {
+            id: 'dst_system_type.value',
+            filterFn: 'arrExcludesSome',
+            value: allSystemTypeValues,
+          },
+        ])
+      )
+        return 'Deletion Rules';
+      else {
+        return undefined;
+      }
+    },
+    [allSystemTypeValues]
+  );
 
   const columns = React.useMemo<MRT_ColumnDef<Rule>[]>(() => {
     const systemTypeValues = systemTypesData?.map((type) => type.value);
@@ -186,7 +233,17 @@ function Rules() {
             },
           },
     muiTablePaperProps: { sx: { maxHeight: '100%' } },
-    muiTableContainerProps: { sx: { height: tableHeight } },
+    muiTableContainerProps: ({ table }) => {
+      const isRuleApplied = !!getAppliedRuleType(table);
+      return {
+        sx: {
+          height: getPageHeightCalc(
+            // Breadcrumbs + Mui table V2 + extra
+            `50px + 110px + 48px  ${isRuleApplied ? ' + 54px' : ''}`
+          ),
+        },
+      };
+    },
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',
@@ -201,28 +258,6 @@ function Rules() {
     ...onPreservedStatesChange,
 
     renderTopToolbarCustomActions: ({ table }) => {
-      const allSystemTypeValues =
-        systemTypesData?.map((type) => type.value) ?? [];
-
-      function isExactFilterActive(
-        expectedFilters: { id: string; filterFn: string; value: string[] }[]
-      ) {
-        const actualFilters = table.getState().columnFilters;
-        const actualFilterFns = table.getState().columnFilterFns;
-
-        // Check length matches
-        if (actualFilters.length !== expectedFilters.length) return false;
-
-        // Check every expected filter matches actual filter and filterFn
-        return expectedFilters.every(({ id, filterFn, value }) => {
-          const actualFilter = actualFilters.find((f) => f.id === id);
-          if (!actualFilter) return false;
-          if (actualFilterFns[id] !== filterFn) return false;
-          // Compare values stringified (arrays)
-          return JSON.stringify(actualFilter.value) === JSON.stringify(value);
-        });
-      }
-
       return (
         <Box>
           <Button
@@ -232,6 +267,7 @@ function Rules() {
             disabled={preservedState.columnFilters.length === 0}
             onClick={() => {
               table.resetColumnFilters();
+              table.setColumnFilterFns(initialColumnFilterFnState);
             }}
           >
             Clear Filters
@@ -239,7 +275,7 @@ function Rules() {
           <Button
             sx={{ mx: 0.5 }}
             variant="outlined"
-            disabled={isExactFilterActive([
+            disabled={isExactFilterActive(table, [
               {
                 id: 'src_system_type.value',
                 filterFn: 'arrExcludesSome',
@@ -247,6 +283,7 @@ function Rules() {
               },
             ])}
             onClick={() => {
+              table.setColumnFilterFns(initialColumnFilterFnState);
               table.resetGlobalFilter();
               table.setColumnFilterFns((prev) => ({
                 ...prev,
@@ -266,7 +303,7 @@ function Rules() {
           <Button
             sx={{ mx: 0.5 }}
             variant="outlined"
-            disabled={isExactFilterActive([
+            disabled={isExactFilterActive(table, [
               {
                 id: 'src_system_type.value',
                 filterFn: 'arrIncludesSome',
@@ -279,6 +316,7 @@ function Rules() {
               },
             ])}
             onClick={() => {
+              table.setColumnFilterFns(initialColumnFilterFnState);
               table.resetGlobalFilter();
               table.setColumnFilterFns((prev) => ({
                 ...prev,
@@ -303,7 +341,7 @@ function Rules() {
           <Button
             sx={{ mx: 0.5 }}
             variant="outlined"
-            disabled={isExactFilterActive([
+            disabled={isExactFilterActive(table, [
               {
                 id: 'dst_system_type.value',
                 filterFn: 'arrExcludesSome',
@@ -311,6 +349,7 @@ function Rules() {
               },
             ])}
             onClick={() => {
+              table.setColumnFilterFns(initialColumnFilterFnState);
               table.resetGlobalFilter();
               table.setColumnFilterFns((prev) => ({
                 ...prev,
@@ -335,8 +374,21 @@ function Rules() {
         paddingLeft: '8px',
       }),
   });
-
-  return <MaterialReactTable table={table} />;
+  return (
+    <div style={{ width: '100%' }}>
+      {getAppliedRuleType(table) && (
+        <MRTTopTableAlert
+          title={`${getAppliedRuleType(table)} Filter Applied`}
+          clearFilters={() => {
+            table.resetColumnFilters();
+            table.setColumnFilterFns(initialColumnFilterFnState);
+          }}
+          clearFiltersAriaLabel={`Clear ${getAppliedRuleType(table)} Filter`}
+        />
+      )}
+      <MaterialReactTable table={table} />
+    </div>
+  );
 }
 
 export default Rules;

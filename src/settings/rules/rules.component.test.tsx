@@ -54,6 +54,10 @@ describe('Rules', () => {
     // chip and table
     expect(await screen.findAllByText('Storage')).toHaveLength(2);
 
+    expect(
+      await screen.findByText('Creation Rules Filter Applied')
+    ).toBeInTheDocument();
+
     expect(showCreationRulesButton).toBeDisabled();
 
     await user.click(clearFiltersButton);
@@ -61,6 +65,12 @@ describe('Rules', () => {
     expect(await screen.findAllByText('Storage')).toHaveLength(4);
 
     expect(clearFiltersButton).toBeDisabled();
+
+    await waitFor(() => {
+      expect(
+        screen.queryByText('Creation Rules Filter Applied')
+      ).not.toBeInTheDocument();
+    });
   }, 10000);
 
   it('sets deletion rules and clears the table filters', async () => {
@@ -89,6 +99,10 @@ describe('Rules', () => {
     // chip and table
     expect(await screen.findAllByText('Storage')).toHaveLength(2);
 
+    expect(
+      await screen.findByText('Deletion Rules Filter Applied')
+    ).toBeInTheDocument();
+
     expect(showDeletionRulesButton).toBeDisabled();
 
     await user.click(clearFiltersButton);
@@ -96,6 +110,12 @@ describe('Rules', () => {
     expect(await screen.findAllByText('Storage')).toHaveLength(4);
 
     expect(clearFiltersButton).toBeDisabled();
+
+    await waitFor(() => {
+      expect(
+        screen.queryByText('Deletion Rules Filter Applied')
+      ).not.toBeInTheDocument();
+    });
   }, 10000);
 
   it('sets moving rules and clears the table filters', async () => {
@@ -124,6 +144,10 @@ describe('Rules', () => {
     // chip and table
     expect(await screen.findAllByText('Storage')).toHaveLength(4);
 
+    expect(
+      await screen.findByText('Moving Rules Filter Applied')
+    ).toBeInTheDocument();
+
     expect(showMovingRulesButton).toBeDisabled();
 
     await user.click(clearFiltersButton);
@@ -131,5 +155,11 @@ describe('Rules', () => {
     expect(await screen.findAllByText('Storage')).toHaveLength(4);
 
     expect(clearFiltersButton).toBeDisabled();
+
+    await waitFor(() => {
+      expect(
+        screen.queryByText('Moving Rules Filter Applied')
+      ).not.toBeInTheDocument();
+    });
   }, 10000);
 });
