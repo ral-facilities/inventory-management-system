@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { MockInstance } from 'vitest';
 import { imsApi } from '../api/api';
@@ -34,6 +34,7 @@ describe('SystemItemsDialog', () => {
       selectedItems: mockSelectedItems,
       onChangeSelectedItems: mockOnChangeSelectedItems,
       parentSystemId: SystemsJSON[0].id,
+      isPrivilegedMode: false,
     };
 
     user = userEvent.setup();
@@ -69,6 +70,36 @@ describe('SystemItemsDialog', () => {
     });
 
     expect(mockOnClose).not.toHaveBeenCalled();
+  });
+
+  it('displays correctly when in admin mode', async () => {
+    props.isPrivilegedMode = true;
+    let baseElement;
+    await act(async () => {
+      baseElement = createView().baseElement;
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByText('Move 2 items to a different system as Admin')
+      ).toBeInTheDocument();
+    });
+
+    const infoIcon = screen.getByTestId('admin-status-tooltip');
+
+    await user.hover(infoIcon);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          "As an admin, you can bypass rules that restrict item placement for other users, and you can modify the item's usage status"
+        )
+      ).toBeInTheDocument();
+    });
+
+    expect(screen.getByRole('button', { name: 'Next' })).toBeInTheDocument();
+
+    expect(baseElement).toMatchSnapshot();
   });
 
   it('renders the breadcrumbs and navigates correctly', async () => {
@@ -181,6 +212,40 @@ describe('SystemItemsDialog', () => {
       expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
     });
 
+    it('cannot move selected items to the same parent system and then clears error state they have been resolved (admin mode)', async () => {
+      props.parentSystemId = SystemsJSON[1].id;
+      props.isPrivilegedMode = true;
+
+      createView();
+
+      await waitFor(() =>
+        expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+      );
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      expect(
+        await screen.findByRole('button', { name: 'Next' })
+      ).toBeDisabled();
+
+      const errorMessage =
+        'Please move items from current location or root to another system.';
+
+      expect(screen.getByText(errorMessage)).toBeInTheDocument();
+      await user.click(screen.getByLabelText('navigate to systems home'));
+
+      await waitFor(() => {
+        expect(screen.getByText('Giant laser')).toBeInTheDocument();
+      });
+
+      await user.click(screen.getAllByText('Storage')[0]);
+
+      expect(
+        await screen.findByRole('button', { name: 'Next' })
+      ).not.toBeDisabled();
+      expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
+    });
+
     it('cannot move selected items to root and resets back to an non error state after error has been resolved', async () => {
       props.parentSystemId = SystemsJSON[1].id;
 
@@ -277,6 +342,122 @@ describe('SystemItemsDialog', () => {
 
       expect(mockOnClose).toHaveBeenCalled();
       expect(mockOnChangeSelectedItems).toHaveBeenCalledWith({});
+    }, 10000);
+  });
+
+  describe('Move to as Admin', () => {
+    beforeEach(() => {
+      props.isPrivilegedMode = true;
+    });
+
+    afterEach(() => {
+      vi.clearAllMocks();
+    });
+
+    it('prepopulates usage statuses when system is selcted and then successfully moves items', async () => {
+      createView();
+
+      await waitFor(() =>
+        expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+      );
+
+      await user.click(screen.getByLabelText('navigate to systems home'));
+
+      await waitFor(() => {
+        expect(screen.getByText('Giant laser')).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByText('Giant laser'));
+
+      await waitFor(() => {
+        expect(screen.getByText('Smaller laser')).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      // Ensure no loading bars visible
+      await waitFor(() =>
+        expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+      );
+
+      await waitFor(
+        () => {
+          expect(
+            screen.getByRole('cell', {
+              name: `Cameras 1 (2)`,
+            })
+          ).toBeInTheDocument();
+        },
+        { timeout: 4000 }
+      );
+
+      await user.click(screen.getAllByLabelText('Expand all')[1]);
+
+      expect((await screen.findAllByRole('combobox'))[2]).toHaveValue('In Use');
+      expect(screen.getAllByRole('combobox')[3]).toHaveValue('In Use');
+
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/KvT2Ox7n', {
+        system_id: '65328f34a40ff5301575a4e3',
+        usage_status_id: '1',
+      });
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
+        system_id: '65328f34a40ff5301575a4e3',
+        usage_status_id: '1',
+      });
+
+      expect(mockOnClose).toHaveBeenCalled();
+      expect(mockOnChangeSelectedItems).toHaveBeenCalledWith({});
+    }, 10000);
+
+    it('displays error if switching to usage status tab without selecting system', async () => {
+      createView();
+
+      await user.click(screen.getByText('Confirm usage statuses'));
+
+      // Ensure no loading bars visible
+      await waitFor(() =>
+        expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+      );
+
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+
+      expect(screen.getByRole('button', { name: 'Finish' })).toBeDisabled();
+      expect(
+        screen.getByText(
+          'Move items from current location or root to another system'
+        )
+      ).toBeInTheDocument();
+
+      await user.click(screen.getByRole('button', { name: 'Back' }));
+
+      await user.click(screen.getByLabelText('navigate to systems home'));
+
+      await waitFor(() => {
+        expect(screen.getByText('Giant laser')).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByText('Giant laser'));
+
+      await waitFor(() => {
+        expect(screen.getByText('Smaller laser')).toBeInTheDocument();
+      });
+
+      expect(
+        screen.queryByText(
+          'Please move items for current location or root to another system'
+        )
+      ).not.toBeInTheDocument();
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      // Ensure no loading bars visible
+      await waitFor(() =>
+        expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+      );
+
+      expect(screen.getByRole('button', { name: 'Finish' })).not.toBeDisabled();
     }, 10000);
   });
 });

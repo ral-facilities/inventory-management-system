@@ -3,6 +3,7 @@ import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { System } from '../api/api.types';
 import APIConfigProvider from '../apiConfigProvider.component';
+import * as authProvider from '../authProvider.component';
 import { server } from '../mocks/server';
 import SystemsJSON from '../mocks/Systems.json';
 import { getSystemById, renderComponentWithRouterProvider } from '../testUtils';
@@ -44,6 +45,11 @@ describe('SystemItemsTable', () => {
   });
 
   it('renders correctly', async () => {
+    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
+      role: 'admin',
+      isPrivilegedUser: true,
+    });
+
     const view = createView();
 
     // Name (obtained from catalogue category item)
@@ -63,6 +69,11 @@ describe('SystemItemsTable', () => {
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
 
+    // Check admin move to button exists
+    expect(
+      screen.getByRole('button', { name: 'Move to as Admin' })
+    ).toBeInTheDocument();
+
     // Expand a group so all columns are rendered to improve test coverage
     // (expanding all causes an infinite loop due to an issue with details panels)
     await user.click(screen.getAllByRole('button', { name: 'Expand' })[0]);
@@ -71,6 +82,8 @@ describe('SystemItemsTable', () => {
       await screen.findByRole('button', { name: 'Show/Hide columns' })
     );
     await user.click(screen.getByText('Created'));
+
+    expect(await screen.findByText('Clear Filters')).toBeInTheDocument();
 
     // Rest in a snapshot
     expect(view.asFragment()).toMatchSnapshot();
@@ -344,6 +357,56 @@ describe('SystemItemsTable', () => {
     });
   });
 
+  it('can open the edit as admin dialog and close it again', async () => {
+    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
+      role: 'admin',
+      isPrivilegedUser: true,
+    });
+
+    createView();
+
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Turbomolecular Pumps 42 (2)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    const expandButtons = screen.getAllByRole('button', {
+      name: 'Expand',
+    });
+    await user.click(expandButtons[0]);
+
+    const serialNumber = '5xE1KSraISvu';
+    await waitFor(() => {
+      expect(screen.getAllByText(serialNumber)).toHaveLength(2);
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Edit as Admin')).toBeInTheDocument();
+    });
+
+    const editButton = screen.getByText('Edit as Admin');
+    await user.click(editButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
   it('can open the duplicate dialog and close it again', async () => {
     createView();
 
@@ -376,6 +439,56 @@ describe('SystemItemsTable', () => {
     });
 
     const duplicateButton = screen.getByText('Duplicate');
+    await user.click(duplicateButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('can open the duplicate dialog as admin and close it again', async () => {
+    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
+      role: 'admin',
+      isPrivilegedUser: true,
+    });
+
+    createView();
+
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Turbomolecular Pumps 42 (2)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    const expandButtons = screen.getAllByRole('button', {
+      name: 'Expand',
+    });
+    await user.click(expandButtons[0]);
+
+    const serialNumber = '5xE1KSraISvu';
+    await waitFor(() => {
+      expect(screen.getAllByText(serialNumber)).toHaveLength(2);
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Duplicate as Admin')).toBeInTheDocument();
+    });
+
+    const duplicateButton = screen.getByText('Duplicate as Admin');
     await user.click(duplicateButton);
 
     await waitFor(() => {
@@ -560,6 +673,56 @@ describe('SystemItemsTable', () => {
     });
 
     const deleteButton = screen.getByText('Delete');
+    await user.click(deleteButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('can open the delete as admin dialog and close it again', async () => {
+    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
+      role: 'admin',
+      isPrivilegedUser: true,
+    });
+
+    createView();
+
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Turbomolecular Pumps 42 (2)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    const expandButtons = screen.getAllByRole('button', {
+      name: 'Expand',
+    });
+    await user.click(expandButtons[0]);
+
+    const serialNumber = '5xE1KSraISvu';
+    await waitFor(() => {
+      expect(screen.getAllByText(serialNumber)).toHaveLength(2);
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Delete as Admin')).toBeInTheDocument();
+    });
+
+    const deleteButton = screen.getByText('Delete as Admin');
     await user.click(deleteButton);
 
     await waitFor(() => {

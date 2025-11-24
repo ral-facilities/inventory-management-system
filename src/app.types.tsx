@@ -205,11 +205,29 @@ export interface PostItems {
   item: ItemPost;
 }
 
-export interface MoveItemsToSystem {
-  usageStatusId?: string;
+export interface MoveItemsToSystemUsageStatus {
+  item_id: string;
+  usage_status_id: string;
+}
+
+export interface BaseMoveItemsToSystem {
+  mode: 'single' | 'multiple';
   selectedItems: Item[];
   targetSystem: System;
 }
+export interface MoveItemsMultipleUsageStatus extends BaseMoveItemsToSystem {
+  mode: 'multiple';
+  usageStatuses: MoveItemsToSystemUsageStatus[];
+}
+
+export interface MoveItemsSingleUsageStatus extends BaseMoveItemsToSystem {
+  mode: 'single';
+  usageStatusId?: string;
+}
+
+export type MoveItemsToSystem =
+  | MoveItemsMultipleUsageStatus
+  | MoveItemsSingleUsageStatus;
 
 export interface AdvancedSerialNumberOptionsType {
   quantity: string | null;
