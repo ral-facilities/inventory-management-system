@@ -1,6 +1,7 @@
-describe('Usage Statuses', () => {
+describe('System Types', () => {
   beforeEach(() => {
-    cy.visit('/admin-ims/system-types');
+    cy.setCurrentUserToAdmin();
+    cy.visit('/settings/system-types');
   });
   afterEach(() => {
     cy.clearMocks();
@@ -18,13 +19,15 @@ describe('Usage Statuses', () => {
     cy.findByText('Operational').should('not.exist');
     cy.findByText('Scrapped').should('not.exist');
     cy.findByText('Storage').should('exist');
+    cy.findByText('Spares Definition Filter Applied').should('exist');
 
-    // filters by spares defintion from the admin page
+    // filters by spares defintion from the settings page
 
-    cy.findByRole('button', { name: 'navigate to admin home' }).click();
+    cy.findByRole('button', { name: 'navigate to settings home' }).click();
     cy.findByText('Spares Definition').click();
     cy.findByText('Operational').should('not.exist');
     cy.findByText('Scrapped').should('not.exist');
     cy.findByText('Storage').should('exist');
+    cy.findByText('Spares Definition Filter Applied').should('exist');
   });
 });

@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router';
 import type { BreadcrumbsInfo } from '../api/api.types';
 import { RoutesHomeLocation, type RoutesHomeLocationType } from '../app.types';
 import Breadcrumbs from '../view/breadcrumbs.component';
+import { useAuthorisationState } from '../authProvider.component';
+import AuthRoleStatus from './authRoleStatus.component';
 
 export interface BaseLayoutHeaderProps {
   breadcrumbsInfo?: BreadcrumbsInfo;
@@ -13,6 +15,8 @@ export interface BaseLayoutHeaderProps {
 }
 
 function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
+  const { isPrivilegedUser } = useAuthorisationState();
+
   const { breadcrumbsInfo, children, homeLocation } = props;
   const navigate = useNavigate();
   const onChangeNode = React.useCallback(
@@ -21,6 +25,7 @@ function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
     },
     [homeLocation, navigate]
   );
+
   return (
     <Box
       sx={{
@@ -31,16 +36,13 @@ function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
       <Grid
         container
         sx={{
-          alignItems: 'center',
-          justifyContent: 'left',
+          justifyContent: 'space-between',
           paddingLeft: 0.5,
           position: 'sticky',
           top: 0,
           backgroundColor: 'background.default',
           zIndex: 1000,
           width: '100%',
-          paddingTop: 2.5,
-          paddingBottom: 2.5,
         }}
       >
         <Breadcrumbs
@@ -49,6 +51,7 @@ function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
           breadcrumbsInfo={breadcrumbsInfo}
           homeLocation={homeLocation}
         />
+        {isPrivilegedUser && <AuthRoleStatus />}
       </Grid>
       {children}
     </Box>

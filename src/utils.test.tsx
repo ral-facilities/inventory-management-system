@@ -3,7 +3,11 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MRT_ColumnDef } from 'material-react-table';
 import { UsageStatus } from './api/api.types';
-import { renderComponentWithRouterProvider } from './testUtils';
+import {
+  ADMIN_ROLE_TOKEN,
+  DEFAULT_ROLE_TOKEN,
+  renderComponentWithRouterProvider,
+} from './testUtils';
 import {
   OverflowTip,
   checkForDuplicates,
@@ -12,6 +16,7 @@ import {
   generateUniqueNameUsingCode,
   getInitialColumnFilterFnState,
   getNonEmptyTrimmedString,
+  setLocalStorageToken,
   sortDataList,
   trimStringValues,
 } from './utils';
@@ -390,4 +395,12 @@ describe('getNonEmptyTrimmedString', () => {
     expect(getNonEmptyTrimmedString({})).toBeUndefined();
     expect(getNonEmptyTrimmedString([])).toBeUndefined();
   });
+});
+
+it('should toggle localstorage token', () => {
+  setLocalStorageToken(false);
+  expect(localStorage.getItem('scigateway:token')).toBe(DEFAULT_ROLE_TOKEN);
+
+  setLocalStorageToken(true);
+  expect(localStorage.getItem('scigateway:token')).toBe(ADMIN_ROLE_TOKEN);
 });

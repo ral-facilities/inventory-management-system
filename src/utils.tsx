@@ -25,6 +25,7 @@ import {
 } from 'material-react-table';
 import React from 'react';
 import { useGetSparesDefinition } from './api/settings';
+import { MicroFrontendToken } from './app.types';
 import { SparesFilterStateType } from './app.types';
 
 /* Returns a name avoiding duplicates by appending _copy_n for nth copy */
@@ -67,6 +68,19 @@ export const isRunningInDevelopment = (): boolean => {
   return import.meta.env.DEV;
 };
 
+/* Sets the token in localstorage to either be an admin or default role */
+export const setLocalStorageToken = (useAdminToken: boolean) => {
+  localStorage.setItem(
+    MicroFrontendToken,
+    useAdminToken
+      ? 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwicm9sZSI6ImFkbWluIiwidXNlcklzQWRtaW4iOmZhbHNlLCJleHAiOjI1MzQwMjMwMDc5OX0.FrsDUqnKskhIvmIjtYVgC9im-cSu1dFlwVQ4cFJf2BgCaSh82XuEngOLkbtQuuXWC1wiipsGP4Y-usq7Q_R68vwXqGYusHo4fXw6AcBcwplgXZ3n60wsTegpBxKZY5foOre0Ng1GpK-7rrx9H-YQUCHSBOtzWOw_eLzu-eNTwMnMnnpGM9L91_hj0dAKiP90Z3Hp0UelnYydc0sf6msOs7RKI2Sij-13vFSL8LToIbfUTZYwKZHbBPD5glce_gsW6_W5W-iGemt7yyhfyf7IxKWq3Q02HCiSkI0uCcBal44sabPrsQ4EaPRwyUnH0X25MC00IAPRHh-1KqabV7IA9w'
+      : 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwicm9sZXMiOltdLCJ1c2VySXNBZG1pbiI6ZmFsc2UsImV4cCI6MjUzNDAyMzAwNzk5fQ.JTdyZHZTU2Vd1cZPzsBGBB_hs72KS4LODyhAyKdNTPWMnp_lEs2fmVSqJjSx3mOTW4J40c7LnJcw6ALlCGuEG3DShQKdoYTtH8JLNyzXi9yNYtPlBTEfWqFKK_IYY9sA_WzlQwYDGLD7jsvCvm92CdWjoNtcfDZ0eIfRjHuIRsW5XllerFFE7ouv9awulGCEHv-zl2m0SpMF-mHUYJV9JbB5bgrqs635vYL-IJg_qdr10Cn11BUhO1ulrFrk1QLhty-_L8LC2d2j11xqEuIMlEcVkQ6w79U1uzg-NEYcHzcuuaitQjZzKsDD8eMDT-dBkIPZxDWzlUuySkGUKDJPzw'
+  );
+
+  // notify the authProvider class via new window event. This will trigger a reload.
+  window.dispatchEvent(new CustomEvent('tokenChanged'));
+};
+
 /* Returns a calc function giving the page height excluding SciGateway related components
   (header and footer) to use for CSS e.g. giving 48px it will return the calc(page height
   - all SciGateway related heights - 48px)*/
@@ -86,6 +100,7 @@ export const getPageHeightCalc = (additionalSubtraction?: string): string => {
   let newAdditional: string | undefined = undefined;
 
   if (isRunningInDevelopment()) newAdditional = '48px';
+
   if (additionalSubtraction !== undefined) {
     if (newAdditional === undefined) newAdditional = additionalSubtraction;
     else newAdditional += ' + ' + additionalSubtraction;
@@ -646,3 +661,32 @@ export const useSparesFilterState = (
     ]
   );
 };
+
+export function isExactFilterActive<TData extends MRT_RowData>(
+  table: MRT_TableInstance<TData>,
+  expectedFilters: { id: string; filterFn?: string; value: unknown }[]
+) {
+  const { columnFilters: actualFilters, columnFilterFns: actualFilterFns } =
+    table.getState();
+
+  // Check length matches
+  if (actualFilters.length !== expectedFilters.length) return false;
+
+  // Check every expected filter matches actual filter and filterFn
+  return expectedFilters.every(({ id, filterFn, value }) => {
+    const actualFilter = actualFilters.find((f) => f.id === id);
+    if (!actualFilter) return false;
+    if (actualFilterFns[id] !== filterFn) return false;
+
+    // Compare values stringified (arrays or value)
+
+    if (Array.isArray(value)) {
+      return (
+        JSON.stringify(sortDataList(actualFilter.value as string[])) ===
+        JSON.stringify(sortDataList(value))
+      );
+    } else {
+      return JSON.stringify(actualFilter.value) === JSON.stringify(value);
+    }
+  });
+}
