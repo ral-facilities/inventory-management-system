@@ -189,24 +189,8 @@ export function SystemItemsUsageStatusTable(
         header: 'Usage Status',
         Header: TableHeaderOverflowTip,
         id: 'item.usage_status',
-        filterVariant: 'multi-select',
-        filterFn: 'arrIncludesSome',
-        columnFilterModeOptions: ['arrIncludesSome', 'arrExcludesSome'],
-        renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) => [
-          <MenuItem
-            key="arrIncludesSome"
-            onClick={() => onSelectFilterMode('arrIncludesSome')}
-          >
-            {MRT_Functions_Localisation.filterArrIncludesSome}
-          </MenuItem>,
-          <MenuItem
-            key="arrExcludesSome"
-            onClick={() => onSelectFilterMode('arrExcludesSome')}
-          >
-            {MRT_Functions_Localisation.filterArrExcludesSome}
-          </MenuItem>,
-        ],
         size: 350,
+        enableColumnActions: false,
         AggregatedCell: ({ row }) => {
           return (
             <FormControl size="small" fullWidth>

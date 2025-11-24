@@ -1,24 +1,18 @@
-import { InfoOutlined } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
-  Alert,
   Box,
   Button,
   Divider,
-  IconButton,
   ListItemIcon,
   ListItemText,
   MenuItem,
   Link as MuiLink,
   TableCellBaseProps,
-  Tooltip,
-  Typography,
 } from '@mui/material';
-import Grid from '@mui/material/Grid2';
 import {
   MaterialReactTable,
   useMaterialReactTable,
@@ -38,7 +32,9 @@ import { useGetSystemIds, useGetSystemTypes } from '../api/systems';
 import { useGetUsageStatuses } from '../api/usageStatuses';
 import { APISettingsContext } from '../apiConfigProvider.component';
 import type { SystemTableType } from '../app.types';
+import { useAuthorisationState } from '../authProvider.component';
 import { findPropertyValue } from '../catalogue/items/catalogueItemsTable.component';
+import MRTTopTableAlert from '../common/mrtTopTableAlert.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import {
   COLUMN_FILTER_BOOLEAN_OPTIONS,
@@ -62,7 +58,6 @@ import {
 import DeleteItemDialog from './deleteItemDialog.component';
 import ItemDialog from './itemDialog.component';
 import ItemsDetailsPanel from './itemsDetailsPanel.component';
-import { useAuthorisationState } from '../authProvider.component';
 
 export interface ItemTableProps {
   catalogueCategory: CatalogueCategory;
@@ -151,7 +146,7 @@ export function ItemsTable(props: ItemTableProps) {
     'create' | 'duplicate' | 'edit'
   >('create');
 
-  const [isPrivilegedUserOpeningDialog, setIsPrivilegedUserOpeningDialog] =
+  const [isPrivilegedMode, setIsPrivilegedMode] =
     React.useState<boolean>(false);
 
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
@@ -607,9 +602,9 @@ export function ItemsTable(props: ItemTableProps) {
             open={true}
             onClose={() => {
               table.setCreatingRow(null);
-              setIsPrivilegedUserOpeningDialog(false);
+              setIsPrivilegedMode(false);
             }}
-            isPrivilegedUser={isPrivilegedUserOpeningDialog}
+            isPrivilegedMode={isPrivilegedMode}
             duplicate={itemDialogType === 'duplicate'}
             requestType={itemDialogType === 'edit' ? 'patch' : 'post'}
             catalogueCategory={catalogueCategory}
@@ -637,7 +632,7 @@ export function ItemsTable(props: ItemTableProps) {
           variant="outlined"
           onClick={() => {
             setItemsDialogType('create');
-            setIsPrivilegedUserOpeningDialog(false);
+            setIsPrivilegedMode(false);
             table.setCreatingRow(true);
           }}
         >
@@ -651,7 +646,7 @@ export function ItemsTable(props: ItemTableProps) {
             variant="outlined"
             onClick={() => {
               setItemsDialogType('create');
-              setIsPrivilegedUserOpeningDialog(true);
+              setIsPrivilegedMode(true);
               table.setCreatingRow(true);
             }}
           >
@@ -697,7 +692,7 @@ export function ItemsTable(props: ItemTableProps) {
           aria-label={`Edit item ${row.original.item.id}`}
           onClick={() => {
             setItemsDialogType('edit');
-            setIsPrivilegedUserOpeningDialog(false);
+            setIsPrivilegedMode(false);
             table.setCreatingRow(row);
             closeMenu();
           }}
@@ -728,7 +723,7 @@ export function ItemsTable(props: ItemTableProps) {
           aria-label={`Delete item ${row.original.item.id}`}
           onClick={() => {
             setDeleteItemDialogOpen(true);
-            setIsPrivilegedUserOpeningDialog(false);
+            setIsPrivilegedMode(false);
             setSelectedItem(row.original.item);
             closeMenu();
           }}
@@ -748,7 +743,7 @@ export function ItemsTable(props: ItemTableProps) {
                 aria-label={`Edit item ${row.original.item.id}`}
                 onClick={() => {
                   setItemsDialogType('edit');
-                  setIsPrivilegedUserOpeningDialog(true);
+                  setIsPrivilegedMode(true);
                   table.setCreatingRow(row);
                   closeMenu();
                 }}
@@ -764,7 +759,7 @@ export function ItemsTable(props: ItemTableProps) {
                 aria-label={`Duplicate item ${row.original.item.id} as Admin`}
                 onClick={() => {
                   setItemsDialogType('duplicate');
-                  setIsPrivilegedUserOpeningDialog(true);
+                  setIsPrivilegedMode(true);
                   table.setCreatingRow(row);
                   closeMenu();
                 }}
@@ -780,7 +775,7 @@ export function ItemsTable(props: ItemTableProps) {
                 aria-label={`Delete item ${row.original.item.id}`}
                 onClick={() => {
                   setDeleteItemDialogOpen(true);
-                  setIsPrivilegedUserOpeningDialog(true);
+                  setIsPrivilegedMode(true);
                   setSelectedItem(row.original.item);
                   closeMenu();
                 }}
@@ -814,64 +809,20 @@ export function ItemsTable(props: ItemTableProps) {
       {isSparesDefinitionDefined &&
         sparesDefinition &&
         isSparesFilterApplied && (
-          <Alert
-            color="info"
-            icon={false}
-            sx={() => ({
-              '& .MuiAlert-message': {
-                width: '100%',
-              },
-              borderRadius: 0,
-              fontSize: '1rem',
-              left: 0,
-              p: 0,
-              position: 'relative',
-              right: 0,
-              top: 0,
-              width: '100%',
-              zIndex: 2,
-            })}
-          >
-            <Grid container alignItems="center" sx={{ px: 1, py: 0.5 }}>
-              <Grid size={2} />
-              <Grid size={8}>
-                <Box display="flex" alignItems="center" justifyContent="center">
-                  <Typography variant="inherit" sx={{ pr: 1 }}>
-                    Spares Definition Filter Applied
-                  </Typography>
-                  <Tooltip
-                    title={
-                      sparesDefinition.system_types.length === 1
-                        ? `Items that are contained within the system type ${sparesDefinition.system_types[0].value} are classified as spares`
-                        : `Items that are contained within a system type of one of ${sparesDefinition.system_types
-                            .map((sys) => sys.value)
-                            .join(', ')
-                            .replace(
-                              /, ([^,]*)$/,
-                              ' or $1'
-                            )} are classified as spares`
-                    }
-                  >
-                    <InfoOutlined fontSize="small" />
-                  </Tooltip>
-                </Box>
-              </Grid>
-              <Grid size={2} display="flex" justifyContent="flex-end">
-                <Tooltip title="Clear Spares Definition Filter">
-                  <span>
-                    <IconButton
-                      size="small"
-                      aria-label="Clear Spares Definition Filter"
-                      onClick={() => table.resetColumnFilters()}
-                      sx={{ color: 'inherit' }}
-                    >
-                      <ClearIcon fontSize="small" />
-                    </IconButton>
-                  </span>
-                </Tooltip>
-              </Grid>
-            </Grid>
-          </Alert>
+          <MRTTopTableAlert
+            title="Spares Definition Filter Applied"
+            clearFilters={table.resetColumnFilters}
+            clearFiltersAriaLabel="Clear Spares Definition Filter"
+            showInfoTooltip
+            infoTooltipTitle={
+              sparesDefinition.system_types.length === 1
+                ? `Items that are contained within the system type ${sparesDefinition.system_types[0].value} are classified as spares`
+                : `Items that are contained within a system type of one of ${sparesDefinition.system_types
+                    .map((sys) => sys.value)
+                    .join(', ')
+                    .replace(/, ([^,]*)$/, ' or $1')} are classified as spares`
+            }
+          />
         )}
       <MaterialReactTable table={table} />
       {!dense && selectedItem && (
@@ -879,11 +830,11 @@ export function ItemsTable(props: ItemTableProps) {
           open={deleteItemDialogOpen}
           onClose={() => {
             setDeleteItemDialogOpen(false);
-            setIsPrivilegedUserOpeningDialog(false);
+            setIsPrivilegedMode(false);
           }}
           item={selectedItem}
           onChangeItem={setSelectedItem}
-          isPrivilegedUser={isPrivilegedUserOpeningDialog}
+          isPrivilegedMode={isPrivilegedMode}
         />
       )}
     </div>

@@ -34,7 +34,7 @@ describe('SystemItemsDialog', () => {
       selectedItems: mockSelectedItems,
       onChangeSelectedItems: mockOnChangeSelectedItems,
       parentSystemId: SystemsJSON[0].id,
-      isPrivilegedUser: false,
+      isPrivilegedMode: false,
     };
 
     user = userEvent.setup();
@@ -73,7 +73,7 @@ describe('SystemItemsDialog', () => {
   });
 
   it('displays correctly when in admin mode', async () => {
-    props.isPrivilegedUser = true;
+    props.isPrivilegedMode = true;
     let baseElement;
     await act(async () => {
       baseElement = createView().baseElement;
@@ -212,6 +212,40 @@ describe('SystemItemsDialog', () => {
       expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
     });
 
+    it('cannot move selected items to the same parent system and then clears error state they have been resolved (admin mode)', async () => {
+      props.parentSystemId = SystemsJSON[1].id;
+      props.isPrivilegedMode = true;
+
+      createView();
+
+      await waitFor(() =>
+        expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+      );
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      expect(
+        await screen.findByRole('button', { name: 'Next' })
+      ).toBeDisabled();
+
+      const errorMessage =
+        'Please move items from current location or root to another system.';
+
+      expect(screen.getByText(errorMessage)).toBeInTheDocument();
+      await user.click(screen.getByLabelText('navigate to systems home'));
+
+      await waitFor(() => {
+        expect(screen.getByText('Giant laser')).toBeInTheDocument();
+      });
+
+      await user.click(screen.getAllByText('Storage')[0]);
+
+      expect(
+        await screen.findByRole('button', { name: 'Next' })
+      ).not.toBeDisabled();
+      expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
+    });
+
     it('cannot move selected items to root and resets back to an non error state after error has been resolved', async () => {
       props.parentSystemId = SystemsJSON[1].id;
 
@@ -313,7 +347,7 @@ describe('SystemItemsDialog', () => {
 
   describe('Move to as Admin', () => {
     beforeEach(() => {
-      props.isPrivilegedUser = true;
+      props.isPrivilegedMode = true;
     });
 
     afterEach(() => {

@@ -12,6 +12,7 @@ import { useGetSystemTypes } from '../../api/systems';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 
 import { APISettingsContext } from '../../apiConfigProvider.component';
+import MRTTopTableAlert from '../../common/mrtTopTableAlert.component';
 import {
   COLUMN_FILTER_BOOLEAN_OPTIONS,
   COLUMN_FILTER_FUNCTIONS,
@@ -24,6 +25,7 @@ import {
   displayTableRowCountText,
   getInitialColumnFilterFnState,
   getPageHeightCalc,
+  isExactFilterActive,
   mrtTheme,
 } from '../../utils';
 
@@ -54,9 +56,6 @@ function SystemTypes() {
       );
     }
   }, [systemTypesData, isLoading, sparesDefinition]);
-
-  // Breadcrumbs + Mui table V2 + extra
-  const tableHeight = getPageHeightCalc('50px + 110px + 48px');
 
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     return [
@@ -153,7 +152,22 @@ function SystemTypes() {
             },
           },
     muiTablePaperProps: { sx: { maxHeight: '100%' } },
-    muiTableContainerProps: { sx: { height: tableHeight } },
+    muiTableContainerProps: ({ table }) => {
+      const isSparesFilterApplied = isExactFilterActive(table, [
+        {
+          id: 'isSpare',
+          value: COLUMN_FILTER_BOOLEAN_OPTIONS[0],
+        },
+      ]);
+      return {
+        sx: {
+          height: getPageHeightCalc(
+            // Breadcrumbs + Mui table V2 + extra
+            `50px + 110px + 48px  ${isSparesFilterApplied ? ' + 54px' : ''}`
+          ),
+        },
+      };
+    },
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',
@@ -168,25 +182,6 @@ function SystemTypes() {
     ...onPreservedStatesChange,
 
     renderTopToolbarCustomActions: ({ table }) => {
-      function isExactFilterActive(
-        expectedFilters: { id: string; filterFn?: string; value: string }[]
-      ) {
-        const actualFilters = table.getState().columnFilters;
-        const actualFilterFns = table.getState().columnFilterFns;
-
-        // Check length matches
-        if (actualFilters.length !== expectedFilters.length) return false;
-
-        // Check every expected filter matches actual filter and filterFn
-        return expectedFilters.every(({ id, filterFn, value }) => {
-          const actualFilter = actualFilters.find((f) => f.id === id);
-          if (!actualFilter) return false;
-          if (actualFilterFns[id] !== filterFn) return false;
-
-          // Compare values stringified (arrays)
-          return JSON.stringify(actualFilter.value) === JSON.stringify(value);
-        });
-      }
       return (
         <Box>
           <Button
@@ -204,7 +199,7 @@ function SystemTypes() {
           <Button
             sx={{ mx: 0.5 }}
             variant="outlined"
-            disabled={isExactFilterActive([
+            disabled={isExactFilterActive(table, [
               {
                 id: 'isSpare',
                 value: COLUMN_FILTER_BOOLEAN_OPTIONS[0],
@@ -232,7 +227,25 @@ function SystemTypes() {
       }),
   });
 
-  return <MaterialReactTable table={table} />;
+  return (
+    <div style={{ width: '100%' }}>
+      {isExactFilterActive(table, [
+        {
+          id: 'isSpare',
+          value: COLUMN_FILTER_BOOLEAN_OPTIONS[0],
+        },
+      ]) && (
+        <MRTTopTableAlert
+          title="Spares Definition Filter Applied"
+          clearFilters={table.resetColumnFilters}
+          clearFiltersAriaLabel="Clear Spares Definition Filter"
+          showInfoTooltip
+          infoTooltipTitle="Items contained in the system types displayed in this table are classified as spares"
+        />
+      )}
+      <MaterialReactTable table={table} />
+    </div>
+  );
 }
 
 export default SystemTypes;

@@ -53,6 +53,8 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
   const apiSettings = React.useContext(APISettingsContext);
   const sparesFilterState = apiSettings?.spares?.sparesFilterState;
 
+  const isSparesDefinitionDefined = !!apiSettings.spares;
+
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
@@ -107,28 +109,30 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
               </Typography>
             </Grid>
             <Grid container spacing={0}>
-              <Grid size={{ xs: 12, sm: 6 }}>
-                <Typography
-                  sx={{
-                    color: 'text.primary',
-                  }}
-                >
-                  Number of spares
-                </Typography>
-                <Typography
-                  sx={{
-                    color: 'text.secondary',
-                  }}
-                >
-                  <MuiLink
-                    underline="hover"
-                    component={Link}
-                    to={`${catalogueItemIdData.id}/items${sparesFilterState}`}
+              {isSparesDefinitionDefined && (
+                <Grid size={{ xs: 12, sm: 6 }}>
+                  <Typography
+                    sx={{
+                      color: 'text.primary',
+                    }}
                   >
-                    {catalogueItemIdData.number_of_spares}
-                  </MuiLink>
-                </Typography>
-              </Grid>
+                    Number of spares
+                  </Typography>
+                  <Typography
+                    sx={{
+                      color: 'text.secondary',
+                    }}
+                  >
+                    <MuiLink
+                      underline="hover"
+                      component={Link}
+                      to={`${catalogueItemIdData.id}/items${sparesFilterState}`}
+                    >
+                      {catalogueItemIdData.number_of_spares}
+                    </MuiLink>
+                  </Typography>
+                </Grid>
+              )}
               <Grid size={{ xs: 12, sm: 6 }}>
                 <Typography
                   sx={{
