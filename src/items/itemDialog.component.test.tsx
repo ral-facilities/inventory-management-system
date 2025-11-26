@@ -245,6 +245,15 @@ describe('ItemDialog', () => {
         system: 'Storage',
       });
 
+      expect(
+        await screen.findByText('Item Creation Rule Applied')
+      ).toBeInTheDocument();
+      expect(
+        await screen.findByLabelText(
+          'The new item’s usage status will be set to New, as defined by the rules'
+        )
+      ).toBeInTheDocument();
+
       //navigate through stepper
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
@@ -1294,6 +1303,15 @@ describe('ItemDialog', () => {
         system: 'Giant laser',
       });
 
+      expect(
+        await screen.findByText('Item Moving Rule Applied')
+      ).toBeInTheDocument();
+      expect(
+        await screen.findByLabelText(
+          'The item’s usage status will be updated to In Use, as defined by the rules'
+        )
+      ).toBeInTheDocument();
+
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -1338,6 +1356,15 @@ describe('ItemDialog', () => {
       await modifySystemValue({
         system: 'Storage',
       });
+
+      expect(
+        await screen.findByText('Item Moving Rule Applied')
+      ).toBeInTheDocument();
+      expect(
+        await screen.findByLabelText(
+          'The item’s usage status will be updated to Used, as defined by the rules'
+        )
+      ).toBeInTheDocument();
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
 

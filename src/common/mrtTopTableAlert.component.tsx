@@ -12,8 +12,8 @@ import Grid from '@mui/material/Grid2';
 
 export interface MRTTopTableAlertProps {
   title: string;
-  clearFilters: () => void;
-  clearFiltersAriaLabel: string;
+  clearFilters?: () => void;
+  clearFiltersAriaLabel?: string;
   alertProps?: AlertProps;
   showInfoTooltip?: boolean;
   infoTooltipTitle?: React.ReactNode;
@@ -63,18 +63,20 @@ const MRTTopTableAlert = (props: MRTTopTableAlertProps) => {
           </Box>
         </Grid>
         <Grid size={2} display="flex" justifyContent="flex-end">
-          <Tooltip title={clearFiltersAriaLabel}>
-            <span>
-              <IconButton
-                size="small"
-                aria-label={clearFiltersAriaLabel}
-                onClick={clearFilters}
-                sx={{ color: 'inherit' }}
-              >
-                <ClearIcon fontSize="small" />
-              </IconButton>
-            </span>
-          </Tooltip>
+          {clearFilters && (
+            <Tooltip title={clearFiltersAriaLabel}>
+              <span>
+                <IconButton
+                  size="small"
+                  aria-label={clearFiltersAriaLabel}
+                  onClick={clearFilters}
+                  sx={{ color: 'inherit' }}
+                >
+                  <ClearIcon fontSize="small" />
+                </IconButton>
+              </span>
+            </Tooltip>
+          )}
         </Grid>
       </Grid>
     </Alert>

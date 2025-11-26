@@ -51,6 +51,7 @@ import {
   convertToPropertyPost,
   convertToPropertyValueList,
 } from '../catalogue/items/catalogueItemsDialog.component';
+import MRTTopTableAlert from '../common/mrtTopTableAlert.component';
 import {
   DATE_PICKER_MAX_DATE,
   DATE_PICKER_MIN_DATE,
@@ -203,7 +204,8 @@ function ItemDialog(props: ItemDialogProps) {
   const { data: tableRules } = useGetRules(srcSystemTypeId);
 
   // This should be a list of 1 rule
-  const { data: selectedRules } = useGetRules(srcSystemTypeId, dstSystemTypeId);
+  const { data: selectedRules, isLoading: isSelectedRulesLoading } =
+    useGetRules(srcSystemTypeId, dstSystemTypeId);
 
   const isDstSystemTypeSameAsSrcSystemType = React.useMemo(() => {
     if (!dstSystem || !srcSystem) return false;
@@ -663,6 +665,25 @@ function ItemDialog(props: ItemDialogProps) {
               }}
               homeLocation="Systems"
             />
+
+            {parentSystemId &&
+              !isSelectedRulesLoading &&
+              !systemsDataLoading && (
+                <MRTTopTableAlert
+                  title={
+                    requestType === 'post'
+                      ? 'Item Creation Rule Applied'
+                      : 'Item Moving Rule Applied'
+                  }
+                  showInfoTooltip
+                  infoTooltipTitle={
+                    requestType === 'post'
+                      ? `The new item’s usage status will be set to ${selectedRules?.[0]?.dst_usage_status?.value ?? selectedItem?.usage_status}, as defined by the rules`
+                      : `The item’s usage status will be updated to ${selectedRules?.[0]?.dst_usage_status?.value ?? selectedItem?.usage_status}, as defined by the rules`
+                  }
+                  alertProps={{ elevation: 1 }}
+                />
+              )}
             <SystemsTableView
               systemsData={systemsData}
               systemsDataLoading={systemsDataLoading}
