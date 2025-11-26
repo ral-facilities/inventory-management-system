@@ -134,12 +134,12 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
           if (
             status === 409 &&
             errorMessage.includes(
-              'A System with the same name already exists within the same parent System'
+              'A system with the same name already exists within the parent system'
             )
           ) {
             setError('name', {
               message:
-                'A System with the same name already exists within the same parent System. Please enter a different name.',
+                'A system with the same name already exists within the parent system. Please enter a different name.',
             });
             return;
           }
@@ -206,12 +206,12 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
               if (
                 status === 409 &&
                 errorMessage.includes(
-                  'A System with the same name already exists within the same parent System'
+                  'A system with the same name already exists within the parent system'
                 )
               ) {
                 setError('name', {
                   message:
-                    'A System with the same name already exists within the same parent System. Please enter a different name.',
+                    'A system with the same name already exists within the parent system. Please enter a different name.',
                 });
                 return;
               }

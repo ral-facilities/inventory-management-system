@@ -64,7 +64,7 @@ describe('APIConfigProvider', () => {
     );
   });
 
-  it('settings are loaded (without spares 204 no content)', async () => {
+  it('settings are loaded (without spares)', async () => {
     server.use(
       http.get('/v1/settings/spares-definition', () => {
         return HttpResponse.json(undefined, { status: 204 });

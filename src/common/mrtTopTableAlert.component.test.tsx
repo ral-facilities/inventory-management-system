@@ -34,7 +34,7 @@ describe('MRTTopTableAlert', () => {
     expect(baseElement).toMatchSnapshot();
   });
 
-  it('call the clear filters function when the clear filter button is clicked', async () => {
+  it('calls the clear filters function when the clear filters button is clicked', async () => {
     createView();
     await user.click(
       await screen.findByRole('button', { name: 'Clear test filter' })

@@ -2,7 +2,9 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { URLPathKeyType } from '../paths';
 import { renderComponentWithRouterProvider } from '../testUtils';
-import AdminLayout, { AdminErrorComponent } from './adminLayout.component';
+import SettingsLayout, {
+  SettingsErrorComponent,
+} from './settingsLayout.component';
 
 const mockedUseNavigate = vi.fn();
 
@@ -11,23 +13,27 @@ vi.mock('react-router', async () => ({
   useNavigate: () => mockedUseNavigate,
 }));
 
-describe('Admin Layout', () => {
+describe('Settings Layout', () => {
   let user: UserEvent;
 
   beforeEach(() => {
     user = userEvent.setup();
   });
   const createView = (path: string, urlPathKey: URLPathKeyType) => {
-    return renderComponentWithRouterProvider(<AdminLayout />, urlPathKey, path);
+    return renderComponentWithRouterProvider(
+      <SettingsLayout />,
+      urlPathKey,
+      path
+    );
   };
 
-  it('renders admin layout page correctly', async () => {
-    const view = createView('/admin-ims', 'admin');
+  it('renders settings layout page correctly', async () => {
+    const view = createView('/settings', 'settings');
 
     await waitFor(() => {
       expect(
         screen.getByRole('button', {
-          name: 'navigate to admin home',
+          name: 'navigate to settings home',
         })
       ).toBeInTheDocument();
     });
@@ -36,7 +42,7 @@ describe('Admin Layout', () => {
   });
 
   it('renders units breadcrumbs correctly', async () => {
-    const view = createView('/admin-ims/units', 'adminUnits');
+    const view = createView('/settings/units', 'settingsUnits');
 
     await waitFor(() => {
       expect(screen.getByText('Units')).toBeInTheDocument();
@@ -46,7 +52,10 @@ describe('Admin Layout', () => {
   });
 
   it('renders usage statuses breadcrumbs correctly', async () => {
-    const view = createView('/admin-ims/usage-statuses', 'adminUsageStatuses');
+    const view = createView(
+      '/settings/usage-statuses',
+      'settingsUsageStatuses'
+    );
 
     await waitFor(() => {
       expect(screen.getByText('Usage statuses')).toBeInTheDocument();
@@ -56,33 +65,33 @@ describe('Admin Layout', () => {
   });
 
   it('calls useNavigate when the home button is clicked', async () => {
-    createView('/admin-ims/usage-statuses', 'adminUsageStatuses');
+    createView('/settings/usage-statuses', 'settingsUsageStatuses');
 
     await waitFor(() => {
       expect(screen.getByText('Usage statuses')).toBeInTheDocument();
     });
 
     const homeButton = screen.getByRole('button', {
-      name: 'navigate to admin home',
+      name: 'navigate to settings home',
     });
 
     await user.click(homeButton);
 
     expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
-    expect(mockedUseNavigate).toHaveBeenCalledWith('/admin-ims');
+    expect(mockedUseNavigate).toHaveBeenCalledWith('/settings');
   });
 });
 
-describe('Admin Error Component', () => {
+describe('Settings Error Component', () => {
   const createView = () => {
-    return renderComponentWithRouterProvider(<AdminErrorComponent />);
+    return renderComponentWithRouterProvider(<SettingsErrorComponent />);
   };
 
   afterEach(() => {
     vi.clearAllMocks();
   });
 
-  it('renders Admin error page correctly', async () => {
+  it('renders Settings error page correctly', async () => {
     const view = createView();
 
     expect(view.asFragment()).toMatchSnapshot();

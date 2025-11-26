@@ -47,6 +47,7 @@ export interface AttachmentTableProps {
 
 function AttachmentsTable(props: AttachmentTableProps) {
   const { entityId } = props;
+
   const { data: attachments, isLoading: attachmentIsLoading } =
     useGetAttachments(entityId);
 

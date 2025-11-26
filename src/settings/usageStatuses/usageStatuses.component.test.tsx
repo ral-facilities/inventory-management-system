@@ -2,6 +2,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 import UsageStatusComponent from './usageStatuses.component';
+import * as authProvider from '../../authProvider.component';
 
 describe('Usage statuses', () => {
   let user: UserEvent;
@@ -10,6 +11,10 @@ describe('Usage statuses', () => {
   };
   beforeEach(() => {
     user = userEvent.setup();
+    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
+      role: 'admin',
+      isPrivilegedUser: true,
+    });
   });
 
   it('renders table correctly', async () => {
@@ -24,6 +29,28 @@ describe('Usage statuses', () => {
     );
 
     expect(view.asFragment()).toMatchSnapshot();
+  });
+
+  it('renders table for non privileged user without add or delete buttons', async () => {
+    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
+      role: 'default',
+      isPrivilegedUser: false,
+    });
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('New')).toBeInTheDocument();
+    });
+    // Ensure no loading bars visible
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
+    // assert there is no add button or row actions
+    expect(
+      screen.queryByRole('button', { name: 'Add Usage Status' })
+    ).not.toBeInTheDocument();
+    expect(screen.queryAllByLabelText('Row Actions')).toHaveLength(0);
   });
 
   it('opens and closes the add usage status dialog', async () => {

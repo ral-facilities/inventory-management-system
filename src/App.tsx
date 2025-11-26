@@ -15,14 +15,14 @@ import {
   createBrowserRouter,
   type RouteObject,
 } from 'react-router';
-import AdminCardView from './admin/adminCardView.component';
-import AdminLayout, {
-  AdminErrorComponent,
-} from './admin/adminLayout.component';
-import Rules from './admin/rules/rules.component';
-import SystemTypes from './admin/systemTypes/systemTypes.component';
-import Units from './admin/units/units.component';
-import UsageStatuses from './admin/usageStatuses/usageStatuses.component';
+import SettingsCardView from './settings/settingsCardView.component';
+import SettingsLayout, {
+  SettingsErrorComponent,
+} from './settings/settingsLayout.component';
+import Rules from './settings/rules/rules.component';
+import SystemTypes from './settings/systemTypes/systemTypes.component';
+import Units from './settings/units/units.component';
+import UsageStatuses from './settings/usageStatuses/usageStatuses.component';
 import {
   clearFailedAuthRequestsQueue,
   retryFailedAuthRequests,
@@ -68,6 +68,8 @@ import SystemsLayout, {
   systemsLayoutLoader,
 } from './systems/systemsLayout.component';
 import ViewTabs from './view/viewTabs.component';
+import { AuthProvider } from './authProvider.component';
+import { TokenUpdatedType } from './state/actions/actions.types';
 
 export const queryClient = new QueryClient({
   queryCache: new QueryCache({
@@ -107,17 +109,17 @@ const routeObject: RouteObject[] = [
         ],
       },
       {
-        path: paths.admin,
-        Component: AdminLayout,
+        path: paths.settings,
+        Component: SettingsLayout,
         children: [
-          { index: true, Component: AdminCardView },
-          { path: paths.adminUnits, Component: Units },
-          { path: paths.adminUsageStatuses, Component: UsageStatuses },
-          { path: paths.adminSystemTypes, Component: SystemTypes },
-          { path: paths.adminRules, Component: Rules },
+          { index: true, Component: SettingsCardView },
+          { path: paths.settingsUnits, Component: Units },
+          { path: paths.settingsUsageStatuses, Component: UsageStatuses },
+          { path: paths.settingsSystemTypes, Component: SystemTypes },
+          { path: paths.settingsRules, Component: Rules },
           {
             path: '*',
-            Component: AdminErrorComponent,
+            Component: SettingsErrorComponent,
           },
         ],
       },
@@ -259,8 +261,10 @@ export function Layout() {
     // attempt to re-render the plugin if we get told to
     const action = (e as CustomEvent).detail;
     if (requestPluginRerender.match(action)) forceUpdate();
-    else if (tokenRefreshed.match(action)) retryFailedAuthRequests();
-    else if (broadcastSignOut.match(action)) clearFailedAuthRequestsQueue();
+    else if (tokenRefreshed.match(action)) {
+      retryFailedAuthRequests();
+      window.dispatchEvent(new CustomEvent(TokenUpdatedType)); // triggers refresh in authProvider
+    } else if (broadcastSignOut.match(action)) clearFailedAuthRequestsQueue();
   }
 
   React.useEffect(() => {
@@ -275,18 +279,20 @@ export function Layout() {
       <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
         <IMSThemeProvider>
           <ConfigProvider>
-            <QueryClientProvider client={queryClient}>
-              <APIConfigProvider>
-                <React.Suspense
-                  fallback={
-                    <Preloader loading={true}>Finished loading</Preloader>
-                  }
-                >
-                  <ViewTabs />
-                  <ReactQueryDevtools initialIsOpen={false} />
-                </React.Suspense>
-              </APIConfigProvider>
-            </QueryClientProvider>
+            <AuthProvider>
+              <QueryClientProvider client={queryClient}>
+                <APIConfigProvider>
+                  <React.Suspense
+                    fallback={
+                      <Preloader loading={true}>Finished loading</Preloader>
+                    }
+                  >
+                    <ViewTabs />
+                    <ReactQueryDevtools initialIsOpen={false} />
+                  </React.Suspense>
+                </APIConfigProvider>
+              </QueryClientProvider>
+            </AuthProvider>
           </ConfigProvider>
         </IMSThemeProvider>
       </LocalizationProvider>

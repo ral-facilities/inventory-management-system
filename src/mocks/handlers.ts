@@ -609,7 +609,7 @@ export const handlers = [
         return HttpResponse.json(
           {
             detail:
-              'A System with the same name already exists within the same parent System',
+              'A system with the same name already exists within the parent system',
           },
           { status: 409 }
         );
@@ -700,7 +700,7 @@ export const handlers = [
         return HttpResponse.json(
           {
             detail:
-              'A System with the same name already exists within the same parent System',
+              'A system with the same name already exists within the parent system',
           },
           { status: 409 }
         );

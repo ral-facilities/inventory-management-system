@@ -17,54 +17,53 @@ import {
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { Unit } from '../../api/api.types.tsx';
-import { useGetUnits } from '../../api/units.tsx';
-import { usePreservedTableState } from '../../common/preservedTableState.component';
+import { UsageStatus } from '../../api/api.types.tsx';
+import { useGetUsageStatuses } from '../../api/usageStatuses.tsx';
+import { usePreservedTableState } from '../../common/preservedTableState.component.tsx';
 import {
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
   COLUMN_FILTER_VARIANTS,
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
-  TableHeaderOverflowTip,
-  customFilterFunctions,
   displayTableRowCountText,
   formatDateTimeStrings,
   getInitialColumnFilterFnState,
   getPageHeightCalc,
   mrtTheme,
-} from '../../utils';
-import DeleteUnitDialog from './deleteUnitsDialog.component.tsx';
-import UnitsDialog from './unitsDialog.component.tsx';
+} from '../../utils.tsx';
+import DeleteUsageStatusDialog from './deleteUsageStatusDialog.component.tsx';
+import UsageStatusDialog from './usageStatusDialog.component.tsx';
+import { useAuthorisationState } from '../../authProvider.component.tsx';
 
-function Units() {
-  const { data: unitData, isLoading: unitDataLoading } = useGetUnits();
+function UsageStatuses() {
+  const { data: usageStatusData, isLoading: usageStatusDataLoading } =
+    useGetUsageStatuses();
+
+  const { isPrivilegedUser } = useAuthorisationState();
 
   // Breadcrumbs + Mui table V2 + extra
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
 
-  const [deleteUnitDialog, setDeleteUnitDialog] =
+  const [deleteUsageStatusDialog, setDeleteUsageStatusDialog] =
     React.useState<boolean>(false);
 
-  const [selectedUnit, setSelectedUnit] = React.useState<Unit | undefined>(
-    undefined
-  );
+  const [selectedUsageStatus, setSelectedUsageStatus] = React.useState<
+    UsageStatus | undefined
+  >(undefined);
 
-  const columns = React.useMemo<MRT_ColumnDef<Unit>[]>(() => {
+  const columns = React.useMemo<MRT_ColumnDef<UsageStatus>[]>(() => {
     return [
       {
         header: 'Value',
-        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.value,
         id: 'value',
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
-        Cell: ({ row }) => row.original.value,
       },
       {
         header: 'Last modified',
-        Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.modified_time),
         id: 'modified_time',
         filterVariant: COLUMN_FILTER_VARIANTS.datetime,
@@ -77,7 +76,6 @@ function Units() {
       },
       {
         header: 'Created',
-        Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.created_time),
         id: 'created_time',
         filterVariant: COLUMN_FILTER_VARIANTS.datetime,
@@ -92,35 +90,34 @@ function Units() {
     ];
   }, []);
 
-  const noResultsText =
-    'No results found: Try adding a Unit by using the Add Unit button';
-
   const initialColumnFilterFnState = React.useMemo(() => {
     return getInitialColumnFilterFnState(columns);
   }, [columns]);
 
+  const noResultsTxt =
+    'No results found: Try adding a Usage Status by using the Add Usage Status button';
+
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
-      columnFilterFns: initialColumnFilterFnState,
       pagination: { pageSize: 15, pageIndex: 0 },
+      columnFilterFns: initialColumnFilterFnState,
     },
     storeInUrl: true,
   });
 
   const table = useMaterialReactTable({
     columns: columns,
-    data: unitData ?? [],
+    data: usageStatusData ?? [],
     // Features
     enableColumnOrdering: true,
     enableColumnFilterModes: true,
     enableFacetedValues: true,
-    enableRowActions: true,
+    enableRowActions: isPrivilegedUser,
     enableStickyHeader: true,
     enableRowSelection: false,
     enableDensityToggle: false,
     enableFullScreenToggle: false,
     enablePagination: true,
-    filterFns: customFilterFunctions,
     // Other settings
     manualFiltering: false,
     paginationDisplayMode: 'pages',
@@ -129,7 +126,7 @@ function Units() {
     // Localisation
     localization: {
       ...MRT_Localization_EN,
-      noRecordsToDisplay: noResultsText,
+      noRecordsToDisplay: noResultsTxt,
     },
     // State
     initialState: {
@@ -138,7 +135,7 @@ function Units() {
     },
     state: {
       ...preservedState,
-      showProgressBars: unitDataLoading, //or showSkeletons
+      showProgressBars: usageStatusDataLoading, //or showSkeletons
     },
     //MRT
     mrtTheme,
@@ -179,7 +176,7 @@ function Units() {
     renderCreateRowDialogContent: () => {
       return (
         <>
-          <UnitsDialog
+          <UsageStatusDialog
             open={true}
             onClose={() => {
               table.setCreatingRow(null);
@@ -190,16 +187,18 @@ function Units() {
     },
     renderTopToolbarCustomActions: ({ table }) => (
       <Box>
-        <Button
-          startIcon={<AddIcon />}
-          sx={{ mx: '4px' }}
-          variant="outlined"
-          onClick={() => {
-            table.setCreatingRow(true);
-          }}
-        >
-          Add Unit
-        </Button>
+        {isPrivilegedUser && (
+          <Button
+            startIcon={<AddIcon />}
+            sx={{ mx: '4px' }}
+            variant="outlined"
+            onClick={() => {
+              table.setCreatingRow(true);
+            }}
+          >
+            Add Usage Status
+          </Button>
+        )}
         <Button
           startIcon={<ClearIcon />}
           sx={{ mx: '4px' }}
@@ -217,11 +216,11 @@ function Units() {
       return [
         <MenuItem
           key="delete"
-          aria-label={`Delete unit ${row.original.value}`}
+          aria-label={`Delete usage status ${row.original.value}`}
           onClick={() => {
             closeMenu();
-            setDeleteUnitDialog(true);
-            setSelectedUnit(row.original);
+            setDeleteUsageStatusDialog(true);
+            setSelectedUsageStatus(row.original);
           }}
         >
           <ListItemIcon>
@@ -232,7 +231,7 @@ function Units() {
       ];
     },
     renderBottomToolbarCustomActions: ({ table }) =>
-      displayTableRowCountText(table, unitData, 'Units', {
+      displayTableRowCountText(table, usageStatusData, 'Usage Statuses', {
         paddingLeft: '8px',
       }),
   });
@@ -240,13 +239,13 @@ function Units() {
   return (
     <>
       <MaterialReactTable table={table} />
-      <DeleteUnitDialog
-        open={deleteUnitDialog}
-        onClose={() => setDeleteUnitDialog(false)}
-        unit={selectedUnit}
+      <DeleteUsageStatusDialog
+        open={deleteUsageStatusDialog}
+        onClose={() => setDeleteUsageStatusDialog(false)}
+        usageStatus={selectedUsageStatus}
       />
     </>
   );
 }
 
-export default Units;
+export default UsageStatuses;

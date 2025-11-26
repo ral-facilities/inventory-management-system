@@ -408,6 +408,61 @@ describe('Items', () => {
     });
   });
 
+  it('displays add dialog in admin view when user is admin', () => {
+    cy.setCurrentUserToAdmin();
+    cy.visit('/catalogue/4/items/1/items');
+
+    cy.findByRole('button', { name: 'Add Item as Admin' }).click();
+
+    cy.findByRole('progressbar').should('not.exist');
+
+    // Operational is 'not allowed' by rules so admin user should be able to bypass this and select usasge status
+    cy.findAllByText('Operational').first().click();
+
+    cy.findByText('Item Creation Rule Applied').should('exist');
+
+    cy.findByRole('button', { name: 'Next' }).click();
+
+    cy.findByLabelText('Usage status *').click();
+    cy.findByRole('option', { name: 'In Use' }).click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Next' }).click();
+
+    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('dialog').should('not.exist');
+
+    cy.findBrowserMockedRequests({
+      method: 'POST',
+      url: '/v1/items',
+    }).should(async (postRequests) => {
+      expect(postRequests.length).eq(1);
+      expect(JSON.stringify(await postRequests[0].json())).equal(
+        JSON.stringify({
+          purchase_order_number: null,
+          is_defective: false,
+          usage_status_id: '1',
+          warranty_end_date: null,
+          asset_number: null,
+          serial_number: null,
+          delivered_date: null,
+          notes: null,
+          properties: [
+            { id: '1', value: 12 },
+            { id: '2', value: 30 },
+            { id: '3', value: 'CMOS' },
+            { id: '4', value: null },
+            { id: '5', value: true },
+            { id: '6', value: false },
+          ],
+          catalogue_item_id: '1',
+          system_id: '65328f34a40ff5301575a4e3',
+        })
+      );
+    });
+  });
+
   it('displays messages for incorrect input types', () => {
     cy.findByRole('button', { name: 'Add Item' }).click();
 
@@ -1768,7 +1823,48 @@ describe('Items', () => {
     });
   });
 
-  it('editing an item should display an error message if values have not been updated', () => {
+  it('displays edit dialog in admin view when user is admin', () => {
+    cy.setCurrentUserToAdmin();
+    cy.visit('/catalogue/9/items/11/items');
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByText('Edit as Admin').click();
+
+    cy.findByRole('progressbar').should('not.exist');
+    cy.findByText('Edit Item as Admin').should('exist');
+
+    // Scrapped is 'not allowed' by rules so admin user should be able to bypass this and override usasge status
+    cy.findByRole('button', { name: 'navigate to systems home' }).click();
+    cy.findAllByText('Scrapped').first().click();
+
+    cy.findByText('Item Moving Rule Applied').should('exist');
+
+    cy.findByRole('button', { name: 'Next' }).click();
+
+    cy.findByLabelText('Usage status *').click();
+    cy.findByRole('option', { name: 'Used' }).click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Next' }).click();
+
+    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('dialog').should('not.exist');
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/items/:id',
+    }).should(async (patchRequests) => {
+      expect(patchRequests.length).eq(1);
+      expect(JSON.stringify(await patchRequests[0].json())).equal(
+        JSON.stringify({
+          usage_status_id: '2',
+          system_id: '657f8c3b2a1b4e5d8f9b3c4e8',
+        })
+      );
+    });
+  });
+
+  it('should display an error message if values have not been updated', () => {
     cy.findAllByLabelText('Row Actions').last().click();
     cy.findByText('Edit').click();
 
@@ -1801,8 +1897,7 @@ describe('Items', () => {
 
     cy.findAllByText('Storage').should('have.length', 1);
 
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.findByText('Item Creation Rule Applied').should('exist');
 
     cy.findByRole('button', { name: 'Next' }).click();
     cy.findByRole('button', { name: 'Next' }).click();
@@ -1881,5 +1976,29 @@ describe('Items', () => {
     cy.findByText(
       'Please move item to a system with Type: Storage before trying to delete.'
     ).should('exist');
+  });
+
+  it('admin user can bypass delete rules and delete dialog is in admin view', () => {
+    cy.setCurrentUserToAdmin();
+    cy.visit('/catalogue/4/items/1/items');
+
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByText('Delete as Admin').click();
+
+    cy.findByText('Serial Number: 5YUQDDjKpz2z').should('exist');
+    cy.findByText('Delete Item as Admin').should('exist');
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'DELETE',
+      url: '/v1/items/:id',
+    }).should((deleteRequests) => {
+      expect(deleteRequests.length).equal(1);
+      const request = deleteRequests[0];
+      expect(request.url.toString()).to.contain('KvT2Ox7n');
+    });
   });
 });
