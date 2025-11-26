@@ -39,7 +39,7 @@ describe('Manufacturer Layout', () => {
       expect(screen.queryByText('Manufacturer A')).not.toBeInTheDocument();
     });
 
-    const homeButton = screen.getByRole('button', {
+    const homeButton = await screen.findByRole('button', {
       name: 'navigate to manufacturers home',
     });
 
@@ -55,7 +55,7 @@ describe('Manufacturer Layout', () => {
       expect(screen.queryByText('Manufacturer A')).not.toBeInTheDocument();
     });
 
-    const homeButton = screen.getByRole('button', {
+    const homeButton = await screen.findByRole('button', {
       name: 'navigate to manufacturers home',
     });
 

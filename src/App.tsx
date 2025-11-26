@@ -15,19 +15,10 @@ import {
   createBrowserRouter,
   type RouteObject,
 } from 'react-router';
-import SettingsCardView from './settings/settingsCardView.component';
-import SettingsLayout, {
-  SettingsErrorComponent,
-} from './settings/settingsLayout.component';
-import Rules from './settings/rules/rules.component';
-import SystemTypes from './settings/systemTypes/systemTypes.component';
-import Units from './settings/units/units.component';
-import UsageStatuses from './settings/usageStatuses/usageStatuses.component';
 import {
   clearFailedAuthRequestsQueue,
   retryFailedAuthRequests,
 } from './api/api';
-import APIConfigProvider from './apiConfigProvider.component';
 import { MicroFrontendId } from './app.types';
 import CatalogueLayout, {
   CatalogueErrorComponent,
@@ -56,6 +47,15 @@ import ManufacturerTable from './manufacturer/manufacturerTable.component';
 import paths from './paths';
 import Preloader from './preloader/preloader.component';
 import retryIMS_APIErrors from './retryIMS_APIErrors';
+import Rules from './settings/rules/rules.component';
+import SettingsCardView from './settings/settingsCardView.component';
+import SettingsLayout, {
+  SettingsErrorComponent,
+} from './settings/settingsLayout.component';
+import SystemTypes from './settings/systemTypes/systemTypes.component';
+import Units from './settings/units/units.component';
+import UsageStatuses from './settings/usageStatuses/usageStatuses.component';
+import { TokenUpdatedType } from './state/actions/actions.types';
 import {
   broadcastSignOut,
   requestPluginRerender,
@@ -68,8 +68,6 @@ import SystemsLayout, {
   systemsLayoutLoader,
 } from './systems/systemsLayout.component';
 import ViewTabs from './view/viewTabs.component';
-import { AuthProvider } from './authProvider.component';
-import { TokenUpdatedType } from './state/actions/actions.types';
 
 export const queryClient = new QueryClient({
   queryCache: new QueryCache({
@@ -279,20 +277,16 @@ export function Layout() {
       <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
         <IMSThemeProvider>
           <ConfigProvider>
-            <AuthProvider>
-              <QueryClientProvider client={queryClient}>
-                <APIConfigProvider>
-                  <React.Suspense
-                    fallback={
-                      <Preloader loading={true}>Finished loading</Preloader>
-                    }
-                  >
-                    <ViewTabs />
-                    <ReactQueryDevtools initialIsOpen={false} />
-                  </React.Suspense>
-                </APIConfigProvider>
-              </QueryClientProvider>
-            </AuthProvider>
+            <QueryClientProvider client={queryClient}>
+              <React.Suspense
+                fallback={
+                  <Preloader loading={true}>Finished loading</Preloader>
+                }
+              >
+                <ViewTabs />
+                <ReactQueryDevtools initialIsOpen={false} />
+              </React.Suspense>
+            </QueryClientProvider>
           </ConfigProvider>
         </IMSThemeProvider>
       </LocalizationProvider>
