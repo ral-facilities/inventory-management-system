@@ -6,6 +6,8 @@ export const RegisterRouteType = `${CustomFrontendMessageType}:register_route`;
 export const NotificationType = `${CustomFrontendMessageType}:notification`;
 export const InvalidateTokenType = `${CustomFrontendMessageType}:invalidate_token`;
 
+export const TokenUpdatedType = 'ims:update_token';
+
 export interface PluginRoute {
   section: string;
   link: string;

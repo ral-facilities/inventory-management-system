@@ -69,6 +69,7 @@ import SystemsLayout, {
 } from './systems/systemsLayout.component';
 import ViewTabs from './view/viewTabs.component';
 import { AuthProvider } from './authProvider.component';
+import { TokenUpdatedType } from './state/actions/actions.types';
 
 export const queryClient = new QueryClient({
   queryCache: new QueryCache({
@@ -260,8 +261,10 @@ export function Layout() {
     // attempt to re-render the plugin if we get told to
     const action = (e as CustomEvent).detail;
     if (requestPluginRerender.match(action)) forceUpdate();
-    else if (tokenRefreshed.match(action)) retryFailedAuthRequests();
-    else if (broadcastSignOut.match(action)) clearFailedAuthRequestsQueue();
+    else if (tokenRefreshed.match(action)) {
+      retryFailedAuthRequests();
+      window.dispatchEvent(new CustomEvent(TokenUpdatedType)); // triggers refresh in authProvider
+    } else if (broadcastSignOut.match(action)) clearFailedAuthRequestsQueue();
   }
 
   React.useEffect(() => {

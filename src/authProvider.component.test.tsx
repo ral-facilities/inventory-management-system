@@ -2,6 +2,7 @@ import { render, RenderResult, screen, waitFor } from '@testing-library/react';
 import { AuthProvider, useAuthorisationState } from './authProvider.component';
 import React from 'react';
 import { ADMIN_ROLE_TOKEN, DEFAULT_ROLE_TOKEN } from './testUtils';
+import { setLocalStorageToken } from './utils';
 
 const localStorageGetItemMock = vi.spyOn(
   window.localStorage.__proto__,
@@ -54,6 +55,27 @@ describe('AuthProvider', () => {
         screen.getByText(
           `Authorised: {"role":"default","isPrivilegedUser":false}`
         )
+      ).toBeInTheDocument();
+    });
+  });
+
+  it('recalculates auth state on token update', async () => {
+    localStorageGetItemMock.mockImplementationOnce(() => DEFAULT_ROLE_TOKEN);
+    renderComponent();
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          `Authorised: {"role":"default","isPrivilegedUser":false}`
+        )
+      ).toBeInTheDocument();
+    });
+
+    setLocalStorageToken(true);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(`Authorised: {"role":"admin","isPrivilegedUser":true}`)
       ).toBeInTheDocument();
     });
   });

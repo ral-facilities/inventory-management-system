@@ -27,6 +27,7 @@ import React from 'react';
 import { useGetSparesDefinition } from './api/settings';
 import { MicroFrontendToken } from './app.types';
 import { SparesFilterStateType } from './app.types';
+import { TokenUpdatedType } from './state/actions/actions.types';
 
 /* Returns a name avoiding duplicates by appending _copy_n for nth copy */
 export const generateUniqueName = (
@@ -78,7 +79,7 @@ export const setLocalStorageToken = (useAdminToken: boolean) => {
   );
 
   // notify the authProvider class via new window event. This will trigger a reload.
-  window.dispatchEvent(new CustomEvent('tokenChanged'));
+  window.dispatchEvent(new CustomEvent(TokenUpdatedType));
 };
 
 /* Returns a calc function giving the page height excluding SciGateway related components
