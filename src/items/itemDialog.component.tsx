@@ -678,8 +678,10 @@ function ItemDialog(props: ItemDialogProps) {
                   showInfoTooltip
                   infoTooltipTitle={
                     requestType === 'post'
-                      ? `The new item’s usage status will be set to ${selectedRules?.[0]?.dst_usage_status?.value ?? selectedItem?.usage_status}, as defined by the rules`
-                      : `The item’s usage status will be updated to ${selectedRules?.[0]?.dst_usage_status?.value ?? selectedItem?.usage_status}, as defined by the rules`
+                      ? `The new item's usage status will be set to ${selectedRules?.[0]?.dst_usage_status?.value ?? selectedItem?.usage_status}, as defined by the rules`
+                      : selectedItem?.system_id === parentSystemId
+                        ? `The item's usage status will remain the same, as defined by the rules`
+                        : `The item's usage status will be updated to ${selectedRules?.[0]?.dst_usage_status?.value ?? selectedItem?.usage_status}, as defined by the rules`
                   }
                   alertProps={{ elevation: 1 }}
                 />

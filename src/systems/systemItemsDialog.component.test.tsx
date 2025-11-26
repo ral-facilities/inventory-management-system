@@ -338,7 +338,7 @@ describe('SystemItemsDialog', () => {
 
       expect(
         await screen.findByLabelText(
-          'The items usage statuses we remain the same, as defined by the rules'
+          'The items usage statuses will remain the same, as defined by the rules'
         )
       ).toBeInTheDocument();
 

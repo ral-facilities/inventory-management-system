@@ -250,7 +250,7 @@ describe('ItemDialog', () => {
       ).toBeInTheDocument();
       expect(
         await screen.findByLabelText(
-          'The new item’s usage status will be set to New, as defined by the rules'
+          `The new item's usage status will be set to New, as defined by the rules`
         )
       ).toBeInTheDocument();
 
@@ -1308,7 +1308,7 @@ describe('ItemDialog', () => {
       ).toBeInTheDocument();
       expect(
         await screen.findByLabelText(
-          'The item’s usage status will be updated to In Use, as defined by the rules'
+          `The item's usage status will be updated to In Use, as defined by the rules`
         )
       ).toBeInTheDocument();
 
@@ -1362,7 +1362,7 @@ describe('ItemDialog', () => {
       ).toBeInTheDocument();
       expect(
         await screen.findByLabelText(
-          'The item’s usage status will be updated to Used, as defined by the rules'
+          `The item's usage status will be updated to Used, as defined by the rules`
         )
       ).toBeInTheDocument();
 

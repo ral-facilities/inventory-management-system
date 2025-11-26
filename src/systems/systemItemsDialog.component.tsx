@@ -288,7 +288,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
                     infoTooltipTitle={
                       selectedRules && selectedRules[0]
                         ? `The items usage statuses will be updated to ${selectedRules[0].dst_usage_status?.value}, as defined by the rules`
-                        : 'The items usage statuses we remain the same, as defined by the rules'
+                        : 'The items usage statuses will remain the same, as defined by the rules'
                     }
                     alertProps={{ elevation: 1 }}
                   />
