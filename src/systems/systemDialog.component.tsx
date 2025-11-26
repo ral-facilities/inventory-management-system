@@ -145,11 +145,11 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
           }
           if (
             status === 422 &&
-            errorMessage.includes('Specified system type not found')
+            errorMessage.includes('The specified system type does not exist')
           ) {
             setError('type_id', {
               message:
-                'Specified system type not found. Please select a valid system type.',
+                'The specified system type does not exist. Please select a valid system type.',
             });
             return;
           }
@@ -229,11 +229,13 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
               }
               if (
                 status === 422 &&
-                errorMessage.includes('Specified system type not found')
+                errorMessage.includes(
+                  'The specified system type does not exist'
+                )
               ) {
                 setError('type_id', {
                   message:
-                    'Specified system type not found. Please select a valid system type.',
+                    'The specified system type does not exist. Please select a valid system type.',
                 });
                 return;
               }

@@ -478,13 +478,13 @@ describe('Systems', () => {
       cy.findByRole('option', { name: 'Operational' }).click();
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByText(
-        'Specified system type not found. Please select a valid system type.'
+        'The specified system type does not exist. Please select a valid system type.'
       ).should('be.visible');
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
       cy.findByRole('button', { name: 'Add System' }).click();
       cy.findByText(
-        'Specified system type not found. Please select a valid system type.'
+        'The specified system type does not exist. Please select a valid system type.'
       ).should('not.exist');
     });
   });
@@ -626,7 +626,7 @@ describe('Systems', () => {
       cy.findByLabelText('Name *').type('Error type not found');
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByText(
-        'Specified system type not found. Please select a valid system type.'
+        'The specified system type does not exist. Please select a valid system type.'
       ).should('exist');
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
@@ -635,7 +635,7 @@ describe('Systems', () => {
       cy.findByText('Edit').click();
 
       cy.findByText(
-        'Specified system type not found. Please select a valid system type.'
+        'The specified system type does not exist. Please select a valid system type.'
       ).should('not.exist');
     });
     it('displays error message if the system has a duplicate name that disappears once closed', () => {
