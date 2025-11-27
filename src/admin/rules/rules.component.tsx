@@ -1,5 +1,12 @@
 import ClearIcon from '@mui/icons-material/Clear';
-import { Box, Button, MenuItem, TableCellBaseProps } from '@mui/material';
+import InfoOutlineIcon from '@mui/icons-material/InfoOutlined';
+import {
+  Box,
+  Button,
+  IconButton,
+  MenuItem,
+  TableCellBaseProps,
+} from '@mui/material';
 import {
   MRT_ColumnDef,
   MaterialReactTable,
@@ -22,6 +29,7 @@ import {
   getPageHeightCalc,
   mrtTheme,
 } from '../../utils';
+import RulesInformationDialog from './rulesInformationDialog.component';
 
 function Rules() {
   const { data: rulesData, isLoading: isLoadingRules } = useGetRules();
@@ -36,6 +44,9 @@ function Rules() {
 
   // Breadcrumbs + Mui table V2 + extra
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
+
+  const [openInformationDialog, setOpenInformationDialog] =
+    React.useState<boolean>(false);
 
   const columns = React.useMemo<MRT_ColumnDef<Rule>[]>(() => {
     const systemTypeValues = systemTypesData?.map((type) => type.value);
@@ -326,6 +337,13 @@ function Rules() {
           >
             Show Deletion Rules
           </Button>
+          <IconButton
+            onClick={() => {
+              setOpenInformationDialog(true);
+            }}
+          >
+            <InfoOutlineIcon />
+          </IconButton>
         </Box>
       );
     },
@@ -336,7 +354,15 @@ function Rules() {
       }),
   });
 
-  return <MaterialReactTable table={table} />;
+  return (
+    <>
+      <RulesInformationDialog
+        open={openInformationDialog}
+        onClose={() => setOpenInformationDialog(false)}
+      />
+      <MaterialReactTable table={table} />
+    </>
+  );
 }
 
 export default Rules;
