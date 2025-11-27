@@ -193,7 +193,7 @@ describe('Add manufacturer dialog', () => {
     it('duplicate manufacturer name displays warning message', async () => {
       createView();
       modifyManufacturerValues({
-        name: 'Manufacturer A',
+        name: 'test_dup',
         url: 'http://test.co.uk',
         addressLine: '4 Example Street',
         town: 'Oxford',

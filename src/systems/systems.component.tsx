@@ -488,11 +488,11 @@ function Systems() {
     muiBottomToolbarProps: ({ table }) =>
       table.getState().isFullScreen ? {} : { sx: { boxShadow: 0 } },
     muiTableContainerProps: ({ table }) => ({
-      // main app bar + breadcrumbs + title + top toolbar + column heading
+      // main app bar + breadcrumbs (incl AuthRole banner) + title + top toolbar + column heading
       sx: {
         height: table.getState().isFullScreen
           ? '100%'
-          : getPageHeightCalc('64px + 80px + 40px + 47px + 40px'),
+          : getPageHeightCalc('64px + 88px + 40px + 47px + 40px'),
       },
     }),
     muiSelectAllCheckboxProps: { disabled: systemId === null },

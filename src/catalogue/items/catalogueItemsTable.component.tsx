@@ -37,6 +37,7 @@ import {
 } from '../../api/api.types';
 import { useGetCatalogueItems } from '../../api/catalogueItems';
 import { useGetManufacturerIds } from '../../api/manufacturers';
+import { APISettingsContext } from '../../apiConfigProvider.component';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import {
   COLUMN_FILTER_BOOLEAN_OPTIONS,
@@ -57,7 +58,6 @@ import {
   getInitialColumnFilterFnState,
   getPageHeightCalc,
   mrtTheme,
-  useSparesFilterState,
 } from '../../utils';
 import CatalogueItemDirectoryDialog from './catalogueItemDirectoryDialog.component';
 import CatalogueItemsDetailsPanel from './catalogueItemsDetailsPanel.component';
@@ -169,15 +169,14 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     isItemSelectable,
     requestOrigin,
   } = props;
-  // Breadcrumbs + Mui table V2 + extra
-  const tableHeight = getPageHeightCalc('50px + 110px + 48px');
   const contentHeight = getPageHeightCalc('80px');
 
   const { data: catalogueItemsData, isLoading: isLoadingCatalogueItems } =
     useGetCatalogueItems(parentInfo.id);
 
-  const { sparesFilterState, isLoading: isLoadingSparesDefinition } =
-    useSparesFilterState();
+  const apiSettings = React.useContext(APISettingsContext);
+  const sparesFilterState = apiSettings?.spares?.sparesFilterState;
+  const isSparesDefinitionDefined = !!apiSettings.spares;
 
   // States
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
@@ -197,7 +196,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       (catalogue_item) => catalogue_item.manufacturer_id
     ) ?? []
   );
-  let isLoading = isLoadingCatalogueItems || isLoadingSparesDefinition;
+  let isLoading = isLoadingCatalogueItems;
   const manufacturerList: (Manufacturer | undefined)[] = useGetManufacturerIds(
     Array.from(manufacturerIdSet.values())
   ).map((query) => {
@@ -305,29 +304,34 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           </MuiLink>
         ),
       },
-      {
-        header: 'Number of spares',
-        Header: TableHeaderOverflowTip,
-        size: 350,
-        accessorFn: (row: TableRowData) => row.catalogueItem.number_of_spares,
-        id: 'catalogueItem.number_of_spares',
-        filterVariant: COLUMN_FILTER_VARIANTS.number,
-        filterFn: COLUMN_FILTER_FUNCTIONS.number,
-        columnFilterModeOptions: [
-          ...COLUMN_FILTER_MODE_OPTIONS.number,
-          ...OPTIONAL_FILTER_MODE_OPTIONS,
-        ],
-        GroupedCell: TableGroupedCell,
-        Cell: ({ row }) => (
-          <MuiLink
-            underline="hover"
-            component={Link}
-            to={`${row.original.catalogueItem.id}/items${sparesFilterState}`}
-          >
-            {row.original.catalogueItem.number_of_spares}
-          </MuiLink>
-        ),
-      },
+      ...(isSparesDefinitionDefined
+        ? [
+            {
+              header: 'Number of spares',
+              Header: TableHeaderOverflowTip,
+              size: 350,
+              accessorFn: (row: TableRowData) =>
+                row.catalogueItem.number_of_spares,
+              id: 'catalogueItem.number_of_spares',
+              filterVariant: COLUMN_FILTER_VARIANTS.number,
+              filterFn: COLUMN_FILTER_FUNCTIONS.number,
+              columnFilterModeOptions: [
+                ...COLUMN_FILTER_MODE_OPTIONS.number,
+                ...OPTIONAL_FILTER_MODE_OPTIONS,
+              ],
+              GroupedCell: TableGroupedCell,
+              Cell: ({ row }: { row: MRT_Row<TableRowData> }) => (
+                <MuiLink
+                  underline="hover"
+                  component={Link}
+                  to={`${row.original.catalogueItem.id}/items${sparesFilterState}`}
+                >
+                  {row.original.catalogueItem.number_of_spares}
+                </MuiLink>
+              ),
+            },
+          ]
+        : []),
       {
         header: 'Description',
         Header: TableHeaderOverflowTip,
@@ -676,7 +680,12 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         enableGrouping: false,
       },
     ];
-  }, [dense, parentInfo.properties, sparesFilterState]);
+  }, [
+    dense,
+    isSparesDefinitionDefined,
+    parentInfo.properties,
+    sparesFilterState,
+  ]);
 
   const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
     selectedRowState ?? {}
@@ -819,10 +828,23 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             'aria-label': `${row.original.catalogueItem.name} row`,
           };
         },
-    muiTableContainerProps: {
-      sx: { height: dense ? '360.4px' : tableHeight, flexShrink: 1 },
-      // @ts-expect-error: MRT Table Container props does not have data-testid
-      'data-testid': 'catalogue-items-table-container',
+    muiTableContainerProps: ({ table }) => {
+      const showAlert =
+        table.getState().showAlertBanner ||
+        table.getFilteredSelectedRowModel().rows.length > 0 ||
+        table.getState().grouping.length > 0;
+      return {
+        sx: {
+          height: dense
+            ? '360.4px'
+            : getPageHeightCalc(
+                // Breadcrumbs + Mui table V2 + extra
+                `50px + 110px + 48px ${showAlert ? '+ 58.75px' : ''}`
+              ),
+          flexShrink: 1,
+        },
+        'data-testid': 'catalogue-items-table-container',
+      };
     },
     muiTableBodyCellProps: ({ column, row }) => {
       const disabledGroupedHeaderColumnIDs = [

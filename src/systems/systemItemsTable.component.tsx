@@ -6,6 +6,7 @@ import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   Box,
   Button,
+  Divider,
   ListItemIcon,
   ListItemText,
   MenuItem,
@@ -14,6 +15,7 @@ import {
 } from '@mui/material';
 import {
   MRT_ColumnDef,
+  MRT_Row,
   MRT_RowSelectionState,
   MaterialReactTable,
   useMaterialReactTable,
@@ -25,6 +27,7 @@ import { CatalogueItem, Item, System } from '../api/api.types';
 import { useGetCatalogueItemIds } from '../api/catalogueItems';
 import { useGetItems } from '../api/items';
 import { useGetUsageStatuses } from '../api/usageStatuses';
+import { APISettingsContext } from '../apiConfigProvider.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import DeleteItemDialog from '../items/deleteItemDialog.component';
 import ItemDialog from '../items/itemDialog.component';
@@ -46,14 +49,15 @@ import {
   getInitialColumnFilterFnState,
   getPageHeightCalc,
   mrtTheme,
-  useSparesFilterState,
 } from '../utils';
 import SystemItemsDialog from './systemItemsDialog.component';
+import { useAuthorisationState } from '../authProvider.component';
 
 const MoveItemsButton = (props: {
   selectedItems: Item[];
   system: System;
   onChangeSelectedItems: (selectedItems: MRT_RowSelectionState) => void;
+  isPrivilegedMode: boolean;
 }) => {
   const [moveItemsDialogOpen, setMoveItemsDialogOpen] =
     React.useState<boolean>(false);
@@ -67,7 +71,7 @@ const MoveItemsButton = (props: {
         disabled={props.selectedItems.length === 0}
         onClick={() => setMoveItemsDialogOpen(true)}
       >
-        Move to
+        {`Move to ${props.isPrivilegedMode ? 'as Admin' : ''}`}
       </Button>
       <SystemItemsDialog
         open={moveItemsDialogOpen}
@@ -75,6 +79,7 @@ const MoveItemsButton = (props: {
         selectedItems={props.selectedItems}
         onChangeSelectedItems={props.onChangeSelectedItems}
         parentSystemId={props.system.id}
+        isPrivilegedMode={props.isPrivilegedMode}
       />
     </>
   );
@@ -93,6 +98,8 @@ export interface SystemItemsTableProps {
 export function SystemItemsTable(props: SystemItemsTableProps) {
   const { system } = props;
 
+  const { isPrivilegedUser } = useAuthorisationState();
+
   // States
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
   const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
@@ -102,6 +109,9 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     'edit' | 'duplicate'
   >('edit');
   const [deleteItemDialogOpen, setDeleteItemDialogOpen] =
+    React.useState<boolean>(false);
+
+  const [isPrivilegedMode, setIsPrivilegedMode] =
     React.useState<boolean>(false);
   const [selectedItem, setSelectedItem] = React.useState<Item | undefined>(
     undefined
@@ -115,8 +125,9 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
   const { data: usageStatusData, isLoading: isLoadingUsageStatuses } =
     useGetUsageStatuses();
 
-  const { sparesFilterState, isLoading: isLoadingSparesDefinition } =
-    useSparesFilterState();
+  const apiSettings = React.useContext(APISettingsContext);
+  const sparesFilterState = apiSettings?.spares?.sparesFilterState;
+  const isSparesDefinitionDefined = !!apiSettings.spares;
 
   // Obtain the selected system data, not just the selection state
   const selectedRowIds = Object.keys(rowSelection);
@@ -129,8 +140,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       new Set<string>(itemsData?.map((item) => item.catalogue_item_id) ?? []),
     [itemsData]
   );
-  let isLoading =
-    isLoadingItems || isLoadingUsageStatuses || isLoadingSparesDefinition;
+  let isLoading = isLoadingItems || isLoadingUsageStatuses;
 
   const catalogueItemList: (CatalogueItem | undefined)[] =
     useGetCatalogueItemIds(Array.from(catalogueItemIdSet.values())).map(
@@ -233,40 +243,45 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           );
         },
       },
-      {
-        header: 'Number of Spares',
-        Header: TableHeaderOverflowTip,
-        // This needs to be a string to allow the AggregatedCell to render correctly.
-        // If not, it does not display. This seems to be a Material React Table (MRT) issue.
-        accessorFn: (row) => String(row.catalogueItem.number_of_spares ?? 0),
-        id: 'catalogueItem.number_of_spares',
-        filterVariant: COLUMN_FILTER_VARIANTS.number,
-        filterFn: COLUMN_FILTER_FUNCTIONS.number,
-        columnFilterModeOptions: [
-          ...COLUMN_FILTER_MODE_OPTIONS.number,
-          ...OPTIONAL_FILTER_MODE_OPTIONS,
-        ],
-        GroupedCell: TableGroupedCell,
-        AggregatedCell: ({ row }) => (
-          <MuiLink
-            underline="hover"
-            component={Link}
-            to={`/catalogue/${row.original.catalogueItem?.catalogue_category_id}/items/${row.original?.catalogueItem?.id}/items${sparesFilterState}`}
-          >
-            {row.original?.catalogueItem?.number_of_spares}
-          </MuiLink>
-        ),
-        size: 300,
-        Cell: ({ row }) => (
-          <MuiLink
-            underline="hover"
-            component={Link}
-            to={`/catalogue/${row.original.catalogueItem?.catalogue_category_id}/items/${row.original?.catalogueItem?.id}/items${sparesFilterState}`}
-          >
-            {row.original?.catalogueItem?.number_of_spares}
-          </MuiLink>
-        ),
-      },
+      ...(isSparesDefinitionDefined
+        ? [
+            {
+              header: 'Number of Spares',
+              Header: TableHeaderOverflowTip,
+              // This needs to be a string to allow the AggregatedCell to render correctly.
+              // If not, it does not display. This seems to be a Material React Table (MRT) issue.
+              accessorFn: (row: TableRowData) =>
+                String(row.catalogueItem.number_of_spares ?? 0),
+              id: 'catalogueItem.number_of_spares',
+              filterVariant: COLUMN_FILTER_VARIANTS.number,
+              filterFn: COLUMN_FILTER_FUNCTIONS.number,
+              columnFilterModeOptions: [
+                ...COLUMN_FILTER_MODE_OPTIONS.number,
+                ...OPTIONAL_FILTER_MODE_OPTIONS,
+              ],
+              GroupedCell: TableGroupedCell,
+              AggregatedCell: ({ row }: { row: MRT_Row<TableRowData> }) => (
+                <MuiLink
+                  underline="hover"
+                  component={Link}
+                  to={`/catalogue/${row.original.catalogueItem?.catalogue_category_id}/items/${row.original?.catalogueItem?.id}/items${sparesFilterState}`}
+                >
+                  {row.original?.catalogueItem?.number_of_spares}
+                </MuiLink>
+              ),
+              size: 300,
+              Cell: ({ row }: { row: MRT_Row<TableRowData> }) => (
+                <MuiLink
+                  underline="hover"
+                  component={Link}
+                  to={`/catalogue/${row.original.catalogueItem?.catalogue_category_id}/items/${row.original?.catalogueItem?.id}/items${sparesFilterState}`}
+                >
+                  {row.original?.catalogueItem?.number_of_spares}
+                </MuiLink>
+              ),
+            },
+          ]
+        : []),
       {
         header: 'Serial Number',
         Header: TableHeaderOverflowTip,
@@ -385,7 +400,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         size: 300,
       },
     ];
-  }, [sparesFilterState, usageStatusData]);
+  }, [isSparesDefinitionDefined, sparesFilterState, usageStatusData]);
 
   const initialColumnFilterFnState = React.useMemo(() => {
     return getInitialColumnFilterFnState(columns);
@@ -526,7 +541,9 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           open={true}
           onClose={() => {
             table.setCreatingRow(null);
+            setIsPrivilegedMode(false);
           }}
+          isPrivilegedMode={isPrivilegedMode}
           duplicate={itemDialogType === 'duplicate'}
           requestType={itemDialogType === 'edit' ? 'patch' : 'post'}
           // Intentionally left undefined here as will fetch inside dialog only when needed instead
@@ -556,11 +573,22 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           Clear Filters
         </Button>
         {system && (
-          <MoveItemsButton
-            selectedItems={selectedItems}
-            system={system}
-            onChangeSelectedItems={setRowSelection}
-          />
+          <>
+            <MoveItemsButton
+              selectedItems={selectedItems}
+              system={system}
+              onChangeSelectedItems={setRowSelection}
+              isPrivilegedMode={false}
+            />
+            {isPrivilegedUser && (
+              <MoveItemsButton
+                selectedItems={selectedItems}
+                system={system}
+                onChangeSelectedItems={setRowSelection}
+                isPrivilegedMode={true}
+              />
+            )}
+          </>
         )}
       </Box>
     ),
@@ -611,6 +639,59 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           </ListItemIcon>
           <ListItemText>Delete</ListItemText>
         </MenuItem>,
+        ...(isPrivilegedUser
+          ? [
+              <Divider key="divider" />,
+              <MenuItem
+                key="edit-as-admin"
+                aria-label={`Edit item ${row.original.item.id}`}
+                onClick={() => {
+                  setItemsDialogType('edit');
+                  setIsPrivilegedMode(true);
+                  table.setCreatingRow(row);
+                  closeMenu();
+                }}
+                sx={{ m: 0 }}
+              >
+                <ListItemIcon>
+                  <EditIcon />
+                </ListItemIcon>
+                <ListItemText>Edit as Admin</ListItemText>
+              </MenuItem>,
+              <MenuItem
+                key="duplicate-as-admin"
+                aria-label={`Duplicate item ${row.original.item.id} as Admin`}
+                onClick={() => {
+                  setItemsDialogType('duplicate');
+                  setIsPrivilegedMode(true);
+                  table.setCreatingRow(row);
+                  closeMenu();
+                }}
+                sx={{ m: 0 }}
+              >
+                <ListItemIcon>
+                  <SaveAsIcon />
+                </ListItemIcon>
+                <ListItemText>Duplicate as Admin</ListItemText>
+              </MenuItem>,
+              <MenuItem
+                key="delete-as-admin"
+                aria-label={`Delete item ${row.original.item.id}`}
+                onClick={() => {
+                  setDeleteItemDialogOpen(true);
+                  setIsPrivilegedMode(true);
+                  setSelectedItem(row.original.item);
+                  closeMenu();
+                }}
+                sx={{ m: 0 }}
+              >
+                <ListItemIcon>
+                  <DeleteIcon />
+                </ListItemIcon>
+                <ListItemText>Delete as Admin</ListItemText>
+              </MenuItem>,
+            ]
+          : []),
       ];
     },
     renderBottomToolbarCustomActions: ({ table }) =>
@@ -632,7 +713,11 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       {selectedItem && (
         <DeleteItemDialog
           open={deleteItemDialogOpen}
-          onClose={() => setDeleteItemDialogOpen(false)}
+          onClose={() => {
+            setDeleteItemDialogOpen(false);
+            setIsPrivilegedMode(false);
+          }}
+          isPrivilegedMode={isPrivilegedMode}
           item={selectedItem}
           onChangeItem={setSelectedItem}
         />

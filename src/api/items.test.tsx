@@ -242,6 +242,7 @@ describe('items api functions', () => {
     beforeEach(() => {
       moveItemsToSystem = {
         // Prevent test interference if modifying the usage statuses or selected items
+        mode: 'single',
         usageStatusId: '0',
         selectedItems: JSON.parse(JSON.stringify(mockItems)),
         targetSystem: SystemsJSON[1] as System,
@@ -254,7 +255,7 @@ describe('items api functions', () => {
       vi.clearAllMocks();
     });
 
-    it('sends requests to move multiple items to a system and returns a successful response for each', async () => {
+    it('sends requests to move multiple items to a system and returns a successful response for each (config as string)', async () => {
       const { result } = renderHook(() => useMoveItemsToSystem(), {
         wrapper: hooksWrapperWithProviders(),
       });
@@ -266,12 +267,57 @@ describe('items api functions', () => {
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
-      moveItemsToSystem.selectedItems.map((item) =>
-        expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/items/${item.id}`, {
-          system_id: moveItemsToSystem.targetSystem.id,
-          usage_status_id: moveItemsToSystem.usageStatusId,
-        })
+
+      moveItemsToSystem.selectedItems.map((item) => {
+        if (moveItemsToSystem.mode === 'single') {
+          expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/items/${item.id}`, {
+            system_id: moveItemsToSystem.targetSystem.id,
+            usage_status_id: moveItemsToSystem.usageStatusId,
+          });
+        }
+      });
+
+      expect(result.current.data).toEqual(
+        moveItemsToSystem.selectedItems.map((item) => ({
+          message: `Successfully moved to Giant laser`,
+          name: item.serial_number,
+          state: 'success',
+        }))
       );
+    });
+
+    it('sends requests to move multiple items to a system and returns a successful response for each (config as list)', async () => {
+      moveItemsToSystem = {
+        ...moveItemsToSystem,
+        mode: 'multiple',
+        usageStatuses: [
+          { item_id: 'KvT2Ox7n', usage_status_id: '0' },
+          { item_id: 'G463gOIA', usage_status_id: '0' },
+        ],
+      };
+      const { result } = renderHook(() => useMoveItemsToSystem(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      expect(result.current.isIdle).toBe(true);
+
+      result.current.mutate(moveItemsToSystem);
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+
+      moveItemsToSystem.selectedItems.map((item) => {
+        if (moveItemsToSystem.mode === 'multiple') {
+          expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/items/${item.id}`, {
+            system_id: moveItemsToSystem.targetSystem.id,
+            usage_status_id: moveItemsToSystem.usageStatuses.find(
+              (status) => status.item_id === item.id
+            )?.usage_status_id,
+          });
+        }
+      });
+
       expect(result.current.data).toEqual(
         moveItemsToSystem.selectedItems.map((item) => ({
           message: `Successfully moved to Giant laser`,
@@ -282,15 +328,19 @@ describe('items api functions', () => {
     });
 
     it('handles a failed request to move items to a system correctly', async () => {
-      moveItemsToSystem.targetSystem = {
-        ...(SystemsJSON[0] as System),
-        name: 'New system name',
-        id: 'new_system_id',
+      moveItemsToSystem = {
+        ...moveItemsToSystem,
+        targetSystem: {
+          ...(SystemsJSON[0] as System),
+          name: 'New system name',
+          id: 'new_system_id',
+        },
+        mode: 'single',
+        usageStatusId: '2',
       };
-      moveItemsToSystem.usageStatusId = '2';
 
-      // Fail just the 1st system
-      moveItemsToSystem.selectedItems[0].id = 'Error 409';
+      // Fail just the 1st item
+      moveItemsToSystem.selectedItems[0].id = 'Error 422';
       moveItemsToSystem.selectedItems[0].serial_number = null;
 
       const { result } = renderHook(() => useMoveItemsToSystem(), {
@@ -304,18 +354,22 @@ describe('items api functions', () => {
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
-      moveItemsToSystem.selectedItems.map((item) =>
-        expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/items/${item.id}`, {
-          system_id: 'new_system_id',
-          usage_status_id: moveItemsToSystem.usageStatusId,
-        })
-      );
+
+      moveItemsToSystem.selectedItems.map((item) => {
+        if (moveItemsToSystem.mode === 'single') {
+          expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/items/${item.id}`, {
+            system_id: 'new_system_id',
+            usage_status_id: moveItemsToSystem.usageStatusId,
+          });
+        }
+      });
+
       expect(result.current.data).toEqual(
         moveItemsToSystem.selectedItems
           .map((item, index) =>
             index === 0
               ? {
-                  message: 'The specified system ID does not exist',
+                  message: 'The specified system does not exist',
                   name: item.serial_number ?? 'No serial number',
                   state: 'error',
                 }

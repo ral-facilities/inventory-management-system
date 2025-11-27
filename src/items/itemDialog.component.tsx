@@ -51,6 +51,7 @@ import {
   convertToPropertyPost,
   convertToPropertyValueList,
 } from '../catalogue/items/catalogueItemsDialog.component';
+import MRTTopTableAlert from '../common/mrtTopTableAlert.component';
 import {
   DATE_PICKER_MAX_DATE,
   DATE_PICKER_MIN_DATE,
@@ -144,11 +145,19 @@ export interface ItemDialogProps {
   catalogueItem?: CatalogueItem;
   catalogueCategory?: CatalogueCategory;
   selectedItem?: Item;
+  isPrivilegedMode: boolean;
 }
 
 function ItemDialog(props: ItemDialogProps) {
-  const { open, onClose, requestType, duplicate, catalogueItem, selectedItem } =
-    props;
+  const {
+    open,
+    onClose,
+    requestType,
+    duplicate,
+    catalogueItem,
+    selectedItem,
+    isPrivilegedMode,
+  } = props;
 
   // Fetch the catalogue category if it hasn't already been given (as required to know what properties are available)
   const { data: fetchedCatalogueCategory } = useGetCatalogueCategory(
@@ -195,7 +204,8 @@ function ItemDialog(props: ItemDialogProps) {
   const { data: tableRules } = useGetRules(srcSystemTypeId);
 
   // This should be a list of 1 rule
-  const { data: selectedRules } = useGetRules(srcSystemTypeId, dstSystemTypeId);
+  const { data: selectedRules, isLoading: isSelectedRulesLoading } =
+    useGetRules(srcSystemTypeId, dstSystemTypeId);
 
   const isDstSystemTypeSameAsSrcSystemType = React.useMemo(() => {
     if (!dstSystem || !srcSystem) return false;
@@ -214,7 +224,12 @@ function ItemDialog(props: ItemDialogProps) {
     useGetSystemsBreadcrumbs(parentSystemId);
 
   const ItemDetailsStepFormMethods = useForm<ItemDetailsStep>({
-    resolver: zodResolver(ItemDetailsStepSchema(requestType)),
+    resolver: zodResolver(
+      ItemDetailsStepSchema(
+        requestType,
+        isPrivilegedMode && parentSystemId !== null
+      )
+    ),
     defaultValues: toItemDetailsStep(selectedItem),
   });
 
@@ -285,6 +300,14 @@ function ItemDialog(props: ItemDialogProps) {
           shouldValidate: true,
         });
       }
+    } else if (isPrivilegedMode) {
+      ItemDetailsStepFormMethods.setValue(
+        'usage_status_id',
+        selectedItem?.usage_status_id ?? '', // sets to current usage status if editing or duplicating item
+        {
+          shouldValidate: false, // so error does not instantly appear
+        }
+      );
     }
   }, [
     selectedRules,
@@ -292,6 +315,8 @@ function ItemDialog(props: ItemDialogProps) {
     ItemDetailsStepFormMethods,
     srcSystemTypeId,
     dstSystemTypeId,
+    isPrivilegedMode,
+    selectedItem?.usage_status_id,
   ]);
 
   // Clears form errors when a value has been changed
@@ -310,9 +335,23 @@ function ItemDialog(props: ItemDialogProps) {
   }, [clearErrorsPropertiesStep, watchPropertiesStep]);
 
   React.useEffect(() => {
-    if (parentSystemId !== selectedItem?.system_id)
+    if (parentSystemId !== selectedItem?.system_id) {
       clearErrorsPropertiesStep('root.formError');
-  }, [clearErrorsPropertiesStep, parentSystemId, selectedItem?.system_id]);
+
+      // Clears usage status error if privileged user as they may be selecting
+      // a system with no rule, and so no usage status. Therefore we want to
+      // ensure the error is always cleared to behave as other dialogs.
+      if (isPrivilegedMode) {
+        clearErrorsDetailsStep(['usage_status_id']);
+      }
+    }
+  }, [
+    clearErrorsDetailsStep,
+    clearErrorsPropertiesStep,
+    isPrivilegedMode,
+    parentSystemId,
+    selectedItem?.system_id,
+  ]);
 
   React.useEffect(() => {
     if (
@@ -492,7 +531,8 @@ function ItemDialog(props: ItemDialogProps) {
             return;
           } else if (
             !isDstSystemTypeSameAsSrcSystemType &&
-            (!selectedRules || selectedRules.length === 0)
+            (!selectedRules || selectedRules.length === 0) &&
+            !isPrivilegedMode
           ) {
             const allowedDstSystemTypes =
               tableRules?.map((rule) => rule.dst_system_type?.value) || [];
@@ -518,6 +558,7 @@ function ItemDialog(props: ItemDialogProps) {
       isDstSystemTypeSameAsSrcSystemType,
       parentSystemId,
       tableRules,
+      isPrivilegedMode,
     ]
   );
 
@@ -539,7 +580,8 @@ function ItemDialog(props: ItemDialogProps) {
         hasErrors = true;
       } else if (
         !isDstSystemTypeSameAsSrcSystemType &&
-        (!selectedRules || selectedRules.length === 0)
+        (!selectedRules || selectedRules.length === 0) &&
+        !isPrivilegedMode
       ) {
         const allowedDstSystemTypes =
           tableRules?.map((rule) => rule.dst_system_type?.value) || [];
@@ -589,6 +631,7 @@ function ItemDialog(props: ItemDialogProps) {
       parentSystemId,
       requestType,
       tableRules,
+      isPrivilegedMode,
     ]
   );
 
@@ -622,6 +665,27 @@ function ItemDialog(props: ItemDialogProps) {
               }}
               homeLocation="Systems"
             />
+
+            {parentSystemId &&
+              !isSelectedRulesLoading &&
+              !systemsDataLoading && (
+                <MRTTopTableAlert
+                  title={
+                    requestType === 'post'
+                      ? 'Item Creation Rule Applied'
+                      : 'Item Moving Rule Applied'
+                  }
+                  showInfoTooltip
+                  infoTooltipTitle={
+                    requestType === 'post'
+                      ? `The new item's usage status will be set to ${selectedRules?.[0]?.dst_usage_status?.value ?? selectedItem?.usage_status}, as defined by the rules`
+                      : selectedItem?.system_id === parentSystemId
+                        ? `The item's usage status will remain the same, as defined by the rules`
+                        : `The item's usage status will be updated to ${selectedRules?.[0]?.dst_usage_status?.value ?? selectedItem?.usage_status}, as defined by the rules`
+                  }
+                  alertProps={{ elevation: 1 }}
+                />
+              )}
             <SystemsTableView
               systemsData={systemsData}
               systemsDataLoading={systemsDataLoading}
@@ -629,11 +693,13 @@ function ItemDialog(props: ItemDialogProps) {
               systemParentId={parentSystemId ?? undefined}
               isSystemSelectable={(system) => {
                 return (
+                  isPrivilegedMode ||
                   tableRules?.some(
                     (rule) =>
                       rule.dst_system_type?.id === system.type_id ||
                       system.type_id === srcSystemTypeId
-                  ) || false
+                  ) ||
+                  false
                 );
               }}
               // Use most unrestricted variant (i.e. copy with no selection)
@@ -917,7 +983,7 @@ function ItemDialog(props: ItemDialogProps) {
                 render={({ field: { value, onChange } }) => (
                   <Autocomplete
                     disableClearable={value != null}
-                    disabled
+                    disabled={!isPrivilegedMode}
                     id="item-usage-status-input"
                     value={
                       usageStatuses?.find(
@@ -939,7 +1005,7 @@ function ItemDialog(props: ItemDialogProps) {
                       <TextField
                         {...params}
                         required={true}
-                        disabled
+                        disabled={!isPrivilegedMode}
                         label="Usage status"
                         error={!!errorsDetailsStep.usage_status_id}
                         helperText={errorsDetailsStep.usage_status_id?.message}
@@ -1178,15 +1244,24 @@ function ItemDialog(props: ItemDialogProps) {
   };
 
   return (
-    <Dialog
-      open={open}
-      maxWidth="lg"
-      PaperProps={{ sx: { height: '810px' } }}
-      fullWidth
-    >
-      <DialogTitle>
-        {`${requestType === 'patch' ? 'Edit' : 'Add'} Item`}
+    <Dialog open={open} maxWidth="xl" fullWidth>
+      <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
+        {`${requestType === 'patch' ? 'Edit' : 'Add'} Item${isPrivilegedMode ? ' as Admin' : ''}`}
+
+        {isPrivilegedMode && (
+          <Tooltip
+            title="As an admin, you can bypass rules that restrict item placement for other users, and you can modify the item's usage status"
+            data-testid={'admin-status-tooltip'}
+            placement="top"
+            enterTouchDelay={0}
+            arrow
+            sx={{ mx: 2 }}
+          >
+            <InfoOutlinedIcon />
+          </Tooltip>
+        )}
       </DialogTitle>
+
       <DialogContent>
         <Stepper
           nonLinear

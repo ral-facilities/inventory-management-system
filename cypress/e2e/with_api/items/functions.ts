@@ -1,6 +1,6 @@
 export const modifyItem = (
   values: Partial<{
-    edit: number;
+    editIndex: number;
     serialNumber: string;
     assetNumber: string;
     purchaseOrderNumber: string;
@@ -17,8 +17,8 @@ export const modifyItem = (
   }>,
   ignoreChecks?: boolean
 ) => {
-  if (typeof values.edit === 'number') {
-    cy.findAllByLabelText('Row Actions').eq(values.edit).click();
+  if (typeof values.editIndex === 'number') {
+    cy.findAllByLabelText('Row Actions').eq(values.editIndex).click();
 
     cy.findByText('Edit').click();
   } else {
@@ -28,9 +28,11 @@ export const modifyItem = (
   cy.findByLabelText('navigate to systems home').click();
 
   if (values.system) cy.findAllByText(values.system).first().click();
-
-  // eslint-disable-next-line cypress/no-unnecessary-waiting
-  cy.wait(4000);
+  if (typeof values.editIndex === 'number') {
+    cy.findByText('Item Moving Rule Applied').should('exist');
+  } else {
+    cy.findByText('Item Creation Rule Applied').should('exist');
+  }
 
   cy.findByRole('button', { name: 'Next' }).click();
 
@@ -246,8 +248,7 @@ export const duplicateItem = (serialNumber: string, index: number) => {
 
   cy.findAllByText('Storage').should('have.length', 1);
 
-  // eslint-disable-next-line cypress/no-unnecessary-waiting
-  cy.wait(4000);
+  cy.findByText('Item Creation Rule Applied').should('exist');
 
   cy.findByRole('button', { name: 'Next' }).click();
   cy.findByRole('button', { name: 'Next' }).click();
@@ -287,7 +288,7 @@ export const addItem = (ignoreChecks?: boolean) => {
 
 export const editItem = () => {
   modifyItem({
-    edit: 0,
+    editIndex: 0,
     serialNumber: 'MX4332424',
     assetNumber: 'PY42343424',
     purchaseOrderNumber: '2334',

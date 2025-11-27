@@ -160,8 +160,8 @@ export const moveItemToSystem = (values: {
     cy.findByText('Storage 2').click();
   });
 
-  // eslint-disable-next-line cypress/no-unnecessary-waiting
-  cy.wait(4000);
+  cy.findByText('Item Moving Rule Applied').should('exist');
+
   cy.findByRole('button', { name: 'Move here' }).should('not.be.disabled');
   cy.findByRole('button', { name: 'Move here' }).click();
   cy.findByRole('dialog').should('not.exist', { timeout: 10000 });

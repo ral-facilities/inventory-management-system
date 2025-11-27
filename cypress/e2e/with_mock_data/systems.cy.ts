@@ -458,13 +458,13 @@ describe('Systems', () => {
       cy.findByRole('option', { name: 'Operational' }).click();
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByText(
-        'A System with the same name already exists within the same parent System. Please enter a different name.'
+        'A system with the same name already exists within the parent system. Please enter a different name.'
       ).should('be.visible');
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
       cy.findByRole('button', { name: 'Add System' }).click();
       cy.findByText(
-        'A System with the same name already exists within the same parent System. Please enter a different name.'
+        'A system with the same name already exists within the parent system. Please enter a different name.'
       ).should('not.exist');
     });
 
@@ -478,13 +478,13 @@ describe('Systems', () => {
       cy.findByRole('option', { name: 'Operational' }).click();
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByText(
-        'Specified system type not found. Please select a valid system type.'
+        'The specified system type does not exist. Please select a valid system type.'
       ).should('be.visible');
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
       cy.findByRole('button', { name: 'Add System' }).click();
       cy.findByText(
-        'Specified system type not found. Please select a valid system type.'
+        'The specified system type does not exist. Please select a valid system type.'
       ).should('not.exist');
     });
   });
@@ -626,7 +626,7 @@ describe('Systems', () => {
       cy.findByLabelText('Name *').type('Error type not found');
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByText(
-        'Specified system type not found. Please select a valid system type.'
+        'The specified system type does not exist. Please select a valid system type.'
       ).should('exist');
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
@@ -635,7 +635,7 @@ describe('Systems', () => {
       cy.findByText('Edit').click();
 
       cy.findByText(
-        'Specified system type not found. Please select a valid system type.'
+        'The specified system type does not exist. Please select a valid system type.'
       ).should('not.exist');
     });
     it('displays error message if the system has a duplicate name that disappears once closed', () => {
@@ -648,7 +648,7 @@ describe('Systems', () => {
       cy.findByLabelText('Name *').type('Error 409');
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByText(
-        'A System with the same name already exists within the same parent System. Please enter a different name.'
+        'A system with the same name already exists within the parent system. Please enter a different name.'
       ).should('be.visible');
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
@@ -657,7 +657,7 @@ describe('Systems', () => {
       cy.findByText('Edit').click();
 
       cy.findByText(
-        'A System with the same name already exists within the same parent System. Please enter a different name.'
+        'A system with the same name already exists within the parent system. Please enter a different name.'
       ).should('not.exist');
     });
   });
@@ -990,8 +990,7 @@ describe('Systems', () => {
           cy.findByRole('button', { name: 'navigate to systems home' }).click();
           cy.findByLabelText('Storage row').click();
 
-          // eslint-disable-next-line cypress/no-unnecessary-waiting
-          cy.wait(4000);
+          cy.findByText('Item Moving Rule Applied').should('exist');
           cy.findByRole('button', { name: 'Move here' }).click();
         });
 
@@ -1014,6 +1013,80 @@ describe('Systems', () => {
           JSON.stringify({
             system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
             usage_status_id: '2',
+          })
+        );
+      });
+    });
+
+    it('moves items (admin mode)', () => {
+      cy.setCurrentUserToAdmin();
+      cy.visit('/systems');
+
+      cy.findByRole('link', { name: 'Pulse Laser' }).click();
+      cy.findAllByRole('button', { name: 'Show/Hide filters' })
+        .eq(1)
+        .scrollIntoView();
+      cy.findAllByRole('button', { name: 'Show/Hide filters' }).eq(1).click();
+
+      // Wait for progress bar to disappear before interacting with filters
+      cy.findAllByRole('progressbar').should('not.exist');
+
+      cy.findAllByRole('button', { name: 'Expand' }).eq(1).scrollIntoView();
+      cy.findAllByRole('button', { name: 'Expand' }).eq(1).click();
+
+      // Second table, first checkbox
+      cy.findAllByRole('table')
+        .eq(1)
+        .within(() => {
+          cy.findAllByRole('checkbox', {
+            name: 'Toggle select row',
+          })
+            .eq(1)
+            .click({ force: true });
+
+          cy.findAllByRole('checkbox', {
+            name: 'Toggle select row',
+          })
+            .eq(2)
+            .click({ force: true });
+        });
+
+      cy.findByRole('button', { name: 'Move to as Admin' }).click();
+
+      cy.startSnoopingBrowserMockedRequest();
+
+      cy.findByRole('dialog')
+        .should('be.visible')
+        .within(() => {
+          cy.findByRole('button', { name: 'navigate to systems home' }).click();
+          cy.findByLabelText('Giant laser row').click();
+          cy.findByRole('button', { name: 'Next' }).click();
+        });
+
+      cy.findAllByRole('combobox').eq(1).click();
+      cy.findByRole('option', { name: 'Scrapped' }).click();
+
+      cy.findByRole('button', { name: 'Finish' }).click();
+
+      cy.findByRole('dialog').should('not.exist');
+
+      cy.findBrowserMockedRequests({
+        method: 'PATCH',
+        url: '/v1/items/:id',
+      }).should(async (patchRequests) => {
+        expect(patchRequests.length).eq(2);
+        expect(patchRequests[0].url.toString()).to.contain('/z1hJvV8Z');
+        expect(JSON.stringify(await patchRequests[0].json())).equal(
+          JSON.stringify({
+            system_id: '65328f34a40ff5301575a4e3',
+            usage_status_id: '3',
+          })
+        );
+        expect(patchRequests[1].url.toString()).to.contain('/4mYoI7pr');
+        expect(JSON.stringify(await patchRequests[1].json())).equal(
+          JSON.stringify({
+            system_id: '65328f34a40ff5301575a4e3',
+            usage_status_id: '3',
           })
         );
       });
@@ -1069,8 +1142,7 @@ describe('Systems', () => {
     cy.findByLabelText('Row Actions').first().click();
     cy.findByText('Edit').click();
 
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.findByText('Item Moving Rule Applied').should('exist');
 
     cy.findByRole('button', { name: 'Next' }).click();
 
@@ -1102,8 +1174,7 @@ describe('Systems', () => {
     cy.findByLabelText('Row Actions').first().click();
     cy.findByText('Duplicate').click();
 
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.findByText('Item Creation Rule Applied').should('exist');
 
     cy.findByRole('button', { name: 'Next' }).click();
     cy.findByRole('button', { name: 'Next' }).click();

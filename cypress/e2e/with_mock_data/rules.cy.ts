@@ -1,6 +1,6 @@
 describe('Rules page', () => {
   beforeEach(() => {
-    cy.visit('/admin-ims/rules');
+    cy.visit('/settings/rules');
   });
 
   it('renders table correctly', () => {
@@ -21,12 +21,13 @@ describe('Rules page', () => {
     cy.findByRole('button', { name: 'Show Creation Rules' }).should(
       'be.disabled'
     );
-
+    cy.findByText('Creation Rules Filter Applied').should('exist');
     cy.findByRole('button', { name: 'Clear Filters' }).click();
 
     cy.findAllByText('Storage').should('have.length', 4);
 
     cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
+    cy.findByText('Creation Rules Filter Applied').should('not.exist');
   });
 
   it('sets deletion rules and clears the table filters', () => {
@@ -42,12 +43,14 @@ describe('Rules page', () => {
     cy.findByRole('button', { name: 'Show Deletion Rules' }).should(
       'be.disabled'
     );
+    cy.findByText('Deletion Rules Filter Applied').should('exist');
 
     cy.findByRole('button', { name: 'Clear Filters' }).click();
 
     cy.findAllByText('Storage').should('have.length', 4);
 
     cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
+    cy.findByText('Deletion Rules Filter Applied').should('not.exist');
   });
 
   it('sets moving rules and clears the table filters', () => {
@@ -65,7 +68,7 @@ describe('Rules page', () => {
     cy.findByRole('button', { name: 'Show Moving Rules' }).should(
       'be.disabled'
     );
-
+    cy.findByText('Moving Rules Filter Applied').should('exist');
     cy.findByRole('button', { name: 'Clear Filters' }).click();
 
     cy.findByRole('progressbar').should('not.exist');
@@ -73,5 +76,6 @@ describe('Rules page', () => {
     cy.findAllByText('Storage').should('have.length', 4);
 
     cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
+    cy.findByText('Moving Rules Filter Applied').should('not.exist');
   });
 });
