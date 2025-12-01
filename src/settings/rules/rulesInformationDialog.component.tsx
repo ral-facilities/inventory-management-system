@@ -82,9 +82,8 @@ const RulesInformationDialog = (props: RulesInformationDialogProps) => {
           <b>Deletion:</b> These define which types of system's items can be
           deleted from. (They have no restriction on usage status).
           <AccordionContent
-            summary="Example: Operational → Scrapped → 'Scrapped'"
-            details="Items can be moved from the system type 'Operational' to 'Scrapped'. This would set
-            the items usage status to 'Scrapped'."
+            summary="Example: Storage"
+            details="Items can be deleted from the system type 'Storage'."
           />
           <p />
           <b>Moving:</b> These define which types of systems an item is allowed
