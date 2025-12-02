@@ -89,10 +89,12 @@ const SystemDialog = (props: SystemDialogProps) => {
           },
     [isNotCreating, parentSystemTypeId, selectedSystem]
   );
+  const systemSchema = SystemsSchema(requestType);
+
   // This is within the React Component as this dialog is used in multiple places in the systems page
   const formControl = createFormControlWithRootErrorClearingUpdated<
-    z.input<ReturnType<typeof SystemsSchema>>,
-    z.output<ReturnType<typeof SystemsSchema>>
+    z.input<typeof systemSchema>,
+    z.output<typeof systemSchema>
   >();
 
   const {
@@ -104,12 +106,12 @@ const SystemDialog = (props: SystemDialogProps) => {
     clearErrors,
     reset,
   } = useForm<
-    z.input<ReturnType<typeof SystemsSchema>>,
+    z.input<typeof systemSchema>,
     undefined,
-    z.output<ReturnType<typeof SystemsSchema>>
+    z.output<typeof systemSchema>
   >({
     formControl,
-    resolver: zodResolver(SystemsSchema(requestType)),
+    resolver: zodResolver(systemSchema),
     defaultValues: initialSystem,
   });
 
@@ -161,7 +163,7 @@ const SystemDialog = (props: SystemDialogProps) => {
   );
 
   const handleEditSystem = React.useCallback(
-    (systemData: z.output<ReturnType<typeof SystemsSchema>>) => {
+    (systemData: z.output<typeof systemSchema>) => {
       // Validate the entered fields
       if (selectedSystem) {
         // Now ensure there is actually something to update
@@ -250,7 +252,7 @@ const SystemDialog = (props: SystemDialogProps) => {
     [selectedSystem, setError, patchSystem, handleClose]
   );
 
-  const onSubmit = (data: z.output<ReturnType<typeof SystemsSchema>>) => {
+  const onSubmit = (data: z.output<typeof systemSchema>) => {
     if (requestType === 'patch') {
       handleEditSystem(data);
     } else {
