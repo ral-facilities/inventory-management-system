@@ -29,11 +29,6 @@ import { ManufacturerSchema, RequestType } from '../form.schemas';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { createFormControlWithRootErrorClearingUpdated } from '../utils';
 import z from 'zod';
-
-const formControl = createFormControlWithRootErrorClearingUpdated<
-  z.input<ReturnType<typeof ManufacturerSchema>>,
-  z.output<ReturnType<typeof ManufacturerSchema>>
->();
 export interface ManufacturerDialogProps {
   open: boolean;
   onClose: () => void;
@@ -81,6 +76,13 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     [isNotCreating, selectedManufacturer]
   );
 
+  const manufacturerSchema = ManufacturerSchema(type);
+
+  const formControl = createFormControlWithRootErrorClearingUpdated<
+    z.input<typeof manufacturerSchema>,
+    z.output<typeof manufacturerSchema>
+  >();
+
   const {
     handleSubmit,
     register,
@@ -89,14 +91,12 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     clearErrors,
     reset,
   } = useForm<
-    // is the ReturnType as `ManufacturerSchema` is a parametised zodObject, therefore it needs to evaluated
-    // to be used as a type, otherwise it is techincally a function call.
-    z.input<ReturnType<typeof ManufacturerSchema>>,
+    z.input<typeof manufacturerSchema>,
     undefined,
-    z.output<ReturnType<typeof ManufacturerSchema>>
+    z.output<typeof manufacturerSchema>
   >({
     formControl,
-    resolver: zodResolver(ManufacturerSchema(type)),
+    resolver: zodResolver(manufacturerSchema),
     defaultValues: initialManufacturer,
   });
 
@@ -112,7 +112,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   }, [clearErrors, onClose, reset]);
 
   const handleAddManufacturer = React.useCallback(
-    (manufacturerData: z.output<ReturnType<typeof ManufacturerSchema>>) => {
+    (manufacturerData: z.output<typeof manufacturerSchema>) => {
       postManufacturer(manufacturerData)
         .then(() => handleClose())
         .catch((error: AxiosError) => {
@@ -130,7 +130,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   );
 
   const handleEditManufacturer = React.useCallback(
-    (manufacturerData: z.output<ReturnType<typeof ManufacturerSchema>>) => {
+    (manufacturerData: z.output<typeof manufacturerSchema>) => {
       if (selectedManufacturer) {
         const isNameUpdated =
           manufacturerData.name !== selectedManufacturer.name;
@@ -253,7 +253,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     [selectedManufacturer, patchManufacturer, handleClose, setError]
   );
 
-  const onSubmit = (data: ManufacturerPost) => {
+  const onSubmit = (data: z.output<typeof manufacturerSchema>) => {
     if (type === 'post') {
       handleAddManufacturer(data);
     } else {
