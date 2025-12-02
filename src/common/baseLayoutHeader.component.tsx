@@ -5,7 +5,9 @@ import { useNavigate } from 'react-router';
 import type { BreadcrumbsInfo } from '../api/api.types';
 import APIConfigProvider from '../apiConfigProvider.component';
 import { RoutesHomeLocation, type RoutesHomeLocationType } from '../app.types';
-import { AuthProvider, useAuthorisationState } from '../authProvider.component';
+import { AuthProvider } from '../authProvider.component';
+import { isRunningInDevelopment } from '../utils';
+import AuthToggle from '../view/authToggle.component';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import AuthRoleStatus from './authRoleStatus.component';
 
@@ -16,8 +18,6 @@ export interface BaseLayoutHeaderProps {
 }
 
 function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
-  const { isPrivilegedUser } = useAuthorisationState();
-
   const { breadcrumbsInfo, children, homeLocation } = props;
   const navigate = useNavigate();
   const onChangeNode = React.useCallback(
@@ -36,6 +36,14 @@ function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
             width: '100%',
           }}
         >
+          {/* Also render authorisation state toggle so it is inline with tabs, but not on home page */}
+          {isRunningInDevelopment() && (
+            <Box sx={{ display: 'flex' }}>
+              <Box sx={{ marginLeft: 'auto' }}>
+                <AuthToggle />
+              </Box>
+            </Box>
+          )}
           <Grid
             container
             sx={{
@@ -54,7 +62,7 @@ function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
               breadcrumbsInfo={breadcrumbsInfo}
               homeLocation={homeLocation}
             />
-            {isPrivilegedUser && <AuthRoleStatus />}
+            <AuthRoleStatus />
           </Grid>
           {children}
         </Box>
