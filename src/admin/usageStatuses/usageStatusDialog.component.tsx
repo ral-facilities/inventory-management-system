@@ -13,7 +13,6 @@ import {
 import { AxiosError } from 'axios';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { UsageStatusPost } from '../../api/api.types';
 import { usePostUsageStatus } from '../../api/usageStatuses';
 import { UsageStatusSchema } from '../../form.schemas';
 import handleIMS_APIError from '../../handleIMS_APIError';
@@ -52,7 +51,7 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
   }, [clearErrors, onClose, reset]);
 
   const handleAddUsageStatus = React.useCallback(
-    (usageStatusData: UsageStatusPost) => {
+    (usageStatusData: z.output<typeof UsageStatusSchema>) => {
       postUsageStatus(usageStatusData)
         .then(() => handleClose())
         .catch((error: AxiosError) => {
@@ -68,9 +67,6 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
     },
     [postUsageStatus, handleClose, setError]
   );
-  const onSubmit = (data: UsageStatusPost) => {
-    handleAddUsageStatus(data);
-  };
 
   return (
     <Dialog open={open} maxWidth="sm" fullWidth>
@@ -116,7 +112,7 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
           <Button
             variant="outlined"
             sx={{ width: '50%', mx: 1 }}
-            onClick={handleSubmit(onSubmit)}
+            onClick={handleSubmit(handleAddUsageStatus)}
             disabled={isAddPending || Object.values(errors).length !== 0}
             endIcon={isAddPending ? <CircularProgress size={20} /> : null}
           >

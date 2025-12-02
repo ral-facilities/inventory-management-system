@@ -13,7 +13,6 @@ import {
 import { AxiosError } from 'axios';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { UnitPost } from '../../api/api.types';
 import { usePostUnit } from '../../api/units';
 import { UnitSchema } from '../../form.schemas';
 import handleIMS_APIError from '../../handleIMS_APIError';
@@ -51,7 +50,7 @@ function UnitsDialog(props: UnitsDialogProps) {
   }, [clearErrors, onClose, reset]);
 
   const handleAddUnit = React.useCallback(
-    (unitData: UnitPost) => {
+    (unitData: z.output<typeof UnitSchema>) => {
       postUnit(unitData)
         .then(() => handleClose())
         .catch((error: AxiosError) => {
@@ -67,10 +66,6 @@ function UnitsDialog(props: UnitsDialogProps) {
     },
     [postUnit, handleClose, setError]
   );
-
-  const onSubmit = (data: UnitPost) => {
-    handleAddUnit(data);
-  };
 
   return (
     <Dialog open={open} maxWidth="sm" fullWidth>
@@ -116,7 +111,7 @@ function UnitsDialog(props: UnitsDialogProps) {
           <Button
             variant="outlined"
             sx={{ width: '50%', mx: 1 }}
-            onClick={handleSubmit(onSubmit)}
+            onClick={handleSubmit(handleAddUnit)}
             disabled={isAddPending || Object.values(errors).length !== 0}
             endIcon={isAddPending ? <CircularProgress size={20} /> : null}
           >
