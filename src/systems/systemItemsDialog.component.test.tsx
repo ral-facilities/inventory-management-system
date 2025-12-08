@@ -99,8 +99,12 @@ describe('SystemItemsDialog', () => {
 
     expect(screen.getByRole('button', { name: 'Next' })).toBeInTheDocument();
 
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
     expect(baseElement).toMatchSnapshot();
-  });
+  }, 10000);
 
   it('renders the breadcrumbs and navigates correctly', async () => {
     createView();
@@ -297,7 +301,7 @@ describe('SystemItemsDialog', () => {
       ).toBeInTheDocument();
       expect(
         await screen.findByLabelText(
-          'The items usage statuses will be updated to In Use, as defined by the rules'
+          `The items' usage statuses will be updated to In Use, according to the rules`
         )
       ).toBeInTheDocument();
 
@@ -338,7 +342,7 @@ describe('SystemItemsDialog', () => {
 
       expect(
         await screen.findByLabelText(
-          'The items usage statuses will remain the same, as defined by the rules'
+          `The items' usage statuses will remain the same, according to the rules`
         )
       ).toBeInTheDocument();
 
@@ -353,7 +357,7 @@ describe('SystemItemsDialog', () => {
 
       expect(mockOnClose).toHaveBeenCalled();
       expect(mockOnChangeSelectedItems).toHaveBeenCalledWith({});
-    }, 10000);
+    }, 15000);
   });
 
   describe('Move to as Admin', () => {

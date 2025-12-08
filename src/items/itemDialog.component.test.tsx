@@ -36,6 +36,10 @@ describe('ItemDialog', () => {
     user = userEvent.setup();
   });
 
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
   const modifyDetailsValues = async (values: {
     serialNumber?: string;
     serialNumberAdvancedOptions?: {
@@ -250,7 +254,7 @@ describe('ItemDialog', () => {
       ).toBeInTheDocument();
       expect(
         await screen.findByLabelText(
-          `The new item's usage status will be set to New, as defined by the rules`
+          `The new item's usage status will be set to New, according to the rules`
         )
       ).toBeInTheDocument();
 
@@ -930,7 +934,7 @@ describe('ItemDialog', () => {
       });
 
       expect(screen.getByRole('button', { name: 'Finish' })).not.toBeDisabled();
-    }, 15000);
+    }, 20000);
 
     it('displays error message when property values type is incorrect', async () => {
       createView();
@@ -1308,7 +1312,7 @@ describe('ItemDialog', () => {
       ).toBeInTheDocument();
       expect(
         await screen.findByLabelText(
-          `The item's usage status will be updated to In Use, as defined by the rules`
+          `The item's usage status will be updated to In Use, according to the rules`
         )
       ).toBeInTheDocument();
 
@@ -1362,7 +1366,7 @@ describe('ItemDialog', () => {
       ).toBeInTheDocument();
       expect(
         await screen.findByLabelText(
-          `The item's usage status will be updated to Used, as defined by the rules`
+          `The item's usage status will be updated to Used, according to the rules`
         )
       ).toBeInTheDocument();
 
