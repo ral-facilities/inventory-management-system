@@ -1,7 +1,7 @@
 # Dockerfile to build and serve inventory management system
 
 # Build stage
-FROM node:22.21-alpine3.22@sha256:b2358485e3e33bc3a33114d2b1bdb18cdbe4df01bd2b257198eb51beb1f026c5 AS builder
+FROM node:22.21-alpine3.23@sha256:3404205afbfa99ffb663ec5ac28be64bd789541816885c75939c7d24dce06fa2 AS builder
 
 WORKDIR /inventory-management-system-build
 
@@ -30,7 +30,7 @@ RUN set -eux; \
     yarn build;
 
 # Run stage
-FROM httpd:2.4.65-alpine3.22@sha256:07b2fabb7029a0b8aeb2e0fd02651c28fe22c21c5b5a59d6ff5b022791fcd89e
+FROM httpd:2.4.66-alpine3.23@sha256:848960db0e4651af52942ee18bf260e967f8aa03b2f16543703ee24b737e7800
 
 # Install specific version of jq (Used for assigning config values in entrypoint script)
 # Reference: https://pkgs.alpinelinux.org/package/edge/main/x86/jq
