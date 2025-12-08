@@ -1,6 +1,6 @@
 import React from 'react';
-import { getUserRole } from './parseTokens';
 import { InventoryManagementSystemSettingsContext } from './configProvider.component';
+import { getUserRole } from './parseTokens';
 import { TokenUpdatedType } from './state/actions/actions.types';
 
 const AuthContext = React.createContext<{

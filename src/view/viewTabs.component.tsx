@@ -1,4 +1,5 @@
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid2';
 import Tabs from '@mui/material/Tabs';
 import React from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router';
@@ -7,8 +8,6 @@ import { a11yProps, StyledTab } from '../common/tab/tab.utils';
 import TabPanel from '../common/tab/tabPanel.component';
 import paths from '../paths';
 import { getSciGatewayPageHeightCalc, isRunningInDevelopment } from '../utils';
-import Grid from '@mui/material/Grid2';
-import AuthToggle from './authToggle.component';
 
 function ViewTabs() {
   const [value, setValue] = React.useState<TabValue | false>('Catalogue');
@@ -66,9 +65,6 @@ function ViewTabs() {
                 />
               ))}
             </Tabs>
-
-            {/* Also render authorisation state toggle so it is inline with tabs, but not on home page */}
-            {value && value !== 'Ims' && <AuthToggle />}
           </Grid>
 
           <Box

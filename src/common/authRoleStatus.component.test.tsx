@@ -1,16 +1,19 @@
 import { render, RenderResult, screen, waitFor } from '@testing-library/react';
-import AuthRoleStatus from './authRoleStatus.component';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import * as parseTokens from '../parseTokens';
+import * as authProvider from '../authProvider.component';
+import AuthRoleStatus from './authRoleStatus.component';
 
 describe('AuthRoleStatus', () => {
   let user: UserEvent;
 
-  const renderComponent = (): RenderResult => render(<AuthRoleStatus />);
+  const createView = (): RenderResult => render(<AuthRoleStatus />);
 
   beforeEach(() => {
     user = userEvent.setup();
-    vi.spyOn(parseTokens, 'getUserRole').mockReturnValue('admin');
+    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
+      role: 'admin',
+      isPrivilegedUser: true,
+    });
   });
 
   afterEach(() => {
@@ -18,7 +21,7 @@ describe('AuthRoleStatus', () => {
   });
 
   it('should render role status', async () => {
-    const view = renderComponent();
+    const view = createView();
 
     await waitFor(() => {
       expect(
@@ -32,7 +35,7 @@ describe('AuthRoleStatus', () => {
   });
 
   it('tooltip should render explanation of role', async () => {
-    renderComponent();
+    createView();
 
     await waitFor(() => {
       expect(
