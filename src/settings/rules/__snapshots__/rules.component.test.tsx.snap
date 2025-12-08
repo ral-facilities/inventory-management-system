@@ -72,6 +72,23 @@ exports[`Rules > renders table correctly 1`] = `
             >
               Show Deletion Rules
             </button>
+            <button
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
+              tabindex="0"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                data-testid="InfoOutlinedIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8"
+                />
+              </svg>
+            </button>
           </div>
           <div
             class="MuiBox-root css-1p0wbhh"
@@ -108,7 +125,7 @@ exports[`Rules > renders table correctly 1`] = `
                         aria-invalid="false"
                         autocomplete="off"
                         class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12tjcea-MuiInputBase-input-MuiOutlinedInput-input"
-                        id=":r5:"
+                        id=":r7:"
                         placeholder="Search"
                         type="text"
                         value=""
@@ -374,13 +391,13 @@ exports[`Rules > renders table correctly 1`] = `
                             </span>
                           </div>
                           <div
-                            aria-describedby=":ri:-helper-text"
+                            aria-describedby=":rk:-helper-text"
                             aria-expanded="false"
                             aria-haspopup="listbox"
                             aria-label="Filter by Source System Type"
-                            aria-labelledby=":ri:"
+                            aria-labelledby=":rk:"
                             class="MuiSelect-select MuiSelect-standard MuiSelect-multiple MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-10y8whu-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                            id=":ri:"
+                            id=":rk:"
                             role="combobox"
                             tabindex="0"
                           >
@@ -442,7 +459,7 @@ exports[`Rules > renders table correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                          id=":ri:-helper-text"
+                          id=":rk:-helper-text"
                         >
                           <label>
                             Filter Mode: Includes any
@@ -607,13 +624,13 @@ exports[`Rules > renders table correctly 1`] = `
                             </span>
                           </div>
                           <div
-                            aria-describedby=":ru:-helper-text"
+                            aria-describedby=":r10:-helper-text"
                             aria-expanded="false"
                             aria-haspopup="listbox"
                             aria-label="Filter by Destination System Type"
-                            aria-labelledby=":ru:"
+                            aria-labelledby=":r10:"
                             class="MuiSelect-select MuiSelect-standard MuiSelect-multiple MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-10y8whu-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                            id=":ru:"
+                            id=":r10:"
                             role="combobox"
                             tabindex="0"
                           >
@@ -675,7 +692,7 @@ exports[`Rules > renders table correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                          id=":ru:-helper-text"
+                          id=":r10:-helper-text"
                         >
                           <label>
                             Filter Mode: Includes any
@@ -840,13 +857,13 @@ exports[`Rules > renders table correctly 1`] = `
                             </span>
                           </div>
                           <div
-                            aria-describedby=":r1a:-helper-text"
+                            aria-describedby=":r1c:-helper-text"
                             aria-expanded="false"
                             aria-haspopup="listbox"
                             aria-label="Filter by Destination Usage Status"
-                            aria-labelledby=":r1a:"
+                            aria-labelledby=":r1c:"
                             class="MuiSelect-select MuiSelect-standard MuiSelect-multiple MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-10y8whu-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                            id=":r1a:"
+                            id=":r1c:"
                             role="combobox"
                             tabindex="0"
                           >
@@ -908,7 +925,7 @@ exports[`Rules > renders table correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                          id=":r1a:-helper-text"
+                          id=":r1c:-helper-text"
                         >
                           <label>
                             Filter Mode: Includes any

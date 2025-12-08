@@ -66,36 +66,40 @@ const RulesInformationDialog = (props: RulesInformationDialogProps) => {
         <Typography variant="body1">
           Rules define what operations are possible for items in relation to
           systems.
-          <p />
-          <Divider></Divider>
-          <p />
+        </Typography>
+        <Divider></Divider>
+        <Typography variant="body1">
           They are split into three categories:
-          <p />
-          <b>Creation:</b> These define which types of system's items can be
-          created in, and what usage status they should have.
-          <AccordionContent
-            summary="Example: Storage → 'New'"
-            details="Items can be created in the system type 'Storage'. This would set
+        </Typography>
+        <Typography variant="body1">
+          <b>Creation:</b> These define which types of system&apos;s items can
+          be created in, and what usage status they should have.
+        </Typography>
+        <AccordionContent
+          summary="Example: Storage → 'New'"
+          details="Items can be created in the system type 'Storage'. This would set
             the items usage status to 'New'."
-          />
-          <p />
-          <b>Deletion:</b> These define which types of system's items can be
-          deleted from. (They have no restriction on usage status).
-          <AccordionContent
-            summary="Example: Storage"
-            details="Items can be deleted from the system type 'Storage'."
-          />
-          <p />
+        />
+        <Typography variant="body1">
+          <b>Deletion:</b> These define which types of system&apos;s items can
+          be deleted from. (They have no restriction on usage status).
+        </Typography>
+        <AccordionContent
+          summary="Example: Storage"
+          details="Items can be deleted from the system type 'Storage'."
+        />
+        <Typography variant="body1">
           <b>Moving:</b> These define which types of systems an item is allowed
           to move between and what usage status they should have once moved.
-          <AccordionContent
-            summary="Example: Storage → Operational → 'In Use'"
-            details="Items can be moved from the system type 'Storage' to 'Operational'. This would set
+        </Typography>
+        <AccordionContent
+          summary="Example: Storage → Operational → 'In Use'"
+          details="Items can be moved from the system type 'Storage' to 'Operational'. This would set
             the items usage status to 'In Use'."
-          />
-          <p />
-          These rules are defined in terms of the source system's type,
-          destination system's type, and usage status.
+        />
+        <Typography variant="body1">
+          These rules are defined in terms of the source system&apos;s type,
+          destination system&apos;s type, and usage status.
         </Typography>
       </DialogContent>
       <DialogActions>
