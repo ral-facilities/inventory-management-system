@@ -1,14 +1,15 @@
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
+import APIConfigProvider from '../../apiConfigProvider.component';
 import CatalogueItemsJSON from '../../mocks/CatalogueItems.json';
 import { server } from '../../mocks/server';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 import CatalogueItemsLandingPage from './catalogueItemsLandingPage.component';
 
 const mockedUseNavigate = vi.fn();
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')),
+vi.mock('react-router', async () => ({
+  ...(await vi.importActual('react-router')),
   useNavigate: () => mockedUseNavigate,
 }));
 
@@ -16,7 +17,9 @@ describe('Catalogue Items Landing Page', () => {
   let user: UserEvent;
   const createView = (path: string) => {
     return renderComponentWithRouterProvider(
-      <CatalogueItemsLandingPage />,
+      <APIConfigProvider>
+        <CatalogueItemsLandingPage />
+      </APIConfigProvider>,
       'catalogueItem',
       path
     );
@@ -225,6 +228,38 @@ describe('Catalogue Items Landing Page', () => {
       name: 'Items',
     });
     expect(url).toHaveAttribute('href', '/catalogue/5/items/89/items');
+  });
+
+  it('navigates to items page with spares definition applied', async () => {
+    createView('/catalogue/5/items/89');
+    await waitFor(() => {
+      expect(screen.getByRole('link', { name: '0' })).toBeInTheDocument();
+    });
+
+    const url = screen.getByRole('link', {
+      name: '0',
+    });
+    expect(url).toHaveAttribute(
+      'href',
+      '/catalogue/5/items/89/items?state=N4IgxgYiBcDaoEsAmMQGcCeaAuBTAtgHTYYAOuhAbgIYA2ArriADQg0NNygnmo4BOCAHYBzFmzqNUAZWwB7ftRFMAvgF11KoA'
+    );
+  });
+
+  it('should not display spares number if spares definition is not defined', async () => {
+    server.use(
+      http.get('/v1/settings/spares-definition', () => {
+        return HttpResponse.json(undefined, { status: 204 });
+      })
+    );
+
+    createView('/catalogue/5/items/89');
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
+    await waitFor(() => {
+      expect(screen.queryByText('Number of spares')).not.toBeInTheDocument();
+    });
   });
 
   it('landing page renders data correctly when optional values are null', async () => {

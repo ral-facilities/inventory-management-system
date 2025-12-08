@@ -1,10 +1,10 @@
 import { screen, waitFor } from '@testing-library/react';
-import { paths } from '../../App';
+import { URLPathKeyType } from '../../paths';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 import CatalogueItemsPage from './catalogueItemsPage.component';
 
 describe('CatalogueItemsPage', () => {
-  const createView = (path: string, urlPathKey: keyof typeof paths) => {
+  const createView = (path: string, urlPathKey: URLPathKeyType) => {
     return renderComponentWithRouterProvider(
       <CatalogueItemsPage />,
       urlPathKey,

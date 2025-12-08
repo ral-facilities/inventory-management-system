@@ -52,6 +52,9 @@ describe('SystemDetails', () => {
     expect(
       screen.getByText(mockSystemDetails.importance ?? '')
     ).toBeInTheDocument();
+
+    expect(screen.getByText('Operational')).toBeInTheDocument();
+
     // Can have new line character which breaks normal matching
     expect(
       screen.getByText(

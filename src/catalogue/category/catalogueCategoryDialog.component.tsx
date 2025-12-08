@@ -11,12 +11,13 @@ import {
   FormControl,
   FormControlLabel,
   FormLabel,
-  Grid,
   Radio,
   RadioGroup,
+  Stack,
   TextField,
   Typography,
 } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import { AxiosError } from 'axios';
 import React from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
@@ -299,9 +300,17 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
           : 'Add Catalogue Category'}
       </DialogTitle>
       <DialogContent>
-        <Grid container direction="column" spacing={1}>
-          <Grid item container sx={{ mt: 1, alignItems: 'center' }}>
-            <Grid item xs={requestType === 'patch' ? 11 : 12}>
+        <Stack
+          spacing={1}
+          sx={{
+            width: '100%',
+          }}
+        >
+          <Grid
+            container
+            sx={{ marginTop: '8px !important', alignItems: 'center' }}
+          >
+            <Grid size={requestType === 'patch' ? 11 : 12}>
               <TextField
                 id="catalogue-category-name-input"
                 label="Name"
@@ -321,8 +330,7 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
                   justifyContent: 'center',
                   paddingLeft: 1,
                 }}
-                item
-                xs={1}
+                size={1}
               >
                 <Button
                   size="large"
@@ -345,7 +353,7 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
               </Grid>
             )}
           </Grid>
-          <Grid item>
+          <Box>
             <Controller
               control={control}
               name="is_leaf"
@@ -384,15 +392,17 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
                 </FormControl>
               )}
             />
-          </Grid>
+          </Box>
           {isLeaf === 'true' && (
             <>
-              <Grid item>
-                <Divider sx={{ minWidth: '700px' }} />
-              </Grid>
-              <Grid item sx={{ paddingLeft: 1, paddingTop: 3 }}>
+              <Divider sx={{ minWidth: '700px' }} />
+              <Box sx={{ paddingLeft: 1 }}>
                 <Typography variant="h6">Catalogue Item Properties</Typography>
-                <Box mt={1}>
+                <Box
+                  sx={{
+                    mt: 1,
+                  }}
+                >
                   <FormProvider {...formMethods}>
                     <CatalogueItemsPropertiesTable
                       requestType={requestType}
@@ -400,10 +410,10 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
                     />
                   </FormProvider>
                 </Box>
-              </Grid>
+              </Box>
             </>
           )}
-        </Grid>
+        </Stack>
       </DialogContent>
       <DialogActions sx={{ flexDirection: 'column', padding: '0px 24px' }}>
         <Box

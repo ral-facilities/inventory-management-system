@@ -12,7 +12,10 @@ import CatalogueItemsDialog, {
 import { http } from 'msw';
 import { MockInstance } from 'vitest';
 import { imsApi } from '../../api/api';
-import { CatalogueItem } from '../../api/api.types';
+import {
+  CatalogueCategoryPropertyType,
+  CatalogueItem,
+} from '../../api/api.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { server } from '../../mocks/server';
 
@@ -337,6 +340,88 @@ describe('Catalogue Items Dialog', () => {
         {
           id: '19',
           value: 'y',
+        },
+      ],
+    });
+  }, 10000);
+
+  it('adds a catalogue item where the catalogue item property has an allowed list of values that includes extra spaces', async () => {
+    props = {
+      ...props,
+      parentInfo: {
+        ...getCatalogueCategoryById('12'),
+        properties: [
+          getCatalogueCategoryById('12').properties[0],
+          getCatalogueCategoryById('12').properties[1],
+          {
+            name: 'Axis',
+            type: CatalogueCategoryPropertyType.Text,
+            unit: null,
+            unit_id: null,
+            mandatory: false,
+            allowed_values: {
+              type: 'list',
+              values: ['  y  ', '  x  ', '  z  '],
+            },
+            id: '19',
+          },
+        ],
+      },
+    };
+
+    createView();
+
+    await modifyValues({
+      costGbp: '1200',
+      costToReworkGbp: '400',
+      daysToReplace: '20',
+      daysToRework: '2',
+      expectedLifetimeDays: '146',
+      description: '',
+      drawingLink: 'https://example.com',
+      drawingNumber: 'mk4324',
+      itemModelNumber: 'mk4324',
+      name: 'test',
+      manufacturer: 'Man{arrowdown}{enter}',
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Next' }));
+
+    fireEvent.change(screen.getByLabelText('Ultimate Pressure (millibar) *'), {
+      target: { value: '10' },
+    });
+
+    const pumpingSpeedAutoComplete = screen.getAllByRole('combobox')[0];
+    await user.type(pumpingSpeedAutoComplete, '4{arrowdown}{enter}');
+
+    const axisAutocomplete = screen.getAllByRole('combobox')[1];
+    await user.type(axisAutocomplete, '  y  {enter}');
+
+    await user.click(screen.getByRole('button', { name: 'Finish' }));
+
+    expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items', {
+      catalogue_category_id: '12',
+      cost_gbp: 1200,
+      cost_to_rework_gbp: 400,
+      days_to_replace: 20,
+      days_to_rework: 2,
+      expected_lifetime_days: 146,
+      description: null,
+      drawing_link: 'https://example.com',
+      drawing_number: 'mk4324',
+      is_obsolete: false,
+      item_model_number: 'mk4324',
+      notes: null,
+      manufacturer_id: '1',
+      name: 'test',
+      obsolete_reason: null,
+      obsolete_replacement_catalogue_item_id: null,
+      properties: [
+        { id: '17', value: 400 },
+        { id: '18', value: 10 },
+        {
+          id: '19',
+          value: '  y  ',
         },
       ],
     });
@@ -1109,8 +1194,8 @@ describe('Catalogue Items Dialog', () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            'Unable to update catalogue item properties and manufacturer '
-              + '(Manufacturer A), as the catalogue item has associated items.'
+            'Unable to update catalogue item properties and manufacturer ' +
+              '(Manufacturer A), as the catalogue item has associated items.'
           )
         ).toBeInTheDocument();
       });
@@ -1152,8 +1237,8 @@ describe('Catalogue Items Dialog', () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            'Unable to update catalogue item properties and manufacturer '
-              + '(Manufacturer A), as the catalogue item has associated items.'
+            'Unable to update catalogue item properties and manufacturer ' +
+              '(Manufacturer A), as the catalogue item has associated items.'
           )
         ).toBeInTheDocument();
       });

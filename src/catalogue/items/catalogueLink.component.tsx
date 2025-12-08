@@ -1,6 +1,6 @@
 import { Link as MuiLink, type SxProps, type Theme } from '@mui/material';
 import type React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { useGetCatalogueItem } from '../../api/catalogueItems';
 import { useGetItem } from '../../api/items';
 

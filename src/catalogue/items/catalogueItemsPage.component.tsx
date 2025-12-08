@@ -1,5 +1,5 @@
 import { Box, LinearProgress } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { useGetCatalogueCategory } from '../../api/catalogueCategories';
 import CatalogueItemsTable from './catalogueItemsTable.component';
 

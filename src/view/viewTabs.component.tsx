@@ -1,11 +1,12 @@
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid2';
 import Tabs from '@mui/material/Tabs';
 import React from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { paths } from '../App';
+import { Outlet, useLocation, useNavigate } from 'react-router';
 import { TAB_VALUES, TabValue } from '../app.types';
 import { a11yProps, StyledTab } from '../common/tab/tab.utils';
 import TabPanel from '../common/tab/tabPanel.component';
+import paths from '../paths';
 import { getSciGatewayPageHeightCalc, isRunningInDevelopment } from '../utils';
 
 function ViewTabs() {
@@ -27,8 +28,6 @@ function ViewTabs() {
 
       if (tabValue !== value && tabValue !== '') {
         tabValue = tabValue.charAt(0).toUpperCase() + tabValue.slice(1);
-        tabValue =
-          tabValue === 'Admin-ims' ? tabValue.replace('-ims', '') : tabValue;
         if (TAB_VALUES.includes(tabValue as TabValue))
           setValue(tabValue as TabValue);
         else setValue(false);
@@ -38,9 +37,7 @@ function ViewTabs() {
 
   const handleChange = (_event: React.SyntheticEvent, newValue: TabValue) => {
     setValue(newValue);
-    navigate(
-      `/${newValue === 'Admin' ? newValue.toLowerCase() + '-ims' : newValue.toLowerCase()}`
-    );
+    navigate(`/${newValue.toLowerCase()}`);
   };
 
   return (
@@ -52,16 +49,24 @@ function ViewTabs() {
     >
       {isRunningInDevelopment() ? (
         <>
-          <Tabs value={value} onChange={handleChange} aria-label="view tabs">
-            {TAB_VALUES.map((value) => (
-              <StyledTab
-                value={value}
-                label={value}
-                key={value}
-                {...a11yProps(value)}
-              />
-            ))}
-          </Tabs>
+          <Grid
+            container
+            display={'flex'}
+            flexDirection={'row'}
+            justifyContent={'space-between'}
+          >
+            <Tabs value={value} onChange={handleChange} aria-label="view tabs">
+              {TAB_VALUES.map((value) => (
+                <StyledTab
+                  value={value}
+                  label={value}
+                  key={value}
+                  {...a11yProps(value)}
+                />
+              ))}
+            </Tabs>
+          </Grid>
+
           <Box
             sx={{
               height: 'calc(100% - 48px)',

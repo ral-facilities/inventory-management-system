@@ -1,30 +1,36 @@
 import ClearIcon from '@mui/icons-material/Clear';
+import DeleteIcon from '@mui/icons-material/Delete';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
-import ErrorIcon from '@mui/icons-material/Error';
+import EditIcon from '@mui/icons-material/Edit';
+import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
-  Autocomplete,
   Box,
   Button,
-  FormControl,
+  Divider,
+  ListItemIcon,
+  ListItemText,
   MenuItem,
+  Link as MuiLink,
   TableCellBaseProps,
-  TextField,
-  Typography,
 } from '@mui/material';
 import {
   MRT_ColumnDef,
+  MRT_Row,
   MRT_RowSelectionState,
   MaterialReactTable,
   useMaterialReactTable,
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { CatalogueItem, Item, System, UsageStatus } from '../api/api.types';
+import { Link } from 'react-router';
+import { CatalogueItem, Item, System } from '../api/api.types';
 import { useGetCatalogueItemIds } from '../api/catalogueItems';
 import { useGetItems } from '../api/items';
 import { useGetUsageStatuses } from '../api/usageStatuses';
-import CatalogueLink from '../catalogue/items/catalogueLink.component';
+import { APISettingsContext } from '../apiConfigProvider.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
+import DeleteItemDialog from '../items/deleteItemDialog.component';
+import ItemDialog from '../items/itemDialog.component';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
 import {
   COLUMN_FILTER_FUNCTIONS,
@@ -38,20 +44,20 @@ import {
   TableGroupedCell,
   TableHeaderOverflowTip,
   customFilterFunctions,
+  displayTableRowCountText,
   formatDateTimeStrings,
   getInitialColumnFilterFnState,
   getPageHeightCalc,
   mrtTheme,
 } from '../utils';
-import SystemItemsDialog, {
-  ItemUsageStatusesErrorStateType,
-  UsageStatusesType,
-} from './systemItemsDialog.component';
+import SystemItemsDialog from './systemItemsDialog.component';
+import { useAuthorisationState } from '../authProvider.component';
 
 const MoveItemsButton = (props: {
   selectedItems: Item[];
   system: System;
   onChangeSelectedItems: (selectedItems: MRT_RowSelectionState) => void;
+  isPrivilegedMode: boolean;
 }) => {
   const [moveItemsDialogOpen, setMoveItemsDialogOpen] =
     React.useState<boolean>(false);
@@ -65,7 +71,7 @@ const MoveItemsButton = (props: {
         disabled={props.selectedItems.length === 0}
         onClick={() => setMoveItemsDialogOpen(true)}
       >
-        Move to
+        {`Move to ${props.isPrivilegedMode ? 'as Admin' : ''}`}
       </Button>
       <SystemItemsDialog
         open={moveItemsDialogOpen}
@@ -73,6 +79,7 @@ const MoveItemsButton = (props: {
         selectedItems={props.selectedItems}
         onChangeSelectedItems={props.onChangeSelectedItems}
         parentSystemId={props.system.id}
+        isPrivilegedMode={props.isPrivilegedMode}
       />
     </>
   );
@@ -81,73 +88,59 @@ const MoveItemsButton = (props: {
 /* Each table row needs the item and catalogue item */
 interface TableRowData {
   item: Item;
-  catalogueItem?: CatalogueItem;
+  catalogueItem: CatalogueItem;
 }
 
 export interface SystemItemsTableProps {
   system?: System;
-  type: 'normal' | 'usageStatus';
-  moveToSelectedItems?: Item[];
-  usageStatuses?: UsageStatusesType[];
-  onChangeUsageStatuses?: (usageStatuses: UsageStatusesType[]) => void;
-  aggregatedCellUsageStatus?: Omit<UsageStatusesType, 'item_id'>[];
-  onChangeAggregatedCellUsageStatus?: (
-    aggregatedCellUsageStatus: Omit<UsageStatusesType, 'item_id'>[]
-  ) => void;
-  itemUsageStatusesErrorState?: ItemUsageStatusesErrorStateType;
-  onChangeItemUsageStatusesErrorState?: (
-    itemUsageStatusesErrorState: ItemUsageStatusesErrorStateType
-  ) => void;
 }
 
 export function SystemItemsTable(props: SystemItemsTableProps) {
-  const {
-    system,
-    type,
-    moveToSelectedItems,
-    usageStatuses,
-    onChangeUsageStatuses,
-    aggregatedCellUsageStatus,
-    onChangeAggregatedCellUsageStatus,
-    itemUsageStatusesErrorState,
-    onChangeItemUsageStatusesErrorState,
-  } = props;
+  const { system } = props;
+
+  const { isPrivilegedUser } = useAuthorisationState();
 
   // States
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
   const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
     {}
   );
+  const [itemDialogType, setItemsDialogType] = React.useState<
+    'edit' | 'duplicate'
+  >('edit');
+  const [deleteItemDialogOpen, setDeleteItemDialogOpen] =
+    React.useState<boolean>(false);
+
+  const [isPrivilegedMode, setIsPrivilegedMode] =
+    React.useState<boolean>(false);
+  const [selectedItem, setSelectedItem] = React.useState<Item | undefined>(
+    undefined
+  );
+
   // Data
   const { data: itemsData, isLoading: isLoadingItems } = useGetItems(
     system?.id,
     undefined
   );
+  const { data: usageStatusData, isLoading: isLoadingUsageStatuses } =
+    useGetUsageStatuses();
 
-  const { data: usageStatusesData } = useGetUsageStatuses();
+  const apiSettings = React.useContext(APISettingsContext);
+  const sparesFilterState = apiSettings?.spares?.sparesFilterState;
+  const isSparesDefinitionDefined = !!apiSettings.spares;
 
   // Obtain the selected system data, not just the selection state
   const selectedRowIds = Object.keys(rowSelection);
   const selectedItems =
-    type === 'normal'
-      ? (itemsData?.filter((item) => selectedRowIds.includes(item.id)) ?? [])
-      : (moveToSelectedItems?.filter((item) =>
-          selectedRowIds.includes(item.id)
-        ) ?? []);
+    itemsData?.filter((item) => selectedRowIds.includes(item.id)) ?? [];
 
   // Fetch catalogue items for each item to display in the table
   const catalogueItemIdSet = React.useMemo(
     () =>
-      type === 'normal'
-        ? new Set<string>(
-            itemsData?.map((item) => item.catalogue_item_id) ?? []
-          )
-        : new Set<string>(
-            moveToSelectedItems?.map((item) => item.catalogue_item_id) ?? []
-          ),
-    [itemsData, moveToSelectedItems, type]
+      new Set<string>(itemsData?.map((item) => item.catalogue_item_id) ?? []),
+    [itemsData]
   );
-  let isLoading = type === 'normal' ? isLoadingItems : false;
+  let isLoading = isLoadingItems || isLoadingUsageStatuses;
 
   const catalogueItemList: (CatalogueItem | undefined)[] =
     useGetCatalogueItemIds(Array.from(catalogueItemIdSet.values())).map(
@@ -174,48 +167,16 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
             }) as TableRowData
         )
       );
-    } else if (!isLoading && moveToSelectedItems) {
-      setTableRows(
-        moveToSelectedItems.map(
-          (itemData) =>
-            ({
-              item: itemData,
-              catalogueItem: catalogueItemList?.find(
-                (catalogueItem) =>
-                  catalogueItem?.id === itemData.catalogue_item_id
-              ),
-            }) as TableRowData
-        )
-      );
     }
     // Purposefully leave out catalogueItemList - this will never be the same due
     // to the reference changing so instead am relying on isLoading to have changed to
     // false and then back to true again for any re-fetches that occur - only
     // alternative I can see right now requires backend changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading, itemsData, moveToSelectedItems]);
-
-  React.useEffect(() => {
-    if (
-      onChangeAggregatedCellUsageStatus &&
-      aggregatedCellUsageStatus &&
-      aggregatedCellUsageStatus.length === 0
-    ) {
-      const initialUsageStatuses: Omit<UsageStatusesType, 'item_id'>[] =
-        Array.from(catalogueItemIdSet).map((catalogue_item_id) => ({
-          catalogue_item_id: catalogue_item_id,
-          usage_status_id: '',
-        }));
-
-      onChangeAggregatedCellUsageStatus(initialUsageStatuses);
-    }
-  }, [
-    aggregatedCellUsageStatus,
-    catalogueItemIdSet,
-    onChangeAggregatedCellUsageStatus,
-  ]);
+  }, [isLoading, itemsData]);
 
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
+    const usageStatusValues = usageStatusData?.map((val) => val.value);
     return [
       {
         header: 'Catalogue Item',
@@ -240,64 +201,87 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
             {MRT_Functions_Localisation.filterArrExcludesSome}
           </MenuItem>,
         ],
-        Cell:
-          type === 'normal'
-            ? ({ row }) => (
-                <CatalogueLink
-                  catalogueItemId={row.original.item.catalogue_item_id}
-                  sx={{ marginRight: 0.5 }}
-                >
-                  {row.original.catalogueItem?.name}
-                </CatalogueLink>
-              )
-            : undefined,
+        Cell: ({ row }) => (
+          <MuiLink
+            underline="hover"
+            component={Link}
+            sx={{ mr: 0.5 }}
+            to={`/catalogue/${row.original.catalogueItem?.catalogue_category_id}/items/${row.original.catalogueItem?.id}`}
+          >
+            {row.original.catalogueItem?.name}
+          </MuiLink>
+        ),
         size: 350,
         GroupedCell: ({ row }) => {
-          const nameGroupedCellError = itemUsageStatusesErrorState
-            ? Object.values(itemUsageStatusesErrorState).filter(
-                (errorState) =>
-                  errorState.catalogue_item_id ===
-                  row.original.item.catalogue_item_id
-              ).length !== 0
-            : false;
-
           return (
             <Box
               sx={{
                 display: 'flex',
                 alignItems: 'center',
-                color: nameGroupedCellError ? 'error.main' : 'inherit',
+
                 width: '100%',
               }}
             >
-              {nameGroupedCellError && (
-                <ErrorIcon sx={{ color: 'error.main' }} />
-              )}
               <OverflowTip
                 disableParagraph
                 sx={{
                   fontSize: 'inherit',
                   mx: 0.5,
-                  width: type === 'normal' ? undefined : '14vw',
                 }}
               >
-                {type === 'normal' ? (
-                  <CatalogueLink
-                    catalogueItemId={row.original.item.catalogue_item_id}
-                    sx={{ mx: 0.5, fontSize: 'inherit' }}
-                  >
-                    {row.original.catalogueItem?.name}
-                  </CatalogueLink>
-                ) : (
-                  row.original?.catalogueItem?.name
-                )}
-
+                <MuiLink
+                  underline="hover"
+                  component={Link}
+                  sx={{ mr: 0.5 }}
+                  to={`/catalogue/${row.original.catalogueItem?.catalogue_category_id}/items/${row.original.catalogueItem?.id}`}
+                >
+                  {row.original.catalogueItem?.name}
+                </MuiLink>
                 {`(${row.subRows?.length})`}
               </OverflowTip>
             </Box>
           );
         },
       },
+      ...(isSparesDefinitionDefined
+        ? [
+            {
+              header: 'Number of Spares',
+              Header: TableHeaderOverflowTip,
+              // This needs to be a string to allow the AggregatedCell to render correctly.
+              // If not, it does not display. This seems to be a Material React Table (MRT) issue.
+              accessorFn: (row: TableRowData) =>
+                String(row.catalogueItem.number_of_spares ?? 0),
+              id: 'catalogueItem.number_of_spares',
+              filterVariant: COLUMN_FILTER_VARIANTS.number,
+              filterFn: COLUMN_FILTER_FUNCTIONS.number,
+              columnFilterModeOptions: [
+                ...COLUMN_FILTER_MODE_OPTIONS.number,
+                ...OPTIONAL_FILTER_MODE_OPTIONS,
+              ],
+              GroupedCell: TableGroupedCell,
+              AggregatedCell: ({ row }: { row: MRT_Row<TableRowData> }) => (
+                <MuiLink
+                  underline="hover"
+                  component={Link}
+                  to={`/catalogue/${row.original.catalogueItem?.catalogue_category_id}/items/${row.original?.catalogueItem?.id}/items${sparesFilterState}`}
+                >
+                  {row.original?.catalogueItem?.number_of_spares}
+                </MuiLink>
+              ),
+              size: 300,
+              Cell: ({ row }: { row: MRT_Row<TableRowData> }) => (
+                <MuiLink
+                  underline="hover"
+                  component={Link}
+                  to={`/catalogue/${row.original.catalogueItem?.catalogue_category_id}/items/${row.original?.catalogueItem?.id}/items${sparesFilterState}`}
+                >
+                  {row.original?.catalogueItem?.number_of_spares}
+                </MuiLink>
+              ),
+            },
+          ]
+        : []),
       {
         header: 'Serial Number',
         Header: TableHeaderOverflowTip,
@@ -310,14 +294,16 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           ...['betweenInclusive'],
         ],
         size: 250,
-        Cell:
-          type === 'normal'
-            ? ({ row }) => (
-                <CatalogueLink itemId={row.original.item.id}>
-                  {row.original.item.serial_number ?? 'No serial number'}
-                </CatalogueLink>
-              )
-            : undefined,
+        Cell: ({ row }) => (
+          <MuiLink
+            underline="hover"
+            component={Link}
+            sx={{ mr: 0.5 }}
+            to={`/catalogue/${row.original.catalogueItem?.catalogue_category_id}/items/${row.original.catalogueItem?.id}/items/${row.original.item.id}`}
+          >
+            {row.original.item.serial_number ?? 'No serial number'}
+          </MuiLink>
+        ),
         enableGrouping: false,
       },
       {
@@ -378,8 +364,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       {
         header: 'Usage Status',
         Header: TableHeaderOverflowTip,
-        accessorFn:
-          type === 'usageStatus' ? undefined : (row) => row.item.usage_status,
+        accessorFn: (row) => row.item.usage_status,
         id: 'item.usage_status',
         filterVariant: 'multi-select',
         filterFn: 'arrIncludesSome',
@@ -399,204 +384,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           </MenuItem>,
         ],
         size: 350,
-        AggregatedCell:
-          type === 'usageStatus'
-            ? ({ row }) => {
-                return (
-                  <FormControl size="small" fullWidth>
-                    <Autocomplete
-                      id={`usage-statuses-${row.original.catalogueItem?.name}`}
-                      size="small"
-                      value={
-                        usageStatusesData?.find(
-                          (usageStatus) =>
-                            usageStatus.id ==
-                            aggregatedCellUsageStatus?.find(
-                              (status) =>
-                                status.catalogue_item_id ===
-                                row.original.catalogueItem?.id
-                            )?.usage_status_id
-                        ) ?? null
-                      }
-                      options={usageStatusesData ?? []}
-                      getOptionLabel={(usageStatus) => usageStatus.value}
-                      onChange={(_event, usageStatus: UsageStatus | null) => {
-                        if (
-                          onChangeAggregatedCellUsageStatus &&
-                          aggregatedCellUsageStatus
-                        ) {
-                          const itemIndex = aggregatedCellUsageStatus.findIndex(
-                            (status: Omit<UsageStatusesType, 'item_id'>) =>
-                              status.catalogue_item_id ===
-                              row.original.catalogueItem?.id
-                          );
-                          const updatedAggregatedCellUsageStatus = [
-                            ...aggregatedCellUsageStatus,
-                          ];
-
-                          updatedAggregatedCellUsageStatus[
-                            itemIndex
-                          ].usage_status_id = usageStatus?.id ?? '';
-
-                          onChangeAggregatedCellUsageStatus(
-                            updatedAggregatedCellUsageStatus
-                          );
-                        }
-
-                        if (onChangeUsageStatuses && usageStatuses) {
-                          const updatedUsageStatuses = [...usageStatuses];
-
-                          for (
-                            let i = 0;
-                            i < updatedUsageStatuses.length;
-                            i++
-                          ) {
-                            const status = updatedUsageStatuses[i];
-                            if (
-                              status.catalogue_item_id ===
-                              row.original.catalogueItem?.id
-                            ) {
-                              // Update the usageStatus for the matching item
-                              updatedUsageStatuses[i].usage_status_id =
-                                usageStatus?.id ?? '';
-                            }
-                          }
-
-                          onChangeUsageStatuses(updatedUsageStatuses);
-                        }
-
-                        if (
-                          itemUsageStatusesErrorState &&
-                          onChangeItemUsageStatusesErrorState
-                        ) {
-                          const updatedItemUsageStatusesErrorState = {
-                            ...itemUsageStatusesErrorState,
-                          };
-                          Object.entries(itemUsageStatusesErrorState).forEach(
-                            ([item_id, status]) => {
-                              if (
-                                status.catalogue_item_id ===
-                                row.original.item.catalogue_item_id
-                              ) {
-                                delete updatedItemUsageStatusesErrorState[
-                                  item_id
-                                ];
-                              }
-                            }
-                          );
-
-                          onChangeItemUsageStatusesErrorState(
-                            updatedItemUsageStatusesErrorState
-                          );
-                        }
-                      }}
-                      sx={{ alignItems: 'center' }}
-                      fullWidth
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          required={true}
-                          label="Usage statuses"
-                        />
-                      )}
-                    />
-                  </FormControl>
-                );
-              }
-            : undefined,
-        Cell:
-          type === 'usageStatus'
-            ? ({ row }) => {
-                const usageStatusCellError = !!(
-                  itemUsageStatusesErrorState &&
-                  itemUsageStatusesErrorState[row.original.item.id]
-                );
-                return (
-                  <FormControl size="small" fullWidth>
-                    <Autocomplete
-                      id={`usage-statuses-${row.original.item?.serial_number ?? 'no-serial-number'}`}
-                      size="small"
-                      value={
-                        usageStatusesData?.find(
-                          (usageStatus) =>
-                            usageStatus.id ==
-                            usageStatuses?.find(
-                              (status) =>
-                                status.item_id === row.original.item.id
-                            )?.usage_status_id
-                        ) ?? null
-                      }
-                      options={usageStatusesData ?? []}
-                      getOptionLabel={(usageStatus) => usageStatus.value}
-                      onChange={(_event, usageStatus: UsageStatus | null) => {
-                        if (onChangeUsageStatuses && usageStatuses) {
-                          const itemIndex = usageStatuses.findIndex(
-                            (status: UsageStatusesType) =>
-                              status.item_id === row.original.item.id
-                          );
-                          const updatedUsageStatuses = [...usageStatuses];
-
-                          updatedUsageStatuses[itemIndex].usage_status_id =
-                            usageStatus?.id ?? '';
-
-                          onChangeUsageStatuses(updatedUsageStatuses);
-                        }
-
-                        if (
-                          itemUsageStatusesErrorState &&
-                          onChangeItemUsageStatusesErrorState
-                        ) {
-                          const updatedItemUsageStatusesErrorState = {
-                            ...itemUsageStatusesErrorState,
-                          };
-                          delete updatedItemUsageStatusesErrorState[
-                            row.original.item.id
-                          ];
-                          onChangeItemUsageStatusesErrorState(
-                            updatedItemUsageStatusesErrorState
-                          );
-                        }
-
-                        if (
-                          onChangeAggregatedCellUsageStatus &&
-                          aggregatedCellUsageStatus
-                        ) {
-                          const itemIndex = aggregatedCellUsageStatus.findIndex(
-                            (status: Omit<UsageStatusesType, 'item_id'>) =>
-                              status.catalogue_item_id ===
-                              row.original.catalogueItem?.id
-                          );
-                          const updatedUsageStatuses = [
-                            ...aggregatedCellUsageStatus,
-                          ];
-
-                          updatedUsageStatuses[itemIndex].usage_status_id = '';
-
-                          onChangeAggregatedCellUsageStatus(
-                            updatedUsageStatuses
-                          );
-                        }
-                      }}
-                      sx={{ alignItems: 'center' }}
-                      fullWidth
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          required={true}
-                          label="Usage statuses"
-                          error={usageStatusCellError}
-                          helperText={
-                            usageStatusCellError &&
-                            itemUsageStatusesErrorState[row.original.item.id]
-                              .message
-                          }
-                        />
-                      )}
-                    />
-                  </FormControl>
-                );
-              }
-            : undefined,
+        filterSelectOptions: usageStatusValues,
       },
       {
         header: 'Expected Lifetime (Days)',
@@ -610,29 +398,9 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           ...OPTIONAL_FILTER_MODE_OPTIONS,
         ],
         size: 300,
-        AggregatedCell: ({ cell, table }) => {
-          const isCatalogueGrouped = table
-            .getState()
-            .grouping.includes('catalogueItem.name');
-          const isCatalogueItemRow =
-            cell.row.groupingColumnId === 'catalogueItem.name';
-          return (
-            isCatalogueGrouped &&
-            isCatalogueItemRow && <>{cell.getValue<number>()}</>
-          );
-        },
       },
     ];
-  }, [
-    aggregatedCellUsageStatus,
-    itemUsageStatusesErrorState,
-    onChangeAggregatedCellUsageStatus,
-    onChangeItemUsageStatusesErrorState,
-    onChangeUsageStatuses,
-    type,
-    usageStatuses,
-    usageStatusesData,
-  ]);
+  }, [isSparesDefinitionDefined, sparesFilterState, usageStatusData]);
 
   const initialColumnFilterFnState = React.useMemo(() => {
     return getInitialColumnFilterFnState(columns);
@@ -645,38 +413,32 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       pagination: { pageSize: 15, pageIndex: 0 },
       columnFilterFns: initialColumnFilterFnState,
     },
-    storeInUrl: type === 'normal',
+    storeInUrl: true,
   });
 
   const noResultsText = 'No items found';
   const table = useMaterialReactTable({
     // Data
-    columns:
-      type === 'normal'
-        ? columns
-        : [
-            { ...columns[0], size: 200 },
-            { ...columns[1], size: 200 },
-            { ...columns[6], size: 200 },
-          ],
+    columns: columns,
     data: tableRows,
     // Features
-    enableColumnOrdering: type === 'normal' ? true : false,
+    enableColumnOrdering: true,
     enableFacetedValues: true,
     enableColumnFilterModes: true,
-    enableColumnResizing: type === 'normal' ? true : false,
+    enableColumnResizing: true,
+    enableRowActions: true,
     enableStickyHeader: true,
     enableDensityToggle: false,
-    enableHiding: type === 'normal' ? true : false,
+    enableHiding: true,
     enableTopToolbar: true,
     enableRowVirtualization: false,
-    enableFullScreenToggle: type === 'normal' ? true : false,
+    enableFullScreenToggle: true,
     enableColumnVirtualization: false,
-    enableRowSelection: type === 'normal' ? true : false,
+    enableRowSelection: true,
     enableGrouping: true,
     enablePagination: true,
-    filterFns: customFilterFunctions,
     // Other settings
+    filterFns: customFilterFunctions,
     manualFiltering: false,
     paginationDisplayMode: 'pages',
     positionToolbarAlertBanner: 'bottom',
@@ -707,11 +469,9 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     mrtTheme,
     //MUI
     muiTableBodyCellProps: ({ column }) =>
-      //Ignore the usages statuses cell in the dialog as this is a
-      // select component and does not need to overflow
-      (column.id === 'item.usage_status' && type === 'usageStatus') ||
       // The overflow of these column groups is done manually in the column definition
       ((column.id === 'catalogueItem.name' ||
+        column.id === 'catalogueItem.number_of_spares' ||
         column.id === 'item.delivered_date') &&
         column.getIsGrouped()) ||
       // Ignore MRT rendered cells e.g. expand , spacer etc
@@ -723,9 +483,6 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                 <TableBodyCellOverFlowTip
                   {...({
                     ...props,
-                    overFlowTipSx: {
-                      width: type === 'usageStatus' ? '25vw' : undefined,
-                    },
                   } as TableCellOverFlowTipProps)}
                 />
               );
@@ -750,10 +507,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         sx: {
           height: table.getState().isFullScreen
             ? '100%'
-            : type === 'usageStatus'
-              ? undefined
-              : getPageHeightCalc(`272px  ${showAlert ? '+ 72px' : ''}`),
-          maxHeight: type === 'usageStatus' ? '670px' : undefined,
+            : getPageHeightCalc(`272px  ${showAlert ? '+ 72px' : ''}`),
         },
       };
     },
@@ -781,6 +535,30 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     ...onPreservedStatesChange,
     getRowId: (row) => row.item.id,
     onRowSelectionChange: setRowSelection,
+    renderCreateRowDialogContent: ({ table, row }) => {
+      return (
+        <ItemDialog
+          open={true}
+          onClose={() => {
+            table.setCreatingRow(null);
+            setIsPrivilegedMode(false);
+          }}
+          isPrivilegedMode={isPrivilegedMode}
+          duplicate={itemDialogType === 'duplicate'}
+          requestType={itemDialogType === 'edit' ? 'patch' : 'post'}
+          // Intentionally left undefined here as will fetch inside dialog only when needed instead
+          catalogueCategory={undefined}
+          catalogueItem={row.original.catalogueItem}
+          selectedItem={{
+            ...row.original.item,
+            notes:
+              itemDialogType === 'duplicate'
+                ? `${row.original.item.notes || ''}\n\nThis is a copy of the item with this Serial Number: ${row.original.item.serial_number ?? 'No serial number'}`
+                : row.original.item.notes,
+          }}
+        />
+      );
+    },
     renderTopToolbarCustomActions: ({ table }) => (
       <Box sx={{ display: 'flex' }}>
         <Button
@@ -794,24 +572,132 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         >
           Clear Filters
         </Button>
-        {system && type === 'normal' && (
-          <MoveItemsButton
-            selectedItems={selectedItems}
-            system={system}
-            onChangeSelectedItems={setRowSelection}
-          />
+        {system && (
+          <>
+            <MoveItemsButton
+              selectedItems={selectedItems}
+              system={system}
+              onChangeSelectedItems={setRowSelection}
+              isPrivilegedMode={false}
+            />
+            {isPrivilegedUser && (
+              <MoveItemsButton
+                selectedItems={selectedItems}
+                system={system}
+                onChangeSelectedItems={setRowSelection}
+                isPrivilegedMode={true}
+              />
+            )}
+          </>
         )}
       </Box>
     ),
-    renderBottomToolbarCustomActions: ({ table }) => (
-      <Typography sx={{ paddingLeft: '8px' }}>
-        {table.getFilteredRowModel().rows.length ==
-        (type == 'normal' ? itemsData : moveToSelectedItems)?.length
-          ? `Total Items: ${(type == 'normal' ? itemsData : moveToSelectedItems)?.length}`
-          : `Returned ${table.getFilteredRowModel().rows.length} out of ${(type == 'normal' ? itemsData : moveToSelectedItems)?.length} Items`}
-      </Typography>
-    ),
-
+    renderRowActionMenuItems: ({ closeMenu, row, table }) => {
+      return [
+        <MenuItem
+          key="edit"
+          aria-label={`Edit item ${row.original.item.id}`}
+          onClick={() => {
+            setItemsDialogType('edit');
+            table.setCreatingRow(row);
+            closeMenu();
+          }}
+          sx={{ m: 0 }}
+        >
+          <ListItemIcon>
+            <EditIcon />
+          </ListItemIcon>
+          <ListItemText>Edit</ListItemText>
+        </MenuItem>,
+        <MenuItem
+          key="duplicate"
+          aria-label={`Duplicate item ${row.original.item.id}`}
+          onClick={() => {
+            setItemsDialogType('duplicate');
+            table.setCreatingRow(row);
+            closeMenu();
+          }}
+          sx={{ m: 0 }}
+        >
+          <ListItemIcon>
+            <SaveAsIcon />
+          </ListItemIcon>
+          <ListItemText>Duplicate</ListItemText>
+        </MenuItem>,
+        <MenuItem
+          key="delete"
+          aria-label={`Delete item ${row.original.item.id}`}
+          onClick={() => {
+            setDeleteItemDialogOpen(true);
+            setSelectedItem(row.original.item);
+            closeMenu();
+          }}
+          sx={{ m: 0 }}
+        >
+          <ListItemIcon>
+            <DeleteIcon />
+          </ListItemIcon>
+          <ListItemText>Delete</ListItemText>
+        </MenuItem>,
+        ...(isPrivilegedUser
+          ? [
+              <Divider key="divider" />,
+              <MenuItem
+                key="edit-as-admin"
+                aria-label={`Edit item ${row.original.item.id}`}
+                onClick={() => {
+                  setItemsDialogType('edit');
+                  setIsPrivilegedMode(true);
+                  table.setCreatingRow(row);
+                  closeMenu();
+                }}
+                sx={{ m: 0 }}
+              >
+                <ListItemIcon>
+                  <EditIcon />
+                </ListItemIcon>
+                <ListItemText>Edit as Admin</ListItemText>
+              </MenuItem>,
+              <MenuItem
+                key="duplicate-as-admin"
+                aria-label={`Duplicate item ${row.original.item.id} as Admin`}
+                onClick={() => {
+                  setItemsDialogType('duplicate');
+                  setIsPrivilegedMode(true);
+                  table.setCreatingRow(row);
+                  closeMenu();
+                }}
+                sx={{ m: 0 }}
+              >
+                <ListItemIcon>
+                  <SaveAsIcon />
+                </ListItemIcon>
+                <ListItemText>Duplicate as Admin</ListItemText>
+              </MenuItem>,
+              <MenuItem
+                key="delete-as-admin"
+                aria-label={`Delete item ${row.original.item.id}`}
+                onClick={() => {
+                  setDeleteItemDialogOpen(true);
+                  setIsPrivilegedMode(true);
+                  setSelectedItem(row.original.item);
+                  closeMenu();
+                }}
+                sx={{ m: 0 }}
+              >
+                <ListItemIcon>
+                  <DeleteIcon />
+                </ListItemIcon>
+                <ListItemText>Delete as Admin</ListItemText>
+              </MenuItem>,
+            ]
+          : []),
+      ];
+    },
+    renderBottomToolbarCustomActions: ({ table }) =>
+      displayTableRowCountText(table, itemsData, 'Items', {
+        paddingLeft: '8px',
+      }),
     renderDetailPanel: ({ row }) =>
       row.original.catalogueItem !== undefined ? (
         <ItemsDetailsPanel
@@ -821,5 +707,21 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       ) : undefined,
   });
 
-  return <MaterialReactTable table={table} />;
+  return (
+    <>
+      <MaterialReactTable table={table} />
+      {selectedItem && (
+        <DeleteItemDialog
+          open={deleteItemDialogOpen}
+          onClose={() => {
+            setDeleteItemDialogOpen(false);
+            setIsPrivilegedMode(false);
+          }}
+          isPrivilegedMode={isPrivilegedMode}
+          item={selectedItem}
+          onChangeItem={setSelectedItem}
+        />
+      )}
+    </>
+  );
 }

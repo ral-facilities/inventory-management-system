@@ -3,7 +3,6 @@ import { addCatalogueItem } from '../catalogueItems/functions';
 import { addItem } from '../items/functions';
 import { addManufacturer } from '../manufacturers/functions';
 import { addUnits } from '../units/functions';
-import { addUsageStatuses } from '../usageStatuses/functions';
 import {
   addSystems,
   copyToSystems,
@@ -13,10 +12,12 @@ import {
   modifySystem,
   moveItemToSystem,
   moveToSystems,
+  navigateToItemsTableViaSpares,
 } from './functions';
 
 describe('systems', () => {
   beforeEach(() => {
+    cy.setCurrentUserToAdmin();
     cy.dropIMSCollections([
       'catalogue_categories',
       'catalogue_items',
@@ -24,14 +25,11 @@ describe('systems', () => {
       'items',
       'systems',
       'units',
-      'usage_statuses',
     ]);
     // Prepare relevant data for systems
-    cy.visit('/admin-ims/usage-statuses');
-    addUsageStatuses(['New', 'In Use', 'Used', 'Scrapped']);
     cy.visit('/manufacturers');
     addManufacturer(true);
-    cy.visit('/admin-ims/units');
+    cy.visit('/settings/units');
     addUnits(['mm', 'nm'], true);
     cy.visit('/systems');
     addSystems();
@@ -50,7 +48,6 @@ describe('systems', () => {
       'items',
       'systems',
       'units',
-      'usage_statuses',
     ]);
   });
 
@@ -58,7 +55,12 @@ describe('systems', () => {
     // add systems is in the before each as it is need for creating items
     editSystems();
     duplicateSystem('optics 2', 1);
-    modifySystem({ name: 'Storage 2', importance: 'high' });
+    modifySystem({
+      name: 'Storage 2',
+      importance: 'high',
+      type: 'Operational',
+    });
+    navigateToItemsTableViaSpares();
     moveItemToSystem({
       checkedItems: [1],
       checkedItemsNames: ['Plano-Convex Lens'],

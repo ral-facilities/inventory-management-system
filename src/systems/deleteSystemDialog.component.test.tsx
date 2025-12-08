@@ -40,6 +40,7 @@ describe('DeleteSystemDialog', () => {
         owner: null,
         importance: SystemImportanceType.LOW,
         parent_id: null,
+        type_id: '1',
         code: '',
         ...CREATED_MODIFIED_TIME_VALUES,
       };

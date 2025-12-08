@@ -8,12 +8,12 @@ exports[`Image Information dialog Component > renders dialog correctly 1`] = `
     aria-hidden="true"
   />
   <div
-    class="MuiDialog-root MuiModal-root css-1r9csp7-MuiModal-root-MuiDialog-root"
+    class="MuiDialog-root MuiModal-root css-12jzxk9-MuiModal-root-MuiDialog-root"
     role="presentation"
   >
     <div
       aria-hidden="true"
-      class="MuiBackdrop-root MuiModal-backdrop css-yiavyu-MuiBackdrop-root-MuiDialog-backdrop"
+      class="MuiBackdrop-root MuiModal-backdrop css-1cennmq-MuiBackdrop-root-MuiDialog-backdrop"
       style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
     />
     <div
@@ -21,24 +21,26 @@ exports[`Image Information dialog Component > renders dialog correctly 1`] = `
       tabindex="0"
     />
     <div
-      class="MuiDialog-container MuiDialog-scrollPaper css-hz1bth-MuiDialog-container"
+      class="MuiDialog-container MuiDialog-scrollPaper css-19do60a-MuiDialog-container"
       role="presentation"
       style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
       tabindex="-1"
     >
       <div
         aria-labelledby=":r0:"
-        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthSm MuiDialog-paperFullWidth css-tlc64q-MuiPaper-root-MuiDialog-paper"
+        aria-modal="true"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthSm MuiDialog-paperFullWidth css-16htz67-MuiPaper-root-MuiDialog-paper"
         role="dialog"
+        style="--Paper-shadow: 0px 11px 15px -7px rgba(0,0,0,0.2),0px 24px 38px 3px rgba(0,0,0,0.14),0px 9px 46px 8px rgba(0,0,0,0.12);"
       >
         <h2
-          class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-bdhsul-MuiTypography-root-MuiDialogTitle-root"
+          class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-rvoa5x-MuiTypography-root-MuiDialogTitle-root"
           id=":r0:"
         >
           Image Information
         </h2>
         <div
-          class="MuiDialogContent-root css-ypiqx9-MuiDialogContent-root"
+          class="MuiDialogContent-root css-kw13he-MuiDialogContent-root"
         >
           <div
             class="MuiBox-root css-0"
@@ -58,94 +60,91 @@ exports[`Image Information dialog Component > renders dialog correctly 1`] = `
               </div>
             </div>
             <h6
-              class="MuiTypography-root MuiTypography-h6 css-2ulfj5-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-h6 css-1miy0lu-MuiTypography-root"
             >
               File Name:
             </h6>
             <p
-              class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
             >
               logo1.png
             </p>
             <hr
-              class="MuiDivider-root MuiDivider-fullWidth css-ctpjxq-MuiDivider-root"
+              class="MuiDivider-root MuiDivider-fullWidth css-zzw4lh-MuiDivider-root"
             />
             <h6
-              class="MuiTypography-root MuiTypography-h6 css-2ulfj5-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-h6 css-1miy0lu-MuiTypography-root"
             >
               Title:
             </h6>
             <p
-              class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
             >
               logo1
             </p>
             <hr
-              class="MuiDivider-root MuiDivider-fullWidth css-ctpjxq-MuiDivider-root"
+              class="MuiDivider-root MuiDivider-fullWidth css-zzw4lh-MuiDivider-root"
             />
             <h6
-              class="MuiTypography-root MuiTypography-h6 css-2ulfj5-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-h6 css-1miy0lu-MuiTypography-root"
             >
               Description:
             </h6>
             <p
-              class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
             >
               test
             </p>
             <hr
-              class="MuiDivider-root MuiDivider-fullWidth css-ctpjxq-MuiDivider-root"
+              class="MuiDivider-root MuiDivider-fullWidth css-zzw4lh-MuiDivider-root"
             />
             <h6
-              class="MuiTypography-root MuiTypography-h6 css-2ulfj5-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-h6 css-1miy0lu-MuiTypography-root"
             >
               Primary:
             </h6>
             <p
-              class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
             >
               No
             </p>
             <hr
-              class="MuiDivider-root MuiDivider-fullWidth css-ctpjxq-MuiDivider-root"
+              class="MuiDivider-root MuiDivider-fullWidth css-zzw4lh-MuiDivider-root"
             />
             <h6
-              class="MuiTypography-root MuiTypography-h6 css-2ulfj5-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-h6 css-1miy0lu-MuiTypography-root"
             >
               Created Time:
             </h6>
             <p
-              class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
             >
               13 Oct 2024 11:59
             </p>
             <hr
-              class="MuiDivider-root MuiDivider-fullWidth css-ctpjxq-MuiDivider-root"
+              class="MuiDivider-root MuiDivider-fullWidth css-zzw4lh-MuiDivider-root"
             />
             <h6
-              class="MuiTypography-root MuiTypography-h6 css-2ulfj5-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-h6 css-1miy0lu-MuiTypography-root"
             >
               Modified Time:
             </h6>
             <p
-              class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
             >
               13 Oct 2024 11:59
             </p>
           </div>
         </div>
         <div
-          class="MuiDialogActions-root MuiDialogActions-spacing css-knqc4i-MuiDialogActions-root"
+          class="MuiDialogActions-root MuiDialogActions-spacing css-15fu35s-MuiDialogActions-root"
         >
           <button
-            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1uent87-MuiButtonBase-root-MuiButton-root"
             tabindex="0"
             type="button"
           >
             Close
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
         </div>
       </div>

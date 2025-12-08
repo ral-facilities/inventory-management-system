@@ -1,8 +1,8 @@
 import { QueryClient } from '@tanstack/react-query';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import type { LoaderFunctionArgs } from 'react-router-dom';
-import { paths } from '../App';
+import type { LoaderFunctionArgs } from 'react-router';
+import { URLPathKeyType } from '../paths';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import SystemsLayout, {
   SystemsLayoutErrorComponent,
@@ -11,8 +11,8 @@ import SystemsLayout, {
 
 const mockedUseNavigate = vi.fn();
 
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')),
+vi.mock('react-router', async () => ({
+  ...(await vi.importActual('react-router')),
   useNavigate: () => mockedUseNavigate,
 }));
 
@@ -26,7 +26,7 @@ describe('Systems Layout', () => {
     vi.clearAllMocks();
   });
 
-  const createView = (path: string, urlPathKey: keyof typeof paths) => {
+  const createView = (path: string, urlPathKey: URLPathKeyType) => {
     return renderComponentWithRouterProvider(
       <SystemsLayout />,
       urlPathKey,

@@ -12,7 +12,7 @@ import {
   MRT_VisibilityState,
 } from 'material-react-table';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router';
 
 // State as will be stored after parsing from search params
 interface State {
@@ -24,6 +24,7 @@ interface State {
   g: MRT_GroupingState;
   cO: MRT_ColumnOrderState;
   p: MRT_PaginationState;
+  fS: boolean;
 }
 
 /* State but where undefined => should not be present in the url */
@@ -49,7 +50,10 @@ interface StateSearchParams extends StatePartial {
 type Updater<T> = T | ((old: T) => T);
 
 /* Returns correctly types value from an updater */
-const getValueFromUpdater = <T,>(updater: Updater<T>, currentValue: T) =>
+export const getValueFromUpdater = <T,>(
+  updater: Updater<T>,
+  currentValue: T
+) =>
   updater instanceof Function ? (updater(currentValue) as T) : (updater as T);
 
 /* Attempts to decompress state from URL, returns '{}' if its null or not de-compressible
@@ -201,7 +205,6 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       // Get the expected unparsed state in the URL for the current internal state
       const parsedStateSearchParams = convertInternalState(parsedState);
       const newUnparsedState = JSON.stringify(parsedStateSearchParams);
-
       // Wait for a column order change if required
       if (unparsedState !== newUnparsedState) {
         // Only set the search params if its just a current page state change and not a browser level change
@@ -260,6 +263,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       cO: firstUpdate.current?.cO || [],
       p: props?.initialState?.pagination ||
         firstUpdate.current?.p || { pageSize: 15, pageIndex: 0 },
+      fS: false,
     }),
     // Need to also update when firstUpdate.current?.x changes, for some reason it claims its not used here when it is
     // We also need to intentionally ignore props?.initialState?.x as these may not be in a memo, and are only set
@@ -282,6 +286,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       g: parsedState.g || defaultState.g,
       cO: parsedState.cO || defaultState.cO,
       p: parsedState.p || defaultState.p,
+      fS: parsedState.fS || defaultState.fS,
     }),
     [
       defaultState.cF,
@@ -292,6 +297,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       defaultState.gFil,
       defaultState.p,
       defaultState.srt,
+      defaultState.fS,
       parsedState.cF,
       parsedState.cFn,
       parsedState.cO,
@@ -300,9 +306,9 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       parsedState.gFil,
       parsedState.p,
       parsedState.srt,
+      parsedState.fS,
     ]
   );
-
   const updateSearchParams = useCallback(
     (stateUpdater: Updater<StatePartial>) => {
       // Use function version to ensure multiple can be changed in the same render
@@ -508,11 +514,13 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
         firstUpdate.current.cO = getValueFromUpdater(updaterOrValue, state.cO);
         return;
       }
+
       updateSearchParams((prevState: StatePartial): StatePartial => {
         const newValue = getValueFromUpdater(
           updaterOrValue,
           prevState.cO || defaultState.cO
         );
+
         return {
           ...prevState,
           cO:
@@ -531,9 +539,13 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       // Ignore first update (pagination and column order has a habit of being set in MRT
       // shortly after the first render with actual data even if disabled in the table itself)
       // similar to https://www.material-react-table.com/docs/guides/state-management
+      // In MRT v3 it sets pagination after first render if the pageIndex is not 0, otherwise
+      // behaves normally
       if (firstUpdate.current.p === undefined && !props?.paginationOnly) {
         firstUpdate.current.p = getValueFromUpdater(updaterOrValue, state.p);
-        return;
+        if (state.p.pageIndex != 0) {
+          return;
+        }
       }
       updateSearchParams((prevState: StatePartial) => {
         const newValue = getValueFromUpdater(
@@ -551,6 +563,21 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
     },
     [defaultState.p, props?.paginationOnly, state.p, updateSearchParams]
   );
+  const setIsFullScreen = useCallback(
+    (updaterOrValue: React.SetStateAction<boolean>) => {
+      updateSearchParams((prevState: StatePartial) => {
+        const newValue = getValueFromUpdater(
+          updaterOrValue,
+          prevState.fS || defaultState.fS
+        );
+        return {
+          ...prevState,
+          fS: newValue ? newValue : undefined,
+        };
+      });
+    },
+    [defaultState.fS, updateSearchParams]
+  );
 
   return {
     preservedState: {
@@ -562,6 +589,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       grouping: state.g,
       columnOrder: state.cO,
       pagination: state.p,
+      isFullScreen: state.fS,
     },
     onPreservedStatesChange: {
       onColumnFiltersChange: setColumnFilters,
@@ -572,6 +600,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       onGroupingChange: setGroupingState,
       onColumnOrderChange: setColumnOrder,
       onPaginationChange: setPagination,
+      onIsFullScreenChange: setIsFullScreen,
     },
   };
 };
