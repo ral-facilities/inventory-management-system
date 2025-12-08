@@ -308,15 +308,14 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
                 onChangeParentId={changeParentSystemId}
                 systemParentId={parentSystemId ?? undefined}
                 isSystemSelectable={(system) => {
-                  return (
-                    isPrivilegedMode ||
-                    tableRules?.some(
-                      (rule) =>
-                        rule.dst_system_type?.id === system.type_id ||
-                        system.type_id === srcSystemTypeId
-                    ) ||
-                    false
-                  );
+                  if (isPrivilegedMode) return true;
+                  const matchesSrc = system?.type_id === srcSystemTypeId;
+                  const matchesAnyDstRule =
+                    Array.isArray(tableRules) &&
+                    tableRules.some(
+                      (rule) => rule?.dst_system_type?.id === system?.type_id
+                    );
+                  return matchesSrc || matchesAnyDstRule;
                 }}
                 // Use most unrestricted variant (i.e. copy with no selection)
                 selectedSystems={[]}
