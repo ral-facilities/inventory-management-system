@@ -262,6 +262,8 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const shouldShowMissingRuleWarning =
+    !selectedRules?.[0] && srcSystemTypeId !== dstSystemTypeId;
   const renderStepContent = (step: number) => {
     switch (step) {
       case 0:
@@ -283,14 +285,21 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
                 !isSelectedRulesLoading &&
                 !systemsDataLoading && (
                   <MRTTopTableAlert
-                    title="Item Moving Rule Applied"
-                    showInfoTooltip
+                    title={
+                      shouldShowMissingRuleWarning
+                        ? `WARNING: No rule exists for moving ${selectedItems.length > 1 ? 'these items' : 'this item'} between these system types`
+                        : 'Item Moving Rule Applied'
+                    }
+                    showInfoTooltip={!shouldShowMissingRuleWarning}
                     infoTooltipTitle={
                       selectedRules && selectedRules[0]
-                        ? `The items usage statuses will be updated to ${selectedRules[0].dst_usage_status?.value}, as defined by the rules`
-                        : 'The items usage statuses will remain the same, as defined by the rules'
+                        ? `The ${selectedItems.length > 1 ? "items' usage statuses" : "item's usage status"} will be updated to ${selectedRules[0].dst_usage_status?.value}, according to the rules`
+                        : `The ${selectedItems.length > 1 ? "items' usage statuses" : "item's usage status"} will remain the same, according to the rules`
                     }
-                    alertProps={{ elevation: 1 }}
+                    alertProps={{
+                      elevation: 1,
+                      color: shouldShowMissingRuleWarning ? 'warning' : 'info',
+                    }}
                   />
                 )}
               <SystemsTableView
