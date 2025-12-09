@@ -26,6 +26,9 @@ afterEach(() => {
 describe('PrimaryImage Component', () => {
   it('matches the snapshot', async () => {
     const view = createView();
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
     expect(view.asFragment()).toMatchSnapshot();
   });
 

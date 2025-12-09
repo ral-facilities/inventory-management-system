@@ -20,8 +20,8 @@ describe('SystemDirectoryDialog', () => {
   const mockOnChangeSelectedSystems = vi.fn();
 
   const mockSelectedSystems: System[] = [
-    SystemsJSON[4] as System,
     SystemsJSON[5] as System,
+    SystemsJSON[6] as System,
   ];
 
   const createView = () => {
@@ -172,8 +172,8 @@ describe('SystemDirectoryDialog', () => {
     it('cannot move selected systems to the same parent system', async () => {
       // Change selected systems to have a parent equal to the target
       props.selectedSystems = [
-        SystemsJSON[0] as System,
         SystemsJSON[1] as System,
+        SystemsJSON[2] as System,
       ];
 
       createView();
@@ -186,7 +186,7 @@ describe('SystemDirectoryDialog', () => {
     });
 
     it('cannot move a selected system into itself', async () => {
-      props.selectedSystems = [SystemsJSON[0] as System];
+      props.selectedSystems = [SystemsJSON[1] as System];
 
       createView();
 
@@ -318,7 +318,7 @@ describe('SystemDirectoryDialog', () => {
     });
 
     it('can copy a selected system to the same parent system', async () => {
-      props.selectedSystems = [SystemsJSON[0] as System];
+      props.selectedSystems = [SystemsJSON[1] as System];
 
       createView();
 
@@ -329,13 +329,13 @@ describe('SystemDirectoryDialog', () => {
       await user.click(screen.getByRole('button', { name: 'Copy here' }));
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
-        ...(SystemsJSON[0] as System),
+        ...(SystemsJSON[1] as System),
         name: 'Giant laser_copy_1',
       });
     });
 
     it('can copy a selected system into itself', async () => {
-      props.selectedSystems = [SystemsJSON[0] as System];
+      props.selectedSystems = [SystemsJSON[1] as System];
 
       createView();
 
@@ -358,9 +358,9 @@ describe('SystemDirectoryDialog', () => {
       await user.click(screen.getByRole('button', { name: 'Copy here' }));
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
-        ...(SystemsJSON[0] as System),
+        ...(SystemsJSON[1] as System),
         name: 'Giant laser',
-        parent_id: SystemsJSON[0].id,
+        parent_id: SystemsJSON[1].id,
       });
     });
 
@@ -417,7 +417,7 @@ describe('SystemDirectoryDialog', () => {
     it('copies selected system to a location with a duplicate code and not a duplicate name', async () => {
       props.selectedSystems = [
         {
-          ...SystemsJSON[1],
+          ...SystemsJSON[2],
           // 'Smaller laser' exists in mock data
           name: 'smaller laser',
         } as System,
@@ -447,7 +447,7 @@ describe('SystemDirectoryDialog', () => {
     });
 
     it('copies selected system to a location with a duplicate code and duplicate name', async () => {
-      props.selectedSystems = [SystemsJSON[1] as System];
+      props.selectedSystems = [SystemsJSON[2] as System];
       createView();
 
       await waitFor(() => {

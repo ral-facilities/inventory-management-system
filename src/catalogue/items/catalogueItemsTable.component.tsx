@@ -13,11 +13,13 @@ import {
   ListItemText,
   MenuItem,
   Link as MuiLink,
+  Stack,
   TableCellBaseProps,
   TableRow,
   Typography,
 } from '@mui/material';
 import {
+  MRT_BottomToolbar,
   MRT_Row,
   MaterialReactTable,
   useMaterialReactTable,
@@ -26,7 +28,7 @@ import {
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import {
   CatalogueCategory,
   CatalogueItem,
@@ -35,8 +37,10 @@ import {
 } from '../../api/api.types';
 import { useGetCatalogueItems } from '../../api/catalogueItems';
 import { useGetManufacturerIds } from '../../api/manufacturers';
+import { APISettingsContext } from '../../apiConfigProvider.component';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import {
+  COLUMN_FILTER_BOOLEAN_OPTIONS,
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
   COLUMN_FILTER_VARIANTS,
@@ -87,7 +91,7 @@ const MoveCatalogueItemsButton = (props: {
         selectedItems={props.selectedItems}
         onChangeSelectedItems={props.onChangeSelectedItems}
         parentCategoryId={props.parentCategoryId}
-        requestType={'moveTo'}
+        requestType="moveTo"
         parentInfo={props.parentInfo}
       />
     </>
@@ -119,7 +123,7 @@ const CopyCatalogueItemsButton = (props: {
         selectedItems={props.selectedItems}
         onChangeSelectedItems={props.onChangeSelectedItems}
         parentCategoryId={props.parentCategoryId}
-        requestType={'copyTo'}
+        requestType="copyTo"
         parentInfo={props.parentInfo}
       />
     </>
@@ -165,11 +169,14 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     isItemSelectable,
     requestOrigin,
   } = props;
-  // Breadcrumbs + Mui table V2 + extra
-  const tableHeight = getPageHeightCalc('50px + 110px + 48px');
+  const contentHeight = getPageHeightCalc('80px');
 
   const { data: catalogueItemsData, isLoading: isLoadingCatalogueItems } =
     useGetCatalogueItems(parentInfo.id);
+
+  const apiSettings = React.useContext(APISettingsContext);
+  const sparesFilterState = apiSettings?.spares?.sparesFilterState;
+  const isSparesDefinitionDefined = !!apiSettings.spares;
 
   // States
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
@@ -297,6 +304,34 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           </MuiLink>
         ),
       },
+      ...(isSparesDefinitionDefined
+        ? [
+            {
+              header: 'Number of spares',
+              Header: TableHeaderOverflowTip,
+              size: 350,
+              accessorFn: (row: TableRowData) =>
+                row.catalogueItem.number_of_spares,
+              id: 'catalogueItem.number_of_spares',
+              filterVariant: COLUMN_FILTER_VARIANTS.number,
+              filterFn: COLUMN_FILTER_FUNCTIONS.number,
+              columnFilterModeOptions: [
+                ...COLUMN_FILTER_MODE_OPTIONS.number,
+                ...OPTIONAL_FILTER_MODE_OPTIONS,
+              ],
+              GroupedCell: TableGroupedCell,
+              Cell: ({ row }: { row: MRT_Row<TableRowData> }) => (
+                <MuiLink
+                  underline="hover"
+                  component={Link}
+                  to={`${row.original.catalogueItem.id}/items${sparesFilterState}`}
+                >
+                  {row.original.catalogueItem.number_of_spares}
+                </MuiLink>
+              ),
+            },
+          ]
+        : []),
       {
         header: 'Description',
         Header: TableHeaderOverflowTip,
@@ -321,6 +356,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         filterFn: COLUMN_FILTER_FUNCTIONS.boolean,
         enableColumnFilterModes: false,
         size: 200,
+        filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
       },
       {
         header: 'Obsolete replacement link',
@@ -406,7 +442,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
               ? false
               : true
             : true,
-        filterSelectOptions: ['Yes', 'No'],
+        filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
       })),
       {
         header: 'Cost (£)',
@@ -644,7 +680,12 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         enableGrouping: false,
       },
     ];
-  }, [dense, parentInfo.properties]);
+  }, [
+    dense,
+    isSparesDefinitionDefined,
+    parentInfo.properties,
+    sparesFilterState,
+  ]);
 
   const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
     selectedRowState ?? {}
@@ -724,6 +765,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     enableGlobalFilter: !dense,
     enableGrouping: !dense,
     enablePagination: true,
+    enableBottomToolbar: dense,
     // Other settings
     filterFns: customFilterFunctions,
     columnVirtualizerOptions: dense
@@ -786,10 +828,23 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             'aria-label': `${row.original.catalogueItem.name} row`,
           };
         },
-    muiTableContainerProps: {
-      sx: { height: dense ? '360.4px' : tableHeight },
-      // @ts-expect-error: MRT Table Container props does not have data-testid
-      'data-testid': 'catalogue-items-table-container',
+    muiTableContainerProps: ({ table }) => {
+      const showAlert =
+        table.getState().showAlertBanner ||
+        table.getFilteredSelectedRowModel().rows.length > 0 ||
+        table.getState().grouping.length > 0;
+      return {
+        sx: {
+          height: dense
+            ? '360.4px'
+            : getPageHeightCalc(
+                // Breadcrumbs + Mui table V2 + extra
+                `50px + 110px + 48px ${showAlert ? '+ 58.75px' : ''}`
+              ),
+          flexShrink: 1,
+        },
+        'data-testid': 'catalogue-items-table-container',
+      };
     },
     muiTableBodyCellProps: ({ column, row }) => {
       const disabledGroupedHeaderColumnIDs = [
@@ -1023,8 +1078,17 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
 
   return (
     <div style={{ width: '100%' }}>
-      <MaterialReactTable table={table} />
-
+      <Stack
+        sx={{
+          width: '100%',
+          height: dense ? undefined : contentHeight,
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <MaterialReactTable table={table} />
+        {!dense && <MRT_BottomToolbar table={table} />}
+      </Stack>
       {!dense && (
         <>
           <DeleteCatalogueItemsDialog

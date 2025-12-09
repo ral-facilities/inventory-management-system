@@ -6,6 +6,7 @@ import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   Box,
   Button,
+  Divider,
   ListItemIcon,
   ListItemText,
   MenuItem,
@@ -19,7 +20,7 @@ import {
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import {
   CatalogueCategory,
   CatalogueItem,
@@ -27,10 +28,16 @@ import {
   System,
 } from '../api/api.types';
 import { useGetItems } from '../api/items';
-import { useGetSystemIds } from '../api/systems';
+import { useGetSystemIds, useGetSystemTypes } from '../api/systems';
+import { useGetUsageStatuses } from '../api/usageStatuses';
+import { APISettingsContext } from '../apiConfigProvider.component';
+import type { SystemTableType } from '../app.types';
+import { useAuthorisationState } from '../authProvider.component';
 import { findPropertyValue } from '../catalogue/items/catalogueItemsTable.component';
+import MRTTopTableAlert from '../common/mrtTopTableAlert.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import {
+  COLUMN_FILTER_BOOLEAN_OPTIONS,
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
   COLUMN_FILTER_VARIANTS,
@@ -42,6 +49,7 @@ import {
   MRT_Functions_Localisation,
   mrtTheme,
   OPTIONAL_FILTER_MODE_OPTIONS,
+  sortDataList,
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
   TableGroupedCell,
@@ -59,11 +67,13 @@ export interface ItemTableProps {
 
 interface TableRowData {
   item: Item;
-  system?: System;
+  system?: SystemTableType;
 }
 
 export function ItemsTable(props: ItemTableProps) {
   const { catalogueCategory, catalogueItem, dense } = props;
+
+  const { isPrivilegedUser } = useAuthorisationState();
 
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
 
@@ -81,11 +91,24 @@ export function ItemsTable(props: ItemTableProps) {
     undefined
   );
 
+  const { data: systemTypesData, isLoading: isLoadingSystemTypes } =
+    useGetSystemTypes();
+
+  const { data: usageStatusData, isLoading: isLoadingUsageStatus } =
+    useGetUsageStatuses();
+
+  const apiSettings = React.useContext(APISettingsContext);
+  const sparesDefinition = apiSettings?.spares?.sparesDefinition;
+  const sparesColumnsFilters = apiSettings?.spares?.sparesColumnsFilters;
+
+  const isSparesDefinitionDefined = !!apiSettings?.spares;
+
   const systemIdSet = new Set<string>(
     itemsData?.map((item) => item.system_id) ?? []
   );
 
-  let isLoading = isLoadingItems;
+  let isLoading =
+    isLoadingItems || isLoadingSystemTypes || isLoadingUsageStatus;
   const systemList: (System | undefined)[] = useGetSystemIds(
     Array.from(systemIdSet.values())
   ).map((query) => {
@@ -97,12 +120,22 @@ export function ItemsTable(props: ItemTableProps) {
   React.useEffect(() => {
     if (!isLoading && itemsData) {
       setTableRows(
-        itemsData.map((itemData) => ({
-          item: itemData,
-          system: systemList?.find(
+        itemsData.map((itemData) => {
+          const system = systemList?.find(
             (system) => system?.id === itemData.system_id
-          ),
-        }))
+          );
+          return {
+            item: itemData,
+            system: system
+              ? {
+                  ...system,
+                  type: systemTypesData?.find(
+                    (type) => type.id === system.type_id
+                  ),
+                }
+              : undefined,
+          };
+        })
       );
     }
     //Purposefully leave out systemList from dependencies for same reasons as catalogueItemsTable
@@ -113,10 +146,13 @@ export function ItemsTable(props: ItemTableProps) {
     'create' | 'duplicate' | 'edit'
   >('create');
 
-  // Breadcrumbs + Mui table V2 + extra
-  const tableHeight = getPageHeightCalc('50px + 110px + 48px');
+  const [isPrivilegedMode, setIsPrivilegedMode] =
+    React.useState<boolean>(false);
+
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     const viewCatalogueItemProperties = catalogueCategory?.properties ?? [];
+    const systemTypeValues = systemTypesData?.map((type) => type.value);
+    const usageStatusValues = usageStatusData?.map((val) => val.value);
     return [
       {
         header: 'Serial Number',
@@ -241,6 +277,7 @@ export function ItemsTable(props: ItemTableProps) {
         filterVariant: COLUMN_FILTER_VARIANTS.boolean,
         enableColumnFilterModes: false,
         size: 200,
+        filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
       },
       {
         header: 'Usage Status',
@@ -265,6 +302,7 @@ export function ItemsTable(props: ItemTableProps) {
           </MenuItem>,
         ],
         size: 350,
+        filterSelectOptions: usageStatusValues,
       },
       {
         header: 'System',
@@ -301,6 +339,31 @@ export function ItemsTable(props: ItemTableProps) {
             {row.original.system?.name}
           </MuiLink>
         ),
+      },
+      {
+        header: 'System Type',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => row.system?.type?.value,
+        id: 'system.type.value',
+        filterVariant: 'multi-select',
+        filterFn: 'arrIncludesSome',
+        columnFilterModeOptions: ['arrIncludesSome', 'arrExcludesSome'],
+        renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) => [
+          <MenuItem
+            key="arrIncludesSome"
+            onClick={() => onSelectFilterMode('arrIncludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrIncludesSome}
+          </MenuItem>,
+          <MenuItem
+            key="arrExcludesSome"
+            onClick={() => onSelectFilterMode('arrExcludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrExcludesSome}
+          </MenuItem>,
+        ],
+        size: 350,
+        filterSelectOptions: systemTypeValues,
       },
       {
         header: 'Notes',
@@ -365,10 +428,10 @@ export function ItemsTable(props: ItemTableProps) {
               ? false
               : true
             : true,
-        filterSelectOptions: ['Yes', 'No'],
+        filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
       })),
     ];
-  }, [catalogueCategory]);
+  }, [catalogueCategory, systemTypesData, usageStatusData]);
 
   const initialColumnFilterFnState = React.useMemo(() => {
     return getInitialColumnFilterFnState(columns);
@@ -382,6 +445,27 @@ export function ItemsTable(props: ItemTableProps) {
     },
     storeInUrl: !dense,
   });
+
+  const isSparesFilterApplied = React.useMemo(() => {
+    if (sparesDefinition === '') return false;
+    if (sparesDefinition === undefined) return false;
+    if (preservedState.columnFilters.length !== 1) return false;
+    if (preservedState.columnFilters[0].id !== 'system.type.value')
+      return false;
+    const orderedColumnFilterValues = sortDataList(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      preservedState.columnFilters[0].value as any[]
+    );
+    const sparesSystemTypeValues = sparesDefinition.system_types.map(
+      (type) => type.value
+    );
+    const orderedSparesDefinitionValues = sortDataList(sparesSystemTypeValues);
+
+    return (
+      JSON.stringify(orderedColumnFilterValues) ===
+      JSON.stringify(orderedSparesDefinitionValues)
+    );
+  }, [preservedState, sparesDefinition]);
 
   const table = useMaterialReactTable({
     // Data
@@ -449,10 +533,23 @@ export function ItemsTable(props: ItemTableProps) {
     //MRT
     mrtTheme,
     //MUI
-    muiTableContainerProps: {
-      sx: { height: dense ? '360.4px' : tableHeight },
-      // @ts-expect-error: MRT Table Container props does not have data-testid
-      'data-testid': 'items-table-container',
+    muiTableContainerProps: ({ table }) => {
+      const showAlert =
+        table.getState().showAlertBanner ||
+        table.getFilteredSelectedRowModel().rows.length > 0 ||
+        table.getState().grouping.length > 0;
+      return {
+        sx: {
+          height: dense
+            ? '360.4px'
+            : getPageHeightCalc(
+                // Breadcrumbs + Mui table V2 + extra
+                `50px + 110px + 48px ${showAlert ? '+ 64px' : ''} ${isSparesFilterApplied ? ' + 54px' : ''}`
+              ),
+          flexShrink: 1,
+        },
+        'data-testid': 'items-table-container',
+      };
     },
     muiTableBodyCellProps: ({ column }) => {
       const disabledGroupedHeaderColumnIDs = [
@@ -505,7 +602,9 @@ export function ItemsTable(props: ItemTableProps) {
             open={true}
             onClose={() => {
               table.setCreatingRow(null);
+              setIsPrivilegedMode(false);
             }}
+            isPrivilegedMode={isPrivilegedMode}
             duplicate={itemDialogType === 'duplicate'}
             requestType={itemDialogType === 'edit' ? 'patch' : 'post'}
             catalogueCategory={catalogueCategory}
@@ -533,11 +632,27 @@ export function ItemsTable(props: ItemTableProps) {
           variant="outlined"
           onClick={() => {
             setItemsDialogType('create');
+            setIsPrivilegedMode(false);
             table.setCreatingRow(true);
           }}
         >
           Add Item
         </Button>
+
+        {isPrivilegedUser && (
+          <Button
+            startIcon={<AddIcon />}
+            sx={{ mx: 0.5 }}
+            variant="outlined"
+            onClick={() => {
+              setItemsDialogType('create');
+              setIsPrivilegedMode(true);
+              table.setCreatingRow(true);
+            }}
+          >
+            Add Item as Admin
+          </Button>
+        )}
 
         <Button
           startIcon={<ClearIcon />}
@@ -550,6 +665,24 @@ export function ItemsTable(props: ItemTableProps) {
         >
           Clear Filters
         </Button>
+        {isSparesDefinitionDefined && sparesColumnsFilters && (
+          <Button
+            sx={{ mx: 0.5 }}
+            variant="outlined"
+            disabled={isSparesFilterApplied}
+            onClick={() => {
+              onPreservedStatesChange.onColumnFiltersChange(
+                sparesColumnsFilters.cF.map((filter) => ({
+                  id: filter.id,
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  value: (filter.value as any[]).map((val) => val.value),
+                }))
+              );
+            }}
+          >
+            Show Spare Items
+          </Button>
+        )}
       </Box>
     ),
     renderRowActionMenuItems: ({ closeMenu, row, table }) => {
@@ -559,6 +692,7 @@ export function ItemsTable(props: ItemTableProps) {
           aria-label={`Edit item ${row.original.item.id}`}
           onClick={() => {
             setItemsDialogType('edit');
+            setIsPrivilegedMode(false);
             table.setCreatingRow(row);
             closeMenu();
           }}
@@ -589,6 +723,7 @@ export function ItemsTable(props: ItemTableProps) {
           aria-label={`Delete item ${row.original.item.id}`}
           onClick={() => {
             setDeleteItemDialogOpen(true);
+            setIsPrivilegedMode(false);
             setSelectedItem(row.original.item);
             closeMenu();
           }}
@@ -599,13 +734,66 @@ export function ItemsTable(props: ItemTableProps) {
           </ListItemIcon>
           <ListItemText>Delete</ListItemText>
         </MenuItem>,
+
+        ...(isPrivilegedUser
+          ? [
+              <Divider key="divider" />,
+              <MenuItem
+                key="edit-as-admin"
+                aria-label={`Edit item ${row.original.item.id}`}
+                onClick={() => {
+                  setItemsDialogType('edit');
+                  setIsPrivilegedMode(true);
+                  table.setCreatingRow(row);
+                  closeMenu();
+                }}
+                sx={{ m: 0 }}
+              >
+                <ListItemIcon>
+                  <EditIcon />
+                </ListItemIcon>
+                <ListItemText>Edit as Admin</ListItemText>
+              </MenuItem>,
+              <MenuItem
+                key="duplicate-as-admin"
+                aria-label={`Duplicate item ${row.original.item.id} as Admin`}
+                onClick={() => {
+                  setItemsDialogType('duplicate');
+                  setIsPrivilegedMode(true);
+                  table.setCreatingRow(row);
+                  closeMenu();
+                }}
+                sx={{ m: 0 }}
+              >
+                <ListItemIcon>
+                  <SaveAsIcon />
+                </ListItemIcon>
+                <ListItemText>Duplicate as Admin</ListItemText>
+              </MenuItem>,
+              <MenuItem
+                key="delete-as-admin"
+                aria-label={`Delete item ${row.original.item.id}`}
+                onClick={() => {
+                  setDeleteItemDialogOpen(true);
+                  setIsPrivilegedMode(true);
+                  setSelectedItem(row.original.item);
+                  closeMenu();
+                }}
+                sx={{ m: 0 }}
+              >
+                <ListItemIcon>
+                  <DeleteIcon />
+                </ListItemIcon>
+                <ListItemText>Delete as Admin</ListItemText>
+              </MenuItem>,
+            ]
+          : []),
       ];
     },
     renderBottomToolbarCustomActions: ({ table }) =>
       displayTableRowCountText(table, itemsData, 'Items', {
         paddingLeft: '8px',
       }),
-
     renderDetailPanel: dense
       ? ({ row }) => (
           <ItemsDetailsPanel
@@ -618,13 +806,35 @@ export function ItemsTable(props: ItemTableProps) {
 
   return (
     <div style={{ width: '100%' }}>
+      {isSparesDefinitionDefined &&
+        sparesDefinition &&
+        isSparesFilterApplied && (
+          <MRTTopTableAlert
+            title="Spares Definition Filter Applied"
+            clearFilters={table.resetColumnFilters}
+            clearFiltersAriaLabel="Clear Spares Definition Filter"
+            showInfoTooltip
+            infoTooltipTitle={
+              sparesDefinition.system_types.length === 1
+                ? `Items that are contained within the system type ${sparesDefinition.system_types[0].value} are classified as spares`
+                : `Items that are contained within a system type of one of ${sparesDefinition.system_types
+                    .map((sys) => sys.value)
+                    .join(', ')
+                    .replace(/, ([^,]*)$/, ' or $1')} are classified as spares`
+            }
+          />
+        )}
       <MaterialReactTable table={table} />
-      {!dense && (
+      {!dense && selectedItem && (
         <DeleteItemDialog
           open={deleteItemDialogOpen}
-          onClose={() => setDeleteItemDialogOpen(false)}
+          onClose={() => {
+            setDeleteItemDialogOpen(false);
+            setIsPrivilegedMode(false);
+          }}
           item={selectedItem}
           onChangeItem={setSelectedItem}
+          isPrivilegedMode={isPrivilegedMode}
         />
       )}
     </div>

@@ -214,7 +214,7 @@ describe('Catalogue Category', () => {
       .should('be.visible')
       .within(() => {
         cy.contains(
-          'Catalogue category has children elements and cannot be deleted, please delete the children elements first'
+          'Catalogue category has child elements and cannot be deleted, please delete the children elements first'
         );
       });
     cy.findByRole('button', { name: 'Continue' }).should('be.disabled');

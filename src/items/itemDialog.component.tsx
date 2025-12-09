@@ -11,7 +11,6 @@ import {
   DialogContent,
   DialogTitle,
   FormHelperText,
-  Grid,
   IconButton,
   Step,
   StepLabel,
@@ -20,6 +19,7 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import { DatePicker, DateValidationError } from '@mui/x-date-pickers';
 import { AxiosError } from 'axios';
 import React from 'react';
@@ -33,8 +33,14 @@ import {
   ItemPost,
   UsageStatus,
 } from '../api/api.types';
+import { useGetCatalogueCategory } from '../api/catalogueCategories';
 import { usePatchItem, usePostItem, usePostItems } from '../api/items';
-import { useGetSystems, useGetSystemsBreadcrumbs } from '../api/systems';
+import { useGetRules } from '../api/rules';
+import {
+  useGetSystem,
+  useGetSystems,
+  useGetSystemsBreadcrumbs,
+} from '../api/systems';
 import { useGetUsageStatuses } from '../api/usageStatuses';
 import {
   ItemDetailsStep,
@@ -45,6 +51,7 @@ import {
   convertToPropertyPost,
   convertToPropertyValueList,
 } from '../catalogue/items/catalogueItemsDialog.component';
+import MRTTopTableAlert from '../common/mrtTopTableAlert.component';
 import {
   DATE_PICKER_MAX_DATE,
   DATE_PICKER_MIN_DATE,
@@ -138,6 +145,7 @@ export interface ItemDialogProps {
   catalogueItem?: CatalogueItem;
   catalogueCategory?: CatalogueCategory;
   selectedItem?: Item;
+  isPrivilegedMode: boolean;
 }
 
 function ItemDialog(props: ItemDialogProps) {
@@ -147,9 +155,19 @@ function ItemDialog(props: ItemDialogProps) {
     requestType,
     duplicate,
     catalogueItem,
-    catalogueCategory,
     selectedItem,
+    isPrivilegedMode,
   } = props;
+
+  // Fetch the catalogue category if it hasn't already been given (as required to know what properties are available)
+  const { data: fetchedCatalogueCategory } = useGetCatalogueCategory(
+    props.catalogueCategory ? undefined : catalogueItem?.catalogue_category_id
+  );
+  const catalogueCategory = React.useMemo(
+    () => props.catalogueCategory || fetchedCatalogueCategory,
+    [fetchedCatalogueCategory, props.catalogueCategory]
+  );
+
   const parentCatalogueItemPropertiesInfo = React.useMemo(
     () => catalogueCategory?.properties ?? [],
     [catalogueCategory]
@@ -159,6 +177,7 @@ function ItemDialog(props: ItemDialogProps) {
     React.useState(false);
 
   const { data: usageStatuses } = useGetUsageStatuses();
+
   const { mutateAsync: addItem, isPending: isAddItemPending } = usePostItem();
   const { mutateAsync: postItems, isPending: isAddItemsPending } =
     usePostItems();
@@ -170,13 +189,32 @@ function ItemDialog(props: ItemDialogProps) {
     setActiveStep(0);
   }, [onClose]);
 
-  //move to systems
+  // Move to systems
   const [parentSystemId, setParentSystemId] = React.useState<string | null>(
     selectedItem?.system_id ?? null
   );
 
-  const [parentSystemIdError, setParentSystemIdError] =
-    React.useState<boolean>(false);
+  // Rules
+  const { data: dstSystem } = useGetSystem(parentSystemId);
+  const { data: srcSystem } = useGetSystem(selectedItem?.system_id);
+  const srcSystemTypeId =
+    requestType === 'post' ? 'null' : (srcSystem?.type_id ?? 'null');
+
+  const dstSystemTypeId = dstSystem?.type_id ?? 'null';
+  const { data: tableRules } = useGetRules(srcSystemTypeId);
+
+  // This should be a list of 1 rule
+  const { data: selectedRules, isLoading: isSelectedRulesLoading } =
+    useGetRules(srcSystemTypeId, dstSystemTypeId);
+
+  const isDstSystemTypeSameAsSrcSystemType = React.useMemo(() => {
+    if (!dstSystem || !srcSystem) return false;
+    return dstSystemTypeId === srcSystemTypeId;
+  }, [dstSystemTypeId, srcSystemTypeId, dstSystem, srcSystem]);
+
+  const [parentSystemIdError, setParentSystemIdError] = React.useState<
+    string | undefined
+  >(undefined);
 
   const { data: systemsData, isLoading: systemsDataLoading } = useGetSystems(
     parentSystemId === null ? 'null' : parentSystemId
@@ -186,7 +224,12 @@ function ItemDialog(props: ItemDialogProps) {
     useGetSystemsBreadcrumbs(parentSystemId);
 
   const ItemDetailsStepFormMethods = useForm<ItemDetailsStep>({
-    resolver: zodResolver(ItemDetailsStepSchema(requestType)),
+    resolver: zodResolver(
+      ItemDetailsStepSchema(
+        requestType,
+        isPrivilegedMode && parentSystemId !== null
+      )
+    ),
     defaultValues: toItemDetailsStep(selectedItem),
   });
 
@@ -224,7 +267,6 @@ function ItemDialog(props: ItemDialogProps) {
 
   const itemDetails = watchDetailsStep();
   const serialNumberAdvancedOptions = itemDetails.serial_number;
-
   // Load the values for editing.
   React.useEffect(() => {
     resetDetailsStep(toItemDetailsStep(selectedItem));
@@ -247,6 +289,36 @@ function ItemDialog(props: ItemDialogProps) {
     selectedItem?.properties,
   ]);
 
+  // Set usage status based on the selected Rule
+  React.useEffect(() => {
+    if (selectedRules && selectedRules.length > 0) {
+      const usageStatus = usageStatuses?.find(
+        (status) => status.id === selectedRules[0].dst_usage_status?.id
+      );
+      if (usageStatus && srcSystemTypeId !== dstSystemTypeId) {
+        ItemDetailsStepFormMethods.setValue('usage_status_id', usageStatus.id, {
+          shouldValidate: true,
+        });
+      }
+    } else if (isPrivilegedMode) {
+      ItemDetailsStepFormMethods.setValue(
+        'usage_status_id',
+        selectedItem?.usage_status_id ?? '', // sets to current usage status if editing or duplicating item
+        {
+          shouldValidate: false, // so error does not instantly appear
+        }
+      );
+    }
+  }, [
+    selectedRules,
+    usageStatuses,
+    ItemDetailsStepFormMethods,
+    srcSystemTypeId,
+    dstSystemTypeId,
+    isPrivilegedMode,
+    selectedItem?.usage_status_id,
+  ]);
+
   // Clears form errors when a value has been changed
   React.useEffect(() => {
     const subscription = watchDetailsStep(() =>
@@ -263,9 +335,23 @@ function ItemDialog(props: ItemDialogProps) {
   }, [clearErrorsPropertiesStep, watchPropertiesStep]);
 
   React.useEffect(() => {
-    if (parentSystemId !== selectedItem?.system_id)
+    if (parentSystemId !== selectedItem?.system_id) {
       clearErrorsPropertiesStep('root.formError');
-  }, [clearErrorsPropertiesStep, parentSystemId, selectedItem?.system_id]);
+
+      // Clears usage status error if privileged user as they may be selecting
+      // a system with no rule, and so no usage status. Therefore we want to
+      // ensure the error is always cleared to behave as other dialogs.
+      if (isPrivilegedMode) {
+        clearErrorsDetailsStep(['usage_status_id']);
+      }
+    }
+  }, [
+    clearErrorsDetailsStep,
+    clearErrorsPropertiesStep,
+    isPrivilegedMode,
+    parentSystemId,
+    selectedItem?.system_id,
+  ]);
 
   React.useEffect(() => {
     if (
@@ -285,10 +371,10 @@ function ItemDialog(props: ItemDialogProps) {
   ]);
 
   React.useEffect(() => {
-    if (parentSystemIdError && parentSystemId) {
-      setParentSystemIdError(false);
+    if (parentSystemId) {
+      setParentSystemIdError(undefined);
     }
-  }, [parentSystemId, parentSystemIdError]);
+  }, [parentSystemId]);
 
   const handleAddItem = React.useCallback(
     (data: ItemPost, quantity?: number, starting_value?: number) => {
@@ -342,7 +428,7 @@ function ItemDialog(props: ItemDialogProps) {
 
         const isNotesUpdated = data.notes !== selectedItem.notes;
 
-        const isCatalogueItemPropertiesUpdated =
+        const isItemPropertiesUpdated =
           JSON.stringify(data.properties) !==
           JSON.stringify(
             selectedItem.properties.map(({ unit, name, ...rest }) => ({
@@ -366,7 +452,7 @@ function ItemDialog(props: ItemDialogProps) {
         if (isDeliveredDateUpdated) item.delivered_date = data.delivered_date;
         if (isNotesUpdated) item.notes = data.notes;
         if (isSystemIdUpdated) item.system_id = data.system_id;
-        if (isCatalogueItemPropertiesUpdated) item.properties = data.properties;
+        if (isItemPropertiesUpdated) item.properties = data.properties;
 
         if (
           selectedItem.id &&
@@ -379,7 +465,7 @@ function ItemDialog(props: ItemDialogProps) {
             isSerialNumberUpdated ||
             isDeliveredDateUpdated ||
             isNotesUpdated ||
-            isCatalogueItemPropertiesUpdated ||
+            isItemPropertiesUpdated ||
             isSystemIdUpdated)
         ) {
           editItem({ id: selectedItem.id, item: item })
@@ -400,9 +486,9 @@ function ItemDialog(props: ItemDialogProps) {
 
   // Stepper
   const STEPS = [
+    'Place into a system',
     (requestType === 'patch' ? 'Edit' : 'Add') + ' item details',
     (requestType === 'patch' ? 'Edit' : 'Add') + ' item properties',
-    'Place into a system',
   ];
   const [activeStep, setActiveStep] = React.useState<number>(0);
 
@@ -439,22 +525,41 @@ function ItemDialog(props: ItemDialogProps) {
   const handleNext = React.useCallback(
     async (event: React.SyntheticEvent, step: number) => {
       switch (step) {
-        case 0:
+        case 0: {
+          if (!parentSystemId) {
+            setParentSystemIdError('Please select a parent system');
+            return;
+          } else if (
+            !isDstSystemTypeSameAsSrcSystemType &&
+            (!selectedRules || selectedRules.length === 0) &&
+            !isPrivilegedMode
+          ) {
+            const allowedDstSystemTypes =
+              tableRules?.map((rule) => rule.dst_system_type?.value) || [];
+            setParentSystemIdError(
+              `Please select a valid parent system. Allowed types: ${allowedDstSystemTypes.join(', ')}.`
+            );
+            return;
+          }
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
+          break;
+        }
+        case 1:
           return handleSubmitDetailsStep(() => {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
           })(event);
 
-        case 1: {
-          const { hasErrors } = await handlePropertiesStep(event);
-          if (hasErrors) return;
-          setActiveStep((prevActiveStep) => prevActiveStep + 1);
-          break;
-        }
         default:
-          setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }
     },
-    [handlePropertiesStep, handleSubmitDetailsStep]
+    [
+      selectedRules,
+      handleSubmitDetailsStep,
+      isDstSystemTypeSameAsSrcSystemType,
+      parentSystemId,
+      tableRules,
+      isPrivilegedMode,
+    ]
   );
 
   const handleBack = () => {
@@ -463,12 +568,32 @@ function ItemDialog(props: ItemDialogProps) {
 
   const handleFinish = React.useCallback(
     async (event: React.SyntheticEvent) => {
-      const { detailsStepData, propertiesStepData } =
-        await handlePropertiesStep(event);
+      let hasErrors = false;
+      const {
+        detailsStepData,
+        propertiesStepData,
+        hasErrors: hasErrorProperties,
+      } = await handlePropertiesStep(event);
 
       if (!parentSystemId) {
-        setParentSystemIdError(true);
+        setParentSystemIdError('Please select a parent system');
+        hasErrors = true;
+      } else if (
+        !isDstSystemTypeSameAsSrcSystemType &&
+        (!selectedRules || selectedRules.length === 0) &&
+        !isPrivilegedMode
+      ) {
+        const allowedDstSystemTypes =
+          tableRules?.map((rule) => rule.dst_system_type?.value) || [];
+        setParentSystemIdError(
+          `Please select a valid parent system. Allowed types: ${allowedDstSystemTypes.join(', ')}.`
+        );
+        hasErrors = true;
       }
+      if (hasErrorProperties) {
+        hasErrors = true;
+      }
+      if (hasErrors) return;
 
       if (detailsStepData && propertiesStepData && parentSystemId) {
         const data: ItemPost = {
@@ -496,13 +621,17 @@ function ItemDialog(props: ItemDialogProps) {
       }
     },
     [
+      selectedRules,
       catalogueItem?.id,
       duplicate,
       handleAddItem,
       handleEditItem,
       handlePropertiesStep,
+      isDstSystemTypeSameAsSrcSystemType,
       parentSystemId,
       requestType,
+      tableRules,
+      isPrivilegedMode,
     ]
   );
 
@@ -510,51 +639,122 @@ function ItemDialog(props: ItemDialogProps) {
     (step: number) => {
       switch (step) {
         case 0:
-          return Object.values(errorsDetailsStep).length !== 0;
+          return !!parentSystemIdError;
         case 1:
+          return Object.values(errorsDetailsStep).length !== 0;
+        case 2:
           return (
             Object.keys(errorsPropertiesStep).filter((val) => val !== 'root')
               .length !== 0
           );
-        case 2:
-          return parentSystemIdError;
       }
     },
     [errorsDetailsStep, errorsPropertiesStep, parentSystemIdError]
   );
 
+  const shouldShowMissingRuleWarning =
+    !selectedRules?.[0] && srcSystemTypeId !== dstSystemTypeId;
+
+  const dstUsageStatus =
+    selectedRules?.[0]?.dst_usage_status?.value ?? selectedItem?.usage_status;
+
   const renderStepContent = (step: number) => {
     switch (step) {
       case 0:
         return (
-          <Grid item container spacing={1.5} xs={12}>
-            <Grid item container xs={12}>
-              <TextField
-                id="item-serial-number-input"
-                label="Serial number"
-                size="small"
-                {...registerDetailsStep('serial_number.serial_number')}
-                fullWidth
-                error={!!errorsDetailsStep.serial_number?.serial_number}
-                helperText={
-                  errorsDetailsStep.serial_number?.serial_number?.message ||
-                  (itemDetails.serial_number.quantity &&
-                    itemDetails.serial_number.starting_value &&
-                    itemDetails.serial_number.serial_number &&
-                    itemDetails.serial_number.serial_number
-                      .trim()
-                      .includes('%s') &&
-                    `e.g. ${itemDetails.serial_number.serial_number?.replace(
-                      '%s',
-                      itemDetails.serial_number.starting_value
-                    )}`)
-                }
-              />
+          <Grid size={12}>
+            <Breadcrumbs
+              breadcrumbsInfo={parentSystemBreadcrumbs}
+              onChangeNode={setParentSystemId}
+              onChangeNavigateHome={() => {
+                setParentSystemId(null);
+              }}
+              homeLocation="Systems"
+            />
+
+            {parentSystemId &&
+              !isSelectedRulesLoading &&
+              !systemsDataLoading && (
+                <MRTTopTableAlert
+                  title={
+                    shouldShowMissingRuleWarning
+                      ? `WARNING: No rule exists for ${requestType === 'post' ? `creating a new item within this system type` : 'moving this item between these system types'} `
+                      : requestType === 'post'
+                        ? 'Item Creation Rule Applied'
+                        : 'Item Moving Rule Applied'
+                  }
+                  showInfoTooltip={!shouldShowMissingRuleWarning}
+                  infoTooltipTitle={
+                    requestType === 'post'
+                      ? `The new item's usage status will be set to ${dstUsageStatus}, according to the rules`
+                      : selectedItem?.system_id === parentSystemId
+                        ? `The item's usage status will remain the same, according to the rules`
+                        : `The item's usage status will be updated to ${dstUsageStatus}, according to the rules`
+                  }
+                  alertProps={{
+                    elevation: 1,
+                    color: shouldShowMissingRuleWarning ? 'warning' : 'info',
+                  }}
+                />
+              )}
+            <SystemsTableView
+              systemsData={systemsData}
+              systemsDataLoading={systemsDataLoading}
+              onChangeParentId={setParentSystemId}
+              systemParentId={parentSystemId ?? undefined}
+              isSystemSelectable={(system) => {
+                if (isPrivilegedMode) return true;
+                const matchesSrc = system?.type_id === srcSystemTypeId;
+                const matchesAnyDstRule =
+                  Array.isArray(tableRules) &&
+                  tableRules.some(
+                    (rule) => rule?.dst_system_type?.id === system?.type_id
+                  );
+                return matchesSrc || matchesAnyDstRule;
+              }}
+              // Use most unrestricted variant (i.e. copy with no selection)
+              selectedSystems={[]}
+              type="copyTo"
+            />
+          </Grid>
+        );
+      case 1:
+        return (
+          <Grid container spacing={1.5} size={12}>
+            <Grid
+              container
+              size={12}
+              sx={{
+                margin: 0,
+              }}
+            >
+              <Grid size={12}>
+                <TextField
+                  id="item-serial-number-input"
+                  label="Serial number"
+                  size="small"
+                  {...registerDetailsStep('serial_number.serial_number')}
+                  fullWidth
+                  error={!!errorsDetailsStep.serial_number?.serial_number}
+                  helperText={
+                    errorsDetailsStep.serial_number?.serial_number?.message ||
+                    (itemDetails.serial_number.quantity &&
+                      itemDetails.serial_number.starting_value &&
+                      itemDetails.serial_number.serial_number &&
+                      itemDetails.serial_number.serial_number
+                        .trim()
+                        .includes('%s') &&
+                      `e.g. ${itemDetails.serial_number.serial_number?.replace(
+                        '%s',
+                        itemDetails.serial_number.starting_value
+                      )}`)
+                  }
+                />
+              </Grid>
 
               {requestType !== 'patch' && (
                 <>
                   <Grid
-                    item
                     onClick={() =>
                       setShowAdvancedSerialNumberOptions(
                         !showAdvancedSerialNumberOptions
@@ -562,10 +762,10 @@ function ItemDialog(props: ItemDialogProps) {
                     }
                   >
                     <Typography
-                      ml={1}
-                      mb={0}
                       variant="caption"
                       sx={{
+                        ml: 1,
+                        mb: 0,
                         cursor: 'pointer',
                         '&:hover': { textDecoration: 'underline' },
                       }}
@@ -575,13 +775,26 @@ function ItemDialog(props: ItemDialogProps) {
                         : 'Show advanced options'}
                     </Typography>
                   </Grid>
-                  <Grid container item xs={12}>
+                  <Grid container size={12}>
                     <Collapse
                       sx={{ width: '100%' }}
                       in={showAdvancedSerialNumberOptions}
                     >
-                      <Grid item container mt={0.25} spacing={1.5} xs={12}>
-                        <Grid item xs={6}>
+                      <Grid
+                        container
+                        spacing={1.5}
+                        size={12}
+                        sx={{
+                          margin: 0,
+                          mt: 0.25,
+                        }}
+                      >
+                        <Grid
+                          size={6}
+                          sx={{
+                            pl: 0,
+                          }}
+                        >
                           <TextField
                             id="item-quantity-input"
                             label="Quantity"
@@ -594,7 +807,12 @@ function ItemDialog(props: ItemDialogProps) {
                             }
                           />
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid
+                          size={6}
+                          sx={{
+                            pr: 0,
+                          }}
+                        >
                           <TextField
                             id="item-starting-value-input"
                             label="Starting value"
@@ -618,7 +836,7 @@ function ItemDialog(props: ItemDialogProps) {
                 </>
               )}
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <TextField
                 id="item-asset-input"
                 label="Asset number"
@@ -627,7 +845,7 @@ function ItemDialog(props: ItemDialogProps) {
                 fullWidth
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <TextField
                 id="item-purchase-order-input"
                 label="Purchase order number"
@@ -636,7 +854,7 @@ function ItemDialog(props: ItemDialogProps) {
                 fullWidth
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <Controller
                 name="warranty_end_date"
                 control={controlDetailsStep}
@@ -690,7 +908,7 @@ function ItemDialog(props: ItemDialogProps) {
                 )}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <Controller
                 name="delivered_date"
                 control={controlDetailsStep}
@@ -741,7 +959,7 @@ function ItemDialog(props: ItemDialogProps) {
                 )}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <Controller
                 control={controlDetailsStep}
                 name="is_defective"
@@ -768,13 +986,14 @@ function ItemDialog(props: ItemDialogProps) {
                 )}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <Controller
                 control={controlDetailsStep}
                 name="usage_status_id"
                 render={({ field: { value, onChange } }) => (
                   <Autocomplete
                     disableClearable={value != null}
+                    disabled={!isPrivilegedMode}
                     id="item-usage-status-input"
                     value={
                       usageStatuses?.find(
@@ -796,6 +1015,7 @@ function ItemDialog(props: ItemDialogProps) {
                       <TextField
                         {...params}
                         required={true}
+                        disabled={!isPrivilegedMode}
                         label="Usage status"
                         error={!!errorsDetailsStep.usage_status_id}
                         helperText={errorsDetailsStep.usage_status_id?.message}
@@ -805,9 +1025,8 @@ function ItemDialog(props: ItemDialogProps) {
                 )}
               />
             </Grid>
-
-            <Grid item container xs={12} sx={{ display: 'flex' }}>
-              <Grid item xs={11}>
+            <Grid container sx={{ display: 'flex' }} size={12}>
+              <Grid size={11}>
                 <TextField
                   id="item-notes-input"
                   label="Notes"
@@ -818,13 +1037,17 @@ function ItemDialog(props: ItemDialogProps) {
                   fullWidth
                 />
               </Grid>
-              <Grid item xs={1}>
+              <Grid size={1}>
                 <Tooltip
                   sx={{ alignItems: 'center' }}
                   title={
                     <div>
                       <Typography>Catalogue item note:</Typography>
-                      <Typography whiteSpace="pre-line">
+                      <Typography
+                        sx={{
+                          whiteSpace: 'pre-line',
+                        }}
+                      >
                         {catalogueItem?.notes ?? 'None'}
                       </Typography>
                     </div>
@@ -841,172 +1064,168 @@ function ItemDialog(props: ItemDialogProps) {
             </Grid>
           </Grid>
         );
-      case 1:
+      case 2:
         return (
-          <Grid item xs={12}>
+          <Grid container size={12}>
             {parentCatalogueItemPropertiesInfo.length >= 1 ? (
-              <Grid container spacing={1.5}>
+              <Grid
+                container
+                size={12}
+                spacing={1.5}
+                sx={{
+                  margin: 0,
+                }}
+              >
                 {parentCatalogueItemPropertiesInfo.map(
                   (property: CatalogueCategoryProperty, index: number) => (
-                    <Grid item xs={12} key={index}>
-                      <Grid container spacing={1.5}>
-                        <Grid item xs={11} sx={{ display: 'flex' }}>
-                          {property.type === 'boolean' ? (
-                            <Controller
-                              control={controlPropertiesStep}
-                              name={`properties.${index}.value.value`}
-                              render={({
-                                field: { value: propertyValue, onChange },
-                              }) => (
-                                <Autocomplete
-                                  disableClearable={property.mandatory ?? false}
-                                  id={`catalogue-item-property-${property.name.replace(
-                                    /\s+/g,
-                                    '-'
-                                  )}`}
-                                  value={
-                                    propertyValue
-                                      ? propertyValue.charAt(0).toUpperCase() +
-                                        propertyValue.slice(1)
-                                      : ''
-                                  }
-                                  size="small"
-                                  onChange={(_event, value) => {
-                                    onChange(value);
-                                  }}
-                                  sx={{ alignItems: 'center' }}
-                                  fullWidth
-                                  options={['True', 'False']}
-                                  isOptionEqualToValue={(option, value) =>
-                                    option.toLowerCase() ==
-                                      value.toLowerCase() || value == ''
-                                  }
-                                  renderInput={(params) => (
-                                    <TextField
-                                      {...params}
-                                      required={property.mandatory ?? false}
-                                      label={property.name}
-                                      error={
-                                        !!errorsPropertiesStep?.properties?.[
-                                          index
-                                        ]?.value?.value
-                                      }
-                                      helperText={
-                                        errorsPropertiesStep?.properties?.[
-                                          index
-                                        ]?.value?.value?.message as string
-                                      }
-                                    />
-                                  )}
-                                />
-                              )}
-                            />
-                          ) : property.allowed_values ? (
-                            <Controller
-                              control={controlPropertiesStep}
-                              name={`properties.${index}.value.value`}
-                              render={({
-                                field: { value: propertyValue, onChange },
-                              }) => (
-                                <Autocomplete
-                                  disableClearable={property.mandatory ?? false}
-                                  id={`catalogue-item-property-${property.name.replace(
-                                    /\s+/g,
-                                    '-'
-                                  )}`}
-                                  value={(propertyValue as string) ?? ''}
-                                  size="small"
-                                  onChange={(_event, value) =>
-                                    onChange(
-                                      value !== null ? String(value) : ''
-                                    )
-                                  }
-                                  sx={{ alignItems: 'center' }}
-                                  fullWidth
-                                  options={
-                                    property.allowed_values?.values ?? []
-                                  }
-                                  getOptionLabel={(option) => option.toString()}
-                                  isOptionEqualToValue={(option, value) =>
-                                    option.toString() === value.toString() ||
-                                    value === ''
-                                  }
-                                  renderInput={(params) => (
-                                    <TextField
-                                      {...params}
-                                      required={property.mandatory ?? false}
-                                      label={`${property.name} ${
-                                        property.unit
-                                          ? `(${property.unit})`
-                                          : ''
-                                      }`}
-                                      error={
-                                        !!errorsPropertiesStep?.properties?.[
-                                          index
-                                        ]?.value?.value
-                                      }
-                                      helperText={
-                                        errorsPropertiesStep?.properties?.[
-                                          index
-                                        ]?.value?.value?.message as string
-                                      }
-                                    />
-                                  )}
-                                />
-                              )}
-                            />
-                          ) : (
-                            <TextField
-                              id={`catalogue-item-${property.name}-input`}
-                              label={`${property.name} ${
-                                property.unit ? `(${property.unit})` : ''
-                              }`}
-                              size="small"
-                              {...registerPropertiesStep(
-                                `properties.${index}.value.value`
-                              )}
-                              required={property.mandatory ?? false}
-                              fullWidth
-                              error={
-                                !!errorsPropertiesStep?.properties?.[index]
-                                  ?.value?.value
-                              }
-                              helperText={
-                                errorsPropertiesStep?.properties?.[index]?.value
-                                  ?.value?.message as string
-                              }
-                            />
-                          )}
-                        </Grid>
-                        <Grid
-                          item
-                          xs={1}
-                          sx={{ display: 'flex', alignItems: 'center' }}
-                        >
-                          <Tooltip
-                            aria-label={`${property.name} details`}
-                            title={
-                              <div>
-                                <Typography>Name: {property.name}</Typography>
-                                <Typography>
-                                  Unit: {property.unit ?? 'None'}
-                                </Typography>
-                                <Typography>
-                                  Type:{' '}
-                                  {property.type === 'string'
-                                    ? 'text'
-                                    : property.type}
-                                </Typography>
-                              </div>
+                    <Grid container spacing={1.5} key={index} size={12}>
+                      <Grid size={11} sx={{ display: 'flex' }}>
+                        {property.type === 'boolean' ? (
+                          <Controller
+                            control={controlPropertiesStep}
+                            name={`properties.${index}.value.value`}
+                            render={({
+                              field: { value: propertyValue, onChange },
+                            }) => (
+                              <Autocomplete
+                                disableClearable={property.mandatory ?? false}
+                                id={`catalogue-item-property-${property.name.replace(
+                                  /\s+/g,
+                                  '-'
+                                )}`}
+                                value={
+                                  propertyValue
+                                    ? propertyValue.charAt(0).toUpperCase() +
+                                      propertyValue.slice(1)
+                                    : ''
+                                }
+                                size="small"
+                                onChange={(_event, value) => {
+                                  onChange(value);
+                                }}
+                                sx={{ alignItems: 'center' }}
+                                fullWidth
+                                options={['True', 'False']}
+                                isOptionEqualToValue={(option, value) =>
+                                  option.toLowerCase() == value.toLowerCase() ||
+                                  value == ''
+                                }
+                                renderInput={(params) => (
+                                  <TextField
+                                    {...params}
+                                    required={property.mandatory ?? false}
+                                    label={property.name}
+                                    error={
+                                      !!errorsPropertiesStep?.properties?.[
+                                        index
+                                      ]?.value?.value
+                                    }
+                                    helperText={
+                                      errorsPropertiesStep?.properties?.[index]
+                                        ?.value?.value?.message as string
+                                    }
+                                  />
+                                )}
+                              />
+                            )}
+                          />
+                        ) : property.allowed_values ? (
+                          <Controller
+                            control={controlPropertiesStep}
+                            name={`properties.${index}.value.value`}
+                            render={({
+                              field: { value: propertyValue, onChange },
+                            }) => (
+                              <Autocomplete
+                                disableClearable={property.mandatory ?? false}
+                                id={`catalogue-item-property-${property.name.replace(
+                                  /\s+/g,
+                                  '-'
+                                )}`}
+                                value={(propertyValue as string) ?? ''}
+                                size="small"
+                                onChange={(_event, value) =>
+                                  onChange(value !== null ? String(value) : '')
+                                }
+                                sx={{ alignItems: 'center' }}
+                                fullWidth
+                                options={property.allowed_values?.values ?? []}
+                                getOptionLabel={(option) => option.toString()}
+                                isOptionEqualToValue={(option, value) =>
+                                  option.toString() === value.toString() ||
+                                  value === ''
+                                }
+                                renderInput={(params) => (
+                                  <TextField
+                                    {...params}
+                                    required={property.mandatory ?? false}
+                                    label={`${property.name} ${
+                                      property.unit ? `(${property.unit})` : ''
+                                    }`}
+                                    error={
+                                      !!errorsPropertiesStep?.properties?.[
+                                        index
+                                      ]?.value?.value
+                                    }
+                                    helperText={
+                                      errorsPropertiesStep?.properties?.[index]
+                                        ?.value?.value?.message as string
+                                    }
+                                  />
+                                )}
+                              />
+                            )}
+                          />
+                        ) : (
+                          <TextField
+                            id={`catalogue-item-${property.name}-input`}
+                            label={`${property.name} ${
+                              property.unit ? `(${property.unit})` : ''
+                            }`}
+                            size="small"
+                            {...registerPropertiesStep(
+                              `properties.${index}.value.value`
+                            )}
+                            required={property.mandatory ?? false}
+                            fullWidth
+                            error={
+                              !!errorsPropertiesStep?.properties?.[index]?.value
+                                ?.value
                             }
-                            placement="right"
-                            enterTouchDelay={0}
-                          >
-                            <IconButton size="small">
-                              <InfoOutlinedIcon />
-                            </IconButton>
-                          </Tooltip>
-                        </Grid>
+                            helperText={
+                              errorsPropertiesStep?.properties?.[index]?.value
+                                ?.value?.message as string
+                            }
+                          />
+                        )}
+                      </Grid>
+                      <Grid
+                        size={1}
+                        sx={{ display: 'flex', alignItems: 'center' }}
+                      >
+                        <Tooltip
+                          aria-label={`${property.name} details`}
+                          title={
+                            <div>
+                              <Typography>Name: {property.name}</Typography>
+                              <Typography>
+                                Unit: {property.unit ?? 'None'}
+                              </Typography>
+                              <Typography>
+                                Type:{' '}
+                                {property.type === 'string'
+                                  ? 'text'
+                                  : property.type}
+                              </Typography>
+                            </div>
+                          }
+                          placement="right"
+                          enterTouchDelay={0}
+                        >
+                          <IconButton size="small">
+                            <InfoOutlinedIcon />
+                          </IconButton>
+                        </Tooltip>
                       </Grid>
                     </Grid>
                   )
@@ -1031,44 +1250,28 @@ function ItemDialog(props: ItemDialogProps) {
             )}
           </Grid>
         );
-      case 2:
-        return (
-          <Grid item xs={12}>
-            <Breadcrumbs
-              breadcrumbsInfo={parentSystemBreadcrumbs}
-              onChangeNode={setParentSystemId}
-              onChangeNavigateHome={() => {
-                setParentSystemId(null);
-              }}
-              homeLocation="Systems"
-            />
-            <SystemsTableView
-              systemsData={systemsData}
-              systemsDataLoading={systemsDataLoading}
-              onChangeParentId={setParentSystemId}
-              systemParentId={parentSystemId ?? undefined}
-              // Use most unrestricted variant (i.e. copy with no selection)
-              selectedSystems={[]}
-              type="copyTo"
-            />
-          </Grid>
-        );
     }
   };
 
   return (
-    <Dialog
-      open={open}
-      maxWidth="lg"
-      PaperProps={{ sx: { height: '800px' } }}
-      fullWidth
-    >
-      <DialogTitle>
-        <Grid
-          item
-          xs={12}
-        >{`${requestType === 'patch' ? 'Edit' : 'Add'} Item`}</Grid>
+    <Dialog open={open} maxWidth="xl" fullWidth>
+      <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
+        {`${requestType === 'patch' ? 'Edit' : 'Add'} Item${isPrivilegedMode ? ' as Admin' : ''}`}
+
+        {isPrivilegedMode && (
+          <Tooltip
+            title="As an admin, you can bypass rules that restrict item placement for other users, and you can modify the item's usage status"
+            data-testid={'admin-status-tooltip'}
+            placement="top"
+            enterTouchDelay={0}
+            arrow
+            sx={{ mx: 2 }}
+          >
+            <InfoOutlinedIcon />
+          </Tooltip>
+        )}
       </DialogTitle>
+
       <DialogContent>
         <Stepper
           nonLinear
@@ -1085,8 +1288,9 @@ function ItemDialog(props: ItemDialogProps) {
             if (isStepFailed(index)) {
               labelProps.optional = (
                 <Typography variant="caption" color="error">
-                  {index === 1 && 'Invalid item properties'}
-                  {index === 0 && 'Invalid item details'}
+                  {index === 0 && parentSystemIdError}
+                  {index === 2 && 'Invalid item properties'}
+                  {index === 1 && 'Invalid item details'}
                 </Typography>
               );
               labelProps.error = true;
@@ -1121,7 +1325,7 @@ function ItemDialog(props: ItemDialogProps) {
               Object.keys(errorsPropertiesStep).filter((val) => val !== 'root')
                 .length !== 0 ||
               Object.values(errorsDetailsStep).length !== 0 ||
-              parentSystemIdError
+              !!parentSystemIdError
             }
             onClick={handleFinish}
             sx={{ mr: 3 }}

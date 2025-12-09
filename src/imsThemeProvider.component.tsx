@@ -1,13 +1,13 @@
-import { CssBaseline } from "@mui/material";
+import { CssBaseline } from '@mui/material';
 import {
   StyledEngineProvider,
   Theme,
   ThemeProvider,
   createTheme,
-} from "@mui/material/styles";
-import React from "react";
-import { MicroFrontendId } from "./app.types";
-import { sendThemeOptions } from "./state/scigateway.actions";
+} from '@mui/material/styles';
+import React from 'react';
+import { MicroFrontendId } from './app.types';
+import { sendThemeOptions } from './state/scigateway.actions';
 
 declare module '@mui/material/styles' {
   interface Theme {

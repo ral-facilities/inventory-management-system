@@ -1,6 +1,9 @@
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { http, HttpResponse } from 'msw';
 import { CatalogueCategory } from '../../api/api.types';
+import APIConfigProvider from '../../apiConfigProvider.component';
+import { server } from '../../mocks/server';
 import {
   getCatalogueCategoryById,
   renderComponentWithRouterProvider,
@@ -17,7 +20,9 @@ describe('Catalogue Items Table', () => {
 
   const createView = (initialEntry?: string) => {
     return renderComponentWithRouterProvider(
-      <CatalogueItemsTable {...props} />,
+      <APIConfigProvider>
+        <CatalogueItemsTable {...props} />
+      </APIConfigProvider>,
       'any',
       initialEntry ?? '/'
     );
@@ -49,12 +54,18 @@ describe('Catalogue Items Table', () => {
     vi.clearAllMocks();
   });
 
-  it('renders table correctly (section 1 due to column virtualisation )', async () => {
+  it('renders table correctly (section 1 due to column virtualisation) and checks for number of spares column', async () => {
     createView();
     await waitFor(() => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
     expect(screen.getByText('Last modified')).toBeInTheDocument();
+    expect(screen.getByText('View Items')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Show/Hide columns' }));
+    await user.click(screen.getByText('Hide all'));
+
+    expect(screen.getByText('Number of spares')).toBeInTheDocument();
   });
 
   it('renders table correctly (Cameras more details)', async () => {
@@ -324,6 +335,21 @@ describe('Catalogue Items Table', () => {
     expect(url[0]).toHaveAttribute('href', '/catalogue/5/items/6');
   });
 
+  it('navigates to items pages with the spares definition applied', async () => {
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+    await ensureColumnsVisible(['Number of spares']);
+
+    const url = await screen.findAllByText('0');
+
+    expect(url[1]).toHaveAttribute(
+      'href',
+      '/89/items?state=N4IgxgYiBcDaoEsAmMQGcCeaAuBTAtgHTYYAOuhAbgIYA2ArriADQg0NNygnmo4BOCAHYBzFmzqNUAZWwB7ftRFMAvgF11KoA'
+    );
+  });
+
   it('navigates to catalogue item landing page', async () => {
     createView();
     await waitFor(() => {
@@ -566,10 +592,10 @@ describe('Catalogue Items Table', () => {
     );
 
     // Do max first, as it technically has no effect on the outcome of the filter
-    const maxInput = screen.getByLabelText('Max');
+    const maxInput = screen.getAllByLabelText('Max')[1];
     await user.type(maxInput, '1000');
 
-    const minInput = screen.getByLabelText('Min');
+    const minInput = screen.getAllByLabelText('Min')[1];
     await user.type(minInput, '800');
 
     await waitFor(() => {
@@ -650,7 +676,7 @@ describe('Catalogue Items Table', () => {
     });
     expect(router.state.location.search).toBe('');
 
-    const globalFilter = screen.getByRole('textbox', { name: '' });
+    const globalFilter = screen.getAllByRole('textbox', { name: '' })[0];
     await user.type(globalFilter, '29');
 
     await waitFor(() => {
@@ -687,7 +713,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Grouped by')).toBeInTheDocument();
     });
     expect(router.state.location.search).toBe(
-      '?state=N4Ig5iBcDaIMYEMAuCA2B7MBXApgSSRwFsA6AOwSJxAF0AaeAeSliICckBaN9Ad05wAPAA4IyAExAN2XHvwRwkAS3RkAzlJAzufTmpyocizYhQZs%2BQqQpUTyNJlwFiJIunFKAZkpziA%2Bsq2DKYOFs6kcGw4yL4BSkEgAGo%2BvAAE4RrB9uZOViTiOGqRSsLKqnZmjpYuSmp%2B6ABGauiGhBWhuS6Nza04flHCqArEOGRIfiE5fUpWfkqSWZVhed0tOIT90c1k7VPhJMI8wjgcPmokAOy7VfuH6MenhSQAHNfLLnDoauNgDcJvnQiX3GSHQm146DYAGs-L9-osOtVSOIEABPOqgzaDYYApH5NEYsFRCHQ3H7ITHRSxVBedbxPoo9FkvLiNgIXhKMhgPxkLBEBonZkuVnszncmlkKFC0gzYh%2BNwFVA8vkCtiaIhiLCeBRILBRNjkSjUaSa7WKPUnEh61Dq006i0GhDiVmFTJaO3m-UkQiGYQAC1Uxvg2RueTI6EIbu0cj0ojggpoAF8gA'
+      '?state=N4Ig5iBcDaIMYEMAuCA2B7MBXApgSSRwFsA6AOwSJxAF0AaeAeSliICckBaN9Ad05wAPAA4IyAExAN2XHvwRwkAS3RkAzlJAzufTmpyocizYhQZs%2BQqQpUTyNJlwFiJIunFKAZkpziA%2Bsq2DKYOFs6kcGw4yL4BSkEgAGo%2BvAAE4RrB9uZOVuRYRABGOGx%2B6J5%2BaqJRmfDZjpYu4jhqkUrCyqp2Zg3hJEpqZYVq6IaE3aG5LujDoziEflHCqArEOGRIfiE5OH5KVnuSWT1heTMjY7tRCCNkEzt9wjzCJcotJADs9715T%2BgvHB8ahIAA5vqcXHB0GpNmBCsJwVMItDNkh0IscLx0GwANZ%2BOEI46TRqkcQIACegzRGOWq0RJJIZMpAXRUSxuPpfSEL0UsVQXnm8V2TNq2x%2BTTYCF4SjIYD8ZAKxTYnLy4kl0tlfn5ZBxKpc%2B2IfjczVQ8sVJU0RDEWE8CiQWCibHIlGo0mttsUDpKJAdqEt7rtXqdCHEapatStCo99sdJEIhmEAAtVK66ickeR0IQIxwdPwqqtlTQAL5AA'
     );
 
     // Reset
@@ -698,7 +724,7 @@ describe('Catalogue Items Table', () => {
     });
     // Expect this to still be here as have now modified the order in some way (as MRT doesn't revert back to its original state in this case)
     expect(router.state.location.search).toBe(
-      '?state=N4Igxg8iBcDaIFsBOAXAtEg9gdzQUwA8AHAQwDsATEAGkVQx32PKtuXS1xLBQEtMyAZxp0OjQXgA2eHiLAkUJSZgDmAVzwBJFHgQA6MiQR45Cpao3bdehJgq8AZrzwUA%2Bn2OnFy9Vp36wJDwFF3deT1oANWdsAAIrBGFaeW8LP2sKPEFA3iI%2BAS9zXwS9XkFXTAAjQUxpHUKfS389Kpq6vFcgokluXTwyFFcUoo1XXn8x1nAzRvT9Vtq8HU7gmrIGtJKiLCI8VGdBPQB2DeLm7cxd-ay9AA5TpuswTEFBlUqiB7m9Z9f3TBW2EwSAA1q53p9kjNNs0KCQAJ7lFAAro9MAmKGpM4ZBFIlF4IGgr4lQi7HihSSOJbhDpwxHE2FIEjYXhkFSuMhqBCVPYMjJMlls1yUsggvn6ca6Vy2TKSDlcnlIEQIchqBzcFBqIJIAxGDGIVXqnhavZ6LWSZWGjUmnUkCgUIKCJIGzlGzXavQ6aREAAWAn1w1mJTImB0zvYDFwglI6KVAF0AL5AA'
+      '?state=N4Igxg8iBcDaIFsBOAXAtEg9gdzQQzBQEtMA7AZxABpFUMc1yBTAGycOtvS1yYA8ADnlIATTmDwo8LTAHMArkwCSKJggB0pPAibjJ0uYpVr1CTCKIAzIkxEB9Yjr1SZC5ao1gkTSbYdEnGgA1G2wAAmMEShoJF0N3E1J5BAAjJiQ7TEs7ciFvaPB9VyMPdREmci8iAWIyZwM3SPUickyU8kw2VXrihI1Mds6mVTtvARYCNSZSFDtYhsU7Ig8lsRii%2BKaBjq6mUZ8O0h7N0oEsAXTiCvUAdmPG0-PLm3J1AA57kpMwTHJZ2RSAk%2BfXUPz%2BDkw%2B2wmCQAGs7ACges4g8TCI8ABPVooSFjCZgXTIhYg9FYiFQmGw4FNfgXQh%2BFhWYYBPakgrzXpNERIPDYIikWR2JKpdLU0rc3n8wWM0hUomc0rLNR2MzlFhC5JpJCcBDCeSWAgoeTeJCabSExB6g2EY3pdTGlg6q2G22mvAibkVAq6pLWo0m9SqNgCAAWZAtHJOiUwqm9dB4jCEBO1AF0AL5AA'
     );
   });
 
@@ -754,7 +780,7 @@ describe('Catalogue Items Table', () => {
 
     //  accuracy column action button
     await user.click(
-      screen.getAllByRole('button', { name: 'Column Actions' })[7]
+      screen.getAllByRole('button', { name: 'Column Actions' })[8]
     );
 
     await user.click(await screen.findByText('Group by Accuracy'));
@@ -798,7 +824,7 @@ describe('Catalogue Items Table', () => {
 
     //  drawing link column action button
     await user.click(
-      screen.getAllByRole('button', { name: 'Column Actions' })[8]
+      screen.getAllByRole('button', { name: 'Column Actions' })[9]
     );
 
     await user.click(await screen.findByText('Group by Drawing Link'));
@@ -835,14 +861,14 @@ describe('Catalogue Items Table', () => {
     // Get the table element (assuming it has a specific class or role)
     const table = screen.getByTestId('catalogue-items-table-container');
 
-    fireEvent.scroll(table, { target: { scrollLeft: 3300 } });
+    fireEvent.scroll(table, { target: { scrollLeft: 3650 } });
 
     // Check if the manufacturer url cell is visible after scrolling
     expect(await screen.findByText(manufacturerUrl)).toBeInTheDocument();
 
     // manufacturer url column action button
     await user.click(
-      screen.getAllByRole('button', { name: 'Column Actions' })[8]
+      screen.getAllByRole('button', { name: 'Column Actions' })[7]
     );
 
     await user.click(await screen.findByText('Group by Manufacturer URL'));
@@ -851,7 +877,7 @@ describe('Catalogue Items Table', () => {
       screen.queryByRole('tooltip', { name: 'Manufacturer URL' })
     ).not.toBeInTheDocument();
 
-    fireEvent.scroll(table, { target: { scrollLeft: -3000 } });
+    fireEvent.scroll(table, { target: { scrollLeft: -3350 } });
 
     expect(
       await screen.findByRole('tooltip', { name: 'Manufacturer URL' })
@@ -884,6 +910,26 @@ describe('Catalogue Items Table', () => {
 
     await waitFor(() => {
       expect(screen.getByDisplayValue('Details')).toBeInTheDocument();
+    });
+  });
+
+  it('renders table correctly (section 1 due to column virtualisation) without spares', async () => {
+    server.use(
+      http.get('/v1/settings/spares-definition', () => {
+        return HttpResponse.json(undefined, { status: 204 });
+      })
+    );
+
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Name')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Show/Hide columns' }));
+    await user.click(screen.getByText('Hide all'));
+
+    await waitFor(() => {
+      expect(screen.queryByText('Number of spares')).not.toBeInTheDocument();
     });
   });
 });

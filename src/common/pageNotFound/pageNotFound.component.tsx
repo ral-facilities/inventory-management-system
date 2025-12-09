@@ -2,7 +2,7 @@ import BugReportIcon from '@mui/icons-material/BugReport';
 import { Box, Link as MuiLink, Theme } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import {
   RoutesHomeLocation,
   type RoutesHomeLocationType,

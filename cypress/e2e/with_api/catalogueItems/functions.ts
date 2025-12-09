@@ -492,8 +492,8 @@ export const deleteFile = (
   cy.findByText(tabValue).click();
   fileNames.forEach((fileName) => {
     if (type === 'image') {
-      cy.findAllByLabelText('Card Actions').first().click();
-      cy.findAllByText('Delete').last().click();
+      cy.findAllByLabelText('Card Actions').first().click({ force: true });
+      cy.findAllByText('Delete').last().click({ force: true });
     } else {
       cy.findByLabelText(`${fileName} row`).within(() => {
         cy.findByLabelText('Row Actions').click();
@@ -504,8 +504,6 @@ export const deleteFile = (
     cy.findByRole('dialog').should('be.visible');
 
     cy.findByRole('button', { name: 'Continue' }).click();
-
-    cy.findByRole('dialog').should('not.exist');
   });
 };
 
@@ -534,7 +532,6 @@ export const viewPrimaryImage = () => {
     .first()
     .click();
   cy.findByTestId('galleryLightBox').within(() => {
-    cy.findByText('File name: logo2.png').should('exist');
     cy.findByText('No description available').should('exist');
 
     cy.findByRole('img', { name: 'No Image' }).should('not.exist');

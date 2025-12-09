@@ -12,6 +12,20 @@ export interface BreadcrumbsInfo {
   full_trail: boolean;
 }
 
+// ------------------------------------ RULE -------------------------------------------------------
+
+export interface Rule {
+  id: string;
+  src_system_type: SystemType | null;
+  dst_system_type: SystemType | null;
+  dst_usage_status: UsageStatus | null;
+}
+
+// ------------------------------------- SPARES -----------------------------------------------------
+
+export interface SparesDefinition {
+  system_types: SystemType[];
+}
 // ------------------------------------ MANUFACTURERS -----------------------------------------------
 
 interface AddressPost {
@@ -79,6 +93,7 @@ export interface SystemPost {
   description?: string | null;
   location?: string | null;
   owner?: string | null;
+  type_id: string;
   importance: SystemImportanceType;
   parent_id?: string | null;
 }
@@ -88,6 +103,11 @@ export type SystemPatch = Partial<SystemPost>;
 export interface System extends CreatedModifiedMixin, Required<SystemPost> {
   id: string;
   code: string;
+}
+
+export interface SystemType {
+  id: string;
+  value: string;
 }
 
 // ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
@@ -191,6 +211,7 @@ export interface CatalogueItem
     Required<Omit<CatalogueItemPost, 'properties'>> {
   id: string;
   properties: Property[];
+  number_of_spares: number | null;
 }
 
 // ------------------------------------ ITEMS ------------------------------------------------

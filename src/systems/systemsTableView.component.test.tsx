@@ -14,9 +14,9 @@ describe('SystemsTableView', () => {
 
   const mockOnChangeParentId = vi.fn();
   const mockSystemsData: System[] = [
-    SystemsJSON[0] as System,
     SystemsJSON[1] as System,
     SystemsJSON[2] as System,
+    SystemsJSON[3] as System,
   ];
 
   const createView = () => {
@@ -27,6 +27,7 @@ describe('SystemsTableView', () => {
     props = {
       systemsData: mockSystemsData,
       systemsDataLoading: false,
+      isSystemSelectable: () => true,
       onChangeParentId: mockOnChangeParentId,
       selectedSystems: [mockSystemsData[1], mockSystemsData[2]],
       type: 'moveTo',
@@ -46,9 +47,12 @@ describe('SystemsTableView', () => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
 
-    mockSystemsData.forEach((system) =>
-      expect(screen.getByText(system.name)).toBeInTheDocument()
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
+
+    for (const system of mockSystemsData)
+      expect(await screen.findByText(system.name)).toBeInTheDocument();
   });
 
   it('renders no results page correctly', async () => {
@@ -113,5 +117,23 @@ describe('SystemsTableView', () => {
       await user.click(systemRow);
       expect(mockOnChangeParentId).toHaveBeenCalledWith(system.id);
     }
+  });
+
+  it('can open and close the add system dialog', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Giant laser')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Add System' }));
+
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
   });
 });

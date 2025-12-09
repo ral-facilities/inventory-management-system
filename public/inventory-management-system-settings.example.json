@@ -23,11 +23,14 @@
     ".webp"
   ],
   "maxImageSizeBytes": 52428800,
+  "privilegedRoles": ["admin"],
   "routes": [
     {
       "section": "homepage",
       "link": "/ims",
       "displayName": "Homepage",
+      "unauthorised": true,
+      "hideFromMenu": true,
       "order": 0
     },
     {
@@ -50,8 +53,8 @@
     },
     {
       "section": "Inventory Management System",
-      "link": "/admin-ims",
-      "displayName": "Admin",
+      "link": "/settings",
+      "displayName": "Settings",
       "order": 4
     }
   ],

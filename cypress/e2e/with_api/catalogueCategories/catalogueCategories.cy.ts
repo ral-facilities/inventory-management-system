@@ -3,13 +3,14 @@ import {
   addCatalogueCategories,
   copyToCatalogueCategories,
   deleteCatalogueCategories,
+  duplicateCatalogueCategories,
   editCatalogueCategories,
   moveToCatalogueCategories,
-  duplicateCatalogueCategories,
 } from './functions';
 
 describe('Catalogue Category', () => {
   beforeEach(() => {
+    cy.setCurrentUserToAdmin();
     cy.dropIMSCollections(['catalogue_categories', 'units']);
     cy.visit('/catalogue');
   });
@@ -20,7 +21,7 @@ describe('Catalogue Category', () => {
 
   it('CRUD for catalogue categories', () => {
     //Prepare data for catalogue categories
-    cy.visit('/admin-ims/units');
+    cy.visit('/settings/units');
     addUnits(['mm', 'nm'], true);
     cy.visit('/catalogue');
     addCatalogueCategories();
