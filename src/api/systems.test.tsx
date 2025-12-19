@@ -3,6 +3,7 @@ import { MockInstance } from 'vitest';
 import { CopyToSystem, MoveToSystem } from '../app.types';
 import SystemBreadcrumbsJSON from '../mocks/SystemBreadcrumbs.json';
 import SystemsJSON from '../mocks/Systems.json';
+import SystemTypesJSON from '../mocks/SystemTypes.json';
 import { hooksWrapperWithProviders } from '../testUtils';
 import { imsApi } from './api';
 import {
@@ -19,6 +20,7 @@ import {
   useGetSystems,
   useGetSystemsBreadcrumbs,
   useGetSystemsTree,
+  useGetSystemTypes,
   useMoveToSystem,
   usePatchSystem,
   usePostSystem,
@@ -75,6 +77,19 @@ describe('System api functions', () => {
           (system) => system.parent_id === '65328f34a40ff5301575a4e3'
         )
       );
+    });
+  });
+
+  describe('useGetSystemTypes', () => {
+    it('sends request to fetch all system types and returns successful response', async () => {
+      const { result } = renderHook(() => useGetSystemTypes(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      expect(result.current.data).toEqual(SystemTypesJSON);
     });
   });
 
@@ -237,6 +252,7 @@ describe('System api functions', () => {
       description: 'Description',
       location: 'Location',
       owner: 'Owner',
+      type_id: '1',
       importance: SystemImportanceType.MEDIUM,
     };
 
@@ -286,7 +302,7 @@ describe('System api functions', () => {
         wrapper: hooksWrapperWithProviders(),
       });
 
-      result.current.mutate('65328f34a40ff5301575a4e9');
+      result.current.mutate(SystemsJSON[7] as System);
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
 
       expect(result.current.data).toEqual('');
@@ -411,7 +427,7 @@ describe('System api functions', () => {
             index === 0
               ? {
                   message:
-                    'A System with the same name already exists within the same parent System',
+                    'A system with the same name already exists within the parent system',
                   name: system.name,
                   state: 'error',
                 }
@@ -590,7 +606,7 @@ describe('System api functions', () => {
             index === 0
               ? {
                   message:
-                    'A System with the same name already exists within the same parent System',
+                    'A system with the same name already exists within the parent system',
                   name: system.name,
                   state: 'error',
                 }

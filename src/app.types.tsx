@@ -1,11 +1,13 @@
 import type { UndefinedInitialDataOptions } from '@tanstack/react-query';
 import type { Body, Meta } from '@uppy/core';
 import type { AxiosError } from 'axios';
+import { MRT_ColumnFiltersState } from 'material-react-table';
 import {
   CatalogueCategory,
   CatalogueItem,
   Item,
   ItemPost,
+  SparesDefinition,
   System,
   type APIImage,
   type ObjectFileUploadMetadata,
@@ -19,7 +21,7 @@ export const TAB_VALUES = [
   'Catalogue',
   'Systems',
   'Manufacturers',
-  'Admin',
+  'Settings',
 ] as const;
 
 export type TabValue = (typeof TAB_VALUES)[number];
@@ -32,7 +34,7 @@ export interface TransferState {
 
 export enum RoutesHomeLocation {
   Catalogue = 'catalogue',
-  Admin = 'admin-ims',
+  Settings = 'settings',
   Systems = 'systems',
   Manufacturers = 'manufacturers',
 }
@@ -178,6 +180,9 @@ export interface CopyToSystem {
   existingSystemCodes: string[];
 }
 
+export interface SystemTableType extends System {
+  type?: { id: string; value: string };
+}
 // ------------------------------------ ITEMS ------------------------------------
 export interface ItemDetailsStep {
   purchase_order_number?: string | null;
@@ -215,11 +220,25 @@ export interface MoveItemsToSystemUsageStatus {
   item_id: string;
   usage_status_id: string;
 }
-export interface MoveItemsToSystem {
-  usageStatuses: MoveItemsToSystemUsageStatus[];
+
+export interface BaseMoveItemsToSystem {
+  mode: 'single' | 'multiple';
   selectedItems: Item[];
   targetSystem: System;
 }
+export interface MoveItemsMultipleUsageStatus extends BaseMoveItemsToSystem {
+  mode: 'multiple';
+  usageStatuses: MoveItemsToSystemUsageStatus[];
+}
+
+export interface MoveItemsSingleUsageStatus extends BaseMoveItemsToSystem {
+  mode: 'single';
+  usageStatusId?: string;
+}
+
+export type MoveItemsToSystem =
+  | MoveItemsMultipleUsageStatus
+  | MoveItemsSingleUsageStatus;
 
 export interface AdvancedSerialNumberOptionsType {
   quantity: string | null;
@@ -236,3 +255,12 @@ export interface AdvancedSerialNumberOptionsType {
 export interface UppyImageUploadResponse extends APIImage, Body {}
 
 export interface UppyUploadMetadata extends ObjectFileUploadMetadata, Meta {}
+
+// --------------------------------- SPARES -----------------------------------------------------------
+
+export interface SparesFilterStateType {
+  sparesDefinition: '' | SparesDefinition;
+  sparesFilterState: string;
+  sparesColumnsFilters: { cF: MRT_ColumnFiltersState };
+  isLoading: boolean;
+}

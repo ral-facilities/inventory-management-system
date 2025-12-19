@@ -36,7 +36,9 @@ export const usePostAttachmentMetadata = (): UseMutationResult<
   });
 };
 
-export const getAttachment = async (id: string): Promise<AttachmentMetadataWithURL> => {
+export const getAttachment = async (
+  id: string
+): Promise<AttachmentMetadataWithURL> => {
   return storageApi.get(`/attachments/${id}`).then((response) => {
     return response.data;
   });

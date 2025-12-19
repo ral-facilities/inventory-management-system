@@ -1,8 +1,8 @@
 import { Box, Button, Paper, alpha, styled } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Unstable_Grid2';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import PageNotFoundComponent from '../common/pageNotFound/pageNotFound.component';
 import { InventoryManagementSystemSettingsContext } from '../configProvider.component';
 import BackgroundImage from '/images/background.jpg';
@@ -174,7 +174,7 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
       >
         <Paper sx={paperStyles} elevation={1}>
           <Grid container style={{ height: '100%' }}>
-            <Grid xs={6}>
+            <Grid size={6}>
               <Box sx={paperContentStyles}>
                 <Typography
                   variant="h3"
@@ -193,7 +193,11 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
                     'Browse catalogue categories, sub categories and catalogue items to locate specific items or add new ones.'
                   }
                 </PaperDescription>
-                <Box marginTop="16px">
+                <Box
+                  sx={{
+                    marginTop: '16px',
+                  }}
+                >
                   <Button
                     sx={(theme) => ({
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -202,7 +206,7 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
                     color="primary"
                     variant="contained"
                     component={Link}
-                    to={'/catalogue'}
+                    to="/catalogue"
                     data-testid="catalogue-button"
                   >
                     {'Explore'}
@@ -210,7 +214,7 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
                 </Box>
               </Box>
             </Grid>
-            <Grid xs={6}>
+            <Grid size={6}>
               <div
                 style={{
                   backgroundImage: `url(${props.facilityImage})`,
@@ -232,7 +236,7 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
           </Grid>
         </Paper>
         <Grid container spacing={2}>
-          <Grid xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Paper sx={paperStyles} elevation={1}>
               <Box sx={paperContentStyles}>
                 <PaperHeading variant="h4">{'Systems'}</PaperHeading>
@@ -241,7 +245,11 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
                     'Navigate through systems and their sub systems to view their component items.'
                   }
                 </PaperDescription>
-                <Box marginTop="auto">
+                <Box
+                  sx={{
+                    marginTop: 'auto',
+                  }}
+                >
                   <Button
                     sx={(theme) => ({
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -250,7 +258,7 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
                     color="primary"
                     variant="contained"
                     component={Link}
-                    to={'/systems'}
+                    to="/systems"
                     data-testid="systems-button"
                   >
                     {'Explore'}
@@ -259,14 +267,18 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
               </Box>
             </Paper>
           </Grid>
-          <Grid xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Paper sx={paperStyles} elevation={1}>
               <Box sx={paperContentStyles}>
                 <PaperHeading variant="h4">{'Manufacturers'}</PaperHeading>
                 <PaperDescription variant="body1">
                   {'View the manufacturers of parts used by EPAC.'}
                 </PaperDescription>
-                <Box marginTop="auto">
+                <Box
+                  sx={{
+                    marginTop: 'auto',
+                  }}
+                >
                   <Button
                     sx={(theme) => ({
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -275,7 +287,7 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
                     color="primary"
                     variant="contained"
                     component={Link}
-                    to={'/manufacturers'}
+                    to="/manufacturers"
                     data-testid="manufacturer-button"
                   >
                     {'Explore'}
@@ -284,7 +296,7 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
               </Box>
             </Paper>
           </Grid>
-          <Grid xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Paper
               sx={{ ...paperStyles, backgroundColor: '#003088' }}
               elevation={1}
@@ -305,7 +317,11 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
                       'World-leading centre for scientific and industrial research.'
                     }
                   </BluePaperDescription>
-                  <Box marginTop="auto">
+                  <Box
+                    sx={{
+                      marginTop: 'auto',
+                    }}
+                  >
                     <LightBlueButton
                       color="primary"
                       variant="contained"

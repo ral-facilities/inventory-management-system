@@ -1,9 +1,12 @@
-import { screen, waitFor, within } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import { Item, System } from '../api/api.types';
-import ItemJSON from '../mocks/Items.json';
+import { http, HttpResponse } from 'msw';
+import { System } from '../api/api.types';
+import APIConfigProvider from '../apiConfigProvider.component';
+import * as authProvider from '../authProvider.component';
+import { server } from '../mocks/server';
 import SystemsJSON from '../mocks/Systems.json';
-import { renderComponentWithRouterProvider } from '../testUtils';
+import { getSystemById, renderComponentWithRouterProvider } from '../testUtils';
 import {
   SystemItemsTable,
   SystemItemsTableProps,
@@ -15,18 +18,20 @@ describe('SystemItemsTable', () => {
   let props: SystemItemsTableProps;
   let user: UserEvent;
 
-  const mockSystem: System = SystemsJSON[2] as System;
+  const mockSystem: System = SystemsJSON[3] as System;
 
   const createView = () => {
     return renderComponentWithRouterProvider(
-      <SystemItemsTable {...props} />,
+      <APIConfigProvider>
+        <SystemItemsTable {...props} />
+      </APIConfigProvider>,
       'any',
       '/'
     );
   };
 
   beforeEach(() => {
-    props = { system: mockSystem, type: 'normal' };
+    props = { system: mockSystem };
 
     user = userEvent.setup();
 
@@ -39,551 +44,695 @@ describe('SystemItemsTable', () => {
     vi.clearAllMocks();
   });
 
-  describe('SystemItemsTable (normal)', () => {
-    afterEach(() => {
-      vi.clearAllMocks();
+  it('renders correctly', async () => {
+    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
+      role: 'admin',
+      isPrivilegedUser: true,
     });
 
-    it('renders correctly', async () => {
-      const view = createView();
+    const view = createView();
 
-      // Name (obtained from catalogue category item)
-      await waitFor(
-        () => {
-          expect(
-            screen.getByRole('cell', {
-              name: `Turbomolecular Pumps 42 (2)`,
-            })
-          ).toBeInTheDocument();
-        },
-        { timeout: 4000 }
-      );
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Turbomolecular Pumps 42 (2)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
 
-      // Ensure no loading bars visible
-      await waitFor(() =>
-        expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
-      );
+    // Ensure no loading bars visible
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
 
-      // Expand a group so all columns are rendered to improve test coverage
-      // (expanding all causes an infinite loop due to an issue with details panels)
-      await user.click(screen.getAllByRole('button', { name: 'Expand' })[0]);
-      //also unhide created column
-      await user.click(
-        await screen.findByRole('button', { name: 'Show/Hide columns' })
-      );
-      await user.click(screen.getByText('Created'));
+    // Check admin move to button exists
+    expect(
+      screen.getByRole('button', { name: 'Move to as Admin' })
+    ).toBeInTheDocument();
 
-      // Rest in a snapshot
-      expect(view.asFragment()).toMatchSnapshot();
+    // Expand a group so all columns are rendered to improve test coverage
+    // (expanding all causes an infinite loop due to an issue with details panels)
+    await user.click(screen.getAllByRole('button', { name: 'Expand' })[0]);
+    //also unhide created column
+    await user.click(
+      await screen.findByRole('button', { name: 'Show/Hide columns' })
+    );
+    await user.click(screen.getByText('Created'));
+
+    expect(await screen.findByText('Clear Filters')).toBeInTheDocument();
+
+    // Rest in a snapshot
+    expect(view.asFragment()).toMatchSnapshot();
+  });
+
+  it('renders correctly (without spares)', async () => {
+    server.use(
+      http.get('/v1/settings/spares-definition', () => {
+        return HttpResponse.json(undefined, { status: 204 });
+      })
+    );
+    const view = createView();
+
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Turbomolecular Pumps 42 (2)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    // Ensure no loading bars visible
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
+    // Expand a group so all columns are rendered to improve test coverage
+    // (expanding all causes an infinite loop due to an issue with details panels)
+    await user.click(screen.getAllByRole('button', { name: 'Expand' })[0]);
+    //also unhide created column
+    await user.click(
+      await screen.findByRole('button', { name: 'Show/Hide columns' })
+    );
+    await user.click(screen.getByText('Created'));
+
+    // Rest in a snapshot
+    expect(view.asFragment()).toMatchSnapshot();
+  });
+
+  it('renders correctly when there are no items to display', async () => {
+    props.system = { ...props.system, id: 'invalid' } as System;
+
+    createView();
+
+    expect(await screen.findByText('No items found')).toBeInTheDocument();
+  });
+
+  it('links to catalogue item landing page', async () => {
+    createView();
+
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Turbomolecular Pumps 42 (2)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    expect(
+      screen.getByRole('link', {
+        name: `Turbomolecular Pumps 42`,
+      })
+    ).toHaveAttribute('href', '/catalogue/13/items/21');
+  });
+
+  it('can set a table filter and clear them again', async () => {
+    createView();
+
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Turbomolecular Pumps 42 (2)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    const clearFiltersButton = screen.getByRole('button', {
+      name: 'Clear Filters',
+    });
+    expect(clearFiltersButton).toBeDisabled();
+
+    await user.type(screen.getByLabelText('Filter by Serial Number'), '43');
+
+    await waitFor(
+      () => {
+        expect(
+          screen.queryByRole('cell', {
+            name: `Turbomolecular Pumps 42 (2)`,
+          })
+        ).not.toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    await user.click(clearFiltersButton);
+
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Turbomolecular Pumps 42 (2)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+  });
+
+  it('displays delivered date grouped cell', async () => {
+    createView();
+
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: 'Turbomolecular Pumps 42 (2)',
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    await user.click(screen.getByTestId('CancelIcon'));
+
+    // Delivered date column action button
+    await user.click(
+      screen.getAllByRole('button', { name: 'Column Actions' })[4]
+    );
+
+    await user.click(await screen.findByText('Group by Delivered Date'));
+
+    expect(
+      screen.getByRole('tooltip', { name: '09 Sep 2023 (1)' })
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByRole('tooltip', { name: 'No Delivered Date (1)' })
+    ).toBeInTheDocument();
+  });
+
+  it('can select and deselect items', async () => {
+    createView();
+
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Turbomolecular Pumps 42 (2)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    expect(screen.getByRole('button', { name: 'Move to' })).toBeDisabled();
+
+    const checkboxes = screen.getAllByRole('checkbox', {
+      name: 'Toggle select row',
     });
 
-    it('renders correctly when there are no items to display', async () => {
-      props.system = { ...props.system, id: 'invalid' } as System;
+    await user.click(checkboxes[0]);
+    await user.click(checkboxes[1]);
 
-      createView();
-
-      expect(screen.getByText('No items found')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: 'Move to' })).toBeEnabled();
     });
 
-    it('links to catalogue item landing page', async () => {
-      createView();
+    await user.click(checkboxes[0]);
+    await user.click(checkboxes[1]);
 
-      // Name (obtained from catalogue category item)
-      await waitFor(
-        () => {
-          expect(
-            screen.getByRole('cell', {
-              name: `Turbomolecular Pumps 42 (2)`,
-            })
-          ).toBeInTheDocument();
-        },
-        { timeout: 4000 }
-      );
-
-      expect(
-        screen.getByRole('link', {
-          name: `Turbomolecular Pumps 42`,
-        })
-      ).toHaveAttribute('href', '/catalogue/13/items/21');
-    });
-
-    it('can set a table filter and clear them again', async () => {
-      createView();
-
-      // Name (obtained from catalogue category item)
-      await waitFor(
-        () => {
-          expect(
-            screen.getByRole('cell', {
-              name: `Turbomolecular Pumps 42 (2)`,
-            })
-          ).toBeInTheDocument();
-        },
-        { timeout: 4000 }
-      );
-
-      const clearFiltersButton = screen.getByRole('button', {
-        name: 'Clear Filters',
-      });
-      expect(clearFiltersButton).toBeDisabled();
-
-      await user.type(screen.getByLabelText('Filter by Serial Number'), '43');
-
-      await waitFor(
-        () => {
-          expect(
-            screen.queryByRole('cell', {
-              name: `Turbomolecular Pumps 42 (2)`,
-            })
-          ).not.toBeInTheDocument();
-        },
-        { timeout: 4000 }
-      );
-
-      await user.click(clearFiltersButton);
-
-      await waitFor(
-        () => {
-          expect(
-            screen.getByRole('cell', {
-              name: `Turbomolecular Pumps 42 (2)`,
-            })
-          ).toBeInTheDocument();
-        },
-        { timeout: 4000 }
-      );
-    });
-
-    it('displays delivered date grouped cell', async () => {
-      createView();
-
-      // Name (obtained from catalogue category item)
-      await waitFor(
-        () => {
-          expect(
-            screen.getByRole('cell', {
-              name: 'Turbomolecular Pumps 42 (2)',
-            })
-          ).toBeInTheDocument();
-        },
-        { timeout: 4000 }
-      );
-
-      await user.click(screen.getByTestId('CancelIcon'));
-
-      // Delivered date column action button
-      await user.click(
-        screen.getAllByRole('button', { name: 'Column Actions' })[3]
-      );
-
-      await user.click(await screen.findByText('Group by Delivered Date'));
-
-      expect(
-        screen.getByRole('tooltip', { name: '09 Sep 2023 (1)' })
-      ).toBeInTheDocument();
-
-      expect(
-        screen.getByRole('tooltip', { name: 'No Delivered Date (1)' })
-      ).toBeInTheDocument();
-    });
-
-    it('can select and deselect items', async () => {
-      createView();
-
-      // Name (obtained from catalogue category item)
-      await waitFor(
-        () => {
-          expect(
-            screen.getByRole('cell', {
-              name: `Turbomolecular Pumps 42 (2)`,
-            })
-          ).toBeInTheDocument();
-        },
-        { timeout: 4000 }
-      );
-
+    await waitFor(() => {
       expect(screen.getByRole('button', { name: 'Move to' })).toBeDisabled();
-
-      const checkboxes = screen.getAllByRole('checkbox', {
-        name: 'Toggle select row',
-      });
-
-      await user.click(checkboxes[0]);
-      await user.click(checkboxes[1]);
-
-      await waitFor(() => {
-        expect(screen.getByRole('button', { name: 'Move to' })).toBeEnabled();
-      });
-
-      await user.click(checkboxes[0]);
-      await user.click(checkboxes[1]);
-
-      await waitFor(() => {
-        expect(screen.getByRole('button', { name: 'Move to' })).toBeDisabled();
-      });
-    });
-
-    it('can open and close the move items dialog', async () => {
-      createView();
-
-      // Name (obtained from catalogue category item)
-      await waitFor(
-        () => {
-          expect(
-            screen.getByRole('cell', {
-              name: `Turbomolecular Pumps 42 (2)`,
-            })
-          ).toBeInTheDocument();
-        },
-        { timeout: 4000 }
-      );
-
-      expect(screen.getByRole('button', { name: 'Move to' })).toBeDisabled();
-
-      const checkboxes = screen.getAllByRole('checkbox', {
-        name: 'Toggle select row',
-      });
-
-      await user.click(checkboxes[0]);
-
-      const moveToButton = screen.getByRole('button', { name: 'Move to' });
-      await waitFor(() => {
-        expect(moveToButton).toBeEnabled();
-      });
-
-      await user.click(moveToButton);
-
-      expect(screen.getByRole('dialog')).toBeInTheDocument();
-
-      await user.click(screen.getByRole('button', { name: 'Cancel' }));
-
-      await waitFor(() => {
-        expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-      });
     });
   });
 
-  describe('SystemItemsTable (usageStatus)', () => {
-    const onChangeUsageStatuses = vi.fn();
-    const onChangeItemUsageStatusesErrorState = vi.fn();
-    const onChangeAggregatedCellUsageStatus = vi.fn();
-    const moveToSelectedItems: Item[] = [
-      ItemJSON[0],
-      ItemJSON[1],
-      ItemJSON[22],
-      ItemJSON[23],
-    ];
+  it('can open and close the move items dialog', async () => {
+    createView();
 
-    beforeEach(() => {
-      props = {
-        system: undefined,
-        type: 'usageStatus',
-        onChangeAggregatedCellUsageStatus,
-        onChangeUsageStatuses,
-        onChangeItemUsageStatusesErrorState,
-        aggregatedCellUsageStatus: [
-          { catalogue_item_id: '1', usage_status_id: '' },
-          { catalogue_item_id: '25', usage_status_id: '' },
-        ],
-        usageStatuses: [
-          { item_id: 'KvT2Ox7n', catalogue_item_id: '1', usage_status_id: '' },
-          { item_id: 'G463gOIA', catalogue_item_id: '1', usage_status_id: '' },
-          { item_id: '7Lrj9KVu', catalogue_item_id: '25', usage_status_id: '' },
-          { item_id: 'QQen23yW', catalogue_item_id: '25', usage_status_id: '' },
-        ],
-        itemUsageStatusesErrorState: {},
-        moveToSelectedItems: moveToSelectedItems,
-      };
-    });
-    afterEach(() => {
-      vi.clearAllMocks();
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Turbomolecular Pumps 42 (2)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    expect(screen.getByRole('button', { name: 'Move to' })).toBeDisabled();
+
+    const checkboxes = screen.getAllByRole('checkbox', {
+      name: 'Toggle select row',
     });
 
-    const selectUsageStatus = async (values: {
-      index: number;
-      usage_status_id: string;
-    }) => {
-      await user.click(screen.getAllByRole('combobox')[values.index]);
+    await user.click(checkboxes[0]);
 
-      const dropdown = await screen.findByRole('listbox');
-
-      await user.click(
-        within(dropdown).getByRole('option', { name: values.usage_status_id })
-      );
-    };
-
-    const modifyUsageStatus = async (values: {
-      cameras1?: string;
-      cameras6?: string;
-      cameras1Item1?: string;
-      cameras1Item2?: string;
-      cameras6Item1?: string;
-      cameras6Item2?: string;
-    }) => {
-      if (
-        values.cameras1Item1 ||
-        values.cameras1Item2 ||
-        values.cameras6Item1 ||
-        values.cameras6Item2
-      ) {
-        await user.click(screen.getByTestId('CancelIcon'));
-
-        if (values.cameras1Item1) {
-          await selectUsageStatus({
-            index: 1,
-            usage_status_id: values.cameras1Item1,
-          });
-        }
-
-        if (values.cameras1Item2) {
-          await selectUsageStatus({
-            index: 2,
-            usage_status_id: values.cameras1Item2,
-          });
-        }
-
-        if (values.cameras6Item1) {
-          await selectUsageStatus({
-            index: 3,
-            usage_status_id: values.cameras6Item1,
-          });
-        }
-
-        if (values.cameras6Item2) {
-          await selectUsageStatus({
-            index: 4,
-            usage_status_id: values.cameras6Item2,
-          });
-        }
-      }
-      if (values.cameras1)
-        await selectUsageStatus({
-          index: 1,
-          usage_status_id: values.cameras1,
-        });
-
-      if (values.cameras6)
-        await selectUsageStatus({
-          index: 2,
-          usage_status_id: values.cameras6,
-        });
-    };
-
-    it('renders correctly', async () => {
-      const view = createView();
-
-      // Name (obtained from catalogue category item)
-      await waitFor(
-        () => {
-          expect(
-            screen.getByRole('cell', {
-              name: `Cameras 1 (2)`,
-            })
-          ).toBeInTheDocument();
-        },
-        { timeout: 4000 }
-      );
-
-      // Ensure no loading bars visible
-      await waitFor(() =>
-        expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
-      );
-
-      // Rest in a snapshot
-      expect(view.asFragment()).toMatchSnapshot();
+    const moveToButton = screen.getByRole('button', { name: 'Move to' });
+    await waitFor(() => {
+      expect(moveToButton).toBeEnabled();
     });
 
-    it('sets the usages status using the aggregate cell (sets all items of a catalogue item to the selected usage status)', async () => {
-      createView();
+    await user.click(moveToButton);
 
-      // Name (obtained from catalogue category item)
-      await waitFor(
-        () => {
-          expect(
-            screen.getByRole('cell', {
-              name: `Cameras 1 (2)`,
-            })
-          ).toBeInTheDocument();
-        },
-        { timeout: 4000 }
-      );
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
 
-      // Ensure no loading bars visible
-      await waitFor(() =>
-        expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
-      );
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
 
-      await modifyUsageStatus({ cameras1: 'Used' });
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
 
-      // Change usages status for cameras 1 items
-      expect(onChangeUsageStatuses).toHaveBeenCalledWith([
-        { item_id: 'KvT2Ox7n', catalogue_item_id: '1', usage_status_id: '2' },
-        { item_id: 'G463gOIA', catalogue_item_id: '1', usage_status_id: '2' },
-        { item_id: '7Lrj9KVu', catalogue_item_id: '25', usage_status_id: '' },
-        { item_id: 'QQen23yW', catalogue_item_id: '25', usage_status_id: '' },
-      ]);
-      expect(onChangeAggregatedCellUsageStatus).toHaveBeenCalledWith([
-        { catalogue_item_id: '1', usage_status_id: '2' },
-        { catalogue_item_id: '25', usage_status_id: '' },
-      ]);
+  it('can open the edit dialog and close it again', async () => {
+    createView();
 
-      await modifyUsageStatus({ cameras6: 'Used' });
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Turbomolecular Pumps 42 (2)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
 
-      // Change usages status for cameras 6 items
-      expect(onChangeUsageStatuses).toHaveBeenCalledWith([
-        { item_id: 'KvT2Ox7n', catalogue_item_id: '1', usage_status_id: '2' },
-        { item_id: 'G463gOIA', catalogue_item_id: '1', usage_status_id: '2' },
-        { item_id: '7Lrj9KVu', catalogue_item_id: '25', usage_status_id: '2' },
-        { item_id: 'QQen23yW', catalogue_item_id: '25', usage_status_id: '2' },
-      ]);
-      expect(onChangeAggregatedCellUsageStatus).toHaveBeenCalledWith([
-        { catalogue_item_id: '1', usage_status_id: '2' },
-        { catalogue_item_id: '25', usage_status_id: '2' },
-      ]);
+    const expandButtons = screen.getAllByRole('button', {
+      name: 'Expand',
+    });
+    await user.click(expandButtons[0]);
+
+    const serialNumber = '5xE1KSraISvu';
+    await waitFor(() => {
+      expect(screen.getAllByText(serialNumber)).toHaveLength(2);
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Edit')).toBeInTheDocument();
     });
 
-    it('set the initial aggregated Cell Usage Status  ', async () => {
-      props.aggregatedCellUsageStatus = [];
-      createView();
+    const editButton = screen.getByText('Edit');
+    await user.click(editButton);
 
-      // Name (obtained from catalogue category item)
-      await waitFor(
-        () => {
-          expect(
-            screen.getByRole('cell', {
-              name: `Cameras 1 (2)`,
-            })
-          ).toBeInTheDocument();
-        },
-        { timeout: 4000 }
-      );
-
-      await waitFor(() => {
-        expect(onChangeAggregatedCellUsageStatus).toHaveBeenCalledWith([
-          { catalogue_item_id: '1', usage_status_id: '' },
-          { catalogue_item_id: '25', usage_status_id: '' },
-        ]);
-      });
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
     });
 
-    it('selects the correct usage status text value according to the number value', async () => {
-      props.aggregatedCellUsageStatus = [
-        { catalogue_item_id: '1', usage_status_id: '0' },
-        { catalogue_item_id: '25', usage_status_id: '1' },
-      ];
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
 
-      createView();
-
-      // Name (obtained from catalogue category item)
-      await waitFor(
-        () => {
-          expect(
-            screen.getByRole('cell', {
-              name: `Cameras 1 (2)`,
-            })
-          ).toBeInTheDocument();
-        },
-        { timeout: 4000 }
-      );
-
-      expect((await screen.findAllByRole('combobox'))[1]).toHaveValue('New');
-      expect(screen.getAllByRole('combobox')[2]).toHaveValue('In Use');
+  it('can open the edit as admin dialog and close it again', async () => {
+    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
+      role: 'admin',
+      isPrivilegedUser: true,
     });
 
-    it('displays errors messages correctly', async () => {
-      props.itemUsageStatusesErrorState = {
-        ['KvT2Ox7n']: {
-          catalogue_item_id: '1',
-          message: 'Please select a usage status',
-        },
-        ['G463gOIA']: {
-          catalogue_item_id: '1',
-          message: 'Please select a usage status',
-        },
-        ['7Lrj9KVu']: {
-          catalogue_item_id: '25',
-          message: 'Please select a usage status',
-        },
-        ['QQen23yW']: {
-          catalogue_item_id: '25',
-          message: 'Please select a usage status',
-        },
-      };
+    createView();
 
-      createView();
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Turbomolecular Pumps 42 (2)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
 
-      // Name (obtained from catalogue category item)
-      await waitFor(
-        () => {
-          expect(
-            screen.getByRole('cell', {
-              name: `Cameras 1 (2)`,
-            })
-          ).toBeInTheDocument();
-        },
-        { timeout: 4000 }
-      );
+    const expandButtons = screen.getAllByRole('button', {
+      name: 'Expand',
+    });
+    await user.click(expandButtons[0]);
 
-      // Ensure no loading bars visible
-      await waitFor(() =>
-        expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
-      );
+    const serialNumber = '5xE1KSraISvu';
+    await waitFor(() => {
+      expect(screen.getAllByText(serialNumber)).toHaveLength(2);
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
 
-      const errorIcon = screen.getAllByTestId('ErrorIcon');
-
-      expect(errorIcon.length).toEqual(2);
-
-      await user.click(screen.getAllByRole('button', { name: 'Expand' })[0]);
-      const helperTexts = screen.getAllByText('Please select a usage status');
-      expect(helperTexts.length).toEqual(2);
-
-      await modifyUsageStatus({ cameras1: 'Used' });
-
-      expect(onChangeItemUsageStatusesErrorState).toHaveBeenCalledWith({
-        ['7Lrj9KVu']: {
-          catalogue_item_id: '25',
-          message: 'Please select a usage status',
-        },
-        ['QQen23yW']: {
-          catalogue_item_id: '25',
-          message: 'Please select a usage status',
-        },
-      });
+    await waitFor(() => {
+      expect(screen.getByText('Edit as Admin')).toBeInTheDocument();
     });
 
-    it('sets the usages status one by one', async () => {
-      createView();
+    const editButton = screen.getByText('Edit as Admin');
+    await user.click(editButton);
 
-      // Name (obtained from catalogue category item)
-      await waitFor(
-        () => {
-          expect(
-            screen.getByRole('cell', {
-              name: `Cameras 1 (2)`,
-            })
-          ).toBeInTheDocument();
-        },
-        { timeout: 4000 }
-      );
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
 
-      // Ensure no loading bars visible
-      await waitFor(() =>
-        expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
-      );
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
 
-      await modifyUsageStatus({
-        cameras1Item1: 'Used',
-        cameras1Item2: 'Used',
-        cameras6Item1: 'Used',
-        cameras6Item2: 'Used',
-      });
+  it('can open the duplicate dialog and close it again', async () => {
+    createView();
 
-      expect(onChangeUsageStatuses).toHaveBeenCalledWith([
-        { item_id: 'KvT2Ox7n', catalogue_item_id: '1', usage_status_id: '2' },
-        { item_id: 'G463gOIA', catalogue_item_id: '1', usage_status_id: '2' },
-        { item_id: '7Lrj9KVu', catalogue_item_id: '25', usage_status_id: '2' },
-        { item_id: 'QQen23yW', catalogue_item_id: '25', usage_status_id: '2' },
-      ]);
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Turbomolecular Pumps 42 (2)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    const expandButtons = screen.getAllByRole('button', {
+      name: 'Expand',
+    });
+    await user.click(expandButtons[0]);
+
+    const serialNumber = '5xE1KSraISvu';
+    await waitFor(() => {
+      expect(screen.getAllByText(serialNumber)).toHaveLength(2);
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Duplicate')).toBeInTheDocument();
+    });
+
+    const duplicateButton = screen.getByText('Duplicate');
+    await user.click(duplicateButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('can open the duplicate dialog as admin and close it again', async () => {
+    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
+      role: 'admin',
+      isPrivilegedUser: true,
+    });
+
+    createView();
+
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Turbomolecular Pumps 42 (2)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    const expandButtons = screen.getAllByRole('button', {
+      name: 'Expand',
+    });
+    await user.click(expandButtons[0]);
+
+    const serialNumber = '5xE1KSraISvu';
+    await waitFor(() => {
+      expect(screen.getAllByText(serialNumber)).toHaveLength(2);
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Duplicate as Admin')).toBeInTheDocument();
+    });
+
+    const duplicateButton = screen.getByText('Duplicate as Admin');
+    await user.click(duplicateButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('can open the duplicate dialog and checks that the notes have been updated', async () => {
+    createView();
+
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Turbomolecular Pumps 42 (2)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    const expandButtons = screen.getAllByRole('button', {
+      name: 'Expand',
+    });
+    await user.click(expandButtons[0]);
+
+    const serialNumber = '5xE1KSraISvu';
+    await waitFor(() => {
+      expect(screen.getAllByText(serialNumber)).toHaveLength(2);
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Duplicate')).toBeInTheDocument();
+    });
+
+    const duplicateButton = screen.getByText('Duplicate');
+    await user.click(duplicateButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByText('Add item details'));
+
+    expect(screen.getByLabelText('Notes')).toHaveValue(
+      'ihwCjMdJ4n7KKcaM34Lj\n\nThis is a copy of the item with this Serial Number: 5xE1KSraISvu'
+    );
+  }, 15000);
+
+  it('can open the duplicate dialog and checks that the notes have been updated when notes is null', async () => {
+    props.system = getSystemById('656da8ef9cba7a76c6f81a5d');
+
+    createView();
+
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Cameras 13 (4)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    const expandButtons = screen.getAllByRole('button', {
+      name: 'Expand',
+    });
+    await user.click(expandButtons[5]);
+
+    const serialNumber = 'RncNJlDk1pXC';
+    await waitFor(() => {
+      expect(screen.getByText(serialNumber)).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Duplicate')).toBeInTheDocument();
+    });
+
+    const duplicateButton = screen.getByText('Duplicate');
+    await user.click(duplicateButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByText('Add item details'));
+
+    expect(screen.getByLabelText('Notes')).toHaveValue(
+      '\n\nThis is a copy of the item with this Serial Number: RncNJlDk1pXC'
+    );
+  }, 20000);
+
+  it('can open the duplicate dialog and checks that the notes have been updated with no serial number', async () => {
+    props.system = getSystemById('656da8ef9cba7a76c6f81a5d');
+
+    createView();
+
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Cameras 13 (4)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    const expandButtons = screen.getAllByRole('button', {
+      name: 'Expand',
+    });
+    await user.click(expandButtons[5]);
+
+    const serialNumber = 'No serial number';
+    await waitFor(() => {
+      expect(screen.getByText(serialNumber)).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[3]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Duplicate')).toBeInTheDocument();
+    });
+
+    const duplicateButton = screen.getByText('Duplicate');
+    await user.click(duplicateButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByText('Add item details'));
+
+    expect(screen.getByLabelText('Notes')).toHaveValue(
+      'MJuSPgXEiXmBbf1Vlq4B\n\nThis is a copy of the item with this Serial Number: No serial number'
+    );
+  }, 20000);
+
+  it('can open the delete dialog and close it again', async () => {
+    createView();
+
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Turbomolecular Pumps 42 (2)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    const expandButtons = screen.getAllByRole('button', {
+      name: 'Expand',
+    });
+    await user.click(expandButtons[0]);
+
+    const serialNumber = '5xE1KSraISvu';
+    await waitFor(() => {
+      expect(screen.getAllByText(serialNumber)).toHaveLength(2);
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Delete')).toBeInTheDocument();
+    });
+
+    const deleteButton = screen.getByText('Delete');
+    await user.click(deleteButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('can open the delete as admin dialog and close it again', async () => {
+    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
+      role: 'admin',
+      isPrivilegedUser: true,
+    });
+
+    createView();
+
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Turbomolecular Pumps 42 (2)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    const expandButtons = screen.getAllByRole('button', {
+      name: 'Expand',
+    });
+    await user.click(expandButtons[0]);
+
+    const serialNumber = '5xE1KSraISvu';
+    await waitFor(() => {
+      expect(screen.getAllByText(serialNumber)).toHaveLength(2);
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Delete as Admin')).toBeInTheDocument();
+    });
+
+    const deleteButton = screen.getByText('Delete as Admin');
+    await user.click(deleteButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
   });
 });

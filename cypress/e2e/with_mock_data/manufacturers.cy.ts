@@ -189,7 +189,7 @@ describe('Manufacturer', () => {
       .should('be.visible')
       .within(() => {
         cy.contains(
-          'The specified manufacturer is a part of a Catalogue Item. Please delete the Catalogue Item first.'
+          'The specified manufacturer is a part of a catalogue item. Please delete the Catalogue Item first.'
         );
       });
     cy.findByRole('button', { name: 'Continue' }).should('be.disabled');

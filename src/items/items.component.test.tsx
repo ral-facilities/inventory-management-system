@@ -5,8 +5,8 @@ import Items from './items.component';
 
 const mockedUseNavigate = vi.fn();
 
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')),
+vi.mock('react-router', async () => ({
+  ...(await vi.importActual('react-router')),
   useNavigate: () => mockedUseNavigate,
 }));
 

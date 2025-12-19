@@ -2,115 +2,143 @@
 
 exports[`Systems Layout > renders root systems correctly 1`] = `
 <DocumentFragment>
-  <div
-    class="MuiBox-root css-v2kfba"
-  >
+  <div>
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1oybmxg-MuiGrid2-root"
+      class="MuiBox-root css-v2kfba"
     >
       <div
-        class="MuiBox-root css-70qvj9"
+        class="MuiBox-root css-k008qs"
+      >
+        <div
+          class="MuiBox-root css-zdpt2t"
+        >
+          <label
+            class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
+          >
+            <span
+              class="MuiSwitch-root MuiSwitch-sizeMedium css-rehya9-MuiSwitch-root"
+            >
+              <span
+                class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary css-161ms7l-MuiButtonBase-root-MuiSwitch-switchBase"
+              >
+                <input
+                  class="PrivateSwitchBase-input MuiSwitch-input css-j8yymo"
+                  type="checkbox"
+                />
+                <span
+                  class="MuiSwitch-thumb css-17jyosd-MuiSwitch-thumb"
+                />
+              </span>
+              <span
+                class="MuiSwitch-track css-tj8d99-MuiSwitch-track"
+              />
+            </span>
+            <span
+              class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-rizt0-MuiTypography-root"
+            >
+              Privileged user
+            </span>
+          </label>
+        </div>
+      </div>
+      <div
+        class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-12ucijv-MuiGrid2-root"
+      >
+        <div
+          class="MuiBox-root css-1ko6z0"
+        >
+          <span
+            aria-label="Systems Home"
+            class=""
+            data-mui-internal-clone-element="true"
+          >
+            <button
+              aria-label="navigate to systems home"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
+              tabindex="0"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                data-testid="HomeIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+                />
+              </svg>
+            </button>
+          </span>
+          <nav
+            aria-label="breadcrumb"
+            class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-fxix4h-MuiTypography-root-MuiBreadcrumbs-root"
+          >
+            <ol
+              class="MuiBreadcrumbs-ol css-1uwp4ue-MuiBreadcrumbs-ol"
+            />
+          </nav>
+        </div>
+      </div>
+      <div
+        aria-label="view mode toggle"
+        class="MuiToggleButtonGroup-root MuiToggleButtonGroup-horizontal css-1un0wb5-MuiToggleButtonGroup-root"
+        role="group"
       >
         <span
-          aria-label="Systems Home"
+          aria-label="Normal view"
           class=""
           data-mui-internal-clone-element="true"
         >
           <button
-            aria-label="navigate to systems home"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+            aria-label="normal view"
+            aria-pressed="true"
+            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root Mui-selected MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-firstButton css-qofxz1-MuiButtonBase-root-MuiToggleButton-root"
             tabindex="0"
             type="button"
+            value="normal"
           >
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-              data-testid="HomeIcon"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+              data-testid="ViewModuleIcon"
               focusable="false"
               viewBox="0 0 24 24"
             >
               <path
-                d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+                d="M14.67 5v6.5H9.33V5zm1 6.5H21V5h-5.33zm-1 7.5v-6.5H9.33V19zm1-6.5V19H21v-6.5zm-7.34 0H3V19h5.33zm0-1V5H3v6.5z"
               />
             </svg>
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
         </span>
-        <nav
-          aria-label="breadcrumb"
-          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1mc59t7-MuiTypography-root-MuiBreadcrumbs-root"
+        <span
+          aria-label="Tree view"
+          class=""
+          data-mui-internal-clone-element="true"
         >
-          <ol
-            class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
-          />
-        </nav>
+          <button
+            aria-label="tree view"
+            aria-pressed="false"
+            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-lastButton css-qofxz1-MuiButtonBase-root-MuiToggleButton-root"
+            tabindex="0"
+            type="button"
+            value="tree"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+              data-testid="AccountTreeIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M22 11V3h-7v3H9V3H2v8h7V8h2v10h4v3h7v-8h-7v3h-2V8h2v3z"
+              />
+            </svg>
+          </button>
+        </span>
       </div>
-    </div>
-    <div
-      aria-label="view mode toggle"
-      class="MuiToggleButtonGroup-root css-f4nwhq-MuiToggleButtonGroup-root"
-      role="group"
-    >
-      <span
-        aria-label="Normal view"
-        class=""
-        data-mui-internal-clone-element="true"
-      >
-        <button
-          aria-label="normal view"
-          aria-pressed="true"
-          class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root Mui-selected MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-firstButton css-1x4vipr-MuiButtonBase-root-MuiToggleButton-root"
-          tabindex="0"
-          type="button"
-          value="normal"
-        >
-          <svg
-            aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
-            data-testid="ViewModuleIcon"
-            focusable="false"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M14.67 5v6.5H9.33V5zm1 6.5H21V5h-5.33zm-1 7.5v-6.5H9.33V19zm1-6.5V19H21v-6.5zm-7.34 0H3V19h5.33zm0-1V5H3v6.5z"
-            />
-          </svg>
-          <span
-            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-          />
-        </button>
-      </span>
-      <span
-        aria-label="Tree view"
-        class=""
-        data-mui-internal-clone-element="true"
-      >
-        <button
-          aria-label="tree view"
-          aria-pressed="false"
-          class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-lastButton css-1x4vipr-MuiButtonBase-root-MuiToggleButton-root"
-          tabindex="0"
-          type="button"
-          value="tree"
-        >
-          <svg
-            aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
-            data-testid="AccountTreeIcon"
-            focusable="false"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M22 11V3h-7v3H9V3H2v8h7V8h2v10h4v3h7v-8h-7v3h-2V8h2v3z"
-            />
-          </svg>
-          <span
-            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-          />
-        </button>
-      </span>
     </div>
   </div>
 </DocumentFragment>
@@ -118,151 +146,179 @@ exports[`Systems Layout > renders root systems correctly 1`] = `
 
 exports[`Systems Layout > renders units breadcrumbs correctly 1`] = `
 <DocumentFragment>
-  <div
-    class="MuiBox-root css-v2kfba"
-  >
+  <div>
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1oybmxg-MuiGrid2-root"
+      class="MuiBox-root css-v2kfba"
     >
       <div
-        class="MuiBox-root css-70qvj9"
+        class="MuiBox-root css-k008qs"
       >
-        <span
-          aria-label="Systems Home"
-          class=""
-          data-mui-internal-clone-element="true"
+        <div
+          class="MuiBox-root css-zdpt2t"
         >
-          <button
-            aria-label="navigate to systems home"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
-            tabindex="0"
-            type="button"
+          <label
+            class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
           >
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-              data-testid="HomeIcon"
-              focusable="false"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
-              />
-            </svg>
             <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
-          </button>
-        </span>
-        <nav
-          aria-label="breadcrumb"
-          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1mc59t7-MuiTypography-root-MuiBreadcrumbs-root"
-        >
-          <ol
-            class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
-          >
-            <li
-              class="MuiBreadcrumbs-li"
+              class="MuiSwitch-root MuiSwitch-sizeMedium css-rehya9-MuiSwitch-root"
             >
-              <div
-                class="MuiBox-root css-8zy5qf"
+              <span
+                class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary css-161ms7l-MuiButtonBase-root-MuiSwitch-switchBase"
+              >
+                <input
+                  class="PrivateSwitchBase-input MuiSwitch-input css-j8yymo"
+                  type="checkbox"
+                />
+                <span
+                  class="MuiSwitch-thumb css-17jyosd-MuiSwitch-thumb"
+                />
+              </span>
+              <span
+                class="MuiSwitch-track css-tj8d99-MuiSwitch-track"
               />
-            </li>
-            <li
-              aria-hidden="true"
-              class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+            </span>
+            <span
+              class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-rizt0-MuiTypography-root"
+            >
+              Privileged user
+            </span>
+          </label>
+        </div>
+      </div>
+      <div
+        class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-12ucijv-MuiGrid2-root"
+      >
+        <div
+          class="MuiBox-root css-1ko6z0"
+        >
+          <span
+            aria-label="Systems Home"
+            class=""
+            data-mui-internal-clone-element="true"
+          >
+            <button
+              aria-label="navigate to systems home"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
+              tabindex="0"
+              type="button"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
-                data-testid="NavigateNextIcon"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                data-testid="HomeIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
                 <path
-                  d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                  d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
                 />
               </svg>
-            </li>
-            <li
-              class="MuiBreadcrumbs-li"
+            </button>
+          </span>
+          <nav
+            aria-label="breadcrumb"
+            class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-fxix4h-MuiTypography-root-MuiBreadcrumbs-root"
+          >
+            <ol
+              class="MuiBreadcrumbs-ol css-1uwp4ue-MuiBreadcrumbs-ol"
             >
-              <p
-                aria-label="Giant laser"
-                class="MuiTypography-root MuiTypography-body1 css-1qs6ojv-MuiTypography-root"
-                data-mui-internal-clone-element="true"
-                role="tooltip"
+              <li
+                class="MuiBreadcrumbs-li"
               >
-                Giant laser
-              </p>
-            </li>
-          </ol>
-        </nav>
+                <div
+                  class="MuiBox-root css-8zy5qf"
+                />
+              </li>
+              <li
+                aria-hidden="true"
+                class="MuiBreadcrumbs-separator css-jhr02i-MuiBreadcrumbs-separator"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                  data-testid="NavigateNextIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                  />
+                </svg>
+              </li>
+              <li
+                class="MuiBreadcrumbs-li"
+              >
+                <p
+                  aria-label="Giant laser"
+                  class="MuiTypography-root MuiTypography-body1 css-1d1tquj-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Giant laser
+                </p>
+              </li>
+            </ol>
+          </nav>
+        </div>
       </div>
-    </div>
-    <div
-      aria-label="view mode toggle"
-      class="MuiToggleButtonGroup-root css-f4nwhq-MuiToggleButtonGroup-root"
-      role="group"
-    >
-      <span
-        aria-label="Normal view"
-        class=""
-        data-mui-internal-clone-element="true"
+      <div
+        aria-label="view mode toggle"
+        class="MuiToggleButtonGroup-root MuiToggleButtonGroup-horizontal css-1un0wb5-MuiToggleButtonGroup-root"
+        role="group"
       >
-        <button
-          aria-label="normal view"
-          aria-pressed="true"
-          class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root Mui-selected MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-firstButton css-1x4vipr-MuiButtonBase-root-MuiToggleButton-root"
-          tabindex="0"
-          type="button"
-          value="normal"
+        <span
+          aria-label="Normal view"
+          class=""
+          data-mui-internal-clone-element="true"
         >
-          <svg
-            aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
-            data-testid="ViewModuleIcon"
-            focusable="false"
-            viewBox="0 0 24 24"
+          <button
+            aria-label="normal view"
+            aria-pressed="true"
+            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root Mui-selected MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-firstButton css-qofxz1-MuiButtonBase-root-MuiToggleButton-root"
+            tabindex="0"
+            type="button"
+            value="normal"
           >
-            <path
-              d="M14.67 5v6.5H9.33V5zm1 6.5H21V5h-5.33zm-1 7.5v-6.5H9.33V19zm1-6.5V19H21v-6.5zm-7.34 0H3V19h5.33zm0-1V5H3v6.5z"
-            />
-          </svg>
-          <span
-            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-          />
-        </button>
-      </span>
-      <span
-        aria-label="Tree view"
-        class=""
-        data-mui-internal-clone-element="true"
-      >
-        <button
-          aria-label="tree view"
-          aria-pressed="false"
-          class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-lastButton css-1x4vipr-MuiButtonBase-root-MuiToggleButton-root"
-          tabindex="0"
-          type="button"
-          value="tree"
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+              data-testid="ViewModuleIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M14.67 5v6.5H9.33V5zm1 6.5H21V5h-5.33zm-1 7.5v-6.5H9.33V19zm1-6.5V19H21v-6.5zm-7.34 0H3V19h5.33zm0-1V5H3v6.5z"
+              />
+            </svg>
+          </button>
+        </span>
+        <span
+          aria-label="Tree view"
+          class=""
+          data-mui-internal-clone-element="true"
         >
-          <svg
-            aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
-            data-testid="AccountTreeIcon"
-            focusable="false"
-            viewBox="0 0 24 24"
+          <button
+            aria-label="tree view"
+            aria-pressed="false"
+            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-lastButton css-qofxz1-MuiButtonBase-root-MuiToggleButton-root"
+            tabindex="0"
+            type="button"
+            value="tree"
           >
-            <path
-              d="M22 11V3h-7v3H9V3H2v8h7V8h2v10h4v3h7v-8h-7v3h-2V8h2v3z"
-            />
-          </svg>
-          <span
-            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-          />
-        </button>
-      </span>
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+              data-testid="AccountTreeIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M22 11V3h-7v3H9V3H2v8h7V8h2v10h4v3h7v-8h-7v3h-2V8h2v3z"
+              />
+            </svg>
+          </button>
+        </span>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -270,102 +326,131 @@ exports[`Systems Layout > renders units breadcrumbs correctly 1`] = `
 
 exports[`Systems Layout Error Component > renders system error page correctly 1`] = `
 <DocumentFragment>
-  <div
-    class="MuiBox-root css-v2kfba"
-  >
+  <div>
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1oybmxg-MuiGrid2-root"
+      class="MuiBox-root css-v2kfba"
     >
       <div
-        class="MuiBox-root css-70qvj9"
+        class="MuiBox-root css-k008qs"
       >
-        <span
-          aria-label="Systems Home"
-          class=""
-          data-mui-internal-clone-element="true"
+        <div
+          class="MuiBox-root css-zdpt2t"
         >
-          <button
-            aria-label="navigate to systems home"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
-            tabindex="0"
-            type="button"
+          <label
+            class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
           >
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-              data-testid="HomeIcon"
-              focusable="false"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
-              />
-            </svg>
             <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              class="MuiSwitch-root MuiSwitch-sizeMedium css-rehya9-MuiSwitch-root"
             >
               <span
-                class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible"
-                style="width: 1px; height: 1px; top: -0.5px; left: -0.5px;"
+                class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary css-161ms7l-MuiButtonBase-root-MuiSwitch-switchBase"
               >
+                <input
+                  class="PrivateSwitchBase-input MuiSwitch-input css-j8yymo"
+                  type="checkbox"
+                />
                 <span
-                  class="MuiTouchRipple-child MuiTouchRipple-childLeaving"
+                  class="MuiSwitch-thumb css-17jyosd-MuiSwitch-thumb"
                 />
               </span>
+              <span
+                class="MuiSwitch-track css-tj8d99-MuiSwitch-track"
+              />
             </span>
-          </button>
-        </span>
-        <nav
-          aria-label="breadcrumb"
-          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1mc59t7-MuiTypography-root-MuiBreadcrumbs-root"
-        >
-          <ol
-            class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
-          />
-        </nav>
-      </div>
-    </div>
-    <div>
-      <div
-        class="MuiBox-root css-d8r78j"
-      >
-        <svg
-          aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1wffj3i-MuiSvgIcon-root"
-          data-testid="BugReportIcon"
-          focusable="false"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M20 8h-2.81c-.45-.78-1.07-1.45-1.82-1.96L17 4.41 15.59 3l-2.17 2.17C12.96 5.06 12.49 5 12 5c-.49 0-.96.06-1.41.17L8.41 3 7 4.41l1.62 1.63C7.88 6.55 7.26 7.22 6.81 8H4v2h2.09c-.05.33-.09.66-.09 1v1H4v2h2v1c0 .34.04.67.09 1H4v2h2.81c1.04 1.79 2.97 3 5.19 3s4.15-1.21 5.19-3H20v-2h-2.09c.05-.33.09-.66.09-1v-1h2v-2h-2v-1c0-.34-.04-.67-.09-1H20zm-6 8h-4v-2h4zm0-4h-4v-2h4z"
-          />
-        </svg>
-        <p
-          class="MuiTypography-root MuiTypography-body1 css-1fjbu-MuiTypography-root"
-        >
-          404
-        </p>
+            <span
+              class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-rizt0-MuiTypography-root"
+            >
+              Privileged user
+            </span>
+          </label>
+        </div>
       </div>
       <div
-        class="MuiBox-root css-sg7ujc"
+        class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-12ucijv-MuiGrid2-root"
       >
-        <h2
-          class="MuiTypography-root MuiTypography-h2 css-18ft2kn-MuiTypography-root"
+        <div
+          class="MuiBox-root css-1ko6z0"
         >
-          Page not found
-        </h2>
-        <p
-          class="MuiTypography-root MuiTypography-body1 css-n3u125-MuiTypography-root"
-        >
-          We're sorry, the page you requested was not found on the server. If you entered the URL manually please check your spelling and try again. Otherwise, return to the 
-          <a
-            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-17fxp5y-MuiTypography-root-MuiLink-root"
-            href="/systems"
+          <span
+            aria-label="Systems Home"
+            class=""
+            data-mui-internal-clone-element="true"
           >
-            systems home page
-          </a>
-           .
-        </p>
+            <button
+              aria-label="navigate to systems home"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
+              tabindex="0"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                data-testid="HomeIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+                />
+              </svg>
+              <span
+                class="MuiTouchRipple-root css-r3djoj-MuiTouchRipple-root"
+              />
+            </button>
+          </span>
+          <nav
+            aria-label="breadcrumb"
+            class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-fxix4h-MuiTypography-root-MuiBreadcrumbs-root"
+          >
+            <ol
+              class="MuiBreadcrumbs-ol css-1uwp4ue-MuiBreadcrumbs-ol"
+            />
+          </nav>
+        </div>
+      </div>
+      <div>
+        <div
+          class="MuiBox-root css-d8r78j"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-182b5zx-MuiSvgIcon-root"
+            data-testid="BugReportIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M20 8h-2.81c-.45-.78-1.07-1.45-1.82-1.96L17 4.41 15.59 3l-2.17 2.17C12.96 5.06 12.49 5 12 5s-.96.06-1.41.17L8.41 3 7 4.41l1.62 1.63C7.88 6.55 7.26 7.22 6.81 8H4v2h2.09c-.05.33-.09.66-.09 1v1H4v2h2v1c0 .34.04.67.09 1H4v2h2.81c1.04 1.79 2.97 3 5.19 3s4.15-1.21 5.19-3H20v-2h-2.09c.05-.33.09-.66.09-1v-1h2v-2h-2v-1c0-.34-.04-.67-.09-1H20zm-6 8h-4v-2h4zm0-4h-4v-2h4z"
+            />
+          </svg>
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-vbjpyr-MuiTypography-root"
+          >
+            404
+          </p>
+        </div>
+        <div
+          class="MuiBox-root css-sg7ujc"
+        >
+          <h2
+            class="MuiTypography-root MuiTypography-h2 css-dyl3ya-MuiTypography-root"
+          >
+            Page not found
+          </h2>
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-13cqhiy-MuiTypography-root"
+          >
+            We're sorry, the page you requested was not found on the server. If you entered the URL manually please check your spelling and try again. Otherwise, return to the 
+            <a
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1amp05l-MuiTypography-root-MuiLink-root"
+              data-discover="true"
+              href="/systems"
+            >
+              systems home page
+            </a>
+             .
+          </p>
+        </div>
       </div>
     </div>
   </div>

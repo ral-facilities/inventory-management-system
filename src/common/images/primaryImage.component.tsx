@@ -11,7 +11,7 @@ import {
   Tooltip,
 } from '@mui/material';
 import React from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 import { useGetImages } from '../../api/images';
 import PrimaryImageDialog from './primaryImageDialog.component';
 import RemovePrimaryImageDialog from './removePrimaryImageDialog.component';
@@ -110,15 +110,13 @@ const PrimaryImage = (props: PrimaryImageProps) => {
 
   return (
     <>
-      {!imageLoading && (
-        <ThumbnailImage
-          image={imagesData?.[0]}
-          dense={isDetailsPanel}
-          isPrimaryThumbnail
-          imageLoading={imageLoading}
-          onClick={isDetailsPanel ? undefined : handleViewPrimary}
-        />
-      )}
+      <ThumbnailImage
+        image={imagesData?.[0]}
+        dense={isDetailsPanel}
+        isPrimaryThumbnail
+        imageLoading={imageLoading}
+        onClick={isDetailsPanel ? undefined : handleViewPrimary}
+      />
       {!isDetailsPanel && (
         <>
           <Box sx={{ height: '20%' }}>

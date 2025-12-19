@@ -12,73 +12,61 @@ exports[`SystemsTree > renders system tree correct at root 1`] = `
         class="MuiBox-root css-70qvj9"
       >
         <h6
-          class="MuiTypography-root MuiTypography-h6 css-1fpkkxh-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-h6 css-1g4mi5o-MuiTypography-root"
         >
           Depth:
         </h6>
         <div
-          class="MuiToggleButtonGroup-root css-bghv3y-MuiToggleButtonGroup-root"
+          class="MuiToggleButtonGroup-root MuiToggleButtonGroup-horizontal css-1qb8o-MuiToggleButtonGroup-root"
           role="group"
         >
           <button
             aria-pressed="true"
-            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root Mui-selected MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-firstButton css-1x4vipr-MuiButtonBase-root-MuiToggleButton-root"
+            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root Mui-selected MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-firstButton css-qofxz1-MuiButtonBase-root-MuiToggleButton-root"
             tabindex="0"
             type="button"
             value="1"
           >
             1
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
           <button
             aria-pressed="false"
-            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-middleButton css-1x4vipr-MuiButtonBase-root-MuiToggleButton-root"
+            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-middleButton css-qofxz1-MuiButtonBase-root-MuiToggleButton-root"
             tabindex="0"
             type="button"
             value="2"
           >
             2
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
           <button
             aria-pressed="false"
-            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-middleButton css-1x4vipr-MuiButtonBase-root-MuiToggleButton-root"
+            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-middleButton css-qofxz1-MuiButtonBase-root-MuiToggleButton-root"
             tabindex="0"
             type="button"
             value="3"
           >
             3
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
           <button
             aria-pressed="false"
-            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-lastButton css-1x4vipr-MuiButtonBase-root-MuiToggleButton-root"
+            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-lastButton css-qofxz1-MuiButtonBase-root-MuiToggleButton-root"
             tabindex="0"
             type="button"
             value="-1"
           >
             unlimited
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
         </div>
         <button
           aria-label="Systems tree warning message"
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-r59t5-MuiButtonBase-root-MuiIconButton-root"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-lk7kvc-MuiButtonBase-root-MuiIconButton-root"
           data-mui-internal-clone-element="true"
           tabindex="0"
           type="button"
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
             data-testid="WarningIcon"
             focusable="false"
             viewBox="0 0 24 24"
@@ -87,51 +75,42 @@ exports[`SystemsTree > renders system tree correct at root 1`] = `
               d="M1 21h22L12 2zm12-3h-2v-2h2zm0-4h-2v-4h2z"
             />
           </svg>
-          <span
-            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-          />
         </button>
       </div>
       <div
         class="MuiBox-root css-70qvj9"
       >
         <div
-          class="MuiToggleButtonGroup-root css-bghv3y-MuiToggleButtonGroup-root"
+          class="MuiToggleButtonGroup-root MuiToggleButtonGroup-horizontal css-1qb8o-MuiToggleButtonGroup-root"
           role="group"
         >
           <button
             aria-pressed="true"
-            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root Mui-selected MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-firstButton css-1x4vipr-MuiButtonBase-root-MuiToggleButton-root"
+            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root Mui-selected MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-firstButton css-qofxz1-MuiButtonBase-root-MuiToggleButton-root"
             tabindex="0"
             type="button"
             value="TB"
           >
             Vertical
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
           <button
             aria-pressed="false"
-            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-lastButton css-1x4vipr-MuiButtonBase-root-MuiToggleButton-root"
+            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-lastButton css-qofxz1-MuiButtonBase-root-MuiToggleButton-root"
             tabindex="0"
             type="button"
             value="LR"
           >
             Horizontal
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
         </div>
         <button
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-n2gp7e-MuiButtonBase-root-MuiIconButton-root"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-b8dcox-MuiButtonBase-root-MuiIconButton-root"
           tabindex="0"
           type="button"
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
             data-testid="FullscreenIcon"
             focusable="false"
             viewBox="0 0 24 24"
@@ -140,9 +119,6 @@ exports[`SystemsTree > renders system tree correct at root 1`] = `
               d="M7 14H5v5h5v-2H7zm-2-4h2V7h3V5H5zm12 7h-3v2h5v-5h-2zM14 5v2h3v3h2V5z"
             />
           </svg>
-          <span
-            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-          />
         </button>
       </div>
     </div>
@@ -182,11 +158,12 @@ exports[`SystemsTree > renders system tree correct at root 1`] = `
                   data-id="root"
                   data-testid="rf__node-root"
                   role="button"
-                  style="z-index: 0; transform: translate(350px,125px); pointer-events: all; visibility: hidden; width: 300px;"
+                  style="z-index: 0; transform: translate(700px,125px); pointer-events: all; visibility: hidden; width: 300px;"
                   tabindex="0"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-flc96v-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-lr5l4w-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                    style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-container MuiGrid-item css-1bcrbzc-MuiGrid-root"
@@ -196,12 +173,13 @@ exports[`SystemsTree > renders system tree correct at root 1`] = `
                       >
                         <p
                           aria-label="Root"
-                          class="MuiTypography-root MuiTypography-body1 css-t3xsyu-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body1 css-1dtzylj-MuiTypography-root"
                           data-mui-internal-clone-element="true"
                           role="tooltip"
                         >
                           <a
-                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
+                            data-discover="true"
                             href="/systems/tree"
                           >
                             Root
@@ -218,13 +196,13 @@ exports[`SystemsTree > renders system tree correct at root 1`] = `
                         >
                           <button
                             aria-label="Root system tree actions menu"
-                            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
                             tabindex="0"
                             type="button"
                           >
                             <svg
                               aria-hidden="true"
-                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                               data-testid="MoreHorizIcon"
                               focusable="false"
                               viewBox="0 0 24 24"
@@ -233,15 +211,12 @@ exports[`SystemsTree > renders system tree correct at root 1`] = `
                                 d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                               />
                             </svg>
-                            <span
-                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                            />
                           </button>
                         </span>
                       </div>
                     </div>
                     <hr
-                      class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
+                      class="MuiDivider-root MuiDivider-fullWidth css-1jpc804-MuiDivider-root"
                     />
                     <div
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -265,14 +240,163 @@ exports[`SystemsTree > renders system tree correct at root 1`] = `
                 <div
                   aria-describedby="react-flow__node-desc-1"
                   class="react-flow__node react-flow__node-systems nopan selectable draggable"
-                  data-id="65328f34a40ff5301575a4e3"
-                  data-testid="rf__node-65328f34a40ff5301575a4e3"
+                  data-id="657f8c3b2a1b4e5d8f9b3c4e5"
+                  data-testid="rf__node-657f8c3b2a1b4e5d8f9b3c4e5"
                   role="button"
                   style="z-index: 0; transform: translate(0px,625px); pointer-events: all; visibility: hidden; width: 300px;"
                   tabindex="0"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-flc96v-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-lr5l4w-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                    style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-item css-1bcrbzc-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8 css-rrdjhq-MuiGrid-root"
+                      >
+                        <p
+                          aria-label="Storage"
+                          class="MuiTypography-root MuiTypography-body1 css-1dtzylj-MuiTypography-root"
+                          data-mui-internal-clone-element="true"
+                          role="tooltip"
+                        >
+                          <a
+                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
+                            data-discover="true"
+                            href="/systems/657f8c3b2a1b4e5d8f9b3c4e5/tree"
+                          >
+                            Storage
+                          </a>
+                        </p>
+                      </div>
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-rcwxuo-MuiGrid-root"
+                      >
+                        <span
+                          aria-label="System tree actions"
+                          class=""
+                          data-mui-internal-clone-element="true"
+                        >
+                          <button
+                            aria-label="Storage system tree actions menu"
+                            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
+                            tabindex="0"
+                            type="button"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                              data-testid="MoreHorizIcon"
+                              focusable="false"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
+                              />
+                            </svg>
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                    <hr
+                      class="MuiDivider-root MuiDivider-fullWidth css-1jpc804-MuiDivider-root"
+                    />
+                    <div
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiBox-root css-0"
+                      >
+                        <div
+                          class="MuiBox-root css-4juikq"
+                        >
+                          <p
+                            class="MuiTypography-root MuiTypography-body1 css-12psztd-MuiTypography-root"
+                          >
+                            Importance:
+                          </p>
+                          <div
+                            class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-1w56vsk-MuiChip-root"
+                          >
+                            <span
+                              class="MuiChip-label MuiChip-labelMedium css-1dybbl5-MuiChip-label"
+                            >
+                              medium
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          class="MuiBox-root css-0"
+                        >
+                          <p
+                            class="MuiTypography-root MuiTypography-body1 css-12psztd-MuiTypography-root"
+                          >
+                            Owner:
+                          </p>
+                          <p
+                            class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
+                          >
+                            Prof Peter Jackson
+                          </p>
+                        </div>
+                        <div
+                          class="MuiBox-root css-0"
+                        >
+                          <p
+                            class="MuiTypography-root MuiTypography-body1 css-12psztd-MuiTypography-root"
+                          >
+                            Location:
+                          </p>
+                          <p
+                            class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
+                          >
+                            Warehouse 42
+Sector 7
+Galactic Core
+                          </p>
+                        </div>
+                        <h6
+                          class="MuiTypography-root MuiTypography-h6 css-18xxwmt-MuiTypography-root"
+                        >
+                          Items:
+                        </h6>
+                        <p
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
+                        >
+                          Motorized Actuators 32: 1
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="react-flow__handle react-flow__handle-bottom nodrag nopan source connectable connectablestart connectableend connectionindicator"
+                    data-handleid="657f8c3b2a1b4e5d8f9b3c4e5"
+                    data-handlepos="bottom"
+                    data-id="1-657f8c3b2a1b4e5d8f9b3c4e5-657f8c3b2a1b4e5d8f9b3c4e5-source"
+                    data-nodeid="657f8c3b2a1b4e5d8f9b3c4e5"
+                  />
+                  <div
+                    class="react-flow__handle react-flow__handle-top nodrag nopan target connectable connectablestart connectableend connectionindicator"
+                    data-handleid="657f8c3b2a1b4e5d8f9b3c4e5"
+                    data-handlepos="top"
+                    data-id="1-657f8c3b2a1b4e5d8f9b3c4e5-657f8c3b2a1b4e5d8f9b3c4e5-target"
+                    data-nodeid="657f8c3b2a1b4e5d8f9b3c4e5"
+                  />
+                </div>
+                <div
+                  aria-describedby="react-flow__node-desc-1"
+                  class="react-flow__node react-flow__node-systems nopan selectable draggable"
+                  data-id="65328f34a40ff5301575a4e3"
+                  data-testid="rf__node-65328f34a40ff5301575a4e3"
+                  role="button"
+                  style="z-index: 0; transform: translate(350px,625px); pointer-events: all; visibility: hidden; width: 300px;"
+                  tabindex="0"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-lr5l4w-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                    style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-container MuiGrid-item css-1bcrbzc-MuiGrid-root"
@@ -282,12 +406,13 @@ exports[`SystemsTree > renders system tree correct at root 1`] = `
                       >
                         <p
                           aria-label="Giant laser"
-                          class="MuiTypography-root MuiTypography-body1 css-t3xsyu-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body1 css-1dtzylj-MuiTypography-root"
                           data-mui-internal-clone-element="true"
                           role="tooltip"
                         >
                           <a
-                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
+                            data-discover="true"
                             href="/systems/65328f34a40ff5301575a4e3/tree"
                           >
                             Giant laser
@@ -304,13 +429,13 @@ exports[`SystemsTree > renders system tree correct at root 1`] = `
                         >
                           <button
                             aria-label="Giant laser system tree actions menu"
-                            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
                             tabindex="0"
                             type="button"
                           >
                             <svg
                               aria-hidden="true"
-                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                               data-testid="MoreHorizIcon"
                               focusable="false"
                               viewBox="0 0 24 24"
@@ -319,15 +444,12 @@ exports[`SystemsTree > renders system tree correct at root 1`] = `
                                 d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                               />
                             </svg>
-                            <span
-                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                            />
                           </button>
                         </span>
                       </div>
                     </div>
                     <hr
-                      class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
+                      class="MuiDivider-root MuiDivider-fullWidth css-1jpc804-MuiDivider-root"
                     />
                     <div
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -339,15 +461,15 @@ exports[`SystemsTree > renders system tree correct at root 1`] = `
                           class="MuiBox-root css-4juikq"
                         >
                           <p
-                            class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body1 css-12psztd-MuiTypography-root"
                           >
                             Importance:
                           </p>
                           <div
-                            class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-ypj0cx-MuiChip-root"
+                            class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-1rc91v9-MuiChip-root"
                           >
                             <span
-                              class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+                              class="MuiChip-label MuiChip-labelMedium css-1dybbl5-MuiChip-label"
                             >
                               high
                             </span>
@@ -357,12 +479,12 @@ exports[`SystemsTree > renders system tree correct at root 1`] = `
                           class="MuiBox-root css-0"
                         >
                           <p
-                            class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body1 css-12psztd-MuiTypography-root"
                           >
                             Owner:
                           </p>
                           <p
-                            class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                           >
                             Juan Horton
                           </p>
@@ -371,63 +493,63 @@ exports[`SystemsTree > renders system tree correct at root 1`] = `
                           class="MuiBox-root css-0"
                         >
                           <p
-                            class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body1 css-12psztd-MuiTypography-root"
                           >
                             Location:
                           </p>
                           <p
-                            class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                           >
                             80371 Alvarado Drive Apt. 272, Heatherhaven, MP 33307
                           </p>
                         </div>
                         <h6
-                          class="MuiTypography-root MuiTypography-h6 css-14y9ogl-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-h6 css-18xxwmt-MuiTypography-root"
                         >
                           Items:
                         </h6>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 1: 2
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 2: 4
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 3: 3
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 4: 3
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 5: 4
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 6: 2
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 7: 4
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 8: 1
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Turbomolecular Pumps 42: 1
                         </p>
@@ -455,11 +577,12 @@ exports[`SystemsTree > renders system tree correct at root 1`] = `
                   data-id="656da8ef9cba7a76c6f81a5d"
                   data-testid="rf__node-656da8ef9cba7a76c6f81a5d"
                   role="button"
-                  style="z-index: 0; transform: translate(350px,625px); pointer-events: all; visibility: hidden; width: 300px;"
+                  style="z-index: 0; transform: translate(700px,625px); pointer-events: all; visibility: hidden; width: 300px;"
                   tabindex="0"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-flc96v-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-lr5l4w-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                    style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-container MuiGrid-item css-1bcrbzc-MuiGrid-root"
@@ -469,12 +592,13 @@ exports[`SystemsTree > renders system tree correct at root 1`] = `
                       >
                         <p
                           aria-label="Pulse Laser"
-                          class="MuiTypography-root MuiTypography-body1 css-t3xsyu-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body1 css-1dtzylj-MuiTypography-root"
                           data-mui-internal-clone-element="true"
                           role="tooltip"
                         >
                           <a
-                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
+                            data-discover="true"
                             href="/systems/656da8ef9cba7a76c6f81a5d/tree"
                           >
                             Pulse Laser
@@ -491,13 +615,13 @@ exports[`SystemsTree > renders system tree correct at root 1`] = `
                         >
                           <button
                             aria-label="Pulse Laser system tree actions menu"
-                            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
                             tabindex="0"
                             type="button"
                           >
                             <svg
                               aria-hidden="true"
-                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                               data-testid="MoreHorizIcon"
                               focusable="false"
                               viewBox="0 0 24 24"
@@ -506,15 +630,12 @@ exports[`SystemsTree > renders system tree correct at root 1`] = `
                                 d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                               />
                             </svg>
-                            <span
-                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                            />
                           </button>
                         </span>
                       </div>
                     </div>
                     <hr
-                      class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
+                      class="MuiDivider-root MuiDivider-fullWidth css-1jpc804-MuiDivider-root"
                     />
                     <div
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -526,15 +647,15 @@ exports[`SystemsTree > renders system tree correct at root 1`] = `
                           class="MuiBox-root css-4juikq"
                         >
                           <p
-                            class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body1 css-12psztd-MuiTypography-root"
                           >
                             Importance:
                           </p>
                           <div
-                            class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-ypj0cx-MuiChip-root"
+                            class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-1rc91v9-MuiChip-root"
                           >
                             <span
-                              class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+                              class="MuiChip-label MuiChip-labelMedium css-1dybbl5-MuiChip-label"
                             >
                               high
                             </span>
@@ -544,12 +665,12 @@ exports[`SystemsTree > renders system tree correct at root 1`] = `
                           class="MuiBox-root css-0"
                         >
                           <p
-                            class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body1 css-12psztd-MuiTypography-root"
                           >
                             Owner:
                           </p>
                           <p
-                            class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                           >
                             Antony Yates
                           </p>
@@ -558,12 +679,12 @@ exports[`SystemsTree > renders system tree correct at root 1`] = `
                           class="MuiBox-root css-0"
                         >
                           <p
-                            class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body1 css-12psztd-MuiTypography-root"
                           >
                             Location:
                           </p>
                           <p
-                            class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                           >
                             Studio 80s
 O'Sullivan trail
@@ -572,127 +693,127 @@ NP1R 4QP
                           </p>
                         </div>
                         <h6
-                          class="MuiTypography-root MuiTypography-h6 css-14y9ogl-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-h6 css-18xxwmt-MuiTypography-root"
                         >
                           Items:
                         </h6>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 8: 2
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 9: 3
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 10: 4
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 11: 1
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 12: 2
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 13: 4
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 14: 3
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 15: 2
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 16: 4
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 17: 2
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 18: 3
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 19: 2
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 20: 1
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 23: 1
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Wavefront Sensors 30: 3
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Wavefront Sensors 31: 3
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Motorized Actuators 32: 3
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Motorized Actuators 33: 3
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Motorized Actuators 34: 3
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Motorized Actuators 35: 3
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cryo Pumps 36: 2
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cryo Pumps 37: 1
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Dry Vacuum Pumps 40: 1
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Dry Vacuum Pumps 41: 1
                         </p>
@@ -720,11 +841,12 @@ NP1R 4QP
                   data-id="656ef565ed0773f82e44bc6d"
                   data-testid="rf__node-656ef565ed0773f82e44bc6d"
                   role="button"
-                  style="z-index: 0; transform: translate(700px,625px); pointer-events: all; visibility: hidden; width: 300px;"
+                  style="z-index: 0; transform: translate(1050px,625px); pointer-events: all; visibility: hidden; width: 300px;"
                   tabindex="0"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-flc96v-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-lr5l4w-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                    style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-container MuiGrid-item css-1bcrbzc-MuiGrid-root"
@@ -734,12 +856,13 @@ NP1R 4QP
                       >
                         <p
                           aria-label="Pico Laser"
-                          class="MuiTypography-root MuiTypography-body1 css-t3xsyu-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body1 css-1dtzylj-MuiTypography-root"
                           data-mui-internal-clone-element="true"
                           role="tooltip"
                         >
                           <a
-                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
+                            data-discover="true"
                             href="/systems/656ef565ed0773f82e44bc6d/tree"
                           >
                             Pico Laser
@@ -756,13 +879,13 @@ NP1R 4QP
                         >
                           <button
                             aria-label="Pico Laser system tree actions menu"
-                            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
                             tabindex="0"
                             type="button"
                           >
                             <svg
                               aria-hidden="true"
-                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                               data-testid="MoreHorizIcon"
                               focusable="false"
                               viewBox="0 0 24 24"
@@ -771,15 +894,12 @@ NP1R 4QP
                                 d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                               />
                             </svg>
-                            <span
-                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                            />
                           </button>
                         </span>
                       </div>
                     </div>
                     <hr
-                      class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
+                      class="MuiDivider-root MuiDivider-fullWidth css-1jpc804-MuiDivider-root"
                     />
                     <div
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -791,15 +911,15 @@ NP1R 4QP
                           class="MuiBox-root css-4juikq"
                         >
                           <p
-                            class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body1 css-12psztd-MuiTypography-root"
                           >
                             Importance:
                           </p>
                           <div
-                            class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-10vhyx7-MuiChip-root"
+                            class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-n701f6-MuiChip-root"
                           >
                             <span
-                              class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+                              class="MuiChip-label MuiChip-labelMedium css-1dybbl5-MuiChip-label"
                             >
                               low
                             </span>
@@ -809,12 +929,12 @@ NP1R 4QP
                           class="MuiBox-root css-0"
                         >
                           <p
-                            class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body1 css-12psztd-MuiTypography-root"
                           >
                             Owner:
                           </p>
                           <p
-                            class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                           >
                             Dr Stacey Ward
                           </p>
@@ -823,12 +943,12 @@ NP1R 4QP
                           class="MuiBox-root css-0"
                         >
                           <p
-                            class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body1 css-12psztd-MuiTypography-root"
                           >
                             Location:
                           </p>
                           <p
-                            class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                           >
                             Flat 90w
 Watson inlet
@@ -837,92 +957,92 @@ G05 6SZ
                           </p>
                         </div>
                         <h6
-                          class="MuiTypography-root MuiTypography-h6 css-14y9ogl-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-h6 css-18xxwmt-MuiTypography-root"
                         >
                           Items:
                         </h6>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 1: 2
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 9: 1
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 11: 1
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 20: 1
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Energy Meters 27: 2
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Motorized Actuators 33: 1
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Motorized Actuators 34: 1
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cryo Pumps 36: 1
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cryo Pumps 37: 3
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Dry Vacuum Pumps 38: 2
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Dry Vacuum Pumps 39: 1
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Dry Vacuum Pumps 40: 3
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Dry Vacuum Pumps 41: 2
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Turbomolecular Pumps 42: 2
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Turbomolecular Pumps 43: 2
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Turbo Pumps 44: 3
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 5: 2
                         </p>
@@ -944,6 +1064,154 @@ G05 6SZ
                     data-nodeid="656ef565ed0773f82e44bc6d"
                   />
                 </div>
+                <div
+                  aria-describedby="react-flow__node-desc-1"
+                  class="react-flow__node react-flow__node-systems nopan selectable draggable"
+                  data-id="657f8c3b2a1b4e5d8f9b3c4e8"
+                  data-testid="rf__node-657f8c3b2a1b4e5d8f9b3c4e8"
+                  role="button"
+                  style="z-index: 0; transform: translate(1400px,625px); pointer-events: all; visibility: hidden; width: 300px;"
+                  tabindex="0"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-lr5l4w-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                    style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-item css-1bcrbzc-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8 css-rrdjhq-MuiGrid-root"
+                      >
+                        <p
+                          aria-label="Scrapped"
+                          class="MuiTypography-root MuiTypography-body1 css-1dtzylj-MuiTypography-root"
+                          data-mui-internal-clone-element="true"
+                          role="tooltip"
+                        >
+                          <a
+                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
+                            data-discover="true"
+                            href="/systems/657f8c3b2a1b4e5d8f9b3c4e8/tree"
+                          >
+                            Scrapped
+                          </a>
+                        </p>
+                      </div>
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-rcwxuo-MuiGrid-root"
+                      >
+                        <span
+                          aria-label="System tree actions"
+                          class=""
+                          data-mui-internal-clone-element="true"
+                        >
+                          <button
+                            aria-label="Scrapped system tree actions menu"
+                            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
+                            tabindex="0"
+                            type="button"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                              data-testid="MoreHorizIcon"
+                              focusable="false"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
+                              />
+                            </svg>
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                    <hr
+                      class="MuiDivider-root MuiDivider-fullWidth css-1jpc804-MuiDivider-root"
+                    />
+                    <div
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiBox-root css-0"
+                      >
+                        <div
+                          class="MuiBox-root css-4juikq"
+                        >
+                          <p
+                            class="MuiTypography-root MuiTypography-body1 css-12psztd-MuiTypography-root"
+                          >
+                            Importance:
+                          </p>
+                          <div
+                            class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-1w56vsk-MuiChip-root"
+                          >
+                            <span
+                              class="MuiChip-label MuiChip-labelMedium css-1dybbl5-MuiChip-label"
+                            >
+                              medium
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          class="MuiBox-root css-0"
+                        >
+                          <p
+                            class="MuiTypography-root MuiTypography-body1 css-12psztd-MuiTypography-root"
+                          >
+                            Owner:
+                          </p>
+                          <p
+                            class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
+                          >
+                            Mrs Jasmine Jackson
+                          </p>
+                        </div>
+                        <div
+                          class="MuiBox-root css-0"
+                        >
+                          <p
+                            class="MuiTypography-root MuiTypography-body1 css-12psztd-MuiTypography-root"
+                          >
+                            Location:
+                          </p>
+                          <p
+                            class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
+                          >
+                            Warehouse 42
+Sector 7
+Galactic Core
+                          </p>
+                        </div>
+                        <h6
+                          class="MuiTypography-root MuiTypography-h6 css-18xxwmt-MuiTypography-root"
+                        >
+                          Items:
+                        </h6>
+                        <p
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
+                        >
+                          No Items
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="react-flow__handle react-flow__handle-bottom nodrag nopan source connectable connectablestart connectableend connectionindicator"
+                    data-handleid="657f8c3b2a1b4e5d8f9b3c4e8"
+                    data-handlepos="bottom"
+                    data-id="1-657f8c3b2a1b4e5d8f9b3c4e8-657f8c3b2a1b4e5d8f9b3c4e8-source"
+                    data-nodeid="657f8c3b2a1b4e5d8f9b3c4e8"
+                  />
+                  <div
+                    class="react-flow__handle react-flow__handle-top nodrag nopan target connectable connectablestart connectableend connectionindicator"
+                    data-handleid="657f8c3b2a1b4e5d8f9b3c4e8"
+                    data-handlepos="top"
+                    data-id="1-657f8c3b2a1b4e5d8f9b3c4e8-657f8c3b2a1b4e5d8f9b3c4e8-target"
+                    data-nodeid="657f8c3b2a1b4e5d8f9b3c4e8"
+                  />
+                </div>
               </div>
               <div
                 class="react-flow__viewport-portal"
@@ -961,7 +1229,7 @@ G05 6SZ
             class="react-flow__minimap-svg"
             height="150"
             role="img"
-            viewBox="-87.50000000000003 -20.833333333333336 875 666.6666666666666"
+            viewBox="-35 -247.5 1470 1120"
             width="200"
           >
             <title
@@ -971,7 +1239,7 @@ G05 6SZ
             </title>
             <path
               class="react-flow__minimap-mask"
-              d="M-108.33333333333337,-41.66666666666667h916.6666666666666v708.3333333333333h-916.6666666666666z
+              d="M-70,-282.5h1540v1190h-1540z
         M0,0h500v500h-500z"
               fill-rule="evenodd"
               pointer-events="none"
@@ -1124,73 +1392,61 @@ exports[`SystemsTree > renders system tree correct in subsystem 1`] = `
         class="MuiBox-root css-70qvj9"
       >
         <h6
-          class="MuiTypography-root MuiTypography-h6 css-1fpkkxh-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-h6 css-1g4mi5o-MuiTypography-root"
         >
           Depth:
         </h6>
         <div
-          class="MuiToggleButtonGroup-root css-bghv3y-MuiToggleButtonGroup-root"
+          class="MuiToggleButtonGroup-root MuiToggleButtonGroup-horizontal css-1qb8o-MuiToggleButtonGroup-root"
           role="group"
         >
           <button
             aria-pressed="true"
-            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root Mui-selected MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-firstButton css-1x4vipr-MuiButtonBase-root-MuiToggleButton-root"
+            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root Mui-selected MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-firstButton css-qofxz1-MuiButtonBase-root-MuiToggleButton-root"
             tabindex="0"
             type="button"
             value="1"
           >
             1
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
           <button
             aria-pressed="false"
-            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-middleButton css-1x4vipr-MuiButtonBase-root-MuiToggleButton-root"
+            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-middleButton css-qofxz1-MuiButtonBase-root-MuiToggleButton-root"
             tabindex="0"
             type="button"
             value="2"
           >
             2
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
           <button
             aria-pressed="false"
-            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-middleButton css-1x4vipr-MuiButtonBase-root-MuiToggleButton-root"
+            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-middleButton css-qofxz1-MuiButtonBase-root-MuiToggleButton-root"
             tabindex="0"
             type="button"
             value="3"
           >
             3
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
           <button
             aria-pressed="false"
-            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-lastButton css-1x4vipr-MuiButtonBase-root-MuiToggleButton-root"
+            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-lastButton css-qofxz1-MuiButtonBase-root-MuiToggleButton-root"
             tabindex="0"
             type="button"
             value="-1"
           >
             unlimited
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
         </div>
         <button
           aria-label="Systems tree warning message"
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-r59t5-MuiButtonBase-root-MuiIconButton-root"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-lk7kvc-MuiButtonBase-root-MuiIconButton-root"
           data-mui-internal-clone-element="true"
           tabindex="0"
           type="button"
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
             data-testid="WarningIcon"
             focusable="false"
             viewBox="0 0 24 24"
@@ -1199,51 +1455,42 @@ exports[`SystemsTree > renders system tree correct in subsystem 1`] = `
               d="M1 21h22L12 2zm12-3h-2v-2h2zm0-4h-2v-4h2z"
             />
           </svg>
-          <span
-            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-          />
         </button>
       </div>
       <div
         class="MuiBox-root css-70qvj9"
       >
         <div
-          class="MuiToggleButtonGroup-root css-bghv3y-MuiToggleButtonGroup-root"
+          class="MuiToggleButtonGroup-root MuiToggleButtonGroup-horizontal css-1qb8o-MuiToggleButtonGroup-root"
           role="group"
         >
           <button
             aria-pressed="true"
-            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root Mui-selected MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-firstButton css-1x4vipr-MuiButtonBase-root-MuiToggleButton-root"
+            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root Mui-selected MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-firstButton css-qofxz1-MuiButtonBase-root-MuiToggleButton-root"
             tabindex="0"
             type="button"
             value="TB"
           >
             Vertical
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
           <button
             aria-pressed="false"
-            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-lastButton css-1x4vipr-MuiButtonBase-root-MuiToggleButton-root"
+            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-lastButton css-qofxz1-MuiButtonBase-root-MuiToggleButton-root"
             tabindex="0"
             type="button"
             value="LR"
           >
             Horizontal
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
         </div>
         <button
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-n2gp7e-MuiButtonBase-root-MuiIconButton-root"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-b8dcox-MuiButtonBase-root-MuiIconButton-root"
           tabindex="0"
           type="button"
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
             data-testid="FullscreenIcon"
             focusable="false"
             viewBox="0 0 24 24"
@@ -1252,9 +1499,6 @@ exports[`SystemsTree > renders system tree correct in subsystem 1`] = `
               d="M7 14H5v5h5v-2H7zm-2-4h2V7h3V5H5zm12 7h-3v2h5v-5h-2zM14 5v2h3v3h2V5z"
             />
           </svg>
-          <span
-            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-          />
         </button>
       </div>
     </div>
@@ -1298,7 +1542,8 @@ exports[`SystemsTree > renders system tree correct in subsystem 1`] = `
                   tabindex="0"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-flc96v-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-lr5l4w-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                    style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-container MuiGrid-item css-1bcrbzc-MuiGrid-root"
@@ -1308,12 +1553,13 @@ exports[`SystemsTree > renders system tree correct in subsystem 1`] = `
                       >
                         <p
                           aria-label="Giant laser"
-                          class="MuiTypography-root MuiTypography-body1 css-t3xsyu-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body1 css-1dtzylj-MuiTypography-root"
                           data-mui-internal-clone-element="true"
                           role="tooltip"
                         >
                           <a
-                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
+                            data-discover="true"
                             href="/systems/65328f34a40ff5301575a4e3/tree"
                           >
                             Giant laser
@@ -1330,13 +1576,13 @@ exports[`SystemsTree > renders system tree correct in subsystem 1`] = `
                         >
                           <button
                             aria-label="Giant laser system tree actions menu"
-                            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
                             tabindex="0"
                             type="button"
                           >
                             <svg
                               aria-hidden="true"
-                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                               data-testid="MoreHorizIcon"
                               focusable="false"
                               viewBox="0 0 24 24"
@@ -1345,15 +1591,12 @@ exports[`SystemsTree > renders system tree correct in subsystem 1`] = `
                                 d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                               />
                             </svg>
-                            <span
-                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                            />
                           </button>
                         </span>
                       </div>
                     </div>
                     <hr
-                      class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
+                      class="MuiDivider-root MuiDivider-fullWidth css-1jpc804-MuiDivider-root"
                     />
                     <div
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -1365,15 +1608,15 @@ exports[`SystemsTree > renders system tree correct in subsystem 1`] = `
                           class="MuiBox-root css-4juikq"
                         >
                           <p
-                            class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body1 css-12psztd-MuiTypography-root"
                           >
                             Importance:
                           </p>
                           <div
-                            class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-ypj0cx-MuiChip-root"
+                            class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-1rc91v9-MuiChip-root"
                           >
                             <span
-                              class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+                              class="MuiChip-label MuiChip-labelMedium css-1dybbl5-MuiChip-label"
                             >
                               high
                             </span>
@@ -1383,12 +1626,12 @@ exports[`SystemsTree > renders system tree correct in subsystem 1`] = `
                           class="MuiBox-root css-0"
                         >
                           <p
-                            class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body1 css-12psztd-MuiTypography-root"
                           >
                             Owner:
                           </p>
                           <p
-                            class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                           >
                             Juan Horton
                           </p>
@@ -1397,63 +1640,63 @@ exports[`SystemsTree > renders system tree correct in subsystem 1`] = `
                           class="MuiBox-root css-0"
                         >
                           <p
-                            class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body1 css-12psztd-MuiTypography-root"
                           >
                             Location:
                           </p>
                           <p
-                            class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                           >
                             80371 Alvarado Drive Apt. 272, Heatherhaven, MP 33307
                           </p>
                         </div>
                         <h6
-                          class="MuiTypography-root MuiTypography-h6 css-14y9ogl-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-h6 css-18xxwmt-MuiTypography-root"
                         >
                           Items:
                         </h6>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 1: 2
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 2: 4
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 3: 3
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 4: 3
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 5: 4
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 6: 2
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 7: 4
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 8: 1
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Turbomolecular Pumps 42: 1
                         </p>
@@ -1485,7 +1728,8 @@ exports[`SystemsTree > renders system tree correct in subsystem 1`] = `
                   tabindex="0"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-flc96v-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-lr5l4w-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                    style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-container MuiGrid-item css-1bcrbzc-MuiGrid-root"
@@ -1495,12 +1739,13 @@ exports[`SystemsTree > renders system tree correct in subsystem 1`] = `
                       >
                         <p
                           aria-label="Smaller laser"
-                          class="MuiTypography-root MuiTypography-body1 css-t3xsyu-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body1 css-1dtzylj-MuiTypography-root"
                           data-mui-internal-clone-element="true"
                           role="tooltip"
                         >
                           <a
-                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
+                            data-discover="true"
                             href="/systems/65328f34a40ff5301575a4e4/tree"
                           >
                             Smaller laser
@@ -1517,13 +1762,13 @@ exports[`SystemsTree > renders system tree correct in subsystem 1`] = `
                         >
                           <button
                             aria-label="Smaller laser system tree actions menu"
-                            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
                             tabindex="0"
                             type="button"
                           >
                             <svg
                               aria-hidden="true"
-                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                               data-testid="MoreHorizIcon"
                               focusable="false"
                               viewBox="0 0 24 24"
@@ -1532,15 +1777,12 @@ exports[`SystemsTree > renders system tree correct in subsystem 1`] = `
                                 d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                               />
                             </svg>
-                            <span
-                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                            />
                           </button>
                         </span>
                       </div>
                     </div>
                     <hr
-                      class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
+                      class="MuiDivider-root MuiDivider-fullWidth css-1jpc804-MuiDivider-root"
                     />
                     <div
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -1552,15 +1794,15 @@ exports[`SystemsTree > renders system tree correct in subsystem 1`] = `
                           class="MuiBox-root css-4juikq"
                         >
                           <p
-                            class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body1 css-12psztd-MuiTypography-root"
                           >
                             Importance:
                           </p>
                           <div
-                            class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-10vhyx7-MuiChip-root"
+                            class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-n701f6-MuiChip-root"
                           >
                             <span
-                              class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+                              class="MuiChip-label MuiChip-labelMedium css-1dybbl5-MuiChip-label"
                             >
                               low
                             </span>
@@ -1570,12 +1812,12 @@ exports[`SystemsTree > renders system tree correct in subsystem 1`] = `
                           class="MuiBox-root css-0"
                         >
                           <p
-                            class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body1 css-12psztd-MuiTypography-root"
                           >
                             Owner:
                           </p>
                           <p
-                            class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                           >
                             Daniel Morrison
                           </p>
@@ -1584,114 +1826,114 @@ exports[`SystemsTree > renders system tree correct in subsystem 1`] = `
                           class="MuiBox-root css-0"
                         >
                           <p
-                            class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body1 css-12psztd-MuiTypography-root"
                           >
                             Location:
                           </p>
                           <p
-                            class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                           >
                             848 James Lock Suite 863
 New Robertbury, PW 17883
                           </p>
                         </div>
                         <h6
-                          class="MuiTypography-root MuiTypography-h6 css-14y9ogl-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-h6 css-18xxwmt-MuiTypography-root"
                         >
                           Items:
                         </h6>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 4: 1
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 6: 1
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 11: 1
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 12: 2
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 17: 1
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 18: 1
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 19: 2
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 20: 2
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 21: 4
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 22: 2
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 23: 3
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 24: 3
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Cameras 25: 4
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Energy Meters 26: 3
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Energy Meters 27: 2
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Energy Meters 28: 4
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Energy Meters 29: 4
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Wavefront Sensors 30: 1
                         </p>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           Turbo Pumps 44: 1
                         </p>
@@ -1893,73 +2135,61 @@ exports[`SystemsTree > renders system tree with any items  1`] = `
         class="MuiBox-root css-70qvj9"
       >
         <h6
-          class="MuiTypography-root MuiTypography-h6 css-1fpkkxh-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-h6 css-1g4mi5o-MuiTypography-root"
         >
           Depth:
         </h6>
         <div
-          class="MuiToggleButtonGroup-root css-bghv3y-MuiToggleButtonGroup-root"
+          class="MuiToggleButtonGroup-root MuiToggleButtonGroup-horizontal css-1qb8o-MuiToggleButtonGroup-root"
           role="group"
         >
           <button
             aria-pressed="true"
-            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root Mui-selected MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-firstButton css-1x4vipr-MuiButtonBase-root-MuiToggleButton-root"
+            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root Mui-selected MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-firstButton css-qofxz1-MuiButtonBase-root-MuiToggleButton-root"
             tabindex="0"
             type="button"
             value="1"
           >
             1
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
           <button
             aria-pressed="false"
-            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-middleButton css-1x4vipr-MuiButtonBase-root-MuiToggleButton-root"
+            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-middleButton css-qofxz1-MuiButtonBase-root-MuiToggleButton-root"
             tabindex="0"
             type="button"
             value="2"
           >
             2
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
           <button
             aria-pressed="false"
-            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-middleButton css-1x4vipr-MuiButtonBase-root-MuiToggleButton-root"
+            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-middleButton css-qofxz1-MuiButtonBase-root-MuiToggleButton-root"
             tabindex="0"
             type="button"
             value="3"
           >
             3
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
           <button
             aria-pressed="false"
-            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-lastButton css-1x4vipr-MuiButtonBase-root-MuiToggleButton-root"
+            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-lastButton css-qofxz1-MuiButtonBase-root-MuiToggleButton-root"
             tabindex="0"
             type="button"
             value="-1"
           >
             unlimited
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
         </div>
         <button
           aria-label="Systems tree warning message"
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-r59t5-MuiButtonBase-root-MuiIconButton-root"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-lk7kvc-MuiButtonBase-root-MuiIconButton-root"
           data-mui-internal-clone-element="true"
           tabindex="0"
           type="button"
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
             data-testid="WarningIcon"
             focusable="false"
             viewBox="0 0 24 24"
@@ -1968,51 +2198,42 @@ exports[`SystemsTree > renders system tree with any items  1`] = `
               d="M1 21h22L12 2zm12-3h-2v-2h2zm0-4h-2v-4h2z"
             />
           </svg>
-          <span
-            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-          />
         </button>
       </div>
       <div
         class="MuiBox-root css-70qvj9"
       >
         <div
-          class="MuiToggleButtonGroup-root css-bghv3y-MuiToggleButtonGroup-root"
+          class="MuiToggleButtonGroup-root MuiToggleButtonGroup-horizontal css-1qb8o-MuiToggleButtonGroup-root"
           role="group"
         >
           <button
             aria-pressed="true"
-            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root Mui-selected MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-firstButton css-1x4vipr-MuiButtonBase-root-MuiToggleButton-root"
+            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root Mui-selected MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-firstButton css-qofxz1-MuiButtonBase-root-MuiToggleButton-root"
             tabindex="0"
             type="button"
             value="TB"
           >
             Vertical
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
           <button
             aria-pressed="false"
-            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-lastButton css-1x4vipr-MuiButtonBase-root-MuiToggleButton-root"
+            class="MuiButtonBase-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButton-root MuiToggleButton-sizeSmall MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal MuiToggleButtonGroup-lastButton css-qofxz1-MuiButtonBase-root-MuiToggleButton-root"
             tabindex="0"
             type="button"
             value="LR"
           >
             Horizontal
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
         </div>
         <button
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-n2gp7e-MuiButtonBase-root-MuiIconButton-root"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-b8dcox-MuiButtonBase-root-MuiIconButton-root"
           tabindex="0"
           type="button"
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
             data-testid="FullscreenIcon"
             focusable="false"
             viewBox="0 0 24 24"
@@ -2021,9 +2242,6 @@ exports[`SystemsTree > renders system tree with any items  1`] = `
               d="M7 14H5v5h5v-2H7zm-2-4h2V7h3V5H5zm12 7h-3v2h5v-5h-2zM14 5v2h3v3h2V5z"
             />
           </svg>
-          <span
-            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-          />
         </button>
       </div>
     </div>
@@ -2067,7 +2285,8 @@ exports[`SystemsTree > renders system tree with any items  1`] = `
                   tabindex="0"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-flc96v-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-lr5l4w-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                    style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-container MuiGrid-item css-1bcrbzc-MuiGrid-root"
@@ -2077,12 +2296,13 @@ exports[`SystemsTree > renders system tree with any items  1`] = `
                       >
                         <p
                           aria-label="Giant laser"
-                          class="MuiTypography-root MuiTypography-body1 css-t3xsyu-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body1 css-1dtzylj-MuiTypography-root"
                           data-mui-internal-clone-element="true"
                           role="tooltip"
                         >
                           <a
-                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
+                            data-discover="true"
                             href="/systems/65328f34a40ff5301575a4e3/tree"
                           >
                             Giant laser
@@ -2099,13 +2319,13 @@ exports[`SystemsTree > renders system tree with any items  1`] = `
                         >
                           <button
                             aria-label="Giant laser system tree actions menu"
-                            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
                             tabindex="0"
                             type="button"
                           >
                             <svg
                               aria-hidden="true"
-                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                               data-testid="MoreHorizIcon"
                               focusable="false"
                               viewBox="0 0 24 24"
@@ -2114,15 +2334,12 @@ exports[`SystemsTree > renders system tree with any items  1`] = `
                                 d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                               />
                             </svg>
-                            <span
-                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                            />
                           </button>
                         </span>
                       </div>
                     </div>
                     <hr
-                      class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
+                      class="MuiDivider-root MuiDivider-fullWidth css-1jpc804-MuiDivider-root"
                     />
                     <div
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -2134,15 +2351,15 @@ exports[`SystemsTree > renders system tree with any items  1`] = `
                           class="MuiBox-root css-4juikq"
                         >
                           <p
-                            class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body1 css-12psztd-MuiTypography-root"
                           >
                             Importance:
                           </p>
                           <div
-                            class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-ypj0cx-MuiChip-root"
+                            class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-1rc91v9-MuiChip-root"
                           >
                             <span
-                              class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+                              class="MuiChip-label MuiChip-labelMedium css-1dybbl5-MuiChip-label"
                             >
                               high
                             </span>
@@ -2152,12 +2369,12 @@ exports[`SystemsTree > renders system tree with any items  1`] = `
                           class="MuiBox-root css-0"
                         >
                           <p
-                            class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body1 css-12psztd-MuiTypography-root"
                           >
                             Owner:
                           </p>
                           <p
-                            class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                           >
                             Juan Horton
                           </p>
@@ -2166,23 +2383,23 @@ exports[`SystemsTree > renders system tree with any items  1`] = `
                           class="MuiBox-root css-0"
                         >
                           <p
-                            class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body1 css-12psztd-MuiTypography-root"
                           >
                             Location:
                           </p>
                           <p
-                            class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                           >
                             80371 Alvarado Drive Apt. 272, Heatherhaven, MP 33307
                           </p>
                         </div>
                         <h6
-                          class="MuiTypography-root MuiTypography-h6 css-14y9ogl-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-h6 css-18xxwmt-MuiTypography-root"
                         >
                           Items:
                         </h6>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           No Items
                         </p>
@@ -2210,11 +2427,12 @@ exports[`SystemsTree > renders system tree with any items  1`] = `
                   data-id="65328f34a40ff5301575a4e4"
                   data-testid="rf__node-65328f34a40ff5301575a4e4"
                   role="button"
-                  style="z-index: 0; transform: translate(0px,500px); pointer-events: all; visibility: hidden; width: 300px;"
+                  style="z-index: 0; transform: translate(0px,0px); pointer-events: all; visibility: hidden; width: 300px;"
                   tabindex="0"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-flc96v-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-lr5l4w-MuiGrid-root-MuiPaper-root-MuiCard-root"
+                    style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-container MuiGrid-item css-1bcrbzc-MuiGrid-root"
@@ -2224,12 +2442,13 @@ exports[`SystemsTree > renders system tree with any items  1`] = `
                       >
                         <p
                           aria-label="Smaller laser"
-                          class="MuiTypography-root MuiTypography-body1 css-t3xsyu-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body1 css-1dtzylj-MuiTypography-root"
                           data-mui-internal-clone-element="true"
                           role="tooltip"
                         >
                           <a
-                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
+                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1orsvah-MuiTypography-root-MuiLink-root"
+                            data-discover="true"
                             href="/systems/65328f34a40ff5301575a4e4/tree"
                           >
                             Smaller laser
@@ -2246,13 +2465,13 @@ exports[`SystemsTree > renders system tree with any items  1`] = `
                         >
                           <button
                             aria-label="Smaller laser system tree actions menu"
-                            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
                             tabindex="0"
                             type="button"
                           >
                             <svg
                               aria-hidden="true"
-                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                               data-testid="MoreHorizIcon"
                               focusable="false"
                               viewBox="0 0 24 24"
@@ -2261,15 +2480,12 @@ exports[`SystemsTree > renders system tree with any items  1`] = `
                                 d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                               />
                             </svg>
-                            <span
-                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                            />
                           </button>
                         </span>
                       </div>
                     </div>
                     <hr
-                      class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
+                      class="MuiDivider-root MuiDivider-fullWidth css-1jpc804-MuiDivider-root"
                     />
                     <div
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -2281,15 +2497,15 @@ exports[`SystemsTree > renders system tree with any items  1`] = `
                           class="MuiBox-root css-4juikq"
                         >
                           <p
-                            class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body1 css-12psztd-MuiTypography-root"
                           >
                             Importance:
                           </p>
                           <div
-                            class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-10vhyx7-MuiChip-root"
+                            class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-n701f6-MuiChip-root"
                           >
                             <span
-                              class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+                              class="MuiChip-label MuiChip-labelMedium css-1dybbl5-MuiChip-label"
                             >
                               low
                             </span>
@@ -2299,12 +2515,12 @@ exports[`SystemsTree > renders system tree with any items  1`] = `
                           class="MuiBox-root css-0"
                         >
                           <p
-                            class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body1 css-12psztd-MuiTypography-root"
                           >
                             Owner:
                           </p>
                           <p
-                            class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                           >
                             Daniel Morrison
                           </p>
@@ -2313,24 +2529,24 @@ exports[`SystemsTree > renders system tree with any items  1`] = `
                           class="MuiBox-root css-0"
                         >
                           <p
-                            class="MuiTypography-root MuiTypography-body1 css-7awnqp-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body1 css-12psztd-MuiTypography-root"
                           >
                             Location:
                           </p>
                           <p
-                            class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                            class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                           >
                             848 James Lock Suite 863
 New Robertbury, PW 17883
                           </p>
                         </div>
                         <h6
-                          class="MuiTypography-root MuiTypography-h6 css-14y9ogl-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-h6 css-18xxwmt-MuiTypography-root"
                         >
                           Items:
                         </h6>
                         <p
-                          class="MuiTypography-root MuiTypography-body2 css-f4jnqf-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body2 css-11cuzcu-MuiTypography-root"
                         >
                           No Items
                         </p>

@@ -103,8 +103,8 @@ export function unmount(props: unknown): Promise<void> {
 export const fetchSettings =
   (): Promise<InventoryManagementSystemSettings | void> => {
     const settingsPath = import.meta.env
-      .VITE_APP_INVENTORY_MANAGEMENT_SYSTEM_BUILD_DIRECTORY
-      ? import.meta.env.VITE_APP_INVENTORY_MANAGEMENT_SYSTEM_BUILD_DIRECTORY +
+      .VITE_INVENTORY_MANAGEMENT_SYSTEM_BUILD_DIRECTORY
+      ? import.meta.env.VITE_INVENTORY_MANAGEMENT_SYSTEM_BUILD_DIRECTORY +
         'inventory-management-system-settings.json'
       : '/inventory-management-system-settings.json';
     return axios
@@ -151,6 +151,11 @@ export const fetchSettings =
           throw new Error('maxImageSizeBytes is undefined in settings');
         }
 
+        // Ensure the privilegedRoles value exists.
+        if (!('privilegedRoles' in settings)) {
+          throw new Error('privilegedRoles is undefined in settings');
+        }
+
         if (Array.isArray(settings['routes']) && settings['routes'].length) {
           settings['routes'].forEach((route: PluginRoute, index: number) => {
             if (
@@ -168,6 +173,7 @@ export const fetchSettings =
                   order: route['order'] ?? 0,
                   hideFromMenu: route['hideFromMenu'] ?? false,
                   admin: route['admin'] ?? false,
+                  unauthorised: route['unauthorised'] ?? false,
                   helpSteps:
                     index === 0 && 'helpSteps' in settings
                       ? settings['helpSteps']
@@ -202,7 +208,7 @@ async function prepare() {
   // When in dev, only use MSW if the api url is given, otherwise load MSW as it must have been explicitly requested
   const settingsResult = await settings;
   if (
-    import.meta.env.VITE_APP_INCLUDE_MSW === 'true' ||
+    import.meta.env.VITE_INCLUDE_MSW === 'true' ||
     settingsResult?.imsApiUrl === '' ||
     settingsResult?.osApiUrl === ''
   ) {
@@ -228,7 +234,7 @@ const conditionalSciGatewayRender = () => {
   }
 };
 
-if (import.meta.env.DEV || import.meta.env.VITE_APP_INCLUDE_MSW === 'true') {
+if (import.meta.env.DEV || import.meta.env.VITE_INCLUDE_MSW === 'true') {
   prepare().then(() => conditionalSciGatewayRender());
 
   log.setDefaultLevel(log.levels.DEBUG);

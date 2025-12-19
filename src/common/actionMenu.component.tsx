@@ -2,9 +2,9 @@ import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PrintIcon from '@mui/icons-material/Print';
 import UploadIcon from '@mui/icons-material/Upload';
-import { IconButton, Menu, MenuItem } from '@mui/material';
+import { Divider, IconButton, Menu, MenuItem } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Unstable_Grid2';
 import React from 'react';
 import UploadAttachmentsDialog from './attachments/uploadAttachmentsDialog.component';
 import UploadImagesDialog from './images/uploadImagesDialog.component';
@@ -12,10 +12,14 @@ import { StyledUppyBox } from './uppy.utils';
 
 export interface ActionMenuProps {
   ariaLabelPrefix: string;
-  editMenuItem: { onClick: () => void; dialog: React.ReactNode };
+  editMenuItem: {
+    onClick: (props?: { isPrivilegedMode?: boolean }) => void;
+    dialog: React.ReactNode;
+  };
   printMenuItem?: boolean;
   uploadAttachmentsEntityId?: string;
   uploadImagesEntityId?: string;
+  showAdminEdit?: boolean;
 }
 function ActionMenu(props: ActionMenuProps) {
   const {
@@ -24,6 +28,7 @@ function ActionMenu(props: ActionMenuProps) {
     ariaLabelPrefix,
     uploadAttachmentsEntityId,
     uploadImagesEntityId,
+    showAdminEdit,
   } = props;
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -43,8 +48,6 @@ function ActionMenu(props: ActionMenuProps) {
 
   return (
     <Grid
-      xs={12}
-      sm
       container
       sx={{
         textAlign: 'right',
@@ -53,6 +56,10 @@ function ActionMenu(props: ActionMenuProps) {
         '@media print': {
           display: 'none',
         },
+      }}
+      size={{
+        xs: 12,
+        sm: 'grow',
       }}
     >
       <Grid>
@@ -93,6 +100,7 @@ function ActionMenu(props: ActionMenuProps) {
             <EditIcon fontSize="small" sx={{ mr: 1 }} />
             Edit
           </MenuItem>
+
           {uploadImagesEntityId && (
             <MenuItem
               onClick={() => {
@@ -126,6 +134,21 @@ function ActionMenu(props: ActionMenuProps) {
               <PrintIcon fontSize="small" sx={{ mr: 1 }} />
               Print
             </MenuItem>
+          )}
+
+          {showAdminEdit && (
+            <>
+              <Divider />
+              <MenuItem
+                onClick={() => {
+                  editMenuItem.onClick({ isPrivilegedMode: true });
+                  handleMenuClose();
+                }}
+              >
+                <EditIcon fontSize="small" sx={{ mr: 1 }} />
+                Edit as Admin
+              </MenuItem>
+            </>
           )}
         </Menu>
       </Grid>

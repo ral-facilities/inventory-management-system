@@ -23,6 +23,7 @@ describe('ActionMenu Component', () => {
       uploadImagesEntityId: '1',
       editMenuItem: mockEditMenuItem,
       printMenuItem: true,
+      showAdminEdit: true, // true to check it renders the option correctly
     };
     user = userEvent.setup();
     // Mock the window.print function
@@ -51,6 +52,9 @@ describe('ActionMenu Component', () => {
     // Check if the "Edit" option is visible
     expect(screen.getByText('Edit')).toBeVisible();
 
+    // Check if the "Edit as Admin" option is visible
+    expect(screen.getByText('Edit as Admin')).toBeVisible();
+
     // Check if the "Print" option is visible
     expect(screen.getByText('Print')).toBeVisible();
   });
@@ -70,6 +74,28 @@ describe('ActionMenu Component', () => {
 
     // Verify that the mock edit function was called
     expect(mockEditMenuItem.onClick).toHaveBeenCalled();
+
+    // Check if the dialog is displayed
+    expect(screen.getByTestId('edit-dialog')).toBeInTheDocument();
+  });
+
+  it('triggers edit as admin action and closes menu on clicking Edit', async () => {
+    createView();
+
+    // Open the menu
+    const actionButton = screen.getByLabelText(
+      'catalogue items landing page actions menu'
+    );
+    await user.click(actionButton);
+
+    // Click on the "Edit as Admin" option
+    const editButton = screen.getByText('Edit as Admin');
+    await user.click(editButton);
+
+    // Verify that the mock edit function was called
+    expect(mockEditMenuItem.onClick).toHaveBeenCalledWith({
+      isPrivilegedMode: true,
+    });
 
     // Check if the dialog is displayed
     expect(screen.getByTestId('edit-dialog')).toBeInTheDocument();

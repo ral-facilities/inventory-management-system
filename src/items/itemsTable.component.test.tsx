@@ -1,12 +1,21 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import { CatalogueCategory, CatalogueItem } from '../api/api.types';
+import { DefaultBodyType, http, HttpResponse, PathParams } from 'msw';
+import {
+  CatalogueCategory,
+  CatalogueItem,
+  SparesDefinition,
+} from '../api/api.types';
+import APIConfigProvider from '../apiConfigProvider.component';
+import { server } from '../mocks/server';
+import SystemTypesJSON from '../mocks/SystemTypes.json';
 import {
   getCatalogueCategoryById,
   getCatalogueItemById,
   renderComponentWithRouterProvider,
 } from '../testUtils';
 import ItemsTable, { ItemTableProps } from './itemsTable.component';
+import * as authProvider from '../authProvider.component';
 
 describe('Items Table', () => {
   vi.setConfig({ testTimeout: 10000 });
@@ -15,14 +24,18 @@ describe('Items Table', () => {
   let user: UserEvent;
   const createView = () => {
     return renderComponentWithRouterProvider(
-      <ItemsTable {...props} />,
+      <APIConfigProvider>
+        <ItemsTable {...props} />
+      </APIConfigProvider>,
       'any',
       '/'
     );
   };
 
   const ensureColumnsVisible = async (columns: string[]) => {
-    await user.click(screen.getByRole('button', { name: 'Show/Hide columns' }));
+    await user.click(
+      await screen.findByRole('button', { name: 'Show/Hide columns' })
+    );
     await user.click(screen.getByText('Hide all'));
 
     for (const column of columns) {
@@ -79,7 +92,12 @@ describe('Items Table', () => {
 
   it('renders correctly part 3 due column virtualisation and checks that the href is correct for the system ID', async () => {
     createView();
-    await ensureColumnsVisible(['Warranty End Date', 'System', 'Created']);
+    await ensureColumnsVisible([
+      'Warranty End Date',
+      'System',
+      'System Type',
+      'Created',
+    ]);
 
     const systemID = screen.getAllByText('Giant laser');
     expect(systemID[0]).toHaveAttribute(
@@ -175,6 +193,36 @@ describe('Items Table', () => {
     });
   });
 
+  it('opens and closes the add item as Admin dialog', async () => {
+    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
+      role: 'admin',
+      isPrivilegedUser: true,
+    });
+
+    createView();
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: 'Add Item as Admin' })
+      ).toBeInTheDocument();
+    });
+
+    const addButton = screen.getByRole('button', {
+      name: 'Add Item as Admin',
+    });
+    await user.click(addButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
   it('sets the table filters and clears the table filters', async () => {
     createView();
 
@@ -201,6 +249,185 @@ describe('Items Table', () => {
     });
   });
 
+  it('sets the spares definition filter and clears the table filters', async () => {
+    props.catalogueCategory = getCatalogueCategoryById(
+      '9'
+    ) as CatalogueCategory;
+    props.catalogueItem = getCatalogueItemById('11') as CatalogueItem;
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Serial Number')).toBeInTheDocument();
+    });
+    const showSparesButton = screen.getByRole('button', {
+      name: 'Show Spare Items',
+    });
+    expect(showSparesButton).not.toBeDisabled();
+
+    await user.click(showSparesButton);
+
+    await waitFor(() => {
+      expect(screen.queryByText('tenrMn1KOmIg')).not.toBeInTheDocument();
+    });
+
+    expect(
+      await screen.findByText('Spares Definition Filter Applied')
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByLabelText(
+        'Items that are contained within the system type Storage are classified as spares'
+      )
+    ).toBeInTheDocument();
+
+    const clearFiltersButton = screen.getByRole('button', {
+      name: 'Clear Filters',
+    });
+
+    await user.click(clearFiltersButton);
+
+    await waitFor(() => {
+      expect(screen.getByText('tenrMn1KOmIg')).toBeInTheDocument();
+    });
+  });
+
+  it('sets the spares definition filter and checks the banner is still visible when grouped and then clears the table filters', async () => {
+    props.catalogueCategory = getCatalogueCategoryById(
+      '9'
+    ) as CatalogueCategory;
+    props.catalogueItem = getCatalogueItemById('11') as CatalogueItem;
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Serial Number')).toBeInTheDocument();
+    });
+    const showSparesButton = screen.getByRole('button', {
+      name: 'Show Spare Items',
+    });
+    expect(showSparesButton).not.toBeDisabled();
+
+    await user.click(showSparesButton);
+
+    await waitFor(() => {
+      expect(screen.queryByText('tenrMn1KOmIg')).not.toBeInTheDocument();
+    });
+
+    expect(
+      await screen.findByText('Spares Definition Filter Applied')
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByLabelText(
+        'Items that are contained within the system type Storage are classified as spares'
+      )
+    ).toBeInTheDocument();
+
+    // Delivered date column action button
+    await user.click(
+      screen.getAllByRole('button', { name: 'Column Actions' })[3]
+    );
+
+    await user.click(await screen.findByText('Group by Asset Number'));
+
+    expect(
+      await screen.findByText('Spares Definition Filter Applied')
+    ).toBeInTheDocument();
+
+    const clearFiltersButton = screen.getByRole('button', {
+      name: 'Clear Filters',
+    });
+
+    await user.click(clearFiltersButton);
+
+    await waitFor(() => {
+      expect(
+        screen.queryByText('Spares Definition Filter Applied')
+      ).not.toBeInTheDocument();
+    });
+
+    expect(
+      await screen.findByText('DEAbxBGr2M', { exact: false })
+    ).toBeInTheDocument();
+  });
+
+  it('does not display spares definition button when spares is not defined', async () => {
+    server.use(
+      http.get('/v1/settings/spares-definition', () => {
+        return HttpResponse.json(undefined, { status: 204 });
+      })
+    );
+    props.catalogueCategory = getCatalogueCategoryById(
+      '9'
+    ) as CatalogueCategory;
+    props.catalogueItem = getCatalogueItemById('11') as CatalogueItem;
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Serial Number')).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.queryByRole('button', {
+          name: 'Show Spare Items',
+        })
+      ).not.toBeInTheDocument();
+    });
+  });
+
+  it('sets the spares definition filter and clears the spares filters (multiple systems types in spares definition)', async () => {
+    server.use(
+      http.get<PathParams, DefaultBodyType, SparesDefinition>(
+        '/v1/settings/spares-definition',
+        () => {
+          return HttpResponse.json(
+            { system_types: [SystemTypesJSON[0], SystemTypesJSON[2]] },
+            { status: 200 }
+          );
+        }
+      )
+    );
+    props.catalogueCategory = getCatalogueCategoryById(
+      '9'
+    ) as CatalogueCategory;
+    props.catalogueItem = getCatalogueItemById('11') as CatalogueItem;
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Serial Number')).toBeInTheDocument();
+    });
+    const showSparesButton = screen.getByRole('button', {
+      name: 'Show Spare Items',
+    });
+    expect(showSparesButton).not.toBeDisabled();
+
+    await user.click(showSparesButton);
+
+    await waitFor(() => {
+      expect(screen.queryByText('tenrMn1KOmIg')).not.toBeInTheDocument();
+    });
+
+    expect(
+      await screen.findByText('Spares Definition Filter Applied')
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByLabelText(
+        'Items that are contained within a system type of one of Storage or Scrapped are classified as spares'
+      )
+    ).toBeInTheDocument();
+
+    const clearSparesFiltersButton = screen.getByRole('button', {
+      name: 'Clear Spares Definition Filter',
+    });
+
+    await user.click(clearSparesFiltersButton);
+
+    await waitFor(() => {
+      expect(screen.getByText('tenrMn1KOmIg')).toBeInTheDocument();
+    });
+  });
+
   it('navigates to catalogue item landing page', async () => {
     createView();
     const serialNumber = '5YUQDDjKpz2z';
@@ -211,35 +438,6 @@ describe('Items Table', () => {
 
     const serialNum = screen.getByText('5YUQDDjKpz2z');
     expect(serialNum).toHaveAttribute('href', '/KvT2Ox7n');
-  });
-
-  it('opens the delete catalogue item dialog and can delete an item', async () => {
-    createView();
-
-    const serialNumber = '5YUQDDjKpz2z';
-    await waitFor(() => {
-      expect(screen.getByText(serialNumber)).toBeInTheDocument();
-    });
-    const rowActionsButton = screen.getAllByLabelText('Row Actions');
-    await user.click(rowActionsButton[0]);
-
-    await waitFor(() => {
-      expect(screen.getByText('Delete')).toBeInTheDocument();
-    });
-
-    const deleteButton = screen.getByText('Delete');
-
-    await user.click(deleteButton);
-
-    await waitFor(() => {
-      expect(screen.getByRole('dialog')).toBeInTheDocument();
-    });
-
-    const continueButton = screen.getByRole('button', { name: 'Continue' });
-    await user.click(continueButton);
-    await waitFor(() => {
-      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-    });
   });
 
   it('can open the edit dialog and close it again', async () => {
@@ -257,6 +455,39 @@ describe('Items Table', () => {
     });
 
     const editButton = screen.getByText('Edit');
+    await user.click(editButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('can open the edit as Admin dialog and close it again', async () => {
+    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
+      role: 'admin',
+      isPrivilegedUser: true,
+    });
+
+    createView();
+
+    const serialNumber = '5YUQDDjKpz2z';
+    await waitFor(() => {
+      expect(screen.getByText(serialNumber)).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Edit as Admin')).toBeInTheDocument();
+    });
+
+    const editButton = screen.getByText('Edit as Admin');
     await user.click(editButton);
 
     await waitFor(() => {
@@ -298,6 +529,39 @@ describe('Items Table', () => {
     });
   });
 
+  it('can open the duplicate as admin dialog and close it again', async () => {
+    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
+      role: 'admin',
+      isPrivilegedUser: true,
+    });
+
+    createView();
+
+    const serialNumber = '5YUQDDjKpz2z';
+    await waitFor(() => {
+      expect(screen.getByText(serialNumber)).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Duplicate as Admin')).toBeInTheDocument();
+    });
+
+    const duplicateButton = screen.getByText('Duplicate as Admin');
+    await user.click(duplicateButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
   it('can open the duplicate dialog and checks that the notes have been updated', async () => {
     createView();
 
@@ -319,10 +583,12 @@ describe('Items Table', () => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
     });
 
+    await user.click(screen.getByText('Add item details'));
+
     expect(screen.getByLabelText('Notes')).toHaveValue(
       '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this Serial Number: 5YUQDDjKpz2z'
     );
-  });
+  }, 15000);
 
   it('can open the duplicate dialog and checks that the notes have been updated when notes is null', async () => {
     props.catalogueCategory = getCatalogueCategoryById(
@@ -348,6 +614,8 @@ describe('Items Table', () => {
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
     });
+
+    await user.click(screen.getByText('Add item details'));
 
     expect(screen.getByLabelText('Notes')).toHaveValue(
       '\n\nThis is a copy of the item with this Serial Number: RncNJlDk1pXC'
@@ -379,6 +647,8 @@ describe('Items Table', () => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
     });
 
+    await user.click(screen.getByText('Add item details'));
+
     expect(screen.getByLabelText('Notes')).toHaveValue(
       'MJuSPgXEiXmBbf1Vlq4B\n\nThis is a copy of the item with this Serial Number: No serial number'
     );
@@ -404,6 +674,69 @@ describe('Items Table', () => {
 
     const duplicateButton = screen.getByText('Duplicate');
     await user.click(duplicateButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('can opens the delete dialog and close it again', async () => {
+    createView();
+
+    const serialNumber = '5YUQDDjKpz2z';
+    await waitFor(() => {
+      expect(screen.getByText(serialNumber)).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Delete')).toBeInTheDocument();
+    });
+
+    const deleteButton = screen.getByText('Delete');
+
+    await user.click(deleteButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('can opens the delete as admin dialog and close it again', async () => {
+    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
+      role: 'admin',
+      isPrivilegedUser: true,
+    });
+
+    createView();
+
+    const serialNumber = '5YUQDDjKpz2z';
+    await waitFor(() => {
+      expect(screen.getByText(serialNumber)).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Delete as Admin')).toBeInTheDocument();
+    });
+
+    const deleteButton = screen.getByText('Delete as Admin');
+
+    await user.click(deleteButton);
 
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();

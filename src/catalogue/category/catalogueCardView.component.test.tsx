@@ -405,7 +405,7 @@ describe('CardView', () => {
       expect(await screen.findByText('Test 1')).toBeInTheDocument();
 
       expect(clearFiltersButton).toBeDisabled();
-    });
+    }, 10000);
 
     it('renders the multi-select filter mode dropdown correctly', async () => {
       createView();
@@ -420,9 +420,9 @@ describe('CardView', () => {
 
       const dropdownButtons = await screen.findAllByTestId('FilterListIcon');
 
-      expect(dropdownButtons[3]).toBeInTheDocument();
+      expect(dropdownButtons[1]).toBeInTheDocument();
 
-      await user.click(dropdownButtons[3]);
+      await user.click(dropdownButtons[1]);
 
       const includeAnyText = await screen.findByRole('menuitem', {
         name: 'Includes any',

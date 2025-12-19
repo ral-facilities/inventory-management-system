@@ -103,14 +103,20 @@ describe('Items', () => {
   it('adds an item with only mandatory fields', () => {
     cy.findByRole('button', { name: 'Add Item' }).click();
 
-    cy.findByLabelText('Usage status *').click();
-    cy.findByText('New').click();
+    cy.findByRole('progressbar').should('not.exist');
+
+    cy.findAllByText('Storage').first().click();
+
+    cy.findByText('No systems found').should('exist');
+
+    cy.findAllByText('Storage').should('have.length', 1);
+
+    cy.findByText('Item Creation Rule Applied').should('exist');
 
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Next' }).click();
     cy.findByRole('button', { name: 'Next' }).click();
-    cy.findByText('Giant laser').click();
 
     cy.findByRole('button', { name: 'Finish' }).click();
     cy.findByRole('dialog').should('not.exist');
@@ -139,7 +145,7 @@ describe('Items', () => {
             { id: '6', value: false },
           ],
           catalogue_item_id: '1',
-          system_id: '65328f34a40ff5301575a4e3',
+          system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
         })
       );
     });
@@ -147,18 +153,26 @@ describe('Items', () => {
 
   it('adds an item with only mandatory fields (serial number advanced options)', () => {
     cy.findByRole('button', { name: 'Add Item' }).click();
+
+    cy.findByRole('progressbar').should('not.exist');
+
+    cy.findAllByText('Storage').first().click();
+
+    cy.findByText('No systems found').should('exist');
+
+    cy.findAllByText('Storage').should('have.length', 1);
+
+    cy.findByText('Item Creation Rule Applied').should('exist');
+
+    cy.findByRole('button', { name: 'Next' }).click();
     cy.findByText('Show advanced options').click();
     cy.findByLabelText('Serial number').type('test %s');
     cy.findByLabelText('Quantity').type('3');
     cy.findByLabelText('Starting value').type('2');
-    cy.findByLabelText('Usage status *').click();
-    cy.findByText('New').click();
 
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Next' }).click();
-    cy.findByRole('button', { name: 'Next' }).click();
-    cy.findByText('Giant laser').click();
 
     cy.findByRole('button', { name: 'Finish' }).click();
     cy.findByRole('dialog').should('not.exist');
@@ -189,7 +203,7 @@ describe('Items', () => {
               { id: '6', value: false },
             ],
             catalogue_item_id: '1',
-            system_id: '65328f34a40ff5301575a4e3',
+            system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
           })
         );
       }
@@ -199,9 +213,17 @@ describe('Items', () => {
   it('displays error messages for serial number advanced options', () => {
     cy.findByRole('button', { name: 'Add Item' }).click();
 
-    cy.findByLabelText('Usage status *').click();
-    cy.findByText('New').click();
+    cy.findByRole('progressbar').should('not.exist');
 
+    cy.findAllByText('Storage').first().click();
+
+    cy.findByText('No systems found').should('exist');
+
+    cy.findAllByText('Storage').should('have.length', 1);
+
+    cy.findByText('Item Creation Rule Applied').should('exist');
+
+    cy.findByRole('button', { name: 'Next' }).click();
     cy.findByText('Show advanced options').click();
 
     cy.findByLabelText('Starting value').type('10');
@@ -263,8 +285,17 @@ describe('Items', () => {
     cy.visit('/catalogue/12/items/17/items');
     cy.findByRole('button', { name: 'Add Item' }).click();
 
-    cy.findByLabelText('Usage status *').click();
-    cy.findByRole('option', { name: 'Used' }).click();
+    cy.findByRole('progressbar').should('not.exist');
+
+    cy.findAllByText('Storage').first().click();
+
+    cy.findByText('No systems found').should('exist');
+
+    cy.findAllByText('Storage').should('have.length', 1);
+
+    cy.findByText('Item Creation Rule Applied').should('exist');
+
+    cy.findByRole('button', { name: 'Next' }).click();
 
     cy.findByRole('button', { name: 'Next' }).click();
 
@@ -274,8 +305,6 @@ describe('Items', () => {
     cy.findByRole('option', { name: '400' }).click();
     cy.findByLabelText('Axis').click();
     cy.findByRole('option', { name: 'y' }).click();
-    cy.findByRole('button', { name: 'Next' }).click();
-    cy.findByText('Giant laser').click();
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Finish' }).click();
@@ -290,7 +319,7 @@ describe('Items', () => {
         JSON.stringify({
           purchase_order_number: null,
           is_defective: false,
-          usage_status_id: '2',
+          usage_status_id: '0',
           warranty_end_date: null,
           asset_number: null,
           serial_number: null,
@@ -302,7 +331,7 @@ describe('Items', () => {
             { id: '19', value: 'y' },
           ],
           catalogue_item_id: '17',
-          system_id: '65328f34a40ff5301575a4e3',
+          system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
         })
       );
     });
@@ -311,6 +340,18 @@ describe('Items', () => {
   it('adds an item with all fields altered', () => {
     cy.findByRole('button', { name: 'Add Item' }).click();
 
+    cy.findByRole('progressbar').should('not.exist');
+
+    cy.findAllByText('Storage').first().click();
+
+    cy.findByText('No systems found').should('exist');
+
+    cy.findAllByText('Storage').should('have.length', 1);
+
+    cy.findByText('Item Creation Rule Applied').should('exist');
+
+    cy.findByRole('button', { name: 'Next' }).click();
+
     cy.findByLabelText('Serial number').type('test1234');
     cy.findByLabelText('Asset number').type('test13221');
     cy.findByLabelText('Purchase order number').type('test23');
@@ -318,8 +359,7 @@ describe('Items', () => {
     cy.findByLabelText('Delivered date').type('12/02/2024');
     cy.findByLabelText('Is defective *').click();
     cy.findByRole('option', { name: 'Yes' }).click();
-    cy.findByLabelText('Usage status *').click();
-    cy.findByText('Scrapped').click();
+
     cy.findByLabelText('Notes').type('test');
 
     cy.findByRole('button', { name: 'Next' }).click();
@@ -332,10 +372,6 @@ describe('Items', () => {
     cy.findByRole('option', { name: 'False' }).click();
     cy.findByLabelText('Older than five years').click();
     cy.findByRole('option', { name: 'True' }).click();
-
-    cy.findByRole('button', { name: 'Next' }).click();
-
-    cy.findByText('Giant laser').click();
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -351,7 +387,7 @@ describe('Items', () => {
         JSON.stringify({
           purchase_order_number: 'test23',
           is_defective: true,
-          usage_status_id: '3',
+          usage_status_id: '0',
           warranty_end_date: '2028-02-12T00:00:00.000Z',
           asset_number: 'test13221',
           serial_number: 'test1234',
@@ -366,6 +402,63 @@ describe('Items', () => {
             { id: '6', value: true },
           ],
           catalogue_item_id: '1',
+          system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
+        })
+      );
+    });
+  });
+
+  it('displays add dialog in admin view when user is admin', () => {
+    cy.setCurrentUserToAdmin();
+    cy.visit('/catalogue/4/items/1/items');
+
+    cy.findByRole('button', { name: 'Add Item as Admin' }).click();
+
+    cy.findByRole('progressbar').should('not.exist');
+
+    // Operational is 'not allowed' by rules so admin user should be able to bypass this and select usasge status
+    cy.findAllByText('Operational').first().click();
+
+    cy.findByText(
+      'WARNING: No rule exists for creating a new item within this system type'
+    ).should('exist');
+
+    cy.findByRole('button', { name: 'Next' }).click();
+
+    cy.findByLabelText('Usage status *').click();
+    cy.findByRole('option', { name: 'In Use' }).click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Next' }).click();
+
+    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('dialog').should('not.exist');
+
+    cy.findBrowserMockedRequests({
+      method: 'POST',
+      url: '/v1/items',
+    }).should(async (postRequests) => {
+      expect(postRequests.length).eq(1);
+      expect(JSON.stringify(await postRequests[0].json())).equal(
+        JSON.stringify({
+          purchase_order_number: null,
+          is_defective: false,
+          usage_status_id: '1',
+          warranty_end_date: null,
+          asset_number: null,
+          serial_number: null,
+          delivered_date: null,
+          notes: null,
+          properties: [
+            { id: '1', value: 12 },
+            { id: '2', value: 30 },
+            { id: '3', value: 'CMOS' },
+            { id: '4', value: null },
+            { id: '5', value: true },
+            { id: '6', value: false },
+          ],
+          catalogue_item_id: '1',
           system_id: '65328f34a40ff5301575a4e3',
         })
       );
@@ -374,6 +467,18 @@ describe('Items', () => {
 
   it('displays messages for incorrect input types', () => {
     cy.findByRole('button', { name: 'Add Item' }).click();
+
+    cy.findByRole('progressbar').should('not.exist');
+
+    cy.findAllByText('Storage').first().click();
+
+    cy.findByText('No systems found').should('exist');
+
+    cy.findAllByText('Storage').should('have.length', 1);
+
+    cy.findByText('Item Creation Rule Applied').should('exist');
+
+    cy.findByRole('button', { name: 'Next' }).click();
 
     cy.findByLabelText('Warranty end date').type('12/02/');
     cy.findByLabelText('Delivered date').type('12/02/');
@@ -402,17 +507,10 @@ describe('Items', () => {
 
     cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.findByText('Please select a usage status.').should('exist');
-
-    cy.findByLabelText('Usage status *').click();
-    cy.findByText('New').click();
-
-    cy.findByRole('button', { name: 'Next' }).click();
-
     cy.findByLabelText('Resolution (megapixels) *').clear();
     cy.findByLabelText('Sensor Type *').clear();
 
-    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByRole('button', { name: 'Finish' }).click();
 
     cy.findAllByText(
       'Please enter a valid value as this field is mandatory.'
@@ -441,6 +539,67 @@ describe('Items', () => {
     cy.findByText('vYs9Vxx6yWbn').should('exist');
     cy.findByText('PcfCM1jp0SUV').should('exist');
     cy.findByText('Zf7P8Qu8TD8c').should('exist');
+  });
+
+  it('set spares definition filter and clears the table filters', () => {
+    cy.visit('/catalogue/9/items/11/items');
+    cy.findByText('dfzqkOJbqifO').should('exist');
+    cy.findByText('tenrMn1KOmIg').should('exist');
+    cy.findByText('eUc80U7FqJum').should('exist');
+    cy.findByText('WrgqAVk3qUQK').should('exist');
+    cy.findByRole('button', { name: 'Show Spare Items' }).should(
+      'not.be.disabled'
+    );
+    cy.findByRole('button', { name: 'Show Spare Items' }).click();
+    cy.findByText('dfzqkOJbqifO').should('exist');
+    cy.findByText('tenrMn1KOmIg').should('not.exist');
+    cy.findByText('eUc80U7FqJum').should('not.exist');
+    cy.findByText('WrgqAVk3qUQK').should('not.exist');
+    cy.findByRole('button', { name: 'Show Spare Items' }).should('be.disabled');
+
+    cy.findByText('Spares Definition Filter Applied').should('exist');
+    cy.findByLabelText(
+      'Items that are contained within the system type Storage are classified as spares'
+    ).should('exist');
+
+    cy.findByRole('button', { name: 'Clear Filters' }).click();
+    cy.findByText('dfzqkOJbqifO').should('exist');
+    cy.findByText('tenrMn1KOmIg').should('exist');
+    cy.findByText('eUc80U7FqJum').should('exist');
+    cy.findByText('WrgqAVk3qUQK').should('exist');
+  });
+
+  it('set spares definition filter and checks the banner is still visible when grouped and then and clears the table filters', () => {
+    cy.visit('/catalogue/9/items/11/items');
+    cy.findByText('dfzqkOJbqifO').should('exist');
+    cy.findByText('tenrMn1KOmIg').should('exist');
+    cy.findByText('eUc80U7FqJum').should('exist');
+    cy.findByText('WrgqAVk3qUQK').should('exist');
+    cy.findByRole('button', { name: 'Show Spare Items' }).should(
+      'not.be.disabled'
+    );
+    cy.findByRole('button', { name: 'Show Spare Items' }).click();
+    cy.findByText('dfzqkOJbqifO').should('exist');
+    cy.findByText('tenrMn1KOmIg').should('not.exist');
+    cy.findByText('eUc80U7FqJum').should('not.exist');
+    cy.findByText('WrgqAVk3qUQK').should('not.exist');
+    cy.findByRole('button', { name: 'Show Spare Items' }).should('be.disabled');
+
+    cy.findByText('Spares Definition Filter Applied').should('exist');
+    cy.findByLabelText(
+      'Items that are contained within the system type Storage are classified as spares'
+    ).should('exist');
+
+    cy.findAllByRole('button', { name: 'Column Actions' }).eq(3).click();
+    cy.findByText('Group by Asset Number').click();
+
+    cy.findByText('Spares Definition Filter Applied').should('exist');
+    cy.findByLabelText(
+      'Items that are contained within the system type Storage are classified as spares'
+    ).should('exist');
+
+    cy.findByRole('button', { name: 'Clear Filters' }).click();
+    cy.findByText('DEAbxBGr2M', { exact: false }).should('exist');
   });
 
   it('navigates to the landing page and navigates back to the table view', () => {
@@ -768,6 +927,8 @@ describe('Items', () => {
       ).should('exist');
 
       cy.findByText('Attachments').click();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).scrollIntoView();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).click();
 
       cy.findAllByLabelText('Row Actions').first().click();
       cy.findByText('Download').click();
@@ -795,6 +956,8 @@ describe('Items', () => {
       ).should('exist');
 
       cy.findByText('Attachments').click();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).scrollIntoView();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).click();
 
       cy.findAllByLabelText('Row Actions').first().click();
       cy.findByText('Edit').click();
@@ -837,6 +1000,8 @@ describe('Items', () => {
       ).should('exist');
 
       cy.findByText('Attachments').click();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).scrollIntoView();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).click();
 
       cy.findAllByLabelText('Row Actions').first().click();
       cy.findByText('Edit').click();
@@ -859,6 +1024,8 @@ describe('Items', () => {
       ).should('exist');
 
       cy.findByText('Attachments').click();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).scrollIntoView();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).click();
 
       cy.findAllByLabelText('Row Actions').first().click();
       cy.findByText('Edit').click();
@@ -881,6 +1048,8 @@ describe('Items', () => {
       ).should('exist');
 
       cy.findByText('Attachments').click();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).scrollIntoView();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).click();
 
       cy.findAllByLabelText('Row Actions').first().click();
       cy.findByText('Edit').click();
@@ -906,6 +1075,8 @@ describe('Items', () => {
       ).should('exist');
 
       cy.findByText('Attachments').click();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).scrollIntoView();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).click();
 
       cy.findAllByLabelText('Row Actions').first().click();
       cy.findByText('Delete').click();
@@ -1519,78 +1690,20 @@ describe('Items', () => {
     });
   });
 
-  it('deletes an item', () => {
-    cy.findAllByLabelText('Row Actions').first().click();
-    cy.findByText('Delete').click();
-
-    cy.findByText('Serial Number: 5YUQDDjKpz2z').should('exist');
-
-    cy.startSnoopingBrowserMockedRequest();
-
-    cy.findByRole('button', { name: 'Continue' }).click();
-
-    cy.findBrowserMockedRequests({
-      method: 'DELETE',
-      url: '/v1/items/:id',
-    }).should((deleteRequests) => {
-      expect(deleteRequests.length).equal(1);
-      const request = deleteRequests[0];
-      expect(request.url.toString()).to.contain('KvT2Ox7n');
-    });
-  });
-
-  it('duplicates an item', () => {
-    cy.findAllByLabelText('Row Actions').first().click();
-    cy.findByText('Duplicate').click();
-
-    cy.startSnoopingBrowserMockedRequest();
-
-    cy.findByRole('button', { name: 'Next' }).click();
-    cy.findByRole('button', { name: 'Next' }).click();
-    cy.findByRole('button', { name: 'Finish' }).click();
-    cy.findByRole('dialog').should('not.exist');
-
-    cy.findBrowserMockedRequests({
-      method: 'POST',
-      url: '/v1/items',
-    }).should(async (postRequests) => {
-      expect(postRequests.length).eq(1);
-      expect(JSON.stringify(await postRequests[0].json())).equal(
-        JSON.stringify({
-          purchase_order_number: '6JYHEjwN',
-          is_defective: false,
-          usage_status_id: '1',
-          warranty_end_date: '2023-04-04T23:00:00.000Z',
-          asset_number: 'LyH8yp1FHf',
-          serial_number: '5YUQDDjKpz2z',
-          delivered_date: '2023-03-17T00:00:00.000Z',
-          notes:
-            '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this Serial Number: 5YUQDDjKpz2z',
-          properties: [
-            { id: '1', value: 0 },
-            { id: '2', value: null },
-            { id: '3', value: 'CMOS' },
-            { id: '4', value: null },
-            { id: '5', value: true },
-            { id: '6', value: null },
-          ],
-          catalogue_item_id: '1',
-          system_id: '65328f34a40ff5301575a4e3',
-        })
-      );
-    });
-  });
-
-  it('should display a link a system in the delete dialog when the item has a system id', () => {
-    cy.findAllByLabelText('Row Actions').last().click();
-    cy.findByText('Delete').click();
-
-    cy.findByRole('link', { name: 'Pico Laser' }).should('exist');
-  });
-
   it('edits an item with all fields altered', () => {
     cy.findAllByLabelText('Row Actions').last().click();
     cy.findByText('Edit').click();
+
+    cy.findByRole('button', { name: 'navigate to systems home' }).click();
+    cy.findAllByText('Scrapped').first().click();
+
+    cy.findByText('No systems found').should('exist');
+
+    cy.findAllByText('Scrapped').should('have.length', 1);
+
+    cy.findByText('Item Moving Rule Applied').should('exist');
+
+    cy.findByRole('button', { name: 'Next' }).click();
 
     cy.findByLabelText('Serial number').type('test1234');
     cy.findByLabelText('Asset number').type('test13221');
@@ -1599,8 +1712,6 @@ describe('Items', () => {
     cy.findByLabelText('Delivered date').type('12/02/2024');
     cy.findByLabelText('Is defective *').click();
     cy.findByRole('option', { name: 'Yes' }).click();
-    cy.findByLabelText('Usage status *').click();
-    cy.findByText('Scrapped').click();
     cy.findByLabelText('Notes').type('test');
 
     cy.findByRole('button', { name: 'Next' }).click();
@@ -1613,11 +1724,6 @@ describe('Items', () => {
     cy.findByRole('option', { name: 'False' }).click();
     cy.findByLabelText('Older than five years').click();
     cy.findByRole('option', { name: 'True' }).click();
-
-    cy.findByRole('button', { name: 'Next' }).click();
-
-    cy.findByRole('button', { name: 'navigate to systems home' }).click();
-    cy.findByText('Giant laser').click();
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -1638,7 +1744,7 @@ describe('Items', () => {
           asset_number: '75YWiLwy54test13221',
           delivered_date: '2024-02-12T00:00:00.000Z',
           notes: 'zolZDKKuvAoTFRUWeZNAtest',
-          system_id: '65328f34a40ff5301575a4e3',
+          system_id: '657f8c3b2a1b4e5d8f9b3c4e8',
           properties: [
             { id: '1', value: 1218 },
             { id: '2', value: 3060 },
@@ -1656,9 +1762,10 @@ describe('Items', () => {
     cy.findAllByLabelText('Row Actions').last().click();
     cy.findByText('Edit').click();
 
+    cy.findByRole('button', { name: 'Next' }).click();
+
     cy.findByLabelText('Serial number').type('test1234');
 
-    cy.findByRole('button', { name: 'Next' }).click();
     cy.findByRole('button', { name: 'Next' }).click();
 
     cy.startSnoopingBrowserMockedRequest();
@@ -1682,6 +1789,7 @@ describe('Items', () => {
     cy.findByText('Edit').click();
 
     cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByRole('button', { name: 'Next' }).click();
 
     cy.findByLabelText('Resolution (megapixels) *').type('18');
     cy.findByLabelText('Frame Rate (fps)').type('60');
@@ -1691,8 +1799,6 @@ describe('Items', () => {
     cy.findByRole('option', { name: 'False' }).click();
     cy.findByLabelText('Older than five years').click();
     cy.findByRole('option', { name: 'True' }).click();
-
-    cy.findByRole('button', { name: 'Next' }).click();
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -1719,6 +1825,49 @@ describe('Items', () => {
     });
   });
 
+  it('displays edit dialog in admin view when user is admin', () => {
+    cy.setCurrentUserToAdmin();
+    cy.visit('/catalogue/9/items/11/items');
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByText('Edit as Admin').click();
+
+    cy.findByRole('progressbar').should('not.exist');
+    cy.findByText('Edit Item as Admin').should('exist');
+
+    // Scrapped is 'not allowed' by rules so admin user should be able to bypass this and override usasge status
+    cy.findByRole('button', { name: 'navigate to systems home' }).click();
+    cy.findAllByText('Scrapped').first().click();
+
+    cy.findByText(
+      'WARNING: No rule exists for moving this item between these system types'
+    ).should('exist');
+
+    cy.findByRole('button', { name: 'Next' }).click();
+
+    cy.findByLabelText('Usage status *').click();
+    cy.findByRole('option', { name: 'Used' }).click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Next' }).click();
+
+    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('dialog').should('not.exist');
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/items/:id',
+    }).should(async (patchRequests) => {
+      expect(patchRequests.length).eq(1);
+      expect(JSON.stringify(await patchRequests[0].json())).equal(
+        JSON.stringify({
+          usage_status_id: '2',
+          system_id: '657f8c3b2a1b4e5d8f9b3c4e8',
+        })
+      );
+    });
+  });
+
   it('should display an error message if values have not been updated', () => {
     cy.findAllByLabelText('Row Actions').last().click();
     cy.findByText('Edit').click();
@@ -1730,5 +1879,130 @@ describe('Items', () => {
     cy.findByText(
       "There have been no changes made. Please change a field's value or press Cancel to exit."
     ).should('exist');
+  });
+
+  it('duplicates an item', () => {
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByText('Duplicate').click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Next' }).click();
+
+    cy.findByText(
+      'Please select a valid parent system. Allowed types: Storage.'
+    ).should('exist');
+
+    cy.findByRole('button', { name: 'navigate to systems home' }).click();
+
+    cy.findAllByText('Storage').first().click();
+
+    cy.findByText('No systems found').should('exist');
+
+    cy.findAllByText('Storage').should('have.length', 1);
+
+    cy.findByText('Item Creation Rule Applied').should('exist');
+
+    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('dialog').should('not.exist');
+
+    cy.findBrowserMockedRequests({
+      method: 'POST',
+      url: '/v1/items',
+    }).should(async (postRequests) => {
+      expect(postRequests.length).eq(1);
+      expect(JSON.stringify(await postRequests[0].json())).equal(
+        JSON.stringify({
+          purchase_order_number: '6JYHEjwN',
+          is_defective: false,
+          usage_status_id: '0',
+          warranty_end_date: '2023-04-04T23:00:00.000Z',
+          asset_number: 'LyH8yp1FHf',
+          serial_number: '5YUQDDjKpz2z',
+          delivered_date: '2023-03-17T00:00:00.000Z',
+          notes:
+            '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this Serial Number: 5YUQDDjKpz2z',
+          properties: [
+            { id: '1', value: 0 },
+            { id: '2', value: null },
+            { id: '3', value: 'CMOS' },
+            { id: '4', value: null },
+            { id: '5', value: true },
+            { id: '6', value: null },
+          ],
+          catalogue_item_id: '1',
+          system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
+        })
+      );
+    });
+  });
+
+  it('deletes an item', () => {
+    cy.visit('/catalogue/9/items/11/items');
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByText('Delete').click();
+
+    cy.findByText('Serial Number: dfzqkOJbqifO').should('exist');
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'DELETE',
+      url: '/v1/items/:id',
+    }).should((deleteRequests) => {
+      expect(deleteRequests.length).equal(1);
+      const request = deleteRequests[0];
+      expect(request.url.toString()).to.contain('RuUxShkg');
+    });
+  });
+
+  it('should display a link a system in the delete dialog when the item has a system id', () => {
+    cy.findAllByLabelText('Row Actions').last().click();
+    cy.findByText('Delete').click();
+
+    cy.findByRole('link', { name: 'Pico Laser' }).should('exist');
+  });
+
+  it('displays error message when a user tries delete an item from a system type which is not allowed', () => {
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByText('Delete').click();
+
+    cy.findByText('Serial Number: 5YUQDDjKpz2z').should('exist');
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.findByText(
+      'Please move item to a system with Type: Storage before trying to delete.'
+    ).should('exist');
+  });
+
+  it('admin user can bypass delete rules and delete dialog is in admin view', () => {
+    cy.setCurrentUserToAdmin();
+    cy.visit('/catalogue/4/items/1/items');
+
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByText('Delete as Admin').click();
+
+    cy.findByText('Serial Number: 5YUQDDjKpz2z').should('exist');
+    cy.findByText('Delete Item as Admin').should('exist');
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'DELETE',
+      url: '/v1/items/:id',
+    }).should((deleteRequests) => {
+      expect(deleteRequests.length).equal(1);
+      const request = deleteRequests[0];
+      expect(request.url.toString()).to.contain('KvT2Ox7n');
+    });
   });
 });

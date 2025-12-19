@@ -1,6 +1,5 @@
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
-import type { Router } from '@remix-run/router';
 import {
   QueryCache,
   QueryClient,
@@ -15,13 +14,7 @@ import {
   RouterProvider,
   createBrowserRouter,
   type RouteObject,
-} from 'react-router-dom';
-import AdminCardView from './admin/adminCardView.component';
-import AdminLayout, {
-  AdminErrorComponent,
-} from './admin/adminLayout.component';
-import Units from './admin/units/units.component';
-import UsageStatuses from './admin/usageStatuses/usageStatuses.component';
+} from 'react-router';
 import {
   clearFailedAuthRequestsQueue,
   retryFailedAuthRequests,
@@ -54,6 +47,15 @@ import ManufacturerTable from './manufacturer/manufacturerTable.component';
 import paths from './paths';
 import Preloader from './preloader/preloader.component';
 import retryIMS_APIErrors from './retryIMS_APIErrors';
+import Rules from './settings/rules/rules.component';
+import SettingsCardView from './settings/settingsCardView.component';
+import SettingsLayout, {
+  SettingsErrorComponent,
+} from './settings/settingsLayout.component';
+import SystemTypes from './settings/systemTypes/systemTypes.component';
+import Units from './settings/units/units.component';
+import UsageStatuses from './settings/usageStatuses/usageStatuses.component';
+import { TokenUpdatedType } from './state/actions/actions.types';
 import {
   broadcastSignOut,
   requestPluginRerender,
@@ -106,15 +108,17 @@ const routeObject: RouteObject[] = [
         ],
       },
       {
-        path: paths.admin,
-        Component: AdminLayout,
+        path: paths.settings,
+        Component: SettingsLayout,
         children: [
-          { index: true, Component: AdminCardView },
-          { path: paths.adminUnits, Component: Units },
-          { path: paths.adminUsageStatuses, Component: UsageStatuses },
+          { index: true, Component: SettingsCardView },
+          { path: paths.settingsUnits, Component: Units },
+          { path: paths.settingsUsageStatuses, Component: UsageStatuses },
+          { path: paths.settingsSystemTypes, Component: SystemTypes },
+          { path: paths.settingsRules, Component: Rules },
           {
             path: '*',
-            Component: AdminErrorComponent,
+            Component: SettingsErrorComponent,
           },
         ],
       },
@@ -235,22 +239,15 @@ const routeObject: RouteObject[] = [
   },
 ];
 
-const reactRouterFutureFlags = {
-  future: {
-    v7_relativeSplatPath: true,
-    v7_fetcherPersist: true,
-    v7_normalizeFormMethod: true,
-    v7_partialHydration: true,
-    v7_skipActionErrorRevalidation: true,
-  },
-};
+//can no longer import from @remix-run/router
+//solution found here https://github.com/remix-run/react-router/discussions/9915
+type Router = ReturnType<typeof createBrowserRouter>;
 
 let router: Router;
 const isUsingMSW =
-  import.meta.env.DEV || import.meta.env.VITE_APP_INCLUDE_MSW === 'true';
+  import.meta.env.DEV || import.meta.env.VITE_INCLUDE_MSW === 'true';
 
-if (!isUsingMSW)
-  router = createBrowserRouter(routeObject, reactRouterFutureFlags);
+if (!isUsingMSW) router = createBrowserRouter(routeObject);
 
 // If the application is using MSW (Mock Service Worker),
 // it creates the router using `createBrowserRouter` within the App so it can wait for MSW to load. This is necessary
@@ -258,17 +255,8 @@ if (!isUsingMSW)
 // environment, this is not needed.
 
 export default function App() {
-  if (isUsingMSW)
-    router = createBrowserRouter(routeObject, reactRouterFutureFlags);
-  return (
-    <RouterProvider
-      router={router}
-      future={{
-        // Disabled for now and will be addressed in #1259
-        v7_startTransition: false,
-      }}
-    />
-  );
+  if (isUsingMSW) router = createBrowserRouter(routeObject);
+  return <RouterProvider router={router} />;
 }
 
 export function Layout() {
@@ -281,8 +269,10 @@ export function Layout() {
     // attempt to re-render the plugin if we get told to
     const action = (e as CustomEvent).detail;
     if (requestPluginRerender.match(action)) forceUpdate();
-    else if (tokenRefreshed.match(action)) retryFailedAuthRequests();
-    else if (broadcastSignOut.match(action)) clearFailedAuthRequestsQueue();
+    else if (tokenRefreshed.match(action)) {
+      retryFailedAuthRequests();
+      window.dispatchEvent(new CustomEvent(TokenUpdatedType)); // triggers refresh in authProvider
+    } else if (broadcastSignOut.match(action)) clearFailedAuthRequestsQueue();
   }
 
   React.useEffect(() => {

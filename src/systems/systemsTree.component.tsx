@@ -34,7 +34,7 @@ import {
 import '@xyflow/react/dist/style.css';
 import type { NodeLookup } from '@xyflow/system';
 import React from 'react';
-import { Link, useParams, useSearchParams } from 'react-router-dom';
+import { Link, useParams, useSearchParams } from 'react-router';
 import { SystemImportanceType } from '../api/api.types';
 import {
   getSystemImportanceColour,

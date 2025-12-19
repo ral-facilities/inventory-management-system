@@ -7,7 +7,7 @@ exports[`ErrorPage Component > renders boldErrorText when provided 1`] = `
       class="MuiBox-root css-7gabc3"
     >
       <p
-        class="MuiTypography-root MuiTypography-body1 css-11gsi37-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 css-cjq4vj-MuiTypography-root"
       >
         Error occurred!
       </p>
@@ -23,12 +23,12 @@ exports[`ErrorPage Component > renders both boldErrorText and errorText when bot
       class="MuiBox-root css-9rkie5"
     >
       <p
-        class="MuiTypography-root MuiTypography-body1 css-11gsi37-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 css-cjq4vj-MuiTypography-root"
       >
         Critical Error!
       </p>
       <p
-        class="MuiTypography-root MuiTypography-body1 css-1uwgr7b-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 css-1xrrpwr-MuiTypography-root"
       >
         Please contact support.
       </p>
@@ -44,7 +44,7 @@ exports[`ErrorPage Component > renders errorText when provided 1`] = `
       class="MuiBox-root css-7gabc3"
     >
       <p
-        class="MuiTypography-root MuiTypography-body1 css-1uwgr7b-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 css-1xrrpwr-MuiTypography-root"
       >
         Something went wrong.
       </p>

@@ -17,7 +17,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Grid2';
 import { AxiosError } from 'axios';
 import React from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
@@ -300,12 +300,17 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
           : 'Add Catalogue Category'}
       </DialogTitle>
       <DialogContent>
-        <Stack width="100%" spacing={1}>
+        <Stack
+          spacing={1}
+          sx={{
+            width: '100%',
+          }}
+        >
           <Grid
             container
             sx={{ marginTop: '8px !important', alignItems: 'center' }}
           >
-            <Grid xs={requestType === 'patch' ? 11 : 12}>
+            <Grid size={requestType === 'patch' ? 11 : 12}>
               <TextField
                 id="catalogue-category-name-input"
                 label="Name"
@@ -325,7 +330,7 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
                   justifyContent: 'center',
                   paddingLeft: 1,
                 }}
-                xs={1}
+                size={1}
               >
                 <Button
                   size="large"
@@ -393,7 +398,11 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
               <Divider sx={{ minWidth: '700px' }} />
               <Box sx={{ paddingLeft: 1 }}>
                 <Typography variant="h6">Catalogue Item Properties</Typography>
-                <Box mt={1}>
+                <Box
+                  sx={{
+                    mt: 1,
+                  }}
+                >
                   <FormProvider {...formMethods}>
                     <CatalogueItemsPropertiesTable
                       requestType={requestType}
