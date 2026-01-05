@@ -652,6 +652,12 @@ function ItemDialog(props: ItemDialogProps) {
     [errorsDetailsStep, errorsPropertiesStep, parentSystemIdError]
   );
 
+  const shouldShowMissingRuleWarning =
+    !selectedRules?.[0] && srcSystemTypeId !== dstSystemTypeId;
+
+  const dstUsageStatus =
+    selectedRules?.[0]?.dst_usage_status?.value ?? selectedItem?.usage_status;
+
   const renderStepContent = (step: number) => {
     switch (step) {
       case 0:
@@ -671,19 +677,24 @@ function ItemDialog(props: ItemDialogProps) {
               !systemsDataLoading && (
                 <MRTTopTableAlert
                   title={
-                    requestType === 'post'
-                      ? 'Item Creation Rule Applied'
-                      : 'Item Moving Rule Applied'
+                    shouldShowMissingRuleWarning
+                      ? `WARNING: No rule exists for ${requestType === 'post' ? `creating a new item within this system type` : 'moving this item between these system types'} `
+                      : requestType === 'post'
+                        ? 'Item Creation Rule Applied'
+                        : 'Item Moving Rule Applied'
                   }
-                  showInfoTooltip
+                  showInfoTooltip={!shouldShowMissingRuleWarning}
                   infoTooltipTitle={
                     requestType === 'post'
-                      ? `The new item's usage status will be set to ${selectedRules?.[0]?.dst_usage_status?.value ?? selectedItem?.usage_status}, as defined by the rules`
+                      ? `The new item's usage status will be set to ${dstUsageStatus}, according to the rules`
                       : selectedItem?.system_id === parentSystemId
-                        ? `The item's usage status will remain the same, as defined by the rules`
-                        : `The item's usage status will be updated to ${selectedRules?.[0]?.dst_usage_status?.value ?? selectedItem?.usage_status}, as defined by the rules`
+                        ? `The item's usage status will remain the same, according to the rules`
+                        : `The item's usage status will be updated to ${dstUsageStatus}, according to the rules`
                   }
-                  alertProps={{ elevation: 1 }}
+                  alertProps={{
+                    elevation: 1,
+                    color: shouldShowMissingRuleWarning ? 'warning' : 'info',
+                  }}
                 />
               )}
             <SystemsTableView
@@ -692,15 +703,14 @@ function ItemDialog(props: ItemDialogProps) {
               onChangeParentId={setParentSystemId}
               systemParentId={parentSystemId ?? undefined}
               isSystemSelectable={(system) => {
-                return (
-                  isPrivilegedMode ||
-                  tableRules?.some(
-                    (rule) =>
-                      rule.dst_system_type?.id === system.type_id ||
-                      system.type_id === srcSystemTypeId
-                  ) ||
-                  false
-                );
+                if (isPrivilegedMode) return true;
+                const matchesSrc = system?.type_id === srcSystemTypeId;
+                const matchesAnyDstRule =
+                  Array.isArray(tableRules) &&
+                  tableRules.some(
+                    (rule) => rule?.dst_system_type?.id === system?.type_id
+                  );
+                return matchesSrc || matchesAnyDstRule;
               }}
               // Use most unrestricted variant (i.e. copy with no selection)
               selectedSystems={[]}
