@@ -377,6 +377,7 @@ function Rules() {
             Show Deletion Rules
           </Button>
           <IconButton
+            aria-label={'Open information dialog'}
             onClick={() => {
               setOpenInformationDialog(true);
             }}

@@ -78,4 +78,17 @@ describe('Rules page', () => {
     cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
     cy.findByText('Moving Rules Filter Applied').should('not.exist');
   });
+
+  
+  it('opens information dialog from icon button', () => {
+    cy.findByLabelText('Open information dialog').click();
+    cy.findByText('Rules Information').should('exist');
+    cy.get('button:contains("Example:")').should('have.length', 3)
+
+    cy.findByText('Example: Storage').click();
+    cy.findByText('Items can be deleted from the system type \'Storage\'.').should('exist');
+
+    cy.findByText('Example: Storage').click();
+    cy.findByRole('button', { name: 'Close' }).click();
+  });
 });
