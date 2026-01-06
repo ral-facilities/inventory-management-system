@@ -29,7 +29,7 @@ exports[`Rules Information dialog Component > renders dialog correctly 1`] = `
       <div
         aria-labelledby=":r0:"
         aria-modal="true"
-        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthMd MuiDialog-paperFullWidth css-1peo4km-MuiPaper-root-MuiDialog-paper"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthSm MuiDialog-paperFullWidth css-16htz67-MuiPaper-root-MuiDialog-paper"
         role="dialog"
         style="--Paper-shadow: 0px 11px 15px -7px rgba(0,0,0,0.2),0px 24px 38px 3px rgba(0,0,0,0.14),0px 9px 46px 8px rgba(0,0,0,0.12);"
       >
@@ -48,10 +48,10 @@ exports[`Rules Information dialog Component > renders dialog correctly 1`] = `
             Rules define what operations are possible for items in relation to systems.
           </p>
           <hr
-            class="MuiDivider-root MuiDivider-fullWidth css-1jpc804-MuiDivider-root"
+            class="MuiDivider-root MuiDivider-fullWidth css-hv6zls-MuiDivider-root"
           />
           <p
-            class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 css-9ebprp-MuiTypography-root"
           >
             They are split into three categories:
           </p>
@@ -64,7 +64,7 @@ exports[`Rules Information dialog Component > renders dialog correctly 1`] = `
              These define which types of system's items can be created in, and what usage status they should have.
           </p>
           <div
-            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-x2nctt-MuiPaper-root-MuiAccordion-root"
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded css-1f7her5-MuiPaper-root-MuiAccordion-root"
             style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
           >
             <h3
@@ -72,21 +72,25 @@ exports[`Rules Information dialog Component > renders dialog correctly 1`] = `
             >
               <button
                 aria-expanded="false"
-                class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters css-1s6o8rm-MuiButtonBase-root-MuiAccordionSummary-root"
+                class="MuiButtonBase-root MuiAccordionSummary-root css-1g5spt2-MuiButtonBase-root-MuiAccordionSummary-root"
                 tabindex="0"
                 type="button"
               >
                 <span
-                  class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-yfrx4k-MuiAccordionSummary-content"
+                  class="MuiAccordionSummary-content css-18x5eyn-MuiAccordionSummary-content"
                 >
-                  Example: Storage → 'New'
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+                  >
+                    Example: Storage → 'New'
+                  </p>
                 </span>
                 <span
                   class="MuiAccordionSummary-expandIconWrapper css-1wqf3nl-MuiAccordionSummary-expandIconWrapper"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-145h4gc-MuiSvgIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                     data-testid="ExpandMoreOutlinedIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
@@ -113,10 +117,14 @@ exports[`Rules Information dialog Component > renders dialog correctly 1`] = `
                     role="region"
                   >
                     <div
-                      class="MuiAccordionDetails-root css-15p5i1e-MuiAccordionDetails-root"
+                      class="MuiAccordionDetails-root css-1sgl14z-MuiAccordionDetails-root"
                     >
-                      Items can be created in the system type 'Storage'. This would set
+                      <p
+                        class="MuiTypography-root MuiTypography-body2 css-7ctihp-MuiTypography-root"
+                      >
+                        Items can be created in the system type 'Storage'. This rule sets
             the items usage status to 'New'.
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -132,7 +140,7 @@ exports[`Rules Information dialog Component > renders dialog correctly 1`] = `
              These define which types of system's items can be deleted from. (They have no restriction on usage status).
           </p>
           <div
-            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-x2nctt-MuiPaper-root-MuiAccordion-root"
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded css-1f7her5-MuiPaper-root-MuiAccordion-root"
             style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
           >
             <h3
@@ -140,21 +148,25 @@ exports[`Rules Information dialog Component > renders dialog correctly 1`] = `
             >
               <button
                 aria-expanded="false"
-                class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters css-1s6o8rm-MuiButtonBase-root-MuiAccordionSummary-root"
+                class="MuiButtonBase-root MuiAccordionSummary-root css-1g5spt2-MuiButtonBase-root-MuiAccordionSummary-root"
                 tabindex="0"
                 type="button"
               >
                 <span
-                  class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-yfrx4k-MuiAccordionSummary-content"
+                  class="MuiAccordionSummary-content css-18x5eyn-MuiAccordionSummary-content"
                 >
-                  Example: Storage
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+                  >
+                    Example: Storage
+                  </p>
                 </span>
                 <span
                   class="MuiAccordionSummary-expandIconWrapper css-1wqf3nl-MuiAccordionSummary-expandIconWrapper"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-145h4gc-MuiSvgIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                     data-testid="ExpandMoreOutlinedIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
@@ -181,9 +193,13 @@ exports[`Rules Information dialog Component > renders dialog correctly 1`] = `
                     role="region"
                   >
                     <div
-                      class="MuiAccordionDetails-root css-15p5i1e-MuiAccordionDetails-root"
+                      class="MuiAccordionDetails-root css-1sgl14z-MuiAccordionDetails-root"
                     >
-                      Items can be deleted from the system type 'Storage'.
+                      <p
+                        class="MuiTypography-root MuiTypography-body2 css-7ctihp-MuiTypography-root"
+                      >
+                        Items can be deleted from the system type 'Storage'.
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -199,7 +215,7 @@ exports[`Rules Information dialog Component > renders dialog correctly 1`] = `
              These define which types of systems an item is allowed to move between and what usage status they should have once moved.
           </p>
           <div
-            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-x2nctt-MuiPaper-root-MuiAccordion-root"
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded css-1f7her5-MuiPaper-root-MuiAccordion-root"
             style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
           >
             <h3
@@ -207,21 +223,25 @@ exports[`Rules Information dialog Component > renders dialog correctly 1`] = `
             >
               <button
                 aria-expanded="false"
-                class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters css-1s6o8rm-MuiButtonBase-root-MuiAccordionSummary-root"
+                class="MuiButtonBase-root MuiAccordionSummary-root css-1g5spt2-MuiButtonBase-root-MuiAccordionSummary-root"
                 tabindex="0"
                 type="button"
               >
                 <span
-                  class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-yfrx4k-MuiAccordionSummary-content"
+                  class="MuiAccordionSummary-content css-18x5eyn-MuiAccordionSummary-content"
                 >
-                  Example: Storage → Operational → 'In Use'
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+                  >
+                    Example: Storage → Operational → 'In Use'
+                  </p>
                 </span>
                 <span
                   class="MuiAccordionSummary-expandIconWrapper css-1wqf3nl-MuiAccordionSummary-expandIconWrapper"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-145h4gc-MuiSvgIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                     data-testid="ExpandMoreOutlinedIcon"
                     focusable="false"
                     viewBox="0 0 24 24"
@@ -248,10 +268,14 @@ exports[`Rules Information dialog Component > renders dialog correctly 1`] = `
                     role="region"
                   >
                     <div
-                      class="MuiAccordionDetails-root css-15p5i1e-MuiAccordionDetails-root"
+                      class="MuiAccordionDetails-root css-1sgl14z-MuiAccordionDetails-root"
                     >
-                      Items can be moved from the system type 'Storage' to 'Operational'. This would set
+                      <p
+                        class="MuiTypography-root MuiTypography-body2 css-7ctihp-MuiTypography-root"
+                      >
+                        Items can be moved from the system type 'Storage' to 'Operational'. This rule sets
             the items usage status to 'In Use'.
+                      </p>
                     </div>
                   </div>
                 </div>

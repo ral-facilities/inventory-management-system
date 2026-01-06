@@ -73,6 +73,7 @@ exports[`Rules > renders table correctly 1`] = `
               Show Deletion Rules
             </button>
             <button
+              aria-label="Open information dialog"
               class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
               tabindex="0"
               type="button"
