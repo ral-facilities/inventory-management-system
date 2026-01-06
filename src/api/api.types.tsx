@@ -108,6 +108,7 @@ export interface System extends CreatedModifiedMixin, Required<SystemPost> {
 export interface SystemType {
   id: string;
   value: string;
+  description: string;
 }
 
 // ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
