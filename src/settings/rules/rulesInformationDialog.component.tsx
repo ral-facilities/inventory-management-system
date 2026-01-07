@@ -101,16 +101,13 @@ const RulesInformationDialog = (props: RulesInformationDialogProps) => {
         <Typography>
           <b>Moving:</b> These define which types of systems an item is allowed
           to move between and what usage status they should have once moved.
+          Items can be moved between systems of the same type, which would not
+          change the usage status.
         </Typography>
         <AccordionContent
           summary="Example: Storage → Operational → 'In Use'"
           details="Items can be moved from the system type 'Storage' to 'Operational'. This rule sets
             the items usage status to 'In Use'."
-        />
-        <AccordionContent
-          summary="Example: Storage → Storage → Source Usage Status"
-          details="Items can be moved between systems of the same type, which would not
-          change the usage status."
         />
       </DialogContent>
       <DialogActions>

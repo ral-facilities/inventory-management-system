@@ -219,7 +219,7 @@ exports[`Rules Information dialog Component > renders dialog correctly 1`] = `
             <b>
               Moving:
             </b>
-             These define which types of systems an item is allowed to move between and what usage status they should have once moved.
+             These define which types of systems an item is allowed to move between and what usage status they should have once moved. Items can be moved between systems of the same type, which would not change the usage status.
           </p>
           <div
             class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded css-1f7her5-MuiPaper-root-MuiAccordion-root"
@@ -282,74 +282,6 @@ exports[`Rules Information dialog Component > renders dialog correctly 1`] = `
                       >
                         Items can be moved from the system type 'Storage' to 'Operational'. This rule sets
             the items usage status to 'In Use'.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded css-1f7her5-MuiPaper-root-MuiAccordion-root"
-            style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
-          >
-            <h3
-              class="MuiAccordion-heading css-cy7rkm-MuiAccordion-heading"
-            >
-              <button
-                aria-expanded="false"
-                class="MuiButtonBase-root MuiAccordionSummary-root css-1g5spt2-MuiButtonBase-root-MuiAccordionSummary-root"
-                tabindex="0"
-                type="button"
-              >
-                <span
-                  class="MuiAccordionSummary-content css-18x5eyn-MuiAccordionSummary-content"
-                >
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
-                  >
-                    Example: Storage → Storage → Source Usage Status
-                  </p>
-                </span>
-                <span
-                  class="MuiAccordionSummary-expandIconWrapper css-1wqf3nl-MuiAccordionSummary-expandIconWrapper"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                    data-testid="ExpandMoreOutlinedIcon"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
-                    />
-                  </svg>
-                </span>
-              </button>
-            </h3>
-            <div
-              class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-cwrbtg-MuiCollapse-root"
-              style="min-height: 0px;"
-            >
-              <div
-                class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
-              >
-                <div
-                  class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
-                >
-                  <div
-                    class="MuiAccordion-region"
-                    role="region"
-                  >
-                    <div
-                      class="MuiAccordionDetails-root css-1sgl14z-MuiAccordionDetails-root"
-                    >
-                      <p
-                        class="MuiTypography-root MuiTypography-body2 css-7ctihp-MuiTypography-root"
-                      >
-                        Items can be moved between systems of the same type, which would not
-          change the usage status.
                       </p>
                     </div>
                   </div>

@@ -83,10 +83,10 @@ describe('Rules page', () => {
   it('opens information dialog from icon button', () => {
     cy.findByLabelText('Open information dialog').click();
     cy.findByText('Rules Information').should('exist');
-    cy.get('button:contains("Example:")').should('have.length', 4)
+    cy.get('button:contains("Example:")').should('have.length', 3)
 
-    cy.findByText('Example: Storage → Storage → Source Usage Status').click();
-    cy.findByText('Items can be moved between systems of the same type, which would not change the usage status.').should('exist');
+    cy.findByText('Example: Storage → Operational → \'In Use\'').click();
+    cy.findByText('Items can be moved from the system type \'Storage\' to \'Operational\'. This rule sets the items usage status to \'In Use\'.').should('exist');
 
     cy.findByText('Example: Storage').click();
     cy.findByRole('button', { name: 'Close' }).click();
