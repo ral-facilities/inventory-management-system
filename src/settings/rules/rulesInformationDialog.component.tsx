@@ -68,10 +68,15 @@ const RulesInformationDialog = (props: RulesInformationDialogProps) => {
       <DialogContent>
         <Typography>
           Rules define what operations are possible for items in relation to
-          systems.
+          systems. These rules are defined in terms of an items source
+          system&apos;s type, destination system&apos;s type, and usage status.
         </Typography>
-        <Divider sx={{ my: 1 }}></Divider>
-        <Typography sx={{ mb: 2 }}>
+        <Typography variant="body2" sx={{ my: 1, ml: 4 }}>
+          Source System Type → Destination System Type → &apos;Destination Usage
+          Status&apos;
+        </Typography>
+        <Divider></Divider>
+        <Typography sx={{ my: 1 }}>
           They are split into three categories:
         </Typography>
         <Typography>
@@ -79,17 +84,19 @@ const RulesInformationDialog = (props: RulesInformationDialogProps) => {
           be created in, and what usage status they should have.
         </Typography>
         <AccordionContent
-          summary="Example: Storage → 'New'"
-          details="Items can be created in the system type 'Storage'. This rule sets
-            the items usage status to 'New'."
+          summary="Example: None → Storage → 'New'"
+          details="Items can be created in the system type 'Storage'. As the item
+          is being created, it has no source system type. This rule sets the items
+          usage status to 'New'."
         />
         <Typography>
           <b>Deletion:</b> These define which types of system&apos;s items can
           be deleted from. (They have no restriction on usage status).
         </Typography>
         <AccordionContent
-          summary="Example: Storage"
-          details="Items can be deleted from the system type 'Storage'."
+          summary="Example: Storage → None → None"
+          details="Items can be deleted from the system type 'Storage'. As the item
+          is being deleted, it has no destination system type and no usage status."
         />
         <Typography>
           <b>Moving:</b> These define which types of systems an item is allowed
@@ -100,10 +107,11 @@ const RulesInformationDialog = (props: RulesInformationDialogProps) => {
           details="Items can be moved from the system type 'Storage' to 'Operational'. This rule sets
             the items usage status to 'In Use'."
         />
-        <Typography>
-          These rules are defined in terms of the source system&apos;s type,
-          destination system&apos;s type, and usage status.
-        </Typography>
+        <AccordionContent
+          summary="Example: Storage → Storage → Source Usage Status"
+          details="Items can be moved between systems of the same type, which would not
+          change the usage status."
+        />
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary">
