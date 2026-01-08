@@ -70,6 +70,15 @@ function SystemTypes() {
         Cell: ({ row }) => row.original.value,
       },
       {
+        header: 'Description',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => row.description,
+        id: 'description',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
+      },
+      {
         header: 'Used For Spares',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => (row.isSpare === true ? 'Yes' : 'No'),

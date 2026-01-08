@@ -9,6 +9,8 @@ describe('System Types', () => {
   it('should render table correctly', () => {
     cy.findByText('Value').should('be.visible');
     cy.findByText('Storage').should('be.visible');
+    cy.findByText('Description').should('be.visible');
+    cy.findByText('Storage system type').should('be.visible');
   });
 
   it('sets and clears the table filters', () => {

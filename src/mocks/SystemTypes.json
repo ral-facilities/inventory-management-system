@@ -1,11 +1,16 @@
 [
   {
     "id": "1",
-    "value": "Storage"
+    "value": "Storage",
+    "description": "Storage system type"
   },
   {
     "id": "2",
-    "value": "Operational"
+    "value": "Operational",
+    "description": "Operational system type"
   },
-  { "id": "3", "value": "Scrapped" }
+  { "id": "3",
+    "value": "Scrapped",
+    "description": "Scrapped system type"
+  }
 ]

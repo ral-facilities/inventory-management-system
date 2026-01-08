@@ -13,7 +13,7 @@ describe('System Types', () => {
     cy.findByText('Operational').should('exist');
     cy.findByText('Scrapped').should('exist');
 
-    // Check that spares defintion button filters the table
+    // Check that spares definition button filters the table
     cy.findByRole('button', { name: 'Show Spares Definition' }).click();
 
     cy.findByText('Operational').should('not.exist');
@@ -21,7 +21,7 @@ describe('System Types', () => {
     cy.findByText('Storage').should('exist');
     cy.findByText('Spares Definition Filter Applied').should('exist');
 
-    // filters by spares defintion from the settings page
+    // filters by spares definition from the settings page
 
     cy.findByRole('button', { name: 'navigate to settings home' }).click();
     cy.findByText('Spares Definition').click();

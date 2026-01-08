@@ -58,7 +58,11 @@ describe('APIConfigProvider', () => {
             ],
           },
           isLoading: false,
-          sparesDefinition: { system_types: [{ id: '1', value: 'Storage' }] },
+          sparesDefinition: {
+            system_types: [
+              { id: '1', value: 'Storage', description: 'Storage system type' },
+            ],
+          },
         },
       })
     );
