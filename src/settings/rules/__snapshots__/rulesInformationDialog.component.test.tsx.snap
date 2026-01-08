@@ -1,0 +1,312 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Rules Information dialog Component > renders dialog correctly 1`] = `
+<body
+  style="padding-right: 1024px; overflow: hidden;"
+>
+  <div
+    aria-hidden="true"
+  />
+  <div
+    class="MuiDialog-root MuiModal-root css-12jzxk9-MuiModal-root-MuiDialog-root"
+    role="presentation"
+  >
+    <div
+      aria-hidden="true"
+      class="MuiBackdrop-root MuiModal-backdrop css-1cennmq-MuiBackdrop-root-MuiDialog-backdrop"
+      style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+    />
+    <div
+      data-testid="sentinelStart"
+      tabindex="0"
+    />
+    <div
+      class="MuiDialog-container MuiDialog-scrollPaper css-19do60a-MuiDialog-container"
+      role="presentation"
+      style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+      tabindex="-1"
+    >
+      <div
+        aria-labelledby=":r0:"
+        aria-modal="true"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthSm MuiDialog-paperFullWidth css-16htz67-MuiPaper-root-MuiDialog-paper"
+        role="dialog"
+        style="--Paper-shadow: 0px 11px 15px -7px rgba(0,0,0,0.2),0px 24px 38px 3px rgba(0,0,0,0.14),0px 9px 46px 8px rgba(0,0,0,0.12);"
+      >
+        <h2
+          class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-rvoa5x-MuiTypography-root-MuiDialogTitle-root"
+          id=":r0:"
+        >
+          Rules Information
+        </h2>
+        <div
+          class="MuiDialogContent-root css-kw13he-MuiDialogContent-root"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+          >
+            Rules define what operations are possible for items in relation to systems. These rules are defined in terms of an items source system's type, destination system's type, and usage status.
+          </p>
+          <p
+            class="MuiTypography-root MuiTypography-body2 css-1lygq6b-MuiTypography-root"
+          >
+            Source System Type → Destination System Type → 'Destination Usage Status'
+          </p>
+          <hr
+            class="MuiDivider-root MuiDivider-fullWidth css-1jpc804-MuiDivider-root"
+          />
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-1m50vrz-MuiTypography-root"
+          >
+            They are split into three categories:
+          </p>
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+          >
+            <b>
+              Creation:
+            </b>
+             These define which types of system's items can be created in, and what usage status they should have.
+          </p>
+          <div
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded css-1f7her5-MuiPaper-root-MuiAccordion-root"
+            style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+          >
+            <h3
+              class="MuiAccordion-heading css-cy7rkm-MuiAccordion-heading"
+            >
+              <button
+                aria-expanded="false"
+                class="MuiButtonBase-root MuiAccordionSummary-root css-1g5spt2-MuiButtonBase-root-MuiAccordionSummary-root"
+                tabindex="0"
+                type="button"
+              >
+                <span
+                  class="MuiAccordionSummary-content css-18x5eyn-MuiAccordionSummary-content"
+                >
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+                  >
+                    Example: None → Storage → 'New'
+                  </p>
+                </span>
+                <span
+                  class="MuiAccordionSummary-expandIconWrapper css-1wqf3nl-MuiAccordionSummary-expandIconWrapper"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    data-testid="ExpandMoreOutlinedIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </h3>
+            <div
+              class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-cwrbtg-MuiCollapse-root"
+              style="min-height: 0px;"
+            >
+              <div
+                class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
+              >
+                <div
+                  class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
+                >
+                  <div
+                    class="MuiAccordion-region"
+                    role="region"
+                  >
+                    <div
+                      class="MuiAccordionDetails-root css-1sgl14z-MuiAccordionDetails-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body2 css-7ctihp-MuiTypography-root"
+                      >
+                        Items can be created in the system type 'Storage'. As the item
+          is being created, it has no source system type. This rule sets the items
+          usage status to 'New'.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+          >
+            <b>
+              Deletion:
+            </b>
+             These define which types of system's items can be deleted from. (They have no restriction on usage status).
+          </p>
+          <div
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded css-1f7her5-MuiPaper-root-MuiAccordion-root"
+            style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+          >
+            <h3
+              class="MuiAccordion-heading css-cy7rkm-MuiAccordion-heading"
+            >
+              <button
+                aria-expanded="false"
+                class="MuiButtonBase-root MuiAccordionSummary-root css-1g5spt2-MuiButtonBase-root-MuiAccordionSummary-root"
+                tabindex="0"
+                type="button"
+              >
+                <span
+                  class="MuiAccordionSummary-content css-18x5eyn-MuiAccordionSummary-content"
+                >
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+                  >
+                    Example: Storage → None → None
+                  </p>
+                </span>
+                <span
+                  class="MuiAccordionSummary-expandIconWrapper css-1wqf3nl-MuiAccordionSummary-expandIconWrapper"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    data-testid="ExpandMoreOutlinedIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </h3>
+            <div
+              class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-cwrbtg-MuiCollapse-root"
+              style="min-height: 0px;"
+            >
+              <div
+                class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
+              >
+                <div
+                  class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
+                >
+                  <div
+                    class="MuiAccordion-region"
+                    role="region"
+                  >
+                    <div
+                      class="MuiAccordionDetails-root css-1sgl14z-MuiAccordionDetails-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body2 css-7ctihp-MuiTypography-root"
+                      >
+                        Items can be deleted from the system type 'Storage'. As the item
+          is being deleted, it has no destination system type and no usage status.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+          >
+            <b>
+              Moving:
+            </b>
+             These define which types of systems an item is allowed to move between and what usage status they should have once moved. Items can be moved between systems of the same type, which would not change the usage status.
+          </p>
+          <div
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded css-1f7her5-MuiPaper-root-MuiAccordion-root"
+            style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+          >
+            <h3
+              class="MuiAccordion-heading css-cy7rkm-MuiAccordion-heading"
+            >
+              <button
+                aria-expanded="false"
+                class="MuiButtonBase-root MuiAccordionSummary-root css-1g5spt2-MuiButtonBase-root-MuiAccordionSummary-root"
+                tabindex="0"
+                type="button"
+              >
+                <span
+                  class="MuiAccordionSummary-content css-18x5eyn-MuiAccordionSummary-content"
+                >
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+                  >
+                    Example: Storage → Operational → 'In Use'
+                  </p>
+                </span>
+                <span
+                  class="MuiAccordionSummary-expandIconWrapper css-1wqf3nl-MuiAccordionSummary-expandIconWrapper"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    data-testid="ExpandMoreOutlinedIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </h3>
+            <div
+              class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-cwrbtg-MuiCollapse-root"
+              style="min-height: 0px;"
+            >
+              <div
+                class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
+              >
+                <div
+                  class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
+                >
+                  <div
+                    class="MuiAccordion-region"
+                    role="region"
+                  >
+                    <div
+                      class="MuiAccordionDetails-root css-1sgl14z-MuiAccordionDetails-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body2 css-7ctihp-MuiTypography-root"
+                      >
+                        Items can be moved from the system type 'Storage' to 'Operational'. This rule sets
+            the items usage status to 'In Use'.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="MuiDialogActions-root MuiDialogActions-spacing css-15fu35s-MuiDialogActions-root"
+        >
+          <button
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1uent87-MuiButtonBase-root-MuiButton-root"
+            tabindex="0"
+            type="button"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      data-testid="sentinelEnd"
+      tabindex="0"
+    />
+  </div>
+</body>
+`;

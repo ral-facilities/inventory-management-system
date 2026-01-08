@@ -1,5 +1,12 @@
 import ClearIcon from '@mui/icons-material/Clear';
-import { Box, Button, MenuItem, TableCellBaseProps } from '@mui/material';
+import InfoOutlineIcon from '@mui/icons-material/InfoOutlined';
+import {
+  Box,
+  Button,
+  IconButton,
+  MenuItem,
+  TableCellBaseProps,
+} from '@mui/material';
 import {
   MRT_ColumnDef,
   MRT_TableInstance,
@@ -25,6 +32,7 @@ import {
   isExactFilterActive,
   mrtTheme,
 } from '../../utils';
+import RulesInformationDialog from './rulesInformationDialog.component';
 
 function Rules() {
   const { data: rulesData, isLoading: isLoadingRules } = useGetRules();
@@ -83,6 +91,9 @@ function Rules() {
     },
     [allSystemTypeValues]
   );
+
+  const [openInformationDialog, setOpenInformationDialog] =
+    React.useState<boolean>(false);
 
   const columns = React.useMemo<MRT_ColumnDef<Rule>[]>(() => {
     const systemTypeValues = systemTypesData?.map((type) => type.value);
@@ -365,6 +376,14 @@ function Rules() {
           >
             Show Deletion Rules
           </Button>
+          <IconButton
+            aria-label={'Open information dialog'}
+            onClick={() => {
+              setOpenInformationDialog(true);
+            }}
+          >
+            <InfoOutlineIcon />
+          </IconButton>
         </Box>
       );
     },
@@ -374,6 +393,7 @@ function Rules() {
         paddingLeft: '8px',
       }),
   });
+
   return (
     <div style={{ width: '100%' }}>
       {getAppliedRuleType(table) && (
@@ -386,6 +406,10 @@ function Rules() {
           clearFiltersAriaLabel={`Clear ${getAppliedRuleType(table)} Filter`}
         />
       )}
+      <RulesInformationDialog
+        open={openInformationDialog}
+        onClose={() => setOpenInformationDialog(false)}
+      />
       <MaterialReactTable table={table} />
     </div>
   );
