@@ -928,7 +928,7 @@ describe('Systems', () => {
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
           type_id: '2',
-          type: { id: '2', value: 'Operational' },
+          type: { id: '2', value: 'Operational', description: 'Operational system type' },
         })
       );
       expect(JSON.stringify(await postRequests[1].json())).equal(
@@ -944,7 +944,7 @@ describe('Systems', () => {
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
           type_id: '2',
-          type: { id: '2', value: 'Operational' },
+          type: { id: '2', value: 'Operational', description: 'Operational system type' },
         })
       );
     });
