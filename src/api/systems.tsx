@@ -35,19 +35,30 @@ export const getSystemImportanceColour = (
   }
 };
 
-const getSystemTypes = async (): Promise<SystemType[]> => {
-  return imsApi.get(`/v1/system-types`).then((response) => {
-    return response.data;
-  });
+const getSystemTypes = async (
+  system_type_id?: string
+): Promise<SystemType[]> => {
+  const queryParams = new URLSearchParams();
+
+  if (system_type_id) queryParams.append('system_type_id', system_type_id);
+
+  return imsApi
+    .get(`/v1/system-types`, {
+      params: queryParams,
+    })
+    .then((response) => {
+      return response.data;
+    });
 };
 
-export const useGetSystemTypes = (): UseQueryResult<
-  SystemType[],
-  AxiosError
-> => {
+export const useGetSystemTypes = (
+  system_type_id?: string
+): UseQueryResult<SystemType[], AxiosError> => {
   return useQuery({
-    queryKey: ['SystemTypes'],
-    queryFn: () => getSystemTypes(),
+    queryKey: ['SystemTypes', system_type_id],
+    queryFn: () => {
+      return getSystemTypes(system_type_id);
+    },
   });
 };
 
