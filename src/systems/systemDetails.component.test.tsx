@@ -15,6 +15,7 @@ describe('SystemDetails', () => {
       mockSystemDetails = SystemsJSON.filter(
         (system) => system.id === props.id
       )[0] as System;
+
     return renderComponentWithRouterProvider(
       <SystemDetails {...props} />,
       'systems'
@@ -43,7 +44,9 @@ describe('SystemDetails', () => {
 
     await waitFor(() => {
       expect(screen.getByText(mockSystemDetails.name)).toBeInTheDocument();
+      expect(screen.getByText('Operational')).toBeInTheDocument();
     });
+
     expect(screen.queryByText('Please select a system')).toBeFalsy();
     expect(
       screen.getByText(mockSystemDetails.location ?? '')
@@ -52,8 +55,6 @@ describe('SystemDetails', () => {
     expect(
       screen.getByText(mockSystemDetails.importance ?? '')
     ).toBeInTheDocument();
-
-    expect(screen.getByText('Operational')).toBeInTheDocument();
 
     // Can have new line character which breaks normal matching
     expect(
