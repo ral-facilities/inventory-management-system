@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import React from 'react';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import type { BreadcrumbsInfo } from '../api/api.types';
 import APIConfigProvider from '../apiConfigProvider.component';
 import { RoutesHomeLocation, type RoutesHomeLocationType } from '../app.types';
@@ -20,11 +20,19 @@ export interface BaseLayoutHeaderProps {
 function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
   const { breadcrumbsInfo, children, homeLocation } = props;
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Check if we are in Tree View or Normal View by looking for '/tree' in the URL
+  const isTreeView =
+    homeLocation === 'Systems' && location.pathname.includes('tree');
+
   const onChangeNode = React.useCallback(
     (id: string | null) => {
-      navigate(`/${RoutesHomeLocation[homeLocation]}${id ? `/${id}` : ''}`);
+      navigate(
+        `/${RoutesHomeLocation[homeLocation]}${id ? `/${id}` : ''}${isTreeView ? '/tree' : ''}`
+      );
     },
-    [homeLocation, navigate]
+    [homeLocation, isTreeView, navigate]
   );
 
   return (

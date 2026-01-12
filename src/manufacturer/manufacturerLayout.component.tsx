@@ -26,7 +26,7 @@ export const manufacturerLayoutLoader =
 
     if (manufacturerId) {
       await queryClient.ensureQueryData(
-        getManufacturerQuery(manufacturerId, true)
+        getManufacturerQuery(manufacturerId, { retry: false })
       );
     }
 

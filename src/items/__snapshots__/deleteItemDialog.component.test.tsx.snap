@@ -309,7 +309,7 @@ exports[`delete item dialog > renders correctly when in admin mode with tooltip 
     data-popper-reference-hidden=""
     id=":r7:"
     role="tooltip"
-    style="position: absolute; top: auto; left: 0px; margin: 0px; right: auto; bottom: 0px; transform: translate(0px, 0px);"
+    style="position: absolute; top: 0px; left: 0px; margin: 0px; bottom: 0px; transform: translate(0px, 0px);"
   >
     <div
       class="MuiTooltip-tooltip MuiTooltip-tooltipArrow MuiTooltip-tooltipPlacementTop css-1eex93v-MuiTooltip-tooltip"

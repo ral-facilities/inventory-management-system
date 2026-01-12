@@ -1,4 +1,6 @@
+import type { UndefinedInitialDataOptions } from '@tanstack/react-query';
 import type { Body, Meta } from '@uppy/core';
+import type { AxiosError } from 'axios';
 import { MRT_ColumnFiltersState } from 'material-react-table';
 import {
   CatalogueCategory,
@@ -47,6 +49,15 @@ export interface AllowedValuesList {
   };
 }
 
+export type GetQueryOptionsType<T> = Omit<
+  UndefinedInitialDataOptions<
+    T,
+    AxiosError<unknown, unknown>,
+    T,
+    readonly unknown[]
+  >,
+  'queryKey'
+>;
 // ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
 
 export type AllowedValues = AllowedValuesList;

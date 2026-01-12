@@ -19,6 +19,7 @@ import {
   useGetSystemIds,
   useGetSystems,
   useGetSystemsBreadcrumbs,
+  useGetSystemsTree,
   useGetSystemTypes,
   useMoveToSystem,
   usePatchSystem,
@@ -88,8 +89,68 @@ describe('System api functions', () => {
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
-
       expect(result.current.data).toEqual(SystemTypesJSON);
+    });
+  });
+
+  describe('useGetSystemsTree', () => {
+    it('fetches root-level systems and items with depth of 1 successfully', async () => {
+      const { result } = renderHook(() => useGetSystemsTree(null, 1), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+
+      expect(result.current.data).toMatchSnapshot();
+    });
+
+    it('fetches systems and items for a specific system ID successfully', async () => {
+      const { result } = renderHook(
+        () => useGetSystemsTree('65328f34a40ff5301575a4e7'),
+        {
+          wrapper: hooksWrapperWithProviders(),
+        }
+      );
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+
+      expect(result.current.data).toMatchSnapshot();
+    });
+
+    it('throws an error when total subsystems exceed the maxSubsystems limit', async () => {
+      const { result } = renderHook(
+        () => useGetSystemsTree(null, undefined, 2, 0),
+        {
+          wrapper: hooksWrapperWithProviders(),
+        }
+      );
+
+      await waitFor(() => {
+        expect(result.current.isError).toBeTruthy();
+      });
+
+      expect(result.current.error?.message).toEqual(
+        'Total subsystems exceeded the maximum allowed limit of 0. Current count: 3'
+      );
+    });
+
+    it('fetches systems and items with default depth and subsystemsCutOffPoint successfully', async () => {
+      const { result } = renderHook(
+        () => useGetSystemsTree(null, undefined, 1),
+        {
+          wrapper: hooksWrapperWithProviders(),
+        }
+      );
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+
+      expect(result.current.data).toMatchSnapshot();
     });
   });
 
