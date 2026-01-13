@@ -51,6 +51,28 @@ export const useGetSystemTypes = (): UseQueryResult<
   });
 };
 
+const getSystemType = async (id: string): Promise<SystemType> => {
+  return imsApi.get(`/v1/system-types/${id}`).then((response) => {
+    return response.data;
+  });
+};
+
+export const getSystemTypeQuery = (id?: string | null, loader?: boolean) =>
+  queryOptions<SystemType, AxiosError>({
+    queryKey: ['SystemType', id],
+    queryFn: () => {
+      return getSystemType(id ?? '');
+    },
+    enabled: !!id,
+    retry: loader ? false : undefined,
+  });
+
+export const useGetSystemType = (
+  id?: string | null
+): UseQueryResult<SystemType, AxiosError> => {
+  return useQuery(getSystemTypeQuery(id));
+};
+
 const getSystems = async (parent_id?: string): Promise<System[]> => {
   const queryParams = new URLSearchParams();
 
