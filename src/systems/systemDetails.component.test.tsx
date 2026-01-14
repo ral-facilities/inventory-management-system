@@ -13,13 +13,14 @@ describe('SystemDetails', () => {
   let user: UserEvent;
 
   const createView = () => {
-    if (props.id)
+    if (props.id) {
       mockSystemDetails = SystemsJSON.filter(
         (system) => system.id === props.id
       )[0] as System;
-    mockSystemTypeDetails = SystemTypesJSON.filter(
-      (system_type) => system_type.id === mockSystemDetails.type_id
-    )[0] as SystemType;
+      mockSystemTypeDetails = SystemTypesJSON.filter(
+        (system_type) => system_type.id === mockSystemDetails.type_id
+      )[0] as SystemType;
+    }
     return renderComponentWithRouterProvider(
       <SystemDetails {...props} />,
       'systems'
