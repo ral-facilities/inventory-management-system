@@ -85,6 +85,13 @@ describe('SystemItemsTable', () => {
 
     expect(await screen.findByText('Clear Filters')).toBeInTheDocument();
 
+    // Ripples sometimes appear here, they seem to only be present on WSL and not on VMs & CI - wait for them to go
+    // away so local tests don't interfere
+    await waitFor(() =>
+      // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
+      expect(view.container.querySelector('.MuiTouchRipple-child')).toBeNull()
+    );
+
     // Rest in a snapshot
     expect(view.asFragment()).toMatchSnapshot();
   });
@@ -122,6 +129,13 @@ describe('SystemItemsTable', () => {
       await screen.findByRole('button', { name: 'Show/Hide columns' })
     );
     await user.click(screen.getByText('Created'));
+
+    // Ripples sometimes appear here, they seem to only be present on WSL and not on VMs & CI - wait for them to go
+    // away so local tests don't interfere
+    await waitFor(() =>
+      // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
+      expect(view.container.querySelector('.MuiTouchRipple-child')).toBeNull()
+    );
 
     // Rest in a snapshot
     expect(view.asFragment()).toMatchSnapshot();
