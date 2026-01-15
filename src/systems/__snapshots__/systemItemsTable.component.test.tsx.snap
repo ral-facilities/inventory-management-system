@@ -3355,7 +3355,24 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                 </svg>
                 <span
                   class="MuiTouchRipple-root css-r3djoj-MuiTouchRipple-root"
-                />
+                >
+                  <span
+                    class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible"
+                    style="width: 173.20508075688772px; height: 173.20508075688772px; top: -36.60254037844386px; left: 13.397459621556138px;"
+                  >
+                    <span
+                      class="MuiTouchRipple-child MuiTouchRipple-childLeaving"
+                    />
+                  </span>
+                  <span
+                    class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible MuiTouchRipple-ripplePulsate"
+                    style="width: 173.20508075688772px; height: 173.20508075688772px; top: -36.60254037844386px; left: 13.397459621556138px;"
+                  >
+                    <span
+                      class="MuiTouchRipple-child MuiTouchRipple-childLeaving MuiTouchRipple-childPulsate"
+                    />
+                  </span>
+                </span>
               </button>
               <button
                 aria-label="Toggle full screen"
@@ -5713,7 +5730,24 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                     </svg>
                     <span
                       class="MuiTouchRipple-root css-r3djoj-MuiTouchRipple-root"
-                    />
+                    >
+                      <span
+                        class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible"
+                        style="width: 173.20508075688772px; height: 173.20508075688772px; top: -36.60254037844386px; left: 13.397459621556138px;"
+                      >
+                        <span
+                          class="MuiTouchRipple-child MuiTouchRipple-childLeaving"
+                        />
+                      </span>
+                      <span
+                        class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible MuiTouchRipple-ripplePulsate"
+                        style="width: 173.20508075688772px; height: 173.20508075688772px; top: -36.60254037844386px; left: 13.397459621556138px;"
+                      >
+                        <span
+                          class="MuiTouchRipple-child MuiTouchRipple-childLeaving MuiTouchRipple-childPulsate"
+                        />
+                      </span>
+                    </span>
                   </button>
                 </span>
               </td>
