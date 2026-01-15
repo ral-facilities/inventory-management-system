@@ -99,8 +99,12 @@ describe('SystemItemsDialog', () => {
 
     expect(screen.getByRole('button', { name: 'Next' })).toBeInTheDocument();
 
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
     expect(baseElement).toMatchSnapshot();
-  });
+  }, 10000);
 
   it('renders the breadcrumbs and navigates correctly', async () => {
     createView();
@@ -287,23 +291,28 @@ describe('SystemItemsDialog', () => {
       await user.click(screen.getByLabelText('navigate to systems home'));
 
       await waitFor(() => {
-        expect(screen.getByText('Giant laser')).toBeInTheDocument();
+        expect(screen.getByText('Pulse Laser')).toBeInTheDocument();
       });
 
-      await user.click(screen.getByText('Giant laser'));
+      await user.click(screen.getByText('Pulse Laser'));
 
-      await waitFor(() => {
-        expect(screen.getByText('Smaller laser')).toBeInTheDocument();
-      });
+      expect(
+        await screen.findByText('Item Moving Rule Applied')
+      ).toBeInTheDocument();
+      expect(
+        await screen.findByLabelText(
+          `The items' usage statuses will be updated to In Use, according to the rules`
+        )
+      ).toBeInTheDocument();
 
       await user.click(screen.getByRole('button', { name: 'Move here' }));
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/KvT2Ox7n', {
-        system_id: '65328f34a40ff5301575a4e3',
+        system_id: '656da8ef9cba7a76c6f81a5d',
         usage_status_id: '1',
       });
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
-        system_id: '65328f34a40ff5301575a4e3',
+        system_id: '656da8ef9cba7a76c6f81a5d',
         usage_status_id: '1',
       });
 
@@ -311,7 +320,7 @@ describe('SystemItemsDialog', () => {
       expect(mockOnChangeSelectedItems).toHaveBeenCalledWith({});
     }, 10000);
 
-    it('moves selected systems (to non-root system)', async () => {
+    it('moves selected systems (to non-root system with the same system type)', async () => {
       props.parentSystemId = SystemsJSON[2].id;
       createView();
 
@@ -322,27 +331,33 @@ describe('SystemItemsDialog', () => {
       await user.click(screen.getByLabelText('navigate to systems home'));
 
       await waitFor(() => {
-        expect(screen.getByText('Giant laser')).toBeInTheDocument();
+        expect(screen.getByText('Pulse Laser')).toBeInTheDocument();
       });
 
-      await user.click(screen.getByText('Giant laser'));
+      await user.click(screen.getByText('Pulse Laser'));
 
-      await waitFor(() => {
-        expect(screen.getByText('Smaller laser')).toBeInTheDocument();
-      });
+      expect(
+        await screen.findByText('Item Moving Rule Applied')
+      ).toBeInTheDocument();
+
+      expect(
+        await screen.findByLabelText(
+          `The items' usage statuses will remain the same, according to the rules`
+        )
+      ).toBeInTheDocument();
 
       await user.click(screen.getByRole('button', { name: 'Move here' }));
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/KvT2Ox7n', {
-        system_id: '65328f34a40ff5301575a4e3',
+        system_id: '656da8ef9cba7a76c6f81a5d',
       });
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
-        system_id: '65328f34a40ff5301575a4e3',
+        system_id: '656da8ef9cba7a76c6f81a5d',
       });
 
       expect(mockOnClose).toHaveBeenCalled();
       expect(mockOnChangeSelectedItems).toHaveBeenCalledWith({});
-    }, 10000);
+    }, 15000);
   });
 
   describe('Move to as Admin', () => {

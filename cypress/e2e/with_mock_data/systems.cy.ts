@@ -478,13 +478,13 @@ describe('Systems', () => {
       cy.findByRole('option', { name: 'Operational' }).click();
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByText(
-        'Specified system type not found. Please select a valid system type.'
+        'The specified system type does not exist. Please select a valid system type.'
       ).should('be.visible');
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
       cy.findByRole('button', { name: 'Add System' }).click();
       cy.findByText(
-        'Specified system type not found. Please select a valid system type.'
+        'The specified system type does not exist. Please select a valid system type.'
       ).should('not.exist');
     });
   });
@@ -626,7 +626,7 @@ describe('Systems', () => {
       cy.findByLabelText('Name *').type('Error type not found');
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByText(
-        'Specified system type not found. Please select a valid system type.'
+        'The specified system type does not exist. Please select a valid system type.'
       ).should('exist');
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
@@ -635,7 +635,7 @@ describe('Systems', () => {
       cy.findByText('Edit').click();
 
       cy.findByText(
-        'Specified system type not found. Please select a valid system type.'
+        'The specified system type does not exist. Please select a valid system type.'
       ).should('not.exist');
     });
     it('displays error message if the system has a duplicate name that disappears once closed', () => {
@@ -990,8 +990,7 @@ describe('Systems', () => {
           cy.findByRole('button', { name: 'navigate to systems home' }).click();
           cy.findByLabelText('Storage row').click();
 
-          // eslint-disable-next-line cypress/no-unnecessary-waiting
-          cy.wait(4000);
+          cy.findByText('Item Moving Rule Applied').should('exist');
           cy.findByRole('button', { name: 'Move here' }).click();
         });
 
@@ -1143,8 +1142,7 @@ describe('Systems', () => {
     cy.findByLabelText('Row Actions').first().click();
     cy.findByText('Edit').click();
 
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.findByText('Item Moving Rule Applied').should('exist');
 
     cy.findByRole('button', { name: 'Next' }).click();
 
@@ -1176,8 +1174,7 @@ describe('Systems', () => {
     cy.findByLabelText('Row Actions').first().click();
     cy.findByText('Duplicate').click();
 
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.findByText('Item Creation Rule Applied').should('exist');
 
     cy.findByRole('button', { name: 'Next' }).click();
     cy.findByRole('button', { name: 'Next' }).click();

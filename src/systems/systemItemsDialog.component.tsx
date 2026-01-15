@@ -1,3 +1,4 @@
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {
   Box,
   Button,
@@ -12,7 +13,6 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Grid from '@mui/material/Grid2';
 import { MRT_RowSelectionState } from 'material-react-table';
 import React from 'react';
@@ -25,11 +25,12 @@ import {
   useGetSystems,
   useGetSystemsBreadcrumbs,
 } from '../api/systems';
+import { MoveItemsToSystemUsageStatus } from '../app.types';
+import MRTTopTableAlert from '../common/mrtTopTableAlert.component';
 import handleTransferState from '../handleTransferState';
 import Breadcrumbs from '../view/breadcrumbs.component';
-import { SystemsTableView } from './systemsTableView.component';
 import { SystemItemsUsageStatusTable } from './systemItemsUsageStatuses.component';
-import { MoveItemsToSystemUsageStatus } from '../app.types';
+import { SystemsTableView } from './systemsTableView.component';
 
 export interface SystemItemsDialogProps {
   open: boolean;
@@ -92,7 +93,8 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   const { data: tableRules } = useGetRules(srcSystemTypeId);
 
   // This should be a list of 1 rule
-  const { data: selectedRules } = useGetRules(srcSystemTypeId, dstSystemTypeId);
+  const { data: selectedRules, isLoading: isSelectedRulesLoading } =
+    useGetRules(srcSystemTypeId, dstSystemTypeId);
 
   const [placeIntoSystemError, setPlaceIntoSystemError] = React.useState<
     string | undefined
@@ -260,6 +262,8 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const shouldShowMissingRuleWarning =
+    !selectedRules?.[0] && srcSystemTypeId !== dstSystemTypeId;
   const renderStepContent = (step: number) => {
     switch (step) {
       case 0:
@@ -276,21 +280,42 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
               />
             </Grid>
             <Grid size={12}>
+              {parentSystemId &&
+                selectedItems.length !== 0 &&
+                !isSelectedRulesLoading &&
+                !systemsDataLoading && (
+                  <MRTTopTableAlert
+                    title={
+                      shouldShowMissingRuleWarning
+                        ? `WARNING: No rule exists for moving ${selectedItems.length > 1 ? 'these items' : 'this item'} between these system types`
+                        : 'Item Moving Rule Applied'
+                    }
+                    showInfoTooltip={!shouldShowMissingRuleWarning}
+                    infoTooltipTitle={
+                      selectedRules && selectedRules[0]
+                        ? `The ${selectedItems.length > 1 ? "items' usage statuses" : "item's usage status"} will be updated to ${selectedRules[0].dst_usage_status?.value}, according to the rules`
+                        : `The ${selectedItems.length > 1 ? "items' usage statuses" : "item's usage status"} will remain the same, according to the rules`
+                    }
+                    alertProps={{
+                      elevation: 1,
+                      color: shouldShowMissingRuleWarning ? 'warning' : 'info',
+                    }}
+                  />
+                )}
               <SystemsTableView
                 systemsData={systemsData}
                 systemsDataLoading={systemsDataLoading}
                 onChangeParentId={changeParentSystemId}
                 systemParentId={parentSystemId ?? undefined}
                 isSystemSelectable={(system) => {
-                  return (
-                    isPrivilegedMode ||
-                    tableRules?.some(
-                      (rule) =>
-                        rule.dst_system_type?.id === system.type_id ||
-                        system.type_id === srcSystemTypeId
-                    ) ||
-                    false
-                  );
+                  if (isPrivilegedMode) return true;
+                  const matchesSrc = system?.type_id === srcSystemTypeId;
+                  const matchesAnyDstRule =
+                    Array.isArray(tableRules) &&
+                    tableRules.some(
+                      (rule) => rule?.dst_system_type?.id === system?.type_id
+                    );
+                  return matchesSrc || matchesAnyDstRule;
                 }}
                 // Use most unrestricted variant (i.e. copy with no selection)
                 selectedSystems={[]}

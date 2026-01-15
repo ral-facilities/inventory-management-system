@@ -339,8 +339,8 @@ describe('items api functions', () => {
         usageStatusId: '2',
       };
 
-      // Fail just the 1st system
-      moveItemsToSystem.selectedItems[0].id = 'Error 409';
+      // Fail just the 1st item
+      moveItemsToSystem.selectedItems[0].id = 'Error 422';
       moveItemsToSystem.selectedItems[0].serial_number = null;
 
       const { result } = renderHook(() => useMoveItemsToSystem(), {
@@ -369,7 +369,7 @@ describe('items api functions', () => {
           .map((item, index) =>
             index === 0
               ? {
-                  message: 'The specified system ID does not exist',
+                  message: 'The specified system does not exist',
                   name: item.serial_number ?? 'No serial number',
                   state: 'error',
                 }

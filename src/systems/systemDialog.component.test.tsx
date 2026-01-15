@@ -237,7 +237,7 @@ describe('Systems Dialog', () => {
 
       expect(
         screen.getByText(
-          'Specified system type not found. Please select a valid system type.'
+          'The specified system type does not exist. Please select a valid system type.'
         )
       ).toBeInTheDocument();
       expect(mockOnClose).not.toHaveBeenCalled();
@@ -441,7 +441,7 @@ describe('Systems Dialog', () => {
       expect(mockOnClose).not.toHaveBeenCalled();
     });
 
-    it('displays error message when type does not exist', async () => {
+    it('displays error message when the system type does not exist', async () => {
       createView();
 
       const values = {
@@ -454,7 +454,7 @@ describe('Systems Dialog', () => {
 
       expect(
         screen.getByText(
-          'Specified system type not found. Please select a valid system type.'
+          'The specified system type does not exist. Please select a valid system type.'
         )
       ).toBeInTheDocument();
       expect(mockOnClose).not.toHaveBeenCalled();

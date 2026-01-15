@@ -111,8 +111,7 @@ describe('Items', () => {
 
     cy.findAllByText('Storage').should('have.length', 1);
 
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.findByText('Item Creation Rule Applied').should('exist');
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -163,8 +162,7 @@ describe('Items', () => {
 
     cy.findAllByText('Storage').should('have.length', 1);
 
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.findByText('Item Creation Rule Applied').should('exist');
 
     cy.findByRole('button', { name: 'Next' }).click();
     cy.findByText('Show advanced options').click();
@@ -223,8 +221,7 @@ describe('Items', () => {
 
     cy.findAllByText('Storage').should('have.length', 1);
 
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.findByText('Item Creation Rule Applied').should('exist');
 
     cy.findByRole('button', { name: 'Next' }).click();
     cy.findByText('Show advanced options').click();
@@ -296,8 +293,7 @@ describe('Items', () => {
 
     cy.findAllByText('Storage').should('have.length', 1);
 
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.findByText('Item Creation Rule Applied').should('exist');
 
     cy.findByRole('button', { name: 'Next' }).click();
 
@@ -352,8 +348,7 @@ describe('Items', () => {
 
     cy.findAllByText('Storage').should('have.length', 1);
 
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.findByText('Item Creation Rule Applied').should('exist');
 
     cy.findByRole('button', { name: 'Next' }).click();
 
@@ -424,8 +419,9 @@ describe('Items', () => {
     // Operational is 'not allowed' by rules so admin user should be able to bypass this and select usasge status
     cy.findAllByText('Operational').first().click();
 
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.findByText(
+      'WARNING: No rule exists for creating a new item within this system type'
+    ).should('exist');
 
     cy.findByRole('button', { name: 'Next' }).click();
 
@@ -480,8 +476,7 @@ describe('Items', () => {
 
     cy.findAllByText('Storage').should('have.length', 1);
 
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.findByText('Item Creation Rule Applied').should('exist');
 
     cy.findByRole('button', { name: 'Next' }).click();
 
@@ -1706,8 +1701,7 @@ describe('Items', () => {
 
     cy.findAllByText('Scrapped').should('have.length', 1);
 
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.findByText('Item Moving Rule Applied').should('exist');
 
     cy.findByRole('button', { name: 'Next' }).click();
 
@@ -1844,8 +1838,9 @@ describe('Items', () => {
     cy.findByRole('button', { name: 'navigate to systems home' }).click();
     cy.findAllByText('Scrapped').first().click();
 
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.findByText(
+      'WARNING: No rule exists for moving this item between these system types'
+    ).should('exist');
 
     cy.findByRole('button', { name: 'Next' }).click();
 
@@ -1906,8 +1901,7 @@ describe('Items', () => {
 
     cy.findAllByText('Storage').should('have.length', 1);
 
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.findByText('Item Creation Rule Applied').should('exist');
 
     cy.findByRole('button', { name: 'Next' }).click();
     cy.findByRole('button', { name: 'Next' }).click();

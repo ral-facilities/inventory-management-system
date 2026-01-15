@@ -51,47 +51,84 @@ exports[`Settings Error Component > renders Settings error page correctly 1`] = 
 
 exports[`Settings Layout > renders settings layout page correctly 1`] = `
 <DocumentFragment>
-  <div
-    class="MuiBox-root css-v2kfba"
-  >
+  <div>
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-12ucijv-MuiGrid2-root"
+      class="MuiBox-root css-v2kfba"
     >
       <div
-        class="MuiBox-root css-1ko6z0"
+        class="MuiBox-root css-k008qs"
       >
-        <span
-          aria-label="Settings Home"
-          class=""
-          data-mui-internal-clone-element="true"
+        <div
+          class="MuiBox-root css-zdpt2t"
         >
-          <button
-            aria-label="navigate to settings home"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
-            tabindex="0"
-            type="button"
+          <label
+            class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
           >
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-              data-testid="HomeIcon"
-              focusable="false"
-              viewBox="0 0 24 24"
+            <span
+              class="MuiSwitch-root MuiSwitch-sizeMedium css-rehya9-MuiSwitch-root"
             >
-              <path
-                d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+              <span
+                class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary css-161ms7l-MuiButtonBase-root-MuiSwitch-switchBase"
+              >
+                <input
+                  class="PrivateSwitchBase-input MuiSwitch-input css-j8yymo"
+                  type="checkbox"
+                />
+                <span
+                  class="MuiSwitch-thumb css-17jyosd-MuiSwitch-thumb"
+                />
+              </span>
+              <span
+                class="MuiSwitch-track css-tj8d99-MuiSwitch-track"
               />
-            </svg>
-          </button>
-        </span>
-        <nav
-          aria-label="breadcrumb"
-          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-fxix4h-MuiTypography-root-MuiBreadcrumbs-root"
+            </span>
+            <span
+              class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-rizt0-MuiTypography-root"
+            >
+              Privileged user
+            </span>
+          </label>
+        </div>
+      </div>
+      <div
+        class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-12ucijv-MuiGrid2-root"
+      >
+        <div
+          class="MuiBox-root css-1ko6z0"
         >
-          <ol
-            class="MuiBreadcrumbs-ol css-1uwp4ue-MuiBreadcrumbs-ol"
-          />
-        </nav>
+          <span
+            aria-label="Settings Home"
+            class=""
+            data-mui-internal-clone-element="true"
+          >
+            <button
+              aria-label="navigate to settings home"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
+              tabindex="0"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                data-testid="HomeIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+                />
+              </svg>
+            </button>
+          </span>
+          <nav
+            aria-label="breadcrumb"
+            class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-fxix4h-MuiTypography-root-MuiBreadcrumbs-root"
+          >
+            <ol
+              class="MuiBreadcrumbs-ol css-1uwp4ue-MuiBreadcrumbs-ol"
+            />
+          </nav>
+        </div>
       </div>
     </div>
   </div>
@@ -100,83 +137,120 @@ exports[`Settings Layout > renders settings layout page correctly 1`] = `
 
 exports[`Settings Layout > renders units breadcrumbs correctly 1`] = `
 <DocumentFragment>
-  <div
-    class="MuiBox-root css-v2kfba"
-  >
+  <div>
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-12ucijv-MuiGrid2-root"
+      class="MuiBox-root css-v2kfba"
     >
       <div
-        class="MuiBox-root css-1ko6z0"
+        class="MuiBox-root css-k008qs"
       >
-        <span
-          aria-label="Settings Home"
-          class=""
-          data-mui-internal-clone-element="true"
+        <div
+          class="MuiBox-root css-zdpt2t"
         >
-          <button
-            aria-label="navigate to settings home"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
-            tabindex="0"
-            type="button"
+          <label
+            class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
           >
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-              data-testid="HomeIcon"
-              focusable="false"
-              viewBox="0 0 24 24"
+            <span
+              class="MuiSwitch-root MuiSwitch-sizeMedium css-rehya9-MuiSwitch-root"
             >
-              <path
-                d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+              <span
+                class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary css-161ms7l-MuiButtonBase-root-MuiSwitch-switchBase"
+              >
+                <input
+                  class="PrivateSwitchBase-input MuiSwitch-input css-j8yymo"
+                  type="checkbox"
+                />
+                <span
+                  class="MuiSwitch-thumb css-17jyosd-MuiSwitch-thumb"
+                />
+              </span>
+              <span
+                class="MuiSwitch-track css-tj8d99-MuiSwitch-track"
               />
-            </svg>
-          </button>
-        </span>
-        <nav
-          aria-label="breadcrumb"
-          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-fxix4h-MuiTypography-root-MuiBreadcrumbs-root"
+            </span>
+            <span
+              class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-rizt0-MuiTypography-root"
+            >
+              Privileged user
+            </span>
+          </label>
+        </div>
+      </div>
+      <div
+        class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-12ucijv-MuiGrid2-root"
+      >
+        <div
+          class="MuiBox-root css-1ko6z0"
         >
-          <ol
-            class="MuiBreadcrumbs-ol css-1uwp4ue-MuiBreadcrumbs-ol"
+          <span
+            aria-label="Settings Home"
+            class=""
+            data-mui-internal-clone-element="true"
           >
-            <li
-              class="MuiBreadcrumbs-li"
-            >
-              <div
-                class="MuiBox-root css-8zy5qf"
-              />
-            </li>
-            <li
-              aria-hidden="true"
-              class="MuiBreadcrumbs-separator css-jhr02i-MuiBreadcrumbs-separator"
+            <button
+              aria-label="navigate to settings home"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
+              tabindex="0"
+              type="button"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
-                data-testid="NavigateNextIcon"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                data-testid="HomeIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
                 <path
-                  d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                  d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
                 />
               </svg>
-            </li>
-            <li
-              class="MuiBreadcrumbs-li"
+            </button>
+          </span>
+          <nav
+            aria-label="breadcrumb"
+            class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-fxix4h-MuiTypography-root-MuiBreadcrumbs-root"
+          >
+            <ol
+              class="MuiBreadcrumbs-ol css-1uwp4ue-MuiBreadcrumbs-ol"
             >
-              <p
-                aria-label="Units"
-                class="MuiTypography-root MuiTypography-body1 css-1d1tquj-MuiTypography-root"
-                data-mui-internal-clone-element="true"
-                role="tooltip"
+              <li
+                class="MuiBreadcrumbs-li"
               >
-                Units
-              </p>
-            </li>
-          </ol>
-        </nav>
+                <div
+                  class="MuiBox-root css-8zy5qf"
+                />
+              </li>
+              <li
+                aria-hidden="true"
+                class="MuiBreadcrumbs-separator css-jhr02i-MuiBreadcrumbs-separator"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                  data-testid="NavigateNextIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                  />
+                </svg>
+              </li>
+              <li
+                class="MuiBreadcrumbs-li"
+              >
+                <p
+                  aria-label="Units"
+                  class="MuiTypography-root MuiTypography-body1 css-1d1tquj-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Units
+                </p>
+              </li>
+            </ol>
+          </nav>
+        </div>
       </div>
     </div>
   </div>
@@ -185,83 +259,120 @@ exports[`Settings Layout > renders units breadcrumbs correctly 1`] = `
 
 exports[`Settings Layout > renders usage statuses breadcrumbs correctly 1`] = `
 <DocumentFragment>
-  <div
-    class="MuiBox-root css-v2kfba"
-  >
+  <div>
     <div
-      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-12ucijv-MuiGrid2-root"
+      class="MuiBox-root css-v2kfba"
     >
       <div
-        class="MuiBox-root css-1ko6z0"
+        class="MuiBox-root css-k008qs"
       >
-        <span
-          aria-label="Settings Home"
-          class=""
-          data-mui-internal-clone-element="true"
+        <div
+          class="MuiBox-root css-zdpt2t"
         >
-          <button
-            aria-label="navigate to settings home"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
-            tabindex="0"
-            type="button"
+          <label
+            class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-19opgx6-MuiFormControlLabel-root"
           >
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-              data-testid="HomeIcon"
-              focusable="false"
-              viewBox="0 0 24 24"
+            <span
+              class="MuiSwitch-root MuiSwitch-sizeMedium css-rehya9-MuiSwitch-root"
             >
-              <path
-                d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+              <span
+                class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary css-161ms7l-MuiButtonBase-root-MuiSwitch-switchBase"
+              >
+                <input
+                  class="PrivateSwitchBase-input MuiSwitch-input css-j8yymo"
+                  type="checkbox"
+                />
+                <span
+                  class="MuiSwitch-thumb css-17jyosd-MuiSwitch-thumb"
+                />
+              </span>
+              <span
+                class="MuiSwitch-track css-tj8d99-MuiSwitch-track"
               />
-            </svg>
-          </button>
-        </span>
-        <nav
-          aria-label="breadcrumb"
-          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-fxix4h-MuiTypography-root-MuiBreadcrumbs-root"
+            </span>
+            <span
+              class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-rizt0-MuiTypography-root"
+            >
+              Privileged user
+            </span>
+          </label>
+        </div>
+      </div>
+      <div
+        class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-12ucijv-MuiGrid2-root"
+      >
+        <div
+          class="MuiBox-root css-1ko6z0"
         >
-          <ol
-            class="MuiBreadcrumbs-ol css-1uwp4ue-MuiBreadcrumbs-ol"
+          <span
+            aria-label="Settings Home"
+            class=""
+            data-mui-internal-clone-element="true"
           >
-            <li
-              class="MuiBreadcrumbs-li"
-            >
-              <div
-                class="MuiBox-root css-8zy5qf"
-              />
-            </li>
-            <li
-              aria-hidden="true"
-              class="MuiBreadcrumbs-separator css-jhr02i-MuiBreadcrumbs-separator"
+            <button
+              aria-label="navigate to settings home"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
+              tabindex="0"
+              type="button"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
-                data-testid="NavigateNextIcon"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                data-testid="HomeIcon"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
                 <path
-                  d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                  d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
                 />
               </svg>
-            </li>
-            <li
-              class="MuiBreadcrumbs-li"
+            </button>
+          </span>
+          <nav
+            aria-label="breadcrumb"
+            class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-fxix4h-MuiTypography-root-MuiBreadcrumbs-root"
+          >
+            <ol
+              class="MuiBreadcrumbs-ol css-1uwp4ue-MuiBreadcrumbs-ol"
             >
-              <p
-                aria-label="Usage statuses"
-                class="MuiTypography-root MuiTypography-body1 css-1d1tquj-MuiTypography-root"
-                data-mui-internal-clone-element="true"
-                role="tooltip"
+              <li
+                class="MuiBreadcrumbs-li"
               >
-                Usage statuses
-              </p>
-            </li>
-          </ol>
-        </nav>
+                <div
+                  class="MuiBox-root css-8zy5qf"
+                />
+              </li>
+              <li
+                aria-hidden="true"
+                class="MuiBreadcrumbs-separator css-jhr02i-MuiBreadcrumbs-separator"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                  data-testid="NavigateNextIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                  />
+                </svg>
+              </li>
+              <li
+                class="MuiBreadcrumbs-li"
+              >
+                <p
+                  aria-label="Usage statuses"
+                  class="MuiTypography-root MuiTypography-body1 css-1d1tquj-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Usage statuses
+                </p>
+              </li>
+            </ol>
+          </nav>
+        </div>
       </div>
     </div>
   </div>
