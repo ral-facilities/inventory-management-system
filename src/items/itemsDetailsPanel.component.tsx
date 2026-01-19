@@ -11,7 +11,8 @@ import React from 'react';
 import { Link } from 'react-router';
 import { CatalogueItem, Item } from '../api/api.types';
 import { useGetManufacturer } from '../api/manufacturers';
-import { useGetSystem, useGetSystemTypes } from '../api/systems';
+import { useGetSystem } from '../api/systems';
+import { useGetSystemTypes } from '../api/systemTypes';
 import PrimaryImage from '../common/images/primaryImage.component';
 import { formatDateTimeStrings } from '../utils';
 

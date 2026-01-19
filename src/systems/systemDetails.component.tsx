@@ -10,11 +10,8 @@ import {
 import Grid from '@mui/material/Grid2';
 import React from 'react';
 import { System } from '../api/api.types';
-import {
-  getSystemImportanceColour,
-  useGetSystem,
-  useGetSystemType,
-} from '../api/systems';
+import { getSystemImportanceColour, useGetSystem } from '../api/systems';
+import { useGetSystemType } from '../api/systemTypes';
 import ActionMenu from '../common/actionMenu.component';
 import PrimaryImage from '../common/images/primaryImage.component';
 import TabView from '../common/tab/tabView.component';
