@@ -193,11 +193,14 @@ describe('Utility functions', () => {
       });
 
       // Mocking the ResizeObserver
-      window.ResizeObserver = vi.fn().mockImplementation((callback) => ({
-        observe: () => observeMock(callback),
-        disconnect: vi.fn(),
-        unobserve: vi.fn(),
-      }));
+      window.ResizeObserver = vi.fn().mockImplementation(function (
+        this: ResizeObserver,
+        callback: ResizeObserverCallback
+      ) {
+        this.disconnect = vi.fn();
+        this.observe = () => observeMock(callback);
+        this.unobserve = vi.fn();
+      }) as unknown as typeof ResizeObserver;
 
       renderComponentWithRouterProvider(
         <OverflowTip>
@@ -247,11 +250,14 @@ describe('Utility functions', () => {
       });
 
       // Mocking the ResizeObserver
-      window.ResizeObserver = vi.fn().mockImplementation((callback) => ({
-        observe: () => observeMock(callback),
-        disconnect: vi.fn(),
-        unobserve: vi.fn(),
-      }));
+      window.ResizeObserver = vi.fn().mockImplementation(function (
+        this: ResizeObserver,
+        callback: ResizeObserverCallback
+      ) {
+        this.disconnect = vi.fn();
+        this.observe = () => observeMock(callback);
+        this.unobserve = vi.fn();
+      }) as unknown as typeof ResizeObserver;
 
       renderComponentWithRouterProvider(
         <OverflowTip>Some long text that overflows</OverflowTip>
