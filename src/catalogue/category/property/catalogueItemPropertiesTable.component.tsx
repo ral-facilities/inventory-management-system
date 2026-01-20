@@ -2,6 +2,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {
   Box,
   Button,
+  Divider,
   ListItemIcon,
   ListItemText,
   MenuItem,
@@ -46,6 +47,7 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 import { useGetUnits } from '../../../api/units';
 import { RequestType } from '../../../form.schemas';
 import PropertyDialog from './propertyDialog.component';
+import { useAuthorisationState } from '../../../authProvider.component';
 
 export interface PropertiesTableProps {
   requestType: RequestType;
@@ -54,6 +56,8 @@ export interface PropertiesTableProps {
 
 export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
   const { catalogueCategory, requestType } = props;
+
+  const { isPrivilegedUser } = useAuthorisationState();
 
   const { control, clearErrors } =
     useFormContext<AddCatalogueCategoryWithPlacementIds>();
@@ -65,6 +69,9 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
     control,
     name: 'properties',
   });
+
+  const [isPrivilegedMode, setIsPrivilegedMode] =
+    React.useState<boolean>(false);
 
   const [propertyDialogRequestType, setPropertyDialogRequestType] =
     React.useState<RequestType>('post');
@@ -332,6 +339,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
           selectedProperty={row.original}
           isMigration={requestType === 'patch'}
           index={requestType === 'post' ? index : undefined}
+          isPrivilegedMode={isPrivilegedMode}
         />
       );
     },
@@ -380,6 +388,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
           key="edit"
           aria-label={`Edit property ${row.original.name}`}
           onClick={() => {
+            setIsPrivilegedMode(false);
             setPropertyDialogRequestType('patch');
             setIndex(row.index);
             table.setCreatingRow(row);
@@ -407,6 +416,28 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
                   <DeleteIcon />
                 </ListItemIcon>
                 <ListItemText>Delete</ListItemText>
+              </MenuItem>,
+            ]
+          : []),
+        ...(isPrivilegedUser
+          ? [
+              <Divider key="divider" />,
+              <MenuItem
+                key="edit-as-admin"
+                aria-label={`Edit property ${row.original.name}`}
+                onClick={() => {
+                  setIsPrivilegedMode(true);
+                  setPropertyDialogRequestType('patch');
+                  setIndex(row.index);
+                  table.setCreatingRow(row);
+                  closeMenu();
+                }}
+                sx={{ m: 0 }}
+              >
+                <ListItemIcon>
+                  <EditIcon />
+                </ListItemIcon>
+                <ListItemText>Edit as Admin</ListItemText>
               </MenuItem>,
             ]
           : []),
