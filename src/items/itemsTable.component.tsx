@@ -1,3 +1,4 @@
+import { InfoOutlined } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -12,6 +13,7 @@ import {
   MenuItem,
   Link as MuiLink,
   TableCellBaseProps,
+  Tooltip,
 } from '@mui/material';
 import {
   MaterialReactTable,
@@ -152,7 +154,22 @@ export function ItemsTable(props: ItemTableProps) {
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     const viewCatalogueItemProperties = catalogueCategory?.properties ?? [];
     const systemTypeValues = systemTypesData?.map((type) => type.value);
+    const systemTypeDescription = systemTypesData?.map(
+      (type) => type.description
+    );
     const usageStatusValues = usageStatusData?.map((val) => val.value);
+
+    // create tooltip content for System Type header
+    let systemTypeTooltip = '';
+    if (systemTypeValues && systemTypeDescription) {
+      for (let i = 0; i < systemTypeValues.length; i++) {
+        systemTypeTooltip =
+          systemTypeTooltip.concat(
+            systemTypeValues[i] + ': ' + systemTypeDescription[i]
+          ) + '\n';
+      }
+    }
+
     return [
       {
         header: 'Serial Number',
@@ -342,7 +359,23 @@ export function ItemsTable(props: ItemTableProps) {
       },
       {
         header: 'System Type',
-        Header: TableHeaderOverflowTip,
+        Header: ({ column }) => (
+          <div>
+            <Tooltip
+              title={
+                <div style={{ whiteSpace: 'pre-line' }}>
+                  {systemTypeTooltip}
+                </div>
+              }
+            >
+              <InfoOutlined
+                sx={{ fontSize: 20, mr: 1, color: 'gray' }}
+              ></InfoOutlined>
+            </Tooltip>
+            {column.columnDef.header}
+          </div>
+        ),
+        TableHeaderOverflowTip,
         accessorFn: (row) => row.system?.type?.value,
         id: 'system.type.value',
         filterVariant: 'multi-select',
