@@ -191,8 +191,6 @@ const PropertyDialog = (props: PropertyDialogProps) => {
 
   const typeAdd = propertyAdd.properties && propertyAdd.properties[index]?.type;
 
-  console.log(selectedProperty);
-
   const formMethods = useForm<AddPropertyMigration>({
     resolver: zodResolver(
       type === 'post'
@@ -206,7 +204,10 @@ const PropertyDialog = (props: PropertyDialogProps) => {
             type: CatalogueCategoryPropertyType.Text,
             mandatory: 'false',
           }
-        : selectedProperty),
+        : {
+            ...selectedProperty,
+            unit_id: selectedProperty?.unit_id ?? null,
+          }),
       default_value: {
         valueType: 'string_false',
         value: { av_placement_id: crypto.randomUUID(), value: '' },

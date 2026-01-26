@@ -13,6 +13,7 @@ import { transformToAddCatalogueCategoryWithPlacementIds } from '../catalogueCat
 import PropertiesTable, {
   PropertiesTableProps,
 } from './catalogueItemPropertiesTable.component';
+import * as authProvider from '../../../authProvider.component';
 
 const TestComponent = (props: PropertiesTableProps) => {
   const formMethods = useForm<AddCatalogueCategoryWithPlacementIds>({
@@ -89,6 +90,38 @@ describe('CatalogueItemPropertiesTable', () => {
     ).toBeInTheDocument();
 
     const editButton = screen.getByLabelText('Edit property Pumping Speed');
+    await user.click(editButton);
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('can open the property edit as admin dialog', async () => {
+    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
+      role: 'admin',
+      isPrivilegedUser: true,
+    });
+
+    createView();
+
+    expect(await screen.findByText('Pumping Speed')).toBeInTheDocument();
+
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    expect(
+      await screen.findByLabelText('Edit property Pumping Speed as admin')
+    ).toBeInTheDocument();
+
+    const editButton = screen.getByLabelText(
+      'Edit property Pumping Speed as admin'
+    );
     await user.click(editButton);
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();

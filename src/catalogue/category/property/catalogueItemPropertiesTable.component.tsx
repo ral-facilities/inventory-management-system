@@ -424,7 +424,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
               <Divider key="divider" />,
               <MenuItem
                 key="edit-as-admin"
-                aria-label={`Edit property ${row.original.name}`}
+                aria-label={`Edit property ${row.original.name} as admin`}
                 onClick={() => {
                   setIsPrivilegedMode(true);
                   setPropertyDialogRequestType('patch');
