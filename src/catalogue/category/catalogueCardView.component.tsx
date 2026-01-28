@@ -19,6 +19,7 @@ import Grid from '@mui/material/Grid2';
 import {
   MRT_BottomToolbar,
   MRT_ColumnDef,
+  MRT_FilterOption,
   MRT_TopToolbar,
   useMaterialReactTable,
   type MRT_Cell,
@@ -118,6 +119,40 @@ const MoveCategoriesButton = (props: {
       />
     </>
   );
+};
+
+const MenuItemsFilterModes = ({
+  onSelectFilterMode,
+}: {
+  onSelectFilterMode: (filterMode: MRT_FilterOption) => void;
+}) => {
+  return [
+    <MenuItem
+      key="arrIncludesSome"
+      onClick={() => onSelectFilterMode('arrIncludesSome')}
+    >
+      {MRT_Functions_Localisation.filterArrIncludesSome}
+    </MenuItem>,
+    <MenuItem
+      key="arrIncludesAll"
+      onClick={() => onSelectFilterMode('arrIncludesAll')}
+    >
+      {MRT_Functions_Localisation.filterArrIncludesAll}
+    </MenuItem>,
+    <MenuItem
+      key="arrExcludesSome"
+      onClick={() => onSelectFilterMode('arrExcludesSome')}
+    >
+      {MRT_Functions_Localisation.filterArrExcludesSome}
+    </MenuItem>,
+
+    <MenuItem
+      key="arrExcludesAll"
+      onClick={() => onSelectFilterMode('arrExcludesAll')}
+    >
+      {MRT_Functions_Localisation.filterArrExcludesAll}
+    </MenuItem>,
+  ];
 };
 
 const CopyCategoriesButton = (props: {
@@ -266,43 +301,28 @@ function CatalogueCardView() {
           'arrExcludesSome',
           'arrExcludesAll',
         ],
-        renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) => [
-          <MenuItem
-            key="arrIncludesSome"
-            onClick={() => onSelectFilterMode('arrIncludesSome')}
-          >
-            {MRT_Functions_Localisation.filterArrIncludesSome}
-          </MenuItem>,
-          <MenuItem
-            key="arrIncludesAll"
-            onClick={() => onSelectFilterMode('arrIncludesAll')}
-          >
-            {MRT_Functions_Localisation.filterArrIncludesAll}
-          </MenuItem>,
-          <MenuItem
-            key="arrExcludesSome"
-            onClick={() => onSelectFilterMode('arrExcludesSome')}
-          >
-            {MRT_Functions_Localisation.filterArrExcludesSome}
-          </MenuItem>,
-
-          <MenuItem
-            key="arrExcludesAll"
-            onClick={() => onSelectFilterMode('arrExcludesAll')}
-          >
-            {MRT_Functions_Localisation.filterArrExcludesAll}
-          </MenuItem>,
-        ],
+        renderColumnFilterModeMenuItems: MenuItemsFilterModes,
         filterSelectOptions: propertyNames,
         enableGrouping: false,
       },
       {
-        header: 'Is Leaf',
-        accessorFn: (row) => (row.is_leaf === true ? 'Yes' : 'No'),
-        id: 'is-leaf',
-        filterVariant: COLUMN_FILTER_VARIANTS.boolean,
+        header: 'Catalogue Directory Content',
+        accessorFn: (row) =>
+          row.is_leaf === true ? 'Catalogue Categories' : 'Catalogue Items',
+        id: 'catalogue-directory-content',
+        filterVariant: 'multi-select',
         enableColumnFilterModes: false,
-        size: 200,
+        size: 350,
+        filterFn: 'arrIncludesSome',
+        columnFilterModeOptions: [
+          'arrIncludesSome',
+          'arrIncludesAll',
+          'arrExcludesSome',
+          'arrExcludesAll',
+        ],
+        renderColumnFilterModeMenuItems: MenuItemsFilterModes,
+        filterSelectOptions: ['Catalogue Categories', 'Catalogue Items'],
+        enableGrouping: false,
       },
     ];
   }, [propertyNames]);
