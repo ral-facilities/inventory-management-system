@@ -465,6 +465,51 @@ export const useDeleteCatalogueCategory = (): UseMutationResult<
   });
 };
 
+const deleteCatalogueCategoryProperty = async (
+  catalogueCategoryId: string,
+  propertyId: string
+): Promise<void> => {
+  return imsApi
+    .delete(
+      `/v1/catalogue-categories/${catalogueCategoryId}/properties/${propertyId}`
+    )
+    .then((response) => response.data);
+};
+
+export const useDeleteCatalogueCategoryProperty = (): UseMutationResult<
+  void,
+  AxiosError,
+  {
+    catalogueCategory: CatalogueCategory;
+    propertyId: string;
+  }
+> => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ catalogueCategory, propertyId }) =>
+      deleteCatalogueCategoryProperty(catalogueCategory.id, propertyId),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: [
+          'CatalogueCategories',
+          variables.catalogueCategory.parent_id ?? 'null',
+        ],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['CatalogueItems', variables.catalogueCategory.id],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['CatalogueItem'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['Items'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['Item'],
+      });
+    },
+  });
+};
 const getCatalogueCategory = async (
   id: string | undefined
 ): Promise<CatalogueCategory> => {

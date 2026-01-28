@@ -48,6 +48,7 @@ import { useGetUnits } from '../../../api/units';
 import { RequestType } from '../../../form.schemas';
 import PropertyDialog from './propertyDialog.component';
 import { useAuthorisationState } from '../../../authProvider.component';
+import DeletePropertyDialog from './deletePropertyDialog.component';
 
 export interface PropertiesTableProps {
   requestType: RequestType;
@@ -75,6 +76,13 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
 
   const [propertyDialogRequestType, setPropertyDialogRequestType] =
     React.useState<RequestType>('post');
+
+  const [deletePropertyDialogOpen, setDeletePropertyDialogOpen] =
+    React.useState<boolean>(false);
+
+  const [selectedProperty, setSelectedProperty] = React.useState<
+    AddCatalogueCategoryPropertyWithPlacementIds | undefined
+  >(undefined);
 
   const [index, setIndex] = React.useState<number | undefined>();
 
@@ -439,6 +447,26 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
                 </ListItemIcon>
                 <ListItemText>Edit as Admin</ListItemText>
               </MenuItem>,
+              ...(requestType === 'patch'
+                ? [
+                    <MenuItem
+                      key="delete-as-admin"
+                      aria-label={`Delete property ${row.original.name} (admin only)`}
+                      onClick={() => {
+                        setDeletePropertyDialogOpen(true);
+                        setSelectedProperty(row.original);
+                        setIndex(row.index);
+                        closeMenu();
+                      }}
+                      sx={{ m: 0 }}
+                    >
+                      <ListItemIcon>
+                        <DeleteIcon />
+                      </ListItemIcon>
+                      <ListItemText>Delete (Admin Only)</ListItemText>
+                    </MenuItem>,
+                  ]
+                : []),
             ]
           : []),
       ];
@@ -453,6 +481,18 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
   return (
     <div style={{ width: '100%' }}>
       <MaterialReactTable table={table} />
+      <DeletePropertyDialog
+        open={deletePropertyDialogOpen}
+        onClose={({ successfulDeletion }) => {
+          setDeletePropertyDialogOpen(false);
+          setSelectedProperty(undefined);
+          if (successfulDeletion) {
+            remove(index);
+          }
+        }}
+        selectedProperty={selectedProperty}
+        catalogueCategory={catalogueCategory}
+      />
     </div>
   );
 }
