@@ -315,7 +315,12 @@ export const handlers = [
         (category) => category.id === catalogue_category_id
       )?.properties?.find((property) => property.id === property_id);
 
-      if (property) {
+      if (catalogue_category_id == 'Error 500') {
+        return HttpResponse.json(
+          { detail: HTTP_500_INTERNAL_SERVER_ERROR_DETAIL },
+          { status: 500 }
+        );
+      } else if (property) {
         return HttpResponse.json(undefined, { status: 204 });
       } else {
         return HttpResponse.json({ detail: '' }, { status: 400 });

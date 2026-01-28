@@ -134,6 +134,38 @@ describe('CatalogueItemPropertiesTable', () => {
     });
   });
 
+  it('can open the property delete dialog (admin)', async () => {
+    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
+      role: 'admin',
+      isPrivilegedUser: true,
+    });
+
+    createView();
+
+    expect(await screen.findByText('Pumping Speed')).toBeInTheDocument();
+
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    expect(
+      await screen.findByLabelText('Delete property Pumping Speed (admin only)')
+    ).toBeInTheDocument();
+
+    const deleteButton = screen.getByLabelText(
+      'Delete property Pumping Speed (admin only)'
+    );
+    await user.click(deleteButton);
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
   it('can change the table filters and clear the table filters', async () => {
     createView();
 
