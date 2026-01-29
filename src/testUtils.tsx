@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RenderOptions, render } from '@testing-library/react';
 import { enGB } from 'date-fns/locale/en-GB';
 import React from 'react';
+import { Provider } from 'react-redux';
 import {
   RouterProvider,
   createBrowserRouter,
@@ -27,6 +28,7 @@ import SystemTypesJSON from './mocks/SystemTypes.json';
 import SystemsJSON from './mocks/Systems.json';
 import UsageStatusJSON from './mocks/UsageStatuses.json';
 import { URLPathKeyType, paths } from './paths';
+import store from './state/store';
 
 export const createTestQueryClient = (): QueryClient =>
   new QueryClient({
@@ -50,9 +52,11 @@ function constructRouterProvider(
 ) {
   const Root: React.FunctionComponent = () => {
     return (
-      <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
-        <QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>
-      </LocalizationProvider>
+      <Provider store={store}>
+        <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
+          <QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>
+        </LocalizationProvider>
+      </Provider>
     );
   };
 

@@ -9,10 +9,11 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AxiosError } from 'axios';
 import { enGB } from 'date-fns/locale/en-GB';
 import React from 'react';
+import { connect, Provider } from 'react-redux';
 import {
+  createBrowserRouter,
   Outlet,
   RouterProvider,
-  createBrowserRouter,
   type RouteObject,
 } from 'react-router';
 import {
@@ -61,6 +62,7 @@ import {
   requestPluginRerender,
   tokenRefreshed,
 } from './state/scigateway.actions';
+import store, { RootState } from './state/store';
 import Systems from './systems/systems.component';
 import SystemsLayout, {
   SystemsErrorComponent,
@@ -249,6 +251,14 @@ export default function App() {
   return <RouterProvider router={router} />;
 }
 
+function mapPreloaderStateToProps(state: RootState): { loading: boolean } {
+  return {
+    loading: !state.config.loading,
+  };
+}
+
+export const ConnectedPreloader = connect(mapPreloaderStateToProps)(Preloader);
+
 export function Layout() {
   // We need to call forceUpdate if SciGateway tells us to rerender
   // but there's no forceUpdate in functional components, so this is the hooks equivalent
@@ -262,6 +272,7 @@ export function Layout() {
     else if (tokenRefreshed.match(action)) {
       retryFailedAuthRequests();
       window.dispatchEvent(new CustomEvent(TokenUpdatedType)); // triggers refresh in authProvider
+      store.dispatch({ type: TokenUpdatedType });
     } else if (broadcastSignOut.match(action)) clearFailedAuthRequestsQueue();
   }
 
@@ -274,22 +285,26 @@ export function Layout() {
 
   return (
     <div className="Layout">
-      <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
-        <IMSThemeProvider>
-          <ConfigProvider>
-            <QueryClientProvider client={queryClient}>
-              <React.Suspense
-                fallback={
-                  <Preloader loading={true}>Finished loading</Preloader>
-                }
-              >
-                <ViewTabs />
-                <ReactQueryDevtools initialIsOpen={false} />
-              </React.Suspense>
-            </QueryClientProvider>
-          </ConfigProvider>
-        </IMSThemeProvider>
-      </LocalizationProvider>
+      <Provider store={store}>
+        <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
+          <IMSThemeProvider>
+            <ConfigProvider>
+              <QueryClientProvider client={queryClient}>
+                <ConnectedPreloader>
+                  <React.Suspense
+                    fallback={
+                      <Preloader loading={true}>Finished loading</Preloader>
+                    }
+                  >
+                    <ViewTabs />
+                    <ReactQueryDevtools initialIsOpen={false} />
+                  </React.Suspense>
+                </ConnectedPreloader>
+              </QueryClientProvider>
+            </ConfigProvider>
+          </IMSThemeProvider>
+        </LocalizationProvider>
+      </Provider>
     </div>
   );
 }
