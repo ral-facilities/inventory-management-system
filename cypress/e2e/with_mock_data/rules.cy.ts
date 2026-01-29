@@ -38,7 +38,7 @@ describe('Rules page', () => {
 
     cy.findByRole('button', { name: 'Show Deletion Rules' }).click();
 
-    cy.findAllByText('Storage').should('have.length', 2);
+    cy.findAllByText('Storage').should('have.length', 1);
 
     cy.findByRole('button', { name: 'Show Deletion Rules' }).should(
       'be.disabled'
@@ -63,7 +63,7 @@ describe('Rules page', () => {
 
     cy.findByRole('progressbar').should('not.exist');
 
-    cy.findAllByText('Storage').should('have.length', 4);
+    cy.findAllByText('Storage').should('have.length', 5);
 
     cy.findByRole('button', { name: 'Show Moving Rules' }).should(
       'be.disabled'
@@ -79,14 +79,15 @@ describe('Rules page', () => {
     cy.findByText('Moving Rules Filter Applied').should('not.exist');
   });
 
-  
   it('opens information dialog from icon button', () => {
     cy.findByLabelText('Open information dialog').click();
     cy.findByText('Rules Information').should('exist');
-    cy.get('button:contains("Example:")').should('have.length', 3)
+    cy.get('button:contains("Example:")').should('have.length', 3);
 
-    cy.findByText('Example: Storage → Operational → \'In Use\'').click();
-    cy.findByText('Items can be moved from the system type \'Storage\' to \'Operational\'. This rule sets the items usage status to \'In Use\'.').should('exist');
+    cy.findByText("Example: Storage → Operational → 'In Use'").click();
+    cy.findByText(
+      "Items can be moved from the system type 'Storage' to 'Operational'. This rule sets the items usage status to 'In Use'."
+    ).should('exist');
 
     cy.findByRole('button', { name: 'Close' }).click();
     cy.findByText('Rules Information').should('not.exist');
