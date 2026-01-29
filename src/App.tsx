@@ -29,7 +29,6 @@ import CatalogueLayout, {
 import CatalogueCardView from './catalogue/category/catalogueCardView.component';
 import CatalogueItemsLandingPage from './catalogue/items/catalogueItemsLandingPage.component';
 import CatalogueItemsPage from './catalogue/items/catalogueItemsPage.component';
-import ConfigProvider from './configProvider.component';
 import handleIMS_APIError from './handleIMS_APIError';
 import {
   HomePage,
@@ -293,20 +292,18 @@ export function Layout() {
       <Provider store={store}>
         <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
           <IMSThemeProvider>
-            <ConfigProvider>
-              <QueryClientProvider client={queryClient}>
-                <ConnectedPreloader>
-                  <React.Suspense
-                    fallback={
-                      <Preloader loading={true}>Finished loading</Preloader>
-                    }
-                  >
-                    <ViewTabs />
-                    <ReactQueryDevtools initialIsOpen={false} />
-                  </React.Suspense>
-                </ConnectedPreloader>
-              </QueryClientProvider>
-            </ConfigProvider>
+            <QueryClientProvider client={queryClient}>
+              <ConnectedPreloader>
+                <React.Suspense
+                  fallback={
+                    <Preloader loading={true}>Finished loading</Preloader>
+                  }
+                >
+                  <ViewTabs />
+                  <ReactQueryDevtools initialIsOpen={false} />
+                </React.Suspense>
+              </ConnectedPreloader>
+            </QueryClientProvider>
           </IMSThemeProvider>
         </LocalizationProvider>
       </Provider>
