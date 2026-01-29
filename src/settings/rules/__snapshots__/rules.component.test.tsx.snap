@@ -990,12 +990,12 @@ exports[`Rules > renders table correctly 1`] = `
                 tabindex="0"
               >
                 <div
-                  aria-label="Storage"
+                  aria-label="Scrapped"
                   class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  Storage
+                  Scrapped
                 </div>
               </td>
               <td
@@ -1066,6 +1066,53 @@ exports[`Rules > renders table correctly 1`] = `
                 tabindex="0"
               >
                 <div
+                  aria-label="Storage"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Storage
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1gkkko5-MuiTableCell-root-MuiTableCell-root"
+                data-index="1"
+                tabindex="0"
+              >
+                <div
+                  aria-label="Scrapped"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Scrapped
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-945msq-MuiTableCell-root-MuiTableCell-root"
+                data-index="2"
+                tabindex="0"
+              >
+                <div
+                  aria-label="Scrapped"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Scrapped
+                </div>
+              </td>
+            </tr>
+            <tr
+              class="MuiTableRow-root css-11yrv3u-MuiTableRow-root"
+              data-index="4"
+            >
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1nh7hv-MuiTableCell-root-MuiTableCell-root"
+                data-index="0"
+                tabindex="0"
+              >
+                <div
                   aria-label="Operational"
                   class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
@@ -1105,7 +1152,7 @@ exports[`Rules > renders table correctly 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root css-11yrv3u-MuiTableRow-root"
-              data-index="4"
+              data-index="5"
             >
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1nh7hv-MuiTableCell-root-MuiTableCell-root"
@@ -1194,7 +1241,7 @@ exports[`Rules > renders table correctly 1`] = `
           <p
             class="MuiTypography-root MuiTypography-body1 css-110q72o-MuiTypography-root"
           >
-            Total Rules: 5
+            Total Rules: 6
           </p>
           <div
             class="MuiBox-root css-nokk8"
