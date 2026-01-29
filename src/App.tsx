@@ -62,6 +62,7 @@ import {
   requestPluginRerender,
   tokenRefreshed,
 } from './state/scigateway.actions';
+import { loadConfig } from './state/slices/configSlice';
 import store, { RootState } from './state/store';
 import Systems from './systems/systems.component';
 import SystemsLayout, {
@@ -253,13 +254,17 @@ export default function App() {
 
 function mapPreloaderStateToProps(state: RootState): { loading: boolean } {
   return {
-    loading: !state.config.loading,
+    loading: state.config.loading,
   };
 }
 
 export const ConnectedPreloader = connect(mapPreloaderStateToProps)(Preloader);
 
 export function Layout() {
+  const dispatch = store.dispatch;
+  React.useEffect(() => {
+    dispatch(loadConfig());
+  }, [dispatch]);
   // We need to call forceUpdate if SciGateway tells us to rerender
   // but there's no forceUpdate in functional components, so this is the hooks equivalent
   // see https://reactjs.org/docs/hooks-faq.html#is-there-something-like-forceupdate

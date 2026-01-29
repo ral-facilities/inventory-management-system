@@ -1,7 +1,7 @@
 import { addCatalogueCategories } from '../catalogueCategories/functions';
 import { addCatalogueItem } from '../catalogueItems/functions';
 import { addManufacturer } from '../manufacturers/functions';
-import { addSystems } from '../systems/functions';
+import { addSystems, modifySystem } from '../systems/functions';
 import { addUnits } from '../units/functions';
 import {
   addItem,
@@ -10,6 +10,7 @@ import {
   duplicateItem,
   editItem,
   editProperty,
+  modifyItem,
 } from './functions';
 
 describe('items', () => {
@@ -30,6 +31,10 @@ describe('items', () => {
     addUnits(['mm', 'nm'], true);
     cy.visit('/systems');
     addSystems(true);
+    modifySystem(
+      { name: 'Scrapped', importance: 'high', type: 'Scrapped' },
+      true
+    );
     cy.visit('/catalogue');
     addCatalogueCategories(true);
     addCatalogueItem(true);
@@ -55,7 +60,11 @@ describe('items', () => {
     cy.findByText('Total Items: 2').should('exist');
     cy.findByRole('progressbar').should('not.exist');
     cy.findAllByText('MX4332424').should('have.length', 2);
-    deleteItem('MX4332424', 1);
+    modifyItem({
+      editIndex: 0,
+      system: 'Scrapped',
+    });
+    deleteItem('No serial number', 0);
     cy.findByRole('progressbar').should('not.exist');
     cy.findAllByText('MX4332424').should('have.length', 1);
   });
