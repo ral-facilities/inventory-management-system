@@ -1,5 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { authListenerMiddleware } from './middleware/authorisationMiddleware';
+import { getUserRole } from '../parseTokens';
+import { createAuthListenerMiddleware } from './middleware/authorisationMiddleware';
 import authorisationReducer from './slices/authorisationSlice';
 import configReducer from './slices/configSlice';
 
@@ -8,7 +9,12 @@ const rootReducer = combineReducers({
   authorisation: authorisationReducer,
 });
 
-export function configureAppStore(preloadedState?: Partial<RootState>) {
+export function configureAppStore(
+  preloadedState?: Partial<RootState>,
+  getUserRoleFn: () => string = getUserRole
+) {
+  const authListenerMiddleware = createAuthListenerMiddleware(getUserRoleFn);
+
   return configureStore({
     reducer: rootReducer,
     preloadedState,
