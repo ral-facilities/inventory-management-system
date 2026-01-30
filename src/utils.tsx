@@ -25,9 +25,9 @@ import {
 } from 'material-react-table';
 import React from 'react';
 import { useGetSparesDefinition } from './api/settings';
-import { MicroFrontendToken } from './app.types';
-import { SparesFilterStateType } from './app.types';
+import { MicroFrontendToken, SparesFilterStateType } from './app.types';
 import { TokenUpdatedType } from './state/actions/actions.types';
+import store from './state/store';
 
 /* Returns a name avoiding duplicates by appending _copy_n for nth copy */
 export const generateUniqueName = (
@@ -79,7 +79,7 @@ export const setLocalStorageToken = (useAdminToken: boolean) => {
   );
 
   // notify the authProvider class via new window event. This will trigger a reload.
-  window.dispatchEvent(new CustomEvent(TokenUpdatedType));
+  store.dispatch({ type: TokenUpdatedType });
 };
 
 /* Returns a calc function giving the page height excluding SciGateway related components

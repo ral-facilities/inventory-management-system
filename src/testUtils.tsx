@@ -28,7 +28,7 @@ import SystemTypesJSON from './mocks/SystemTypes.json';
 import SystemsJSON from './mocks/Systems.json';
 import UsageStatusJSON from './mocks/UsageStatuses.json';
 import { URLPathKeyType, paths } from './paths';
-import store from './state/store';
+import { RootState, configureAppStore } from './state/store';
 
 export const createTestQueryClient = (): QueryClient =>
   new QueryClient({
@@ -48,9 +48,11 @@ function constructRouterProvider(
   ui: React.ReactNode,
   queryClient: QueryClient,
   urlPathKey?: URLPathKeyType,
-  initialEntry?: string
+  initialEntry?: string,
+  preloadedState?: Partial<RootState>
 ) {
   const Root: React.FunctionComponent = () => {
+    const store = configureAppStore(preloadedState);
     return (
       <Provider store={store}>
         <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
@@ -73,7 +75,8 @@ function constructRouterProvider(
 function constructRouterProviderWrapper(
   queryClient: QueryClient,
   urlPathKey?: URLPathKeyType,
-  initialEntry?: string
+  initialEntry?: string,
+  preloadedState?: Partial<RootState>
 ) {
   const wrapper = ({
     children,
@@ -84,7 +87,8 @@ function constructRouterProviderWrapper(
       children,
       queryClient,
       urlPathKey,
-      initialEntry
+      initialEntry,
+      preloadedState
     ).provider;
   };
   return wrapper;
@@ -94,6 +98,7 @@ export function renderComponentWithRouterProvider(
   ui: React.ReactElement,
   urlPathKey?: URLPathKeyType,
   initialEntry?: string,
+  preloadedState?: Partial<RootState>,
   {
     // Automatically create a query client instance if no query client was passed in
     queryClient = createTestQueryClient(),
@@ -104,7 +109,8 @@ export function renderComponentWithRouterProvider(
     ui,
     queryClient,
     urlPathKey,
-    initialEntry
+    initialEntry,
+    preloadedState
   );
   return {
     queryClient,
@@ -120,12 +126,14 @@ export const hooksWrapperWithProviders = (props?: {
   queryClient?: QueryClient;
   urlPathKey?: URLPathKeyType;
   initialEntry?: string;
+  preloadedState?: Partial<RootState>;
 }) => {
   const testQueryClient = props?.queryClient ?? createTestQueryClient();
   return constructRouterProviderWrapper(
     testQueryClient,
     props?.urlPathKey,
-    props?.initialEntry
+    props?.initialEntry,
+    props?.preloadedState
   );
 };
 

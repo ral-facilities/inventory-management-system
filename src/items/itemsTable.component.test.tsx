@@ -9,26 +9,27 @@ import {
 import APIConfigProvider from '../apiConfigProvider.component';
 import { server } from '../mocks/server';
 import SystemTypesJSON from '../mocks/SystemTypes.json';
+import { RootState } from '../state/store';
 import {
   getCatalogueCategoryById,
   getCatalogueItemById,
   renderComponentWithRouterProvider,
 } from '../testUtils';
 import ItemsTable, { ItemTableProps } from './itemsTable.component';
-import * as authProvider from '../authProvider.component';
 
 describe('Items Table', () => {
   vi.setConfig({ testTimeout: 10000 });
 
   let props: ItemTableProps;
   let user: UserEvent;
-  const createView = () => {
+  const createView = (preloadedState?: Partial<RootState>) => {
     return renderComponentWithRouterProvider(
       <APIConfigProvider>
         <ItemsTable {...props} />
       </APIConfigProvider>,
       'any',
-      '/'
+      '/',
+      preloadedState
     );
   };
 
@@ -194,12 +195,13 @@ describe('Items Table', () => {
   });
 
   it('opens and closes the add item as Admin dialog', async () => {
-    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
-      role: 'admin',
-      isPrivilegedUser: true,
+    createView({
+      authorisation: {
+        role: 'admin',
+        isPrivilegedUser: true,
+        adminMode: false,
+      },
     });
-
-    createView();
 
     await waitFor(() => {
       expect(
@@ -469,12 +471,13 @@ describe('Items Table', () => {
   });
 
   it('can open the edit as Admin dialog and close it again', async () => {
-    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
-      role: 'admin',
-      isPrivilegedUser: true,
+    createView({
+      authorisation: {
+        role: 'admin',
+        isPrivilegedUser: true,
+        adminMode: false,
+      },
     });
-
-    createView();
 
     const serialNumber = '5YUQDDjKpz2z';
     await waitFor(() => {
@@ -530,12 +533,13 @@ describe('Items Table', () => {
   });
 
   it('can open the duplicate as admin dialog and close it again', async () => {
-    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
-      role: 'admin',
-      isPrivilegedUser: true,
+    createView({
+      authorisation: {
+        role: 'admin',
+        isPrivilegedUser: true,
+        adminMode: false,
+      },
     });
-
-    createView();
 
     const serialNumber = '5YUQDDjKpz2z';
     await waitFor(() => {
@@ -716,12 +720,13 @@ describe('Items Table', () => {
   });
 
   it('can opens the delete as admin dialog and close it again', async () => {
-    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
-      role: 'admin',
-      isPrivilegedUser: true,
+    createView({
+      authorisation: {
+        role: 'admin',
+        isPrivilegedUser: true,
+        adminMode: false,
+      },
     });
-
-    createView();
 
     const serialNumber = '5YUQDDjKpz2z';
     await waitFor(() => {

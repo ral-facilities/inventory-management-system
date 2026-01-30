@@ -1,19 +1,27 @@
-import { render, RenderResult, screen, waitFor } from '@testing-library/react';
+import { RenderResult, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import * as authProvider from '../authProvider.component';
+import { renderComponentWithRouterProvider } from '../testUtils';
 import AuthRoleStatus from './authRoleStatus.component';
 
 describe('AuthRoleStatus', () => {
   let user: UserEvent;
 
-  const createView = (): RenderResult => render(<AuthRoleStatus />);
+  const createView = (): RenderResult =>
+    renderComponentWithRouterProvider(
+      <AuthRoleStatus />,
+      undefined,
+      undefined,
+      {
+        authorisation: {
+          role: 'admin',
+          isPrivilegedUser: true,
+          adminMode: false,
+        },
+      }
+    );
 
   beforeEach(() => {
     user = userEvent.setup();
-    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
-      role: 'admin',
-      isPrivilegedUser: true,
-    });
   });
 
   afterEach(() => {

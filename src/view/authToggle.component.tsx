@@ -1,10 +1,11 @@
 import { FormControlLabel, Switch } from '@mui/material';
-import { useAuthorisationState } from '../authProvider.component';
 import React from 'react';
+import { useAppSelector } from '../state/hook';
+import { selectAuthorisation } from '../state/slices/authorisationSlice';
 import { setLocalStorageToken } from '../utils';
 
 function AuthToggle() {
-  const { isPrivilegedUser } = useAuthorisationState();
+  const { isPrivilegedUser } = useAppSelector(selectAuthorisation);
 
   const handleChangeRole = React.useCallback(() => {
     setLocalStorageToken(!isPrivilegedUser);
