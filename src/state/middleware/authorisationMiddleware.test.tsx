@@ -1,7 +1,7 @@
 import { TokenUpdatedType } from '../actions/actions.types';
 import { configureAppStore } from '../store';
 
-describe('authListenerMiddleware (DI style)', () => {
+describe('authListenerMiddleware', () => {
   let store: ReturnType<typeof configureAppStore>;
   let mockGetUserRole: () => string;
 

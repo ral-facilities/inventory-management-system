@@ -21,7 +21,7 @@ describe('authorisationSlice', () => {
 
     expect(state.role).toBe('admin');
     expect(state.isPrivilegedUser).toBe(true);
-    expect(state.adminMode).toBe(false); // unchanged
+    expect(state.adminMode).toBe(false);
   });
 
   it('should update adminMode', () => {
