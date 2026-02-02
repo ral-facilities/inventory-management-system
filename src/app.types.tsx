@@ -11,6 +11,7 @@ import {
   type ObjectFileUploadMetadata,
 } from './api/api.types';
 
+export const PluginId = 'inventory-management-system';
 export const MicroFrontendId = 'scigateway';
 export const MicroFrontendToken = `${MicroFrontendId}:token`;
 

@@ -23,10 +23,13 @@ export const authSlice = createSlice({
     ) {
       state.role = action.payload.role;
       state.isPrivilegedUser = action.payload.isPrivilegedUser;
+
+      if (!state.isPrivilegedUser) {
+        state.isAdminMode = false;
+      }
     },
     setIsAdminMode(state, action: PayloadAction<boolean>) {
-      if (!state.isPrivilegedUser) state.isAdminMode = false;
-      else state.isAdminMode = action.payload;
+      state.isAdminMode = state.isPrivilegedUser ? action.payload : false;
     },
   },
 });

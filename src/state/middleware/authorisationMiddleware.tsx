@@ -1,9 +1,12 @@
 import { createListenerMiddleware } from '@reduxjs/toolkit';
 import { TokenUpdatedType } from '../actions/actions.types';
-import { setAuthorisation } from '../slices/authorisationSlice';
-import { RootState } from '../store';
+import { setAuthorisation, setIsAdminMode } from '../slices/authorisationSlice';
+import { RootState, StorageDeps } from '../store';
 
-export const createAuthListenerMiddleware = (getUserRoleFn: () => string) => {
+export const createAuthListenerMiddleware = (
+  getUserRoleFn: () => string,
+  storage: StorageDeps
+) => {
   const middleware = createListenerMiddleware();
 
   middleware.startListening({
@@ -20,6 +23,32 @@ export const createAuthListenerMiddleware = (getUserRoleFn: () => string) => {
           isPrivilegedUser: privilegedRoles.includes(role),
         })
       );
+    },
+  });
+
+  middleware.startListening({
+    actionCreator: setIsAdminMode,
+    effect: async (_, listenerApi) => {
+      const state = listenerApi.getState() as RootState;
+      if (state.authorisation.isPrivilegedUser) {
+        storage.saveIsAdminMode(state.authorisation.isAdminMode);
+      } else {
+        storage.clearIsAdminMode();
+      }
+    },
+  });
+
+  middleware.startListening({
+    actionCreator: setAuthorisation,
+    effect: async (_, listenerApi) => {
+      const { isPrivilegedUser, isAdminMode } = (
+        listenerApi.getState() as RootState
+      ).authorisation;
+      if (!isPrivilegedUser) {
+        storage.clearIsAdminMode();
+      } else {
+        storage.saveIsAdminMode(isAdminMode);
+      }
     },
   });
 

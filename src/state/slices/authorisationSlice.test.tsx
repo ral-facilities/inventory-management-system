@@ -24,6 +24,19 @@ describe('authorisationSlice', () => {
     expect(state.isAdminMode).toBe(false);
   });
 
+  it('should set isAdminMode to false if the isPrivilegedUser is false', () => {
+    const action = setAuthorisation({
+      role: 'admin',
+      isPrivilegedUser: false,
+    });
+
+    const state = reducer({ ...initialState, isAdminMode: true }, action);
+
+    expect(state.role).toBe('admin');
+    expect(state.isPrivilegedUser).toBe(false);
+    expect(state.isAdminMode).toBe(false);
+  });
+
   it('should update isAdminMode', () => {
     const action = setIsAdminMode(true);
 
