@@ -199,7 +199,7 @@ describe('Items Table', () => {
       authorisation: {
         role: 'admin',
         isPrivilegedUser: true,
-        adminMode: false,
+        adminMode: true,
       },
     });
 
@@ -475,7 +475,7 @@ describe('Items Table', () => {
       authorisation: {
         role: 'admin',
         isPrivilegedUser: true,
-        adminMode: false,
+        adminMode: true,
       },
     });
 
@@ -537,7 +537,7 @@ describe('Items Table', () => {
       authorisation: {
         role: 'admin',
         isPrivilegedUser: true,
-        adminMode: false,
+        adminMode: true,
       },
     });
 
@@ -724,7 +724,7 @@ describe('Items Table', () => {
       authorisation: {
         role: 'admin',
         isPrivilegedUser: true,
-        adminMode: false,
+        adminMode: true,
       },
     });
 

@@ -5,8 +5,8 @@ import { useAppSelector } from '../state/hook';
 import { selectAuthorisation } from '../state/slices/authorisationSlice';
 
 function AuthRoleStatus() {
-  const { isPrivilegedUser, role } = useAppSelector(selectAuthorisation);
-  if (!isPrivilegedUser) return undefined;
+  const { adminMode, role } = useAppSelector(selectAuthorisation);
+  if (!adminMode) return undefined;
   return (
     <Paper
       square

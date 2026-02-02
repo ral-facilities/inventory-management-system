@@ -1,7 +1,7 @@
 describe('Units', () => {
   beforeEach(() => {
-    cy.setCurrentUserToAdmin();
     cy.visit('/settings/units');
+    cy.setCurrentUserToAdmin();
   });
   afterEach(() => {
     cy.clearMocks();

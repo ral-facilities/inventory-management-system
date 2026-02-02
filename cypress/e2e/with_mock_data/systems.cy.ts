@@ -1027,8 +1027,8 @@ describe('Systems', () => {
     });
 
     it('moves items (admin mode)', () => {
-      cy.setCurrentUserToAdmin();
       cy.visit('/systems');
+      cy.setCurrentUserToAdmin();
 
       cy.findByRole('link', { name: 'Pulse Laser' }).click();
       cy.findAllByRole('button', { name: 'Show/Hide filters' })

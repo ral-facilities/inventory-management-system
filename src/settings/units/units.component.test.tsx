@@ -15,7 +15,7 @@ describe('Units', () => {
         authorisation: {
           role: 'admin',
           isPrivilegedUser: true,
-          adminMode: false,
+          adminMode: true,
         },
       }
     );

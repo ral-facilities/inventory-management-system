@@ -99,7 +99,7 @@ export interface SystemItemsTableProps {
 export function SystemItemsTable(props: SystemItemsTableProps) {
   const { system } = props;
 
-  const { isPrivilegedUser } = useAppSelector(selectAuthorisation);
+  const { adminMode } = useAppSelector(selectAuthorisation);
 
   // States
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
@@ -581,7 +581,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
               onChangeSelectedItems={setRowSelection}
               isPrivilegedMode={false}
             />
-            {isPrivilegedUser && (
+            {adminMode && (
               <MoveItemsButton
                 selectedItems={selectedItems}
                 system={system}
@@ -640,7 +640,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           </ListItemIcon>
           <ListItemText>Delete</ListItemText>
         </MenuItem>,
-        ...(isPrivilegedUser
+        ...(adminMode
           ? [
               <Divider key="divider" />,
               <MenuItem

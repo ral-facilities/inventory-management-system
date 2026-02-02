@@ -25,7 +25,8 @@ export const authSlice = createSlice({
       state.isPrivilegedUser = action.payload.isPrivilegedUser;
     },
     setAdminMode(state, action: PayloadAction<boolean>) {
-      state.adminMode = action.payload;
+      if (!state.isPrivilegedUser) state.adminMode = false;
+      else state.adminMode = action.payload;
     },
   },
 });
