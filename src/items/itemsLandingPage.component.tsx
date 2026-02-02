@@ -31,7 +31,7 @@ const ItemsActionMenu = (props: {
   item: Item;
 }) => {
   const { catalogueItem, catalogueCategory, item } = props;
-  const { adminMode } = useAppSelector(selectAuthorisation);
+  const { isAdminMode } = useAppSelector(selectAuthorisation);
   const [editItemDialogOpen, setEditItemDialogOpen] =
     React.useState<boolean>(false);
   const [isPrivilegedMode, setIsPrivilegedMode] =
@@ -39,7 +39,7 @@ const ItemsActionMenu = (props: {
 
   return (
     <ActionMenu
-      showAdminEdit={adminMode}
+      showAdminEdit={isAdminMode}
       ariaLabelPrefix="items landing page"
       printMenuItem
       uploadAttachmentsEntityId={item.id}

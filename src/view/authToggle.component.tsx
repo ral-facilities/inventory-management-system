@@ -3,22 +3,22 @@ import React from 'react';
 import { useAppDispatch, useAppSelector } from '../state/hook';
 import {
   selectAuthorisation,
-  setAdminMode,
+  setIsAdminMode,
 } from '../state/slices/authorisationSlice';
 import { setLocalStorageToken } from '../utils';
 
 function AuthToggle() {
   const dispatch = useAppDispatch();
-  const { adminMode } = useAppSelector(selectAuthorisation);
+  const { isAdminMode } = useAppSelector(selectAuthorisation);
 
   const handleChangeRole = React.useCallback(() => {
-    setLocalStorageToken(!adminMode);
-    dispatch(setAdminMode(!adminMode));
-  }, [adminMode, dispatch]);
+    setLocalStorageToken(!isAdminMode);
+    dispatch(setIsAdminMode(!isAdminMode));
+  }, [isAdminMode, dispatch]);
 
   return (
     <FormControlLabel
-      control={<Switch checked={adminMode} onChange={handleChangeRole} />}
+      control={<Switch checked={isAdminMode} onChange={handleChangeRole} />}
       label="Admin user"
       labelPlacement="end"
     />

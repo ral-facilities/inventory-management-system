@@ -6,16 +6,16 @@ import React from 'react';
 import { useAppDispatch, useAppSelector } from '../state/hook';
 import {
   selectAuthorisation,
-  setAdminMode,
+  setIsAdminMode,
 } from '../state/slices/authorisationSlice';
 
 const AuthSettingsMenuItem = () => {
-  const { adminMode, isPrivilegedUser } = useAppSelector(selectAuthorisation);
+  const { isAdminMode, isPrivilegedUser } = useAppSelector(selectAuthorisation);
   const dispatch = useAppDispatch();
 
   const handleAdminMode = React.useCallback(() => {
-    dispatch(setAdminMode(!adminMode));
-  }, [adminMode, dispatch]);
+    dispatch(setIsAdminMode(!isAdminMode));
+  }, [isAdminMode, dispatch]);
 
   if (!isPrivilegedUser) return null;
   return (
@@ -24,7 +24,7 @@ const AuthSettingsMenuItem = () => {
         <AdminPanelSettingsIcon />
       </ListItemIcon>
       <ListItemText
-        primary={adminMode ? 'Switch to normal mode' : 'Switch to admin mode'}
+        primary={isAdminMode ? 'Switch to normal mode' : 'Switch to admin mode'}
       />
     </MenuItem>
   );

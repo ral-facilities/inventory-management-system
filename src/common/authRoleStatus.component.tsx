@@ -5,8 +5,8 @@ import { useAppSelector } from '../state/hook';
 import { selectAuthorisation } from '../state/slices/authorisationSlice';
 
 function AuthRoleStatus() {
-  const { adminMode, role } = useAppSelector(selectAuthorisation);
-  if (!adminMode) return undefined;
+  const { isAdminMode, role } = useAppSelector(selectAuthorisation);
+  if (!isAdminMode) return undefined;
   return (
     <Paper
       square

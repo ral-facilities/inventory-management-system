@@ -50,7 +50,7 @@ describe('SystemItemsTable', () => {
       authorisation: {
         role: 'admin',
         isPrivilegedUser: true,
-        adminMode: true,
+        isAdminMode: true,
       },
     });
 
@@ -378,7 +378,7 @@ describe('SystemItemsTable', () => {
       authorisation: {
         role: 'admin',
         isPrivilegedUser: true,
-        adminMode: true,
+        isAdminMode: true,
       },
     });
 
@@ -474,7 +474,7 @@ describe('SystemItemsTable', () => {
       authorisation: {
         role: 'admin',
         isPrivilegedUser: true,
-        adminMode: true,
+        isAdminMode: true,
       },
     });
 
@@ -709,7 +709,7 @@ describe('SystemItemsTable', () => {
       authorisation: {
         role: 'admin',
         isPrivilegedUser: true,
-        adminMode: true,
+        isAdminMode: true,
       },
     });
 

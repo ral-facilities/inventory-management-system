@@ -74,7 +74,7 @@ interface TableRowData {
 export function ItemsTable(props: ItemTableProps) {
   const { catalogueCategory, catalogueItem, dense } = props;
 
-  const { adminMode } = useAppSelector(selectAuthorisation);
+  const { isAdminMode } = useAppSelector(selectAuthorisation);
 
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
 
@@ -640,7 +640,7 @@ export function ItemsTable(props: ItemTableProps) {
           Add Item
         </Button>
 
-        {adminMode && (
+        {isAdminMode && (
           <Button
             startIcon={<AddIcon />}
             sx={{ mx: 0.5 }}
@@ -736,7 +736,7 @@ export function ItemsTable(props: ItemTableProps) {
           <ListItemText>Delete</ListItemText>
         </MenuItem>,
 
-        ...(adminMode
+        ...(isAdminMode
           ? [
               <Divider key="divider" />,
               <MenuItem
