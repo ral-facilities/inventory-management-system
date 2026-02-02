@@ -15,7 +15,7 @@ describe('Usage statuses', () => {
         authorisation: {
           role: 'admin',
           isPrivilegedUser: true,
-          adminMode: false,
+          isAdminMode: false,
         },
       }
     );
@@ -43,7 +43,7 @@ describe('Usage statuses', () => {
       authorisation: {
         role: 'default',
         isPrivilegedUser: false,
-        adminMode: false,
+        isAdminMode: false,
       },
     });
 
