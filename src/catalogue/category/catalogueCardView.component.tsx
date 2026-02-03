@@ -308,18 +308,11 @@ function CatalogueCardView() {
       {
         header: 'Catalogue Directory Content',
         accessorFn: (row) =>
-          row.is_leaf === true ? 'Catalogue Categories' : 'Catalogue Items',
+          row.is_leaf === true ? 'Catalogue Items' : 'Catalogue Categories',
         id: 'catalogue-directory-content',
-        filterVariant: 'multi-select',
+        filterVariant: COLUMN_FILTER_VARIANTS.boolean,
         enableColumnFilterModes: false,
         size: 350,
-        filterFn: 'arrIncludesSome',
-        columnFilterModeOptions: [
-          'arrIncludesSome',
-          'arrIncludesAll',
-          'arrExcludesSome',
-          'arrExcludesAll',
-        ],
         renderColumnFilterModeMenuItems: MenuItemsFilterModes,
         filterSelectOptions: ['Catalogue Categories', 'Catalogue Items'],
         enableGrouping: false,
