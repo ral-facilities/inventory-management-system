@@ -136,7 +136,7 @@ The system checks the role associated with the access token against the `privile
 
 For development an admin access token can be set via the `Privileged user` toggle (top right-hand corner of screen in dev mode), or through SciGateway authentication. To setup admin users please follow the instructions on [ldap-jwt-auth](https://github.com/ral-facilities/ldap-jwt-auth?tab=readme-ov-file#how-to-add-or-remove-a-user-from-the-system) and [inventory-management-system-api](https://github.com/ral-facilities/inventory-management-system-api?tab=readme-ov-file#jwt-authenticationauthorization)
 
-**Privileged users have the following functionality avaiable to them**
+**Privileged users have the following functionality available to them**
 
 - Create and delete units and usage statuses
 - Bypass rules when creating, deleting, editing, or moving items
