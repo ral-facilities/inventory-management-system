@@ -1,11 +1,11 @@
 import { createListenerMiddleware } from '@reduxjs/toolkit';
 import { TokenUpdatedType } from '../actions/actions.types';
 import { setAuthorisation, setIsAdminMode } from '../slices/authorisationSlice';
-import { RootState, StorageDeps } from '../store';
+import { RootState, StorageRegistry } from '../store';
 
 export const createAuthListenerMiddleware = (
   getUserRoleFn: () => string,
-  storage: StorageDeps
+  storageRegistryDict: StorageRegistry
 ) => {
   const middleware = createListenerMiddleware();
 
@@ -31,9 +31,9 @@ export const createAuthListenerMiddleware = (
     effect: async (_, listenerApi) => {
       const state = listenerApi.getState() as RootState;
       if (state.authorisation.isPrivilegedUser) {
-        storage.saveIsAdminMode(state.authorisation.isAdminMode);
+        storageRegistryDict.authorisation.save(state.authorisation.isAdminMode);
       } else {
-        storage.clearIsAdminMode();
+        storageRegistryDict.authorisation.clear();
       }
     },
   });
@@ -45,9 +45,9 @@ export const createAuthListenerMiddleware = (
         listenerApi.getState() as RootState
       ).authorisation;
       if (!isPrivilegedUser) {
-        storage.clearIsAdminMode();
+        storageRegistryDict.authorisation.clear();
       } else {
-        storage.saveIsAdminMode(isAdminMode);
+        storageRegistryDict.authorisation.save(isAdminMode);
       }
     },
   });
