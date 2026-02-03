@@ -146,7 +146,7 @@ export const editProperty = () => {
   }).click();
 
   cy.findAllByLabelText('Row Actions').eq(4).click();
-  cy.findByLabelText('Edit property Shape').click();
+  cy.findByLabelText('Edit property Shape as admin').click();
 
   cy.findByLabelText('Property Name *').clear();
   cy.findByLabelText('Property Name *').type('Type');
@@ -178,7 +178,7 @@ export const editProperty = () => {
   cy.findByText('Edit').click();
   cy.findByRole('button', { name: 'Next' }).click();
   cy.findByRole('button', { name: 'Next' }).click();
-  cy.findByLabelText('Type (mm)*').click();
+  cy.findByLabelText('Type (mm) *').click();
   cy.findByRole('option', { name: 'flat' }).click();
   cy.findByDisplayValue('flat').should('exist');
 
