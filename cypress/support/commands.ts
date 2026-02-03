@@ -144,7 +144,7 @@ Cypress.Commands.add('setCurrentUserToAdmin', () => {
 
       document.body.appendChild(div);
     });
-    cy.findByRole('menuitem', { name: 'Switch to admin mode' }).click();
+    cy.findByRole('menuitem', { name: 'Switch admin mode on' }).click();
   });
 });
 

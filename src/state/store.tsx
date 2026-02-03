@@ -10,6 +10,7 @@ import authorisationReducer, {
   initialState as authInitialSlice,
 } from './slices/authorisationSlice';
 import configReducer from './slices/configSlice';
+import criticalityReducer from './slices/criticalitySlice';
 
 export interface StorageDeps {
   loadIsAdminMode: () => boolean | undefined;
@@ -26,6 +27,7 @@ const authorisationStorage: StorageDeps = {
 const rootReducer = combineReducers({
   config: configReducer,
   authorisation: authorisationReducer,
+  criticality: criticalityReducer,
 });
 
 export function configureAppStore(

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import AuthSettingsMenuItem from './authSettingsMenuItem.component';
+import CriticalitySettingsMenuItem from './criticalitySettingsMenuItem.component';
 
 const SettingsMenuItems = () => {
   const [menuOpen, setMenuOpen] = React.useState(
@@ -42,6 +43,7 @@ const SettingsMenuItems = () => {
     return ReactDOM.createPortal(
       <>
         <AuthSettingsMenuItem />
+        <CriticalitySettingsMenuItem />
       </>,
       // we know this is not null from the mutation observer
 
