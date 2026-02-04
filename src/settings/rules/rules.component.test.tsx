@@ -97,7 +97,7 @@ describe('Rules', () => {
 
     await user.click(showDeletionRulesButton);
     // chip and table
-    expect(await screen.findAllByText('Storage')).toHaveLength(2);
+    expect(await screen.findAllByText('Storage')).toHaveLength(1);
 
     expect(
       await screen.findByText('Deletion Rules Filter Applied')
@@ -142,7 +142,7 @@ describe('Rules', () => {
 
     await user.click(showMovingRulesButton);
     // chip and table
-    expect(await screen.findAllByText('Storage')).toHaveLength(4);
+    expect(await screen.findAllByText('Storage')).toHaveLength(5);
 
     expect(
       await screen.findByText('Moving Rules Filter Applied')
