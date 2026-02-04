@@ -18,8 +18,10 @@ import { resetUniqueIdCounter } from '../../utils';
 import CatalogueCategoryDialog, {
   CatalogueCategoryDialogProps,
 } from './catalogueCategoryDialog.component';
+import handleTransferState from '../../handleTransferState';
 
 vi.mock('../../handleIMS_APIError');
+vi.mock('../../handleTransferState');
 
 describe('Catalogue Category Dialog', () => {
   const onClose = vi.fn();
@@ -1360,6 +1362,14 @@ describe('Catalogue Category Dialog', () => {
         name: 'test2',
         properties: undefined,
       });
+
+      expect(handleTransferState).toHaveBeenCalledWith([
+        {
+          name: 'test2',
+          message: `Successfully updated Catalogue Category name to test2`,
+          state: 'success',
+        },
+      ]);
     });
 
     it('edits a new catalogue category at sub level ("/catalogue/*")', async () => {
@@ -1372,6 +1382,14 @@ describe('Catalogue Category Dialog', () => {
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/1', {
         name: 'test2',
       });
+
+      expect(handleTransferState).toHaveBeenCalledWith([
+        {
+          name: 'test2',
+          message: `Successfully updated Catalogue Category name to test2`,
+          state: 'success',
+        },
+      ]);
     });
   });
 
