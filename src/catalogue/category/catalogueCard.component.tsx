@@ -1,8 +1,10 @@
+import WarningIcon from '@mui/icons-material/Warning';
 import {
   Button,
   Card,
   CardActions,
   CardContent,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import {
@@ -14,7 +16,10 @@ import {
 } from 'material-react-table';
 import { Link } from 'react-router';
 import { CatalogueCategory } from '../../api/api.types';
+import { useAppSelector } from '../../state/hook';
+import { selectCriticality } from '../../state/slices/criticalitySlice';
 import { OverflowTip, formatDateTimeStrings } from '../../utils';
+import { CriticalTooltipText } from './catalogueCardView.component';
 export interface CatalogueCardProps {
   table: MRT_TableInstance<CatalogueCategory>;
   card: MRT_Cell<CatalogueCategory>;
@@ -29,6 +34,10 @@ function CatalogueCard(props: CatalogueCardProps) {
   const isSelected = selectedCategories.some(
     (category) => category.id === card.row.original.id
   );
+
+  const { isCriticalMode } = useAppSelector(selectCriticality);
+
+  const showFlagged = isCriticalMode && card.row.original.is_flagged;
   return (
     <Button
       component={Link}
@@ -43,7 +52,7 @@ function CatalogueCard(props: CatalogueCardProps) {
       }}
     >
       <Card
-        sx={{
+        sx={(theme) => ({
           width: '100%',
           display: 'flex',
           flexDirection: 'row',
@@ -51,17 +60,39 @@ function CatalogueCard(props: CatalogueCardProps) {
           backgroundColor: isSelected
             ? table.options.mrtTheme.selectedRowBackgroundColor
             : undefined,
-        }}
+
+          border: showFlagged
+            ? `2px solid ${theme.palette.error.main}`
+            : undefined,
+
+          boxShadow: showFlagged
+            ? `0 0 10px 3px ${theme.palette.error.main}88` // 88 = ~53% opacity for fuzzy glow
+            : undefined,
+        })}
       >
         <CardActions>
           <MRT_SelectCheckbox
             row={card.row as MRT_Row<CatalogueCategory>}
             table={table}
             sx={{
-              margin: 0.5,
+              mx: 0.5,
+              padding: 0,
             }}
           />
         </CardActions>
+        <CardContent sx={{ display: 'flex', alignItems: 'center', padding: 0 }}>
+          {showFlagged && (
+            <Tooltip title={CriticalTooltipText}>
+              <WarningIcon
+                sx={{
+                  pr: 1,
+                  fontSize: '35px',
+                  color: 'error.main',
+                }}
+              />
+            </Tooltip>
+          )}
+        </CardContent>
         <CardContent
           sx={{
             width: '100%',
@@ -79,7 +110,8 @@ function CatalogueCard(props: CatalogueCardProps) {
             row={card.row as MRT_Row<CatalogueCategory>}
             table={table}
             sx={{
-              margin: 0.5,
+              mx: 0.5,
+              padding: 0,
             }}
           />
         </CardActions>

@@ -14,6 +14,8 @@ import {
   MenuItem,
   Paper,
   Stack,
+  Tooltip,
+  Typography,
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import {
@@ -34,6 +36,7 @@ import {
 import CardViewFilters from '../../common/cardView/cardViewFilters.component';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import {
+  COLUMN_FILTER_BOOLEAN_OPTIONS,
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
   COLUMN_FILTER_VARIANTS,
@@ -49,7 +52,11 @@ import {
 import CatalogueCard from './catalogueCard.component';
 import CatalogueCategoryDialog from './catalogueCategoryDialog.component';
 
+import InfoOutlined from '@mui/icons-material/InfoOutlined';
 import ErrorPage from '../../common/errorPage.component';
+import MRTTopTableAlert from '../../common/mrtTopTableAlert.component';
+import { useAppSelector } from '../../state/hook';
+import { selectCriticality } from '../../state/slices/criticalitySlice';
 import CatalogueCategoryDirectoryDialog from './catalogueCategoryDirectoryDialog.component';
 import DeleteCatalogueCategoryDialog from './deleteCatalogueCategoryDialog.component';
 
@@ -150,6 +157,13 @@ const CopyCategoriesButton = (props: {
   );
 };
 
+export const CriticalTooltipText = (
+  <Typography style={{ whiteSpace: 'pre-line' }}>
+    A catalogue category is considered critical if any of its nested child
+    categories or catalogue items are marked as critical.
+  </Typography>
+);
+
 function CatalogueCardView() {
   const { catalogue_category_id: catalogueCategoryId = null } = useParams();
   const {
@@ -161,6 +175,7 @@ function CatalogueCardView() {
     () => catalogueCategoryDetail,
     [catalogueCategoryDetail]
   );
+  const { isCriticalMode } = useAppSelector(selectCriticality);
   const parentId = (parentInfo && parentInfo.id) || null;
 
   const isLeafNode = parentInfo ? parentInfo.is_leaf : false;
@@ -304,6 +319,23 @@ function CatalogueCardView() {
         enableColumnFilterModes: false,
         size: 200,
       },
+      {
+        header: 'is Critical',
+        Header: ({ column }) => (
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Tooltip title={CriticalTooltipText}>
+              <InfoOutlined sx={{ mr: 1 }} fontSize="small" />
+            </Tooltip>
+            {column.columnDef.header}
+          </Box>
+        ),
+        accessorFn: (row: CatalogueCategory) => (row.is_flagged ? 'Yes' : 'No'),
+        id: 'is_flagged',
+        filterVariant: COLUMN_FILTER_VARIANTS.boolean,
+        enableColumnFilterModes: false,
+        size: 200,
+        filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
+      },
     ];
   }, [propertyNames]);
 
@@ -319,6 +351,13 @@ function CatalogueCardView() {
     storeInUrl: true,
     paginationOnly: true,
   });
+
+  const isCriticalFilterApplied = React.useMemo(() => {
+    const filters = preservedState.columnFilters;
+    const isFlagged = filters.find((f) => f.id === 'is_flagged');
+    if (isFlagged?.value === 'Yes') return true;
+    return false;
+  }, [preservedState]);
 
   const table = useMaterialReactTable({
     // Data
@@ -414,6 +453,20 @@ function CatalogueCardView() {
               {selectedCategories.length} selected
             </Button>
           </>
+        )}
+        {isCriticalMode && (
+          <Button
+            sx={{ mx: 0.5 }}
+            variant="outlined"
+            disabled={isCriticalFilterApplied}
+            onClick={() => {
+              onPreservedStatesChange.onColumnFiltersChange([
+                { id: 'is_flagged', value: 'Yes' },
+              ]);
+            }}
+          >
+            Show Critical Items
+          </Button>
         )}
         <Button
           startIcon={<ClearIcon />}
@@ -520,6 +573,13 @@ function CatalogueCardView() {
             width: '100%',
           }}
         >
+          {isCriticalFilterApplied && isCriticalMode && (
+            <MRTTopTableAlert
+              title="Critical Filter Applied"
+              clearFilters={table.resetColumnFilters}
+              clearFiltersAriaLabel="Clear Critical Filter"
+            />
+          )}
           <MRT_TopToolbar table={table} />
           <Stack
             sx={{

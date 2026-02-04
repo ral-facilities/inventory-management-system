@@ -27,7 +27,7 @@ describe('systems', () => {
     ]);
     // Prepare relevant data for systems
     cy.visit('/manufacturers');
-    cy.setCurrentUserToAdmin();
+    cy.setMode({ admin: true });
     addManufacturer(true);
     cy.visit('/settings/units');
     addUnits(['mm', 'nm'], true);

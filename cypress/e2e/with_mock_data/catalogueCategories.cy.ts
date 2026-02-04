@@ -57,6 +57,25 @@ describe('Catalogue Category', () => {
     cy.findByText('Actuators').should('not.exist');
   });
 
+  it('shows critical catalogue categories and filter button', () => {
+    cy.visit('/catalogue');
+    cy.setMode({ critical: true });
+
+    cy.findByRole('button', { name: 'Show Critical Items' }).should('exist');
+    cy.findByTestId('WarningIcon').should('exist');
+    cy.findByTestId('WarningIcon').trigger('mouseover');
+    cy.findByText(
+      'A catalogue category is considered critical if any of its nested child categories or catalogue items are marked as critical.'
+    );
+    cy.findByText('Beam Characterization').click();
+
+    cy.findByTestId('WarningIcon').should('exist');
+    cy.findByTestId('WarningIcon').trigger('mouseover');
+    cy.findByText(
+      'A catalogue category is considered critical if any of its nested child categories or catalogue items are marked as critical.'
+    );
+  });
+
   it('should be able to navigate through categories while preserving the page state when going back', () => {
     cy.editEndpointResponse({
       url: '/v1/catalogue-categories',
@@ -653,6 +672,7 @@ describe('Catalogue Category', () => {
           properties: [],
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          is_flagged: false,
         })
       );
       expect(JSON.stringify(await patchRequests[1].json())).equal(
@@ -720,6 +740,7 @@ describe('Catalogue Category', () => {
           ],
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          is_flagged: false,
         })
       );
       expect(JSON.stringify(await patchRequests[2].json())).equal(
@@ -732,6 +753,7 @@ describe('Catalogue Category', () => {
           properties: [],
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          is_flagged: false,
         })
       );
     });
@@ -781,6 +803,7 @@ describe('Catalogue Category', () => {
           properties: [],
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          is_flagged: false,
         })
       );
       expect(JSON.stringify(await patchRequests[1].json())).equal(
@@ -848,6 +871,7 @@ describe('Catalogue Category', () => {
           ],
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          is_flagged: false,
         })
       );
       expect(JSON.stringify(await patchRequests[2].json())).equal(
@@ -860,6 +884,7 @@ describe('Catalogue Category', () => {
           properties: [],
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          is_flagged: false,
         })
       );
     });

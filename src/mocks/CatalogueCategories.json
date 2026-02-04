@@ -7,7 +7,8 @@
     "is_leaf": false,
     "properties": [],
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "is_flagged": true
   },
   {
     "id": "2",
@@ -17,7 +18,8 @@
     "is_leaf": false,
     "properties": [],
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "is_flagged": null
   },
   {
     "id": "3",
@@ -27,7 +29,8 @@
     "is_leaf": false,
     "properties": [],
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "is_flagged": false
   },
   {
     "id": "9086",
@@ -56,7 +59,8 @@
       }
     ],
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "is_flagged": false
   },
   {
     "id": "79",
@@ -66,7 +70,8 @@
     "is_leaf": false,
     "properties": [],
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "is_flagged": false
   },
   {
     "id": "4",
@@ -131,7 +136,8 @@
       }
     ],
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "is_flagged": false
   },
   {
     "id": "5",
@@ -160,7 +166,8 @@
       }
     ],
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "is_flagged": false
   },
   {
     "id": "8967",
@@ -189,7 +196,8 @@
       }
     ],
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "is_flagged": false
   },
   {
     "id": "6",
@@ -218,7 +226,8 @@
       }
     ],
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "is_flagged": true
   },
   {
     "id": "8",
@@ -228,7 +237,8 @@
     "is_leaf": false,
     "properties": [],
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "is_flagged": false
   },
   {
     "id": "9",
@@ -257,7 +267,8 @@
       }
     ],
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "is_flagged": false
   },
   {
     "id": "20",
@@ -267,7 +278,8 @@
     "is_leaf": false,
     "properties": [],
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "is_flagged": false
   },
   {
     "id": "21",
@@ -277,7 +289,8 @@
     "is_leaf": false,
     "properties": [],
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "is_flagged": false
   },
   {
     "id": "22",
@@ -287,7 +300,8 @@
     "is_leaf": false,
     "properties": [],
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "is_flagged": false
   },
   {
     "id": "23",
@@ -297,7 +311,8 @@
     "is_leaf": false,
     "properties": [],
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "is_flagged": false
   },
   {
     "id": "10",
@@ -307,7 +322,8 @@
     "is_leaf": false,
     "properties": [],
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "is_flagged": false
   },
   {
     "id": "11",
@@ -336,7 +352,8 @@
       }
     ],
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "is_flagged": false
   },
   {
     "id": "12",
@@ -380,7 +397,8 @@
       }
     ],
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "is_flagged": false
   },
   {
     "id": "13",
@@ -409,7 +427,8 @@
       }
     ],
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "is_flagged": false
   },
   {
     "id": "14",
@@ -438,7 +457,8 @@
       }
     ],
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "is_flagged": false
   },
   {
     "id": "15",
@@ -448,7 +468,8 @@
     "is_leaf": false,
     "properties": [],
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "is_flagged": false
   },
   {
     "id": "16",
@@ -458,7 +479,8 @@
     "is_leaf": false,
     "properties": [],
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "is_flagged": false
   },
   {
     "id": "17",
@@ -468,7 +490,8 @@
     "is_leaf": true,
     "properties": [],
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "is_flagged": false
   },
   {
     "id": "18",
@@ -497,7 +520,8 @@
       }
     ],
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "is_flagged": false
   },
   {
     "id": "19",
@@ -507,6 +531,7 @@
     "is_leaf": false,
     "properties": [],
     "created_time": "2024-01-01T12:00:00.000+00:00",
-    "modified_time": "2024-01-02T13:10:10.000+00:00"
+    "modified_time": "2024-01-02T13:10:10.000+00:00",
+    "is_flagged": false
   }
 ]

@@ -4,17 +4,23 @@ import { http, HttpResponse } from 'msw';
 import { CatalogueCategory } from '../../api/api.types';
 import { server } from '../../mocks/server';
 import { URLPathKeyType } from '../../paths';
+import { RootState } from '../../state/store';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 import CardView from './catalogueCardView.component';
 
 describe('CardView', () => {
   let user: UserEvent;
 
-  const createView = (path?: string, urlPathKey?: URLPathKeyType) => {
+  const createView = (
+    path?: string,
+    urlPathKey?: URLPathKeyType,
+    preloadedState?: Partial<RootState>
+  ) => {
     return renderComponentWithRouterProvider(
       <CardView />,
       urlPathKey || 'catalogue',
-      path || '/catalogue'
+      path || '/catalogue',
+      preloadedState
     );
   };
 
@@ -309,6 +315,59 @@ describe('CardView', () => {
     });
   });
 
+  it('shows critical catalogue categories and filter button', async () => {
+    createView('/catalogue', undefined, {
+      criticality: { isCriticalMode: true },
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
+    });
+
+    expect(
+      screen.getByRole('button', { name: 'Show Critical Items' })
+    ).toBeInTheDocument();
+
+    expect(screen.getByTestId('WarningIcon')).toBeInTheDocument();
+
+    await user.hover(screen.getByTestId('WarningIcon'));
+
+    expect(
+      await screen.findByText(
+        'A catalogue category is considered critical if any of its nested child categories or catalogue items are marked as critical.'
+      )
+    ).toBeInTheDocument();
+  });
+
+  it('clicks on shows critical Items filter button', async () => {
+    createView('/catalogue', undefined, {
+      criticality: { isCriticalMode: true },
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('Motion')).toBeInTheDocument();
+    });
+
+    await user.click(
+      screen.getByRole('button', { name: 'Show Critical Items' })
+    );
+
+    await waitFor(() => {
+      expect(screen.queryByText('Motion')).not.toBeInTheDocument();
+    });
+
+    expect(screen.getByText('Critical Filter Applied')).toBeInTheDocument();
+
+    expect(screen.getByTestId('WarningIcon')).toBeInTheDocument();
+
+    await user.hover(screen.getByTestId('WarningIcon'));
+
+    expect(
+      await screen.findByText(
+        'A catalogue category is considered critical if any of its nested child categories or catalogue items are marked as critical.'
+      )
+    ).toBeInTheDocument();
+  });
   describe('pagination', () => {
     beforeEach(() => {
       server.use(
