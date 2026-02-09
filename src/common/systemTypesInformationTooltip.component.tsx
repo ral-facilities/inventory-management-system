@@ -2,25 +2,10 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Box, Tooltip, Typography } from '@mui/material';
 import { SystemType } from '../api/api.types';
 
-interface SystemTypeInformationTooltipProps {
+export interface SystemTypeInformationTooltipProps {
   title: string;
   systemTypesData: SystemType[] | undefined;
 }
-
-/*
-<Box sx={{ alignItems: 'center', display: 'flex' }}>
-            <Tooltip
-              title={
-                <Typography style={{ whiteSpace: 'pre-line' }}>
-                  {systemTypeTooltip}
-                </Typography>
-              }
-            >
-              <InfoOutlinedIcon fontSize="small" sx={{ mr: 1 }} />
-            </Tooltip>
-            {column.columnDef.header}
-          </Box>
-*/
 
 export const SystemTypeColumnHeaderInformationTooltip = ({
   title,
