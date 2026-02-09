@@ -19,7 +19,6 @@ import Grid from '@mui/material/Grid2';
 import {
   MRT_BottomToolbar,
   MRT_ColumnDef,
-  MRT_FilterOption,
   MRT_TopToolbar,
   useMaterialReactTable,
   type MRT_Cell,
@@ -119,40 +118,6 @@ const MoveCategoriesButton = (props: {
       />
     </>
   );
-};
-
-const MenuItemsFilterModes = ({
-  onSelectFilterMode,
-}: {
-  onSelectFilterMode: (filterMode: MRT_FilterOption) => void;
-}) => {
-  return [
-    <MenuItem
-      key="arrIncludesSome"
-      onClick={() => onSelectFilterMode('arrIncludesSome')}
-    >
-      {MRT_Functions_Localisation.filterArrIncludesSome}
-    </MenuItem>,
-    <MenuItem
-      key="arrIncludesAll"
-      onClick={() => onSelectFilterMode('arrIncludesAll')}
-    >
-      {MRT_Functions_Localisation.filterArrIncludesAll}
-    </MenuItem>,
-    <MenuItem
-      key="arrExcludesSome"
-      onClick={() => onSelectFilterMode('arrExcludesSome')}
-    >
-      {MRT_Functions_Localisation.filterArrExcludesSome}
-    </MenuItem>,
-
-    <MenuItem
-      key="arrExcludesAll"
-      onClick={() => onSelectFilterMode('arrExcludesAll')}
-    >
-      {MRT_Functions_Localisation.filterArrExcludesAll}
-    </MenuItem>,
-  ];
 };
 
 const CopyCategoriesButton = (props: {
@@ -301,7 +266,33 @@ function CatalogueCardView() {
           'arrExcludesSome',
           'arrExcludesAll',
         ],
-        renderColumnFilterModeMenuItems: MenuItemsFilterModes,
+        renderColumnFilterModeMenuItems: ({ onSelectFilterMode }) => [
+          <MenuItem
+            key="arrIncludesSome"
+            onClick={() => onSelectFilterMode('arrIncludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrIncludesSome}
+          </MenuItem>,
+          <MenuItem
+            key="arrIncludesAll"
+            onClick={() => onSelectFilterMode('arrIncludesAll')}
+          >
+            {MRT_Functions_Localisation.filterArrIncludesAll}
+          </MenuItem>,
+          <MenuItem
+            key="arrExcludesSome"
+            onClick={() => onSelectFilterMode('arrExcludesSome')}
+          >
+            {MRT_Functions_Localisation.filterArrExcludesSome}
+          </MenuItem>,
+
+          <MenuItem
+            key="arrExcludesAll"
+            onClick={() => onSelectFilterMode('arrExcludesAll')}
+          >
+            {MRT_Functions_Localisation.filterArrExcludesAll}
+          </MenuItem>,
+        ],
         filterSelectOptions: propertyNames,
         enableGrouping: false,
       },
@@ -313,7 +304,6 @@ function CatalogueCardView() {
         filterVariant: COLUMN_FILTER_VARIANTS.boolean,
         enableColumnFilterModes: false,
         size: 350,
-        renderColumnFilterModeMenuItems: MenuItemsFilterModes,
         filterSelectOptions: ['Catalogue Categories', 'Catalogue Items'],
         enableGrouping: false,
       },
