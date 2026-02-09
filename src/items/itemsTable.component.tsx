@@ -1,4 +1,3 @@
-import { InfoOutlined } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -13,7 +12,6 @@ import {
   MenuItem,
   Link as MuiLink,
   TableCellBaseProps,
-  Tooltip,
 } from '@mui/material';
 import {
   MaterialReactTable,
@@ -39,6 +37,7 @@ import { useAuthorisationState } from '../authProvider.component';
 import { findPropertyValue } from '../catalogue/items/catalogueItemsTable.component';
 import MRTTopTableAlert from '../common/mrtTopTableAlert.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
+import { SystemTypeColumnHeaderInformationTooltip } from '../common/systemTypesInformationTooltip.component';
 import {
   COLUMN_FILTER_BOOLEAN_OPTIONS,
   COLUMN_FILTER_FUNCTIONS,
@@ -155,21 +154,7 @@ export function ItemsTable(props: ItemTableProps) {
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     const viewCatalogueItemProperties = catalogueCategory?.properties ?? [];
     const systemTypeValues = systemTypesData?.map((type) => type.value);
-    const systemTypeDescription = systemTypesData?.map(
-      (type) => type.description
-    );
     const usageStatusValues = usageStatusData?.map((val) => val.value);
-
-    // create tooltip content for System Type header
-    let systemTypeTooltip = '';
-    if (systemTypeValues && systemTypeDescription) {
-      for (let i = 0; i < systemTypeValues.length; i++) {
-        systemTypeTooltip =
-          systemTypeTooltip.concat(
-            systemTypeValues[i] + ': ' + systemTypeDescription[i]
-          ) + '\n';
-      }
-    }
 
     return [
       {
@@ -361,20 +346,10 @@ export function ItemsTable(props: ItemTableProps) {
       {
         header: 'System Type',
         Header: ({ column }) => (
-          <div>
-            <Tooltip
-              title={
-                <div style={{ whiteSpace: 'pre-line' }}>
-                  {systemTypeTooltip}
-                </div>
-              }
-            >
-              <InfoOutlined
-                sx={{ fontSize: 20, mr: 1, color: 'gray' }}
-              ></InfoOutlined>
-            </Tooltip>
-            {column.columnDef.header}
-          </div>
+          <SystemTypeColumnHeaderInformationTooltip
+            title={column.columnDef.header}
+            systemTypesData={systemTypesData}
+          />
         ),
         TableHeaderOverflowTip,
         accessorFn: (row) => row.system?.type?.value,
