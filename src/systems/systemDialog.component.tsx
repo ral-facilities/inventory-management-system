@@ -26,10 +26,10 @@ import {
 import {
   getSystemImportanceColour,
   useGetSystem,
-  useGetSystemTypes,
   usePatchSystem,
   usePostSystem,
 } from '../api/systems';
+import { useGetSystemTypes } from '../api/systemTypes';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';

@@ -30,7 +30,8 @@ import {
   System,
 } from '../api/api.types';
 import { useGetItems } from '../api/items';
-import { useGetSystemIds, useGetSystemTypes } from '../api/systems';
+import { useGetSystemIds } from '../api/systems';
+import { useGetSystemTypes } from '../api/systemTypes';
 import { useGetUsageStatuses } from '../api/usageStatuses';
 import { APISettingsContext } from '../apiConfigProvider.component';
 import type { SystemTableType } from '../app.types';

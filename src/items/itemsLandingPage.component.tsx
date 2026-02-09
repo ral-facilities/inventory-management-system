@@ -16,13 +16,14 @@ import { useGetCatalogueCategory } from '../api/catalogueCategories';
 import { useGetCatalogueItem } from '../api/catalogueItems';
 import { useGetItem } from '../api/items';
 import { useGetManufacturer } from '../api/manufacturers';
-import { useGetSystem, useGetSystemTypes } from '../api/systems';
+import { useGetSystem } from '../api/systems';
+import { useGetSystemType } from '../api/systemTypes';
+import { useAuthorisationState } from '../authProvider.component';
 import ActionMenu from '../common/actionMenu.component';
 import PrimaryImage from '../common/images/primaryImage.component';
 import TabView from '../common/tab/tabView.component';
 import { formatDateTimeStrings } from '../utils';
 import ItemDialog from './itemDialog.component';
-import { useAuthorisationState } from '../authProvider.component';
 
 const ItemsActionMenu = (props: {
   catalogueItem: CatalogueItem;
@@ -89,7 +90,7 @@ function ItemsLandingPage() {
 
   const { data: systemData } = useGetSystem(itemData?.system_id);
 
-  const { data: systemTypesData = [] } = useGetSystemTypes();
+  const { data: systemTypeData } = useGetSystemType(systemData?.type_id);
 
   const { data: manufacturer } = useGetManufacturer(
     catalogueItemData?.manufacturer_id
@@ -387,9 +388,7 @@ function ItemsLandingPage() {
                                 color: 'text.secondary',
                               }}
                             >
-                              {systemTypesData?.find(
-                                (type) => type.id === systemData?.type_id
-                              )?.value ?? 'Unknown'}
+                              {systemTypeData?.value}
                             </Typography>
                           </Grid>
                           <Grid size={{ xs: 12, sm: 6, md: 4 }}>

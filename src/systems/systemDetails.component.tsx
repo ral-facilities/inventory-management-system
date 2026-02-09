@@ -10,11 +10,8 @@ import {
 import Grid from '@mui/material/Grid2';
 import React from 'react';
 import { System } from '../api/api.types';
-import {
-  getSystemImportanceColour,
-  useGetSystem,
-  useGetSystemTypes,
-} from '../api/systems';
+import { getSystemImportanceColour, useGetSystem } from '../api/systems';
+import { useGetSystemType } from '../api/systemTypes';
 import ActionMenu from '../common/actionMenu.component';
 import PrimaryImage from '../common/images/primaryImage.component';
 import TabView from '../common/tab/tabView.component';
@@ -57,7 +54,7 @@ export interface SystemDetailsProps {
 
 function SystemDetails(props: SystemDetailsProps) {
   const { data: system, isLoading: systemLoading } = useGetSystem(props.id);
-  const { data: systemTypesData = [] } = useGetSystemTypes();
+  const { data: systemTypeData } = useGetSystemType(system?.type_id);
 
   return systemLoading && props.id !== null ? (
     <Box
@@ -146,8 +143,7 @@ function SystemDetails(props: SystemDetailsProps) {
                     wordWrap: 'break-word',
                   }}
                 >
-                  {systemTypesData?.find((type) => type.id === system.type_id)
-                    ?.value ?? 'Unknown'}
+                  {systemTypeData?.value}
                 </Typography>
               </Grid>
 

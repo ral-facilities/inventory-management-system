@@ -19,7 +19,7 @@ const rulesJson: Rule[] = [
   },
   {
     id: '2',
-    src_system_type: getSystemTypeByValue('Storage'),
+    src_system_type: getSystemTypeByValue('Scrapped'),
     dst_system_type: null,
     dst_usage_status: null,
   },
@@ -31,12 +31,18 @@ const rulesJson: Rule[] = [
   },
   {
     id: '4',
+    src_system_type: getSystemTypeByValue('Storage'),
+    dst_system_type: getSystemTypeByValue('Scrapped'),
+    dst_usage_status: getUsageStatusByValue('Scrapped'),
+  },
+  {
+    id: '5',
     src_system_type: getSystemTypeByValue('Operational'),
     dst_system_type: getSystemTypeByValue('Storage'),
     dst_usage_status: getUsageStatusByValue('Used'),
   },
   {
-    id: '5',
+    id: '6',
     src_system_type: getSystemTypeByValue('Operational'),
     dst_system_type: getSystemTypeByValue('Scrapped'),
     dst_usage_status: getUsageStatusByValue('Scrapped'),
