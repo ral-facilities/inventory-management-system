@@ -36,11 +36,8 @@ import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link, useParams } from 'react-router';
 import { System, SystemImportanceType } from '../api/api.types';
-import {
-  getSystemImportanceColour,
-  useGetSystems,
-  useGetSystemTypes,
-} from '../api/systems';
+import { getSystemImportanceColour, useGetSystems } from '../api/systems';
+import { useGetSystemTypes } from '../api/systemTypes';
 import type { SystemTableType } from '../app.types';
 import {
   getValueFromUpdater,

@@ -16,7 +16,7 @@ import {
 import React from 'react';
 import type { Rule } from '../../api/api.types';
 import { useGetRules } from '../../api/rules';
-import { useGetSystemTypes } from '../../api/systems';
+import { useGetSystemTypes } from '../../api/systemTypes';
 import { useGetUsageStatuses } from '../../api/usageStatuses';
 import MRTTopTableAlert from '../../common/mrtTopTableAlert.component';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
