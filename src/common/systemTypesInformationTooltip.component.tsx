@@ -40,6 +40,7 @@ export const SystemTypeColumnHeaderInformationTooltip = ({
             {systemTypeTooltip}
           </Typography>
         }
+        aria-label="System Type Info Tooltip"
       >
         <InfoOutlinedIcon fontSize="small" sx={{ mr: 1 }} />
       </Tooltip>
