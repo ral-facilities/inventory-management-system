@@ -1,6 +1,8 @@
 import { render, RenderResult, screen, waitFor } from '@testing-library/react';
-import { AuthProvider, useAuthorisationState } from './authProvider.component';
 import React from 'react';
+import { Provider } from 'react-redux';
+import { AuthProvider, useAuthorisationState } from './authProvider.component';
+import store from './state/store';
 import { ADMIN_ROLE_TOKEN, DEFAULT_ROLE_TOKEN } from './testUtils';
 import { setLocalStorageToken } from './utils';
 
@@ -24,9 +26,11 @@ describe('AuthProvider', () => {
   // Create wrapper for authorisation tests
   const renderComponent = (): RenderResult =>
     render(
-      <AuthProvider>
-        <ConfigTest />
-      </AuthProvider>
+      <Provider store={store}>
+        <AuthProvider>
+          <ConfigTest />
+        </AuthProvider>
+      </Provider>
     );
 
   afterEach(() => {

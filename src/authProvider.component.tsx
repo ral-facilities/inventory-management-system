@@ -1,7 +1,8 @@
 import React from 'react';
-import { InventoryManagementSystemSettingsContext } from './configProvider.component';
 import { getUserRole } from './parseTokens';
 import { TokenUpdatedType } from './state/actions/actions.types';
+import { useAppSelector } from './state/hook';
+import { selectSettings } from './state/slices/configSlice';
 
 const AuthContext = React.createContext<{
   role: string;
@@ -15,9 +16,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     role: 'default',
     isPrivilegedUser: false,
   });
-  const { privilegedRoles } = React.useContext(
-    InventoryManagementSystemSettingsContext
-  );
+
+  const {
+    settings: { privilegedRoles },
+  } = useAppSelector(selectSettings);
 
   const setAuthorisationState = React.useCallback(() => {
     const role = getUserRole();
