@@ -18,7 +18,6 @@ import { useGetItem } from '../api/items';
 import { useGetManufacturer } from '../api/manufacturers';
 import { useGetSystem } from '../api/systems';
 import { useGetSystemType } from '../api/systemTypes';
-import { useAuthorisationState } from '../authProvider.component';
 import ActionMenu from '../common/actionMenu.component';
 import PrimaryImage from '../common/images/primaryImage.component';
 import TabView from '../common/tab/tabView.component';
