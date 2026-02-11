@@ -22,6 +22,8 @@ import { useAuthorisationState } from '../authProvider.component';
 import ActionMenu from '../common/actionMenu.component';
 import PrimaryImage from '../common/images/primaryImage.component';
 import TabView from '../common/tab/tabView.component';
+import { useAppSelector } from '../state/hook';
+import { selectAuthorisation } from '../state/slices/authorisationSlice';
 import { formatDateTimeStrings } from '../utils';
 import ItemDialog from './itemDialog.component';
 
@@ -31,7 +33,7 @@ const ItemsActionMenu = (props: {
   item: Item;
 }) => {
   const { catalogueItem, catalogueCategory, item } = props;
-  const { isPrivilegedUser } = useAuthorisationState();
+  const { isPrivilegedUser } = useAppSelector(selectAuthorisation);
   const [editItemDialogOpen, setEditItemDialogOpen] =
     React.useState<boolean>(false);
   const [isPrivilegedMode, setIsPrivilegedMode] =

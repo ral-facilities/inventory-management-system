@@ -1,10 +1,11 @@
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { IconButton, Paper, Theme, Tooltip, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
-import { useAuthorisationState } from '../authProvider.component';
+import { useAppSelector } from '../state/hook';
+import { selectAuthorisation } from '../state/slices/authorisationSlice';
 
 function AuthRoleStatus() {
-  const { isPrivilegedUser, role } = useAuthorisationState();
+  const { isPrivilegedUser, role } = useAppSelector(selectAuthorisation);
   if (!isPrivilegedUser) return undefined;
   return (
     <Paper

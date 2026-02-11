@@ -44,6 +44,7 @@ import ManufacturerLayout, {
   manufacturerLayoutLoader,
 } from './manufacturer/manufacturerLayout.component';
 import ManufacturerTable from './manufacturer/manufacturerTable.component';
+import { getUserRole } from './parseTokens';
 import paths from './paths';
 import Preloader from './preloader/preloader.component';
 import retryIMS_APIErrors from './retryIMS_APIErrors';
@@ -61,6 +62,7 @@ import {
   requestPluginRerender,
   tokenRefreshed,
 } from './state/scigateway.actions';
+import { setAuthorisation } from './state/slices/authorisationSlice';
 import { loadConfig } from './state/slices/configSlice';
 import store, { RootState } from './state/store';
 import Systems from './systems/systems.component';
@@ -262,7 +264,18 @@ export const ConnectedPreloader = connect(mapPreloaderStateToProps)(Preloader);
 export function Layout() {
   const dispatch = store.dispatch;
   React.useEffect(() => {
-    dispatch(loadConfig());
+    dispatch(loadConfig()).then(() => {
+      const role = getUserRole();
+      const state = store.getState();
+      const privilegedRoles = state.config.settings.privilegedRoles;
+
+      dispatch(
+        setAuthorisation({
+          role,
+          isPrivilegedUser: privilegedRoles.includes(role),
+        })
+      );
+    });
   }, [dispatch]);
   // We need to call forceUpdate if SciGateway tells us to rerender
   // but there's no forceUpdate in functional components, so this is the hooks equivalent
@@ -275,8 +288,7 @@ export function Layout() {
     if (requestPluginRerender.match(action)) forceUpdate();
     else if (tokenRefreshed.match(action)) {
       retryFailedAuthRequests();
-      window.dispatchEvent(new CustomEvent(TokenUpdatedType)); // triggers refresh in authProvider
-      store.dispatch({ type: TokenUpdatedType });
+      store.dispatch({ type: TokenUpdatedType }); // Triggers middleware to recalculate the user's role and update authorisation state
     } else if (broadcastSignOut.match(action)) clearFailedAuthRequestsQueue();
   }
 

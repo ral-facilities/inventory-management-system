@@ -1,11 +1,15 @@
-import { render, RenderResult, waitFor, screen } from '@testing-library/react';
+import { RenderResult, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import {
+  ADMIN_ROLE_TOKEN,
+  renderComponentWithRouterProvider,
+} from '../testUtils';
 import AuthToggle from './authToggle.component';
-import { ADMIN_ROLE_TOKEN } from '../testUtils';
 
 describe('Auth Toggle', () => {
   let user: UserEvent;
-  const renderComponent = (): RenderResult => render(<AuthToggle />);
+  const renderComponent = (): RenderResult =>
+    renderComponentWithRouterProvider(<AuthToggle />);
 
   beforeEach(() => {
     user = userEvent.setup();
