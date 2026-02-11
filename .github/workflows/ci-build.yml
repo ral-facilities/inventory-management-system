@@ -87,7 +87,7 @@ jobs:
         uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
         with:
           repository: ral-facilities/inventory-management-system-api
-          ref: develop
+          ref: main
 
       # This is required as need to setup api in a different directory as checkout will attempt delete
       # all existing files which in this case will include a data directory created by docker causing
@@ -126,13 +126,13 @@ jobs:
           --env OBJECT_STORAGE__API_REQUEST_TIMEOUT_SECONDS=10 \
           --env OBJECT_STORAGE__API_URL=http://localhost:8002 \
           --volume /home/runner/work/inventory-management-system/inventory-management-system-api/logging.example.ini:/app/logging.ini \
-          harbor.stfc.ac.uk/inventory-management-system/ims-api:develop
+          harbor.stfc.ac.uk/inventory-management-system/ims-api:main
 
       - name: Clone Object Storage api repo
         uses: actions/checkout@cbb722410c2e876e24abbe8de2cc27693e501dcb
         with:
           repository: ral-facilities/object-storage-api
-          ref: develop
+          ref: main
           path: object-storage-api
 
       - name: Move Object Storage api repo
@@ -182,7 +182,7 @@ jobs:
           --env IMAGE__UPLOAD_LIMIT=100 \
           --add-host "localhost:host-gateway" \
           --volume /home/runner/work/inventory-management-system/object-storage-api/logging.example.ini:/app/logging.ini \
-          harbor.stfc.ac.uk/scd-object-storage-api/object-storage-api:develop
+          harbor.stfc.ac.uk/scd-object-storage-api/object-storage-api:main
 
       - name: Checkout repo
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0

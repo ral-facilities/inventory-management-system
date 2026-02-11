@@ -17,12 +17,12 @@ import { useGetCatalogueItem } from '../api/catalogueItems';
 import { useGetItem } from '../api/items';
 import { useGetManufacturer } from '../api/manufacturers';
 import { useGetSystem, useGetSystemTypes } from '../api/systems';
+import { useAuthorisationState } from '../authProvider.component';
 import ActionMenu from '../common/actionMenu.component';
 import PrimaryImage from '../common/images/primaryImage.component';
 import TabView from '../common/tab/tabView.component';
 import { formatDateTimeStrings } from '../utils';
 import ItemDialog from './itemDialog.component';
-import { useAuthorisationState } from '../authProvider.component';
 
 const ItemsActionMenu = (props: {
   catalogueItem: CatalogueItem;
