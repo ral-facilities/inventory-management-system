@@ -4,7 +4,8 @@ import Typography from '@mui/material/Typography';
 import React from 'react';
 import { Link } from 'react-router';
 import PageNotFoundComponent from '../common/pageNotFound/pageNotFound.component';
-import { InventoryManagementSystemSettingsContext } from '../configProvider.component';
+import { useAppSelector } from '../state/hook';
+import { selectSettings } from '../state/slices/configSlice';
 import BackgroundImage from '/images/background.jpg';
 import Decal1Image from '/images/decal1.svg';
 import Decal2DarkImage from '/images/decal2-dark.svg';
@@ -344,7 +345,7 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
 };
 
 export const HomePage = React.memo((): React.ReactElement => {
-  const settings = React.useContext(InventoryManagementSystemSettingsContext);
+  const { settings } = useAppSelector(selectSettings);
   const pluginHost = settings.pluginHost;
 
   const HomePage = BaseHomePage;

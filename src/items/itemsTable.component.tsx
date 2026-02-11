@@ -28,14 +28,16 @@ import {
   System,
 } from '../api/api.types';
 import { useGetItems } from '../api/items';
-import { useGetSystemIds, useGetSystemTypes } from '../api/systems';
+import { useGetSystemIds } from '../api/systems';
+import { useGetSystemTypes } from '../api/systemTypes';
 import { useGetUsageStatuses } from '../api/usageStatuses';
 import { APISettingsContext } from '../apiConfigProvider.component';
 import type { SystemTableType } from '../app.types';
-import { useAuthorisationState } from '../authProvider.component';
 import { findPropertyValue } from '../catalogue/items/catalogueItemsTable.component';
 import MRTTopTableAlert from '../common/mrtTopTableAlert.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
+import { useAppSelector } from '../state/hook';
+import { selectAuthorisation } from '../state/slices/authorisationSlice';
 import {
   COLUMN_FILTER_BOOLEAN_OPTIONS,
   COLUMN_FILTER_FUNCTIONS,
@@ -73,7 +75,7 @@ interface TableRowData {
 export function ItemsTable(props: ItemTableProps) {
   const { catalogueCategory, catalogueItem, dense } = props;
 
-  const { isPrivilegedUser } = useAuthorisationState();
+  const { isPrivilegedUser } = useAppSelector(selectAuthorisation);
 
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
 

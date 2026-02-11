@@ -42,6 +42,7 @@ import {
 import { CatalogueCategorySchema, RequestType } from '../../form.schemas';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import CatalogueItemsPropertiesTable from './property/catalogueItemPropertiesTable.component';
+import handleTransferState from '../../handleTransferState';
 
 // Function to convert a list of strings to a list of numbers
 export const convertListToNumbers = (values: string[]): number[] => {
@@ -256,18 +257,28 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
           patchCatalogueCategory({
             id: selectedCatalogueCategory.id,
             catalogueCategory: { name: data.name },
-          }).catch((error: AxiosError) => {
-            const response = error.response?.data as APIError;
-            if (response && error.response?.status === 409) {
-              setError('name', {
-                message:
-                  'A catalogue category with the same name already exists within the same parent catalogue category. Please enter a different name.',
-              });
-              return;
-            }
+          })
+            .then(() => {
+              handleTransferState([
+                {
+                  name: data.name,
+                  message: `Successfully updated Catalogue Category name to ${data.name}`,
+                  state: 'success',
+                },
+              ]);
+            })
+            .catch((error: AxiosError) => {
+              const response = error.response?.data as APIError;
+              if (response && error.response?.status === 409) {
+                setError('name', {
+                  message:
+                    'A catalogue category with the same name already exists within the same parent catalogue category. Please enter a different name.',
+                });
+                return;
+              }
 
-            handleIMS_APIError(error);
-          });
+              handleIMS_APIError(error);
+            });
         } else
           setError('name', {
             message:

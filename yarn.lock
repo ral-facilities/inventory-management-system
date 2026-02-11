@@ -1569,13 +1569,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reduxjs/toolkit@npm:^2.2.5":
-  version: 2.8.0
-  resolution: "@reduxjs/toolkit@npm:2.8.0"
+"@reduxjs/toolkit@npm:^2.11.2":
+  version: 2.11.2
+  resolution: "@reduxjs/toolkit@npm:2.11.2"
   dependencies:
     "@standard-schema/spec": "npm:^1.0.0"
     "@standard-schema/utils": "npm:^0.3.0"
-    immer: "npm:^10.0.3"
+    immer: "npm:^11.0.0"
     redux: "npm:^5.0.1"
     redux-thunk: "npm:^3.1.0"
     reselect: "npm:^5.1.0"
@@ -1587,7 +1587,7 @@ __metadata:
       optional: true
     react-redux:
       optional: true
-  checksum: 10c0/dd19b115234861911b91ae258ed047247a0a09a8750eb0ec9f3ca83b37590f2bfc2c56f56dd541fa24f55d8e9dfbad2360d3737c3168c9adcb9895c621a6a827
+  checksum: 10c0/4d388b96dc4b12a577af23607c252b3647c1b3b5136dbb0212e1dbbef9bb309e93d3ba6a95795ee165e87e4286453025cd67a98b5b3bb6d244b93ea487dd1ac0
   languageName: node
   linkType: hard
 
@@ -5661,10 +5661,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"immer@npm:^10.0.3":
-  version: 10.1.1
-  resolution: "immer@npm:10.1.1"
-  checksum: 10c0/b749e10d137ccae91788f41bd57e9387f32ea6d6ea8fd7eb47b23fd7766681575efc7f86ceef7fe24c3bc9d61e38ff5d2f49c2663b2b0c056e280a4510923653
+"immer@npm:^11.0.0":
+  version: 11.1.3
+  resolution: "immer@npm:11.1.3"
+  checksum: 10c0/2d0bcb7946274bb99254b8129026da9579591569afdd4f29e5ef3ebf231375c7ab97c344ffbfc9eeabea27a2145623fca1287c17e3ebd007c8cdcfd82954eeb7
   languageName: node
   linkType: hard
 
@@ -5737,7 +5737,7 @@ __metadata:
     "@mui/icons-material": "npm:^6.0.0"
     "@mui/material": "npm:^6.0.0"
     "@mui/x-date-pickers": "npm:^7.15.0"
-    "@reduxjs/toolkit": "npm:^2.2.5"
+    "@reduxjs/toolkit": "npm:^2.11.2"
     "@tanstack/eslint-plugin-query": "npm:5.73.3"
     "@tanstack/react-query": "npm:^5.40.0"
     "@tanstack/react-query-devtools": "npm:^5.40.0"

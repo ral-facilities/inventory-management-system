@@ -16,13 +16,15 @@ import { useGetCatalogueCategory } from '../api/catalogueCategories';
 import { useGetCatalogueItem } from '../api/catalogueItems';
 import { useGetItem } from '../api/items';
 import { useGetManufacturer } from '../api/manufacturers';
-import { useGetSystem, useGetSystemTypes } from '../api/systems';
+import { useGetSystem } from '../api/systems';
+import { useGetSystemType } from '../api/systemTypes';
 import ActionMenu from '../common/actionMenu.component';
 import PrimaryImage from '../common/images/primaryImage.component';
 import TabView from '../common/tab/tabView.component';
+import { useAppSelector } from '../state/hook';
+import { selectAuthorisation } from '../state/slices/authorisationSlice';
 import { formatDateTimeStrings } from '../utils';
 import ItemDialog from './itemDialog.component';
-import { useAuthorisationState } from '../authProvider.component';
 
 const ItemsActionMenu = (props: {
   catalogueItem: CatalogueItem;
@@ -30,7 +32,7 @@ const ItemsActionMenu = (props: {
   item: Item;
 }) => {
   const { catalogueItem, catalogueCategory, item } = props;
-  const { isPrivilegedUser } = useAuthorisationState();
+  const { isPrivilegedUser } = useAppSelector(selectAuthorisation);
   const [editItemDialogOpen, setEditItemDialogOpen] =
     React.useState<boolean>(false);
   const [isPrivilegedMode, setIsPrivilegedMode] =
@@ -89,7 +91,7 @@ function ItemsLandingPage() {
 
   const { data: systemData } = useGetSystem(itemData?.system_id);
 
-  const { data: systemTypesData = [] } = useGetSystemTypes();
+  const { data: systemTypeData } = useGetSystemType(systemData?.type_id);
 
   const { data: manufacturer } = useGetManufacturer(
     catalogueItemData?.manufacturer_id
@@ -387,9 +389,7 @@ function ItemsLandingPage() {
                                 color: 'text.secondary',
                               }}
                             >
-                              {systemTypesData?.find(
-                                (type) => type.id === systemData?.type_id
-                              )?.value ?? 'Unknown'}
+                              {systemTypeData?.value}
                             </Typography>
                           </Grid>
                           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
