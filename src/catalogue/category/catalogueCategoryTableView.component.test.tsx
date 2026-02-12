@@ -6,6 +6,7 @@ import {
 
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { CatalogueCategoryPropertyType } from '../../api/api.types';
+import { RootState } from '../../state/store';
 import CatalogueCategoryTableView, {
   CatalogueCategoryTableViewProps,
 } from './catalogueCategoryTableView.component';
@@ -15,9 +16,12 @@ describe('CatalogueCategoryTableView', () => {
   let user: UserEvent;
 
   const onChangeParentCategoryId = vi.fn();
-  const createView = () => {
+  const createView = (preloadedState?: Partial<RootState>) => {
     return renderComponentWithRouterProvider(
-      <CatalogueCategoryTableView {...props} />
+      <CatalogueCategoryTableView {...props} />,
+      undefined,
+      undefined,
+      preloadedState
     );
   };
 
@@ -29,6 +33,7 @@ describe('CatalogueCategoryTableView', () => {
           name: 'Energy Meters',
           parent_id: '1',
           code: 'energy-meters',
+          is_flagged: false,
           is_leaf: true,
           properties: [
             {
@@ -62,6 +67,7 @@ describe('CatalogueCategoryTableView', () => {
           name: 'test_dup',
           parent_id: '1',
           code: 'test_dup',
+          is_flagged: false,
           is_leaf: false,
           properties: [],
           ...CREATED_MODIFIED_TIME_VALUES,
@@ -71,6 +77,7 @@ describe('CatalogueCategoryTableView', () => {
           name: 'Cameras',
           parent_id: '1',
           code: 'cameras',
+          is_flagged: false,
           is_leaf: true,
           properties: [
             {
@@ -135,6 +142,7 @@ describe('CatalogueCategoryTableView', () => {
           name: 'Energy Meters',
           parent_id: '1',
           code: 'energy-meters',
+          is_flagged: false,
           is_leaf: true,
           properties: [
             {
@@ -163,6 +171,7 @@ describe('CatalogueCategoryTableView', () => {
           name: 'Wavefront Sensors',
           parent_id: '1',
           code: 'wavefront-sensors',
+          is_flagged: true,
           is_leaf: true,
           properties: [
             {
@@ -191,6 +200,7 @@ describe('CatalogueCategoryTableView', () => {
           name: 'Voltage Meters',
           parent_id: '1',
           code: 'voltage-meters',
+          is_flagged: false,
           is_leaf: true,
           properties: [
             {
@@ -219,6 +229,7 @@ describe('CatalogueCategoryTableView', () => {
           name: 'Amp Meters',
           parent_id: '1',
           code: 'amp-meters',
+          is_flagged: false,
           is_leaf: false,
           ...CREATED_MODIFIED_TIME_VALUES,
           properties: [],
@@ -298,6 +309,7 @@ describe('CatalogueCategoryTableView', () => {
         name: 'test_dup',
         parent_id: '1',
         code: 'test_dup',
+        is_flagged: false,
         is_leaf: false,
         ...CREATED_MODIFIED_TIME_VALUES,
         properties: [],
@@ -307,6 +319,7 @@ describe('CatalogueCategoryTableView', () => {
         name: 'Amp Meters',
         parent_id: '1',
         code: 'amp-meters',
+        is_flagged: false,
         is_leaf: false,
         ...CREATED_MODIFIED_TIME_VALUES,
         properties: [],
@@ -351,5 +364,48 @@ describe('CatalogueCategoryTableView', () => {
     await user.click(voltageMetersRow);
 
     expect(onChangeParentCategoryId).not.toHaveBeenCalled();
+  });
+
+  it('shows critical catalogue categories', async () => {
+    props.selectedCategories = [
+      {
+        id: '79',
+        name: 'test_dup',
+        parent_id: '1',
+        code: 'test_dup',
+        is_flagged: false,
+        is_leaf: false,
+        ...CREATED_MODIFIED_TIME_VALUES,
+        properties: [],
+      },
+      {
+        id: '19',
+        name: 'Amp Meters',
+        parent_id: '1',
+        code: 'amp-meters',
+        is_flagged: false,
+        is_leaf: false,
+        ...CREATED_MODIFIED_TIME_VALUES,
+        properties: [],
+      },
+    ];
+
+    props.requestType = 'moveTo';
+
+    createView({
+      criticality: { isCriticalMode: true },
+    });
+
+    await waitFor(() => {
+      expect(screen.getByTestId('WarningIcon')).toBeInTheDocument();
+    });
+
+    await user.hover(screen.getByTestId('WarningIcon'));
+
+    expect(
+      await screen.findByText(
+        'A catalogue category is considered critical if any of its nested child categories or catalogue items are marked as critical.'
+      )
+    ).toBeInTheDocument();
   });
 });

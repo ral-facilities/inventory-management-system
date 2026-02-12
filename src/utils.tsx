@@ -691,3 +691,9 @@ export function isExactFilterActive<TData extends MRT_RowData>(
     }
   });
 }
+
+export const criticalityRowStyle = (theme: Theme) => {
+  return {
+    backgroundColor: theme.palette.error.main + '11', // ~7% tint
+  };
+};

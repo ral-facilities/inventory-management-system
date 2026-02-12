@@ -8,16 +8,22 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { CatalogueCategory } from '../../api/api.types';
+import CriticalityTooltipIcon from '../../common/criticalityTooltipIcon.component';
+import { useAppSelector } from '../../state/hook';
+import { selectCriticality } from '../../state/slices/criticalitySlice';
 import {
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
   COLUMN_FILTER_VARIANTS,
+  OverflowTip,
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
+  criticalityRowStyle,
   formatDateTimeStrings,
   generateUniqueName,
   mrtTheme,
 } from '../../utils';
+import { CriticalTooltipText } from './catalogueCardView.component';
 import CatalogueCategoryDialog from './catalogueCategoryDialog.component';
 
 export interface CatalogueCategoryTableViewProps {
@@ -47,6 +53,8 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
       return category.id;
     });
 
+  const { isCriticalMode } = useAppSelector(selectCriticality);
+
   const catalogueCategoryNames: string[] =
     catalogueCategoryData?.map((item) => item.name) || [];
 
@@ -61,6 +69,17 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
         size: 567.5,
+        Cell: ({ renderedCellValue, row }) => {
+          const showFlagged = row.original.is_flagged && isCriticalMode;
+          return (
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              {showFlagged && (
+                <CriticalityTooltipIcon label={CriticalTooltipText} />
+              )}
+              <OverflowTip>{renderedCellValue}</OverflowTip>
+            </Box>
+          );
+        },
       },
       {
         header: 'Last modified',
@@ -75,7 +94,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
           formatDateTimeStrings(row.original.modified_time, true),
       },
     ];
-  }, []);
+  }, [isCriticalMode]);
 
   const table = useMaterialReactTable({
     // Data
@@ -123,15 +142,17 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
           (requestType !== 'moveTo' ||
             !selectedCatalogueCategoryIds.includes(row.original.id))) ||
         requestType === 'standard';
+      const showFlagged = row.original.is_flagged && isCriticalMode;
       return {
         component: TableRow,
         onClick: () => {
           if (canPlaceHere) onChangeParentCategoryId(row.original.id);
         },
         'aria-label': `${row.original.name} row`,
-        style: {
+        sx: (theme) => ({
           cursor: canPlaceHere ? 'pointer' : 'not-allowed',
-        },
+          ...(showFlagged && criticalityRowStyle(theme)),
+        }),
       };
     },
     muiTableBodyCellProps: ({ column, row }) =>

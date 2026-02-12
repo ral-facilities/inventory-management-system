@@ -334,6 +334,7 @@ describe('catalogue items api functions', () => {
           ],
           id: '657305bc1e468454e97b638a',
           code: 'rf-lenses',
+          is_flagged: false,
           ...CREATED_MODIFIED_TIME_VALUES,
         },
       };
@@ -472,6 +473,7 @@ describe('catalogue items api functions', () => {
           ],
           id: '657305bc1e468454e97b638a',
           code: 'rf-lenses',
+          is_flagged: false,
           ...CREATED_MODIFIED_TIME_VALUES,
         },
       };

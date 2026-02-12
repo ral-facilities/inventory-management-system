@@ -34,6 +34,7 @@ describe('catalogue item directory Dialog', () => {
         name: 'Energy Meters',
         parent_id: '1',
         code: 'energy-meters',
+        is_flagged: false,
         is_leaf: true,
 
         properties: [

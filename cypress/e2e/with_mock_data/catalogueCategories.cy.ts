@@ -76,6 +76,33 @@ describe('Catalogue Category', () => {
     );
   });
 
+  it('shows critical catalogue categories in the move and copy to catalogue category table', () => {
+    cy.visit('/catalogue');
+    cy.setMode({ critical: true });
+
+    cy.findAllByRole('checkbox', {
+      name: 'Toggle select card',
+    })
+      .eq(1)
+      .click();
+    cy.findAllByRole('checkbox', {
+      name: 'Toggle select card',
+    })
+      .eq(0)
+      .click();
+    cy.findByRole('button', { name: 'Copy to' }).click();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByTestId('WarningIcon').should('exist');
+        cy.findByTestId('WarningIcon').trigger('mouseover');
+      });
+    cy.findByText(
+      'A catalogue category is considered critical if any of its nested child categories or catalogue items are marked as critical.'
+    );
+  });
+
   it('should be able to navigate through categories while preserving the page state when going back', () => {
     cy.editEndpointResponse({
       url: '/v1/catalogue-categories',

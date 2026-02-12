@@ -1,10 +1,8 @@
-import WarningIcon from '@mui/icons-material/Warning';
 import {
   Button,
   Card,
   CardActions,
   CardContent,
-  Tooltip,
   Typography,
 } from '@mui/material';
 import {
@@ -16,6 +14,7 @@ import {
 } from 'material-react-table';
 import { Link } from 'react-router';
 import { CatalogueCategory } from '../../api/api.types';
+import CriticalityTooltipIcon from '../../common/criticalityTooltipIcon.component';
 import { useAppSelector } from '../../state/hook';
 import { selectCriticality } from '../../state/slices/criticalitySlice';
 import { OverflowTip, formatDateTimeStrings } from '../../utils';
@@ -82,15 +81,7 @@ function CatalogueCard(props: CatalogueCardProps) {
         </CardActions>
         <CardContent sx={{ display: 'flex', alignItems: 'center', padding: 0 }}>
           {showFlagged && (
-            <Tooltip title={CriticalTooltipText}>
-              <WarningIcon
-                sx={{
-                  pr: 1,
-                  fontSize: '35px',
-                  color: 'error.main',
-                }}
-              />
-            </Tooltip>
+            <CriticalityTooltipIcon label={CriticalTooltipText} />
           )}
         </CardContent>
         <CardContent

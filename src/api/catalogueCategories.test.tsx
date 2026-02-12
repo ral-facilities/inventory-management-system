@@ -156,6 +156,7 @@ describe('catalogue categories api functions', () => {
         parent_id: null,
         id: '1',
         code: 'test',
+        is_flagged: false,
         is_leaf: false,
         properties: [],
         ...CREATED_MODIFIED_TIME_VALUES,
@@ -275,6 +276,7 @@ describe('catalogue categories api functions', () => {
         name: 'test_dup',
         parent_id: '1',
         code: 'test_dup',
+        is_flagged: false,
         is_leaf: false,
         properties: [],
         ...CREATED_MODIFIED_TIME_VALUES,
@@ -284,6 +286,7 @@ describe('catalogue categories api functions', () => {
         name: 'Wavefront Sensors',
         parent_id: '1',
         code: 'wavefront-sensors',
+        is_flagged: true,
         is_leaf: true,
         properties: [
           {
@@ -312,6 +315,7 @@ describe('catalogue categories api functions', () => {
         name: 'Energy Meters',
         parent_id: '1',
         code: 'energy-meters',
+        is_flagged: false,
         is_leaf: true,
         properties: [
           {
@@ -404,6 +408,7 @@ describe('catalogue categories api functions', () => {
         parent_id: null,
         name: 'Wavefront Sensors',
         code: 'wavefront-sensors',
+        is_flagged: true,
         is_leaf: false,
         properties: [],
         ...CREATED_MODIFIED_TIME_VALUES,
@@ -587,6 +592,7 @@ describe('catalogue categories api functions', () => {
         parent_id: null,
         name: 'Wavefront Sensors',
         code: 'wavefront-sensors',
+        is_flagged: true,
         is_leaf: false,
         properties: [],
         ...CREATED_MODIFIED_TIME_VALUES,

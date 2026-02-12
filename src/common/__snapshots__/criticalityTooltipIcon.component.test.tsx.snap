@@ -1,0 +1,21 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CriticalityTooltipIcon > renders correctly 1`] = `
+<body>
+  <div>
+    <svg
+      aria-hidden="true"
+      aria-label="test"
+      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-lsa6h-MuiSvgIcon-root"
+      data-mui-internal-clone-element="true"
+      data-testid="WarningIcon"
+      focusable="false"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M1 21h22L12 2zm12-3h-2v-2h2zm0-4h-2v-4h2z"
+      />
+    </svg>
+  </div>
+</body>
+`;
