@@ -25,9 +25,9 @@ import {
 } from 'material-react-table';
 import React from 'react';
 import { useGetSparesDefinition } from './api/settings';
-import { MicroFrontendToken } from './app.types';
-import { SparesFilterStateType } from './app.types';
+import { MicroFrontendToken, SparesFilterStateType } from './app.types';
 import { TokenUpdatedType } from './state/actions/actions.types';
+import store from './state/store';
 
 /* Returns a name avoiding duplicates by appending _copy_n for nth copy */
 export const generateUniqueName = (
@@ -78,8 +78,8 @@ export const setLocalStorageToken = (useAdminToken: boolean) => {
       : 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwicm9sZXMiOltdLCJ1c2VySXNBZG1pbiI6ZmFsc2UsImV4cCI6MjUzNDAyMzAwNzk5fQ.JTdyZHZTU2Vd1cZPzsBGBB_hs72KS4LODyhAyKdNTPWMnp_lEs2fmVSqJjSx3mOTW4J40c7LnJcw6ALlCGuEG3DShQKdoYTtH8JLNyzXi9yNYtPlBTEfWqFKK_IYY9sA_WzlQwYDGLD7jsvCvm92CdWjoNtcfDZ0eIfRjHuIRsW5XllerFFE7ouv9awulGCEHv-zl2m0SpMF-mHUYJV9JbB5bgrqs635vYL-IJg_qdr10Cn11BUhO1ulrFrk1QLhty-_L8LC2d2j11xqEuIMlEcVkQ6w79U1uzg-NEYcHzcuuaitQjZzKsDD8eMDT-dBkIPZxDWzlUuySkGUKDJPzw'
   );
 
-  // notify the authProvider class via new window event. This will trigger a reload.
-  window.dispatchEvent(new CustomEvent(TokenUpdatedType));
+  // Triggers middleware to recalculate the user's role and update authorisation state
+  store.dispatch({ type: TokenUpdatedType });
 };
 
 /* Returns a calc function giving the page height excluding SciGateway related components

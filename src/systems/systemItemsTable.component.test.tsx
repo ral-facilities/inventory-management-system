@@ -3,9 +3,9 @@ import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { System } from '../api/api.types';
 import APIConfigProvider from '../apiConfigProvider.component';
-import * as authProvider from '../authProvider.component';
 import { server } from '../mocks/server';
 import SystemsJSON from '../mocks/Systems.json';
+import { RootState } from '../state/store';
 import { getSystemById, renderComponentWithRouterProvider } from '../testUtils';
 import {
   SystemItemsTable,
@@ -20,13 +20,14 @@ describe('SystemItemsTable', () => {
 
   const mockSystem: System = SystemsJSON[3] as System;
 
-  const createView = () => {
+  const createView = (preloadedState?: Partial<RootState>) => {
     return renderComponentWithRouterProvider(
       <APIConfigProvider>
         <SystemItemsTable {...props} />
       </APIConfigProvider>,
       'any',
-      '/'
+      '/',
+      preloadedState
     );
   };
 
@@ -45,12 +46,13 @@ describe('SystemItemsTable', () => {
   });
 
   it('renders correctly', async () => {
-    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
-      role: 'admin',
-      isPrivilegedUser: true,
+    const view = createView({
+      authorisation: {
+        role: 'admin',
+        isPrivilegedUser: true,
+        isAdminMode: false,
+      },
     });
-
-    const view = createView();
 
     // Name (obtained from catalogue category item)
     await waitFor(
@@ -372,12 +374,13 @@ describe('SystemItemsTable', () => {
   });
 
   it('can open the edit as admin dialog and close it again', async () => {
-    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
-      role: 'admin',
-      isPrivilegedUser: true,
+    createView({
+      authorisation: {
+        role: 'admin',
+        isPrivilegedUser: true,
+        isAdminMode: false,
+      },
     });
-
-    createView();
 
     // Name (obtained from catalogue category item)
     await waitFor(
@@ -467,12 +470,13 @@ describe('SystemItemsTable', () => {
   });
 
   it('can open the duplicate dialog as admin and close it again', async () => {
-    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
-      role: 'admin',
-      isPrivilegedUser: true,
+    createView({
+      authorisation: {
+        role: 'admin',
+        isPrivilegedUser: true,
+        isAdminMode: false,
+      },
     });
-
-    createView();
 
     // Name (obtained from catalogue category item)
     await waitFor(
@@ -701,12 +705,13 @@ describe('SystemItemsTable', () => {
   });
 
   it('can open the delete as admin dialog and close it again', async () => {
-    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
-      role: 'admin',
-      isPrivilegedUser: true,
+    createView({
+      authorisation: {
+        role: 'admin',
+        isPrivilegedUser: true,
+        isAdminMode: false,
+      },
     });
-
-    createView();
 
     // Name (obtained from catalogue category item)
     await waitFor(

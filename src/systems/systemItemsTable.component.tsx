@@ -32,6 +32,8 @@ import { usePreservedTableState } from '../common/preservedTableState.component'
 import DeleteItemDialog from '../items/deleteItemDialog.component';
 import ItemDialog from '../items/itemDialog.component';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
+import { useAppSelector } from '../state/hook';
+import { selectAuthorisation } from '../state/slices/authorisationSlice';
 import {
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
@@ -51,7 +53,6 @@ import {
   mrtTheme,
 } from '../utils';
 import SystemItemsDialog from './systemItemsDialog.component';
-import { useAuthorisationState } from '../authProvider.component';
 
 const MoveItemsButton = (props: {
   selectedItems: Item[];
@@ -98,7 +99,7 @@ export interface SystemItemsTableProps {
 export function SystemItemsTable(props: SystemItemsTableProps) {
   const { system } = props;
 
-  const { isPrivilegedUser } = useAuthorisationState();
+  const { isPrivilegedUser } = useAppSelector(selectAuthorisation);
 
   // States
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
