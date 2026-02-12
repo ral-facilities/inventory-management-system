@@ -27,6 +27,7 @@ exports[`Upload image dialog > renders dialog correctly 1`] = `
             tabindex="-1"
           />
           <div
+            aria-modal="true"
             class="uppy-Dashboard-inner"
             role="dialog"
           >

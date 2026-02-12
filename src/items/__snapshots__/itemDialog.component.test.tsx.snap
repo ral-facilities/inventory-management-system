@@ -565,6 +565,7 @@ exports[`ItemDialog > Add Item > displays warning when in admin mode 1`] = `
                                 >
                                   <svg
                                     aria-hidden="true"
+                                    aria-label="System Type Info Tooltip"
                                     class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-1raa5r2-MuiSvgIcon-root"
                                     data-mui-internal-clone-element="true"
                                     data-testid="InfoOutlinedIcon"
@@ -2029,6 +2030,7 @@ exports[`ItemDialog > Edit Item > displays warning when in admin mode for edit 1
                                 >
                                   <svg
                                     aria-hidden="true"
+                                    aria-label="System Type Info Tooltip"
                                     class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-1raa5r2-MuiSvgIcon-root"
                                     data-mui-internal-clone-element="true"
                                     data-testid="InfoOutlinedIcon"
