@@ -445,6 +445,33 @@ describe('Catalogue Items', () => {
     cy.findByText('Cameras 4').should('exist');
   });
 
+  it('displays the table view correctly (Criticality)', () => {
+    cy.visit('/catalogue/6');
+
+    cy.setMode({ critical: true });
+    cy.findByText('Wavefront Sensors 31').should('exist');
+    cy.findByText('Wavefront Sensors 30').should('exist');
+
+    cy.findByTestId('WarningIcon').should('exist');
+    cy.findByTestId('WarningIcon').trigger('mouseover');
+    cy.findByText('Items are running low in this catalogue item').should(
+      'exist'
+    );
+  });
+
+  it('displays the catalogue item landing page (Criticality)', () => {
+    cy.visit('/catalogue/6/items/10');
+
+    cy.setMode({ critical: true });
+
+    cy.findByTestId('WarningIcon').should('exist');
+    cy.findByTestId('WarningIcon').trigger('mouseover');
+    cy.findByText('Items are running low in this catalogue item').should(
+      'exist'
+    );
+    cy.findAllByText('-4.55').should('have.length', 2);
+  });
+
   it('navigates to the landing page and navigates back to the table view', () => {
     cy.findByText('Cameras 1').click();
     cy.findByText(
