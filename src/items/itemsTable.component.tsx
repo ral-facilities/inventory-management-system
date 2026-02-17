@@ -36,6 +36,7 @@ import type { SystemTableType } from '../app.types';
 import { findPropertyValue } from '../catalogue/items/catalogueItemsTable.component';
 import MRTTopTableAlert from '../common/mrtTopTableAlert.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
+import { SystemTypeColumnHeaderInformationTooltip } from '../common/systemTypesInformationTooltip.component';
 import { useAppSelector } from '../state/hook';
 import { selectAuthorisation } from '../state/slices/authorisationSlice';
 import {
@@ -155,6 +156,7 @@ export function ItemsTable(props: ItemTableProps) {
     const viewCatalogueItemProperties = catalogueCategory?.properties ?? [];
     const systemTypeValues = systemTypesData?.map((type) => type.value);
     const usageStatusValues = usageStatusData?.map((val) => val.value);
+
     return [
       {
         header: 'Serial Number',
@@ -344,7 +346,13 @@ export function ItemsTable(props: ItemTableProps) {
       },
       {
         header: 'System Type',
-        Header: TableHeaderOverflowTip,
+        Header: ({ column }) => (
+          <SystemTypeColumnHeaderInformationTooltip
+            title={column.columnDef.header}
+            systemTypesData={systemTypesData}
+          />
+        ),
+        TableHeaderOverflowTip,
         accessorFn: (row) => row.system?.type?.value,
         id: 'system.type.value',
         filterVariant: 'multi-select',

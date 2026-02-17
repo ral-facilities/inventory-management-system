@@ -16,6 +16,7 @@ import React from 'react';
 import { System } from '../api/api.types';
 import { useGetSystemTypes } from '../api/systemTypes';
 import type { SystemTableType } from '../app.types';
+import { SystemTypeColumnHeaderInformationTooltip } from '../common/systemTypesInformationTooltip.component';
 import {
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
@@ -89,7 +90,13 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
       },
       {
         header: 'Type',
-        Header: TableHeaderOverflowTip,
+        Header: ({ column }) => (
+          <SystemTypeColumnHeaderInformationTooltip
+            title={column.columnDef.header}
+            systemTypesData={systemTypesData}
+          />
+        ),
+        TableHeaderOverflowTip,
         accessorFn: (row) => row.type?.value,
         id: 'type',
         filterVariant: 'multi-select',
