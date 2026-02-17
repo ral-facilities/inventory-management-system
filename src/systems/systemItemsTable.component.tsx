@@ -14,6 +14,7 @@ import {
   TableCellBaseProps,
 } from '@mui/material';
 import {
+  MRT_Column,
   MRT_ColumnDef,
   MRT_Row,
   MRT_RowSelectionState,
@@ -29,6 +30,7 @@ import { useGetItems } from '../api/items';
 import { useGetUsageStatuses } from '../api/usageStatuses';
 import { APISettingsContext } from '../apiConfigProvider.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
+import { SparesColumnHeaderInformationTooltip } from '../common/sparesInformationTooltip.component';
 import DeleteItemDialog from '../items/deleteItemDialog.component';
 import ItemDialog from '../items/itemDialog.component';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
@@ -248,7 +250,17 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         ? [
             {
               header: 'Number of Spares',
-              Header: TableHeaderOverflowTip,
+              Header: ({
+                column,
+              }: {
+                column: MRT_Column<TableRowData, unknown>;
+              }) => (
+                <SparesColumnHeaderInformationTooltip
+                  title={column.columnDef.header}
+                  sparesDefinition={apiSettings?.spares?.sparesDefinition}
+                />
+              ),
+              TableHeaderOverflowTip,
               // This needs to be a string to allow the AggregatedCell to render correctly.
               // If not, it does not display. This seems to be a Material React Table (MRT) issue.
               accessorFn: (row: TableRowData) =>
