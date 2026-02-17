@@ -97,6 +97,16 @@ describe('SystemItemsDialog', () => {
       ).toBeInTheDocument();
     });
 
+    await user.unhover(infoIcon);
+
+    await waitFor(() => {
+      expect(
+        screen.queryByText(
+          "As an admin, you can bypass rules that restrict item placement for other users, and you can modify the item's usage status"
+        )
+      ).not.toBeInTheDocument();
+    });
+
     expect(screen.getByRole('button', { name: 'Next' })).toBeInTheDocument();
 
     await waitFor(() =>
