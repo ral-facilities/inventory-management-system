@@ -53,6 +53,9 @@ describe('delete Catalogue Category dialogue', () => {
       obsolete_reason: null,
       properties: [],
       number_of_spares: 0,
+      number_of_spares_required: null,
+      criticality: null,
+      is_flagged: null,
       ...CREATED_MODIFIED_TIME_VALUES,
     };
     props = {

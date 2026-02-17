@@ -48,6 +48,7 @@ import {
   getPageHeightCalc,
   MRT_Functions_Localisation,
   mrtTheme,
+  OverflowTip,
 } from '../../utils';
 import CatalogueCard from './catalogueCard.component';
 import CatalogueCategoryDialog from './catalogueCategoryDialog.component';
@@ -326,7 +327,7 @@ function CatalogueCardView() {
             <Tooltip title={CriticalTooltipText}>
               <InfoOutlined sx={{ mr: 1 }} fontSize="small" />
             </Tooltip>
-            {column.columnDef.header}
+            <OverflowTip>{column.columnDef.header}</OverflowTip>
           </Box>
         ),
         accessorFn: (row: CatalogueCategory) => (row.is_flagged ? 'Yes' : 'No'),

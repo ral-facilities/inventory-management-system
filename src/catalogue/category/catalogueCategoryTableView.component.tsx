@@ -76,7 +76,9 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
               {showFlagged && (
                 <CriticalityTooltipIcon label={CriticalTooltipText} />
               )}
-              <OverflowTip>{renderedCellValue}</OverflowTip>
+              <OverflowTip sx={{ fontSize: 'inherit' }}>
+                {renderedCellValue}
+              </OverflowTip>
             </Box>
           );
         },

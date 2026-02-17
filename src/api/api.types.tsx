@@ -214,6 +214,9 @@ export interface CatalogueItem
   id: string;
   properties: Property[];
   number_of_spares: number | null;
+  number_of_spares_required: number | null;
+  criticality: number | null;
+  is_flagged: boolean | null;
 }
 
 // ------------------------------------ ITEMS ------------------------------------------------

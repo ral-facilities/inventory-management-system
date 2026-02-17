@@ -544,8 +544,8 @@ export function ItemsTable(props: ItemTableProps) {
           height: dense
             ? '360.4px'
             : getPageHeightCalc(
-                // Breadcrumbs + Mui table V2 + extra
-                `50px + 110px + 48px ${showAlert ? '+ 64px' : ''} ${isSparesFilterApplied ? ' + 54px' : ''}`
+                // Breadcrumbs + Mui table V2 + header + extra
+                `50px + 110px + 58px + 48px ${showAlert ? '+ 64px' : ''} ${isSparesFilterApplied ? ' + 54px' : ''}`
               ),
           flexShrink: 1,
         },

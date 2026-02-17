@@ -35,10 +35,9 @@ describe('Items Landing Page', () => {
     createView('/catalogue/4/items/1/items/KvT2Ox7n');
 
     await waitFor(() => {
-      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
+      expect(screen.getByText('Description:')).toBeInTheDocument();
     });
 
-    expect(screen.getByText('Description:')).toBeInTheDocument();
     expect(
       screen.getByText('High-resolution cameras for beam characterization. 1')
     ).toBeInTheDocument();
@@ -54,7 +53,9 @@ describe('Items Landing Page', () => {
     createView('/catalogue/4/items/1/items/KvT2Ox7n');
 
     await waitFor(() => {
-      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
+      expect(
+        screen.getByText('High-resolution cameras for beam characterization. 1')
+      ).toBeInTheDocument();
     });
 
     await user.click(screen.getByText('Notes'));
@@ -65,7 +66,9 @@ describe('Items Landing Page', () => {
   it('navigates to the system when the system id is clicked', async () => {
     createView('/catalogue/4/items/1/items/KvT2Ox7n');
     await waitFor(() => {
-      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
+      expect(
+        screen.getByText('High-resolution cameras for beam characterization. 1')
+      ).toBeInTheDocument();
     });
 
     const systemName = await screen.findByText('Giant laser');
@@ -88,7 +91,9 @@ describe('Items Landing Page', () => {
     createView('/catalogue/4/items/1/items/KvT2Ox7n');
 
     await waitFor(() => {
-      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
+      expect(
+        screen.getByText('High-resolution cameras for beam characterization. 1')
+      ).toBeInTheDocument();
     });
 
     await user.click(
@@ -126,7 +131,11 @@ describe('Items Landing Page', () => {
     createView('/catalogue/4/items/33/items/I26EJNJ0');
 
     await waitFor(() => {
-      expect(screen.getByText('Cameras 14')).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          'High-resolution cameras for beam characterization. 14'
+        )
+      ).toBeInTheDocument();
     });
 
     await waitFor(() => {
@@ -166,7 +175,9 @@ describe('Items Landing Page', () => {
   it('navigates to manufacturer landing page', async () => {
     createView('/catalogue/4/items/1/items/KvT2Ox7n');
     await waitFor(() => {
-      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
+      expect(
+        screen.getByText('High-resolution cameras for beam characterization. 1')
+      ).toBeInTheDocument();
     });
 
     const url = await screen.findByText('Manufacturer A');

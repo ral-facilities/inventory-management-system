@@ -5,6 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
+import InfoOutlined from '@mui/icons-material/InfoOutlined';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   Box,
@@ -16,10 +17,12 @@ import {
   Stack,
   TableCellBaseProps,
   TableRow,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import {
   MRT_BottomToolbar,
+  MRT_Column,
   MRT_Row,
   MaterialReactTable,
   useMaterialReactTable,
@@ -38,7 +41,10 @@ import {
 import { useGetCatalogueItems } from '../../api/catalogueItems';
 import { useGetManufacturerIds } from '../../api/manufacturers';
 import { APISettingsContext } from '../../apiConfigProvider.component';
+import CriticalityTooltipIcon from '../../common/criticalityTooltipIcon.component';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
+import { useAppSelector } from '../../state/hook';
+import { selectCriticality } from '../../state/slices/criticalitySlice';
 import {
   COLUMN_FILTER_BOOLEAN_OPTIONS,
   COLUMN_FILTER_FUNCTIONS,
@@ -46,10 +52,12 @@ import {
   COLUMN_FILTER_VARIANTS,
   MRT_Functions_Localisation,
   OPTIONAL_FILTER_MODE_OPTIONS,
+  OverflowTip,
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
   TableGroupedCell,
   TableHeaderOverflowTip,
+  criticalityRowStyle,
   customFilterFunctions,
   deselectRowById,
   displayTableRowCountText,
@@ -65,7 +73,6 @@ import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import CatalogueLink from './catalogueLink.component';
 import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
 import ObsoleteCatalogueItemDialog from './obsoleteCatalogueItemDialog.component';
-
 const MoveCatalogueItemsButton = (props: {
   selectedItems: CatalogueItem[];
   onChangeSelectedItems: (selectedItems: MRT_RowSelectionState) => void;
@@ -173,7 +180,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
 
   const { data: catalogueItemsData, isLoading: isLoadingCatalogueItems } =
     useGetCatalogueItems(parentInfo.id);
-
+  const { isCriticalMode } = useAppSelector(selectCriticality);
   const apiSettings = React.useContext(APISettingsContext);
   const sparesFilterState = apiSettings?.spares?.sparesFilterState;
   const isSparesDefinitionDefined = !!apiSettings.spares;
@@ -247,21 +254,63 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
-        size: 200,
-        Cell: ({ renderedCellValue, row }) =>
-          dense ? (
-            renderedCellValue
-          ) : (
-            <MuiLink
-              underline="hover"
-              component={Link}
-              to={`${row.original.catalogueItem.id}`}
-            >
-              {renderedCellValue}
-            </MuiLink>
-          ),
+        size: 250,
+        Cell: ({ row, renderedCellValue }) => {
+          const showFlagged =
+            row.original.catalogueItem.is_flagged && isCriticalMode;
+          return (
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              {showFlagged && (
+                <CriticalityTooltipIcon
+                  label={'Items are running low in this catalogue item'}
+                />
+              )}
+              <OverflowTip sx={{ fontSize: 'inherit' }}>
+                {dense ? (
+                  renderedCellValue
+                ) : (
+                  <MuiLink
+                    underline="hover"
+                    component={Link}
+                    to={`${row.original.catalogueItem.id}`}
+                  >
+                    {renderedCellValue}
+                  </MuiLink>
+                )}
+              </OverflowTip>
+            </Box>
+          );
+        },
+
         GroupedCell: TableGroupedCell,
       },
+      ...(isSparesDefinitionDefined
+        ? [
+            {
+              header: 'Criticality',
+              Header: ({ column }: { column: MRT_Column<TableRowData> }) => (
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Tooltip
+                    title={
+                      'The criticality column indicates whether new items need to bough for a given catalogue item. if the value is empty this means that expected lifetime field is none for that given catalogue please update the field '
+                    }
+                  >
+                    <InfoOutlined sx={{ mr: 1 }} fontSize="small" />
+                  </Tooltip>
+                  <OverflowTip sx={{ font: 'inherit' }}>
+                    {column.columnDef.header}
+                  </OverflowTip>
+                </Box>
+              ),
+              accessorFn: (row: TableRowData) => row.catalogueItem.criticality,
+              id: 'catalogueItem.criticality',
+              filterVariant: COLUMN_FILTER_VARIANTS.number,
+              filterFn: COLUMN_FILTER_FUNCTIONS.number,
+              columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.number,
+              size: 250,
+            },
+          ]
+        : []),
       {
         header: 'Last modified',
         Header: TableHeaderOverflowTip,
@@ -682,6 +731,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     ];
   }, [
     dense,
+    isCriticalMode,
     isSparesDefinitionDefined,
     parentInfo.properties,
     sparesFilterState,
@@ -731,7 +781,10 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
 
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
-      columnVisibility: { 'catalogueItem.created_time': false },
+      columnVisibility: {
+        'catalogueItem.created_time': false,
+        'catalogueItem.criticality': isCriticalMode,
+      },
       pagination: { pageSize: dense ? 5 : 15, pageIndex: 0 },
       columnFilterFns: initialColumnFilterFnState,
     },
@@ -743,7 +796,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     columns: dense
       ? [
           { ...columns[0], size: undefined },
-          { ...columns[1], size: undefined },
+          { ...columns[2], size: undefined },
         ]
       : columns, // If dense only show the name column
     data: tableRows ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
@@ -807,25 +860,33 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     // MUI
     muiTableBodyRowProps: dense
       ? ({ row }) => {
+          const showFlagged =
+            row.original.catalogueItem.is_flagged && isCriticalMode;
           return {
             component: TableRow,
             onClick: () => handleRowSelection(row),
 
             selected: rowSelection[row.id],
-            sx: {
+            sx: (theme) => ({
               cursor:
                 isItemSelectable === undefined ||
                 isItemSelectable(row.original.catalogueItem)
                   ? 'pointer'
                   : 'not-allowed',
-            },
+              ...(showFlagged && criticalityRowStyle(theme)),
+            }),
             'aria-label': `${row.original.catalogueItem.name} row`,
           };
         }
       : ({ row }) => {
+          const showFlagged =
+            row.original.catalogueItem.is_flagged && isCriticalMode;
           return {
             component: TableRow,
             'aria-label': `${row.original.catalogueItem.name} row`,
+            sx: (theme) => ({
+              ...(showFlagged && criticalityRowStyle(theme)),
+            }),
           };
         },
     muiTableContainerProps: ({ table }) => {
@@ -1075,6 +1136,17 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         )
       : undefined,
   });
+
+  React.useEffect(() => {
+    if (
+      isCriticalMode !==
+      table.getState().columnVisibility['catalogueItem.criticality']
+    )
+      table.setColumnVisibility((prev) => ({
+        ...prev,
+        'catalogueItem.criticality': isCriticalMode,
+      }));
+  }, [isCriticalMode, table]);
 
   return (
     <div style={{ width: '100%' }}>

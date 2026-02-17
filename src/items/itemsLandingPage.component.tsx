@@ -131,18 +131,7 @@ function ItemsLandingPage() {
                   sx={{ alignItems: 'flex-start', pl: 2 }}
                 >
                   <Grid size={12}>
-                    <Typography
-                      variant="h4"
-                      gutterBottom
-                      sx={{
-                        fontWeight: 'bold',
-                        wordWrap: 'break-word',
-                      }}
-                    >
-                      {catalogueItemData.name}
-                    </Typography>
-
-                    <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
+                    <Typography variant="h6" gutterBottom sx={{ my: 2 }}>
                       Serial Number: {itemData.serial_number ?? 'None'}
                     </Typography>
 

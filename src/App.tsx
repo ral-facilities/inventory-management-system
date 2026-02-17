@@ -27,6 +27,7 @@ import CatalogueLayout, {
   catalogueLayoutLoader,
 } from './catalogue/catalogueLayout.component';
 import CatalogueCardView from './catalogue/category/catalogueCardView.component';
+import CatalogueItemLayout from './catalogue/items/catalogueItemLayout.component';
 import CatalogueItemsLandingPage from './catalogue/items/catalogueItemsLandingPage.component';
 import CatalogueItemsPage from './catalogue/items/catalogueItemsPage.component';
 import SettingsMenuItems from './common/settingsMenuItems.component';
@@ -155,7 +156,7 @@ const routeObject: RouteObject[] = [
                   },
                   {
                     path: paths.catalogueItem,
-                    Component: Outlet,
+                    Component: CatalogueItemLayout,
                     children: [
                       {
                         index: true,

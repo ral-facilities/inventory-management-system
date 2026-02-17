@@ -90,7 +90,7 @@ describe('Catalogue Items', () => {
   it('navigates to items page with spares definition applied', () => {
     cy.visit('/catalogue/9/items');
 
-    cy.findByRole('link', { name: '1' }).click();
+    cy.findAllByRole('link', { name: '1' }).first().click();
 
     cy.findByText('dfzqkOJbqifO').should('exist');
 
@@ -100,7 +100,7 @@ describe('Catalogue Items', () => {
   it('navigates to items page with spares definition applied (from landing page)', () => {
     cy.visit('/catalogue/9/items/11');
 
-    cy.findByRole('link', { name: '1' }).click();
+    cy.findAllByRole('link', { name: '1' }).first().click();
 
     cy.findByText('dfzqkOJbqifO').should('exist');
 
@@ -117,7 +117,7 @@ describe('Catalogue Items', () => {
 
     cy.findAllByLabelText('Expand').eq(1).click();
 
-    cy.findByRole('link', { name: '1' }).click();
+    cy.findAllByRole('link', { name: '1' }).first().click();
 
     cy.findByText('dfzqkOJbqifO').should('exist');
 
@@ -1140,6 +1140,9 @@ describe('Catalogue Items', () => {
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
           number_of_spares: 0,
+          number_of_spares_required: null,
+          criticality: null,
+          is_flagged: null,
         })
       );
       expect(JSON.stringify(await patchRequests[1].json())).equal(
@@ -1168,6 +1171,9 @@ describe('Catalogue Items', () => {
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
           number_of_spares: 0,
+          number_of_spares_required: null,
+          criticality: null,
+          is_flagged: null,
         })
       );
     });
