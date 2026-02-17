@@ -11,8 +11,6 @@ export const SparesColumnHeaderInformationTooltip = ({
   title,
   sparesDefinition,
 }: SparesInformationTooltipProps) => {
-  console.log(sparesDefinition);
-
   let tooltipContent =
     'The spares values is determined by the location of an item. ';
 
