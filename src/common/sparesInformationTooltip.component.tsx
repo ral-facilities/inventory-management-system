@@ -1,17 +1,16 @@
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Box, Tooltip, Typography } from '@mui/material';
-import React from 'react';
-import { APISettingsContext } from '../apiConfigProvider.component';
+import { SparesDefinition } from '../api/api.types';
 
 export interface SparesInformationTooltipProps {
   title: string;
+  sparesDefinition: '' | SparesDefinition | undefined;
 }
 
 export const SparesColumnHeaderInformationTooltip = ({
   title,
+  sparesDefinition,
 }: SparesInformationTooltipProps) => {
-  const sparesDefinition =
-    React.useContext(APISettingsContext).spares?.sparesDefinition;
   console.log(sparesDefinition);
 
   let tooltipContent =
