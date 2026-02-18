@@ -1,5 +1,6 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import SystemTypesJSON from '../mocks/SystemTypes.json';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import {
   SparesColumnHeaderInformationTooltip,
@@ -18,7 +19,7 @@ describe('Spares Information Tooltip Component', () => {
   beforeEach(() => {
     props = {
       title: 'Number of spares',
-      sparesDefinition: undefined,
+      sparesDefinition: { system_types: [SystemTypesJSON[0]] },
     };
 
     user = userEvent.setup();
@@ -33,7 +34,7 @@ describe('Spares Information Tooltip Component', () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          'The spares values is determined by the location of an item. Currently there is no spares definition.'
+          "The spares values is determined by the location of an item. When an item is in a system with the system type 'Storage' then it is classified as a spare."
         )
       ).toBeInTheDocument();
     });
