@@ -1655,7 +1655,12 @@ exports[`SystemItemsUsageStatusTable > renders correctly 1`] = `
                   role="combobox"
                   tabindex="0"
                 >
-                  15
+                  <span
+                    aria-hidden="true"
+                    class="notranslate"
+                  >
+                    ​
+                  </span>
                 </div>
                 <input
                   aria-hidden="true"

@@ -1045,7 +1045,12 @@ exports[`SystemItemsDialog > displays correctly when in admin mode 1`] = `
                                 role="combobox"
                                 tabindex="0"
                               >
-                                5
+                                <span
+                                  aria-hidden="true"
+                                  class="notranslate"
+                                >
+                                  ​
+                                </span>
                               </div>
                               <input
                                 aria-hidden="true"

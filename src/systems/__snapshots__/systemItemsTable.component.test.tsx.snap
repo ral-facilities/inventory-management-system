@@ -3011,7 +3011,12 @@ exports[`SystemItemsTable > renders correctly (without spares) 1`] = `
                     role="combobox"
                     tabindex="0"
                   >
-                    15
+                    <span
+                      aria-hidden="true"
+                      class="notranslate"
+                    >
+                      ​
+                    </span>
                   </div>
                   <input
                     aria-hidden="true"
@@ -6474,7 +6479,12 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                     role="combobox"
                     tabindex="0"
                   >
-                    15
+                    <span
+                      aria-hidden="true"
+                      class="notranslate"
+                    >
+                      ​
+                    </span>
                   </div>
                   <input
                     aria-hidden="true"
