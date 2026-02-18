@@ -71,7 +71,7 @@ describe('Items Landing Page', () => {
       ).toBeInTheDocument();
     });
 
-    const systemName = await screen.findByText('Giant laser');
+    const systemName = (await screen.findAllByText('Giant laser'))[0];
     expect(systemName).toHaveAttribute(
       'href',
       '/systems/65328f34a40ff5301575a4e3'
@@ -151,7 +151,7 @@ describe('Items Landing Page', () => {
 
     const serialNumber = '5YUQDDjKpz2z';
     await waitFor(() => {
-      expect(screen.getByText(serialNumber)).toBeInTheDocument();
+      expect(screen.getAllByText(serialNumber)).toHaveLength(2);
     });
 
     await user.click(
