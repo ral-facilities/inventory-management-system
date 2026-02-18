@@ -23,6 +23,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import { Manufacturer } from '../api/api.types';
 import { useGetManufacturers } from '../api/manufacturers';
+import { ROWS_PER_PAGE_OPTIONS } from '../common/consts';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import { RequestType } from '../form.schemas';
 import {
@@ -237,7 +238,7 @@ function ManufacturerTable() {
     },
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: [15, 30, 45],
+      rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
       shape: 'rounded',
       variant: 'outlined',
     },

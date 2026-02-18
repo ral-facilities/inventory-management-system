@@ -39,6 +39,7 @@ import { System, SystemImportanceType } from '../api/api.types';
 import { getSystemImportanceColour, useGetSystems } from '../api/systems';
 import { useGetSystemTypes } from '../api/systemTypes';
 import type { SystemTableType } from '../app.types';
+import { ROWS_PER_PAGE_OPTIONS } from '../common/consts';
 import {
   getValueFromUpdater,
   usePreservedTableState,
@@ -476,7 +477,7 @@ function Systems() {
       shape: 'rounded',
       variant: 'outlined',
       showRowsPerPage: true,
-      rowsPerPageOptions: [15, 30, 45],
+      rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
       showFirstButton: false,
       showLastButton: false,
       size: 'small',

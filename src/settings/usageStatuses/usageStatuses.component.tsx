@@ -19,6 +19,7 @@ import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { UsageStatus } from '../../api/api.types.tsx';
 import { useGetUsageStatuses } from '../../api/usageStatuses.tsx';
+import { ROWS_PER_PAGE_OPTIONS } from '../../common/consts.tsx';
 import { usePreservedTableState } from '../../common/preservedTableState.component.tsx';
 import { useAppSelector } from '../../state/hook.ts';
 import { selectAuthorisation } from '../../state/slices/authorisationSlice.tsx';
@@ -168,7 +169,7 @@ function UsageStatuses() {
     },
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: [15, 30, 45],
+      rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
       shape: 'rounded',
       variant: 'outlined',
     },

@@ -44,6 +44,7 @@ import {
   OverflowTip,
 } from '../../utils';
 import CardViewFilters from '../cardView/cardViewFilters.component';
+import { ROWS_PER_PAGE_OPTIONS } from '../consts';
 import DownloadFileDialog from '../downloadFileDialog.component';
 import EditFileDialog from '../editFileDialog.component';
 import ErrorPage from '../errorPage.component';
@@ -280,7 +281,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
       : undefined,
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: dense ? [18, 24, 30] : [16, 24, 32],
+      rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
       shape: 'rounded',
       variant: 'outlined',
     },

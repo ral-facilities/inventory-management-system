@@ -18,6 +18,7 @@ import type { Rule } from '../../api/api.types';
 import { useGetRules } from '../../api/rules';
 import { useGetSystemTypes } from '../../api/systemTypes';
 import { useGetUsageStatuses } from '../../api/usageStatuses';
+import { ROWS_PER_PAGE_OPTIONS } from '../../common/consts';
 import MRTTopTableAlert from '../../common/mrtTopTableAlert.component';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import {
@@ -261,7 +262,7 @@ function Rules() {
     },
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: [15, 30, 45],
+      rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
       shape: 'rounded',
       variant: 'outlined',
     },

@@ -49,6 +49,7 @@ import {
 import CatalogueCard from './catalogueCard.component';
 import CatalogueCategoryDialog from './catalogueCategoryDialog.component';
 
+import { ROWS_PER_PAGE_OPTIONS } from '../../common/consts';
 import ErrorPage from '../../common/errorPage.component';
 import CatalogueCategoryDirectoryDialog from './catalogueCategoryDirectoryDialog.component';
 import DeleteCatalogueCategoryDialog from './deleteCatalogueCategoryDialog.component';
@@ -379,7 +380,7 @@ function CatalogueCardView() {
     },
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: [30, 45, 60],
+      rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
       shape: 'rounded',
       variant: 'outlined',
     },

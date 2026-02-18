@@ -16,6 +16,7 @@ import React from 'react';
 import { System } from '../api/api.types';
 import { useGetSystemTypes } from '../api/systemTypes';
 import type { SystemTableType } from '../app.types';
+import { ROWS_PER_PAGE_OPTIONS } from '../common/consts';
 import { SystemTypeColumnHeaderInformationTooltip } from '../common/systemTypesInformationTooltip.component';
 import {
   COLUMN_FILTER_FUNCTIONS,
@@ -223,7 +224,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
     muiTableContainerProps: { sx: { height: '360.4px' } },
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: [5],
+      rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
       shape: 'rounded',
       variant: 'outlined',
     },

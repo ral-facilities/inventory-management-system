@@ -12,6 +12,7 @@ import { useGetSystemTypes } from '../../api/systemTypes';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 
 import { APISettingsContext } from '../../apiConfigProvider.component';
+import { ROWS_PER_PAGE_OPTIONS } from '../../common/consts';
 import MRTTopTableAlert from '../../common/mrtTopTableAlert.component';
 import {
   COLUMN_FILTER_BOOLEAN_OPTIONS,
@@ -183,7 +184,7 @@ function SystemTypes() {
     },
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: [15, 30, 45],
+      rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
       shape: 'rounded',
       variant: 'outlined',
     },

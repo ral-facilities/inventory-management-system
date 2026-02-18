@@ -28,6 +28,7 @@ import { useGetCatalogueItemIds } from '../api/catalogueItems';
 import { useGetItems } from '../api/items';
 import { useGetUsageStatuses } from '../api/usageStatuses';
 import { APISettingsContext } from '../apiConfigProvider.component';
+import { ROWS_PER_PAGE_OPTIONS } from '../common/consts';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import DeleteItemDialog from '../items/deleteItemDialog.component';
 import ItemDialog from '../items/itemDialog.component';
@@ -518,7 +519,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     },
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: [15, 30, 45],
+      rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
       shape: 'rounded',
       variant: 'outlined',
     },

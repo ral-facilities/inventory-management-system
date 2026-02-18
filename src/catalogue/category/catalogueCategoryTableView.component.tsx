@@ -8,6 +8,7 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { CatalogueCategory } from '../../api/api.types';
+import { ROWS_PER_PAGE_OPTIONS } from '../../common/consts';
 import {
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
@@ -165,7 +166,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
     },
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: [5],
+      rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
       shape: 'rounded',
       variant: 'outlined',
     },

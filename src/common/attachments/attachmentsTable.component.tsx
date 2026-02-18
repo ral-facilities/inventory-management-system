@@ -34,6 +34,7 @@ import {
   getPageHeightCalc,
   mrtTheme,
 } from '../../utils';
+import { ROWS_PER_PAGE_OPTIONS } from '../consts';
 import DownloadFileDialog from '../downloadFileDialog.component';
 import EditFileDialog from '../editFileDialog.component';
 import { usePreservedTableState } from '../preservedTableState.component';
@@ -201,7 +202,7 @@ function AttachmentsTable(props: AttachmentTableProps) {
     },
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: [15, 30, 45],
+      rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
       shape: 'rounded',
       variant: 'outlined',
     },
