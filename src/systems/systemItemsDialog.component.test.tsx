@@ -34,7 +34,7 @@ describe('SystemItemsDialog', () => {
       selectedItems: mockSelectedItems,
       onChangeSelectedItems: mockOnChangeSelectedItems,
       parentSystemId: SystemsJSON[0].id,
-      isPrivilegedMode: false,
+      isAdminMode: false,
     };
 
     user = userEvent.setup();
@@ -73,7 +73,7 @@ describe('SystemItemsDialog', () => {
   });
 
   it('displays correctly when in admin mode', async () => {
-    props.isPrivilegedMode = true;
+    props.isAdminMode = true;
     let baseElement;
     await act(async () => {
       baseElement = createView().baseElement;
@@ -218,7 +218,7 @@ describe('SystemItemsDialog', () => {
 
     it('cannot move selected items to the same parent system and then clears error state they have been resolved (admin mode)', async () => {
       props.parentSystemId = SystemsJSON[1].id;
-      props.isPrivilegedMode = true;
+      props.isAdminMode = true;
 
       createView();
 
@@ -362,7 +362,7 @@ describe('SystemItemsDialog', () => {
 
   describe('Move to as Admin', () => {
     beforeEach(() => {
-      props.isPrivilegedMode = true;
+      props.isAdminMode = true;
     });
 
     afterEach(() => {

@@ -31,7 +31,7 @@ describe('ItemDialog', () => {
       requestType: 'post',
       catalogueCategory: getCatalogueCategoryById('4'),
       catalogueItem: getCatalogueItemById('1'),
-      isPrivilegedMode: false,
+      isAdminMode: false,
     };
     user = userEvent.setup();
   });
@@ -216,7 +216,7 @@ describe('ItemDialog', () => {
     });
 
     it('displays warning when in admin mode', async () => {
-      props.isPrivilegedMode = true;
+      props.isAdminMode = true;
       let baseElement;
       await act(async () => {
         baseElement = createView().baseElement;
@@ -762,7 +762,7 @@ describe('ItemDialog', () => {
     }, 10000);
 
     it('adds an item (case admin mode, placing in system which is not allowed)', async () => {
-      props.isPrivilegedMode = true;
+      props.isAdminMode = true;
       createView();
 
       await modifySystemValue({
@@ -833,7 +833,7 @@ describe('ItemDialog', () => {
     });
 
     it('displays error message when usage status not selected (case admin mode selecting not allowed system)', async () => {
-      props.isPrivilegedMode = true;
+      props.isAdminMode = true;
       createView();
 
       await user.click(screen.getByText('Add item details'));
@@ -1241,7 +1241,7 @@ describe('ItemDialog', () => {
     });
 
     it('displays warning when in admin mode for edit', async () => {
-      props.isPrivilegedMode = true;
+      props.isAdminMode = true;
       let baseElement;
       await act(async () => {
         baseElement = createView().baseElement;
@@ -1328,7 +1328,7 @@ describe('ItemDialog', () => {
     }, 10000);
 
     it('edit an item (case admin mode placing into not allowed system', async () => {
-      props.isPrivilegedMode = true;
+      props.isAdminMode = true;
 
       createView();
 

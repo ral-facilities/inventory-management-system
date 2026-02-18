@@ -273,7 +273,7 @@ export function Layout() {
       dispatch(
         setAuthorisation({
           role,
-          isPrivilegedUser: privilegedRoles.includes(role),
+          isAdminUser: privilegedRoles.includes(role),
         })
       );
     });

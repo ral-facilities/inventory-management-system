@@ -560,13 +560,13 @@ export const PropertiesStepSchema = z.object({
 
 export const ItemDetailsStepSchema = (
   requestType: RequestType,
-  isPrivilegedMode: boolean
+  isAdminMode: boolean
 ) => {
   return z.object({
     purchase_order_number: OptionalOrNullableStringSchema({ requestType }),
     is_defective: MandatoryBooleanSchema({}),
     usage_status_id: MandatoryStringSchema({
-      errorMessage: isPrivilegedMode
+      errorMessage: isAdminMode
         ? 'Please select a usage status.'
         : 'Please navigate back and select a system. This field will then be prepopulated.',
     }),

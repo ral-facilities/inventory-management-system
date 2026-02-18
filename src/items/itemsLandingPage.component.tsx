@@ -34,8 +34,7 @@ const ItemsActionMenu = (props: {
   const { isAdminMode } = useAppSelector(selectAuthorisation);
   const [editItemDialogOpen, setEditItemDialogOpen] =
     React.useState<boolean>(false);
-  const [isPrivilegedMode, setIsPrivilegedMode] =
-    React.useState<boolean>(false);
+  const [isAdminDialog, setIsAdminDialog] = React.useState<boolean>(false);
 
   return (
     <ActionMenu
@@ -47,7 +46,7 @@ const ItemsActionMenu = (props: {
       editMenuItem={{
         onClick: (props) => {
           setEditItemDialogOpen(true);
-          setIsPrivilegedMode(props?.isPrivilegedMode === true);
+          setIsAdminDialog(props?.isAdminMode === true);
         },
         dialog: (
           <>
@@ -57,7 +56,7 @@ const ItemsActionMenu = (props: {
                 onClose={() => {
                   setEditItemDialogOpen(false);
                 }}
-                isPrivilegedMode={isPrivilegedMode}
+                isAdminMode={isAdminDialog}
                 requestType="patch"
                 catalogueCategory={catalogueCategory}
                 catalogueItem={catalogueItem}
