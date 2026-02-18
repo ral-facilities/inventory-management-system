@@ -413,7 +413,12 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         size: 300,
       },
     ];
-  }, [isSparesDefinitionDefined, sparesFilterState, usageStatusData]);
+  }, [
+    apiSettings?.spares?.sparesDefinition,
+    isSparesDefinitionDefined,
+    sparesFilterState,
+    usageStatusData,
+  ]);
 
   const initialColumnFilterFnState = React.useMemo(() => {
     return getInitialColumnFilterFnState(columns);

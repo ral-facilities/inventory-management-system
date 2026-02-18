@@ -693,6 +693,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
     ];
   }, [
+    apiSettings?.spares?.sparesDefinition,
     dense,
     isSparesDefinitionDefined,
     parentInfo.properties,
