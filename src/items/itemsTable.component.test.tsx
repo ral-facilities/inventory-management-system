@@ -198,8 +198,8 @@ describe('Items Table', () => {
     createView({
       authorisation: {
         role: 'admin',
-        isPrivilegedUser: true,
-        isAdminMode: false,
+        isAdminUser: true,
+        isAdminMode: true,
       },
     });
 
@@ -474,8 +474,8 @@ describe('Items Table', () => {
     createView({
       authorisation: {
         role: 'admin',
-        isPrivilegedUser: true,
-        isAdminMode: false,
+        isAdminUser: true,
+        isAdminMode: true,
       },
     });
 
@@ -536,8 +536,8 @@ describe('Items Table', () => {
     createView({
       authorisation: {
         role: 'admin',
-        isPrivilegedUser: true,
-        isAdminMode: false,
+        isAdminUser: true,
+        isAdminMode: true,
       },
     });
 
@@ -723,8 +723,8 @@ describe('Items Table', () => {
     createView({
       authorisation: {
         role: 'admin',
-        isPrivilegedUser: true,
-        isAdminMode: false,
+        isAdminUser: true,
+        isAdminMode: true,
       },
     });
 

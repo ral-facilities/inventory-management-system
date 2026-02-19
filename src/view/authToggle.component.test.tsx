@@ -19,10 +19,10 @@ describe('Auth Toggle', () => {
     renderComponent();
 
     await waitFor(() => {
-      expect(screen.getByText('Privileged user')).toBeInTheDocument();
+      expect(screen.getByText('Admin user')).toBeInTheDocument();
     });
 
-    const checkBox = screen.getByRole('checkbox', { name: 'Privileged user' });
+    const checkBox = screen.getByRole('checkbox', { name: 'Admin user' });
 
     expect(checkBox).not.toBeChecked();
 

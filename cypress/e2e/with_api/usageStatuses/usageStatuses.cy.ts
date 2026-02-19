@@ -2,8 +2,8 @@ import { addUsageStatuses, deleteUsageStatuses } from './functions';
 
 describe('Usage Statuses', () => {
   beforeEach(() => {
-    cy.setCurrentUserToAdmin();
     cy.visit('/settings/usage-statuses');
+    cy.setCurrentUserToAdmin();
   });
   afterEach(() => {
     cy.clearMocks();

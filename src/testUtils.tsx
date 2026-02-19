@@ -28,6 +28,8 @@ import SystemTypesJSON from './mocks/SystemTypes.json';
 import SystemsJSON from './mocks/Systems.json';
 import UsageStatusJSON from './mocks/UsageStatuses.json';
 import { URLPathKeyType, paths } from './paths';
+import { initialState as initialAuthState } from './state/slices/authorisationSlice';
+import { initialState as initialConfigState } from './state/slices/configSlice';
 import { RootState, configureAppStore } from './state/store';
 
 export const createTestQueryClient = (): QueryClient =>
@@ -47,12 +49,11 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
 function constructRouterProvider(
   ui: React.ReactNode,
   queryClient: QueryClient,
+  store: ReturnType<typeof configureAppStore>,
   urlPathKey?: URLPathKeyType,
-  initialEntry?: string,
-  preloadedState?: Partial<RootState>
+  initialEntry?: string
 ) {
   const Root: React.FunctionComponent = () => {
-    const store = configureAppStore(preloadedState);
     return (
       <Provider store={store}>
         <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
@@ -74,9 +75,9 @@ function constructRouterProvider(
 
 function constructRouterProviderWrapper(
   queryClient: QueryClient,
+  store: ReturnType<typeof configureAppStore>,
   urlPathKey?: URLPathKeyType,
-  initialEntry?: string,
-  preloadedState?: Partial<RootState>
+  initialEntry?: string
 ) {
   const wrapper = ({
     children,
@@ -86,9 +87,9 @@ function constructRouterProviderWrapper(
     return constructRouterProvider(
       children,
       queryClient,
+      store,
       urlPathKey,
-      initialEntry,
-      preloadedState
+      initialEntry
     ).provider;
   };
   return wrapper;
@@ -105,14 +106,16 @@ export function renderComponentWithRouterProvider(
     ...renderOptions
   }: ExtendedRenderOptions = {}
 ) {
+  const store = configureAppStore(preloadedState);
   const { router, provider } = constructRouterProvider(
     ui,
     queryClient,
+    store,
     urlPathKey,
-    initialEntry,
-    preloadedState
+    initialEntry
   );
   return {
+    store,
     queryClient,
     router,
     ...render(ui, {
@@ -129,11 +132,12 @@ export const hooksWrapperWithProviders = (props?: {
   preloadedState?: Partial<RootState>;
 }) => {
   const testQueryClient = props?.queryClient ?? createTestQueryClient();
+  const store = configureAppStore(props?.preloadedState);
   return constructRouterProviderWrapper(
     testQueryClient,
+    store,
     props?.urlPathKey,
-    props?.initialEntry,
-    props?.preloadedState
+    props?.initialEntry
   );
 };
 
@@ -205,6 +209,11 @@ export const getSystemTypeByValue = (value: string): SystemType => {
 export const getUsageStatusByValue = (value: string): UsageStatus => {
   return UsageStatusJSON.find((status) => status.value === value)!;
 };
+
+export const getInitialState = (): RootState => ({
+  config: initialConfigState,
+  authorisation: initialAuthState,
+});
 
 export const CREATED_MODIFIED_TIME_VALUES = {
   created_time: '2024-01-01T12:00:00.000+00:00',

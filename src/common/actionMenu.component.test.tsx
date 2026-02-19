@@ -94,7 +94,7 @@ describe('ActionMenu Component', () => {
 
     // Verify that the mock edit function was called
     expect(mockEditMenuItem.onClick).toHaveBeenCalledWith({
-      isPrivilegedMode: true,
+      isAdminMode: true,
     });
 
     // Check if the dialog is displayed

@@ -1,6 +1,5 @@
 describe('System Types', () => {
   beforeEach(() => {
-    cy.setCurrentUserToAdmin();
     cy.visit('/settings/system-types');
   });
   afterEach(() => {

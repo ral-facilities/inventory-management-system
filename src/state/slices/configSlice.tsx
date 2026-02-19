@@ -40,7 +40,7 @@ const initialSettings: InventoryManagementSystemSettings = {
   pluginHost: '',
 };
 
-const initialState: ConfigState = {
+export const initialState: ConfigState = {
   loading: true,
   settings: initialSettings,
 };

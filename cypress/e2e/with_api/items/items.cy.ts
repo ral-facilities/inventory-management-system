@@ -15,7 +15,6 @@ import {
 
 describe('items', () => {
   beforeEach(() => {
-    cy.setCurrentUserToAdmin();
     cy.dropIMSCollections([
       'catalogue_categories',
       'catalogue_items',
@@ -26,6 +25,7 @@ describe('items', () => {
     ]);
     // Prepare relevant data for items
     cy.visit('/manufacturers');
+    cy.setCurrentUserToAdmin();
     addManufacturer(true);
     cy.visit('/settings/units');
     addUnits(['mm', 'nm'], true);
