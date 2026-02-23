@@ -7,7 +7,7 @@ import { parseErrorResponse } from '../utils';
 import { APIError } from './api.types';
 
 // These are for ensuring refresh request is only sent once when multiple requests
-// are failing due to 403's at the same time
+// are failing due to 401's at the same time
 let isFetchingAccessToken = false;
 let failedAuthRequestQueue: ((shouldReject?: boolean) => void)[] = [];
 
@@ -53,7 +53,7 @@ const createAuthenticatedClient = (props: {
       // only allow a request to be retried once. Don't retry if not logged
       // in, it should not have been accessible
       if (
-        error.response?.status === 403 &&
+        error.response?.status === 401 &&
         errorMessage.includes('expired token') &&
         !originalRequest._retried &&
         localStorage.getItem('scigateway:token')
@@ -100,7 +100,7 @@ export function uppyOnAfterResponse(xhr: XMLHttpRequest) {
 
     // Check if the token is invalid and needs refreshing
     if (
-      xhr.status === 403 &&
+      xhr.status === 401 &&
       errorMessage.includes('expired token') &&
       localStorage.getItem('scigateway:token')
     ) {

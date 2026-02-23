@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router';
 import type { BreadcrumbsInfo } from '../api/api.types';
 import APIConfigProvider from '../apiConfigProvider.component';
 import { RoutesHomeLocation, type RoutesHomeLocationType } from '../app.types';
-import { AuthProvider } from '../authProvider.component';
 import { isRunningInDevelopment } from '../utils';
 import AuthToggle from '../view/authToggle.component';
 import Breadcrumbs from '../view/breadcrumbs.component';
@@ -28,46 +27,44 @@ function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
   );
 
   return (
-    <AuthProvider>
-      <APIConfigProvider>
-        <Box
+    <APIConfigProvider>
+      <Box
+        sx={{
+          height: '100%',
+          width: '100%',
+        }}
+      >
+        {/* Also render authorisation state toggle so it is inline with tabs, but not on home page */}
+        {isRunningInDevelopment() && (
+          <Box sx={{ display: 'flex' }}>
+            <Box sx={{ marginLeft: 'auto' }}>
+              <AuthToggle />
+            </Box>
+          </Box>
+        )}
+        <Grid
+          container
           sx={{
-            height: '100%',
+            justifyContent: 'space-between',
+            paddingLeft: 0.5,
+            position: 'sticky',
+            top: 0,
+            backgroundColor: 'background.default',
+            zIndex: 1000,
             width: '100%',
           }}
         >
-          {/* Also render authorisation state toggle so it is inline with tabs, but not on home page */}
-          {isRunningInDevelopment() && (
-            <Box sx={{ display: 'flex' }}>
-              <Box sx={{ marginLeft: 'auto' }}>
-                <AuthToggle />
-              </Box>
-            </Box>
-          )}
-          <Grid
-            container
-            sx={{
-              justifyContent: 'space-between',
-              paddingLeft: 0.5,
-              position: 'sticky',
-              top: 0,
-              backgroundColor: 'background.default',
-              zIndex: 1000,
-              width: '100%',
-            }}
-          >
-            <Breadcrumbs
-              onChangeNode={onChangeNode}
-              onChangeNavigateHome={() => onChangeNode(null)}
-              breadcrumbsInfo={breadcrumbsInfo}
-              homeLocation={homeLocation}
-            />
-            <AuthRoleStatus />
-          </Grid>
-          {children}
-        </Box>
-      </APIConfigProvider>
-    </AuthProvider>
+          <Breadcrumbs
+            onChangeNode={onChangeNode}
+            onChangeNavigateHome={() => onChangeNode(null)}
+            breadcrumbsInfo={breadcrumbsInfo}
+            homeLocation={homeLocation}
+          />
+          <AuthRoleStatus />
+        </Grid>
+        {children}
+      </Box>
+    </APIConfigProvider>
   );
 }
 

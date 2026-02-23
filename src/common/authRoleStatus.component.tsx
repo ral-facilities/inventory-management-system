@@ -1,11 +1,12 @@
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { IconButton, Paper, Theme, Tooltip, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
-import { useAuthorisationState } from '../authProvider.component';
+import { useAppSelector } from '../state/hook';
+import { selectAuthorisation } from '../state/slices/authorisationSlice';
 
 function AuthRoleStatus() {
-  const { isPrivilegedUser, role } = useAuthorisationState();
-  if (!isPrivilegedUser) return undefined;
+  const { isAdminMode } = useAppSelector(selectAuthorisation);
+  if (!isAdminMode) return undefined;
   return (
     <Paper
       square
@@ -31,7 +32,7 @@ function AuthRoleStatus() {
       >
         <Grid>
           <Tooltip
-            title={`The ${role} role enables extra functionality. You can create/delete units and usage statuses, and bypass rules when creating, deleting, editing, or moving items.`}
+            title={`The admin role enables extra functionality. You can create/delete units and usage statuses, and bypass rules when creating, deleting, editing, or moving items.`}
             aria-label={'auth-role-status-tooltip'}
           >
             <IconButton
@@ -51,7 +52,7 @@ function AuthRoleStatus() {
         </Grid>
         <Grid>
           <Typography variant="h6" sx={{ fontSize: '16px', color: 'black' }}>
-            {role.charAt(0).toUpperCase() + role.slice(1)}
+            Admin
           </Typography>
         </Grid>
       </Grid>

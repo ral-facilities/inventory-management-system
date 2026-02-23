@@ -36,7 +36,7 @@ exports[`Manufacturer Layout Error Component > renders manufacturer error page c
             <span
               class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-rizt0-MuiTypography-root"
             >
-              Privileged user
+              Admin user
             </span>
           </label>
         </div>
