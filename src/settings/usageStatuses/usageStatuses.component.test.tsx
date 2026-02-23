@@ -1,20 +1,27 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { RootState } from '../../state/store';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 import UsageStatusComponent from './usageStatuses.component';
-import * as authProvider from '../../authProvider.component';
 
 describe('Usage statuses', () => {
   let user: UserEvent;
-  const createView = () => {
-    return renderComponentWithRouterProvider(<UsageStatusComponent />);
+  const createView = (preloadedState?: Partial<RootState>) => {
+    return renderComponentWithRouterProvider(
+      <UsageStatusComponent />,
+      undefined,
+      undefined,
+      preloadedState ?? {
+        authorisation: {
+          role: 'admin',
+          isAdminUser: true,
+          isAdminMode: true,
+        },
+      }
+    );
   };
   beforeEach(() => {
     user = userEvent.setup();
-    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
-      role: 'admin',
-      isPrivilegedUser: true,
-    });
   });
 
   it('renders table correctly', async () => {
@@ -31,12 +38,14 @@ describe('Usage statuses', () => {
     expect(view.asFragment()).toMatchSnapshot();
   });
 
-  it('renders table for non privileged user without add or delete buttons', async () => {
-    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
-      role: 'default',
-      isPrivilegedUser: false,
+  it('renders table for non admin user without add or delete buttons', async () => {
+    createView({
+      authorisation: {
+        role: 'default',
+        isAdminUser: false,
+        isAdminMode: false,
+      },
     });
-    createView();
 
     await waitFor(() => {
       expect(screen.getByText('New')).toBeInTheDocument();

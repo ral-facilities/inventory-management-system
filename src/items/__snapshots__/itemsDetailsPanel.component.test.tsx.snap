@@ -252,9 +252,7 @@ exports[`Items details panel > renders details panel correctly (None values for 
                       </p>
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-s1l41m-MuiTypography-root"
-                      >
-                        Operational
-                      </p>
+                      />
                     </div>
                     <div
                       class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
@@ -853,9 +851,7 @@ exports[`Items details panel > renders details panel correctly (no dates) 1`] = 
                       </p>
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-s1l41m-MuiTypography-root"
-                      >
-                        Operational
-                      </p>
+                      />
                     </div>
                     <div
                       class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
@@ -1454,9 +1450,7 @@ exports[`Items details panel > renders details panel correctly (when there are n
                       </p>
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-s1l41m-MuiTypography-root"
-                      >
-                        Operational
-                      </p>
+                      />
                     </div>
                     <div
                       class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
@@ -2066,9 +2060,7 @@ exports[`Items details panel > renders details panel correctly 1`] = `
                       </p>
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-s1l41m-MuiTypography-root"
-                      >
-                        Unknown
-                      </p>
+                      />
                     </div>
                     <div
                       class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"

@@ -20,6 +20,8 @@ import React from 'react';
 import { Unit } from '../../api/api.types.tsx';
 import { useGetUnits } from '../../api/units.tsx';
 import { usePreservedTableState } from '../../common/preservedTableState.component.tsx';
+import { useAppSelector } from '../../state/hook.ts';
+import { selectAuthorisation } from '../../state/slices/authorisationSlice.tsx';
 import {
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
@@ -36,12 +38,11 @@ import {
 } from '../../utils.tsx';
 import DeleteUnitDialog from './deleteUnitsDialog.component.tsx';
 import UnitsDialog from './unitsDialog.component.tsx';
-import { useAuthorisationState } from '../../authProvider.component.tsx';
 
 function Units() {
   const { data: unitData, isLoading: unitDataLoading } = useGetUnits();
 
-  const { isPrivilegedUser } = useAuthorisationState();
+  const { isAdminMode } = useAppSelector(selectAuthorisation);
 
   // Breadcrumbs + Mui table V2 + extra
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
@@ -117,7 +118,7 @@ function Units() {
     enableColumnOrdering: true,
     enableColumnFilterModes: true,
     enableFacetedValues: true,
-    enableRowActions: isPrivilegedUser,
+    enableRowActions: isAdminMode,
     enableStickyHeader: true,
     enableRowSelection: false,
     enableDensityToggle: false,
@@ -193,7 +194,7 @@ function Units() {
     },
     renderTopToolbarCustomActions: ({ table }) => (
       <Box>
-        {isPrivilegedUser && (
+        {isAdminMode && (
           <Button
             startIcon={<AddIcon />}
             sx={{ mx: '4px' }}
