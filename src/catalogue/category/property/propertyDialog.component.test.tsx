@@ -21,15 +21,19 @@ import PropertyDialog, {
   PropertyDialogProps,
 } from './propertyDialog.component';
 
-interface TestAddPropertyMigration
-  extends Omit<AddPropertyMigration, 'default_value' | 'allowed_values'> {
+interface TestAddPropertyMigration extends Omit<
+  AddPropertyMigration,
+  'default_value' | 'allowed_values'
+> {
   unit?: string;
   default_value?: string;
   allowed_values?: AllowedValues;
 }
 
-interface TestEditPropertyMigration
-  extends Omit<EditPropertyMigration, 'allowed_values'> {
+interface TestEditPropertyMigration extends Omit<
+  EditPropertyMigration,
+  'allowed_values'
+> {
   allowed_values?: AllowedValues;
   unit?: string;
 }
@@ -64,7 +68,7 @@ describe('PropertyDialog', () => {
       isMigration: true,
       type: 'post',
       catalogueCategory: getCatalogueCategoryById('12') as CatalogueCategory,
-      isPrivilegedMode: false,
+      isAdminMode: false,
     };
     axiosPostSpy = vi.spyOn(imsApi, 'post');
     user = userEvent.setup();
@@ -727,7 +731,7 @@ describe('PropertyDialog', () => {
         type: 'patch',
         catalogueCategory: getCatalogueCategoryById('12') as CatalogueCategory,
         selectedProperty: formattedProperties[0],
-        isPrivilegedMode: false,
+        isAdminMode: false,
       };
       axiosPatchSpy = vi.spyOn(imsApi, 'patch');
     });
@@ -776,8 +780,8 @@ describe('PropertyDialog', () => {
       }
     };
 
-    it('edits an exisitng property unit in privileged mode', async () => {
-      props.isPrivilegedMode = true;
+    it('edits an exisitng property unit in admin mode', async () => {
+      props.isAdminMode = true;
       createView();
 
       await modifyEditValues({
@@ -901,8 +905,8 @@ describe('PropertyDialog', () => {
       );
     });
 
-    it('edits an existing property allowed values, name and unit (privileged mode) ', async () => {
-      props.isPrivilegedMode = true;
+    it('edits an existing property allowed values, name and unit (admin mode) ', async () => {
+      props.isAdminMode = true;
 
       createView();
       await modifyEditValues({
@@ -968,7 +972,7 @@ describe('PropertyDialog', () => {
     });
 
     it('displays error if nothing changes in admin mode then unit changed', async () => {
-      props.isPrivilegedMode = true;
+      props.isAdminMode = true;
 
       createView();
 

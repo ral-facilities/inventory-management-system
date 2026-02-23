@@ -1454,8 +1454,8 @@ describe('Catalogue Category', () => {
   });
 
   it('edits an existing property unit (as admin)', () => {
-    cy.setCurrentUserToAdmin();
     cy.visit('/catalogue/10');
+    cy.setCurrentUserToAdmin();
 
     cy.findAllByRole('button', {
       name: 'Card Actions',

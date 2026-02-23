@@ -145,7 +145,7 @@ export interface PropertyDialogProps {
   selectedProperty?: AddCatalogueCategoryPropertyWithPlacementIds;
   isMigration: boolean;
   index?: number;
-  isPrivilegedMode: boolean;
+  isAdminMode: boolean;
 }
 
 const PropertyDialog = (props: PropertyDialogProps) => {
@@ -157,7 +157,7 @@ const PropertyDialog = (props: PropertyDialogProps) => {
     selectedProperty,
     isMigration,
     index = 0,
-    isPrivilegedMode,
+    isAdminMode,
   } = props;
 
   const formMethodsAdd = useFormContext<AddCatalogueCategoryWithPlacementIds>();
@@ -316,7 +316,7 @@ const PropertyDialog = (props: PropertyDialogProps) => {
         });
       } else {
         setError('name', {
-          message: `There have been no changes made. Please change ${isPrivilegedMode ? 'a' : 'the name'} field value or press Close.`,
+          message: `There have been no changes made. Please change ${isAdminMode ? 'a' : 'the name'} field value or press Close.`,
         });
         return;
       }
@@ -325,7 +325,7 @@ const PropertyDialog = (props: PropertyDialogProps) => {
     [
       catalogueCategory,
       handleClose,
-      isPrivilegedMode,
+      isAdminMode,
       patchCatalogueCategoryProperty,
       selectedProperty,
       setError,
@@ -372,8 +372,8 @@ const PropertyDialog = (props: PropertyDialogProps) => {
       <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
         {type === 'post'
           ? 'Add Property'
-          : `Edit Property${isPrivilegedMode ? ' as Admin' : ''}`}
-        {isPrivilegedMode && (
+          : `Edit Property${isAdminMode ? ' as Admin' : ''}`}
+        {isAdminMode && (
           <Tooltip
             title="As an admin, you can edit a property's unit"
             data-testid={'admin-status-tooltip'}
@@ -741,7 +741,7 @@ const PropertyDialog = (props: PropertyDialogProps) => {
               <Autocomplete
                 disabled={
                   propertyType === CatalogueCategoryPropertyType.Boolean ||
-                  (type === 'patch' && isMigration && !isPrivilegedMode)
+                  (type === 'patch' && isMigration && !isAdminMode)
                 }
                 id={crypto.randomUUID()}
                 options={units ?? []}
@@ -759,7 +759,7 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                     variant="outlined"
                     disabled={
                       property.type === CatalogueCategoryPropertyType.Boolean ||
-                      (type === 'patch' && isMigration && !isPrivilegedMode)
+                      (type === 'patch' && isMigration && !isAdminMode)
                     }
                   />
                 )}
