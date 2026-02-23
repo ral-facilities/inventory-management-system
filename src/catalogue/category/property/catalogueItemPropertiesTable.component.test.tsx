@@ -13,7 +13,7 @@ import { transformToAddCatalogueCategoryWithPlacementIds } from '../catalogueCat
 import PropertiesTable, {
   PropertiesTableProps,
 } from './catalogueItemPropertiesTable.component';
-import * as authProvider from '../../../authProvider.component';
+import { RootState } from '../../../state/store';
 
 const TestComponent = (props: PropertiesTableProps) => {
   const formMethods = useForm<AddCatalogueCategoryWithPlacementIds>({
@@ -33,9 +33,13 @@ const TestComponent = (props: PropertiesTableProps) => {
 describe('CatalogueItemPropertiesTable', () => {
   let props: PropertiesTableProps;
   let user: UserEvent;
-
-  const createView = () => {
-    return renderComponentWithRouterProvider(<TestComponent {...props} />);
+  const createView = (preloadedState?: Partial<RootState>) => {
+    return renderComponentWithRouterProvider(
+      <TestComponent {...props} />,
+      undefined,
+      undefined,
+      preloadedState
+    );
   };
 
   beforeEach(() => {
@@ -103,12 +107,13 @@ describe('CatalogueItemPropertiesTable', () => {
   });
 
   it('can open the property edit as admin dialog', async () => {
-    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
-      role: 'admin',
-      isPrivilegedUser: true,
+    createView({
+      authorisation: {
+        role: 'admin',
+        isAdminUser: true,
+        isAdminMode: true,
+      },
     });
-
-    createView();
 
     expect(await screen.findByText('Pumping Speed')).toBeInTheDocument();
 
@@ -135,12 +140,13 @@ describe('CatalogueItemPropertiesTable', () => {
   });
 
   it('can open the property delete dialog (admin)', async () => {
-    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
-      role: 'admin',
-      isPrivilegedUser: true,
+    createView({
+      authorisation: {
+        role: 'admin',
+        isAdminUser: true,
+        isAdminMode: true,
+      },
     });
-
-    createView();
 
     expect(await screen.findByText('Pumping Speed')).toBeInTheDocument();
 

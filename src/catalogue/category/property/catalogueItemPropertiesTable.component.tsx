@@ -47,8 +47,9 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 import { useGetUnits } from '../../../api/units';
 import { RequestType } from '../../../form.schemas';
 import PropertyDialog from './propertyDialog.component';
-import { useAuthorisationState } from '../../../authProvider.component';
 import DeletePropertyDialog from './deletePropertyDialog.component';
+import { useAppSelector } from '../../../state/hook';
+import { selectAuthorisation } from '../../../state/slices/authorisationSlice';
 
 export interface PropertiesTableProps {
   requestType: RequestType;
@@ -58,7 +59,7 @@ export interface PropertiesTableProps {
 export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
   const { catalogueCategory, requestType } = props;
 
-  const { isPrivilegedUser } = useAuthorisationState();
+  const { isAdminMode } = useAppSelector(selectAuthorisation);
 
   const { control, clearErrors } =
     useFormContext<AddCatalogueCategoryWithPlacementIds>();
@@ -71,8 +72,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
     name: 'properties',
   });
 
-  const [isPrivilegedMode, setIsPrivilegedMode] =
-    React.useState<boolean>(false);
+  const [isAdminDialog, setIsAdminDialog] = React.useState<boolean>(false);
 
   const [propertyDialogRequestType, setPropertyDialogRequestType] =
     React.useState<RequestType>('post');
@@ -347,7 +347,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
           selectedProperty={row.original}
           isMigration={requestType === 'patch'}
           index={requestType === 'post' ? index : undefined}
-          isPrivilegedMode={isPrivilegedMode}
+          isAdminMode={isAdminDialog}
         />
       );
     },
@@ -396,7 +396,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
           key="edit"
           aria-label={`Edit property ${row.original.name}`}
           onClick={() => {
-            setIsPrivilegedMode(false);
+            setIsAdminDialog(false);
             setPropertyDialogRequestType('patch');
             setIndex(row.index);
             table.setCreatingRow(row);
@@ -427,14 +427,14 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
               </MenuItem>,
             ]
           : []),
-        ...(isPrivilegedUser
+        ...(isAdminMode
           ? [
               <Divider key="divider" />,
               <MenuItem
                 key="edit-as-admin"
                 aria-label={`Edit property ${row.original.name} as admin`}
                 onClick={() => {
-                  setIsPrivilegedMode(true);
+                  setIsAdminDialog(true);
                   setPropertyDialogRequestType('patch');
                   setIndex(row.index);
                   table.setCreatingRow(row);
