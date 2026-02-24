@@ -265,10 +265,13 @@ export const deleteProperty = () => {
   cy.findByText('Spherical Lenses').click();
   cy.findByText('Plano-Convex Lens').click();
 
+  cy.findByText('Substrate').should('exist');
   cy.findByText('Type').should('not.exist');
+
   cy.findByText('Items').click();
 
   cy.findAllByText('MX4332424').first().click();
+  cy.findByText('Substrate').should('exist');
   cy.findByText('Type').should('not.exist');
 
   cy.findByText('Items').click();
