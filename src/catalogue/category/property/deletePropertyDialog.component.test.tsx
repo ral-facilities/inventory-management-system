@@ -60,9 +60,7 @@ describe('delete property dialog', () => {
     });
 
     await waitFor(() => {
-      expect(
-        screen.getByText('Delete Property (Admin Only)')
-      ).toBeInTheDocument();
+      expect(screen.getByText('Delete Property as Admin')).toBeInTheDocument();
     });
 
     const infoIcon = screen.getByTestId('admin-status-tooltip');

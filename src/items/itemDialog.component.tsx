@@ -20,7 +20,7 @@ import {
   Typography,
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
-import { DatePicker, DateValidationError } from '@mui/x-date-pickers';
+import { DateValidationError, DesktopDatePicker } from '@mui/x-date-pickers';
 import { AxiosError } from 'axios';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -856,7 +856,7 @@ function ItemDialog(props: ItemDialogProps) {
                 name="warranty_end_date"
                 control={controlDetailsStep}
                 render={({ field }) => (
-                  <DatePicker
+                  <DesktopDatePicker
                     label="Warranty end date"
                     {...field}
                     value={
@@ -910,7 +910,7 @@ function ItemDialog(props: ItemDialogProps) {
                 name="delivered_date"
                 control={controlDetailsStep}
                 render={({ field }) => (
-                  <DatePicker
+                  <DesktopDatePicker
                     label="Delivered date"
                     {...field}
                     value={

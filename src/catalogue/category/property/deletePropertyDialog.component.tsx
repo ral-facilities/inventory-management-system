@@ -77,10 +77,10 @@ const DeletePropertyDialog = (props: DeletePropertyDialogProps) => {
   }, [catalogueCategory, deleteProperty, handleClose, selectedProperty?.name]);
 
   return (
-    <Dialog open={open} maxWidth="lg" fullWidth>
+    <Dialog open={open} maxWidth="sm" fullWidth>
       <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
         <WarningIcon sx={{ marginRight: 1 }} />
-        Delete Property (Admin Only)
+        Delete Property as Admin
         <Tooltip
           title="As an admin, you can delete properties"
           data-testid={'admin-status-tooltip'}

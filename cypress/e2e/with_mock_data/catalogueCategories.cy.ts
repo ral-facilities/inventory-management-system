@@ -1664,7 +1664,7 @@ describe('Catalogue Category', () => {
     }).click();
 
     cy.findAllByLabelText('Row Actions').first().click();
-    cy.findByLabelText('Delete property Pumping Speed (admin only)').click();
+    cy.findByLabelText('Delete property Pumping Speed as admin').click();
 
     cy.findByRole('button', { name: 'Continue' }).should('be.disabled');
 

@@ -251,7 +251,7 @@ export const deleteProperty = () => {
   }).click();
 
   cy.findAllByLabelText('Row Actions').eq(4).click();
-  cy.findByLabelText('Delete property Type (admin only)').click();
+  cy.findByLabelText('Delete property Type as admin').click();
 
   cy.findByRole('button', { name: 'Continue' }).should('be.disabled');
 

@@ -451,7 +451,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
                 ? [
                     <MenuItem
                       key="delete-as-admin"
-                      aria-label={`Delete property ${row.original.name} (admin only)`}
+                      aria-label={`Delete property ${row.original.name} as admin`}
                       onClick={() => {
                         setDeletePropertyDialogOpen(true);
                         setSelectedProperty(row.original);
@@ -463,7 +463,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
                       <ListItemIcon>
                         <DeleteIcon />
                       </ListItemIcon>
-                      <ListItemText>Delete (Admin Only)</ListItemText>
+                      <ListItemText>Delete as Admin</ListItemText>
                     </MenuItem>,
                   ]
                 : []),

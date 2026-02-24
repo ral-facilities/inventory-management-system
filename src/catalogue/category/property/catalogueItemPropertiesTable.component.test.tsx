@@ -154,11 +154,11 @@ describe('CatalogueItemPropertiesTable', () => {
     await user.click(rowActionsButton[0]);
 
     expect(
-      await screen.findByLabelText('Delete property Pumping Speed (admin only)')
+      await screen.findByLabelText('Delete property Pumping Speed as admin')
     ).toBeInTheDocument();
 
     const deleteButton = screen.getByLabelText(
-      'Delete property Pumping Speed (admin only)'
+      'Delete property Pumping Speed as admin'
     );
     await user.click(deleteButton);
     await waitFor(() => {
