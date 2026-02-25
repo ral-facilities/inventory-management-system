@@ -16,14 +16,19 @@ import React from 'react';
 import { System } from '../api/api.types';
 import { useGetSystemTypes } from '../api/systems';
 import type { SystemTableType } from '../app.types';
+import CriticalityTooltipIcon from '../common/criticalityTooltipIcon.component';
+import { useAppSelector } from '../state/hook';
+import { selectCriticality } from '../state/slices/criticalitySlice';
 import {
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
   COLUMN_FILTER_VARIANTS,
   MRT_Functions_Localisation,
+  OverflowTip,
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
   TableHeaderOverflowTip,
+  criticalityRowStyle,
   customFilterFunctions,
   formatDateTimeStrings,
   mrtTheme,
@@ -58,6 +63,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
 
   const { data: systemTypesData, isLoading: systemTypesLoading } =
     useGetSystemTypes();
+  const { isCriticalMode } = useAppSelector(selectCriticality);
 
   const isLoading = systemsDataLoading || systemTypesLoading;
   const [tableRows, setTableRows] = React.useState<SystemTableType[]>([]);
@@ -86,6 +92,21 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
+        Cell: ({ row, renderedCellValue }) => {
+          const showFlagged = row.original.is_flagged && isCriticalMode;
+          return (
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              {showFlagged && (
+                <CriticalityTooltipIcon
+                  label={'Items are running low within this subsystems'}
+                />
+              )}
+              <OverflowTip sx={{ fontSize: 'inherit' }}>
+                {renderedCellValue}
+              </OverflowTip>
+            </Box>
+          );
+        },
       },
       {
         header: 'Type',
@@ -132,7 +153,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
           formatDateTimeStrings(row.original.modified_time, true),
       },
     ],
-    [systemTypesData]
+    [isCriticalMode, systemTypesData]
   );
   const table = useMaterialReactTable({
     // Data
@@ -181,13 +202,16 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
         (type === 'copyTo' || !selectedSystemIds.includes(row.original.id)) &&
         (isSystemSelectable ? isSystemSelectable(row.original) : true);
 
+      const showFlagged = row.original.is_flagged && isCriticalMode;
+
       return {
         component: TableRow,
         onClick: () => canPlaceHere && onChangeParentId(row.original.id),
         'aria-label': `${row.original.name} row`,
-        style: {
+        sx: (theme) => ({
           cursor: canPlaceHere ? 'pointer' : 'not-allowed',
-        },
+          ...(showFlagged && criticalityRowStyle(theme)),
+        }),
       };
     },
     muiTableBodyCellProps: ({ column, row }) =>

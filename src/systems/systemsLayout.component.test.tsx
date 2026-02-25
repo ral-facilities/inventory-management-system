@@ -52,7 +52,7 @@ describe('Systems Layout', () => {
     const view = createView('/systems/65328f34a40ff5301575a4e3', 'system');
 
     await waitFor(() => {
-      expect(screen.getByText('Giant laser')).toBeInTheDocument();
+      expect(screen.getAllByText('Giant laser')).toHaveLength(2);
     });
 
     expect(view.asFragment()).toMatchSnapshot();
@@ -62,7 +62,7 @@ describe('Systems Layout', () => {
     createView('/systems/65328f34a40ff5301575a4e3', 'system');
 
     await waitFor(() => {
-      expect(screen.getByText('Giant laser')).toBeInTheDocument();
+      expect(screen.getAllByText('Giant laser')).toHaveLength(2);
     });
 
     const homeButton = screen.getByRole('button', {

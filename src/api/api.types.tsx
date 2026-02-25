@@ -103,6 +103,7 @@ export type SystemPatch = Partial<SystemPost>;
 export interface System extends CreatedModifiedMixin, Required<SystemPost> {
   id: string;
   code: string;
+  is_flagged: boolean | null;
 }
 
 export interface SystemType {

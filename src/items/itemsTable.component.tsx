@@ -545,7 +545,7 @@ export function ItemsTable(props: ItemTableProps) {
             ? '360.4px'
             : getPageHeightCalc(
                 // Breadcrumbs + Mui table V2 + header + extra
-                `50px + 110px + 58px + 48px ${showAlert ? '+ 64px' : ''} ${isSparesFilterApplied ? ' + 54px' : ''}`
+                `50px + 110px + 78px + 48px ${showAlert ? '+ 64px' : ''} ${isSparesFilterApplied ? ' + 54px' : ''}`
               ),
           flexShrink: 1,
         },

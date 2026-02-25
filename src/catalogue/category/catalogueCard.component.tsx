@@ -17,7 +17,11 @@ import { CatalogueCategory } from '../../api/api.types';
 import CriticalityTooltipIcon from '../../common/criticalityTooltipIcon.component';
 import { useAppSelector } from '../../state/hook';
 import { selectCriticality } from '../../state/slices/criticalitySlice';
-import { OverflowTip, formatDateTimeStrings } from '../../utils';
+import {
+  OverflowTip,
+  criticalityCardStyle,
+  formatDateTimeStrings,
+} from '../../utils';
 import { CriticalTooltipText } from './catalogueCardView.component';
 export interface CatalogueCardProps {
   table: MRT_TableInstance<CatalogueCategory>;
@@ -59,14 +63,7 @@ function CatalogueCard(props: CatalogueCardProps) {
           backgroundColor: isSelected
             ? table.options.mrtTheme.selectedRowBackgroundColor
             : undefined,
-
-          border: showFlagged
-            ? `2px solid ${theme.palette.error.main}`
-            : undefined,
-
-          boxShadow: showFlagged
-            ? `0 0 10px 3px ${theme.palette.error.main}88` // 88 = ~53% opacity for fuzzy glow
-            : undefined,
+          ...(showFlagged && criticalityCardStyle(theme)),
         })}
       >
         <CardActions>

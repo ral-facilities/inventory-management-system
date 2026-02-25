@@ -2,6 +2,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import EditIcon from '@mui/icons-material/Edit';
+import InfoOutlined from '@mui/icons-material/InfoOutlined';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   Box,
@@ -12,8 +13,10 @@ import {
   MenuItem,
   Link as MuiLink,
   TableCellBaseProps,
+  Tooltip,
 } from '@mui/material';
 import {
+  MRT_Column,
   MRT_ColumnDef,
   MRT_Row,
   MRT_RowSelectionState,
@@ -28,13 +31,16 @@ import { useGetCatalogueItemIds } from '../api/catalogueItems';
 import { useGetItems } from '../api/items';
 import { useGetUsageStatuses } from '../api/usageStatuses';
 import { APISettingsContext } from '../apiConfigProvider.component';
+import CriticalityTooltipIcon from '../common/criticalityTooltipIcon.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import DeleteItemDialog from '../items/deleteItemDialog.component';
 import ItemDialog from '../items/itemDialog.component';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
 import { useAppSelector } from '../state/hook';
 import { selectAuthorisation } from '../state/slices/authorisationSlice';
+import { selectCriticality } from '../state/slices/criticalitySlice';
 import {
+  COLUMN_FILTER_BOOLEAN_OPTIONS,
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
   COLUMN_FILTER_VARIANTS,
@@ -45,6 +51,7 @@ import {
   TableCellOverFlowTipProps,
   TableGroupedCell,
   TableHeaderOverflowTip,
+  criticalityRowStyle,
   customFilterFunctions,
   displayTableRowCountText,
   formatDateTimeStrings,
@@ -126,6 +133,8 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
   const { data: usageStatusData, isLoading: isLoadingUsageStatuses } =
     useGetUsageStatuses();
 
+  const { isCriticalMode } = useAppSelector(selectCriticality);
+
   const apiSettings = React.useContext(APISettingsContext);
   const sparesFilterState = apiSettings?.spares?.sparesFilterState;
   const isSparesDefinitionDefined = !!apiSettings.spares;
@@ -202,18 +211,34 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
             {MRT_Functions_Localisation.filterArrExcludesSome}
           </MenuItem>,
         ],
-        Cell: ({ row }) => (
-          <MuiLink
-            underline="hover"
-            component={Link}
-            sx={{ mr: 0.5 }}
-            to={`/catalogue/${row.original.catalogueItem?.catalogue_category_id}/items/${row.original.catalogueItem?.id}`}
-          >
-            {row.original.catalogueItem?.name}
-          </MuiLink>
-        ),
+        Cell: ({ row, renderedCellValue }) => {
+          const showFlagged =
+            row.original.catalogueItem.is_flagged && isCriticalMode;
+          return (
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              {showFlagged && (
+                <CriticalityTooltipIcon
+                  label={'Items are running low in this catalogue item'}
+                />
+              )}
+              <OverflowTip sx={{ fontSize: 'inherit' }}>
+                <MuiLink
+                  underline="hover"
+                  component={Link}
+                  sx={{ mr: 0.5 }}
+                  to={`/catalogue/${row.original.catalogueItem?.catalogue_category_id}/items/${row.original.catalogueItem?.id}`}
+                >
+                  {renderedCellValue}
+                </MuiLink>
+              </OverflowTip>
+            </Box>
+          );
+        },
+
         size: 350,
         GroupedCell: ({ row }) => {
+          const showFlagged =
+            row.original.catalogueItem.is_flagged && isCriticalMode;
           return (
             <Box
               sx={{
@@ -223,6 +248,12 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                 width: '100%',
               }}
             >
+              {showFlagged && (
+                <CriticalityTooltipIcon
+                  label={'Items are running low in this catalogue item'}
+                />
+              )}
+
               <OverflowTip
                 disableParagraph
                 sx={{
@@ -246,6 +277,50 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       },
       ...(isSparesDefinitionDefined
         ? [
+            {
+              header: 'Criticality',
+              Header: ({
+                column,
+              }: {
+                column: MRT_Column<TableRowData, unknown>;
+              }) => (
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Tooltip
+                    title={
+                      'The criticality column indicates whether new items need to bough for a given catalogue item. if the value is empty this means that expected lifetime field is none for that given catalogue please update the field '
+                    }
+                  >
+                    <InfoOutlined sx={{ mr: 1 }} fontSize="small" />
+                  </Tooltip>
+                  <OverflowTip sx={{ font: 'inherit' }}>
+                    {column.columnDef.header}
+                  </OverflowTip>
+                </Box>
+              ),
+              accessorFn: (row: TableRowData) =>
+                String(row.catalogueItem.criticality ?? ''),
+              id: 'catalogueItem.criticality',
+              filterVariant: COLUMN_FILTER_VARIANTS.number,
+              filterFn: COLUMN_FILTER_FUNCTIONS.number,
+              columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.number,
+              size: 250,
+              AggregatedCell: ({ row }: { row: MRT_Row<TableRowData> }) =>
+                row.original.catalogueItem.criticality,
+            },
+            {
+              header: 'is Critical',
+              accessorFn: (row: TableRowData) =>
+                row.catalogueItem.is_flagged === true ? 'Yes' : 'No',
+              id: 'catalogueItem.is_flagged',
+              filterVariant: COLUMN_FILTER_VARIANTS.boolean,
+              enableColumnFilterModes: false,
+              size: 200,
+              filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
+              AggregatedCell: ({ row }: { row: MRT_Row<TableRowData> }) =>
+                row.original.catalogueItem.is_flagged
+                  ? COLUMN_FILTER_BOOLEAN_OPTIONS[0]
+                  : COLUMN_FILTER_BOOLEAN_OPTIONS[1],
+            },
             {
               header: 'Number of Spares',
               Header: TableHeaderOverflowTip,
@@ -401,7 +476,12 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         size: 300,
       },
     ];
-  }, [isSparesDefinitionDefined, sparesFilterState, usageStatusData]);
+  }, [
+    isCriticalMode,
+    isSparesDefinitionDefined,
+    sparesFilterState,
+    usageStatusData,
+  ]);
 
   const initialColumnFilterFnState = React.useMemo(() => {
     return getInitialColumnFilterFnState(columns);
@@ -409,7 +489,10 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
 
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
-      columnVisibility: { 'item.created_time': false },
+      columnVisibility: {
+        'item.created_time': false,
+        'catalogueItem.is_flagged': false,
+      },
       grouping: ['catalogueItem.name'],
       pagination: { pageSize: 15, pageIndex: 0 },
       columnFilterFns: initialColumnFilterFnState,
@@ -417,6 +500,12 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     storeInUrl: true,
   });
 
+  const isCriticalFilterApplied = React.useMemo(() => {
+    const filters = preservedState.columnFilters;
+    const isFlagged = filters.find((f) => f.id === 'catalogueItem.is_flagged');
+    if (isFlagged?.value === 'Yes') return true;
+    return false;
+  }, [preservedState]);
   const noResultsText = 'No items found';
   const table = useMaterialReactTable({
     // Data
@@ -499,6 +588,13 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         zIndex: table.getState().isFullScreen ? 1210 : undefined,
       },
     }),
+    muiTableBodyRowProps: ({ row }) => {
+      const showFlagged =
+        row.original.catalogueItem.is_flagged && isCriticalMode;
+      return {
+        sx: (theme) => ({ ...(showFlagged && criticalityRowStyle(theme)) }),
+      };
+    },
     muiTableContainerProps: ({ table }) => {
       const showAlert =
         table.getState().showAlertBanner ||
@@ -590,6 +686,23 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
               />
             )}
           </>
+        )}
+        {isCriticalMode && (
+          <Button
+            sx={{ mx: 0.5 }}
+            variant="outlined"
+            disabled={isCriticalFilterApplied}
+            onClick={() => {
+              onPreservedStatesChange.onColumnFiltersChange([
+                {
+                  id: 'catalogueItem.is_flagged',
+                  value: COLUMN_FILTER_BOOLEAN_OPTIONS[0],
+                },
+              ]);
+            }}
+          >
+            Show Critical Items
+          </Button>
         )}
       </Box>
     ),

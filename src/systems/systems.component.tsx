@@ -4,6 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
+import InfoOutlined from '@mui/icons-material/InfoOutlined';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
@@ -42,14 +43,19 @@ import {
   useGetSystemTypes,
 } from '../api/systems';
 import type { SystemTableType } from '../app.types';
+import CriticalityTooltipIcon from '../common/criticalityTooltipIcon.component';
 import {
   getValueFromUpdater,
   usePreservedTableState,
 } from '../common/preservedTableState.component';
+import { useAppSelector } from '../state/hook';
+import { selectCriticality } from '../state/slices/criticalitySlice';
 import {
+  COLUMN_FILTER_BOOLEAN_OPTIONS,
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
   COLUMN_FILTER_VARIANTS,
+  criticalityRowStyle,
   customFilterFunctions,
   deselectRowById,
   displayTableRowCountText,
@@ -60,6 +66,7 @@ import {
   MRT_Functions_Localisation,
   mrtTheme,
   OPTIONAL_FILTER_MODE_OPTIONS,
+  OverflowTip,
   TableBodyCellOverFlowTip,
   TableHeaderOverflowTip,
   type TableCellOverFlowTipProps,
@@ -198,6 +205,13 @@ const SystemsActionMenu = (props: {
 
 const MIN_SUBSYSTEMS_WIDTH = '500px';
 
+export const CriticalTooltipText = (
+  <Typography style={{ whiteSpace: 'pre-line' }}>
+    A System is considered critical if any of its nested child items, catalogue
+    item are marked as critical.
+  </Typography>
+);
+
 function Systems() {
   // Navigation
   const { system_id: systemId = null } = useParams();
@@ -222,6 +236,7 @@ function Systems() {
       'description',
       'owner',
       'location',
+      'is_flagged',
     ],
     []
   );
@@ -234,6 +249,8 @@ function Systems() {
       // String value of null for filtering root systems
       systemId === null ? 'null' : systemId
     );
+
+  const { isCriticalMode } = useAppSelector(selectCriticality);
 
   const isLoading = systemTypesLoading || subsystemsDataLoading;
   const [tableRows, setTableRows] = React.useState<SystemTableType[]>([]);
@@ -264,17 +281,44 @@ function Systems() {
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
         size: 180,
-        Cell: ({ row }) => {
+        Cell: ({ row, renderedCellValue }) => {
+          const showFlagged = row.original.is_flagged && isCriticalMode;
           return (
-            <MuiLink
-              underline="hover"
-              component={Link}
-              to={`/systems/${row.original.id}`}
-            >
-              {row.original.name}
-            </MuiLink>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              {showFlagged && (
+                <CriticalityTooltipIcon
+                  label={'Items are running low within this subsystems'}
+                />
+              )}
+              <OverflowTip sx={{ fontSize: 'inherit' }}>
+                <MuiLink
+                  underline="hover"
+                  component={Link}
+                  to={`/systems/${row.original.id}`}
+                >
+                  {renderedCellValue}
+                </MuiLink>
+              </OverflowTip>
+            </Box>
           );
         },
+      },
+      {
+        header: 'is Critical',
+        Header: ({ column }) => (
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Tooltip title={CriticalTooltipText}>
+              <InfoOutlined sx={{ mr: 1 }} fontSize="small" />
+            </Tooltip>
+            {column.columnDef.header}
+          </Box>
+        ),
+        accessorFn: (row: System) => (row.is_flagged ? 'Yes' : 'No'),
+        id: 'is_flagged',
+        filterVariant: COLUMN_FILTER_VARIANTS.boolean,
+        enableColumnFilterModes: false,
+        size: 200,
+        filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
       },
       {
         header: 'Type',
@@ -407,7 +451,7 @@ function Systems() {
         size: 250,
       },
     ];
-  }, [systemTypesData]);
+  }, [isCriticalMode, systemTypesData]);
   // Data
 
   // Names for preventing duplicates in the duplicate dialog
@@ -429,6 +473,13 @@ function Systems() {
     storeInUrl: true,
     urlParamName: 'subState',
   });
+
+  const isCriticalFilterApplied = React.useMemo(() => {
+    const filters = preservedState.columnFilters;
+    const isFlagged = filters.find((f) => f.id === 'is_flagged');
+    if (isFlagged?.value === 'Yes') return true;
+    return false;
+  }, [preservedState]);
 
   const subsystemsTable = useMaterialReactTable({
     // Data
@@ -476,6 +527,12 @@ function Systems() {
       showFirstButton: false,
       showLastButton: false,
       size: 'small',
+    },
+    muiTableBodyRowProps: ({ row }) => {
+      const showFlagged = row.original.is_flagged && isCriticalMode;
+      return {
+        sx: (theme) => ({ ...(showFlagged && criticalityRowStyle(theme)) }),
+      };
     },
     muiTablePaperProps: ({ table }) => ({
       elevation: 0,
@@ -541,7 +598,12 @@ function Systems() {
       if (newValue) {
         subsystemsTable.setShowColumnFilters(true);
         subsystemsTable.setColumnVisibility(
-          Object.fromEntries(hiddenColumns.map((col) => [col, true]))
+          Object.fromEntries(
+            hiddenColumns.map((col) => [
+              col,
+              col === 'is_flagged' ? isCriticalMode : true,
+            ])
+          )
         );
       } else {
         subsystemsTable.setShowColumnFilters(false);
@@ -639,6 +701,20 @@ function Systems() {
           Clear Filters
         </Button>
         <AddSystemButton systemId={systemId} />
+        {isCriticalMode && (
+          <Button
+            sx={{ mx: 0.5 }}
+            variant="outlined"
+            disabled={isCriticalFilterApplied}
+            onClick={() => {
+              onPreservedStatesChange.onColumnFiltersChange([
+                { id: 'is_flagged', value: 'Yes' },
+              ]);
+            }}
+          >
+            Show Critical Items
+          </Button>
+        )}
       </Box>
     ),
     renderRowActionMenuItems: ({ closeMenu, row }) => {

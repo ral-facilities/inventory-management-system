@@ -928,6 +928,7 @@ describe('Systems', () => {
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
           type_id: '2',
+          is_flagged: true,
           type: {
             id: '2',
             value: 'Operational',
@@ -948,6 +949,7 @@ describe('Systems', () => {
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
           type_id: '2',
+          is_flagged: false,
           type: {
             id: '2',
             value: 'Operational',

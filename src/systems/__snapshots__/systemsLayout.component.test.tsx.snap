@@ -81,6 +81,13 @@ exports[`Systems Layout > renders root systems correctly 1`] = `
           </nav>
         </div>
       </div>
+      <div
+        class="MuiBox-root css-ns7h0t"
+      >
+        <h4
+          class="MuiTypography-root MuiTypography-h4 css-13tjivu-MuiTypography-root"
+        />
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -202,6 +209,15 @@ exports[`Systems Layout > renders units breadcrumbs correctly 1`] = `
             </ol>
           </nav>
         </div>
+      </div>
+      <div
+        class="MuiBox-root css-ns7h0t"
+      >
+        <h4
+          class="MuiTypography-root MuiTypography-h4 css-13tjivu-MuiTypography-root"
+        >
+          Giant laser
+        </h4>
       </div>
     </div>
   </div>

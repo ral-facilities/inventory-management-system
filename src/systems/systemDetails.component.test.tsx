@@ -42,12 +42,12 @@ describe('SystemDetails', () => {
     createView();
 
     await waitFor(() => {
-      expect(screen.getByText(mockSystemDetails.name)).toBeInTheDocument();
+      expect(
+        screen.getByText(mockSystemDetails.location ?? '')
+      ).toBeInTheDocument();
     });
     expect(screen.queryByText('Please select a system')).toBeFalsy();
-    expect(
-      screen.getByText(mockSystemDetails.location ?? '')
-    ).toBeInTheDocument();
+
     expect(screen.getByText(mockSystemDetails.owner ?? '')).toBeInTheDocument();
     expect(
       screen.getByText(mockSystemDetails.importance ?? '')
@@ -71,7 +71,9 @@ describe('SystemDetails', () => {
     createView();
 
     await waitFor(() => {
-      expect(screen.getByText(mockSystemDetails.name)).toBeInTheDocument();
+      expect(
+        screen.getByText(mockSystemDetails.importance)
+      ).toBeInTheDocument();
     });
     expect(screen.queryByText('Please select a system')).toBeFalsy();
     // One for each of location, owner and description
@@ -82,7 +84,9 @@ describe('SystemDetails', () => {
     createView();
 
     await waitFor(() => {
-      expect(screen.getByText(mockSystemDetails.name)).toBeInTheDocument();
+      expect(
+        screen.getByText(mockSystemDetails.location ?? '')
+      ).toBeInTheDocument();
     });
 
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();

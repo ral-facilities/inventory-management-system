@@ -697,3 +697,17 @@ export const criticalityRowStyle = (theme: Theme) => {
     backgroundColor: theme.palette.error.main + '11', // ~7% tint
   };
 };
+
+export const criticalityCardStyle = (theme: Theme) => {
+  return {
+    border: `2px solid ${theme.palette.error.main}`,
+    boxShadow: `0 0 10px 3px ${theme.palette.error.main}88`, // 88 = ~53% opacity for fuzzy glow
+  };
+};
+
+export const criticalityHeaderStyle = (theme: Theme) => {
+  return {
+    ...criticalityCardStyle(theme),
+    borderRadius: 5,
+  };
+};

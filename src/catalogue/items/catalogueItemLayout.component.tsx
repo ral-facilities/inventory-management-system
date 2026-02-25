@@ -5,6 +5,7 @@ import { useGetCatalogueItem } from '../../api/catalogueItems';
 import CriticalityTooltipIcon from '../../common/criticalityTooltipIcon.component';
 import { useAppSelector } from '../../state/hook';
 import { selectCriticality } from '../../state/slices/criticalitySlice';
+import { criticalityHeaderStyle } from '../../utils';
 
 function CatalogueItemLayout() {
   const { catalogue_item_id: catalogueItemId, item_id: itemId } = useParams();
@@ -41,33 +42,48 @@ function CatalogueItemLayout() {
           gap: 0.5,
         }}
       >
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          {showFlagged && (
-            <CriticalityTooltipIcon
-              label={'Items are running low in this catalogue item'}
-              sx={{ fontSize: '40px' }}
-            />
-          )}
-          <Typography
-            variant="h4"
-            sx={{
-              fontWeight: 'bold',
-              wordWrap: 'break-word',
-            }}
-          >
-            {catalogueItem?.name}
-          </Typography>
-          {subtitle && (
+        <Box
+          sx={(theme) => ({
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+
+            width: '100%',
+            gap: 1,
+            padding: 1,
+            ...(showFlagged && criticalityHeaderStyle(theme)),
+          })}
+        >
+          <>
+            {showFlagged && (
+              <CriticalityTooltipIcon
+                label={'Items are running low in this catalogue item'}
+                sx={{ fontSize: '40px' }}
+              />
+            )}
             <Typography
-              variant="h6"
-              color="text.secondary"
+              variant="h4"
               sx={{
                 fontWeight: 'bold',
+                wordWrap: 'break-word',
+                alignItems: 'center',
               }}
             >
-              ({subtitle})
+              {catalogueItem?.name}
             </Typography>
-          )}
+            {subtitle && (
+              <Typography
+                variant="h6"
+                color="text.secondary"
+                sx={{
+                  fontWeight: 'bold',
+                  alignItems: 'center',
+                }}
+              >
+                ({subtitle})
+              </Typography>
+            )}
+          </>
         </Box>
       </Box>
       <Outlet />

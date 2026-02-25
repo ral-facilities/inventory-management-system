@@ -1162,7 +1162,7 @@ exports[`SystemItemsDialog > displays correctly when in admin mode 1`] = `
   >
     <div
       class="MuiTooltip-tooltip MuiTooltip-tooltipArrow MuiTooltip-tooltipPlacementTop css-1eex93v-MuiTooltip-tooltip"
-      style="opacity: 1; transform: none; transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,transform 133ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+      style="opacity: 1; transform: scale(1, 1); transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,transform 133ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
     >
       As an admin, you can bypass rules that restrict item placement for other users, and you can modify the item's usage status
       <span

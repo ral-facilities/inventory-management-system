@@ -74,7 +74,7 @@ describe('Systems', () => {
     await user.click(toggleFullScreenButton);
 
     expect(router.state.location.search).toBe(
-      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuhvMgIaw32PM4SNCEYAHEvFhcAdhkGsRZZHg44xDEjJbD0JAO4zk8HWxAAbEhh44tp5AF8HQA'
+      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuhvMgIaw32PM4SNCEYAHEvFhcAdhkGsRZZHg44xDEjJbD0JAO4zk8HWxAAbEhh44tpkflphzXAOauaMMF3N5kAX38gA'
     );
 
     await waitFor(() => {
@@ -117,7 +117,7 @@ describe('Systems', () => {
     await user.click(toggleFullScreenButton);
 
     expect(router.state.location.search).toBe(
-      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuhvMgIaw32PM4SNCEYAHEvFhcAdhkGsRZZHg44xDEjJbD0JAO4zk8HWxAAbEhh44tp5AF8HQA'
+      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuhvMgIaw32PM4SNCEYAHEvFhcAdhkGsRZZHg44xDEjJbD0JAO4zk8HWxAAbEhh44tpkflphzXAOauaMMF3N5kAX38gA'
     );
 
     const clearFiltersButton = await screen.findByRole('button', {
