@@ -605,17 +605,22 @@ export const handlers = [
 
   http.get<{ id: string }, DefaultBodyType, SystemType | ErrorResponse>(
     '/v1/system-types/:id',
-    ({params}) => {
+    ({ params }) => {
       const { id } = params;
 
-      const data = SystemTypesJSON.find((systemType) => systemType.id === id) as SystemType;
+      const data = SystemTypesJSON.find(
+        (systemType) => systemType.id === id
+      ) as SystemType;
 
-      if(data !== undefined) return HttpResponse.json(data, {status: 200});
+      if (data !== undefined) return HttpResponse.json(data, { status: 200 });
 
-      return HttpResponse.json({ detail: 'System type not found' }, { status: 404});
+      return HttpResponse.json(
+        { detail: 'System type not found' },
+        { status: 404 }
+      );
     }
   ),
-  
+
   http.get<PathParams, DefaultBodyType, SystemType[]>(
     '/v1/system-types',
     () => {
