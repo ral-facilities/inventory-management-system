@@ -481,13 +481,21 @@ export const useDeleteCatalogueCategoryProperty = (): UseMutationResult<
   AxiosError,
   {
     catalogueCategory: CatalogueCategory;
-    propertyId: string;
+    property: CatalogueCategoryProperty;
   }
 > => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ catalogueCategory, propertyId }) =>
-      deleteCatalogueCategoryProperty(catalogueCategory.id, propertyId),
+    mutationFn: ({ catalogueCategory, property }) => {
+      handleTransferState([
+        {
+          name: catalogueCategory.name,
+          message: `Deleting property ${property.name} from ${catalogueCategory.name}`,
+          state: 'information',
+        },
+      ]);
+      return deleteCatalogueCategoryProperty(catalogueCategory.id, property.id);
+    },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({
         queryKey: [
@@ -507,6 +515,13 @@ export const useDeleteCatalogueCategoryProperty = (): UseMutationResult<
       queryClient.invalidateQueries({
         queryKey: ['Item'],
       });
+      handleTransferState([
+        {
+          name: variables.catalogueCategory.name,
+          message: `Successfully deleted property ${variables.property.name} from ${variables.catalogueCategory.name}`,
+          state: 'success',
+        },
+      ]);
     },
   });
 };

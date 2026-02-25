@@ -56,7 +56,7 @@ const DeletePropertyDialog = (props: DeletePropertyDialogProps) => {
     if (catalogueCategory && propertyAPIFormat) {
       deleteProperty({
         catalogueCategory,
-        propertyId: propertyAPIFormat.id,
+        property: propertyAPIFormat,
       })
         .then(() => {
           handleClose({ successfulDeletion: true });
