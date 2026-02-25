@@ -20,7 +20,10 @@ import React from 'react';
 import { CatalogueItem, Item, UsageStatus } from '../api/api.types';
 import { useGetCatalogueItemIds } from '../api/catalogueItems';
 import { useGetUsageStatuses } from '../api/usageStatuses';
-import { ROWS_PER_PAGE_OPTIONS } from '../common/consts';
+import {
+  DEFAULT_ROWS_PER_PAGE_VALUE,
+  ROWS_PER_PAGE_OPTIONS,
+} from '../common/consts';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
 import {
@@ -339,7 +342,7 @@ export function SystemItemsUsageStatusTable(
     initialState: {
       columnVisibility: { 'item.created_time': false },
       grouping: ['catalogueItem.name'],
-      pagination: { pageSize: 15, pageIndex: 0 },
+      pagination: { pageSize: DEFAULT_ROWS_PER_PAGE_VALUE, pageIndex: 0 },
       columnFilterFns: initialColumnFilterFnState,
     },
   });

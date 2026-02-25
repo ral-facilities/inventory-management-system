@@ -18,7 +18,10 @@ import type { Rule } from '../../api/api.types';
 import { useGetRules } from '../../api/rules';
 import { useGetSystemTypes } from '../../api/systemTypes';
 import { useGetUsageStatuses } from '../../api/usageStatuses';
-import { ROWS_PER_PAGE_OPTIONS } from '../../common/consts';
+import {
+  DEFAULT_ROWS_PER_PAGE_VALUE,
+  ROWS_PER_PAGE_OPTIONS,
+} from '../../common/consts';
 import MRTTopTableAlert from '../../common/mrtTopTableAlert.component';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import {
@@ -187,7 +190,7 @@ function Rules() {
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
       columnFilterFns: initialColumnFilterFnState,
-      pagination: { pageSize: 15, pageIndex: 0 },
+      pagination: { pageSize: DEFAULT_ROWS_PER_PAGE_VALUE, pageIndex: 0 },
     },
     storeInUrl: true,
   });

@@ -44,7 +44,7 @@ import {
   OverflowTip,
 } from '../../utils';
 import CardViewFilters from '../cardView/cardViewFilters.component';
-import { ROWS_PER_PAGE_OPTIONS } from '../consts';
+import { DEFAULT_ROWS_PER_PAGE_VALUE, ROWS_PER_PAGE_OPTIONS } from '../consts';
 import DownloadFileDialog from '../downloadFileDialog.component';
 import EditFileDialog from '../editFileDialog.component';
 import ErrorPage from '../errorPage.component';
@@ -212,7 +212,7 @@ const ImageGallery = (props: ImageGalleryProps) => {
 
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
-      pagination: { pageSize: dense ? 18 : 16, pageIndex: 0 },
+      pagination: { pageSize: DEFAULT_ROWS_PER_PAGE_VALUE, pageIndex: 0 },
       columnFilterFns: initialColumnFilterFnState,
     },
     storeInUrl: !dense,

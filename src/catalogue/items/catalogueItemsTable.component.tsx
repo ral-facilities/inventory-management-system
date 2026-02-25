@@ -38,7 +38,10 @@ import {
 import { useGetCatalogueItems } from '../../api/catalogueItems';
 import { useGetManufacturerIds } from '../../api/manufacturers';
 import { APISettingsContext } from '../../apiConfigProvider.component';
-import { ROWS_PER_PAGE_OPTIONS } from '../../common/consts';
+import {
+  DEFAULT_ROWS_PER_PAGE_VALUE,
+  ROWS_PER_PAGE_OPTIONS,
+} from '../../common/consts';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import {
   COLUMN_FILTER_BOOLEAN_OPTIONS,
@@ -733,7 +736,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
       columnVisibility: { 'catalogueItem.created_time': false },
-      pagination: { pageSize: dense ? 5 : 15, pageIndex: 0 },
+      pagination: { pageSize: DEFAULT_ROWS_PER_PAGE_VALUE, pageIndex: 0 },
       columnFilterFns: initialColumnFilterFnState,
     },
     storeInUrl: !dense,

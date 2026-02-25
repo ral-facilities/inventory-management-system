@@ -49,7 +49,10 @@ import {
 import CatalogueCard from './catalogueCard.component';
 import CatalogueCategoryDialog from './catalogueCategoryDialog.component';
 
-import { ROWS_PER_PAGE_OPTIONS } from '../../common/consts';
+import {
+  DEFAULT_ROWS_PER_PAGE_VALUE,
+  ROWS_PER_PAGE_OPTIONS,
+} from '../../common/consts';
 import ErrorPage from '../../common/errorPage.component';
 import CatalogueCategoryDirectoryDialog from './catalogueCategoryDirectoryDialog.component';
 import DeleteCatalogueCategoryDialog from './deleteCatalogueCategoryDialog.component';
@@ -317,7 +320,7 @@ function CatalogueCardView() {
 
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
-      pagination: { pageSize: 30, pageIndex: 0 },
+      pagination: { pageSize: DEFAULT_ROWS_PER_PAGE_VALUE, pageIndex: 0 },
       columnFilterFns: initialColumnFilterFnState,
     },
     storeInUrl: true,

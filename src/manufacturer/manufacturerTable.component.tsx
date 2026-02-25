@@ -23,7 +23,10 @@ import React from 'react';
 import { Link } from 'react-router';
 import { Manufacturer } from '../api/api.types';
 import { useGetManufacturers } from '../api/manufacturers';
-import { ROWS_PER_PAGE_OPTIONS } from '../common/consts';
+import {
+  DEFAULT_ROWS_PER_PAGE_VALUE,
+  ROWS_PER_PAGE_OPTIONS,
+} from '../common/consts';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import { RequestType } from '../form.schemas';
 import {
@@ -184,7 +187,7 @@ function ManufacturerTable() {
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
       columnVisibility: { created_time: false },
-      pagination: { pageSize: 15, pageIndex: 0 },
+      pagination: { pageSize: DEFAULT_ROWS_PER_PAGE_VALUE, pageIndex: 0 },
       columnFilterFns: initialColumnFilterFnState,
     },
     storeInUrl: true,

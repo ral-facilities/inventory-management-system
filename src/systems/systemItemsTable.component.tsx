@@ -28,7 +28,10 @@ import { useGetCatalogueItemIds } from '../api/catalogueItems';
 import { useGetItems } from '../api/items';
 import { useGetUsageStatuses } from '../api/usageStatuses';
 import { APISettingsContext } from '../apiConfigProvider.component';
-import { ROWS_PER_PAGE_OPTIONS } from '../common/consts';
+import {
+  DEFAULT_ROWS_PER_PAGE_VALUE,
+  ROWS_PER_PAGE_OPTIONS,
+} from '../common/consts';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import DeleteItemDialog from '../items/deleteItemDialog.component';
 import ItemDialog from '../items/itemDialog.component';
@@ -412,7 +415,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     initialState: {
       columnVisibility: { 'item.created_time': false },
       grouping: ['catalogueItem.name'],
-      pagination: { pageSize: 15, pageIndex: 0 },
+      pagination: { pageSize: DEFAULT_ROWS_PER_PAGE_VALUE, pageIndex: 0 },
       columnFilterFns: initialColumnFilterFnState,
     },
     storeInUrl: true,

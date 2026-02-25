@@ -34,7 +34,7 @@ import {
   getPageHeightCalc,
   mrtTheme,
 } from '../../utils';
-import { ROWS_PER_PAGE_OPTIONS } from '../consts';
+import { DEFAULT_ROWS_PER_PAGE_VALUE, ROWS_PER_PAGE_OPTIONS } from '../consts';
 import DownloadFileDialog from '../downloadFileDialog.component';
 import EditFileDialog from '../editFileDialog.component';
 import { usePreservedTableState } from '../preservedTableState.component';
@@ -131,7 +131,7 @@ function AttachmentsTable(props: AttachmentTableProps) {
 
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
-      pagination: { pageSize: 15, pageIndex: 0 },
+      pagination: { pageSize: DEFAULT_ROWS_PER_PAGE_VALUE, pageIndex: 0 },
       columnFilterFns: initialColumnFilterFnState,
     },
     storeInUrl: true,
