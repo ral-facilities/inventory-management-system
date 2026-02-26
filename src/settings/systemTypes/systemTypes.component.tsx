@@ -8,7 +8,7 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import type { SystemType } from '../../api/api.types';
-import { useGetSystemTypes } from '../../api/systems';
+import { useGetSystemTypes } from '../../api/systemTypes';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 
 import { APISettingsContext } from '../../apiConfigProvider.component';
@@ -68,6 +68,15 @@ function SystemTypes() {
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
         Cell: ({ row }) => row.original.value,
+      },
+      {
+        header: 'Description',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => row.description,
+        id: 'description',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
       },
       {
         header: 'Used For Spares',

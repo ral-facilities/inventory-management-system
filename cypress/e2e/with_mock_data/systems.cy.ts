@@ -928,7 +928,11 @@ describe('Systems', () => {
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
           type_id: '2',
-          type: { id: '2', value: 'Operational' },
+          type: {
+            id: '2',
+            value: 'Operational',
+            description: 'Operational system type',
+          },
         })
       );
       expect(JSON.stringify(await postRequests[1].json())).equal(
@@ -944,7 +948,11 @@ describe('Systems', () => {
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
           type_id: '2',
-          type: { id: '2', value: 'Operational' },
+          type: {
+            id: '2',
+            value: 'Operational',
+            description: 'Operational system type',
+          },
         })
       );
     });
@@ -1019,8 +1027,8 @@ describe('Systems', () => {
     });
 
     it('moves items (admin mode)', () => {
-      cy.setCurrentUserToAdmin();
       cy.visit('/systems');
+      cy.setCurrentUserToAdmin();
 
       cy.findByRole('link', { name: 'Pulse Laser' }).click();
       cy.findAllByRole('button', { name: 'Show/Hide filters' })
@@ -1218,13 +1226,13 @@ describe('Systems', () => {
   });
 
   it('deletes an item', () => {
-    cy.visit('/systems/657f8c3b2a1b4e5d8f9b3c4e5');
+    cy.visit('/systems/657f8c3b2a1b4e5d8f9b3c4e8');
 
     cy.findByRole('button', { name: 'Expand' }).click();
     cy.findByLabelText('Row Actions').first().click();
     cy.findByText('Delete').click();
 
-    cy.findByText('Serial Number: dfzqkOJbqifO').should('exist');
+    cy.findByText('Serial Number: WrgqAVk3qUQK').should('exist');
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -1236,7 +1244,7 @@ describe('Systems', () => {
     }).should((deleteRequests) => {
       expect(deleteRequests.length).equal(1);
       const request = deleteRequests[0];
-      expect(request.url.toString()).to.contain('RuUxShkg');
+      expect(request.url.toString()).to.contain('qWAdynAI');
     });
   });
 });

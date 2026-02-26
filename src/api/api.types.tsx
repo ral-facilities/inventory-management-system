@@ -108,6 +108,7 @@ export interface System extends CreatedModifiedMixin, Required<SystemPost> {
 export interface SystemType {
   id: string;
   value: string;
+  description: string;
 }
 
 // ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
@@ -146,6 +147,7 @@ export interface CatalogueCategoryPropertyPost
 export interface CatalogueCategoryPropertyPatch {
   name?: string;
   allowed_values?: AllowedValues | null;
+  unit_id?: string | null;
 }
 
 export interface CatalogueCategoryProperty

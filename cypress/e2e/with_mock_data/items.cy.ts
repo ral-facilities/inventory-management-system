@@ -409,8 +409,8 @@ describe('Items', () => {
   });
 
   it('displays add dialog in admin view when user is admin', () => {
-    cy.setCurrentUserToAdmin();
     cy.visit('/catalogue/4/items/1/items');
+    cy.setCurrentUserToAdmin();
 
     cy.findByRole('button', { name: 'Add Item as Admin' }).click();
 
@@ -1826,9 +1826,9 @@ describe('Items', () => {
   });
 
   it('displays edit dialog in admin view when user is admin', () => {
-    cy.setCurrentUserToAdmin();
     cy.visit('/catalogue/9/items/11/items');
-    cy.findAllByLabelText('Row Actions').first().click();
+    cy.setCurrentUserToAdmin();
+    cy.findAllByLabelText('Row Actions').last().click();
     cy.findByText('Edit as Admin').click();
 
     cy.findByRole('progressbar').should('not.exist');
@@ -1836,7 +1836,7 @@ describe('Items', () => {
 
     // Scrapped is 'not allowed' by rules so admin user should be able to bypass this and override usasge status
     cy.findByRole('button', { name: 'navigate to systems home' }).click();
-    cy.findAllByText('Scrapped').first().click();
+    cy.findAllByText('Giant laser').first().click();
 
     cy.findByText(
       'WARNING: No rule exists for moving this item between these system types'
@@ -1861,8 +1861,7 @@ describe('Items', () => {
       expect(patchRequests.length).eq(1);
       expect(JSON.stringify(await patchRequests[0].json())).equal(
         JSON.stringify({
-          usage_status_id: '2',
-          system_id: '657f8c3b2a1b4e5d8f9b3c4e8',
+          system_id: '65328f34a40ff5301575a4e3',
         })
       );
     });
@@ -1886,6 +1885,9 @@ describe('Items', () => {
     cy.findByText('Duplicate').click();
 
     cy.startSnoopingBrowserMockedRequest();
+    cy.findByText(
+      'WARNING: No rule exists for creating a new item within this system type'
+    ).should('exist');
 
     cy.findByRole('button', { name: 'Next' }).click();
 
@@ -1941,10 +1943,10 @@ describe('Items', () => {
 
   it('deletes an item', () => {
     cy.visit('/catalogue/9/items/11/items');
-    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findAllByLabelText('Row Actions').last().click();
     cy.findByText('Delete').click();
 
-    cy.findByText('Serial Number: dfzqkOJbqifO').should('exist');
+    cy.findByText('Serial Number: WrgqAVk3qUQK').should('exist');
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -1956,7 +1958,7 @@ describe('Items', () => {
     }).should((deleteRequests) => {
       expect(deleteRequests.length).equal(1);
       const request = deleteRequests[0];
-      expect(request.url.toString()).to.contain('RuUxShkg');
+      expect(request.url.toString()).to.contain('qWAdynAI');
     });
   });
 
@@ -1978,13 +1980,13 @@ describe('Items', () => {
     cy.findByRole('button', { name: 'Continue' }).click();
 
     cy.findByText(
-      'Please move item to a system with Type: Storage before trying to delete.'
+      'Please move item to a system with Type: Scrapped before trying to delete.'
     ).should('exist');
   });
 
   it('admin user can bypass delete rules and delete dialog is in admin view', () => {
-    cy.setCurrentUserToAdmin();
     cy.visit('/catalogue/4/items/1/items');
+    cy.setCurrentUserToAdmin();
 
     cy.findAllByLabelText('Row Actions').first().click();
     cy.findByText('Delete as Admin').click();

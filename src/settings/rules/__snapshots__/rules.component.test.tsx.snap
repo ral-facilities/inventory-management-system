@@ -72,6 +72,24 @@ exports[`Rules > renders table correctly 1`] = `
             >
               Show Deletion Rules
             </button>
+            <button
+              aria-label="Open information dialog"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
+              tabindex="0"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                data-testid="InfoOutlinedIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8"
+                />
+              </svg>
+            </button>
           </div>
           <div
             class="MuiBox-root css-1p0wbhh"
@@ -108,7 +126,7 @@ exports[`Rules > renders table correctly 1`] = `
                         aria-invalid="false"
                         autocomplete="off"
                         class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12tjcea-MuiInputBase-input-MuiOutlinedInput-input"
-                        id=":r5:"
+                        id=":r7:"
                         placeholder="Search"
                         type="text"
                         value=""
@@ -374,13 +392,13 @@ exports[`Rules > renders table correctly 1`] = `
                             </span>
                           </div>
                           <div
-                            aria-describedby=":ri:-helper-text"
+                            aria-describedby=":rk:-helper-text"
                             aria-expanded="false"
                             aria-haspopup="listbox"
                             aria-label="Filter by Source System Type"
-                            aria-labelledby=":ri:"
+                            aria-labelledby=":rk:"
                             class="MuiSelect-select MuiSelect-standard MuiSelect-multiple MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-10y8whu-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                            id=":ri:"
+                            id=":rk:"
                             role="combobox"
                             tabindex="0"
                           >
@@ -442,7 +460,7 @@ exports[`Rules > renders table correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                          id=":ri:-helper-text"
+                          id=":rk:-helper-text"
                         >
                           <label>
                             Filter Mode: Includes any
@@ -607,13 +625,13 @@ exports[`Rules > renders table correctly 1`] = `
                             </span>
                           </div>
                           <div
-                            aria-describedby=":ru:-helper-text"
+                            aria-describedby=":r10:-helper-text"
                             aria-expanded="false"
                             aria-haspopup="listbox"
                             aria-label="Filter by Destination System Type"
-                            aria-labelledby=":ru:"
+                            aria-labelledby=":r10:"
                             class="MuiSelect-select MuiSelect-standard MuiSelect-multiple MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-10y8whu-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                            id=":ru:"
+                            id=":r10:"
                             role="combobox"
                             tabindex="0"
                           >
@@ -675,7 +693,7 @@ exports[`Rules > renders table correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                          id=":ru:-helper-text"
+                          id=":r10:-helper-text"
                         >
                           <label>
                             Filter Mode: Includes any
@@ -840,13 +858,13 @@ exports[`Rules > renders table correctly 1`] = `
                             </span>
                           </div>
                           <div
-                            aria-describedby=":r1a:-helper-text"
+                            aria-describedby=":r1c:-helper-text"
                             aria-expanded="false"
                             aria-haspopup="listbox"
                             aria-label="Filter by Destination Usage Status"
-                            aria-labelledby=":r1a:"
+                            aria-labelledby=":r1c:"
                             class="MuiSelect-select MuiSelect-standard MuiSelect-multiple MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-10y8whu-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                            id=":r1a:"
+                            id=":r1c:"
                             role="combobox"
                             tabindex="0"
                           >
@@ -908,7 +926,7 @@ exports[`Rules > renders table correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                          id=":r1a:-helper-text"
+                          id=":r1c:-helper-text"
                         >
                           <label>
                             Filter Mode: Includes any
@@ -972,12 +990,12 @@ exports[`Rules > renders table correctly 1`] = `
                 tabindex="0"
               >
                 <div
-                  aria-label="Storage"
+                  aria-label="Scrapped"
                   class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  Storage
+                  Scrapped
                 </div>
               </td>
               <td
@@ -1048,6 +1066,53 @@ exports[`Rules > renders table correctly 1`] = `
                 tabindex="0"
               >
                 <div
+                  aria-label="Storage"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Storage
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1gkkko5-MuiTableCell-root-MuiTableCell-root"
+                data-index="1"
+                tabindex="0"
+              >
+                <div
+                  aria-label="Scrapped"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Scrapped
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-945msq-MuiTableCell-root-MuiTableCell-root"
+                data-index="2"
+                tabindex="0"
+              >
+                <div
+                  aria-label="Scrapped"
+                  class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Scrapped
+                </div>
+              </td>
+            </tr>
+            <tr
+              class="MuiTableRow-root css-11yrv3u-MuiTableRow-root"
+              data-index="4"
+            >
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1nh7hv-MuiTableCell-root-MuiTableCell-root"
+                data-index="0"
+                tabindex="0"
+              >
+                <div
                   aria-label="Operational"
                   class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                   data-mui-internal-clone-element="true"
@@ -1087,7 +1152,7 @@ exports[`Rules > renders table correctly 1`] = `
             </tr>
             <tr
               class="MuiTableRow-root css-11yrv3u-MuiTableRow-root"
-              data-index="4"
+              data-index="5"
             >
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1nh7hv-MuiTableCell-root-MuiTableCell-root"
@@ -1176,7 +1241,7 @@ exports[`Rules > renders table correctly 1`] = `
           <p
             class="MuiTypography-root MuiTypography-body1 css-110q72o-MuiTypography-root"
           >
-            Total Rules: 5
+            Total Rules: 6
           </p>
           <div
             class="MuiBox-root css-nokk8"

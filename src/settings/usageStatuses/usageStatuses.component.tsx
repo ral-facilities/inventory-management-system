@@ -20,6 +20,8 @@ import React from 'react';
 import { UsageStatus } from '../../api/api.types.tsx';
 import { useGetUsageStatuses } from '../../api/usageStatuses.tsx';
 import { usePreservedTableState } from '../../common/preservedTableState.component.tsx';
+import { useAppSelector } from '../../state/hook.ts';
+import { selectAuthorisation } from '../../state/slices/authorisationSlice.tsx';
 import {
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
@@ -34,13 +36,12 @@ import {
 } from '../../utils.tsx';
 import DeleteUsageStatusDialog from './deleteUsageStatusDialog.component.tsx';
 import UsageStatusDialog from './usageStatusDialog.component.tsx';
-import { useAuthorisationState } from '../../authProvider.component.tsx';
 
 function UsageStatuses() {
   const { data: usageStatusData, isLoading: usageStatusDataLoading } =
     useGetUsageStatuses();
 
-  const { isPrivilegedUser } = useAuthorisationState();
+  const { isAdminMode } = useAppSelector(selectAuthorisation);
 
   // Breadcrumbs + Mui table V2 + extra
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
@@ -112,7 +113,7 @@ function UsageStatuses() {
     enableColumnOrdering: true,
     enableColumnFilterModes: true,
     enableFacetedValues: true,
-    enableRowActions: isPrivilegedUser,
+    enableRowActions: isAdminMode,
     enableStickyHeader: true,
     enableRowSelection: false,
     enableDensityToggle: false,
@@ -187,7 +188,7 @@ function UsageStatuses() {
     },
     renderTopToolbarCustomActions: ({ table }) => (
       <Box>
-        {isPrivilegedUser && (
+        {isAdminMode && (
           <Button
             startIcon={<AddIcon />}
             sx={{ mx: '4px' }}

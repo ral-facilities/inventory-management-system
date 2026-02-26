@@ -34,6 +34,13 @@ describe('Manufacturer Table', () => {
     await user.click(screen.getByRole('button', { name: 'Show/Hide columns' }));
     await user.click(screen.getByText('Created'));
 
+    // Ripples sometimes appear here, they seem to only be present on WSL and not on VMs & CI - wait for them to go
+    // away so local tests don't interfere
+    await waitFor(() =>
+      // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
+      expect(view.container.querySelector('.MuiTouchRipple-child')).toBeNull()
+    );
+
     expect(view.asFragment()).toMatchSnapshot();
   });
 

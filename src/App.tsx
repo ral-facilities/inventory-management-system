@@ -9,10 +9,11 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AxiosError } from 'axios';
 import { enGB } from 'date-fns/locale/en-GB';
 import React from 'react';
+import { connect, Provider } from 'react-redux';
 import {
+  createBrowserRouter,
   Outlet,
   RouterProvider,
-  createBrowserRouter,
   type RouteObject,
 } from 'react-router';
 import {
@@ -28,7 +29,7 @@ import CatalogueLayout, {
 import CatalogueCardView from './catalogue/category/catalogueCardView.component';
 import CatalogueItemsLandingPage from './catalogue/items/catalogueItemsLandingPage.component';
 import CatalogueItemsPage from './catalogue/items/catalogueItemsPage.component';
-import ConfigProvider from './configProvider.component';
+import SettingsMenuItems from './common/settingsMenuItems.component';
 import handleIMS_APIError from './handleIMS_APIError';
 import {
   HomePage,
@@ -44,6 +45,7 @@ import ManufacturerLayout, {
   manufacturerLayoutLoader,
 } from './manufacturer/manufacturerLayout.component';
 import ManufacturerTable from './manufacturer/manufacturerTable.component';
+import { getUserRole } from './parseTokens';
 import paths from './paths';
 import Preloader from './preloader/preloader.component';
 import retryIMS_APIErrors from './retryIMS_APIErrors';
@@ -61,6 +63,9 @@ import {
   requestPluginRerender,
   tokenRefreshed,
 } from './state/scigateway.actions';
+import { setAuthorisation } from './state/slices/authorisationSlice';
+import { loadConfig } from './state/slices/configSlice';
+import store, { RootState } from './state/store';
 import Systems from './systems/systems.component';
 import SystemsLayout, {
   SystemsErrorComponent,
@@ -249,7 +254,30 @@ export default function App() {
   return <RouterProvider router={router} />;
 }
 
+function mapPreloaderStateToProps(state: RootState): { loading: boolean } {
+  return {
+    loading: state.config.loading,
+  };
+}
+
+export const ConnectedPreloader = connect(mapPreloaderStateToProps)(Preloader);
+
 export function Layout() {
+  const dispatch = store.dispatch;
+  React.useEffect(() => {
+    dispatch(loadConfig()).then(() => {
+      const role = getUserRole();
+      const state = store.getState();
+      const privilegedRoles = state.config.settings.privilegedRoles;
+
+      dispatch(
+        setAuthorisation({
+          role,
+          isAdminUser: privilegedRoles.includes(role),
+        })
+      );
+    });
+  }, [dispatch]);
   // We need to call forceUpdate if SciGateway tells us to rerender
   // but there's no forceUpdate in functional components, so this is the hooks equivalent
   // see https://reactjs.org/docs/hooks-faq.html#is-there-something-like-forceupdate
@@ -261,7 +289,7 @@ export function Layout() {
     if (requestPluginRerender.match(action)) forceUpdate();
     else if (tokenRefreshed.match(action)) {
       retryFailedAuthRequests();
-      window.dispatchEvent(new CustomEvent(TokenUpdatedType)); // triggers refresh in authProvider
+      store.dispatch({ type: TokenUpdatedType }); // Triggers middleware to recalculate the user's role and update authorisation state
     } else if (broadcastSignOut.match(action)) clearFailedAuthRequestsQueue();
   }
 
@@ -274,22 +302,25 @@ export function Layout() {
 
   return (
     <div className="Layout">
-      <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
-        <IMSThemeProvider>
-          <ConfigProvider>
+      <Provider store={store}>
+        <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
+          <IMSThemeProvider>
             <QueryClientProvider client={queryClient}>
-              <React.Suspense
-                fallback={
-                  <Preloader loading={true}>Finished loading</Preloader>
-                }
-              >
-                <ViewTabs />
-                <ReactQueryDevtools initialIsOpen={false} />
-              </React.Suspense>
+              <ConnectedPreloader>
+                <React.Suspense
+                  fallback={
+                    <Preloader loading={true}>Finished loading</Preloader>
+                  }
+                >
+                  <ViewTabs />
+                  <SettingsMenuItems />
+                  <ReactQueryDevtools initialIsOpen={false} />
+                </React.Suspense>
+              </ConnectedPreloader>
             </QueryClientProvider>
-          </ConfigProvider>
-        </IMSThemeProvider>
-      </LocalizationProvider>
+          </IMSThemeProvider>
+        </LocalizationProvider>
+      </Provider>
     </div>
   );
 }

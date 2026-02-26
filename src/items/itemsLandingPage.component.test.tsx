@@ -36,6 +36,7 @@ describe('Items Landing Page', () => {
 
     await waitFor(() => {
       expect(screen.getByText('Cameras 1')).toBeInTheDocument();
+      expect(screen.getByText('Operational')).toBeInTheDocument();
     });
 
     expect(screen.getByText('Description:')).toBeInTheDocument();

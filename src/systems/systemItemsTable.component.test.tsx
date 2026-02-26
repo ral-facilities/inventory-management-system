@@ -3,9 +3,9 @@ import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { System } from '../api/api.types';
 import APIConfigProvider from '../apiConfigProvider.component';
-import * as authProvider from '../authProvider.component';
 import { server } from '../mocks/server';
 import SystemsJSON from '../mocks/Systems.json';
+import { RootState } from '../state/store';
 import { getSystemById, renderComponentWithRouterProvider } from '../testUtils';
 import {
   SystemItemsTable,
@@ -20,13 +20,14 @@ describe('SystemItemsTable', () => {
 
   const mockSystem: System = SystemsJSON[3] as System;
 
-  const createView = () => {
+  const createView = (preloadedState?: Partial<RootState>) => {
     return renderComponentWithRouterProvider(
       <APIConfigProvider>
         <SystemItemsTable {...props} />
       </APIConfigProvider>,
       'any',
-      '/'
+      '/',
+      preloadedState
     );
   };
 
@@ -45,12 +46,13 @@ describe('SystemItemsTable', () => {
   });
 
   it('renders correctly', async () => {
-    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
-      role: 'admin',
-      isPrivilegedUser: true,
+    const view = createView({
+      authorisation: {
+        role: 'admin',
+        isAdminUser: true,
+        isAdminMode: true,
+      },
     });
-
-    const view = createView();
 
     // Name (obtained from catalogue category item)
     await waitFor(
@@ -84,6 +86,13 @@ describe('SystemItemsTable', () => {
     await user.click(screen.getByText('Created'));
 
     expect(await screen.findByText('Clear Filters')).toBeInTheDocument();
+
+    // Ripples sometimes appear here, they seem to only be present on WSL and not on VMs & CI - wait for them to go
+    // away so local tests don't interfere
+    await waitFor(() =>
+      // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
+      expect(view.container.querySelector('.MuiTouchRipple-child')).toBeNull()
+    );
 
     // Rest in a snapshot
     expect(view.asFragment()).toMatchSnapshot();
@@ -122,6 +131,13 @@ describe('SystemItemsTable', () => {
       await screen.findByRole('button', { name: 'Show/Hide columns' })
     );
     await user.click(screen.getByText('Created'));
+
+    // Ripples sometimes appear here, they seem to only be present on WSL and not on VMs & CI - wait for them to go
+    // away so local tests don't interfere
+    await waitFor(() =>
+      // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
+      expect(view.container.querySelector('.MuiTouchRipple-child')).toBeNull()
+    );
 
     // Rest in a snapshot
     expect(view.asFragment()).toMatchSnapshot();
@@ -358,12 +374,13 @@ describe('SystemItemsTable', () => {
   });
 
   it('can open the edit as admin dialog and close it again', async () => {
-    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
-      role: 'admin',
-      isPrivilegedUser: true,
+    createView({
+      authorisation: {
+        role: 'admin',
+        isAdminUser: true,
+        isAdminMode: true,
+      },
     });
-
-    createView();
 
     // Name (obtained from catalogue category item)
     await waitFor(
@@ -453,12 +470,13 @@ describe('SystemItemsTable', () => {
   });
 
   it('can open the duplicate dialog as admin and close it again', async () => {
-    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
-      role: 'admin',
-      isPrivilegedUser: true,
+    createView({
+      authorisation: {
+        role: 'admin',
+        isAdminUser: true,
+        isAdminMode: true,
+      },
     });
-
-    createView();
 
     // Name (obtained from catalogue category item)
     await waitFor(
@@ -687,12 +705,13 @@ describe('SystemItemsTable', () => {
   });
 
   it('can open the delete as admin dialog and close it again', async () => {
-    vi.spyOn(authProvider, 'useAuthorisationState').mockReturnValue({
-      role: 'admin',
-      isPrivilegedUser: true,
+    createView({
+      authorisation: {
+        role: 'admin',
+        isAdminUser: true,
+        isAdminMode: true,
+      },
     });
-
-    createView();
 
     // Name (obtained from catalogue category item)
     await waitFor(

@@ -37,7 +37,7 @@ describe('delete item dialog', () => {
       onClose: onClose,
       item: item,
       onChangeItem: onChangeItem,
-      isPrivilegedMode: false,
+      isAdminMode: false,
     };
     user = userEvent.setup(); // Assigning userEvent to 'user'
   });
@@ -56,7 +56,7 @@ describe('delete item dialog', () => {
   });
 
   it('renders correctly when in admin mode with tooltip', async () => {
-    props.isPrivilegedMode = true;
+    props.isAdminMode = true;
 
     let baseElement;
     await act(async () => {
@@ -98,7 +98,7 @@ describe('delete item dialog', () => {
   });
 
   it('disables continue button and shows circular progress indicator when request is pending', async () => {
-    item.system_id = SystemJSON[0].id;
+    item.system_id = SystemJSON[10].id;
     server.use(
       http.delete('/v1/items/:id', () => {
         return new Promise(() => {});
@@ -142,7 +142,7 @@ describe('delete item dialog', () => {
   });
 
   it('calls handleDeleteSession when continue button is clicked with', async () => {
-    item.system_id = SystemJSON[0].id;
+    item.system_id = SystemJSON[10].id;
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
     await user.click(continueButton);
@@ -154,7 +154,7 @@ describe('delete item dialog', () => {
 
   it('displays error message if an unknown error occurs', async () => {
     item.id = 'Error 500';
-    item.system_id = SystemJSON[0].id;
+    item.system_id = SystemJSON[10].id;
 
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
@@ -171,14 +171,14 @@ describe('delete item dialog', () => {
 
     expect(
       await screen.findByText(
-        'Please move item to a system with Type: Storage before trying to delete.'
+        'Please move item to a system with Type: Scrapped before trying to delete.'
       )
     ).toBeInTheDocument();
     expect(onClose).not.toHaveBeenCalled();
   });
 
   it('in admin mode allows deletion of item from a system type which is not allowed', async () => {
-    props.isPrivilegedMode = true;
+    props.isAdminMode = true;
     createView();
 
     const continueButton = screen.getByRole('button', { name: 'Continue' });
