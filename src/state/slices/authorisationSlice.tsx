@@ -3,13 +3,13 @@ import { RootState } from '../store';
 
 interface AuthorisationState {
   role: string;
-  isPrivilegedUser: boolean;
+  isAdminUser: boolean;
   isAdminMode: boolean;
 }
 
 export const initialState: AuthorisationState = {
   role: 'default',
-  isPrivilegedUser: false,
+  isAdminUser: false,
   isAdminMode: false,
 };
 
@@ -22,14 +22,14 @@ export const authSlice = createSlice({
       action: PayloadAction<Omit<AuthorisationState, 'isAdminMode'>>
     ) {
       state.role = action.payload.role;
-      state.isPrivilegedUser = action.payload.isPrivilegedUser;
+      state.isAdminUser = action.payload.isAdminUser;
 
-      if (!state.isPrivilegedUser) {
+      if (!state.isAdminUser) {
         state.isAdminMode = false;
       }
     },
     setIsAdminMode(state, action: PayloadAction<boolean>) {
-      state.isAdminMode = state.isPrivilegedUser ? action.payload : false;
+      state.isAdminMode = state.isAdminUser ? action.payload : false;
     },
   },
 });

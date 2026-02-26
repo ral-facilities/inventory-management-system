@@ -13,6 +13,7 @@ import {
   CatalogueCategory,
   CatalogueCategoryPatch,
   CatalogueCategoryPost,
+  CatalogueCategoryProperty,
   CatalogueCategoryPropertyPatch,
   CatalogueCategoryPropertyPost,
   CatalogueCategoryPropertyType,
@@ -20,6 +21,7 @@ import {
 import {
   useCopyToCatalogueCategory,
   useDeleteCatalogueCategory,
+  useDeleteCatalogueCategoryProperty,
   useGetCatalogueBreadcrumbs,
   useGetCatalogueCategories,
   useGetCatalogueCategory,
@@ -836,6 +838,60 @@ describe('catalogue categories api functions', () => {
           message: 'Something went wrong',
           name: 'Cameras',
           state: 'error',
+        },
+      ]);
+    });
+  });
+  describe('useDeleteCatalogueCategoryProperty', () => {
+    let mockDataPropertyDelete: CatalogueCategoryProperty;
+    const propertyId = '19';
+    const catalogueCategory = getCatalogueCategoryById(
+      '12'
+    ) as CatalogueCategory;
+
+    beforeEach(() => {
+      mockDataPropertyDelete = {
+        id: propertyId,
+        unit: null,
+        unit_id: null,
+        name: 'test',
+        allowed_values: { type: 'list', values: ['x', 'y', 'z', 'a'] },
+        type: CatalogueCategoryPropertyType.Text,
+        mandatory: false,
+      };
+    });
+
+    it('posts a request to delete a property and returns a successful response', async () => {
+      const { result } = renderHook(
+        () => useDeleteCatalogueCategoryProperty(),
+        {
+          wrapper: hooksWrapperWithProviders(),
+        }
+      );
+      expect(result.current.isIdle).toBe(true);
+      result.current.mutate({
+        catalogueCategory,
+        property: mockDataPropertyDelete,
+      });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      expect(result.current.data).toEqual('');
+
+      expect(handleTransferState).toBeCalledTimes(2);
+      expect(handleTransferState).toHaveBeenCalledWith([
+        {
+          name: 'Dry Vacuum Pumps',
+          message: `Deleting property test from Dry Vacuum Pumps`,
+          state: 'information',
+        },
+      ]);
+      expect(handleTransferState).toHaveBeenCalledWith([
+        {
+          name: 'Dry Vacuum Pumps',
+          message: `Successfully deleted property test from Dry Vacuum Pumps`,
+          state: 'success',
         },
       ]);
     });

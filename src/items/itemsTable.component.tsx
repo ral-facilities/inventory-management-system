@@ -28,13 +28,15 @@ import {
   System,
 } from '../api/api.types';
 import { useGetItems } from '../api/items';
-import { useGetSystemIds, useGetSystemTypes } from '../api/systems';
+import { useGetSystemIds } from '../api/systems';
+import { useGetSystemTypes } from '../api/systemTypes';
 import { useGetUsageStatuses } from '../api/usageStatuses';
 import { APISettingsContext } from '../apiConfigProvider.component';
 import type { SystemTableType } from '../app.types';
 import { findPropertyValue } from '../catalogue/items/catalogueItemsTable.component';
 import MRTTopTableAlert from '../common/mrtTopTableAlert.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
+import { SystemTypeColumnHeaderInformationTooltip } from '../common/systemTypesInformationTooltip.component';
 import { useAppSelector } from '../state/hook';
 import { selectAuthorisation } from '../state/slices/authorisationSlice';
 import {
@@ -147,13 +149,13 @@ export function ItemsTable(props: ItemTableProps) {
     'create' | 'duplicate' | 'edit'
   >('create');
 
-  const [isPrivilegedMode, setIsPrivilegedMode] =
-    React.useState<boolean>(false);
+  const [isAdminDialog, setIsAdminDialog] = React.useState<boolean>(false);
 
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     const viewCatalogueItemProperties = catalogueCategory?.properties ?? [];
     const systemTypeValues = systemTypesData?.map((type) => type.value);
     const usageStatusValues = usageStatusData?.map((val) => val.value);
+
     return [
       {
         header: 'Serial Number',
@@ -343,7 +345,13 @@ export function ItemsTable(props: ItemTableProps) {
       },
       {
         header: 'System Type',
-        Header: TableHeaderOverflowTip,
+        Header: ({ column }) => (
+          <SystemTypeColumnHeaderInformationTooltip
+            title={column.columnDef.header}
+            systemTypesData={systemTypesData}
+          />
+        ),
+        TableHeaderOverflowTip,
         accessorFn: (row) => row.system?.type?.value,
         id: 'system.type.value',
         filterVariant: 'multi-select',
@@ -603,9 +611,9 @@ export function ItemsTable(props: ItemTableProps) {
             open={true}
             onClose={() => {
               table.setCreatingRow(null);
-              setIsPrivilegedMode(false);
+              setIsAdminDialog(false);
             }}
-            isPrivilegedMode={isPrivilegedMode}
+            isAdminMode={isAdminDialog}
             duplicate={itemDialogType === 'duplicate'}
             requestType={itemDialogType === 'edit' ? 'patch' : 'post'}
             catalogueCategory={catalogueCategory}
@@ -633,7 +641,7 @@ export function ItemsTable(props: ItemTableProps) {
           variant="outlined"
           onClick={() => {
             setItemsDialogType('create');
-            setIsPrivilegedMode(false);
+            setIsAdminDialog(false);
             table.setCreatingRow(true);
           }}
         >
@@ -647,7 +655,7 @@ export function ItemsTable(props: ItemTableProps) {
             variant="outlined"
             onClick={() => {
               setItemsDialogType('create');
-              setIsPrivilegedMode(true);
+              setIsAdminDialog(true);
               table.setCreatingRow(true);
             }}
           >
@@ -693,7 +701,7 @@ export function ItemsTable(props: ItemTableProps) {
           aria-label={`Edit item ${row.original.item.id}`}
           onClick={() => {
             setItemsDialogType('edit');
-            setIsPrivilegedMode(false);
+            setIsAdminDialog(false);
             table.setCreatingRow(row);
             closeMenu();
           }}
@@ -724,7 +732,7 @@ export function ItemsTable(props: ItemTableProps) {
           aria-label={`Delete item ${row.original.item.id}`}
           onClick={() => {
             setDeleteItemDialogOpen(true);
-            setIsPrivilegedMode(false);
+            setIsAdminDialog(false);
             setSelectedItem(row.original.item);
             closeMenu();
           }}
@@ -744,7 +752,7 @@ export function ItemsTable(props: ItemTableProps) {
                 aria-label={`Edit item ${row.original.item.id}`}
                 onClick={() => {
                   setItemsDialogType('edit');
-                  setIsPrivilegedMode(true);
+                  setIsAdminDialog(true);
                   table.setCreatingRow(row);
                   closeMenu();
                 }}
@@ -760,7 +768,7 @@ export function ItemsTable(props: ItemTableProps) {
                 aria-label={`Duplicate item ${row.original.item.id} as Admin`}
                 onClick={() => {
                   setItemsDialogType('duplicate');
-                  setIsPrivilegedMode(true);
+                  setIsAdminDialog(true);
                   table.setCreatingRow(row);
                   closeMenu();
                 }}
@@ -776,7 +784,7 @@ export function ItemsTable(props: ItemTableProps) {
                 aria-label={`Delete item ${row.original.item.id}`}
                 onClick={() => {
                   setDeleteItemDialogOpen(true);
-                  setIsPrivilegedMode(true);
+                  setIsAdminDialog(true);
                   setSelectedItem(row.original.item);
                   closeMenu();
                 }}
@@ -831,11 +839,11 @@ export function ItemsTable(props: ItemTableProps) {
           open={deleteItemDialogOpen}
           onClose={() => {
             setDeleteItemDialogOpen(false);
-            setIsPrivilegedMode(false);
+            setIsAdminDialog(false);
           }}
           item={selectedItem}
           onChangeItem={setSelectedItem}
-          isPrivilegedMode={isPrivilegedMode}
+          isAdminMode={isAdminDialog}
         />
       )}
     </div>

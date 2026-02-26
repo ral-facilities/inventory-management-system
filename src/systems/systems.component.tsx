@@ -36,16 +36,14 @@ import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link, useParams } from 'react-router';
 import { System, SystemImportanceType } from '../api/api.types';
-import {
-  getSystemImportanceColour,
-  useGetSystems,
-  useGetSystemTypes,
-} from '../api/systems';
+import { getSystemImportanceColour, useGetSystems } from '../api/systems';
+import { useGetSystemTypes } from '../api/systemTypes';
 import type { SystemTableType } from '../app.types';
 import {
   getValueFromUpdater,
   usePreservedTableState,
 } from '../common/preservedTableState.component';
+import { SystemTypeColumnHeaderInformationTooltip } from '../common/systemTypesInformationTooltip.component';
 import {
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
@@ -278,7 +276,13 @@ function Systems() {
       },
       {
         header: 'Type',
-        Header: TableHeaderOverflowTip,
+        Header: ({ column }) => (
+          <SystemTypeColumnHeaderInformationTooltip
+            title={column.columnDef.header}
+            systemTypesData={systemTypesData}
+          />
+        ),
+        TableHeaderOverflowTip,
         accessorFn: (row) => row.type?.value,
         id: 'type.value',
         filterVariant: 'multi-select',

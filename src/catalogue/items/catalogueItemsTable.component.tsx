@@ -23,6 +23,7 @@ import {
   MRT_Row,
   MaterialReactTable,
   useMaterialReactTable,
+  type MRT_Column,
   type MRT_ColumnDef,
   type MRT_RowSelectionState,
 } from 'material-react-table';
@@ -39,6 +40,7 @@ import { useGetCatalogueItems } from '../../api/catalogueItems';
 import { useGetManufacturerIds } from '../../api/manufacturers';
 import { APISettingsContext } from '../../apiConfigProvider.component';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
+import { SparesColumnHeaderInformationTooltip } from '../../common/sparesInformationTooltip.component';
 import {
   COLUMN_FILTER_BOOLEAN_OPTIONS,
   COLUMN_FILTER_FUNCTIONS,
@@ -308,7 +310,17 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         ? [
             {
               header: 'Number of spares',
-              Header: TableHeaderOverflowTip,
+              Header: ({
+                column,
+              }: {
+                column: MRT_Column<TableRowData, unknown>;
+              }) => (
+                <SparesColumnHeaderInformationTooltip
+                  title={column.columnDef.header}
+                  sparesDefinition={apiSettings?.spares?.sparesDefinition}
+                />
+              ),
+              TableHeaderOverflowTip,
               size: 350,
               accessorFn: (row: TableRowData) =>
                 row.catalogueItem.number_of_spares,
@@ -681,6 +693,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
     ];
   }, [
+    apiSettings?.spares?.sparesDefinition,
     dense,
     isSparesDefinitionDefined,
     parentInfo.properties,

@@ -10,7 +10,6 @@ const SettingsMenuItems = () => {
   );
 
   // observe body for new nodes (this is where #settings gets added)
-
   const observer = React.useMemo(
     () =>
       new MutationObserver(() => {
@@ -45,8 +44,8 @@ const SettingsMenuItems = () => {
         <AuthSettingsMenuItem />
         <CriticalitySettingsMenuItem />
       </>,
-      // we know this is not null from the mutation observer
 
+      // we know this is not null from the mutation observer
       document.body.querySelector('#settings ul, #mobile-overflow-menu ul')!
     );
   }

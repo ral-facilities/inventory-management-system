@@ -11,36 +11,36 @@ describe('authorisationSlice', () => {
     expect(state).toEqual(initialState);
   });
 
-  it('should set role and privileged flag', () => {
+  it('should set role and admin flag', () => {
     const action = setAuthorisation({
       role: 'admin',
-      isPrivilegedUser: true,
+      isAdminUser: true,
     });
 
     const state = reducer(initialState, action);
 
     expect(state.role).toBe('admin');
-    expect(state.isPrivilegedUser).toBe(true);
+    expect(state.isAdminUser).toBe(true);
     expect(state.isAdminMode).toBe(false);
   });
 
-  it('should set isAdminMode to false if the isPrivilegedUser is false', () => {
+  it('should set isAdminMode to false if the isAdminUser is false', () => {
     const action = setAuthorisation({
       role: 'admin',
-      isPrivilegedUser: false,
+      isAdminUser: false,
     });
 
     const state = reducer({ ...initialState, isAdminMode: true }, action);
 
     expect(state.role).toBe('admin');
-    expect(state.isPrivilegedUser).toBe(false);
+    expect(state.isAdminUser).toBe(false);
     expect(state.isAdminMode).toBe(false);
   });
 
   it('should update isAdminMode', () => {
     const action = setIsAdminMode(true);
 
-    const state = reducer({ ...initialState, isPrivilegedUser: true }, action);
+    const state = reducer({ ...initialState, isAdminUser: true }, action);
 
     expect(state.isAdminMode).toBe(true);
   });
@@ -48,14 +48,14 @@ describe('authorisationSlice', () => {
   it('should not modify role when toggling isAdminMode', () => {
     const startState = {
       role: 'user',
-      isPrivilegedUser: true,
+      isAdminUser: true,
       isAdminMode: false,
     };
 
     const state = reducer(startState, setIsAdminMode(true));
 
     expect(state.role).toBe('user');
-    expect(state.isPrivilegedUser).toBe(true);
+    expect(state.isAdminUser).toBe(true);
     expect(state.isAdminMode).toBe(true);
   });
 });

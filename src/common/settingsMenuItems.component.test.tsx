@@ -40,7 +40,7 @@ describe('Settings Menu Items component', () => {
     it('can toggle to admin mode ', async () => {
       state = {
         ...state,
-        authorisation: { ...state.authorisation, isPrivilegedUser: true },
+        authorisation: { ...state.authorisation, isAdminUser: true },
       };
       const { store } = createView(state);
 
@@ -55,7 +55,7 @@ describe('Settings Menu Items component', () => {
       expect(store.getState().authorisation.isAdminMode).toStrictEqual(true);
     });
 
-    it('does not display admin toggle if user is not a privileged user', () => {
+    it('does not display admin toggle if user is not a admin user', () => {
       createView();
       expect(
         screen.queryByText('Switch admin mode on')
