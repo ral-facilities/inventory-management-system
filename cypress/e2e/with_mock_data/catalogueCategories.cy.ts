@@ -1648,6 +1648,45 @@ describe('Catalogue Category', () => {
 
     cy.findByText('Please enter a valid number.').should('not.exist');
   });
+
+  it('deletes a property (admin)', () => {
+    cy.visit('/catalogue/10');
+    cy.setCurrentUserToAdmin();
+
+    cy.findAllByRole('button', {
+      name: 'Card Actions',
+    })
+      .eq(1)
+      .click();
+
+    cy.findByRole('menuitem', {
+      name: 'edit Dry Vacuum Pumps catalogue category button',
+    }).click();
+
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByLabelText('Delete property Pumping Speed as admin').click();
+
+    cy.findByRole('button', { name: 'Continue' }).should('be.disabled');
+
+    cy.findByRole('checkbox', {
+      name: 'Confirm understanding and proceed checkbox',
+    }).click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'DELETE',
+      url: '/v1/catalogue-categories/:catalogue_category_id/properties/:property_id',
+    }).should((deleteRequests) => {
+      expect(deleteRequests.length).equal(1);
+      const request = deleteRequests[0];
+      expect(request.url.toString()).to.contain('12');
+      expect(request.url.toString()).to.contain('17');
+    });
+  });
+
   // The tooltip tests are very flaky; issue to fix later: https://github.com/ral-facilities/inventory-management-system/issues/637
   it.skip('display overflow tooltip on hover', () => {
     // Card view

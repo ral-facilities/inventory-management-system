@@ -239,6 +239,44 @@ export const addProperty = () => {
   cy.findByText('Items').click();
 };
 
+export const deleteProperty = () => {
+  cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
+  cy.findByText('Lenses').click();
+  cy.findByRole('button', {
+    name: `Card Actions`,
+  }).click();
+
+  cy.findByRole('menuitem', {
+    name: `edit Spherical Lenses catalogue category button`,
+  }).click();
+
+  cy.findAllByLabelText('Row Actions').eq(4).click();
+  cy.findByLabelText('Delete property Type as admin').click();
+
+  cy.findByRole('button', { name: 'Continue' }).should('be.disabled');
+
+  cy.findByRole('checkbox', {
+    name: 'Confirm understanding and proceed checkbox',
+  }).click();
+
+  cy.findByRole('button', { name: 'Continue' }).click();
+  cy.findByRole('button', { name: 'Close' }).click();
+
+  cy.findByText('Spherical Lenses').click();
+  cy.findByText('Plano-Convex Lens').click();
+
+  cy.findByText('Substrate').should('exist');
+  cy.findByText('Type').should('not.exist');
+
+  cy.findByText('Items').click();
+
+  cy.findAllByText('MX4332424').first().click();
+  cy.findByText('Substrate').should('exist');
+  cy.findByText('Type').should('not.exist');
+
+  cy.findByText('Items').click();
+};
+
 export const duplicateItem = (serialNumber: string, index: number) => {
   cy.findAllByLabelText('Row Actions').eq(index).click();
   cy.findByText(`Duplicate`).click();
