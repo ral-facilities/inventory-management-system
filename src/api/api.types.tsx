@@ -147,6 +147,7 @@ export interface CatalogueCategoryPropertyPost
 export interface CatalogueCategoryPropertyPatch {
   name?: string;
   allowed_values?: AllowedValues | null;
+  unit_id?: string | null;
 }
 
 export interface CatalogueCategoryProperty

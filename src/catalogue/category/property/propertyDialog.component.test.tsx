@@ -21,16 +21,21 @@ import PropertyDialog, {
   PropertyDialogProps,
 } from './propertyDialog.component';
 
-interface TestAddPropertyMigration
-  extends Omit<AddPropertyMigration, 'default_value' | 'allowed_values'> {
+interface TestAddPropertyMigration extends Omit<
+  AddPropertyMigration,
+  'default_value' | 'allowed_values'
+> {
   unit?: string;
   default_value?: string;
   allowed_values?: AllowedValues;
 }
 
-interface TestEditPropertyMigration
-  extends Omit<EditPropertyMigration, 'allowed_values'> {
+interface TestEditPropertyMigration extends Omit<
+  EditPropertyMigration,
+  'allowed_values'
+> {
   allowed_values?: AllowedValues;
+  unit?: string;
 }
 
 const TestComponent = (props: PropertyDialogProps) => {
@@ -63,6 +68,7 @@ describe('PropertyDialog', () => {
       isMigration: true,
       type: 'post',
       catalogueCategory: getCatalogueCategoryById('12') as CatalogueCategory,
+      isAdminMode: false,
     };
     axiosPostSpy = vi.spyOn(imsApi, 'post');
     user = userEvent.setup();
@@ -725,6 +731,7 @@ describe('PropertyDialog', () => {
         type: 'patch',
         catalogueCategory: getCatalogueCategoryById('12') as CatalogueCategory,
         selectedProperty: formattedProperties[0],
+        isAdminMode: false,
       };
       axiosPatchSpy = vi.spyOn(imsApi, 'patch');
     });
@@ -759,7 +766,42 @@ describe('PropertyDialog', () => {
           });
         }
       }
+      if (formField.unit) {
+        const unit = screen.getByLabelText('Select Unit');
+        await user.click(unit);
+        const unitDropdown = screen.getByRole('listbox', {
+          name: 'Select Unit',
+        });
+        await user.click(
+          within(unitDropdown).getByRole('option', {
+            name: formField.unit,
+          })
+        );
+      }
     };
+
+    it('edits an exisitng property unit in admin mode', async () => {
+      props.isAdminMode = true;
+      createView();
+
+      await modifyEditValues({
+        unit: 'millimeters',
+      });
+
+      await user.click(
+        screen.getByRole('checkbox', {
+          name: 'Confirm understanding and proceed checkbox',
+        })
+      );
+      await user.click(screen.getByRole('button', { name: 'Save' }));
+
+      expect(axiosPatchSpy).toHaveBeenCalledWith(
+        '/v1/catalogue-categories/12/properties/17',
+        {
+          unit_id: '5',
+        }
+      );
+    });
 
     it('edits an existing property allowed values (type string)', async () => {
       props.selectedProperty = formattedProperties[2];
@@ -863,6 +905,36 @@ describe('PropertyDialog', () => {
       );
     });
 
+    it('edits an existing property allowed values, name and unit (admin mode) ', async () => {
+      props.isAdminMode = true;
+
+      createView();
+      await modifyEditValues({
+        name: 'test',
+        allowed_values: { type: 'list', values: [600] },
+        unit: 'millimeters',
+      });
+
+      await user.click(
+        screen.getByRole('checkbox', {
+          name: 'Confirm understanding and proceed checkbox',
+        })
+      );
+      await user.click(screen.getByRole('button', { name: 'Save' }));
+
+      expect(axiosPatchSpy).toHaveBeenCalledWith(
+        '/v1/catalogue-categories/12/properties/17',
+        {
+          name: 'test',
+          allowed_values: {
+            type: 'list',
+            values: [300, 400, 500, 600],
+          },
+          unit_id: '5',
+        }
+      );
+    });
+
     it('display error message if the nothing has changed and changes the property name', async () => {
       createView();
 
@@ -895,6 +967,44 @@ describe('PropertyDialog', () => {
         '/v1/catalogue-categories/12/properties/17',
         {
           name: 'test',
+        }
+      );
+    });
+
+    it('displays error if nothing changes in admin mode then unit changed', async () => {
+      props.isAdminMode = true;
+
+      createView();
+
+      await user.click(
+        screen.getByRole('checkbox', {
+          name: 'Confirm understanding and proceed checkbox',
+        })
+      );
+      await user.click(screen.getByRole('button', { name: 'Save' }));
+
+      const formError = screen.getByText(
+        'There have been no changes made. Please change a field value or press Close.'
+      );
+
+      expect(formError).toBeInTheDocument();
+
+      await modifyEditValues({
+        unit: 'millimeters',
+      });
+
+      const formError2 = screen.queryByText(
+        'There have been no changes made. Please change a field value or press Close.'
+      );
+
+      expect(formError2).not.toBeInTheDocument();
+
+      await user.click(screen.getByRole('button', { name: 'Save' }));
+
+      expect(axiosPatchSpy).toHaveBeenCalledWith(
+        '/v1/catalogue-categories/12/properties/17',
+        {
+          unit_id: '5',
         }
       );
     });

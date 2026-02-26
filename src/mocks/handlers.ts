@@ -302,6 +302,32 @@ export const handlers = [
     }
   ),
 
+  http.delete<
+    { catalogue_category_id: string; property_id: string },
+    DefaultBodyType,
+    ErrorResponse | NonNullable<unknown>
+  >(
+    '/v1/catalogue-categories/:catalogue_category_id/properties/:property_id',
+    async ({ params }) => {
+      const { catalogue_category_id, property_id } = params;
+
+      const property = CatalogueCategoriesJSON.find(
+        (category) => category.id === catalogue_category_id
+      )?.properties?.find((property) => property.id === property_id);
+
+      if (catalogue_category_id == 'Error 500') {
+        return HttpResponse.json(
+          { detail: HTTP_500_INTERNAL_SERVER_ERROR_DETAIL },
+          { status: 500 }
+        );
+      } else if (property) {
+        return HttpResponse.json(undefined, { status: 204 });
+      } else {
+        return HttpResponse.json({ detail: '' }, { status: 400 });
+      }
+    }
+  ),
+
   // ------------------------------------ CATALOGUE ITEMS ------------------------------------
 
   http.post<PathParams, CatalogueItemPost, CatalogueItem | ErrorResponse>(

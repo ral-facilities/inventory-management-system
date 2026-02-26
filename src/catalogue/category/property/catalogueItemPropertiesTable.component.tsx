@@ -2,6 +2,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {
   Box,
   Button,
+  Divider,
   ListItemIcon,
   ListItemText,
   MenuItem,
@@ -46,6 +47,9 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 import { useGetUnits } from '../../../api/units';
 import { RequestType } from '../../../form.schemas';
 import PropertyDialog from './propertyDialog.component';
+import DeletePropertyDialog from './deletePropertyDialog.component';
+import { useAppSelector } from '../../../state/hook';
+import { selectAuthorisation } from '../../../state/slices/authorisationSlice';
 
 export interface PropertiesTableProps {
   requestType: RequestType;
@@ -54,6 +58,8 @@ export interface PropertiesTableProps {
 
 export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
   const { catalogueCategory, requestType } = props;
+
+  const { isAdminMode } = useAppSelector(selectAuthorisation);
 
   const { control, clearErrors } =
     useFormContext<AddCatalogueCategoryWithPlacementIds>();
@@ -66,8 +72,17 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
     name: 'properties',
   });
 
+  const [isAdminDialog, setIsAdminDialog] = React.useState<boolean>(false);
+
   const [propertyDialogRequestType, setPropertyDialogRequestType] =
     React.useState<RequestType>('post');
+
+  const [deletePropertyDialogOpen, setDeletePropertyDialogOpen] =
+    React.useState<boolean>(false);
+
+  const [selectedProperty, setSelectedProperty] = React.useState<
+    AddCatalogueCategoryPropertyWithPlacementIds | undefined
+  >(undefined);
 
   const [index, setIndex] = React.useState<number | undefined>();
 
@@ -332,6 +347,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
           selectedProperty={row.original}
           isMigration={requestType === 'patch'}
           index={requestType === 'post' ? index : undefined}
+          isAdminMode={isAdminDialog}
         />
       );
     },
@@ -380,6 +396,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
           key="edit"
           aria-label={`Edit property ${row.original.name}`}
           onClick={() => {
+            setIsAdminDialog(false);
             setPropertyDialogRequestType('patch');
             setIndex(row.index);
             table.setCreatingRow(row);
@@ -410,6 +427,48 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
               </MenuItem>,
             ]
           : []),
+        ...(isAdminMode
+          ? [
+              <Divider key="divider" />,
+              <MenuItem
+                key="edit-as-admin"
+                aria-label={`Edit property ${row.original.name} as admin`}
+                onClick={() => {
+                  setIsAdminDialog(true);
+                  setPropertyDialogRequestType('patch');
+                  setIndex(row.index);
+                  table.setCreatingRow(row);
+                  closeMenu();
+                }}
+                sx={{ m: 0 }}
+              >
+                <ListItemIcon>
+                  <EditIcon />
+                </ListItemIcon>
+                <ListItemText>Edit as Admin</ListItemText>
+              </MenuItem>,
+              ...(requestType === 'patch'
+                ? [
+                    <MenuItem
+                      key="delete-as-admin"
+                      aria-label={`Delete property ${row.original.name} as admin`}
+                      onClick={() => {
+                        setDeletePropertyDialogOpen(true);
+                        setSelectedProperty(row.original);
+                        setIndex(row.index);
+                        closeMenu();
+                      }}
+                      sx={{ m: 0 }}
+                    >
+                      <ListItemIcon>
+                        <DeleteIcon />
+                      </ListItemIcon>
+                      <ListItemText>Delete as Admin</ListItemText>
+                    </MenuItem>,
+                  ]
+                : []),
+            ]
+          : []),
       ];
     },
     // Functions
@@ -422,6 +481,18 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
   return (
     <div style={{ width: '100%' }}>
       <MaterialReactTable table={table} />
+      <DeletePropertyDialog
+        open={deletePropertyDialogOpen}
+        onClose={({ successfulDeletion }) => {
+          setDeletePropertyDialogOpen(false);
+          setSelectedProperty(undefined);
+          if (successfulDeletion) {
+            remove(index);
+          }
+        }}
+        selectedProperty={selectedProperty}
+        catalogueCategory={catalogueCategory}
+      />
     </div>
   );
 }
