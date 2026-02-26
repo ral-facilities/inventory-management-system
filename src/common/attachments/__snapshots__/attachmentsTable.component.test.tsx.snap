@@ -107,7 +107,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                         aria-invalid="false"
                         autocomplete="off"
                         class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12tjcea-MuiInputBase-input-MuiOutlinedInput-input"
-                        id=":r5j:"
+                        id=":r6m:"
                         placeholder="Search"
                         type="text"
                         value=""
@@ -426,12 +426,12 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                             </span>
                           </div>
                           <input
-                            aria-describedby=":r62:-helper-text"
+                            aria-describedby=":r75:-helper-text"
                             aria-invalid="false"
                             aria-label="Filter by File name"
                             autocomplete="off"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                            id=":r62:"
+                            id=":r75:"
                             placeholder="Filter by File name"
                             title="Filter by File name"
                             type="text"
@@ -469,7 +469,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                          id=":r62:-helper-text"
+                          id=":r75:-helper-text"
                         >
                           <label>
                             Filter Mode: Fuzzy
@@ -643,12 +643,12 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                             </span>
                           </div>
                           <input
-                            aria-describedby=":r6d:-helper-text"
+                            aria-describedby=":r7g:-helper-text"
                             aria-invalid="false"
                             aria-label="Filter by Title"
                             autocomplete="off"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                            id=":r6d:"
+                            id=":r7g:"
                             placeholder="Filter by Title"
                             title="Filter by Title"
                             type="text"
@@ -686,7 +686,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                          id=":r6d:-helper-text"
+                          id=":r7g:-helper-text"
                         >
                           <label>
                             Filter Mode: Fuzzy
@@ -860,12 +860,12 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                             </span>
                           </div>
                           <input
-                            aria-describedby=":r6o:-helper-text"
+                            aria-describedby=":r7r:-helper-text"
                             aria-invalid="false"
                             aria-label="Filter by Description"
                             autocomplete="off"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                            id=":r6o:"
+                            id=":r7r:"
                             placeholder="Filter by Description"
                             title="Filter by Description"
                             type="text"
@@ -903,7 +903,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                          id=":r6o:-helper-text"
+                          id=":r7r:-helper-text"
                         >
                           <label>
                             Filter Mode: Fuzzy
@@ -1046,11 +1046,11 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                             class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                           >
                             <input
-                              aria-describedby=":r73:-helper-text"
+                              aria-describedby=":r86:-helper-text"
                               aria-invalid="false"
                               autocomplete="off"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                              id=":r73:"
+                              id=":r86:"
                               inputmode="text"
                               placeholder="Min"
                               type="text"
@@ -1081,7 +1081,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                           </div>
                           <p
                             class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-18y2hez-MuiFormHelperText-root"
-                            id=":r73:-helper-text"
+                            id=":r86:-helper-text"
                           >
                             <label>
                               Filter Mode: Between Inclusive
@@ -1098,7 +1098,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                               aria-invalid="false"
                               autocomplete="off"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                              id=":r76:"
+                              id=":r89:"
                               inputmode="text"
                               placeholder="Max"
                               type="text"
@@ -1265,11 +1265,11 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                             class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                           >
                             <input
-                              aria-describedby=":r7f:-helper-text"
+                              aria-describedby=":r8i:-helper-text"
                               aria-invalid="false"
                               autocomplete="off"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                              id=":r7f:"
+                              id=":r8i:"
                               inputmode="text"
                               placeholder="Min"
                               type="text"
@@ -1300,7 +1300,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                           </div>
                           <p
                             class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-18y2hez-MuiFormHelperText-root"
-                            id=":r7f:-helper-text"
+                            id=":r8i:-helper-text"
                           >
                             <label>
                               Filter Mode: Between Inclusive
@@ -1317,7 +1317,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                               aria-invalid="false"
                               autocomplete="off"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                              id=":r7i:"
+                              id=":r8l:"
                               inputmode="text"
                               placeholder="Max"
                               type="text"
@@ -1451,7 +1451,7 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
               >
                 <label
                   class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-10j3yc8-MuiFormLabel-root-MuiInputLabel-root"
-                  for="mrt-rows-per-page-:r5g:"
+                  for="mrt-rows-per-page-:r6j:"
                 >
                   Rows per page
                 </label>
@@ -1466,15 +1466,15 @@ exports[`Attachments Table > renders no results page correctly 1`] = `
                     role="combobox"
                     tabindex="0"
                   >
-                    15
+                    30
                   </div>
                   <input
                     aria-hidden="true"
                     aria-invalid="false"
                     class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
-                    id="mrt-rows-per-page-:r5g:"
+                    id="mrt-rows-per-page-:r6j:"
                     tabindex="-1"
-                    value="15"
+                    value="30"
                   />
                   <svg
                     aria-hidden="true"
@@ -4530,6 +4530,531 @@ exports[`Attachments Table > renders table correctly 1`] = `
                 tabindex="0"
               />
             </tr>
+            <tr
+              aria-label="laser-calibration.txt row"
+              class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
+              data-index="15"
+              role="row"
+            >
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lcxgoh-MuiTableCell-root"
+                data-index="0"
+                tabindex="0"
+              >
+                <button
+                  aria-label="Row Actions"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-ctvy04-MuiButtonBase-root-MuiIconButton-root"
+                  data-mui-internal-clone-element="true"
+                  tabindex="0"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    data-testid="MoreHorizIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
+                    />
+                  </svg>
+                </button>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-renti5-MuiTableCell-root-MuiTableCell-root"
+                data-index="1"
+                tabindex="0"
+              >
+                <div
+                  aria-label="laser-calibration.txt"
+                  class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  laser-calibration.txt
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ovvc66-MuiTableCell-root-MuiTableCell-root"
+                data-index="2"
+                tabindex="0"
+              >
+                <div
+                  aria-label="Laser Calibration"
+                  class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Laser Calibration
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-25jm0l-MuiTableCell-root-MuiTableCell-root"
+                data-index="3"
+                tabindex="0"
+              >
+                <div
+                  aria-label="Detailed report on the calibration of high-precision lasers used in experiments."
+                  class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Detailed report on the calibration of high-precision lasers used in experiments.
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ygmulr-MuiTableCell-root-MuiTableCell-root"
+                data-index="4"
+                tabindex="0"
+              >
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  01 Jan 2024 12:00
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xbikvd-MuiTableCell-root-MuiTableCell-root"
+                data-index="5"
+                tabindex="0"
+              >
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  02 Jan 2024 13:10
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pcje0t-MuiTableCell-root"
+                data-index="6"
+                tabindex="0"
+              />
+            </tr>
+            <tr
+              aria-label="safety-protocols.pdf row"
+              class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
+              data-index="16"
+              role="row"
+            >
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lcxgoh-MuiTableCell-root"
+                data-index="0"
+                tabindex="0"
+              >
+                <button
+                  aria-label="Row Actions"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-ctvy04-MuiButtonBase-root-MuiIconButton-root"
+                  data-mui-internal-clone-element="true"
+                  tabindex="0"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    data-testid="MoreHorizIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
+                    />
+                  </svg>
+                </button>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-renti5-MuiTableCell-root-MuiTableCell-root"
+                data-index="1"
+                tabindex="0"
+              >
+                <div
+                  aria-label="safety-protocols.pdf"
+                  class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  safety-protocols.pdf
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ovvc66-MuiTableCell-root-MuiTableCell-root"
+                data-index="2"
+                tabindex="0"
+              >
+                <div
+                  aria-label="Safety Protocols"
+                  class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Safety Protocols
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-25jm0l-MuiTableCell-root-MuiTableCell-root"
+                data-index="3"
+                tabindex="0"
+              >
+                <div
+                  aria-label="Comprehensive guide outlining safety protocols and procedures for conducting experiments."
+                  class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Comprehensive guide outlining safety protocols and procedures for conducting experiments.
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ygmulr-MuiTableCell-root-MuiTableCell-root"
+                data-index="4"
+                tabindex="0"
+              >
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  01 Jan 2024 12:00
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xbikvd-MuiTableCell-root-MuiTableCell-root"
+                data-index="5"
+                tabindex="0"
+              >
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  02 Jan 2024 13:10
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pcje0t-MuiTableCell-root"
+                data-index="6"
+                tabindex="0"
+              />
+            </tr>
+            <tr
+              aria-label="camera-setup-guide.docx row"
+              class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
+              data-index="17"
+              role="row"
+            >
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lcxgoh-MuiTableCell-root"
+                data-index="0"
+                tabindex="0"
+              >
+                <button
+                  aria-label="Row Actions"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-ctvy04-MuiButtonBase-root-MuiIconButton-root"
+                  data-mui-internal-clone-element="true"
+                  tabindex="0"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    data-testid="MoreHorizIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
+                    />
+                  </svg>
+                </button>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-renti5-MuiTableCell-root-MuiTableCell-root"
+                data-index="1"
+                tabindex="0"
+              >
+                <div
+                  aria-label="camera-setup-guide.docx"
+                  class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  camera-setup-guide.docx
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ovvc66-MuiTableCell-root-MuiTableCell-root"
+                data-index="2"
+                tabindex="0"
+              >
+                <div
+                  aria-label="Camera Setup Guide"
+                  class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Camera Setup Guide
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-25jm0l-MuiTableCell-root-MuiTableCell-root"
+                data-index="3"
+                tabindex="0"
+              >
+                <div
+                  aria-label="Guide providing instructions for setting up and configuring cameras used in experiments."
+                  class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Guide providing instructions for setting up and configuring cameras used in experiments.
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ygmulr-MuiTableCell-root-MuiTableCell-root"
+                data-index="4"
+                tabindex="0"
+              >
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  01 Jan 2024 12:00
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xbikvd-MuiTableCell-root-MuiTableCell-root"
+                data-index="5"
+                tabindex="0"
+              >
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  02 Jan 2024 13:10
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pcje0t-MuiTableCell-root"
+                data-index="6"
+                tabindex="0"
+              />
+            </tr>
+            <tr
+              aria-label="experiment-results.rtf row"
+              class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
+              data-index="18"
+              role="row"
+            >
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lcxgoh-MuiTableCell-root"
+                data-index="0"
+                tabindex="0"
+              >
+                <button
+                  aria-label="Row Actions"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-ctvy04-MuiButtonBase-root-MuiIconButton-root"
+                  data-mui-internal-clone-element="true"
+                  tabindex="0"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    data-testid="MoreHorizIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
+                    />
+                  </svg>
+                </button>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-renti5-MuiTableCell-root-MuiTableCell-root"
+                data-index="1"
+                tabindex="0"
+              >
+                <div
+                  aria-label="experiment-results.rtf"
+                  class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  experiment-results.rtf
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ovvc66-MuiTableCell-root-MuiTableCell-root"
+                data-index="2"
+                tabindex="0"
+              >
+                <div
+                  aria-label="Experiment Results"
+                  class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Experiment Results
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-25jm0l-MuiTableCell-root-MuiTableCell-root"
+                data-index="3"
+                tabindex="0"
+              >
+                <div
+                  aria-label="Compilation of results from various experiments conducted, including data analysis and graphs"
+                  class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Compilation of results from various experiments conducted, including data analysis and graphs
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ygmulr-MuiTableCell-root-MuiTableCell-root"
+                data-index="4"
+                tabindex="0"
+              >
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  01 Jan 2024 12:00
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xbikvd-MuiTableCell-root-MuiTableCell-root"
+                data-index="5"
+                tabindex="0"
+              >
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  02 Jan 2024 13:10
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pcje0t-MuiTableCell-root"
+                data-index="6"
+                tabindex="0"
+              />
+            </tr>
+            <tr
+              aria-label="laser-calibration.txt row"
+              class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
+              data-index="19"
+              role="row"
+            >
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1lcxgoh-MuiTableCell-root"
+                data-index="0"
+                tabindex="0"
+              >
+                <button
+                  aria-label="Row Actions"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-ctvy04-MuiButtonBase-root-MuiIconButton-root"
+                  data-mui-internal-clone-element="true"
+                  tabindex="0"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    data-testid="MoreHorizIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
+                    />
+                  </svg>
+                </button>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-renti5-MuiTableCell-root-MuiTableCell-root"
+                data-index="1"
+                tabindex="0"
+              >
+                <div
+                  aria-label="laser-calibration.txt"
+                  class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  laser-calibration.txt
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ovvc66-MuiTableCell-root-MuiTableCell-root"
+                data-index="2"
+                tabindex="0"
+              >
+                <div
+                  aria-label="Laser Calibration"
+                  class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Laser Calibration
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-25jm0l-MuiTableCell-root-MuiTableCell-root"
+                data-index="3"
+                tabindex="0"
+              >
+                <div
+                  aria-label="Detailed report on the calibration of high-precision lasers used in experiments."
+                  class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Detailed report on the calibration of high-precision lasers used in experiments.
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ygmulr-MuiTableCell-root-MuiTableCell-root"
+                data-index="4"
+                tabindex="0"
+              >
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  01 Jan 2024 12:00
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xbikvd-MuiTableCell-root-MuiTableCell-root"
+                data-index="5"
+                tabindex="0"
+              >
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  02 Jan 2024 13:10
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pcje0t-MuiTableCell-root"
+                data-index="6"
+                tabindex="0"
+              />
+            </tr>
           </tbody>
         </table>
       </div>
@@ -4628,7 +5153,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                     role="combobox"
                     tabindex="0"
                   >
-                    15
+                    30
                   </div>
                   <input
                     aria-hidden="true"
@@ -4636,7 +5161,7 @@ exports[`Attachments Table > renders table correctly 1`] = `
                     class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
                     id="mrt-rows-per-page-:r0:"
                     tabindex="-1"
-                    value="15"
+                    value="30"
                   />
                   <svg
                     aria-hidden="true"
@@ -4692,19 +5217,10 @@ exports[`Attachments Table > renders table correctly 1`] = `
                   </li>
                   <li>
                     <button
-                      aria-label="Go to page 2"
-                      class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary MuiPaginationItem-page css-fpujy5-MuiButtonBase-root-MuiPaginationItem-root"
-                      tabindex="0"
-                      type="button"
-                    >
-                      2
-                    </button>
-                  </li>
-                  <li>
-                    <button
                       aria-label="Go to next page"
-                      class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary MuiPaginationItem-previousNext css-fpujy5-MuiButtonBase-root-MuiPaginationItem-root"
-                      tabindex="0"
+                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-fpujy5-MuiButtonBase-root-MuiPaginationItem-root"
+                      disabled=""
+                      tabindex="-1"
                       type="button"
                     >
                       <svg

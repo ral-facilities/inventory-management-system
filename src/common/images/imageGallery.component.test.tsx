@@ -41,7 +41,7 @@ describe('Image Gallery', () => {
       { timeout: 5000 }
     );
 
-    expect((await screen.findAllByText('logo1.png')).length).toEqual(8);
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(10);
 
     expect(baseElement).toMatchSnapshot();
   }, 10000);
@@ -72,10 +72,10 @@ describe('Image Gallery', () => {
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
 
-    expect(screen.getAllByText('logo1.png').length).toEqual(8);
+    expect(screen.getAllByText('logo1.png').length).toEqual(10);
     expect(router.state.location.search).toBe('');
 
-    await user.click(screen.getByRole('button', { name: 'Go to page 2' }));
+    await user.click(screen.getByRole('button', { name: 'Go to page 2' })); //need to add 30+ images
 
     await waitFor(() => {
       expect(screen.getAllByText('logo1.png').length).toEqual(2);
@@ -100,7 +100,7 @@ describe('Image Gallery', () => {
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
 
-    expect((await screen.findAllByText('logo1.png')).length).toEqual(8);
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(10);
 
     await user.click(screen.getByRole('button', { name: 'Show/Hide filters' }));
 
@@ -114,7 +114,7 @@ describe('Image Gallery', () => {
     });
 
     await user.click(clearFiltersButton);
-    expect((await screen.findAllByText('logo1.png')).length).toEqual(8);
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(10);
 
     expect(clearFiltersButton).toBeDisabled();
   });
@@ -126,7 +126,7 @@ describe('Image Gallery', () => {
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
 
-    expect((await screen.findAllByText('logo1.png')).length).toEqual(8);
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(10);
 
     const actionMenus = screen.getAllByLabelText(`Card Actions`);
     await user.click(actionMenus[0]);
@@ -152,7 +152,7 @@ describe('Image Gallery', () => {
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
 
-    expect((await screen.findAllByText('logo1.png')).length).toEqual(8);
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(10);
 
     const actionMenus = screen.getAllByLabelText(`Card Actions`);
     await user.click(actionMenus[0]);
@@ -178,7 +178,7 @@ describe('Image Gallery', () => {
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
 
-    expect((await screen.findAllByText('logo1.png')).length).toEqual(8);
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(10);
 
     const actionMenus = screen.getAllByLabelText(`Card Actions`);
     await user.click(actionMenus[0]);
@@ -205,7 +205,7 @@ describe('Image Gallery', () => {
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
 
-    expect((await screen.findAllByText('logo1.png')).length).toEqual(8);
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(10);
 
     const actionMenus = screen.getAllByLabelText(`Card Actions`);
     await user.click(actionMenus[0]);
@@ -597,7 +597,7 @@ describe('Image Gallery', () => {
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
 
-    expect((await screen.findAllByText('logo1.png')).length).toEqual(9);
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(10);
 
     expect(baseElement).toMatchSnapshot();
   });
@@ -611,7 +611,7 @@ describe('Image Gallery', () => {
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
 
-    expect((await screen.findAllByText('logo1.png')).length).toEqual(9);
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(10);
 
     const initialURL = router.state.location.search;
     await user.click(screen.getByRole('button', { name: 'Show/Hide filters' }));
@@ -637,7 +637,7 @@ describe('Image Gallery', () => {
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
 
-    expect((await screen.findAllByText('logo1.png')).length).toEqual(9);
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(10);
 
     const uploadImageButton = screen.getByRole('button', {
       name: 'Upload Images',

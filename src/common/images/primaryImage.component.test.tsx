@@ -52,7 +52,7 @@ describe('PrimaryImage Component', () => {
     await waitFor(() =>
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
-    expect((await screen.findAllByText('logo1.png')).length).toEqual(9);
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(10);
     const cancelButton = screen.getByRole('button', { name: 'Cancel' });
     await user.click(cancelButton);
     await waitFor(() => {
