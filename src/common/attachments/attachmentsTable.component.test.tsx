@@ -16,16 +16,6 @@ describe('Attachments Table', () => {
     return renderComponentWithRouterProvider(<AttachmentsTable {...props} />);
   };
 
-  function createData(): AttachmentTableProps[] {
-    const data: AttachmentTableProps[] = [];
-    for (let index = 1; index < 35; index++) {
-      data.push({
-        entityId: index.toString(),
-      });
-    }
-    return data;
-  }
-
   beforeEach(() => {
     props = {
       entityId: '1',
