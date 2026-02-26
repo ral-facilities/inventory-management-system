@@ -13,6 +13,7 @@ import { transformToAddCatalogueCategoryWithPlacementIds } from '../catalogueCat
 import PropertiesTable, {
   PropertiesTableProps,
 } from './catalogueItemPropertiesTable.component';
+import { RootState } from '../../../state/store';
 
 const TestComponent = (props: PropertiesTableProps) => {
   const formMethods = useForm<AddCatalogueCategoryWithPlacementIds>({
@@ -32,9 +33,13 @@ const TestComponent = (props: PropertiesTableProps) => {
 describe('CatalogueItemPropertiesTable', () => {
   let props: PropertiesTableProps;
   let user: UserEvent;
-
-  const createView = () => {
-    return renderComponentWithRouterProvider(<TestComponent {...props} />);
+  const createView = (preloadedState?: Partial<RootState>) => {
+    return renderComponentWithRouterProvider(
+      <TestComponent {...props} />,
+      undefined,
+      undefined,
+      preloadedState
+    );
   };
 
   beforeEach(() => {
@@ -89,6 +94,39 @@ describe('CatalogueItemPropertiesTable', () => {
     ).toBeInTheDocument();
 
     const editButton = screen.getByLabelText('Edit property Pumping Speed');
+    await user.click(editButton);
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('can open the property edit as admin dialog', async () => {
+    createView({
+      authorisation: {
+        role: 'admin',
+        isAdminUser: true,
+        isAdminMode: true,
+      },
+    });
+
+    expect(await screen.findByText('Pumping Speed')).toBeInTheDocument();
+
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    expect(
+      await screen.findByLabelText('Edit property Pumping Speed as admin')
+    ).toBeInTheDocument();
+
+    const editButton = screen.getByLabelText(
+      'Edit property Pumping Speed as admin'
+    );
     await user.click(editButton);
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();

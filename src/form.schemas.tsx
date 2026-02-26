@@ -478,6 +478,7 @@ export const CatalogueCategoryPropertyPatchSchema = z.object({
     errorMessage: 'Please enter a property name.',
   }),
   allowed_values: AllowedValuesListSchema.nullable().optional(),
+  unit_id: OptionalOrNullableStringSchema({ requestType: 'patch' }),
 });
 
 export const CatalogueCategoryPostPropertySchema =
