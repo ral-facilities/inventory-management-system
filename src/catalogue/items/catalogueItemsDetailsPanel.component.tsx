@@ -277,25 +277,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 >
                   {catalogueItemIdData.expected_lifetime_days ?? 'None'}
                 </Typography>
-              </Grid>
-
-              <Grid size={{ xs: 12, sm: 6 }}>
-                <Typography
-                  sx={{
-                    color: 'text.primary',
-                  }}
-                >
-                  Drawing Number
-                </Typography>
-                <Typography
-                  sx={{
-                    color: 'text.secondary',
-                    wordWrap: 'break-word',
-                  }}
-                >
-                  {catalogueItemIdData.drawing_number ?? 'None'}
-                </Typography>
-              </Grid>
+              </Grid>    
 
               <Grid size={{ xs: 12, sm: 6 }}>
                 <Typography
