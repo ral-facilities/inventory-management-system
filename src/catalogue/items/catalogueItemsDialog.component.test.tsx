@@ -53,8 +53,6 @@ describe('Catalogue Items Dialog', () => {
     daysToReplace?: string;
     daysToRework?: string;
     expectedLifetimeDays?: string;
-    drawingNumber?: string;
-    drawingLink?: string;
     itemModelNumber?: string;
     resolution?: string;
     frameRate?: string;
@@ -98,16 +96,6 @@ describe('Catalogue Items Dialog', () => {
     if (values.expectedLifetimeDays !== undefined)
       fireEvent.change(screen.getByLabelText('Expected Lifetime (days)'), {
         target: { value: values.expectedLifetimeDays },
-      });
-
-    if (values.drawingNumber !== undefined)
-      fireEvent.change(screen.getByLabelText('Drawing number'), {
-        target: { value: values.drawingNumber },
-      });
-
-    if (values.drawingLink !== undefined)
-      fireEvent.change(screen.getByLabelText('Drawing link'), {
-        target: { value: values.drawingLink },
       });
 
     if (values.itemModelNumber !== undefined)
@@ -232,8 +220,6 @@ describe('Catalogue Items Dialog', () => {
       daysToRework: '2',
       expectedLifetimeDays: '541',
       description: '',
-      drawingLink: 'https://example.com',
-      drawingNumber: 'mk4324',
       itemModelNumber: 'mk4324',
       name: 'test',
       manufacturer: 'Man{arrowdown}{enter}',
@@ -261,8 +247,6 @@ describe('Catalogue Items Dialog', () => {
       days_to_rework: 2,
       expected_lifetime_days: 541,
       description: null,
-      drawing_link: 'https://example.com',
-      drawing_number: 'mk4324',
       is_obsolete: false,
       manufacturer_id: '1',
       notes: 'Test note',
@@ -296,8 +280,6 @@ describe('Catalogue Items Dialog', () => {
       daysToRework: '2',
       expectedLifetimeDays: '146',
       description: '',
-      drawingLink: 'https://example.com',
-      drawingNumber: 'mk4324',
       itemModelNumber: 'mk4324',
       name: 'test',
       manufacturer: 'Man{arrowdown}{enter}',
@@ -325,8 +307,6 @@ describe('Catalogue Items Dialog', () => {
       days_to_rework: 2,
       expected_lifetime_days: 146,
       description: null,
-      drawing_link: 'https://example.com',
-      drawing_number: 'mk4324',
       is_obsolete: false,
       item_model_number: 'mk4324',
       notes: null,
@@ -378,8 +358,6 @@ describe('Catalogue Items Dialog', () => {
       daysToRework: '2',
       expectedLifetimeDays: '146',
       description: '',
-      drawingLink: 'https://example.com',
-      drawingNumber: 'mk4324',
       itemModelNumber: 'mk4324',
       name: 'test',
       manufacturer: 'Man{arrowdown}{enter}',
@@ -407,8 +385,6 @@ describe('Catalogue Items Dialog', () => {
       days_to_rework: 2,
       expected_lifetime_days: 146,
       description: null,
-      drawing_link: 'https://example.com',
-      drawing_number: 'mk4324',
       is_obsolete: false,
       item_model_number: 'mk4324',
       notes: null,
@@ -449,8 +425,6 @@ describe('Catalogue Items Dialog', () => {
       daysToRework: '2',
       expectedLifetimeDays: '321',
       description: '',
-      drawingLink: 'https://example.com',
-      drawingNumber: 'mk4324',
       itemModelNumber: 'mk4324',
       name: 'test',
       manufacturer: 'Man{arrowdown}{enter}',
@@ -489,8 +463,6 @@ describe('Catalogue Items Dialog', () => {
       daysToRework: '2',
       expectedLifetimeDays: '524',
       description: '',
-      drawingLink: 'https://example.com',
-      drawingNumber: 'mk4324',
       itemModelNumber: 'mk4324',
       name: 'test',
       manufacturer: 'Man{arrowdown}{enter}',
@@ -546,8 +518,6 @@ describe('Catalogue Items Dialog', () => {
       days_to_rework: null,
       expected_lifetime_days: null,
       description: null,
-      drawing_link: null,
-      drawing_number: null,
       is_obsolete: false,
       item_model_number: null,
       manufacturer_id: '1',
@@ -633,8 +603,6 @@ describe('Catalogue Items Dialog', () => {
       daysToRework: '2a',
       expectedLifetimeDays: '43ab',
       description: '',
-      drawingLink: 'example.com',
-      drawingNumber: 'mk4324',
       itemModelNumber: 'mk4324',
       name: 'test',
       manufacturer: 'Man{arrowdown}{enter}',
@@ -650,11 +618,7 @@ describe('Catalogue Items Dialog', () => {
       'Please enter a valid number.'
     );
 
-    expect(
-      screen.getByText(
-        'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted.'
-      )
-    ).toBeInTheDocument();
+
 
     await modifyValues({
       costGbp: '1200',
@@ -662,7 +626,6 @@ describe('Catalogue Items Dialog', () => {
       daysToReplace: '20',
       daysToRework: '2',
       expectedLifetimeDays: '43',
-      drawingLink: 'https://example.com',
     });
 
     await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -701,8 +664,6 @@ describe('Catalogue Items Dialog', () => {
       daysToReplace: '-5',
       daysToRework: '-5',
       description: '',
-      drawingLink: 'https://example.com',
-      drawingNumber: 'mk4324',
       expectedLifetimeDays: '-5',
       itemModelNumber: 'mk4324',
       name: 'test',
@@ -746,8 +707,6 @@ describe('Catalogue Items Dialog', () => {
       daysToRework: '2',
       expectedLifetimeDays: '421',
       description: '',
-      drawingLink: 'https://example.com',
-      drawingNumber: 'mk4324',
       itemModelNumber: 'mk4324',
       name: 'Error 500',
       manufacturer: 'Man{arrowdown}{enter}',
@@ -893,8 +852,6 @@ describe('Catalogue Items Dialog', () => {
         daysToRework: '68',
         expectedLifetimeDays: '486',
         description: ' ',
-        drawingLink: 'http://example.com',
-        drawingNumber: 'test',
         itemModelNumber: 'test1',
         name: 'test',
         manufacturer: 'Man{arrowdown}{arrowdown}{enter}',
@@ -911,8 +868,6 @@ describe('Catalogue Items Dialog', () => {
         days_to_rework: 68,
         expected_lifetime_days: 486,
         description: null,
-        drawing_link: 'http://example.com',
-        drawing_number: 'test',
         item_model_number: 'test1',
         name: 'test',
         manufacturer_id: '3',
@@ -1012,8 +967,6 @@ describe('Catalogue Items Dialog', () => {
         daysToRework: '',
         expectedLifetimeDays: '',
         description: '',
-        drawingLink: '',
-        drawingNumber: '',
         itemModelNumber: '',
         name: '',
         notes: '',
