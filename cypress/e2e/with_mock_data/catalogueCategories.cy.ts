@@ -1505,6 +1505,57 @@ describe('Catalogue Category', () => {
     });
   });
 
+  it('edits an existing property unit (as admin)', () => {
+    cy.visit('/catalogue/10');
+    cy.setCurrentUserToAdmin();
+
+    cy.findAllByRole('button', {
+      name: 'Card Actions',
+    })
+      .eq(1)
+      .click();
+
+    cy.findByRole('menuitem', {
+      name: 'edit Dry Vacuum Pumps catalogue category button',
+    }).click();
+
+    cy.findAllByLabelText('Row Actions').eq(1).click();
+    cy.findByLabelText('Edit property Ultimate Pressure as admin').click();
+
+    cy.findByLabelText('Select Unit').click();
+    cy.findByRole('option', { name: 'millimeters' }).click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('checkbox', {
+      name: 'Confirm understanding and proceed checkbox',
+    }).click();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findByText('Add Property').should('have.length', 1);
+
+    // Active waiting (test column filters) for the patch request below
+    cy.findAllByLabelText('Filter by Name').last().type('Ultimate Pressure');
+    cy.findByRole('button', { name: 'Clear Filters' }).should('exist');
+    cy.findByRole('button', { name: 'Clear Filters' }).should(
+      'be.not.disabled'
+    );
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/catalogue-categories/:catalogue_category_id/properties/:property_id',
+    }).should(async (patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      const request = patchRequests[0];
+      expect(JSON.stringify(await request.json())).equal(
+        JSON.stringify({
+          unit_id: '5',
+        })
+      );
+    });
+  });
+
   it('display edit form errors on property dialog (mandatory errors)', () => {
     cy.visit('/catalogue/10');
 
@@ -1649,6 +1700,45 @@ describe('Catalogue Category', () => {
 
     cy.findByText('Please enter a valid number.').should('not.exist');
   });
+
+  it('deletes a property (admin)', () => {
+    cy.visit('/catalogue/10');
+    cy.setCurrentUserToAdmin();
+
+    cy.findAllByRole('button', {
+      name: 'Card Actions',
+    })
+      .eq(1)
+      .click();
+
+    cy.findByRole('menuitem', {
+      name: 'edit Dry Vacuum Pumps catalogue category button',
+    }).click();
+
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByLabelText('Delete property Pumping Speed as admin').click();
+
+    cy.findByRole('button', { name: 'Continue' }).should('be.disabled');
+
+    cy.findByRole('checkbox', {
+      name: 'Confirm understanding and proceed checkbox',
+    }).click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'DELETE',
+      url: '/v1/catalogue-categories/:catalogue_category_id/properties/:property_id',
+    }).should((deleteRequests) => {
+      expect(deleteRequests.length).equal(1);
+      const request = deleteRequests[0];
+      expect(request.url.toString()).to.contain('12');
+      expect(request.url.toString()).to.contain('17');
+    });
+  });
+
   // The tooltip tests are very flaky; issue to fix later: https://github.com/ral-facilities/inventory-management-system/issues/637
   it.skip('display overflow tooltip on hover', () => {
     // Card view

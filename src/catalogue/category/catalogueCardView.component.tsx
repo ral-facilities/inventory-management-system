@@ -312,12 +312,15 @@ function CatalogueCardView() {
         enableGrouping: false,
       },
       {
-        header: 'Is Leaf',
-        accessorFn: (row) => (row.is_leaf === true ? 'Yes' : 'No'),
-        id: 'is-leaf',
+        header: 'Catalogue Directory Content',
+        accessorFn: (row) =>
+          row.is_leaf === true ? 'Catalogue Items' : 'Catalogue Categories',
+        id: 'catalogue-directory-content',
         filterVariant: COLUMN_FILTER_VARIANTS.boolean,
         enableColumnFilterModes: false,
-        size: 200,
+        size: 350,
+        filterSelectOptions: ['Catalogue Categories', 'Catalogue Items'],
+        enableGrouping: false,
       },
       {
         header: 'is Critical',

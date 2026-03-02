@@ -8,7 +8,7 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import type { SystemType } from '../../api/api.types';
-import { useGetSystemTypes } from '../../api/systems';
+import { useGetSystemTypes } from '../../api/systemTypes';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 
 import { APISettingsContext } from '../../apiConfigProvider.component';

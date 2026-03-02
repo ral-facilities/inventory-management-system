@@ -38,7 +38,7 @@ export interface SystemItemsDialogProps {
   selectedItems: Item[];
   onChangeSelectedItems: (selectedItems: MRT_RowSelectionState) => void;
   parentSystemId: string | null;
-  isPrivilegedMode: boolean;
+  isAdminMode: boolean;
 }
 
 export interface UsageStatusesType {
@@ -68,13 +68,8 @@ const convertToSystemUsageStatuses = (
 };
 
 const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
-  const {
-    open,
-    onClose,
-    selectedItems,
-    onChangeSelectedItems,
-    isPrivilegedMode,
-  } = props;
+  const { open, onClose, selectedItems, onChangeSelectedItems, isAdminMode } =
+    props;
 
   // Store here and update only if changed to reduce re-renders and allow
   // navigation
@@ -187,7 +182,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     // Ensure finished loading and not moving to root
     // (where we don't need to load anything as the name is known)
     if (!targetSystemLoading && targetSystem !== undefined) {
-      if (isPrivilegedMode) {
+      if (isAdminMode) {
         moveItemsToSystem({
           mode: 'multiple',
           usageStatuses: convertToSystemUsageStatuses(usageStatuses),
@@ -227,7 +222,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     targetSystemLoading,
     targetSystem,
     moveItemsToSystem,
-    isPrivilegedMode,
+    isAdminMode,
     selectedItems,
     onChangeSelectedItems,
     handleClose,
@@ -308,7 +303,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
                 onChangeParentId={changeParentSystemId}
                 systemParentId={parentSystemId ?? undefined}
                 isSystemSelectable={(system) => {
-                  if (isPrivilegedMode) return true;
+                  if (isAdminMode) return true;
                   const matchesSrc = system?.type_id === srcSystemTypeId;
                   const matchesAnyDstRule =
                     Array.isArray(tableRules) &&
@@ -340,8 +335,8 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
       <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
         Move{' '}
         {selectedItems.length > 1 ? `${selectedItems.length} items` : '1 item'}{' '}
-        to a different system{isPrivilegedMode ? ' as Admin' : ''}
-        {isPrivilegedMode && (
+        to a different system{isAdminMode ? ' as Admin' : ''}
+        {isAdminMode && (
           <Tooltip
             title="As an admin, you can bypass rules that restrict item placement for other users, and you can modify the item's usage status"
             data-testid={'admin-status-tooltip'}
@@ -355,7 +350,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
         )}
       </DialogTitle>
       <DialogContent>
-        {isPrivilegedMode && (
+        {isAdminMode && (
           <Stepper
             nonLinear
             activeStep={activeStep}
@@ -398,7 +393,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
         <Button onClick={handleClose} sx={{ mr: 'auto' }}>
           Cancel
         </Button>
-        {isPrivilegedMode && (
+        {isAdminMode && (
           <Button
             disabled={activeStep === 0}
             onClick={handleBack}
@@ -407,7 +402,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
             Back
           </Button>
         )}
-        {isPrivilegedMode ? (
+        {isAdminMode ? (
           activeStep === STEPS.length - 1 ? (
             <Button
               disabled={

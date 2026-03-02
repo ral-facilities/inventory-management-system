@@ -216,7 +216,7 @@ async function prepare() {
     import.meta.env.VITE_INCLUDE_MSW === 'true' ||
     settingsResult?.imsApiUrl === '' ||
     settingsResult?.osApiUrl === '' ||
-    settingsResult?.imsJsApiUrl
+    settingsResult?.imsJsApiUrl === ''
   ) {
     // Need to use require instead of import as import breaks when loaded in SG
     const { worker } = await import('./mocks/browser');

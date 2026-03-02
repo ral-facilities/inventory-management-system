@@ -7,6 +7,7 @@ import {
   addItem,
   addProperty,
   deleteItem,
+  deleteProperty,
   duplicateItem,
   editItem,
   editProperty,
@@ -57,6 +58,7 @@ describe('items', () => {
     duplicateItem('MX4332424', 0);
     addProperty();
     editProperty();
+    deleteProperty();
     cy.findByText('Total Items: 2').should('exist');
     cy.findByRole('progressbar').should('not.exist');
     cy.findAllByText('MX4332424').should('have.length', 2);
