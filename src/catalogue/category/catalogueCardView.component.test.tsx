@@ -335,7 +335,7 @@ describe('CardView', () => {
 
     expect(
       await screen.findByText(
-        'A catalogue category is considered critical if any of its nested child categories or catalogue items are marked as critical.'
+        'A catalogue category is considered critical if any of its nested child categories or catalogue items are flagged as critical.'
       )
     ).toBeInTheDocument();
   });
@@ -365,7 +365,7 @@ describe('CardView', () => {
 
     expect(
       await screen.findByText(
-        'A catalogue category is considered critical if any of its nested child categories or catalogue items are marked as critical.'
+        'A catalogue category is considered critical if any of its nested child categories or catalogue items are flagged as critical.'
       )
     ).toBeInTheDocument();
   });

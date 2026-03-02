@@ -65,14 +65,14 @@ describe('Catalogue Category', () => {
     cy.findByTestId('WarningIcon').should('exist');
     cy.findByTestId('WarningIcon').trigger('mouseover');
     cy.findByText(
-      'A catalogue category is considered critical if any of its nested child categories or catalogue items are marked as critical.'
+      'A catalogue category is considered critical if any of its nested child categories or catalogue items are flagged as critical.'
     );
     cy.findByText('Beam Characterization').click();
 
     cy.findByTestId('WarningIcon').should('exist');
     cy.findByTestId('WarningIcon').trigger('mouseover');
     cy.findByText(
-      'A catalogue category is considered critical if any of its nested child categories or catalogue items are marked as critical.'
+      'A catalogue category is considered critical if any of its nested child categories or catalogue items are flagged as critical.'
     );
   });
 
@@ -99,7 +99,7 @@ describe('Catalogue Category', () => {
         cy.findByTestId('WarningIcon').trigger('mouseover');
       });
     cy.findByText(
-      'A catalogue category is considered critical if any of its nested child categories or catalogue items are marked as critical.'
+      'A catalogue category is considered critical if any of its nested child categories or catalogue items are flagged as critical.'
     );
   });
 
@@ -1507,7 +1507,7 @@ describe('Catalogue Category', () => {
 
   it('edits an existing property unit (as admin)', () => {
     cy.visit('/catalogue/10');
-    cy.setCurrentUserToAdmin();
+    cy.setMode({ admin: true });
 
     cy.findAllByRole('button', {
       name: 'Card Actions',
@@ -1703,7 +1703,7 @@ describe('Catalogue Category', () => {
 
   it('deletes a property (admin)', () => {
     cy.visit('/catalogue/10');
-    cy.setCurrentUserToAdmin();
+    cy.setMode({ admin: true });
 
     cy.findAllByRole('button', {
       name: 'Card Actions',

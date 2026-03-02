@@ -160,7 +160,7 @@ const CopyCategoriesButton = (props: {
 export const CriticalTooltipText = (
   <Typography style={{ whiteSpace: 'pre-line' }}>
     A catalogue category is considered critical if any of its nested child
-    categories or catalogue items are marked as critical.
+    categories or catalogue items are flagged as critical.
   </Typography>
 );
 
@@ -323,7 +323,7 @@ function CatalogueCardView() {
         enableGrouping: false,
       },
       {
-        header: 'is Critical',
+        header: 'Is Critical',
         Header: ({ column }) => (
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Tooltip title={CriticalTooltipText}>

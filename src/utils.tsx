@@ -1,4 +1,5 @@
 import {
+  alpha,
   Link as MuiLink,
   SxProps,
   TableCell,
@@ -332,8 +333,9 @@ function getNestedProperty(obj: any, path: string): any {
     .reduce((o, p) => (o && o[p] !== undefined ? o[p] : undefined), obj);
 }
 
-interface ModifiedMRTGroupedCellProps<TData extends MRT_RowData>
-  extends MRTGroupedCellProps<TData> {
+interface ModifiedMRTGroupedCellProps<
+  TData extends MRT_RowData,
+> extends MRTGroupedCellProps<TData> {
   outputType?: 'Link' | 'Date'; // default is Text
 }
 
@@ -694,6 +696,6 @@ export function isExactFilterActive<TData extends MRT_RowData>(
 
 export const criticalityRowStyle = (theme: Theme) => {
   return {
-    backgroundColor: theme.palette.error.main + '11', // ~7% tint
+    backgroundColor: alpha(theme.palette.error.main, 0.07), // ~7% tint
   };
 };
