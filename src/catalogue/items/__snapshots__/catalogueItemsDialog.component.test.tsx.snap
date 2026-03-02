@@ -468,86 +468,6 @@ exports[`Catalogue Items Dialog > renders details step correctly 1`] = `
                   <label
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeSmall MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeSmall MuiInputLabel-outlined css-1kfabtt-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="false"
-                    for="catalogue-item-drawing-number-input"
-                    id="catalogue-item-drawing-number-input-label"
-                  >
-                    Drawing number
-                  </label>
-                  <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall css-1blp12k-MuiInputBase-root-MuiOutlinedInput-root"
-                  >
-                    <input
-                      aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall css-1pzfmz2-MuiInputBase-input-MuiOutlinedInput-input"
-                      id="catalogue-item-drawing-number-input"
-                      name="drawing_number"
-                      type="text"
-                      value=""
-                    />
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-81qg8w"
-                      >
-                        <span>
-                          Drawing number
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j0u08r-MuiGrid2-root"
-              >
-                <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeSmall MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeSmall MuiInputLabel-outlined css-1kfabtt-MuiFormLabel-root-MuiInputLabel-root"
-                    data-shrink="false"
-                    for="catalogue-item-drawing-link-input"
-                    id="catalogue-item-drawing-link-input-label"
-                  >
-                    Drawing link
-                  </label>
-                  <div
-                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall css-1blp12k-MuiInputBase-root-MuiOutlinedInput-root"
-                  >
-                    <input
-                      aria-invalid="false"
-                      class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall css-1pzfmz2-MuiInputBase-input-MuiOutlinedInput-input"
-                      id="catalogue-item-drawing-link-input"
-                      name="drawing_link"
-                      type="text"
-                      value=""
-                    />
-                    <fieldset
-                      aria-hidden="true"
-                      class="MuiOutlinedInput-notchedOutline css-1ll44ll-MuiOutlinedInput-notchedOutline"
-                    >
-                      <legend
-                        class="css-81qg8w"
-                      >
-                        <span>
-                          Drawing link
-                        </span>
-                      </legend>
-                    </fieldset>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j0u08r-MuiGrid2-root"
-              >
-                <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-cmpglg-MuiFormControl-root-MuiTextField-root"
-                >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeSmall MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeSmall MuiInputLabel-outlined css-1kfabtt-MuiFormLabel-root-MuiInputLabel-root"
-                    data-shrink="false"
                     for="catalogue-item-model-input"
                     id="catalogue-item-model-input-label"
                   >
@@ -809,7 +729,7 @@ exports[`Catalogue Items Dialog > renders properties step correctly 1`] = `
       tabindex="-1"
     >
       <div
-        aria-labelledby=":rl:"
+        aria-labelledby=":rj:"
         aria-modal="true"
         class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthLg MuiDialog-paperFullWidth css-1k6wpiw-MuiPaper-root-MuiDialog-paper"
         role="dialog"
@@ -817,7 +737,7 @@ exports[`Catalogue Items Dialog > renders properties step correctly 1`] = `
       >
         <h2
           class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-rvoa5x-MuiTypography-root-MuiDialogTitle-root"
-          id=":rl:"
+          id=":rj:"
         >
           Add Catalogue Item
         </h2>

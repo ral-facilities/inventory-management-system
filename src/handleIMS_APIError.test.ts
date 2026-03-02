@@ -54,12 +54,12 @@ describe('handleIMS_APIError', () => {
     });
   });
 
-  it('does not broadcast 403 errors', () => {
+  it('does not broadcast 401 errors', () => {
     error = {
       isAxiosError: true,
       response: {
         data: {},
-        status: 403,
+        status: 401,
         statusText: 'Invalid token or expired token',
         headers: {},
         // @ts-expect-error: not needed for test

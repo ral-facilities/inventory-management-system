@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import WarningIcon from '@mui/icons-material/Warning';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {
   Autocomplete,
   Button,
@@ -13,6 +14,7 @@ import {
   Stack,
   TextField,
   Typography,
+  Tooltip,
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import React from 'react';
@@ -143,6 +145,7 @@ export interface PropertyDialogProps {
   selectedProperty?: AddCatalogueCategoryPropertyWithPlacementIds;
   isMigration: boolean;
   index?: number;
+  isAdminMode: boolean;
 }
 
 const PropertyDialog = (props: PropertyDialogProps) => {
@@ -154,6 +157,7 @@ const PropertyDialog = (props: PropertyDialogProps) => {
     selectedProperty,
     isMigration,
     index = 0,
+    isAdminMode,
   } = props;
 
   const formMethodsAdd = useFormContext<AddCatalogueCategoryWithPlacementIds>();
@@ -200,7 +204,10 @@ const PropertyDialog = (props: PropertyDialogProps) => {
             type: CatalogueCategoryPropertyType.Text,
             mandatory: 'false',
           }
-        : selectedProperty),
+        : {
+            ...selectedProperty,
+            unit_id: selectedProperty?.unit_id ?? null,
+          }),
       default_value: {
         valueType: 'string_false',
         value: { av_placement_id: crypto.randomUUID(), value: '' },
@@ -291,11 +298,17 @@ const PropertyDialog = (props: PropertyDialogProps) => {
         JSON.stringify(property.allowed_values?.values) !==
         JSON.stringify(propertyAPIFormat?.allowed_values?.values);
 
+      const isUnitUpdated = property.unit_id !== propertyAPIFormat?.unit_id;
+
       if (isNameUpdated) patchProperty.name = property.name;
       if (isAllowedValuesUpdated)
         patchProperty.allowed_values = property.allowed_values;
+      if (isUnitUpdated) patchProperty.unit_id = property.unit_id;
 
-      if (propertyAPIFormat?.id && (isNameUpdated || isAllowedValuesUpdated)) {
+      if (
+        propertyAPIFormat?.id &&
+        (isNameUpdated || isAllowedValuesUpdated || isUnitUpdated)
+      ) {
         patchCatalogueCategoryProperty({
           catalogueCategory,
           property: patchProperty,
@@ -303,8 +316,7 @@ const PropertyDialog = (props: PropertyDialogProps) => {
         });
       } else {
         setError('name', {
-          message:
-            'There have been no changes made. Please change the name field value or press Close.',
+          message: `There have been no changes made. Please change ${isAdminMode ? 'a' : 'the name'} field value or press Close.`,
         });
         return;
       }
@@ -313,6 +325,7 @@ const PropertyDialog = (props: PropertyDialogProps) => {
     [
       catalogueCategory,
       handleClose,
+      isAdminMode,
       patchCatalogueCategoryProperty,
       selectedProperty,
       setError,
@@ -328,6 +341,7 @@ const PropertyDialog = (props: PropertyDialogProps) => {
     } else {
       const transformedData: CatalogueCategoryPropertyPatch = {
         name: data.name,
+        unit_id: data.unit_id,
         ...(data.allowed_values && {
           allowed_values: transformAllowedValues(data.allowed_values),
         }),
@@ -355,8 +369,22 @@ const PropertyDialog = (props: PropertyDialogProps) => {
     : propertyAdd?.properties?.[index]?.type;
   return (
     <Dialog open={open} maxWidth="sm" fullWidth>
-      <DialogTitle>
-        {type === 'post' ? 'Add Property' : 'Edit Property'}
+      <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
+        {type === 'post'
+          ? 'Add Property'
+          : `Edit Property${isAdminMode ? ' as Admin' : ''}`}
+        {isAdminMode && (
+          <Tooltip
+            title="As an admin, you can edit a property's unit"
+            data-testid={'admin-status-tooltip'}
+            placement="top"
+            enterTouchDelay={0}
+            arrow
+            sx={{ mx: 2 }}
+          >
+            <InfoOutlinedIcon />
+          </Tooltip>
+        )}
       </DialogTitle>
       <DialogContent sx={{ pb: 0.5 }}>
         <Stack
@@ -713,7 +741,7 @@ const PropertyDialog = (props: PropertyDialogProps) => {
               <Autocomplete
                 disabled={
                   propertyType === CatalogueCategoryPropertyType.Boolean ||
-                  (type === 'patch' && isMigration)
+                  (type === 'patch' && isMigration && !isAdminMode)
                 }
                 id={crypto.randomUUID()}
                 options={units ?? []}
@@ -722,6 +750,7 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                 fullWidth
                 onChange={(_event, unit) => {
                   onChange(unit?.id ?? null);
+                  clearErrors();
                 }}
                 renderInput={(params) => (
                   <TextField
@@ -730,7 +759,7 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                     variant="outlined"
                     disabled={
                       property.type === CatalogueCategoryPropertyType.Boolean ||
-                      (type === 'patch' && isMigration)
+                      (type === 'patch' && isMigration && !isAdminMode)
                     }
                   />
                 )}
