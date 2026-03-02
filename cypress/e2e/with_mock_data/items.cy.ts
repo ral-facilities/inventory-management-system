@@ -85,7 +85,6 @@ describe('Items', () => {
       'High-resolution cameras for beam characterization. 1'
     ).should('exist');
     cy.findByText('Obsolete reason').should('exist');
-    cy.findByText('Drawing Number').should('exist');
 
     cy.findByRole('link', { name: 'Cameras' }).click();
 

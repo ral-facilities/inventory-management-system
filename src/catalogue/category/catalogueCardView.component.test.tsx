@@ -316,7 +316,7 @@ describe('CardView', () => {
     });
   });
 
-  it('shows critical catalogue categories and filter button', async () => {
+  it('shows all criticality states for catalogue categories and the filter button', async () => {
     createView('/catalogue', undefined, {
       criticality: { isCriticalMode: true },
     });
@@ -326,7 +326,21 @@ describe('CardView', () => {
     });
 
     expect(
-      screen.getByRole('button', { name: 'Show Critical Items' })
+      screen.getByRole('button', { name: 'Show Critical Categories' })
+    ).toBeInTheDocument();
+
+    expect(screen.getByTestId('ErrorIcon')).toBeInTheDocument();
+
+    await user.hover(screen.getByTestId('ErrorIcon'));
+
+    expect(
+      await screen.findByText('This catalogue category is critical.')
+    ).toBeInTheDocument();
+
+    await user.hover(screen.getAllByTestId('CheckCircleIcon')[0]);
+
+    expect(
+      await screen.findByText('This catalogue category is not critical.')
     ).toBeInTheDocument();
 
     expect(screen.getByTestId('WarningIcon')).toBeInTheDocument();
@@ -335,12 +349,12 @@ describe('CardView', () => {
 
     expect(
       await screen.findByText(
-        'A catalogue category is considered critical if any of its nested child categories or catalogue items are marked as critical.'
+        'Unable to determine if this catalogue category is critical. Please contact support.'
       )
     ).toBeInTheDocument();
   });
 
-  it('clicks on shows critical Items filter button', async () => {
+  it('clicks on shows critical Categories filter button', async () => {
     createView('/catalogue', undefined, {
       criticality: { isCriticalMode: true },
     });
@@ -350,7 +364,7 @@ describe('CardView', () => {
     });
 
     await user.click(
-      screen.getByRole('button', { name: 'Show Critical Items' })
+      screen.getByRole('button', { name: 'Show Critical Categories' })
     );
 
     await waitFor(() => {
@@ -359,14 +373,12 @@ describe('CardView', () => {
 
     expect(screen.getByText('Critical Filter Applied')).toBeInTheDocument();
 
-    expect(screen.getByTestId('WarningIcon')).toBeInTheDocument();
+    expect(screen.getByTestId('ErrorIcon')).toBeInTheDocument();
 
-    await user.hover(screen.getByTestId('WarningIcon'));
+    await user.hover(screen.getByTestId('ErrorIcon'));
 
     expect(
-      await screen.findByText(
-        'A catalogue category is considered critical if any of its nested child categories or catalogue items are marked as critical.'
-      )
+      await screen.findByText('This catalogue category is critical.')
     ).toBeInTheDocument();
   });
   describe('pagination', () => {

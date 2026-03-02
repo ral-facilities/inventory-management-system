@@ -13,7 +13,7 @@ function CatalogueItemLayout() {
   const location = useLocation();
   const { isCriticalMode } = useAppSelector(selectCriticality);
 
-  const showFlagged = catalogueItem?.is_flagged && isCriticalMode;
+  const showFlagged = catalogueItem?.is_flagged;
 
   const getPageSubtitle = () => {
     // Check for individual item detail page (has item_id param)
@@ -42,10 +42,10 @@ function CatalogueItemLayout() {
         }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          {showFlagged && (
+          {isCriticalMode && (
             <CriticalityTooltipIcon
               label={'Items are running low in this catalogue item'}
-              sx={{ fontSize: '40px' }}
+              showFlagged={showFlagged}
             />
           )}
           <Typography

@@ -137,7 +137,7 @@ describe('Catalogue Items Landing Page', () => {
       screen.getByText('High-resolution cameras for beam characterization. 1')
     ).toBeInTheDocument();
 
-    expect(screen.getAllByText('None').length).toEqual(9);
+    expect(screen.getAllByText('None').length).toEqual(7);
   });
 
   it('renders text correctly (extra details given)', async () => {
@@ -153,11 +153,6 @@ describe('Catalogue Items Landing Page', () => {
     expect(
       screen.getByText('High-resolution cameras for beam characterization. 2')
     ).toBeInTheDocument();
-
-    expect(screen.getByText('http://example-drawing-link.com')).toHaveAttribute(
-      'href',
-      'http://example-drawing-link.com'
-    );
 
     expect(screen.getByText('Resolution (megapixels)')).toBeInTheDocument();
   });

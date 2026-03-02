@@ -14,6 +14,7 @@ import {
   TableCellBaseProps,
 } from '@mui/material';
 import {
+  MRT_Column,
   MRT_ColumnDef,
   MRT_Row,
   MRT_RowSelectionState,
@@ -29,6 +30,7 @@ import { useGetItems } from '../api/items';
 import { useGetUsageStatuses } from '../api/usageStatuses';
 import { APISettingsContext } from '../apiConfigProvider.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
+import { SparesColumnHeaderInformationTooltip } from '../common/sparesInformationTooltip.component';
 import DeleteItemDialog from '../items/deleteItemDialog.component';
 import ItemDialog from '../items/itemDialog.component';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
@@ -58,7 +60,7 @@ const MoveItemsButton = (props: {
   selectedItems: Item[];
   system: System;
   onChangeSelectedItems: (selectedItems: MRT_RowSelectionState) => void;
-  isPrivilegedMode: boolean;
+  isAdminMode: boolean;
 }) => {
   const [moveItemsDialogOpen, setMoveItemsDialogOpen] =
     React.useState<boolean>(false);
@@ -72,7 +74,7 @@ const MoveItemsButton = (props: {
         disabled={props.selectedItems.length === 0}
         onClick={() => setMoveItemsDialogOpen(true)}
       >
-        {`Move to ${props.isPrivilegedMode ? 'as Admin' : ''}`}
+        {`Move to ${props.isAdminMode ? 'as Admin' : ''}`}
       </Button>
       <SystemItemsDialog
         open={moveItemsDialogOpen}
@@ -80,7 +82,7 @@ const MoveItemsButton = (props: {
         selectedItems={props.selectedItems}
         onChangeSelectedItems={props.onChangeSelectedItems}
         parentSystemId={props.system.id}
-        isPrivilegedMode={props.isPrivilegedMode}
+        isAdminMode={props.isAdminMode}
       />
     </>
   );
@@ -112,8 +114,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
   const [deleteItemDialogOpen, setDeleteItemDialogOpen] =
     React.useState<boolean>(false);
 
-  const [isPrivilegedMode, setIsPrivilegedMode] =
-    React.useState<boolean>(false);
+  const [isAdminDialog, setIsAdminDialog] = React.useState<boolean>(false);
   const [selectedItem, setSelectedItem] = React.useState<Item | undefined>(
     undefined
   );
@@ -248,7 +249,17 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         ? [
             {
               header: 'Number of Spares',
-              Header: TableHeaderOverflowTip,
+              Header: ({
+                column,
+              }: {
+                column: MRT_Column<TableRowData, unknown>;
+              }) => (
+                <SparesColumnHeaderInformationTooltip
+                  title={column.columnDef.header}
+                  sparesDefinition={apiSettings?.spares?.sparesDefinition}
+                />
+              ),
+              TableHeaderOverflowTip,
               // This needs to be a string to allow the AggregatedCell to render correctly.
               // If not, it does not display. This seems to be a Material React Table (MRT) issue.
               accessorFn: (row: TableRowData) =>
@@ -401,7 +412,12 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         size: 300,
       },
     ];
-  }, [isSparesDefinitionDefined, sparesFilterState, usageStatusData]);
+  }, [
+    apiSettings?.spares?.sparesDefinition,
+    isSparesDefinitionDefined,
+    sparesFilterState,
+    usageStatusData,
+  ]);
 
   const initialColumnFilterFnState = React.useMemo(() => {
     return getInitialColumnFilterFnState(columns);
@@ -542,9 +558,9 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           open={true}
           onClose={() => {
             table.setCreatingRow(null);
-            setIsPrivilegedMode(false);
+            setIsAdminDialog(false);
           }}
-          isPrivilegedMode={isPrivilegedMode}
+          isAdminMode={isAdminDialog}
           duplicate={itemDialogType === 'duplicate'}
           requestType={itemDialogType === 'edit' ? 'patch' : 'post'}
           // Intentionally left undefined here as will fetch inside dialog only when needed instead
@@ -579,14 +595,14 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
               selectedItems={selectedItems}
               system={system}
               onChangeSelectedItems={setRowSelection}
-              isPrivilegedMode={false}
+              isAdminMode={false}
             />
             {isAdminMode && (
               <MoveItemsButton
                 selectedItems={selectedItems}
                 system={system}
                 onChangeSelectedItems={setRowSelection}
-                isPrivilegedMode={true}
+                isAdminMode={true}
               />
             )}
           </>
@@ -648,7 +664,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                 aria-label={`Edit item ${row.original.item.id}`}
                 onClick={() => {
                   setItemsDialogType('edit');
-                  setIsPrivilegedMode(true);
+                  setIsAdminDialog(true);
                   table.setCreatingRow(row);
                   closeMenu();
                 }}
@@ -664,7 +680,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                 aria-label={`Duplicate item ${row.original.item.id} as Admin`}
                 onClick={() => {
                   setItemsDialogType('duplicate');
-                  setIsPrivilegedMode(true);
+                  setIsAdminDialog(true);
                   table.setCreatingRow(row);
                   closeMenu();
                 }}
@@ -680,7 +696,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                 aria-label={`Delete item ${row.original.item.id}`}
                 onClick={() => {
                   setDeleteItemDialogOpen(true);
-                  setIsPrivilegedMode(true);
+                  setIsAdminDialog(true);
                   setSelectedItem(row.original.item);
                   closeMenu();
                 }}
@@ -716,9 +732,9 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           open={deleteItemDialogOpen}
           onClose={() => {
             setDeleteItemDialogOpen(false);
-            setIsPrivilegedMode(false);
+            setIsAdminDialog(false);
           }}
-          isPrivilegedMode={isPrivilegedMode}
+          isAdminMode={isAdminDialog}
           item={selectedItem}
           onChangeItem={setSelectedItem}
         />

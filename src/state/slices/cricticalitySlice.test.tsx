@@ -7,7 +7,7 @@ describe('criticalitySlice', () => {
     expect(state).toEqual(initialState);
   });
 
-  it('should update isAdminMode', () => {
+  it('should update isCriticalMode', () => {
     const action = setIsCriticalMode(true);
 
     const state = reducer(initialState, action);

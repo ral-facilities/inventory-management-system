@@ -17,12 +17,27 @@ import { CatalogueCategory } from '../../api/api.types';
 import CriticalityTooltipIcon from '../../common/criticalityTooltipIcon.component';
 import { useAppSelector } from '../../state/hook';
 import { selectCriticality } from '../../state/slices/criticalitySlice';
-import { OverflowTip, formatDateTimeStrings } from '../../utils';
-import { CriticalTooltipText } from './catalogueCardView.component';
+import {
+  formatDateTimeStrings,
+  getCriticalityColor,
+  OverflowTip,
+} from '../../utils';
 export interface CatalogueCardProps {
   table: MRT_TableInstance<CatalogueCategory>;
   card: MRT_Cell<CatalogueCategory>;
 }
+
+export const getCriticalityLabel = (isCritical: boolean | null) => {
+  if (isCritical === true) {
+    return 'This catalogue category is critical.';
+  }
+
+  if (isCritical === false) {
+    return 'This catalogue category is not critical.';
+  }
+
+  return 'Unable to determine if this catalogue category is critical. Please contact support.';
+};
 
 function CatalogueCard(props: CatalogueCardProps) {
   const { table, card } = props;
@@ -36,7 +51,7 @@ function CatalogueCard(props: CatalogueCardProps) {
 
   const { isCriticalMode } = useAppSelector(selectCriticality);
 
-  const showFlagged = isCriticalMode && card.row.original.is_flagged;
+  const showFlagged = card.row.original.is_flagged;
   return (
     <Button
       component={Link}
@@ -51,23 +66,24 @@ function CatalogueCard(props: CatalogueCardProps) {
       }}
     >
       <Card
-        sx={(theme) => ({
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'row',
-          height: '100px',
-          backgroundColor: isSelected
-            ? table.options.mrtTheme.selectedRowBackgroundColor
-            : undefined,
+        sx={(theme) => {
+          const color = isCriticalMode
+            ? getCriticalityColor({ theme, showFlagged })
+            : undefined;
+          return {
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'row',
+            height: '100px',
+            backgroundColor: isSelected
+              ? table.options.mrtTheme.selectedRowBackgroundColor
+              : undefined,
 
-          border: showFlagged
-            ? `2px solid ${theme.palette.error.main}`
-            : undefined,
+            border: isCriticalMode ? `2px solid ${color}` : undefined,
 
-          boxShadow: showFlagged
-            ? `0 0 10px 3px ${theme.palette.error.main}88` // 88 = ~53% opacity for fuzzy glow
-            : undefined,
-        })}
+            boxShadow: isCriticalMode ? `0 0 10px 3px ${color}` : undefined, //  53% opacity for fuzzy glow
+          };
+        }}
       >
         <CardActions>
           <MRT_SelectCheckbox
@@ -80,8 +96,11 @@ function CatalogueCard(props: CatalogueCardProps) {
           />
         </CardActions>
         <CardContent sx={{ display: 'flex', alignItems: 'center', padding: 0 }}>
-          {showFlagged && (
-            <CriticalityTooltipIcon label={CriticalTooltipText} />
+          {isCriticalMode && (
+            <CriticalityTooltipIcon
+              showFlagged={showFlagged}
+              label={getCriticalityLabel(showFlagged)}
+            />
           )}
         </CardContent>
         <CardContent

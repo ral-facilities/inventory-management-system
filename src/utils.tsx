@@ -1,4 +1,5 @@
 import {
+  alpha,
   Link as MuiLink,
   SxProps,
   TableCell,
@@ -78,7 +79,7 @@ export const setLocalStorageToken = (isAdminToken: boolean) => {
       : 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwicm9sZXMiOltdLCJ1c2VySXNBZG1pbiI6ZmFsc2UsImV4cCI6MjUzNDAyMzAwNzk5fQ.JTdyZHZTU2Vd1cZPzsBGBB_hs72KS4LODyhAyKdNTPWMnp_lEs2fmVSqJjSx3mOTW4J40c7LnJcw6ALlCGuEG3DShQKdoYTtH8JLNyzXi9yNYtPlBTEfWqFKK_IYY9sA_WzlQwYDGLD7jsvCvm92CdWjoNtcfDZ0eIfRjHuIRsW5XllerFFE7ouv9awulGCEHv-zl2m0SpMF-mHUYJV9JbB5bgrqs635vYL-IJg_qdr10Cn11BUhO1ulrFrk1QLhty-_L8LC2d2j11xqEuIMlEcVkQ6w79U1uzg-NEYcHzcuuaitQjZzKsDD8eMDT-dBkIPZxDWzlUuySkGUKDJPzw'
   );
 
-  // notify the authProvider class via new window event. This will trigger a reload.
+  // Triggers middleware to recalculate the user's role and update authorisation state
   store.dispatch({ type: TokenUpdatedType });
 };
 
@@ -332,8 +333,9 @@ function getNestedProperty(obj: any, path: string): any {
     .reduce((o, p) => (o && o[p] !== undefined ? o[p] : undefined), obj);
 }
 
-interface ModifiedMRTGroupedCellProps<TData extends MRT_RowData>
-  extends MRTGroupedCellProps<TData> {
+interface ModifiedMRTGroupedCellProps<
+  TData extends MRT_RowData,
+> extends MRTGroupedCellProps<TData> {
   outputType?: 'Link' | 'Date'; // default is Text
 }
 
@@ -692,8 +694,27 @@ export function isExactFilterActive<TData extends MRT_RowData>(
   });
 }
 
-export const criticalityRowStyle = (theme: Theme) => {
+export const getCriticalityColor = (props: {
+  theme: Theme;
+  showFlagged: boolean | null;
+}) => {
+  const { theme, showFlagged } = props;
+  if (showFlagged === null) return theme.palette.warning.main;
+  if (showFlagged === true) return theme.palette.error.main;
+  return theme.palette.success.main;
+};
+
+export const criticalityRowStyle = (props: {
+  theme: Theme;
+  showFlagged: boolean | null;
+}) => {
+  const { theme, showFlagged } = props;
+
+  const color = getCriticalityColor({ theme, showFlagged });
   return {
-    backgroundColor: theme.palette.error.main + '11', // ~7% tint
+    backgroundColor: alpha(
+      color,
+      0.07 // 7% tint
+    ),
   };
 };

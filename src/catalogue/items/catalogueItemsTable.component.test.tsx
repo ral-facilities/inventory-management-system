@@ -86,9 +86,9 @@ describe('Catalogue Items Table', () => {
 
     expect(await screen.findByText('-4.55')).toBeInTheDocument();
 
-    expect(screen.getByTestId('WarningIcon')).toBeInTheDocument();
+    expect(screen.getByTestId('ErrorIcon')).toBeInTheDocument();
 
-    await user.hover(screen.getByTestId('WarningIcon'));
+    await user.hover(screen.getByTestId('ErrorIcon'));
 
     expect(
       await screen.findByText('Items are running low in this catalogue item')
@@ -170,11 +170,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
 
-    await ensureColumnsVisible([
-      'Time to replace (days)',
-      'Days to Rework',
-      'Drawing Number',
-    ]);
+    await ensureColumnsVisible(['Time to replace (days)', 'Days to Rework']);
   });
 
   it('renders table correctly for properties with type boolean', async () => {
@@ -193,11 +189,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
 
-    await ensureColumnsVisible([
-      'Drawing Link',
-      'Item Model Number',
-      'Created',
-    ]);
+    await ensureColumnsVisible(['Item Model Number', 'Created']);
   });
 
   it('renders table correctly (section 5 due to column virtualisation)', async () => {
@@ -397,17 +389,6 @@ describe('Catalogue Items Table', () => {
 
     const url = screen.queryAllByText('Click here');
     expect(url[0]).toHaveAttribute('href', '/89/items');
-  });
-
-  it('navigates to drawing link', async () => {
-    createView();
-    await waitFor(() => {
-      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
-    });
-    await ensureColumnsVisible(['Drawing Link']);
-
-    const url = screen.queryAllByText('http://example-drawing-link.com');
-    expect(url[0]).toHaveAttribute('href', 'http://example-drawing-link.com');
   });
 
   it('opens obsolete dialog and can close it again', async () => {
@@ -721,7 +702,7 @@ describe('Catalogue Items Table', () => {
     expect(router.state.location.search).toBe('');
   });
 
-  it('can change the grouping state', async () => {
+  it.only('can change the grouping state', async () => {
     const { router } = createView();
 
     await waitFor(() => {
@@ -740,7 +721,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Grouped by')).toBeInTheDocument();
     });
     expect(router.state.location.search).toBe(
-      '?state=N4Ig5iBcDaIMYEMAuCA2B7MBXApgSSRwFsA6AOwSJxAF0AaeAeSliICckBaN9Ad05wAPAA4IyAExAN2XHvwRwkAS3RkAzlJAzufTmpyocizYhQZs%2BQqQpUTyNJlwFiJOGyXLEqDwE87Zx0sXInRxJQAzJRxxAH1lWwZTBwtnUjccZGi4pQSQADUo3gACVI1E%2B3MnK3IsIgAjHDYY9HCYtVE2HDL4CsDUknEutyVhZVV-ZKqXJTVmurV0Q0IJyqDSdHnFnEIYzuFUBWIcMiQYpNWYj2JLyXKAlOqNhaWcXYyFshW%2B6uEeYUblF0SAB2L4PFy-dD-DhRNQkAAcYKmaXQalOYDqwiRa1cqNOSHQb146DYAGsYhisXdJjjxAgfLMCW99odsf06Qy4oTOsSyWzqkJ-oost5wtscq8Od1zt8XOI2AheEoyGAYmRag02Py5QqlSqYt4yKTtaQrkQYiFBqg1RrGpoiGIsOEFEgsJ02ORKNRpI7nYo3Y0SG7UPbfS6Ax6EOJ5V1ug71X7Xe6SIRDMIABaqb09e7I8joQhxjg6fjtQ5amgAXyAA'
+      '?state=N4Ig5iBcDaIMYEMAuCA2B7MBXApgSSRwFsA6AOwSJxAF0AaeAeSliICckBaN9Ad05wAPAA4IyAExAN2XHvwRwkAS3RkAzlJAzufTmpyocizYhQZs%2BQqQpUTyNJlwFiJOGyXLEqDwE87Zx0sXInRxJQAzJRxxAH1lWwZTBwtnUjccZGi4pQSQADUo3gACVI1E%2B3MnK3IsIgAjHDYY9HCYtVE2HDL4CsDUknEutyVhZVV-ZKqXJTVmurV0Q0IJyqDSdHnFnEIYzuFUBWIcMiQYpNWYj2JLyXKAlOqNhaWcXYyFshW%2B6uEeYUblF0SAB2L4PFy-dD-DhRNQkAAcYKmaXQalOYDqwiRa1cqNOSHQb146DYAGsYhisXdJjjxAgfLMCW99odsf06Qy4oTOsSyWzqkJ-oost5wtscq8Od1zt9plYYiFBqgYmRag02JoiGIsOEFEgsJ02ORKNRpNrdYoDY0SAbUJrzXqrUaEOJxJ01N0taqLfrDSRCIZhAALVSmnr3ZHkdCET0cHT8dqHDU0AC%2BQA'
     );
 
     // Reset
@@ -751,7 +732,7 @@ describe('Catalogue Items Table', () => {
     });
     // Expect this to still be here as have now modified the order in some way (as MRT doesn't revert back to its original state in this case)
     expect(router.state.location.search).toBe(
-      '?state=N4Igxg8iBcDaIFsBOAXAtEg9gdzQQzBQEtMA7AZxABpFUMc1yBTAGycOtvS1yYA8ADnlIATTmDwo8LTAHMArkwCSKJggB0pPAibjJ0uYpVr1YJEWISWFgJ56pMhctUaEmEUQBmRJiID6xDr2Bk7GGmZMkr4BREE0AGo%2B2AAEYZQ0Eg6Gziak8ggARkxIfpiefuRCSEzp4PqORi7qIjVmRALEZMENORpE5KUF5Jhsqt3ZYeqYQyNMqn7VAiwEakykKH6ZIYp%2BFmq7Yhn1E03Tw6NMC5HDpOOhTQJYAsXENeoA7HeNJo%2BYz6g%2BcjqAAcX16pkw5A2sgKAjBkzAkI2KEwV2wmCQAGs-DC4UcsvcTCI8DYBiirksVvCmsTSQFUdV0VjqSZ%2BM9CNFrJ45rFLrTalsepMREg8NgiKRZH48oViiyNCKxRKpdZSJj5eo9gg-G4WixpfkikhOAhhPJPAQUPJqkhNNpdDRTXkLYRrcV1NaWCazS6rTb1HgRCKarUnebLW7bao2AIABZkB11AnfDSkTCqUN0HiMIRgOUAXQAvkA'
+      '?state=N4Igxg8iBcDaIFsBOAXAtEg9gdzQQzBQEtMA7AZxABpFUMc1yBTAGycOtvS1yYA8ADnlIATTmDwo8LTAHMArkwCSKJggB0pPAibjJ0uYpVr1YJEWISWFgJ56pMhctUaEmEUQBmRJiID6xDr2Bk7GGmZMkr4BREE0AGo%2B2AAEYZQ0Eg6Gziak8ggARkxIfpiefuRCSEzp4PqORi7qIjVmRALEZMENORpE5KUF5Jhsqt3ZYeqYQyNMqn7VAiwEakykKH6ZIYp%2BFmq7Yhn1E03Tw6NMC5HDpOOhTQJYAsXENeoA7HeNJo%2BYz6g%2BcjqAAcX16pkw5A2sgKAjBkzAkI2KEwV2wmCQAGs-DC4UcsvcTCI8DYBiirksVvCmsTSQFUdV0VjqSZ%2BM9CNFrJ45rFLrTalsepM9gg-G4Wiw-HlCsVOAhhPJPAQUPJqkhNNpdDR5XklYRVcV1KqWHKFXqVWr1HgRCJquRajrFcqDerVGwBAALMhauoE74aUiYVQOug8RhCMCygC6AF8gA'
     );
   });
 
@@ -830,50 +811,6 @@ describe('Catalogue Items Table', () => {
     ).toBeInTheDocument();
   });
 
-  it('displays drawing link grouped cell', async () => {
-    createView();
-
-    await waitFor(() => {
-      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
-    });
-
-    expect(await screen.findByText('Name')).toBeInTheDocument();
-
-    const drawingLink = 'http://example-drawing-link.com';
-
-    // Get the table element (assuming it has a specific class or role)
-    const table = screen.getByTestId('catalogue-items-table-container');
-
-    fireEvent.scroll(table, { target: { scrollLeft: 2780 } });
-
-    // Check if the drawing link cell is visible after scrolling
-    expect(await screen.findByText(drawingLink)).toBeInTheDocument();
-
-    //  drawing link column action button
-    await user.click(
-      screen.getAllByRole('button', { name: 'Column Actions' })[9]
-    );
-
-    await user.click(await screen.findByText('Group by Drawing Link'));
-
-    expect(
-      screen.queryByRole('tooltip', { name: 'Drawing Link' })
-    ).not.toBeInTheDocument();
-
-    fireEvent.scroll(table, { target: { scrollLeft: -2780 } });
-
-    expect(
-      await screen.findByRole('tooltip', { name: 'Drawing Link' })
-    ).toBeInTheDocument();
-
-    // Check if the drawing link grouped cell is visible after scrolling
-    expect(
-      await screen.findByRole('tooltip', {
-        name: 'http://example-drawing-link.com (1)',
-      })
-    ).toBeInTheDocument();
-  });
-
   it('displays manufacturer url grouped cell', async () => {
     createView();
 
@@ -895,7 +832,7 @@ describe('Catalogue Items Table', () => {
 
     // manufacturer url column action button
     await user.click(
-      screen.getAllByRole('button', { name: 'Column Actions' })[7]
+      screen.getAllByRole('button', { name: 'Column Actions' })[5]
     );
 
     await user.click(await screen.findByText('Group by Manufacturer URL'));

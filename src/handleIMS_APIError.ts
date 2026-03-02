@@ -17,7 +17,7 @@ const handleIMS_APIError = (error: AxiosError, broadcast = true): void => {
   // due to the plugin its routing from being different). It is assumed that errors of this nature
   // should not be possible due to SciGateway verifying the user itself, so we follow DataGateway's
   // approach and don't display any of these errors.
-  if (broadcast && status !== 403) {
+  if (broadcast && status !== 401) {
     let broadcastMessage;
     if (!error.response)
       // No response so it's a network error

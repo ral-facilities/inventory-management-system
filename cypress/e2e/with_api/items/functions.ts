@@ -146,10 +146,13 @@ export const editProperty = () => {
   }).click();
 
   cy.findAllByLabelText('Row Actions').eq(4).click();
-  cy.findByLabelText('Edit property Shape').click();
+  cy.findByLabelText('Edit property Shape as admin').click();
 
   cy.findByLabelText('Property Name *').clear();
   cy.findByLabelText('Property Name *').type('Type');
+
+  cy.findByLabelText('Select Unit').click();
+  cy.findByRole('option', { name: 'mm' }).click();
 
   cy.findByRole('button', { name: 'Add list item' }).click();
   cy.findAllByLabelText('List item').last().type('flat');
@@ -165,17 +168,17 @@ export const editProperty = () => {
   cy.findByText('Spherical Lenses').click();
   cy.findByText('Plano-Convex Lens').click();
 
-  cy.findByText('Type').should('exist');
+  cy.findByText('Type (mm)').should('exist');
 
   cy.findByText('Items').click();
 
   cy.findAllByText('MX4332424').first().click();
-  cy.findByText('Type').should('exist');
+  cy.findByText('Type (mm)').should('exist');
   cy.findByRole('button', { name: 'items landing page actions menu' }).click();
   cy.findByText('Edit').click();
   cy.findByRole('button', { name: 'Next' }).click();
   cy.findByRole('button', { name: 'Next' }).click();
-  cy.findByLabelText('Type *').click();
+  cy.findByLabelText('Type (mm) *').click();
   cy.findByRole('option', { name: 'flat' }).click();
   cy.findByDisplayValue('flat').should('exist');
 
@@ -232,6 +235,44 @@ export const addProperty = () => {
   cy.findAllByText('MX4332424').first().click();
   cy.findByText('Shape').should('exist');
   cy.findByText('convex').should('exist');
+
+  cy.findByText('Items').click();
+};
+
+export const deleteProperty = () => {
+  cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
+  cy.findByText('Lenses').click();
+  cy.findByRole('button', {
+    name: `Card Actions`,
+  }).click();
+
+  cy.findByRole('menuitem', {
+    name: `edit Spherical Lenses catalogue category button`,
+  }).click();
+
+  cy.findAllByLabelText('Row Actions').eq(4).click();
+  cy.findByLabelText('Delete property Type as admin').click();
+
+  cy.findByRole('button', { name: 'Continue' }).should('be.disabled');
+
+  cy.findByRole('checkbox', {
+    name: 'Confirm understanding and proceed checkbox',
+  }).click();
+
+  cy.findByRole('button', { name: 'Continue' }).click();
+  cy.findByRole('button', { name: 'Close' }).click();
+
+  cy.findByText('Spherical Lenses').click();
+  cy.findByText('Plano-Convex Lens').click();
+
+  cy.findByText('Substrate').should('exist');
+  cy.findByText('Type').should('not.exist');
+
+  cy.findByText('Items').click();
+
+  cy.findAllByText('MX4332424').first().click();
+  cy.findByText('Substrate').should('exist');
+  cy.findByText('Type').should('not.exist');
 
   cy.findByText('Items').click();
 };

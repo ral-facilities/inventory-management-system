@@ -39,9 +39,9 @@ describe('Catalogue Item Layout', () => {
       expect(screen.getByText('Wavefront Sensors 31')).toBeInTheDocument();
     });
 
-    expect(screen.getByTestId('WarningIcon')).toBeInTheDocument();
+    expect(screen.getByTestId('ErrorIcon')).toBeInTheDocument();
 
-    await user.hover(screen.getByTestId('WarningIcon'));
+    await user.hover(screen.getByTestId('ErrorIcon'));
 
     expect(
       await screen.findByText('Items are running low in this catalogue item')

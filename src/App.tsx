@@ -274,7 +274,7 @@ export function Layout() {
       dispatch(
         setAuthorisation({
           role,
-          isPrivilegedUser: privilegedRoles.includes(role),
+          isAdminUser: privilegedRoles.includes(role),
         })
       );
     });
@@ -290,7 +290,7 @@ export function Layout() {
     if (requestPluginRerender.match(action)) forceUpdate();
     else if (tokenRefreshed.match(action)) {
       retryFailedAuthRequests();
-      store.dispatch({ type: TokenUpdatedType }); // triggers refresh in authProvider
+      store.dispatch({ type: TokenUpdatedType }); // Triggers middleware to recalculate the user's role and update authorisation state
     } else if (broadcastSignOut.match(action)) clearFailedAuthRequestsQueue();
   }
 

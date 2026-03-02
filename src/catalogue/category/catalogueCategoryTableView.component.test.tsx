@@ -142,7 +142,7 @@ describe('CatalogueCategoryTableView', () => {
           name: 'Energy Meters',
           parent_id: '1',
           code: 'energy-meters',
-          is_flagged: false,
+          is_flagged: null,
           is_leaf: true,
           properties: [
             {
@@ -397,14 +397,25 @@ describe('CatalogueCategoryTableView', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByTestId('WarningIcon')).toBeInTheDocument();
+      expect(screen.getByTestId('ErrorIcon')).toBeInTheDocument();
     });
+
+    await user.hover(screen.getByTestId('ErrorIcon'));
+
+    expect(
+      await screen.findByText('This catalogue category is critical.')
+    ).toBeInTheDocument();
+    await user.hover(screen.getAllByTestId('CheckCircleIcon')[0]);
+
+    expect(
+      await screen.findByText('This catalogue category is not critical.')
+    ).toBeInTheDocument();
 
     await user.hover(screen.getByTestId('WarningIcon'));
 
     expect(
       await screen.findByText(
-        'A catalogue category is considered critical if any of its nested child categories or catalogue items are marked as critical.'
+        'Unable to determine if this catalogue category is critical. Please contact support.'
       )
     ).toBeInTheDocument();
   });
