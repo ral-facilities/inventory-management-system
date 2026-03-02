@@ -1,7 +1,7 @@
 import { createBooleanLocalStorage } from './storage';
 
-describe('isAdminModeStorage', () => {
-  const isAdminModeStorage = createBooleanLocalStorage('test');
+describe('createBooleanLocalStorage', () => {
+  const testBooleanStorage = createBooleanLocalStorage('test');
   const localStorageGetItemMock = vi.spyOn(
     window.localStorage.__proto__,
     'getItem'
@@ -28,7 +28,7 @@ describe('isAdminModeStorage', () => {
     it('should return true when stored value is "true"', () => {
       localStorageGetItemMock.mockImplementationOnce(() => 'true');
 
-      const result = isAdminModeStorage.load();
+      const result = testBooleanStorage.load();
 
       expect(result).toBe(true);
       expect(localStorageGetItemMock).toHaveBeenCalledWith(KEY);
@@ -37,7 +37,7 @@ describe('isAdminModeStorage', () => {
     it('should return false when stored value is "false"', () => {
       localStorageGetItemMock.mockImplementationOnce(() => 'false');
 
-      const result = isAdminModeStorage.load();
+      const result = testBooleanStorage.load();
 
       expect(result).toBe(false);
     });
@@ -45,7 +45,7 @@ describe('isAdminModeStorage', () => {
     it('should return undefined when value is missing', () => {
       localStorageGetItemMock.mockImplementationOnce(() => null);
 
-      const result = isAdminModeStorage.load();
+      const result = testBooleanStorage.load();
 
       expect(result).toBeUndefined();
     });
@@ -53,7 +53,7 @@ describe('isAdminModeStorage', () => {
     it('should return undefined for an invalid value', () => {
       localStorageGetItemMock.mockImplementationOnce(() => 'garbage');
 
-      const result = isAdminModeStorage.load();
+      const result = testBooleanStorage.load();
 
       expect(result).toBeUndefined();
     });
@@ -61,13 +61,13 @@ describe('isAdminModeStorage', () => {
 
   describe('save', () => {
     it('should store "true"', () => {
-      isAdminModeStorage.save(true);
+      testBooleanStorage.save(true);
 
       expect(localStorageSetItemMock).toHaveBeenCalledWith(KEY, 'true');
     });
 
     it('should store "false"', () => {
-      isAdminModeStorage.save(false);
+      testBooleanStorage.save(false);
 
       expect(localStorageSetItemMock).toHaveBeenCalledWith(KEY, 'false');
     });
@@ -75,7 +75,7 @@ describe('isAdminModeStorage', () => {
 
   describe('clear', () => {
     it('should remove the key from localStorage', () => {
-      isAdminModeStorage.clear();
+      testBooleanStorage.clear();
 
       expect(localStorageRemoveItemMock).toHaveBeenCalledWith(KEY);
     });
