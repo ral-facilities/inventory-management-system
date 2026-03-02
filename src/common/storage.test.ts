@@ -1,6 +1,6 @@
 import { createBooleanLocalStorage } from './storage';
 
-describe('adminModeStorage', () => {
+describe('isAdminModeStorage', () => {
   const isAdminModeStorage = createBooleanLocalStorage('test');
   const localStorageGetItemMock = vi.spyOn(
     window.localStorage.__proto__,
@@ -24,7 +24,7 @@ describe('adminModeStorage', () => {
     localStorage.clear();
   });
 
-  describe('loadIsAdminMode', () => {
+  describe('load', () => {
     it('should return true when stored value is "true"', () => {
       localStorageGetItemMock.mockImplementationOnce(() => 'true');
 
@@ -59,7 +59,7 @@ describe('adminModeStorage', () => {
     });
   });
 
-  describe('saveIsAdminMode', () => {
+  describe('save', () => {
     it('should store "true"', () => {
       isAdminModeStorage.save(true);
 
@@ -73,7 +73,7 @@ describe('adminModeStorage', () => {
     });
   });
 
-  describe('clearIsAdminMode', () => {
+  describe('clear', () => {
     it('should remove the key from localStorage', () => {
       isAdminModeStorage.clear();
 
