@@ -23,7 +23,7 @@ const CriticalitySettingsMenuItem = () => {
         <GppMaybeIcon />
       </ListItemIcon>
       <ListItemText
-        primary={`Switch to critical mode ${isCriticalMode ? 'off' : 'on'}`}
+        primary={`Switch critical mode ${isCriticalMode ? 'off' : 'on'}`}
       />
     </MenuItem>
   );
