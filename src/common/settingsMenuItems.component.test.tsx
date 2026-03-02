@@ -44,12 +44,12 @@ describe('Settings Menu Items component', () => {
       };
       const { store } = createView(state);
 
-      const adminToggleButton = screen.getByText('Switch to admin mode');
+      const adminToggleButton = screen.getByText('Switch admin mode on');
 
       await user.click(adminToggleButton);
 
       expect(
-        await screen.findByText('Switch to normal mode')
+        await screen.findByText('Switch admin mode off')
       ).toBeInTheDocument();
 
       expect(store.getState().authorisation.isAdminMode).toStrictEqual(true);
@@ -58,7 +58,7 @@ describe('Settings Menu Items component', () => {
     it('does not display admin toggle if user is not a admin user', () => {
       createView();
       expect(
-        screen.queryByText('Switch to admin mode')
+        screen.queryByText('Switch admin mode on')
       ).not.toBeInTheDocument();
     });
   });

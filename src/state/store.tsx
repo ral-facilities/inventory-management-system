@@ -1,45 +1,45 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import {
-  clearIsAdminMode,
-  loadIsAdminMode,
-  saveIsAdminMode,
-} from '../common/storage';
+import { authorisationStorage, criticalityStorage } from '../common/storage';
 import { getUserRole } from '../parseTokens';
 import { createAuthListenerMiddleware } from './middleware/authorisationMiddleware';
+import { createCriticalListenerMiddleware } from './middleware/criticalityMiddleware';
 import authorisationReducer, {
-  initialState as authInitialSlice,
+  initialState as initialAuthSlice,
 } from './slices/authorisationSlice';
 import configReducer from './slices/configSlice';
+import criticalityReducer, {
+  initialState as initialCriticalState,
+} from './slices/criticalitySlice';
 
-export interface StorageDeps {
-  loadIsAdminMode: () => boolean | undefined;
-  saveIsAdminMode: (v: boolean) => void;
-  clearIsAdminMode: () => void;
-}
-
-const authorisationStorage: StorageDeps = {
-  loadIsAdminMode,
-  saveIsAdminMode,
-  clearIsAdminMode,
+const storageRegistry = {
+  authorisation: authorisationStorage,
+  criticality: criticalityStorage,
 };
+
+export type StorageRegistry = typeof storageRegistry;
 
 const rootReducer = combineReducers({
   config: configReducer,
   authorisation: authorisationReducer,
+  criticality: criticalityReducer,
 });
 
 export function configureAppStore(
   preloadedState?: Partial<RootState>,
   getUserRoleFn: () => string = getUserRole,
-  storageDeps: StorageDeps = authorisationStorage
+  storageRegistryDict: StorageRegistry = storageRegistry
 ) {
   const authListenerMiddleware = createAuthListenerMiddleware(
     getUserRoleFn,
-    storageDeps
+    storageRegistryDict
   );
 
+  const criticalityListenerMiddleware =
+    createCriticalListenerMiddleware(storageRegistryDict);
+
   // hydrate admin mode safely
-  const hydratedIsAdminMode = storageDeps.loadIsAdminMode();
+  const hydratedIsAdminMode = storageRegistryDict.authorisation.load();
+  const hydratedIsCriticalMode = storageRegistryDict.criticality.load();
 
   const mergedPreloaded: Partial<RootState> = {
     ...preloadedState,
@@ -48,14 +48,22 @@ export function configureAppStore(
       ...(hydratedIsAdminMode !== undefined
         ? { isAdminMode: hydratedIsAdminMode }
         : {}),
-    } as typeof authInitialSlice,
+    } as typeof initialAuthSlice,
+    criticality: {
+      ...(preloadedState?.criticality ?? {}),
+      ...((hydratedIsCriticalMode !== undefined
+        ? { isCriticalMode: hydratedIsCriticalMode }
+        : {}) as typeof initialCriticalState),
+    },
   };
 
   return configureStore({
     reducer: rootReducer,
     preloadedState: mergedPreloaded,
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().prepend(authListenerMiddleware.middleware),
+      getDefaultMiddleware()
+        .prepend(authListenerMiddleware.middleware)
+        .prepend(criticalityListenerMiddleware.middleware),
   });
 }
 

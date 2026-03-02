@@ -30,6 +30,7 @@ import UsageStatusJSON from './mocks/UsageStatuses.json';
 import { URLPathKeyType, paths } from './paths';
 import { initialState as initialAuthState } from './state/slices/authorisationSlice';
 import { initialState as initialConfigState } from './state/slices/configSlice';
+import { initialState as initialCriticalState } from './state/slices/criticalitySlice';
 import { RootState, configureAppStore } from './state/store';
 
 export const createTestQueryClient = (): QueryClient =>
@@ -213,6 +214,7 @@ export const getUsageStatusByValue = (value: string): UsageStatus => {
 export const getInitialState = (): RootState => ({
   config: initialConfigState,
   authorisation: initialAuthState,
+  criticality: initialCriticalState,
 });
 
 export const CREATED_MODIFIED_TIME_VALUES = {
