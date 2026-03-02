@@ -1,5 +1,12 @@
 import AddIcon from '@mui/icons-material/Add';
-import { Box, Button, TableCellBaseProps, TableRow } from '@mui/material';
+import InfoOutlined from '@mui/icons-material/InfoOutlined';
+import {
+  Box,
+  Button,
+  TableCellBaseProps,
+  TableRow,
+  Tooltip,
+} from '@mui/material';
 import {
   MaterialReactTable,
   useMaterialReactTable,
@@ -12,10 +19,10 @@ import CriticalityTooltipIcon from '../../common/criticalityTooltipIcon.componen
 import { useAppSelector } from '../../state/hook';
 import { selectCriticality } from '../../state/slices/criticalitySlice';
 import {
+  COLUMN_FILTER_BOOLEAN_OPTIONS,
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
   COLUMN_FILTER_VARIANTS,
-  OverflowTip,
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
   criticalityRowStyle,
@@ -23,6 +30,7 @@ import {
   generateUniqueName,
   mrtTheme,
 } from '../../utils';
+import { getCriticalityLabel } from './catalogueCard.component';
 import { CriticalTooltipText } from './catalogueCardView.component';
 import CatalogueCategoryDialog from './catalogueCategoryDialog.component';
 
@@ -52,7 +60,6 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
     selectedCategories.map((category) => {
       return category.id;
     });
-
   const { isCriticalMode } = useAppSelector(selectCriticality);
 
   const catalogueCategoryNames: string[] =
@@ -62,6 +69,32 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
   const columns = React.useMemo<MRT_ColumnDef<CatalogueCategory>[]>(() => {
     return [
       {
+        header: 'Is Critical',
+        Header: ({ column }) => (
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Tooltip title={CriticalTooltipText}>
+              <InfoOutlined sx={{ mr: 1 }} fontSize="small" />
+            </Tooltip>
+            {column.columnDef.header}
+          </Box>
+        ),
+        accessorFn: (row: CatalogueCategory) => (row.is_flagged ? 'Yes' : 'No'),
+        id: 'is_flagged',
+        filterVariant: COLUMN_FILTER_VARIANTS.boolean,
+        enableColumnFilterModes: false,
+        size: 180,
+        filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
+        Cell: ({ row }) => {
+          const showFlagged = row.original.is_flagged;
+          return (
+            <CriticalityTooltipIcon
+              showFlagged={showFlagged}
+              label={getCriticalityLabel(showFlagged)}
+            />
+          );
+        },
+      },
+      {
         header: 'Name',
         accessorFn: (row) => row.name,
         id: 'name',
@@ -69,17 +102,6 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
         size: 567.5,
-        Cell: ({ renderedCellValue, row }) => {
-          const showFlagged = row.original.is_flagged && isCriticalMode;
-          return (
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              {showFlagged && (
-                <CriticalityTooltipIcon label={CriticalTooltipText} />
-              )}
-              <OverflowTip>{renderedCellValue}</OverflowTip>
-            </Box>
-          );
-        },
       },
       {
         header: 'Last modified',
@@ -88,13 +110,13 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
         filterVariant: COLUMN_FILTER_VARIANTS.datetime,
         filterFn: COLUMN_FILTER_FUNCTIONS.datetime,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.datetime,
-        size: 567.5,
+        size: 400,
         enableGrouping: false,
         Cell: ({ row }) =>
           formatDateTimeStrings(row.original.modified_time, true),
       },
     ];
-  }, [isCriticalMode]);
+  }, []);
 
   const table = useMaterialReactTable({
     // Data
@@ -111,6 +133,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
     enableStickyHeader: true,
     enableRowSelection: false,
     enableDensityToggle: false,
+    enableColumnResizing: true,
     enableColumnFilters: true,
     enableHiding: false,
     enableFullScreenToggle: false,
@@ -129,6 +152,9 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
       showColumnFilters: true,
       showGlobalFilter: true,
       pagination: { pageSize: 5, pageIndex: 0 },
+      columnVisibility: {
+        is_flagged: isCriticalMode,
+      },
     },
     state: {
       showProgressBars: catalogueCategoryDataLoading, //or showSkeletons
@@ -142,7 +168,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
           (requestType !== 'moveTo' ||
             !selectedCatalogueCategoryIds.includes(row.original.id))) ||
         requestType === 'standard';
-      const showFlagged = row.original.is_flagged && isCriticalMode;
+      const showFlagged = row.original.is_flagged;
       return {
         component: TableRow,
         onClick: () => {
@@ -151,7 +177,8 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
         'aria-label': `${row.original.name} row`,
         sx: (theme) => ({
           cursor: canPlaceHere ? 'pointer' : 'not-allowed',
-          ...(showFlagged && criticalityRowStyle(theme)),
+          ...(isCriticalMode &&
+            criticalityRowStyle({ theme, showFlagged: showFlagged })),
         }),
       };
     },
@@ -232,6 +259,14 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
       </Box>
     ),
   });
+
+  React.useEffect(() => {
+    if (isCriticalMode !== table.getState().columnVisibility['is_flagged'])
+      table.setColumnVisibility((prev) => ({
+        ...prev,
+        is_flagged: isCriticalMode,
+      }));
+  }, [isCriticalMode, table]);
 
   return <MaterialReactTable table={table} />;
 };

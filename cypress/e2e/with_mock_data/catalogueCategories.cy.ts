@@ -57,26 +57,28 @@ describe('Catalogue Category', () => {
     cy.findByText('Actuators').should('not.exist');
   });
 
-  it('shows critical catalogue categories and filter button', () => {
+  it('shows all criticality states of catalogue categories and the filter button', () => {
     cy.visit('/catalogue');
     cy.setMode({ critical: true });
 
-    cy.findByRole('button', { name: 'Show Critical Items' }).should('exist');
-    cy.findByTestId('WarningIcon').should('exist');
-    cy.findByTestId('WarningIcon').trigger('mouseover');
-    cy.findByText(
-      'A catalogue category is considered critical if any of its nested child categories or catalogue items are flagged as critical.'
+    cy.findByRole('button', { name: 'Show Critical Categories' }).should(
+      'exist'
     );
-    cy.findByText('Beam Characterization').click();
+    cy.findByTestId('ErrorIcon').should('exist');
+    cy.findByTestId('ErrorIcon').trigger('mouseover');
+    cy.findByText('This catalogue category is critical.');
 
     cy.findByTestId('WarningIcon').should('exist');
     cy.findByTestId('WarningIcon').trigger('mouseover');
     cy.findByText(
-      'A catalogue category is considered critical if any of its nested child categories or catalogue items are flagged as critical.'
+      'Unable to determine if this catalogue category is critical. Please contact support.'
     );
+
+    cy.findAllByTestId('CheckCircleIcon').first().trigger('mouseover');
+    cy.findByText('This catalogue category is not critical.');
   });
 
-  it('shows critical catalogue categories in the move and copy to catalogue category table', () => {
+  it('shows all criticality states of catalogue categories in the move and copy to catalogue category table', () => {
     cy.visit('/catalogue');
     cy.setMode({ critical: true });
 
@@ -95,11 +97,27 @@ describe('Catalogue Category', () => {
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.findByTestId('WarningIcon').should('exist');
-        cy.findByTestId('WarningIcon').trigger('mouseover');
+        cy.findByTestId('ErrorIcon').should('exist');
+        cy.findByTestId('ErrorIcon').trigger('mouseover');
+      });
+    cy.findByText('This catalogue category is critical.');
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findAllByTestId('CheckCircleIcon').first().trigger('mouseover');
+      });
+    cy.findByText('This catalogue category is not critical.');
+
+    cy.findByRole('button', { name: 'Go to page 2' }).click();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findAllByTestId('WarningIcon').first().trigger('mouseover');
       });
     cy.findByText(
-      'A catalogue category is considered critical if any of its nested child categories or catalogue items are flagged as critical.'
+      'Unable to determine if this catalogue category is critical. Please contact support.'
     );
   });
 

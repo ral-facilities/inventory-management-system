@@ -460,6 +460,11 @@ function CatalogueCardView() {
         {isCriticalMode && (
           <Button
             sx={{ mx: 0.5 }}
+            startIcon={
+              <Tooltip title={CriticalTooltipText}>
+                <InfoOutlined />
+              </Tooltip>
+            }
             variant="outlined"
             disabled={isCriticalFilterApplied}
             onClick={() => {
@@ -468,7 +473,7 @@ function CatalogueCardView() {
               ]);
             }}
           >
-            Show Critical Items
+            Show Critical Categories
           </Button>
         )}
         <Button

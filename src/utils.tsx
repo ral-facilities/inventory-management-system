@@ -694,8 +694,27 @@ export function isExactFilterActive<TData extends MRT_RowData>(
   });
 }
 
-export const criticalityRowStyle = (theme: Theme) => {
+export const getCriticalityColor = (props: {
+  theme: Theme;
+  showFlagged: boolean | null;
+}) => {
+  const { theme, showFlagged } = props;
+  if (showFlagged === null) return theme.palette.warning.main;
+  if (showFlagged === true) return theme.palette.error.main;
+  return theme.palette.success.main;
+};
+
+export const criticalityRowStyle = (props: {
+  theme: Theme;
+  showFlagged: boolean | null;
+}) => {
+  const { theme, showFlagged } = props;
+
+  const color = getCriticalityColor({ theme, showFlagged });
   return {
-    backgroundColor: alpha(theme.palette.error.main, 0.07), // ~7% tint
+    backgroundColor: alpha(
+      color,
+      0.07 // 7% tint
+    ),
   };
 };
