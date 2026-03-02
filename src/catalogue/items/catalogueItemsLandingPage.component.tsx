@@ -386,55 +386,6 @@ function CatalogueItemsLandingPage() {
                             </Typography>
                           </Grid>
 
-                          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-                            <Typography
-                              align="left"
-                              sx={{
-                                color: 'text.primary',
-                              }}
-                            >
-                              Drawing Number
-                            </Typography>
-                            <Typography
-                              align="left"
-                              sx={{
-                                color: 'text.secondary',
-                                wordWrap: 'break-word',
-                              }}
-                            >
-                              {catalogueItemIdData.drawing_number ?? 'None'}
-                            </Typography>
-                          </Grid>
-
-                          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-                            <Typography
-                              align="left"
-                              sx={{
-                                color: 'text.primary',
-                              }}
-                            >
-                              Drawing link
-                            </Typography>
-                            <Typography
-                              align="left"
-                              sx={{
-                                color: 'text.secondary',
-                                wordWrap: 'break-word',
-                              }}
-                            >
-                              {catalogueItemIdData.drawing_link ? (
-                                <MuiLink
-                                  underline="hover"
-                                  target="_blank"
-                                  href={catalogueItemIdData.drawing_link}
-                                >
-                                  {catalogueItemIdData.drawing_link}
-                                </MuiLink>
-                              ) : (
-                                'None'
-                              )}
-                            </Typography>
-                          </Grid>
 
                           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
                             <Typography
