@@ -36,7 +36,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "4",
@@ -103,7 +103,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "4",
@@ -170,7 +170,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "4",
@@ -237,7 +237,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "4",
@@ -304,7 +304,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "4",
@@ -371,7 +371,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "4",
@@ -438,7 +438,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "4",
@@ -505,7 +505,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "4",
@@ -572,7 +572,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "4",
@@ -639,7 +639,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "4",
@@ -706,7 +706,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "4",
@@ -773,7 +773,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "4",
@@ -840,7 +840,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "4",
@@ -907,7 +907,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "4",
@@ -974,7 +974,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "4",
@@ -1041,7 +1041,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "4",
@@ -1108,7 +1108,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "4",
@@ -1175,7 +1175,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "4",
@@ -1242,7 +1242,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "4",
@@ -1309,7 +1309,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "4",
@@ -1376,7 +1376,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "4",
@@ -1443,7 +1443,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "4",
@@ -1510,7 +1510,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "4",
@@ -1577,7 +1577,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "4",
@@ -1644,7 +1644,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "4",
@@ -1711,7 +1711,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "5",
@@ -1750,7 +1750,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "5",
@@ -1789,7 +1789,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "5",
@@ -1828,7 +1828,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "5",
@@ -1867,7 +1867,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "6",
@@ -1906,7 +1906,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": false
+    "is_flagged": null
   },
   {
     "catalogue_category_id": "6",
@@ -1984,7 +1984,7 @@
     "number_of_spares": 1,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "9",
@@ -2023,7 +2023,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "9",
@@ -2062,7 +2062,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "9",
@@ -2101,7 +2101,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "11",
@@ -2140,7 +2140,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "11",
@@ -2179,7 +2179,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "12",
@@ -2225,7 +2225,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "12",
@@ -2271,7 +2271,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "12",
@@ -2317,7 +2317,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "12",
@@ -2363,7 +2363,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "13",
@@ -2402,7 +2402,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "13",
@@ -2441,7 +2441,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "14",
@@ -2480,7 +2480,7 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   },
   {
     "catalogue_category_id": "14",
@@ -2519,6 +2519,6 @@
     "number_of_spares": 0,
     "number_of_spares_required": null,
     "criticality": null,
-    "is_flagged": null
+    "is_flagged": false
   }
 ]

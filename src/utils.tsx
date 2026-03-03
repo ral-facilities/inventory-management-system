@@ -718,3 +718,27 @@ export const criticalityRowStyle = (props: {
     ),
   };
 };
+
+export const criticalityCardStyle = (props: {
+  theme: Theme;
+  showFlagged: boolean | null;
+}) => {
+  const { theme, showFlagged } = props;
+  const color = getCriticalityColor({ theme, showFlagged });
+
+  return {
+    border: `2px solid ${color}`,
+    boxShadow: `0 0 10px 3px ${alpha(color, 0.53)}`, // 88 = ~53% opacity for fuzzy glow
+  };
+};
+
+export const criticalityHeaderStyle = (props: {
+  theme: Theme;
+  showFlagged: boolean | null;
+}) => {
+  const { theme, showFlagged } = props;
+  return {
+    ...criticalityCardStyle({ theme, showFlagged }),
+    borderRadius: 5,
+  };
+};

@@ -18,8 +18,8 @@ import CriticalityTooltipIcon from '../../common/criticalityTooltipIcon.componen
 import { useAppSelector } from '../../state/hook';
 import { selectCriticality } from '../../state/slices/criticalitySlice';
 import {
+  criticalityCardStyle,
   formatDateTimeStrings,
-  getCriticalityColor,
   OverflowTip,
 } from '../../utils';
 export interface CatalogueCardProps {
@@ -66,24 +66,16 @@ function CatalogueCard(props: CatalogueCardProps) {
       }}
     >
       <Card
-        sx={(theme) => {
-          const color = isCriticalMode
-            ? getCriticalityColor({ theme, showFlagged })
-            : undefined;
-          return {
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'row',
-            height: '100px',
-            backgroundColor: isSelected
-              ? table.options.mrtTheme.selectedRowBackgroundColor
-              : undefined,
-
-            border: isCriticalMode ? `2px solid ${color}` : undefined,
-
-            boxShadow: isCriticalMode ? `0 0 10px 3px ${color}` : undefined, //  53% opacity for fuzzy glow
-          };
-        }}
+        sx={(theme) => ({
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'row',
+          height: '100px',
+          backgroundColor: isSelected
+            ? table.options.mrtTheme.selectedRowBackgroundColor
+            : undefined,
+          ...(isCriticalMode && criticalityCardStyle({ theme, showFlagged })),
+        })}
       >
         <CardActions>
           <MRT_SelectCheckbox

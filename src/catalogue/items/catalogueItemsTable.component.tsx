@@ -74,6 +74,19 @@ import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import CatalogueLink from './catalogueLink.component';
 import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
 import ObsoleteCatalogueItemDialog from './obsoleteCatalogueItemDialog.component';
+
+export const getCICriticalityLabel = (showFlagged: boolean | null) => {
+  if (showFlagged === true) {
+    return 'This catalogue item is critical.';
+  }
+
+  if (showFlagged === false) {
+    return 'This catalogue item is not critical.';
+  }
+
+  return 'Unable to determine if this catalogue item is critical. If the expected lifetime is "None" please update this field. Otherwise wait until this is recalculated.';
+};
+
 const MoveCatalogueItemsButton = (props: {
   selectedItems: CatalogueItem[];
   onChangeSelectedItems: (selectedItems: MRT_RowSelectionState) => void;
@@ -248,6 +261,24 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     const viewCatalogueItemProperties = parentInfo.properties ?? [];
     return [
       {
+        header: 'Is Critical',
+        accessorFn: (row) => (row.catalogueItem.is_flagged ? 'Yes' : 'No'),
+        id: 'catalogueItem.is_flagged',
+        filterVariant: COLUMN_FILTER_VARIANTS.boolean,
+        enableColumnFilterModes: false,
+        size: 180,
+        filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
+        Cell: ({ row }) => {
+          const showFlagged = row.original.catalogueItem.is_flagged;
+          return (
+            <CriticalityTooltipIcon
+              showFlagged={showFlagged}
+              label={getCICriticalityLabel(showFlagged)}
+            />
+          );
+        },
+      },
+      {
         header: 'Name',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem.name,
@@ -255,32 +286,22 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
-        size: 250,
+        size: dense ? 500 : 250,
         Cell: ({ row, renderedCellValue }) => {
-          const showFlagged =
-            row.original.catalogueItem.is_flagged && isCriticalMode;
           return (
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              {isCriticalMode && (
-                <CriticalityTooltipIcon
-                  label={'Items are running low in this catalogue item'}
-                  showFlagged={showFlagged}
-                />
+            <OverflowTip sx={{ fontSize: 'inherit' }}>
+              {dense ? (
+                renderedCellValue
+              ) : (
+                <MuiLink
+                  underline="hover"
+                  component={Link}
+                  to={`${row.original.catalogueItem.id}`}
+                >
+                  {renderedCellValue}
+                </MuiLink>
               )}
-              <OverflowTip sx={{ fontSize: 'inherit' }}>
-                {dense ? (
-                  renderedCellValue
-                ) : (
-                  <MuiLink
-                    underline="hover"
-                    component={Link}
-                    to={`${row.original.catalogueItem.id}`}
-                  >
-                    {renderedCellValue}
-                  </MuiLink>
-                )}
-              </OverflowTip>
-            </Box>
+            </OverflowTip>
           );
         },
 
@@ -703,7 +724,6 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   }, [
     apiSettings?.spares?.sparesDefinition,
     dense,
-    isCriticalMode,
     isSparesDefinitionDefined,
     parentInfo.properties,
     sparesFilterState,
@@ -755,6 +775,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     initialState: {
       columnVisibility: {
         'catalogueItem.created_time': false,
+        'catalogueItem.is_flagged': isCriticalMode,
         'catalogueItem.criticality': isCriticalMode,
       },
       pagination: { pageSize: dense ? 5 : 15, pageIndex: 0 },
@@ -768,7 +789,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     columns: dense
       ? [
           { ...columns[0], size: undefined },
-          { ...columns[2], size: undefined },
+          { ...columns[1], size: undefined },
+          { ...columns[3], size: undefined },
         ]
       : columns, // If dense only show the name column
     data: tableRows ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
@@ -1108,14 +1130,20 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   });
 
   React.useEffect(() => {
-    if (
-      isCriticalMode !==
-      table.getState().columnVisibility['catalogueItem.criticality']
-    )
-      table.setColumnVisibility((prev) => ({
+    table.setColumnVisibility((prev) => {
+      const nextOn = isCriticalMode;
+      const same =
+        prev['catalogueItem.criticality'] === nextOn &&
+        prev['catalogueItem.is_flagged'] === nextOn;
+
+      if (same) return prev;
+
+      return {
         ...prev,
-        'catalogueItem.criticality': isCriticalMode,
-      }));
+        'catalogueItem.criticality': nextOn,
+        'catalogueItem.is_flagged': nextOn,
+      };
+    });
   }, [isCriticalMode, table]);
 
   return (

@@ -5,6 +5,8 @@ import { useGetCatalogueItem } from '../../api/catalogueItems';
 import CriticalityTooltipIcon from '../../common/criticalityTooltipIcon.component';
 import { useAppSelector } from '../../state/hook';
 import { selectCriticality } from '../../state/slices/criticalitySlice';
+import { criticalityHeaderStyle } from '../../utils';
+import { getCICriticalityLabel } from './catalogueItemsTable.component';
 
 function CatalogueItemLayout() {
   const { catalogue_item_id: catalogueItemId, item_id: itemId } = useParams();
@@ -13,7 +15,7 @@ function CatalogueItemLayout() {
   const location = useLocation();
   const { isCriticalMode } = useAppSelector(selectCriticality);
 
-  const showFlagged = catalogueItem?.is_flagged;
+  const showFlagged = catalogueItem?.is_flagged ?? null;
 
   const getPageSubtitle = () => {
     // Check for individual item detail page (has item_id param)
@@ -41,10 +43,22 @@ function CatalogueItemLayout() {
           gap: 0.5,
         }}
       >
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Box
+          sx={(theme) => ({
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+
+            width: '100%',
+            gap: 1,
+            padding: 1,
+            ...(isCriticalMode &&
+              criticalityHeaderStyle({ theme, showFlagged })),
+          })}
+        >
           {isCriticalMode && (
             <CriticalityTooltipIcon
-              label={'Items are running low in this catalogue item'}
+              label={getCICriticalityLabel(showFlagged)}
               showFlagged={showFlagged}
             />
           )}

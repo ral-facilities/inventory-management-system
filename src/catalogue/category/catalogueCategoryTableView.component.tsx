@@ -261,11 +261,15 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
   });
 
   React.useEffect(() => {
-    if (isCriticalMode !== table.getState().columnVisibility['is_flagged'])
-      table.setColumnVisibility((prev) => ({
+    table.setColumnVisibility((prev) => {
+      const nextOn = isCriticalMode;
+      if (prev.is_flagged === nextOn) return prev;
+
+      return {
         ...prev,
-        is_flagged: isCriticalMode,
-      }));
+        is_flagged: nextOn,
+      };
+    });
   }, [isCriticalMode, table]);
 
   return <MaterialReactTable table={table} />;
