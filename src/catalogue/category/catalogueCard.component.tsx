@@ -62,7 +62,7 @@ function CatalogueCard(props: CatalogueCardProps) {
         width: '100%',
         textDecoration: 'none',
         color: 'inherit',
-        position: 'relative', // Make the parent container relative
+        position: 'relative',
       }}
     >
       <Card

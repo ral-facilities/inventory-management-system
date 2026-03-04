@@ -702,7 +702,7 @@ describe('Catalogue Items Table', () => {
     expect(router.state.location.search).toBe('');
   });
 
-  it.only('can change the grouping state', async () => {
+  it('can change the grouping state', async () => {
     const { router } = createView();
 
     await waitFor(() => {

@@ -728,7 +728,7 @@ export const criticalityCardStyle = (props: {
 
   return {
     border: `2px solid ${color}`,
-    boxShadow: `0 0 10px 3px ${alpha(color, 0.53)}`, // 88 = ~53% opacity for fuzzy glow
+    boxShadow: `0 0 10px 3px ${alpha(color, 0.53)}`, // 53% opacity for fuzzy glow
   };
 };
 
