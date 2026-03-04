@@ -15,7 +15,7 @@ const getIcon = (showFlagged: boolean | null) => {
       <WarningIcon
         sx={(theme) => ({
           pr: 1,
-          fontSize: '35px',
+          fontSize: '36px',
           color: theme.palette.warning.main,
         })}
       />

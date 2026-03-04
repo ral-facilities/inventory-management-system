@@ -26,7 +26,7 @@ exports[`CriticalityTooltipIcon > renders correctly (showFlagged=null) 1`] = `
     <svg
       aria-hidden="true"
       aria-label="test"
-      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1vxd69-MuiSvgIcon-root"
+      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1xvssuy-MuiSvgIcon-root"
       data-mui-internal-clone-element="true"
       data-testid="WarningIcon"
       focusable="false"
