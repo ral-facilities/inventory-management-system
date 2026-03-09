@@ -823,11 +823,12 @@ describe('Catalogue Items', () => {
     );
 
     cy.findByText('Cameras 25').should('exist');
+    cy.findByText('Cameras 1').should('not.exist');
 
     cy.findByRole('button', { name: 'Clear Filters' }).click();
 
+    cy.findByText('Cameras 25').should('exist');
     cy.findByText('Cameras 1').should('exist');
-    cy.findByText('Cameras 25').should('not.exist');
 
     cy.location('search').should('eq', '');
   });
