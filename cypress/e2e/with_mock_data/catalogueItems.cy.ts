@@ -436,11 +436,9 @@ describe('Catalogue Items', () => {
     cy.findByText('Wavefront Sensors 31').should('exist');
     cy.findByText('Wavefront Sensors 30').should('exist');
 
-    cy.findByTestId('WarningIcon').should('exist');
-    cy.findByTestId('WarningIcon').trigger('mouseover');
-    cy.findByText('Items are running low in this catalogue item').should(
-      'exist'
-    );
+    cy.findByTestId('ErrorIcon').should('exist');
+    cy.findByTestId('ErrorIcon').trigger('mouseover');
+    cy.findByText('This catalogue item is critical.').should('exist');
   });
 
   it('displays the catalogue item landing page (Criticality)', () => {
@@ -448,12 +446,10 @@ describe('Catalogue Items', () => {
 
     cy.setMode({ critical: true });
 
-    cy.findByTestId('WarningIcon').should('exist');
-    cy.findByTestId('WarningIcon').trigger('mouseover');
-    cy.findByText('Items are running low in this catalogue item').should(
-      'exist'
-    );
-    cy.findAllByText('-4.55').should('have.length', 2);
+    cy.findByTestId('ErrorIcon').should('exist');
+    cy.findByTestId('ErrorIcon').trigger('mouseover');
+    cy.findByText('This catalogue item is critical.').should('exist');
+    cy.findAllByText('-4.6').should('have.length', 2);
   });
 
   it('navigates to the landing page and navigates back to the table view', () => {
@@ -528,8 +524,6 @@ describe('Catalogue Items', () => {
     cy.findByRole('link', { name: 'Manufacturer A' }).click();
     cy.url().should('contain', '/manufacturers/1');
   });
-
- 
 
   it('checks the href property of the manufacturer link', () => {
     cy.findByRole('button', { name: 'Show/Hide columns' }).click();
@@ -785,6 +779,7 @@ describe('Catalogue Items', () => {
   });
 
   it('check table state persists on page reload', () => {
+    cy.setMode({ critical: false });
     cy.findByText('Cameras 1').should('exist');
     cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
 
@@ -795,7 +790,7 @@ describe('Catalogue Items', () => {
     cy.findByRole('link', { name: 'Cameras 15' }).should('exist');
     cy.location('search').should(
       'eq',
-      '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJMoGAngA5NoIAM4YATglr4W7TkJABhBsXFoRAAgCMAVhABffQF19QA'
+      '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJMoGAngA5NoIAM4YATglr4W7TkJABhBsXFoRAAgCMAVhABffQF1WYAGoIR3dFjxEyFGmHHFMxJAH0MCRjABmOCLEhkA'
     );
 
     cy.reload();
@@ -804,11 +799,12 @@ describe('Catalogue Items', () => {
     cy.findByText('Cameras 1').should('not.exist');
     cy.location('search').should(
       'eq',
-      '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJMoGAngA5NoIAM4YATglr4W7TkJABhBsXFoRAAgCMAVhABffQF19QA'
+      '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJMoGAngA5NoIAM4YATglr4W7TkJABhBsXFoRAAgCMAVhABffQF1WYAGoIR3dFjxEyFGmHHFMxJAH0MCRjABmOCLEhkA'
     );
   });
 
   it('can load and clear date filters', () => {
+    cy.setMode({ critical: true });
     cy.visit(
       '/catalogue/4/items?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0luSCAZgsUgPoYKXEgA0IANxwkY8EBgCeABx7QQSTD35DsIuQCYADOoAsAWk0BGAwGYAKps3RL1zdUuaAWiAC%2BvUJJmoAzhgBOCAB2%2BHyCwrIgrgC6LjFAA'
     );
@@ -967,7 +963,9 @@ describe('Catalogue Items', () => {
   it('can navigate to an items page from the table view', () => {
     cy.visit('/catalogue/5');
 
-    cy.findAllByRole('link', { name: 'Click here' }).eq(0).click();
+    cy.findAllByRole('link', { name: 'Click here' }).first().scrollIntoView();
+
+    cy.findAllByRole('link', { name: 'Click here' }).first().click();
 
     cy.url().should('contain', 'catalogue/5/items/89/items');
   });
@@ -1131,7 +1129,7 @@ describe('Catalogue Items', () => {
           number_of_spares: 0,
           number_of_spares_required: null,
           criticality: null,
-          is_flagged: null,
+          is_flagged: false,
         })
       );
       expect(JSON.stringify(await patchRequests[1].json())).equal(
@@ -1160,7 +1158,7 @@ describe('Catalogue Items', () => {
           number_of_spares: 0,
           number_of_spares_required: null,
           criticality: null,
-          is_flagged: null,
+          is_flagged: false,
         })
       );
     });

@@ -20,6 +20,7 @@ import {
 import Grid from '@mui/material/Grid2';
 import {
   MRT_BottomToolbar,
+  MRT_Column,
   MRT_ColumnDef,
   MRT_TopToolbar,
   useMaterialReactTable,
@@ -54,6 +55,7 @@ import CatalogueCard from './catalogueCard.component';
 import CatalogueCategoryDialog from './catalogueCategoryDialog.component';
 
 import InfoOutlined from '@mui/icons-material/InfoOutlined';
+import { APISettingsContext } from '../../apiConfigProvider.component';
 import ErrorPage from '../../common/errorPage.component';
 import MRTTopTableAlert from '../../common/mrtTopTableAlert.component';
 import { useAppSelector } from '../../state/hook';
@@ -198,6 +200,9 @@ function CatalogueCardView() {
     !catalogueCategoryId ? 'null' : catalogueCategoryId
   );
 
+  const apiSettings = React.useContext(APISettingsContext);
+  const isSparesDefinitionDefined = !!apiSettings.spares;
+
   const catalogueCategoryNames: string[] = catalogueCategoryData
     ? catalogueCategoryData.map((item) => item.name)
     : [];
@@ -323,25 +328,34 @@ function CatalogueCardView() {
         filterSelectOptions: ['Catalogue Categories', 'Catalogue Items'],
         enableGrouping: false,
       },
-      {
-        header: 'Is Critical',
-        Header: ({ column }) => (
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Tooltip title={CriticalTooltipText}>
-              <InfoOutlined sx={{ mr: 1 }} fontSize="small" />
-            </Tooltip>
-            <OverflowTip>{column.columnDef.header}</OverflowTip>
-          </Box>
-        ),
-        accessorFn: (row: CatalogueCategory) => (row.is_flagged ? 'Yes' : 'No'),
-        id: 'is_flagged',
-        filterVariant: COLUMN_FILTER_VARIANTS.boolean,
-        enableColumnFilterModes: false,
-        size: 200,
-        filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
-      },
+      ...(isSparesDefinitionDefined
+        ? [
+            {
+              header: 'Is Critical',
+              Header: ({
+                column,
+              }: {
+                column: MRT_Column<CatalogueCategory, unknown>;
+              }) => (
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Tooltip title={CriticalTooltipText}>
+                    <InfoOutlined sx={{ mr: 1 }} fontSize="small" />
+                  </Tooltip>
+                  <OverflowTip>{column.columnDef.header}</OverflowTip>
+                </Box>
+              ),
+              accessorFn: (row: CatalogueCategory) =>
+                row.is_flagged ? 'Yes' : 'No',
+              id: 'is_flagged',
+              filterVariant: COLUMN_FILTER_VARIANTS.boolean,
+              enableColumnFilterModes: false,
+              size: 200,
+              filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
+            },
+          ]
+        : []),
     ];
-  }, [propertyNames]);
+  }, [isSparesDefinitionDefined, propertyNames]);
 
   const initialColumnFilterFnState = React.useMemo(() => {
     return getInitialColumnFilterFnState(columns);
@@ -458,7 +472,7 @@ function CatalogueCardView() {
             </Button>
           </>
         )}
-        {isCriticalMode && (
+        {isCriticalMode && isSparesDefinitionDefined && (
           <Button
             sx={{ mx: 0.5 }}
             startIcon={

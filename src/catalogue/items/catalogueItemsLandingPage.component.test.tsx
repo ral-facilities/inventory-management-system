@@ -65,7 +65,7 @@ describe('Catalogue Items Landing Page', () => {
     });
 
     expect(screen.getAllByText('Criticality:')).toHaveLength(2);
-    expect(screen.getAllByText('-4.55')).toHaveLength(2);
+    expect(screen.getAllByText('-4.6')).toHaveLength(2);
   });
 
   it('renders text correctly (critical mode on without expected lifetime)', async () => {

@@ -24,10 +24,25 @@ import PrimaryImage from '../../common/images/primaryImage.component';
 import TabView from '../../common/tab/tabView.component';
 import { useAppSelector } from '../../state/hook';
 import { selectCriticality } from '../../state/slices/criticalitySlice';
-import { formatDateTimeStrings } from '../../utils';
+import { formatDateTimeStrings, roundUpTenth } from '../../utils';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
+import { getCICriticalityLabel } from './catalogueItemsTable.component';
 import CatalogueLink from './catalogueLink.component';
 
+export const CriticalityInfoToolTip = () => {
+  return (
+    <Tooltip
+      title={getCICriticalityLabel(null)}
+      placement="top"
+      enterTouchDelay={0}
+      arrow
+      aria-label="Criticality Warning"
+      sx={{ ml: 2 }}
+    >
+      <InfoOutlinedIcon />
+    </Tooltip>
+  );
+};
 const CatalogueItemsActionMenu = (props: {
   catalogueItem: CatalogueItem;
   catalogueCategory: CatalogueCategory;
@@ -84,22 +99,6 @@ function CatalogueItemsLandingPage() {
     catalogueItemIdData?.manufacturer_id
   );
 
-  const CriticalityInfoToolTip = () => {
-    return (
-      <Tooltip
-        title={
-          'The criticality is none as the expected lifetime field is None, please edit this field'
-        }
-        placement="top"
-        enterTouchDelay={0}
-        arrow
-        aria-label="Criticality Warning"
-        sx={{ ml: 2 }}
-      >
-        <InfoOutlinedIcon />
-      </Tooltip>
-    );
-  };
   return (
     <Stack sx={{ width: '100%' }}>
       {catalogueItemIdData && catalogueCategoryData && isParentCorrect && (
@@ -173,7 +172,7 @@ function CatalogueItemsLandingPage() {
                             {typeof catalogueItemIdData.expected_lifetime_days !==
                             'number'
                               ? 'None'
-                              : catalogueItemIdData.criticality}
+                              : roundUpTenth(catalogueItemIdData.criticality)}
                           </Typography>
 
                           {typeof catalogueItemIdData.expected_lifetime_days !==
@@ -261,6 +260,37 @@ function CatalogueItemsLandingPage() {
                         <Grid container spacing={1}>
                           {isSparesDefinitionDefined && (
                             <>
+                              {isCriticalMode && (
+                                <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+                                  <Typography
+                                    align="left"
+                                    sx={{
+                                      color: 'text.primary',
+                                    }}
+                                  >
+                                    Criticality:
+                                  </Typography>
+                                  <Box
+                                    sx={{
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                    }}
+                                  >
+                                    <Typography
+                                      align="left"
+                                      sx={{
+                                        color: 'text.secondary',
+                                      }}
+                                    >
+                                      {roundUpTenth(
+                                        catalogueItemIdData.criticality
+                                      ) ?? 'None'}
+                                    </Typography>
+                                    {catalogueItemIdData.criticality ===
+                                      null && <CriticalityInfoToolTip />}
+                                  </Box>
+                                </Grid>
+                              )}
                               <Grid size={{ xs: 12, sm: 6, md: 4 }}>
                                 <Typography
                                   align="left"
@@ -286,7 +316,6 @@ function CatalogueItemsLandingPage() {
                                   </MuiLink>
                                 </Typography>
                               </Grid>
-
                               {isCriticalMode && (
                                 <Grid size={{ xs: 12, sm: 6, md: 4 }}>
                                   <Typography
@@ -295,7 +324,7 @@ function CatalogueItemsLandingPage() {
                                       color: 'text.primary',
                                     }}
                                   >
-                                    Criticality:
+                                    Number of spares required:
                                   </Typography>
                                   <Box
                                     sx={{
@@ -309,11 +338,25 @@ function CatalogueItemsLandingPage() {
                                         color: 'text.secondary',
                                       }}
                                     >
-                                      {catalogueItemIdData.criticality ??
-                                        'None'}
+                                      {roundUpTenth(
+                                        catalogueItemIdData.number_of_spares_required
+                                      ) ?? 'None'}
                                     </Typography>
-                                    {typeof catalogueItemIdData.expected_lifetime_days !==
-                                      'number' && <CriticalityInfoToolTip />}
+                                    {catalogueItemIdData.number_of_spares_required ===
+                                      null && (
+                                      <Tooltip
+                                        title={
+                                          'Unable to determine if the number of spares required for this catalogue item. If the expected lifetime is "None" please update this field. Otherwise wait until this is recalculated.'
+                                        }
+                                        placement="top"
+                                        enterTouchDelay={0}
+                                        arrow
+                                        aria-label="number of spares required warning"
+                                        sx={{ ml: 2 }}
+                                      >
+                                        <InfoOutlinedIcon />
+                                      </Tooltip>
+                                    )}
                                   </Box>
                                 </Grid>
                               )}
@@ -479,7 +522,6 @@ function CatalogueItemsLandingPage() {
                                 'None'}
                             </Typography>
                           </Grid>
-
 
                           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
                             <Typography

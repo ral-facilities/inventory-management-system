@@ -742,3 +742,15 @@ export const criticalityHeaderStyle = (props: {
     borderRadius: 5,
   };
 };
+
+export function roundUpTenth(x?: number | null) {
+  if (typeof x !== 'number') return x;
+
+  if (x > 0) {
+    // Positive: round up
+    return Math.ceil(x * 10) / 10;
+  } else {
+    // Negative: round down
+    return Math.floor(x * 10) / 10;
+  }
+}
