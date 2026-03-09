@@ -143,11 +143,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
 
-    await ensureColumnsVisible([
-      'Time to replace (days)',
-      'Days to Rework',
-      'Drawing Number',
-    ]);
+    await ensureColumnsVisible(['Time to replace (days)', 'Days to Rework']);
   });
 
   it('renders table correctly for properties with type boolean', async () => {
@@ -166,11 +162,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
 
-    await ensureColumnsVisible([
-      'Drawing Link',
-      'Item Model Number',
-      'Created',
-    ]);
+    await ensureColumnsVisible(['Item Model Number', 'Created']);
   });
 
   it('renders table correctly (section 5 due to column virtualisation)', async () => {
@@ -370,17 +362,6 @@ describe('Catalogue Items Table', () => {
 
     const url = screen.queryAllByText('Click here');
     expect(url[0]).toHaveAttribute('href', '/89/items');
-  });
-
-  it('navigates to drawing link', async () => {
-    createView();
-    await waitFor(() => {
-      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
-    });
-    await ensureColumnsVisible(['Drawing Link']);
-
-    const url = screen.queryAllByText('http://example-drawing-link.com');
-    expect(url[0]).toHaveAttribute('href', 'http://example-drawing-link.com');
   });
 
   it('opens obsolete dialog and can close it again', async () => {
@@ -713,7 +694,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Grouped by')).toBeInTheDocument();
     });
     expect(router.state.location.search).toBe(
-      '?state=N4Ig5iBcDaIMYEMAuCA2B7MBXApgSSRwFsA6AOwSJxAF0AaeAeSliICckBaN9Ad05wAPAA4IyAExAN2XHvwRwkAS3RkAzlJAzufTmpyocizYhQZs%2BQqQpUTyNJlwFiJIunFKAZkpziA%2Bsq2DKYOFs6kcGw4yL4BSkEgAGo%2BvAAE4RrB9uZOVuRYRABGOGx%2B6J5%2BaqJRmfDZjpYu4jhqkUrCyqp2Zg3hJEpqZYVq6IaE3aG5LujDoziEflHCqArEOGRIfiE5OH5KVnuSWT1heTMjY7tRCCNkEzt9wjzCJcotJADs9715T%2BgvHB8ahIAA5vqcXHB0GpNmBCsJwVMItDNkh0IscLx0GwANZ%2BOEI46TRqkcQIACegzRGOWq0RJJIZMpAXRUSxuPpfSEL0UsVQXnm8V2TNq2x%2BTTYCF4SjIYD8ZAKxTYnLy4kl0tlfn5ZBxKpc%2B2IfjczVQ8sVJU0RDEWE8CiQWCibHIlGo0mttsUDpKJAdqEt7rtXqdCHEapatStCo99sdJEIhmEAAtVK66ickeR0IQIxwdPwqqtlTQAL5AA'
+      '?state=N4Ig5iBcDaIMYEMAuCA2B7MBXApgSSRwFsA6AOwSJxAF0AaeAeSliICckBaN9Ad05wAPAA4IyAExAN2XHvwRwkAS3RkAzlJAzufTmpyocizYhQZs%2BQqQpUTyNJlwFiJIunFKAZkpziA%2Bsq2DKYOFs6kcGw4yL4BSkEgAGo%2BvAAE4RrB9uZOVuRYRABGOGx%2B6J5%2BaqJRmfDZjpYu4jhqkUrCyqp2Zg3hJEpqZYVq6IaE3aG5LujDoziEflHCqArEOGRIfiE5OH5KVnuSWT1heTMjY7tRCCNkEzt9wjzCJcotJADs9715T%2BgvHB8ahIAA5vqcXHB0GpNmBCsJwVMItDNkh0IscLx0GwANZ%2BOEI46TRqkcQIACegzRGOWq0RJJIZMpAXRUSxuPpfSEL0UsVQXnm8V2TNq2x%2BLn2xD8bmaqD8ZAKxTYmiIYiwngUSCwUTY5Eo1Gkao1im1JRI2tQKqNmtNuoQ4nENVqqoVxq1OpIhEMwgAFqoDXUTkjyOhCM6ODp%2BFVVsqaABfIA'
     );
 
     // Reset
@@ -724,7 +705,7 @@ describe('Catalogue Items Table', () => {
     });
     // Expect this to still be here as have now modified the order in some way (as MRT doesn't revert back to its original state in this case)
     expect(router.state.location.search).toBe(
-      '?state=N4Igxg8iBcDaIFsBOAXAtEg9gdzQQzBQEtMA7AZxABpFUMc1yBTAGycOtvS1yYA8ADnlIATTmDwo8LTAHMArkwCSKJggB0pPAibjJ0uYpVr1CTCKIAzIkxEB9Yjr1SZC5ao1gkTSbYdEnGgA1G2wAAmMEShoJF0N3E1J5BAAjJiQ7TEs7ciFvaPB9VyMPdREmci8iAWIyZwM3SPUickyU8kw2VXrihI1Mds6mVTtvARYCNSZSFDtYhsU7Ig8lsRii%2BKaBjq6mUZ8O0h7N0oEsAXTiCvUAdmPG0-PLm3J1AA57kpMwTHJZ2RSAk%2BfXUPz%2BDkw%2B2wmCQAGs7ACges4g8TCI8ABPVooSFjCZgXTIhYg9FYiFQmGw4FNfgXQh%2BFhWYYBPakgrzXpNERIPDYIikWR2JKpdLU0rc3n8wWM0hUomc0rLNR2MzlFhC5JpJCcBDCeSWAgoeTeJCabSExB6g2EY3pdTGlg6q2G22mvAibkVAq6pLWo0m9SqNgCAAWZAtHJOiUwqm9dB4jCEBO1AF0AL5AA'
+      '?state=N4Igxg8iBcDaIFsBOAXAtEg9gdzQQzBQEtMA7AZxABpFUMc1yBTAGycOtvS1yYA8ADnlIATTmDwo8LTAHMArkwCSKJggB0pPAibjJ0uYpVr1CTCKIAzIkxEB9Yjr1SZC5ao1gkTSbYdEnGgA1G2wAAmMEShoJF0N3E1J5BAAjJiQ7TEs7ciFvaPB9VyMPdREmci8iAWIyZwM3SPUickyU8kw2VXrihI1Mds6mVTtvARYCNSZSFDtYhsU7Ig8lsRii%2BKaBjq6mUZ8O0h7N0oEsAXTiCvUAdmPG0-PLm3J1AA57kpMwTHJZ2RSAk%2BfXUPz%2BDkw%2B2wmCQAGs7ACges4g8TCI8ABPVooSFjCZgXTIhYg9FYiFQmGw4FNfgXQh%2BFhWYYBPakgrzXpNZZqOxmcosOxJVLpTgIYTySwEFDybxITTaQmIcWSwgy9LqGUsUXKqVquV4EQifIFMVJFXS2XqVRsAQACzIio5J0SmFUJroPEYQgJSBAAF0AL5AA'
     );
   });
 
@@ -803,50 +784,6 @@ describe('Catalogue Items Table', () => {
     ).toBeInTheDocument();
   });
 
-  it('displays drawing link grouped cell', async () => {
-    createView();
-
-    await waitFor(() => {
-      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
-    });
-
-    expect(await screen.findByText('Name')).toBeInTheDocument();
-
-    const drawingLink = 'http://example-drawing-link.com';
-
-    // Get the table element (assuming it has a specific class or role)
-    const table = screen.getByTestId('catalogue-items-table-container');
-
-    fireEvent.scroll(table, { target: { scrollLeft: 2780 } });
-
-    // Check if the drawing link cell is visible after scrolling
-    expect(await screen.findByText(drawingLink)).toBeInTheDocument();
-
-    //  drawing link column action button
-    await user.click(
-      screen.getAllByRole('button', { name: 'Column Actions' })[9]
-    );
-
-    await user.click(await screen.findByText('Group by Drawing Link'));
-
-    expect(
-      screen.queryByRole('tooltip', { name: 'Drawing Link' })
-    ).not.toBeInTheDocument();
-
-    fireEvent.scroll(table, { target: { scrollLeft: -2780 } });
-
-    expect(
-      await screen.findByRole('tooltip', { name: 'Drawing Link' })
-    ).toBeInTheDocument();
-
-    // Check if the drawing link grouped cell is visible after scrolling
-    expect(
-      await screen.findByRole('tooltip', {
-        name: 'http://example-drawing-link.com (1)',
-      })
-    ).toBeInTheDocument();
-  });
-
   it('displays manufacturer url grouped cell', async () => {
     createView();
 
@@ -868,7 +805,7 @@ describe('Catalogue Items Table', () => {
 
     // manufacturer url column action button
     await user.click(
-      screen.getAllByRole('button', { name: 'Column Actions' })[7]
+      screen.getAllByRole('button', { name: 'Column Actions' })[5]
     );
 
     await user.click(await screen.findByText('Group by Manufacturer URL'));

@@ -136,7 +136,7 @@ const CatalogueCategoryDirectoryDialog = (
     <Dialog
       open={open}
       maxWidth="lg"
-      PaperProps={{ sx: { height: '692px' } }}
+      slotProps={{ paper: { sx: { height: 'xl' } } }}
       fullWidth
     >
       <DialogTitle sx={{ marginLeft: 2 }}>

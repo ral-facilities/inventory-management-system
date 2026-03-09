@@ -20,12 +20,12 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Setup Node.js
         uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
         with:
-          node-version: 22.22
+          node-version: 24.13.1
           cache: 'yarn'
 
       - name: Install dependencies
@@ -46,9 +46,10 @@ jobs:
 
       - name: Upload test results to Codecov
         if: ${{ !cancelled() }}
-        uses: codecov/test-results-action@0fa95f0e1eeaafde2c782583b36b28ad0d8c77d3 # v1.2.1
+        uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5.5.2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          report-type: test_results
 
   e2e-tests:
     name: End-to-End (with mock data) Tests
@@ -56,12 +57,12 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Setup Node.js
         uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
         with:
-          node-version: 22.22
+          node-version: 24.13.1
           cache: 'yarn'
 
       - name: Install dependencies
@@ -73,7 +74,7 @@ jobs:
 
       - name: Upload Cypress screenshots
         if: failure()
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: Inventory management system Screenshots
           path: cypress/screenshots
@@ -185,12 +186,12 @@ jobs:
           harbor.stfc.ac.uk/scd-object-storage-api/object-storage-api:develop
 
       - name: Checkout repo
-        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Setup Node.js
         uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
         with:
-          node-version: 22.22
+          node-version: 24.13.1
           cache: 'yarn'
 
       - name: Install dependencies
@@ -222,7 +223,7 @@ jobs:
 
       - name: Upload Cypress screenshots
         if: failure()
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: Inventory management system (with api) Screenshots
           path: cypress/screenshots
@@ -234,12 +235,12 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Setup Node.js
         uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
         with:
-          node-version: 22.22
+          node-version: 24.13.1
           cache: 'yarn'
 
       - name: Install dependencies
@@ -262,7 +263,7 @@ jobs:
       PUSH_DOCKER_IMAGE_TO_HARBOR: ${{ inputs.push-docker-image-to-harbor != null && inputs.push-docker-image-to-harbor || 'false' }}
     steps:
       - name: Check out repo
-        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Login to Harbor
         uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3.7.0
@@ -278,7 +279,7 @@ jobs:
           images: ${{ secrets.HARBOR_URL }}/ims
 
       - name: ${{ fromJSON(env.PUSH_DOCKER_IMAGE_TO_HARBOR) && 'Build and push Docker image to Harbor' || 'Build Docker image' }}
-        uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6.19.2
         with:
           context: .
           file: ./Dockerfile.prod

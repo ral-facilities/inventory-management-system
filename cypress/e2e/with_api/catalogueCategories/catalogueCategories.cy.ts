@@ -10,9 +10,9 @@ import {
 
 describe('Catalogue Category', () => {
   beforeEach(() => {
-    cy.setCurrentUserToAdmin();
     cy.dropIMSCollections(['catalogue_categories', 'units']);
     cy.visit('/catalogue');
+    cy.setMode({ admin: true });
   });
   afterEach(() => {
     cy.clearMocks();

@@ -72,7 +72,6 @@ describe('Items', () => {
       'High-resolution cameras for beam characterization. 1'
     ).should('exist');
     cy.findByText('Obsolete reason').should('exist');
-    cy.findByText('Drawing Number').should('exist');
 
     cy.findByRole('link', { name: 'Cameras' }).click();
 
@@ -409,8 +408,8 @@ describe('Items', () => {
   });
 
   it('displays add dialog in admin view when user is admin', () => {
-    cy.setCurrentUserToAdmin();
     cy.visit('/catalogue/4/items/1/items');
+    cy.setMode({ admin: true });
 
     cy.findByRole('button', { name: 'Add Item as Admin' }).click();
 
@@ -1826,8 +1825,8 @@ describe('Items', () => {
   });
 
   it('displays edit dialog in admin view when user is admin', () => {
-    cy.setCurrentUserToAdmin();
     cy.visit('/catalogue/9/items/11/items');
+    cy.setMode({ admin: true });
     cy.findAllByLabelText('Row Actions').last().click();
     cy.findByText('Edit as Admin').click();
 
@@ -1985,8 +1984,8 @@ describe('Items', () => {
   });
 
   it('admin user can bypass delete rules and delete dialog is in admin view', () => {
-    cy.setCurrentUserToAdmin();
     cy.visit('/catalogue/4/items/1/items');
+    cy.setMode({ admin: true });
 
     cy.findAllByLabelText('Row Actions').first().click();
     cy.findByText('Delete as Admin').click();

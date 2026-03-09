@@ -29,6 +29,7 @@ import CatalogueLayout, {
 import CatalogueCardView from './catalogue/category/catalogueCardView.component';
 import CatalogueItemsLandingPage from './catalogue/items/catalogueItemsLandingPage.component';
 import CatalogueItemsPage from './catalogue/items/catalogueItemsPage.component';
+import SettingsMenuItems from './common/settingsMenuItems.component';
 import handleIMS_APIError from './handleIMS_APIError';
 import {
   HomePage,
@@ -272,7 +273,7 @@ export function Layout() {
       dispatch(
         setAuthorisation({
           role,
-          isPrivilegedUser: privilegedRoles.includes(role),
+          isAdminUser: privilegedRoles.includes(role),
         })
       );
     });
@@ -312,6 +313,7 @@ export function Layout() {
                   }
                 >
                   <ViewTabs />
+                  <SettingsMenuItems />
                   <ReactQueryDevtools initialIsOpen={false} />
                 </React.Suspense>
               </ConnectedPreloader>

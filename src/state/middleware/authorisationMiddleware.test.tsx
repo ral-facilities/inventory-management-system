@@ -1,13 +1,25 @@
 import { TokenUpdatedType } from '../actions/actions.types';
-import { configureAppStore } from '../store';
+import { setAuthorisation, setIsAdminMode } from '../slices/authorisationSlice';
+import { configureAppStore, StorageRegistry } from '../store';
 
 describe('authListenerMiddleware', () => {
   let store: ReturnType<typeof configureAppStore>;
   let mockGetUserRole: () => string;
+  let storageRegistryDict: StorageRegistry;
 
   beforeEach(() => {
     mockGetUserRole = vi.fn().mockReturnValue('admin');
-    store = configureAppStore(undefined, mockGetUserRole);
+    const storageDeps = {
+      save: vi.fn(),
+      clear: vi.fn(),
+      load: vi.fn(),
+    };
+    storageRegistryDict = {
+      authorisation: storageDeps,
+      criticality: storageDeps,
+    };
+
+    store = configureAppStore(undefined, mockGetUserRole, storageRegistryDict);
   });
 
   it('sets authorisation when token is updated', async () => {
@@ -17,6 +29,28 @@ describe('authListenerMiddleware', () => {
 
     const state = store.getState();
     expect(state.authorisation.role).toBe('admin');
-    expect(state.authorisation.isPrivilegedUser).toBe(true);
+    expect(state.authorisation.isAdminUser).toBe(true);
+  });
+
+  it('should save admin mode when user is admin', async () => {
+    store.dispatch(setAuthorisation({ role: 'admin', isAdminUser: true }));
+
+    store.dispatch(setIsAdminMode(true));
+
+    await Promise.resolve();
+
+    expect(storageRegistryDict.authorisation.save).toHaveBeenCalledWith(true);
+    expect(storageRegistryDict.authorisation.clear).not.toHaveBeenCalled();
+  });
+
+  it('should clear admin mode when user is not admin', async () => {
+    store.dispatch(setAuthorisation({ role: 'default', isAdminUser: false }));
+
+    store.dispatch(setIsAdminMode(true));
+
+    await Promise.resolve();
+
+    expect(storageRegistryDict.authorisation.clear).toHaveBeenCalled();
+    expect(storageRegistryDict.authorisation.save).not.toHaveBeenCalled();
   });
 });

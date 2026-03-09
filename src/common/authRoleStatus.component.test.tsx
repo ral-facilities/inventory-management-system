@@ -14,8 +14,8 @@ describe('AuthRoleStatus', () => {
       {
         authorisation: {
           role: 'admin',
-          isPrivilegedUser: true,
-          isAdminMode: false,
+          isAdminUser: true,
+          isAdminMode: true,
         },
       }
     );

@@ -14,8 +14,8 @@ describe('Usage statuses', () => {
       preloadedState ?? {
         authorisation: {
           role: 'admin',
-          isPrivilegedUser: true,
-          isAdminMode: false,
+          isAdminUser: true,
+          isAdminMode: true,
         },
       }
     );
@@ -38,11 +38,11 @@ describe('Usage statuses', () => {
     expect(view.asFragment()).toMatchSnapshot();
   });
 
-  it('renders table for non privileged user without add or delete buttons', async () => {
+  it('renders table for non admin user without add or delete buttons', async () => {
     createView({
       authorisation: {
         role: 'default',
-        isPrivilegedUser: false,
+        isAdminUser: false,
         isAdminMode: false,
       },
     });

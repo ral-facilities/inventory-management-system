@@ -1,22 +1,25 @@
 import { FormControlLabel, Switch } from '@mui/material';
 import React from 'react';
-import { useAppSelector } from '../state/hook';
-import { selectAuthorisation } from '../state/slices/authorisationSlice';
+import { useAppDispatch, useAppSelector } from '../state/hook';
+import {
+  selectAuthorisation,
+  setIsAdminMode,
+} from '../state/slices/authorisationSlice';
 import { setLocalStorageToken } from '../utils';
 
 function AuthToggle() {
-  const { isPrivilegedUser } = useAppSelector(selectAuthorisation);
+  const dispatch = useAppDispatch();
+  const { isAdminMode } = useAppSelector(selectAuthorisation);
 
   const handleChangeRole = React.useCallback(() => {
-    setLocalStorageToken(!isPrivilegedUser);
-  }, [isPrivilegedUser]);
+    setLocalStorageToken(!isAdminMode);
+    dispatch(setIsAdminMode(!isAdminMode));
+  }, [isAdminMode, dispatch]);
 
   return (
     <FormControlLabel
-      control={
-        <Switch checked={isPrivilegedUser} onChange={handleChangeRole} />
-      }
-      label="Privileged user"
+      control={<Switch checked={isAdminMode} onChange={handleChangeRole} />}
+      label="Admin user"
       labelPlacement="end"
     />
   );

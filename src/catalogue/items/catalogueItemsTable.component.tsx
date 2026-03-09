@@ -23,6 +23,7 @@ import {
   MRT_Row,
   MaterialReactTable,
   useMaterialReactTable,
+  type MRT_Column,
   type MRT_ColumnDef,
   type MRT_RowSelectionState,
 } from 'material-react-table';
@@ -43,6 +44,7 @@ import {
   ROWS_PER_PAGE_OPTIONS,
 } from '../../common/consts';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
+import { SparesColumnHeaderInformationTooltip } from '../../common/sparesInformationTooltip.component';
 import {
   COLUMN_FILTER_BOOLEAN_OPTIONS,
   COLUMN_FILTER_FUNCTIONS,
@@ -312,7 +314,17 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         ? [
             {
               header: 'Number of spares',
-              Header: TableHeaderOverflowTip,
+              Header: ({
+                column,
+              }: {
+                column: MRT_Column<TableRowData, unknown>;
+              }) => (
+                <SparesColumnHeaderInformationTooltip
+                  title={column.columnDef.header}
+                  sparesDefinition={apiSettings?.spares?.sparesDefinition}
+                />
+              ),
+              TableHeaderOverflowTip,
               size: 350,
               accessorFn: (row: TableRowData) =>
                 row.catalogueItem.number_of_spares,
@@ -511,47 +523,6 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         GroupedCell: TableGroupedCell,
       },
       {
-        header: 'Drawing Number',
-        Header: TableHeaderOverflowTip,
-        accessorFn: (row) => row.catalogueItem.drawing_number ?? '',
-        id: 'catalogueItem.drawing_number',
-        filterVariant: COLUMN_FILTER_VARIANTS.string,
-        filterFn: COLUMN_FILTER_FUNCTIONS.string,
-        columnFilterModeOptions: [
-          ...COLUMN_FILTER_MODE_OPTIONS.string,
-          ...OPTIONAL_FILTER_MODE_OPTIONS,
-        ],
-        size: 250,
-        GroupedCell: TableGroupedCell,
-      },
-      {
-        header: 'Drawing Link',
-        Header: TableHeaderOverflowTip,
-        accessorFn: (row) => row.catalogueItem.drawing_link ?? '',
-        id: 'catalogueItem.drawing_link',
-        filterVariant: COLUMN_FILTER_VARIANTS.string,
-        filterFn: COLUMN_FILTER_FUNCTIONS.string,
-        columnFilterModeOptions: [
-          ...COLUMN_FILTER_MODE_OPTIONS.string,
-          ...OPTIONAL_FILTER_MODE_OPTIONS,
-        ],
-        size: 250,
-        Cell: ({ row }) =>
-          row.original.catalogueItem.drawing_link && (
-            <MuiLink
-              underline="hover"
-              target="_blank"
-              href={row.original.catalogueItem.drawing_link}
-              // For ensuring space when grouping
-              sx={{ marginRight: 0.5 }}
-            >
-              {row.original.catalogueItem.drawing_link}
-            </MuiLink>
-          ),
-        GroupedCell: (props) =>
-          TableGroupedCell({ ...props, outputType: 'Link' }),
-      },
-      {
         header: 'Item Model Number',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem.item_model_number ?? '',
@@ -685,6 +656,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
     ];
   }, [
+    apiSettings?.spares?.sparesDefinition,
     dense,
     isSparesDefinitionDefined,
     parentInfo.properties,
@@ -855,8 +827,6 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         'catalogueItem.name',
         'catalogueItem.cost_to_rework_gbp',
         'catalogueItem.days_to_rework',
-        'catalogueItem.drawing_number',
-        'catalogueItem.drawing_link',
         'catalogueItem.expected_lifetime_days',
         'catalogueItem.item_model_number',
         'manufacturer.url',

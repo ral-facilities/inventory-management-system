@@ -125,7 +125,7 @@ const modifyCatalogueCategory = (
       cy.findByText('Hide all').click();
 
       cy.findByText(
-        `${values.newFormFields[0].name}${values.newFormFields[0].unit ? `(${values.newFormFields[0].unit})` : ''}`
+        `${values.newFormFields[0].name}${values.newFormFields[0].unit ? ` (${values.newFormFields[0].unit})` : ''}`
       ).click();
       cy.findAllByText(
         `${values.newFormFields[0].name}${values.newFormFields[0].unit ? ` (${values.newFormFields[0].unit})` : ''}`

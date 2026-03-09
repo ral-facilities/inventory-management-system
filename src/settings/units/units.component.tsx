@@ -46,7 +46,7 @@ import UnitsDialog from './unitsDialog.component.tsx';
 function Units() {
   const { data: unitData, isLoading: unitDataLoading } = useGetUnits();
 
-  const { isPrivilegedUser } = useAppSelector(selectAuthorisation);
+  const { isAdminMode } = useAppSelector(selectAuthorisation);
 
   // Breadcrumbs + Mui table V2 + extra
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
@@ -122,7 +122,7 @@ function Units() {
     enableColumnOrdering: true,
     enableColumnFilterModes: true,
     enableFacetedValues: true,
-    enableRowActions: isPrivilegedUser,
+    enableRowActions: isAdminMode,
     enableStickyHeader: true,
     enableRowSelection: false,
     enableDensityToggle: false,
@@ -198,7 +198,7 @@ function Units() {
     },
     renderTopToolbarCustomActions: ({ table }) => (
       <Box>
-        {isPrivilegedUser && (
+        {isAdminMode && (
           <Button
             startIcon={<AddIcon />}
             sx={{ mx: '4px' }}

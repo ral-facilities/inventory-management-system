@@ -36,7 +36,7 @@ exports[`Catalogue Layout > renders a catalogue categories page correctly 1`] = 
             <span
               class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-rizt0-MuiTypography-root"
             >
-              Privileged user
+              Admin user
             </span>
           </label>
         </div>
@@ -158,7 +158,7 @@ exports[`Catalogue Layout > renders a catalogue items landing page correctly 1`]
             <span
               class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-rizt0-MuiTypography-root"
             >
-              Privileged user
+              Admin user
             </span>
           </label>
         </div>
@@ -348,7 +348,7 @@ exports[`Catalogue Layout > renders a catalogue items page correctly 1`] = `
             <span
               class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-rizt0-MuiTypography-root"
             >
-              Privileged user
+              Admin user
             </span>
           </label>
         </div>
@@ -504,7 +504,7 @@ exports[`Catalogue Layout > renders catalogue home page correctly 1`] = `
             <span
               class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-rizt0-MuiTypography-root"
             >
-              Privileged user
+              Admin user
             </span>
           </label>
         </div>
@@ -590,7 +590,7 @@ exports[`Catalogue Layout > renders the item landing page page correctly 1`] = `
             <span
               class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-rizt0-MuiTypography-root"
             >
-              Privileged user
+              Admin user
             </span>
           </label>
         </div>
@@ -848,7 +848,7 @@ exports[`Catalogue Layout > renders the items page correctly 1`] = `
             <span
               class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-rizt0-MuiTypography-root"
             >
-              Privileged user
+              Admin user
             </span>
           </label>
         </div>
@@ -1072,7 +1072,7 @@ exports[`Catalogue Layout Error Component > renders catalogue error page correct
             <span
               class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-rizt0-MuiTypography-root"
             >
-              Privileged user
+              Admin user
             </span>
           </label>
         </div>

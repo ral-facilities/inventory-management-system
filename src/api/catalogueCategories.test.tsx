@@ -13,6 +13,7 @@ import {
   CatalogueCategory,
   CatalogueCategoryPatch,
   CatalogueCategoryPost,
+  CatalogueCategoryProperty,
   CatalogueCategoryPropertyPatch,
   CatalogueCategoryPropertyPost,
   CatalogueCategoryPropertyType,
@@ -20,6 +21,7 @@ import {
 import {
   useCopyToCatalogueCategory,
   useDeleteCatalogueCategory,
+  useDeleteCatalogueCategoryProperty,
   useGetCatalogueBreadcrumbs,
   useGetCatalogueCategories,
   useGetCatalogueCategory,
@@ -138,6 +140,7 @@ describe('catalogue categories api functions', () => {
         ],
         code: 'cameras',
         id: '4',
+        is_flagged: false,
         is_leaf: true,
         name: 'test',
         parent_id: '1',
@@ -155,6 +158,7 @@ describe('catalogue categories api functions', () => {
         parent_id: null,
         id: '1',
         code: 'test',
+        is_flagged: false,
         is_leaf: false,
         properties: [],
         ...CREATED_MODIFIED_TIME_VALUES,
@@ -191,6 +195,7 @@ describe('catalogue categories api functions', () => {
         {
           code: 'actuators',
           id: '8',
+          is_flagged: false,
           is_leaf: false,
           name: 'Actuators',
           parent_id: '2',
@@ -255,6 +260,7 @@ describe('catalogue categories api functions', () => {
       expect(result.current.data).toEqual({
         code: 'beam-characterization',
         id: '1',
+        is_flagged: true,
         is_leaf: false,
         name: 'Beam Characterization',
         parent_id: null,
@@ -272,6 +278,7 @@ describe('catalogue categories api functions', () => {
         name: 'test_dup',
         parent_id: '1',
         code: 'test_dup',
+        is_flagged: false,
         is_leaf: false,
         properties: [],
         ...CREATED_MODIFIED_TIME_VALUES,
@@ -281,6 +288,7 @@ describe('catalogue categories api functions', () => {
         name: 'Wavefront Sensors',
         parent_id: '1',
         code: 'wavefront-sensors',
+        is_flagged: true,
         is_leaf: true,
         properties: [
           {
@@ -309,6 +317,7 @@ describe('catalogue categories api functions', () => {
         name: 'Energy Meters',
         parent_id: '1',
         code: 'energy-meters',
+        is_flagged: false,
         is_leaf: true,
         properties: [
           {
@@ -401,6 +410,7 @@ describe('catalogue categories api functions', () => {
         parent_id: null,
         name: 'Wavefront Sensors',
         code: 'wavefront-sensors',
+        is_flagged: true,
         is_leaf: false,
         properties: [],
         ...CREATED_MODIFIED_TIME_VALUES,
@@ -445,6 +455,7 @@ describe('catalogue categories api functions', () => {
       {
         id: '79',
         name: 'test_dup',
+        is_flagged: false,
         parent_id: '1',
         code: 'test_dup',
         is_leaf: false,
@@ -456,6 +467,7 @@ describe('catalogue categories api functions', () => {
         name: 'Wavefront Sensors',
         parent_id: '1',
         code: 'wavefront-sensors',
+        is_flagged: true,
         is_leaf: true,
         properties: [
           {
@@ -483,6 +495,7 @@ describe('catalogue categories api functions', () => {
         id: '5',
         name: 'Energy Meters',
         parent_id: '1',
+        is_flagged: false,
         code: 'energy-meters',
         is_leaf: true,
         properties: [
@@ -581,6 +594,7 @@ describe('catalogue categories api functions', () => {
         parent_id: null,
         name: 'Wavefront Sensors',
         code: 'wavefront-sensors',
+        is_flagged: true,
         is_leaf: false,
         properties: [],
         ...CREATED_MODIFIED_TIME_VALUES,
@@ -836,6 +850,60 @@ describe('catalogue categories api functions', () => {
           message: 'Something went wrong',
           name: 'Cameras',
           state: 'error',
+        },
+      ]);
+    });
+  });
+  describe('useDeleteCatalogueCategoryProperty', () => {
+    let mockDataPropertyDelete: CatalogueCategoryProperty;
+    const propertyId = '19';
+    const catalogueCategory = getCatalogueCategoryById(
+      '12'
+    ) as CatalogueCategory;
+
+    beforeEach(() => {
+      mockDataPropertyDelete = {
+        id: propertyId,
+        unit: null,
+        unit_id: null,
+        name: 'test',
+        allowed_values: { type: 'list', values: ['x', 'y', 'z', 'a'] },
+        type: CatalogueCategoryPropertyType.Text,
+        mandatory: false,
+      };
+    });
+
+    it('posts a request to delete a property and returns a successful response', async () => {
+      const { result } = renderHook(
+        () => useDeleteCatalogueCategoryProperty(),
+        {
+          wrapper: hooksWrapperWithProviders(),
+        }
+      );
+      expect(result.current.isIdle).toBe(true);
+      result.current.mutate({
+        catalogueCategory,
+        property: mockDataPropertyDelete,
+      });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      expect(result.current.data).toEqual('');
+
+      expect(handleTransferState).toBeCalledTimes(2);
+      expect(handleTransferState).toHaveBeenCalledWith([
+        {
+          name: 'Dry Vacuum Pumps',
+          message: `Deleting property test from Dry Vacuum Pumps`,
+          state: 'information',
+        },
+      ]);
+      expect(handleTransferState).toHaveBeenCalledWith([
+        {
+          name: 'Dry Vacuum Pumps',
+          message: `Successfully deleted property test from Dry Vacuum Pumps`,
+          state: 'success',
         },
       ]);
     });

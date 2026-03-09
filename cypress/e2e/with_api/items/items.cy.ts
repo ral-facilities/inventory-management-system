@@ -7,6 +7,7 @@ import {
   addItem,
   addProperty,
   deleteItem,
+  deleteProperty,
   duplicateItem,
   editItem,
   editProperty,
@@ -15,7 +16,6 @@ import {
 
 describe('items', () => {
   beforeEach(() => {
-    cy.setCurrentUserToAdmin();
     cy.dropIMSCollections([
       'catalogue_categories',
       'catalogue_items',
@@ -26,6 +26,7 @@ describe('items', () => {
     ]);
     // Prepare relevant data for items
     cy.visit('/manufacturers');
+    cy.setMode({ admin: true });
     addManufacturer(true);
     cy.visit('/settings/units');
     addUnits(['mm', 'nm'], true);
@@ -57,6 +58,7 @@ describe('items', () => {
     duplicateItem('MX4332424', 0);
     addProperty();
     editProperty();
+    deleteProperty();
     cy.findByText('Total Items: 2').should('exist');
     cy.findByRole('progressbar').should('not.exist');
     cy.findAllByText('MX4332424').should('have.length', 2);
