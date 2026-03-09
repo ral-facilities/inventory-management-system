@@ -43,8 +43,6 @@ describe('delete Catalogue Category dialogue', () => {
       days_to_replace: 0,
       days_to_rework: null,
       expected_lifetime_days: null,
-      drawing_link: null,
-      drawing_number: null,
       notes: null,
       is_obsolete: false,
       item_model_number: null,

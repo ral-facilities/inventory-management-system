@@ -29,11 +29,11 @@ describe('authListenerMiddleware', () => {
 
     const state = store.getState();
     expect(state.authorisation.role).toBe('admin');
-    expect(state.authorisation.isPrivilegedUser).toBe(true);
+    expect(state.authorisation.isAdminUser).toBe(true);
   });
 
-  it('should save admin mode when user IS privileged', async () => {
-    store.dispatch(setAuthorisation({ role: 'admin', isPrivilegedUser: true }));
+  it('should save admin mode when user is admin', async () => {
+    store.dispatch(setAuthorisation({ role: 'admin', isAdminUser: true }));
 
     store.dispatch(setIsAdminMode(true));
 
@@ -43,10 +43,8 @@ describe('authListenerMiddleware', () => {
     expect(storageRegistryDict.authorisation.clear).not.toHaveBeenCalled();
   });
 
-  it('should clear admin mode when user is NOT privileged', async () => {
-    store.dispatch(
-      setAuthorisation({ role: 'default', isPrivilegedUser: false })
-    );
+  it('should clear admin mode when user is not admin', async () => {
+    store.dispatch(setAuthorisation({ role: 'default', isAdminUser: false }));
 
     store.dispatch(setIsAdminMode(true));
 

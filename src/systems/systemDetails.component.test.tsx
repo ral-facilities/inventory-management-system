@@ -1,20 +1,26 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import { System } from '../api/api.types';
+import { System, SystemType } from '../api/api.types';
 import SystemsJSON from '../mocks/Systems.json';
+import SystemTypesJSON from '../mocks/SystemTypes.json';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import SystemDetails, { SystemDetailsProps } from './systemDetails.component';
 
 describe('SystemDetails', () => {
   let props: SystemDetailsProps;
   let mockSystemDetails: System;
+  let mockSystemTypeDetails: SystemType;
   let user: UserEvent;
 
   const createView = () => {
-    if (props.id)
+    if (props.id) {
       mockSystemDetails = SystemsJSON.filter(
         (system) => system.id === props.id
       )[0] as System;
+      mockSystemTypeDetails = SystemTypesJSON.filter(
+        (system_type) => system_type.id === mockSystemDetails.type_id
+      )[0] as SystemType;
+    }
     return renderComponentWithRouterProvider(
       <SystemDetails {...props} />,
       'systems'
@@ -42,8 +48,9 @@ describe('SystemDetails', () => {
     createView();
 
     await waitFor(() => {
+      expect(screen.getByText(mockSystemDetails.name)).toBeInTheDocument();
       expect(
-        screen.getByText(mockSystemDetails.location ?? '')
+        screen.getByText(mockSystemTypeDetails.value ?? '')
       ).toBeInTheDocument();
     });
     expect(screen.queryByText('Please select a system')).toBeFalsy();
@@ -52,8 +59,6 @@ describe('SystemDetails', () => {
     expect(
       screen.getByText(mockSystemDetails.importance ?? '')
     ).toBeInTheDocument();
-
-    expect(screen.getByText('Operational')).toBeInTheDocument();
 
     // Can have new line character which breaks normal matching
     expect(

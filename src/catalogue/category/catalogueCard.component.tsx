@@ -12,24 +12,40 @@ import {
   type MRT_Row,
   type MRT_TableInstance,
 } from 'material-react-table';
+import React from 'react';
 import { Link } from 'react-router';
 import { CatalogueCategory } from '../../api/api.types';
+import { APISettingsContext } from '../../apiConfigProvider.component';
 import CriticalityTooltipIcon from '../../common/criticalityTooltipIcon.component';
 import { useAppSelector } from '../../state/hook';
 import { selectCriticality } from '../../state/slices/criticalitySlice';
 import {
-  OverflowTip,
   criticalityCardStyle,
   formatDateTimeStrings,
+  OverflowTip,
 } from '../../utils';
-import { CriticalTooltipText } from './catalogueCardView.component';
 export interface CatalogueCardProps {
   table: MRT_TableInstance<CatalogueCategory>;
   card: MRT_Cell<CatalogueCategory>;
 }
 
+export const getCriticalityLabel = (isCritical: boolean | null) => {
+  if (isCritical === true) {
+    return 'This catalogue category is critical.';
+  }
+
+  if (isCritical === false) {
+    return 'This catalogue category is not critical.';
+  }
+
+  return 'Unable to determine if this catalogue category is critical. Please contact support.';
+};
+
 function CatalogueCard(props: CatalogueCardProps) {
   const { table, card } = props;
+
+  const apiSettings = React.useContext(APISettingsContext);
+  const isSparesDefinitionDefined = !!apiSettings.spares;
   const selectedCategories = table
     .getSelectedRowModel()
     .rows.map((row) => row.original);
@@ -40,7 +56,7 @@ function CatalogueCard(props: CatalogueCardProps) {
 
   const { isCriticalMode } = useAppSelector(selectCriticality);
 
-  const showFlagged = isCriticalMode && card.row.original.is_flagged;
+  const showFlagged = card.row.original.is_flagged;
   return (
     <Button
       component={Link}
@@ -51,7 +67,7 @@ function CatalogueCard(props: CatalogueCardProps) {
         width: '100%',
         textDecoration: 'none',
         color: 'inherit',
-        position: 'relative', // Make the parent container relative
+        position: 'relative',
       }}
     >
       <Card
@@ -63,7 +79,9 @@ function CatalogueCard(props: CatalogueCardProps) {
           backgroundColor: isSelected
             ? table.options.mrtTheme.selectedRowBackgroundColor
             : undefined,
-          ...(showFlagged && criticalityCardStyle(theme)),
+          ...(isCriticalMode &&
+            isSparesDefinitionDefined &&
+            criticalityCardStyle({ theme, showFlagged })),
         })}
       >
         <CardActions>
@@ -77,8 +95,11 @@ function CatalogueCard(props: CatalogueCardProps) {
           />
         </CardActions>
         <CardContent sx={{ display: 'flex', alignItems: 'center', padding: 0 }}>
-          {showFlagged && (
-            <CriticalityTooltipIcon label={CriticalTooltipText} />
+          {isCriticalMode && isSparesDefinitionDefined && (
+            <CriticalityTooltipIcon
+              showFlagged={showFlagged}
+              label={getCriticalityLabel(showFlagged)}
+            />
           )}
         </CardContent>
         <CardContent

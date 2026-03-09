@@ -10,14 +10,14 @@ import {
 } from '../state/slices/authorisationSlice';
 
 const AuthSettingsMenuItem = () => {
-  const { isAdminMode, isPrivilegedUser } = useAppSelector(selectAuthorisation);
+  const { isAdminMode, isAdminUser } = useAppSelector(selectAuthorisation);
   const dispatch = useAppDispatch();
 
   const handleAdminMode = React.useCallback(() => {
     dispatch(setIsAdminMode(!isAdminMode));
   }, [isAdminMode, dispatch]);
 
-  if (!isPrivilegedUser) return null;
+  if (!isAdminUser) return null;
   return (
     <MenuItem id="item-admin-mode" onClick={handleAdminMode}>
       <ListItemIcon>

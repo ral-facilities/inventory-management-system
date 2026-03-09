@@ -3764,6 +3764,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                       class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                     >
                       <div
+<<<<<<< HEAD
                         class="MuiBox-root css-70qvj9"
                       >
                         <svg
@@ -4054,9 +4055,25 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                         class="MuiTypography-root MuiTypography-body1 css-1bnbo3v-MuiTypography-root"
                         data-mui-internal-clone-element="true"
                         role="tooltip"
+=======
+                        class="MuiBox-root css-fv3lde"
+>>>>>>> catalogue-items-flaggging-#1656
                       >
+                        <svg
+                          aria-hidden="true"
+                          aria-label="Spares Info Tooltip"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-1raa5r2-MuiSvgIcon-root"
+                          data-mui-internal-clone-element="true"
+                          data-testid="InfoOutlinedIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8"
+                          />
+                        </svg>
                         Number of Spares
-                      </p>
+                      </div>
                     </div>
                     <span
                       aria-label="Sort by Number of Spares ascending"

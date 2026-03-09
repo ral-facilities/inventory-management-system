@@ -44,7 +44,7 @@ function SystemsLayout() {
 
   const { data: systemsBreadcrumbs } = useGetSystemsBreadcrumbs(systemId);
   const { data: system } = useGetSystem(systemId);
-  const showFlagged = system?.is_flagged && isCriticalMode;
+  const showFlagged = system?.is_flagged;
 
   return (
     <BaseLayoutHeader
@@ -60,13 +60,15 @@ function SystemsLayout() {
           padding: 1,
           mt: 1,
           mx: 1,
-          ...(showFlagged && criticalityHeaderStyle(theme)),
+          ...(isCriticalMode &&
+            showFlagged !== undefined &&
+            criticalityHeaderStyle({ theme, showFlagged })),
         })}
       >
-        {showFlagged && (
+        {isCriticalMode && showFlagged !== undefined && (
           <CriticalityTooltipIcon
+            showFlagged={showFlagged}
             label={'Items are running low within this subsystems'}
-            sx={{ fontSize: '40px' }}
           />
         )}
         <Typography

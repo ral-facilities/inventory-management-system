@@ -3,11 +3,31 @@ import { renderComponentWithRouterProvider } from '../testUtils';
 import CriticalityTooltipIcon from './criticalityTooltipIcon.component';
 
 describe('CriticalityTooltipIcon', () => {
-  it('renders correctly', async () => {
+  it('renders correctly (showFlagged=true)', async () => {
     let baseElement;
     await act(async () => {
       baseElement = renderComponentWithRouterProvider(
-        <CriticalityTooltipIcon label={'test'} />
+        <CriticalityTooltipIcon showFlagged={true} label={'test'} />
+      ).baseElement;
+    });
+    expect(baseElement).toMatchSnapshot();
+  });
+
+  it('renders correctly (showFlagged=false)', async () => {
+    let baseElement;
+    await act(async () => {
+      baseElement = renderComponentWithRouterProvider(
+        <CriticalityTooltipIcon showFlagged={false} label={'test'} />
+      ).baseElement;
+    });
+    expect(baseElement).toMatchSnapshot();
+  });
+
+  it('renders correctly (showFlagged=null)', async () => {
+    let baseElement;
+    await act(async () => {
+      baseElement = renderComponentWithRouterProvider(
+        <CriticalityTooltipIcon showFlagged={null} label={'test'} />
       ).baseElement;
     });
     expect(baseElement).toMatchSnapshot();

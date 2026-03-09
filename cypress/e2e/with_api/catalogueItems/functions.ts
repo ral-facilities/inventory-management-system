@@ -8,8 +8,6 @@ const modifyCatalogueItem = (
     daysToReplace: string;
     daysToRework?: string;
     expectedLifetimeDays?: string;
-    drawingNumber?: string;
-    drawingLink?: string;
     itemModelNumber?: string;
     notes?: string;
     manufacturer: string;
@@ -70,20 +68,6 @@ const modifyCatalogueItem = (
         );
       } else {
         cy.findByLabelText('Expected Lifetime (days)').clear();
-      }
-
-      if (values.drawingNumber) {
-        cy.findByLabelText('Drawing number').clear();
-        cy.findByLabelText('Drawing number').type(values.drawingNumber);
-      } else {
-        cy.findByLabelText('Drawing number').clear();
-      }
-
-      if (values.drawingLink) {
-        cy.findByLabelText('Drawing link').clear();
-        cy.findByLabelText('Drawing link').type(values.drawingLink);
-      } else {
-        cy.findByLabelText('Drawing link').clear();
       }
 
       if (values.itemModelNumber) {
@@ -151,11 +135,6 @@ const modifyCatalogueItem = (
 
     if (values.expectedLifetimeDays)
       cy.findByText(values.expectedLifetimeDays).should('exist');
-
-    if (values.drawingNumber)
-      cy.findByText(values.drawingNumber).should('exist');
-
-    if (values.drawingLink) cy.findByText(values.drawingLink).should('exist');
 
     if (values.itemModelNumber)
       cy.findByText(values.itemModelNumber).should('exist');
@@ -275,6 +254,7 @@ export const copyToCatalogueItems = (values: { checkedItems: string[] }) => {
   }
   cy.go('back');
   cy.go('back');
+  cy.go('back');
 };
 
 export const moveToCatalogueItems = (values: { checkedItems: string[] }) => {
@@ -311,8 +291,6 @@ export const addCatalogueItem = (ignoreChecks?: boolean) => {
       daysToReplace: '5',
       daysToRework: '1',
       expectedLifetimeDays: '365',
-      drawingLink: 'https://example.com/',
-      drawingNumber: 'GH45235324',
       itemModelNumber: 'rew5435453',
       notes: 'test',
       manufacturer: 'ThorsLabs',
@@ -334,8 +312,6 @@ export const editCatalogueItem = () => {
     costToReworkGbp: '20',
     daysToReplace: '5',
     expectedLifetimeDays: '365',
-    drawingLink: 'https://example.com/',
-    drawingNumber: 'GH4523566324',
     itemModelNumber: 'rew54359453',
     notes: 'test 2',
     manufacturer: 'ThorsLabs',
@@ -479,9 +455,10 @@ export const downloadFile = (
     cy.findByLabelText(`Download ${fileName} attachment`).click();
   }
 
-  cy.findByRole('dialog').should('be.visible');
+  cy.findByRole('dialog').should('exist');
 
   cy.findByRole('button', { name: 'Continue' }).click();
+  cy.findByRole('dialog').should('not.exist');
 };
 
 export const deleteFile = (
@@ -501,7 +478,7 @@ export const deleteFile = (
       cy.findByLabelText(`Delete attachment ${fileName}`).click();
     }
 
-    cy.findByRole('dialog').should('be.visible');
+    cy.findByRole('dialog').should('exist');
 
     cy.findByRole('button', { name: 'Continue' }).click();
   });

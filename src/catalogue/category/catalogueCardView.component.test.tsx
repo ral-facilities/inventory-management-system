@@ -2,6 +2,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { CatalogueCategory } from '../../api/api.types';
+import APIConfigProvider from '../../apiConfigProvider.component';
 import { server } from '../../mocks/server';
 import { URLPathKeyType } from '../../paths';
 import { RootState } from '../../state/store';
@@ -17,7 +18,9 @@ describe('CardView', () => {
     preloadedState?: Partial<RootState>
   ) => {
     return renderComponentWithRouterProvider(
-      <CardView />,
+      <APIConfigProvider>
+        <CardView />
+      </APIConfigProvider>,
       urlPathKey || 'catalogue',
       path || '/catalogue',
       preloadedState
@@ -93,7 +96,7 @@ describe('CardView', () => {
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
 
-    const addButton = screen.getByRole('button', {
+    const addButton = await screen.findByRole('button', {
       name: 'Add Catalogue Category',
     });
     await user.click(addButton);
@@ -316,7 +319,7 @@ describe('CardView', () => {
     });
   });
 
-  it('shows critical catalogue categories and filter button', async () => {
+  it('shows all criticality states for catalogue categories and the filter button', async () => {
     createView('/catalogue', undefined, {
       criticality: { isCriticalMode: true },
     });
@@ -326,7 +329,21 @@ describe('CardView', () => {
     });
 
     expect(
-      screen.getByRole('button', { name: 'Show Critical Items' })
+      screen.getByRole('button', { name: 'Show Critical Categories' })
+    ).toBeInTheDocument();
+
+    expect(screen.getByTestId('ErrorIcon')).toBeInTheDocument();
+
+    await user.hover(screen.getByTestId('ErrorIcon'));
+
+    expect(
+      await screen.findByText('This catalogue category is critical.')
+    ).toBeInTheDocument();
+
+    await user.hover(screen.getAllByTestId('CheckCircleIcon')[0]);
+
+    expect(
+      await screen.findByText('This catalogue category is not critical.')
     ).toBeInTheDocument();
 
     expect(screen.getByTestId('WarningIcon')).toBeInTheDocument();
@@ -335,12 +352,32 @@ describe('CardView', () => {
 
     expect(
       await screen.findByText(
-        'A catalogue category is considered critical if any of its nested child categories or catalogue items are marked as critical.'
+        'Unable to determine if this catalogue category is critical. Please contact support.'
       )
     ).toBeInTheDocument();
   });
 
-  it('clicks on shows critical Items filter button', async () => {
+  it('does not show criticality states for catalogue categories and the filter button', async () => {
+    server.use(
+      http.get('/v1/settings/spares-definition', () => {
+        return HttpResponse.json(undefined, { status: 204 });
+      })
+    );
+    createView('/catalogue', undefined, {
+      criticality: { isCriticalMode: true },
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
+    });
+    await waitFor(() => {
+      expect(
+        screen.queryByRole('button', { name: 'Show Critical Categories' })
+      ).not.toBeInTheDocument();
+    });
+  });
+
+  it('clicks on shows critical Categories filter button', async () => {
     createView('/catalogue', undefined, {
       criticality: { isCriticalMode: true },
     });
@@ -350,7 +387,7 @@ describe('CardView', () => {
     });
 
     await user.click(
-      screen.getByRole('button', { name: 'Show Critical Items' })
+      screen.getByRole('button', { name: 'Show Critical Categories' })
     );
 
     await waitFor(() => {
@@ -359,14 +396,12 @@ describe('CardView', () => {
 
     expect(screen.getByText('Critical Filter Applied')).toBeInTheDocument();
 
-    expect(screen.getByTestId('WarningIcon')).toBeInTheDocument();
+    expect(screen.getByTestId('ErrorIcon')).toBeInTheDocument();
 
-    await user.hover(screen.getByTestId('WarningIcon'));
+    await user.hover(screen.getByTestId('ErrorIcon'));
 
     expect(
-      await screen.findByText(
-        'A catalogue category is considered critical if any of its nested child categories or catalogue items are marked as critical.'
-      )
+      await screen.findByText('This catalogue category is critical.')
     ).toBeInTheDocument();
   });
   describe('pagination', () => {
@@ -475,7 +510,7 @@ describe('CardView', () => {
       );
 
       await user.click(
-        screen.getByRole('button', { name: 'Show/Hide filters' })
+        await screen.findByRole('button', { name: 'Show/Hide filters' })
       );
 
       const dropdownButtons = await screen.findAllByTestId('FilterListIcon');

@@ -65,11 +65,6 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
     expect(screen.getByText('Last modified')).toBeInTheDocument();
-    expect(screen.getByText('View Items')).toBeInTheDocument();
-
-    await user.click(screen.getByRole('button', { name: 'Show/Hide columns' }));
-    await user.click(screen.getByText('Hide all'));
-
     expect(screen.getByText('Number of spares')).toBeInTheDocument();
   });
 
@@ -81,17 +76,17 @@ describe('Catalogue Items Table', () => {
     await waitFor(() => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
-    expect(screen.getByText('Last modified')).toBeInTheDocument();
+
     expect(screen.getByText('Criticality')).toBeInTheDocument();
 
-    expect(await screen.findByText('-4.55')).toBeInTheDocument();
+    expect(await screen.findByText('-4.6')).toBeInTheDocument();
 
-    expect(screen.getByTestId('WarningIcon')).toBeInTheDocument();
+    expect(screen.getByTestId('ErrorIcon')).toBeInTheDocument();
 
-    await user.hover(screen.getByTestId('WarningIcon'));
+    await user.hover(screen.getByTestId('ErrorIcon'));
 
     expect(
-      await screen.findByText('Items are running low in this catalogue item')
+      await screen.findByText('This catalogue item is critical.')
     ).toBeInTheDocument();
   });
 
@@ -170,11 +165,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
 
-    await ensureColumnsVisible([
-      'Time to replace (days)',
-      'Days to Rework',
-      'Drawing Number',
-    ]);
+    await ensureColumnsVisible(['Time to replace (days)', 'Days to Rework']);
   });
 
   it('renders table correctly for properties with type boolean', async () => {
@@ -193,11 +184,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
 
-    await ensureColumnsVisible([
-      'Drawing Link',
-      'Item Model Number',
-      'Created',
-    ]);
+    await ensureColumnsVisible(['Item Model Number', 'Created']);
   });
 
   it('renders table correctly (section 5 due to column virtualisation)', async () => {
@@ -397,17 +384,6 @@ describe('Catalogue Items Table', () => {
 
     const url = screen.queryAllByText('Click here');
     expect(url[0]).toHaveAttribute('href', '/89/items');
-  });
-
-  it('navigates to drawing link', async () => {
-    createView();
-    await waitFor(() => {
-      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
-    });
-    await ensureColumnsVisible(['Drawing Link']);
-
-    const url = screen.queryAllByText('http://example-drawing-link.com');
-    expect(url[0]).toHaveAttribute('href', 'http://example-drawing-link.com');
   });
 
   it('opens obsolete dialog and can close it again', async () => {
@@ -615,7 +591,7 @@ describe('Catalogue Items Table', () => {
     });
     expect(clearFiltersButton).toBeDisabled();
     expect(router.state.location.search).toBe(
-      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUyWBlE5RGLNh3jcMvAdAIB3AARiycZT36D02fMVKUGBGDSgAHVlgB2XIwJSmRF8bCZYAIxgsDAJSN1VjT2FzPQpA4NDSJlp7DGQwcgJnVCZos0ImKEsihgi1ExjRS3igkLCCFLpg10NIjyECn0p7aix7AmpWGwoAdnKozu843v7B4ZgKAA4Jjq9YmrAsGFzULCbNLGoAayYcAPtVyq64hmQATxgWfdT0zKv86Zq7x%2BeDo%2BOHymG3EDGoyE0UGcOCYzjwZACgyB62qoPBkOhTAwUMBbQqnxBlAIAA8BmBSMxsZwwoomD8DCp8cDUZRiuQmJJrBhYfDEdQrmRkHDuOS8LRqBRnMh2AKhXgRagxYMKGKMLLhRlFeKKMgGGCbAz3CBBRrRdrSKF7AALFxKRmTFHdSVYUiG9rXL7iOysFDY1D3CYAX0DQA'
+      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUyWBlE5RGLNh3jcMvAdAIB3AARiycZT36D02fMVKUGBGDSgAHVlgB2XIwJSmRF8bCZYAIxgsDAJSN1VjT2FzPQpA4NDSJlp7DGQwcgJnVCZos0ImKEsihgi1ExjRS3igkLCCFLpg10NIjyECn0p7aix7AmpWGwoAdnKozu843v7B4ZgKAA4Jjq9YmrAsGFzULCbNLGoAayYcAPtVyq64hmQATxgWfdT0zKv86Zq7x%2BeDo%2BOHymG3EDGoyE0UGcOCYzjwZACgyB62qoPBkOhTAwUMBbQqnxBlAIAA8BmBSMxsZwwoomD8DCp8cDUZRiuQmJJrBhYfDEdQrmRkHDuOS8LRqBRnMh2AKhXgRagxYMKGKMLLhRlFeKKMgGGCbAz3CBBRrRdrSKF7AALFxKRmTFHdSVYUiG9rXL7iOysFDY1D3ZFVJ1%2BTjpHA4RiBm41OEIwb%2BThMGD2ZC0J60ACOeCgtDKeIIAF8C0A'
     );
 
     // Do max first, as it technically has no effect on the outcome of the filter
@@ -629,7 +605,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.queryByText('Energy Meters 26')).not.toBeInTheDocument();
     });
     expect(router.state.location.search).toBe(
-      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUyWBlE5RGLNh3jcMvAdAIB3AARiycZT36D02fMVKUGBGDSgAHVlgB2XIwJSmRF8bCZYAIxgsDAJSN1VjT2FzPQpA4NDSJlp7DGQwcgJnVCZos0ImKEsihgi1ExjRS3igkLCCFLpg10NIjyECn0p7aix7AmpWGwoAdnKozu843v7B4ZgKAA4Jjq9YmrAsGFzULCbNLGoAayYcAPtVyq64hmQATxgWfdT0zKv86Zq7x%2BeDo%2BOHymG3EDGoyE0UGcOCYzjwZACgyB62qoPBkOhTAwUMBbQqnxBlAIAA8BmBSMxsZwwoomD8DCp8cDUZRiuQmJJrBhYfDEdQrmRkHDuOS8LRqBRnMh2AKhXgRagxYMKGKMLLhRlFeKKMgGGCbAz3CBBRrRdrSKF7AALFxKRmTFHdSVYUiG9rXL7iOysFDY1D3CYAXw8ADEEABtUBQMrwD2EqjbXLnS4CABumEIEdA-oGCBAO2oUJwIDTGaUICWAAZKyBg9n7rnYwWiyWQOmMJnYwBGas1wMAXQHgaAA'
+      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUyWBlE5RGLNh3jcMvAdAIB3AARiycZT36D02fMVKUGBGDSgAHVlgB2XIwJSmRF8bCZYAIxgsDAJSN1VjT2FzPQpA4NDSJlp7DGQwcgJnVCZos0ImKEsihgi1ExjRS3igkLCCFLpg10NIjyECn0p7aix7AmpWGwoAdnKozu843v7B4ZgKAA4Jjq9YmrAsGFzULCbNLGoAayYcAPtVyq64hmQATxgWfdT0zKv86Zq7x%2BeDo%2BOHymG3EDGoyE0UGcOCYzjwZACgyB62qoPBkOhTAwUMBbQqnxBlAIAA8BmBSMxsZwwoomD8DCp8cDUZRiuQmJJrBhYfDEdQrmRkHDuOS8LRqBRnMh2AKhXgRagxYMKGKMLLhRlFeKKMgGGCbAz3CBBRrRdrSKF7AALFxKRmTFHdSVYUiG9rXL7iOysFDY1D3ZFVJ1%2BTjpHA4RiBm41OEIwb%2BThMGD2ZC0J60ACOeCgtDKeIIAF8PAAxBAAbVAUDzHsJVG2uXOlwEADdMIRy6B-QMECAdtQoTgQC220oQEsAAzjkBFzv3bvwXuofvQocgVsYdsLgCMk6nBYAugeC0A'
     );
 
     await user.click(clearFiltersButton);
@@ -638,7 +614,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
     });
     expect(router.state.location.search).toBe(
-      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUyWBlE5RGLNh3jcMvAdAIB3AARiycZT36D02fMVKUGBGDSgAHVlgB2XIwJSmRF8bCZYAIxgsDAJSN1VjT2FzPQpA4NDSJlp7DGQwcgJnVCZos0ImKEsihgi1ExjRS3igkLCCFLpg10NIjyECn0p7aix7AmpWGwoAdnKozu843v7B4ZgKAA4Jjq9YmrAsGFzULCbNLGoAayYcAPtVyq64hmQATxgWfdT0zKv86Zq7x%2BeDo%2BOHymG3EDGoyE0UGcOCYzjwZACgyB62qoPBkOhTAwUMBbQqnxBlAIAA8BmBSMxsZwwoomD8DCp8cDUZRiuQmJJrBhYfDEdQrmRkHDuOS8LRqBRnMh2AKhXgRagxYMKGKMLLhRlFeKKMgGGCbAz3CBBRrRdrSKF7AALFxKRmTFHdSVYUiG9rXL7iOysFDY1D3CYAX0DQA'
+      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUyWBlE5RGLNh3jcMvAdAIB3AARiycZT36D02fMVKUGBGDSgAHVlgB2XIwJSmRF8bCZYAIxgsDAJSN1VjT2FzPQpA4NDSJlp7DGQwcgJnVCZos0ImKEsihgi1ExjRS3igkLCCFLpg10NIjyECn0p7aix7AmpWGwoAdnKozu843v7B4ZgKAA4Jjq9YmrAsGFzULCbNLGoAayYcAPtVyq64hmQATxgWfdT0zKv86Zq7x%2BeDo%2BOHymG3EDGoyE0UGcOCYzjwZACgyB62qoPBkOhTAwUMBbQqnxBlAIAA8BmBSMxsZwwoomD8DCp8cDUZRiuQmJJrBhYfDEdQrmRkHDuOS8LRqBRnMh2AKhXgRagxYMKGKMLLhRlFeKKMgGGCbAz3CBBRrRdrSKF7AALFxKRmTFHdSVYUiG9rXL7iOysFDY1D3ZFVJ1%2BTjpHA4RiBm41OEIwb%2BThMGD2ZC0J60ACOeCgtDKeIIAF8C0A'
     );
   });
 
@@ -684,7 +660,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.queryByText('Energy Meters 26')).not.toBeInTheDocument();
     });
     expect(router.state.location.search).toBe(
-      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXJVqUVigxSAnlx79B6bPmKlKAO2TtFGXgF9DQA'
+      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIVYTThmQ4cjLj36D02fMVKUaUVigw6Anooy8BKVSI3iAdnjIAjAtSZZOTGAAdktGE1oBHPChaBmNTFWF1MUprZHYwggBfRKA'
     );
 
     // Reset
@@ -740,7 +716,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Grouped by')).toBeInTheDocument();
     });
     expect(router.state.location.search).toBe(
-      '?state=N4Ig5iBcDaIMYEMAuCA2B7MBXApgSSRwFsA6AOwSJxAF0AaeAeSliICckBaN9Ad05wAPAA4IyAExAN2XHvwRwkAS3RkAzlJAzufTmpyocizYhQZs%2BQqQpUTyNJlwFiJOGyXLEqDwE87Zx0sXInRxJQAzJRxxAH1lWwZTBwtnUjccZGi4pQSQADUo3gACVI1E%2B3MnK3IsIgAjHDYY9HCYtVE2HDL4CsDUknEutyVhZVV-ZKqXJTVmurV0Q0IJyqDSdHnFnEIYzuFUBWIcMiQYpNWYj2JLyXKAlOqNhaWcXYyFshW%2B6uEeYUblF0SAB2L4PFy-dD-DhRNQkAAcYKmaXQalOYDqwiRa1cqNOSHQb146DYAGsYhisXdJjjxAgfLMCW99odsf06Qy4oTOsSyWzqkJ-oost5wtscq8Od1zt8XOI2AheEoyGAYmRag02Py5QqlSqYt4yKTtaQrkQYiFBqg1RrGpoiGIsOEFEgsJ02ORKNRpI7nYo3Y0SG7UPbfS6Ax6EOJ5V1ug71X7Xe6SIRDMIABaqb09e7I8joQhxjg6fjtQ5amgAXyAA'
+      '?state=N4Ig5iBcDaIMYEMAuCA2B7MBXApgSSRwFsA6AOwSJxAF0AaeAeSliICckBaN9Ad05wAPAA4IyAExAN2XHvwRwkAS3RkAzlJAzufTmpyocizYhQZs%2BQqSVqA%2BgDNUCMGBySGptJlwFi5StQeyF4WvqRwbErKiKhRAJ4mweY%2BVuRYRABGOGy26Pa2aqJsOBpBZt6WfmTpWTl5BUUltsUAjlhKxe7wSRVhJETo4kr2Sm62ylSJ5aGpETjIYxOBIABqo7wABGGl3dMpfuIlEUrCyqpTIfvWdugZauiGhBfJlaS39484zTjCTnDEODISFsnhetiixHBXVBvVS7weOEI3wQ9zIz1hfmEPGE2WUJRIAHZ0TNMdjcaM1CQABzEq4kODoNTAsAZYS0170xnApDob68dBsADWthZbLKlw54gQcTsPO%2BvwUyxhJNIUpl415xX5QvZfSEOMUY1i9kRSiotjVO2VdIhRFsA0OqFs1Uy2U0RDEWHsCiQWGKbH8k2knu9ij92RIftQ7pDPvDAYQ4nExTUOw91VDvv9JEIhmEAAtVEqeiryOhCGmODp%2BIVFWxaABfIA'
     );
 
     // Reset
@@ -751,7 +727,7 @@ describe('Catalogue Items Table', () => {
     });
     // Expect this to still be here as have now modified the order in some way (as MRT doesn't revert back to its original state in this case)
     expect(router.state.location.search).toBe(
-      '?state=N4Igxg8iBcDaIFsBOAXAtEg9gdzQQzBQEtMA7AZxABpFUMc1yBTAGycOtvS1yYA8ADnlIATTmDwo8LTAHMArkwCSKJggB0pPAibjJ0uYpVr1YJEWISWFgJ56pMhctUaEmEUQBmRJiID6xDr2Bk7GGmZMkr4BREE0AGo%2B2AAEYZQ0Eg6Gziak8ggARkxIfpiefuRCSEzp4PqORi7qIjVmRALEZMENORpE5KUF5Jhsqt3ZYeqYQyNMqn7VAiwEakykKH6ZIYp%2BFmq7Yhn1E03Tw6NMC5HDpOOhTQJYAsXENeoA7HeNJo%2BYz6g%2BcjqAAcX16pkw5A2sgKAjBkzAkI2KEwV2wmCQAGs-DC4UcsvcTCI8DYBiirksVvCmsTSQFUdV0VjqSZ%2BM9CNFrJ45rFLrTalsepMREg8NgiKRZH48oViiyNCKxRKpdZSJj5eo9gg-G4WixpfkikhOAhhPJPAQUPJqkhNNpdDRTXkLYRrcV1NaWCazS6rTb1HgRCKarUnebLW7bao2AIABZkB11AnfDSkTCqUN0HiMIRgOUAXQAvkA'
+      '?state=N4Igxg8iBcDaIFsBOAXAtEg9gdzQQzBQEtMA7AZxABpFUMc1yBTAGycOtvS1yYA8ADnlIATTmDwo8LTAHMArkwCSKJggB0RcgH0AZizyzZTMTQlSZC5ao2k8CJuMnS5ilWvVgkRYhJY%2BATycLV2sPUnkEACMmJG1MXW1yISQmSjNnSzcbdQjo2PjE5LxUnVSAR3kiVNNwTND3DQRMESJdIhNtYgdglytGz1TJTu7HGgA1DuwAAkb0upD%2BnJE0ryIBYjJerLCNLXio8kw2VW2GnMxD46ZVbVSBAzA1JlIUbXM%2BxW0fNW-aj52A0uRxOTDuTDwR1IZyWHgEWAEsWIaXUAHYYdk4QikR1yOoABwY3aeTDkN6yKICIkDMCkt4oTDg7CYJAAa20FKpGUWmI0IjwAR0DPBDwIYwWn2J-MFXUZqWZbOpOX4iMInX8uhuRAc2ml8wB5w8PwQ2maKxY2jyMSQnAQwnkugIKHkqSQuXs4rtEUdhBdsXULpYtvtPudrvUeBEIlK8y9DqdfrdqjYAgAFmRxQbYbZMKpY3QeIwhE8bQBdAC%2BQA'
     );
   });
 
@@ -830,50 +806,6 @@ describe('Catalogue Items Table', () => {
     ).toBeInTheDocument();
   });
 
-  it('displays drawing link grouped cell', async () => {
-    createView();
-
-    await waitFor(() => {
-      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
-    });
-
-    expect(await screen.findByText('Name')).toBeInTheDocument();
-
-    const drawingLink = 'http://example-drawing-link.com';
-
-    // Get the table element (assuming it has a specific class or role)
-    const table = screen.getByTestId('catalogue-items-table-container');
-
-    fireEvent.scroll(table, { target: { scrollLeft: 2780 } });
-
-    // Check if the drawing link cell is visible after scrolling
-    expect(await screen.findByText(drawingLink)).toBeInTheDocument();
-
-    //  drawing link column action button
-    await user.click(
-      screen.getAllByRole('button', { name: 'Column Actions' })[9]
-    );
-
-    await user.click(await screen.findByText('Group by Drawing Link'));
-
-    expect(
-      screen.queryByRole('tooltip', { name: 'Drawing Link' })
-    ).not.toBeInTheDocument();
-
-    fireEvent.scroll(table, { target: { scrollLeft: -2780 } });
-
-    expect(
-      await screen.findByRole('tooltip', { name: 'Drawing Link' })
-    ).toBeInTheDocument();
-
-    // Check if the drawing link grouped cell is visible after scrolling
-    expect(
-      await screen.findByRole('tooltip', {
-        name: 'http://example-drawing-link.com (1)',
-      })
-    ).toBeInTheDocument();
-  });
-
   it('displays manufacturer url grouped cell', async () => {
     createView();
 
@@ -895,7 +827,7 @@ describe('Catalogue Items Table', () => {
 
     // manufacturer url column action button
     await user.click(
-      screen.getAllByRole('button', { name: 'Column Actions' })[7]
+      screen.getAllByRole('button', { name: 'Column Actions' })[5]
     );
 
     await user.click(await screen.findByText('Group by Manufacturer URL'));

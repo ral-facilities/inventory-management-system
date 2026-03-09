@@ -1,12 +1,32 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`CriticalityTooltipIcon > renders correctly 1`] = `
+exports[`CriticalityTooltipIcon > renders correctly (showFlagged=false) 1`] = `
 <body>
   <div>
     <svg
       aria-hidden="true"
       aria-label="test"
-      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-lsa6h-MuiSvgIcon-root"
+      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-gjkvlp-MuiSvgIcon-root"
+      data-mui-internal-clone-element="true"
+      data-testid="CheckCircleIcon"
+      focusable="false"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8z"
+      />
+    </svg>
+  </div>
+</body>
+`;
+
+exports[`CriticalityTooltipIcon > renders correctly (showFlagged=null) 1`] = `
+<body>
+  <div>
+    <svg
+      aria-hidden="true"
+      aria-label="test"
+      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1xvssuy-MuiSvgIcon-root"
       data-mui-internal-clone-element="true"
       data-testid="WarningIcon"
       focusable="false"
@@ -14,6 +34,26 @@ exports[`CriticalityTooltipIcon > renders correctly 1`] = `
     >
       <path
         d="M1 21h22L12 2zm12-3h-2v-2h2zm0-4h-2v-4h2z"
+      />
+    </svg>
+  </div>
+</body>
+`;
+
+exports[`CriticalityTooltipIcon > renders correctly (showFlagged=true) 1`] = `
+<body>
+  <div>
+    <svg
+      aria-hidden="true"
+      aria-label="test"
+      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-lsa6h-MuiSvgIcon-root"
+      data-mui-internal-clone-element="true"
+      data-testid="ErrorIcon"
+      focusable="false"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m1 15h-2v-2h2zm0-4h-2V7h2z"
       />
     </svg>
   </div>

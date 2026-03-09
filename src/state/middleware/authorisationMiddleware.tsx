@@ -20,7 +20,7 @@ export const createAuthListenerMiddleware = (
       listenerApi.dispatch(
         setAuthorisation({
           role,
-          isPrivilegedUser: privilegedRoles.includes(role),
+          isAdminUser: privilegedRoles.includes(role),
         })
       );
     },
@@ -30,7 +30,7 @@ export const createAuthListenerMiddleware = (
     actionCreator: setIsAdminMode,
     effect: async (_, listenerApi) => {
       const state = listenerApi.getState() as RootState;
-      if (state.authorisation.isPrivilegedUser) {
+      if (state.authorisation.isAdminUser) {
         storageRegistryDict.authorisation.save(state.authorisation.isAdminMode);
       } else {
         storageRegistryDict.authorisation.clear();
@@ -41,10 +41,9 @@ export const createAuthListenerMiddleware = (
   middleware.startListening({
     actionCreator: setAuthorisation,
     effect: async (_, listenerApi) => {
-      const { isPrivilegedUser, isAdminMode } = (
-        listenerApi.getState() as RootState
-      ).authorisation;
-      if (!isPrivilegedUser) {
+      const { isAdminUser, isAdminMode } = (listenerApi.getState() as RootState)
+        .authorisation;
+      if (!isAdminUser) {
         storageRegistryDict.authorisation.clear();
       } else {
         storageRegistryDict.authorisation.save(isAdminMode);

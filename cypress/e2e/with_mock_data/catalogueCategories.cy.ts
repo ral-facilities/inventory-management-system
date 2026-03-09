@@ -57,26 +57,28 @@ describe('Catalogue Category', () => {
     cy.findByText('Actuators').should('not.exist');
   });
 
-  it('shows critical catalogue categories and filter button', () => {
+  it('shows all criticality states of catalogue categories and the filter button', () => {
     cy.visit('/catalogue');
     cy.setMode({ critical: true });
 
-    cy.findByRole('button', { name: 'Show Critical Items' }).should('exist');
-    cy.findByTestId('WarningIcon').should('exist');
-    cy.findByTestId('WarningIcon').trigger('mouseover');
-    cy.findByText(
-      'A catalogue category is considered critical if any of its nested child categories or catalogue items are marked as critical.'
+    cy.findByRole('button', { name: 'Show Critical Categories' }).should(
+      'exist'
     );
-    cy.findByText('Beam Characterization').click();
+    cy.findByTestId('ErrorIcon').should('exist');
+    cy.findByTestId('ErrorIcon').trigger('mouseover');
+    cy.findByText('This catalogue category is critical.');
 
     cy.findByTestId('WarningIcon').should('exist');
     cy.findByTestId('WarningIcon').trigger('mouseover');
     cy.findByText(
-      'A catalogue category is considered critical if any of its nested child categories or catalogue items are marked as critical.'
+      'Unable to determine if this catalogue category is critical. Please contact support.'
     );
+
+    cy.findAllByTestId('CheckCircleIcon').first().trigger('mouseover');
+    cy.findByText('This catalogue category is not critical.');
   });
 
-  it('shows critical catalogue categories in the move and copy to catalogue category table', () => {
+  it('shows all criticality states of catalogue categories in the move and copy to catalogue category table', () => {
     cy.visit('/catalogue');
     cy.setMode({ critical: true });
 
@@ -95,11 +97,27 @@ describe('Catalogue Category', () => {
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.findByTestId('WarningIcon').should('exist');
-        cy.findByTestId('WarningIcon').trigger('mouseover');
+        cy.findByTestId('ErrorIcon').should('exist');
+        cy.findByTestId('ErrorIcon').trigger('mouseover');
+      });
+    cy.findByText('This catalogue category is critical.');
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findAllByTestId('CheckCircleIcon').first().trigger('mouseover');
+      });
+    cy.findByText('This catalogue category is not critical.');
+
+    cy.findByRole('button', { name: 'Go to page 2' }).click();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findAllByTestId('WarningIcon').first().trigger('mouseover');
       });
     cy.findByText(
-      'A catalogue category is considered critical if any of its nested child categories or catalogue items are marked as critical.'
+      'Unable to determine if this catalogue category is critical. Please contact support.'
     );
   });
 
@@ -1505,6 +1523,57 @@ describe('Catalogue Category', () => {
     });
   });
 
+  it('edits an existing property unit (as admin)', () => {
+    cy.visit('/catalogue/10');
+    cy.setMode({ admin: true });
+
+    cy.findAllByRole('button', {
+      name: 'Card Actions',
+    })
+      .eq(1)
+      .click();
+
+    cy.findByRole('menuitem', {
+      name: 'edit Dry Vacuum Pumps catalogue category button',
+    }).click();
+
+    cy.findAllByLabelText('Row Actions').eq(1).click();
+    cy.findByLabelText('Edit property Ultimate Pressure as admin').click();
+
+    cy.findByLabelText('Select Unit').click();
+    cy.findByRole('option', { name: 'millimeters' }).click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('checkbox', {
+      name: 'Confirm understanding and proceed checkbox',
+    }).click();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findByText('Add Property').should('have.length', 1);
+
+    // Active waiting (test column filters) for the patch request below
+    cy.findAllByLabelText('Filter by Name').last().type('Ultimate Pressure');
+    cy.findByRole('button', { name: 'Clear Filters' }).should('exist');
+    cy.findByRole('button', { name: 'Clear Filters' }).should(
+      'be.not.disabled'
+    );
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/catalogue-categories/:catalogue_category_id/properties/:property_id',
+    }).should(async (patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      const request = patchRequests[0];
+      expect(JSON.stringify(await request.json())).equal(
+        JSON.stringify({
+          unit_id: '5',
+        })
+      );
+    });
+  });
+
   it('display edit form errors on property dialog (mandatory errors)', () => {
     cy.visit('/catalogue/10');
 
@@ -1649,6 +1718,45 @@ describe('Catalogue Category', () => {
 
     cy.findByText('Please enter a valid number.').should('not.exist');
   });
+
+  it('deletes a property (admin)', () => {
+    cy.visit('/catalogue/10');
+    cy.setMode({ admin: true });
+
+    cy.findAllByRole('button', {
+      name: 'Card Actions',
+    })
+      .eq(1)
+      .click();
+
+    cy.findByRole('menuitem', {
+      name: 'edit Dry Vacuum Pumps catalogue category button',
+    }).click();
+
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByLabelText('Delete property Pumping Speed as admin').click();
+
+    cy.findByRole('button', { name: 'Continue' }).should('be.disabled');
+
+    cy.findByRole('checkbox', {
+      name: 'Confirm understanding and proceed checkbox',
+    }).click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'DELETE',
+      url: '/v1/catalogue-categories/:catalogue_category_id/properties/:property_id',
+    }).should((deleteRequests) => {
+      expect(deleteRequests.length).equal(1);
+      const request = deleteRequests[0];
+      expect(request.url.toString()).to.contain('12');
+      expect(request.url.toString()).to.contain('17');
+    });
+  });
+
   // The tooltip tests are very flaky; issue to fix later: https://github.com/ral-facilities/inventory-management-system/issues/637
   it.skip('display overflow tooltip on hover', () => {
     // Card view

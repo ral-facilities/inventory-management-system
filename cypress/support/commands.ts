@@ -162,7 +162,7 @@ Cypress.Commands.add('setMode', ({ admin = false, critical = false } = {}) => {
 
   // Toggle critical mode
   if (critical) {
-    cy.findByRole('menuitem', { name: 'Switch to critical mode on' }).click();
+    cy.findByRole('menuitem', { name: 'Switch critical mode on' }).click();
   }
 });
 

@@ -605,14 +605,24 @@ exports[`SystemItemsDialog > displays correctly when in admin mode 1`] = `
                                 <div
                                   class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                                 >
-                                  <p
-                                    aria-label="Type"
-                                    class="MuiTypography-root MuiTypography-body1 css-1bnbo3v-MuiTypography-root"
-                                    data-mui-internal-clone-element="true"
-                                    role="tooltip"
+                                  <div
+                                    class="MuiBox-root css-fv3lde"
                                   >
+                                    <svg
+                                      aria-hidden="true"
+                                      aria-label="System Type Info Tooltip"
+                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-1raa5r2-MuiSvgIcon-root"
+                                      data-mui-internal-clone-element="true"
+                                      data-testid="InfoOutlinedIcon"
+                                      focusable="false"
+                                      viewBox="0 0 24 24"
+                                    >
+                                      <path
+                                        d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8"
+                                      />
+                                    </svg>
                                     Type
-                                  </p>
+                                  </div>
                                 </div>
                                 <span
                                   aria-label="Sort by Type descending"
@@ -1151,6 +1161,7 @@ exports[`SystemItemsDialog > displays correctly when in admin mode 1`] = `
       tabindex="0"
     />
   </div>
+<<<<<<< HEAD
   <div
     class="MuiPopper-root MuiTooltip-popper MuiTooltip-popperInteractive MuiTooltip-popperArrow css-jycagz-MuiPopper-root-MuiTooltip-popper"
     data-popper-escaped=""
@@ -1171,5 +1182,7 @@ exports[`SystemItemsDialog > displays correctly when in admin mode 1`] = `
       />
     </div>
   </div>
+=======
+>>>>>>> catalogue-items-flaggging-#1656
 </body>
 `;

@@ -31,7 +31,7 @@ describe('Catalogue Item Layout', () => {
     });
   });
 
-  it('renders catalogue items landing page title correctly (critical mode)', async () => {
+  it('renders catalogue items landing page title correctly when is_flagged is true (critical mode)', async () => {
     createView('/catalogue/6/items/10', 'catalogueItem', {
       criticality: { isCriticalMode: true },
     });
@@ -39,12 +39,46 @@ describe('Catalogue Item Layout', () => {
       expect(screen.getByText('Wavefront Sensors 31')).toBeInTheDocument();
     });
 
+    expect(screen.getByTestId('ErrorIcon')).toBeInTheDocument();
+
+    await user.hover(screen.getByTestId('ErrorIcon'));
+
+    expect(
+      await screen.findByText('This catalogue item is critical.')
+    ).toBeInTheDocument();
+  });
+
+  it('renders catalogue items landing page title correctly when is_flagged is null (critical mode)', async () => {
+    createView('/catalogue/6/items/9', 'catalogueItem', {
+      criticality: { isCriticalMode: true },
+    });
+    await waitFor(() => {
+      expect(screen.getByText('Wavefront Sensors 30')).toBeInTheDocument();
+    });
+
     expect(screen.getByTestId('WarningIcon')).toBeInTheDocument();
 
     await user.hover(screen.getByTestId('WarningIcon'));
 
     expect(
-      await screen.findByText('Items are running low in this catalogue item')
+      await screen.findByText(
+        'Unable to determine if this catalogue item is critical. If the expected lifetime is "None" please update this field. Otherwise wait until this is recalculated.'
+      )
+    ).toBeInTheDocument();
+  });
+
+  it('renders catalogue items landing page title correctly when is_flagged is false (critical mode)', async () => {
+    createView('/catalogue/4/items/1', 'catalogueItem', {
+      criticality: { isCriticalMode: true },
+    });
+    await waitFor(() => {
+      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
+    });
+
+    await user.hover(screen.getAllByTestId('CheckCircleIcon')[0]);
+
+    expect(
+      await screen.findByText('This catalogue item is not critical.')
     ).toBeInTheDocument();
   });
 

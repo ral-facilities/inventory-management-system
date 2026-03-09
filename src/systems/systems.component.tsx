@@ -37,17 +37,15 @@ import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link, useParams } from 'react-router';
 import { System, SystemImportanceType } from '../api/api.types';
-import {
-  getSystemImportanceColour,
-  useGetSystems,
-  useGetSystemTypes,
-} from '../api/systems';
+import { getSystemImportanceColour, useGetSystems } from '../api/systems';
+import { useGetSystemTypes } from '../api/systemTypes';
 import type { SystemTableType } from '../app.types';
 import CriticalityTooltipIcon from '../common/criticalityTooltipIcon.component';
 import {
   getValueFromUpdater,
   usePreservedTableState,
 } from '../common/preservedTableState.component';
+import { SystemTypeColumnHeaderInformationTooltip } from '../common/systemTypesInformationTooltip.component';
 import { useAppSelector } from '../state/hook';
 import { selectCriticality } from '../state/slices/criticalitySlice';
 import {
@@ -282,11 +280,12 @@ function Systems() {
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
         size: 180,
         Cell: ({ row, renderedCellValue }) => {
-          const showFlagged = row.original.is_flagged && isCriticalMode;
+          const showFlagged = row.original.is_flagged;
           return (
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              {showFlagged && (
+              {isCriticalMode && (
                 <CriticalityTooltipIcon
+                  showFlagged={showFlagged}
                   label={'Items are running low within this subsystems'}
                 />
               )}
@@ -322,7 +321,13 @@ function Systems() {
       },
       {
         header: 'Type',
-        Header: TableHeaderOverflowTip,
+        Header: ({ column }) => (
+          <SystemTypeColumnHeaderInformationTooltip
+            title={column.columnDef.header}
+            systemTypesData={systemTypesData}
+          />
+        ),
+        TableHeaderOverflowTip,
         accessorFn: (row) => row.type?.value,
         id: 'type.value',
         filterVariant: 'multi-select',
@@ -529,9 +534,11 @@ function Systems() {
       size: 'small',
     },
     muiTableBodyRowProps: ({ row }) => {
-      const showFlagged = row.original.is_flagged && isCriticalMode;
+      const showFlagged = row.original.is_flagged;
       return {
-        sx: (theme) => ({ ...(showFlagged && criticalityRowStyle(theme)) }),
+        sx: (theme) => ({
+          ...(isCriticalMode && criticalityRowStyle({ theme, showFlagged })),
+        }),
       };
     },
     muiTablePaperProps: ({ table }) => ({

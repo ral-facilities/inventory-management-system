@@ -49,7 +49,7 @@ describe('SystemItemsTable', () => {
     const view = createView({
       authorisation: {
         role: 'admin',
-        isPrivilegedUser: true,
+        isAdminUser: true,
         isAdminMode: true,
       },
     });
@@ -377,7 +377,7 @@ describe('SystemItemsTable', () => {
     createView({
       authorisation: {
         role: 'admin',
-        isPrivilegedUser: true,
+        isAdminUser: true,
         isAdminMode: true,
       },
     });
@@ -473,7 +473,7 @@ describe('SystemItemsTable', () => {
     createView({
       authorisation: {
         role: 'admin',
-        isPrivilegedUser: true,
+        isAdminUser: true,
         isAdminMode: true,
       },
     });
@@ -708,7 +708,7 @@ describe('SystemItemsTable', () => {
     createView({
       authorisation: {
         role: 'admin',
-        isPrivilegedUser: true,
+        isAdminUser: true,
         isAdminMode: true,
       },
     });

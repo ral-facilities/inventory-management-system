@@ -55,11 +55,9 @@ describe('Items', () => {
 
     cy.setMode({ critical: true });
 
-    cy.findByTestId('WarningIcon').should('exist');
-    cy.findByTestId('WarningIcon').trigger('mouseover');
-    cy.findByText('Items are running low in this catalogue item').should(
-      'exist'
-    );
+    cy.findByTestId('ErrorIcon').should('exist');
+    cy.findByTestId('ErrorIcon').trigger('mouseover');
+    cy.findByText('This catalogue item is critical.').should('exist');
     cy.findAllByText('(Item Details)').should('exist');
   });
 
@@ -85,7 +83,6 @@ describe('Items', () => {
       'High-resolution cameras for beam characterization. 1'
     ).should('exist');
     cy.findByText('Obsolete reason').should('exist');
-    cy.findByText('Drawing Number').should('exist');
 
     cy.findByRole('link', { name: 'Cameras' }).click();
 

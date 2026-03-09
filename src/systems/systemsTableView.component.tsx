@@ -14,9 +14,10 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { System } from '../api/api.types';
-import { useGetSystemTypes } from '../api/systems';
+import { useGetSystemTypes } from '../api/systemTypes';
 import type { SystemTableType } from '../app.types';
 import CriticalityTooltipIcon from '../common/criticalityTooltipIcon.component';
+import { SystemTypeColumnHeaderInformationTooltip } from '../common/systemTypesInformationTooltip.component';
 import { useAppSelector } from '../state/hook';
 import { selectCriticality } from '../state/slices/criticalitySlice';
 import {
@@ -93,11 +94,12 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
         Cell: ({ row, renderedCellValue }) => {
-          const showFlagged = row.original.is_flagged && isCriticalMode;
+          const showFlagged = row.original.is_flagged;
           return (
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              {showFlagged && (
+              {isCriticalMode && (
                 <CriticalityTooltipIcon
+                  showFlagged={showFlagged}
                   label={'Items are running low within this subsystems'}
                 />
               )}
@@ -110,7 +112,13 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
       },
       {
         header: 'Type',
-        Header: TableHeaderOverflowTip,
+        Header: ({ column }) => (
+          <SystemTypeColumnHeaderInformationTooltip
+            title={column.columnDef.header}
+            systemTypesData={systemTypesData}
+          />
+        ),
+        TableHeaderOverflowTip,
         accessorFn: (row) => row.type?.value,
         id: 'type',
         filterVariant: 'multi-select',
@@ -202,7 +210,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
         (type === 'copyTo' || !selectedSystemIds.includes(row.original.id)) &&
         (isSystemSelectable ? isSystemSelectable(row.original) : true);
 
-      const showFlagged = row.original.is_flagged && isCriticalMode;
+      const showFlagged = row.original.is_flagged;
 
       return {
         component: TableRow,
@@ -210,7 +218,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
         'aria-label': `${row.original.name} row`,
         sx: (theme) => ({
           cursor: canPlaceHere ? 'pointer' : 'not-allowed',
-          ...(showFlagged && criticalityRowStyle(theme)),
+          ...(isCriticalMode && criticalityRowStyle({ theme, showFlagged })),
         }),
       };
     },

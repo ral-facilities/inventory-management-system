@@ -6,6 +6,7 @@ import CriticalityTooltipIcon from '../../common/criticalityTooltipIcon.componen
 import { useAppSelector } from '../../state/hook';
 import { selectCriticality } from '../../state/slices/criticalitySlice';
 import { criticalityHeaderStyle } from '../../utils';
+import { getCICriticalityLabel } from './catalogueItemsTable.component';
 
 function CatalogueItemLayout() {
   const { catalogue_item_id: catalogueItemId, item_id: itemId } = useParams();
@@ -14,7 +15,7 @@ function CatalogueItemLayout() {
   const location = useLocation();
   const { isCriticalMode } = useAppSelector(selectCriticality);
 
-  const showFlagged = catalogueItem?.is_flagged && isCriticalMode;
+  const showFlagged = catalogueItem?.is_flagged ?? null;
 
   const getPageSubtitle = () => {
     // Check for individual item detail page (has item_id param)
@@ -51,39 +52,37 @@ function CatalogueItemLayout() {
             width: '100%',
             gap: 1,
             padding: 1,
-            ...(showFlagged && criticalityHeaderStyle(theme)),
+            ...(isCriticalMode &&
+              criticalityHeaderStyle({ theme, showFlagged })),
           })}
         >
-          <>
-            {showFlagged && (
-              <CriticalityTooltipIcon
-                label={'Items are running low in this catalogue item'}
-                sx={{ fontSize: '40px' }}
-              />
-            )}
+          {isCriticalMode && (
+            <CriticalityTooltipIcon
+              label={getCICriticalityLabel(showFlagged)}
+              showFlagged={showFlagged}
+            />
+          )}
+          <Typography
+            variant="h4"
+            sx={{
+              fontWeight: 'bold',
+              wordWrap: 'break-word',
+            }}
+          >
+            {catalogueItem?.name}
+          </Typography>
+          {subtitle && (
             <Typography
-              variant="h4"
+              variant="h6"
+              color="text.secondary"
               sx={{
                 fontWeight: 'bold',
-                wordWrap: 'break-word',
                 alignItems: 'center',
               }}
             >
-              {catalogueItem?.name}
+              ({subtitle})
             </Typography>
-            {subtitle && (
-              <Typography
-                variant="h6"
-                color="text.secondary"
-                sx={{
-                  fontWeight: 'bold',
-                  alignItems: 'center',
-                }}
-              >
-                ({subtitle})
-              </Typography>
-            )}
-          </>
+          )}
         </Box>
       </Box>
       <Outlet />
