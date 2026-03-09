@@ -124,18 +124,27 @@ Cypress.Commands.add('findBrowserMockedRequests', ({ method, url }) => {
 });
 
 /**
- * Sets the current token in localstorage to one that contains an admin role
- * The relevant part of the token's payload is: {role: 'admin', userIsAdmin: false}
- * This is used wherever specific admin functionality needs to be tested
+ * Enable admin mode, critical mode, or both.
+ *
+ * Example:
+ *   cy.setMode({ admin: true });
+ *   cy.setMode({ critical: true });
+ *   cy.setMode({ admin: true, critical: true });
  */
-Cypress.Commands.add('setCurrentUserToAdmin', () => {
-  cy.window().then((win) => {
-    win.localStorage.setItem(
-      'scigateway:token',
-      'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwicm9sZSI6ImFkbWluIiwidXNlcklzQWRtaW4iOmZhbHNlLCJleHAiOjI1MzQwMjMwMDc5OX0.FrsDUqnKskhIvmIjtYVgC9im-cSu1dFlwVQ4cFJf2BgCaSh82XuEngOLkbtQuuXWC1wiipsGP4Y-usq7Q_R68vwXqGYusHo4fXw6AcBcwplgXZ3n60wsTegpBxKZY5foOre0Ng1GpK-7rrx9H-YQUCHSBOtzWOw_eLzu-eNTwMnMnnpGM9L91_hj0dAKiP90Z3Hp0UelnYydc0sf6msOs7RKI2Sij-13vFSL8LToIbfUTZYwKZHbBPD5glce_gsW6_W5W-iGemt7yyhfyf7IxKWq3Q02HCiSkI0uCcBal44sabPrsQ4EaPRwyUnH0X25MC00IAPRHh-1KqabV7IA9w'
-    );
+Cypress.Commands.add('setMode', ({ admin = false, critical = false } = {}) => {
+  // Only set the token if enabling admin mode
+  if (admin) {
+    cy.window().then((win) => {
+      win.localStorage.setItem(
+        'scigateway:token',
+        'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwicm9sZSI6ImFkbWluIiwidXNlcklzQWRtaW4iOmZhbHNlLCJleHAiOjI1MzQwMjMwMDc5OX0.FrsDUq...' // shortened for clarity
+      );
+    });
+  }
 
-    cy.document().then((document) => {
+  // Ensure settings menu exists
+  cy.document().then((document) => {
+    if (!document.getElementById('settings')) {
       const div = document.createElement('div');
       div.id = 'settings';
 
@@ -143,9 +152,18 @@ Cypress.Commands.add('setCurrentUserToAdmin', () => {
       div.appendChild(ul);
 
       document.body.appendChild(div);
-    });
-    cy.findByRole('menuitem', { name: 'Switch admin mode on' }).click();
+    }
   });
+
+  // Toggle admin mode
+  if (admin) {
+    cy.findByRole('menuitem', { name: 'Switch admin mode on' }).click();
+  }
+
+  // Toggle critical mode
+  if (critical) {
+    cy.findByRole('menuitem', { name: 'Switch critical mode on' }).click();
+  }
 });
 
 declare global {
@@ -218,12 +236,19 @@ declare global {
        * @example cy.dropIMSCollections(['catalogue_categories']);
        */
       dropIMSCollections(collections: string[]): Chainable<unknown>;
+
       /**
-       * Sets the token in localstorage to admin role token
+       * Enables admin mode, critical mode, or both.
        *
-       * @example cy.setCurrentUserToAdmin()
+       * @example
+       * cy.setMode({ admin: true });
+       * cy.setMode({ critical: true });
+       * cy.setMode({ admin: true, critical: true });
        */
-      setCurrentUserToAdmin(): Chainable<unknown>;
+      setMode(options?: {
+        admin?: boolean;
+        critical?: boolean;
+      }): Chainable<unknown>;
     }
   }
 }

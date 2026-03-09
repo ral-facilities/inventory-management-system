@@ -170,6 +170,7 @@ export interface CatalogueCategory
     CreatedModifiedMixin {
   id: string;
   code: string;
+  is_flagged: boolean | null;
   properties: CatalogueCategoryProperty[];
 }
 

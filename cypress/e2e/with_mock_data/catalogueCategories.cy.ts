@@ -57,6 +57,70 @@ describe('Catalogue Category', () => {
     cy.findByText('Actuators').should('not.exist');
   });
 
+  it('shows all criticality states of catalogue categories and the filter button', () => {
+    cy.visit('/catalogue');
+    cy.setMode({ critical: true });
+
+    cy.findByRole('button', { name: 'Show Critical Categories' }).should(
+      'exist'
+    );
+    cy.findByTestId('ErrorIcon').should('exist');
+    cy.findByTestId('ErrorIcon').trigger('mouseover');
+    cy.findByText('This catalogue category is critical.');
+
+    cy.findByTestId('WarningIcon').should('exist');
+    cy.findByTestId('WarningIcon').trigger('mouseover');
+    cy.findByText(
+      'Unable to determine if this catalogue category is critical. Please contact support.'
+    );
+
+    cy.findAllByTestId('CheckCircleIcon').first().trigger('mouseover');
+    cy.findByText('This catalogue category is not critical.');
+  });
+
+  it('shows all criticality states of catalogue categories in the move and copy to catalogue category table', () => {
+    cy.visit('/catalogue');
+    cy.setMode({ critical: true });
+
+    cy.findAllByRole('checkbox', {
+      name: 'Toggle select card',
+    })
+      .eq(1)
+      .click();
+    cy.findAllByRole('checkbox', {
+      name: 'Toggle select card',
+    })
+      .eq(0)
+      .click();
+    cy.findByRole('button', { name: 'Copy to' }).click();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByTestId('ErrorIcon').should('exist');
+        cy.findByTestId('ErrorIcon').trigger('mouseover');
+      });
+    cy.findByText('This catalogue category is critical.');
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findAllByTestId('CheckCircleIcon').first().trigger('mouseover');
+      });
+    cy.findByText('This catalogue category is not critical.');
+
+    cy.findByRole('button', { name: 'Go to page 2' }).click();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findAllByTestId('WarningIcon').first().trigger('mouseover');
+      });
+    cy.findByText(
+      'Unable to determine if this catalogue category is critical. Please contact support.'
+    );
+  });
+
   it('should be able to navigate through categories while preserving the page state when going back', () => {
     cy.editEndpointResponse({
       url: '/v1/catalogue-categories',
@@ -653,6 +717,7 @@ describe('Catalogue Category', () => {
           properties: [],
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          is_flagged: false,
         })
       );
       expect(JSON.stringify(await patchRequests[1].json())).equal(
@@ -720,6 +785,7 @@ describe('Catalogue Category', () => {
           ],
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          is_flagged: false,
         })
       );
       expect(JSON.stringify(await patchRequests[2].json())).equal(
@@ -732,6 +798,7 @@ describe('Catalogue Category', () => {
           properties: [],
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          is_flagged: false,
         })
       );
     });
@@ -781,6 +848,7 @@ describe('Catalogue Category', () => {
           properties: [],
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          is_flagged: false,
         })
       );
       expect(JSON.stringify(await patchRequests[1].json())).equal(
@@ -848,6 +916,7 @@ describe('Catalogue Category', () => {
           ],
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          is_flagged: false,
         })
       );
       expect(JSON.stringify(await patchRequests[2].json())).equal(
@@ -860,6 +929,7 @@ describe('Catalogue Category', () => {
           properties: [],
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          is_flagged: false,
         })
       );
     });
@@ -1455,7 +1525,7 @@ describe('Catalogue Category', () => {
 
   it('edits an existing property unit (as admin)', () => {
     cy.visit('/catalogue/10');
-    cy.setCurrentUserToAdmin();
+    cy.setMode({ admin: true });
 
     cy.findAllByRole('button', {
       name: 'Card Actions',
@@ -1651,7 +1721,7 @@ describe('Catalogue Category', () => {
 
   it('deletes a property (admin)', () => {
     cy.visit('/catalogue/10');
-    cy.setCurrentUserToAdmin();
+    cy.setMode({ admin: true });
 
     cy.findAllByRole('button', {
       name: 'Card Actions',
