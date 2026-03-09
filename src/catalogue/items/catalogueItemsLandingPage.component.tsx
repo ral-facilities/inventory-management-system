@@ -43,6 +43,23 @@ export const CriticalityInfoToolTip = () => {
     </Tooltip>
   );
 };
+
+export const NumberOfSparesRequiredInfoToolTip = () => {
+  return (
+    <Tooltip
+      title={
+        'Unable to determine if the number of spares required for this catalogue item. If the expected lifetime is "None" please update this field. Otherwise wait until this is recalculated.'
+      }
+      placement="top"
+      enterTouchDelay={0}
+      arrow
+      aria-label="number of spares required warning"
+      sx={{ ml: 2 }}
+    >
+      <InfoOutlinedIcon />
+    </Tooltip>
+  );
+};
 const CatalogueItemsActionMenu = (props: {
   catalogueItem: CatalogueItem;
   catalogueCategory: CatalogueCategory;
@@ -134,9 +151,12 @@ function CatalogueItemsLandingPage() {
                   {isSparesDefinitionDefined && (
                     <>
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <Typography variant="h6">Number of spares:</Typography>
+                        <Typography component="p" variant="h6">
+                          Number of spares:
+                        </Typography>
 
                         <Typography
+                          component="p"
                           variant="h6"
                           sx={{
                             color: 'text.secondary',
@@ -159,9 +179,12 @@ function CatalogueItemsLandingPage() {
                         <Box
                           sx={{ display: 'flex', alignItems: 'center', mt: 2 }}
                         >
-                          <Typography variant="h6">Criticality:</Typography>
+                          <Typography component="p" variant="h6">
+                            Criticality:
+                          </Typography>
 
                           <Typography
+                            component="p"
                             variant="h6"
                             sx={{
                               color: 'text.secondary',
@@ -181,7 +204,12 @@ function CatalogueItemsLandingPage() {
                       )}
                     </>
                   )}
-                  <Typography variant="h6" gutterBottom sx={{ my: 2 }}>
+                  <Typography
+                    component="p"
+                    variant="h6"
+                    gutterBottom
+                    sx={{ my: 2 }}
+                  >
                     Description:
                   </Typography>
                   <Typography
@@ -344,18 +372,7 @@ function CatalogueItemsLandingPage() {
                                     </Typography>
                                     {catalogueItemIdData.number_of_spares_required ===
                                       null && (
-                                      <Tooltip
-                                        title={
-                                          'Unable to determine if the number of spares required for this catalogue item. If the expected lifetime is "None" please update this field. Otherwise wait until this is recalculated.'
-                                        }
-                                        placement="top"
-                                        enterTouchDelay={0}
-                                        arrow
-                                        aria-label="number of spares required warning"
-                                        sx={{ ml: 2 }}
-                                      >
-                                        <InfoOutlinedIcon />
-                                      </Tooltip>
+                                      <NumberOfSparesRequiredInfoToolTip />
                                     )}
                                   </Box>
                                 </Grid>

@@ -964,6 +964,9 @@ describe('Catalogue Items', () => {
     cy.visit('/catalogue/5');
 
     cy.findAllByRole('link', { name: 'Click here' }).first().scrollIntoView();
+    cy.findAllByRole('link', { name: 'Click here' })
+      .first()
+      .should('be.visible');
 
     cy.findAllByRole('link', { name: 'Click here' }).first().click();
 

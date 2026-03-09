@@ -1,7 +1,9 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import React from 'react';
 import { Outlet, useLocation, useParams } from 'react-router';
 import { useGetCatalogueItem } from '../../api/catalogueItems';
+import { APISettingsContext } from '../../apiConfigProvider.component';
 import CriticalityTooltipIcon from '../../common/criticalityTooltipIcon.component';
 import { useAppSelector } from '../../state/hook';
 import { selectCriticality } from '../../state/slices/criticalitySlice';
@@ -14,6 +16,8 @@ function CatalogueItemLayout() {
   const { data: catalogueItem } = useGetCatalogueItem(catalogueItemId);
   const location = useLocation();
   const { isCriticalMode } = useAppSelector(selectCriticality);
+  const apiSettings = React.useContext(APISettingsContext);
+  const isSparesDefinitionDefined = !!apiSettings.spares;
 
   const showFlagged = catalogueItem?.is_flagged ?? null;
 
@@ -53,10 +57,11 @@ function CatalogueItemLayout() {
             gap: 1,
             padding: 1,
             ...(isCriticalMode &&
+              isSparesDefinitionDefined &&
               criticalityHeaderStyle({ theme, showFlagged })),
           })}
         >
-          {isCriticalMode && (
+          {isCriticalMode && isSparesDefinitionDefined && (
             <CriticalityTooltipIcon
               label={getCICriticalityLabel(showFlagged)}
               showFlagged={showFlagged}
