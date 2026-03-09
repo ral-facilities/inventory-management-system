@@ -1,11 +1,9 @@
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {
   Box,
   Collapse,
   Link as MuiLink,
   Tab,
   Tabs,
-  Tooltip,
   Typography,
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
@@ -21,7 +19,10 @@ import PrimaryImage from '../../common/images/primaryImage.component';
 import { useAppSelector } from '../../state/hook';
 import { selectCriticality } from '../../state/slices/criticalitySlice';
 import { formatDateTimeStrings, roundUpTenth } from '../../utils';
-import { CriticalityInfoToolTip } from './catalogueItemsLandingPage.component';
+import {
+  CriticalityInfoToolTip,
+  NumberOfSparesRequiredInfoToolTip,
+} from './catalogueItemsLandingPage.component';
 import CatalogueLink from './catalogueLink.component';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -197,20 +198,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                           ) ?? 'None'}
                         </Typography>
                         {catalogueItemIdData.number_of_spares_required ===
-                          null && (
-                          <Tooltip
-                            title={
-                              'Unable to determine if the number of spares required for this catalogue item. If the expected lifetime is "None" please update this field. Otherwise wait until this is recalculated.'
-                            }
-                            placement="top"
-                            enterTouchDelay={0}
-                            arrow
-                            aria-label="number of spares required warning"
-                            sx={{ ml: 2 }}
-                          >
-                            <InfoOutlinedIcon />
-                          </Tooltip>
-                        )}
+                          null && <NumberOfSparesRequiredInfoToolTip />}
                       </Box>
                     </Grid>
                   )}

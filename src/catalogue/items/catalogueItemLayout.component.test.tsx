@@ -1,5 +1,8 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { http, HttpResponse } from 'msw';
+import APIConfigProvider from '../../apiConfigProvider.component';
+import { server } from '../../mocks/server';
 import { URLPathKeyType } from '../../paths';
 import { RootState } from '../../state/store';
 import { renderComponentWithRouterProvider } from '../../testUtils';
@@ -17,7 +20,9 @@ describe('Catalogue Item Layout', () => {
     preloadedState?: Partial<RootState>
   ) => {
     return renderComponentWithRouterProvider(
-      <CatalogueItemLayout />,
+      <APIConfigProvider>
+        <CatalogueItemLayout />
+      </APIConfigProvider>,
       urlPathKey,
       path,
       preloadedState
@@ -46,6 +51,24 @@ describe('Catalogue Item Layout', () => {
     expect(
       await screen.findByText('This catalogue item is critical.')
     ).toBeInTheDocument();
+  });
+
+  it('renders catalogue items landing page title correctly when spares definition is not defined', async () => {
+    server.use(
+      http.get('/v1/settings/spares-definition', () => {
+        return HttpResponse.json(undefined, { status: 204 });
+      })
+    );
+    createView('/catalogue/6/items/10', 'catalogueItem', {
+      criticality: { isCriticalMode: true },
+    });
+    await waitFor(() => {
+      expect(screen.getByText('Wavefront Sensors 31')).toBeInTheDocument();
+    });
+
+    await waitFor(() =>
+      expect(screen.queryByTestId('ErrorIcon')).not.toBeInTheDocument()
+    );
   });
 
   it('renders catalogue items landing page title correctly when is_flagged is null (critical mode)', async () => {
