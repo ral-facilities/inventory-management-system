@@ -40,6 +40,7 @@ import {
 } from '../../api/api.types';
 import { useGetCatalogueItems } from '../../api/catalogueItems';
 import { useGetManufacturerIds } from '../../api/manufacturers';
+import { useGetInUseDefinition } from '../../api/settings';
 import { APISettingsContext } from '../../apiConfigProvider.component';
 import CriticalityTooltipIcon from '../../common/criticalityTooltipIcon.component';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
@@ -75,6 +76,54 @@ import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import CatalogueLink from './catalogueLink.component';
 import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
 import ObsoleteCatalogueItemDialog from './obsoleteCatalogueItemDialog.component';
+
+export const CriticalityHeaderInfoToolTip = () => {
+  const { data } = useGetInUseDefinition();
+
+  const systemTypes =
+    data && typeof data === 'object' && 'system_types' in data
+      ? (data.system_types.map((t) => t?.value).filter(Boolean) as string[])
+      : [];
+
+  const systemText =
+    systemTypes.length > 0
+      ? `'${systemTypes.join("', '")}'`
+      : 'a system type defined as in use';
+
+  const title =
+    `The criticality value is determined by the systems an item is used in. ` +
+    `When an item is in a system with the system type ${systemText} then it is assessed against the required operational demand.`;
+
+  return (
+    <Tooltip title={title}>
+      <InfoOutlined sx={{ mr: 1 }} fontSize="small" />
+    </Tooltip>
+  );
+};
+
+export const NumberOfSparesRequiredHeaderInfoToolTip = () => {
+  const { data } = useGetInUseDefinition();
+
+  const systemTypes =
+    data && typeof data === 'object' && 'system_types' in data
+      ? (data.system_types.map((t) => t?.value).filter(Boolean) as string[])
+      : [];
+
+  const systemText =
+    systemTypes.length > 0
+      ? `'${systemTypes.join("', '")}'`
+      : 'a system type defined as in use';
+
+  const title =
+    `The number of spares required is determined by how an item is used across systems. ` +
+    `When an item is in a system with the system type ${systemText} then operational demand and replacement intervals are used to calculate the spare requirement.`;
+
+  return (
+    <Tooltip title={title}>
+      <InfoOutlined sx={{ mr: 1 }} fontSize="small" />
+    </Tooltip>
+  );
+};
 
 export const getCICriticalityLabel = (showFlagged: boolean | null) => {
   if (showFlagged === true) {
@@ -323,13 +372,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                 column: MRT_Column<TableRowData, unknown>;
               }) => (
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <Tooltip
-                    title={
-                      'The criticality column indicates whether new items need to bough for a given catalogue item. if the value is empty this means that expected lifetime field is none for that given catalogue please update the field '
-                    }
-                  >
-                    <InfoOutlined sx={{ mr: 1 }} fontSize="small" />
-                  </Tooltip>
+                  <CriticalityHeaderInfoToolTip />
                   <OverflowTip sx={{ font: 'inherit' }}>
                     {column.columnDef.header}
                   </OverflowTip>
@@ -380,7 +423,18 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             },
             {
               header: 'Number of spares required',
-              Header: TableHeaderOverflowTip,
+              Header: ({
+                column,
+              }: {
+                column: MRT_Column<TableRowData, unknown>;
+              }) => (
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <NumberOfSparesRequiredHeaderInfoToolTip />
+                  <OverflowTip sx={{ font: 'inherit' }}>
+                    {column.columnDef.header}
+                  </OverflowTip>
+                </Box>
+              ),
               size: 350,
               accessorFn: (row: TableRowData) =>
                 row.catalogueItem.number_of_spares_required,

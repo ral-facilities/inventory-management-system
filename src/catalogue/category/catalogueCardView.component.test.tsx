@@ -357,7 +357,7 @@ describe('CardView', () => {
     ).toBeInTheDocument();
   });
 
-  it('does not show criticality states for catalogue categories and the filter button', async () => {
+  it('does not show criticality states or the critical filter button for catalogue categories', async () => {
     server.use(
       http.get('/v1/settings/spares-definition', () => {
         return HttpResponse.json(undefined, { status: 204 });
