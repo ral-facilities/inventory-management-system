@@ -3,6 +3,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import type { LoaderFunctionArgs } from 'react-router';
 import { URLPathKeyType } from '../paths';
+import { RootState } from '../state/store';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import SystemsLayout, {
   SystemsLayoutErrorComponent,
@@ -26,11 +27,16 @@ describe('Systems Layout', () => {
     vi.clearAllMocks();
   });
 
-  const createView = (path: string, urlPathKey: URLPathKeyType) => {
+  const createView = (
+    path: string,
+    urlPathKey: URLPathKeyType,
+    preloadedState?: Partial<RootState>
+  ) => {
     return renderComponentWithRouterProvider(
       <SystemsLayout />,
       urlPathKey,
-      path
+      path,
+      preloadedState
     );
   };
 
@@ -50,6 +56,18 @@ describe('Systems Layout', () => {
 
   it('renders units breadcrumbs correctly', async () => {
     const view = createView('/systems/65328f34a40ff5301575a4e3', 'system');
+
+    await waitFor(() => {
+      expect(screen.getAllByText('Giant laser')).toHaveLength(2);
+    });
+
+    expect(view.asFragment()).toMatchSnapshot();
+  });
+
+  it('renders critical mode correctly', async () => {
+    const view = createView('/systems/65328f34a40ff5301575a4e3', 'system', {
+      criticality: { isCriticalMode: true },
+    });
 
     await waitFor(() => {
       expect(screen.getAllByText('Giant laser')).toHaveLength(2);

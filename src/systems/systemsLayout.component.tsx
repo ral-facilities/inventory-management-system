@@ -13,6 +13,7 @@ import PageNotFoundComponent from '../common/pageNotFound/pageNotFound.component
 import { useAppSelector } from '../state/hook';
 import { selectCriticality } from '../state/slices/criticalitySlice';
 import { criticalityHeaderStyle } from '../utils';
+import { getSCriticalityLabel } from './systems.component';
 
 export const SystemsErrorComponent = () => {
   return <PageNotFoundComponent homeLocation="Systems" />;
@@ -68,7 +69,7 @@ function SystemsLayout() {
         {isCriticalMode && showFlagged !== undefined && (
           <CriticalityTooltipIcon
             showFlagged={showFlagged}
-            label={'Items are running low within this subsystems'}
+            label={getSCriticalityLabel(showFlagged)}
           />
         )}
         <Typography

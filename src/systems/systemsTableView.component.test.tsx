@@ -2,6 +2,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { System } from '../api/api.types';
 import SystemsJSON from '../mocks/Systems.json';
+import { RootState } from '../state/store';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import {
   SystemsTableView,
@@ -19,8 +20,13 @@ describe('SystemsTableView', () => {
     SystemsJSON[3] as System,
   ];
 
-  const createView = () => {
-    return renderComponentWithRouterProvider(<SystemsTableView {...props} />);
+  const createView = (preloadedState?: Partial<RootState>) => {
+    return renderComponentWithRouterProvider(
+      <SystemsTableView {...props} />,
+      undefined,
+      undefined,
+      preloadedState
+    );
   };
 
   beforeEach(() => {
@@ -53,6 +59,24 @@ describe('SystemsTableView', () => {
 
     for (const system of mockSystemsData)
       expect(await screen.findByText(system.name)).toBeInTheDocument();
+  });
+
+  it('renders critical mode correctly', async () => {
+    createView({ criticality: { isCriticalMode: true } });
+
+    await waitFor(() => {
+      expect(screen.getByText('Name')).toBeInTheDocument();
+    });
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
+    await user.hover(screen.getAllByTestId('ErrorIcon')[0]);
+
+    expect(
+      await screen.findByText('This system is critical.')
+    ).toBeInTheDocument();
   });
 
   it('renders no results page correctly', async () => {

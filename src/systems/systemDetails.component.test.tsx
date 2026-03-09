@@ -48,7 +48,6 @@ describe('SystemDetails', () => {
     createView();
 
     await waitFor(() => {
-      expect(screen.getByText(mockSystemDetails.name)).toBeInTheDocument();
       expect(
         screen.getByText(mockSystemTypeDetails.value ?? '')
       ).toBeInTheDocument();

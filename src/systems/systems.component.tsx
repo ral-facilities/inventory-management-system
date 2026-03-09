@@ -74,6 +74,18 @@ import SystemDetails from './systemDetails.component';
 import SystemDialog from './systemDialog.component';
 import { SystemDirectoryDialog } from './systemDirectoryDialog.component';
 
+export const getSCriticalityLabel = (showFlagged: boolean | null) => {
+  if (showFlagged === true) {
+    return 'This system is critical.';
+  }
+
+  if (showFlagged === false) {
+    return 'This system is not critical.';
+  }
+
+  return 'Unable to determine if this catalogue item is critical. Please wait until this is recalculated.';
+};
+
 export type SystemMenuDialogType = 'edit' | 'duplicate' | 'delete';
 
 const AddSystemButton = (props: {
@@ -272,37 +284,6 @@ function Systems() {
     const systemTypeValues = systemTypesData?.map((type) => type.value);
     return [
       {
-        header: 'Name',
-        accessorFn: (row) => row.name,
-        id: 'name',
-        filterVariant: COLUMN_FILTER_VARIANTS.string,
-        filterFn: COLUMN_FILTER_FUNCTIONS.string,
-        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
-        size: 180,
-        Cell: ({ row, renderedCellValue }) => {
-          const showFlagged = row.original.is_flagged;
-          return (
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              {isCriticalMode && (
-                <CriticalityTooltipIcon
-                  showFlagged={showFlagged}
-                  label={'Items are running low within this subsystems'}
-                />
-              )}
-              <OverflowTip sx={{ fontSize: 'inherit' }}>
-                <MuiLink
-                  underline="hover"
-                  component={Link}
-                  to={`/systems/${row.original.id}`}
-                >
-                  {renderedCellValue}
-                </MuiLink>
-              </OverflowTip>
-            </Box>
-          );
-        },
-      },
-      {
         header: 'is Critical',
         Header: ({ column }) => (
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -318,7 +299,49 @@ function Systems() {
         enableColumnFilterModes: false,
         size: 200,
         filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
+        Cell: ({ row }) => {
+          const showFlagged = row.original.is_flagged;
+          return (
+            <CriticalityTooltipIcon
+              showFlagged={showFlagged}
+              label={getSCriticalityLabel(showFlagged)}
+            />
+          );
+        },
       },
+      {
+        header: 'Name',
+        accessorFn: (row) => row.name,
+        id: 'name',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
+        size: 180,
+        Cell: ({ row, renderedCellValue, table }) => {
+          const showFlagged = row.original.is_flagged;
+          const fullScreenState = table.getState().isFullScreen;
+          return (
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              {isCriticalMode && !fullScreenState && (
+                <CriticalityTooltipIcon
+                  showFlagged={showFlagged}
+                  label={getSCriticalityLabel(showFlagged)}
+                />
+              )}
+              <OverflowTip sx={{ fontSize: 'inherit' }}>
+                <MuiLink
+                  underline="hover"
+                  component={Link}
+                  to={`/systems/${row.original.id}`}
+                >
+                  {renderedCellValue}
+                </MuiLink>
+              </OverflowTip>
+            </Box>
+          );
+        },
+      },
+
       {
         header: 'Type',
         Header: ({ column }) => (
@@ -478,13 +501,6 @@ function Systems() {
     storeInUrl: true,
     urlParamName: 'subState',
   });
-
-  const isCriticalFilterApplied = React.useMemo(() => {
-    const filters = preservedState.columnFilters;
-    const isFlagged = filters.find((f) => f.id === 'is_flagged');
-    if (isFlagged?.value === 'Yes') return true;
-    return false;
-  }, [preservedState]);
 
   const subsystemsTable = useMaterialReactTable({
     // Data
@@ -681,7 +697,7 @@ function Systems() {
                     onClick={() => {
                       table.resetColumnFilters();
                     }}
-                    data-testid="clear-filters-button"
+                    aria-label="clear filters button"
                   >
                     <ClearIcon />
                   </IconButton>
@@ -708,20 +724,6 @@ function Systems() {
           Clear Filters
         </Button>
         <AddSystemButton systemId={systemId} />
-        {isCriticalMode && (
-          <Button
-            sx={{ mx: 0.5 }}
-            variant="outlined"
-            disabled={isCriticalFilterApplied}
-            onClick={() => {
-              onPreservedStatesChange.onColumnFiltersChange([
-                { id: 'is_flagged', value: 'Yes' },
-              ]);
-            }}
-          >
-            Show Critical Items
-          </Button>
-        )}
       </Box>
     ),
     renderRowActionMenuItems: ({ closeMenu, row }) => {

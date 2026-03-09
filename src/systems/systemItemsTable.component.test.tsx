@@ -83,7 +83,61 @@ describe('SystemItemsTable', () => {
     await user.click(
       await screen.findByRole('button', { name: 'Show/Hide columns' })
     );
-    await user.click(screen.getByText('Created'));
+    await user.click(screen.getAllByText('Created')[0]);
+
+    expect(await screen.findByText('Clear Filters')).toBeInTheDocument();
+
+    // Ripples sometimes appear here, they seem to only be present on WSL and not on VMs & CI - wait for them to go
+    // away so local tests don't interfere
+    await waitFor(() =>
+      // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
+      expect(view.container.querySelector('.MuiTouchRipple-child')).toBeNull()
+    );
+
+    // Rest in a snapshot
+    expect(view.asFragment()).toMatchSnapshot();
+  });
+
+  it('renders correctly in critical mode ', async () => {
+    const view = createView({
+      authorisation: {
+        role: 'admin',
+        isAdminUser: true,
+        isAdminMode: true,
+      },
+      criticality: { isCriticalMode: true },
+    });
+
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Turbomolecular Pumps 42 (2)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    // Ensure no loading bars visible
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
+    // Check admin move to button exists
+    expect(
+      screen.getByRole('button', { name: 'Move to as Admin' })
+    ).toBeInTheDocument();
+
+    // Expand a group so all columns are rendered to improve test coverage
+    // (expanding all causes an infinite loop due to an issue with details panels)
+    await user.click(screen.getAllByRole('button', { name: 'Expand' })[0]);
+    //also unhide created column
+    await user.click(
+      await screen.findByRole('button', { name: 'Show/Hide columns' })
+    );
+    await user.click(screen.getAllByText('Created')[0]);
 
     expect(await screen.findByText('Clear Filters')).toBeInTheDocument();
 
@@ -130,7 +184,7 @@ describe('SystemItemsTable', () => {
     await user.click(
       await screen.findByRole('button', { name: 'Show/Hide columns' })
     );
-    await user.click(screen.getByText('Created'));
+    await user.click(screen.getAllByText('Created')[0]);
 
     // Ripples sometimes appear here, they seem to only be present on WSL and not on VMs & CI - wait for them to go
     // away so local tests don't interfere

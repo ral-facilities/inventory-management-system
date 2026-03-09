@@ -1,10 +1,12 @@
 import AddIcon from '@mui/icons-material/Add';
+import InfoOutlined from '@mui/icons-material/InfoOutlined';
 import {
   Box,
   Button,
   MenuItem,
   TableCellBaseProps,
   TableRow,
+  Tooltip,
 } from '@mui/material';
 import {
   MRT_ColumnDef,
@@ -21,11 +23,11 @@ import { SystemTypeColumnHeaderInformationTooltip } from '../common/systemTypesI
 import { useAppSelector } from '../state/hook';
 import { selectCriticality } from '../state/slices/criticalitySlice';
 import {
+  COLUMN_FILTER_BOOLEAN_OPTIONS,
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
   COLUMN_FILTER_VARIANTS,
   MRT_Functions_Localisation,
-  OverflowTip,
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
   TableHeaderOverflowTip,
@@ -35,6 +37,7 @@ import {
   mrtTheme,
 } from '../utils';
 import SystemDialog from './systemDialog.component';
+import { CriticalTooltipText, getSCriticalityLabel } from './systems.component';
 
 export interface SystemsTableViewProps {
   systemsData?: System[];
@@ -86,6 +89,32 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
   const columns = React.useMemo<MRT_ColumnDef<SystemTableType>[]>(
     () => [
       {
+        header: 'is Critical',
+        Header: ({ column }) => (
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Tooltip title={CriticalTooltipText}>
+              <InfoOutlined sx={{ mr: 1 }} fontSize="small" />
+            </Tooltip>
+            {column.columnDef.header}
+          </Box>
+        ),
+        accessorFn: (row: System) => (row.is_flagged ? 'Yes' : 'No'),
+        id: 'is_flagged',
+        filterVariant: COLUMN_FILTER_VARIANTS.boolean,
+        enableColumnFilterModes: false,
+        size: 200,
+        filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
+        Cell: ({ row }) => {
+          const showFlagged = row.original.is_flagged;
+          return (
+            <CriticalityTooltipIcon
+              showFlagged={showFlagged}
+              label={getSCriticalityLabel(showFlagged)}
+            />
+          );
+        },
+      },
+      {
         header: 'Name',
         id: 'name',
         accessorKey: 'name',
@@ -93,22 +122,6 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
-        Cell: ({ row, renderedCellValue }) => {
-          const showFlagged = row.original.is_flagged;
-          return (
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              {isCriticalMode && (
-                <CriticalityTooltipIcon
-                  showFlagged={showFlagged}
-                  label={'Items are running low within this subsystems'}
-                />
-              )}
-              <OverflowTip sx={{ fontSize: 'inherit' }}>
-                {renderedCellValue}
-              </OverflowTip>
-            </Box>
-          );
-        },
       },
       {
         header: 'Type',
@@ -161,7 +174,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
           formatDateTimeStrings(row.original.modified_time, true),
       },
     ],
-    [isCriticalMode, systemTypesData]
+    [systemTypesData]
   );
   const table = useMaterialReactTable({
     // Data
@@ -198,6 +211,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
       showColumnFilters: true,
       showGlobalFilter: true,
       pagination: { pageSize: 5, pageIndex: 0 },
+      columnVisibility: { is_flagged: isCriticalMode },
     },
     state: {
       showProgressBars: systemsDataLoading,

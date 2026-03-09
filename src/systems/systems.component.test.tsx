@@ -1,6 +1,7 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { URLPathKeyType } from '../paths';
+import { RootState } from '../state/store';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import Systems from './systems.component';
 
@@ -9,11 +10,16 @@ describe('Systems', () => {
   vi.setConfig({ testTimeout: 14000 });
 
   let user: UserEvent;
-  const createView = (path: string, urlPathKey?: URLPathKeyType) => {
+  const createView = (
+    path: string,
+    urlPathKey?: URLPathKeyType,
+    preloadedState?: Partial<RootState>
+  ) => {
     return renderComponentWithRouterProvider(
       <Systems />,
       urlPathKey ?? 'systems',
-      path
+      path,
+      preloadedState
     );
   };
 
@@ -36,6 +42,24 @@ describe('Systems', () => {
       expect(screen.getByText('Root systems')).toBeInTheDocument();
     });
 
+    expect(screen.getByText('Giant laser')).toBeInTheDocument();
+    expect(screen.getByText('Total Systems: 5')).toBeInTheDocument();
+  });
+
+  it('renders correctly in critical mode', async () => {
+    createView('/systems', undefined, {
+      criticality: { isCriticalMode: true },
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('Root systems')).toBeInTheDocument();
+    });
+
+    await user.hover(screen.getAllByTestId('ErrorIcon')[0]);
+
+    expect(
+      await screen.findByText('This system is critical.')
+    ).toBeInTheDocument();
     expect(screen.getByText('Giant laser')).toBeInTheDocument();
     expect(screen.getByText('Total Systems: 5')).toBeInTheDocument();
   });
@@ -154,9 +178,9 @@ describe('Systems', () => {
     expect(screen.getByText('Giant laser')).toBeInTheDocument();
     expect(screen.getByText('Total Systems: 5')).toBeInTheDocument();
 
-    const clearFiltersButton = await screen.findByTestId(
-      'clear-filters-button'
-    );
+    const clearFiltersButton = await screen.findByRole('button', {
+      name: 'clear filters button',
+    });
 
     await user.click(
       await screen.findByRole('button', { name: 'Show/Hide filters' })
