@@ -506,6 +506,7 @@ describe('Systems Dialog', () => {
     delete MOCK_SELECTED_SYSTEM_POST_DATA.code;
     delete MOCK_SELECTED_SYSTEM_POST_DATA.created_time;
     delete MOCK_SELECTED_SYSTEM_POST_DATA.modified_time;
+    delete MOCK_SELECTED_SYSTEM_POST_DATA.is_flagged;
 
     beforeEach(() => {
       props.requestType = 'post';
