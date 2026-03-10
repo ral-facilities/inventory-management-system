@@ -790,7 +790,7 @@ describe('Catalogue Items', () => {
     cy.findByRole('link', { name: 'Cameras 15' }).should('exist');
     cy.location('search').should(
       'eq',
-      '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJMoGAngA5NoIAM4YATglr4W7TkJABhBsXFoRAAgCMAVhABffQF1WYAGoIR3dFjxEyFGmHHFMxJAH0MCRjABmOCLEhkA'
+      '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJMoGAngA5NoIAM4YATglr4W7TkJABhBsXFoRAAgCMAVhABffQF19QA'
     );
 
     cy.reload();
@@ -799,7 +799,7 @@ describe('Catalogue Items', () => {
     cy.findByText('Cameras 1').should('not.exist');
     cy.location('search').should(
       'eq',
-      '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJMoGAngA5NoIAM4YATglr4W7TkJABhBsXFoRAAgCMAVhABffQF1WYAGoIR3dFjxEyFGmHHFMxJAH0MCRjABmOCLEhkA'
+      '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJMoGAngA5NoIAM4YATglr4W7TkJABhBsXFoRAAgCMAVhABffQF19QA'
     );
   });
 

@@ -54,7 +54,7 @@ describe('Systems', () => {
 
     cy.location('search').should(
       'eq',
-      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuhvMgIaw32PM4SNCEYAHEvFhcAdhkGsRZZHg44xDEjJbD0JAO4zk8HWxAAbEhh44tp5AF8HQA'
+      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuhvMgIaw32PM4SNCEYAHEvFhcAdhkGsRZZHg44xDEjJbD0JAO4zk8HWxAAbEhh44tpkflphzXAOauaMMF3N5kAX38gA'
     );
     cy.findByText('Storage system for various items.').scrollIntoView();
     cy.findByText('Storage system for various items.').should('be.visible');
@@ -69,7 +69,7 @@ describe('Systems', () => {
 
     cy.location('search').should(
       'eq',
-      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuhvMgIaw32PM4SNCEYAHEvFhcAdhkGsRZZHg44xDEjJbD0JAO4zk8HWxAAbEhh44tp5AF8HQA'
+      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuhvMgIaw32PM4SNCEYAHEvFhcAdhkGsRZZHg44xDEjJbD0JAO4zk8HWxAAbEhh44tpkflphzXAOauaMMF3N5kAX38gA'
     );
     cy.findByText('Storage system for various items.').scrollIntoView();
     cy.findByText('Storage system for various items.').should('be.visible');
@@ -77,7 +77,6 @@ describe('Systems', () => {
 
   it('should be able to use browser back to undo a pagination state change', () => {
     cy.visit('/systems/65328f34a40ff5301575a4e3');
-    cy.setMode({ critical: true });
 
     cy.findByText('Smaller laser').should('be.visible');
 
@@ -168,7 +167,6 @@ describe('Systems', () => {
 
   it('should be able to navigate through subsystems while preserving the table states when going back', () => {
     cy.visit('/systems/65328f34a40ff5301575a4e3');
-    cy.setMode({ critical: true });
 
     cy.findAllByRole('progressbar', { timeout: 10000 }).should('not.exist');
 
@@ -282,7 +280,6 @@ describe('Systems', () => {
 
   it("should be able to navigate to an item's landing page", () => {
     cy.findByRole('link', { name: 'Pulse Laser' }).click();
-    cy.setMode({ critical: true });
 
     cy.findAllByRole('button', { name: 'Show/Hide filters' })
       .eq(1)
@@ -304,7 +301,6 @@ describe('Systems', () => {
 
   it("should be able to navigate to a filtered item's table using the spares value", () => {
     cy.findByRole('link', { name: 'Pulse Laser' }).click();
-    cy.setMode({ critical: true });
     cy.findAllByRole('button', { name: 'Show/Hide filters' })
       .eq(1)
       .scrollIntoView();
@@ -966,7 +962,6 @@ describe('Systems', () => {
   });
   describe('Move', () => {
     it('moves items', () => {
-      cy.setMode({ critical: true });
       cy.findByRole('link', { name: 'Pulse Laser' }).click();
 
       cy.findAllByRole('button', { name: 'Show/Hide filters' })
@@ -1035,9 +1030,9 @@ describe('Systems', () => {
       });
     });
 
-    it.only('moves items (admin mode)', () => {
+    it('moves items (admin mode)', () => {
       cy.visit('/systems');
-      cy.setMode({ admin: true, critical: true });
+      cy.setMode({ admin: true });
 
       cy.findByRole('link', { name: 'Pulse Laser' }).click();
       cy.findAllByRole('button', { name: 'Show/Hide filters' })
@@ -1186,7 +1181,6 @@ describe('Systems', () => {
 
   it('duplicates an item', () => {
     cy.visit('/systems/657f8c3b2a1b4e5d8f9b3c4e5');
-    cy.setMode({ critical: true });
 
     cy.findByRole('button', { name: 'Expand' }).click();
     cy.findByLabelText('Row Actions').first().click();
