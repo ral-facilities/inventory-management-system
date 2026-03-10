@@ -12,6 +12,34 @@ describe('Systems', () => {
     cy.findByText('Giant laser').should('be.visible');
   });
 
+  it('should eventually load in critical mode  at root', () => {
+    cy.setMode({ critical: true });
+    cy.findByText('Root systems').should('be.visible');
+    cy.findByText('Giant laser').should('be.visible');
+
+    cy.findAllByTestId('ErrorIcon').first().should('exist');
+    cy.findAllByTestId('ErrorIcon').first().trigger('mouseover');
+    cy.findByText('This system is critical.');
+  });
+
+  it('should eventually load in critical mode', () => {
+    cy.visit(
+      '/systems/656da8ef9cba7a76c6f81a5d?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0CAzgPoBm2a%2B%2BxKANCAG44kYoDAE8ADsVR0MAJwQA7fCB79sg6CACaxOiAC%2BegLp6gA'
+    );
+    cy.setMode({ critical: true });
+    cy.findAllByText('Pulse Laser').should('have.length', 2);
+
+    cy.findAllByTestId('ErrorIcon').first().should('exist');
+    cy.findAllByTestId('ErrorIcon').first().trigger('mouseover');
+    cy.findByText('This system is critical.');
+
+    cy.findByText('Returned 3 out of 56 Items').scrollIntoView();
+
+    cy.findAllByTestId('ErrorIcon').last().should('exist');
+    cy.findAllByTestId('ErrorIcon').last().trigger('mouseover');
+    cy.findByText('This catalogue item is critical.');
+  });
+
   it('should eventually load displaying system not found when system does not exist', () => {
     cy.visit('/systems/invalid_id');
 

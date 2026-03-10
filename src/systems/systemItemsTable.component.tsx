@@ -205,7 +205,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                 const showFlagged = row.original.catalogueItem.is_flagged;
                 return (
                   <CriticalityTooltipIcon
-                    label={'Items are running low in this catalogue item'}
+                    label={getCICriticalityLabel(showFlagged)}
                     showFlagged={showFlagged}
                   />
                 );

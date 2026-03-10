@@ -9953,7 +9953,7 @@ exports[`SystemItemsTable > renders correctly in critical mode  1`] = `
               >
                 <svg
                   aria-hidden="true"
-                  aria-label="Items are running low in this catalogue item"
+                  aria-label="This catalogue item is not critical."
                   class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-gjkvlp-MuiSvgIcon-root"
                   data-mui-internal-clone-element="true"
                   data-testid="CheckCircleIcon"
@@ -10668,7 +10668,7 @@ exports[`SystemItemsTable > renders correctly in critical mode  1`] = `
               >
                 <svg
                   aria-hidden="true"
-                  aria-label="Items are running low in this catalogue item"
+                  aria-label="This catalogue item is not critical."
                   class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-gjkvlp-MuiSvgIcon-root"
                   data-mui-internal-clone-element="true"
                   data-testid="CheckCircleIcon"
