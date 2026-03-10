@@ -44,16 +44,16 @@ export function configureAppStore(
   const mergedPreloaded: Partial<RootState> = {
     ...preloadedState,
     authorisation: {
-      ...(preloadedState?.authorisation ?? {}),
       ...(hydratedIsAdminMode !== undefined
         ? { isAdminMode: hydratedIsAdminMode }
-        : {}),
+        : initialAuthSlice),
+      ...(preloadedState?.authorisation ?? {}),
     } as typeof initialAuthSlice,
     criticality: {
-      ...(preloadedState?.criticality ?? {}),
       ...((hydratedIsCriticalMode !== undefined
         ? { isCriticalMode: hydratedIsCriticalMode }
-        : {}) as typeof initialCriticalState),
+        : initialCriticalState) as typeof initialCriticalState),
+      ...(preloadedState?.criticality ?? {}),
     },
   };
 
