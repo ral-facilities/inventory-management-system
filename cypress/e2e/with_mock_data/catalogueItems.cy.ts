@@ -804,7 +804,6 @@ describe('Catalogue Items', () => {
   });
 
   it('can load and clear date filters', () => {
-    cy.setMode({ critical: true });
     cy.visit(
       '/catalogue/4/items?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0luSCAZgsUgPoYKXEgA0IANxwkY8EBgCeABx7QQSTD35DsIuQCYADOoAsAWk0BGAwGYAKps3RL1zdUuaAWiAC%2BvUJJmoAzhgBOCAB2%2BHyCwrIgrgC6LjFAA'
     );

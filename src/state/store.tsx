@@ -52,7 +52,7 @@ export function configureAppStore(
     criticality: {
       ...((hydratedIsCriticalMode !== undefined
         ? { isCriticalMode: hydratedIsCriticalMode }
-        : { initialCriticalState }) as typeof initialCriticalState),
+        : initialCriticalState) as typeof initialCriticalState),
       ...(preloadedState?.criticality ?? {}),
     },
   };
