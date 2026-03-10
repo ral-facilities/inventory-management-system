@@ -132,9 +132,12 @@ function ItemsLandingPage() {
                 >
                   <Grid size={12}>
                     <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
-                      <Typography variant="h6">Serial Number:</Typography>
+                      <Typography component="p" variant="h6">
+                        Serial Number:
+                      </Typography>
 
                       <Typography
+                        component="p"
                         variant="h6"
                         sx={{
                           color: 'text.secondary',
@@ -146,9 +149,12 @@ function ItemsLandingPage() {
                       </Typography>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', my: 2 }}>
-                      <Typography variant="h6">System:</Typography>
+                      <Typography component="p" variant="h6">
+                        System:
+                      </Typography>
 
                       <Typography
+                        component="p"
                         variant="h6"
                         sx={{
                           color: 'text.secondary',
@@ -166,7 +172,12 @@ function ItemsLandingPage() {
                       </Typography>
                     </Box>
 
-                    <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
+                    <Typography
+                      component="p"
+                      variant="h6"
+                      gutterBottom
+                      sx={{ mb: 2 }}
+                    >
                       Description:
                     </Typography>
                     <Typography
