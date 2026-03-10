@@ -26,7 +26,7 @@ const rootReducer = combineReducers({
 
 export function configureAppStore(
   preloadedState?: Partial<RootState>,
-  getUserRoleFn: () => string = getUserRole,
+  getUserRoleFn: () => string | undefined = getUserRole,
   storageRegistryDict: StorageRegistry = storageRegistry
 ) {
   const authListenerMiddleware = createAuthListenerMiddleware(
