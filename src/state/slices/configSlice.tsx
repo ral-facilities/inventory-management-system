@@ -37,6 +37,7 @@ const initialSettings: InventoryManagementSystemSettings = {
   ],
   maxImageSizeBytes: 52428800,
   privilegedRoles: ['admin'],
+  prefillSerialNumbers: true,
   routes: [],
   pluginHost: '',
 };

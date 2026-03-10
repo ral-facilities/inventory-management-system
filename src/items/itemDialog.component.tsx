@@ -63,10 +63,17 @@ import {
 } from '../form.schemas';
 import handleIMS_APIError from '../handleIMS_APIError';
 import handleTransferState from '../handleTransferState';
+import store from '../state/store';
 import { SystemsTableView } from '../systems/systemsTableView.component';
 import Breadcrumbs from '../view/breadcrumbs.component';
 
-function toItemDetailsStep(item: Item | undefined): ItemDetailsStep {
+function toItemDetailsStep(
+  item: Item | undefined,
+  catalogueCategory: CatalogueCategory | undefined
+): ItemDetailsStep {
+  const state = store.getState();
+  const prefillSerialNumbers = state.config.settings.prefillSerialNumbers;
+
   if (!item) {
     return {
       purchase_order_number: '',
@@ -75,7 +82,8 @@ function toItemDetailsStep(item: Item | undefined): ItemDetailsStep {
       warranty_end_date: null,
       asset_number: '',
       serial_number: {
-        serial_number: '',
+        serial_number:
+          (prefillSerialNumbers && catalogueCategory?.name) + '%s' || '',
         starting_value: '',
         quantity: '',
       },
@@ -227,7 +235,7 @@ function ItemDialog(props: ItemDialogProps) {
     resolver: zodResolver(
       ItemDetailsStepSchema(requestType, isAdminMode && parentSystemId !== null)
     ),
-    defaultValues: toItemDetailsStep(selectedItem),
+    defaultValues: toItemDetailsStep(selectedItem, catalogueCategory),
   });
 
   const {
@@ -266,7 +274,7 @@ function ItemDialog(props: ItemDialogProps) {
   const serialNumberAdvancedOptions = itemDetails.serial_number;
   // Load the values for editing.
   React.useEffect(() => {
-    resetDetailsStep(toItemDetailsStep(selectedItem));
+    resetDetailsStep(toItemDetailsStep(selectedItem, catalogueCategory));
     resetPropertiesStep({
       properties: convertToPropertyValueList(
         catalogueCategory,
