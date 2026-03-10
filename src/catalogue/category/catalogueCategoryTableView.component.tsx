@@ -71,6 +71,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
     catalogueCategoryData?.map((item) => item.name) || [];
 
   const noResultsTxt = 'No catalogue categories found';
+
   const columns = React.useMemo<MRT_ColumnDef<CatalogueCategory>[]>(() => {
     return [
       ...(isSparesDefinitionDefined
