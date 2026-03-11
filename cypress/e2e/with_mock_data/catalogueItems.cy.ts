@@ -86,7 +86,7 @@ describe('Catalogue Items', () => {
   it('navigates to items page with spares definition applied', () => {
     cy.visit('/catalogue/9/items');
 
-    cy.findByRole('link', { name: '1' }).click();
+    cy.findAllByRole('link', { name: '1' }).first().click();
 
     cy.findByText('dfzqkOJbqifO').should('exist');
 
@@ -96,7 +96,7 @@ describe('Catalogue Items', () => {
   it('navigates to items page with spares definition applied (from landing page)', () => {
     cy.visit('/catalogue/9/items/11');
 
-    cy.findByRole('link', { name: '1' }).click();
+    cy.findAllByRole('link', { name: '1' }).first().click();
 
     cy.findByText('dfzqkOJbqifO').should('exist');
 
@@ -113,7 +113,7 @@ describe('Catalogue Items', () => {
 
     cy.findAllByLabelText('Expand').eq(1).click();
 
-    cy.findByRole('link', { name: '1' }).click();
+    cy.findAllByRole('link', { name: '1' }).first().click();
 
     cy.findByText('dfzqkOJbqifO').should('exist');
 
@@ -429,6 +429,29 @@ describe('Catalogue Items', () => {
     cy.findByText('Cameras 4').should('exist');
   });
 
+  it('displays the table view correctly (Criticality)', () => {
+    cy.visit('/catalogue/6');
+
+    cy.setMode({ critical: true });
+    cy.findByText('Wavefront Sensors 31').should('exist');
+    cy.findByText('Wavefront Sensors 30').should('exist');
+
+    cy.findByTestId('ErrorIcon').should('exist');
+    cy.findByTestId('ErrorIcon').trigger('mouseover');
+    cy.findByText('This catalogue item is critical.').should('exist');
+  });
+
+  it('displays the catalogue item landing page (Criticality)', () => {
+    cy.visit('/catalogue/6/items/10');
+
+    cy.setMode({ critical: true });
+
+    cy.findByTestId('ErrorIcon').should('exist');
+    cy.findByTestId('ErrorIcon').trigger('mouseover');
+    cy.findByText('This catalogue item is critical.').should('exist');
+    cy.findAllByText('-4.6').should('have.length', 2);
+  });
+
   it('navigates to the landing page and navigates back to the table view', () => {
     cy.findByText('Cameras 1').click();
     cy.findByText(
@@ -501,8 +524,6 @@ describe('Catalogue Items', () => {
     cy.findByRole('link', { name: 'Manufacturer A' }).click();
     cy.url().should('contain', '/manufacturers/1');
   });
-
- 
 
   it('checks the href property of the manufacturer link', () => {
     cy.findByRole('button', { name: 'Show/Hide columns' }).click();
@@ -758,6 +779,7 @@ describe('Catalogue Items', () => {
   });
 
   it('check table state persists on page reload', () => {
+    cy.setMode({ critical: false });
     cy.findByText('Cameras 1').should('exist');
     cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
 
@@ -940,7 +962,14 @@ describe('Catalogue Items', () => {
   it('can navigate to an items page from the table view', () => {
     cy.visit('/catalogue/5');
 
-    cy.findAllByRole('link', { name: 'Click here' }).eq(0).click();
+    cy.findAllByRole('link', { name: 'Click here' }).first().scrollIntoView();
+    cy.findAllByRole('link', { name: 'Click here' })
+      .first()
+      .should('be.visible');
+
+    cy.findAllByRole('link', { name: 'Click here' })
+      .first()
+      .click({ force: true });
 
     cy.url().should('contain', 'catalogue/5/items/89/items');
   });
@@ -1102,6 +1131,9 @@ describe('Catalogue Items', () => {
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
           number_of_spares: 0,
+          number_of_spares_required: null,
+          criticality: null,
+          is_flagged: false,
         })
       );
       expect(JSON.stringify(await patchRequests[1].json())).equal(
@@ -1128,6 +1160,9 @@ describe('Catalogue Items', () => {
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
           number_of_spares: 0,
+          number_of_spares_required: null,
+          criticality: null,
+          is_flagged: false,
         })
       );
     });

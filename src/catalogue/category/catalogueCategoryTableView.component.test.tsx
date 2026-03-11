@@ -1,12 +1,14 @@
 import { screen, waitFor } from '@testing-library/react';
+import userEvent, { UserEvent } from '@testing-library/user-event';
+import { http, HttpResponse } from 'msw';
+import { CatalogueCategoryPropertyType } from '../../api/api.types';
+import APIConfigProvider from '../../apiConfigProvider.component';
+import { server } from '../../mocks/server';
+import { RootState } from '../../state/store';
 import {
   CREATED_MODIFIED_TIME_VALUES,
   renderComponentWithRouterProvider,
 } from '../../testUtils';
-
-import userEvent, { UserEvent } from '@testing-library/user-event';
-import { CatalogueCategoryPropertyType } from '../../api/api.types';
-import { RootState } from '../../state/store';
 import CatalogueCategoryTableView, {
   CatalogueCategoryTableViewProps,
 } from './catalogueCategoryTableView.component';
@@ -18,7 +20,9 @@ describe('CatalogueCategoryTableView', () => {
   const onChangeParentCategoryId = vi.fn();
   const createView = (preloadedState?: Partial<RootState>) => {
     return renderComponentWithRouterProvider(
-      <CatalogueCategoryTableView {...props} />,
+      <APIConfigProvider>
+        <CatalogueCategoryTableView {...props} />
+      </APIConfigProvider>,
       undefined,
       undefined,
       preloadedState
@@ -418,5 +422,44 @@ describe('CatalogueCategoryTableView', () => {
         'Unable to determine if this catalogue category is critical. Please contact support.'
       )
     ).toBeInTheDocument();
+  });
+
+  it('does not shows critical catalogue categories when spares is undefined', async () => {
+    props.selectedCategories = [
+      {
+        id: '79',
+        name: 'test_dup',
+        parent_id: '1',
+        code: 'test_dup',
+        is_flagged: false,
+        is_leaf: false,
+        ...CREATED_MODIFIED_TIME_VALUES,
+        properties: [],
+      },
+      {
+        id: '19',
+        name: 'Amp Meters',
+        parent_id: '1',
+        code: 'amp-meters',
+        is_flagged: false,
+        is_leaf: false,
+        ...CREATED_MODIFIED_TIME_VALUES,
+        properties: [],
+      },
+    ];
+
+    props.requestType = 'moveTo';
+
+    server.use(
+      http.get('/v1/settings/spares-definition', () => {
+        return HttpResponse.json(undefined, { status: 204 });
+      })
+    );
+    createView({
+      criticality: { isCriticalMode: true },
+    });
+    await waitFor(() => {
+      expect(screen.queryByTestId('ErrorIcon')).not.toBeInTheDocument();
+    });
   });
 });

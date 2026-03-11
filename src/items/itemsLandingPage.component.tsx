@@ -131,22 +131,53 @@ function ItemsLandingPage() {
                   sx={{ alignItems: 'flex-start', pl: 2 }}
                 >
                   <Grid size={12}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
+                      <Typography component="p" variant="h6">
+                        Serial Number:
+                      </Typography>
+
+                      <Typography
+                        component="p"
+                        variant="h6"
+                        sx={{
+                          color: 'text.secondary',
+                          ml: 1,
+                          p: 0,
+                        }}
+                      >
+                        {itemData.serial_number ?? 'None'}
+                      </Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', my: 2 }}>
+                      <Typography component="p" variant="h6">
+                        System:
+                      </Typography>
+
+                      <Typography
+                        component="p"
+                        variant="h6"
+                        sx={{
+                          color: 'text.secondary',
+                          ml: 1,
+                          p: 0,
+                        }}
+                      >
+                        <MuiLink
+                          underline="hover"
+                          component={Link}
+                          to={'/systems/' + systemData?.id}
+                        >
+                          {systemData?.name}
+                        </MuiLink>
+                      </Typography>
+                    </Box>
+
                     <Typography
-                      variant="h4"
+                      component="p"
+                      variant="h6"
                       gutterBottom
-                      sx={{
-                        fontWeight: 'bold',
-                        wordWrap: 'break-word',
-                      }}
+                      sx={{ mb: 2 }}
                     >
-                      {catalogueItemData.name}
-                    </Typography>
-
-                    <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
-                      Serial Number: {itemData.serial_number ?? 'None'}
-                    </Typography>
-
-                    <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
                       Description:
                     </Typography>
                     <Typography
