@@ -3011,7 +3011,7 @@ exports[`SystemItemsTable > renders correctly (without spares) 1`] = `
                     role="combobox"
                     tabindex="0"
                   >
-                    15
+                    30
                   </div>
                   <input
                     aria-hidden="true"
@@ -3019,7 +3019,7 @@ exports[`SystemItemsTable > renders correctly (without spares) 1`] = `
                     class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
                     id="mrt-rows-per-page-:rgr:"
                     tabindex="-1"
-                    value="15"
+                    value="30"
                   />
                   <svg
                     aria-hidden="true"
@@ -6484,7 +6484,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                     role="combobox"
                     tabindex="0"
                   >
-                    15
+                    30
                   </div>
                   <input
                     aria-hidden="true"
@@ -6492,7 +6492,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
                     class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
                     id="mrt-rows-per-page-:r0:"
                     tabindex="-1"
-                    value="15"
+                    value="30"
                   />
                   <svg
                     aria-hidden="true"
@@ -10865,7 +10865,7 @@ exports[`SystemItemsTable > renders correctly in critical mode  1`] = `
                     role="combobox"
                     tabindex="0"
                   >
-                    15
+                    30
                   </div>
                   <input
                     aria-hidden="true"
@@ -10873,7 +10873,7 @@ exports[`SystemItemsTable > renders correctly in critical mode  1`] = `
                     class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
                     id="mrt-rows-per-page-:r7d:"
                     tabindex="-1"
-                    value="15"
+                    value="30"
                   />
                   <svg
                     aria-hidden="true"

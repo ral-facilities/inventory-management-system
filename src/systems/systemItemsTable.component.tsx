@@ -34,6 +34,10 @@ import {
   NumberOfSparesRequiredHeaderInfoToolTip,
   getCICriticalityLabel,
 } from '../catalogue/items/catalogueItemsTable.component';
+import {
+  DEFAULT_ROWS_PER_PAGE_VALUE,
+  ROWS_PER_PAGE_OPTIONS,
+} from '../common/consts';
 import CriticalityTooltipIcon from '../common/criticalityTooltipIcon.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import { SparesColumnHeaderInformationTooltip } from '../common/sparesInformationTooltip.component';
@@ -546,7 +550,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         'catalogueItem.number_of_spares_required': isCriticalMode,
       },
       grouping: ['catalogueItem.name'],
-      pagination: { pageSize: 15, pageIndex: 0 },
+      pagination: { pageSize: DEFAULT_ROWS_PER_PAGE_VALUE, pageIndex: 0 },
       columnFilterFns: initialColumnFilterFnState,
     },
     storeInUrl: true,
@@ -661,7 +665,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     },
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: [15, 30, 45],
+      rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
       shape: 'rounded',
       variant: 'outlined',
     },

@@ -332,12 +332,12 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                                 </span>
                               </div>
                               <input
-                                aria-describedby=":r4j6:-helper-text"
+                                aria-describedby=":r4tg:-helper-text"
                                 aria-invalid="false"
                                 aria-label="Filter by Name"
                                 autocomplete="off"
                                 class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                                id=":r4j6:"
+                                id=":r4tg:"
                                 placeholder="Filter by Name"
                                 title="Filter by Name"
                                 type="text"
@@ -375,7 +375,7 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                             </div>
                             <p
                               class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                              id=":r4j6:-helper-text"
+                              id=":r4tg:-helper-text"
                             >
                               <label>
                                 Filter Mode: Fuzzy
@@ -533,12 +533,12 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                                   </span>
                                 </div>
                                 <input
-                                  aria-describedby=":r4jf:-helper-text"
+                                  aria-describedby=":r4tp:-helper-text"
                                   aria-invalid="false"
                                   aria-label="Min"
                                   autocomplete="off"
                                   class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                                  id=":r4jf:"
+                                  id=":r4tp:"
                                   placeholder="Min"
                                   title="Min"
                                   type="text"
@@ -576,7 +576,7 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                               </div>
                               <p
                                 class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                                id=":r4jf:-helper-text"
+                                id=":r4tp:-helper-text"
                               >
                                 <label>
                                   Filter Mode: Between Inclusive
@@ -594,7 +594,7 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                                   aria-label="Max"
                                   autocomplete="off"
                                   class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                                  id=":r4jk:"
+                                  id=":r4tu:"
                                   placeholder="Max"
                                   title="Max"
                                   type="text"
@@ -1234,7 +1234,7 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                   >
                     <label
                       class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-10j3yc8-MuiFormLabel-root-MuiInputLabel-root"
-                      for="mrt-rows-per-page-:r4ir:"
+                      for="mrt-rows-per-page-:r4t5:"
                     >
                       Rows per page
                     </label>
@@ -1249,15 +1249,15 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                         role="combobox"
                         tabindex="0"
                       >
-                        5
+                        30
                       </div>
                       <input
                         aria-hidden="true"
                         aria-invalid="false"
                         class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
-                        id="mrt-rows-per-page-:r4ir:"
+                        id="mrt-rows-per-page-:r4t5:"
                         tabindex="-1"
-                        value="5"
+                        value="30"
                       />
                       <svg
                         aria-hidden="true"

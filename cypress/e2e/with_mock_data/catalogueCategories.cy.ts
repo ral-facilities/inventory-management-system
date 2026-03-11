@@ -14,6 +14,7 @@ describe('Catalogue Category', () => {
         name: 'Test ' + index.toString(),
         parent_id: null,
         code: index.toString(),
+        is_flagged: false,
         is_leaf: false,
         created_time: '2024-01-01T12:00:00.000+00:00',
         modified_time: '2024-01-02T13:10:10.000+00:00',
@@ -109,8 +110,6 @@ describe('Catalogue Category', () => {
       });
     cy.findByText('This catalogue category is not critical.');
 
-    cy.findByRole('button', { name: 'Go to page 2' }).click();
-
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
@@ -146,6 +145,7 @@ describe('Catalogue Category', () => {
       '?state=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygAYBfBoA'
     );
 
+    cy.findByText('Test 1').should('exist');
     cy.findByText('Test 1').click();
     cy.location('search').should('eq', '');
     cy.findByRole('combobox', { name: 'Categories per page' }).within(() =>

@@ -319,6 +319,66 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
                 data-index="14"
                 role="row"
               />
+              <tr
+                aria-label="Cameras 16 row"
+                class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
+                data-index="15"
+                role="row"
+              />
+              <tr
+                aria-label="Cameras 17 row"
+                class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
+                data-index="16"
+                role="row"
+              />
+              <tr
+                aria-label="Cameras 18 row"
+                class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
+                data-index="17"
+                role="row"
+              />
+              <tr
+                aria-label="Cameras 19 row"
+                class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
+                data-index="18"
+                role="row"
+              />
+              <tr
+                aria-label="Cameras 20 row"
+                class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
+                data-index="19"
+                role="row"
+              />
+              <tr
+                aria-label="Cameras 21 row"
+                class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
+                data-index="20"
+                role="row"
+              />
+              <tr
+                aria-label="Cameras 22 row"
+                class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
+                data-index="21"
+                role="row"
+              />
+              <tr
+                aria-label="Cameras 23 row"
+                class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
+                data-index="22"
+                role="row"
+              />
+              <tr
+                aria-label="Cameras 24 row"
+                class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
+                data-index="23"
+                role="row"
+              />
+              <tr
+                aria-label="Cameras 25 row"
+                class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
+                data-index="24"
+                role="row"
+              />
             </tbody>
           </table>
         </div>
@@ -392,7 +452,7 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
                     role="combobox"
                     tabindex="0"
                   >
-                    15
+                    30
                   </div>
                   <input
                     aria-hidden="true"
@@ -400,7 +460,7 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
                     class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
                     id="mrt-rows-per-page-:r0:"
                     tabindex="-1"
-                    value="15"
+                    value="30"
                   />
                   <svg
                     aria-hidden="true"
@@ -456,19 +516,10 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
                   </li>
                   <li>
                     <button
-                      aria-label="Go to page 2"
-                      class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary MuiPaginationItem-page css-fpujy5-MuiButtonBase-root-MuiPaginationItem-root"
-                      tabindex="0"
-                      type="button"
-                    >
-                      2
-                    </button>
-                  </li>
-                  <li>
-                    <button
                       aria-label="Go to next page"
-                      class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary MuiPaginationItem-previousNext css-fpujy5-MuiButtonBase-root-MuiPaginationItem-root"
-                      tabindex="0"
+                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-fpujy5-MuiButtonBase-root-MuiPaginationItem-root"
+                      disabled=""
+                      tabindex="-1"
                       type="button"
                     >
                       <svg
