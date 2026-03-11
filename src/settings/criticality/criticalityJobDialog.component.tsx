@@ -48,7 +48,7 @@ function CriticalityJobDialog(props: CriticalityJobDialogProps) {
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
       <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
-        {!(!isLoading && job && typeof job === 'object') && (
+        {!isLoading && !(job && typeof job === 'object') && (
           <WarningIcon sx={{ mr: 1 }} />
         )}
         Criticality Job
@@ -74,75 +74,79 @@ function CriticalityJobDialog(props: CriticalityJobDialogProps) {
             </Box>
           )}
 
-          {!isLoading && job && typeof job === 'object' ? (
-            <>
-              <Typography variant="h6">Status:</Typography>
-              <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-                {job.status ?? 'Unknown'}
-              </Typography>
-              <Divider sx={{ marginY: 2 }} />
+          {!isLoading &&
+            (job && typeof job === 'object' ? (
+              <>
+                <Typography variant="h6">Status:</Typography>
+                <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+                  {job.status ?? 'Unknown'}
+                </Typography>
+                <Divider sx={{ marginY: 2 }} />
 
-              <Typography variant="h6">Last Started:</Typography>
-              <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-                {job.last_executed_start_time
-                  ? formatDateTimeStrings(job.last_executed_start_time, true)
-                  : 'None'}
-              </Typography>
-              <Divider sx={{ marginY: 2 }} />
+                <Typography variant="h6">Last Started:</Typography>
+                <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+                  {job.last_executed_start_time
+                    ? formatDateTimeStrings(job.last_executed_start_time, true)
+                    : 'None'}
+                </Typography>
+                <Divider sx={{ marginY: 2 }} />
 
-              <Typography variant="h6">Last Finished:</Typography>
-              <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-                {job.last_executed_end_time
-                  ? formatDateTimeStrings(job.last_executed_end_time, true)
-                  : 'None'}
-              </Typography>
-              <Divider sx={{ marginY: 2 }} />
+                <Typography variant="h6">Last Finished:</Typography>
+                <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+                  {job.last_executed_end_time
+                    ? formatDateTimeStrings(job.last_executed_end_time, true)
+                    : 'None'}
+                </Typography>
+                <Divider sx={{ marginY: 2 }} />
 
-              <Typography variant="h6">Last Successful Start:</Typography>
-              <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-                {job.last_successful_executed_start_time
-                  ? formatDateTimeStrings(
-                      job.last_successful_executed_start_time,
-                      true
-                    )
-                  : 'None'}
-              </Typography>
-              <Divider sx={{ marginY: 2 }} />
+                <Typography variant="h6">Last Successful Start:</Typography>
+                <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+                  {job.last_successful_executed_start_time
+                    ? formatDateTimeStrings(
+                        job.last_successful_executed_start_time,
+                        true
+                      )
+                    : 'None'}
+                </Typography>
+                <Divider sx={{ marginY: 2 }} />
 
-              <Typography variant="h6">Last Successful End:</Typography>
-              <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-                {job.last_successful_executed_end_time
-                  ? formatDateTimeStrings(
-                      job.last_successful_executed_end_time,
-                      true
-                    )
-                  : 'None'}
-              </Typography>
-              <Divider sx={{ marginY: 2 }} />
+                <Typography variant="h6">Last Successful End:</Typography>
+                <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+                  {job.last_successful_executed_end_time
+                    ? formatDateTimeStrings(
+                        job.last_successful_executed_end_time,
+                        true
+                      )
+                    : 'None'}
+                </Typography>
+                <Divider sx={{ marginY: 2 }} />
 
-              <Typography variant="h6">Last Successful Duration:</Typography>
-              <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-                {typeof job.last_successful_duration_seconds === 'number'
-                  ? `${job.last_successful_duration_seconds}s`
-                  : 'None'}
-              </Typography>
-              <Divider sx={{ marginY: 2 }} />
+                <Typography variant="h6">Last Successful Duration:</Typography>
+                <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+                  {typeof job.last_successful_duration_seconds === 'number'
+                    ? `${job.last_successful_duration_seconds}s`
+                    : 'None'}
+                </Typography>
+                <Divider sx={{ marginY: 2 }} />
 
-              <Typography variant="h6">Next Scheduled:</Typography>
-              <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-                {formatDateTimeStrings(job.next_scheduled_execution_time, true)}
-              </Typography>
-            </>
-          ) : (
-            <>
-              <Typography variant="h6">Status:</Typography>
-              <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-                {error?.response?.status === 404
-                  ? 'Job not found. Please contact support.'
-                  : 'Not enabled. Please contact support to enable it.'}
-              </Typography>
-            </>
-          )}
+                <Typography variant="h6">Next Scheduled:</Typography>
+                <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+                  {formatDateTimeStrings(
+                    job.next_scheduled_execution_time,
+                    true
+                  )}
+                </Typography>
+              </>
+            ) : (
+              <>
+                <Typography variant="h6">Status:</Typography>
+                <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+                  {error?.response?.status === 404
+                    ? 'Job not found. Please contact support.'
+                    : 'Not enabled. Please contact support to enable it.'}
+                </Typography>
+              </>
+            ))}
         </Box>
       </DialogContent>
 
