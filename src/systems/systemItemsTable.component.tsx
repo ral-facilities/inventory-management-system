@@ -2,7 +2,6 @@ import ClearIcon from '@mui/icons-material/Clear';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import EditIcon from '@mui/icons-material/Edit';
-import InfoOutlined from '@mui/icons-material/InfoOutlined';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   Box,
@@ -13,7 +12,6 @@ import {
   MenuItem,
   Link as MuiLink,
   TableCellBaseProps,
-  Tooltip,
 } from '@mui/material';
 import {
   MRT_Column,
@@ -31,7 +29,11 @@ import { useGetCatalogueItemIds } from '../api/catalogueItems';
 import { useGetItems } from '../api/items';
 import { useGetUsageStatuses } from '../api/usageStatuses';
 import { APISettingsContext } from '../apiConfigProvider.component';
-import { getCICriticalityLabel } from '../catalogue/items/catalogueItemsTable.component';
+import {
+  CriticalityHeaderInfoToolTip,
+  NumberOfSparesRequiredHeaderInfoToolTip,
+  getCICriticalityLabel,
+} from '../catalogue/items/catalogueItemsTable.component';
 import CriticalityTooltipIcon from '../common/criticalityTooltipIcon.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import { SparesColumnHeaderInformationTooltip } from '../common/sparesInformationTooltip.component';
@@ -328,13 +330,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                 column: MRT_Column<TableRowData, unknown>;
               }) => (
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <Tooltip
-                    title={
-                      'The criticality column indicates whether new items need to bough for a given catalogue item. if the value is empty this means that expected lifetime field is none for that given catalogue please update the field '
-                    }
-                  >
-                    <InfoOutlined sx={{ mr: 1 }} fontSize="small" />
-                  </Tooltip>
+                  <CriticalityHeaderInfoToolTip />
                   <OverflowTip sx={{ font: 'inherit' }}>
                     {column.columnDef.header}
                   </OverflowTip>
@@ -352,7 +348,6 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
               Cell: ({ row }: { row: MRT_Row<TableRowData> }) =>
                 roundUpTenth(row.original?.catalogueItem?.criticality),
             },
-
             {
               header: 'Number of Spares',
               Header: ({
@@ -400,7 +395,18 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
             },
             {
               header: 'Number of spares required',
-              TableHeaderOverflowTip,
+              Header: ({
+                column,
+              }: {
+                column: MRT_Column<TableRowData, unknown>;
+              }) => (
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <NumberOfSparesRequiredHeaderInfoToolTip />
+                  <OverflowTip sx={{ font: 'inherit' }}>
+                    {column.columnDef.header}
+                  </OverflowTip>
+                </Box>
+              ),
               // This needs to be a string to allow the AggregatedCell to render correctly.
               // If not, it does not display. This seems to be a Material React Table (MRT) issue.
               accessorFn: (row: TableRowData) =>

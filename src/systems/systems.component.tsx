@@ -217,8 +217,8 @@ const MIN_SUBSYSTEMS_WIDTH = '500px';
 
 export const CriticalTooltipText = (
   <Typography style={{ whiteSpace: 'pre-line' }}>
-    A System is considered critical if any of its nested child items, catalogue
-    item are marked as critical.
+    A system is critical when any of its child catalogue items are critical or
+    when a subsystem is critical and has a &#39;high&#39; importance.
   </Typography>
 );
 
@@ -568,11 +568,11 @@ function Systems() {
     muiBottomToolbarProps: ({ table }) =>
       table.getState().isFullScreen ? {} : { sx: { boxShadow: 0 } },
     muiTableContainerProps: ({ table }) => ({
-      // main app bar + breadcrumbs (incl AuthRole banner) + title + top toolbar + column heading
+      // main app bar + breadcrumbs (incl AuthRole banner) + title + top toolbar + column heading + critical mode spacing
       sx: {
         height: table.getState().isFullScreen
           ? '100%'
-          : getPageHeightCalc('64px + 88px + 40px + 47px + 40px'),
+          : getPageHeightCalc('64px + 88px + 40px + 47px + 40px + 15px'),
       },
     }),
     muiTableBodyCellProps: ({ table, column }) =>
