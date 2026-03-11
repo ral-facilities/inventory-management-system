@@ -11,8 +11,7 @@ export const SparesColumnHeaderInformationTooltip = ({
   title,
   sparesDefinition,
 }: SparesInformationTooltipProps) => {
-  let tooltipContent =
-    'The spares values is determined by the location of an item. ';
+  let tooltipContent = 'This value is determined by the location of an item. ';
 
   if (sparesDefinition == undefined || sparesDefinition == '') {
     tooltipContent = tooltipContent.concat(

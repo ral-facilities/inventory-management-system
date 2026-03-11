@@ -90,9 +90,7 @@ export const CriticalityHeaderInfoToolTip = () => {
       ? `'${systemTypes.join("', '")}'`
       : 'a system type defined as in use';
 
-  const title =
-    `The criticality value is determined by the systems an item is used in. ` +
-    `When an item is in a system with the system type ${systemText} then it is assessed against the required operational demand.`;
+  const title = `This is determined by how an item is used across systems with the system type ${systemText} and its assessed demand.`;
 
   return (
     <Tooltip title={title}>
@@ -114,9 +112,7 @@ export const NumberOfSparesRequiredHeaderInfoToolTip = () => {
       ? `'${systemTypes.join("', '")}'`
       : 'a system type defined as in use';
 
-  const title =
-    `The number of spares required is determined by how an item is used across systems. ` +
-    `When an item is in a system with the system type ${systemText} then operational demand and replacement intervals are used to calculate the spare requirement.`;
+  const title = `This is determined by how an item is used across systems with the system type ${systemText} and its replacement intervals.`;
 
   return (
     <Tooltip title={title}>
