@@ -1752,7 +1752,7 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                     role="combobox"
                     tabindex="0"
                   >
-                    5
+                    30
                   </div>
                   <input
                     aria-hidden="true"
@@ -1760,7 +1760,7 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                     class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
                     id="mrt-rows-per-page-:r0:"
                     tabindex="-1"
-                    value="5"
+                    value="30"
                   />
                   <svg
                     aria-hidden="true"

@@ -40,6 +40,10 @@ import { getSystemImportanceColour, useGetSystems } from '../api/systems';
 import { useGetSystemTypes } from '../api/systemTypes';
 import type { SystemTableType } from '../app.types';
 import {
+  DEFAULT_ROWS_PER_PAGE_VALUE,
+  ROWS_PER_PAGE_OPTIONS,
+} from '../common/consts';
+import {
   getValueFromUpdater,
   usePreservedTableState,
 } from '../common/preservedTableState.component';
@@ -427,7 +431,7 @@ function Systems() {
       columnVisibility: Object.fromEntries(
         hiddenColumns.map((col) => [col, false])
       ),
-      pagination: { pageSize: 15, pageIndex: 0 },
+      pagination: { pageSize: DEFAULT_ROWS_PER_PAGE_VALUE, pageIndex: 0 },
       columnFilterFns: initialColumnFilterFnState,
     },
     storeInUrl: true,
@@ -476,7 +480,7 @@ function Systems() {
       shape: 'rounded',
       variant: 'outlined',
       showRowsPerPage: true,
-      rowsPerPageOptions: [15, 30, 45],
+      rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
       showFirstButton: false,
       showLastButton: false,
       size: 'small',

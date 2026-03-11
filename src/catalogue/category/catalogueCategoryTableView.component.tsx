@@ -18,6 +18,10 @@ import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { CatalogueCategory } from '../../api/api.types';
 import { APISettingsContext } from '../../apiConfigProvider.component';
+import {
+  DEFAULT_ROWS_PER_PAGE_VALUE,
+  ROWS_PER_PAGE_OPTIONS,
+} from '../../common/consts';
 import CriticalityTooltipIcon from '../../common/criticalityTooltipIcon.component';
 import { useAppSelector } from '../../state/hook';
 import { selectCriticality } from '../../state/slices/criticalitySlice';
@@ -166,7 +170,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
     initialState: {
       showColumnFilters: true,
       showGlobalFilter: true,
-      pagination: { pageSize: 5, pageIndex: 0 },
+      pagination: { pageSize: DEFAULT_ROWS_PER_PAGE_VALUE, pageIndex: 0 },
       columnVisibility: {
         is_flagged: isCriticalMode,
       },
@@ -229,7 +233,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
     },
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: [5],
+      rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
       shape: 'rounded',
       variant: 'outlined',
     },

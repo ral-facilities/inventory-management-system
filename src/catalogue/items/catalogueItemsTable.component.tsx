@@ -42,6 +42,10 @@ import { useGetCatalogueItems } from '../../api/catalogueItems';
 import { useGetManufacturerIds } from '../../api/manufacturers';
 import { useGetInUseDefinition } from '../../api/settings';
 import { APISettingsContext } from '../../apiConfigProvider.component';
+import {
+  DEFAULT_ROWS_PER_PAGE_VALUE,
+  ROWS_PER_PAGE_OPTIONS,
+} from '../../common/consts';
 import CriticalityTooltipIcon from '../../common/criticalityTooltipIcon.component';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import { SparesColumnHeaderInformationTooltip } from '../../common/sparesInformationTooltip.component';
@@ -856,7 +860,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         'catalogueItem.criticality': isCriticalMode,
         'catalogueItem.number_of_spares_required': isCriticalMode,
       },
-      pagination: { pageSize: dense ? 5 : 15, pageIndex: 0 },
+      pagination: { pageSize: DEFAULT_ROWS_PER_PAGE_VALUE, pageIndex: 0 },
       columnFilterFns: initialColumnFilterFnState,
     },
     storeInUrl: !dense,
@@ -1037,7 +1041,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       : undefined,
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: dense ? [5] : [15, 30, 45],
+      rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
       shape: 'rounded',
       variant: 'outlined',
     },

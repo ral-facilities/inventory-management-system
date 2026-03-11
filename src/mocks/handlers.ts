@@ -1083,7 +1083,7 @@ export const handlers = [
     const entityId = attachmentParams.get('entity_id');
 
     const generateAttachments = () => {
-      return Array.from({ length: 20 }, (_, index) => {
+      return Array.from({ length: 35 }, (_, index) => {
         const id = index + 1;
         const attachment = { ...AttachmentsJSON[id % 4] };
 
@@ -1248,7 +1248,7 @@ export const handlers = [
     }
 
     const generateImages = () => {
-      return Array.from({ length: 20 }, (_, index) => {
+      return Array.from({ length: 35 }, (_, index) => {
         const id = index + 1;
         let image;
 
