@@ -296,15 +296,9 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
               <Autocomplete
                 disableClearable={value != null}
                 id="systems-type-id-input"
-                disabled={!!parentSystemTypeId}
                 value={
-                  parentSystemTypeId
-                    ? (systemsTypes?.find(
-                        (systemType) => systemType.id === parentSystemTypeId
-                      ) ?? null)
-                    : (systemsTypes?.find(
-                        (systemType) => systemType.id === value
-                      ) ?? null)
+                  systemsTypes?.find((systemType) => systemType.id === value) ??
+                  null
                 }
                 onChange={(_event, systemType: SystemType | null) => {
                   onChange(systemType?.id ?? null);
@@ -318,7 +312,6 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
                   <TextField
                     {...params}
                     required={true}
-                    disabled={!!parentSystemTypeId}
                     label="Type"
                     error={!!errors.type_id}
                     helperText={errors.type_id?.message}
