@@ -254,6 +254,7 @@ export const copyToCatalogueItems = (values: { checkedItems: string[] }) => {
   }
   cy.go('back');
   cy.go('back');
+  cy.go('back');
 };
 
 export const moveToCatalogueItems = (values: { checkedItems: string[] }) => {
@@ -454,9 +455,10 @@ export const downloadFile = (
     cy.findByLabelText(`Download ${fileName} attachment`).click();
   }
 
-  cy.findByRole('dialog').should('be.visible');
+  cy.findByRole('dialog').should('exist');
 
   cy.findByRole('button', { name: 'Continue' }).click();
+  cy.findByRole('dialog').should('not.exist');
 };
 
 export const deleteFile = (
@@ -476,7 +478,7 @@ export const deleteFile = (
       cy.findByLabelText(`Delete attachment ${fileName}`).click();
     }
 
-    cy.findByRole('dialog').should('be.visible');
+    cy.findByRole('dialog').should('exist');
 
     cy.findByRole('button', { name: 'Continue' }).click();
   });

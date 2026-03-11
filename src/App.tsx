@@ -27,6 +27,7 @@ import CatalogueLayout, {
   catalogueLayoutLoader,
 } from './catalogue/catalogueLayout.component';
 import CatalogueCardView from './catalogue/category/catalogueCardView.component';
+import CatalogueItemLayout from './catalogue/items/catalogueItemLayout.component';
 import CatalogueItemsLandingPage from './catalogue/items/catalogueItemsLandingPage.component';
 import CatalogueItemsPage from './catalogue/items/catalogueItemsPage.component';
 import SettingsMenuItems from './common/settingsMenuItems.component';
@@ -155,7 +156,7 @@ const routeObject: RouteObject[] = [
                   },
                   {
                     path: paths.catalogueItem,
-                    Component: Outlet,
+                    Component: CatalogueItemLayout,
                     children: [
                       {
                         index: true,
@@ -250,6 +251,7 @@ if (!isUsingMSW) router = createBrowserRouter(routeObject);
 // environment, this is not needed.
 
 export default function App() {
+  // eslint-disable-next-line react-hooks/globals
   if (isUsingMSW) router = createBrowserRouter(routeObject);
   return <RouterProvider router={router} />;
 }
@@ -269,13 +271,13 @@ export function Layout() {
       const role = getUserRole();
       const state = store.getState();
       const privilegedRoles = state.config.settings.privilegedRoles;
-
-      dispatch(
-        setAuthorisation({
-          role,
-          isAdminUser: privilegedRoles.includes(role),
-        })
-      );
+      if (typeof role === 'string')
+        dispatch(
+          setAuthorisation({
+            role,
+            isAdminUser: privilegedRoles.includes(role),
+          })
+        );
     });
   }, [dispatch]);
   // We need to call forceUpdate if SciGateway tells us to rerender

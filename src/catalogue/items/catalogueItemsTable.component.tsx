@@ -5,6 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
+import InfoOutlined from '@mui/icons-material/InfoOutlined';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   Box,
@@ -16,14 +17,15 @@ import {
   Stack,
   TableCellBaseProps,
   TableRow,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import {
   MRT_BottomToolbar,
+  MRT_Column,
   MRT_Row,
   MaterialReactTable,
   useMaterialReactTable,
-  type MRT_Column,
   type MRT_ColumnDef,
   type MRT_RowSelectionState,
 } from 'material-react-table';
@@ -38,13 +40,17 @@ import {
 } from '../../api/api.types';
 import { useGetCatalogueItems } from '../../api/catalogueItems';
 import { useGetManufacturerIds } from '../../api/manufacturers';
+import { useGetInUseDefinition } from '../../api/settings';
 import { APISettingsContext } from '../../apiConfigProvider.component';
 import {
   DEFAULT_ROWS_PER_PAGE_VALUE,
   ROWS_PER_PAGE_OPTIONS,
 } from '../../common/consts';
+import CriticalityTooltipIcon from '../../common/criticalityTooltipIcon.component';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import { SparesColumnHeaderInformationTooltip } from '../../common/sparesInformationTooltip.component';
+import { useAppSelector } from '../../state/hook';
+import { selectCriticality } from '../../state/slices/criticalitySlice';
 import {
   COLUMN_FILTER_BOOLEAN_OPTIONS,
   COLUMN_FILTER_FUNCTIONS,
@@ -52,10 +58,12 @@ import {
   COLUMN_FILTER_VARIANTS,
   MRT_Functions_Localisation,
   OPTIONAL_FILTER_MODE_OPTIONS,
+  OverflowTip,
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
   TableGroupedCell,
   TableHeaderOverflowTip,
+  criticalityRowStyle,
   customFilterFunctions,
   deselectRowById,
   displayTableRowCountText,
@@ -64,6 +72,7 @@ import {
   getInitialColumnFilterFnState,
   getPageHeightCalc,
   mrtTheme,
+  roundUpTenth,
 } from '../../utils';
 import CatalogueItemDirectoryDialog from './catalogueItemDirectoryDialog.component';
 import CatalogueItemsDetailsPanel from './catalogueItemsDetailsPanel.component';
@@ -71,6 +80,62 @@ import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import CatalogueLink from './catalogueLink.component';
 import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
 import ObsoleteCatalogueItemDialog from './obsoleteCatalogueItemDialog.component';
+
+export const CriticalityHeaderInfoToolTip = () => {
+  const { data } = useGetInUseDefinition();
+
+  const systemTypes =
+    data && typeof data === 'object' && 'system_types' in data
+      ? (data.system_types.map((t) => t?.value).filter(Boolean) as string[])
+      : [];
+
+  const systemText =
+    systemTypes.length > 0
+      ? `'${systemTypes.join("', '")}'`
+      : 'a system type defined as in use';
+
+  const title = `This is determined by how an item is used across systems with the system type ${systemText} and its assessed demand.`;
+
+  return (
+    <Tooltip title={title}>
+      <InfoOutlined sx={{ mr: 1 }} fontSize="small" />
+    </Tooltip>
+  );
+};
+
+export const NumberOfSparesRequiredHeaderInfoToolTip = () => {
+  const { data } = useGetInUseDefinition();
+
+  const systemTypes =
+    data && typeof data === 'object' && 'system_types' in data
+      ? (data.system_types.map((t) => t?.value).filter(Boolean) as string[])
+      : [];
+
+  const systemText =
+    systemTypes.length > 0
+      ? `'${systemTypes.join("', '")}'`
+      : 'a system type defined as in use';
+
+  const title = `This is determined by how an item is used across systems with the system type ${systemText} and its replacement intervals.`;
+
+  return (
+    <Tooltip title={title}>
+      <InfoOutlined sx={{ mr: 1 }} fontSize="small" />
+    </Tooltip>
+  );
+};
+
+export const getCICriticalityLabel = (showFlagged: boolean | null) => {
+  if (showFlagged === true) {
+    return 'This catalogue item is critical.';
+  }
+
+  if (showFlagged === false) {
+    return 'This catalogue item is not critical.';
+  }
+
+  return 'Unable to determine if this catalogue item is critical. If the expected lifetime is "None" please update this field. Otherwise wait until this is recalculated.';
+};
 
 const MoveCatalogueItemsButton = (props: {
   selectedItems: CatalogueItem[];
@@ -179,7 +244,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
 
   const { data: catalogueItemsData, isLoading: isLoadingCatalogueItems } =
     useGetCatalogueItems(parentInfo.id);
-
+  const { isCriticalMode } = useAppSelector(selectCriticality);
   const apiSettings = React.useContext(APISettingsContext);
   const sparesFilterState = apiSettings?.spares?.sparesFilterState;
   const isSparesDefinitionDefined = !!apiSettings.spares;
@@ -245,6 +310,29 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     const viewCatalogueItemProperties = parentInfo.properties ?? [];
     return [
+      ...(isSparesDefinitionDefined
+        ? [
+            {
+              header: 'Is Critical',
+              accessorFn: (row: TableRowData) =>
+                row.catalogueItem.is_flagged ? 'Yes' : 'No',
+              id: 'catalogueItem.is_flagged',
+              filterVariant: COLUMN_FILTER_VARIANTS.boolean,
+              enableColumnFilterModes: false,
+              size: 180,
+              filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
+              Cell: ({ row }: { row: MRT_Row<TableRowData> }) => {
+                const showFlagged = row.original.catalogueItem.is_flagged;
+                return (
+                  <CriticalityTooltipIcon
+                    showFlagged={showFlagged}
+                    label={getCICriticalityLabel(showFlagged)}
+                  />
+                );
+              },
+            },
+          ]
+        : []),
       {
         header: 'Name',
         Header: TableHeaderOverflowTip,
@@ -253,21 +341,118 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
-        size: 200,
-        Cell: ({ renderedCellValue, row }) =>
-          dense ? (
-            renderedCellValue
-          ) : (
-            <MuiLink
-              underline="hover"
-              component={Link}
-              to={`${row.original.catalogueItem.id}`}
-            >
-              {renderedCellValue}
-            </MuiLink>
-          ),
+        size: dense ? 500 : 250,
+        Cell: ({ row, renderedCellValue }) => {
+          return (
+            <OverflowTip sx={{ fontSize: 'inherit' }}>
+              {dense ? (
+                renderedCellValue
+              ) : (
+                <MuiLink
+                  underline="hover"
+                  component={Link}
+                  to={`${row.original.catalogueItem.id}`}
+                >
+                  {renderedCellValue}
+                </MuiLink>
+              )}
+            </OverflowTip>
+          );
+        },
+
         GroupedCell: TableGroupedCell,
       },
+      ...(isSparesDefinitionDefined
+        ? [
+            {
+              header: 'Criticality',
+              Header: ({
+                column,
+              }: {
+                column: MRT_Column<TableRowData, unknown>;
+              }) => (
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <CriticalityHeaderInfoToolTip />
+                  <OverflowTip sx={{ font: 'inherit' }}>
+                    {column.columnDef.header}
+                  </OverflowTip>
+                </Box>
+              ),
+              accessorFn: (row: TableRowData) => row.catalogueItem.criticality,
+              id: 'catalogueItem.criticality',
+              filterVariant: COLUMN_FILTER_VARIANTS.number,
+              filterFn: COLUMN_FILTER_FUNCTIONS.number,
+              columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.number,
+              size: 250,
+              Cell: ({ row }: { row: MRT_Row<TableRowData> }) =>
+                roundUpTenth(row.original.catalogueItem.criticality),
+            },
+            {
+              header: 'Number of spares',
+              Header: ({
+                column,
+              }: {
+                column: MRT_Column<TableRowData, unknown>;
+              }) => (
+                <SparesColumnHeaderInformationTooltip
+                  title={column.columnDef.header}
+                  sparesDefinition={apiSettings?.spares?.sparesDefinition}
+                />
+              ),
+              TableHeaderOverflowTip,
+              size: 350,
+              accessorFn: (row: TableRowData) =>
+                row.catalogueItem.number_of_spares,
+              id: 'catalogueItem.number_of_spares',
+              filterVariant: COLUMN_FILTER_VARIANTS.number,
+              filterFn: COLUMN_FILTER_FUNCTIONS.number,
+              columnFilterModeOptions: [
+                ...COLUMN_FILTER_MODE_OPTIONS.number,
+                ...OPTIONAL_FILTER_MODE_OPTIONS,
+              ],
+              GroupedCell: TableGroupedCell,
+              Cell: ({ row }: { row: MRT_Row<TableRowData> }) => (
+                <MuiLink
+                  underline="hover"
+                  component={Link}
+                  to={`${row.original.catalogueItem.id}/items${sparesFilterState}`}
+                >
+                  {row.original.catalogueItem.number_of_spares}
+                </MuiLink>
+              ),
+            },
+            {
+              header: 'Number of spares required',
+              Header: ({
+                column,
+              }: {
+                column: MRT_Column<TableRowData, unknown>;
+              }) => (
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <NumberOfSparesRequiredHeaderInfoToolTip />
+                  <OverflowTip sx={{ font: 'inherit' }}>
+                    {column.columnDef.header}
+                  </OverflowTip>
+                </Box>
+              ),
+              size: 350,
+              accessorFn: (row: TableRowData) =>
+                row.catalogueItem.number_of_spares_required,
+              id: 'catalogueItem.number_of_spares_required',
+              filterVariant: COLUMN_FILTER_VARIANTS.number,
+              filterFn: COLUMN_FILTER_FUNCTIONS.number,
+              columnFilterModeOptions: [
+                ...COLUMN_FILTER_MODE_OPTIONS.number,
+                ...OPTIONAL_FILTER_MODE_OPTIONS,
+              ],
+              GroupedCell: TableGroupedCell,
+              Cell: ({ row }: { row: MRT_Row<TableRowData> }) =>
+                roundUpTenth(
+                  row.original.catalogueItem.number_of_spares_required
+                ),
+            },
+          ]
+        : []),
       {
         header: 'Last modified',
         Header: TableHeaderOverflowTip,
@@ -310,44 +495,6 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           </MuiLink>
         ),
       },
-      ...(isSparesDefinitionDefined
-        ? [
-            {
-              header: 'Number of spares',
-              Header: ({
-                column,
-              }: {
-                column: MRT_Column<TableRowData, unknown>;
-              }) => (
-                <SparesColumnHeaderInformationTooltip
-                  title={column.columnDef.header}
-                  sparesDefinition={apiSettings?.spares?.sparesDefinition}
-                />
-              ),
-              TableHeaderOverflowTip,
-              size: 350,
-              accessorFn: (row: TableRowData) =>
-                row.catalogueItem.number_of_spares,
-              id: 'catalogueItem.number_of_spares',
-              filterVariant: COLUMN_FILTER_VARIANTS.number,
-              filterFn: COLUMN_FILTER_FUNCTIONS.number,
-              columnFilterModeOptions: [
-                ...COLUMN_FILTER_MODE_OPTIONS.number,
-                ...OPTIONAL_FILTER_MODE_OPTIONS,
-              ],
-              GroupedCell: TableGroupedCell,
-              Cell: ({ row }: { row: MRT_Row<TableRowData> }) => (
-                <MuiLink
-                  underline="hover"
-                  component={Link}
-                  to={`${row.original.catalogueItem.id}/items${sparesFilterState}`}
-                >
-                  {row.original.catalogueItem.number_of_spares}
-                </MuiLink>
-              ),
-            },
-          ]
-        : []),
       {
         header: 'Description',
         Header: TableHeaderOverflowTip,
@@ -707,7 +854,12 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
 
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
-      columnVisibility: { 'catalogueItem.created_time': false },
+      columnVisibility: {
+        'catalogueItem.created_time': false,
+        'catalogueItem.is_flagged': isCriticalMode,
+        'catalogueItem.criticality': isCriticalMode,
+        'catalogueItem.number_of_spares_required': isCriticalMode,
+      },
       pagination: { pageSize: DEFAULT_ROWS_PER_PAGE_VALUE, pageIndex: 0 },
       columnFilterFns: initialColumnFilterFnState,
     },
@@ -720,6 +872,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       ? [
           { ...columns[0], size: undefined },
           { ...columns[1], size: undefined },
+          { ...columns[3], size: undefined },
         ]
       : columns, // If dense only show the name column
     data: tableRows ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
@@ -783,25 +936,35 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     // MUI
     muiTableBodyRowProps: dense
       ? ({ row }) => {
+          const showFlagged = row.original.catalogueItem.is_flagged;
           return {
             component: TableRow,
             onClick: () => handleRowSelection(row),
 
             selected: rowSelection[row.id],
-            sx: {
+            sx: (theme) => ({
               cursor:
                 isItemSelectable === undefined ||
                 isItemSelectable(row.original.catalogueItem)
                   ? 'pointer'
                   : 'not-allowed',
-            },
+              ...(isCriticalMode &&
+                isSparesDefinitionDefined &&
+                criticalityRowStyle({ theme, showFlagged })),
+            }),
             'aria-label': `${row.original.catalogueItem.name} row`,
           };
         }
       : ({ row }) => {
+          const showFlagged = row.original.catalogueItem.is_flagged;
           return {
             component: TableRow,
             'aria-label': `${row.original.catalogueItem.name} row`,
+            sx: (theme) => ({
+              ...(isCriticalMode &&
+                isSparesDefinitionDefined &&
+                criticalityRowStyle({ theme, showFlagged })),
+            }),
           };
         },
     muiTableContainerProps: ({ table }) => {
@@ -1049,6 +1212,26 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         )
       : undefined,
   });
+
+  React.useEffect(() => {
+    if (isSparesDefinitionDefined)
+      table.setColumnVisibility((prev) => {
+        const nextOn = isCriticalMode;
+        const same =
+          prev['catalogueItem.criticality'] === nextOn &&
+          prev['catalogueItem.is_flagged'] === nextOn &&
+          prev['catalogueItem.number_of_spares_required'];
+
+        if (same) return prev;
+
+        return {
+          ...prev,
+          'catalogueItem.criticality': nextOn,
+          'catalogueItem.is_flagged': nextOn,
+          'catalogueItem.number_of_spares_required': nextOn,
+        };
+      });
+  }, [isCriticalMode, isSparesDefinitionDefined, table]);
 
   return (
     <div style={{ width: '100%' }}>

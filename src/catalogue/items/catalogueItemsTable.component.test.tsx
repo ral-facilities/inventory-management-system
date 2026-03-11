@@ -4,6 +4,7 @@ import { http, HttpResponse } from 'msw';
 import { CatalogueCategory } from '../../api/api.types';
 import APIConfigProvider from '../../apiConfigProvider.component';
 import { server } from '../../mocks/server';
+import { RootState } from '../../state/store';
 import {
   getCatalogueCategoryById,
   renderComponentWithRouterProvider,
@@ -18,13 +19,17 @@ describe('Catalogue Items Table', () => {
   let props: CatalogueItemsTableProps;
   let user: UserEvent;
 
-  const createView = (initialEntry?: string) => {
+  const createView = (
+    initialEntry?: string,
+    preloadedState?: Partial<RootState>
+  ) => {
     return renderComponentWithRouterProvider(
       <APIConfigProvider>
         <CatalogueItemsTable {...props} />
       </APIConfigProvider>,
       'any',
-      initialEntry ?? '/'
+      initialEntry ?? '/',
+      preloadedState
     );
   };
 
@@ -60,12 +65,29 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
     expect(screen.getByText('Last modified')).toBeInTheDocument();
-    expect(screen.getByText('View Items')).toBeInTheDocument();
-
-    await user.click(screen.getByRole('button', { name: 'Show/Hide columns' }));
-    await user.click(screen.getByText('Hide all'));
-
     expect(screen.getByText('Number of spares')).toBeInTheDocument();
+  });
+
+  it('renders table correctly (Criticality)', async () => {
+    props.parentInfo = getCatalogueCategoryById('6') as CatalogueCategory;
+    createView(undefined, {
+      criticality: { isCriticalMode: true },
+    });
+    await waitFor(() => {
+      expect(screen.getByText('Name')).toBeInTheDocument();
+    });
+
+    expect(screen.getByText('Criticality')).toBeInTheDocument();
+
+    expect(await screen.findByText('-4.6')).toBeInTheDocument();
+
+    expect(screen.getByTestId('ErrorIcon')).toBeInTheDocument();
+
+    await user.hover(screen.getByTestId('ErrorIcon'));
+
+    expect(
+      await screen.findByText('This catalogue item is critical.')
+    ).toBeInTheDocument();
   });
 
   it('renders table correctly (Cameras more details)', async () => {
@@ -569,7 +591,7 @@ describe('Catalogue Items Table', () => {
     });
     expect(clearFiltersButton).toBeDisabled();
     expect(router.state.location.search).toBe(
-      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUyWBlE5RGLNh3jcMvAdAIB3AARiycZT36D02fMVKUGBGDSgAHVlgB2XIwJSmRF8bCZYAIxgsDAJSN1VjT2FzPQpA4NDSJlp7DGQwcgJnVCZos0ImKEsihgi1ExjRS3igkLCCFLpg10NIjyECn0p7aix7AmpWGwoAdnKozu843v7B4ZgKAA4Jjq9YmrAsGFzULCbNLGoAayYcAPtVyq64hmQATxgWfdT0zKv86Zq7x%2BeDo%2BOHymG3EDGoyE0UGcOCYzjwZACgyB62qoPBkOhTAwUMBbQqnxBlAIAA8BmBSMxsZwwoomD8DCp8cDUZRiuQmJJrBhYfDEdQrmRkHDuOS8LRqBRnMh2AKhXgRagxYMKGKMLLhRlFeKKMgGGCbAz3CBBRrRdrSKF7AALFxKRmTFHdSVYUiGyIAX3dQA'
+      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUyWBlE5RGLNh3jcMvAdAIB3AARiycZT36D02fMVKUGBGDSgAHVlgB2XIwJSmRF8bCZYAIxgsDAJSN1VjT2FzPQpA4NDSJlp7DGQwcgJnVCZos0ImKEsihgi1ExjRS3igkLCCFLpg10NIjyECn0p7aix7AmpWGwoAdnKozu843v7B4ZgKAA4Jjq9YmrAsGFzULCbNLGoAayYcAPtVyq64hmQATxgWfdT0zKv86Zq7x%2BeDo%2BOHymG3EDGoyE0UGcOCYzjwZACgyB62qoPBkOhTAwUMBbQqnxBlAIAA8BmBSMxsZwwoomD8DCp8cDUZRiuQmJJrBhYfDEdQrmRkHDuOS8LRqBRnMh2AKhXgRagxYMKGKMLLhRlFeKKMgGGCbAz3CBBRrRdrSKF7AALFxKRmTFHdSVYUiG9rXL7iOysFDY1D3ZFVJ1%2BTjpHA4RiBm41OEIwb%2BThMGD2ZC0J60ACOeCgtDKeIIAF8C0A'
     );
 
     // Do max first, as it technically has no effect on the outcome of the filter
@@ -583,7 +605,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.queryByText('Energy Meters 26')).not.toBeInTheDocument();
     });
     expect(router.state.location.search).toBe(
-      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUyWBlE5RGLNh3jcMvAdAIB3AARiycZT36D02fMVKUGBGDSgAHVlgB2XIwJSmRF8bCZYAIxgsDAJSN1VjT2FzPQpA4NDSJlp7DGQwcgJnVCZos0ImKEsihgi1ExjRS3igkLCCFLpg10NIjyECn0p7aix7AmpWGwoAdnKozu843v7B4ZgKAA4Jjq9YmrAsGFzULCbNLGoAayYcAPtVyq64hmQATxgWfdT0zKv86Zq7x%2BeDo%2BOHymG3EDGoyE0UGcOCYzjwZACgyB62qoPBkOhTAwUMBbQqnxBlAIAA8BmBSMxsZwwoomD8DCp8cDUZRiuQmJJrBhYfDEdQrmRkHDuOS8LRqBRnMh2AKhXgRagxYMKGKMLLhRlFeKKMgGGCbAz3CBBRrRdrSKF7AALFxKRmTFHdSVYUiGyIAXw8ADEEABtUBQMrwa5fcRbHZnC4gAQAN0whD9oFQ9wGCBAO2oUJw0ZAcYwCeDSwADEWQJ6kymlOnUJnoTm8wWQABGEul90AXQ77qAA'
+      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUyWBlE5RGLNh3jcMvAdAIB3AARiycZT36D02fMVKUGBGDSgAHVlgB2XIwJSmRF8bCZYAIxgsDAJSN1VjT2FzPQpA4NDSJlp7DGQwcgJnVCZos0ImKEsihgi1ExjRS3igkLCCFLpg10NIjyECn0p7aix7AmpWGwoAdnKozu843v7B4ZgKAA4Jjq9YmrAsGFzULCbNLGoAayYcAPtVyq64hmQATxgWfdT0zKv86Zq7x%2BeDo%2BOHymG3EDGoyE0UGcOCYzjwZACgyB62qoPBkOhTAwUMBbQqnxBlAIAA8BmBSMxsZwwoomD8DCp8cDUZRiuQmJJrBhYfDEdQrmRkHDuOS8LRqBRnMh2AKhXgRagxYMKGKMLLhRlFeKKMgGGCbAz3CBBRrRdrSKF7AALFxKRmTFHdSVYUiG9rXL7iOysFDY1D3ZFVJ1%2BTjpHA4RiBm41OEIwb%2BThMGD2ZC0J60ACOeCgtDKeIIAF8PAAxBAAbVAUDzHsJVG2uXOlwEADdMIRy6B-QMECAdtQoTgQC220oQEsAAzjkBFzv3bvwXuofvQocgVsYdsLgCMk6nBYAugeC0A'
     );
 
     await user.click(clearFiltersButton);
@@ -592,7 +614,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
     });
     expect(router.state.location.search).toBe(
-      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUyWBlE5RGLNh3jcMvAdAIB3AARiycZT36D02fMVKUGBGDSgAHVlgB2XIwJSmRF8bCZYAIxgsDAJSN1VjT2FzPQpA4NDSJlp7DGQwcgJnVCZos0ImKEsihgi1ExjRS3igkLCCFLpg10NIjyECn0p7aix7AmpWGwoAdnKozu843v7B4ZgKAA4Jjq9YmrAsGFzULCbNLGoAayYcAPtVyq64hmQATxgWfdT0zKv86Zq7x%2BeDo%2BOHymG3EDGoyE0UGcOCYzjwZACgyB62qoPBkOhTAwUMBbQqnxBlAIAA8BmBSMxsZwwoomD8DCp8cDUZRiuQmJJrBhYfDEdQrmRkHDuOS8LRqBRnMh2AKhXgRagxYMKGKMLLhRlFeKKMgGGCbAz3CBBRrRdrSKF7AALFxKRmTFHdSVYUiGyIAX3dQA'
+      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUyWBlE5RGLNh3jcMvAdAIB3AARiycZT36D02fMVKUGBGDSgAHVlgB2XIwJSmRF8bCZYAIxgsDAJSN1VjT2FzPQpA4NDSJlp7DGQwcgJnVCZos0ImKEsihgi1ExjRS3igkLCCFLpg10NIjyECn0p7aix7AmpWGwoAdnKozu843v7B4ZgKAA4Jjq9YmrAsGFzULCbNLGoAayYcAPtVyq64hmQATxgWfdT0zKv86Zq7x%2BeDo%2BOHymG3EDGoyE0UGcOCYzjwZACgyB62qoPBkOhTAwUMBbQqnxBlAIAA8BmBSMxsZwwoomD8DCp8cDUZRiuQmJJrBhYfDEdQrmRkHDuOS8LRqBRnMh2AKhXgRagxYMKGKMLLhRlFeKKMgGGCbAz3CBBRrRdrSKF7AALFxKRmTFHdSVYUiG9rXL7iOysFDY1D3ZFVJ1%2BTjpHA4RiBm41OEIwb%2BThMGD2ZC0J60ACOeCgtDKeIIAF8C0A'
     );
   });
 
@@ -638,7 +660,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.queryByText('Energy Meters 26')).not.toBeInTheDocument();
     });
     expect(router.state.location.search).toBe(
-      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUAdsnZceBAL7ygA'
+      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIVYTThmQ4cjLj36D02fMVKUaUVigw6Anooy8BKVSI3iAdnjIAjAtSZZOTGAAdktGE1oBHPChaBmNTFWF1MUprZHYwggBfRKA'
     );
 
     // Reset
@@ -694,7 +716,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Grouped by')).toBeInTheDocument();
     });
     expect(router.state.location.search).toBe(
-      '?state=N4Ig5iBcDaIMYEMAuCA2B7MBXApgSSRwFsA6AOwSJxAF0AaeAeSliICckBaN9Ad05wAPAA4IyAExAN2XHvwRwkAS3RkAzlJAzufTmpyocizYhQZs%2BQqQpUTyNJlwFiJIunFKAZkpziA%2Bsq2DKYOFs6kcGw4yL4BSkEgAGo%2BvAAE4RrB9uZOVuRYRABGOGx%2B6J5%2BaqJRmfDZjpYu4jhqkUrCyqp2Zg3hJEpqZYVq6IaE3aG5LujDoziEflHCqArEOGRIfiE5OH5KVnuSWT1heTMjY7tRCCNkEzt9wjzCJcotJADs9715T%2BgvHB8ahIAA5vqcXHB0GpNmBCsJwVMItDNkh0IscLx0GwANZ%2BOEI46TRqkcQIACegzRGOWq0RJJIZMpAXRUSxuPpfSEL0UsVQXnm8V2TNq2x%2BLn2xD8bmaqD8ZAKxTYmiIYiwngUSCwUTY5Eo1Gkao1im1JRI2tQKqNmtNuoQ4nENVqqoVxq1OpIhEMwgAFqoDXUTkjyOhCM6ODp%2BFVVsqaABfIA'
+      '?state=N4Ig5iBcDaIMYEMAuCA2B7MBXApgSSRwFsA6AOwSJxAF0AaeAeSliICckBaN9Ad05wAPAA4IyAExAN2XHvwRwkAS3RkAzlJAzufTmpyocizYhQZs%2BQqSVqA%2BgDNUCMGBySGptJlwFi5StQeyF4WvqRwbErKiKhRAJ4mweY%2BVuRYRABGOGy26Pa2aqJsOBpBZt6WfmTpWTl5BUUltsUAjlhKxe7wSRVhJETo4kr2Sm62ylSJ5aGpETjIYxOBIABqo7wABGGl3dMpfuIlEUrCyqpTIfvWdugZauiGhBfJlaS39484zTjCTnDEODISFsnhetiixHBXVBvVS7weOEI3wQ9zIz1hfmEPGE2WUJRIAHZ0TNMdjcaM1CQABzEq4kODoNTAsAZYS0170xnApDob68dBsADWthZbLKlw54gQcTsPO%2BvwUyxhJNIUpl415xX5QvZfSEOMUY1i9kRSiotjVO2VdIhRFsA0OqFs1Uy2U0RDEWHsCiQWGKbH8k2knu9ij92RIftQ7pDPvDAYQ4nExTUOw91VDvv9JEIhmEAAtVEqeiryOhCGmODp%2BIVFWxaABfIA'
     );
 
     // Reset
@@ -705,7 +727,7 @@ describe('Catalogue Items Table', () => {
     });
     // Expect this to still be here as have now modified the order in some way (as MRT doesn't revert back to its original state in this case)
     expect(router.state.location.search).toBe(
-      '?state=N4Igxg8iBcDaIFsBOAXAtEg9gdzQQzBQEtMA7AZxABpFUMc1yBTAGycOtvS1yYA8ADnlIATTmDwo8LTAHMArkwCSKJggB0pPAibjJ0uYpVr1CTCKIAzIkxEB9Yjr1SZC5ao1gkTSbYdEnGgA1G2wAAmMEShoJF0N3E1J5BAAjJiQ7TEs7ciFvaPB9VyMPdREmci8iAWIyZwM3SPUickyU8kw2VXrihI1Mds6mVTtvARYCNSZSFDtYhsU7Ig8lsRii%2BKaBjq6mUZ8O0h7N0oEsAXTiCvUAdmPG0-PLm3J1AA57kpMwTHJZ2RSAk%2BfXUPz%2BDkw%2B2wmCQAGs7ACges4g8TCI8ABPVooSFjCZgXTIhYg9FYiFQmGw4FNfgXQh%2BFhWYYBPakgrzXpNZZqOxmcosOxJVLpTgIYTySwEFDybxITTaQmIcWSwgy9LqGUsUXKqVquV4EQifIFMVJFXS2XqVRsAQACzIio5J0SmFUJroPEYQgJSBAAF0AL5AA'
+      '?state=N4Igxg8iBcDaIFsBOAXAtEg9gdzQQzBQEtMA7AZxABpFUMc1yBTAGycOtvS1yYA8ADnlIATTmDwo8LTAHMArkwCSKJggB0RcgH0AZizyzZTMTQlSZC5ao2k8CJuMnS5ilWvVgkRYhJY%2BATycLV2sPUnkEACMmJG1MXW1yISQmSjNnSzcbdQjo2PjE5LxUnVSAR3kiVNNwTND3DQRMESJdIhNtYgdglytGz1TJTu7HGgA1DuwAAkb0upD%2BnJE0ryIBYjJerLCNLXio8kw2VW2GnMxD46ZVbVSBAzA1JlIUbXM%2BxW0fNW-aj52A0uRxOTDuTDwR1IZyWHgEWAEsWIaXUAHYYdk4QikR1yOoABwY3aeTDkN6yKICIkDMCkt4oTDg7CYJAAa20FKpGUWmI0IjwAR0DPBDwIYwWn2J-MFXUZqWZbOpOX4iMInX8uhuRAc2ml8wB5w8PwQ2maKxY2jyMSQnAQwnkugIKHkqSQuXs4rtEUdhBdsXULpYtvtPudrvUeBEIlK8y9DqdfrdqjYAgAFmRxQbYbZMKpY3QeIwhE8bQBdAC%2BQA'
     );
   });
 

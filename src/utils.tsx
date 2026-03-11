@@ -731,3 +731,26 @@ export const criticalityCardStyle = (props: {
     boxShadow: `0 0 10px 3px ${alpha(color, 0.53)}`, // 53% opacity for fuzzy glow
   };
 };
+
+export const criticalityHeaderStyle = (props: {
+  theme: Theme;
+  showFlagged: boolean | null;
+}) => {
+  const { theme, showFlagged } = props;
+  return {
+    ...criticalityCardStyle({ theme, showFlagged }),
+    borderRadius: 5,
+  };
+};
+
+export function roundUpTenth(x?: number | null) {
+  if (typeof x !== 'number') return x;
+
+  if (x > 0) {
+    // Positive: round up
+    return Math.ceil(x * 10) / 10;
+  } else {
+    // Negative: round down
+    return Math.floor(x * 10) / 10;
+  }
+}

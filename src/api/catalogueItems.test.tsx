@@ -164,6 +164,9 @@ describe('catalogue items api functions', () => {
         obsolete_reason: null,
         properties: [],
         number_of_spares: 0,
+        number_of_spares_required: null,
+        criticality: null,
+        is_flagged: null,
         ...CREATED_MODIFIED_TIME_VALUES,
       };
     });
@@ -266,6 +269,9 @@ describe('catalogue items api functions', () => {
             obsolete_reason: null,
             obsolete_replacement_catalogue_item_id: null,
             number_of_spares: 0,
+            number_of_spares_required: null,
+            criticality: null,
+            is_flagged: null,
             properties: [
               {
                 id: '90',
@@ -294,6 +300,9 @@ describe('catalogue items api functions', () => {
             obsolete_reason: null,
             obsolete_replacement_catalogue_item_id: null,
             number_of_spares: 0,
+            number_of_spares_required: null,
+            criticality: null,
+            is_flagged: null,
             properties: [
               {
                 id: '90',
@@ -401,6 +410,9 @@ describe('catalogue items api functions', () => {
             obsolete_reason: null,
             obsolete_replacement_catalogue_item_id: null,
             number_of_spares: 0,
+            number_of_spares_required: null,
+            criticality: null,
+            is_flagged: null,
             properties: [
               {
                 id: '90',
@@ -429,6 +441,9 @@ describe('catalogue items api functions', () => {
             obsolete_reason: null,
             obsolete_replacement_catalogue_item_id: null,
             number_of_spares: 0,
+            number_of_spares_required: null,
+            criticality: null,
+            is_flagged: null,
             properties: [
               {
                 id: '90',

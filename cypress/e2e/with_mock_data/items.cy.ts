@@ -50,6 +50,17 @@ describe('Items', () => {
     cy.findByText('Cameras 3').should('be.visible');
   });
 
+  it('displays the item landing page (Criticality)', () => {
+    cy.visit('/catalogue/6/items/10/items/pZT8K0aP');
+
+    cy.setMode({ critical: true });
+
+    cy.findByTestId('ErrorIcon').should('exist');
+    cy.findByTestId('ErrorIcon').trigger('mouseover');
+    cy.findByText('This catalogue item is critical.').should('exist');
+    cy.findAllByText('(Item Details)').should('exist');
+  });
+
   it('should be able to navigate back to the catalogue home', () => {
     cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
     cy.findByText('Motion').should('be.visible');
