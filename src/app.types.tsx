@@ -28,7 +28,7 @@ export type TabValue = (typeof TAB_VALUES)[number];
 export interface TransferState {
   name: string;
   message: string;
-  state: 'success' | 'error' | 'information';
+  state: 'success' | 'error' | 'info' | 'warning';
 }
 
 export enum RoutesHomeLocation {
@@ -68,8 +68,7 @@ export interface AddCatalogueCategoryWithPlacementIds {
   properties?: AddCatalogueCategoryPropertyWithPlacementIds[];
 }
 
-export interface AddCatalogueCategoryPropertyWithPlacementIds
-  extends AddCatalogueCategoryProperty {
+export interface AddCatalogueCategoryPropertyWithPlacementIds extends AddCatalogueCategoryProperty {
   cip_placement_id: string; // Catalogue item properties (cip)
 }
 
