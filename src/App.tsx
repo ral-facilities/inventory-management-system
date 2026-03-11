@@ -250,6 +250,7 @@ if (!isUsingMSW) router = createBrowserRouter(routeObject);
 // environment, this is not needed.
 
 export default function App() {
+  // eslint-disable-next-line react-hooks/globals
   if (isUsingMSW) router = createBrowserRouter(routeObject);
   return <RouterProvider router={router} />;
 }

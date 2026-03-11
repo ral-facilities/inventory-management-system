@@ -47,8 +47,10 @@ export interface UsageStatusesType {
   usage_status_id: string;
 }
 
-export interface UsageStatusesErrorType
-  extends Omit<UsageStatusesType, 'usageStatus'> {
+export interface UsageStatusesErrorType extends Omit<
+  UsageStatusesType,
+  'usageStatus'
+> {
   error: boolean;
 }
 
@@ -132,6 +134,10 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   const { mutateAsync: moveItemsToSystem, isPending: isMovePending } =
     useMoveItemsToSystem();
 
+  // Stepper
+  const STEPS = ['Place into a system', 'Confirm usage statuses'];
+  const [activeStep, setActiveStep] = React.useState<number>(0);
+
   const populateUsageStatuses = React.useCallback(() => {
     const usageStatusId =
       srcSystemTypeId === dstSystemTypeId || selectedRules?.length === 0
@@ -164,7 +170,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     setActiveStep(0);
     setParentSystemId(props.parentSystemId);
     onClose();
-  }, [onClose, props.parentSystemId]);
+  }, [onClose, props.parentSystemId, setActiveStep]);
 
   const hasSystemErrors =
     // Disable when not moving anywhere different
@@ -228,10 +234,6 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     handleClose,
   ]);
 
-  // Stepper
-  const STEPS = ['Place into a system', 'Confirm usage statuses'];
-  const [activeStep, setActiveStep] = React.useState<number>(0);
-
   const handleNext = React.useCallback(
     (step: number) => {
       switch (step) {
@@ -250,7 +252,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
         }
       }
     },
-    [hasSystemErrors, populateUsageStatuses]
+    [hasSystemErrors, populateUsageStatuses, setActiveStep]
   );
 
   const handleBack = () => {
