@@ -4,7 +4,7 @@ import { setAuthorisation, setIsAdminMode } from '../slices/authorisationSlice';
 import { RootState, StorageRegistry } from '../store';
 
 export const createAuthListenerMiddleware = (
-  getUserRoleFn: () => string,
+  getUserRoleFn: () => string | undefined,
   storageRegistryDict: StorageRegistry
 ) => {
   const middleware = createListenerMiddleware();
@@ -16,13 +16,13 @@ export const createAuthListenerMiddleware = (
       const privilegedRoles = state.config.settings.privilegedRoles;
 
       const role = getUserRoleFn();
-
-      listenerApi.dispatch(
-        setAuthorisation({
-          role,
-          isAdminUser: privilegedRoles.includes(role),
-        })
-      );
+      if (typeof role === 'string')
+        listenerApi.dispatch(
+          setAuthorisation({
+            role,
+            isAdminUser: privilegedRoles.includes(role),
+          })
+        );
     },
   });
 

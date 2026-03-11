@@ -270,13 +270,13 @@ export function Layout() {
       const role = getUserRole();
       const state = store.getState();
       const privilegedRoles = state.config.settings.privilegedRoles;
-
-      dispatch(
-        setAuthorisation({
-          role,
-          isAdminUser: privilegedRoles.includes(role),
-        })
-      );
+      if (typeof role === 'string')
+        dispatch(
+          setAuthorisation({
+            role,
+            isAdminUser: privilegedRoles.includes(role),
+          })
+        );
     });
   }, [dispatch]);
   // We need to call forceUpdate if SciGateway tells us to rerender
