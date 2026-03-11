@@ -499,18 +499,6 @@ function Systems() {
           : getPageHeightCalc('64px + 88px + 40px + 47px + 40px'),
       },
     }),
-    muiSelectAllCheckboxProps: { disabled: systemId === null },
-    muiSelectCheckboxProps: ({ row, table }) => {
-      const selectedSystems = table
-        .getSelectedRowModel()
-        .rows.map((row) => row.original);
-      const type_id = selectedSystems[0]?.type_id;
-      const isDisabled =
-        selectedSystems.length > 0 ? row.original.type_id !== type_id : false;
-      return {
-        disabled: isDisabled,
-      };
-    },
     muiTableBodyCellProps: ({ table, column }) =>
       // Ignore MRT rendered cells e.g. expand , spacer etc
       column.id.startsWith('mrt')
