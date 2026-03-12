@@ -83,7 +83,7 @@ function toItemDetailsStep(
       asset_number: '',
       serial_number: {
         serial_number:
-          (prefillSerialNumbers && catalogueCategory?.name + '%s') || '',
+          (prefillSerialNumbers && catalogueCategory?.name + ' %s') || '',
         starting_value: '',
         quantity: '',
       },
@@ -766,19 +766,43 @@ function ItemDialog(props: ItemDialogProps) {
                       )
                     }
                   >
-                    <Typography
-                      variant="caption"
-                      sx={{
-                        ml: 1,
-                        mb: 0,
-                        cursor: 'pointer',
-                        '&:hover': { textDecoration: 'underline' },
-                      }}
-                    >
-                      {showAdvancedSerialNumberOptions
-                        ? 'Close advanced options'
-                        : 'Show advanced options'}
-                    </Typography>
+                    <Box sx={{ alignItems: 'center', display: 'flex' }}>
+                      <Tooltip
+                        title={
+                          <Box>
+                            <Typography>
+                              When adding multiple items, %s marks where the
+                              generated number will appear. This number is based
+                              on the Starting Value and Quantity.
+                            </Typography>
+                            <Typography sx={{ mt: 2 }}>Example: </Typography>
+                            <Typography>
+                              Serial number: item%s. Quantity: 2. Starting
+                              value: 1
+                            </Typography>
+                            <Typography>
+                              Resulting serial numbers: item1, item2
+                            </Typography>
+                          </Box>
+                        }
+                        aria-label="Serial Number Advanced Options Tooltip"
+                      >
+                        <InfoOutlinedIcon fontSize="small" />
+                      </Tooltip>
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          ml: 1,
+                          mb: 0,
+                          cursor: 'pointer',
+                          '&:hover': { textDecoration: 'underline' },
+                        }}
+                      >
+                        {showAdvancedSerialNumberOptions
+                          ? 'Close advanced options'
+                          : 'Show advanced options'}
+                      </Typography>
+                    </Box>
                   </Grid>
                   <Grid container size={12}>
                     <Collapse
