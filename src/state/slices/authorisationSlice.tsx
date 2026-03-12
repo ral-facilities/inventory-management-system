@@ -25,11 +25,15 @@ export const authSlice = createSlice({
       state.isAdminUser = action.payload.isAdminUser;
 
       if (!state.isAdminUser) {
-        state.isAdminMode = false;
+        state.isAdminMode = initialState.isAdminMode;
+      } else {
+        state.isAdminMode = state.isAdminMode ?? initialState.isAdminMode;
       }
     },
     setIsAdminMode(state, action: PayloadAction<boolean>) {
-      state.isAdminMode = state.isAdminUser ? action.payload : false;
+      state.isAdminMode = state.isAdminUser
+        ? action.payload
+        : initialState.isAdminMode;
     },
   },
 });

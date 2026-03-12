@@ -17,6 +17,7 @@ import {
   CatalogueItemPatch,
   CatalogueItemPost,
   ImageMetadataPatch,
+  InUseDefinition,
   Item,
   ItemPatch,
   ItemPost,
@@ -1082,7 +1083,7 @@ export const handlers = [
     const entityId = attachmentParams.get('entity_id');
 
     const generateAttachments = () => {
-      return Array.from({ length: 20 }, (_, index) => {
+      return Array.from({ length: 35 }, (_, index) => {
         const id = index + 1;
         const attachment = { ...AttachmentsJSON[id % 4] };
 
@@ -1247,7 +1248,7 @@ export const handlers = [
     }
 
     const generateImages = () => {
-      return Array.from({ length: 20 }, (_, index) => {
+      return Array.from({ length: 35 }, (_, index) => {
         const id = index + 1;
         let image;
 
@@ -1392,6 +1393,17 @@ export const handlers = [
     () => {
       return HttpResponse.json(
         { system_types: [SystemTypesJSON[0]] },
+        { status: 200 }
+      );
+    }
+  ),
+  // --------------------------------- SPARES DEFINITION ------------------------------------------------------
+
+  http.get<PathParams, DefaultBodyType, InUseDefinition>(
+    '/v1/settings/in-use-definition',
+    () => {
+      return HttpResponse.json(
+        { system_types: [SystemTypesJSON[1]] },
         { status: 200 }
       );
     }

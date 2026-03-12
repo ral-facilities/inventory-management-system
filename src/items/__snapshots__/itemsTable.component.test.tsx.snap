@@ -217,7 +217,7 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
           </div>
         </div>
         <div
-          class="MuiTableContainer-root css-18mrzwk-MuiTableContainer-root"
+          class="MuiTableContainer-root css-h49et4-MuiTableContainer-root"
           data-testid="items-table-container"
         >
           <table
@@ -1579,7 +1579,7 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
                       role="combobox"
                       tabindex="0"
                     >
-                      15
+                      30
                     </div>
                     <input
                       aria-hidden="true"
@@ -1587,7 +1587,7 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
                       class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
                       id="mrt-rows-per-page-:r0:"
                       tabindex="-1"
-                      value="15"
+                      value="30"
                     />
                     <svg
                       aria-hidden="true"
@@ -1894,7 +1894,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
           </div>
         </div>
         <div
-          class="MuiTableContainer-root css-18mrzwk-MuiTableContainer-root"
+          class="MuiTableContainer-root css-h49et4-MuiTableContainer-root"
           data-testid="items-table-container"
         >
           <table
@@ -3252,7 +3252,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                       role="combobox"
                       tabindex="0"
                     >
-                      15
+                      30
                     </div>
                     <input
                       aria-hidden="true"
@@ -3260,7 +3260,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                       class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
                       id="mrt-rows-per-page-:r2i:"
                       tabindex="-1"
-                      value="15"
+                      value="30"
                     />
                     <svg
                       aria-hidden="true"
@@ -5142,7 +5142,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                       role="combobox"
                       tabindex="0"
                     >
-                      5
+                      30
                     </div>
                     <input
                       aria-hidden="true"
@@ -5150,7 +5150,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                       class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
                       id="mrt-rows-per-page-:r3e2:"
                       tabindex="-1"
-                      value="5"
+                      value="30"
                     />
                     <svg
                       aria-hidden="true"

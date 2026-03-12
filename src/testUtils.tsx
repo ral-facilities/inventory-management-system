@@ -107,7 +107,8 @@ export function renderComponentWithRouterProvider(
     ...renderOptions
   }: ExtendedRenderOptions = {}
 ) {
-  const store = configureAppStore(preloadedState);
+  const state = getInitialState();
+  const store = configureAppStore({ ...state, ...preloadedState });
   const { router, provider } = constructRouterProvider(
     ui,
     queryClient,
@@ -133,7 +134,9 @@ export const hooksWrapperWithProviders = (props?: {
   preloadedState?: Partial<RootState>;
 }) => {
   const testQueryClient = props?.queryClient ?? createTestQueryClient();
-  const store = configureAppStore(props?.preloadedState);
+
+  const state = getInitialState();
+  const store = configureAppStore({ ...state, ...props?.preloadedState });
   return constructRouterProviderWrapper(
     testQueryClient,
     store,

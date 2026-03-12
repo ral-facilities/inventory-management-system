@@ -2,6 +2,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { CatalogueCategory } from '../../api/api.types';
+import APIConfigProvider from '../../apiConfigProvider.component';
 import { server } from '../../mocks/server';
 import { URLPathKeyType } from '../../paths';
 import { RootState } from '../../state/store';
@@ -17,7 +18,9 @@ describe('CardView', () => {
     preloadedState?: Partial<RootState>
   ) => {
     return renderComponentWithRouterProvider(
-      <CardView />,
+      <APIConfigProvider>
+        <CardView />
+      </APIConfigProvider>,
       urlPathKey || 'catalogue',
       path || '/catalogue',
       preloadedState
@@ -93,7 +96,7 @@ describe('CardView', () => {
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
 
-    const addButton = screen.getByRole('button', {
+    const addButton = await screen.findByRole('button', {
       name: 'Add Catalogue Category',
     });
     await user.click(addButton);
@@ -354,6 +357,26 @@ describe('CardView', () => {
     ).toBeInTheDocument();
   });
 
+  it('does not show criticality states or the critical filter button for catalogue categories', async () => {
+    server.use(
+      http.get('/v1/settings/spares-definition', () => {
+        return HttpResponse.json(undefined, { status: 204 });
+      })
+    );
+    createView('/catalogue', undefined, {
+      criticality: { isCriticalMode: true },
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
+    });
+    await waitFor(() => {
+      expect(
+        screen.queryByRole('button', { name: 'Show Critical Categories' })
+      ).not.toBeInTheDocument();
+    });
+  });
+
   it('clicks on shows critical Categories filter button', async () => {
     createView('/catalogue', undefined, {
       criticality: { isCriticalMode: true },
@@ -487,7 +510,7 @@ describe('CardView', () => {
       );
 
       await user.click(
-        screen.getByRole('button', { name: 'Show/Hide filters' })
+        await screen.findByRole('button', { name: 'Show/Hide filters' })
       );
 
       const dropdownButtons = await screen.findAllByTestId('FilterListIcon');

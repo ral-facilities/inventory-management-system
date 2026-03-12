@@ -20,6 +20,10 @@ import React from 'react';
 import { CatalogueItem, Item, UsageStatus } from '../api/api.types';
 import { useGetCatalogueItemIds } from '../api/catalogueItems';
 import { useGetUsageStatuses } from '../api/usageStatuses';
+import {
+  DEFAULT_ROWS_PER_PAGE_VALUE,
+  ROWS_PER_PAGE_OPTIONS,
+} from '../common/consts';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
 import {
@@ -338,7 +342,7 @@ export function SystemItemsUsageStatusTable(
     initialState: {
       columnVisibility: { 'item.created_time': false },
       grouping: ['catalogueItem.name'],
-      pagination: { pageSize: 15, pageIndex: 0 },
+      pagination: { pageSize: DEFAULT_ROWS_PER_PAGE_VALUE, pageIndex: 0 },
       columnFilterFns: initialColumnFilterFnState,
     },
   });
@@ -452,7 +456,7 @@ export function SystemItemsUsageStatusTable(
     },
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: [15, 30, 45],
+      rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
       shape: 'rounded',
       variant: 'outlined',
     },

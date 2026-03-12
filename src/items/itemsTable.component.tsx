@@ -34,6 +34,10 @@ import { useGetUsageStatuses } from '../api/usageStatuses';
 import { APISettingsContext } from '../apiConfigProvider.component';
 import type { SystemTableType } from '../app.types';
 import { findPropertyValue } from '../catalogue/items/catalogueItemsTable.component';
+import {
+  DEFAULT_ROWS_PER_PAGE_VALUE,
+  ROWS_PER_PAGE_OPTIONS,
+} from '../common/consts';
 import MRTTopTableAlert from '../common/mrtTopTableAlert.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import { SystemTypeColumnHeaderInformationTooltip } from '../common/systemTypesInformationTooltip.component';
@@ -449,7 +453,7 @@ export function ItemsTable(props: ItemTableProps) {
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
       columnVisibility: { created_time: false },
-      pagination: { pageSize: dense ? 5 : 15, pageIndex: 0 },
+      pagination: { pageSize: DEFAULT_ROWS_PER_PAGE_VALUE, pageIndex: 0 },
       columnFilterFns: initialColumnFilterFnState,
     },
     storeInUrl: !dense,
@@ -552,8 +556,8 @@ export function ItemsTable(props: ItemTableProps) {
           height: dense
             ? '360.4px'
             : getPageHeightCalc(
-                // Breadcrumbs + Mui table V2 + extra
-                `50px + 110px + 48px ${showAlert ? '+ 64px' : ''} ${isSparesFilterApplied ? ' + 54px' : ''}`
+                // Breadcrumbs + Mui table V2 + header + extra
+                `50px + 110px + 58px + 48px ${showAlert ? '+ 64px' : ''} ${isSparesFilterApplied ? ' + 54px' : ''}`
               ),
           flexShrink: 1,
         },
@@ -597,7 +601,7 @@ export function ItemsTable(props: ItemTableProps) {
     },
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: dense ? [5] : [15, 30, 45],
+      rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
       shape: 'rounded',
       variant: 'outlined',
     },

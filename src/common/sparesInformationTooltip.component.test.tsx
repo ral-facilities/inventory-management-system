@@ -34,7 +34,7 @@ describe('Spares Information Tooltip Component', () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          "The spares values is determined by the location of an item. When an item is in a system with the system type 'Storage' then it is classified as a spare."
+          "This value is determined by the location of an item. When an item is in a system with the system type 'Storage' then it is classified as a spare."
         )
       ).toBeInTheDocument();
     });

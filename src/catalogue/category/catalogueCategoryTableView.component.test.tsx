@@ -1,12 +1,17 @@
 import { screen, waitFor } from '@testing-library/react';
+import userEvent, { UserEvent } from '@testing-library/user-event';
+import { http, HttpResponse } from 'msw';
+import {
+  CatalogueCategory,
+  CatalogueCategoryPropertyType,
+} from '../../api/api.types';
+import APIConfigProvider from '../../apiConfigProvider.component';
+import { server } from '../../mocks/server';
+import { RootState } from '../../state/store';
 import {
   CREATED_MODIFIED_TIME_VALUES,
   renderComponentWithRouterProvider,
 } from '../../testUtils';
-
-import userEvent, { UserEvent } from '@testing-library/user-event';
-import { CatalogueCategoryPropertyType } from '../../api/api.types';
-import { RootState } from '../../state/store';
 import CatalogueCategoryTableView, {
   CatalogueCategoryTableViewProps,
 } from './catalogueCategoryTableView.component';
@@ -18,12 +23,32 @@ describe('CatalogueCategoryTableView', () => {
   const onChangeParentCategoryId = vi.fn();
   const createView = (preloadedState?: Partial<RootState>) => {
     return renderComponentWithRouterProvider(
-      <CatalogueCategoryTableView {...props} />,
+      <APIConfigProvider>
+        <CatalogueCategoryTableView {...props} />
+      </APIConfigProvider>,
       undefined,
       undefined,
       preloadedState
     );
   };
+
+  function createData(): CatalogueCategory[] {
+    const data: CatalogueCategory[] = [];
+    for (let index = 1; index < 35; index++) {
+      data.push({
+        id: index.toString(),
+        name: 'Test ' + index.toString(),
+        parent_id: '1',
+        code: index.toString(),
+        is_flagged: false,
+        is_leaf: true,
+        created_time: '2024-01-01T12:00:00.000+00:00',
+        modified_time: '2024-01-02T13:10:10.000+00:00',
+        properties: [],
+      });
+    }
+    return data;
+  }
 
   beforeEach(() => {
     props = {
@@ -287,12 +312,6 @@ describe('CatalogueCategoryTableView', () => {
     createView();
 
     await waitFor(() => {
-      expect(screen.getByText('Cameras')).toBeInTheDocument();
-    });
-
-    await user.click(screen.getByRole('button', { name: 'Go to page 2' }));
-
-    await waitFor(() => {
       expect(screen.getByText('Amp Meters')).toBeInTheDocument();
     });
 
@@ -300,6 +319,28 @@ describe('CatalogueCategoryTableView', () => {
     await user.click(AmpMetersRow);
 
     expect(onChangeParentCategoryId).toHaveBeenCalledWith('19');
+  });
+
+  it('changes page correctly and rerenders data', async () => {
+    props.catalogueCategoryData = createData();
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Test 1')).toBeInTheDocument();
+    });
+    expect(screen.queryByText('Test 34')).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Go to page 2' }));
+    await waitFor(() => {
+      expect(screen.getByText('Test 34')).toBeInTheDocument();
+    });
+    expect(screen.queryByText('Test 1')).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Go to page 1' }));
+    await waitFor(() => {
+      expect(screen.getByText('Test 1')).toBeInTheDocument();
+    });
+    expect(screen.queryByText('Test 34')).not.toBeInTheDocument();
   });
 
   it('disables the leaf categories and the selected categories', async () => {
@@ -418,5 +459,44 @@ describe('CatalogueCategoryTableView', () => {
         'Unable to determine if this catalogue category is critical. Please contact support.'
       )
     ).toBeInTheDocument();
+  });
+
+  it('does not shows critical catalogue categories when spares is undefined', async () => {
+    props.selectedCategories = [
+      {
+        id: '79',
+        name: 'test_dup',
+        parent_id: '1',
+        code: 'test_dup',
+        is_flagged: false,
+        is_leaf: false,
+        ...CREATED_MODIFIED_TIME_VALUES,
+        properties: [],
+      },
+      {
+        id: '19',
+        name: 'Amp Meters',
+        parent_id: '1',
+        code: 'amp-meters',
+        is_flagged: false,
+        is_leaf: false,
+        ...CREATED_MODIFIED_TIME_VALUES,
+        properties: [],
+      },
+    ];
+
+    props.requestType = 'moveTo';
+
+    server.use(
+      http.get('/v1/settings/spares-definition', () => {
+        return HttpResponse.json(undefined, { status: 204 });
+      })
+    );
+    createView({
+      criticality: { isCriticalMode: true },
+    });
+    await waitFor(() => {
+      expect(screen.queryByTestId('ErrorIcon')).not.toBeInTheDocument();
+    });
   });
 });

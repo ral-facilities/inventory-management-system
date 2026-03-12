@@ -113,7 +113,7 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
           >
             <table
               class="MuiTable-root MuiTable-stickyHeader css-ithv9-MuiTable-root"
-              style="--header-mrt_row_expand-size: 60; --col-mrt_row_expand-size: 60; --header-mrt_row_select-size: 60; --col-mrt_row_select-size: 60; --header-catalogueItem_name-size: 150; --col-catalogueItem_name-size: 150; --header-catalogueItem_modified_time-size: 150; --col-catalogueItem_modified_time-size: 150;"
+              style="--header-mrt_row_expand-size: 60; --col-mrt_row_expand-size: 60; --header-mrt_row_select-size: 60; --col-mrt_row_select-size: 60; --header-catalogueItem_name-size: 150; --col-catalogueItem_name-size: 150; --header-catalogueItem_number_of_spares-size: 150; --col-catalogueItem_number_of_spares-size: 150;"
             >
               <thead
                 class="MuiTableHead-root css-1e5wupo-MuiTableHead-root"
@@ -332,12 +332,12 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                                 </span>
                               </div>
                               <input
-                                aria-describedby=":r3rb:-helper-text"
+                                aria-describedby=":r4tg:-helper-text"
                                 aria-invalid="false"
                                 aria-label="Filter by Name"
                                 autocomplete="off"
                                 class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                                id=":r3rb:"
+                                id=":r4tg:"
                                 placeholder="Filter by Name"
                                 title="Filter by Name"
                                 type="text"
@@ -375,7 +375,7 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                             </div>
                             <p
                               class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                              id=":r3rb:-helper-text"
+                              id=":r4tg:-helper-text"
                             >
                               <label>
                                 Filter Mode: Fuzzy
@@ -388,7 +388,7 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                   </th>
                   <th
                     aria-sort="none"
-                    class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-11hye3q-MuiTableCell-root"
+                    class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ig35fg-MuiTableCell-root"
                     colspan="1"
                     data-can-sort="true"
                     data-index="3"
@@ -404,22 +404,32 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                         <div
                           class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                         >
-                          <p
-                            aria-label="Last modified"
-                            class="MuiTypography-root MuiTypography-body1 css-1bnbo3v-MuiTypography-root"
-                            data-mui-internal-clone-element="true"
-                            role="tooltip"
+                          <div
+                            class="MuiBox-root css-fv3lde"
                           >
-                            Last modified
-                          </p>
+                            <svg
+                              aria-hidden="true"
+                              aria-label="Spares Info Tooltip"
+                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-1raa5r2-MuiSvgIcon-root"
+                              data-mui-internal-clone-element="true"
+                              data-testid="InfoOutlinedIcon"
+                              focusable="false"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8"
+                              />
+                            </svg>
+                            Number of spares
+                          </div>
                         </div>
                         <span
-                          aria-label="Sort by Last modified descending"
+                          aria-label="Sort by Number of spares descending"
                           class="MuiBadge-root css-63ezxx-MuiBadge-root"
                           data-mui-internal-clone-element="true"
                         >
                           <span
-                            aria-label="Sort by Last modified descending"
+                            aria-label="Sort by Number of spares descending"
                             class="MuiButtonBase-root MuiTableSortLabel-root Mui-active MuiTableSortLabel-directionAsc css-bgz9z4-MuiButtonBase-root-MuiTableSortLabel-root"
                             role="button"
                             tabindex="0"
@@ -483,48 +493,90 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                             class="MuiBox-root css-8yqbvs"
                           >
                             <div
-                              class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w93hbh-MuiFormControl-root-MuiTextField-root"
+                              class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1kiuirp-MuiFormControl-root-MuiTextField-root"
                             >
                               <div
-                                class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
+                                class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                               >
+                                <div
+                                  class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1nowbqt-MuiInputAdornment-root"
+                                >
+                                  <span
+                                    aria-hidden="true"
+                                    class="notranslate"
+                                  >
+                                    ​
+                                  </span>
+                                  <span
+                                    aria-label="Change filter mode"
+                                    class=""
+                                    data-mui-internal-clone-element="true"
+                                  >
+                                    <button
+                                      aria-label="Change filter mode"
+                                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-egflwm-MuiButtonBase-root-MuiIconButton-root"
+                                      tabindex="0"
+                                      type="button"
+                                    >
+                                      <svg
+                                        aria-hidden="true"
+                                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                                        data-testid="FilterListIcon"
+                                        focusable="false"
+                                        viewBox="0 0 24 24"
+                                      >
+                                        <path
+                                          d="M10 18h4v-2h-4zM3 6v2h18V6zm3 7h12v-2H6z"
+                                        />
+                                      </svg>
+                                    </button>
+                                  </span>
+                                </div>
                                 <input
-                                  aria-describedby=":r3rk:-helper-text"
+                                  aria-describedby=":r4tp:-helper-text"
                                   aria-invalid="false"
+                                  aria-label="Min"
                                   autocomplete="off"
-                                  class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                                  id=":r3rk:"
-                                  inputmode="text"
+                                  class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
+                                  id=":r4tp:"
                                   placeholder="Min"
+                                  title="Min"
                                   type="text"
                                   value=""
                                 />
                                 <div
-                                  class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-elo8k2-MuiInputAdornment-root"
+                                  class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1exhmnf-MuiInputAdornment-root"
                                 >
-                                  <button
-                                    aria-label="Choose date"
-                                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1ysp02-MuiButtonBase-root-MuiIconButton-root"
-                                    tabindex="0"
-                                    type="button"
+                                  <span
+                                    aria-label="Clear filter"
+                                    class=""
+                                    data-mui-internal-clone-element="true"
                                   >
-                                    <svg
-                                      aria-hidden="true"
-                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                                      data-testid="CalendarIcon"
-                                      focusable="false"
-                                      viewBox="0 0 24 24"
+                                    <button
+                                      aria-label="Clear filter"
+                                      class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeSmall css-pqx1bi-MuiButtonBase-root-MuiIconButton-root"
+                                      disabled=""
+                                      tabindex="-1"
+                                      type="button"
                                     >
-                                      <path
-                                        d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
-                                      />
-                                    </svg>
-                                  </button>
+                                      <svg
+                                        aria-hidden="true"
+                                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                                        data-testid="CloseIcon"
+                                        focusable="false"
+                                        viewBox="0 0 24 24"
+                                      >
+                                        <path
+                                          d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                                        />
+                                      </svg>
+                                    </button>
+                                  </span>
                                 </div>
                               </div>
                               <p
-                                class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-18y2hez-MuiFormHelperText-root"
-                                id=":r3rk:-helper-text"
+                                class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
+                                id=":r4tp:-helper-text"
                               >
                                 <label>
                                   Filter Mode: Between Inclusive
@@ -532,42 +584,50 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                               </p>
                             </div>
                             <div
-                              class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w93hbh-MuiFormControl-root-MuiTextField-root"
+                              class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-16wgtpn-MuiFormControl-root-MuiTextField-root"
                             >
                               <div
                                 class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                               >
                                 <input
                                   aria-invalid="false"
+                                  aria-label="Max"
                                   autocomplete="off"
-                                  class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                                  id=":r3rn:"
-                                  inputmode="text"
+                                  class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
+                                  id=":r4tu:"
                                   placeholder="Max"
+                                  title="Max"
                                   type="text"
                                   value=""
                                 />
                                 <div
-                                  class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-elo8k2-MuiInputAdornment-root"
+                                  class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1exhmnf-MuiInputAdornment-root"
                                 >
-                                  <button
-                                    aria-label="Choose date"
-                                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1ysp02-MuiButtonBase-root-MuiIconButton-root"
-                                    tabindex="0"
-                                    type="button"
+                                  <span
+                                    aria-label="Clear filter"
+                                    class=""
+                                    data-mui-internal-clone-element="true"
                                   >
-                                    <svg
-                                      aria-hidden="true"
-                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                                      data-testid="CalendarIcon"
-                                      focusable="false"
-                                      viewBox="0 0 24 24"
+                                    <button
+                                      aria-label="Clear filter"
+                                      class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeSmall css-pqx1bi-MuiButtonBase-root-MuiIconButton-root"
+                                      disabled=""
+                                      tabindex="-1"
+                                      type="button"
                                     >
-                                      <path
-                                        d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
-                                      />
-                                    </svg>
-                                  </button>
+                                      <svg
+                                        aria-hidden="true"
+                                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                                        data-testid="CloseIcon"
+                                        focusable="false"
+                                        viewBox="0 0 24 24"
+                                      >
+                                        <path
+                                          d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                                        />
+                                      </svg>
+                                    </button>
+                                  </span>
                                 </div>
                               </div>
                             </div>
@@ -673,20 +733,34 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                       data-mui-internal-clone-element="true"
                       role="tooltip"
                     >
-                      Energy Meters 26
+                      <p
+                        aria-label="Energy Meters 26"
+                        class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                        data-mui-internal-clone-element="true"
+                        role="tooltip"
+                      >
+                        Energy Meters 26
+                      </p>
                     </div>
                   </td>
                   <td
-                    class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-rblqjp-MuiTableCell-root-MuiTableCell-root"
+                    class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-yf5a0r-MuiTableCell-root-MuiTableCell-root"
                     data-index="3"
                     tabindex="0"
                   >
                     <div
+                      aria-label="0"
                       class="MuiTypography-root MuiTypography-body1 css-y1qza6-MuiTypography-root"
                       data-mui-internal-clone-element="true"
                       role="tooltip"
                     >
-                      02 Jan 2024 13:10
+                      <a
+                        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                        data-discover="true"
+                        href="/89/items?state=N4IgxgYiBcDaoEsAmMQGcCeaAuBTAtgHTYYAOuhAbgIYA2ArriADQg0NNygnmo4BOCAHYBzFmzqNUAZWwB7ftRFMAvgF11KoA"
+                      >
+                        0
+                      </a>
                     </div>
                   </td>
                 </tr>
@@ -793,20 +867,34 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                       data-mui-internal-clone-element="true"
                       role="tooltip"
                     >
-                      Energy Meters 27
+                      <p
+                        aria-label="Energy Meters 27"
+                        class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                        data-mui-internal-clone-element="true"
+                        role="tooltip"
+                      >
+                        Energy Meters 27
+                      </p>
                     </div>
                   </td>
                   <td
-                    class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-rblqjp-MuiTableCell-root-MuiTableCell-root"
+                    class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-yf5a0r-MuiTableCell-root-MuiTableCell-root"
                     data-index="3"
                     tabindex="0"
                   >
                     <div
+                      aria-label="0"
                       class="MuiTypography-root MuiTypography-body1 css-y1qza6-MuiTypography-root"
                       data-mui-internal-clone-element="true"
                       role="tooltip"
                     >
-                      02 Jan 2024 13:10
+                      <a
+                        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                        data-discover="true"
+                        href="/6/items?state=N4IgxgYiBcDaoEsAmMQGcCeaAuBTAtgHTYYAOuhAbgIYA2ArriADQg0NNygnmo4BOCAHYBzFmzqNUAZWwB7ftRFMAvgF11KoA"
+                      >
+                        0
+                      </a>
                     </div>
                   </td>
                 </tr>
@@ -913,20 +1001,34 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                       data-mui-internal-clone-element="true"
                       role="tooltip"
                     >
-                      Energy Meters 28
+                      <p
+                        aria-label="Energy Meters 28"
+                        class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                        data-mui-internal-clone-element="true"
+                        role="tooltip"
+                      >
+                        Energy Meters 28
+                      </p>
                     </div>
                   </td>
                   <td
-                    class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-rblqjp-MuiTableCell-root-MuiTableCell-root"
+                    class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-yf5a0r-MuiTableCell-root-MuiTableCell-root"
                     data-index="3"
                     tabindex="0"
                   >
                     <div
+                      aria-label="0"
                       class="MuiTypography-root MuiTypography-body1 css-y1qza6-MuiTypography-root"
                       data-mui-internal-clone-element="true"
                       role="tooltip"
                     >
-                      02 Jan 2024 13:10
+                      <a
+                        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                        data-discover="true"
+                        href="/7/items?state=N4IgxgYiBcDaoEsAmMQGcCeaAuBTAtgHTYYAOuhAbgIYA2ArriADQg0NNygnmo4BOCAHYBzFmzqNUAZWwB7ftRFMAvgF11KoA"
+                      >
+                        0
+                      </a>
                     </div>
                   </td>
                 </tr>
@@ -1033,20 +1135,34 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                       data-mui-internal-clone-element="true"
                       role="tooltip"
                     >
-                      Energy Meters 29
+                      <p
+                        aria-label="Energy Meters 29"
+                        class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                        data-mui-internal-clone-element="true"
+                        role="tooltip"
+                      >
+                        Energy Meters 29
+                      </p>
                     </div>
                   </td>
                   <td
-                    class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-rblqjp-MuiTableCell-root-MuiTableCell-root"
+                    class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-yf5a0r-MuiTableCell-root-MuiTableCell-root"
                     data-index="3"
                     tabindex="0"
                   >
                     <div
+                      aria-label="0"
                       class="MuiTypography-root MuiTypography-body1 css-y1qza6-MuiTypography-root"
                       data-mui-internal-clone-element="true"
                       role="tooltip"
                     >
-                      02 Jan 2024 13:10
+                      <a
+                        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-73o1y3-MuiTypography-root-MuiLink-root"
+                        data-discover="true"
+                        href="/8/items?state=N4IgxgYiBcDaoEsAmMQGcCeaAuBTAtgHTYYAOuhAbgIYA2ArriADQg0NNygnmo4BOCAHYBzFmzqNUAZWwB7ftRFMAvgF11KoA"
+                      >
+                        0
+                      </a>
                     </div>
                   </td>
                 </tr>
@@ -1118,7 +1234,7 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                   >
                     <label
                       class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-10j3yc8-MuiFormLabel-root-MuiInputLabel-root"
-                      for="mrt-rows-per-page-:r3r0:"
+                      for="mrt-rows-per-page-:r4t5:"
                     >
                       Rows per page
                     </label>
@@ -1133,15 +1249,15 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                         role="combobox"
                         tabindex="0"
                       >
-                        5
+                        30
                       </div>
                       <input
                         aria-hidden="true"
                         aria-invalid="false"
                         class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
-                        id="mrt-rows-per-page-:r3r0:"
+                        id="mrt-rows-per-page-:r4t5:"
                         tabindex="-1"
-                        value="5"
+                        value="30"
                       />
                       <svg
                         aria-hidden="true"

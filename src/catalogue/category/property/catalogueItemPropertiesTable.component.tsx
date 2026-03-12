@@ -45,6 +45,10 @@ import ClearIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { useGetUnits } from '../../../api/units';
+import {
+  DEFAULT_ROWS_PER_PAGE_VALUE,
+  ROWS_PER_PAGE_OPTIONS,
+} from '../../../common/consts';
 import { RequestType } from '../../../form.schemas';
 import PropertyDialog from './propertyDialog.component';
 import DeletePropertyDialog from './deletePropertyDialog.component';
@@ -247,7 +251,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
     initialState: {
       columnVisibility: { actions: false },
       pagination: {
-        pageSize: 5,
+        pageSize: DEFAULT_ROWS_PER_PAGE_VALUE,
         pageIndex: 0,
       },
       columnFilterFns: initialColumnFilterFnState,
@@ -326,7 +330,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
     },
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: [5],
+      rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
       shape: 'rounded',
       variant: 'outlined',
     },

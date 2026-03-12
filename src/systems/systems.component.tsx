@@ -40,6 +40,10 @@ import { getSystemImportanceColour, useGetSystems } from '../api/systems';
 import { useGetSystemTypes } from '../api/systemTypes';
 import type { SystemTableType } from '../app.types';
 import {
+  DEFAULT_ROWS_PER_PAGE_VALUE,
+  ROWS_PER_PAGE_OPTIONS,
+} from '../common/consts';
+import {
   getValueFromUpdater,
   usePreservedTableState,
 } from '../common/preservedTableState.component';
@@ -427,7 +431,7 @@ function Systems() {
       columnVisibility: Object.fromEntries(
         hiddenColumns.map((col) => [col, false])
       ),
-      pagination: { pageSize: 15, pageIndex: 0 },
+      pagination: { pageSize: DEFAULT_ROWS_PER_PAGE_VALUE, pageIndex: 0 },
       columnFilterFns: initialColumnFilterFnState,
     },
     storeInUrl: true,
@@ -476,7 +480,7 @@ function Systems() {
       shape: 'rounded',
       variant: 'outlined',
       showRowsPerPage: true,
-      rowsPerPageOptions: [15, 30, 45],
+      rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
       showFirstButton: false,
       showLastButton: false,
       size: 'small',
@@ -499,18 +503,6 @@ function Systems() {
           : getPageHeightCalc('64px + 88px + 40px + 47px + 40px'),
       },
     }),
-    muiSelectAllCheckboxProps: { disabled: systemId === null },
-    muiSelectCheckboxProps: ({ row, table }) => {
-      const selectedSystems = table
-        .getSelectedRowModel()
-        .rows.map((row) => row.original);
-      const type_id = selectedSystems[0]?.type_id;
-      const isDisabled =
-        selectedSystems.length > 0 ? row.original.type_id !== type_id : false;
-      return {
-        disabled: isDisabled,
-      };
-    },
     muiTableBodyCellProps: ({ table, column }) =>
       // Ignore MRT rendered cells e.g. expand , spacer etc
       column.id.startsWith('mrt')

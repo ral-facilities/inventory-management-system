@@ -1234,7 +1234,7 @@ exports[`ItemDialog > Add Item > displays warning when in admin mode 1`] = `
                               role="combobox"
                               tabindex="0"
                             >
-                              5
+                              30
                             </div>
                             <input
                               aria-hidden="true"
@@ -1242,7 +1242,7 @@ exports[`ItemDialog > Add Item > displays warning when in admin mode 1`] = `
                               class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
                               id="mrt-rows-per-page-:r68:"
                               tabindex="-1"
-                              value="5"
+                              value="30"
                             />
                             <svg
                               aria-hidden="true"
@@ -2465,7 +2465,7 @@ exports[`ItemDialog > Edit Item > displays warning when in admin mode for edit 1
                               role="combobox"
                               tabindex="0"
                             >
-                              5
+                              30
                             </div>
                             <input
                               aria-hidden="true"
@@ -2473,7 +2473,7 @@ exports[`ItemDialog > Edit Item > displays warning when in admin mode for edit 1
                               class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
                               id="mrt-rows-per-page-:r3en:"
                               tabindex="-1"
-                              value="5"
+                              value="30"
                             />
                             <svg
                               aria-hidden="true"

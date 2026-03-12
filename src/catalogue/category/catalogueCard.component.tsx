@@ -12,8 +12,10 @@ import {
   type MRT_Row,
   type MRT_TableInstance,
 } from 'material-react-table';
+import React from 'react';
 import { Link } from 'react-router';
 import { CatalogueCategory } from '../../api/api.types';
+import { APISettingsContext } from '../../apiConfigProvider.component';
 import CriticalityTooltipIcon from '../../common/criticalityTooltipIcon.component';
 import { useAppSelector } from '../../state/hook';
 import { selectCriticality } from '../../state/slices/criticalitySlice';
@@ -41,6 +43,9 @@ export const getCriticalityLabel = (isCritical: boolean | null) => {
 
 function CatalogueCard(props: CatalogueCardProps) {
   const { table, card } = props;
+
+  const apiSettings = React.useContext(APISettingsContext);
+  const isSparesDefinitionDefined = !!apiSettings.spares;
   const selectedCategories = table
     .getSelectedRowModel()
     .rows.map((row) => row.original);
@@ -74,7 +79,9 @@ function CatalogueCard(props: CatalogueCardProps) {
           backgroundColor: isSelected
             ? table.options.mrtTheme.selectedRowBackgroundColor
             : undefined,
-          ...(isCriticalMode && criticalityCardStyle({ theme, showFlagged })),
+          ...(isCriticalMode &&
+            isSparesDefinitionDefined &&
+            criticalityCardStyle({ theme, showFlagged })),
         })}
       >
         <CardActions>
@@ -88,7 +95,7 @@ function CatalogueCard(props: CatalogueCardProps) {
           />
         </CardActions>
         <CardContent sx={{ display: 'flex', alignItems: 'center', padding: 0 }}>
-          {isCriticalMode && (
+          {isCriticalMode && isSparesDefinitionDefined && (
             <CriticalityTooltipIcon
               showFlagged={showFlagged}
               label={getCriticalityLabel(showFlagged)}

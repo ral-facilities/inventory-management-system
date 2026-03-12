@@ -4,6 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
+import InfoOutlined from '@mui/icons-material/InfoOutlined';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   Box,
@@ -20,6 +21,7 @@ import {
 import Grid from '@mui/material/Grid2';
 import {
   MRT_BottomToolbar,
+  MRT_Column,
   MRT_ColumnDef,
   MRT_TopToolbar,
   useMaterialReactTable,
@@ -33,8 +35,17 @@ import {
   useGetCatalogueCategories,
   useGetCatalogueCategory,
 } from '../../api/catalogueCategories';
+import { APISettingsContext } from '../../apiConfigProvider.component';
 import CardViewFilters from '../../common/cardView/cardViewFilters.component';
+import {
+  DEFAULT_ROWS_PER_PAGE_VALUE,
+  ROWS_PER_PAGE_OPTIONS,
+} from '../../common/consts';
+import ErrorPage from '../../common/errorPage.component';
+import MRTTopTableAlert from '../../common/mrtTopTableAlert.component';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
+import { useAppSelector } from '../../state/hook';
+import { selectCriticality } from '../../state/slices/criticalitySlice';
 import {
   COLUMN_FILTER_BOOLEAN_OPTIONS,
   COLUMN_FILTER_FUNCTIONS,
@@ -48,15 +59,10 @@ import {
   getPageHeightCalc,
   MRT_Functions_Localisation,
   mrtTheme,
+  OverflowTip,
 } from '../../utils';
 import CatalogueCard from './catalogueCard.component';
 import CatalogueCategoryDialog from './catalogueCategoryDialog.component';
-
-import InfoOutlined from '@mui/icons-material/InfoOutlined';
-import ErrorPage from '../../common/errorPage.component';
-import MRTTopTableAlert from '../../common/mrtTopTableAlert.component';
-import { useAppSelector } from '../../state/hook';
-import { selectCriticality } from '../../state/slices/criticalitySlice';
 import CatalogueCategoryDirectoryDialog from './catalogueCategoryDirectoryDialog.component';
 import DeleteCatalogueCategoryDialog from './deleteCatalogueCategoryDialog.component';
 
@@ -197,6 +203,9 @@ function CatalogueCardView() {
     !catalogueCategoryId ? 'null' : catalogueCategoryId
   );
 
+  const apiSettings = React.useContext(APISettingsContext);
+  const isSparesDefinitionDefined = !!apiSettings.spares;
+
   const catalogueCategoryNames: string[] = catalogueCategoryData
     ? catalogueCategoryData.map((item) => item.name)
     : [];
@@ -322,25 +331,34 @@ function CatalogueCardView() {
         filterSelectOptions: ['Catalogue Categories', 'Catalogue Items'],
         enableGrouping: false,
       },
-      {
-        header: 'Is Critical',
-        Header: ({ column }) => (
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Tooltip title={CriticalTooltipText}>
-              <InfoOutlined sx={{ mr: 1 }} fontSize="small" />
-            </Tooltip>
-            {column.columnDef.header}
-          </Box>
-        ),
-        accessorFn: (row: CatalogueCategory) => (row.is_flagged ? 'Yes' : 'No'),
-        id: 'is_flagged',
-        filterVariant: COLUMN_FILTER_VARIANTS.boolean,
-        enableColumnFilterModes: false,
-        size: 200,
-        filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
-      },
+      ...(isSparesDefinitionDefined
+        ? [
+            {
+              header: 'Is Critical',
+              Header: ({
+                column,
+              }: {
+                column: MRT_Column<CatalogueCategory, unknown>;
+              }) => (
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Tooltip title={CriticalTooltipText}>
+                    <InfoOutlined sx={{ mr: 1 }} fontSize="small" />
+                  </Tooltip>
+                  <OverflowTip>{column.columnDef.header}</OverflowTip>
+                </Box>
+              ),
+              accessorFn: (row: CatalogueCategory) =>
+                row.is_flagged ? 'Yes' : 'No',
+              id: 'is_flagged',
+              filterVariant: COLUMN_FILTER_VARIANTS.boolean,
+              enableColumnFilterModes: false,
+              size: 200,
+              filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
+            },
+          ]
+        : []),
     ];
-  }, [propertyNames]);
+  }, [isSparesDefinitionDefined, propertyNames]);
 
   const initialColumnFilterFnState = React.useMemo(() => {
     return getInitialColumnFilterFnState(columns);
@@ -348,7 +366,7 @@ function CatalogueCardView() {
 
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
-      pagination: { pageSize: 30, pageIndex: 0 },
+      pagination: { pageSize: DEFAULT_ROWS_PER_PAGE_VALUE, pageIndex: 0 },
       columnFilterFns: initialColumnFilterFnState,
     },
     storeInUrl: true,
@@ -418,7 +436,7 @@ function CatalogueCardView() {
     },
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: [30, 45, 60],
+      rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
       shape: 'rounded',
       variant: 'outlined',
     },
@@ -457,7 +475,7 @@ function CatalogueCardView() {
             </Button>
           </>
         )}
-        {isCriticalMode && (
+        {isCriticalMode && isSparesDefinitionDefined && (
           <Button
             sx={{ mx: 0.5 }}
             startIcon={
