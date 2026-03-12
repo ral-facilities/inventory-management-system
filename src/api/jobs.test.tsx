@@ -1,7 +1,7 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { hooksWrapperWithProviders } from '../testUtils';
 import { JobStatus } from './api.types';
-import { useGetJob, usePostJob } from './jobScheduler';
+import { useGetJob, usePostJob } from './jobs';
 
 describe('usePostJob', () => {
   it('posts a request to scheduler a criticality job and returns successful response', async () => {

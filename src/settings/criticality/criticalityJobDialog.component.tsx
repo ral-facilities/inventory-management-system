@@ -15,7 +15,7 @@ import {
 import { AxiosError } from 'axios';
 import React from 'react';
 import { JobStatus } from '../../api/api.types';
-import { useGetJob, usePostJob } from '../../api/jobScheduler';
+import { useGetJob, usePostJob } from '../../api/jobs';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { useAppSelector } from '../../state/hook';
 import { selectAuthorisation } from '../../state/slices/authorisationSlice';
