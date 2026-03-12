@@ -30,9 +30,15 @@ import { useGetItems } from '../api/items';
 import { useGetUsageStatuses } from '../api/usageStatuses';
 import { APISettingsContext } from '../apiConfigProvider.component';
 import {
+  CriticalityHeaderInfoToolTip,
+  NumberOfSparesRequiredHeaderInfoToolTip,
+  getCICriticalityLabel,
+} from '../catalogue/items/catalogueItemsTable.component';
+import {
   DEFAULT_ROWS_PER_PAGE_VALUE,
   ROWS_PER_PAGE_OPTIONS,
 } from '../common/consts';
+import CriticalityTooltipIcon from '../common/criticalityTooltipIcon.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import { SparesColumnHeaderInformationTooltip } from '../common/sparesInformationTooltip.component';
 import DeleteItemDialog from '../items/deleteItemDialog.component';
@@ -40,7 +46,9 @@ import ItemDialog from '../items/itemDialog.component';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
 import { useAppSelector } from '../state/hook';
 import { selectAuthorisation } from '../state/slices/authorisationSlice';
+import { selectCriticality } from '../state/slices/criticalitySlice';
 import {
+  COLUMN_FILTER_BOOLEAN_OPTIONS,
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
   COLUMN_FILTER_VARIANTS,
@@ -51,12 +59,14 @@ import {
   TableCellOverFlowTipProps,
   TableGroupedCell,
   TableHeaderOverflowTip,
+  criticalityRowStyle,
   customFilterFunctions,
   displayTableRowCountText,
   formatDateTimeStrings,
   getInitialColumnFilterFnState,
   getPageHeightCalc,
   mrtTheme,
+  roundUpTenth,
 } from '../utils';
 import SystemItemsDialog from './systemItemsDialog.component';
 
@@ -131,6 +141,8 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
   const { data: usageStatusData, isLoading: isLoadingUsageStatuses } =
     useGetUsageStatuses();
 
+  const { isCriticalMode } = useAppSelector(selectCriticality);
+
   const apiSettings = React.useContext(APISettingsContext);
   const sparesFilterState = apiSettings?.spares?.sparesFilterState;
   const isSparesDefinitionDefined = !!apiSettings.spares;
@@ -184,6 +196,62 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     const usageStatusValues = usageStatusData?.map((val) => val.value);
     return [
+      ...(isSparesDefinitionDefined
+        ? [
+            {
+              header: 'Is Critical',
+              accessorFn: (row: TableRowData) =>
+                row.catalogueItem.is_flagged ? 'Yes' : 'No',
+              id: 'catalogueItem.is_flagged',
+              filterVariant: COLUMN_FILTER_VARIANTS.boolean,
+              enableColumnFilterModes: false,
+              size: 200,
+              filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
+              AggregatedCell: ({ row }: { row: MRT_Row<TableRowData> }) => {
+                const showFlagged = row.original.catalogueItem.is_flagged;
+                return (
+                  <CriticalityTooltipIcon
+                    label={getCICriticalityLabel(showFlagged)}
+                    showFlagged={showFlagged}
+                  />
+                );
+              },
+              Cell: ({ row }: { row: MRT_Row<TableRowData> }) => {
+                const showFlagged = row.original.catalogueItem.is_flagged;
+                return (
+                  <CriticalityTooltipIcon
+                    showFlagged={showFlagged}
+                    label={getCICriticalityLabel(showFlagged)}
+                  />
+                );
+              },
+            },
+          ]
+        : []),
+      {
+        header: 'Serial Number',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => row.item.serial_number ?? 'No serial number',
+        id: 'item.serial_number',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS.string,
+          ...['betweenInclusive'],
+        ],
+        size: 250,
+        Cell: ({ row }) => (
+          <MuiLink
+            underline="hover"
+            component={Link}
+            sx={{ mr: 0.5 }}
+            to={`/catalogue/${row.original.catalogueItem?.catalogue_category_id}/items/${row.original.catalogueItem?.id}/items/${row.original.item.id}`}
+          >
+            {row.original.item.serial_number ?? 'No serial number'}
+          </MuiLink>
+        ),
+        enableGrouping: false,
+      },
       {
         header: 'Catalogue Item',
         Header: TableHeaderOverflowTip,
@@ -207,16 +275,23 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
             {MRT_Functions_Localisation.filterArrExcludesSome}
           </MenuItem>,
         ],
-        Cell: ({ row }) => (
-          <MuiLink
-            underline="hover"
-            component={Link}
-            sx={{ mr: 0.5 }}
-            to={`/catalogue/${row.original.catalogueItem?.catalogue_category_id}/items/${row.original.catalogueItem?.id}`}
-          >
-            {row.original.catalogueItem?.name}
-          </MuiLink>
-        ),
+        Cell: ({ row, renderedCellValue }) => {
+          return (
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <OverflowTip sx={{ fontSize: 'inherit' }}>
+                <MuiLink
+                  underline="hover"
+                  component={Link}
+                  sx={{ mr: 0.5 }}
+                  to={`/catalogue/${row.original.catalogueItem?.catalogue_category_id}/items/${row.original.catalogueItem?.id}`}
+                >
+                  {renderedCellValue}
+                </MuiLink>
+              </OverflowTip>
+            </Box>
+          );
+        },
+
         size: 350,
         GroupedCell: ({ row }) => {
           return (
@@ -251,6 +326,32 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       },
       ...(isSparesDefinitionDefined
         ? [
+            {
+              header: 'Criticality',
+              Header: ({
+                column,
+              }: {
+                column: MRT_Column<TableRowData, unknown>;
+              }) => (
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <CriticalityHeaderInfoToolTip />
+                  <OverflowTip sx={{ font: 'inherit' }}>
+                    {column.columnDef.header}
+                  </OverflowTip>
+                </Box>
+              ),
+              accessorFn: (row: TableRowData) =>
+                String(row.catalogueItem.criticality ?? ''),
+              id: 'catalogueItem.criticality',
+              filterVariant: COLUMN_FILTER_VARIANTS.number,
+              filterFn: COLUMN_FILTER_FUNCTIONS.number,
+              columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.number,
+              size: 250,
+              AggregatedCell: ({ row }: { row: MRT_Row<TableRowData> }) =>
+                roundUpTenth(row.original.catalogueItem.criticality),
+              Cell: ({ row }: { row: MRT_Row<TableRowData> }) =>
+                roundUpTenth(row.original?.catalogueItem?.criticality),
+            },
             {
               header: 'Number of Spares',
               Header: ({
@@ -296,32 +397,45 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                 </MuiLink>
               ),
             },
+            {
+              header: 'Number of spares required',
+              Header: ({
+                column,
+              }: {
+                column: MRT_Column<TableRowData, unknown>;
+              }) => (
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <NumberOfSparesRequiredHeaderInfoToolTip />
+                  <OverflowTip sx={{ font: 'inherit' }}>
+                    {column.columnDef.header}
+                  </OverflowTip>
+                </Box>
+              ),
+              // This needs to be a string to allow the AggregatedCell to render correctly.
+              // If not, it does not display. This seems to be a Material React Table (MRT) issue.
+              accessorFn: (row: TableRowData) =>
+                String(row.catalogueItem.number_of_spares_required ?? 0),
+              id: 'catalogueItem.number_of_spares_required',
+              filterVariant: COLUMN_FILTER_VARIANTS.number,
+              filterFn: COLUMN_FILTER_FUNCTIONS.number,
+              columnFilterModeOptions: [
+                ...COLUMN_FILTER_MODE_OPTIONS.number,
+                ...OPTIONAL_FILTER_MODE_OPTIONS,
+              ],
+              GroupedCell: TableGroupedCell,
+              AggregatedCell: ({ row }: { row: MRT_Row<TableRowData> }) =>
+                roundUpTenth(
+                  row.original?.catalogueItem?.number_of_spares_required
+                ),
+              size: 300,
+              Cell: ({ row }: { row: MRT_Row<TableRowData> }) =>
+                roundUpTenth(
+                  row.original?.catalogueItem?.number_of_spares_required
+                ),
+            },
           ]
         : []),
-      {
-        header: 'Serial Number',
-        Header: TableHeaderOverflowTip,
-        accessorFn: (row) => row.item.serial_number ?? 'No serial number',
-        id: 'item.serial_number',
-        filterVariant: COLUMN_FILTER_VARIANTS.string,
-        filterFn: COLUMN_FILTER_FUNCTIONS.string,
-        columnFilterModeOptions: [
-          ...COLUMN_FILTER_MODE_OPTIONS.string,
-          ...['betweenInclusive'],
-        ],
-        size: 250,
-        Cell: ({ row }) => (
-          <MuiLink
-            underline="hover"
-            component={Link}
-            sx={{ mr: 0.5 }}
-            to={`/catalogue/${row.original.catalogueItem?.catalogue_category_id}/items/${row.original.catalogueItem?.id}/items/${row.original.item.id}`}
-          >
-            {row.original.item.serial_number ?? 'No serial number'}
-          </MuiLink>
-        ),
-        enableGrouping: false,
-      },
+
       {
         header: 'Last modified',
         Header: TableHeaderOverflowTip,
@@ -429,7 +543,12 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
 
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
-      columnVisibility: { 'item.created_time': false },
+      columnVisibility: {
+        'catalogueItem.created_time': false,
+        'catalogueItem.is_flagged': isCriticalMode,
+        'catalogueItem.criticality': isCriticalMode,
+        'catalogueItem.number_of_spares_required': isCriticalMode,
+      },
       grouping: ['catalogueItem.name'],
       pagination: { pageSize: DEFAULT_ROWS_PER_PAGE_VALUE, pageIndex: 0 },
       columnFilterFns: initialColumnFilterFnState,
@@ -519,6 +638,16 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         zIndex: table.getState().isFullScreen ? 1210 : undefined,
       },
     }),
+    muiTableBodyRowProps: ({ row }) => {
+      const showFlagged = row.original.catalogueItem.is_flagged;
+      return {
+        sx: (theme) => ({
+          ...(isCriticalMode &&
+            isSparesDefinitionDefined &&
+            criticalityRowStyle({ showFlagged, theme })),
+        }),
+      };
+    },
     muiTableContainerProps: ({ table }) => {
       const showAlert =
         table.getState().showAlertBanner ||
@@ -727,6 +856,26 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         />
       ) : undefined,
   });
+
+  React.useEffect(() => {
+    if (isSparesDefinitionDefined)
+      table.setColumnVisibility((prev) => {
+        const nextOn = isCriticalMode;
+        const same =
+          prev['catalogueItem.criticality'] === nextOn &&
+          prev['catalogueItem.is_flagged'] === nextOn &&
+          prev['catalogueItem.number_of_spares_required'];
+
+        if (same) return prev;
+
+        return {
+          ...prev,
+          'catalogueItem.criticality': nextOn,
+          'catalogueItem.is_flagged': nextOn,
+          'catalogueItem.number_of_spares_required': nextOn,
+        };
+      });
+  }, [isCriticalMode, isSparesDefinitionDefined, table]);
 
   return (
     <>

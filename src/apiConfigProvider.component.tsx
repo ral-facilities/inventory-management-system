@@ -2,6 +2,7 @@ import React from 'react';
 import { SparesFilterStateType } from './app.types';
 import Preloader from './preloader/preloader.component';
 
+import { Outlet } from 'react-router';
 import { useSparesFilterState } from './utils';
 
 interface APISettings {
@@ -43,3 +44,11 @@ function APIConfigProvider({ children }: { children: React.ReactNode }) {
 }
 
 export default APIConfigProvider;
+
+export function APIConfigProviderLayout() {
+  return (
+    <APIConfigProvider>
+      <Outlet />
+    </APIConfigProvider>
+  );
+}

@@ -82,6 +82,7 @@ function CatalogueItemLayout() {
               color="text.secondary"
               sx={{
                 fontWeight: 'bold',
+                alignItems: 'center',
               }}
             >
               ({subtitle})
