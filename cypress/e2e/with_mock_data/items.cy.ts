@@ -143,7 +143,7 @@ describe('Items', () => {
           usage_status_id: '0',
           warranty_end_date: null,
           asset_number: null,
-          serial_number: null,
+          serial_number: 'Cameras %s',
           delivered_date: null,
           notes: null,
           properties: [
@@ -176,7 +176,7 @@ describe('Items', () => {
 
     cy.findByRole('button', { name: 'Next' }).click();
     cy.findByText('Show advanced options').click();
-    cy.findByLabelText('Serial number').type('test %s');
+    cy.findByLabelText('Serial number').type('{selectall}{del}test %s');
     cy.findByLabelText('Quantity').type('3');
     cy.findByLabelText('Starting value').type('2');
 
@@ -234,6 +234,8 @@ describe('Items', () => {
     cy.findByText('Item Creation Rule Applied').should('exist');
 
     cy.findByRole('button', { name: 'Next' }).click();
+
+    cy.findByLabelText('Serial number').type('{selectall}{del}');
     cy.findByText('Show advanced options').click();
 
     cy.findByLabelText('Starting value').type('10');
@@ -332,7 +334,7 @@ describe('Items', () => {
           usage_status_id: '0',
           warranty_end_date: null,
           asset_number: null,
-          serial_number: null,
+          serial_number: 'Dry Vacuum Pumps %s',
           delivered_date: null,
           notes: null,
           properties: [
@@ -362,7 +364,7 @@ describe('Items', () => {
 
     cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.findByLabelText('Serial number').type('test1234');
+    cy.findByLabelText('Serial number').type('{selectall}{del}test1234');
     cy.findByLabelText('Asset number').type('test13221');
     cy.findByLabelText('Purchase order number').type('test23');
     cy.findByLabelText('Warranty end date').type('12/02/2028');
@@ -457,7 +459,7 @@ describe('Items', () => {
           usage_status_id: '1',
           warranty_end_date: null,
           asset_number: null,
-          serial_number: null,
+          serial_number: 'Cameras %s',
           delivered_date: null,
           notes: null,
           properties: [
