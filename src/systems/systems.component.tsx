@@ -40,11 +40,11 @@ import { System, SystemImportanceType } from '../api/api.types';
 import { getSystemImportanceColour, useGetSystems } from '../api/systems';
 import { useGetSystemTypes } from '../api/systemTypes';
 import type { SystemTableType } from '../app.types';
-import CriticalityTooltipIcon from '../common/criticalityTooltipIcon.component';
 import {
   DEFAULT_ROWS_PER_PAGE_VALUE,
   ROWS_PER_PAGE_OPTIONS,
 } from '../common/consts';
+import CriticalityTooltipIcon from '../common/criticalityTooltipIcon.component';
 import {
   getValueFromUpdater,
   usePreservedTableState,
@@ -572,11 +572,13 @@ function Systems() {
     muiBottomToolbarProps: ({ table }) =>
       table.getState().isFullScreen ? {} : { sx: { boxShadow: 0 } },
     muiTableContainerProps: ({ table }) => ({
-      // main app bar + breadcrumbs (incl AuthRole banner) + title + top toolbar + column heading + critical mode spacing
+      // main app bar + breadcrumbs (incl AuthRole banner) + title + top toolbar + column heading + critical mode spacing + header spacing  + critical mode header spacing
       sx: {
         height: table.getState().isFullScreen
           ? '100%'
-          : getPageHeightCalc('64px + 88px + 40px + 47px + 40px + 15px'),
+          : getPageHeightCalc(
+              `64px + 88px + 40px + 47px + 40px + 15px  ${systemId ? ' + 42px' : ''} ${isCriticalMode ? '+ 4px' : ''}`
+            ),
       },
     }),
     muiTableBodyCellProps: ({ table, column }) =>
