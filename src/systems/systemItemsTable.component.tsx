@@ -642,7 +642,9 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       const showFlagged = row.original.catalogueItem.is_flagged;
       return {
         sx: (theme) => ({
-          ...(isCriticalMode && criticalityRowStyle({ showFlagged, theme })),
+          ...(isCriticalMode &&
+            isSparesDefinitionDefined &&
+            criticalityRowStyle({ showFlagged, theme })),
         }),
       };
     },

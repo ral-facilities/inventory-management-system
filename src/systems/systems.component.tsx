@@ -26,8 +26,10 @@ import {
 import Grid from '@mui/material/Grid2';
 import {
   MaterialReactTable,
+  MRT_Column,
   MRT_ColumnDef,
   MRT_GlobalFilterTextField,
+  MRT_Row,
   MRT_RowSelectionState,
   MRT_ToggleFiltersButton,
   MRT_ToggleFullScreenButton,
@@ -39,6 +41,7 @@ import { Link, useParams } from 'react-router';
 import { System, SystemImportanceType } from '../api/api.types';
 import { getSystemImportanceColour, useGetSystems } from '../api/systems';
 import { useGetSystemTypes } from '../api/systemTypes';
+import { APISettingsContext } from '../apiConfigProvider.component';
 import type { SystemTableType } from '../app.types';
 import {
   DEFAULT_ROWS_PER_PAGE_VALUE,
@@ -230,6 +233,9 @@ function Systems() {
   // Navigation
   const { system_id: systemId = null } = useParams();
 
+  const apiSettings = React.useContext(APISettingsContext);
+  const isSparesDefinitionDefined = !!apiSettings.spares;
+
   // Specifically for the drop down menus/dialogues
   const [selectedSystemForMenu, setSelectedSystemForMenu] = React.useState<
     System | undefined
@@ -287,32 +293,40 @@ function Systems() {
   const columns = React.useMemo<MRT_ColumnDef<SystemTableType>[]>(() => {
     const systemTypeValues = systemTypesData?.map((type) => type.value);
     return [
-      {
-        header: 'is Critical',
-        Header: ({ column }) => (
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Tooltip title={CriticalTooltipText}>
-              <InfoOutlined sx={{ mr: 1 }} fontSize="small" />
-            </Tooltip>
-            {column.columnDef.header}
-          </Box>
-        ),
-        accessorFn: (row: System) => (row.is_flagged ? 'Yes' : 'No'),
-        id: 'is_flagged',
-        filterVariant: COLUMN_FILTER_VARIANTS.boolean,
-        enableColumnFilterModes: false,
-        size: 200,
-        filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
-        Cell: ({ row }) => {
-          const showFlagged = row.original.is_flagged;
-          return (
-            <CriticalityTooltipIcon
-              showFlagged={showFlagged}
-              label={getSCriticalityLabel(showFlagged)}
-            />
-          );
-        },
-      },
+      ...(isSparesDefinitionDefined
+        ? [
+            {
+              header: 'is Critical',
+              Header: ({
+                column,
+              }: {
+                column: MRT_Column<SystemTableType, unknown>;
+              }) => (
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Tooltip title={CriticalTooltipText}>
+                    <InfoOutlined sx={{ mr: 1 }} fontSize="small" />
+                  </Tooltip>
+                  {column.columnDef.header}
+                </Box>
+              ),
+              accessorFn: (row: System) => (row.is_flagged ? 'Yes' : 'No'),
+              id: 'is_flagged',
+              filterVariant: COLUMN_FILTER_VARIANTS.boolean,
+              enableColumnFilterModes: false,
+              size: 200,
+              filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
+              Cell: ({ row }: { row: MRT_Row<SystemTableType> }) => {
+                const showFlagged = row.original.is_flagged;
+                return (
+                  <CriticalityTooltipIcon
+                    showFlagged={showFlagged}
+                    label={getSCriticalityLabel(showFlagged)}
+                  />
+                );
+              },
+            },
+          ]
+        : []),
       {
         header: 'Name',
         accessorFn: (row) => row.name,
@@ -326,12 +340,14 @@ function Systems() {
           const fullScreenState = table.getState().isFullScreen;
           return (
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              {isCriticalMode && !fullScreenState && (
-                <CriticalityTooltipIcon
-                  showFlagged={showFlagged}
-                  label={getSCriticalityLabel(showFlagged)}
-                />
-              )}
+              {isCriticalMode &&
+                isSparesDefinitionDefined &&
+                !fullScreenState && (
+                  <CriticalityTooltipIcon
+                    showFlagged={showFlagged}
+                    label={getSCriticalityLabel(showFlagged)}
+                  />
+                )}
               <OverflowTip sx={{ fontSize: 'inherit' }}>
                 <MuiLink
                   underline="hover"
@@ -483,7 +499,7 @@ function Systems() {
         size: 250,
       },
     ];
-  }, [isCriticalMode, systemTypesData]);
+  }, [isCriticalMode, isSparesDefinitionDefined, systemTypesData]);
   // Data
 
   // Names for preventing duplicates in the duplicate dialog
@@ -557,7 +573,9 @@ function Systems() {
       const showFlagged = row.original.is_flagged;
       return {
         sx: (theme) => ({
-          ...(isCriticalMode && criticalityRowStyle({ theme, showFlagged })),
+          ...(isCriticalMode &&
+            isSparesDefinitionDefined &&
+            criticalityRowStyle({ theme, showFlagged })),
         }),
       };
     },
@@ -577,7 +595,7 @@ function Systems() {
         height: table.getState().isFullScreen
           ? '100%'
           : getPageHeightCalc(
-              `64px + 88px + 40px + 47px + 40px + 15px  ${systemId ? ' + 42px' : ''} ${isCriticalMode ? '+ 4px' : ''}`
+              `64px + 88px + 40px + 47px + 40px + 15px  ${systemId ? ' + 42px' : ''} ${isCriticalMode && isSparesDefinitionDefined ? '+ 4px' : ''}`
             ),
       },
     }),
