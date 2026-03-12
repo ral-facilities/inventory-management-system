@@ -4,6 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
+import InfoOutlined from '@mui/icons-material/InfoOutlined';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   Box,
@@ -34,8 +35,17 @@ import {
   useGetCatalogueCategories,
   useGetCatalogueCategory,
 } from '../../api/catalogueCategories';
+import { APISettingsContext } from '../../apiConfigProvider.component';
 import CardViewFilters from '../../common/cardView/cardViewFilters.component';
+import {
+  DEFAULT_ROWS_PER_PAGE_VALUE,
+  ROWS_PER_PAGE_OPTIONS,
+} from '../../common/consts';
+import ErrorPage from '../../common/errorPage.component';
+import MRTTopTableAlert from '../../common/mrtTopTableAlert.component';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
+import { useAppSelector } from '../../state/hook';
+import { selectCriticality } from '../../state/slices/criticalitySlice';
 import {
   COLUMN_FILTER_BOOLEAN_OPTIONS,
   COLUMN_FILTER_FUNCTIONS,
@@ -53,13 +63,6 @@ import {
 } from '../../utils';
 import CatalogueCard from './catalogueCard.component';
 import CatalogueCategoryDialog from './catalogueCategoryDialog.component';
-
-import InfoOutlined from '@mui/icons-material/InfoOutlined';
-import { APISettingsContext } from '../../apiConfigProvider.component';
-import ErrorPage from '../../common/errorPage.component';
-import MRTTopTableAlert from '../../common/mrtTopTableAlert.component';
-import { useAppSelector } from '../../state/hook';
-import { selectCriticality } from '../../state/slices/criticalitySlice';
 import CatalogueCategoryDirectoryDialog from './catalogueCategoryDirectoryDialog.component';
 import DeleteCatalogueCategoryDialog from './deleteCatalogueCategoryDialog.component';
 
@@ -363,7 +366,7 @@ function CatalogueCardView() {
 
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
-      pagination: { pageSize: 30, pageIndex: 0 },
+      pagination: { pageSize: DEFAULT_ROWS_PER_PAGE_VALUE, pageIndex: 0 },
       columnFilterFns: initialColumnFilterFnState,
     },
     storeInUrl: true,
@@ -433,7 +436,7 @@ function CatalogueCardView() {
     },
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: [30, 45, 60],
+      rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
       shape: 'rounded',
       variant: 'outlined',
     },

@@ -1,7 +1,10 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
-import { CatalogueCategoryPropertyType } from '../../api/api.types';
+import {
+  CatalogueCategory,
+  CatalogueCategoryPropertyType,
+} from '../../api/api.types';
 import APIConfigProvider from '../../apiConfigProvider.component';
 import { server } from '../../mocks/server';
 import { RootState } from '../../state/store';
@@ -28,6 +31,24 @@ describe('CatalogueCategoryTableView', () => {
       preloadedState
     );
   };
+
+  function createData(): CatalogueCategory[] {
+    const data: CatalogueCategory[] = [];
+    for (let index = 1; index < 35; index++) {
+      data.push({
+        id: index.toString(),
+        name: 'Test ' + index.toString(),
+        parent_id: '1',
+        code: index.toString(),
+        is_flagged: false,
+        is_leaf: true,
+        created_time: '2024-01-01T12:00:00.000+00:00',
+        modified_time: '2024-01-02T13:10:10.000+00:00',
+        properties: [],
+      });
+    }
+    return data;
+  }
 
   beforeEach(() => {
     props = {
@@ -291,12 +312,6 @@ describe('CatalogueCategoryTableView', () => {
     createView();
 
     await waitFor(() => {
-      expect(screen.getByText('Cameras')).toBeInTheDocument();
-    });
-
-    await user.click(screen.getByRole('button', { name: 'Go to page 2' }));
-
-    await waitFor(() => {
       expect(screen.getByText('Amp Meters')).toBeInTheDocument();
     });
 
@@ -304,6 +319,28 @@ describe('CatalogueCategoryTableView', () => {
     await user.click(AmpMetersRow);
 
     expect(onChangeParentCategoryId).toHaveBeenCalledWith('19');
+  });
+
+  it('changes page correctly and rerenders data', async () => {
+    props.catalogueCategoryData = createData();
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Test 1')).toBeInTheDocument();
+    });
+    expect(screen.queryByText('Test 34')).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Go to page 2' }));
+    await waitFor(() => {
+      expect(screen.getByText('Test 34')).toBeInTheDocument();
+    });
+    expect(screen.queryByText('Test 1')).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Go to page 1' }));
+    await waitFor(() => {
+      expect(screen.getByText('Test 1')).toBeInTheDocument();
+    });
+    expect(screen.queryByText('Test 34')).not.toBeInTheDocument();
   });
 
   it('disables the leaf categories and the selected categories', async () => {

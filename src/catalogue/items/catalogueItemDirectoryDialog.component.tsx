@@ -53,6 +53,10 @@ const CatalogueItemDirectoryDialog = (
   const [parentCategoryId, setParentCategoryId] = React.useState<string | null>(
     props.parentCategoryId
   );
+  const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
+    undefined
+  );
+
   React.useEffect(() => {
     setParentCategoryId(props.parentCategoryId);
   }, [props.parentCategoryId]);
@@ -83,10 +87,6 @@ const CatalogueItemDirectoryDialog = (
 
   const { data: targetCatalogueCategory } =
     useGetCatalogueCategory(parentCategoryId);
-
-  const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
-    undefined
-  );
 
   const handleMoveToCatalogueItem = React.useCallback(() => {
     if (

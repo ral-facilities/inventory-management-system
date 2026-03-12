@@ -743,21 +743,21 @@ describe('Catalogue Items Table', () => {
     const rowsPerPageSelect = await screen.findByRole('combobox', {
       name: 'Rows per page',
     });
-    expect(within(rowsPerPageSelect).getByText('15')).toBeInTheDocument();
+    expect(within(rowsPerPageSelect).getByText('30')).toBeInTheDocument();
 
     // Change to another value
     fireEvent.mouseDown(rowsPerPageSelect);
-    fireEvent.click(within(await screen.findByRole('listbox')).getByText('30'));
-    expect(within(rowsPerPageSelect).getByText('30')).toBeInTheDocument();
+    fireEvent.click(within(await screen.findByRole('listbox')).getByText('45'));
+    expect(within(rowsPerPageSelect).getByText('45')).toBeInTheDocument();
 
     expect(router.state.location.search).toBe(
-      '?state=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
+      '?state=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygAYBfBoA'
     );
 
     // And back again
     fireEvent.mouseDown(rowsPerPageSelect);
-    fireEvent.click(within(await screen.findByRole('listbox')).getByText('15'));
-    expect(within(rowsPerPageSelect).getByText('15')).toBeInTheDocument();
+    fireEvent.click(within(await screen.findByRole('listbox')).getByText('30'));
+    expect(within(rowsPerPageSelect).getByText('30')).toBeInTheDocument();
 
     expect(router.state.location.search).toBe('');
   });
