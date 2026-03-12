@@ -4,7 +4,7 @@ import { JobStatus } from './api.types';
 import { useGetJob, usePostJob } from './jobScheduler';
 
 describe('usePostJob', () => {
-  it('posts a request to schedular a criticality job and returns successful response', async () => {
+  it('posts a request to scheduler a criticality job and returns successful response', async () => {
     const { result } = renderHook(() => usePostJob('criticality'), {
       wrapper: hooksWrapperWithProviders(),
     });

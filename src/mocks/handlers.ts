@@ -1411,7 +1411,7 @@ export const handlers = [
     }
   ),
 
-  // --------------------------------- JOBS SCHEDULAR ------------------------------------------------------
+  // --------------------------------- JOB SCHEDULER ------------------------------------------------------
 
   http.post<PathParams, DefaultBodyType, ErrorResponse | NonNullable<unknown>>(
     '/jobs/criticality/run',
