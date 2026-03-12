@@ -1,12 +1,14 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import type { QueryClient } from '@tanstack/react-query';
+import React from 'react';
 import { Outlet, useParams, type LoaderFunctionArgs } from 'react-router';
 import {
   getSystemQuery,
   useGetSystem,
   useGetSystemsBreadcrumbs,
 } from '../api/systems';
+import { APISettingsContext } from '../apiConfigProvider.component';
 import BaseLayoutHeader from '../common/baseLayoutHeader.component';
 import CriticalityTooltipIcon from '../common/criticalityTooltipIcon.component';
 import PageNotFoundComponent from '../common/pageNotFound/pageNotFound.component';
@@ -42,6 +44,8 @@ export const systemsLayoutLoader =
 function SystemsLayout() {
   const { system_id: systemId } = useParams();
   const { isCriticalMode } = useAppSelector(selectCriticality);
+  const apiSettings = React.useContext(APISettingsContext);
+  const isSparesDefinitionDefined = !!apiSettings.spares;
 
   const { data: systemsBreadcrumbs } = useGetSystemsBreadcrumbs(systemId);
   const { data: system } = useGetSystem(systemId);
@@ -62,16 +66,19 @@ function SystemsLayout() {
           mt: 1,
           mx: 1,
           ...(isCriticalMode &&
+            isSparesDefinitionDefined &&
             showFlagged !== undefined &&
             criticalityHeaderStyle({ theme, showFlagged })),
         })}
       >
-        {isCriticalMode && showFlagged !== undefined && (
-          <CriticalityTooltipIcon
-            showFlagged={showFlagged}
-            label={getSCriticalityLabel(showFlagged)}
-          />
-        )}
+        {isCriticalMode &&
+          isSparesDefinitionDefined &&
+          showFlagged !== undefined && (
+            <CriticalityTooltipIcon
+              showFlagged={showFlagged}
+              label={getSCriticalityLabel(showFlagged)}
+            />
+          )}
         <Typography
           variant="h4"
           sx={{
