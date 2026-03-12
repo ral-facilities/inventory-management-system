@@ -280,7 +280,7 @@ describe('ItemDialog', () => {
           { id: '6', value: false },
         ],
         purchase_order_number: null,
-        serial_number: null,
+        serial_number: 'Cameras %s',
         system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
         usage_status_id: '0',
         warranty_end_date: null,
@@ -318,7 +318,7 @@ describe('ItemDialog', () => {
           { id: '6', value: false },
         ],
         purchase_order_number: null,
-        serial_number: null,
+        serial_number: 'Cameras %s',
         system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
         usage_status_id: '0',
         warranty_end_date: null,
@@ -476,7 +476,7 @@ describe('ItemDialog', () => {
           },
         ],
         purchase_order_number: null,
-        serial_number: null,
+        serial_number: 'Dry Vacuum Pumps %s',
         system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
         usage_status_id: '0',
         warranty_end_date: null,
@@ -611,6 +611,43 @@ describe('ItemDialog', () => {
       ).toBeDisabled();
     }, 10000);
 
+    it('displays serial number advanced options tooltip correctly on hover', async () => {
+      createView();
+
+      await user.click(screen.getByText('Add item details'));
+
+      const infoIcon = screen.getByLabelText(
+        'Serial Number Advanced Options Tooltip'
+      );
+
+      await user.hover(infoIcon);
+      await waitFor(() => {
+        expect(
+          screen.getByText(
+            'When adding multiple items, %s marks where the generated number will appear. This number is based on the Starting Value and Quantity.'
+          )
+        ).toBeInTheDocument();
+      });
+      expect(screen.getByText('Example:')).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          'Serial number: item %s. Quantity: 2. Starting value: 1'
+        )
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText('Resulting serial numbers: item 1, item 2')
+      ).toBeInTheDocument();
+
+      await user.unhover(infoIcon);
+      await waitFor(() => {
+        expect(
+          screen.queryByText(
+            'When adding multiple items, %s marks where the generated number will appear. This number is based on the Starting Value and Quantity.'
+          )
+        ).not.toBeInTheDocument();
+      });
+    });
+
     it('displays error messages for serial number advanced options', async () => {
       createView();
 
@@ -675,6 +712,7 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByText('Close advanced options'));
       await modifyDetailsValues({
+        serialNumber: '',
         serialNumberAdvancedOptions: {
           quantity: '100',
           starting_value: '2',
@@ -793,7 +831,7 @@ describe('ItemDialog', () => {
           { id: '6', value: false },
         ],
         purchase_order_number: null,
-        serial_number: null,
+        serial_number: 'Cameras %s',
         system_id: '65328f34a40ff5301575a4e3',
         usage_status_id: '1',
         warranty_end_date: null,

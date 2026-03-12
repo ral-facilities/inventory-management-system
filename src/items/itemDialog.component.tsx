@@ -777,11 +777,11 @@ function ItemDialog(props: ItemDialogProps) {
                             </Typography>
                             <Typography sx={{ mt: 2 }}>Example: </Typography>
                             <Typography>
-                              Serial number: item%s. Quantity: 2. Starting
+                              Serial number: item %s. Quantity: 2. Starting
                               value: 1
                             </Typography>
                             <Typography>
-                              Resulting serial numbers: item1, item2
+                              Resulting serial numbers: item 1, item 2
                             </Typography>
                           </Box>
                         }
