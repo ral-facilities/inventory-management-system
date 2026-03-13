@@ -3,7 +3,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import MenuItem from '@mui/material/MenuItem';
 import React from 'react';
-import { useGetJob } from '../api/jobScheduler';
+
+import { useGetJob } from '../api/jobs';
 import handleTransferState from '../handleTransferState';
 import { useAppDispatch, useAppSelector } from '../state/hook';
 import {
@@ -25,8 +26,15 @@ const CriticalitySettingsMenuItem = () => {
       if (job && typeof job === 'object') {
         handleTransferState([
           {
-            name: 'Critical Mode',
-            message: `Enabled. Status: ${job?.status ? job.status.charAt(0).toUpperCase() + job.status.slice(1) : 'Idle'} Last Executed: ${job.last_successful_executed_start_time ? formatDateTimeStrings(job.last_successful_executed_start_time, true) : 'None'} Next Scheduled Run: ${job.next_scheduled_execution_time ? formatDateTimeStrings(job.next_scheduled_execution_time, true) : 'None'}`,
+            name: 'Criticality',
+            message: `Last updated at ${job.last_successful_executed_start_time ? formatDateTimeStrings(job.last_successful_executed_start_time, true) : 'None'}`,
+            state: 'info',
+          },
+        ]);
+        handleTransferState([
+          {
+            name: 'Criticality',
+            message: `Next scheduled run at ${job.next_scheduled_execution_time ? formatDateTimeStrings(job.next_scheduled_execution_time, true) : 'None'}`,
             state: 'info',
           },
         ]);

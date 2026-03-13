@@ -74,12 +74,19 @@ describe('Settings Menu Items component', () => {
 
       expect(store.getState().criticality.isCriticalMode).toStrictEqual(true);
 
-      expect(handleTransferState).toBeCalled();
+      expect(handleTransferState).toHaveBeenCalledTimes(2);
       expect(handleTransferState).toHaveBeenCalledWith([
         {
-          name: 'Critical Mode',
-          message:
-            'Enabled. Status: Finished Last Executed: 10 Mar 2026 17:12 Next Scheduled Run: 10 Mar 2026 17:12',
+          name: 'Criticality',
+          message: 'Last updated at 10 Mar 2026 17:12',
+          state: 'info',
+        },
+      ]);
+
+      expect(handleTransferState).toHaveBeenCalledWith([
+        {
+          name: 'Criticality',
+          message: 'Next scheduled run at 10 Mar 2026 17:12',
           state: 'info',
         },
       ]);
@@ -119,7 +126,7 @@ describe('Settings Menu Items component', () => {
       ]);
     });
 
-    it('displays warning message, when ims job schedular is not enabled', async () => {
+    it('displays warning message, when ims job scheduler is not enabled', async () => {
       server.use(
         http.get('jobs/criticality', () => {
           return HttpResponse.error();
