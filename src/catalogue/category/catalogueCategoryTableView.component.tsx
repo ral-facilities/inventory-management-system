@@ -31,6 +31,9 @@ import {
   COLUMN_FILTER_MODE_OPTIONS,
   COLUMN_FILTER_VARIANTS,
   criticalityRowStyle,
+  displayTableRowCountText,
+  flexContainerProps,
+  flexTableContainerProps,
   formatDateTimeStrings,
   generateUniqueName,
   mrtTheme,
@@ -99,7 +102,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
               id: 'is_flagged',
               filterVariant: COLUMN_FILTER_VARIANTS.boolean,
               enableColumnFilterModes: false,
-              size: 180,
+              size: 200,
               filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
               Cell: ({ row }: { row: MRT_Row<CatalogueCategory> }) => {
                 const showFlagged = row.original.is_flagged;
@@ -120,7 +123,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
-        size: 567.5,
+        size: isCriticalMode ? 680 : 780,
       },
       {
         header: 'Last modified',
@@ -129,13 +132,13 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
         filterVariant: COLUMN_FILTER_VARIANTS.datetime,
         filterFn: COLUMN_FILTER_FUNCTIONS.datetime,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.datetime,
-        size: 400,
+        size: isCriticalMode ? 590 : 690,
         enableGrouping: false,
         Cell: ({ row }) =>
           formatDateTimeStrings(row.original.modified_time, true),
       },
     ];
-  }, [isSparesDefinitionDefined]);
+  }, [isCriticalMode, isSparesDefinitionDefined]);
 
   const table = useMaterialReactTable({
     // Data
@@ -226,7 +229,8 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
               );
             },
           },
-    muiTableContainerProps: { sx: { height: '360.4px' } },
+    muiTablePaperProps: { sx: flexContainerProps },
+    muiTableContainerProps: { sx: flexTableContainerProps },
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',
@@ -278,6 +282,15 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
         </Button>
       </Box>
     ),
+    renderBottomToolbarCustomActions: ({ table }) =>
+      displayTableRowCountText(
+        table,
+        catalogueCategoryData,
+        'Catalogue Categories',
+        {
+          paddingLeft: '8px',
+        }
+      ),
   });
 
   React.useEffect(() => {
@@ -292,7 +305,11 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
     });
   }, [isCriticalMode, table]);
 
-  return <MaterialReactTable table={table} />;
+  return (
+    <Box sx={{ p: 1, ...flexContainerProps }}>
+      <MaterialReactTable table={table} />
+    </Box>
+  );
 };
 
 export default CatalogueCategoryTableView;

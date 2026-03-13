@@ -28,6 +28,11 @@ import {
 import { MoveItemsToSystemUsageStatus } from '../app.types';
 import MRTTopTableAlert from '../common/mrtTopTableAlert.component';
 import handleTransferState from '../handleTransferState';
+import {
+  flexContainerProps,
+  formWithStepperDialogProps,
+  tableDialogProps,
+} from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { SystemItemsUsageStatusTable } from './systemItemsUsageStatuses.component';
 import { SystemsTableView } from './systemsTableView.component';
@@ -265,7 +270,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     switch (step) {
       case 0:
         return (
-          <Grid container spacing={1.5} size={12}>
+          <Grid sx={flexContainerProps} container spacing={1.5} size={12}>
             <Grid size={12}>
               <Breadcrumbs
                 breadcrumbsInfo={parentSystemBreadcrumbs}
@@ -276,7 +281,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
                 homeLocation="Systems"
               />
             </Grid>
-            <Grid size={12}>
+            <Grid sx={{ p: 1, ...flexContainerProps }} size={12}>
               {parentSystemId &&
                 selectedItems.length !== 0 &&
                 !isSelectedRulesLoading &&
@@ -323,18 +328,25 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
         );
       case 1:
         return (
-          <SystemItemsUsageStatusTable
-            items={selectedItems}
-            onChangeUsageStatuses={setUsageStatuses}
-            usageStatuses={usageStatuses}
-          />
+          <Box sx={{ p: 1, ...flexContainerProps }}>
+            <SystemItemsUsageStatusTable
+              items={selectedItems}
+              onChangeUsageStatuses={setUsageStatuses}
+              usageStatuses={usageStatuses}
+            />
+          </Box>
         );
     }
   };
 
   return (
-    <Dialog open={open} maxWidth="xl" fullWidth>
-      <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
+    <Dialog
+      open={open}
+      {...(isAdminMode ? formWithStepperDialogProps : tableDialogProps)}
+    >
+      <DialogTitle
+        sx={{ display: 'inline-flex', alignItems: 'center', paddingBottom: 0 }}
+      >
         Move{' '}
         {selectedItems.length > 1 ? `${selectedItems.length} items` : '1 item'}{' '}
         to a different system{isAdminMode ? ' as Admin' : ''}
@@ -351,7 +363,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
           </Tooltip>
         )}
       </DialogTitle>
-      <DialogContent>
+      <DialogContent sx={flexContainerProps}>
         {isAdminMode && (
           <Stepper
             nonLinear
@@ -389,7 +401,9 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
             })}
           </Stepper>
         )}
-        <Box sx={{ marginTop: 2 }}>{renderStepContent(activeStep)}</Box>
+        <Box sx={{ marginTop: 2, ...flexContainerProps }}>
+          {renderStepContent(activeStep)}
+        </Box>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} sx={{ mr: 'auto' }}>

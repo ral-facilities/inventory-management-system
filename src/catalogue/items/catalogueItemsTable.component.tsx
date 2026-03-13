@@ -67,6 +67,8 @@ import {
   customFilterFunctions,
   deselectRowById,
   displayTableRowCountText,
+  flexContainerProps,
+  flexTableContainerProps,
   formatDateTimeStrings,
   generateUniqueName,
   getInitialColumnFilterFnState,
@@ -341,7 +343,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
-        size: dense ? 500 : 250,
+        size: dense ? 5000 : 250,
         Cell: ({ row, renderedCellValue }) => {
           return (
             <OverflowTip sx={{ fontSize: 'inherit' }}>
@@ -872,14 +874,14 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       ? [
           { ...columns[0], size: undefined },
           { ...columns[1], size: undefined },
-          { ...columns[3], size: undefined },
+          { ...columns[5], size: undefined },
         ]
       : columns, // If dense only show the name column
     data: tableRows ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     // Features
     enableColumnOrdering: !dense,
     enableFacetedValues: true,
-    enableColumnResizing: !dense,
+    enableColumnResizing: true,
     enableRowActions: !dense,
     enableColumnFilterModes: true,
     enableStickyHeader: true,
@@ -967,24 +969,15 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             }),
           };
         },
-    muiTableContainerProps: ({ table }) => {
-      const showAlert =
-        table.getState().showAlertBanner ||
-        table.getFilteredSelectedRowModel().rows.length > 0 ||
-        table.getState().grouping.length > 0;
+    muiTablePaperProps: { sx: flexContainerProps },
+    muiTableContainerProps: () => {
       return {
-        sx: {
-          height: dense
-            ? '360.4px'
-            : getPageHeightCalc(
-                // Breadcrumbs + Mui table V2 + extra
-                `50px + 110px + 48px ${showAlert ? '+ 58.75px' : ''}`
-              ),
-          flexShrink: 1,
-        },
+        sx: flexTableContainerProps,
+
         'data-testid': 'catalogue-items-table-container',
       };
     },
+
     muiTableBodyCellProps: ({ column, row }) => {
       const disabledGroupedHeaderColumnIDs = [
         'catalogueItem.name',
@@ -1233,14 +1226,27 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       });
   }, [isCriticalMode, isSparesDefinitionDefined, table]);
 
+  React.useEffect(() => {
+    if (dense)
+      table.setColumnSizing((prev) => {
+        console.log(prev);
+
+        const newSizes = {
+          'catalogueItem.is_flagged': 180,
+          'catalogueItem.name': isCriticalMode ? 670 : 760,
+          'catalogueItem.modified_time': isCriticalMode ? 500 : 590,
+        };
+        return { ...prev, ...newSizes };
+      });
+  }, [dense, table, isCriticalMode]);
+
   return (
-    <div style={{ width: '100%' }}>
+    <Box sx={{ width: '100%', ...flexContainerProps }}>
       <Stack
         sx={{
+          ...flexContainerProps,
           width: '100%',
-          height: dense ? undefined : contentHeight,
-          display: 'flex',
-          flexDirection: 'column',
+          ...(!dense ? { height: contentHeight, flex: undefined } : { p: 1 }),
         }}
       >
         <MaterialReactTable table={table} />
@@ -1267,7 +1273,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           />
         </>
       )}
-    </div>
+    </Box>
   );
 };
 

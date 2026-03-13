@@ -36,6 +36,8 @@ import {
   TableCellOverFlowTipProps,
   TableHeaderOverflowTip,
   customFilterFunctions,
+  flexContainerProps,
+  flexTableContainerProps,
   getInitialColumnFilterFnState,
   mrtTheme,
 } from '../utils';
@@ -433,23 +435,8 @@ export function SystemItemsUsageStatusTable(
           },
 
     // MUI
-    muiTablePaperProps: ({ table }) => ({
-      // sx doesn't work here currently - see https://www.material-react-table.com/docs/guides/full-screen-toggle
-      style: {
-        maxWidth: '100%',
-        // SciGateway navigation drawer is 1200, modal is 1300
-        zIndex: table.getState().isFullScreen ? 1210 : undefined,
-      },
-    }),
-    muiTableContainerProps: ({ table }) => {
-      return {
-        sx: {
-          height: table.getState().isFullScreen ? '100%' : undefined,
-
-          maxHeight: '670px',
-        },
-      };
-    },
+    muiTablePaperProps: { sx: flexContainerProps },
+    muiTableContainerProps: { sx: flexTableContainerProps },
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',

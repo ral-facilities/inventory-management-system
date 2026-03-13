@@ -41,8 +41,13 @@ import {
 } from '../../app.types';
 import { CatalogueCategorySchema, RequestType } from '../../form.schemas';
 import handleIMS_APIError from '../../handleIMS_APIError';
-import CatalogueItemsPropertiesTable from './property/catalogueItemPropertiesTable.component';
 import handleTransferState from '../../handleTransferState';
+import {
+  flexContainerProps,
+  formDialogProps,
+  tableDialogProps,
+} from '../../utils';
+import CatalogueItemsPropertiesTable from './property/catalogueItemPropertiesTable.component';
 
 // Function to convert a list of strings to a list of numbers
 export const convertListToNumbers = (values: string[]): number[] => {
@@ -304,17 +309,21 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
   };
 
   return (
-    <Dialog open={open} maxWidth="lg" fullWidth>
+    <Dialog
+      open={open}
+      {...(isLeaf === 'true' ? tableDialogProps : formDialogProps)}
+    >
       <DialogTitle>
         {requestType === 'patch'
           ? 'Edit Catalogue Category'
           : 'Add Catalogue Category'}
       </DialogTitle>
-      <DialogContent>
+      <DialogContent sx={flexContainerProps}>
         <Stack
           spacing={1}
           sx={{
             width: '100%',
+            ...flexContainerProps,
           }}
         >
           <Grid
@@ -407,11 +416,12 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
           {isLeaf === 'true' && (
             <>
               <Divider sx={{ minWidth: '700px' }} />
-              <Box sx={{ paddingLeft: 1 }}>
+              <Box sx={{ paddingLeft: 1, ...flexContainerProps }}>
                 <Typography variant="h6">Catalogue Item Properties</Typography>
                 <Box
                   sx={{
                     mt: 1,
+                    ...flexContainerProps,
                   }}
                 >
                   <FormProvider {...formMethods}>

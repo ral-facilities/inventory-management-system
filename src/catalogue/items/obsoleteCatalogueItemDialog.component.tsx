@@ -32,7 +32,11 @@ import {
 } from '../../api/catalogueItems';
 import { ObsoleteDetails } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
-import { trimStringValues } from '../../utils';
+import {
+  flexContainerProps,
+  formWithStepperDialogProps,
+  trimStringValues,
+} from '../../utils';
 import Breadcrumbs from '../../view/breadcrumbs.component';
 import CatalogueCategoryTableView from '../category/catalogueCategoryTableView.component';
 import CatalogueItemsTable from './catalogueItemsTable.component';
@@ -243,7 +247,7 @@ const ObsoleteCatalogueItemDialog = (
                   obsolete_reason: e.target.value,
                 })
               }
-              minRows={16}
+              minRows={formError ? 24 : 26}
               multiline
               fullWidth
             />
@@ -272,8 +276,7 @@ const ObsoleteCatalogueItemDialog = (
                 selectedRowState={
                   obsoleteDetails.obsolete_replacement_catalogue_item_id
                     ? {
-                        [obsoleteDetails.obsolete_replacement_catalogue_item_id]:
-                          true,
+                        [obsoleteDetails.obsolete_replacement_catalogue_item_id]: true,
                       }
                     : undefined
                 }
@@ -298,14 +301,9 @@ const ObsoleteCatalogueItemDialog = (
     }
   };
   return (
-    <Dialog
-      open={open}
-      PaperProps={{ sx: { height: '840px' } }}
-      fullWidth
-      maxWidth="xl"
-    >
+    <Dialog open={open} {...formWithStepperDialogProps}>
       <DialogTitle>Obsolete Catalogue Item</DialogTitle>
-      <DialogContent>
+      <DialogContent sx={flexContainerProps}>
         <Stepper
           // Allow user to skip steps if want to
           nonLinear
@@ -321,22 +319,24 @@ const ObsoleteCatalogueItemDialog = (
             </Step>
           ))}
         </Stepper>
-        <Box sx={{ textAlign: 'center', marginTop: 2 }}>
+        <Box sx={{ textAlign: 'center', marginTop: 2, ...flexContainerProps }}>
           {renderStepContent(activeStep)}
         </Box>
-        <Box
-          sx={{
-            mx: 3,
-            marginTop: 3,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
-            {formError}
-          </FormHelperText>
-        </Box>
+        {formError && (
+          <Box
+            sx={{
+              mx: 3,
+              marginTop: 3,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
+              {formError}
+            </FormHelperText>
+          </Box>
+        )}
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} sx={{ mr: 'auto' }}>

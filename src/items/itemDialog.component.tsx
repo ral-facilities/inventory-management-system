@@ -64,6 +64,7 @@ import {
 import handleIMS_APIError from '../handleIMS_APIError';
 import handleTransferState from '../handleTransferState';
 import { SystemsTableView } from '../systems/systemsTableView.component';
+import { flexContainerProps, formWithStepperDialogProps } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 
 function toItemDetailsStep(item: Item | undefined): ItemDetailsStep {
@@ -659,7 +660,7 @@ function ItemDialog(props: ItemDialogProps) {
     switch (step) {
       case 0:
         return (
-          <Grid size={12}>
+          <Grid sx={{ p: 1, ...flexContainerProps }} size={12}>
             <Breadcrumbs
               breadcrumbsInfo={parentSystemBreadcrumbs}
               onChangeNode={setParentSystemId}
@@ -1029,7 +1030,7 @@ function ItemDialog(props: ItemDialogProps) {
                   label="Notes"
                   size="small"
                   multiline
-                  minRows={5}
+                  minRows={10}
                   {...registerDetailsStep('notes')}
                   fullWidth
                 />
@@ -1251,8 +1252,10 @@ function ItemDialog(props: ItemDialogProps) {
   };
 
   return (
-    <Dialog open={open} maxWidth="xl" fullWidth>
-      <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
+    <Dialog open={open} {...formWithStepperDialogProps}>
+      <DialogTitle
+        sx={{ display: 'inline-flex', alignItems: 'center', paddingBottom: 0 }}
+      >
         {`${requestType === 'patch' ? 'Edit' : 'Add'} Item${isAdminMode ? ' as Admin' : ''}`}
 
         {isAdminMode && (
@@ -1269,7 +1272,7 @@ function ItemDialog(props: ItemDialogProps) {
         )}
       </DialogTitle>
 
-      <DialogContent>
+      <DialogContent sx={flexContainerProps}>
         <Stepper
           nonLinear
           activeStep={activeStep}
@@ -1303,7 +1306,9 @@ function ItemDialog(props: ItemDialogProps) {
           })}
         </Stepper>
 
-        <Box sx={{ marginTop: 2 }}>{renderStepContent(activeStep)}</Box>
+        <Box sx={{ marginTop: 2, ...flexContainerProps }}>
+          {renderStepContent(activeStep)}
+        </Box>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} sx={{ mr: 'auto' }}>
