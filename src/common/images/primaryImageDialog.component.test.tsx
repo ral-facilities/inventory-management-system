@@ -50,7 +50,7 @@ describe('Primary Image Dialog', () => {
       { timeout: 10000 }
     );
 
-    expect((await screen.findAllByText('logo1.png')).length).toEqual(9);
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(15);
 
     expect(baseElement).toMatchSnapshot();
   });
@@ -62,7 +62,7 @@ describe('Primary Image Dialog', () => {
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
 
-    expect((await screen.findAllByText('logo1.png')).length).toEqual(9);
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(15);
 
     const uploadImageButton = screen.getByRole('button', {
       name: 'Upload Images',
@@ -137,7 +137,7 @@ describe('Primary Image Dialog', () => {
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
 
-    expect((await screen.findAllByText('logo1.png')).length).toEqual(9);
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(15);
 
     const imageCard = screen.getAllByRole('radio', {
       name: 'Toggle select card',
@@ -165,7 +165,7 @@ describe('Primary Image Dialog', () => {
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
 
-    expect((await screen.findAllByText('logo1.png')).length).toEqual(9);
+    expect((await screen.findAllByText('logo1.png')).length).toEqual(15);
 
     const imageCard = screen.getAllByRole('radio', {
       name: 'Toggle select card',

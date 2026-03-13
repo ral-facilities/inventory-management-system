@@ -3,6 +3,7 @@ import LZString from 'lz-string';
 import { MRT_VisibilityState } from 'material-react-table';
 import { act } from 'react';
 import { hooksWrapperWithProviders } from '../testUtils';
+import { DEFAULT_ROWS_PER_PAGE_VALUE } from './consts';
 import { usePreservedTableState } from './preservedTableState.component';
 
 describe('Preserved table state functions', () => {
@@ -114,7 +115,10 @@ describe('Preserved table state functions', () => {
             initialState: {
               columnVisibility: { created_time: false },
               grouping: ['catalogue_item.name'],
-              pagination: { pageSize: 20, pageIndex: 5 },
+              pagination: {
+                pageSize: DEFAULT_ROWS_PER_PAGE_VALUE,
+                pageIndex: 5,
+              },
               columnFilterFns: { 'catalogue_item.name': 'betweenInclusive' },
             },
             storeInUrl: true,
@@ -134,7 +138,7 @@ describe('Preserved table state functions', () => {
           grouping: ['catalogue_item.name'],
           columnOrder: [],
           pagination: {
-            pageSize: 20,
+            pageSize: 30,
             pageIndex: 5,
           },
           isFullScreen: false,

@@ -2,16 +2,12 @@ import Grid from '@mui/material/Grid2';
 import LZString from 'lz-string';
 import type { MRT_ColumnFiltersState } from 'material-react-table';
 import React from 'react';
-import { APISettingsContext } from '../apiConfigProvider.component';
 import CriticalityJobDialog from './criticality/criticalityJobDialog.component';
 import SettingsCard from './settingsCard.component';
 
 function SettingsCardView() {
   const [openCriticalityDialog, setOpenCriticalityDialog] =
     React.useState<boolean>(false);
-
-  const apiSettings = React.useContext(APISettingsContext);
-  const isSparesDefinitionDefined = !!apiSettings.spares;
 
   const sparesFilter: { cF: MRT_ColumnFiltersState } = {
     cF: [
@@ -37,12 +33,10 @@ function SettingsCardView() {
         title="Criticality"
         onOpen={() => setOpenCriticalityDialog(true)}
       />
-      {isSparesDefinitionDefined && (
-        <CriticalityJobDialog
-          open={openCriticalityDialog}
-          onClose={() => setOpenCriticalityDialog(false)}
-        />
-      )}
+      <CriticalityJobDialog
+        open={openCriticalityDialog}
+        onClose={() => setOpenCriticalityDialog(false)}
+      />
     </Grid>
   );
 }

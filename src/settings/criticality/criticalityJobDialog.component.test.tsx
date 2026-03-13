@@ -79,7 +79,7 @@ describe('Criticality dialog', () => {
     ).toBeInTheDocument();
   });
 
-  it('displays warning message, when ims job schedular is not enabled', async () => {
+  it('displays warning message, when ims job scheduler is not enabled', async () => {
     server.use(
       http.get('jobs/criticality', () => {
         return HttpResponse.error();

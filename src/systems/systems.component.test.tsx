@@ -1,5 +1,8 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { http, HttpResponse } from 'msw';
+import APIConfigProvider from '../apiConfigProvider.component';
+import { server } from '../mocks/server';
 import { URLPathKeyType } from '../paths';
 import { RootState } from '../state/store';
 import { renderComponentWithRouterProvider } from '../testUtils';
@@ -16,7 +19,9 @@ describe('Systems', () => {
     preloadedState?: Partial<RootState>
   ) => {
     return renderComponentWithRouterProvider(
-      <Systems />,
+      <APIConfigProvider>
+        <Systems />
+      </APIConfigProvider>,
       urlPathKey ?? 'systems',
       path,
       preloadedState
@@ -55,13 +60,32 @@ describe('Systems', () => {
       expect(screen.getByText('Root systems')).toBeInTheDocument();
     });
 
-    await user.hover(screen.getAllByTestId('ErrorIcon')[0]);
+    await user.hover((await screen.findAllByTestId('ErrorIcon'))[0]);
 
     expect(
       await screen.findByText('This system is critical.')
     ).toBeInTheDocument();
     expect(screen.getByText('Giant laser')).toBeInTheDocument();
     expect(screen.getByText('Total Systems: 5')).toBeInTheDocument();
+  });
+
+  it('renders correctly in critical mode when spares is not defined', async () => {
+    server.use(
+      http.get('/v1/settings/spares-definition', () => {
+        return HttpResponse.json(undefined, { status: 204 });
+      })
+    );
+    createView('/systems', undefined, {
+      criticality: { isCriticalMode: true },
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('Root systems')).toBeInTheDocument();
+    });
+
+    await waitFor(() =>
+      expect(screen.queryByTestId('ErrorIcon')).not.toBeInTheDocument()
+    );
   });
 
   it('renders correctly when viewing a specific system', async () => {

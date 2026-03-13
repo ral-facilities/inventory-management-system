@@ -42,6 +42,10 @@ import { useGetCatalogueItems } from '../../api/catalogueItems';
 import { useGetManufacturerIds } from '../../api/manufacturers';
 import { useGetInUseDefinition } from '../../api/settings';
 import { APISettingsContext } from '../../apiConfigProvider.component';
+import {
+  DEFAULT_ROWS_PER_PAGE_VALUE,
+  ROWS_PER_PAGE_OPTIONS,
+} from '../../common/consts';
 import CriticalityTooltipIcon from '../../common/criticalityTooltipIcon.component';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import { SparesColumnHeaderInformationTooltip } from '../../common/sparesInformationTooltip.component';
@@ -90,9 +94,7 @@ export const CriticalityHeaderInfoToolTip = () => {
       ? `'${systemTypes.join("', '")}'`
       : 'a system type defined as in use';
 
-  const title =
-    `The criticality value is determined by the systems an item is used in. ` +
-    `When an item is in a system with the system type ${systemText} then it is assessed against the required operational demand.`;
+  const title = `This is determined by how an item is used across systems with the system type ${systemText} and its assessed demand.`;
 
   return (
     <Tooltip title={title}>
@@ -114,9 +116,7 @@ export const NumberOfSparesRequiredHeaderInfoToolTip = () => {
       ? `'${systemTypes.join("', '")}'`
       : 'a system type defined as in use';
 
-  const title =
-    `The number of spares required is determined by how an item is used across systems. ` +
-    `When an item is in a system with the system type ${systemText} then operational demand and replacement intervals are used to calculate the spare requirement.`;
+  const title = `This is determined by how an item is used across systems with the system type ${systemText} and its replacement intervals.`;
 
   return (
     <Tooltip title={title}>
@@ -860,7 +860,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         'catalogueItem.criticality': isCriticalMode,
         'catalogueItem.number_of_spares_required': isCriticalMode,
       },
-      pagination: { pageSize: dense ? 5 : 15, pageIndex: 0 },
+      pagination: { pageSize: DEFAULT_ROWS_PER_PAGE_VALUE, pageIndex: 0 },
       columnFilterFns: initialColumnFilterFnState,
     },
     storeInUrl: !dense,
@@ -1041,7 +1041,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       : undefined,
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: dense ? [5] : [15, 30, 45],
+      rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
       shape: 'rounded',
       variant: 'outlined',
     },

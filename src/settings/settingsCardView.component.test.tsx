@@ -1,8 +1,6 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import { http, HttpResponse } from 'msw';
 import APIConfigProvider from '../apiConfigProvider.component';
-import { server } from '../mocks/server';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import SettingsCardView from './settingsCardView.component';
 
@@ -21,21 +19,6 @@ describe('SettingsCardView', () => {
     user = userEvent.setup();
   });
   it('renders settings card view correctly', async () => {
-    const view = createView();
-
-    await waitFor(() => {
-      expect(screen.getByText('Units')).toBeInTheDocument();
-    });
-
-    expect(view.asFragment()).toMatchSnapshot();
-  });
-
-  it('renders settings card view correctly no spares definition', async () => {
-    server.use(
-      http.get('/v1/settings/spares-definition', () => {
-        return HttpResponse.json(undefined, { status: 204 });
-      })
-    );
     const view = createView();
 
     await waitFor(() => {

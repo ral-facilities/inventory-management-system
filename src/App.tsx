@@ -20,6 +20,7 @@ import {
   clearFailedAuthRequestsQueue,
   retryFailedAuthRequests,
 } from './api/api';
+import { APIConfigProviderLayout } from './apiConfigProvider.component';
 import { MicroFrontendId } from './app.types';
 import CatalogueLayout, {
   CatalogueErrorComponent,
@@ -113,73 +114,78 @@ const routeObject: RouteObject[] = [
         ],
       },
       {
-        path: paths.settings,
-        Component: SettingsLayout,
-        children: [
-          { index: true, Component: SettingsCardView },
-          { path: paths.settingsUnits, Component: Units },
-          { path: paths.settingsUsageStatuses, Component: UsageStatuses },
-          { path: paths.settingsSystemTypes, Component: SystemTypes },
-          { path: paths.settingsRules, Component: Rules },
-          {
-            path: '*',
-            Component: SettingsErrorComponent,
-          },
-        ],
-      },
-      {
-        path: paths.catalogue,
-        Component: CatalogueLayout,
-        ErrorBoundary: CatalogueLayoutErrorComponent,
+        Component: APIConfigProviderLayout,
         children: [
           {
-            index: true,
-            Component: CatalogueCardView,
+            path: paths.settings,
+            Component: SettingsLayout,
+            children: [
+              { index: true, Component: SettingsCardView },
+              { path: paths.settingsUnits, Component: Units },
+              { path: paths.settingsUsageStatuses, Component: UsageStatuses },
+              { path: paths.settingsSystemTypes, Component: SystemTypes },
+              { path: paths.settingsRules, Component: Rules },
+              {
+                path: '*',
+                Component: SettingsErrorComponent,
+              },
+            ],
           },
           {
-            path: paths.catalogueCategories,
-            Component: Outlet,
+            path: paths.catalogue,
+            Component: CatalogueLayout,
+            ErrorBoundary: CatalogueLayoutErrorComponent,
             children: [
               {
                 index: true,
                 Component: CatalogueCardView,
-                loader: catalogueLayoutLoader(queryClient),
               },
               {
-                path: paths.catalogueItems,
+                path: paths.catalogueCategories,
                 Component: Outlet,
                 children: [
                   {
                     index: true,
-                    Component: CatalogueItemsPage,
+                    Component: CatalogueCardView,
                     loader: catalogueLayoutLoader(queryClient),
                   },
                   {
-                    path: paths.catalogueItem,
-                    Component: CatalogueItemLayout,
+                    path: paths.catalogueItems,
+                    Component: Outlet,
                     children: [
                       {
                         index: true,
-                        Component: CatalogueItemsLandingPage,
+                        Component: CatalogueItemsPage,
                         loader: catalogueLayoutLoader(queryClient),
                       },
                       {
-                        path: paths.items,
-                        Component: Outlet,
+                        path: paths.catalogueItem,
+                        Component: CatalogueItemLayout,
                         children: [
                           {
                             index: true,
-                            Component: Items,
+                            Component: CatalogueItemsLandingPage,
                             loader: catalogueLayoutLoader(queryClient),
                           },
                           {
-                            path: paths.item,
+                            path: paths.items,
                             Component: Outlet,
                             children: [
                               {
                                 index: true,
-                                Component: ItemsLandingPage,
+                                Component: Items,
                                 loader: catalogueLayoutLoader(queryClient),
+                              },
+                              {
+                                path: paths.item,
+                                Component: Outlet,
+                                children: [
+                                  {
+                                    index: true,
+                                    Component: ItemsLandingPage,
+                                    loader: catalogueLayoutLoader(queryClient),
+                                  },
+                                ],
                               },
                             ],
                           },
@@ -189,45 +195,45 @@ const routeObject: RouteObject[] = [
                   },
                 ],
               },
+              {
+                path: '*',
+                Component: CatalogueErrorComponent,
+              },
             ],
           },
           {
-            path: '*',
-            Component: CatalogueErrorComponent,
-          },
-        ],
-      },
-      {
-        path: paths.systems,
-        Component: SystemsLayout,
-        ErrorBoundary: SystemsLayoutErrorComponent,
-        children: [
-          { index: true, Component: Systems },
-          {
-            path: paths.system,
-            Component: Systems,
-            loader: systemsLayoutLoader(queryClient),
-          },
-          {
-            path: '*',
-            Component: SystemsErrorComponent,
-          },
-        ],
-      },
-      {
-        path: paths.manufacturers,
-        Component: ManufacturerLayout,
-        ErrorBoundary: ManufacturerLayoutErrorComponent,
-        children: [
-          { index: true, Component: ManufacturerTable },
-          {
-            path: paths.manufacturer,
-            Component: ManufacturerLandingPage,
-            loader: manufacturerLayoutLoader(queryClient),
+            path: paths.systems,
+            Component: SystemsLayout,
+            ErrorBoundary: SystemsLayoutErrorComponent,
+            children: [
+              { index: true, Component: Systems },
+              {
+                path: paths.system,
+                Component: Systems,
+                loader: systemsLayoutLoader(queryClient),
+              },
+              {
+                path: '*',
+                Component: SystemsErrorComponent,
+              },
+            ],
           },
           {
-            path: '*',
-            Component: ManufacturerErrorComponent,
+            path: paths.manufacturers,
+            Component: ManufacturerLayout,
+            ErrorBoundary: ManufacturerLayoutErrorComponent,
+            children: [
+              { index: true, Component: ManufacturerTable },
+              {
+                path: paths.manufacturer,
+                Component: ManufacturerLandingPage,
+                loader: manufacturerLayoutLoader(queryClient),
+              },
+              {
+                path: '*',
+                Component: ManufacturerErrorComponent,
+              },
+            ],
           },
         ],
       },
@@ -251,6 +257,7 @@ if (!isUsingMSW) router = createBrowserRouter(routeObject);
 // environment, this is not needed.
 
 export default function App() {
+  // eslint-disable-next-line react-hooks/globals
   if (isUsingMSW) router = createBrowserRouter(routeObject);
   return <RouterProvider router={router} />;
 }

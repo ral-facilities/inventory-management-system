@@ -35,7 +35,7 @@ describe('Attachments Table', () => {
 
     expect(
       (await screen.findAllByText('laser-calibration.txt')).length
-    ).toEqual(3);
+    ).toEqual(7);
 
     expect(baseElement).toMatchSnapshot();
   });
@@ -68,23 +68,23 @@ describe('Attachments Table', () => {
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
 
-    expect(screen.getAllByText('laser-calibration.txt').length).toEqual(3);
+    expect(screen.getAllByText('laser-calibration.txt').length).toEqual(7);
     expect(router.state.location.search).toBe('');
 
     await user.click(screen.getByRole('button', { name: 'Go to page 2' }));
 
     await waitFor(() => {
-      expect(screen.getAllByText('laser-calibration.txt').length).toEqual(2);
+      expect(screen.getAllByText('laser-calibration.txt').length).toEqual(1);
     });
 
     expect(router.state.location.search).toBe(
-      '?state=N4IgDiBcpghg5gUwMoEsBeioEYCsAacBRASQDsATRADxwF86g'
+      '?state=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADygEYBfBoA'
     );
 
     await user.click(screen.getByRole('button', { name: 'Go to page 1' }));
 
     await waitFor(() => {
-      expect(screen.getAllByText('laser-calibration.txt').length).toEqual(3);
+      expect(screen.getAllByText('laser-calibration.txt').length).toEqual(7);
     });
 
     expect(router.state.location.search).toBe('');
@@ -94,7 +94,7 @@ describe('Attachments Table', () => {
     createView();
 
     await waitFor(() => {
-      expect(screen.getAllByText('laser-calibration.txt').length).toEqual(3);
+      expect(screen.getAllByText('laser-calibration.txt').length).toEqual(7);
     });
 
     await user.click(
@@ -119,7 +119,7 @@ describe('Attachments Table', () => {
     createView();
 
     await waitFor(() => {
-      expect(screen.getAllByText('laser-calibration.txt').length).toEqual(3);
+      expect(screen.getAllByText('laser-calibration.txt').length).toEqual(7);
     });
 
     const clearFiltersButton = screen.getByRole('button', {
@@ -141,7 +141,7 @@ describe('Attachments Table', () => {
     await user.click(clearFiltersButton);
 
     await waitFor(() => {
-      expect(screen.getAllByText('laser-calibration.txt').length).toEqual(3);
+      expect(screen.getAllByText('laser-calibration.txt').length).toEqual(7);
     });
 
     expect(clearFiltersButton).toBeDisabled();
@@ -151,7 +151,7 @@ describe('Attachments Table', () => {
     createView();
 
     expect((await screen.findAllByText('safety-protocols.pdf')).length).toEqual(
-      4
+      8
     );
 
     const rowActionsButton = screen.getAllByLabelText('Row Actions');
@@ -183,7 +183,7 @@ describe('Attachments Table', () => {
     createView();
 
     expect((await screen.findAllByText('safety-protocols.pdf')).length).toEqual(
-      4
+      8
     );
 
     const rowActionsButton = screen.getAllByLabelText('Row Actions');
@@ -215,7 +215,7 @@ describe('Attachments Table', () => {
     createView();
 
     expect((await screen.findAllByText('safety-protocols.pdf')).length).toEqual(
-      4
+      8
     );
 
     const rowActionsButton = screen.getAllByLabelText('Row Actions');
