@@ -99,7 +99,7 @@
     "eslint-plugin-testing-library": "7.15.4",
     "express": "5.2.1",
     "globals": "17.3.0",
-    "jsdom": "26.1.0",
+    "jsdom": "28.1.0",
     "prettier": "3.8.1",
     "serve": "14.2.5",
     "serve-static": "2.2.1",
