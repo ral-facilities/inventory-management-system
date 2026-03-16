@@ -7,13 +7,13 @@ import {
   DialogContent,
   DialogTitle,
   FormHelperText,
+  Stack,
   Step,
   StepLabel,
   Stepper,
   Tooltip,
   Typography,
 } from '@mui/material';
-import Grid from '@mui/material/Grid2';
 import { MRT_RowSelectionState } from 'material-react-table';
 import React from 'react';
 import { Item } from '../api/api.types';
@@ -28,6 +28,11 @@ import {
 import { MoveItemsToSystemUsageStatus } from '../app.types';
 import MRTTopTableAlert from '../common/mrtTopTableAlert.component';
 import handleTransferState from '../handleTransferState';
+import {
+  flexContainerProps,
+  formWithStepperDialogProps,
+  tableDialogProps,
+} from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { SystemItemsUsageStatusTable } from './systemItemsUsageStatuses.component';
 import { SystemsTableView } from './systemsTableView.component';
@@ -265,18 +270,17 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     switch (step) {
       case 0:
         return (
-          <Grid container spacing={1.5} size={12}>
-            <Grid size={12}>
-              <Breadcrumbs
-                breadcrumbsInfo={parentSystemBreadcrumbs}
-                onChangeNode={changeParentSystemId}
-                onChangeNavigateHome={() => {
-                  changeParentSystemId(null);
-                }}
-                homeLocation="Systems"
-              />
-            </Grid>
-            <Grid size={12}>
+          <Stack sx={{ height: '100%' }} spacing={1.5}>
+            <Breadcrumbs
+              breadcrumbsInfo={parentSystemBreadcrumbs}
+              onChangeNode={changeParentSystemId}
+              onChangeNavigateHome={() => {
+                changeParentSystemId(null);
+              }}
+              homeLocation="Systems"
+            />
+
+            <Box sx={{ p: 1, ...flexContainerProps, minHeight: '500px' }}>
               {parentSystemId &&
                 selectedItems.length !== 0 &&
                 !isSelectedRulesLoading &&
@@ -318,23 +322,37 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
                 selectedSystems={[]}
                 type="copyTo"
               />
-            </Grid>
-          </Grid>
+            </Box>
+          </Stack>
         );
       case 1:
         return (
-          <SystemItemsUsageStatusTable
-            items={selectedItems}
-            onChangeUsageStatuses={setUsageStatuses}
-            usageStatuses={usageStatuses}
-          />
+          <Box
+            sx={{
+              p: 1,
+              ...flexContainerProps,
+              height: '100%',
+              minHeight: '500px',
+            }}
+          >
+            <SystemItemsUsageStatusTable
+              items={selectedItems}
+              onChangeUsageStatuses={setUsageStatuses}
+              usageStatuses={usageStatuses}
+            />
+          </Box>
         );
     }
   };
 
   return (
-    <Dialog open={open} maxWidth="xl" fullWidth>
-      <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
+    <Dialog
+      open={open}
+      {...(isAdminMode ? formWithStepperDialogProps : tableDialogProps)}
+    >
+      <DialogTitle
+        sx={{ display: 'inline-flex', alignItems: 'center', paddingBottom: 0 }}
+      >
         Move{' '}
         {selectedItems.length > 1 ? `${selectedItems.length} items` : '1 item'}{' '}
         to a different system{isAdminMode ? ' as Admin' : ''}
@@ -351,7 +369,11 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
           </Tooltip>
         )}
       </DialogTitle>
-      <DialogContent>
+      <DialogContent
+        sx={{
+          height: `calc(100% - 16px ${isAdminMode ? '- 40px' : ''})`,
+        }}
+      >
         {isAdminMode && (
           <Stepper
             nonLinear
@@ -389,7 +411,9 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
             })}
           </Stepper>
         )}
-        <Box sx={{ marginTop: 2 }}>{renderStepContent(activeStep)}</Box>
+        <Box sx={{ marginTop: 2, height: 'inherit' }}>
+          {renderStepContent(activeStep)}
+        </Box>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} sx={{ mr: 'auto' }}>

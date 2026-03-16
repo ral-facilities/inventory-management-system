@@ -52,7 +52,7 @@ import {
 } from '../../form.schemas';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component';
-import { sortDataList } from '../../utils';
+import { formWithStepperDialogProps, sortDataList } from '../../utils';
 
 const RECENT_MANUFACTURER_CUTOFF_TIME = 10 * 60 * 1000;
 
@@ -689,7 +689,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 size="small"
                 {...registerDetailsStep('notes')}
                 multiline
-                minRows={5}
+                minRows={8}
                 fullWidth
               />
             </Grid>
@@ -884,12 +884,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     }
   };
   return (
-    <Dialog
-      PaperProps={{ sx: { height: '910px' } }}
-      open={open}
-      maxWidth="lg"
-      fullWidth
-    >
+    <Dialog open={open} {...formWithStepperDialogProps}>
       <DialogTitle>{`${
         requestType === 'patch' ? 'Edit' : 'Add'
       } Catalogue Item`}</DialogTitle>

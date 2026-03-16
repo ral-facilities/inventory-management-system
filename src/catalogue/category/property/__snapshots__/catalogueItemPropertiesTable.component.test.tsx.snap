@@ -3,10 +3,10 @@
 exports[`CatalogueItemPropertiesTable > renders table correctly (not editing properties) 1`] = `
 <DocumentFragment>
   <div
-    style="width: 100%;"
+    class="MuiBox-root css-1wyqftk"
   >
     <div
-      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-1hoqul-MuiPaper-root"
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-th9pv0-MuiPaper-root"
       style="--Paper-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);"
     >
       <div
@@ -209,12 +209,12 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
         </div>
       </div>
       <div
-        class="MuiTableContainer-root css-1jqhb4h-MuiTableContainer-root"
+        class="MuiTableContainer-root css-1qjrzjp-MuiTableContainer-root"
         data-testid="properties-table-container"
       >
         <table
           class="MuiTable-root MuiTable-stickyHeader css-1gcyac0-MuiTable-root"
-          style="--header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-name-size: 220; --col-name-size: 220; --header-type-size: 250; --col-type-size: 250; --header-allowed_values-size: 300; --col-allowed_values-size: 300; --header-unit-size: 250; --col-unit-size: 250; --header-property_mandatory-size: 200; --col-property_mandatory-size: 200; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
+          style="--header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-name-size: 345; --col-name-size: 345; --header-type-size: 250; --col-type-size: 250; --header-allowed_values-size: 345; --col-allowed_values-size: 345; --header-unit-size: 250; --col-unit-size: 250; --header-property_mandatory-size: 200; --col-property_mandatory-size: 200; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
         >
           <thead
             class="MuiTableHead-root css-7psuou-MuiTableHead-root"
