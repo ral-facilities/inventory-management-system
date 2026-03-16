@@ -235,7 +235,7 @@ export function SystemItemsUsageStatusTable(
           ...COLUMN_FILTER_MODE_OPTIONS.string,
           ...['betweenInclusive'],
         ],
-        size: 250,
+        size: isCriticalMode ? 460 : 660,
         enableGrouping: false,
       },
       {
@@ -377,6 +377,7 @@ export function SystemItemsUsageStatusTable(
     ];
   }, [
     isSparesDefinitionDefined,
+    isCriticalMode,
     usageStatusesData,
     usageStatuses,
     aggregatedCellUsageStatus,
@@ -446,6 +447,9 @@ export function SystemItemsUsageStatusTable(
       showColumnFilters: true,
       showGlobalFilter: true,
       expanded: initialExpanded,
+      columnVisibility: {
+        'catalogueItem.is_flagged': isCriticalMode,
+      },
     },
     state: {
       ...preservedState,
@@ -548,6 +552,21 @@ export function SystemItemsUsageStatusTable(
         />
       ) : undefined,
   });
+
+  React.useEffect(() => {
+    if (isSparesDefinitionDefined)
+      table.setColumnVisibility((prev) => {
+        const nextOn = isCriticalMode;
+        const same = prev['catalogueItem.is_flagged'] === nextOn;
+
+        if (same) return prev;
+
+        return {
+          ...prev,
+          'catalogueItem.is_flagged': nextOn,
+        };
+      });
+  }, [isCriticalMode, isSparesDefinitionDefined, table]);
 
   return <MaterialReactTable table={table} />;
 }

@@ -137,7 +137,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
         header: 'Name',
         id: 'name',
         accessorKey: 'name',
-        size: isCriticalMode ? 535 : 200,
+        size: isCriticalMode ? 520 : 720,
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
