@@ -16,6 +16,7 @@ jq \
   --arg pluginHost "$PLUGIN_HOST" \
   '.imsApiUrl = $imsApiUrl |
    .osApiUrl = $osApiUrl |
+   .imsJsApiUrl = $imsJsApiUrl |
    .maxAttachmentSizeBytes = $maxAttachmentSizeBytes |
    .attachmentAllowedFileExtensions = $attachmentAllowedFileExtensions |
    .imageAllowedFileExtensions = $imageAllowedFileExtensions |
