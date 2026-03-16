@@ -179,7 +179,7 @@ const CatalogueCategoryDirectoryDialog = (
           </Grid>
         </Grid>
       </DialogTitle>
-      <DialogContent sx={flexContainerProps}>
+      <DialogContent sx={{ ...flexContainerProps, minHeight: '500px' }}>
         <CatalogueCategoryTableView
           selectedCategories={selectedCategories}
           catalogueCategoryParentId={parentCategoryId ?? undefined}

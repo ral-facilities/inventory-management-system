@@ -318,12 +318,13 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
           ? 'Edit Catalogue Category'
           : 'Add Catalogue Category'}
       </DialogTitle>
-      <DialogContent sx={flexContainerProps}>
+      <DialogContent sx={{ height: '100%' }}>
         <Stack
           spacing={1}
           sx={{
             width: '100%',
-            ...flexContainerProps,
+            height: 'inherit',
+            overflow: 'auto',
           }}
         >
           <Grid
@@ -335,7 +336,7 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
                 id="catalogue-category-name-input"
                 label="Name"
                 required
-                sx={{ marginLeft: '4px', marginTop: '8px' }}
+                sx={{ marginTop: '8px', paddingRight: 1 }}
                 {...register('name')}
                 error={!!errors.name}
                 helperText={errors.name?.message}
@@ -416,7 +417,13 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
           {isLeaf === 'true' && (
             <>
               <Divider sx={{ minWidth: '700px' }} />
-              <Box sx={{ paddingLeft: 1, ...flexContainerProps }}>
+              <Box
+                sx={{
+                  paddingLeft: 1,
+                  ...flexContainerProps,
+                  minHeight: '500px',
+                }}
+              >
                 <Typography variant="h6">Catalogue Item Properties</Typography>
                 <Box
                   sx={{

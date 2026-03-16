@@ -224,7 +224,7 @@ const ObsoleteCatalogueItemDialog = (
               '& .MuiAutocomplete-input': {
                 textAlign: 'center',
               },
-              margin: 1,
+              p: 1,
             }}
             fullWidth
             options={['Yes', 'No']}
@@ -303,7 +303,7 @@ const ObsoleteCatalogueItemDialog = (
   return (
     <Dialog open={open} {...formWithStepperDialogProps}>
       <DialogTitle>Obsolete Catalogue Item</DialogTitle>
-      <DialogContent sx={flexContainerProps}>
+      <DialogContent sx={{ height: 'calc(100% - 56px)' }}>
         <Stepper
           // Allow user to skip steps if want to
           nonLinear
@@ -319,7 +319,15 @@ const ObsoleteCatalogueItemDialog = (
             </Step>
           ))}
         </Stepper>
-        <Box sx={{ textAlign: 'center', marginTop: 2, ...flexContainerProps }}>
+        <Box
+          sx={{
+            textAlign: 'center',
+            marginTop: 2,
+            ...flexContainerProps,
+            height: 'inherit',
+            minHeight: '500px',
+          }}
+        >
           {renderStepContent(activeStep)}
         </Box>
         {formError && (

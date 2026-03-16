@@ -7,13 +7,13 @@ import {
   DialogContent,
   DialogTitle,
   FormHelperText,
+  Stack,
   Step,
   StepLabel,
   Stepper,
   Tooltip,
   Typography,
 } from '@mui/material';
-import Grid from '@mui/material/Grid2';
 import { MRT_RowSelectionState } from 'material-react-table';
 import React from 'react';
 import { Item } from '../api/api.types';
@@ -270,18 +270,17 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     switch (step) {
       case 0:
         return (
-          <Grid sx={flexContainerProps} container spacing={1.5} size={12}>
-            <Grid size={12}>
-              <Breadcrumbs
-                breadcrumbsInfo={parentSystemBreadcrumbs}
-                onChangeNode={changeParentSystemId}
-                onChangeNavigateHome={() => {
-                  changeParentSystemId(null);
-                }}
-                homeLocation="Systems"
-              />
-            </Grid>
-            <Grid sx={{ p: 1, ...flexContainerProps }} size={12}>
+          <Stack sx={{ height: '100%' }} spacing={1.5}>
+            <Breadcrumbs
+              breadcrumbsInfo={parentSystemBreadcrumbs}
+              onChangeNode={changeParentSystemId}
+              onChangeNavigateHome={() => {
+                changeParentSystemId(null);
+              }}
+              homeLocation="Systems"
+            />
+
+            <Box sx={{ p: 1, ...flexContainerProps, minHeight: '500px' }}>
               {parentSystemId &&
                 selectedItems.length !== 0 &&
                 !isSelectedRulesLoading &&
@@ -323,12 +322,19 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
                 selectedSystems={[]}
                 type="copyTo"
               />
-            </Grid>
-          </Grid>
+            </Box>
+          </Stack>
         );
       case 1:
         return (
-          <Box sx={{ p: 1, ...flexContainerProps }}>
+          <Box
+            sx={{
+              p: 1,
+              ...flexContainerProps,
+              height: '100%',
+              minHeight: '500px',
+            }}
+          >
             <SystemItemsUsageStatusTable
               items={selectedItems}
               onChangeUsageStatuses={setUsageStatuses}
@@ -363,7 +369,11 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
           </Tooltip>
         )}
       </DialogTitle>
-      <DialogContent sx={flexContainerProps}>
+      <DialogContent
+        sx={{
+          height: `calc(100% - 16px ${isAdminMode ? '- 40px' : ''})`,
+        }}
+      >
         {isAdminMode && (
           <Stepper
             nonLinear
@@ -401,7 +411,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
             })}
           </Stepper>
         )}
-        <Box sx={{ marginTop: 2, ...flexContainerProps }}>
+        <Box sx={{ marginTop: 2, height: 'inherit' }}>
           {renderStepContent(activeStep)}
         </Box>
       </DialogContent>

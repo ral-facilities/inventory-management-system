@@ -166,7 +166,7 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
           </Grid>
         </Grid>
       </DialogTitle>
-      <DialogContent sx={flexContainerProps}>
+      <DialogContent sx={{ ...flexContainerProps, minHeight: '500px' }}>
         <SystemsTableView
           systemsData={systemsData}
           systemsDataLoading={systemsDataLoading}

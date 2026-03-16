@@ -12,6 +12,7 @@ import {
   DialogTitle,
   FormHelperText,
   IconButton,
+  Stack,
   Step,
   StepLabel,
   Stepper,
@@ -660,7 +661,7 @@ function ItemDialog(props: ItemDialogProps) {
     switch (step) {
       case 0:
         return (
-          <Grid sx={{ p: 1, ...flexContainerProps }} size={12}>
+          <Stack sx={{ p: 1, height: '100%' }}>
             <Breadcrumbs
               breadcrumbsInfo={parentSystemBreadcrumbs}
               onChangeNode={setParentSystemId}
@@ -669,52 +670,53 @@ function ItemDialog(props: ItemDialogProps) {
               }}
               homeLocation="Systems"
             />
-
-            {parentSystemId &&
-              !isSelectedRulesLoading &&
-              !systemsDataLoading && (
-                <MRTTopTableAlert
-                  title={
-                    shouldShowMissingRuleWarning
-                      ? `WARNING: No rule exists for ${requestType === 'post' ? `creating a new item within this system type` : 'moving this item between these system types'} `
-                      : requestType === 'post'
-                        ? 'Item Creation Rule Applied'
-                        : 'Item Moving Rule Applied'
-                  }
-                  showInfoTooltip={!shouldShowMissingRuleWarning}
-                  infoTooltipTitle={
-                    requestType === 'post'
-                      ? `The new item's usage status will be set to ${dstUsageStatus}, according to the rules`
-                      : selectedItem?.system_id === parentSystemId
-                        ? `The item's usage status will remain the same, according to the rules`
-                        : `The item's usage status will be updated to ${dstUsageStatus}, according to the rules`
-                  }
-                  alertProps={{
-                    elevation: 1,
-                    color: shouldShowMissingRuleWarning ? 'warning' : 'info',
-                  }}
-                />
-              )}
-            <SystemsTableView
-              systemsData={systemsData}
-              systemsDataLoading={systemsDataLoading}
-              onChangeParentId={setParentSystemId}
-              systemParentId={parentSystemId ?? undefined}
-              isSystemSelectable={(system) => {
-                if (isAdminMode) return true;
-                const matchesSrc = system?.type_id === srcSystemTypeId;
-                const matchesAnyDstRule =
-                  Array.isArray(tableRules) &&
-                  tableRules.some(
-                    (rule) => rule?.dst_system_type?.id === system?.type_id
-                  );
-                return matchesSrc || matchesAnyDstRule;
-              }}
-              // Use most unrestricted variant (i.e. copy with no selection)
-              selectedSystems={[]}
-              type="copyTo"
-            />
-          </Grid>
+            <Box sx={{ p: 1, ...flexContainerProps, minHeight: '500px' }}>
+              {parentSystemId &&
+                !isSelectedRulesLoading &&
+                !systemsDataLoading && (
+                  <MRTTopTableAlert
+                    title={
+                      shouldShowMissingRuleWarning
+                        ? `WARNING: No rule exists for ${requestType === 'post' ? `creating a new item within this system type` : 'moving this item between these system types'} `
+                        : requestType === 'post'
+                          ? 'Item Creation Rule Applied'
+                          : 'Item Moving Rule Applied'
+                    }
+                    showInfoTooltip={!shouldShowMissingRuleWarning}
+                    infoTooltipTitle={
+                      requestType === 'post'
+                        ? `The new item's usage status will be set to ${dstUsageStatus}, according to the rules`
+                        : selectedItem?.system_id === parentSystemId
+                          ? `The item's usage status will remain the same, according to the rules`
+                          : `The item's usage status will be updated to ${dstUsageStatus}, according to the rules`
+                    }
+                    alertProps={{
+                      elevation: 1,
+                      color: shouldShowMissingRuleWarning ? 'warning' : 'info',
+                    }}
+                  />
+                )}
+              <SystemsTableView
+                systemsData={systemsData}
+                systemsDataLoading={systemsDataLoading}
+                onChangeParentId={setParentSystemId}
+                systemParentId={parentSystemId ?? undefined}
+                isSystemSelectable={(system) => {
+                  if (isAdminMode) return true;
+                  const matchesSrc = system?.type_id === srcSystemTypeId;
+                  const matchesAnyDstRule =
+                    Array.isArray(tableRules) &&
+                    tableRules.some(
+                      (rule) => rule?.dst_system_type?.id === system?.type_id
+                    );
+                  return matchesSrc || matchesAnyDstRule;
+                }}
+                // Use most unrestricted variant (i.e. copy with no selection)
+                selectedSystems={[]}
+                type="copyTo"
+              />
+            </Box>
+          </Stack>
         );
       case 1:
         return (
@@ -1272,7 +1274,7 @@ function ItemDialog(props: ItemDialogProps) {
         )}
       </DialogTitle>
 
-      <DialogContent sx={flexContainerProps}>
+      <DialogContent sx={{ height: `calc(100% - 56px)` }}>
         <Stepper
           nonLinear
           activeStep={activeStep}
@@ -1306,7 +1308,12 @@ function ItemDialog(props: ItemDialogProps) {
           })}
         </Stepper>
 
-        <Box sx={{ marginTop: 2, ...flexContainerProps }}>
+        <Box
+          sx={{
+            marginTop: 2,
+            height: 'inherit',
+          }}
+        >
           {renderStepContent(activeStep)}
         </Box>
       </DialogContent>

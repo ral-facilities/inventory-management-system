@@ -197,7 +197,7 @@ const CatalogueItemDirectoryDialog = (
           </Grid>
         </Grid>
       </DialogTitle>
-      <DialogContent sx={flexContainerProps}>
+      <DialogContent sx={{ ...flexContainerProps, minHeight: '500px' }}>
         {targetCatalogueCategory?.is_leaf ? (
           <CatalogueItemsTable
             parentInfo={targetCatalogueCategory}
