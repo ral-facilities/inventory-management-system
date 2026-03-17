@@ -3,8 +3,8 @@
 exports[`SystemItemsUsageStatusTable > renders correctly 1`] = `
 <DocumentFragment>
   <div
-    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-1hoqul-MuiPaper-root"
-    style="--Paper-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12); max-width: 100%;"
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-th9pv0-MuiPaper-root"
+    style="--Paper-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);"
   >
     <div
       class="MuiBox-root css-1tbggly"
@@ -165,7 +165,7 @@ exports[`SystemItemsUsageStatusTable > renders correctly 1`] = `
       </div>
     </div>
     <div
-      class="MuiTableContainer-root css-1oacet0-MuiTableContainer-root"
+      class="MuiTableContainer-root css-1qjrzjp-MuiTableContainer-root"
     >
       <table
         class="MuiTable-root MuiTable-stickyHeader css-ithv9-MuiTable-root"

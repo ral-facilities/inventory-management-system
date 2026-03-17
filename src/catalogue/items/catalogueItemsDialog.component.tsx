@@ -45,6 +45,7 @@ import {
   PropertiesStep,
   PropertyValue,
 } from '../../app.types';
+import { FORM_WITH_STEPPER_DIALOG_PROPS } from '../../common/consts';
 import {
   CatalogueItemDetailsStepSchema,
   PropertiesStepSchema,
@@ -689,7 +690,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 size="small"
                 {...registerDetailsStep('notes')}
                 multiline
-                minRows={5}
+                minRows={8}
                 fullWidth
               />
             </Grid>
@@ -884,12 +885,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     }
   };
   return (
-    <Dialog
-      PaperProps={{ sx: { height: '910px' } }}
-      open={open}
-      maxWidth="lg"
-      fullWidth
-    >
+    <Dialog open={open} {...FORM_WITH_STEPPER_DIALOG_PROPS}>
       <DialogTitle>{`${
         requestType === 'patch' ? 'Edit' : 'Add'
       } Catalogue Item`}</DialogTitle>

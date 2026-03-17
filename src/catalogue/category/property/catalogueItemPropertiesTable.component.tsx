@@ -40,6 +40,11 @@ import {
   mrtTheme,
 } from '../../../utils';
 
+import {
+  FLEX_CONTAINER_PROPS,
+  FLEX_TABLE_CONTAINER_PROP,
+} from '../../../common/consts';
+
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
@@ -50,10 +55,10 @@ import {
   ROWS_PER_PAGE_OPTIONS,
 } from '../../../common/consts';
 import { RequestType } from '../../../form.schemas';
-import PropertyDialog from './propertyDialog.component';
-import DeletePropertyDialog from './deletePropertyDialog.component';
 import { useAppSelector } from '../../../state/hook';
 import { selectAuthorisation } from '../../../state/slices/authorisationSlice';
+import DeletePropertyDialog from './deletePropertyDialog.component';
+import PropertyDialog from './propertyDialog.component';
 
 export interface PropertiesTableProps {
   requestType: RequestType;
@@ -106,7 +111,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.name,
         id: 'name',
-        size: 220,
+        size: 345,
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
@@ -151,7 +156,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
             .map((value) => value['value'])
             .join(', '),
         id: 'allowed_values',
-        size: 300,
+        size: 345,
         filterVariant: 'multi-select',
         filterFn: 'arrIncludesSome',
         columnFilterModeOptions: [
@@ -291,8 +296,9 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
     //MRT
     mrtTheme,
     // MUI
+    muiTablePaperProps: { sx: FLEX_CONTAINER_PROPS },
     muiTableContainerProps: {
-      sx: { height: '350px', width: '1152px' },
+      sx: FLEX_TABLE_CONTAINER_PROP,
       // @ts-expect-error: MRT Table Container props does not have data-testid
       'data-testid': 'properties-table-container',
     },
@@ -483,7 +489,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
       }),
   });
   return (
-    <div style={{ width: '100%' }}>
+    <Box sx={{ width: '100%', p: 1, ...FLEX_CONTAINER_PROPS }}>
       <MaterialReactTable table={table} />
       <DeletePropertyDialog
         open={deletePropertyDialogOpen}
@@ -497,7 +503,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
         selectedProperty={selectedProperty}
         catalogueCategory={catalogueCategory}
       />
-    </div>
+    </Box>
   );
 }
 

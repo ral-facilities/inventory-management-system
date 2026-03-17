@@ -23,6 +23,8 @@ import { APISettingsContext } from '../apiConfigProvider.component';
 import type { SystemTableType } from '../app.types';
 import {
   DEFAULT_ROWS_PER_PAGE_VALUE,
+  FLEX_CONTAINER_PROPS,
+  FLEX_TABLE_CONTAINER_PROP,
   ROWS_PER_PAGE_OPTIONS,
 } from '../common/consts';
 import CriticalityTooltipIcon from '../common/criticalityTooltipIcon.component';
@@ -135,7 +137,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
         header: 'Name',
         id: 'name',
         accessorKey: 'name',
-        size: 400,
+        size: isCriticalMode ? 535 : 200,
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
@@ -185,13 +187,13 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
         filterVariant: COLUMN_FILTER_VARIANTS.datetime,
         filterFn: COLUMN_FILTER_FUNCTIONS.datetime,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.datetime,
-        size: 400,
+        size: 385,
         enableGrouping: false,
         Cell: ({ row }) =>
           formatDateTimeStrings(row.original.modified_time, true),
       },
     ],
-    [isSparesDefinitionDefined, systemTypesData]
+    [isCriticalMode, isSparesDefinitionDefined, systemTypesData]
   );
   const table = useMaterialReactTable({
     // Data
@@ -202,7 +204,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
     enableColumnFilterModes: true,
     enableColumnPinning: false,
     enableTopToolbar: true,
-    enableColumnResizing: false,
+    enableColumnResizing: true,
     enableFacetedValues: true,
     enableRowActions: false,
     enableGlobalFilter: false,
@@ -278,7 +280,8 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
               );
             },
           },
-    muiTableContainerProps: { sx: { height: '360.4px' } },
+    muiTablePaperProps: { sx: FLEX_CONTAINER_PROPS },
+    muiTableContainerProps: { sx: FLEX_TABLE_CONTAINER_PROP },
     muiPaginationProps: {
       color: 'secondary',
       rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,

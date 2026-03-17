@@ -92,10 +92,10 @@ describe('Systems', () => {
     createView('/systems/65328f34a40ff5301575a4e3', 'system');
 
     await waitFor(() => {
-      expect(screen.getByText('Subsystems')).toBeInTheDocument();
+      expect(screen.getByText('Smaller laser')).toBeInTheDocument();
     });
 
-    expect(screen.getByText('Smaller laser')).toBeInTheDocument();
+    expect(screen.getByText('Subsystems')).toBeInTheDocument();
     expect(screen.getByText('Total Subsystems: 1')).toBeInTheDocument();
   });
 
