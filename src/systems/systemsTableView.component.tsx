@@ -187,7 +187,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
         filterVariant: COLUMN_FILTER_VARIANTS.datetime,
         filterFn: COLUMN_FILTER_FUNCTIONS.datetime,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.datetime,
-        size: 385,
+        size: 360,
         enableGrouping: false,
         Cell: ({ row }) =>
           formatDateTimeStrings(row.original.modified_time, true),

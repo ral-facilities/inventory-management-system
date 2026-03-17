@@ -394,7 +394,7 @@ exports[`SystemItemsDialog > displays correctly when in admin mode 1`] = `
                   >
                     <table
                       class="MuiTable-root MuiTable-stickyHeader css-1gcyac0-MuiTable-root"
-                      style="--header-name-size: 720; --col-name-size: 720; --header-type-size: 350; --col-type-size: 350; --header-modified_time-size: 385; --col-modified_time-size: 385; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
+                      style="--header-name-size: 720; --col-name-size: 720; --header-type-size: 350; --col-type-size: 350; --header-modified_time-size: 360; --col-modified_time-size: 360; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
                     >
                       <thead
                         class="MuiTableHead-root css-7psuou-MuiTableHead-root"
