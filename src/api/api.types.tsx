@@ -107,6 +107,7 @@ export type SystemPatch = Partial<SystemPost>;
 export interface System extends CreatedModifiedMixin, Required<SystemPost> {
   id: string;
   code: string;
+  is_flagged: boolean | null;
 }
 
 export interface SystemType {
@@ -308,4 +309,23 @@ export interface APIImageWithURL extends APIImage {
   not to their client first. */
   view_url: string;
   download_url: string;
+}
+
+// ------------------------------------ JOB SCHEDULER ------------------------------------------------
+
+export enum JobStatus {
+  Running = 'running',
+  Failed = 'failed',
+  Finished = 'finished',
+}
+
+export interface Job {
+  id: string;
+  last_executed_start_time: string | null;
+  last_executed_end_time: string | null;
+  status: JobStatus | null;
+  last_successful_executed_start_time: string | null;
+  last_successful_executed_end_time: string | null;
+  last_successful_duration_seconds: number | null;
+  next_scheduled_execution_time: string;
 }

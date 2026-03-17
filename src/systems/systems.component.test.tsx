@@ -1,6 +1,10 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { http, HttpResponse } from 'msw';
+import APIConfigProvider from '../apiConfigProvider.component';
+import { server } from '../mocks/server';
 import { URLPathKeyType } from '../paths';
+import { RootState } from '../state/store';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import Systems from './systems.component';
 
@@ -9,11 +13,18 @@ describe('Systems', () => {
   vi.setConfig({ testTimeout: 14000 });
 
   let user: UserEvent;
-  const createView = (path: string, urlPathKey?: URLPathKeyType) => {
+  const createView = (
+    path: string,
+    urlPathKey?: URLPathKeyType,
+    preloadedState?: Partial<RootState>
+  ) => {
     return renderComponentWithRouterProvider(
-      <Systems />,
+      <APIConfigProvider>
+        <Systems />
+      </APIConfigProvider>,
       urlPathKey ?? 'systems',
-      path
+      path,
+      preloadedState
     );
   };
 
@@ -38,6 +49,43 @@ describe('Systems', () => {
 
     expect(screen.getByText('Giant laser')).toBeInTheDocument();
     expect(screen.getByText('Total Systems: 5')).toBeInTheDocument();
+  });
+
+  it('renders correctly in critical mode', async () => {
+    createView('/systems', undefined, {
+      criticality: { isCriticalMode: true },
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('Root systems')).toBeInTheDocument();
+    });
+
+    await user.hover((await screen.findAllByTestId('ErrorIcon'))[0]);
+
+    expect(
+      await screen.findByText('This system is critical.')
+    ).toBeInTheDocument();
+    expect(screen.getByText('Giant laser')).toBeInTheDocument();
+    expect(screen.getByText('Total Systems: 5')).toBeInTheDocument();
+  });
+
+  it('renders correctly in critical mode when spares is not defined', async () => {
+    server.use(
+      http.get('/v1/settings/spares-definition', () => {
+        return HttpResponse.json(undefined, { status: 204 });
+      })
+    );
+    createView('/systems', undefined, {
+      criticality: { isCriticalMode: true },
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('Root systems')).toBeInTheDocument();
+    });
+
+    await waitFor(() =>
+      expect(screen.queryByTestId('ErrorIcon')).not.toBeInTheDocument()
+    );
   });
 
   it('renders correctly when viewing a specific system', async () => {
@@ -74,7 +122,7 @@ describe('Systems', () => {
     await user.click(toggleFullScreenButton);
 
     expect(router.state.location.search).toBe(
-      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuhvMgIaw32PM4SNCEYAHEvFhcAdhkGsRZZHg44xDEjJbD0JAO4zk8HWxAAbEhh44tp5AF8HQA'
+      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuhvMgIaw32PM4SNCEYAHEvFhcAdhkGsRZZHg44xDEjJbD0JAO4zk8HWxAAbEhh44tpkflphzXAOauaMMF3N5kAX38gA'
     );
 
     await waitFor(() => {
@@ -117,7 +165,7 @@ describe('Systems', () => {
     await user.click(toggleFullScreenButton);
 
     expect(router.state.location.search).toBe(
-      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuhvMgIaw32PM4SNCEYAHEvFhcAdhkGsRZZHg44xDEjJbD0JAO4zk8HWxAAbEhh44tp5AF8HQA'
+      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuhvMgIaw32PM4SNCEYAHEvFhcAdhkGsRZZHg44xDEjJbD0JAO4zk8HWxAAbEhh44tpkflphzXAOauaMMF3N5kAX38gA'
     );
 
     const clearFiltersButton = await screen.findByRole('button', {
@@ -154,9 +202,9 @@ describe('Systems', () => {
     expect(screen.getByText('Giant laser')).toBeInTheDocument();
     expect(screen.getByText('Total Systems: 5')).toBeInTheDocument();
 
-    const clearFiltersButton = await screen.findByTestId(
-      'clear-filters-button'
-    );
+    const clearFiltersButton = await screen.findByRole('button', {
+      name: 'clear filters button',
+    });
 
     await user.click(
       await screen.findByRole('button', { name: 'Show/Hide filters' })

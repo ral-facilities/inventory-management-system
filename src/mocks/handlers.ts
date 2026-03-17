@@ -21,6 +21,8 @@ import {
   Item,
   ItemPatch,
   ItemPost,
+  Job,
+  JobStatus,
   Manufacturer,
   ManufacturerPatch,
   ManufacturerPost,
@@ -1408,4 +1410,28 @@ export const handlers = [
       );
     }
   ),
+
+  // --------------------------------- JOB SCHEDULER ------------------------------------------------------
+
+  http.post<PathParams, DefaultBodyType, ErrorResponse | NonNullable<unknown>>(
+    '/jobs/criticality/run',
+    () => {
+      return HttpResponse.json(undefined, { status: 204 });
+    }
+  ),
+  http.get<PathParams, DefaultBodyType, Job>('/jobs/criticality', () => {
+    return HttpResponse.json(
+      {
+        id: '1',
+        last_executed_start_time: '2026-03-10T17:12:15.141Z',
+        last_executed_end_time: '2026-03-10T17:12:15.141Z',
+        status: JobStatus.Finished,
+        last_successful_executed_start_time: '2026-03-10T17:12:15.141Z',
+        last_successful_executed_end_time: '2026-03-10T17:12:15.141Z',
+        last_successful_duration_seconds: 0.123,
+        next_scheduled_execution_time: '2026-03-10T17:12:15.141Z',
+      },
+      { status: 200 }
+    );
+  }),
 ];

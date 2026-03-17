@@ -725,7 +725,7 @@ describe('catalogue categories api functions', () => {
         {
           message: 'Editing property test in Dry Vacuum Pumps',
           name: 'Dry Vacuum Pumps',
-          state: 'information',
+          state: 'info',
         },
       ]);
 
@@ -757,7 +757,7 @@ describe('catalogue categories api functions', () => {
         {
           message: 'Editing property Error 500 in Dry Vacuum Pumps',
           name: 'Dry Vacuum Pumps',
-          state: 'information',
+          state: 'info',
         },
       ]);
 
@@ -810,7 +810,7 @@ describe('catalogue categories api functions', () => {
         {
           message: 'Adding property test in Cameras',
           name: 'Cameras',
-          state: 'information',
+          state: 'info',
         },
       ]);
 
@@ -841,7 +841,7 @@ describe('catalogue categories api functions', () => {
         {
           message: 'Adding property Error 500 in Cameras',
           name: 'Cameras',
-          state: 'information',
+          state: 'info',
         },
       ]);
 
@@ -896,7 +896,7 @@ describe('catalogue categories api functions', () => {
         {
           name: 'Dry Vacuum Pumps',
           message: `Deleting property test from Dry Vacuum Pumps`,
-          state: 'information',
+          state: 'info',
         },
       ]);
       expect(handleTransferState).toHaveBeenCalledWith([

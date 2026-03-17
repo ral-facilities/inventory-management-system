@@ -1,8 +1,12 @@
 import { QueryClient } from '@tanstack/react-query';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { http, HttpResponse } from 'msw';
 import type { LoaderFunctionArgs } from 'react-router';
+import APIConfigProvider from '../apiConfigProvider.component';
+import { server } from '../mocks/server';
 import { URLPathKeyType } from '../paths';
+import { RootState } from '../state/store';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import SystemsLayout, {
   SystemsLayoutErrorComponent,
@@ -26,11 +30,18 @@ describe('Systems Layout', () => {
     vi.clearAllMocks();
   });
 
-  const createView = (path: string, urlPathKey: URLPathKeyType) => {
+  const createView = (
+    path: string,
+    urlPathKey: URLPathKeyType,
+    preloadedState?: Partial<RootState>
+  ) => {
     return renderComponentWithRouterProvider(
-      <SystemsLayout />,
+      <APIConfigProvider>
+        <SystemsLayout />
+      </APIConfigProvider>,
       urlPathKey,
-      path
+      path,
+      preloadedState
     );
   };
 
@@ -52,7 +63,36 @@ describe('Systems Layout', () => {
     const view = createView('/systems/65328f34a40ff5301575a4e3', 'system');
 
     await waitFor(() => {
-      expect(screen.getByText('Giant laser')).toBeInTheDocument();
+      expect(screen.getAllByText('Giant laser')).toHaveLength(2);
+    });
+
+    expect(view.asFragment()).toMatchSnapshot();
+  });
+
+  it('renders critical mode correctly', async () => {
+    const view = createView('/systems/65328f34a40ff5301575a4e3', 'system', {
+      criticality: { isCriticalMode: true },
+    });
+
+    await waitFor(() => {
+      expect(screen.getAllByText('Giant laser')).toHaveLength(2);
+    });
+
+    expect(view.asFragment()).toMatchSnapshot();
+  });
+
+  it('renders critical mode correctly when spares is not defined', async () => {
+    server.use(
+      http.get('/v1/settings/spares-definition', () => {
+        return HttpResponse.json(undefined, { status: 204 });
+      })
+    );
+    const view = createView('/systems/65328f34a40ff5301575a4e3', 'system', {
+      criticality: { isCriticalMode: true },
+    });
+
+    await waitFor(() => {
+      expect(screen.getAllByText('Giant laser')).toHaveLength(2);
     });
 
     expect(view.asFragment()).toMatchSnapshot();
@@ -62,7 +102,7 @@ describe('Systems Layout', () => {
     createView('/systems/65328f34a40ff5301575a4e3', 'system');
 
     await waitFor(() => {
-      expect(screen.getByText('Giant laser')).toBeInTheDocument();
+      expect(screen.getAllByText('Giant laser')).toHaveLength(2);
     });
 
     const homeButton = screen.getByRole('button', {

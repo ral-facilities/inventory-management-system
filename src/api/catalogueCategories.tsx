@@ -131,7 +131,7 @@ export const usePostCatalogueCategoryProperty = (): UseMutationResult<
         {
           name: catalogueCategory.name,
           message: `Adding property ${property.name} in ${catalogueCategory.name}`,
-          state: 'information',
+          state: 'info',
         },
       ]);
       return postCatalogueCategoryProperty(catalogueCategory, property);
@@ -208,7 +208,7 @@ export const usePatchCatalogueCategoryProperty = (): UseMutationResult<
         {
           name: catalogueCategory.name,
           message: `Editing property ${property.name} in ${catalogueCategory.name}`,
-          state: 'information',
+          state: 'info',
         },
       ]);
       return patchCatalogueCategoryProperty(
@@ -491,7 +491,7 @@ export const useDeleteCatalogueCategoryProperty = (): UseMutationResult<
         {
           name: catalogueCategory.name,
           message: `Deleting property ${property.name} from ${catalogueCategory.name}`,
-          state: 'information',
+          state: 'info',
         },
       ]);
       return deleteCatalogueCategoryProperty(catalogueCategory.id, property.id);
