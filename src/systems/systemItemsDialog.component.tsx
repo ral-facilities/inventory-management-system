@@ -26,13 +26,13 @@ import {
   useGetSystemsBreadcrumbs,
 } from '../api/systems';
 import { MoveItemsToSystemUsageStatus } from '../app.types';
+import {
+  FLEX_CONTAINER_PROPS,
+  FORM_WITH_STEPPER_DIALOG_PROPS,
+  TABLE_DIALOG_PROPS,
+} from '../common/consts';
 import MRTTopTableAlert from '../common/mrtTopTableAlert.component';
 import handleTransferState from '../handleTransferState';
-import {
-  flexContainerProps,
-  formWithStepperDialogProps,
-  tableDialogProps,
-} from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { SystemItemsUsageStatusTable } from './systemItemsUsageStatuses.component';
 import { SystemsTableView } from './systemsTableView.component';
@@ -280,7 +280,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
               homeLocation="Systems"
             />
 
-            <Box sx={{ p: 1, ...flexContainerProps, minHeight: '500px' }}>
+            <Box sx={{ p: 1, ...FLEX_CONTAINER_PROPS, minHeight: '500px' }}>
               {parentSystemId &&
                 selectedItems.length !== 0 &&
                 !isSelectedRulesLoading &&
@@ -330,7 +330,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
           <Box
             sx={{
               p: 1,
-              ...flexContainerProps,
+              ...FLEX_CONTAINER_PROPS,
               height: '100%',
               minHeight: '500px',
             }}
@@ -348,7 +348,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   return (
     <Dialog
       open={open}
-      {...(isAdminMode ? formWithStepperDialogProps : tableDialogProps)}
+      {...(isAdminMode ? FORM_WITH_STEPPER_DIALOG_PROPS : TABLE_DIALOG_PROPS)}
     >
       <DialogTitle
         sx={{ display: 'inline-flex', alignItems: 'center', paddingBottom: 0 }}

@@ -39,14 +39,14 @@ import {
   AddCatalogueCategoryWithPlacementIds,
   AllowedValues as AllowedValuesPlaceholder,
 } from '../../app.types';
+import {
+  FLEX_CONTAINER_PROPS,
+  FORM_DIALOG_PROPS,
+  TABLE_DIALOG_PROPS,
+} from '../../common/consts';
 import { CatalogueCategorySchema, RequestType } from '../../form.schemas';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import handleTransferState from '../../handleTransferState';
-import {
-  flexContainerProps,
-  formDialogProps,
-  tableDialogProps,
-} from '../../utils';
 import CatalogueItemsPropertiesTable from './property/catalogueItemPropertiesTable.component';
 
 // Function to convert a list of strings to a list of numbers
@@ -311,7 +311,7 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
   return (
     <Dialog
       open={open}
-      {...(isLeaf === 'true' ? tableDialogProps : formDialogProps)}
+      {...(isLeaf === 'true' ? TABLE_DIALOG_PROPS : FORM_DIALOG_PROPS)}
     >
       <DialogTitle>
         {requestType === 'patch'
@@ -336,7 +336,7 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
                 id="catalogue-category-name-input"
                 label="Name"
                 required
-                sx={{ marginTop: '8px', paddingRight: 1 }}
+                sx={{ marginTop: 1, paddingRight: 1 }}
                 {...register('name')}
                 error={!!errors.name}
                 helperText={errors.name?.message}
@@ -420,7 +420,7 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
               <Box
                 sx={{
                   paddingLeft: 1,
-                  ...flexContainerProps,
+                  ...FLEX_CONTAINER_PROPS,
                   minHeight: '500px',
                 }}
               >
@@ -428,7 +428,7 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
                 <Box
                   sx={{
                     mt: 1,
-                    ...flexContainerProps,
+                    ...FLEX_CONTAINER_PROPS,
                   }}
                 >
                   <FormProvider {...formMethods}>

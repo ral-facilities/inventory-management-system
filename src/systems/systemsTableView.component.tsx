@@ -23,6 +23,8 @@ import { APISettingsContext } from '../apiConfigProvider.component';
 import type { SystemTableType } from '../app.types';
 import {
   DEFAULT_ROWS_PER_PAGE_VALUE,
+  FLEX_CONTAINER_PROPS,
+  FLEX_TABLE_CONTAINER_PROP,
   ROWS_PER_PAGE_OPTIONS,
 } from '../common/consts';
 import CriticalityTooltipIcon from '../common/criticalityTooltipIcon.component';
@@ -40,8 +42,6 @@ import {
   TableHeaderOverflowTip,
   criticalityRowStyle,
   customFilterFunctions,
-  flexContainerProps,
-  flexTableContainerProps,
   formatDateTimeStrings,
   mrtTheme,
 } from '../utils';
@@ -280,8 +280,8 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
               );
             },
           },
-    muiTablePaperProps: { sx: flexContainerProps },
-    muiTableContainerProps: { sx: flexTableContainerProps },
+    muiTablePaperProps: { sx: FLEX_CONTAINER_PROPS },
+    muiTableContainerProps: { sx: FLEX_TABLE_CONTAINER_PROP },
     muiPaginationProps: {
       color: 'secondary',
       rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,

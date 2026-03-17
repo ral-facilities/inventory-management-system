@@ -36,11 +36,14 @@ import {
   TableHeaderOverflowTip,
   customFilterFunctions,
   displayTableRowCountText,
-  flexContainerProps,
-  flexTableContainerProps,
   getInitialColumnFilterFnState,
   mrtTheme,
 } from '../../../utils';
+
+import {
+  FLEX_CONTAINER_PROPS,
+  FLEX_TABLE_CONTAINER_PROP,
+} from '../../../common/consts';
 
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -293,9 +296,9 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
     //MRT
     mrtTheme,
     // MUI
-    muiTablePaperProps: { sx: flexContainerProps },
+    muiTablePaperProps: { sx: FLEX_CONTAINER_PROPS },
     muiTableContainerProps: {
-      sx: flexTableContainerProps,
+      sx: FLEX_TABLE_CONTAINER_PROP,
       // @ts-expect-error: MRT Table Container props does not have data-testid
       'data-testid': 'properties-table-container',
     },
@@ -486,7 +489,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
       }),
   });
   return (
-    <Box sx={{ width: '100%', p: 1, ...flexContainerProps }}>
+    <Box sx={{ width: '100%', p: 1, ...FLEX_CONTAINER_PROPS }}>
       <MaterialReactTable table={table} />
       <DeletePropertyDialog
         open={deletePropertyDialogOpen}

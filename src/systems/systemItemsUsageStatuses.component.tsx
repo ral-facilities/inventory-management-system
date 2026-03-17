@@ -25,6 +25,8 @@ import { APISettingsContext } from '../apiConfigProvider.component';
 import { getCICriticalityLabel } from '../catalogue/items/catalogueItemsTable.component';
 import {
   DEFAULT_ROWS_PER_PAGE_VALUE,
+  FLEX_CONTAINER_PROPS,
+  FLEX_TABLE_CONTAINER_PROP,
   ROWS_PER_PAGE_OPTIONS,
 } from '../common/consts';
 import CriticalityTooltipIcon from '../common/criticalityTooltipIcon.component';
@@ -44,8 +46,6 @@ import {
   TableHeaderOverflowTip,
   criticalityRowStyle,
   customFilterFunctions,
-  flexContainerProps,
-  flexTableContainerProps,
   getInitialColumnFilterFnState,
   mrtTheme,
 } from '../utils';
@@ -496,8 +496,8 @@ export function SystemItemsUsageStatusTable(
         }),
       };
     },
-    muiTablePaperProps: { sx: flexContainerProps },
-    muiTableContainerProps: { sx: flexTableContainerProps },
+    muiTablePaperProps: { sx: FLEX_CONTAINER_PROPS },
+    muiTableContainerProps: { sx: FLEX_TABLE_CONTAINER_PROP },
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',

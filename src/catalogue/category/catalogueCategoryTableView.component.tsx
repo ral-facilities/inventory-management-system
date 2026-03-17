@@ -20,6 +20,8 @@ import { CatalogueCategory } from '../../api/api.types';
 import { APISettingsContext } from '../../apiConfigProvider.component';
 import {
   DEFAULT_ROWS_PER_PAGE_VALUE,
+  FLEX_CONTAINER_PROPS,
+  FLEX_TABLE_CONTAINER_PROP,
   ROWS_PER_PAGE_OPTIONS,
 } from '../../common/consts';
 import CriticalityTooltipIcon from '../../common/criticalityTooltipIcon.component';
@@ -32,8 +34,6 @@ import {
   COLUMN_FILTER_VARIANTS,
   criticalityRowStyle,
   displayTableRowCountText,
-  flexContainerProps,
-  flexTableContainerProps,
   formatDateTimeStrings,
   generateUniqueName,
   mrtTheme,
@@ -132,7 +132,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
         filterVariant: COLUMN_FILTER_VARIANTS.datetime,
         filterFn: COLUMN_FILTER_FUNCTIONS.datetime,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.datetime,
-        size: isCriticalMode ? 590 : 690,
+        size: isCriticalMode ? 570 : 670,
         enableGrouping: false,
         Cell: ({ row }) =>
           formatDateTimeStrings(row.original.modified_time, true),
@@ -229,8 +229,8 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
               );
             },
           },
-    muiTablePaperProps: { sx: flexContainerProps },
-    muiTableContainerProps: { sx: flexTableContainerProps },
+    muiTablePaperProps: { sx: FLEX_CONTAINER_PROPS },
+    muiTableContainerProps: { sx: FLEX_TABLE_CONTAINER_PROP },
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',
@@ -306,7 +306,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
   }, [isCriticalMode, table]);
 
   return (
-    <Box sx={{ p: 1, ...flexContainerProps }}>
+    <Box sx={{ p: 1, ...FLEX_CONTAINER_PROPS }}>
       <MaterialReactTable table={table} />
     </Box>
   );
