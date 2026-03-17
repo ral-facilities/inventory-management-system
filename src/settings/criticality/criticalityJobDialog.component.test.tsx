@@ -1,5 +1,7 @@
 import { act, screen, waitFor } from '@testing-library/react';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
+import handleTransferState from '../../handleTransferState';
 import { server } from '../../mocks/server';
 import { RootState } from '../../state/store';
 import { renderComponentWithRouterProvider } from '../../testUtils';
@@ -7,8 +9,11 @@ import CriticalityJobDialog, {
   CriticalityJobDialogProps,
 } from './criticalityJobDialog.component';
 
+vi.mock('../../handleTransferState');
+
 describe('Criticality dialog', () => {
   let props: CriticalityJobDialogProps;
+  let user: UserEvent;
 
   const onClose = vi.fn();
 
@@ -26,6 +31,7 @@ describe('Criticality dialog', () => {
       open: true,
       onClose: onClose,
     };
+    user = userEvent.setup();
   });
 
   afterEach(() => {
@@ -54,7 +60,16 @@ describe('Criticality dialog', () => {
 
     const runJobButton = screen.getByRole('button', { name: 'Run Job' });
 
-    expect(runJobButton).toBeInTheDocument();
+    await user.click(runJobButton);
+
+    expect(handleTransferState).toBeCalledTimes(1);
+    expect(handleTransferState).toHaveBeenCalledWith([
+      {
+        name: 'Criticality',
+        message: 'Job successfully sent to scheduler.',
+        state: 'success',
+      },
+    ]);
   });
 
   it('display warning message, when the job is not found', async () => {
@@ -91,6 +106,13 @@ describe('Criticality dialog', () => {
     await waitFor(() => {
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument();
     });
+
+    await waitFor(() => {
+      expect(
+        screen.queryByRole('button', { name: 'Run Job' })
+      ).not.toBeInTheDocument();
+    });
+
     expect(
       screen.getByText('Not enabled. Please contact support to enable it.')
     ).toBeInTheDocument();

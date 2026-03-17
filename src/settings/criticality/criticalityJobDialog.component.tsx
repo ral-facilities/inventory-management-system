@@ -17,6 +17,7 @@ import React from 'react';
 import { JobStatus } from '../../api/api.types';
 import { useGetJob, usePostJob } from '../../api/jobs';
 import handleIMS_APIError from '../../handleIMS_APIError';
+import handleTransferState from '../../handleTransferState';
 import { useAppSelector } from '../../state/hook';
 import { selectAuthorisation } from '../../state/slices/authorisationSlice';
 import { formatDateTimeStrings } from '../../utils';
@@ -37,10 +38,21 @@ function CriticalityJobDialog(props: CriticalityJobDialogProps) {
   const isRunning = job?.status === JobStatus.Running;
 
   const handlePostJob = React.useCallback(() => {
-    postJob().catch((error: AxiosError) => {
-      handleIMS_APIError(error);
-    });
-  }, [postJob]);
+    postJob()
+      .then(() => {
+        handleTransferState([
+          {
+            name: 'Criticality',
+            message: 'Job successfully sent to scheduler.',
+            state: 'success',
+          },
+        ]);
+        onClose();
+      })
+      .catch((error: AxiosError) => {
+        handleIMS_APIError(error);
+      });
+  }, [onClose, postJob]);
   React.useEffect(() => {
     if (open) refetch();
   }, [open, refetch]);
@@ -153,7 +165,7 @@ function CriticalityJobDialog(props: CriticalityJobDialogProps) {
       <DialogActions>
         <Button onClick={onClose}>Close</Button>
 
-        {isAdminMode && (
+        {isAdminMode && !isLoading && job && typeof job === 'object' && (
           <Button
             variant="contained"
             color="primary"
