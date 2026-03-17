@@ -31,12 +31,12 @@ import {
   usePatchCatalogueItem,
 } from '../../api/catalogueItems';
 import { ObsoleteDetails } from '../../app.types';
-import handleIMS_APIError from '../../handleIMS_APIError';
 import {
-  flexContainerProps,
-  formWithStepperDialogProps,
-  trimStringValues,
-} from '../../utils';
+  FLEX_CONTAINER_PROPS,
+  FORM_WITH_STEPPER_DIALOG_PROPS,
+} from '../../common/consts';
+import handleIMS_APIError from '../../handleIMS_APIError';
+import { trimStringValues } from '../../utils';
 import Breadcrumbs from '../../view/breadcrumbs.component';
 import CatalogueCategoryTableView from '../category/catalogueCategoryTableView.component';
 import CatalogueItemsTable from './catalogueItemsTable.component';
@@ -301,7 +301,7 @@ const ObsoleteCatalogueItemDialog = (
     }
   };
   return (
-    <Dialog open={open} {...formWithStepperDialogProps}>
+    <Dialog open={open} {...FORM_WITH_STEPPER_DIALOG_PROPS}>
       <DialogTitle>Obsolete Catalogue Item</DialogTitle>
       <DialogContent sx={{ height: 'calc(100% - 56px)' }}>
         <Stepper
@@ -323,7 +323,7 @@ const ObsoleteCatalogueItemDialog = (
           sx={{
             textAlign: 'center',
             marginTop: 2,
-            ...flexContainerProps,
+            ...FLEX_CONTAINER_PROPS,
             height: 'inherit',
             minHeight: '500px',
           }}

@@ -19,8 +19,8 @@ import {
   useGetSystemsBreadcrumbs,
   useMoveToSystem,
 } from '../api/systems';
+import { FLEX_CONTAINER_PROPS, TABLE_DIALOG_PROPS } from '../common/consts';
 import handleTransferState from '../handleTransferState';
-import { flexContainerProps, tableDialogProps } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { SystemsTableView } from './systemsTableView.component';
 
@@ -122,7 +122,7 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
   ]);
 
   return (
-    <Dialog open={open} {...tableDialogProps}>
+    <Dialog open={open} {...TABLE_DIALOG_PROPS}>
       <DialogTitle sx={{ marginLeft: 2, paddingBottom: 0 }}>
         <Grid container spacing={2}>
           <Grid>
@@ -166,7 +166,7 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
           </Grid>
         </Grid>
       </DialogTitle>
-      <DialogContent sx={{ ...flexContainerProps, minHeight: '500px' }}>
+      <DialogContent sx={{ ...FLEX_CONTAINER_PROPS, minHeight: '500px' }}>
         <SystemsTableView
           systemsData={systemsData}
           systemsDataLoading={systemsDataLoading}

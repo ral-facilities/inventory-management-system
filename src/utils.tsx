@@ -1,6 +1,5 @@
 import {
   alpha,
-  DialogProps,
   Link as MuiLink,
   SxProps,
   TableCell,
@@ -755,41 +754,3 @@ export function roundUpTenth(x?: number | null) {
     return Math.floor(x * 10) / 10;
   }
 }
-
-export const tableDialogProps: Omit<DialogProps, 'open'> = {
-  maxWidth: 'xl',
-  slotProps: {
-    paper: {
-      sx: {
-        height: '100%',
-      },
-    },
-  },
-  fullWidth: true,
-};
-
-export const formDialogProps: Omit<DialogProps, 'open'> = {
-  maxWidth: 'xl',
-  slotProps: {
-    paper: {
-      sx: {
-        maxHeight: '100%',
-      },
-    },
-  },
-  fullWidth: true,
-};
-
-export const formWithStepperDialogProps = tableDialogProps;
-
-export const flexContainerProps: React.CSSProperties = {
-  flex: 1,
-  display: 'flex',
-  flexDirection: 'column',
-  overflow: 'hidden',
-};
-
-export const flexTableContainerProps: React.CSSProperties = {
-  flex: 1,
-  overflow: 'auto',
-};

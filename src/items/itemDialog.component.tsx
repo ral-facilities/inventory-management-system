@@ -52,6 +52,10 @@ import {
   convertToPropertyPost,
   convertToPropertyValueList,
 } from '../catalogue/items/catalogueItemsDialog.component';
+import {
+  FLEX_CONTAINER_PROPS,
+  FORM_WITH_STEPPER_DIALOG_PROPS,
+} from '../common/consts';
 import MRTTopTableAlert from '../common/mrtTopTableAlert.component';
 import {
   DATE_PICKER_MAX_DATE,
@@ -65,7 +69,6 @@ import {
 import handleIMS_APIError from '../handleIMS_APIError';
 import handleTransferState from '../handleTransferState';
 import { SystemsTableView } from '../systems/systemsTableView.component';
-import { flexContainerProps, formWithStepperDialogProps } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 
 function toItemDetailsStep(item: Item | undefined): ItemDetailsStep {
@@ -670,7 +673,7 @@ function ItemDialog(props: ItemDialogProps) {
               }}
               homeLocation="Systems"
             />
-            <Box sx={{ p: 1, ...flexContainerProps, minHeight: '500px' }}>
+            <Box sx={{ p: 1, ...FLEX_CONTAINER_PROPS, minHeight: '500px' }}>
               {parentSystemId &&
                 !isSelectedRulesLoading &&
                 !systemsDataLoading && (
@@ -1254,7 +1257,7 @@ function ItemDialog(props: ItemDialogProps) {
   };
 
   return (
-    <Dialog open={open} {...formWithStepperDialogProps}>
+    <Dialog open={open} {...FORM_WITH_STEPPER_DIALOG_PROPS}>
       <DialogTitle
         sx={{ display: 'inline-flex', alignItems: 'center', paddingBottom: 0 }}
       >

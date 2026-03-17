@@ -44,6 +44,8 @@ import { useGetInUseDefinition } from '../../api/settings';
 import { APISettingsContext } from '../../apiConfigProvider.component';
 import {
   DEFAULT_ROWS_PER_PAGE_VALUE,
+  FLEX_CONTAINER_PROPS,
+  FLEX_TABLE_CONTAINER_PROP,
   ROWS_PER_PAGE_OPTIONS,
 } from '../../common/consts';
 import CriticalityTooltipIcon from '../../common/criticalityTooltipIcon.component';
@@ -67,8 +69,6 @@ import {
   customFilterFunctions,
   deselectRowById,
   displayTableRowCountText,
-  flexContainerProps,
-  flexTableContainerProps,
   formatDateTimeStrings,
   generateUniqueName,
   getInitialColumnFilterFnState,
@@ -969,10 +969,10 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             }),
           };
         },
-    muiTablePaperProps: { sx: flexContainerProps },
+    muiTablePaperProps: { sx: FLEX_CONTAINER_PROPS },
     muiTableContainerProps: () => {
       return {
-        sx: flexTableContainerProps,
+        sx: FLEX_TABLE_CONTAINER_PROP,
 
         'data-testid': 'catalogue-items-table-container',
       };
@@ -1229,22 +1229,20 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   React.useEffect(() => {
     if (dense)
       table.setColumnSizing((prev) => {
-        console.log(prev);
-
         const newSizes = {
           'catalogueItem.is_flagged': 180,
           'catalogueItem.name': isCriticalMode ? 670 : 760,
-          'catalogueItem.modified_time': isCriticalMode ? 500 : 590,
+          'catalogueItem.modified_time': isCriticalMode ? 480 : 570,
         };
         return { ...prev, ...newSizes };
       });
   }, [dense, table, isCriticalMode]);
 
   return (
-    <Box sx={{ width: '100%', ...flexContainerProps }}>
+    <Box sx={{ width: '100%', ...FLEX_CONTAINER_PROPS }}>
       <Stack
         sx={{
-          ...flexContainerProps,
+          ...FLEX_CONTAINER_PROPS,
           width: '100%',
           ...(!dense ? { height: contentHeight, flex: undefined } : { p: 1 }),
         }}

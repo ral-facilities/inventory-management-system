@@ -45,6 +45,7 @@ import {
   PropertiesStep,
   PropertyValue,
 } from '../../app.types';
+import { FORM_WITH_STEPPER_DIALOG_PROPS } from '../../common/consts';
 import {
   CatalogueItemDetailsStepSchema,
   PropertiesStepSchema,
@@ -52,7 +53,7 @@ import {
 } from '../../form.schemas';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component';
-import { formWithStepperDialogProps, sortDataList } from '../../utils';
+import { sortDataList } from '../../utils';
 
 const RECENT_MANUFACTURER_CUTOFF_TIME = 10 * 60 * 1000;
 
@@ -884,7 +885,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     }
   };
   return (
-    <Dialog open={open} {...formWithStepperDialogProps}>
+    <Dialog open={open} {...FORM_WITH_STEPPER_DIALOG_PROPS}>
       <DialogTitle>{`${
         requestType === 'patch' ? 'Edit' : 'Add'
       } Catalogue Item`}</DialogTitle>

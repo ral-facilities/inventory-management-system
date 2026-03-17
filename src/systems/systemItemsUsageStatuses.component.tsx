@@ -22,6 +22,8 @@ import { useGetCatalogueItemIds } from '../api/catalogueItems';
 import { useGetUsageStatuses } from '../api/usageStatuses';
 import {
   DEFAULT_ROWS_PER_PAGE_VALUE,
+  FLEX_CONTAINER_PROPS,
+  FLEX_TABLE_CONTAINER_PROP,
   ROWS_PER_PAGE_OPTIONS,
 } from '../common/consts';
 import { usePreservedTableState } from '../common/preservedTableState.component';
@@ -36,8 +38,6 @@ import {
   TableCellOverFlowTipProps,
   TableHeaderOverflowTip,
   customFilterFunctions,
-  flexContainerProps,
-  flexTableContainerProps,
   getInitialColumnFilterFnState,
   mrtTheme,
 } from '../utils';
@@ -435,8 +435,8 @@ export function SystemItemsUsageStatusTable(
           },
 
     // MUI
-    muiTablePaperProps: { sx: flexContainerProps },
-    muiTableContainerProps: { sx: flexTableContainerProps },
+    muiTablePaperProps: { sx: FLEX_CONTAINER_PROPS },
+    muiTableContainerProps: { sx: FLEX_TABLE_CONTAINER_PROP },
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',
