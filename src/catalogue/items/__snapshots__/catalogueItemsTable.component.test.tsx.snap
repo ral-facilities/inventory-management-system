@@ -113,7 +113,7 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
           >
             <table
               class="MuiTable-root MuiTable-stickyHeader css-1gcyac0-MuiTable-root"
-              style="--header-mrt_row_expand-size: 60; --col-mrt_row_expand-size: 60; --header-mrt_row_select-size: 60; --col-mrt_row_select-size: 60; --header-catalogueItem_name-size: 760; --col-catalogueItem_name-size: 760; --header-catalogueItem_modified_time-size: 590; --col-catalogueItem_modified_time-size: 590; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
+              style="--header-mrt_row_expand-size: 60; --col-mrt_row_expand-size: 60; --header-mrt_row_select-size: 60; --col-mrt_row_select-size: 60; --header-catalogueItem_name-size: 760; --col-catalogueItem_name-size: 760; --header-catalogueItem_modified_time-size: 570; --col-catalogueItem_modified_time-size: 570; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
             >
               <thead
                 class="MuiTableHead-root css-7psuou-MuiTableHead-root"
