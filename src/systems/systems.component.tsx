@@ -595,7 +595,7 @@ function Systems() {
         height: table.getState().isFullScreen
           ? '100%'
           : getPageHeightCalc(
-              `64px + 88px + 40px + 47px + 40px + 20px  ${systemId ? ' + 42px' : ''} ${isCriticalMode && isSparesDefinitionDefined ? '+ 4px' : ''}`
+              `64px + 88px + 40px + 47px + 40px + 20px  ${systemId ? ' + 42px' : ''} ${isCriticalMode && isSparesDefinitionDefined && systemId ? '+ 4px' : ''}`
             ),
       },
     }),
