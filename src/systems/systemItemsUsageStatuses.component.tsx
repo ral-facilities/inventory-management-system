@@ -22,6 +22,8 @@ import { useGetCatalogueItemIds } from '../api/catalogueItems';
 import { useGetUsageStatuses } from '../api/usageStatuses';
 import {
   DEFAULT_ROWS_PER_PAGE_VALUE,
+  FLEX_CONTAINER_PROPS,
+  FLEX_TABLE_CONTAINER_PROP,
   ROWS_PER_PAGE_OPTIONS,
 } from '../common/consts';
 import { usePreservedTableState } from '../common/preservedTableState.component';
@@ -433,23 +435,8 @@ export function SystemItemsUsageStatusTable(
           },
 
     // MUI
-    muiTablePaperProps: ({ table }) => ({
-      // sx doesn't work here currently - see https://www.material-react-table.com/docs/guides/full-screen-toggle
-      style: {
-        maxWidth: '100%',
-        // SciGateway navigation drawer is 1200, modal is 1300
-        zIndex: table.getState().isFullScreen ? 1210 : undefined,
-      },
-    }),
-    muiTableContainerProps: ({ table }) => {
-      return {
-        sx: {
-          height: table.getState().isFullScreen ? '100%' : undefined,
-
-          maxHeight: '670px',
-        },
-      };
-    },
+    muiTablePaperProps: { sx: FLEX_CONTAINER_PROPS },
+    muiTableContainerProps: { sx: FLEX_TABLE_CONTAINER_PROP },
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',
