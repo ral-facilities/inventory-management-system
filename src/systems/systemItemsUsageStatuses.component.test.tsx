@@ -152,7 +152,7 @@ describe('SystemItemsUsageStatusTable', () => {
     expect(view.asFragment()).toMatchSnapshot();
   });
 
-  it('renders correctly  in critical mode', async () => {
+  it('renders correctly in critical mode', async () => {
     const view = createView({ criticality: { isCriticalMode: true } });
 
     // Name (obtained from catalogue category item)
