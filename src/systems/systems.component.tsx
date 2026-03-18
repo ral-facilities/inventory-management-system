@@ -390,7 +390,7 @@ function Systems() {
             {MRT_Functions_Localisation.filterArrExcludesSome}
           </MenuItem>,
         ],
-        size: 130,
+        size: 160,
         filterSelectOptions: systemTypeValues,
       },
       {
@@ -530,7 +530,7 @@ function Systems() {
     enableRowSelection: true,
     enableRowActions: true,
     enableDensityToggle: false,
-    enableColumnResizing: false,
+    enableColumnResizing: true,
     enableGlobalFilter: true,
     enableHiding: true,
     enableColumnFilterModes: true,
@@ -640,8 +640,25 @@ function Systems() {
             ])
           )
         );
+
+        subsystemsTable.setColumnSizing((prev) => {
+          return {
+            ...prev,
+            name: 300,
+            'type.value': 300,
+          };
+        });
       } else {
         subsystemsTable.setShowColumnFilters(false);
+
+        subsystemsTable.setColumnSizing((prev) => {
+          return {
+            ...prev,
+            name: subsystemsTable.getColumn('name')?.columnDef.size ?? 160,
+            'type.value':
+              subsystemsTable.getColumn('type.value')?.columnDef.size ?? 160,
+          };
+        });
         subsystemsTable.setColumnVisibility(
           Object.fromEntries(hiddenColumns.map((col) => [col, false]))
         );
