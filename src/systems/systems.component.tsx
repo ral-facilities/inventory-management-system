@@ -334,7 +334,7 @@ function Systems() {
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
-        size: 180,
+        size: 170,
         Cell: ({ row, renderedCellValue, table }) => {
           const showFlagged = row.original.is_flagged;
           const fullScreenState = table.getState().isFullScreen;
@@ -390,7 +390,7 @@ function Systems() {
             {MRT_Functions_Localisation.filterArrExcludesSome}
           </MenuItem>,
         ],
-        size: 150,
+        size: 140,
         filterSelectOptions: systemTypeValues,
       },
       {
