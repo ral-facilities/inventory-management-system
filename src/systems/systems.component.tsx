@@ -334,7 +334,7 @@ function Systems() {
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
-        size: 170,
+        size: 160,
         Cell: ({ row, renderedCellValue, table }) => {
           const showFlagged = row.original.is_flagged;
           const fullScreenState = table.getState().isFullScreen;
@@ -390,7 +390,7 @@ function Systems() {
             {MRT_Functions_Localisation.filterArrExcludesSome}
           </MenuItem>,
         ],
-        size: 140,
+        size: 160,
         filterSelectOptions: systemTypeValues,
       },
       {
@@ -530,7 +530,7 @@ function Systems() {
     enableRowSelection: true,
     enableRowActions: true,
     enableDensityToggle: false,
-    enableColumnResizing: false,
+    enableColumnResizing: true,
     enableGlobalFilter: true,
     enableHiding: true,
     enableColumnFilterModes: true,
@@ -595,7 +595,7 @@ function Systems() {
         height: table.getState().isFullScreen
           ? '100%'
           : getPageHeightCalc(
-              `64px + 88px + 40px + 47px + 40px + 15px  ${systemId ? ' + 42px' : ''} ${isCriticalMode && isSparesDefinitionDefined ? '+ 4px' : ''}`
+              `64px + 88px + 40px + 47px + 40px + 20px  ${systemId ? ' + 42px' : ''} ${isCriticalMode && isSparesDefinitionDefined && systemId ? '+ 4px' : ''}`
             ),
       },
     }),
@@ -640,8 +640,25 @@ function Systems() {
             ])
           )
         );
+
+        subsystemsTable.setColumnSizing((prev) => {
+          return {
+            ...prev,
+            name: 300,
+            'type.value': 300,
+          };
+        });
       } else {
         subsystemsTable.setShowColumnFilters(false);
+
+        subsystemsTable.setColumnSizing((prev) => {
+          return {
+            ...prev,
+            name: subsystemsTable.getColumn('name')?.columnDef.size ?? 160,
+            'type.value':
+              subsystemsTable.getColumn('type.value')?.columnDef.size ?? 160,
+          };
+        });
         subsystemsTable.setColumnVisibility(
           Object.fromEntries(hiddenColumns.map((col) => [col, false]))
         );
