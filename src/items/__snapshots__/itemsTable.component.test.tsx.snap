@@ -217,7 +217,7 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
           </div>
         </div>
         <div
-          class="MuiTableContainer-root css-1ofjxoj-MuiTableContainer-root"
+          class="MuiTableContainer-root css-1at0h20-MuiTableContainer-root"
           data-testid="items-table-container"
         >
           <table
@@ -1894,7 +1894,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
           </div>
         </div>
         <div
-          class="MuiTableContainer-root css-1ofjxoj-MuiTableContainer-root"
+          class="MuiTableContainer-root css-1at0h20-MuiTableContainer-root"
           data-testid="items-table-container"
         >
           <table
