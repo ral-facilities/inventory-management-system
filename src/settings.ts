@@ -3,6 +3,7 @@ import { PluginRoute } from './state/actions/actions.types';
 export interface InventoryManagementSystemSettings {
   imsApiUrl: string;
   osApiUrl: string;
+  hsApiUrl: string;
   maxAttachmentSizeBytes: number;
   attachmentAllowedFileExtensions: string[];
   imageAllowedFileExtensions: string[];

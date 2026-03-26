@@ -7,6 +7,7 @@ TEMPFILE="$(mktemp)"
 jq \
   --arg imsApiUrl "$IMS_API_URL" \
   --arg osApiUrl "$OS_API_URL" \
+  --arg hsApiUrl "$HS_API_URL" \
   --argjson maxAttachmentSizeBytes $MAX_ATTACHMENT_SIZE_BYTES \
   --argjson attachmentAllowedFileExtensions "$ATTACHMENT_ALLOWED_FILE_EXTENSIONS" \
   --argjson imageAllowedFileExtensions "$IMAGE_ALLOWED_FILE_EXTENSIONS" \
@@ -15,6 +16,7 @@ jq \
   --arg pluginHost "$PLUGIN_HOST" \
   '.imsApiUrl = $imsApiUrl |
    .osApiUrl = $osApiUrl |
+   .hsApiUrl = $hsApiUrl |
    .maxAttachmentSizeBytes = $maxAttachmentSizeBytes |
    .attachmentAllowedFileExtensions = $attachmentAllowedFileExtensions |
    .imageAllowedFileExtensions = $imageAllowedFileExtensions |

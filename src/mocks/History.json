@@ -1,0 +1,103 @@
+[
+  {
+    "id": "11",
+    "element_id": "1",
+    "operation_type": "insert",
+    "data_modified_time": "2024-01-01T12:00:00.000+00:00",
+    "data_modified_comment": null,
+    "data_modified_by": "User A",
+    "updated_fields": {
+      "name": "Manufacturer A",
+      "code": "manufacturer-a",
+      "url": "http://example.com",
+      "address": {
+        "address_line": "1 Example Street",
+        "town": "Oxford",
+        "county": "Oxfordshire",
+        "postcode": "OX1 2AB",
+        "country": "United Kingdom"
+      },
+      "telephone": "07334893348",
+      "created_time": "2024-01-01T12:00:00.000+00:00"
+    }
+  },
+  {
+    "id": "12",
+    "element_id": "2",
+    "operation_type": "insert",
+    "data_modified_time": "2024-01-01T13:00:00.000+00:00",
+    "data_modified_comment": null,
+    "data_modified_by": "User A",
+    "updated_fields": {
+      "name": "Manufacturer B",
+      "code": "manufacturer-b",
+      "url": "http://example.com",
+      "address": {
+        "address_line": "1 Example Street",
+        "town": "Oxford",
+        "county": "Oxfordshire",
+        "postcode": "OX1 2AB",
+        "country": "United Kingdom"
+      },
+      "telephone": "07334893348",
+      "created_time": "2024-01-01T13:00:00.000+00:00"
+    }
+  },
+  {
+    "id": "13",
+    "element_id": "3",
+    "operation_type": "insert",
+    "data_modified_time": "2024-01-01T14:00:00.000+00:00",
+    "data_modified_comment": null,
+    "data_modified_by": "User B",
+    "updated_fields": {
+      "name": "Manufacturer C",
+      "code": "manufacturer-c",
+      "url": "http://example.com",
+      "address": {
+        "address_line": "1 Example Street",
+        "town": "Oxford",
+        "county": "Oxfordshire",
+        "postcode": "OX1 2AB",
+        "country": "United Kingdom"
+      },
+      "telephone": "07334893348",
+      "created_time": "2024-01-01T14:00:00.000+00:00"
+    }
+  },
+  {
+    "id": "14",
+    "element_id": "1",
+    "operation_type": "update",
+    "data_modified_time": "2024-01-02T12:00:00.000+00:00",
+    "data_modified_comment": "Address has changed",
+    "data_modified_by": "User B",
+    "updated_fields": {
+      "address": {
+        "address_line": "5 Example Street"
+      }
+    }
+  },
+  {
+    "id": "15",
+    "element_id": "1",
+    "operation_type": "update",
+    "data_modified_time": "2024-01-03T12:00:00.000+00:00",
+    "data_modified_comment": "Telephone number has changed",
+    "data_modified_by": "User A",
+    "updated_fields": {
+      "telephone": "07565848959"
+    }
+  },
+  {
+    "id": "16",
+    "element_id": "2",
+    "operation_type": "update",
+    "data_modified_time": "2024-01-02T12:30:00.000+00:00",
+    "data_modified_comment": "Website URL changed",
+    "data_modified_by": "User C",
+    "updated_fields": {
+      "url": "http://test.com"
+    }
+  }
+]

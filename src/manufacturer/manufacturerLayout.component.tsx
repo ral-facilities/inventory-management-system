@@ -1,11 +1,15 @@
 import type { QueryClient } from '@tanstack/react-query';
 import React from 'react';
-import { Outlet, useParams, type LoaderFunctionArgs } from 'react-router';
+import {
+  Outlet,
+  useLocation,
+  useParams,
+  type LoaderFunctionArgs,
+} from 'react-router';
 import { BreadcrumbsInfo } from '../api/api.types';
 import { getManufacturerQuery, useGetManufacturer } from '../api/manufacturers';
 import BaseLayoutHeader from '../common/baseLayoutHeader.component';
 import PageNotFoundComponent from '../common/pageNotFound/pageNotFound.component';
-import paths from '../paths';
 
 export const ManufacturerErrorComponent = () => {
   return <PageNotFoundComponent homeLocation="Manufacturers" />;
@@ -22,11 +26,11 @@ export const ManufacturerLayoutErrorComponent = () => {
 export const manufacturerLayoutLoader =
   (queryClient: QueryClient) =>
   async ({ params }: LoaderFunctionArgs) => {
-    const { manufacturer_id: manufacturerId } = params;
+    const { manufacturer_id: manufacturerId, element_id: element_id } = params;
 
-    if (manufacturerId) {
+    if (manufacturerId || element_id) {
       await queryClient.ensureQueryData(
-        getManufacturerQuery(manufacturerId, true)
+        getManufacturerQuery(manufacturerId ?? element_id, true)
       );
     }
 
@@ -34,23 +38,30 @@ export const manufacturerLayoutLoader =
   };
 
 function ManufacturerLayout() {
-  const { manufacturer_id: manufacturerId } = useParams();
+  const { manufacturer_id: manufacturerId, element_id: element_id } =
+    useParams();
 
-  const { data: manufacturerData } = useGetManufacturer(manufacturerId);
+  const { data: manufacturerData } = useGetManufacturer(
+    manufacturerId ?? element_id
+  );
 
   const [manufacturerBreadcrumbs, setManufacturerBreadcrumbs] = React.useState<
     BreadcrumbsInfo | undefined
   >(undefined);
 
+  const location = useLocation();
+
   React.useEffect(() => {
+    console.log('MAN DATA');
+    console.log(manufacturerData);
     if (manufacturerData) {
       setManufacturerBreadcrumbs({
         full_trail: true,
         trail: [
-          [
-            `${paths.manufacturer}/${manufacturerData.id}`,
-            manufacturerData.name,
-          ],
+          [`/${manufacturerData.id}`, manufacturerData.name],
+          ...((location.pathname.includes('history')
+            ? [['/history', 'History']]
+            : []) satisfies BreadcrumbsInfo['trail']),
         ],
       });
     } else {
@@ -59,7 +70,7 @@ function ManufacturerLayout() {
         trail: [],
       });
     }
-  }, [manufacturerData]);
+  }, [element_id, location.pathname, manufacturerData]);
 
   return (
     <BaseLayoutHeader

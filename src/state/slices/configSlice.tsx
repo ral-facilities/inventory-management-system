@@ -13,6 +13,7 @@ export interface ConfigState {
 const initialSettings: InventoryManagementSystemSettings = {
   imsApiUrl: '',
   osApiUrl: '',
+  hsApiUrl: '',
   maxAttachmentSizeBytes: 104857600,
   attachmentAllowedFileExtensions: [
     '.csv',

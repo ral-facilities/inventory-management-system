@@ -16,6 +16,7 @@ import {
   CatalogueItem,
   CatalogueItemPatch,
   CatalogueItemPost,
+  HistoryEntry,
   ImageMetadataPatch,
   Item,
   ItemPatch,
@@ -48,6 +49,7 @@ import SystemsJSON from './Systems.json';
 import SystemTypesJSON from './SystemTypes.json';
 import UnitsJSON from './Units.json';
 import UsageStatusJSON from './UsageStatuses.json';
+import HistoryJSON from './History.json';
 
 /* Values defined on the backend that may change */
 
@@ -139,6 +141,7 @@ export const handlers = [
   http.get<PathParams, DefaultBodyType, CatalogueCategory[]>(
     '/v1/catalogue-categories',
     ({ request }) => {
+      console.log('CAT HANDLING');
       const url = new URL(request.url);
       const catalogueCategoryParams = url.searchParams;
       const parentId = catalogueCategoryParams.get('parent_id');
@@ -605,17 +608,22 @@ export const handlers = [
 
   http.get<{ id: string }, DefaultBodyType, SystemType | ErrorResponse>(
     '/v1/system-types/:id',
-    ({params}) => {
+    ({ params }) => {
       const { id } = params;
 
-      const data = SystemTypesJSON.find((systemType) => systemType.id === id) as SystemType;
+      const data = SystemTypesJSON.find(
+        (systemType) => systemType.id === id
+      ) as SystemType;
 
-      if(data !== undefined) return HttpResponse.json(data, {status: 200});
+      if (data !== undefined) return HttpResponse.json(data, { status: 200 });
 
-      return HttpResponse.json({ detail: 'System type not found' }, { status: 404});
+      return HttpResponse.json(
+        { detail: 'System type not found' },
+        { status: 404 }
+      );
     }
   ),
-  
+
   http.get<PathParams, DefaultBodyType, SystemType[]>(
     '/v1/system-types',
     () => {
@@ -1363,6 +1371,31 @@ export const handlers = [
         { system_types: [SystemTypesJSON[0]] },
         { status: 200 }
       );
+    }
+  ),
+
+  // ------------------------------------ HISTORY ------------------------------------------------
+
+  http.get<PathParams, DefaultBodyType, HistoryEntry[]>(
+    '/v1/history-entries/:collection',
+    ({ request, params }) => {
+      const url = new URL(request.url);
+      const { collection } = params;
+      const historyParams = url.searchParams;
+      const elementId = historyParams.get('element_id');
+      let data;
+
+      if (collection == 'manufacturers') {
+        data = HistoryJSON.filter(
+          (history) => history.element_id == elementId
+        ).sort(
+          (a, b) =>
+            new Date(b.data_modified_time).getTime() -
+            new Date(a.data_modified_time).getTime()
+        ) as HistoryEntry[];
+      }
+
+      return HttpResponse.json(data, { status: 200 });
     }
   ),
 ];

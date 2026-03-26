@@ -46,14 +46,14 @@ export interface ManufacturerPost {
   telephone?: string | null;
 }
 
-export interface ManufacturerPatch
-  extends Partial<Omit<ManufacturerPost, 'address'>> {
+export interface ManufacturerPatch extends Partial<
+  Omit<ManufacturerPost, 'address'>
+> {
   address?: AddressPatch;
 }
 
 export interface Manufacturer
-  extends Required<Omit<ManufacturerPost, 'address'>>,
-    CreatedModifiedMixin {
+  extends Required<Omit<ManufacturerPost, 'address'>>, CreatedModifiedMixin {
   id: string;
   code: string;
   address: Address;
@@ -138,8 +138,7 @@ export interface CatalogueCategoryPostProperty {
   allowed_values?: AllowedValues | null;
 }
 
-export interface CatalogueCategoryPropertyPost
-  extends CatalogueCategoryPostProperty {
+export interface CatalogueCategoryPropertyPost extends CatalogueCategoryPostProperty {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default_value: any;
 }
@@ -149,8 +148,7 @@ export interface CatalogueCategoryPropertyPatch {
   allowed_values?: AllowedValues | null;
 }
 
-export interface CatalogueCategoryProperty
-  extends Required<CatalogueCategoryPostProperty> {
+export interface CatalogueCategoryProperty extends Required<CatalogueCategoryPostProperty> {
   id: string;
   unit: string | null;
 }
@@ -165,7 +163,8 @@ export interface CatalogueCategoryPost {
 export type CatalogueCategoryPatch = Partial<CatalogueCategoryPost>;
 
 export interface CatalogueCategory
-  extends Required<Omit<CatalogueCategoryPost, 'properties'>>,
+  extends
+    Required<Omit<CatalogueCategoryPost, 'properties'>>,
     CreatedModifiedMixin {
   id: string;
   code: string;
@@ -208,7 +207,8 @@ export interface CatalogueItemPost {
 
 export type CatalogueItemPatch = Partial<CatalogueItemPost>;
 export interface CatalogueItem
-  extends CreatedModifiedMixin,
+  extends
+    CreatedModifiedMixin,
     Required<Omit<CatalogueItemPost, 'properties'>> {
   id: string;
   properties: Property[];
@@ -234,12 +234,23 @@ export interface ItemPost {
 export type ItemPatch = Partial<ItemPost>;
 
 export interface Item
-  extends CreatedModifiedMixin,
-    Required<Omit<ItemPost, 'properties'>> {
+  extends CreatedModifiedMixin, Required<Omit<ItemPost, 'properties'>> {
   id: string;
   usage_status: string;
   properties: Property[];
 }
+// ------------------------------------ HISTORY API -----------------------------------------
+
+export interface HistoryEntry {
+  id: string;
+  element_id: string;
+  operation_type: string;
+  data_modified_time: string;
+  data_modified_comment: string | null;
+  data_modified_by: string;
+  updated_fields: Record<string, unknown>;
+}
+
 // ------------------------------------ OBJECT STORAGE API -----------------------------------------
 
 export interface ObjectFilePostBase {
@@ -265,8 +276,7 @@ export interface AttachmentUploadInfo {
 }
 
 export interface AttachmentMetadata
-  extends Required<AttachmentPostMetadata>,
-    CreatedModifiedMixin {
+  extends Required<AttachmentPostMetadata>, CreatedModifiedMixin {
   id: string;
 }
 
@@ -288,8 +298,7 @@ export interface ImagePost extends ObjectFileUploadMetadata {
 }
 
 export interface APIImage
-  extends Required<Omit<ImagePost, 'upload_file'>>,
-    CreatedModifiedMixin {
+  extends Required<Omit<ImagePost, 'upload_file'>>, CreatedModifiedMixin {
   id: string;
   primary: boolean;
   thumbnail_base64: string;

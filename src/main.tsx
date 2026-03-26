@@ -127,6 +127,11 @@ export const fetchSettings =
           throw new Error('osApiUrl is undefined in settings');
         }
 
+        // Ensure the hsApiUrl name exists.
+        if (!('hsApiUrl' in settings)) {
+          throw new Error('hsApiUrl is undefined in settings');
+        }
+
         // Ensure the maxAttachmentSizeBytes value exists.
         if (!('maxAttachmentSizeBytes' in settings)) {
           throw new Error('maxAttachmentSizeBytes is undefined in settings');
@@ -210,7 +215,8 @@ async function prepare() {
   if (
     import.meta.env.VITE_INCLUDE_MSW === 'true' ||
     settingsResult?.imsApiUrl === '' ||
-    settingsResult?.osApiUrl === ''
+    settingsResult?.osApiUrl === '' ||
+    settingsResult?.hsApiUrl === ''
   ) {
     // Need to use require instead of import as import breaks when loaded in SG
     const { worker } = await import('./mocks/browser');
