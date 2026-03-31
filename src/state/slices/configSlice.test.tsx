@@ -6,6 +6,7 @@ describe('configSlice', () => {
   const initialSettings: InventoryManagementSystemSettings = {
     imsApiUrl: '',
     osApiUrl: '',
+    imsJsApiUrl: '',
     maxAttachmentSizeBytes: 104857600,
     attachmentAllowedFileExtensions: [
       '.csv',

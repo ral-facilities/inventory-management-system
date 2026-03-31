@@ -3,7 +3,7 @@ import { addUsageStatuses, deleteUsageStatuses } from './functions';
 describe('Usage Statuses', () => {
   beforeEach(() => {
     cy.visit('/settings/usage-statuses');
-    cy.setCurrentUserToAdmin();
+    cy.setMode({ admin: true });
   });
   afterEach(() => {
     cy.clearMocks();

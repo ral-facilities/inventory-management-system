@@ -42,6 +42,7 @@ describe('DeleteSystemDialog', () => {
         parent_id: null,
         type_id: '1',
         code: '',
+        is_flagged: false,
         ...CREATED_MODIFIED_TIME_VALUES,
       };
 

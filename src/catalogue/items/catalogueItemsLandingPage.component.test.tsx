@@ -4,6 +4,7 @@ import { http, HttpResponse } from 'msw';
 import APIConfigProvider from '../../apiConfigProvider.component';
 import CatalogueItemsJSON from '../../mocks/CatalogueItems.json';
 import { server } from '../../mocks/server';
+import { RootState } from '../../state/store';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 import CatalogueItemsLandingPage from './catalogueItemsLandingPage.component';
 
@@ -15,13 +16,14 @@ vi.mock('react-router', async () => ({
 
 describe('Catalogue Items Landing Page', () => {
   let user: UserEvent;
-  const createView = (path: string) => {
+  const createView = (path: string, preloadedState?: Partial<RootState>) => {
     return renderComponentWithRouterProvider(
       <APIConfigProvider>
         <CatalogueItemsLandingPage />
       </APIConfigProvider>,
       'catalogueItem',
-      path
+      path,
+      preloadedState
     );
   };
 
@@ -36,7 +38,9 @@ describe('Catalogue Items Landing Page', () => {
     createView('/catalogue/4/items/1');
 
     await waitFor(() => {
-      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
+      expect(
+        screen.getByText('High-resolution cameras for beam characterization. 1')
+      ).toBeInTheDocument();
     });
 
     expect(screen.getByText('Description:')).toBeInTheDocument();
@@ -47,11 +51,47 @@ describe('Catalogue Items Landing Page', () => {
     expect(screen.getByText('Resolution (megapixels)')).toBeInTheDocument();
   });
 
+  it('renders text correctly (critical mode on with all details)', async () => {
+    createView('/catalogue/6/items/10', {
+      criticality: { isCriticalMode: true },
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          'Wavefront sensors for precise optical measurements. 31'
+        )
+      ).toBeInTheDocument();
+    });
+
+    expect(screen.getAllByText('Criticality:')).toHaveLength(2);
+    expect(screen.getAllByText('-4.6')).toHaveLength(2);
+  });
+
+  it('renders text correctly (critical mode on without expected lifetime)', async () => {
+    createView('/catalogue/6/items/9', {
+      criticality: { isCriticalMode: true },
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          'Wavefront sensors for precise optical measurements. 30'
+        )
+      ).toBeInTheDocument();
+    });
+
+    expect(screen.getAllByText('Criticality:')).toHaveLength(2);
+    expect(screen.getAllByLabelText('Criticality Warning')).toHaveLength(2);
+  });
+
   it('renders text correctly (notes tab)', async () => {
     createView('/catalogue/4/items/1');
 
     await waitFor(() => {
-      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
+      expect(
+        screen.getByText('High-resolution cameras for beam characterization. 1')
+      ).toBeInTheDocument();
     });
 
     expect(screen.getByText('Description:')).toBeInTheDocument();
@@ -87,7 +127,9 @@ describe('Catalogue Items Landing Page', () => {
     createView('/catalogue/4/items/1');
 
     await waitFor(() => {
-      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
+      expect(
+        screen.getByText('High-resolution cameras for beam characterization. 1')
+      ).toBeInTheDocument();
     });
 
     expect(screen.getByText('Description:')).toBeInTheDocument();
@@ -95,25 +137,22 @@ describe('Catalogue Items Landing Page', () => {
       screen.getByText('High-resolution cameras for beam characterization. 1')
     ).toBeInTheDocument();
 
-    expect(screen.getAllByText('None').length).toEqual(9);
+    expect(screen.getAllByText('None').length).toEqual(7);
   });
 
   it('renders text correctly (extra details given)', async () => {
     createView('/catalogue/4/items/2');
 
     await waitFor(() => {
-      expect(screen.getByText('Cameras 2')).toBeInTheDocument();
+      expect(
+        screen.getByText('High-resolution cameras for beam characterization. 2')
+      ).toBeInTheDocument();
     });
 
     expect(screen.getByText('Description:')).toBeInTheDocument();
     expect(
       screen.getByText('High-resolution cameras for beam characterization. 2')
     ).toBeInTheDocument();
-
-    expect(screen.getByText('http://example-drawing-link.com')).toHaveAttribute(
-      'href',
-      'http://example-drawing-link.com'
-    );
 
     expect(screen.getByText('Resolution (megapixels)')).toBeInTheDocument();
   });
@@ -130,7 +169,9 @@ describe('Catalogue Items Landing Page', () => {
     createView('/catalogue/4/items/1');
 
     await waitFor(() => {
-      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
+      expect(
+        screen.getByText('High-resolution cameras for beam characterization. 1')
+      ).toBeInTheDocument();
     });
 
     await user.click(
@@ -157,7 +198,11 @@ describe('Catalogue Items Landing Page', () => {
     createView('/catalogue/5/items/6');
 
     await waitFor(() => {
-      expect(screen.getByText('Energy Meters 27')).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          'Precision energy meters for accurate measurements. 27'
+        )
+      ).toBeInTheDocument();
     });
 
     await user.click(
@@ -184,7 +229,11 @@ describe('Catalogue Items Landing Page', () => {
     createView('/catalogue/5/items/89');
 
     await waitFor(() => {
-      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          'Precision energy meters for accurate measurements. 26'
+        )
+      ).toBeInTheDocument();
     });
 
     await waitFor(() => {
@@ -199,7 +248,11 @@ describe('Catalogue Items Landing Page', () => {
     createView('/catalogue/5/items/89');
 
     await waitFor(() => {
-      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          'Precision energy meters for accurate measurements. 26'
+        )
+      ).toBeInTheDocument();
     });
 
     await user.click(
@@ -233,12 +286,12 @@ describe('Catalogue Items Landing Page', () => {
   it('navigates to items page with spares definition applied', async () => {
     createView('/catalogue/5/items/89');
     await waitFor(() => {
-      expect(screen.getByRole('link', { name: '0' })).toBeInTheDocument();
+      expect(screen.getAllByRole('link', { name: '0' })).toHaveLength(2);
     });
 
-    const url = screen.getByRole('link', {
+    const url = screen.getAllByRole('link', {
       name: '0',
-    });
+    })[1];
     expect(url).toHaveAttribute(
       'href',
       '/catalogue/5/items/89/items?state=N4IgxgYiBcDaoEsAmMQGcCeaAuBTAtgHTYYAOuhAbgIYA2ArriADQg0NNygnmo4BOCAHYBzFmzqNUAZWwB7ftRFMAvgF11KoA'
@@ -266,7 +319,11 @@ describe('Catalogue Items Landing Page', () => {
     createView('/catalogue/4/items/33');
 
     await waitFor(() => {
-      expect(screen.getByText('Cameras 14')).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          'High-resolution cameras for beam characterization. 14'
+        )
+      ).toBeInTheDocument();
     });
 
     await waitFor(() => {
@@ -281,7 +338,9 @@ describe('Catalogue Items Landing Page', () => {
   it('navigates to manufacturer landing page', async () => {
     createView('/catalogue/4/items/1');
     await waitFor(() => {
-      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
+      expect(
+        screen.getByText('High-resolution cameras for beam characterization. 1')
+      ).toBeInTheDocument();
     });
 
     const url = await screen.findByText('Manufacturer A');
@@ -292,7 +351,9 @@ describe('Catalogue Items Landing Page', () => {
     createView('/catalogue/4/items/1');
 
     await waitFor(() => {
-      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
+      expect(
+        screen.getByText('High-resolution cameras for beam characterization. 1')
+      ).toBeInTheDocument();
     });
 
     expect(await screen.findByAltText('test')).toBeInTheDocument();

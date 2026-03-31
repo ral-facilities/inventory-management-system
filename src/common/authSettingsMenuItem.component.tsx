@@ -24,7 +24,7 @@ const AuthSettingsMenuItem = () => {
         <AdminPanelSettingsIcon />
       </ListItemIcon>
       <ListItemText
-        primary={isAdminMode ? 'Switch to normal mode' : 'Switch to admin mode'}
+        primary={`Switch admin mode ${isAdminMode ? 'off' : 'on'}`}
       />
     </MenuItem>
   );

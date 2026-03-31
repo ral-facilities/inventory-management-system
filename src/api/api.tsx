@@ -145,3 +145,7 @@ export const imsApi = createAuthenticatedClient({
 export const storageApi = createAuthenticatedClient({
   getURL: (settings) => settings.osApiUrl,
 });
+
+export const jobSchedulerApi = createAuthenticatedClient({
+  getURL: (settings) => settings.imsJsApiUrl,
+});

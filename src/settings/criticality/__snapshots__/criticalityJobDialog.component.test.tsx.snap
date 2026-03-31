@@ -1,0 +1,157 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Criticality dialog > renders dialog correctly 1`] = `
+<body
+  style="padding-right: 1024px; overflow: hidden;"
+>
+  <div
+    aria-hidden="true"
+  />
+  <div
+    class="MuiDialog-root MuiModal-root css-1424xw8-MuiModal-root-MuiDialog-root"
+    role="presentation"
+  >
+    <div
+      aria-hidden="true"
+      class="MuiBackdrop-root MuiModal-backdrop css-1cennmq-MuiBackdrop-root-MuiDialog-backdrop"
+      style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+    />
+    <div
+      data-testid="sentinelStart"
+      tabindex="0"
+    />
+    <div
+      class="MuiDialog-container MuiDialog-scrollPaper css-19do60a-MuiDialog-container"
+      role="presentation"
+      style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+      tabindex="-1"
+    >
+      <div
+        aria-labelledby=":r0:"
+        aria-modal="true"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthSm MuiDialog-paperFullWidth css-16htz67-MuiPaper-root-MuiDialog-paper"
+        role="dialog"
+        style="--Paper-shadow: 0px 11px 15px -7px rgba(0,0,0,0.2),0px 24px 38px 3px rgba(0,0,0,0.14),0px 9px 46px 8px rgba(0,0,0,0.12);"
+      >
+        <h2
+          class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-19csis5-MuiTypography-root-MuiDialogTitle-root"
+          id=":r0:"
+        >
+          Criticality Job
+        </h2>
+        <div
+          class="MuiDialogContent-root css-kw13he-MuiDialogContent-root"
+        >
+          <div
+            class="MuiBox-root css-0"
+          >
+            <h6
+              class="MuiTypography-root MuiTypography-h6 css-1miy0lu-MuiTypography-root"
+            >
+              Status:
+            </h6>
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+            >
+              finished
+            </p>
+            <hr
+              class="MuiDivider-root MuiDivider-fullWidth css-zzw4lh-MuiDivider-root"
+            />
+            <h6
+              class="MuiTypography-root MuiTypography-h6 css-1miy0lu-MuiTypography-root"
+            >
+              Last Started:
+            </h6>
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+            >
+              10 Mar 2026 17:12
+            </p>
+            <hr
+              class="MuiDivider-root MuiDivider-fullWidth css-zzw4lh-MuiDivider-root"
+            />
+            <h6
+              class="MuiTypography-root MuiTypography-h6 css-1miy0lu-MuiTypography-root"
+            >
+              Last Finished:
+            </h6>
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+            >
+              10 Mar 2026 17:12
+            </p>
+            <hr
+              class="MuiDivider-root MuiDivider-fullWidth css-zzw4lh-MuiDivider-root"
+            />
+            <h6
+              class="MuiTypography-root MuiTypography-h6 css-1miy0lu-MuiTypography-root"
+            >
+              Last Successful Start:
+            </h6>
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+            >
+              10 Mar 2026 17:12
+            </p>
+            <hr
+              class="MuiDivider-root MuiDivider-fullWidth css-zzw4lh-MuiDivider-root"
+            />
+            <h6
+              class="MuiTypography-root MuiTypography-h6 css-1miy0lu-MuiTypography-root"
+            >
+              Last Successful End:
+            </h6>
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+            >
+              10 Mar 2026 17:12
+            </p>
+            <hr
+              class="MuiDivider-root MuiDivider-fullWidth css-zzw4lh-MuiDivider-root"
+            />
+            <h6
+              class="MuiTypography-root MuiTypography-h6 css-1miy0lu-MuiTypography-root"
+            >
+              Last Successful Duration:
+            </h6>
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+            >
+              0.123s
+            </p>
+            <hr
+              class="MuiDivider-root MuiDivider-fullWidth css-zzw4lh-MuiDivider-root"
+            />
+            <h6
+              class="MuiTypography-root MuiTypography-h6 css-1miy0lu-MuiTypography-root"
+            >
+              Next Scheduled:
+            </h6>
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+            >
+              10 Mar 2026 17:12
+            </p>
+          </div>
+        </div>
+        <div
+          class="MuiDialogActions-root MuiDialogActions-spacing css-15fu35s-MuiDialogActions-root"
+        >
+          <button
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1uent87-MuiButtonBase-root-MuiButton-root"
+            tabindex="0"
+            type="button"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      data-testid="sentinelEnd"
+      tabindex="0"
+    />
+  </div>
+</body>
+`;

@@ -17,9 +17,12 @@ import {
   CatalogueItemPatch,
   CatalogueItemPost,
   ImageMetadataPatch,
+  InUseDefinition,
   Item,
   ItemPatch,
   ItemPost,
+  Job,
+  JobStatus,
   Manufacturer,
   ManufacturerPatch,
   ManufacturerPost,
@@ -631,17 +634,22 @@ export const handlers = [
 
   http.get<{ id: string }, DefaultBodyType, SystemType | ErrorResponse>(
     '/v1/system-types/:id',
-    ({params}) => {
+    ({ params }) => {
       const { id } = params;
 
-      const data = SystemTypesJSON.find((systemType) => systemType.id === id) as SystemType;
+      const data = SystemTypesJSON.find(
+        (systemType) => systemType.id === id
+      ) as SystemType;
 
-      if(data !== undefined) return HttpResponse.json(data, {status: 200});
+      if (data !== undefined) return HttpResponse.json(data, { status: 200 });
 
-      return HttpResponse.json({ detail: 'System type not found' }, { status: 404});
+      return HttpResponse.json(
+        { detail: 'System type not found' },
+        { status: 404 }
+      );
     }
   ),
-  
+
   http.get<PathParams, DefaultBodyType, SystemType[]>(
     '/v1/system-types',
     () => {
@@ -1077,7 +1085,7 @@ export const handlers = [
     const entityId = attachmentParams.get('entity_id');
 
     const generateAttachments = () => {
-      return Array.from({ length: 20 }, (_, index) => {
+      return Array.from({ length: 35 }, (_, index) => {
         const id = index + 1;
         const attachment = { ...AttachmentsJSON[id % 4] };
 
@@ -1242,7 +1250,7 @@ export const handlers = [
     }
 
     const generateImages = () => {
-      return Array.from({ length: 20 }, (_, index) => {
+      return Array.from({ length: 35 }, (_, index) => {
         const id = index + 1;
         let image;
 
@@ -1391,4 +1399,39 @@ export const handlers = [
       );
     }
   ),
+  // --------------------------------- SPARES DEFINITION ------------------------------------------------------
+
+  http.get<PathParams, DefaultBodyType, InUseDefinition>(
+    '/v1/settings/in-use-definition',
+    () => {
+      return HttpResponse.json(
+        { system_types: [SystemTypesJSON[1]] },
+        { status: 200 }
+      );
+    }
+  ),
+
+  // --------------------------------- JOB SCHEDULER ------------------------------------------------------
+
+  http.post<PathParams, DefaultBodyType, ErrorResponse | NonNullable<unknown>>(
+    '/jobs/criticality/run',
+    () => {
+      return HttpResponse.json(undefined, { status: 204 });
+    }
+  ),
+  http.get<PathParams, DefaultBodyType, Job>('/jobs/criticality', () => {
+    return HttpResponse.json(
+      {
+        id: '1',
+        last_executed_start_time: '2026-03-10T17:12:15.141Z',
+        last_executed_end_time: '2026-03-10T17:12:15.141Z',
+        status: JobStatus.Finished,
+        last_successful_executed_start_time: '2026-03-10T17:12:15.141Z',
+        last_successful_executed_end_time: '2026-03-10T17:12:15.141Z',
+        last_successful_duration_seconds: 0.123,
+        next_scheduled_execution_time: '2026-03-10T17:12:15.141Z',
+      },
+      { status: 200 }
+    );
+  }),
 ];
