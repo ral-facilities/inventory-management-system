@@ -43,8 +43,6 @@ describe('delete Catalogue Category dialogue', () => {
       days_to_replace: 0,
       days_to_rework: null,
       expected_lifetime_days: null,
-      drawing_link: null,
-      drawing_number: null,
       notes: null,
       is_obsolete: false,
       item_model_number: null,
@@ -53,6 +51,9 @@ describe('delete Catalogue Category dialogue', () => {
       obsolete_reason: null,
       properties: [],
       number_of_spares: 0,
+      number_of_spares_required: null,
+      criticality: null,
+      is_flagged: null,
       ...CREATED_MODIFIED_TIME_VALUES,
     };
     props = {

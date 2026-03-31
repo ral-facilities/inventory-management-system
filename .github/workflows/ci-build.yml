@@ -88,7 +88,7 @@ jobs:
         uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
         with:
           repository: ral-facilities/inventory-management-system-api
-          ref: main
+          ref: develop
 
       # This is required as need to setup api in a different directory as checkout will attempt delete
       # all existing files which in this case will include a data directory created by docker causing
@@ -115,11 +115,11 @@ jobs:
           --env AUTHENTICATION__ENABLED=false \
           --env API__TITLE="Inventory Management System API" \
           --env API__DESCRIPTION="This is the API for the Inventory Management System" \
-          --env DATABASE__PROTOCOL="mongodb" \
-          --env DATABASE__USERNAME="root" \
-          --env DATABASE__PASSWORD="example" \
-          --env DATABASE__HOST_AND_OPTIONS="localhost:27017/?authMechanism=SCRAM-SHA-256&authSource=admin" \
-          --env DATABASE__NAME="ims" \
+          --env IMS_DATABASE__PROTOCOL="mongodb" \
+          --env IMS_DATABASE__USERNAME="root" \
+          --env IMS_DATABASE__PASSWORD="example" \
+          --env IMS_DATABASE__HOST_AND_OPTIONS="localhost:27017/?authMechanism=SCRAM-SHA-256&authSource=admin" \
+          --env IMS_DATABASE__NAME="ims" \
           --env API__ALLOWED_CORS_HEADERS='["*"]' \
           --env API__ALLOWED_CORS_ORIGINS='["*"]' \
           --env API__ALLOWED_CORS_METHODS='["*"]' \
@@ -127,13 +127,13 @@ jobs:
           --env OBJECT_STORAGE__API_REQUEST_TIMEOUT_SECONDS=10 \
           --env OBJECT_STORAGE__API_URL=http://localhost:8002 \
           --volume /home/runner/work/inventory-management-system/inventory-management-system-api/logging.example.ini:/app/logging.ini \
-          harbor.stfc.ac.uk/inventory-management-system/ims-api:main
+          harbor.stfc.ac.uk/inventory-management-system/ims-api:develop
 
       - name: Clone Object Storage api repo
         uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
         with:
           repository: ral-facilities/object-storage-api
-          ref: main
+          ref: develop
           path: object-storage-api
 
       - name: Move Object Storage api repo
@@ -162,11 +162,11 @@ jobs:
           --env AUTHENTICATION__ENABLED=false \
           --env API__TITLE="Object Storage Service API" \
           --env API__DESCRIPTION="This is the API for the Object Storage Service" \
-          --env DATABASE__PROTOCOL="mongodb" \
-          --env DATABASE__USERNAME="root" \
-          --env DATABASE__PASSWORD="example" \
-          --env DATABASE__HOST_AND_OPTIONS="object-storage-api-mongodb:27017" \
-          --env DATABASE__NAME="object-storage" \
+          --env OS_DATABASE__PROTOCOL="mongodb" \
+          --env OS_DATABASE__USERNAME="root" \
+          --env OS_DATABASE__PASSWORD="example" \
+          --env OS_DATABASE__HOST_AND_OPTIONS="object-storage-api-mongodb:27017" \
+          --env OS_DATABASE__NAME="object-storage" \
           --env API__ALLOWED_CORS_HEADERS='["*"]' \
           --env API__ALLOWED_CORS_ORIGINS='["*"]' \
           --env API__ALLOWED_CORS_METHODS='["*"]' \
@@ -183,7 +183,7 @@ jobs:
           --env IMAGE__UPLOAD_LIMIT=100 \
           --add-host "localhost:host-gateway" \
           --volume /home/runner/work/inventory-management-system/object-storage-api/logging.example.ini:/app/logging.ini \
-          harbor.stfc.ac.uk/scd-object-storage-api/object-storage-api:main
+          harbor.stfc.ac.uk/scd-object-storage-api/object-storage-api:develop
 
       - name: Checkout repo
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2

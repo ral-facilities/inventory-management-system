@@ -140,6 +140,7 @@ describe('catalogue categories api functions', () => {
         ],
         code: 'cameras',
         id: '4',
+        is_flagged: false,
         is_leaf: true,
         name: 'test',
         parent_id: '1',
@@ -157,6 +158,7 @@ describe('catalogue categories api functions', () => {
         parent_id: null,
         id: '1',
         code: 'test',
+        is_flagged: false,
         is_leaf: false,
         properties: [],
         ...CREATED_MODIFIED_TIME_VALUES,
@@ -193,6 +195,7 @@ describe('catalogue categories api functions', () => {
         {
           code: 'actuators',
           id: '8',
+          is_flagged: false,
           is_leaf: false,
           name: 'Actuators',
           parent_id: '2',
@@ -257,6 +260,7 @@ describe('catalogue categories api functions', () => {
       expect(result.current.data).toEqual({
         code: 'beam-characterization',
         id: '1',
+        is_flagged: true,
         is_leaf: false,
         name: 'Beam Characterization',
         parent_id: null,
@@ -274,6 +278,7 @@ describe('catalogue categories api functions', () => {
         name: 'test_dup',
         parent_id: '1',
         code: 'test_dup',
+        is_flagged: false,
         is_leaf: false,
         properties: [],
         ...CREATED_MODIFIED_TIME_VALUES,
@@ -283,6 +288,7 @@ describe('catalogue categories api functions', () => {
         name: 'Wavefront Sensors',
         parent_id: '1',
         code: 'wavefront-sensors',
+        is_flagged: true,
         is_leaf: true,
         properties: [
           {
@@ -311,6 +317,7 @@ describe('catalogue categories api functions', () => {
         name: 'Energy Meters',
         parent_id: '1',
         code: 'energy-meters',
+        is_flagged: false,
         is_leaf: true,
         properties: [
           {
@@ -403,6 +410,7 @@ describe('catalogue categories api functions', () => {
         parent_id: null,
         name: 'Wavefront Sensors',
         code: 'wavefront-sensors',
+        is_flagged: true,
         is_leaf: false,
         properties: [],
         ...CREATED_MODIFIED_TIME_VALUES,
@@ -447,6 +455,7 @@ describe('catalogue categories api functions', () => {
       {
         id: '79',
         name: 'test_dup',
+        is_flagged: false,
         parent_id: '1',
         code: 'test_dup',
         is_leaf: false,
@@ -458,6 +467,7 @@ describe('catalogue categories api functions', () => {
         name: 'Wavefront Sensors',
         parent_id: '1',
         code: 'wavefront-sensors',
+        is_flagged: true,
         is_leaf: true,
         properties: [
           {
@@ -485,6 +495,7 @@ describe('catalogue categories api functions', () => {
         id: '5',
         name: 'Energy Meters',
         parent_id: '1',
+        is_flagged: false,
         code: 'energy-meters',
         is_leaf: true,
         properties: [
@@ -583,6 +594,7 @@ describe('catalogue categories api functions', () => {
         parent_id: null,
         name: 'Wavefront Sensors',
         code: 'wavefront-sensors',
+        is_flagged: true,
         is_leaf: false,
         properties: [],
         ...CREATED_MODIFIED_TIME_VALUES,
@@ -713,7 +725,7 @@ describe('catalogue categories api functions', () => {
         {
           message: 'Editing property test in Dry Vacuum Pumps',
           name: 'Dry Vacuum Pumps',
-          state: 'information',
+          state: 'info',
         },
       ]);
 
@@ -745,7 +757,7 @@ describe('catalogue categories api functions', () => {
         {
           message: 'Editing property Error 500 in Dry Vacuum Pumps',
           name: 'Dry Vacuum Pumps',
-          state: 'information',
+          state: 'info',
         },
       ]);
 
@@ -798,7 +810,7 @@ describe('catalogue categories api functions', () => {
         {
           message: 'Adding property test in Cameras',
           name: 'Cameras',
-          state: 'information',
+          state: 'info',
         },
       ]);
 
@@ -829,7 +841,7 @@ describe('catalogue categories api functions', () => {
         {
           message: 'Adding property Error 500 in Cameras',
           name: 'Cameras',
-          state: 'information',
+          state: 'info',
         },
       ]);
 
@@ -884,7 +896,7 @@ describe('catalogue categories api functions', () => {
         {
           name: 'Dry Vacuum Pumps',
           message: `Deleting property test from Dry Vacuum Pumps`,
-          state: 'information',
+          state: 'info',
         },
       ]);
       expect(handleTransferState).toHaveBeenCalledWith([

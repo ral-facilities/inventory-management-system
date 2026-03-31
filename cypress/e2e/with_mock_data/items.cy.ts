@@ -50,6 +50,17 @@ describe('Items', () => {
     cy.findByText('Cameras 3').should('be.visible');
   });
 
+  it('displays the item landing page (Criticality)', () => {
+    cy.visit('/catalogue/6/items/10/items/pZT8K0aP');
+
+    cy.setMode({ critical: true });
+
+    cy.findByTestId('ErrorIcon').should('exist');
+    cy.findByTestId('ErrorIcon').trigger('mouseover');
+    cy.findByText('This catalogue item is critical.').should('exist');
+    cy.findAllByText('(Item Details)').should('exist');
+  });
+
   it('should be able to navigate back to the catalogue home', () => {
     cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
     cy.findByText('Motion').should('be.visible');
@@ -72,7 +83,6 @@ describe('Items', () => {
       'High-resolution cameras for beam characterization. 1'
     ).should('exist');
     cy.findByText('Obsolete reason').should('exist');
-    cy.findByText('Drawing Number').should('exist');
 
     cy.findByRole('link', { name: 'Cameras' }).click();
 
@@ -410,7 +420,7 @@ describe('Items', () => {
 
   it('displays add dialog in admin view when user is admin', () => {
     cy.visit('/catalogue/4/items/1/items');
-    cy.setCurrentUserToAdmin();
+    cy.setMode({ admin: true });
 
     cy.findByRole('button', { name: 'Add Item as Admin' }).click();
 
@@ -880,21 +890,21 @@ describe('Items', () => {
       ).should('exist');
 
       cy.findByText('Attachments').click();
-      cy.findByText('Total Attachments: 20').should('be.visible');
+      cy.findByText('Total Attachments: 35').should('be.visible');
 
-      cy.findAllByText('safety-protocols.pdf').should('have.length', 4);
-      cy.findAllByText('camera-setup-guide.docx').should('have.length', 4);
-      cy.findAllByText('experiment-results.rtf').should('have.length', 4);
-      cy.findAllByText('laser-calibration.txt').should('have.length', 3);
+      cy.findAllByText('safety-protocols.pdf').should('have.length', 8);
+      cy.findAllByText('camera-setup-guide.docx').should('have.length', 8);
+      cy.findAllByText('experiment-results.rtf').should('have.length', 7);
+      cy.findAllByText('laser-calibration.txt').should('have.length', 7);
       cy.findByText('Last modified').scrollIntoView();
-      cy.findAllByText('02 Jan 2024 13:10').should('have.length', 15);
+      cy.findAllByText('02 Jan 2024 13:10').should('have.length', 30);
 
       cy.findByRole('button', { name: 'Go to page 2' }).scrollIntoView();
       cy.findByRole('button', { name: 'Go to page 2' }).click();
       cy.findAllByText('safety-protocols.pdf').should('have.length', 1);
       cy.findAllByText('camera-setup-guide.docx').should('have.length', 1);
-      cy.findAllByText('experiment-results.rtf').should('have.length', 1);
-      cy.findAllByText('laser-calibration.txt').should('have.length', 2);
+      cy.findAllByText('experiment-results.rtf').should('have.length', 2);
+      cy.findAllByText('laser-calibration.txt').should('have.length', 1);
       cy.findByText('Last modified').scrollIntoView();
       cy.findAllByText('02 Jan 2024 13:10').should('have.length', 5);
     });
@@ -906,17 +916,17 @@ describe('Items', () => {
       ).should('exist');
 
       cy.findByText('Attachments').click();
-      cy.findAllByText('Safety Protocols').should('have.length', 4);
-      cy.findAllByText('Camera Setup Guide').should('have.length', 4);
+      cy.findAllByText('Safety Protocols').should('have.length', 8);
+      cy.findAllByText('Camera Setup Guide').should('have.length', 8);
 
       cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
       cy.findByLabelText('Filter by File name').type('camera');
       cy.findAllByText('Safety Protocols').should('not.exist');
-      cy.findAllByText('Camera Setup Guide').should('have.length', 5);
+      cy.findAllByText('Camera Setup Guide').should('have.length', 9);
 
       cy.findByRole('button', { name: 'Clear Filters' }).click();
-      cy.findAllByText('Safety Protocols').should('have.length', 4);
-      cy.findAllByText('Camera Setup Guide').should('have.length', 4);
+      cy.findAllByText('Safety Protocols').should('have.length', 8);
+      cy.findAllByText('Camera Setup Guide').should('have.length', 8);
       cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
     });
 
@@ -1213,13 +1223,13 @@ describe('Items', () => {
       ).should('exist');
 
       cy.findByText('Gallery').click();
-      cy.findAllByText('stfc-logo-blue-text.png').should('have.length', 8);
+      cy.findAllByText('stfc-logo-blue-text.png').should('have.length', 15);
       cy.findByRole('button', { name: 'Show/Hide filters' }).click();
       cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
       cy.findByLabelText('Filter by File name').type('logo1.png');
       cy.findByAltText('test').should('not.exist');
       cy.findByRole('button', { name: 'Clear Filters' }).click();
-      cy.findAllByText('stfc-logo-blue-text.png').should('have.length', 8);
+      cy.findAllByText('stfc-logo-blue-text.png').should('have.length', 15);
       cy.findByRole('button', { name: 'Show/Hide filters' }).click();
       cy.findByLabelText('Filter by File name').should('not.visible');
     });
@@ -1827,7 +1837,7 @@ describe('Items', () => {
 
   it('displays edit dialog in admin view when user is admin', () => {
     cy.visit('/catalogue/9/items/11/items');
-    cy.setCurrentUserToAdmin();
+    cy.setMode({ admin: true });
     cy.findAllByLabelText('Row Actions').last().click();
     cy.findByText('Edit as Admin').click();
 
@@ -1986,7 +1996,7 @@ describe('Items', () => {
 
   it('admin user can bypass delete rules and delete dialog is in admin view', () => {
     cy.visit('/catalogue/4/items/1/items');
-    cy.setCurrentUserToAdmin();
+    cy.setMode({ admin: true });
 
     cy.findAllByLabelText('Row Actions').first().click();
     cy.findByText('Delete as Admin').click();

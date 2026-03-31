@@ -1,12 +1,17 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { System } from '../api/api.types';
+import APIConfigProvider from '../apiConfigProvider.component';
 import SystemsJSON from '../mocks/Systems.json';
+import { RootState } from '../state/store';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import {
   SystemsTableView,
   SystemsTableViewProps,
 } from './systemsTableView.component';
+
+import { http, HttpResponse } from 'msw';
+import { server } from '../mocks/server';
 
 describe('SystemsTableView', () => {
   let props: SystemsTableViewProps;
@@ -19,8 +24,15 @@ describe('SystemsTableView', () => {
     SystemsJSON[3] as System,
   ];
 
-  const createView = () => {
-    return renderComponentWithRouterProvider(<SystemsTableView {...props} />);
+  const createView = (preloadedState?: Partial<RootState>) => {
+    return renderComponentWithRouterProvider(
+      <APIConfigProvider>
+        <SystemsTableView {...props} />
+      </APIConfigProvider>,
+      undefined,
+      undefined,
+      preloadedState
+    );
   };
 
   beforeEach(() => {
@@ -53,6 +65,46 @@ describe('SystemsTableView', () => {
 
     for (const system of mockSystemsData)
       expect(await screen.findByText(system.name)).toBeInTheDocument();
+  });
+
+  it('renders critical mode correctly', async () => {
+    createView({ criticality: { isCriticalMode: true } });
+
+    await waitFor(() => {
+      expect(screen.getByText('Name')).toBeInTheDocument();
+    });
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
+    await user.hover((await screen.findAllByTestId('ErrorIcon'))[0]);
+
+    expect(
+      await screen.findByText('This system is critical.')
+    ).toBeInTheDocument();
+  });
+
+  it('renders critical mode correctly when spares is not defined', async () => {
+    server.use(
+      http.get('/v1/settings/spares-definition', () => {
+        return HttpResponse.json(undefined, { status: 204 });
+      })
+    );
+
+    createView({ criticality: { isCriticalMode: true } });
+
+    await waitFor(() => {
+      expect(screen.getByText('Name')).toBeInTheDocument();
+    });
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
+    await waitFor(() =>
+      expect(screen.queryByTestId('ErrorIcon')).not.toBeInTheDocument()
+    );
   });
 
   it('renders no results page correctly', async () => {

@@ -1,11 +1,11 @@
 import { createListenerMiddleware } from '@reduxjs/toolkit';
 import { TokenUpdatedType } from '../actions/actions.types';
 import { setAuthorisation, setIsAdminMode } from '../slices/authorisationSlice';
-import { RootState, StorageDeps } from '../store';
+import { RootState, StorageRegistry } from '../store';
 
 export const createAuthListenerMiddleware = (
-  getUserRoleFn: () => string,
-  storage: StorageDeps
+  getUserRoleFn: () => string | undefined,
+  storageRegistryDict: StorageRegistry
 ) => {
   const middleware = createListenerMiddleware();
 
@@ -16,13 +16,13 @@ export const createAuthListenerMiddleware = (
       const privilegedRoles = state.config.settings.privilegedRoles;
 
       const role = getUserRoleFn();
-
-      listenerApi.dispatch(
-        setAuthorisation({
-          role,
-          isAdminUser: privilegedRoles.includes(role),
-        })
-      );
+      if (typeof role === 'string')
+        listenerApi.dispatch(
+          setAuthorisation({
+            role,
+            isAdminUser: privilegedRoles.includes(role),
+          })
+        );
     },
   });
 
@@ -31,9 +31,9 @@ export const createAuthListenerMiddleware = (
     effect: async (_, listenerApi) => {
       const state = listenerApi.getState() as RootState;
       if (state.authorisation.isAdminUser) {
-        storage.saveIsAdminMode(state.authorisation.isAdminMode);
+        storageRegistryDict.authorisation.save(state.authorisation.isAdminMode);
       } else {
-        storage.clearIsAdminMode();
+        storageRegistryDict.authorisation.clear();
       }
     },
   });
@@ -44,9 +44,9 @@ export const createAuthListenerMiddleware = (
       const { isAdminUser, isAdminMode } = (listenerApi.getState() as RootState)
         .authorisation;
       if (!isAdminUser) {
-        storage.clearIsAdminMode();
+        storageRegistryDict.authorisation.clear();
       } else {
-        storage.saveIsAdminMode(isAdminMode);
+        storageRegistryDict.authorisation.save(isAdminMode);
       }
     },
   });

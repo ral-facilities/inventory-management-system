@@ -1,4 +1,5 @@
 import {
+  alpha,
   Link as MuiLink,
   SxProps,
   TableCell,
@@ -332,8 +333,9 @@ function getNestedProperty(obj: any, path: string): any {
     .reduce((o, p) => (o && o[p] !== undefined ? o[p] : undefined), obj);
 }
 
-interface ModifiedMRTGroupedCellProps<TData extends MRT_RowData>
-  extends MRTGroupedCellProps<TData> {
+interface ModifiedMRTGroupedCellProps<
+  TData extends MRT_RowData,
+> extends MRTGroupedCellProps<TData> {
   outputType?: 'Link' | 'Date'; // default is Text
 }
 
@@ -690,4 +692,65 @@ export function isExactFilterActive<TData extends MRT_RowData>(
       return JSON.stringify(actualFilter.value) === JSON.stringify(value);
     }
   });
+}
+
+export const getCriticalityColor = (props: {
+  theme: Theme;
+  showFlagged: boolean | null;
+}) => {
+  const { theme, showFlagged } = props;
+  if (showFlagged === null) return theme.palette.warning.main;
+  if (showFlagged === true) return theme.palette.error.main;
+  return theme.palette.success.main;
+};
+
+export const criticalityRowStyle = (props: {
+  theme: Theme;
+  showFlagged: boolean | null;
+}) => {
+  const { theme, showFlagged } = props;
+
+  const color = getCriticalityColor({ theme, showFlagged });
+  return {
+    backgroundColor: alpha(
+      color,
+      0.07 // 7% tint
+    ),
+  };
+};
+
+export const criticalityCardStyle = (props: {
+  theme: Theme;
+  showFlagged: boolean | null;
+}) => {
+  const { theme, showFlagged } = props;
+  const color = getCriticalityColor({ theme, showFlagged });
+
+  return {
+    border: `2px solid ${color}`,
+    boxShadow: `0 0 10px 3px ${alpha(color, 0.53)}`, // 53% opacity for fuzzy glow
+  };
+};
+
+export const criticalityHeaderStyle = (props: {
+  theme: Theme;
+  showFlagged: boolean | null;
+}) => {
+  const { theme, showFlagged } = props;
+  return {
+    ...criticalityCardStyle({ theme, showFlagged }),
+    borderRadius: 5,
+  };
+};
+
+export function roundUpTenth(x?: number | null) {
+  if (typeof x !== 'number') return x;
+
+  if (x > 0) {
+    // Positive: round up
+    return Math.ceil(x * 10) / 10;
+  } else {
+    // Negative: round down
+    return Math.floor(x * 10) / 10;
+  }
 }

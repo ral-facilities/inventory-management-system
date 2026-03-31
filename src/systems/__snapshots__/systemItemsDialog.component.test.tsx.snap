@@ -29,12 +29,12 @@ exports[`SystemItemsDialog > displays correctly when in admin mode 1`] = `
       <div
         aria-labelledby=":r2e:"
         aria-modal="true"
-        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthXl MuiDialog-paperFullWidth css-ji9sn5-MuiPaper-root-MuiDialog-paper"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthXl MuiDialog-paperFullWidth css-v3yqi3-MuiPaper-root-MuiDialog-paper"
         role="dialog"
         style="--Paper-shadow: 0px 11px 15px -7px rgba(0,0,0,0.2),0px 24px 38px 3px rgba(0,0,0,0.14),0px 9px 46px 8px rgba(0,0,0,0.12);"
       >
         <h2
-          class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-19csis5-MuiTypography-root-MuiDialogTitle-root"
+          class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-17ltkeq-MuiTypography-root-MuiDialogTitle-root"
           id=":r2e:"
         >
           Move
@@ -58,7 +58,7 @@ exports[`SystemItemsDialog > displays correctly when in admin mode 1`] = `
           </svg>
         </h2>
         <div
-          class="MuiDialogContent-root css-kw13he-MuiDialogContent-root"
+          class="MuiDialogContent-root css-y8y9ec-MuiDialogContent-root"
         >
           <div
             class="MuiStepper-root MuiStepper-horizontal MuiStepper-nonLinear css-1ykbur3-MuiStepper-root"
@@ -156,89 +156,85 @@ exports[`SystemItemsDialog > displays correctly when in admin mode 1`] = `
             </div>
           </div>
           <div
-            class="MuiBox-root css-1yuhvjn"
+            class="MuiBox-root css-gxzhr2"
           >
             <div
-              class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-spacing-xs-1.5 css-1gpyge2-MuiGrid2-root"
+              class="MuiStack-root css-1vml573-MuiStack-root"
             >
               <div
-                class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j0u08r-MuiGrid2-root"
+                class="MuiBox-root css-1ko6z0"
               >
-                <div
-                  class="MuiBox-root css-1ko6z0"
+                <span
+                  aria-label="Systems Home"
+                  class=""
+                  data-mui-internal-clone-element="true"
                 >
-                  <span
-                    aria-label="Systems Home"
-                    class=""
-                    data-mui-internal-clone-element="true"
+                  <button
+                    aria-label="navigate to systems home"
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
+                    tabindex="0"
+                    type="button"
                   >
-                    <button
-                      aria-label="navigate to systems home"
-                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-53g0n7-MuiButtonBase-root-MuiIconButton-root"
-                      tabindex="0"
-                      type="button"
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                      data-testid="HomeIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+                      />
+                    </svg>
+                  </button>
+                </span>
+                <nav
+                  aria-label="breadcrumb"
+                  class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-fxix4h-MuiTypography-root-MuiBreadcrumbs-root"
+                >
+                  <ol
+                    class="MuiBreadcrumbs-ol css-1uwp4ue-MuiBreadcrumbs-ol"
+                  >
+                    <li
+                      class="MuiBreadcrumbs-li"
+                    >
+                      <div
+                        class="MuiBox-root css-8zy5qf"
+                      />
+                    </li>
+                    <li
+                      aria-hidden="true"
+                      class="MuiBreadcrumbs-separator css-jhr02i-MuiBreadcrumbs-separator"
                     >
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                        data-testid="HomeIcon"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                        data-testid="NavigateNextIcon"
                         focusable="false"
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+                          d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
                         />
                       </svg>
-                    </button>
-                  </span>
-                  <nav
-                    aria-label="breadcrumb"
-                    class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-fxix4h-MuiTypography-root-MuiBreadcrumbs-root"
-                  >
-                    <ol
-                      class="MuiBreadcrumbs-ol css-1uwp4ue-MuiBreadcrumbs-ol"
+                    </li>
+                    <li
+                      class="MuiBreadcrumbs-li"
                     >
-                      <li
-                        class="MuiBreadcrumbs-li"
+                      <p
+                        aria-label="Storage"
+                        class="MuiTypography-root MuiTypography-body1 css-1d1tquj-MuiTypography-root"
+                        data-mui-internal-clone-element="true"
+                        role="tooltip"
                       >
-                        <div
-                          class="MuiBox-root css-8zy5qf"
-                        />
-                      </li>
-                      <li
-                        aria-hidden="true"
-                        class="MuiBreadcrumbs-separator css-jhr02i-MuiBreadcrumbs-separator"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
-                          data-testid="NavigateNextIcon"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
-                          />
-                        </svg>
-                      </li>
-                      <li
-                        class="MuiBreadcrumbs-li"
-                      >
-                        <p
-                          aria-label="Storage"
-                          class="MuiTypography-root MuiTypography-body1 css-1d1tquj-MuiTypography-root"
-                          data-mui-internal-clone-element="true"
-                          role="tooltip"
-                        >
-                          Storage
-                        </p>
-                      </li>
-                    </ol>
-                  </nav>
-                </div>
+                        Storage
+                      </p>
+                    </li>
+                  </ol>
+                </nav>
               </div>
               <div
-                class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-1j0u08r-MuiGrid2-root"
+                class="MuiBox-root css-1ddxrcs"
               >
                 <div
                   class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-aut081-MuiPaper-root-MuiAlert-root"
@@ -287,7 +283,7 @@ exports[`SystemItemsDialog > displays correctly when in admin mode 1`] = `
                   </div>
                 </div>
                 <div
-                  class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-1hoqul-MuiPaper-root"
+                  class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-th9pv0-MuiPaper-root"
                   style="--Paper-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);"
                 >
                   <div
@@ -394,21 +390,21 @@ exports[`SystemItemsDialog > displays correctly when in admin mode 1`] = `
                     </div>
                   </div>
                   <div
-                    class="MuiTableContainer-root css-e8e8ar-MuiTableContainer-root"
+                    class="MuiTableContainer-root css-1qjrzjp-MuiTableContainer-root"
                   >
                     <table
-                      class="MuiTable-root MuiTable-stickyHeader css-ithv9-MuiTable-root"
-                      style="--header-name-size: 400; --col-name-size: 400; --header-type-size: 350; --col-type-size: 350; --header-modified_time-size: 400; --col-modified_time-size: 400;"
+                      class="MuiTable-root MuiTable-stickyHeader css-1gcyac0-MuiTable-root"
+                      style="--header-name-size: 720; --col-name-size: 720; --header-type-size: 350; --col-type-size: 350; --header-modified_time-size: 360; --col-modified_time-size: 360; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
                     >
                       <thead
-                        class="MuiTableHead-root css-1e5wupo-MuiTableHead-root"
+                        class="MuiTableHead-root css-7psuou-MuiTableHead-root"
                       >
                         <tr
-                          class="MuiTableRow-root MuiTableRow-head css-1jx5a6f-MuiTableRow-root"
+                          class="MuiTableRow-root MuiTableRow-head css-1mpnnre-MuiTableRow-root"
                         >
                           <th
                             aria-sort="none"
-                            class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ce1tms-MuiTableCell-root"
+                            class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1b9izdo-MuiTableCell-root"
                             colspan="1"
                             data-can-sort="true"
                             data-index="0"
@@ -416,7 +412,7 @@ exports[`SystemItemsDialog > displays correctly when in admin mode 1`] = `
                             tabindex="0"
                           >
                             <div
-                              class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
+                              class="Mui-TableHeadCell-Content MuiBox-root css-c8wlay"
                             >
                               <div
                                 class="Mui-TableHeadCell-Content-Labels MuiBox-root css-68rqdf"
@@ -480,6 +476,15 @@ exports[`SystemItemsDialog > displays correctly when in admin mode 1`] = `
                                     />
                                   </svg>
                                 </button>
+                              </div>
+                              <div
+                                class="Mui-TableHeadCell-ResizeHandle-Wrapper MuiBox-root css-1ug570k"
+                              >
+                                <div
+                                  aria-orientation="vertical"
+                                  class="MuiDivider-root MuiDivider-fullWidth MuiDivider-vertical MuiDivider-flexItem Mui-TableHeadCell-ResizeHandle-Divider css-138kmo-MuiDivider-root"
+                                  role="separator"
+                                />
                               </div>
                             </div>
                             <div
@@ -589,7 +594,7 @@ exports[`SystemItemsDialog > displays correctly when in admin mode 1`] = `
                           </th>
                           <th
                             aria-sort="none"
-                            class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-j2z49e-MuiTableCell-root"
+                            class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1mf9tlw-MuiTableCell-root"
                             colspan="1"
                             data-can-sort="true"
                             data-index="1"
@@ -597,7 +602,7 @@ exports[`SystemItemsDialog > displays correctly when in admin mode 1`] = `
                             tabindex="0"
                           >
                             <div
-                              class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
+                              class="Mui-TableHeadCell-Content MuiBox-root css-c8wlay"
                             >
                               <div
                                 class="Mui-TableHeadCell-Content-Labels MuiBox-root css-68rqdf"
@@ -678,6 +683,15 @@ exports[`SystemItemsDialog > displays correctly when in admin mode 1`] = `
                                     />
                                   </svg>
                                 </button>
+                              </div>
+                              <div
+                                class="Mui-TableHeadCell-ResizeHandle-Wrapper MuiBox-root css-1ug570k"
+                              >
+                                <div
+                                  aria-orientation="vertical"
+                                  class="MuiDivider-root MuiDivider-fullWidth MuiDivider-vertical MuiDivider-flexItem Mui-TableHeadCell-ResizeHandle-Divider css-138kmo-MuiDivider-root"
+                                  role="separator"
+                                />
                               </div>
                             </div>
                             <div
@@ -812,7 +826,7 @@ exports[`SystemItemsDialog > displays correctly when in admin mode 1`] = `
                           </th>
                           <th
                             aria-sort="none"
-                            class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-14x66ne-MuiTableCell-root"
+                            class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1dlm72t-MuiTableCell-root"
                             colspan="1"
                             data-can-sort="true"
                             data-index="2"
@@ -820,7 +834,7 @@ exports[`SystemItemsDialog > displays correctly when in admin mode 1`] = `
                             tabindex="0"
                           >
                             <div
-                              class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
+                              class="Mui-TableHeadCell-Content MuiBox-root css-c8wlay"
                             >
                               <div
                                 class="Mui-TableHeadCell-Content-Labels MuiBox-root css-68rqdf"
@@ -884,6 +898,15 @@ exports[`SystemItemsDialog > displays correctly when in admin mode 1`] = `
                                     />
                                   </svg>
                                 </button>
+                              </div>
+                              <div
+                                class="Mui-TableHeadCell-ResizeHandle-Wrapper MuiBox-root css-1ug570k"
+                              >
+                                <div
+                                  aria-orientation="vertical"
+                                  class="MuiDivider-root MuiDivider-fullWidth MuiDivider-vertical MuiDivider-flexItem Mui-TableHeadCell-ResizeHandle-Divider css-138kmo-MuiDivider-root"
+                                  role="separator"
+                                />
                               </div>
                             </div>
                             <div
@@ -993,14 +1016,40 @@ exports[`SystemItemsDialog > displays correctly when in admin mode 1`] = `
                               </div>
                             </div>
                           </th>
+                          <th
+                            aria-sort="none"
+                            class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6pxal-MuiTableCell-root"
+                            colspan="1"
+                            data-index="3"
+                            scope="col"
+                            tabindex="0"
+                          >
+                            <div
+                              class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
+                            >
+                              <div
+                                class="Mui-TableHeadCell-Content-Labels MuiBox-root css-4ng264"
+                              >
+                                <div
+                                  class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-10aqj5p"
+                                />
+                              </div>
+                              <div
+                                class="Mui-TableHeadCell-Content-Actions MuiBox-root css-epvm6"
+                              />
+                            </div>
+                          </th>
                         </tr>
                       </thead>
                       <tbody
-                        class="MuiTableBody-root css-6jvq2p-MuiTableBody-root"
+                        class="MuiTableBody-root css-1d5b2yu-MuiTableBody-root"
                       >
-                        <tr>
+                        <tr
+                          style="display: grid;"
+                        >
                           <td
-                            colspan="3"
+                            colspan="4"
+                            style="display: grid;"
                           >
                             <p
                               class="MuiTypography-root MuiTypography-body1 css-1s2etz1-MuiTypography-root"
@@ -1045,7 +1094,7 @@ exports[`SystemItemsDialog > displays correctly when in admin mode 1`] = `
                                 role="combobox"
                                 tabindex="0"
                               >
-                                5
+                                30
                               </div>
                               <input
                                 aria-hidden="true"
@@ -1053,7 +1102,7 @@ exports[`SystemItemsDialog > displays correctly when in admin mode 1`] = `
                                 class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
                                 id="mrt-rows-per-page-:r2i:"
                                 tabindex="-1"
-                                value="5"
+                                value="30"
                               />
                               <svg
                                 aria-hidden="true"
