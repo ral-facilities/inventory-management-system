@@ -85,7 +85,7 @@ describe('Catalogue Item Layout', () => {
 
     expect(
       await screen.findByText(
-        'Unable to determine if this catalogue item is critical. If the expected lifetime is "None" please update this field. Otherwise wait until this is recalculated.'
+        'Unable to determine if this catalogue item is critical. If the expected lifetime is "None" or 0 please update this field. Otherwise wait until this is recalculated.'
       )
     ).toBeInTheDocument();
   });

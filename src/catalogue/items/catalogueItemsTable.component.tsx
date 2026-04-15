@@ -136,7 +136,7 @@ export const getCICriticalityLabel = (showFlagged: boolean | null) => {
     return 'This catalogue item is not critical.';
   }
 
-  return 'Unable to determine if this catalogue item is critical. If the expected lifetime is "None" please update this field. Otherwise wait until this is recalculated.';
+  return 'Unable to determine if this catalogue item is critical. If the expected lifetime is "None" or 0 please update this field. Otherwise wait until this is recalculated.';
 };
 
 const MoveCatalogueItemsButton = (props: {
