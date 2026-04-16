@@ -138,14 +138,19 @@ function convertToCatalogueItemDetailsStepPost(
     name: item.name,
     description: item.description ?? null,
     cost_gbp: Number(item.cost_gbp), // Convert string to number
-    cost_to_rework_gbp: item.cost_to_rework_gbp
-      ? Number(item.cost_to_rework_gbp)
-      : null, // Convert if not null
-    days_to_replace: Number(item.days_to_replace), // Convert string to number
-    days_to_rework: item.days_to_rework ? Number(item.days_to_rework) : null, // Convert if not null
-    expected_lifetime_days: item.expected_lifetime_days
-      ? Number(item.expected_lifetime_days)
-      : null, // Convert if not null
+    cost_to_rework_gbp:
+      typeof item.cost_to_rework_gbp === 'number'
+        ? Number(item.cost_to_rework_gbp)
+        : null,
+    days_to_replace: Number(item.days_to_replace),
+    days_to_rework:
+      typeof item.days_to_rework === 'number'
+        ? Number(item.days_to_rework)
+        : null,
+    expected_lifetime_days:
+      typeof item.expected_lifetime_days === 'number'
+        ? Number(item.expected_lifetime_days)
+        : null,
     item_model_number: item.item_model_number ?? null,
     notes: item.notes ?? null,
   };
