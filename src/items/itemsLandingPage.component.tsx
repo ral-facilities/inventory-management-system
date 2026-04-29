@@ -23,6 +23,7 @@ import PrimaryImage from '../common/images/primaryImage.component';
 import TabView from '../common/tab/tabView.component';
 import { useAppSelector } from '../state/hook';
 import { selectAuthorisation } from '../state/slices/authorisationSlice';
+import store from '../state/store';
 import { formatDateTimeStrings } from '../utils';
 import ItemDialog from './itemDialog.component';
 
@@ -36,6 +37,9 @@ const ItemsActionMenu = (props: {
   const [editItemDialogOpen, setEditItemDialogOpen] =
     React.useState<boolean>(false);
   const [isAdminDialog, setIsAdminDialog] = React.useState<boolean>(false);
+  const state = store.getState();
+  const serialNumberPrefillEnabled =
+    state.config.settings.serialNumberPrefillEnabled;
 
   return (
     <ActionMenu
@@ -62,6 +66,7 @@ const ItemsActionMenu = (props: {
                 catalogueCategory={catalogueCategory}
                 catalogueItem={catalogueItem}
                 selectedItem={item}
+                serialNumberPrefillEnabled={serialNumberPrefillEnabled}
               />
             )}
           </>

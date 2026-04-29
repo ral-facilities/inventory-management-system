@@ -47,6 +47,7 @@ import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
 import { useAppSelector } from '../state/hook';
 import { selectAuthorisation } from '../state/slices/authorisationSlice';
 import { selectCriticality } from '../state/slices/criticalitySlice';
+import store from '../state/store';
 import {
   COLUMN_FILTER_BOOLEAN_OPTIONS,
   COLUMN_FILTER_FUNCTIONS,
@@ -146,6 +147,9 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
   const apiSettings = React.useContext(APISettingsContext);
   const sparesFilterState = apiSettings?.spares?.sparesFilterState;
   const isSparesDefinitionDefined = !!apiSettings.spares;
+  const state = store.getState();
+  const serialNumberPrefillEnabled =
+    state.config.settings.serialNumberPrefillEnabled;
 
   // Obtain the selected system data, not just the selection state
   const selectedRowIds = Object.keys(rowSelection);
@@ -706,6 +710,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                 ? `${row.original.item.notes || ''}\n\nThis is a copy of the item with this Serial Number: ${row.original.item.serial_number ?? 'No serial number'}`
                 : row.original.item.notes,
           }}
+          serialNumberPrefillEnabled={serialNumberPrefillEnabled}
         />
       );
     },

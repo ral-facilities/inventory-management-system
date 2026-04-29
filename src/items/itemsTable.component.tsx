@@ -43,6 +43,7 @@ import { usePreservedTableState } from '../common/preservedTableState.component'
 import { SystemTypeColumnHeaderInformationTooltip } from '../common/systemTypesInformationTooltip.component';
 import { useAppSelector } from '../state/hook';
 import { selectAuthorisation } from '../state/slices/authorisationSlice';
+import store from '../state/store';
 import {
   COLUMN_FILTER_BOOLEAN_OPTIONS,
   COLUMN_FILTER_FUNCTIONS,
@@ -154,6 +155,9 @@ export function ItemsTable(props: ItemTableProps) {
   >('create');
 
   const [isAdminDialog, setIsAdminDialog] = React.useState<boolean>(false);
+  const state = store.getState();
+  const serialNumberPrefillEnabled =
+    state.config.settings.serialNumberPrefillEnabled;
 
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     const viewCatalogueItemProperties = catalogueCategory?.properties ?? [];
@@ -633,6 +637,7 @@ export function ItemsTable(props: ItemTableProps) {
                         : row.original.item.notes,
                   }
             }
+            serialNumberPrefillEnabled={serialNumberPrefillEnabled}
           />
         </>
       );
