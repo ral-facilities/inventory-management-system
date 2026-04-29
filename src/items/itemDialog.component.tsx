@@ -68,17 +68,14 @@ import {
 } from '../form.schemas';
 import handleIMS_APIError from '../handleIMS_APIError';
 import handleTransferState from '../handleTransferState';
-import store from '../state/store';
 import { SystemsTableView } from '../systems/systemsTableView.component';
 import Breadcrumbs from '../view/breadcrumbs.component';
 
 function toItemDetailsStep(
   item: Item | undefined,
-  catalogueCategory: CatalogueCategory | undefined
+  catalogueCategory: CatalogueCategory | undefined,
+  serialNumberPrefillEnabled: boolean
 ): ItemDetailsStep {
-  const state = store.getState();
-  const prefillSerialNumbers = state.config.settings.prefillSerialNumbers;
-
   if (!item) {
     return {
       purchase_order_number: '',
@@ -88,7 +85,7 @@ function toItemDetailsStep(
       asset_number: '',
       serial_number: {
         serial_number:
-          (prefillSerialNumbers && catalogueCategory?.name + ' %s') || '',
+          (serialNumberPrefillEnabled && catalogueCategory?.name + ' %s') || '',
         starting_value: '',
         quantity: '',
       },
@@ -159,6 +156,7 @@ export interface ItemDialogProps {
   catalogueCategory?: CatalogueCategory;
   selectedItem?: Item;
   isAdminMode: boolean;
+  serialNumberPrefillEnabled: boolean;
 }
 
 function ItemDialog(props: ItemDialogProps) {
@@ -170,6 +168,7 @@ function ItemDialog(props: ItemDialogProps) {
     catalogueItem,
     selectedItem,
     isAdminMode,
+    serialNumberPrefillEnabled,
   } = props;
 
   // Fetch the catalogue category if it hasn't already been given (as required to know what properties are available)
@@ -240,7 +239,11 @@ function ItemDialog(props: ItemDialogProps) {
     resolver: zodResolver(
       ItemDetailsStepSchema(requestType, isAdminMode && parentSystemId !== null)
     ),
-    defaultValues: toItemDetailsStep(selectedItem, catalogueCategory),
+    defaultValues: toItemDetailsStep(
+      selectedItem,
+      catalogueCategory,
+      serialNumberPrefillEnabled
+    ),
   });
 
   const {
@@ -279,7 +282,13 @@ function ItemDialog(props: ItemDialogProps) {
   const serialNumberAdvancedOptions = itemDetails.serial_number;
   // Load the values for editing.
   React.useEffect(() => {
-    resetDetailsStep(toItemDetailsStep(selectedItem, catalogueCategory));
+    resetDetailsStep(
+      toItemDetailsStep(
+        selectedItem,
+        catalogueCategory,
+        serialNumberPrefillEnabled
+      )
+    );
     resetPropertiesStep({
       properties: convertToPropertyValueList(
         catalogueCategory,
@@ -297,6 +306,7 @@ function ItemDialog(props: ItemDialogProps) {
     resetPropertiesStep,
     selectedItem,
     selectedItem?.properties,
+    serialNumberPrefillEnabled,
   ]);
 
   // Set usage status based on the selected Rule
@@ -364,10 +374,14 @@ function ItemDialog(props: ItemDialogProps) {
   ]);
 
   React.useEffect(() => {
-    if (
+    const neitherProvided =
       !serialNumberAdvancedOptions.quantity &&
-      !serialNumberAdvancedOptions.starting_value
-    ) {
+      !serialNumberAdvancedOptions.starting_value;
+    const bothProvided =
+      serialNumberAdvancedOptions.quantity ||
+      serialNumberAdvancedOptions.starting_value;
+
+    if (neitherProvided || bothProvided) {
       clearErrorsDetailsStep([
         'serial_number.quantity',
         'serial_number.serial_number',

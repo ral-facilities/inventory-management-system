@@ -19,7 +19,6 @@ describe('App', () => {
                 settings: {
                   pluginHost: 'http://localhost',
                   privilegedRoles: ['admin'],
-                  prefillSerialNumbers: true,
                 },
               },
             })

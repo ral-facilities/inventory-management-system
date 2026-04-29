@@ -30,7 +30,7 @@ describe('configSlice', () => {
     ],
     maxImageSizeBytes: 52428800,
     privilegedRoles: ['admin'],
-    prefillSerialNumbers: true,
+    serialNumberPrefillEnabled: true,
     routes: [],
     pluginHost: '',
   };

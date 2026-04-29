@@ -143,7 +143,7 @@ describe('Items', () => {
           usage_status_id: '0',
           warranty_end_date: null,
           asset_number: null,
-          serial_number: 'Cameras %s',
+          serial_number: null,
           delivered_date: null,
           notes: null,
           properties: [
