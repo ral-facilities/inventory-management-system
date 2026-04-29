@@ -278,7 +278,7 @@ describe('Catalogue Items Dialog', () => {
       costToReworkGbp: '400',
       daysToReplace: '20',
       daysToRework: '2',
-      expectedLifetimeDays: '146',
+      expectedLifetimeDays: '0',
       description: '',
       itemModelNumber: 'mk4324',
       name: 'test',
@@ -305,7 +305,7 @@ describe('Catalogue Items Dialog', () => {
       cost_to_rework_gbp: 400,
       days_to_replace: 20,
       days_to_rework: 2,
-      expected_lifetime_days: 146,
+      expected_lifetime_days: 0,
       description: null,
       is_obsolete: false,
       item_model_number: 'mk4324',
@@ -617,8 +617,6 @@ describe('Catalogue Items Dialog', () => {
     expect(validNumberDetailsHelperText[0]).toHaveTextContent(
       'Please enter a valid number.'
     );
-
-
 
     await modifyValues({
       costGbp: '1200',

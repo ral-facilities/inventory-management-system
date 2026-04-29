@@ -864,7 +864,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         const same =
           prev['catalogueItem.criticality'] === nextOn &&
           prev['catalogueItem.is_flagged'] === nextOn &&
-          prev['catalogueItem.number_of_spares_required'];
+          prev['catalogueItem.number_of_spares_required'] === nextOn;
 
         if (same) return prev;
 
