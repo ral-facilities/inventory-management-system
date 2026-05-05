@@ -26,7 +26,11 @@ import {
   usePatchManufacturer,
   usePostManufacturer,
 } from '../api/manufacturers';
-import { ManufacturerSchema, RequestType } from '../form.schemas';
+import {
+  ManufacturerPostSchema,
+  ManufacturerSchema,
+  RequestType,
+} from '../form.schemas';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { createFormControlWithRootErrorClearing } from '../utils';
 
@@ -37,9 +41,8 @@ export interface ManufacturerDialogProps {
   type: RequestType;
 }
 
-const _manufacturerPostSchema = ManufacturerSchema('post');
 const formControl = createFormControlWithRootErrorClearing<
-  z.input<typeof _manufacturerPostSchema>,
+  z.input<typeof ManufacturerPostSchema>,
   undefined,
   ManufacturerPost
 >();
@@ -92,7 +95,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     clearErrors,
     reset,
   } = useForm<
-    z.input<typeof _manufacturerPostSchema>,
+    z.input<typeof ManufacturerPostSchema>,
     undefined,
     ManufacturerPost
   >({

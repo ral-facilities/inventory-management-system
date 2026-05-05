@@ -255,6 +255,8 @@ export const ManufacturerSchema = (requestType: RequestType) => {
   });
 };
 
+export const ManufacturerPostSchema = ManufacturerSchema('post');
+
 // ------------------------------------ UNITS -------------------------------------------------------
 
 export const UnitSchema = z.object({
@@ -280,6 +282,8 @@ export const SystemsSchema = (requestType: RequestType) =>
       errorMessage: 'Please select a type.',
     }),
   });
+
+export const SystemsPostSchema = SystemsSchema('post');
 
 // ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
 
@@ -546,6 +550,9 @@ export const CatalogueItemDetailsStepSchema = (requestType: RequestType) => {
     notes: OptionalOrNullableStringSchema({ requestType }),
   });
 };
+
+export const CatalogueItemDetailsStepPostSchema =
+  CatalogueItemDetailsStepSchema('post');
 
 export const PropertiesStepSchema = z.object({
   properties: z.array(z.discriminatedUnion('valueType', propertiesTypeList)),

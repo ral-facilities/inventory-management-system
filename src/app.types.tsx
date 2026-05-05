@@ -97,19 +97,6 @@ export interface MoveToCatalogueCategory {
 
 // ------------------------------------ CATALOGUE ITEM ------------------------------------
 
-export interface CatalogueItemDetailsStep {
-  manufacturer_id: string;
-  name: string;
-  description?: string | null;
-  cost_gbp: string;
-  cost_to_rework_gbp?: string | null;
-  days_to_replace: string;
-  days_to_rework?: string | null;
-  expected_lifetime_days?: string | null;
-  item_model_number?: string | null;
-  notes?: string | null;
-}
-
 export interface CatalogueItemDetailsStepPost {
   manufacturer_id: string;
   name: string;
