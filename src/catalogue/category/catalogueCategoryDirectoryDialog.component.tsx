@@ -18,6 +18,7 @@ import {
   useGetCatalogueCategory,
   useMoveToCatalogueCategory,
 } from '../../api/catalogueCategories';
+import { FLEX_CONTAINER_PROPS, TABLE_DIALOG_PROPS } from '../../common/consts';
 import handleTransferState from '../../handleTransferState';
 import Breadcrumbs from '../../view/breadcrumbs.component';
 import CatalogueCategoryTableView from './catalogueCategoryTableView.component';
@@ -133,13 +134,8 @@ const CatalogueCategoryDirectoryDialog = (
     useGetCatalogueBreadcrumbs(parentCategoryId);
 
   return (
-    <Dialog
-      open={open}
-      maxWidth="lg"
-      PaperProps={{ sx: { height: '692px' } }}
-      fullWidth
-    >
-      <DialogTitle sx={{ marginLeft: 2 }}>
+    <Dialog open={open} {...TABLE_DIALOG_PROPS}>
+      <DialogTitle sx={{ marginLeft: 2, paddingBottom: 0 }}>
         <Grid container spacing={2}>
           <Grid>
             <Box
@@ -165,7 +161,7 @@ const CatalogueCategoryDirectoryDialog = (
                   placement="top"
                   enterTouchDelay={0}
                   arrow
-                  aria-label={'Copy Warning'}
+                  aria-label="Copy Warning"
                   sx={{ mx: 2 }}
                 >
                   <InfoOutlinedIcon />
@@ -183,7 +179,7 @@ const CatalogueCategoryDirectoryDialog = (
           </Grid>
         </Grid>
       </DialogTitle>
-      <DialogContent>
+      <DialogContent sx={{ ...FLEX_CONTAINER_PROPS, minHeight: '500px' }}>
         <CatalogueCategoryTableView
           selectedCategories={selectedCategories}
           catalogueCategoryParentId={parentCategoryId ?? undefined}

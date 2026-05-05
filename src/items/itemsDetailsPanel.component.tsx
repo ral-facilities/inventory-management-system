@@ -11,7 +11,8 @@ import React from 'react';
 import { Link } from 'react-router';
 import { CatalogueItem, Item } from '../api/api.types';
 import { useGetManufacturer } from '../api/manufacturers';
-import { useGetSystem, useGetSystemTypes } from '../api/systems';
+import { useGetSystem } from '../api/systems';
+import { useGetSystemType } from '../api/systemTypes';
 import PrimaryImage from '../common/images/primaryImage.component';
 import { formatDateTimeStrings } from '../utils';
 
@@ -48,7 +49,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
     catalogueItemIdData.manufacturer_id
   );
   const { data: systemData } = useGetSystem(itemData.system_id);
-  const { data: systemTypesData } = useGetSystemTypes();
+  const { data: systemTypeData } = useGetSystemType(systemData?.type_id);
 
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
@@ -268,9 +269,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                     wordWrap: 'break-word',
                   }}
                 >
-                  {systemTypesData?.find(
-                    (type) => type.id === systemData?.type_id
-                  )?.value ?? 'Unknown'}
+                  {systemTypeData?.value}
                 </Typography>
               </Grid>
 

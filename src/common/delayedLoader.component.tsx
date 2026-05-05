@@ -13,7 +13,8 @@ const DelayedLoader = (props: DelayedLoaderProps) => {
   const [showLoader, setShowLoader] = React.useState(false);
 
   React.useEffect(() => {
-    let timeout: NodeJS.Timeout | null = null;
+    // Return type reported as number by vscode, but when built seems to use NextJS.Timeout
+    let timeout: ReturnType<typeof setTimeout> | null = null;
 
     if (isLoading) {
       timeout = setTimeout(() => {

@@ -39,8 +39,14 @@ import {
   AddCatalogueCategoryWithPlacementIds,
   AllowedValues as AllowedValuesPlaceholder,
 } from '../../app.types';
+import {
+  FLEX_CONTAINER_PROPS,
+  FORM_DIALOG_PROPS,
+  TABLE_DIALOG_PROPS,
+} from '../../common/consts';
 import { CatalogueCategorySchema, RequestType } from '../../form.schemas';
 import handleIMS_APIError from '../../handleIMS_APIError';
+import handleTransferState from '../../handleTransferState';
 import { createFormControlWithRootErrorClearing } from '../../utils';
 import CatalogueItemsPropertiesTable from './property/catalogueItemPropertiesTable.component';
 
@@ -290,18 +296,28 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
           patchCatalogueCategory({
             id: selectedCatalogueCategory.id,
             catalogueCategory: { name: data.name },
-          }).catch((error: AxiosError) => {
-            const response = error.response?.data as APIError;
-            if (response && error.response?.status === 409) {
-              setError('name', {
-                message:
-                  'A catalogue category with the same name already exists within the same parent catalogue category. Please enter a different name.',
-              });
-              return;
-            }
+          })
+            .then(() => {
+              handleTransferState([
+                {
+                  name: data.name,
+                  message: `Successfully updated Catalogue Category name to ${data.name}`,
+                  state: 'success',
+                },
+              ]);
+            })
+            .catch((error: AxiosError) => {
+              const response = error.response?.data as APIError;
+              if (response && error.response?.status === 409) {
+                setError('name', {
+                  message:
+                    'A catalogue category with the same name already exists within the same parent catalogue category. Please enter a different name.',
+                });
+                return;
+              }
 
-            handleIMS_APIError(error);
-          });
+              handleIMS_APIError(error);
+            });
         } else
           setError('name', {
             message:
@@ -325,17 +341,22 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
   };
 
   return (
-    <Dialog open={open} maxWidth="lg" fullWidth>
+    <Dialog
+      open={open}
+      {...(isLeaf === 'true' ? TABLE_DIALOG_PROPS : FORM_DIALOG_PROPS)}
+    >
       <DialogTitle>
         {requestType === 'patch'
           ? 'Edit Catalogue Category'
           : 'Add Catalogue Category'}
       </DialogTitle>
-      <DialogContent>
+      <DialogContent sx={{ height: '100%' }}>
         <Stack
           spacing={1}
           sx={{
             width: '100%',
+            height: 'inherit',
+            overflow: 'auto',
           }}
         >
           <Grid
@@ -347,7 +368,7 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
                 id="catalogue-category-name-input"
                 label="Name"
                 required
-                sx={{ marginLeft: '4px', marginTop: '8px' }}
+                sx={{ marginTop: 1, paddingRight: 1 }}
                 {...register('name')}
                 error={!!errors.name}
                 helperText={errors.name?.message}
@@ -428,11 +449,18 @@ const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
           {isLeaf === 'true' && (
             <>
               <Divider sx={{ minWidth: '700px' }} />
-              <Box sx={{ paddingLeft: 1 }}>
+              <Box
+                sx={{
+                  paddingLeft: 1,
+                  ...FLEX_CONTAINER_PROPS,
+                  minHeight: '500px',
+                }}
+              >
                 <Typography variant="h6">Catalogue Item Properties</Typography>
                 <Box
                   sx={{
                     mt: 1,
+                    ...FLEX_CONTAINER_PROPS,
                   }}
                 >
                   <FormProvider {...formMethods}>

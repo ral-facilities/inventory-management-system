@@ -22,6 +22,7 @@ import {
   useCopyToCatalogueItem,
   useMoveToCatalogueItem,
 } from '../../api/catalogueItems';
+import { FLEX_CONTAINER_PROPS, TABLE_DIALOG_PROPS } from '../../common/consts';
 import handleTransferState from '../../handleTransferState';
 import Breadcrumbs from '../../view/breadcrumbs.component';
 import CatalogueCategoryTableView from '../category/catalogueCategoryTableView.component';
@@ -53,6 +54,10 @@ const CatalogueItemDirectoryDialog = (
   const [parentCategoryId, setParentCategoryId] = React.useState<string | null>(
     props.parentCategoryId
   );
+  const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
+    undefined
+  );
+
   React.useEffect(() => {
     setParentCategoryId(props.parentCategoryId);
   }, [props.parentCategoryId]);
@@ -83,10 +88,6 @@ const CatalogueItemDirectoryDialog = (
 
   const { data: targetCatalogueCategory } =
     useGetCatalogueCategory(parentCategoryId);
-
-  const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
-    undefined
-  );
 
   const handleMoveToCatalogueItem = React.useCallback(() => {
     if (
@@ -152,13 +153,8 @@ const CatalogueItemDirectoryDialog = (
     useGetCatalogueBreadcrumbs(parentCategoryId);
 
   return (
-    <Dialog
-      open={open}
-      maxWidth="lg"
-      PaperProps={{ sx: { height: '770px' } }}
-      fullWidth
-    >
-      <DialogTitle sx={{ marginLeft: 2 }}>
+    <Dialog open={open} {...TABLE_DIALOG_PROPS}>
+      <DialogTitle sx={{ marginLeft: 2, paddingBottom: 0 }}>
         <Grid container spacing={2}>
           <Grid
             container
@@ -184,7 +180,7 @@ const CatalogueItemDirectoryDialog = (
                 placement="top"
                 enterTouchDelay={0}
                 arrow
-                aria-label={'Copy Warning'}
+                aria-label="Copy Warning"
                 sx={{ mx: 2 }}
               >
                 <InfoOutlinedIcon />
@@ -201,7 +197,7 @@ const CatalogueItemDirectoryDialog = (
           </Grid>
         </Grid>
       </DialogTitle>
-      <DialogContent>
+      <DialogContent sx={{ ...FLEX_CONTAINER_PROPS, minHeight: '500px' }}>
         {targetCatalogueCategory?.is_leaf ? (
           <CatalogueItemsTable
             parentInfo={targetCatalogueCategory}
@@ -213,7 +209,7 @@ const CatalogueItemDirectoryDialog = (
           <CatalogueCategoryTableView
             selectedCategories={[]}
             onChangeParentCategoryId={setParentCategoryId}
-            requestType={'standard'}
+            requestType="standard"
             catalogueCategoryData={catalogueCategoryData}
             catalogueCategoryDataLoading={catalogueCategoryDataLoading}
             requestOrigin="item"
@@ -221,19 +217,21 @@ const CatalogueItemDirectoryDialog = (
             catalogueCategoryParentId={parentCategoryId ?? undefined}
           />
         )}
-        <Box
-          sx={{
-            mx: 3,
-            marginTop: 3,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
-            {errorMessage}
-          </FormHelperText>
-        </Box>
+        {errorMessage && (
+          <Box
+            sx={{
+              mx: 3,
+              marginTop: 3,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
+              {errorMessage}
+            </FormHelperText>
+          </Box>
+        )}
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>

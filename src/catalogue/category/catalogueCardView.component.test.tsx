@@ -2,19 +2,28 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { CatalogueCategory } from '../../api/api.types';
+import APIConfigProvider from '../../apiConfigProvider.component';
 import { server } from '../../mocks/server';
 import { URLPathKeyType } from '../../paths';
+import { RootState } from '../../state/store';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 import CardView from './catalogueCardView.component';
 
 describe('CardView', () => {
   let user: UserEvent;
 
-  const createView = (path?: string, urlPathKey?: URLPathKeyType) => {
+  const createView = (
+    path?: string,
+    urlPathKey?: URLPathKeyType,
+    preloadedState?: Partial<RootState>
+  ) => {
     return renderComponentWithRouterProvider(
-      <CardView />,
+      <APIConfigProvider>
+        <CardView />
+      </APIConfigProvider>,
       urlPathKey || 'catalogue',
-      path || '/catalogue'
+      path || '/catalogue',
+      preloadedState
     );
   };
 
@@ -29,6 +38,7 @@ describe('CardView', () => {
         is_leaf: true,
         created_time: '2024-01-01T12:00:00.000+00:00',
         modified_time: '2024-01-02T13:10:10.000+00:00',
+        is_flagged: false,
         properties: [],
       });
     }
@@ -86,7 +96,7 @@ describe('CardView', () => {
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
 
-    const addButton = screen.getByRole('button', {
+    const addButton = await screen.findByRole('button', {
       name: 'Add Catalogue Category',
     });
     await user.click(addButton);
@@ -309,6 +319,91 @@ describe('CardView', () => {
     });
   });
 
+  it('shows all criticality states for catalogue categories and the filter button', async () => {
+    createView('/catalogue', undefined, {
+      criticality: { isCriticalMode: true },
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
+    });
+
+    expect(
+      screen.getByRole('button', { name: 'Show Critical Categories' })
+    ).toBeInTheDocument();
+
+    expect(screen.getByTestId('ErrorIcon')).toBeInTheDocument();
+
+    await user.hover(screen.getByTestId('ErrorIcon'));
+
+    expect(
+      await screen.findByText('This catalogue category is critical.')
+    ).toBeInTheDocument();
+
+    await user.hover(screen.getAllByTestId('CheckCircleIcon')[0]);
+
+    expect(
+      await screen.findByText('This catalogue category is not critical.')
+    ).toBeInTheDocument();
+
+    expect(screen.getByTestId('WarningIcon')).toBeInTheDocument();
+
+    await user.hover(screen.getByTestId('WarningIcon'));
+
+    expect(
+      await screen.findByText(
+        'Unable to determine if this catalogue category is critical. Please contact support.'
+      )
+    ).toBeInTheDocument();
+  });
+
+  it('does not show criticality states or the critical filter button for catalogue categories', async () => {
+    server.use(
+      http.get('/v1/settings/spares-definition', () => {
+        return HttpResponse.json(undefined, { status: 204 });
+      })
+    );
+    createView('/catalogue', undefined, {
+      criticality: { isCriticalMode: true },
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
+    });
+    await waitFor(() => {
+      expect(
+        screen.queryByRole('button', { name: 'Show Critical Categories' })
+      ).not.toBeInTheDocument();
+    });
+  });
+
+  it('clicks on shows critical Categories filter button', async () => {
+    createView('/catalogue', undefined, {
+      criticality: { isCriticalMode: true },
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('Motion')).toBeInTheDocument();
+    });
+
+    await user.click(
+      screen.getByRole('button', { name: 'Show Critical Categories' })
+    );
+
+    await waitFor(() => {
+      expect(screen.queryByText('Motion')).not.toBeInTheDocument();
+    });
+
+    expect(screen.getByText('Critical Filter Applied')).toBeInTheDocument();
+
+    expect(screen.getByTestId('ErrorIcon')).toBeInTheDocument();
+
+    await user.hover(screen.getByTestId('ErrorIcon'));
+
+    expect(
+      await screen.findByText('This catalogue category is critical.')
+    ).toBeInTheDocument();
+  });
   describe('pagination', () => {
     beforeEach(() => {
       server.use(
@@ -405,7 +500,7 @@ describe('CardView', () => {
       expect(await screen.findByText('Test 1')).toBeInTheDocument();
 
       expect(clearFiltersButton).toBeDisabled();
-    });
+    }, 10000);
 
     it('renders the multi-select filter mode dropdown correctly', async () => {
       createView();
@@ -415,7 +510,7 @@ describe('CardView', () => {
       );
 
       await user.click(
-        screen.getByRole('button', { name: 'Show/Hide filters' })
+        await screen.findByRole('button', { name: 'Show/Hide filters' })
       );
 
       const dropdownButtons = await screen.findAllByTestId('FilterListIcon');

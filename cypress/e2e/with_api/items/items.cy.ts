@@ -1,16 +1,17 @@
 import { addCatalogueCategories } from '../catalogueCategories/functions';
 import { addCatalogueItem } from '../catalogueItems/functions';
 import { addManufacturer } from '../manufacturers/functions';
-import { addSystems } from '../systems/functions';
+import { addSystems, modifySystem } from '../systems/functions';
 import { addUnits } from '../units/functions';
-import { addUsageStatuses } from '../usageStatuses/functions';
 import {
   addItem,
   addProperty,
   deleteItem,
+  deleteProperty,
   duplicateItem,
   editItem,
   editProperty,
+  modifyItem,
 } from './functions';
 
 describe('items', () => {
@@ -22,17 +23,19 @@ describe('items', () => {
       'items',
       'systems',
       'units',
-      'usage_statuses',
     ]);
     // Prepare relevant data for items
-    cy.visit('/admin-ims/usage-statuses');
-    addUsageStatuses(['New', 'Used']);
     cy.visit('/manufacturers');
+    cy.setMode({ admin: true });
     addManufacturer(true);
-    cy.visit('/admin-ims/units');
+    cy.visit('/settings/units');
     addUnits(['mm', 'nm'], true);
     cy.visit('/systems');
     addSystems(true);
+    modifySystem(
+      { name: 'Scrapped', importance: 'high', type: 'Scrapped' },
+      true
+    );
     cy.visit('/catalogue');
     addCatalogueCategories(true);
     addCatalogueItem(true);
@@ -46,7 +49,6 @@ describe('items', () => {
       'items',
       'systems',
       'units',
-      'usage_statuses',
     ]);
   });
 
@@ -56,7 +58,16 @@ describe('items', () => {
     duplicateItem('MX4332424', 0);
     addProperty();
     editProperty();
-    deleteItem('MX4332424', 0);
-    deleteItem('MX4332424', 0);
+    deleteProperty();
+    cy.findByText('Total Items: 2').should('exist');
+    cy.findByRole('progressbar').should('not.exist');
+    cy.findAllByText('MX4332424').should('have.length', 2);
+    modifyItem({
+      editIndex: 0,
+      system: 'Scrapped',
+    });
+    deleteItem('No serial number', 0);
+    cy.findByRole('progressbar').should('not.exist');
+    cy.findAllByText('MX4332424').should('have.length', 1);
   });
 });

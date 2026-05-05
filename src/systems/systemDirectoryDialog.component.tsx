@@ -19,6 +19,7 @@ import {
   useGetSystemsBreadcrumbs,
   useMoveToSystem,
 } from '../api/systems';
+import { FLEX_CONTAINER_PROPS, TABLE_DIALOG_PROPS } from '../common/consts';
 import handleTransferState from '../handleTransferState';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { SystemsTableView } from './systemsTableView.component';
@@ -35,13 +36,6 @@ export interface SystemDirectoryDialogProps {
 export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
   const { open, onClose, selectedSystems, onChangeSelectedSystems, type } =
     props;
-
-  const parentSystemTypeId = React.useMemo(() => {
-    if (selectedSystems.length > 0) {
-      return selectedSystems[0].type_id;
-    }
-    return null;
-  }, [selectedSystems]);
 
   // Store here and update only if changed to reduce re-renders and allow
   // navigation
@@ -128,13 +122,8 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
   ]);
 
   return (
-    <Dialog
-      open={open}
-      maxWidth="lg"
-      slotProps={{ paper: { sx: { height: '692px' } } }}
-      fullWidth
-    >
-      <DialogTitle marginLeft={2}>
+    <Dialog open={open} {...TABLE_DIALOG_PROPS}>
+      <DialogTitle sx={{ marginLeft: 2, paddingBottom: 0 }}>
         <Grid container spacing={2}>
           <Grid>
             <Box
@@ -159,7 +148,7 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
                   placement="top"
                   enterTouchDelay={0}
                   arrow
-                  aria-label={'Copy Warning'}
+                  aria-label="Copy Warning"
                   sx={{ mx: 2 }}
                 >
                   <InfoOutlinedIcon />
@@ -177,16 +166,13 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
           </Grid>
         </Grid>
       </DialogTitle>
-      <DialogContent>
+      <DialogContent sx={{ ...FLEX_CONTAINER_PROPS, minHeight: '500px' }}>
         <SystemsTableView
           systemsData={systemsData}
           systemsDataLoading={systemsDataLoading}
           systemParentId={parentSystemId ?? undefined}
           onChangeParentId={setParentSystemId}
           selectedSystems={selectedSystems}
-          isSystemSelectable={(system: System) => {
-            return parentSystemTypeId === system.type_id;
-          }}
           type={type}
         />
       </DialogContent>

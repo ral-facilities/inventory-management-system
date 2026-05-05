@@ -123,6 +123,49 @@ Cypress.Commands.add('findBrowserMockedRequests', ({ method, url }) => {
   });
 });
 
+/**
+ * Enable admin mode, critical mode, or both.
+ *
+ * Example:
+ *   cy.setMode({ admin: true });
+ *   cy.setMode({ critical: true });
+ *   cy.setMode({ admin: true, critical: true });
+ */
+Cypress.Commands.add('setMode', ({ admin = false, critical = false } = {}) => {
+  // Only set the token if enabling admin mode
+  if (admin) {
+    cy.window().then((win) => {
+      win.localStorage.setItem(
+        'scigateway:token',
+        'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwicm9sZSI6ImFkbWluIiwidXNlcklzQWRtaW4iOmZhbHNlLCJleHAiOjI1MzQwMjMwMDc5OX0.FrsDUq...' // shortened for clarity
+      );
+    });
+  }
+
+  // Ensure settings menu exists
+  cy.document().then((document) => {
+    if (!document.getElementById('settings')) {
+      const div = document.createElement('div');
+      div.id = 'settings';
+
+      const ul = document.createElement('ul');
+      div.appendChild(ul);
+
+      document.body.appendChild(div);
+    }
+  });
+
+  // Toggle admin mode
+  if (admin) {
+    cy.findByRole('menuitem', { name: 'Switch admin mode on' }).click();
+  }
+
+  // Toggle critical mode
+  if (critical) {
+    cy.findByRole('menuitem', { name: 'Switch critical mode on' }).click();
+  }
+});
+
 declare global {
   interface Window {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -193,6 +236,19 @@ declare global {
        * @example cy.dropIMSCollections(['catalogue_categories']);
        */
       dropIMSCollections(collections: string[]): Chainable<unknown>;
+
+      /**
+       * Enables admin mode, critical mode, or both.
+       *
+       * @example
+       * cy.setMode({ admin: true });
+       * cy.setMode({ critical: true });
+       * cy.setMode({ admin: true, critical: true });
+       */
+      setMode(options?: {
+        admin?: boolean;
+        critical?: boolean;
+      }): Chainable<unknown>;
     }
   }
 }

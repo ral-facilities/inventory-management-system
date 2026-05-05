@@ -26,8 +26,6 @@ describe('Catalogue Items', () => {
         cy.findByLabelText('Time to replace (days) *').type('14');
         cy.findByLabelText('Time to rework (days)').type('5');
         cy.findByLabelText('Expected Lifetime (days)').type('345');
-        cy.findByLabelText('Drawing number').type('MX43242');
-        cy.findByLabelText('Drawing link').type('https://example.com');
         cy.findByLabelText('Model number').type('MXtest');
         cy.findByLabelText('Manufacturer *').click();
         cy.findByLabelText('Manufacturer *').type('Man{downArrow}{enter}');
@@ -66,8 +64,6 @@ describe('Catalogue Items', () => {
           days_to_replace: 14,
           days_to_rework: 5,
           expected_lifetime_days: 345,
-          drawing_number: 'MX43242',
-          drawing_link: 'https://example.com',
           item_model_number: 'MXtest',
           notes: 'This is a test note',
           properties: [
@@ -85,6 +81,43 @@ describe('Catalogue Items', () => {
         })
       );
     });
+  });
+
+  it('navigates to items page with spares definition applied', () => {
+    cy.visit('/catalogue/9/items');
+
+    cy.findAllByRole('link', { name: '1' }).first().click();
+
+    cy.findByText('dfzqkOJbqifO').should('exist');
+
+    cy.findAllByLabelText('Row Actions').should('have.length', 1);
+  });
+
+  it('navigates to items page with spares definition applied (from landing page)', () => {
+    cy.visit('/catalogue/9/items/11');
+
+    cy.findAllByRole('link', { name: '1' }).first().click();
+
+    cy.findByText('dfzqkOJbqifO').should('exist');
+
+    cy.findAllByLabelText('Row Actions').should('have.length', 1);
+  });
+
+  it('navigates to items page with spares definition applied (from details panel on catalogue items table)', () => {
+    cy.visit('/catalogue/9/items');
+
+    cy.findAllByLabelText('Toggle select row').first().click();
+    cy.findAllByLabelText('Toggle select row').eq(2).click();
+
+    cy.findByRole('button', { name: 'Move to' }).click();
+
+    cy.findAllByLabelText('Expand').eq(1).click();
+
+    cy.findAllByRole('link', { name: '1' }).first().click();
+
+    cy.findByText('dfzqkOJbqifO').should('exist');
+
+    cy.findAllByLabelText('Row Actions').should('have.length', 1);
   });
 
   it('"duplicate" a catalogue item', () => {
@@ -115,8 +148,6 @@ describe('Catalogue Items', () => {
           days_to_replace: 7,
           days_to_rework: 60,
           expected_lifetime_days: 3635,
-          drawing_number: null,
-          drawing_link: null,
           item_model_number: null,
           notes: 'Need to find new manufacturer. 27',
           properties: [
@@ -177,8 +208,6 @@ describe('Catalogue Items', () => {
           days_to_replace: 14,
           days_to_rework: null,
           expected_lifetime_days: null,
-          drawing_number: null,
-          drawing_link: null,
           item_model_number: null,
           notes: null,
           properties: [
@@ -244,8 +273,6 @@ describe('Catalogue Items', () => {
           days_to_replace: 14,
           days_to_rework: null,
           expected_lifetime_days: null,
-          drawing_number: null,
-          drawing_link: null,
           item_model_number: null,
           notes: null,
           properties: [
@@ -327,20 +354,15 @@ describe('Catalogue Items', () => {
         cy.findByLabelText('Cost (£) *').type('gfdg');
         cy.findByLabelText('Time to replace (days) *').type('32gf');
         cy.findByLabelText('Expected Lifetime (days)').clear();
-        cy.findByLabelText('Drawing link').type('test.co.uk');
         cy.findByLabelText('Expected Lifetime (days)').type('friday');
 
         cy.findAllByText('Please enter a valid number.').should(
           'have.length',
           3
         );
-        cy.findAllByText(
-          'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted.'
-        ).should('exist');
         cy.findByRole('button', { name: 'Next' }).should('be.disabled');
 
         // details - negative number input validation test
-        cy.findByLabelText('Drawing link').clear();
         cy.findByLabelText('Cost (£) *').clear();
         cy.findByLabelText('Cost (£) *').type('-10');
         cy.findByLabelText('Cost to rework (£)').clear();
@@ -364,7 +386,6 @@ describe('Catalogue Items', () => {
         cy.findByLabelText('Time to replace (days) *').type('14');
         cy.findByLabelText('Cost to rework (£)').clear();
         cy.findByLabelText('Time to rework (days)').clear();
-        cy.findByLabelText('Drawing link').type('https://test.co.uk');
         cy.findByLabelText('Expected Lifetime (days)').clear();
         cy.findByLabelText('Expected Lifetime (days)').type('200');
 
@@ -406,6 +427,29 @@ describe('Catalogue Items', () => {
     cy.findByText('Cameras 2').should('exist');
     cy.findByText('Cameras 3').should('exist');
     cy.findByText('Cameras 4').should('exist');
+  });
+
+  it('displays the table view correctly (Criticality)', () => {
+    cy.visit('/catalogue/6');
+
+    cy.setMode({ critical: true });
+    cy.findByText('Wavefront Sensors 31').should('exist');
+    cy.findByText('Wavefront Sensors 30').should('exist');
+
+    cy.findByTestId('ErrorIcon').should('exist');
+    cy.findByTestId('ErrorIcon').trigger('mouseover');
+    cy.findByText('This catalogue item is critical.').should('exist');
+  });
+
+  it('displays the catalogue item landing page (Criticality)', () => {
+    cy.visit('/catalogue/6/items/10');
+
+    cy.setMode({ critical: true });
+
+    cy.findByTestId('ErrorIcon').should('exist');
+    cy.findByTestId('ErrorIcon').trigger('mouseover');
+    cy.findByText('This catalogue item is critical.').should('exist');
+    cy.findAllByText('-4.6').should('have.length', 2);
   });
 
   it('navigates to the landing page and navigates back to the table view', () => {
@@ -479,24 +523,6 @@ describe('Catalogue Items', () => {
 
     cy.findByRole('link', { name: 'Manufacturer A' }).click();
     cy.url().should('contain', '/manufacturers/1');
-  });
-
-  it('checks the href property of the drawing link link', () => {
-    cy.findByRole('button', { name: 'Show/Hide columns' }).click();
-    cy.findByText('Hide all').click();
-
-    cy.findByText('Drawing Link').click();
-
-    // Find the link element
-    cy.findAllByText('http://example-drawing-link.com')
-      .first()
-      .should('have.attr', 'href')
-      .should('include', 'http://example-drawing-link.com'); // Check href attribute value
-
-    cy.findAllByText('http://example-drawing-link.com')
-      .first()
-      .should('have.attr', 'target')
-      .should('include', '_blank'); // Check target attribute value
   });
 
   it('checks the href property of the manufacturer link', () => {
@@ -654,8 +680,6 @@ describe('Catalogue Items', () => {
         cy.findByLabelText('Time to rework (days)').type('5');
         cy.findByLabelText('Expected Lifetime (days)').clear();
         cy.findByLabelText('Expected Lifetime (days)').type('345');
-        cy.findByLabelText('Drawing number').type('MX43242');
-        cy.findByLabelText('Drawing link').type('https://example.com');
         cy.findByLabelText('Model number').type('MXtest');
         cy.findByLabelText('Manufacturer *').click();
         cy.findByLabelText('Manufacturer *').type(
@@ -685,8 +709,6 @@ describe('Catalogue Items', () => {
           days_to_replace: 71,
           days_to_rework: 605,
           expected_lifetime_days: 345,
-          drawing_number: 'MX43242',
-          drawing_link: 'https://example.com',
           item_model_number: 'MXtest',
           manufacturer_id: '1',
           notes: 'This is an updated note',
@@ -757,6 +779,7 @@ describe('Catalogue Items', () => {
   });
 
   it('check table state persists on page reload', () => {
+    cy.setMode({ critical: false });
     cy.findByText('Cameras 1').should('exist');
     cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
 
@@ -786,11 +809,12 @@ describe('Catalogue Items', () => {
     );
 
     cy.findByText('Cameras 25').should('exist');
+    cy.findByText('Cameras 1').should('not.exist');
 
     cy.findByRole('button', { name: 'Clear Filters' }).click();
 
+    cy.findByText('Cameras 25').should('exist');
     cy.findByText('Cameras 1').should('exist');
-    cy.findByText('Cameras 25').should('not.exist');
 
     cy.location('search').should('eq', '');
   });
@@ -939,7 +963,14 @@ describe('Catalogue Items', () => {
   it('can navigate to an items page from the table view', () => {
     cy.visit('/catalogue/5');
 
-    cy.findAllByRole('link', { name: 'Click here' }).eq(0).click();
+    cy.findAllByRole('link', { name: 'Click here' }).first().scrollIntoView();
+    cy.findAllByRole('link', { name: 'Click here' })
+      .first()
+      .should('be.visible');
+
+    cy.findAllByRole('link', { name: 'Click here' })
+      .first()
+      .click({ force: true });
 
     cy.url().should('contain', 'catalogue/5/items/89/items');
   });
@@ -1093,8 +1124,6 @@ describe('Catalogue Items', () => {
           days_to_replace: 7,
           days_to_rework: null,
           expected_lifetime_days: 3124,
-          drawing_number: null,
-          drawing_link: 'http://example-drawing-link.com',
           item_model_number: null,
           is_obsolete: true,
           obsolete_replacement_catalogue_item_id: '6',
@@ -1102,6 +1131,10 @@ describe('Catalogue Items', () => {
           notes: 'Need to find new manufacturer. 26',
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          number_of_spares: 0,
+          number_of_spares_required: null,
+          criticality: null,
+          is_flagged: false,
         })
       );
       expect(JSON.stringify(await patchRequests[1].json())).equal(
@@ -1120,8 +1153,6 @@ describe('Catalogue Items', () => {
           days_to_replace: 7,
           days_to_rework: 60,
           expected_lifetime_days: 3635,
-          drawing_number: null,
-          drawing_link: null,
           item_model_number: null,
           is_obsolete: false,
           obsolete_replacement_catalogue_item_id: null,
@@ -1129,6 +1160,10 @@ describe('Catalogue Items', () => {
           notes: 'Need to find new manufacturer. 27',
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          number_of_spares: 0,
+          number_of_spares_required: null,
+          criticality: null,
+          is_flagged: false,
         })
       );
     });

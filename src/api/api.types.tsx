@@ -12,6 +12,24 @@ export interface BreadcrumbsInfo {
   full_trail: boolean;
 }
 
+// ------------------------------------ RULE -------------------------------------------------------
+
+export interface Rule {
+  id: string;
+  src_system_type: SystemType | null;
+  dst_system_type: SystemType | null;
+  dst_usage_status: UsageStatus | null;
+}
+
+// ------------------------------------- SPARES -----------------------------------------------------
+
+export interface SparesDefinition {
+  system_types: SystemType[];
+}
+
+// ------------------------------------- IN USE -----------------------------------------------------
+
+export type InUseDefinition = SparesDefinition;
 // ------------------------------------ MANUFACTURERS -----------------------------------------------
 
 interface AddressPost {
@@ -32,14 +50,14 @@ export interface ManufacturerPost {
   telephone?: string | null;
 }
 
-export interface ManufacturerPatch
-  extends Partial<Omit<ManufacturerPost, 'address'>> {
+export interface ManufacturerPatch extends Partial<
+  Omit<ManufacturerPost, 'address'>
+> {
   address?: AddressPatch;
 }
 
 export interface Manufacturer
-  extends Required<Omit<ManufacturerPost, 'address'>>,
-    CreatedModifiedMixin {
+  extends Required<Omit<ManufacturerPost, 'address'>>, CreatedModifiedMixin {
   id: string;
   code: string;
   address: Address;
@@ -89,11 +107,13 @@ export type SystemPatch = Partial<SystemPost>;
 export interface System extends CreatedModifiedMixin, Required<SystemPost> {
   id: string;
   code: string;
+  is_flagged: boolean | null;
 }
 
 export interface SystemType {
   id: string;
   value: string;
+  description: string;
 }
 
 // ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
@@ -123,8 +143,7 @@ export interface CatalogueCategoryPostProperty {
   allowed_values?: AllowedValues | null;
 }
 
-export interface CatalogueCategoryPropertyPost
-  extends CatalogueCategoryPostProperty {
+export interface CatalogueCategoryPropertyPost extends CatalogueCategoryPostProperty {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default_value: any;
 }
@@ -132,10 +151,10 @@ export interface CatalogueCategoryPropertyPost
 export interface CatalogueCategoryPropertyPatch {
   name?: string;
   allowed_values?: AllowedValues | null;
+  unit_id?: string | null;
 }
 
-export interface CatalogueCategoryProperty
-  extends Required<CatalogueCategoryPostProperty> {
+export interface CatalogueCategoryProperty extends Required<CatalogueCategoryPostProperty> {
   id: string;
   unit: string | null;
 }
@@ -150,10 +169,12 @@ export interface CatalogueCategoryPost {
 export type CatalogueCategoryPatch = Partial<CatalogueCategoryPost>;
 
 export interface CatalogueCategory
-  extends Required<Omit<CatalogueCategoryPost, 'properties'>>,
+  extends
+    Required<Omit<CatalogueCategoryPost, 'properties'>>,
     CreatedModifiedMixin {
   id: string;
   code: string;
+  is_flagged: boolean | null;
   properties: CatalogueCategoryProperty[];
 }
 
@@ -181,8 +202,6 @@ export interface CatalogueItemPost {
   days_to_replace: number;
   days_to_rework?: number | null;
   expected_lifetime_days?: number | null;
-  drawing_number?: string | null;
-  drawing_link?: string | null;
   item_model_number?: string | null;
   is_obsolete: boolean;
   obsolete_reason?: string | null;
@@ -193,10 +212,15 @@ export interface CatalogueItemPost {
 
 export type CatalogueItemPatch = Partial<CatalogueItemPost>;
 export interface CatalogueItem
-  extends CreatedModifiedMixin,
+  extends
+    CreatedModifiedMixin,
     Required<Omit<CatalogueItemPost, 'properties'>> {
   id: string;
   properties: Property[];
+  number_of_spares: number | null;
+  number_of_spares_required: number | null;
+  criticality: number | null;
+  is_flagged: boolean | null;
 }
 
 // ------------------------------------ ITEMS ------------------------------------------------
@@ -218,8 +242,7 @@ export interface ItemPost {
 export type ItemPatch = Partial<ItemPost>;
 
 export interface Item
-  extends CreatedModifiedMixin,
-    Required<Omit<ItemPost, 'properties'>> {
+  extends CreatedModifiedMixin, Required<Omit<ItemPost, 'properties'>> {
   id: string;
   usage_status: string;
   properties: Property[];
@@ -249,8 +272,7 @@ export interface AttachmentUploadInfo {
 }
 
 export interface AttachmentMetadata
-  extends Required<AttachmentPostMetadata>,
-    CreatedModifiedMixin {
+  extends Required<AttachmentPostMetadata>, CreatedModifiedMixin {
   id: string;
 }
 
@@ -272,8 +294,7 @@ export interface ImagePost extends ObjectFileUploadMetadata {
 }
 
 export interface APIImage
-  extends Required<Omit<ImagePost, 'upload_file'>>,
-    CreatedModifiedMixin {
+  extends Required<Omit<ImagePost, 'upload_file'>>, CreatedModifiedMixin {
   id: string;
   primary: boolean;
   thumbnail_base64: string;
@@ -288,4 +309,23 @@ export interface APIImageWithURL extends APIImage {
   not to their client first. */
   view_url: string;
   download_url: string;
+}
+
+// ------------------------------------ JOB SCHEDULER ------------------------------------------------
+
+export enum JobStatus {
+  Running = 'running',
+  Failed = 'failed',
+  Finished = 'finished',
+}
+
+export interface Job {
+  id: string;
+  last_executed_start_time: string | null;
+  last_executed_end_time: string | null;
+  status: JobStatus | null;
+  last_successful_executed_start_time: string | null;
+  last_successful_executed_end_time: string | null;
+  last_successful_duration_seconds: number | null;
+  next_scheduled_execution_time: string;
 }

@@ -17,9 +17,12 @@ import {
   CatalogueItemPatch,
   CatalogueItemPost,
   ImageMetadataPatch,
+  InUseDefinition,
   Item,
   ItemPatch,
   ItemPost,
+  Job,
+  JobStatus,
   Manufacturer,
   ManufacturerPatch,
   ManufacturerPost,
@@ -31,6 +34,8 @@ import {
   UnitPost,
   UsageStatus,
   UsageStatusPost,
+  type Rule,
+  type SparesDefinition,
 } from '../api/api.types';
 import { generateUniqueId } from '../utils';
 import AttachmentsJSON from './Attachments.json';
@@ -40,11 +45,22 @@ import CatalogueItemsJSON from './CatalogueItems.json';
 import ImagesJSON from './Images.json';
 import ItemsJSON from './Items.json';
 import ManufacturersJSON from './Manufacturers.json';
+import RulesJSON from './rules';
 import SystemBreadcrumbsJSON from './SystemBreadcrumbs.json';
 import SystemsJSON from './Systems.json';
 import SystemTypesJSON from './SystemTypes.json';
 import UnitsJSON from './Units.json';
 import UsageStatusJSON from './UsageStatuses.json';
+
+/* Values defined on the backend that may change */
+
+// Detail to return in the 500 (Internal Server Error) responses
+const HTTP_500_INTERNAL_SERVER_ERROR_DETAIL = 'Something went wrong';
+// Special fields that are not allowed to be changed in a post request while the catalogue item has child elements
+const CATALOGUE_ITEM_WITH_CHILD_NON_EDITABLE_FIELDS = [
+  'manufacturer_id',
+  'properties',
+];
 
 /* MSW v2 expects types for responses, this interface covers any empty body
    or error with detail */
@@ -74,7 +90,7 @@ export const handlers = [
 
     if (body.name === 'Error 500') {
       return HttpResponse.json(
-        { detail: 'Something went wrong' },
+        { detail: HTTP_500_INTERNAL_SERVER_ERROR_DETAIL },
         { status: 500 }
       );
     }
@@ -194,7 +210,7 @@ export const handlers = [
 
     if (fullBody.name === 'Error 500') {
       return HttpResponse.json(
-        { detail: 'Something went wrong' },
+        { detail: HTTP_500_INTERNAL_SERVER_ERROR_DETAIL },
         { status: 500 }
       );
     }
@@ -215,7 +231,7 @@ export const handlers = [
         return HttpResponse.json(
           {
             detail:
-              'Catalogue category has children elements and cannot be deleted',
+              'Catalogue category has child elements and cannot be deleted',
           },
           { status: 409 }
         );
@@ -226,6 +242,8 @@ export const handlers = [
       return HttpResponse.json({ detail: '' }, { status: 400 });
     }
   }),
+
+  // ------------------------------------ CATALOGUE CATEGORY PROPERTIES ------------------------------------
 
   http.post<
     PathParams,
@@ -242,7 +260,7 @@ export const handlers = [
 
       if (body.name == 'Error 500') {
         return HttpResponse.json(
-          { detail: 'Something went wrong' },
+          { detail: HTTP_500_INTERNAL_SERVER_ERROR_DETAIL },
           { status: 500 }
         );
       }
@@ -269,7 +287,7 @@ export const handlers = [
 
       if (body.name == 'Error 500') {
         return HttpResponse.json(
-          { detail: 'Something went wrong' },
+          { detail: HTTP_500_INTERNAL_SERVER_ERROR_DETAIL },
           { status: 500 }
         );
       }
@@ -287,6 +305,32 @@ export const handlers = [
     }
   ),
 
+  http.delete<
+    { catalogue_category_id: string; property_id: string },
+    DefaultBodyType,
+    ErrorResponse | NonNullable<unknown>
+  >(
+    '/v1/catalogue-categories/:catalogue_category_id/properties/:property_id',
+    async ({ params }) => {
+      const { catalogue_category_id, property_id } = params;
+
+      const property = CatalogueCategoriesJSON.find(
+        (category) => category.id === catalogue_category_id
+      )?.properties?.find((property) => property.id === property_id);
+
+      if (catalogue_category_id == 'Error 500') {
+        return HttpResponse.json(
+          { detail: HTTP_500_INTERNAL_SERVER_ERROR_DETAIL },
+          { status: 500 }
+        );
+      } else if (property) {
+        return HttpResponse.json(undefined, { status: 204 });
+      } else {
+        return HttpResponse.json({ detail: '' }, { status: 400 });
+      }
+    }
+  ),
+
   // ------------------------------------ CATALOGUE ITEMS ------------------------------------
 
   http.post<PathParams, CatalogueItemPost, CatalogueItem | ErrorResponse>(
@@ -299,7 +343,7 @@ export const handlers = [
         body.catalogue_category_id === 'Error 500'
       ) {
         return HttpResponse.json(
-          { detail: 'Something went wrong' },
+          { detail: HTTP_500_INTERNAL_SERVER_ERROR_DETAIL },
           { status: 500 }
         );
       }
@@ -392,29 +436,20 @@ export const handlers = [
         properties: body.properties ?? validCatalogueItem?.properties,
       };
 
-      if (body.name === 'test_has_children_elements') {
-        // find the name of the manufacturer, so it can be used in the error message
-        const manufacturerName = ManufacturersJSON?.find(
-          (manufacturer) =>
-            manufacturer.id === validCatalogueItem?.manufacturer_id
-        ) as Manufacturer;
+      if (body.name === 'test_has_children_elements')
         return HttpResponse.json(
           {
-            detail:
-              'Unable to update catalogue item properties and manufacturer (' +
-              manufacturerName?.name +
-              '), as the catalogue item has child elements.',
+            detail: `Catalogue item has child elements, so the following fields cannot be updated: ${CATALOGUE_ITEM_WITH_CHILD_NON_EDITABLE_FIELDS.join(', ')}`,
           },
           { status: 409 }
         );
-      }
       if (
         body.name === 'Error 500' ||
         body.obsolete_reason === 'Error 500' ||
         body.catalogue_category_id === 'Error 500'
       )
         return HttpResponse.json(
-          { detail: 'Something went wrong' },
+          { detail: HTTP_500_INTERNAL_SERVER_ERROR_DETAIL },
           { status: 500 }
         );
 
@@ -466,13 +501,16 @@ export const handlers = [
     async ({ request }) => {
       const body = await request.json();
 
-      if (body.name === 'Manufacturer A') {
-        return HttpResponse.json({ detail: '' }, { status: 409 });
+      if (body.name === 'test_dup') {
+        return HttpResponse.json(
+          { detail: 'A manufacturer with the same name already exists' },
+          { status: 409 }
+        );
       }
 
       if (body.name === 'Error 500') {
         return HttpResponse.json(
-          { detail: 'Something went wrong' },
+          { detail: HTTP_500_INTERNAL_SERVER_ERROR_DETAIL },
           { status: 500 }
         );
       }
@@ -535,16 +573,13 @@ export const handlers = [
 
       if (body.name === 'test_dup') {
         return HttpResponse.json(
-          {
-            detail:
-              'A manufacturer with the same name already exists. Please enter a different name',
-          },
+          { detail: 'A manufacturer with the same name already exists' },
           { status: 409 }
         );
       }
       if (body.name === 'Error 500') {
         return HttpResponse.json(
-          { detail: 'Something went wrong' },
+          { detail: HTTP_500_INTERNAL_SERVER_ERROR_DETAIL },
           { status: 500 }
         );
       }
@@ -583,7 +618,7 @@ export const handlers = [
       if (id === '2') {
         return HttpResponse.json(
           {
-            detail: 'The specified manufacturer is a part of a Catalogue Item',
+            detail: 'The specified manufacturer is a part of a catalogue item',
           },
           { status: 409 }
         );
@@ -594,6 +629,33 @@ export const handlers = [
       return HttpResponse.json({ detail: '' }, { status: 400 });
     }
   }),
+
+  // ------------------------------------ SYSTEM TYPES ------------------------------------
+
+  http.get<{ id: string }, DefaultBodyType, SystemType | ErrorResponse>(
+    '/v1/system-types/:id',
+    ({ params }) => {
+      const { id } = params;
+
+      const data = SystemTypesJSON.find(
+        (systemType) => systemType.id === id
+      ) as SystemType;
+
+      if (data !== undefined) return HttpResponse.json(data, { status: 200 });
+
+      return HttpResponse.json(
+        { detail: 'System type not found' },
+        { status: 404 }
+      );
+    }
+  ),
+
+  http.get<PathParams, DefaultBodyType, SystemType[]>(
+    '/v1/system-types',
+    () => {
+      return HttpResponse.json(SystemTypesJSON, { status: 200 });
+    }
+  ),
 
   // ------------------------------------ SYSTEMS ------------------------------------
 
@@ -606,20 +668,18 @@ export const handlers = [
         return HttpResponse.json(
           {
             detail:
-              'A System with the same name already exists within the same parent System',
+              'A system with the same name already exists within the parent system',
           },
           { status: 409 }
         );
       } else if (body.name === 'Error 500') {
         return HttpResponse.json(
-          { detail: 'Something went wrong' },
+          { detail: HTTP_500_INTERNAL_SERVER_ERROR_DETAIL },
           { status: 500 }
         );
       } else if (body.name === 'Error type not found') {
         return HttpResponse.json(
-          {
-            detail: 'Specified system type not found',
-          },
+          { detail: 'The specified system type does not exist' },
           { status: 422 }
         );
       }
@@ -637,19 +697,12 @@ export const handlers = [
     '/v1/systems/:id',
     ({ params }) => {
       const { id } = params;
+
       const data = SystemsJSON.find((system) => system.id === id) as System;
+
       if (data !== undefined) return HttpResponse.json(data, { status: 200 });
-      else
-        return HttpResponse.json(
-          { detail: 'A System with such ID was not found' },
-          { status: 404 }
-        );
-    }
-  ),
-  http.get<PathParams, DefaultBodyType, SystemType[]>(
-    '/v1/system-types',
-    () => {
-      return HttpResponse.json(SystemTypesJSON, { status: 200 });
+
+      return HttpResponse.json({ detail: 'System not found' }, { status: 404 });
     }
   ),
 
@@ -697,19 +750,19 @@ export const handlers = [
         return HttpResponse.json(
           {
             detail:
-              'A System with the same name already exists within the same parent System',
+              'A system with the same name already exists within the parent system',
           },
           { status: 409 }
         );
       } else if (body.name === 'Error 500') {
         return HttpResponse.json(
-          { detail: 'Something went wrong' },
+          { detail: HTTP_500_INTERNAL_SERVER_ERROR_DETAIL },
           { status: 500 }
         );
       } else if (body.name === 'Error type not found') {
         return HttpResponse.json(
           {
-            detail: 'Specified system type not found',
+            detail: 'The specified system type does not exist',
           },
           { status: 422 }
         );
@@ -728,7 +781,7 @@ export const handlers = [
 
       if (validSystem) {
         return HttpResponse.json({ ...validSystem, ...body }, { status: 200 });
-      } else return HttpResponse.json({ detail: '' }, { status: 404 });
+      } else return HttpResponse.json({ detail: '' }, { status: 400 });
     }
   ),
 
@@ -742,17 +795,11 @@ export const handlers = [
     if (validSystem) {
       if (SystemsJSON.find((value) => value.parent_id === validSystem.id)) {
         return HttpResponse.json(
-          {
-            detail: 'System has child elements and cannot be deleted',
-          },
+          { detail: 'System has child elements and cannot be deleted' },
           { status: 409 }
         );
-      } else {
-        return HttpResponse.json(undefined, { status: 204 });
-      }
-    } else {
-      return HttpResponse.json({ detail: '' }, { status: 404 });
-    }
+      } else return HttpResponse.json(undefined, { status: 204 });
+    } else return HttpResponse.json({ detail: '' }, { status: 400 });
   }),
 
   // ------------------------------------ ITEMS ------------------------------------------------
@@ -764,7 +811,7 @@ export const handlers = [
 
       if (body.serial_number === 'Error 500') {
         return HttpResponse.json(
-          { detail: 'Something went wrong' },
+          { detail: HTTP_500_INTERNAL_SERVER_ERROR_DETAIL },
           { status: 500 }
         );
       }
@@ -813,9 +860,8 @@ export const handlers = [
 
       const data = ItemsJSON.find((items) => items.id === id);
 
-      if (!data) {
+      if (!data)
         return HttpResponse.json({ detail: 'Item not found' }, { status: 404 });
-      }
 
       return HttpResponse.json(data, { status: 200 });
     }
@@ -828,15 +874,13 @@ export const handlers = [
     const systemId = itemsParams.get('system_id');
     let data;
 
-    if (catalogueItemId) {
+    if (catalogueItemId)
       data = ItemsJSON.filter(
         (items) => items.catalogue_item_id === catalogueItemId
       );
-    }
 
-    if (systemId) {
+    if (systemId)
       data = ItemsJSON.filter((items) => items.system_id === systemId);
-    }
 
     return HttpResponse.json(data, { status: 200 });
   }),
@@ -847,12 +891,10 @@ export const handlers = [
       const body = await request.json();
       const { id } = params;
 
-      if (id === 'Error 409')
+      if (id === 'Error 422')
         return HttpResponse.json(
-          {
-            detail: 'The specified system ID does not exist',
-          },
-          { status: 409 }
+          { detail: 'The specified system does not exist' },
+          { status: 422 }
         );
 
       const validItem = ItemsJSON.find((value) => value.id === id);
@@ -862,7 +904,7 @@ export const handlers = [
 
       if (body.serial_number === 'Error 500')
         return HttpResponse.json(
-          { detail: 'Something went wrong' },
+          { detail: HTTP_500_INTERNAL_SERVER_ERROR_DETAIL },
           { status: 500 }
         );
 
@@ -887,7 +929,7 @@ export const handlers = [
 
     if (id === 'Error 500')
       return HttpResponse.json(
-        { detail: 'Something went wrong' },
+        { detail: HTTP_500_INTERNAL_SERVER_ERROR_DETAIL },
         { status: 500 }
       );
 
@@ -907,15 +949,13 @@ export const handlers = [
 
       if (body.value === 'test_dup') {
         return HttpResponse.json(
-          {
-            detail: 'A unit with the same value already exists',
-          },
+          { detail: 'A unit with the same value already exists' },
           { status: 409 }
         );
       }
       if (body.value === 'Error 500') {
         return HttpResponse.json(
-          { detail: 'Something went wrong' },
+          { detail: HTTP_500_INTERNAL_SERVER_ERROR_DETAIL },
           { status: 500 }
         );
       }
@@ -943,9 +983,7 @@ export const handlers = [
     if (validUnit) {
       if (id === '2') {
         return HttpResponse.json(
-          {
-            detail: 'The specified unit is part of a Catalogue category',
-          },
+          { detail: 'The specified unit is part of a catalogue category' },
           { status: 409 }
         );
       } else {
@@ -967,20 +1005,16 @@ export const handlers = [
     async ({ request }) => {
       const body = await request.json();
 
-      if (body.value === 'test_dup') {
+      if (body.value === 'test_dup')
         return HttpResponse.json(
-          {
-            detail: 'A Usage Status with the same value already exists',
-          },
+          { detail: 'A usage status with the same value already exists' },
           { status: 409 }
         );
-      }
-      if (body.value === 'Error 500') {
+      if (body.value === 'Error 500')
         return HttpResponse.json(
-          { detail: 'Something went wrong' },
+          { detail: HTTP_500_INTERNAL_SERVER_ERROR_DETAIL },
           { status: 500 }
         );
-      }
 
       return HttpResponse.json(
         {
@@ -1005,9 +1039,7 @@ export const handlers = [
     if (validUsageStatus) {
       if (id === '2') {
         return HttpResponse.json(
-          {
-            detail: 'The specified usage status is a part of an Item',
-          },
+          { detail: 'The specified usage status is part of an item' },
           { status: 409 }
         );
       } else {
@@ -1053,7 +1085,7 @@ export const handlers = [
     const entityId = attachmentParams.get('entity_id');
 
     const generateAttachments = () => {
-      return Array.from({ length: 20 }, (_, index) => {
+      return Array.from({ length: 35 }, (_, index) => {
         const id = index + 1;
         const attachment = { ...AttachmentsJSON[id % 4] };
 
@@ -1116,9 +1148,7 @@ export const handlers = [
         }
       }
 
-      if (id === '5') {
-        return HttpResponse.error();
-      }
+      if (id === '5') return HttpResponse.error();
 
       return HttpResponse.json(
         {
@@ -1144,7 +1174,7 @@ export const handlers = [
 
     if (fullBody.file_name === 'Error_500.txt') {
       return HttpResponse.json(
-        { detail: 'Something went wrong' },
+        { detail: HTTP_500_INTERNAL_SERVER_ERROR_DETAIL },
         { status: 500 }
       );
     } else if (fullBody.file_name?.includes('duplicate_file_name')) {
@@ -1168,7 +1198,7 @@ export const handlers = [
 
     if (id === 'Error 500')
       return HttpResponse.json(
-        { detail: 'Something went wrong' },
+        { detail: HTTP_500_INTERNAL_SERVER_ERROR_DETAIL },
         { status: 500 }
       );
 
@@ -1183,7 +1213,7 @@ export const handlers = [
       status: 204,
       headers: {
         'Content-Type': 'text/plain; charset=utf-8',
-        // This is need for uppy
+        // This is needed for uppy
         ETag: '"e76fe3d21078d7a3b9ec95edf437d010"',
       },
     });
@@ -1220,7 +1250,7 @@ export const handlers = [
     }
 
     const generateImages = () => {
-      return Array.from({ length: 20 }, (_, index) => {
+      return Array.from({ length: 35 }, (_, index) => {
         const id = index + 1;
         let image;
 
@@ -1274,9 +1304,7 @@ export const handlers = [
         }
       }
 
-      if (id === '5') {
-        return HttpResponse.error();
-      }
+      if (id === '5') return HttpResponse.error();
 
       return HttpResponse.json(
         {
@@ -1305,7 +1333,7 @@ export const handlers = [
         (id === '17' && fullBody.primary === true)
       ) {
         return HttpResponse.json(
-          { detail: 'Something went wrong' },
+          { detail: HTTP_500_INTERNAL_SERVER_ERROR_DETAIL },
           { status: 500 }
         );
       } else if (fullBody.file_name?.includes('duplicate_file_name')) {
@@ -1330,10 +1358,80 @@ export const handlers = [
 
     if (id === 'Error 500')
       return HttpResponse.json(
-        { detail: 'Something went wrong' },
+        { detail: HTTP_500_INTERNAL_SERVER_ERROR_DETAIL },
         { status: 500 }
       );
 
     return HttpResponse.json(undefined, { status: 204 });
+  }),
+
+  // ------------------------------------ RULES ------------------------------------------------
+
+  http.get<PathParams, DefaultBodyType, Rule[]>('/v1/rules', ({ request }) => {
+    const url = new URL(request.url);
+    const systemsParams = url.searchParams;
+    const src_system_type_id = systemsParams.get('src_system_type_id');
+    const dst_system_type_id = systemsParams.get('dst_system_type_id');
+
+    let rules: Rule[] = RulesJSON;
+    if (src_system_type_id) {
+      const value =
+        src_system_type_id === 'null' ? undefined : src_system_type_id;
+      rules = rules.filter((rule) => rule.src_system_type?.id === value);
+    }
+    if (dst_system_type_id) {
+      const value =
+        dst_system_type_id === 'null' ? undefined : dst_system_type_id;
+      rules = rules.filter((rule) => rule.dst_system_type?.id === value);
+    }
+
+    return HttpResponse.json(rules, { status: 200 });
+  }),
+
+  // --------------------------------- SPARES DEFINITION ------------------------------------------------------
+
+  http.get<PathParams, DefaultBodyType, SparesDefinition>(
+    '/v1/settings/spares-definition',
+    () => {
+      return HttpResponse.json(
+        { system_types: [SystemTypesJSON[0]] },
+        { status: 200 }
+      );
+    }
+  ),
+  // --------------------------------- SPARES DEFINITION ------------------------------------------------------
+
+  http.get<PathParams, DefaultBodyType, InUseDefinition>(
+    '/v1/settings/in-use-definition',
+    () => {
+      return HttpResponse.json(
+        { system_types: [SystemTypesJSON[1]] },
+        { status: 200 }
+      );
+    }
+  ),
+
+  // --------------------------------- JOB SCHEDULER ------------------------------------------------------
+
+  http.post<PathParams, DefaultBodyType, ErrorResponse | NonNullable<unknown>>(
+    '/jobs/criticality/run',
+    () => {
+      return HttpResponse.json(undefined, { status: 204 });
+    }
+  ),
+  http.get<PathParams, DefaultBodyType, Job>('/jobs/criticality', () => {
+    return HttpResponse.json(
+      {
+        id: '1',
+        last_executed_start_time: '2026-03-10T17:12:15.141Z',
+        last_executed_end_time: '2026-03-10T17:12:15.141Z',
+        status: JobStatus.Finished,
+        last_successful_executed_start_time: '2026-03-10T17:12:15.141Z',
+        last_successful_executed_end_time: '2026-03-10T17:12:15.141Z',
+        last_successful_duration_seconds: 0.123,
+        next_scheduled_execution_time: '2026-03-10T17:12:15.141Z',
+      },
+      { status: 200 }
+    );
   }),
 ];

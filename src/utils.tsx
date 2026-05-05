@@ -1,4 +1,5 @@
 import {
+  alpha,
   Link as MuiLink,
   SxProps,
   TableCell,
@@ -9,6 +10,7 @@ import {
 } from '@mui/material';
 import { FilterFn, FilterMeta, Row } from '@tanstack/table-core';
 import { format, parseISO } from 'date-fns';
+import LZString from 'lz-string';
 import {
   MRT_Cell,
   MRT_Column,
@@ -25,9 +27,14 @@ import {
 import React from 'react';
 import {
   createFormControl,
+  Path,
   type FieldValues,
   type UseFormReturn,
 } from 'react-hook-form';
+import { useGetSparesDefinition } from './api/settings';
+import { MicroFrontendToken, SparesFilterStateType } from './app.types';
+import { TokenUpdatedType } from './state/actions/actions.types';
+import store from './state/store';
 
 /* Returns a name avoiding duplicates by appending _copy_n for nth copy */
 export const generateUniqueName = (
@@ -69,6 +76,19 @@ export const isRunningInDevelopment = (): boolean => {
   return import.meta.env.DEV;
 };
 
+/* Sets the token in localstorage to either be an admin or default role */
+export const setLocalStorageToken = (isAdminToken: boolean) => {
+  localStorage.setItem(
+    MicroFrontendToken,
+    isAdminToken
+      ? 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwicm9sZSI6ImFkbWluIiwidXNlcklzQWRtaW4iOmZhbHNlLCJleHAiOjI1MzQwMjMwMDc5OX0.FrsDUqnKskhIvmIjtYVgC9im-cSu1dFlwVQ4cFJf2BgCaSh82XuEngOLkbtQuuXWC1wiipsGP4Y-usq7Q_R68vwXqGYusHo4fXw6AcBcwplgXZ3n60wsTegpBxKZY5foOre0Ng1GpK-7rrx9H-YQUCHSBOtzWOw_eLzu-eNTwMnMnnpGM9L91_hj0dAKiP90Z3Hp0UelnYydc0sf6msOs7RKI2Sij-13vFSL8LToIbfUTZYwKZHbBPD5glce_gsW6_W5W-iGemt7yyhfyf7IxKWq3Q02HCiSkI0uCcBal44sabPrsQ4EaPRwyUnH0X25MC00IAPRHh-1KqabV7IA9w'
+      : 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwicm9sZXMiOltdLCJ1c2VySXNBZG1pbiI6ZmFsc2UsImV4cCI6MjUzNDAyMzAwNzk5fQ.JTdyZHZTU2Vd1cZPzsBGBB_hs72KS4LODyhAyKdNTPWMnp_lEs2fmVSqJjSx3mOTW4J40c7LnJcw6ALlCGuEG3DShQKdoYTtH8JLNyzXi9yNYtPlBTEfWqFKK_IYY9sA_WzlQwYDGLD7jsvCvm92CdWjoNtcfDZ0eIfRjHuIRsW5XllerFFE7ouv9awulGCEHv-zl2m0SpMF-mHUYJV9JbB5bgrqs635vYL-IJg_qdr10Cn11BUhO1ulrFrk1QLhty-_L8LC2d2j11xqEuIMlEcVkQ6w79U1uzg-NEYcHzcuuaitQjZzKsDD8eMDT-dBkIPZxDWzlUuySkGUKDJPzw'
+  );
+
+  // Triggers middleware to recalculate the user's role and update authorisation state
+  store.dispatch({ type: TokenUpdatedType });
+};
+
 /* Returns a calc function giving the page height excluding SciGateway related components
   (header and footer) to use for CSS e.g. giving 48px it will return the calc(page height
   - all SciGateway related heights - 48px)*/
@@ -88,6 +108,7 @@ export const getPageHeightCalc = (additionalSubtraction?: string): string => {
   let newAdditional: string | undefined = undefined;
 
   if (isRunningInDevelopment()) newAdditional = '48px';
+
   if (additionalSubtraction !== undefined) {
     if (newAdditional === undefined) newAdditional = additionalSubtraction;
     else newAdditional += ' + ' + additionalSubtraction;
@@ -318,8 +339,9 @@ function getNestedProperty(obj: any, path: string): any {
     .reduce((o, p) => (o && o[p] !== undefined ? o[p] : undefined), obj);
 }
 
-interface ModifiedMRTGroupedCellProps<TData extends MRT_RowData>
-  extends MRTGroupedCellProps<TData> {
+interface ModifiedMRTGroupedCellProps<
+  TData extends MRT_RowData,
+> extends MRTGroupedCellProps<TData> {
   outputType?: 'Link' | 'Date'; // default is Text
 }
 
@@ -369,6 +391,8 @@ export const TableGroupedCell = <TData extends MRT_RowData>(
         ) : (
           cellData
         )
+      ) : typeof cellData === 'number' ? (
+        cellData
       ) : (
         `No ${column.columnDef.header}`
       )}{' '}
@@ -389,8 +413,12 @@ export const resetUniqueIdCounter = () => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function sortDataList(data: any[], sortedValue: string) {
-  return data.sort((a, b) => a[sortedValue].localeCompare(b[sortedValue]));
+export function sortDataList(data: any[], sortedValue?: string) {
+  return data.sort((a, b) => {
+    const valueA = sortedValue ? a[sortedValue] : a;
+    const valueB = sortedValue ? b[sortedValue] : b;
+    return valueA.localeCompare(valueB);
+  });
 }
 
 export const displayTableRowCountText = <TData extends MRT_RowData>(
@@ -597,10 +625,9 @@ export const COLUMN_FILTER_BOOLEAN_OPTIONS = ['Yes', 'No'];
 export function createFormControlWithRootErrorClearing<
   T extends FieldValues,
 >(options?: {
-  name?: string;
+  name?: Path<T> | readonly Path<T>[];
   customCallback?: Parameters<
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    Omit<UseFormReturn<T, any, T>, 'formState'>['subscribe']
+    UseFormReturn<T, unknown, T>['subscribe']
   >[0]['callback'];
 }) {
   const { formControl } = createFormControl<T>();
@@ -618,4 +645,143 @@ export function createFormControlWithRootErrorClearing<
     },
   });
   return formControl;
+}
+
+export const useSparesFilterState = (
+  urlParamName?: string
+): SparesFilterStateType => {
+  const {
+    data: sparesDefinition = { system_types: [] },
+    isLoading: isLoadingSparesDefinition,
+  } = useGetSparesDefinition();
+
+  const urlParam = urlParamName || 'state';
+
+  const sparesFilter = React.useMemo(() => {
+    return sparesDefinition
+      ? sparesDefinition.system_types.map((type) => ({
+          type: 'string',
+          value: type.value,
+        }))
+      : [];
+  }, [sparesDefinition]);
+
+  const sparesColumnsFilters = React.useMemo(
+    () => ({
+      cF: [{ id: 'system.type.value', value: sparesFilter }],
+    }),
+    [sparesFilter]
+  );
+
+  const sparesFilterState = React.useMemo(() => {
+    const encoded = LZString.compressToEncodedURIComponent(
+      JSON.stringify(sparesColumnsFilters)
+    );
+    return `?${urlParam}=${encoded}`;
+  }, [urlParam, sparesColumnsFilters]);
+
+  return React.useMemo(
+    () => ({
+      sparesFilterState,
+      sparesColumnsFilters,
+      isLoading: isLoadingSparesDefinition,
+      sparesDefinition,
+    }),
+    [
+      sparesFilterState,
+      sparesColumnsFilters,
+      isLoadingSparesDefinition,
+      sparesDefinition,
+    ]
+  );
+};
+
+export function isExactFilterActive<TData extends MRT_RowData>(
+  table: MRT_TableInstance<TData>,
+  expectedFilters: { id: string; filterFn?: string; value: unknown }[]
+) {
+  const { columnFilters: actualFilters, columnFilterFns: actualFilterFns } =
+    table.getState();
+
+  // Check length matches
+  if (actualFilters.length !== expectedFilters.length) return false;
+
+  // Check every expected filter matches actual filter and filterFn
+  return expectedFilters.every(({ id, filterFn, value }) => {
+    const actualFilter = actualFilters.find((f) => f.id === id);
+    if (!actualFilter) return false;
+    if (actualFilterFns[id] !== filterFn) return false;
+
+    // Compare values stringified (arrays or value)
+
+    if (Array.isArray(value)) {
+      return (
+        JSON.stringify(sortDataList(actualFilter.value as string[])) ===
+        JSON.stringify(sortDataList(value))
+      );
+    } else {
+      return JSON.stringify(actualFilter.value) === JSON.stringify(value);
+    }
+  });
+}
+
+export const getCriticalityColor = (props: {
+  theme: Theme;
+  showFlagged: boolean | null;
+}) => {
+  const { theme, showFlagged } = props;
+  if (showFlagged === null) return theme.palette.warning.main;
+  if (showFlagged === true) return theme.palette.error.main;
+  return theme.palette.success.main;
+};
+
+export const criticalityRowStyle = (props: {
+  theme: Theme;
+  showFlagged: boolean | null;
+}) => {
+  const { theme, showFlagged } = props;
+
+  const color = getCriticalityColor({ theme, showFlagged });
+  return {
+    backgroundColor: alpha(
+      color,
+      0.07 // 7% tint
+    ),
+  };
+};
+
+export const criticalityCardStyle = (props: {
+  theme: Theme;
+  showFlagged: boolean | null;
+}) => {
+  const { theme, showFlagged } = props;
+  const color = getCriticalityColor({ theme, showFlagged });
+
+  return {
+    border: `2px solid ${color}`,
+    boxShadow: `0 0 10px 3px ${alpha(color, 0.53)}`, // 53% opacity for fuzzy glow
+  };
+};
+
+export const criticalityHeaderStyle = (props: {
+  theme: Theme;
+  showFlagged: boolean | null;
+}) => {
+  const { theme, showFlagged } = props;
+  return {
+    ...criticalityCardStyle({ theme, showFlagged }),
+    borderRadius: 5,
+  };
+};
+
+export function roundUpTenth(x?: number | null) {
+  if (typeof x !== 'number') return x;
+
+  if (x > 0) {
+    // Positive: round up
+    return Math.ceil(x * 10) / 10;
+  } else {
+    // Negative: round down
+    return Math.floor(x * 10) / 10;
+  }
 }

@@ -1,6 +1,7 @@
 describe('Units', () => {
   beforeEach(() => {
-    cy.visit('/admin-ims/units');
+    cy.visit('/settings/units');
+    cy.setMode({ admin: true });
   });
   afterEach(() => {
     cy.clearMocks();

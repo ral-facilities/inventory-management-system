@@ -16,10 +16,13 @@ import { useGetCatalogueCategory } from '../api/catalogueCategories';
 import { useGetCatalogueItem } from '../api/catalogueItems';
 import { useGetItem } from '../api/items';
 import { useGetManufacturer } from '../api/manufacturers';
-import { useGetSystem, useGetSystemTypes } from '../api/systems';
+import { useGetSystem } from '../api/systems';
+import { useGetSystemType } from '../api/systemTypes';
 import ActionMenu from '../common/actionMenu.component';
 import PrimaryImage from '../common/images/primaryImage.component';
 import TabView from '../common/tab/tabView.component';
+import { useAppSelector } from '../state/hook';
+import { selectAuthorisation } from '../state/slices/authorisationSlice';
 import { formatDateTimeStrings } from '../utils';
 import ItemDialog from './itemDialog.component';
 
@@ -29,16 +32,23 @@ const ItemsActionMenu = (props: {
   item: Item;
 }) => {
   const { catalogueItem, catalogueCategory, item } = props;
+  const { isAdminMode } = useAppSelector(selectAuthorisation);
   const [editItemDialogOpen, setEditItemDialogOpen] =
     React.useState<boolean>(false);
+  const [isAdminDialog, setIsAdminDialog] = React.useState<boolean>(false);
+
   return (
     <ActionMenu
+      showAdminEdit={isAdminMode}
       ariaLabelPrefix="items landing page"
       printMenuItem
       uploadAttachmentsEntityId={item.id}
       uploadImagesEntityId={item.id}
       editMenuItem={{
-        onClick: () => setEditItemDialogOpen(true),
+        onClick: (props) => {
+          setEditItemDialogOpen(true);
+          setIsAdminDialog(props?.isAdminMode === true);
+        },
         dialog: (
           <>
             {editItemDialogOpen && (
@@ -47,6 +57,7 @@ const ItemsActionMenu = (props: {
                 onClose={() => {
                   setEditItemDialogOpen(false);
                 }}
+                isAdminMode={isAdminDialog}
                 requestType="patch"
                 catalogueCategory={catalogueCategory}
                 catalogueItem={catalogueItem}
@@ -79,7 +90,7 @@ function ItemsLandingPage() {
 
   const { data: systemData } = useGetSystem(itemData?.system_id);
 
-  const { data: systemTypesData } = useGetSystemTypes();
+  const { data: systemTypeData } = useGetSystemType(systemData?.type_id);
 
   const { data: manufacturer } = useGetManufacturer(
     catalogueItemData?.manufacturer_id
@@ -120,22 +131,53 @@ function ItemsLandingPage() {
                   sx={{ alignItems: 'flex-start', pl: 2 }}
                 >
                   <Grid size={12}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
+                      <Typography component="p" variant="h6">
+                        Serial Number:
+                      </Typography>
+
+                      <Typography
+                        component="p"
+                        variant="h6"
+                        sx={{
+                          color: 'text.secondary',
+                          ml: 1,
+                          p: 0,
+                        }}
+                      >
+                        {itemData.serial_number ?? 'None'}
+                      </Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', my: 2 }}>
+                      <Typography component="p" variant="h6">
+                        System:
+                      </Typography>
+
+                      <Typography
+                        component="p"
+                        variant="h6"
+                        sx={{
+                          color: 'text.secondary',
+                          ml: 1,
+                          p: 0,
+                        }}
+                      >
+                        <MuiLink
+                          underline="hover"
+                          component={Link}
+                          to={'/systems/' + systemData?.id}
+                        >
+                          {systemData?.name}
+                        </MuiLink>
+                      </Typography>
+                    </Box>
+
                     <Typography
-                      variant="h4"
+                      component="p"
+                      variant="h6"
                       gutterBottom
-                      sx={{
-                        fontWeight: 'bold',
-                        wordWrap: 'break-word',
-                      }}
+                      sx={{ mb: 2 }}
                     >
-                      {catalogueItemData.name}
-                    </Typography>
-
-                    <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
-                      Serial Number: {itemData.serial_number ?? 'None'}
-                    </Typography>
-
-                    <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
                       Description:
                     </Typography>
                     <Typography
@@ -377,9 +419,7 @@ function ItemsLandingPage() {
                                 color: 'text.secondary',
                               }}
                             >
-                              {systemTypesData?.find(
-                                (type) => type.id === systemData?.type_id
-                              )?.value ?? 'Unknown'}
+                              {systemTypeData?.value}
                             </Typography>
                           </Grid>
                           <Grid size={{ xs: 12, sm: 6, md: 4 }}>

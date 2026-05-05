@@ -1,6 +1,10 @@
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { http, HttpResponse } from 'msw';
 import { CatalogueCategory } from '../../api/api.types';
+import APIConfigProvider from '../../apiConfigProvider.component';
+import { server } from '../../mocks/server';
+import { RootState } from '../../state/store';
 import {
   getCatalogueCategoryById,
   renderComponentWithRouterProvider,
@@ -15,11 +19,17 @@ describe('Catalogue Items Table', () => {
   let props: CatalogueItemsTableProps;
   let user: UserEvent;
 
-  const createView = (initialEntry?: string) => {
+  const createView = (
+    initialEntry?: string,
+    preloadedState?: Partial<RootState>
+  ) => {
     return renderComponentWithRouterProvider(
-      <CatalogueItemsTable {...props} />,
+      <APIConfigProvider>
+        <CatalogueItemsTable {...props} />
+      </APIConfigProvider>,
       'any',
-      initialEntry ?? '/'
+      initialEntry ?? '/',
+      preloadedState
     );
   };
 
@@ -49,12 +59,35 @@ describe('Catalogue Items Table', () => {
     vi.clearAllMocks();
   });
 
-  it('renders table correctly (section 1 due to column virtualisation )', async () => {
+  it('renders table correctly (section 1 due to column virtualisation) and checks for number of spares column', async () => {
     createView();
     await waitFor(() => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
     expect(screen.getByText('Last modified')).toBeInTheDocument();
+    expect(screen.getByText('Number of spares')).toBeInTheDocument();
+  });
+
+  it('renders table correctly (Criticality)', async () => {
+    props.parentInfo = getCatalogueCategoryById('6') as CatalogueCategory;
+    createView(undefined, {
+      criticality: { isCriticalMode: true },
+    });
+    await waitFor(() => {
+      expect(screen.getByText('Name')).toBeInTheDocument();
+    });
+
+    expect(screen.getByText('Criticality')).toBeInTheDocument();
+
+    expect(await screen.findByText('-4.6')).toBeInTheDocument();
+
+    expect(screen.getByTestId('ErrorIcon')).toBeInTheDocument();
+
+    await user.hover(screen.getByTestId('ErrorIcon'));
+
+    expect(
+      await screen.findByText('This catalogue item is critical.')
+    ).toBeInTheDocument();
   });
 
   it('renders table correctly (Cameras more details)', async () => {
@@ -132,11 +165,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
 
-    await ensureColumnsVisible([
-      'Time to replace (days)',
-      'Days to Rework',
-      'Drawing Number',
-    ]);
+    await ensureColumnsVisible(['Time to replace (days)', 'Days to Rework']);
   });
 
   it('renders table correctly for properties with type boolean', async () => {
@@ -155,11 +184,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
 
-    await ensureColumnsVisible([
-      'Drawing Link',
-      'Item Model Number',
-      'Created',
-    ]);
+    await ensureColumnsVisible(['Item Model Number', 'Created']);
   });
 
   it('renders table correctly (section 5 due to column virtualisation)', async () => {
@@ -324,6 +349,21 @@ describe('Catalogue Items Table', () => {
     expect(url[0]).toHaveAttribute('href', '/catalogue/5/items/6');
   });
 
+  it('navigates to items pages with the spares definition applied', async () => {
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+    await ensureColumnsVisible(['Number of spares']);
+
+    const url = await screen.findAllByText('0');
+
+    expect(url[1]).toHaveAttribute(
+      'href',
+      '/89/items?state=N4IgxgYiBcDaoEsAmMQGcCeaAuBTAtgHTYYAOuhAbgIYA2ArriADQg0NNygnmo4BOCAHYBzFmzqNUAZWwB7ftRFMAvgF11KoA'
+    );
+  });
+
   it('navigates to catalogue item landing page', async () => {
     createView();
     await waitFor(() => {
@@ -344,17 +384,6 @@ describe('Catalogue Items Table', () => {
 
     const url = screen.queryAllByText('Click here');
     expect(url[0]).toHaveAttribute('href', '/89/items');
-  });
-
-  it('navigates to drawing link', async () => {
-    createView();
-    await waitFor(() => {
-      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
-    });
-    await ensureColumnsVisible(['Drawing Link']);
-
-    const url = screen.queryAllByText('http://example-drawing-link.com');
-    expect(url[0]).toHaveAttribute('href', 'http://example-drawing-link.com');
   });
 
   it('opens obsolete dialog and can close it again', async () => {
@@ -562,21 +591,21 @@ describe('Catalogue Items Table', () => {
     });
     expect(clearFiltersButton).toBeDisabled();
     expect(router.state.location.search).toBe(
-      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUyWBlE5RGLNh3jcMvAdAIB3AARiycZT36D02fMVKUGBGDSgAHVlgB2XIwJSmRF8bCZYAIxgsDAJSN1VjT2FzPQpA4NDSJlp7DGQwcgJnVCZos0ImKEsihgi1ExjRS3igkLCCFLpg10NIjyECn0p7aix7AmpWGwoAdnKozu843v7B4ZgKAA4Jjq9YmrAsGFzULCbNLGoAayYcAPtVyq64hmQATxgWfdT0zKv86Zq7x%2BeDo%2BOHymG3EDGoyE0UGcOCYzjwZACgyB62qoPBkOhTAwUMBbQqnxBlAIAA8BmBSMxsZwwoomD8DCp8cDUZRiuQmJJrBhYfDEdQrmRkHDuOS8LRqBRnMh2AKhXgRagxYMKGKMLLhRlFeKKMgGGCbAz3CBBRrRdrSKF7AALFxKRmTFHdSVYUiGyIAX3dQA'
+      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUyWBlE5RGLNh3jcMvAdAIB3AARiycZT36D02fMVKUGBGDSgAHVlgB2XIwJSmRF8bCZYAIxgsDAJSN1VjT2FzPQpA4NDSJlp7DGQwcgJnVCZos0ImKEsihgi1ExjRS3igkLCCFLpg10NIjyECn0p7aix7AmpWGwoAdnKozu843v7B4ZgKAA4Jjq9YmrAsGFzULCbNLGoAayYcAPtVyq64hmQATxgWfdT0zKv86Zq7x%2BeDo%2BOHymG3EDGoyE0UGcOCYzjwZACgyB62qoPBkOhTAwUMBbQqnxBlAIAA8BmBSMxsZwwoomD8DCp8cDUZRiuQmJJrBhYfDEdQrmRkHDuOS8LRqBRnMh2AKhXgRagxYMKGKMLLhRlFeKKMgGGCbAz3CBBRrRdrSKF7AALFxKRmTFHdSVYUiG9rXL7iOysFDY1D3ZFVJ1%2BTjpHA4RiBm41OEIwb%2BThMGD2ZC0J60ACOeCgtDKeIIAF8C0A'
     );
 
     // Do max first, as it technically has no effect on the outcome of the filter
-    const maxInput = screen.getByLabelText('Max');
+    const maxInput = screen.getAllByLabelText('Max')[1];
     await user.type(maxInput, '1000');
 
-    const minInput = screen.getByLabelText('Min');
+    const minInput = screen.getAllByLabelText('Min')[1];
     await user.type(minInput, '800');
 
     await waitFor(() => {
       expect(screen.queryByText('Energy Meters 26')).not.toBeInTheDocument();
     });
     expect(router.state.location.search).toBe(
-      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUyWBlE5RGLNh3jcMvAdAIB3AARiycZT36D02fMVKUGBGDSgAHVlgB2XIwJSmRF8bCZYAIxgsDAJSN1VjT2FzPQpA4NDSJlp7DGQwcgJnVCZos0ImKEsihgi1ExjRS3igkLCCFLpg10NIjyECn0p7aix7AmpWGwoAdnKozu843v7B4ZgKAA4Jjq9YmrAsGFzULCbNLGoAayYcAPtVyq64hmQATxgWfdT0zKv86Zq7x%2BeDo%2BOHymG3EDGoyE0UGcOCYzjwZACgyB62qoPBkOhTAwUMBbQqnxBlAIAA8BmBSMxsZwwoomD8DCp8cDUZRiuQmJJrBhYfDEdQrmRkHDuOS8LRqBRnMh2AKhXgRagxYMKGKMLLhRlFeKKMgGGCbAz3CBBRrRdrSKF7AALFxKRmTFHdSVYUiGyIAXw8ADEEABtUBQMrwa5fcRbHZnC4gAQAN0whD9oFQ9wGCBAO2oUJw0ZAcYwCeDSwADEWQJ6kymlOnUJnoTm8wWQABGEul90AXQ77qAA'
+      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUyWBlE5RGLNh3jcMvAdAIB3AARiycZT36D02fMVKUGBGDSgAHVlgB2XIwJSmRF8bCZYAIxgsDAJSN1VjT2FzPQpA4NDSJlp7DGQwcgJnVCZos0ImKEsihgi1ExjRS3igkLCCFLpg10NIjyECn0p7aix7AmpWGwoAdnKozu843v7B4ZgKAA4Jjq9YmrAsGFzULCbNLGoAayYcAPtVyq64hmQATxgWfdT0zKv86Zq7x%2BeDo%2BOHymG3EDGoyE0UGcOCYzjwZACgyB62qoPBkOhTAwUMBbQqnxBlAIAA8BmBSMxsZwwoomD8DCp8cDUZRiuQmJJrBhYfDEdQrmRkHDuOS8LRqBRnMh2AKhXgRagxYMKGKMLLhRlFeKKMgGGCbAz3CBBRrRdrSKF7AALFxKRmTFHdSVYUiG9rXL7iOysFDY1D3ZFVJ1%2BTjpHA4RiBm41OEIwb%2BThMGD2ZC0J60ACOeCgtDKeIIAF8PAAxBAAbVAUDzHsJVG2uXOlwEADdMIRy6B-QMECAdtQoTgQC220oQEsAAzjkBFzv3bvwXuofvQocgVsYdsLgCMk6nBYAugeC0A'
     );
 
     await user.click(clearFiltersButton);
@@ -585,7 +614,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
     });
     expect(router.state.location.search).toBe(
-      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUyWBlE5RGLNh3jcMvAdAIB3AARiycZT36D02fMVKUGBGDSgAHVlgB2XIwJSmRF8bCZYAIxgsDAJSN1VjT2FzPQpA4NDSJlp7DGQwcgJnVCZos0ImKEsihgi1ExjRS3igkLCCFLpg10NIjyECn0p7aix7AmpWGwoAdnKozu843v7B4ZgKAA4Jjq9YmrAsGFzULCbNLGoAayYcAPtVyq64hmQATxgWfdT0zKv86Zq7x%2BeDo%2BOHymG3EDGoyE0UGcOCYzjwZACgyB62qoPBkOhTAwUMBbQqnxBlAIAA8BmBSMxsZwwoomD8DCp8cDUZRiuQmJJrBhYfDEdQrmRkHDuOS8LRqBRnMh2AKhXgRagxYMKGKMLLhRlFeKKMgGGCbAz3CBBRrRdrSKF7AALFxKRmTFHdSVYUiGyIAX3dQA'
+      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUyWBlE5RGLNh3jcMvAdAIB3AARiycZT36D02fMVKUGBGDSgAHVlgB2XIwJSmRF8bCZYAIxgsDAJSN1VjT2FzPQpA4NDSJlp7DGQwcgJnVCZos0ImKEsihgi1ExjRS3igkLCCFLpg10NIjyECn0p7aix7AmpWGwoAdnKozu843v7B4ZgKAA4Jjq9YmrAsGFzULCbNLGoAayYcAPtVyq64hmQATxgWfdT0zKv86Zq7x%2BeDo%2BOHymG3EDGoyE0UGcOCYzjwZACgyB62qoPBkOhTAwUMBbQqnxBlAIAA8BmBSMxsZwwoomD8DCp8cDUZRiuQmJJrBhYfDEdQrmRkHDuOS8LRqBRnMh2AKhXgRagxYMKGKMLLhRlFeKKMgGGCbAz3CBBRrRdrSKF7AALFxKRmTFHdSVYUiG9rXL7iOysFDY1D3ZFVJ1%2BTjpHA4RiBm41OEIwb%2BThMGD2ZC0J60ACOeCgtDKeIIAF8C0A'
     );
   });
 
@@ -631,7 +660,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.queryByText('Energy Meters 26')).not.toBeInTheDocument();
     });
     expect(router.state.location.search).toBe(
-      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUAdsnZceBAL7ygA'
+      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIVYTThmQ4cjLj36D02fMVKUaUVigw6Anooy8BKVSI3iAdnjIAjAtSZZOTGAAdktGE1oBHPChaBmNTFWF1MUprZHYwggBfRKA'
     );
 
     // Reset
@@ -687,7 +716,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Grouped by')).toBeInTheDocument();
     });
     expect(router.state.location.search).toBe(
-      '?state=N4Ig5iBcDaIMYEMAuCA2B7MBXApgSSRwFsA6AOwSJxAF0AaeAeSliICckBaN9Ad05wAPAA4IyAExAN2XHvwRwkAS3RkAzlJAzufTmpyocizYhQZs%2BQqQpUTyNJlwFiJIunFKAZkpziA%2Bsq2DKYOFs6kcGw4yL4BSkEgAGo%2BvAAE4RrB9uZOViTiOGqRSsLKqnZmjpYuSmp%2B6ABGauiGhBWhuS6Nza04flHCqArEOGRIfiE5fUpWfkqSWZVhed0tOIT90c1k7VPhJMI8wjgcPmokAOy7VfuH6MenhSQAHNfLLnDoauNgDcJvnQiX3GSHQm146DYAGs-L9-osOtVSOIEABPOqgzaDYYApH5NEYsFRCHQ3H7ITHRSxVBedbxPoo9FkvLiNgIXhKMhgPxkLBEBonZkuVnszncmlkKFC0gzYh%2BNwFVA8vkCtiaIhiLCeBRILBRNjkSjUaSa7WKPUnEh61Dq006i0GhDiVmFTJaO3m-UkQiGYQAC1Uxvg2RueTI6EIbu0cj0ojggpoAF8gA'
+      '?state=N4Ig5iBcDaIMYEMAuCA2B7MBXApgSSRwFsA6AOwSJxAF0AaeAeSliICckBaN9Ad05wAPAA4IyAExAN2XHvwRwkAS3RkAzlJAzufTmpyocizYhQZs%2BQqSVqA%2BgDNUCMGBySGptJlwFi5StQeyF4WvqRwbErKiKhRAJ4mweY%2BVuRYRABGOGy26Pa2aqJsOBpBZt6WfmTpWTl5BUUltsUAjlhKxe7wSRVhJETo4kr2Sm62ylSJ5aGpETjIYxOBIABqo7wABGGl3dMpfuIlEUrCyqpTIfvWdugZauiGhBfJlaS39484zTjCTnDEODISFsnhetiixHBXVBvVS7weOEI3wQ9zIz1hfmEPGE2WUJRIAHZ0TNMdjcaM1CQABzEq4kODoNTAsAZYS0170xnApDob68dBsADWthZbLKlw54gQcTsPO%2BvwUyxhJNIUpl415xX5QvZfSEOMUY1i9kRSiotjVO2VdIhRFsA0OqFs1Uy2U0RDEWHsCiQWGKbH8k2knu9ij92RIftQ7pDPvDAYQ4nExTUOw91VDvv9JEIhmEAAtVEqeiryOhCGmODp%2BIVFWxaABfIA'
     );
 
     // Reset
@@ -698,7 +727,7 @@ describe('Catalogue Items Table', () => {
     });
     // Expect this to still be here as have now modified the order in some way (as MRT doesn't revert back to its original state in this case)
     expect(router.state.location.search).toBe(
-      '?state=N4Igxg8iBcDaIFsBOAXAtEg9gdzQQzBQEtMA7AZxABpFUMc1yBTAGycOtvS1yYA8ADnlIATTmDwo8LTAHMArkwCSKJggB0pPAibjJ0uYpVr1CTCKIAzIkxEB9Yjr1SZC5ao1gkTSbYdEnGgA1G2wAAmMEShoJF0N3ExEmci8iAWIyZwM3SPUicjtMACNyTDZVLNcjD3Vi0vKmO28BFgI1JlIUO1jsxTsiD36xGP0qhI06sqZVJp9S0kr43IEsASZUG3J1AHZFnJqVzDWN5PUADj3qkzBMci7ZIoFL8fUbu4dMWexMJABrOweTxGcX2iTwAE8CihPs1WmBdMDei8RBCoTCmN8-s9cvw1oQ-CwrNMAo0UZDsTUREg8NgiKRZHZSPIEEV1hTEtTafS7ITSL92RoBmo7GYkixGczWUhOAhhPJLAQUPJvEhNNoEYg5QrCMr1uplSwZVrFbrVXgRFTktFNUztUqVepVGwBAALMganpjXKkTCqa3IbgMchCeHSgC6AF8gA'
+      '?state=N4Igxg8iBcDaIFsBOAXAtEg9gdzQQzBQEtMA7AZxABpFUMc1yBTAGycOtvS1yYA8ADnlIATTmDwo8LTAHMArkwCSKJggB0RcgH0AZizyzZTMTQlSZC5ao2k8CJuMnS5ilWvVgkRYhJY%2BATycLV2sPUnkEACMmJG1MXW1yISQmSjNnSzcbdQjo2PjE5LxUnVSAR3kiVNNwTND3DQRMESJdIhNtYgdglytGz1TJTu7HGgA1DuwAAkb0upD%2BnJE0ryIBYjJerLCNLXio8kw2VW2GnMxD46ZVbVSBAzA1JlIUbXM%2BxW0fNW-aj52A0uRxOTDuTDwR1IZyWHgEWAEsWIaXUAHYYdk4QikR1yOoABwY3aeTDkN6yKICIkDMCkt4oTDg7CYJAAa20FKpGUWmI0IjwAR0DPBDwIYwWn2J-MFXUZqWZbOpOX4iMInX8uhuRAc2ml8wB5w8PwQ2maKxY2jyMSQnAQwnkugIKHkqSQuXs4rtEUdhBdsXULpYtvtPudrvUeBEIlK8y9DqdfrdqjYAgAFmRxQbYbZMKpY3QeIwhE8bQBdAC%2BQA'
     );
   });
 
@@ -714,21 +743,21 @@ describe('Catalogue Items Table', () => {
     const rowsPerPageSelect = await screen.findByRole('combobox', {
       name: 'Rows per page',
     });
-    expect(within(rowsPerPageSelect).getByText('15')).toBeInTheDocument();
+    expect(within(rowsPerPageSelect).getByText('30')).toBeInTheDocument();
 
     // Change to another value
     fireEvent.mouseDown(rowsPerPageSelect);
-    fireEvent.click(within(await screen.findByRole('listbox')).getByText('30'));
-    expect(within(rowsPerPageSelect).getByText('30')).toBeInTheDocument();
+    fireEvent.click(within(await screen.findByRole('listbox')).getByText('45'));
+    expect(within(rowsPerPageSelect).getByText('45')).toBeInTheDocument();
 
     expect(router.state.location.search).toBe(
-      '?state=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
+      '?state=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygAYBfBoA'
     );
 
     // And back again
     fireEvent.mouseDown(rowsPerPageSelect);
-    fireEvent.click(within(await screen.findByRole('listbox')).getByText('15'));
-    expect(within(rowsPerPageSelect).getByText('15')).toBeInTheDocument();
+    fireEvent.click(within(await screen.findByRole('listbox')).getByText('30'));
+    expect(within(rowsPerPageSelect).getByText('30')).toBeInTheDocument();
 
     expect(router.state.location.search).toBe('');
   });
@@ -754,7 +783,7 @@ describe('Catalogue Items Table', () => {
 
     //  accuracy column action button
     await user.click(
-      screen.getAllByRole('button', { name: 'Column Actions' })[7]
+      screen.getAllByRole('button', { name: 'Column Actions' })[8]
     );
 
     await user.click(await screen.findByText('Group by Accuracy'));
@@ -777,50 +806,6 @@ describe('Catalogue Items Table', () => {
     ).toBeInTheDocument();
   });
 
-  it('displays drawing link grouped cell', async () => {
-    createView();
-
-    await waitFor(() => {
-      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
-    });
-
-    expect(await screen.findByText('Name')).toBeInTheDocument();
-
-    const drawingLink = 'http://example-drawing-link.com';
-
-    // Get the table element (assuming it has a specific class or role)
-    const table = screen.getByTestId('catalogue-items-table-container');
-
-    fireEvent.scroll(table, { target: { scrollLeft: 2780 } });
-
-    // Check if the drawing link cell is visible after scrolling
-    expect(await screen.findByText(drawingLink)).toBeInTheDocument();
-
-    //  drawing link column action button
-    await user.click(
-      screen.getAllByRole('button', { name: 'Column Actions' })[8]
-    );
-
-    await user.click(await screen.findByText('Group by Drawing Link'));
-
-    expect(
-      screen.queryByRole('tooltip', { name: 'Drawing Link' })
-    ).not.toBeInTheDocument();
-
-    fireEvent.scroll(table, { target: { scrollLeft: -2780 } });
-
-    expect(
-      await screen.findByRole('tooltip', { name: 'Drawing Link' })
-    ).toBeInTheDocument();
-
-    // Check if the drawing link grouped cell is visible after scrolling
-    expect(
-      await screen.findByRole('tooltip', {
-        name: 'http://example-drawing-link.com (1)',
-      })
-    ).toBeInTheDocument();
-  });
-
   it('displays manufacturer url grouped cell', async () => {
     createView();
 
@@ -835,14 +820,14 @@ describe('Catalogue Items Table', () => {
     // Get the table element (assuming it has a specific class or role)
     const table = screen.getByTestId('catalogue-items-table-container');
 
-    fireEvent.scroll(table, { target: { scrollLeft: 3300 } });
+    fireEvent.scroll(table, { target: { scrollLeft: 3650 } });
 
     // Check if the manufacturer url cell is visible after scrolling
     expect(await screen.findByText(manufacturerUrl)).toBeInTheDocument();
 
     // manufacturer url column action button
     await user.click(
-      screen.getAllByRole('button', { name: 'Column Actions' })[8]
+      screen.getAllByRole('button', { name: 'Column Actions' })[5]
     );
 
     await user.click(await screen.findByText('Group by Manufacturer URL'));
@@ -851,7 +836,7 @@ describe('Catalogue Items Table', () => {
       screen.queryByRole('tooltip', { name: 'Manufacturer URL' })
     ).not.toBeInTheDocument();
 
-    fireEvent.scroll(table, { target: { scrollLeft: -3000 } });
+    fireEvent.scroll(table, { target: { scrollLeft: -3350 } });
 
     expect(
       await screen.findByRole('tooltip', { name: 'Manufacturer URL' })
@@ -884,6 +869,26 @@ describe('Catalogue Items Table', () => {
 
     await waitFor(() => {
       expect(screen.getByDisplayValue('Details')).toBeInTheDocument();
+    });
+  });
+
+  it('renders table correctly (section 1 due to column virtualisation) without spares', async () => {
+    server.use(
+      http.get('/v1/settings/spares-definition', () => {
+        return HttpResponse.json(undefined, { status: 204 });
+      })
+    );
+
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Name')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Show/Hide columns' }));
+    await user.click(screen.getByText('Hide all'));
+
+    await waitFor(() => {
+      expect(screen.queryByText('Number of spares')).not.toBeInTheDocument();
     });
   });
 });

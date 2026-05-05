@@ -28,3 +28,26 @@ export const readSciGatewayToken = (): SciGatewayToken => {
   }
   return null;
 };
+
+/**
+ * Retrieves the user's role from the JWT stored in localStorage.
+ *
+ * If the user is authenticated, the JWT should contain a `role` claim.
+ * In that case, the function returns the role value. If the token is
+ * missing or cannot be parsed, the function returns `undefined`.
+ *
+ * If a token exists but the `role` field is not present in the decoded
+ * payload, the function returns the fallback role `"default"`.
+ *
+ * @returns {string | undefined} The user's role, "default" if no role
+ *          exists in the token, or `undefined` if the user is not authenticated.
+ */
+export const getUserRole = (): string | undefined => {
+  const token = localStorage.getItem(MicroFrontendToken);
+  if (token) {
+    const parsedToken = JSON.parse(parseJwt(token));
+    return parsedToken.role ?? 'default';
+  }
+
+  return undefined;
+};

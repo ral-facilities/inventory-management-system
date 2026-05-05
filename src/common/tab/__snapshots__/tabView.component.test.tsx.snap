@@ -28,7 +28,7 @@ exports[`TabView Component > renders correctly 1`] = `
               <button
                 aria-controls="tab1-tabpanel"
                 aria-selected="true"
-                class="MuiButtonBase-root MuiTab-root MuiTab-labelIcon MuiTab-textColorPrimary Mui-selected css-1noduw7-MuiButtonBase-root-MuiTab-root"
+                class="MuiButtonBase-root MuiTab-root MuiTab-labelIcon MuiTab-textColorPrimary Mui-selected css-1onfi4s css-iypnj4-MuiButtonBase-root-MuiTab-root"
                 id="tab1-tab"
                 role="tab"
                 tabindex="0"
@@ -44,7 +44,7 @@ exports[`TabView Component > renders correctly 1`] = `
               <button
                 aria-controls="tab3-tabpanel"
                 aria-selected="false"
-                class="MuiButtonBase-root MuiTab-root MuiTab-labelIcon MuiTab-textColorPrimary css-1noduw7-MuiButtonBase-root-MuiTab-root"
+                class="MuiButtonBase-root MuiTab-root MuiTab-labelIcon MuiTab-textColorPrimary css-1onfi4s css-iypnj4-MuiButtonBase-root-MuiTab-root"
                 id="tab3-tab"
                 role="tab"
                 tabindex="-1"
@@ -60,7 +60,7 @@ exports[`TabView Component > renders correctly 1`] = `
               <button
                 aria-controls="tab2-tabpanel"
                 aria-selected="false"
-                class="MuiButtonBase-root MuiTab-root MuiTab-labelIcon MuiTab-textColorPrimary css-1noduw7-MuiButtonBase-root-MuiTab-root"
+                class="MuiButtonBase-root MuiTab-root MuiTab-labelIcon MuiTab-textColorPrimary css-1onfi4s css-iypnj4-MuiButtonBase-root-MuiTab-root"
                 id="tab2-tab"
                 role="tab"
                 tabindex="-1"
@@ -76,7 +76,7 @@ exports[`TabView Component > renders correctly 1`] = `
               <button
                 aria-controls="Gallery-tabpanel"
                 aria-selected="false"
-                class="MuiButtonBase-root MuiTab-root MuiTab-labelIcon MuiTab-textColorPrimary css-1noduw7-MuiButtonBase-root-MuiTab-root"
+                class="MuiButtonBase-root MuiTab-root MuiTab-labelIcon MuiTab-textColorPrimary css-1onfi4s css-iypnj4-MuiButtonBase-root-MuiTab-root"
                 id="Gallery-tab"
                 role="tab"
                 tabindex="-1"
@@ -98,7 +98,7 @@ exports[`TabView Component > renders correctly 1`] = `
               <button
                 aria-controls="Attachments-tabpanel"
                 aria-selected="false"
-                class="MuiButtonBase-root MuiTab-root MuiTab-labelIcon MuiTab-textColorPrimary css-1noduw7-MuiButtonBase-root-MuiTab-root"
+                class="MuiButtonBase-root MuiTab-root MuiTab-labelIcon MuiTab-textColorPrimary css-1onfi4s css-iypnj4-MuiButtonBase-root-MuiTab-root"
                 id="Attachments-tab"
                 role="tab"
                 tabindex="-1"

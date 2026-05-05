@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Catalogue Items details panel > renders details panel correctly (None values for telephone and url) 1`] = `
+exports[`Items details panel > renders details panel correctly (None values for telephone and url) 1`] = `
 <DocumentFragment>
   <div
     class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-smpqgx-MuiGrid2-root"
@@ -252,9 +252,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                       </p>
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-s1l41m-MuiTypography-root"
-                      >
-                        Operational
-                      </p>
+                      />
                     </div>
                     <div
                       class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
@@ -601,7 +599,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
 </DocumentFragment>
 `;
 
-exports[`Catalogue Items details panel > renders details panel correctly (no dates) 1`] = `
+exports[`Items details panel > renders details panel correctly (no dates) 1`] = `
 <DocumentFragment>
   <div
     class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-smpqgx-MuiGrid2-root"
@@ -853,9 +851,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (no dat
                       </p>
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-s1l41m-MuiTypography-root"
-                      >
-                        Operational
-                      </p>
+                      />
                     </div>
                     <div
                       class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
@@ -1202,7 +1198,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (no dat
 </DocumentFragment>
 `;
 
-exports[`Catalogue Items details panel > renders details panel correctly (when there are no Notes) 1`] = `
+exports[`Items details panel > renders details panel correctly (when there are no Notes) 1`] = `
 <DocumentFragment>
   <div
     class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-smpqgx-MuiGrid2-root"
@@ -1454,9 +1450,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                       </p>
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-s1l41m-MuiTypography-root"
-                      >
-                        Operational
-                      </p>
+                      />
                     </div>
                     <div
                       class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
@@ -1803,7 +1797,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
 </DocumentFragment>
 `;
 
-exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
+exports[`Items details panel > renders details panel correctly 1`] = `
 <DocumentFragment>
   <div
     class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-smpqgx-MuiGrid2-root"
@@ -2066,9 +2060,7 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                       </p>
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-s1l41m-MuiTypography-root"
-                      >
-                        Unknown
-                      </p>
+                      />
                     </div>
                     <div
                       class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
@@ -2397,7 +2389,7 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
 </DocumentFragment>
 `;
 
-exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`] = `
+exports[`Items details panel > renders manufacturer panel correctly 1`] = `
 <DocumentFragment>
   <div
     class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-smpqgx-MuiGrid2-root"
@@ -3018,7 +3010,7 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
 </DocumentFragment>
 `;
 
-exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
+exports[`Items details panel > renders notes panel correctly 1`] = `
 <DocumentFragment>
   <div
     class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-smpqgx-MuiGrid2-root"
@@ -3639,7 +3631,7 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
 </DocumentFragment>
 `;
 
-exports[`Catalogue Items details panel > renders properties panel correctly (empty property list) 1`] = `
+exports[`Items details panel > renders properties panel correctly (empty property list) 1`] = `
 <DocumentFragment>
   <div
     class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-smpqgx-MuiGrid2-root"
@@ -4145,7 +4137,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly (emp
 </DocumentFragment>
 `;
 
-exports[`Catalogue Items details panel > renders properties panel correctly 1`] = `
+exports[`Items details panel > renders properties panel correctly 1`] = `
 <DocumentFragment>
   <div
     class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-smpqgx-MuiGrid2-root"

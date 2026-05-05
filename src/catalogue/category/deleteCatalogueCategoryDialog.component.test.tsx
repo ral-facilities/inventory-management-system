@@ -37,6 +37,7 @@ describe('delete Catalogue Category dialogue', () => {
       parent_id: null,
       id: '1',
       code: 'test',
+      is_flagged: false,
       is_leaf: false,
       properties: [],
       ...CREATED_MODIFIED_TIME_VALUES,
@@ -146,7 +147,7 @@ describe('delete Catalogue Category dialogue', () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          'Catalogue category has children elements and cannot be deleted, please delete the children elements first'
+          'Catalogue category has child elements and cannot be deleted, please delete the children elements first'
         )
       ).toBeInTheDocument();
     });

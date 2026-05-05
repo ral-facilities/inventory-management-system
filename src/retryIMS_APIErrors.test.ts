@@ -21,9 +21,9 @@ describe('retryIMS_APIErrors', () => {
     };
   });
 
-  it('returns false if error code is 403', () => {
+  it('returns false if error code is 401', () => {
     if (error.response) {
-      error.response.status = 403;
+      error.response.status = 401;
     }
     const result = retryIMS_APIErrors(0, error);
     expect(result).toBe(false);

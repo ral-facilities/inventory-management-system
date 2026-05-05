@@ -103,8 +103,8 @@ export function unmount(props: unknown): Promise<void> {
 export const fetchSettings =
   (): Promise<InventoryManagementSystemSettings | void> => {
     const settingsPath = import.meta.env
-      .VITE_APP_INVENTORY_MANAGEMENT_SYSTEM_BUILD_DIRECTORY
-      ? import.meta.env.VITE_APP_INVENTORY_MANAGEMENT_SYSTEM_BUILD_DIRECTORY +
+      .VITE_INVENTORY_MANAGEMENT_SYSTEM_BUILD_DIRECTORY
+      ? import.meta.env.VITE_INVENTORY_MANAGEMENT_SYSTEM_BUILD_DIRECTORY +
         'inventory-management-system-settings.json'
       : '/inventory-management-system-settings.json';
     return axios
@@ -125,6 +125,11 @@ export const fetchSettings =
         // Ensure the osApiUrl name exists.
         if (!('osApiUrl' in settings)) {
           throw new Error('osApiUrl is undefined in settings');
+        }
+
+        // Ensure the imsJsApiUrl name exists.
+        if (!('imsJsApiUrl' in settings)) {
+          throw new Error('imsJsApiUrl is undefined in settings');
         }
 
         // Ensure the maxAttachmentSizeBytes value exists.
@@ -149,6 +154,11 @@ export const fetchSettings =
         // Ensure the maxImageSizeBytes value exists.
         if (!('maxImageSizeBytes' in settings)) {
           throw new Error('maxImageSizeBytes is undefined in settings');
+        }
+
+        // Ensure the privilegedRoles value exists.
+        if (!('privilegedRoles' in settings)) {
+          throw new Error('privilegedRoles is undefined in settings');
         }
 
         if (Array.isArray(settings['routes']) && settings['routes'].length) {
@@ -203,9 +213,10 @@ async function prepare() {
   // When in dev, only use MSW if the api url is given, otherwise load MSW as it must have been explicitly requested
   const settingsResult = await settings;
   if (
-    import.meta.env.VITE_APP_INCLUDE_MSW === 'true' ||
+    import.meta.env.VITE_INCLUDE_MSW === 'true' ||
     settingsResult?.imsApiUrl === '' ||
-    settingsResult?.osApiUrl === ''
+    settingsResult?.osApiUrl === '' ||
+    settingsResult?.imsJsApiUrl === ''
   ) {
     // Need to use require instead of import as import breaks when loaded in SG
     const { worker } = await import('./mocks/browser');
@@ -229,7 +240,7 @@ const conditionalSciGatewayRender = () => {
   }
 };
 
-if (import.meta.env.DEV || import.meta.env.VITE_APP_INCLUDE_MSW === 'true') {
+if (import.meta.env.DEV || import.meta.env.VITE_INCLUDE_MSW === 'true') {
   prepare().then(() => conditionalSciGatewayRender());
 
   log.setDefaultLevel(log.levels.DEBUG);

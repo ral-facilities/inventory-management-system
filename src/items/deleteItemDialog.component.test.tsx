@@ -9,6 +9,7 @@ import { http } from 'msw';
 import { act } from 'react';
 import { Item } from '../api/api.types';
 import handleIMS_APIError from '../handleIMS_APIError';
+import SystemJSON from '../mocks/Systems.json';
 import { server } from '../mocks/server';
 import { getItemById, renderComponentWithRouterProvider } from '../testUtils';
 import DeleteItemDialog, {
@@ -22,19 +23,21 @@ describe('delete item dialog', () => {
   let user: UserEvent;
   const onClose = vi.fn();
   const onChangeItem = vi.fn();
-  let item: Item | undefined;
+  let item: Item;
 
   const createView = (): RenderResult => {
     return renderComponentWithRouterProvider(<DeleteItemDialog {...props} />);
   };
 
   beforeEach(() => {
-    item = getItemById('KvT2Ox7n');
+    item = { ...getItemById('KvT2Ox7n') };
+
     props = {
       open: true,
       onClose: onClose,
       item: item,
       onChangeItem: onChangeItem,
+      isAdminMode: false,
     };
     user = userEvent.setup(); // Assigning userEvent to 'user'
   });
@@ -49,6 +52,33 @@ describe('delete item dialog', () => {
     await act(async () => {
       baseElement = createView().baseElement;
     });
+    expect(baseElement).toMatchSnapshot();
+  });
+
+  it('renders correctly when in admin mode with tooltip', async () => {
+    props.isAdminMode = true;
+
+    let baseElement;
+    await act(async () => {
+      baseElement = createView().baseElement;
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('Delete Item as Admin')).toBeInTheDocument();
+    });
+
+    const infoIcon = screen.getByTestId('admin-status-tooltip');
+
+    await user.hover(infoIcon);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          'As an admin, you can bypass rules that prevent other users from deleting an item'
+        )
+      ).toBeInTheDocument();
+    });
+
     expect(baseElement).toMatchSnapshot();
   });
 
@@ -68,6 +98,7 @@ describe('delete item dialog', () => {
   });
 
   it('disables continue button and shows circular progress indicator when request is pending', async () => {
+    item.system_id = SystemJSON[10].id;
     server.use(
       http.delete('/v1/items/:id', () => {
         return new Promise(() => {});
@@ -110,20 +141,8 @@ describe('delete item dialog', () => {
     expect(onClose).not.toHaveBeenCalled();
   });
 
-  it('displays warning message when session data is not loaded', async () => {
-    props.item = undefined;
-
-    createView();
-    const continueButton = screen.getByRole('button', { name: 'Continue' });
-    await user.click(continueButton);
-    const helperTexts = screen.getByText(
-      'No data provided, Please refresh and try again'
-    );
-    expect(helperTexts).toBeInTheDocument();
-    expect(onClose).not.toHaveBeenCalled();
-  });
-
   it('calls handleDeleteSession when continue button is clicked with', async () => {
+    item.system_id = SystemJSON[10].id;
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
     await user.click(continueButton);
@@ -134,7 +153,8 @@ describe('delete item dialog', () => {
   });
 
   it('displays error message if an unknown error occurs', async () => {
-    if (item) item.id = 'Error 500';
+    item.id = 'Error 500';
+    item.system_id = SystemJSON[10].id;
 
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
@@ -143,6 +163,32 @@ describe('delete item dialog', () => {
     expect(handleIMS_APIError).toHaveBeenCalled();
     expect(onClose).not.toHaveBeenCalled();
   });
+
+  it('displays error message when a user tries delete an item from a system type which is not allowed', async () => {
+    createView();
+    const continueButton = screen.getByRole('button', { name: 'Continue' });
+    await user.click(continueButton);
+
+    expect(
+      await screen.findByText(
+        'Please move item to a system with Type: Scrapped before trying to delete.'
+      )
+    ).toBeInTheDocument();
+    expect(onClose).not.toHaveBeenCalled();
+  });
+
+  it('in admin mode allows deletion of item from a system type which is not allowed', async () => {
+    props.isAdminMode = true;
+    createView();
+
+    const continueButton = screen.getByRole('button', { name: 'Continue' });
+    await user.click(continueButton);
+
+    await waitFor(() => {
+      expect(onClose).toHaveBeenCalled();
+    });
+  });
+
   it('renders correctly when items has no serial number', async () => {
     props.item = { ...getItemById('wKsFzrSq'), serial_number: null } as Item;
     createView();

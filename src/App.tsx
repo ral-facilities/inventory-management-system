@@ -9,23 +9,18 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AxiosError } from 'axios';
 import { enGB } from 'date-fns/locale/en-GB';
 import React from 'react';
+import { connect, Provider } from 'react-redux';
 import {
+  createBrowserRouter,
   Outlet,
   RouterProvider,
-  createBrowserRouter,
   type RouteObject,
 } from 'react-router';
-import AdminCardView from './admin/adminCardView.component';
-import AdminLayout, {
-  AdminErrorComponent,
-} from './admin/adminLayout.component';
-import SystemTypes from './admin/systemTypes/systemTypes.component';
-import Units from './admin/units/units.component';
-import UsageStatuses from './admin/usageStatuses/usageStatuses.component';
 import {
   clearFailedAuthRequestsQueue,
   retryFailedAuthRequests,
 } from './api/api';
+import { APIConfigProviderLayout } from './apiConfigProvider.component';
 import { MicroFrontendId } from './app.types';
 import CatalogueLayout, {
   CatalogueErrorComponent,
@@ -33,9 +28,10 @@ import CatalogueLayout, {
   catalogueLayoutLoader,
 } from './catalogue/catalogueLayout.component';
 import CatalogueCardView from './catalogue/category/catalogueCardView.component';
+import CatalogueItemLayout from './catalogue/items/catalogueItemLayout.component';
 import CatalogueItemsLandingPage from './catalogue/items/catalogueItemsLandingPage.component';
 import CatalogueItemsPage from './catalogue/items/catalogueItemsPage.component';
-import ConfigProvider from './configProvider.component';
+import SettingsMenuItems from './common/settingsMenuItems.component';
 import handleIMS_APIError from './handleIMS_APIError';
 import {
   HomePage,
@@ -51,14 +47,27 @@ import ManufacturerLayout, {
   manufacturerLayoutLoader,
 } from './manufacturer/manufacturerLayout.component';
 import ManufacturerTable from './manufacturer/manufacturerTable.component';
+import { getUserRole } from './parseTokens';
 import paths from './paths';
 import Preloader from './preloader/preloader.component';
 import retryIMS_APIErrors from './retryIMS_APIErrors';
+import Rules from './settings/rules/rules.component';
+import SettingsCardView from './settings/settingsCardView.component';
+import SettingsLayout, {
+  SettingsErrorComponent,
+} from './settings/settingsLayout.component';
+import SystemTypes from './settings/systemTypes/systemTypes.component';
+import Units from './settings/units/units.component';
+import UsageStatuses from './settings/usageStatuses/usageStatuses.component';
+import { TokenUpdatedType } from './state/actions/actions.types';
 import {
   broadcastSignOut,
   requestPluginRerender,
   tokenRefreshed,
 } from './state/scigateway.actions';
+import { setAuthorisation } from './state/slices/authorisationSlice';
+import { loadConfig } from './state/slices/configSlice';
+import store, { RootState } from './state/store';
 import Systems from './systems/systems.component';
 import SystemsLayout, {
   SystemsErrorComponent,
@@ -105,72 +114,78 @@ const routeObject: RouteObject[] = [
         ],
       },
       {
-        path: paths.admin,
-        Component: AdminLayout,
-        children: [
-          { index: true, Component: AdminCardView },
-          { path: paths.adminUnits, Component: Units },
-          { path: paths.adminUsageStatuses, Component: UsageStatuses },
-          { path: paths.adminSystemTypes, Component: SystemTypes },
-          {
-            path: '*',
-            Component: AdminErrorComponent,
-          },
-        ],
-      },
-      {
-        path: paths.catalogue,
-        Component: CatalogueLayout,
-        ErrorBoundary: CatalogueLayoutErrorComponent,
+        Component: APIConfigProviderLayout,
         children: [
           {
-            index: true,
-            Component: CatalogueCardView,
+            path: paths.settings,
+            Component: SettingsLayout,
+            children: [
+              { index: true, Component: SettingsCardView },
+              { path: paths.settingsUnits, Component: Units },
+              { path: paths.settingsUsageStatuses, Component: UsageStatuses },
+              { path: paths.settingsSystemTypes, Component: SystemTypes },
+              { path: paths.settingsRules, Component: Rules },
+              {
+                path: '*',
+                Component: SettingsErrorComponent,
+              },
+            ],
           },
           {
-            path: paths.catalogueCategories,
-            Component: Outlet,
+            path: paths.catalogue,
+            Component: CatalogueLayout,
+            ErrorBoundary: CatalogueLayoutErrorComponent,
             children: [
               {
                 index: true,
                 Component: CatalogueCardView,
-                loader: catalogueLayoutLoader(queryClient),
               },
               {
-                path: paths.catalogueItems,
+                path: paths.catalogueCategories,
                 Component: Outlet,
                 children: [
                   {
                     index: true,
-                    Component: CatalogueItemsPage,
+                    Component: CatalogueCardView,
                     loader: catalogueLayoutLoader(queryClient),
                   },
                   {
-                    path: paths.catalogueItem,
+                    path: paths.catalogueItems,
                     Component: Outlet,
                     children: [
                       {
                         index: true,
-                        Component: CatalogueItemsLandingPage,
+                        Component: CatalogueItemsPage,
                         loader: catalogueLayoutLoader(queryClient),
                       },
                       {
-                        path: paths.items,
-                        Component: Outlet,
+                        path: paths.catalogueItem,
+                        Component: CatalogueItemLayout,
                         children: [
                           {
                             index: true,
-                            Component: Items,
+                            Component: CatalogueItemsLandingPage,
                             loader: catalogueLayoutLoader(queryClient),
                           },
                           {
-                            path: paths.item,
+                            path: paths.items,
                             Component: Outlet,
                             children: [
                               {
                                 index: true,
-                                Component: ItemsLandingPage,
+                                Component: Items,
                                 loader: catalogueLayoutLoader(queryClient),
+                              },
+                              {
+                                path: paths.item,
+                                Component: Outlet,
+                                children: [
+                                  {
+                                    index: true,
+                                    Component: ItemsLandingPage,
+                                    loader: catalogueLayoutLoader(queryClient),
+                                  },
+                                ],
                               },
                             ],
                           },
@@ -180,45 +195,45 @@ const routeObject: RouteObject[] = [
                   },
                 ],
               },
+              {
+                path: '*',
+                Component: CatalogueErrorComponent,
+              },
             ],
           },
           {
-            path: '*',
-            Component: CatalogueErrorComponent,
-          },
-        ],
-      },
-      {
-        path: paths.systems,
-        Component: SystemsLayout,
-        ErrorBoundary: SystemsLayoutErrorComponent,
-        children: [
-          { index: true, Component: Systems },
-          {
-            path: paths.system,
-            Component: Systems,
-            loader: systemsLayoutLoader(queryClient),
-          },
-          {
-            path: '*',
-            Component: SystemsErrorComponent,
-          },
-        ],
-      },
-      {
-        path: paths.manufacturers,
-        Component: ManufacturerLayout,
-        ErrorBoundary: ManufacturerLayoutErrorComponent,
-        children: [
-          { index: true, Component: ManufacturerTable },
-          {
-            path: paths.manufacturer,
-            Component: ManufacturerLandingPage,
-            loader: manufacturerLayoutLoader(queryClient),
+            path: paths.systems,
+            Component: SystemsLayout,
+            ErrorBoundary: SystemsLayoutErrorComponent,
+            children: [
+              { index: true, Component: Systems },
+              {
+                path: paths.system,
+                Component: Systems,
+                loader: systemsLayoutLoader(queryClient),
+              },
+              {
+                path: '*',
+                Component: SystemsErrorComponent,
+              },
+            ],
           },
           {
-            path: '*',
-            Component: ManufacturerErrorComponent,
+            path: paths.manufacturers,
+            Component: ManufacturerLayout,
+            ErrorBoundary: ManufacturerLayoutErrorComponent,
+            children: [
+              { index: true, Component: ManufacturerTable },
+              {
+                path: paths.manufacturer,
+                Component: ManufacturerLandingPage,
+                loader: manufacturerLayoutLoader(queryClient),
+              },
+              {
+                path: '*',
+                Component: ManufacturerErrorComponent,
+              },
+            ],
           },
         ],
       },
@@ -232,7 +247,7 @@ type Router = ReturnType<typeof createBrowserRouter>;
 
 let router: Router;
 const isUsingMSW =
-  import.meta.env.DEV || import.meta.env.VITE_APP_INCLUDE_MSW === 'true';
+  import.meta.env.DEV || import.meta.env.VITE_INCLUDE_MSW === 'true';
 
 if (!isUsingMSW) router = createBrowserRouter(routeObject);
 
@@ -242,11 +257,35 @@ if (!isUsingMSW) router = createBrowserRouter(routeObject);
 // environment, this is not needed.
 
 export default function App() {
+  // eslint-disable-next-line react-hooks/globals
   if (isUsingMSW) router = createBrowserRouter(routeObject);
   return <RouterProvider router={router} />;
 }
 
+function mapPreloaderStateToProps(state: RootState): { loading: boolean } {
+  return {
+    loading: state.config.loading,
+  };
+}
+
+export const ConnectedPreloader = connect(mapPreloaderStateToProps)(Preloader);
+
 export function Layout() {
+  const dispatch = store.dispatch;
+  React.useEffect(() => {
+    dispatch(loadConfig()).then(() => {
+      const role = getUserRole();
+      const state = store.getState();
+      const privilegedRoles = state.config.settings.privilegedRoles;
+      if (typeof role === 'string')
+        dispatch(
+          setAuthorisation({
+            role,
+            isAdminUser: privilegedRoles.includes(role),
+          })
+        );
+    });
+  }, [dispatch]);
   // We need to call forceUpdate if SciGateway tells us to rerender
   // but there's no forceUpdate in functional components, so this is the hooks equivalent
   // see https://reactjs.org/docs/hooks-faq.html#is-there-something-like-forceupdate
@@ -256,8 +295,10 @@ export function Layout() {
     // attempt to re-render the plugin if we get told to
     const action = (e as CustomEvent).detail;
     if (requestPluginRerender.match(action)) forceUpdate();
-    else if (tokenRefreshed.match(action)) retryFailedAuthRequests();
-    else if (broadcastSignOut.match(action)) clearFailedAuthRequestsQueue();
+    else if (tokenRefreshed.match(action)) {
+      retryFailedAuthRequests();
+      store.dispatch({ type: TokenUpdatedType }); // Triggers middleware to recalculate the user's role and update authorisation state
+    } else if (broadcastSignOut.match(action)) clearFailedAuthRequestsQueue();
   }
 
   React.useEffect(() => {
@@ -269,22 +310,25 @@ export function Layout() {
 
   return (
     <div className="Layout">
-      <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
-        <IMSThemeProvider>
-          <ConfigProvider>
+      <Provider store={store}>
+        <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
+          <IMSThemeProvider>
             <QueryClientProvider client={queryClient}>
-              <React.Suspense
-                fallback={
-                  <Preloader loading={true}>Finished loading</Preloader>
-                }
-              >
-                <ViewTabs />
-                <ReactQueryDevtools initialIsOpen={false} />
-              </React.Suspense>
+              <ConnectedPreloader>
+                <React.Suspense
+                  fallback={
+                    <Preloader loading={true}>Finished loading</Preloader>
+                  }
+                >
+                  <ViewTabs />
+                  <SettingsMenuItems />
+                  <ReactQueryDevtools initialIsOpen={false} />
+                </React.Suspense>
+              </ConnectedPreloader>
             </QueryClientProvider>
-          </ConfigProvider>
-        </IMSThemeProvider>
-      </LocalizationProvider>
+          </IMSThemeProvider>
+        </LocalizationProvider>
+      </Provider>
     </div>
   );
 }

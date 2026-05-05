@@ -7,7 +7,11 @@ import {
 } from '../../testUtils';
 
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { http, HttpResponse } from 'msw';
 import { CatalogueCategory, CatalogueItem } from '../../api/api.types';
+import APIConfigProvider from '../../apiConfigProvider.component';
+import { server } from '../../mocks/server';
+import { RootState } from '../../state/store';
 import CatalogueItemsDetailsPanel, {
   CatalogueItemsDetailsPanelProps,
 } from './catalogueItemsDetailsPanel.component';
@@ -15,9 +19,14 @@ import CatalogueItemsDetailsPanel, {
 describe('Catalogue Items details panel', () => {
   let user: UserEvent;
   let props: CatalogueItemsDetailsPanelProps;
-  const createView = () => {
+  const createView = (preloadedState?: Partial<RootState>) => {
     return renderComponentWithRouterProvider(
-      <CatalogueItemsDetailsPanel {...props} />
+      <APIConfigProvider>
+        <CatalogueItemsDetailsPanel {...props} />
+      </APIConfigProvider>,
+      undefined,
+      undefined,
+      preloadedState
     );
   };
 
@@ -33,6 +42,20 @@ describe('Catalogue Items details panel', () => {
 
   it('renders details panel correctly', async () => {
     const view = createView();
+    await waitFor(() => {
+      expect(
+        screen.getByRole('link', { name: 'Click here' })
+      ).toBeInTheDocument();
+    });
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+    expect(view.asFragment()).toMatchSnapshot();
+  });
+
+  it('renders details panel correctly in critical mode ', async () => {
+    const view = createView({ criticality: { isCriticalMode: true } });
     await waitFor(() => {
       expect(
         screen.getByRole('link', { name: 'Click here' })
@@ -73,13 +96,21 @@ describe('Catalogue Items details panel', () => {
     props.manufacturerData = getManufacturerById('4');
     const view = createView();
 
+    await waitFor(() => {
+      expect(screen.getByText('Number of spares')).toBeInTheDocument();
+    });
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
     expect(view.asFragment()).toMatchSnapshot();
   });
 
   it('renders properties panel correctly', async () => {
     const view = createView();
 
-    await user.click(screen.getByText('Properties'));
+    await user.click(await screen.findByText('Properties'));
     await waitFor(() =>
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
@@ -93,7 +124,7 @@ describe('Catalogue Items details panel', () => {
     } as CatalogueItem;
     const view = createView();
 
-    await user.click(screen.getByText('Properties'));
+    await user.click(await screen.findByText('Properties'));
     await waitFor(() =>
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
@@ -102,7 +133,7 @@ describe('Catalogue Items details panel', () => {
 
   it('renders manufacturer panel correctly', async () => {
     const view = createView();
-    await user.click(screen.getByText('Manufacturer'));
+    await user.click(await screen.findByText('Manufacturer'));
     await waitFor(() =>
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
@@ -111,7 +142,7 @@ describe('Catalogue Items details panel', () => {
 
   it('renders notes panel correctly', async () => {
     const view = createView();
-    await user.click(screen.getByText('Notes'));
+    await user.click(await screen.findByText('Notes'));
     await waitFor(() =>
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
@@ -126,6 +157,34 @@ describe('Catalogue Items details panel', () => {
     props.manufacturerData = getManufacturerById('4');
 
     const view = createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Number of spares')).toBeInTheDocument();
+    });
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+    expect(view.asFragment()).toMatchSnapshot();
+  });
+
+  it('renders details panel correctly (without spares)', async () => {
+    server.use(
+      http.get('/v1/settings/spares-definition', () => {
+        return HttpResponse.json(undefined, { status: 204 });
+      })
+    );
+
+    const view = createView();
+    await waitFor(() => {
+      expect(
+        screen.getByRole('link', { name: 'Click here' })
+      ).toBeInTheDocument();
+    });
+
     await waitFor(() =>
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );

@@ -1,29 +1,40 @@
-const modifyItem = (
-  values: {
-    edit?: number;
-    serialNumber?: string;
-    assetNumber?: string;
-    purchaseOrderNumber?: string;
-    warrantyEndDate?: string;
-    deliveredDate?: string;
+export const modifyItem = (
+  values: Partial<{
+    editIndex: number;
+    serialNumber: string;
+    assetNumber: string;
+    purchaseOrderNumber: string;
+    warrantyEndDate: string;
+    deliveredDate: string;
     isDefective: string;
     usageStatus: string;
-    notes?: string;
+    notes: string;
     substrate: string;
-    diameter?: string;
+    diameter: string;
     wavelengthRange: string;
-    broken?: string;
+    broken: string;
     system: string;
-  },
+  }>,
   ignoreChecks?: boolean
 ) => {
-  if (typeof values.edit === 'number') {
-    cy.findAllByLabelText('Row Actions').eq(values.edit).click();
+  if (typeof values.editIndex === 'number') {
+    cy.findAllByLabelText('Row Actions').eq(values.editIndex).click();
 
     cy.findByText('Edit').click();
   } else {
     cy.findByRole('button', { name: 'Add Item' }).click();
   }
+
+  cy.findByLabelText('navigate to systems home').click();
+
+  if (values.system) cy.findAllByText(values.system).first().click();
+  if (typeof values.editIndex === 'number') {
+    cy.findByText('Item Moving Rule Applied').should('exist');
+  } else {
+    cy.findByText('Item Creation Rule Applied').should('exist');
+  }
+
+  cy.findByRole('button', { name: 'Next' }).click();
 
   if (values.serialNumber) {
     cy.findByLabelText('Serial number').clear();
@@ -62,11 +73,15 @@ const modifyItem = (
     cy.findByLabelText('Delivered date').clear();
   }
 
-  cy.findByLabelText('Usage status *').click();
-  cy.findByRole('option', { name: values.usageStatus }).click();
+  if (values.usageStatus) {
+    cy.findByLabelText('Usage status *').click();
+    cy.findByRole('option', { name: values.usageStatus }).click();
+  }
 
-  cy.findByLabelText('Is defective *').click();
-  cy.findByRole('option', { name: values.isDefective }).click();
+  if (values.isDefective) {
+    cy.findByLabelText('Is defective *').click();
+    cy.findByRole('option', { name: values.isDefective }).click();
+  }
 
   if (values.notes) {
     cy.findByLabelText('Notes').clear();
@@ -77,8 +92,10 @@ const modifyItem = (
 
   cy.findByRole('button', { name: 'Next' }).click();
 
-  cy.findByLabelText('Substrate *').click();
-  cy.findByRole('option', { name: values.substrate }).click();
+  if (values.substrate) {
+    cy.findByLabelText('Substrate *').click();
+    cy.findByRole('option', { name: values.substrate }).click();
+  }
 
   if (values.diameter) {
     cy.findByLabelText('Diameter (mm)').clear();
@@ -87,22 +104,15 @@ const modifyItem = (
     cy.findByLabelText('Diameter (mm)').clear();
   }
 
-  cy.findByLabelText('Wavelength Range (nm) *').clear();
-  cy.findByLabelText('Wavelength Range (nm) *').type(values.wavelengthRange);
+  if (values.wavelengthRange) {
+    cy.findByLabelText('Wavelength Range (nm) *').clear();
+    cy.findByLabelText('Wavelength Range (nm) *').type(values.wavelengthRange);
+  }
 
   if (values.broken) {
     cy.findByLabelText('Broken').click();
     cy.findByRole('option', { name: values.broken }).click();
-  } else {
-    cy.findByLabelText('Broken').click();
-    cy.findByRole('option', { name: 'None' }).click();
   }
-
-  cy.findByRole('button', { name: 'Next' }).click();
-
-  cy.findByLabelText('navigate to systems home').click();
-
-  cy.findAllByText(values.system).first().click();
 
   cy.findByRole('button', { name: 'Finish' }).click();
 
@@ -136,10 +146,13 @@ export const editProperty = () => {
   }).click();
 
   cy.findAllByLabelText('Row Actions').eq(4).click();
-  cy.findByLabelText('Edit property Shape').click();
+  cy.findByLabelText('Edit property Shape as admin').click();
 
   cy.findByLabelText('Property Name *').clear();
   cy.findByLabelText('Property Name *').type('Type');
+
+  cy.findByLabelText('Select Unit').click();
+  cy.findByRole('option', { name: 'mm' }).click();
 
   cy.findByRole('button', { name: 'Add list item' }).click();
   cy.findAllByLabelText('List item').last().type('flat');
@@ -155,16 +168,17 @@ export const editProperty = () => {
   cy.findByText('Spherical Lenses').click();
   cy.findByText('Plano-Convex Lens').click();
 
-  cy.findByText('Type').should('exist');
+  cy.findByText('Type (mm)').should('exist');
 
   cy.findByText('Items').click();
 
   cy.findAllByText('MX4332424').first().click();
-  cy.findByText('Type').should('exist');
+  cy.findByText('Type (mm)').should('exist');
   cy.findByRole('button', { name: 'items landing page actions menu' }).click();
   cy.findByText('Edit').click();
   cy.findByRole('button', { name: 'Next' }).click();
-  cy.findByLabelText('Type *').click();
+  cy.findByRole('button', { name: 'Next' }).click();
+  cy.findByLabelText('Type (mm) *').click();
   cy.findByRole('option', { name: 'flat' }).click();
   cy.findByDisplayValue('flat').should('exist');
 
@@ -225,9 +239,57 @@ export const addProperty = () => {
   cy.findByText('Items').click();
 };
 
+export const deleteProperty = () => {
+  cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
+  cy.findByText('Lenses').click();
+  cy.findByRole('button', {
+    name: `Card Actions`,
+  }).click();
+
+  cy.findByRole('menuitem', {
+    name: `edit Spherical Lenses catalogue category button`,
+  }).click();
+
+  cy.findAllByLabelText('Row Actions').eq(4).click();
+  cy.findByLabelText('Delete property Type as admin').click();
+
+  cy.findByRole('button', { name: 'Continue' }).should('be.disabled');
+
+  cy.findByRole('checkbox', {
+    name: 'Confirm understanding and proceed checkbox',
+  }).click();
+
+  cy.findByRole('button', { name: 'Continue' }).click();
+  cy.findByRole('button', { name: 'Close' }).click();
+
+  cy.findByText('Spherical Lenses').click();
+  cy.findByText('Plano-Convex Lens').click();
+
+  cy.findByText('Substrate').should('exist');
+  cy.findByText('Type').should('not.exist');
+
+  cy.findByText('Items').click();
+
+  cy.findAllByText('MX4332424').first().click();
+  cy.findByText('Substrate').should('exist');
+  cy.findByText('Type').should('not.exist');
+
+  cy.findByText('Items').click();
+};
+
 export const duplicateItem = (serialNumber: string, index: number) => {
   cy.findAllByLabelText('Row Actions').eq(index).click();
   cy.findByText(`Duplicate`).click();
+
+  cy.findByRole('button', { name: 'navigate to systems home' }).click();
+
+  cy.findAllByText('Storage').first().click();
+
+  cy.findByText('No systems found').should('exist');
+
+  cy.findAllByText('Storage').should('have.length', 1);
+
+  cy.findByText('Item Creation Rule Applied').should('exist');
 
   cy.findByRole('button', { name: 'Next' }).click();
   cy.findByRole('button', { name: 'Next' }).click();
@@ -254,7 +316,6 @@ export const addItem = (ignoreChecks?: boolean) => {
       warrantyEndDate: '17/02/2029',
       deliveredDate: '19/03/2022',
       isDefective: 'Yes',
-      usageStatus: 'New',
       notes: 'test',
       substrate: 'N-BK7',
       diameter: '10',
@@ -268,14 +329,13 @@ export const addItem = (ignoreChecks?: boolean) => {
 
 export const editItem = () => {
   modifyItem({
-    edit: 0,
+    editIndex: 0,
     serialNumber: 'MX4332424',
     assetNumber: 'PY42343424',
     purchaseOrderNumber: '2334',
     warrantyEndDate: '17/02/2030',
     deliveredDate: '19/03/2024',
     isDefective: 'No',
-    usageStatus: 'Used',
     notes: 'tests',
     substrate: 'Fused Silica',
     diameter: '100',

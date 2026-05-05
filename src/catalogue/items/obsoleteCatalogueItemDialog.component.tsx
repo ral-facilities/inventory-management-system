@@ -31,6 +31,10 @@ import {
   usePatchCatalogueItem,
 } from '../../api/catalogueItems';
 import { ObsoleteDetails } from '../../app.types';
+import {
+  FLEX_CONTAINER_PROPS,
+  FORM_WITH_STEPPER_DIALOG_PROPS,
+} from '../../common/consts';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { trimStringValues } from '../../utils';
 import Breadcrumbs from '../../view/breadcrumbs.component';
@@ -211,7 +215,7 @@ const ObsoleteCatalogueItemDialog = (
         return (
           <Autocomplete
             disableClearable={true}
-            id={'is-obsolete'}
+            id="is-obsolete"
             value={obsoleteDetails.is_obsolete ? 'Yes' : 'No'}
             onChange={(_event, value) => {
               handleObsoleteChange(value === 'Yes' ? true : false);
@@ -220,7 +224,7 @@ const ObsoleteCatalogueItemDialog = (
               '& .MuiAutocomplete-input': {
                 textAlign: 'center',
               },
-              margin: 1,
+              p: 1,
             }}
             fullWidth
             options={['Yes', 'No']}
@@ -243,7 +247,7 @@ const ObsoleteCatalogueItemDialog = (
                   obsolete_reason: e.target.value,
                 })
               }
-              minRows={16}
+              minRows={formError ? 24 : 26}
               multiline
               fullWidth
             />
@@ -272,8 +276,7 @@ const ObsoleteCatalogueItemDialog = (
                 selectedRowState={
                   obsoleteDetails.obsolete_replacement_catalogue_item_id
                     ? {
-                        [obsoleteDetails.obsolete_replacement_catalogue_item_id]:
-                          true,
+                        [obsoleteDetails.obsolete_replacement_catalogue_item_id]: true,
                       }
                     : undefined
                 }
@@ -286,7 +289,7 @@ const ObsoleteCatalogueItemDialog = (
               <CatalogueCategoryTableView
                 selectedCategories={[]}
                 onChangeParentCategoryId={setCatalogueCurrDirId}
-                requestType={'standard'}
+                requestType="standard"
                 catalogueCategoryData={catalogueCategoryDataList}
                 catalogueCategoryDataLoading={catalogueCategoryDataListLoading}
                 requestOrigin="item"
@@ -298,14 +301,9 @@ const ObsoleteCatalogueItemDialog = (
     }
   };
   return (
-    <Dialog
-      open={open}
-      PaperProps={{ sx: { height: '840px' } }}
-      fullWidth
-      maxWidth="xl"
-    >
+    <Dialog open={open} {...FORM_WITH_STEPPER_DIALOG_PROPS}>
       <DialogTitle>Obsolete Catalogue Item</DialogTitle>
-      <DialogContent>
+      <DialogContent sx={{ height: 'calc(100% - 56px)' }}>
         <Stepper
           // Allow user to skip steps if want to
           nonLinear
@@ -321,22 +319,32 @@ const ObsoleteCatalogueItemDialog = (
             </Step>
           ))}
         </Stepper>
-        <Box sx={{ textAlign: 'center', marginTop: 2 }}>
-          {renderStepContent(activeStep)}
-        </Box>
         <Box
           sx={{
-            mx: 3,
-            marginTop: 3,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            textAlign: 'center',
+            marginTop: 2,
+            ...FLEX_CONTAINER_PROPS,
+            height: 'inherit',
+            minHeight: '500px',
           }}
         >
-          <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
-            {formError}
-          </FormHelperText>
+          {renderStepContent(activeStep)}
         </Box>
+        {formError && (
+          <Box
+            sx={{
+              mx: 3,
+              marginTop: 3,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
+              {formError}
+            </FormHelperText>
+          </Box>
+        )}
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} sx={{ mr: 'auto' }}>

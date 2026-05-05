@@ -45,6 +45,7 @@ import {
   PropertiesStep,
   PropertyValue,
 } from '../../app.types';
+import { FORM_WITH_STEPPER_DIALOG_PROPS } from '../../common/consts';
 import {
   CatalogueItemDetailsStepSchema,
   PropertiesStepSchema,
@@ -72,8 +73,6 @@ function toCatalogueItemDetailsStep(
       days_to_replace: '',
       days_to_rework: '',
       expected_lifetime_days: '',
-      drawing_number: '',
-      drawing_link: '',
       item_model_number: '',
       notes: '',
     };
@@ -93,8 +92,6 @@ function toCatalogueItemDetailsStep(
       item.expected_lifetime_days !== null
         ? String(item.expected_lifetime_days)
         : '',
-    drawing_number: item.drawing_number ?? '',
-    drawing_link: item.drawing_link ?? '',
     item_model_number: item.item_model_number ?? '',
     notes: item.notes ?? '',
   };
@@ -111,8 +108,7 @@ export function convertToPropertyValueList(
       (catProp) => catProp.id === property.id
     );
 
-    const valueType = `${property.type}_${property.mandatory}`;
-
+    const valueType = `${property.type}_${property.mandatory}${property.allowed_values && property.type === 'string' ? '_av' : ''}`;
     return {
       valueType: valueType,
       value: {
@@ -145,16 +141,19 @@ function convertToCatalogueItemDetailsStepPost(
     name: item.name,
     description: item.description ?? null,
     cost_gbp: Number(item.cost_gbp), // Convert string to number
-    cost_to_rework_gbp: item.cost_to_rework_gbp
-      ? Number(item.cost_to_rework_gbp)
-      : null, // Convert if not null
-    days_to_replace: Number(item.days_to_replace), // Convert string to number
-    days_to_rework: item.days_to_rework ? Number(item.days_to_rework) : null, // Convert if not null
-    expected_lifetime_days: item.expected_lifetime_days
-      ? Number(item.expected_lifetime_days)
-      : null, // Convert if not null
-    drawing_number: item.drawing_number ?? null,
-    drawing_link: item.drawing_link ?? null,
+    cost_to_rework_gbp:
+      typeof item.cost_to_rework_gbp === 'number'
+        ? Number(item.cost_to_rework_gbp)
+        : null,
+    days_to_replace: Number(item.days_to_replace),
+    days_to_rework:
+      typeof item.days_to_rework === 'number'
+        ? Number(item.days_to_rework)
+        : null,
+    expected_lifetime_days:
+      typeof item.expected_lifetime_days === 'number'
+        ? Number(item.expected_lifetime_days)
+        : null,
     item_model_number: item.item_model_number ?? null,
     notes: item.notes ?? null,
   };
@@ -308,12 +307,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           data.expected_lifetime_days !==
           selectedCatalogueItem.expected_lifetime_days;
 
-        const isDrawingNumberUpdated =
-          data.drawing_number !== selectedCatalogueItem.drawing_number;
-
-        const isDrawingLinkUpdated =
-          data.drawing_link !== selectedCatalogueItem.drawing_link;
-
         const isModelNumberUpdated =
           data.item_model_number !== selectedCatalogueItem.item_model_number;
 
@@ -344,10 +337,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           catalogueItem.days_to_rework = data.days_to_rework;
         if (isExpectedLifetimeDaysUpdated)
           catalogueItem.expected_lifetime_days = data.expected_lifetime_days;
-        if (isDrawingNumberUpdated)
-          catalogueItem.drawing_number = data.drawing_number;
-        if (isDrawingLinkUpdated)
-          catalogueItem.drawing_link = data.drawing_link;
         if (isModelNumberUpdated)
           catalogueItem.item_model_number = data.item_model_number;
         if (isCatalogueItemPropertiesUpdated) {
@@ -366,8 +355,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             isDaysToReplaceUpdated ||
             isDaysToReworkUpdated ||
             isExpectedLifetimeDaysUpdated ||
-            isDrawingNumberUpdated ||
-            isDrawingLinkUpdated ||
             isModelNumberUpdated ||
             isCatalogueItemPropertiesUpdated ||
             isManufacturerUpdated ||
@@ -616,26 +603,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             </Grid>
             <Grid size={12}>
               <TextField
-                id="catalogue-item-drawing-number-input"
-                label="Drawing number"
-                size="small"
-                {...registerDetailsStep('drawing_number')}
-                fullWidth
-              />
-            </Grid>
-            <Grid size={12}>
-              <TextField
-                id="catalogue-item-drawing-link-input"
-                label="Drawing link"
-                size="small"
-                {...registerDetailsStep('drawing_link')}
-                error={!!errorsDetailsStep.drawing_link}
-                helperText={errorsDetailsStep.drawing_link?.message}
-                fullWidth
-              />
-            </Grid>
-            <Grid size={12}>
-              <TextField
                 id="catalogue-item-model-input"
                 label="Model number"
                 size="small"
@@ -719,7 +686,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 size="small"
                 {...registerDetailsStep('notes')}
                 multiline
-                minRows={5}
+                minRows={8}
                 fullWidth
               />
             </Grid>
@@ -914,12 +881,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     }
   };
   return (
-    <Dialog
-      PaperProps={{ sx: { height: '910px' } }}
-      open={open}
-      maxWidth="lg"
-      fullWidth
-    >
+    <Dialog open={open} {...FORM_WITH_STEPPER_DIALOG_PROPS}>
       <DialogTitle>{`${
         requestType === 'patch' ? 'Edit' : 'Add'
       } Catalogue Item`}</DialogTitle>

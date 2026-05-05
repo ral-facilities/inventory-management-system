@@ -1,14 +1,17 @@
 import type { Body, Meta } from '@uppy/core';
+import { MRT_ColumnFiltersState } from 'material-react-table';
 import {
   CatalogueCategory,
   CatalogueItem,
   Item,
   ItemPost,
+  SparesDefinition,
   System,
   type APIImage,
   type ObjectFileUploadMetadata,
 } from './api/api.types';
 
+export const PluginId = 'inventory-management-system';
 export const MicroFrontendId = 'scigateway';
 export const MicroFrontendToken = `${MicroFrontendId}:token`;
 
@@ -17,7 +20,7 @@ export const TAB_VALUES = [
   'Catalogue',
   'Systems',
   'Manufacturers',
-  'Admin',
+  'Settings',
 ] as const;
 
 export type TabValue = (typeof TAB_VALUES)[number];
@@ -25,12 +28,12 @@ export type TabValue = (typeof TAB_VALUES)[number];
 export interface TransferState {
   name: string;
   message: string;
-  state: 'success' | 'error' | 'information';
+  state: 'success' | 'error' | 'info' | 'warning';
 }
 
 export enum RoutesHomeLocation {
   Catalogue = 'catalogue',
-  Admin = 'admin-ims',
+  Settings = 'settings',
   Systems = 'systems',
   Manufacturers = 'manufacturers',
 }
@@ -65,8 +68,7 @@ export interface AddCatalogueCategoryWithPlacementIds {
   properties?: AddCatalogueCategoryPropertyWithPlacementIds[];
 }
 
-export interface AddCatalogueCategoryPropertyWithPlacementIds
-  extends AddCatalogueCategoryProperty {
+export interface AddCatalogueCategoryPropertyWithPlacementIds extends AddCatalogueCategoryProperty {
   cip_placement_id: string; // Catalogue item properties (cip)
 }
 
@@ -104,8 +106,6 @@ export interface CatalogueItemDetailsStep {
   days_to_replace: string;
   days_to_rework?: string | null;
   expected_lifetime_days?: string | null;
-  drawing_number?: string | null;
-  drawing_link?: string | null;
   item_model_number?: string | null;
   notes?: string | null;
 }
@@ -119,8 +119,6 @@ export interface CatalogueItemDetailsStepPost {
   days_to_replace: number;
   days_to_rework?: number | null;
   expected_lifetime_days?: number | null;
-  drawing_number?: string | null;
-  drawing_link?: string | null;
   item_model_number?: string | null;
   notes?: string | null;
 }
@@ -207,11 +205,25 @@ export interface MoveItemsToSystemUsageStatus {
   item_id: string;
   usage_status_id: string;
 }
-export interface MoveItemsToSystem {
-  usageStatuses: MoveItemsToSystemUsageStatus[];
+
+export interface BaseMoveItemsToSystem {
+  mode: 'single' | 'multiple';
   selectedItems: Item[];
   targetSystem: System;
 }
+export interface MoveItemsMultipleUsageStatus extends BaseMoveItemsToSystem {
+  mode: 'multiple';
+  usageStatuses: MoveItemsToSystemUsageStatus[];
+}
+
+export interface MoveItemsSingleUsageStatus extends BaseMoveItemsToSystem {
+  mode: 'single';
+  usageStatusId?: string;
+}
+
+export type MoveItemsToSystem =
+  | MoveItemsMultipleUsageStatus
+  | MoveItemsSingleUsageStatus;
 
 export interface AdvancedSerialNumberOptionsType {
   quantity: string | null;
@@ -228,3 +240,12 @@ export interface AdvancedSerialNumberOptionsType {
 export interface UppyImageUploadResponse extends APIImage, Body {}
 
 export interface UppyUploadMetadata extends ObjectFileUploadMetadata, Meta {}
+
+// --------------------------------- SPARES -----------------------------------------------------------
+
+export interface SparesFilterStateType {
+  sparesDefinition: '' | SparesDefinition;
+  sparesFilterState: string;
+  sparesColumnsFilters: { cF: MRT_ColumnFiltersState };
+  isLoading: boolean;
+}

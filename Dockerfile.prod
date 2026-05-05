@@ -1,7 +1,7 @@
 # Dockerfile to build and serve inventory management system
 
 # Build stage
-FROM node:22.15.0-alpine3.21@sha256:ad1aedbcc1b0575074a91ac146d6956476c1f9985994810e4ee02efd932a68fd AS builder
+FROM node:24.13.1-alpine3.23@sha256:4f696fbf39f383c1e486030ba6b289a5d9af541642fc78ab197e584a113b9c03 AS builder
 
 WORKDIR /inventory-management-system-build
 
@@ -23,18 +23,18 @@ COPY . .
 RUN set -eux; \
     \
     # Set the React production variable which holds reference to the path of the plugin build \
-    sed -i "s#VITE_APP_INVENTORY_MANAGEMENT_SYSTEM_BUILD_DIRECTORY=.*#VITE_APP_INVENTORY_MANAGEMENT_SYSTEM_BUILD_DIRECTORY=/inventory-management-system/#" .env.production; \
+    sed -i "s#VITE_INVENTORY_MANAGEMENT_SYSTEM_BUILD_DIRECTORY=.*#VITE_INVENTORY_MANAGEMENT_SYSTEM_BUILD_DIRECTORY=/inventory-management-system/#" .env.production; \
     \
     cp public/inventory-management-system-settings.example.json public/inventory-management-system-settings.json; \
     \
     yarn build;
 
 # Run stage
-FROM httpd:2.4.63-alpine3.21@sha256:4aec2953509e2d3aa5a8d73c580a381be44803fd2481875b15d9ad7d2810d7ca
+FROM httpd:2.4.66-alpine3.23@sha256:8f26f33a7002658050e9ab2cd6b77502619dfc89d0a6ba2e9e4a202e0ef04596
 
 # Install specific version of jq (Used for assigning config values in entrypoint script)
 # Reference: https://pkgs.alpinelinux.org/package/edge/main/x86/jq
-RUN apk add --no-cache jq=1.7.1-r0
+RUN apk add --no-cache jq=1.8.1-r0
 
 WORKDIR /usr/local/apache2/htdocs
 
@@ -68,11 +68,13 @@ USER www-data
 
 ENV IMS_API_URL="/inventory-management-system-api"
 ENV OS_API_URL="/object-storage-api"
+ENV IMS_JS_API_URL="/ims-job-scheduler-api"
 ENV PLUGIN_HOST="/inventory-management-system"
 ENV MAX_ATTACHMENT_SIZE_BYTES=104857600
 ENV ATTACHMENT_ALLOWED_FILE_EXTENSIONS='[".csv", ".doc", ".docx", ".pdf", ".rtf", ".txt", ".xls", ".xlsx"]'
 ENV IMAGE_ALLOWED_FILE_EXTENSIONS='[".bmp", ".jpe", ".jpeg", ".jpg", ".png", ".tif", ".tiff", ".webp"]'
 ENV MAX_IMAGE_SIZE_BYTES=52428800
+ENV PRIVILEGED_ROLES='["admin"]'
 
 COPY docker/docker-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["docker-entrypoint.sh"]

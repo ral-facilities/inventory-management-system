@@ -217,7 +217,7 @@ describe('Systems Dialog', () => {
 
       expect(
         screen.getByText(
-          'A System with the same name already exists within the same parent System. Please enter a different name.'
+          'A system with the same name already exists within the parent system. Please enter a different name.'
         )
       ).toBeInTheDocument();
       expect(mockOnClose).not.toHaveBeenCalled();
@@ -237,7 +237,7 @@ describe('Systems Dialog', () => {
 
       expect(
         screen.getByText(
-          'Specified system type not found. Please select a valid system type.'
+          'The specified system type does not exist. Please select a valid system type.'
         )
       ).toBeInTheDocument();
       expect(mockOnClose).not.toHaveBeenCalled();
@@ -272,6 +272,7 @@ describe('Systems Dialog', () => {
       id: '65328f34a40ff5301575a4e3',
       type_id: '1',
       code: 'mock-laser',
+      is_flagged: false,
       ...CREATED_MODIFIED_TIME_VALUES,
     };
 
@@ -421,7 +422,7 @@ describe('Systems Dialog', () => {
 
       expect(
         screen.getByText(
-          'A System with the same name already exists within the same parent System. Please enter a different name.'
+          'A system with the same name already exists within the parent system. Please enter a different name.'
         )
       ).toBeInTheDocument();
       expect(mockOnClose).not.toHaveBeenCalled();
@@ -443,7 +444,7 @@ describe('Systems Dialog', () => {
       expect(mockOnClose).not.toHaveBeenCalled();
     });
 
-    it('displays error message when type does not exist', async () => {
+    it('displays error message when the system type does not exist', async () => {
       createView();
 
       const values = {
@@ -456,7 +457,7 @@ describe('Systems Dialog', () => {
 
       expect(
         screen.getByText(
-          'Specified system type not found. Please select a valid system type.'
+          'The specified system type does not exist. Please select a valid system type.'
         )
       ).toBeInTheDocument();
       expect(mockOnClose).not.toHaveBeenCalled();
@@ -496,6 +497,7 @@ describe('Systems Dialog', () => {
       id: '65328f34a40ff5301575a4e3',
       code: 'mock-laser',
       type_id: '2',
+      is_flagged: false,
       ...CREATED_MODIFIED_TIME_VALUES,
     };
 
@@ -506,6 +508,7 @@ describe('Systems Dialog', () => {
     delete MOCK_SELECTED_SYSTEM_POST_DATA.code;
     delete MOCK_SELECTED_SYSTEM_POST_DATA.created_time;
     delete MOCK_SELECTED_SYSTEM_POST_DATA.modified_time;
+    delete MOCK_SELECTED_SYSTEM_POST_DATA.is_flagged;
 
     beforeEach(() => {
       props.requestType = 'post';

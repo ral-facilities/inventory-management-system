@@ -6,6 +6,7 @@ import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   Box,
   Button,
+  Divider,
   ListItemIcon,
   ListItemText,
   MenuItem,
@@ -27,11 +28,21 @@ import {
   System,
 } from '../api/api.types';
 import { useGetItems } from '../api/items';
-import { useGetSystemIds, useGetSystemTypes } from '../api/systems';
+import { useGetSystemIds } from '../api/systems';
+import { useGetSystemTypes } from '../api/systemTypes';
 import { useGetUsageStatuses } from '../api/usageStatuses';
+import { APISettingsContext } from '../apiConfigProvider.component';
 import type { SystemTableType } from '../app.types';
 import { findPropertyValue } from '../catalogue/items/catalogueItemsTable.component';
+import {
+  DEFAULT_ROWS_PER_PAGE_VALUE,
+  ROWS_PER_PAGE_OPTIONS,
+} from '../common/consts';
+import MRTTopTableAlert from '../common/mrtTopTableAlert.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
+import { SystemTypeColumnHeaderInformationTooltip } from '../common/systemTypesInformationTooltip.component';
+import { useAppSelector } from '../state/hook';
+import { selectAuthorisation } from '../state/slices/authorisationSlice';
 import {
   COLUMN_FILTER_BOOLEAN_OPTIONS,
   COLUMN_FILTER_FUNCTIONS,
@@ -45,6 +56,7 @@ import {
   MRT_Functions_Localisation,
   mrtTheme,
   OPTIONAL_FILTER_MODE_OPTIONS,
+  sortDataList,
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
   TableGroupedCell,
@@ -68,6 +80,8 @@ interface TableRowData {
 export function ItemsTable(props: ItemTableProps) {
   const { catalogueCategory, catalogueItem, dense } = props;
 
+  const { isAdminMode } = useAppSelector(selectAuthorisation);
+
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
 
   const noResultsText =
@@ -87,12 +101,21 @@ export function ItemsTable(props: ItemTableProps) {
   const { data: systemTypesData, isLoading: isLoadingSystemTypes } =
     useGetSystemTypes();
 
-  const { data: usageStatusData } = useGetUsageStatuses();
+  const { data: usageStatusData, isLoading: isLoadingUsageStatus } =
+    useGetUsageStatuses();
+
+  const apiSettings = React.useContext(APISettingsContext);
+  const sparesDefinition = apiSettings?.spares?.sparesDefinition;
+  const sparesColumnsFilters = apiSettings?.spares?.sparesColumnsFilters;
+
+  const isSparesDefinitionDefined = !!apiSettings?.spares;
+
   const systemIdSet = new Set<string>(
     itemsData?.map((item) => item.system_id) ?? []
   );
 
-  let isLoading = isLoadingItems || isLoadingSystemTypes;
+  let isLoading =
+    isLoadingItems || isLoadingSystemTypes || isLoadingUsageStatus;
   const systemList: (System | undefined)[] = useGetSystemIds(
     Array.from(systemIdSet.values())
   ).map((query) => {
@@ -130,12 +153,13 @@ export function ItemsTable(props: ItemTableProps) {
     'create' | 'duplicate' | 'edit'
   >('create');
 
-  // Breadcrumbs + Mui table V2 + extra
-  const tableHeight = getPageHeightCalc('50px + 110px + 48px');
+  const [isAdminDialog, setIsAdminDialog] = React.useState<boolean>(false);
+
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     const viewCatalogueItemProperties = catalogueCategory?.properties ?? [];
     const systemTypeValues = systemTypesData?.map((type) => type.value);
     const usageStatusValues = usageStatusData?.map((val) => val.value);
+
     return [
       {
         header: 'Serial Number',
@@ -325,7 +349,13 @@ export function ItemsTable(props: ItemTableProps) {
       },
       {
         header: 'System Type',
-        Header: TableHeaderOverflowTip,
+        Header: ({ column }) => (
+          <SystemTypeColumnHeaderInformationTooltip
+            title={column.columnDef.header}
+            systemTypesData={systemTypesData}
+          />
+        ),
+        TableHeaderOverflowTip,
         accessorFn: (row) => row.system?.type?.value,
         id: 'system.type.value',
         filterVariant: 'multi-select',
@@ -423,11 +453,32 @@ export function ItemsTable(props: ItemTableProps) {
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
       columnVisibility: { created_time: false },
-      pagination: { pageSize: dense ? 5 : 15, pageIndex: 0 },
+      pagination: { pageSize: DEFAULT_ROWS_PER_PAGE_VALUE, pageIndex: 0 },
       columnFilterFns: initialColumnFilterFnState,
     },
     storeInUrl: !dense,
   });
+
+  const isSparesFilterApplied = React.useMemo(() => {
+    if (sparesDefinition === '') return false;
+    if (sparesDefinition === undefined) return false;
+    if (preservedState.columnFilters.length !== 1) return false;
+    if (preservedState.columnFilters[0].id !== 'system.type.value')
+      return false;
+    const orderedColumnFilterValues = sortDataList(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      preservedState.columnFilters[0].value as any[]
+    );
+    const sparesSystemTypeValues = sparesDefinition.system_types.map(
+      (type) => type.value
+    );
+    const orderedSparesDefinitionValues = sortDataList(sparesSystemTypeValues);
+
+    return (
+      JSON.stringify(orderedColumnFilterValues) ===
+      JSON.stringify(orderedSparesDefinitionValues)
+    );
+  }, [preservedState, sparesDefinition]);
 
   const table = useMaterialReactTable({
     // Data
@@ -495,10 +546,23 @@ export function ItemsTable(props: ItemTableProps) {
     //MRT
     mrtTheme,
     //MUI
-    muiTableContainerProps: {
-      sx: { height: dense ? '360.4px' : tableHeight },
-      // @ts-expect-error: MRT Table Container props does not have data-testid
-      'data-testid': 'items-table-container',
+    muiTableContainerProps: ({ table }) => {
+      const showAlert =
+        table.getState().showAlertBanner ||
+        table.getFilteredSelectedRowModel().rows.length > 0 ||
+        table.getState().grouping.length > 0;
+      return {
+        sx: {
+          height: dense
+            ? '360.4px'
+            : getPageHeightCalc(
+                // Breadcrumbs + Mui table V2 + header + extra
+                `50px + 110px + 78px + 44px ${showAlert ? '+ 64px' : ''} ${isSparesFilterApplied ? ' + 54px' : ''}`
+              ),
+          flexShrink: 1,
+        },
+        'data-testid': 'items-table-container',
+      };
     },
     muiTableBodyCellProps: ({ column }) => {
       const disabledGroupedHeaderColumnIDs = [
@@ -537,7 +601,7 @@ export function ItemsTable(props: ItemTableProps) {
     },
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: dense ? [5] : [15, 30, 45],
+      rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
       shape: 'rounded',
       variant: 'outlined',
     },
@@ -551,7 +615,9 @@ export function ItemsTable(props: ItemTableProps) {
             open={true}
             onClose={() => {
               table.setCreatingRow(null);
+              setIsAdminDialog(false);
             }}
+            isAdminMode={isAdminDialog}
             duplicate={itemDialogType === 'duplicate'}
             requestType={itemDialogType === 'edit' ? 'patch' : 'post'}
             catalogueCategory={catalogueCategory}
@@ -579,11 +645,27 @@ export function ItemsTable(props: ItemTableProps) {
           variant="outlined"
           onClick={() => {
             setItemsDialogType('create');
+            setIsAdminDialog(false);
             table.setCreatingRow(true);
           }}
         >
           Add Item
         </Button>
+
+        {isAdminMode && (
+          <Button
+            startIcon={<AddIcon />}
+            sx={{ mx: 0.5 }}
+            variant="outlined"
+            onClick={() => {
+              setItemsDialogType('create');
+              setIsAdminDialog(true);
+              table.setCreatingRow(true);
+            }}
+          >
+            Add Item as Admin
+          </Button>
+        )}
 
         <Button
           startIcon={<ClearIcon />}
@@ -596,6 +678,24 @@ export function ItemsTable(props: ItemTableProps) {
         >
           Clear Filters
         </Button>
+        {isSparesDefinitionDefined && sparesColumnsFilters && (
+          <Button
+            sx={{ mx: 0.5 }}
+            variant="outlined"
+            disabled={isSparesFilterApplied}
+            onClick={() => {
+              onPreservedStatesChange.onColumnFiltersChange(
+                sparesColumnsFilters.cF.map((filter) => ({
+                  id: filter.id,
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  value: (filter.value as any[]).map((val) => val.value),
+                }))
+              );
+            }}
+          >
+            Show Spare Items
+          </Button>
+        )}
       </Box>
     ),
     renderRowActionMenuItems: ({ closeMenu, row, table }) => {
@@ -605,6 +705,7 @@ export function ItemsTable(props: ItemTableProps) {
           aria-label={`Edit item ${row.original.item.id}`}
           onClick={() => {
             setItemsDialogType('edit');
+            setIsAdminDialog(false);
             table.setCreatingRow(row);
             closeMenu();
           }}
@@ -635,6 +736,7 @@ export function ItemsTable(props: ItemTableProps) {
           aria-label={`Delete item ${row.original.item.id}`}
           onClick={() => {
             setDeleteItemDialogOpen(true);
+            setIsAdminDialog(false);
             setSelectedItem(row.original.item);
             closeMenu();
           }}
@@ -645,13 +747,66 @@ export function ItemsTable(props: ItemTableProps) {
           </ListItemIcon>
           <ListItemText>Delete</ListItemText>
         </MenuItem>,
+
+        ...(isAdminMode
+          ? [
+              <Divider key="divider" />,
+              <MenuItem
+                key="edit-as-admin"
+                aria-label={`Edit item ${row.original.item.id}`}
+                onClick={() => {
+                  setItemsDialogType('edit');
+                  setIsAdminDialog(true);
+                  table.setCreatingRow(row);
+                  closeMenu();
+                }}
+                sx={{ m: 0 }}
+              >
+                <ListItemIcon>
+                  <EditIcon />
+                </ListItemIcon>
+                <ListItemText>Edit as Admin</ListItemText>
+              </MenuItem>,
+              <MenuItem
+                key="duplicate-as-admin"
+                aria-label={`Duplicate item ${row.original.item.id} as Admin`}
+                onClick={() => {
+                  setItemsDialogType('duplicate');
+                  setIsAdminDialog(true);
+                  table.setCreatingRow(row);
+                  closeMenu();
+                }}
+                sx={{ m: 0 }}
+              >
+                <ListItemIcon>
+                  <SaveAsIcon />
+                </ListItemIcon>
+                <ListItemText>Duplicate as Admin</ListItemText>
+              </MenuItem>,
+              <MenuItem
+                key="delete-as-admin"
+                aria-label={`Delete item ${row.original.item.id}`}
+                onClick={() => {
+                  setDeleteItemDialogOpen(true);
+                  setIsAdminDialog(true);
+                  setSelectedItem(row.original.item);
+                  closeMenu();
+                }}
+                sx={{ m: 0 }}
+              >
+                <ListItemIcon>
+                  <DeleteIcon />
+                </ListItemIcon>
+                <ListItemText>Delete as Admin</ListItemText>
+              </MenuItem>,
+            ]
+          : []),
       ];
     },
     renderBottomToolbarCustomActions: ({ table }) =>
       displayTableRowCountText(table, itemsData, 'Items', {
         paddingLeft: '8px',
       }),
-
     renderDetailPanel: dense
       ? ({ row }) => (
           <ItemsDetailsPanel
@@ -664,13 +819,35 @@ export function ItemsTable(props: ItemTableProps) {
 
   return (
     <div style={{ width: '100%' }}>
+      {isSparesDefinitionDefined &&
+        sparesDefinition &&
+        isSparesFilterApplied && (
+          <MRTTopTableAlert
+            title="Spares Definition Filter Applied"
+            clearFilters={table.resetColumnFilters}
+            clearFiltersAriaLabel="Clear Spares Definition Filter"
+            showInfoTooltip
+            infoTooltipTitle={
+              sparesDefinition.system_types.length === 1
+                ? `Items that are contained within the system type ${sparesDefinition.system_types[0].value} are classified as spares`
+                : `Items that are contained within a system type of one of ${sparesDefinition.system_types
+                    .map((sys) => sys.value)
+                    .join(', ')
+                    .replace(/, ([^,]*)$/, ' or $1')} are classified as spares`
+            }
+          />
+        )}
       <MaterialReactTable table={table} />
-      {!dense && (
+      {!dense && selectedItem && (
         <DeleteItemDialog
           open={deleteItemDialogOpen}
-          onClose={() => setDeleteItemDialogOpen(false)}
+          onClose={() => {
+            setDeleteItemDialogOpen(false);
+            setIsAdminDialog(false);
+          }}
           item={selectedItem}
           onChangeItem={setSelectedItem}
+          isAdminMode={isAdminDialog}
         />
       )}
     </div>

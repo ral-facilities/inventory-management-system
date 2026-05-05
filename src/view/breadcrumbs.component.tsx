@@ -16,7 +16,7 @@ export interface BreadcrumbsProps {
   breadcrumbsInfo?: BreadcrumbsInfo;
   onChangeNode: (newId: string) => void;
   onChangeNavigateHome: () => void;
-  homeLocation: 'Systems' | 'Admin' | 'Manufacturers' | 'Catalogue';
+  homeLocation: 'Systems' | 'Settings' | 'Manufacturers' | 'Catalogue';
 }
 
 const StyledBreadcrumbs = styled(MuiBreadcrumbs)({
@@ -41,7 +41,7 @@ const Breadcrumbs = (props: BreadcrumbsProps) => {
   // dynamically adjusting based on the number of breadcrumbs available.
   const breadcrumbMaxWidth = `${(100 - 10) / trailPrefix.concat(breadcrumbsInfo?.trail ?? emptyElement).length}vw`;
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+    <Box sx={{ display: 'flex', alignItems: 'center', py: 2.5 }}>
       <Tooltip title={tooltipLabel}>
         <span>
           <IconButton onClick={onChangeNavigateHome} aria-label={homeAriaLabel}>

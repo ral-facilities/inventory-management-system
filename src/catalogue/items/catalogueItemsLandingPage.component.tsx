@@ -8,6 +8,7 @@ import {
   LinearProgress,
   Link as MuiLink,
   Stack,
+  Tooltip,
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
@@ -17,13 +18,48 @@ import { CatalogueCategory, CatalogueItem } from '../../api/api.types';
 import { useGetCatalogueCategory } from '../../api/catalogueCategories';
 import { useGetCatalogueItem } from '../../api/catalogueItems';
 import { useGetManufacturer } from '../../api/manufacturers';
+import { APISettingsContext } from '../../apiConfigProvider.component';
 import ActionMenu from '../../common/actionMenu.component';
 import PrimaryImage from '../../common/images/primaryImage.component';
 import TabView from '../../common/tab/tabView.component';
-import { formatDateTimeStrings } from '../../utils';
+import { useAppSelector } from '../../state/hook';
+import { selectCriticality } from '../../state/slices/criticalitySlice';
+import { formatDateTimeStrings, roundUpTenth } from '../../utils';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
+import { getCICriticalityLabel } from './catalogueItemsTable.component';
 import CatalogueLink from './catalogueLink.component';
 
+export const CriticalityInfoToolTip = () => {
+  return (
+    <Tooltip
+      title={getCICriticalityLabel(null)}
+      placement="top"
+      enterTouchDelay={0}
+      arrow
+      aria-label="Criticality Warning"
+      sx={{ ml: 2 }}
+    >
+      <InfoOutlinedIcon />
+    </Tooltip>
+  );
+};
+
+export const NumberOfSparesRequiredInfoToolTip = () => {
+  return (
+    <Tooltip
+      title={
+        'Unable to determine if the number of spares required for this catalogue item. If the expected lifetime is "None" please update this field. Otherwise wait until this is recalculated.'
+      }
+      placement="top"
+      enterTouchDelay={0}
+      arrow
+      aria-label="number of spares required warning"
+      sx={{ ml: 2 }}
+    >
+      <InfoOutlinedIcon />
+    </Tooltip>
+  );
+};
 const CatalogueItemsActionMenu = (props: {
   catalogueItem: CatalogueItem;
   catalogueCategory: CatalogueCategory;
@@ -67,6 +103,12 @@ function CatalogueItemsLandingPage() {
     isLoading: catalogueCategoryDataLoading,
   } = useGetCatalogueCategory(catalogueCategoryId);
 
+  const { isCriticalMode } = useAppSelector(selectCriticality);
+
+  const apiSettings = React.useContext(APISettingsContext);
+  const sparesFilterState = apiSettings?.spares?.sparesFilterState;
+  const isSparesDefinitionDefined = !!apiSettings.spares;
+
   const isParentCorrect =
     catalogueItemIdData?.catalogue_category_id === catalogueCategoryId;
 
@@ -82,6 +124,7 @@ function CatalogueItemsLandingPage() {
           size={12}
           sx={{
             justifyContent: 'center',
+            display: 'flex',
           }}
         >
           <Grid
@@ -105,18 +148,68 @@ function CatalogueItemsLandingPage() {
                 sx={{ alignItems: 'flex-start', pl: 2 }}
               >
                 <Grid size={12}>
-                  <Typography
-                    variant="h4"
-                    gutterBottom
-                    sx={{
-                      fontWeight: 'bold',
-                      wordWrap: 'break-word',
-                    }}
-                  >
-                    {catalogueItemIdData.name}
-                  </Typography>
+                  {isSparesDefinitionDefined && (
+                    <>
+                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Typography component="p" variant="h6">
+                          Number of spares:
+                        </Typography>
 
-                  <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
+                        <Typography
+                          component="p"
+                          variant="h6"
+                          sx={{
+                            color: 'text.secondary',
+                            ml: 1,
+                            display: 'flex',
+                            alignItems: 'bottom',
+                            height: '100%',
+                          }}
+                        >
+                          <MuiLink
+                            underline="hover"
+                            component={Link}
+                            to={`items${sparesFilterState}`}
+                          >
+                            {catalogueItemIdData.number_of_spares}
+                          </MuiLink>
+                        </Typography>
+                      </Box>
+                      {isCriticalMode && (
+                        <Box
+                          sx={{ display: 'flex', alignItems: 'center', mt: 2 }}
+                        >
+                          <Typography component="p" variant="h6">
+                            Criticality:
+                          </Typography>
+
+                          <Typography
+                            component="p"
+                            variant="h6"
+                            sx={{
+                              color: 'text.secondary',
+                              ml: 1,
+                              p: 0,
+                            }}
+                          >
+                            {typeof catalogueItemIdData.expected_lifetime_days !==
+                            'number'
+                              ? 'None'
+                              : roundUpTenth(catalogueItemIdData.criticality)}
+                          </Typography>
+
+                          {typeof catalogueItemIdData.expected_lifetime_days !==
+                            'number' && <CriticalityInfoToolTip />}
+                        </Box>
+                      )}
+                    </>
+                  )}
+                  <Typography
+                    component="p"
+                    variant="h6"
+                    gutterBottom
+                    sx={{ my: 2 }}
+                  >
                     Description:
                   </Typography>
                   <Typography
@@ -150,7 +243,7 @@ function CatalogueItemsLandingPage() {
                     sx={{ ml: 0.5, py: '5.75px' }}
                     variant="outlined"
                     component={Link}
-                    to={'items'}
+                    to="items"
                     startIcon={<InventoryOutlinedIcon />}
                   >
                     Items
@@ -193,6 +286,99 @@ function CatalogueItemsLandingPage() {
 
                       <Grid container size={12}>
                         <Grid container spacing={1}>
+                          {isSparesDefinitionDefined && (
+                            <>
+                              {isCriticalMode && (
+                                <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+                                  <Typography
+                                    align="left"
+                                    sx={{
+                                      color: 'text.primary',
+                                    }}
+                                  >
+                                    Criticality:
+                                  </Typography>
+                                  <Box
+                                    sx={{
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                    }}
+                                  >
+                                    <Typography
+                                      align="left"
+                                      sx={{
+                                        color: 'text.secondary',
+                                      }}
+                                    >
+                                      {roundUpTenth(
+                                        catalogueItemIdData.criticality
+                                      ) ?? 'None'}
+                                    </Typography>
+                                    {catalogueItemIdData.criticality ===
+                                      null && <CriticalityInfoToolTip />}
+                                  </Box>
+                                </Grid>
+                              )}
+                              <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+                                <Typography
+                                  align="left"
+                                  sx={{
+                                    color: 'text.primary',
+                                  }}
+                                >
+                                  Number of spares
+                                </Typography>
+
+                                <Typography
+                                  align="left"
+                                  sx={{
+                                    color: 'text.secondary',
+                                  }}
+                                >
+                                  <MuiLink
+                                    underline="hover"
+                                    component={Link}
+                                    to={`items${sparesFilterState}`}
+                                  >
+                                    {catalogueItemIdData.number_of_spares}
+                                  </MuiLink>
+                                </Typography>
+                              </Grid>
+                              {isCriticalMode && (
+                                <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+                                  <Typography
+                                    align="left"
+                                    sx={{
+                                      color: 'text.primary',
+                                    }}
+                                  >
+                                    Number of spares required:
+                                  </Typography>
+                                  <Box
+                                    sx={{
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                    }}
+                                  >
+                                    <Typography
+                                      align="left"
+                                      sx={{
+                                        color: 'text.secondary',
+                                      }}
+                                    >
+                                      {roundUpTenth(
+                                        catalogueItemIdData.number_of_spares_required
+                                      ) ?? 'None'}
+                                    </Typography>
+                                    {catalogueItemIdData.number_of_spares_required ===
+                                      null && (
+                                      <NumberOfSparesRequiredInfoToolTip />
+                                    )}
+                                  </Box>
+                                </Grid>
+                              )}
+                            </>
+                          )}
                           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
                             <Typography
                               align="left"
@@ -202,6 +388,7 @@ function CatalogueItemsLandingPage() {
                             >
                               Obsolete
                             </Typography>
+
                             <Typography
                               align="left"
                               sx={{
@@ -350,56 +537,6 @@ function CatalogueItemsLandingPage() {
                             >
                               {catalogueItemIdData.expected_lifetime_days ??
                                 'None'}
-                            </Typography>
-                          </Grid>
-
-                          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-                            <Typography
-                              align="left"
-                              sx={{
-                                color: 'text.primary',
-                              }}
-                            >
-                              Drawing Number
-                            </Typography>
-                            <Typography
-                              align="left"
-                              sx={{
-                                color: 'text.secondary',
-                                wordWrap: 'break-word',
-                              }}
-                            >
-                              {catalogueItemIdData.drawing_number ?? 'None'}
-                            </Typography>
-                          </Grid>
-
-                          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-                            <Typography
-                              align="left"
-                              sx={{
-                                color: 'text.primary',
-                              }}
-                            >
-                              Drawing link
-                            </Typography>
-                            <Typography
-                              align="left"
-                              sx={{
-                                color: 'text.secondary',
-                                wordWrap: 'break-word',
-                              }}
-                            >
-                              {catalogueItemIdData.drawing_link ? (
-                                <MuiLink
-                                  underline="hover"
-                                  target="_blank"
-                                  href={catalogueItemIdData.drawing_link}
-                                >
-                                  {catalogueItemIdData.drawing_link}
-                                </MuiLink>
-                              ) : (
-                                'None'
-                              )}
                             </Typography>
                           </Grid>
 

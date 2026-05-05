@@ -16,7 +16,8 @@ import type {
   UppyImageUploadResponse,
   UppyUploadMetadata,
 } from '../../app.types';
-import { InventoryManagementSystemSettingsContext } from '../../configProvider.component';
+import { useAppSelector } from '../../state/hook';
+import { selectSettings } from '../../state/slices/configSlice';
 import { getNonEmptyTrimmedString } from '../../utils';
 import {
   getUploadingState,
@@ -37,8 +38,9 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
 
   const queryClient = useQueryClient();
 
-  const { maxImageSizeBytes, osApiUrl, imageAllowedFileExtensions } =
-    React.useContext(InventoryManagementSystemSettingsContext);
+  const {
+    settings: { maxImageSizeBytes, osApiUrl, imageAllowedFileExtensions },
+  } = useAppSelector(selectSettings);
 
   // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000,
   // so here the former is expected despite them really being GiB, MiB and KiB.
@@ -73,6 +75,15 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
 
     return newUppy;
   });
+
+  // Destroy uppy instance on unmount (Should also avoid errors in tests e.g. 'ReferenceError: window is not defined' from code
+  // executing after tests have completed)
+  React.useEffect(
+    () => () => {
+      uppy.destroy();
+    },
+    [uppy]
+  );
 
   const { files = {}, error, recoveredState } = uppy.getState();
   const { isAllComplete } = uppy.getObjectOfFilesPerState();

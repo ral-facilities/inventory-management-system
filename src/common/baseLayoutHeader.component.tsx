@@ -4,7 +4,10 @@ import React from 'react';
 import { useNavigate } from 'react-router';
 import type { BreadcrumbsInfo } from '../api/api.types';
 import { RoutesHomeLocation, type RoutesHomeLocationType } from '../app.types';
+import { isRunningInDevelopment } from '../utils';
+import AuthToggle from '../view/authToggle.component';
 import Breadcrumbs from '../view/breadcrumbs.component';
+import AuthRoleStatus from './authRoleStatus.component';
 
 export interface BaseLayoutHeaderProps {
   breadcrumbsInfo?: BreadcrumbsInfo;
@@ -21,6 +24,7 @@ function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
     },
     [homeLocation, navigate]
   );
+
   return (
     <Box
       sx={{
@@ -28,19 +32,24 @@ function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
         width: '100%',
       }}
     >
+      {/* Also render authorisation state toggle so it is inline with tabs, but not on home page */}
+      {isRunningInDevelopment() && (
+        <Box sx={{ display: 'flex' }}>
+          <Box sx={{ marginLeft: 'auto' }}>
+            <AuthToggle />
+          </Box>
+        </Box>
+      )}
       <Grid
         container
         sx={{
-          alignItems: 'center',
-          justifyContent: 'left',
+          justifyContent: 'space-between',
           paddingLeft: 0.5,
           position: 'sticky',
           top: 0,
           backgroundColor: 'background.default',
           zIndex: 1000,
           width: '100%',
-          paddingTop: 2.5,
-          paddingBottom: 2.5,
         }}
       >
         <Breadcrumbs
@@ -49,6 +58,7 @@ function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
           breadcrumbsInfo={breadcrumbsInfo}
           homeLocation={homeLocation}
         />
+        <AuthRoleStatus />
       </Grid>
       {children}
     </Box>

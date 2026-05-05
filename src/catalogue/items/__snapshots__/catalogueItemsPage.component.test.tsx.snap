@@ -3,13 +3,13 @@
 exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
 <DocumentFragment>
   <div
-    style="width: 100%;"
+    class="MuiBox-root css-123hto"
   >
     <div
-      class="MuiStack-root css-17doft4-MuiStack-root"
+      class="MuiStack-root css-7u13gi-MuiStack-root"
     >
       <div
-        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-1hoqul-MuiPaper-root"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-th9pv0-MuiPaper-root"
         style="--Paper-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);"
       >
         <div
@@ -212,12 +212,12 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
           </div>
         </div>
         <div
-          class="MuiTableContainer-root css-13mblvd-MuiTableContainer-root"
+          class="MuiTableContainer-root css-1qjrzjp-MuiTableContainer-root"
           data-testid="catalogue-items-table-container"
         >
           <table
             class="MuiTable-root MuiTable-stickyHeader css-1gcyac0-MuiTable-root"
-            style="--header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-mrt_row_select-size: 60; --col-mrt_row_select-size: 60; --header-catalogueItem_name-size: 200; --col-catalogueItem_name-size: 200; --header-catalogueItem_modified_time-size: 350; --col-catalogueItem_modified_time-size: 350; --header-View_Items-size: 200; --col-View_Items-size: 200; --header-catalogueItem_description-size: 250; --col-catalogueItem_description-size: 250; --header-catalogueItem_is_obsolete-size: 200; --col-catalogueItem_is_obsolete-size: 200; --header-catalogueItem_obsolete_replacement_catalogue_item_id-size: 275; --col-catalogueItem_obsolete_replacement_catalogue_item_id-size: 275; --header-catalogueItem_obsolete_reason-size: 225; --col-catalogueItem_obsolete_reason-size: 225; --header-catalogueItem_properties_1-size: 250; --col-catalogueItem_properties_1-size: 250; --header-catalogueItem_properties_2-size: 250; --col-catalogueItem_properties_2-size: 250; --header-catalogueItem_properties_3-size: 250; --col-catalogueItem_properties_3-size: 250; --header-catalogueItem_properties_4-size: 250; --col-catalogueItem_properties_4-size: 250; --header-catalogueItem_properties_5-size: 250; --col-catalogueItem_properties_5-size: 250; --header-catalogueItem_properties_6-size: 250; --col-catalogueItem_properties_6-size: 250; --header-catalogueItem_cost_gbp-size: 250; --col-catalogueItem_cost_gbp-size: 250; --header-catalogueItem_cost_to_rework_gbp-size: 250; --col-catalogueItem_cost_to_rework_gbp-size: 250; --header-catalogueItem_days_to_replace-size: 275; --col-catalogueItem_days_to_replace-size: 275; --header-catalogueItem_days_to_rework-size: 250; --col-catalogueItem_days_to_rework-size: 250; --header-catalogueItem_expected_lifetime_days-size: 300; --col-catalogueItem_expected_lifetime_days-size: 300; --header-catalogueItem_drawing_number-size: 250; --col-catalogueItem_drawing_number-size: 250; --header-catalogueItem_drawing_link-size: 250; --col-catalogueItem_drawing_link-size: 250; --header-catalogueItem_item_model_number-size: 250; --col-catalogueItem_item_model_number-size: 250; --header-manufacturer_name-size: 350; --col-manufacturer_name-size: 350; --header-manufacturer_url-size: 250; --col-manufacturer_url-size: 250; --header-manufacturer_address-size: 300; --col-manufacturer_address-size: 300; --header-manufacturer_telephone-size: 300; --col-manufacturer_telephone-size: 300; --header-catalogueItem_notes-size: 250; --col-catalogueItem_notes-size: 250; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
+            style="--header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-mrt_row_select-size: 60; --col-mrt_row_select-size: 60; --header-catalogueItem_name-size: 250; --col-catalogueItem_name-size: 250; --header-catalogueItem_modified_time-size: 350; --col-catalogueItem_modified_time-size: 350; --header-View_Items-size: 200; --col-View_Items-size: 200; --header-catalogueItem_description-size: 250; --col-catalogueItem_description-size: 250; --header-catalogueItem_is_obsolete-size: 200; --col-catalogueItem_is_obsolete-size: 200; --header-catalogueItem_obsolete_replacement_catalogue_item_id-size: 275; --col-catalogueItem_obsolete_replacement_catalogue_item_id-size: 275; --header-catalogueItem_obsolete_reason-size: 225; --col-catalogueItem_obsolete_reason-size: 225; --header-catalogueItem_properties_1-size: 250; --col-catalogueItem_properties_1-size: 250; --header-catalogueItem_properties_2-size: 250; --col-catalogueItem_properties_2-size: 250; --header-catalogueItem_properties_3-size: 250; --col-catalogueItem_properties_3-size: 250; --header-catalogueItem_properties_4-size: 250; --col-catalogueItem_properties_4-size: 250; --header-catalogueItem_properties_5-size: 250; --col-catalogueItem_properties_5-size: 250; --header-catalogueItem_properties_6-size: 250; --col-catalogueItem_properties_6-size: 250; --header-catalogueItem_cost_gbp-size: 250; --col-catalogueItem_cost_gbp-size: 250; --header-catalogueItem_cost_to_rework_gbp-size: 250; --col-catalogueItem_cost_to_rework_gbp-size: 250; --header-catalogueItem_days_to_replace-size: 275; --col-catalogueItem_days_to_replace-size: 275; --header-catalogueItem_days_to_rework-size: 250; --col-catalogueItem_days_to_rework-size: 250; --header-catalogueItem_expected_lifetime_days-size: 300; --col-catalogueItem_expected_lifetime_days-size: 300; --header-catalogueItem_item_model_number-size: 250; --col-catalogueItem_item_model_number-size: 250; --header-manufacturer_name-size: 350; --col-manufacturer_name-size: 350; --header-manufacturer_url-size: 250; --col-manufacturer_url-size: 250; --header-manufacturer_address-size: 300; --col-manufacturer_address-size: 300; --header-manufacturer_telephone-size: 300; --col-manufacturer_telephone-size: 300; --header-catalogueItem_notes-size: 250; --col-catalogueItem_notes-size: 250; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
           >
             <thead
               class="MuiTableHead-root css-7psuou-MuiTableHead-root"
@@ -319,6 +319,66 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
                 data-index="14"
                 role="row"
               />
+              <tr
+                aria-label="Cameras 16 row"
+                class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
+                data-index="15"
+                role="row"
+              />
+              <tr
+                aria-label="Cameras 17 row"
+                class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
+                data-index="16"
+                role="row"
+              />
+              <tr
+                aria-label="Cameras 18 row"
+                class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
+                data-index="17"
+                role="row"
+              />
+              <tr
+                aria-label="Cameras 19 row"
+                class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
+                data-index="18"
+                role="row"
+              />
+              <tr
+                aria-label="Cameras 20 row"
+                class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
+                data-index="19"
+                role="row"
+              />
+              <tr
+                aria-label="Cameras 21 row"
+                class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
+                data-index="20"
+                role="row"
+              />
+              <tr
+                aria-label="Cameras 22 row"
+                class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
+                data-index="21"
+                role="row"
+              />
+              <tr
+                aria-label="Cameras 23 row"
+                class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
+                data-index="22"
+                role="row"
+              />
+              <tr
+                aria-label="Cameras 24 row"
+                class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
+                data-index="23"
+                role="row"
+              />
+              <tr
+                aria-label="Cameras 25 row"
+                class="MuiTableRow-root MuiTableRow-root css-tfxtwj-MuiTableRow-root-MuiTableRow-root"
+                data-index="24"
+                role="row"
+              />
             </tbody>
           </table>
         </div>
@@ -392,7 +452,7 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
                     role="combobox"
                     tabindex="0"
                   >
-                    15
+                    30
                   </div>
                   <input
                     aria-hidden="true"
@@ -400,7 +460,7 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
                     class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
                     id="mrt-rows-per-page-:r0:"
                     tabindex="-1"
-                    value="15"
+                    value="30"
                   />
                   <svg
                     aria-hidden="true"
@@ -456,19 +516,10 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
                   </li>
                   <li>
                     <button
-                      aria-label="Go to page 2"
-                      class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary MuiPaginationItem-page css-fpujy5-MuiButtonBase-root-MuiPaginationItem-root"
-                      tabindex="0"
-                      type="button"
-                    >
-                      2
-                    </button>
-                  </li>
-                  <li>
-                    <button
                       aria-label="Go to next page"
-                      class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary MuiPaginationItem-previousNext css-fpujy5-MuiButtonBase-root-MuiPaginationItem-root"
-                      tabindex="0"
+                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-fpujy5-MuiButtonBase-root-MuiPaginationItem-root"
+                      disabled=""
+                      tabindex="-1"
                       type="button"
                     >
                       <svg

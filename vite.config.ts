@@ -38,26 +38,16 @@ function jsonHMR(): PluginOption {
   };
 }
 
-// Obtain default coverage config from vitest when not building for production
-// (to avoid importing vitest during build as its a dev dependency)
-let vitestCoverageConfigDefaultsExclude: string[] = [];
-if (process.env.NODE_ENV !== 'production') {
-  await import('vitest/config').then((vitestConfig) => {
-    vitestCoverageConfigDefaultsExclude =
-      vitestConfig.coverageConfigDefaults.exclude;
-  });
-}
-
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
 
   // Whether to output build files in a way SciGateway can load (the default for production unless e2e testing)
   const buildLibrary =
-    env.NODE_ENV === 'production' && env.VITE_APP_BUILD_STANDALONE !== 'true';
+    env.NODE_ENV === 'production' && env.VITE_BUILD_STANDALONE !== 'true';
 
   // Whether to exclude MSW from the build
-  const excludeMSW = env.VITE_APP_INCLUDE_MSW !== 'true';
+  const excludeMSW = env.VITE_INCLUDE_MSW !== 'true';
 
   const plugins: PluginOption[] = [react()];
 
@@ -65,11 +55,11 @@ export default defineConfig(({ mode }) => {
   if (env.NODE_ENV === 'development') plugins.push(jsonHMR());
 
   // Allow codecov bundle analysis
-  if (env.VITE_APP_INCLUDE_CODECOV === 'true')
+  if (env.VITE_INCLUDE_CODECOV === 'true')
     plugins.push(
       codecovVitePlugin({
         enableBundleAnalysis: env.CODECOV_TOKEN !== undefined,
-        bundleName: 'inventory-management-system',
+        bundleName: 'prod-build',
         uploadToken: env.CODECOV_TOKEN,
       })
     );
@@ -162,10 +152,8 @@ export default defineConfig(({ mode }) => {
           // Extra for VSCode extension
           ['lcov', { outputFile: 'lcov.info', silent: true }],
         ],
+        include: ['/src/**.{js,jsx,ts,tsx}'],
         exclude: [
-          ...vitestCoverageConfigDefaultsExclude,
-          'public/*',
-          'server/*',
           // Leave handlers to show up unused code
           'src/mocks/browser.ts',
           'src/mocks/server.ts',
@@ -179,6 +167,22 @@ export default defineConfig(({ mode }) => {
         ...(env.CI ? ['junit'] : []),
       ],
       outputFile: env.CI ? { junit: 'test-report.junit.xml' } : undefined,
+      deps: {
+        optimizer: {
+          client: {
+            enabled: true,
+            include: [
+              '@mui/material',
+              '@mui/icons-material',
+              '@mui/x-date-pickers',
+              'react/jsx-runtime',
+              '@emotion/react',
+              '@emotion/styled',
+              'material-react-table',
+            ],
+          },
+        },
+      },
     },
   };
 });

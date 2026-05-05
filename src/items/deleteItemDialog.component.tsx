@@ -1,3 +1,4 @@
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import WarningIcon from '@mui/icons-material/Warning';
 import {
   Box,
@@ -9,6 +10,7 @@ import {
   DialogTitle,
   FormHelperText,
   Link as MuiLink,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import { AxiosError } from 'axios';
@@ -16,35 +18,49 @@ import React from 'react';
 import { Link } from 'react-router';
 import { Item } from '../api/api.types';
 import { useDeleteItem } from '../api/items';
+import { useGetRules } from '../api/rules';
 import { useGetSystem } from '../api/systems';
 import handleIMS_APIError from '../handleIMS_APIError';
 
 export interface DeleteItemDialogProps {
   open: boolean;
   onClose: () => void;
-  item: Item | undefined;
+  item: Item;
   onChangeItem: (Item: Item | undefined) => void;
+  isAdminMode: boolean;
 }
 
 const DeleteItemDialog = (props: DeleteItemDialogProps) => {
-  const { open, onClose, item, onChangeItem } = props;
-
-  const [error, setError] = React.useState(false);
+  const { open, onClose, item, onChangeItem, isAdminMode } = props;
   const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
     undefined
   );
 
   const { data: systemData } = useGetSystem(item?.system_id);
+
+  // This should be a list of 1 rule
+  const { data: selectedRules } = useGetRules(
+    systemData?.type_id ?? 'null',
+    'null'
+  );
+
+  const { data: deletionRules } = useGetRules(undefined, 'null');
+
   const { mutateAsync: deleteItem, isPending: isDeletePending } =
     useDeleteItem();
 
   const handleClose = React.useCallback(() => {
     onClose();
-    setError(false);
-    setErrorMessage('');
+    setErrorMessage(undefined);
   }, [onClose]);
+
   const handleDeleteItem = React.useCallback(() => {
-    if (item) {
+    const allowedSystemTypes: string[] =
+      deletionRules
+        ?.map((rule) => rule.src_system_type?.value ?? '')
+        .filter((value): value is string => value !== '') || [];
+
+    if ((selectedRules && selectedRules.length > 0) || isAdminMode) {
       deleteItem(item)
         .then(() => {
           onClose();
@@ -54,16 +70,37 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
           handleIMS_APIError(error);
         });
     } else {
-      setError(true);
-      setErrorMessage('No data provided, Please refresh and try again');
+      setErrorMessage(
+        `Please move item to a system with Type: ${allowedSystemTypes.join(', ')} before trying to delete.`
+      );
     }
-  }, [deleteItem, item, onChangeItem, onClose]);
+  }, [
+    selectedRules,
+    deleteItem,
+    deletionRules,
+    isAdminMode,
+    item,
+    onChangeItem,
+    onClose,
+  ]);
 
   return (
     <Dialog open={open} maxWidth="lg">
       <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
         <WarningIcon sx={{ marginRight: 1 }} />
-        Delete Item
+        Delete Item{isAdminMode ? ' as Admin' : ''}
+        {isAdminMode && (
+          <Tooltip
+            title="As an admin, you can bypass rules that prevent other users from deleting an item"
+            data-testid={'admin-status-tooltip'}
+            placement="top"
+            enterTouchDelay={0}
+            arrow
+            sx={{ mx: 2 }}
+          >
+            <InfoOutlinedIcon />
+          </Tooltip>
+        )}
       </DialogTitle>
       <DialogContent>
         {systemData && (
@@ -91,13 +128,13 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
         <Button onClick={handleClose}>Cancel</Button>
         <Button
           onClick={handleDeleteItem}
-          disabled={isDeletePending || error}
+          disabled={isDeletePending || !!errorMessage}
           endIcon={isDeletePending ? <CircularProgress size={20} /> : null}
         >
           Continue
         </Button>
       </DialogActions>
-      {error && (
+      {errorMessage && (
         <Box
           sx={{
             mx: 3,

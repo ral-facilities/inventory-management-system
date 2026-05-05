@@ -28,10 +28,11 @@ import {
 import {
   getSystemImportanceColour,
   useGetSystem,
-  useGetSystemTypes,
   usePatchSystem,
   usePostSystem,
 } from '../api/systems';
+import { useGetSystemTypes } from '../api/systemTypes';
+
 import { RequestType, SystemsSchema } from '../form.schemas';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { createFormControlWithRootErrorClearing } from '../utils';
@@ -55,14 +56,15 @@ const SystemDialog = (props: SystemDialogProps) => {
   const { mutateAsync: patchSystem, isPending: isEditPending } =
     usePatchSystem();
 
-  const { data: parentSystem } = useGetSystem(parentId);
+  const { data: parentSystem, isLoading: isLoadingParentSystem } =
+    useGetSystem(parentId);
 
   const parentSystemTypeId = React.useMemo(() => {
-    if (parentSystem) {
+    if (!isLoadingParentSystem && parentSystem) {
       return parentSystem.type_id;
     }
     return null;
-  }, [parentSystem]);
+  }, [parentSystem, isLoadingParentSystem]);
 
   const { data: systemsTypes } = useGetSystemTypes();
   const isNotCreating = (requestType !== 'post' || duplicate) && selectedSystem;
@@ -126,22 +128,22 @@ const SystemDialog = (props: SystemDialogProps) => {
           if (
             status === 409 &&
             errorMessage.includes(
-              'A System with the same name already exists within the same parent System'
+              'A system with the same name already exists within the parent system'
             )
           ) {
             setError('name', {
               message:
-                'A System with the same name already exists within the same parent System. Please enter a different name.',
+                'A system with the same name already exists within the parent system. Please enter a different name.',
             });
             return;
           }
           if (
             status === 422 &&
-            errorMessage.includes('Specified system type not found')
+            errorMessage.includes('The specified system type does not exist')
           ) {
             setError('type_id', {
               message:
-                'Specified system type not found. Please select a valid system type.',
+                'The specified system type does not exist. Please select a valid system type.',
             });
             return;
           }
@@ -198,12 +200,12 @@ const SystemDialog = (props: SystemDialogProps) => {
               if (
                 status === 409 &&
                 errorMessage.includes(
-                  'A System with the same name already exists within the same parent System'
+                  'A system with the same name already exists within the parent system'
                 )
               ) {
                 setError('name', {
                   message:
-                    'A System with the same name already exists within the same parent System. Please enter a different name.',
+                    'A system with the same name already exists within the parent system. Please enter a different name.',
                 });
                 return;
               }
@@ -221,11 +223,13 @@ const SystemDialog = (props: SystemDialogProps) => {
               }
               if (
                 status === 422 &&
-                errorMessage.includes('Specified system type not found')
+                errorMessage.includes(
+                  'The specified system type does not exist'
+                )
               ) {
                 setError('type_id', {
                   message:
-                    'Specified system type not found. Please select a valid system type.',
+                    'The specified system type does not exist. Please select a valid system type.',
                 });
                 return;
               }
@@ -278,6 +282,7 @@ const SystemDialog = (props: SystemDialogProps) => {
               fullWidth
             />
           </Box>
+
           <Controller
             control={control}
             name="type_id"
@@ -285,15 +290,9 @@ const SystemDialog = (props: SystemDialogProps) => {
               <Autocomplete
                 disableClearable={value != null}
                 id="systems-type-id-input"
-                disabled={!!parentSystemTypeId}
                 value={
-                  parentSystemTypeId
-                    ? (systemsTypes?.find(
-                        (systemType) => systemType.id === parentSystemTypeId
-                      ) ?? null)
-                    : (systemsTypes?.find(
-                        (systemType) => systemType.id === value
-                      ) ?? null)
+                  systemsTypes?.find((systemType) => systemType.id === value) ??
+                  null
                 }
                 onChange={(_event, systemType: SystemType | null) => {
                   onChange(systemType?.id ?? null);
@@ -307,7 +306,6 @@ const SystemDialog = (props: SystemDialogProps) => {
                   <TextField
                     {...params}
                     required={true}
-                    disabled={!!parentSystemTypeId}
                     label="Type"
                     error={!!errors.type_id}
                     helperText={errors.type_id?.message}

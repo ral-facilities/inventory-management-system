@@ -4,6 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
+import InfoOutlined from '@mui/icons-material/InfoOutlined';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
@@ -25,8 +26,10 @@ import {
 import Grid from '@mui/material/Grid2';
 import {
   MaterialReactTable,
+  MRT_Column,
   MRT_ColumnDef,
   MRT_GlobalFilterTextField,
+  MRT_Row,
   MRT_RowSelectionState,
   MRT_ToggleFiltersButton,
   MRT_ToggleFullScreenButton,
@@ -36,20 +39,28 @@ import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link, useParams } from 'react-router';
 import { System, SystemImportanceType } from '../api/api.types';
-import {
-  getSystemImportanceColour,
-  useGetSystems,
-  useGetSystemTypes,
-} from '../api/systems';
+import { getSystemImportanceColour, useGetSystems } from '../api/systems';
+import { useGetSystemTypes } from '../api/systemTypes';
+import { APISettingsContext } from '../apiConfigProvider.component';
 import type { SystemTableType } from '../app.types';
+import {
+  DEFAULT_ROWS_PER_PAGE_VALUE,
+  ROWS_PER_PAGE_OPTIONS,
+} from '../common/consts';
+import CriticalityTooltipIcon from '../common/criticalityTooltipIcon.component';
 import {
   getValueFromUpdater,
   usePreservedTableState,
 } from '../common/preservedTableState.component';
+import { SystemTypeColumnHeaderInformationTooltip } from '../common/systemTypesInformationTooltip.component';
+import { useAppSelector } from '../state/hook';
+import { selectCriticality } from '../state/slices/criticalitySlice';
 import {
+  COLUMN_FILTER_BOOLEAN_OPTIONS,
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
   COLUMN_FILTER_VARIANTS,
+  criticalityRowStyle,
   customFilterFunctions,
   deselectRowById,
   displayTableRowCountText,
@@ -60,6 +71,7 @@ import {
   MRT_Functions_Localisation,
   mrtTheme,
   OPTIONAL_FILTER_MODE_OPTIONS,
+  OverflowTip,
   TableBodyCellOverFlowTip,
   TableHeaderOverflowTip,
   type TableCellOverFlowTipProps,
@@ -68,6 +80,18 @@ import { DeleteSystemDialog } from './deleteSystemDialog.component';
 import SystemDetails from './systemDetails.component';
 import SystemDialog from './systemDialog.component';
 import { SystemDirectoryDialog } from './systemDirectoryDialog.component';
+
+export const getSCriticalityLabel = (showFlagged: boolean | null) => {
+  if (showFlagged === true) {
+    return 'This system is critical.';
+  }
+
+  if (showFlagged === false) {
+    return 'This system is not critical.';
+  }
+
+  return 'Unable to determine if this catalogue item is critical. Please wait until this is recalculated.';
+};
 
 export type SystemMenuDialogType = 'edit' | 'duplicate' | 'delete';
 
@@ -198,9 +222,19 @@ const SystemsActionMenu = (props: {
 
 const MIN_SUBSYSTEMS_WIDTH = '500px';
 
+export const CriticalTooltipText = (
+  <Typography style={{ whiteSpace: 'pre-line' }}>
+    A system is critical when any of its child catalogue items are critical or
+    when a subsystem is critical and has a &#39;high&#39; importance.
+  </Typography>
+);
+
 function Systems() {
   // Navigation
   const { system_id: systemId = null } = useParams();
+
+  const apiSettings = React.useContext(APISettingsContext);
+  const isSparesDefinitionDefined = !!apiSettings.spares;
 
   // Specifically for the drop down menus/dialogues
   const [selectedSystemForMenu, setSelectedSystemForMenu] = React.useState<
@@ -222,6 +256,7 @@ function Systems() {
       'description',
       'owner',
       'location',
+      'is_flagged',
     ],
     []
   );
@@ -234,6 +269,8 @@ function Systems() {
       // String value of null for filtering root systems
       systemId === null ? 'null' : systemId
     );
+
+  const { isCriticalMode } = useAppSelector(selectCriticality);
 
   const isLoading = systemTypesLoading || subsystemsDataLoading;
   const [tableRows, setTableRows] = React.useState<SystemTableType[]>([]);
@@ -256,6 +293,40 @@ function Systems() {
   const columns = React.useMemo<MRT_ColumnDef<SystemTableType>[]>(() => {
     const systemTypeValues = systemTypesData?.map((type) => type.value);
     return [
+      ...(isSparesDefinitionDefined
+        ? [
+            {
+              header: 'is Critical',
+              Header: ({
+                column,
+              }: {
+                column: MRT_Column<SystemTableType, unknown>;
+              }) => (
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Tooltip title={CriticalTooltipText}>
+                    <InfoOutlined sx={{ mr: 1 }} fontSize="small" />
+                  </Tooltip>
+                  {column.columnDef.header}
+                </Box>
+              ),
+              accessorFn: (row: System) => (row.is_flagged ? 'Yes' : 'No'),
+              id: 'is_flagged',
+              filterVariant: COLUMN_FILTER_VARIANTS.boolean,
+              enableColumnFilterModes: false,
+              size: 200,
+              filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
+              Cell: ({ row }: { row: MRT_Row<SystemTableType> }) => {
+                const showFlagged = row.original.is_flagged;
+                return (
+                  <CriticalityTooltipIcon
+                    showFlagged={showFlagged}
+                    label={getSCriticalityLabel(showFlagged)}
+                  />
+                );
+              },
+            },
+          ]
+        : []),
       {
         header: 'Name',
         accessorFn: (row) => row.name,
@@ -263,22 +334,43 @@ function Systems() {
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
-        size: 180,
-        Cell: ({ row }) => {
+        size: 160,
+        Cell: ({ row, renderedCellValue, table }) => {
+          const showFlagged = row.original.is_flagged;
+          const fullScreenState = table.getState().isFullScreen;
           return (
-            <MuiLink
-              underline="hover"
-              component={Link}
-              to={`/systems/${row.original.id}`}
-            >
-              {row.original.name}
-            </MuiLink>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              {isCriticalMode &&
+                isSparesDefinitionDefined &&
+                !fullScreenState && (
+                  <CriticalityTooltipIcon
+                    showFlagged={showFlagged}
+                    label={getSCriticalityLabel(showFlagged)}
+                  />
+                )}
+              <OverflowTip sx={{ fontSize: 'inherit' }}>
+                <MuiLink
+                  underline="hover"
+                  component={Link}
+                  to={`/systems/${row.original.id}`}
+                >
+                  {renderedCellValue}
+                </MuiLink>
+              </OverflowTip>
+            </Box>
           );
         },
       },
+
       {
         header: 'Type',
-        Header: TableHeaderOverflowTip,
+        Header: ({ column }) => (
+          <SystemTypeColumnHeaderInformationTooltip
+            title={column.columnDef.header}
+            systemTypesData={systemTypesData}
+          />
+        ),
+        TableHeaderOverflowTip,
         accessorFn: (row) => row.type?.value,
         id: 'type.value',
         filterVariant: 'multi-select',
@@ -298,7 +390,7 @@ function Systems() {
             {MRT_Functions_Localisation.filterArrExcludesSome}
           </MenuItem>,
         ],
-        size: 150,
+        size: 160,
         filterSelectOptions: systemTypeValues,
       },
       {
@@ -407,7 +499,7 @@ function Systems() {
         size: 250,
       },
     ];
-  }, [systemTypesData]);
+  }, [isCriticalMode, isSparesDefinitionDefined, systemTypesData]);
   // Data
 
   // Names for preventing duplicates in the duplicate dialog
@@ -423,7 +515,7 @@ function Systems() {
       columnVisibility: Object.fromEntries(
         hiddenColumns.map((col) => [col, false])
       ),
-      pagination: { pageSize: 15, pageIndex: 0 },
+      pagination: { pageSize: DEFAULT_ROWS_PER_PAGE_VALUE, pageIndex: 0 },
       columnFilterFns: initialColumnFilterFnState,
     },
     storeInUrl: true,
@@ -438,7 +530,7 @@ function Systems() {
     enableRowSelection: true,
     enableRowActions: true,
     enableDensityToggle: false,
-    enableColumnResizing: false,
+    enableColumnResizing: true,
     enableGlobalFilter: true,
     enableHiding: true,
     enableColumnFilterModes: true,
@@ -472,10 +564,20 @@ function Systems() {
       shape: 'rounded',
       variant: 'outlined',
       showRowsPerPage: true,
-      rowsPerPageOptions: [15, 30, 45],
+      rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
       showFirstButton: false,
       showLastButton: false,
       size: 'small',
+    },
+    muiTableBodyRowProps: ({ row }) => {
+      const showFlagged = row.original.is_flagged;
+      return {
+        sx: (theme) => ({
+          ...(isCriticalMode &&
+            isSparesDefinitionDefined &&
+            criticalityRowStyle({ theme, showFlagged })),
+        }),
+      };
     },
     muiTablePaperProps: ({ table }) => ({
       elevation: 0,
@@ -488,25 +590,15 @@ function Systems() {
     muiBottomToolbarProps: ({ table }) =>
       table.getState().isFullScreen ? {} : { sx: { boxShadow: 0 } },
     muiTableContainerProps: ({ table }) => ({
-      // main app bar + breadcrumbs + title + top toolbar + column heading
+      // main app bar + breadcrumbs (incl AuthRole banner) + title + top toolbar + column heading + critical mode spacing + header spacing  + critical mode header spacing
       sx: {
         height: table.getState().isFullScreen
           ? '100%'
-          : getPageHeightCalc('64px + 80px + 40px + 47px + 40px'),
+          : getPageHeightCalc(
+              `64px + 88px + 40px + 47px + 40px + 20px  ${systemId ? ' + 42px' : ''} ${isCriticalMode && isSparesDefinitionDefined && systemId ? '+ 4px' : ''}`
+            ),
       },
     }),
-    muiSelectAllCheckboxProps: { disabled: systemId === null },
-    muiSelectCheckboxProps: ({ row, table }) => {
-      const selectedSystems = table
-        .getSelectedRowModel()
-        .rows.map((row) => row.original);
-      const type_id = selectedSystems[0]?.type_id;
-      const isDisabled =
-        selectedSystems.length > 0 ? row.original.type_id !== type_id : false;
-      return {
-        disabled: isDisabled,
-      };
-    },
     muiTableBodyCellProps: ({ table, column }) =>
       // Ignore MRT rendered cells e.g. expand , spacer etc
       column.id.startsWith('mrt')
@@ -541,10 +633,32 @@ function Systems() {
       if (newValue) {
         subsystemsTable.setShowColumnFilters(true);
         subsystemsTable.setColumnVisibility(
-          Object.fromEntries(hiddenColumns.map((col) => [col, true]))
+          Object.fromEntries(
+            hiddenColumns.map((col) => [
+              col,
+              col === 'is_flagged' ? isCriticalMode : true,
+            ])
+          )
         );
+
+        subsystemsTable.setColumnSizing((prev) => {
+          return {
+            ...prev,
+            name: 300,
+            'type.value': 300,
+          };
+        });
       } else {
         subsystemsTable.setShowColumnFilters(false);
+
+        subsystemsTable.setColumnSizing((prev) => {
+          return {
+            ...prev,
+            name: subsystemsTable.getColumn('name')?.columnDef.size ?? 160,
+            'type.value':
+              subsystemsTable.getColumn('type.value')?.columnDef.size ?? 160,
+          };
+        });
         subsystemsTable.setColumnVisibility(
           Object.fromEntries(hiddenColumns.map((col) => [col, false]))
         );
@@ -605,14 +719,14 @@ function Systems() {
                   parentSystemId={systemId}
                 />
               )}
-              <Tooltip title={'Clear Filters'}>
+              <Tooltip title="Clear Filters">
                 <span>
                   <IconButton
                     disabled={preservedState.columnFilters.length === 0}
                     onClick={() => {
                       table.resetColumnFilters();
                     }}
-                    data-testid="clear-filters-button"
+                    aria-label="clear filters button"
                   >
                     <ClearIcon />
                   </IconButton>

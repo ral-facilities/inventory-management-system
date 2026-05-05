@@ -12,6 +12,7 @@ describe('Catalogue Category', () => {
   beforeEach(() => {
     cy.dropIMSCollections(['catalogue_categories', 'units']);
     cy.visit('/catalogue');
+    cy.setMode({ admin: true });
   });
   afterEach(() => {
     cy.clearMocks();
@@ -20,7 +21,7 @@ describe('Catalogue Category', () => {
 
   it('CRUD for catalogue categories', () => {
     //Prepare data for catalogue categories
-    cy.visit('/admin-ims/units');
+    cy.visit('/settings/units');
     addUnits(['mm', 'nm'], true);
     cy.visit('/catalogue');
     addCatalogueCategories();

@@ -3,7 +3,11 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MRT_ColumnDef } from 'material-react-table';
 import { UsageStatus } from './api/api.types';
-import { renderComponentWithRouterProvider } from './testUtils';
+import {
+  ADMIN_ROLE_TOKEN,
+  DEFAULT_ROLE_TOKEN,
+  renderComponentWithRouterProvider,
+} from './testUtils';
 import {
   OverflowTip,
   checkForDuplicates,
@@ -12,6 +16,7 @@ import {
   generateUniqueNameUsingCode,
   getInitialColumnFilterFnState,
   getNonEmptyTrimmedString,
+  setLocalStorageToken,
   sortDataList,
   trimStringValues,
 } from './utils';
@@ -188,11 +193,14 @@ describe('Utility functions', () => {
       });
 
       // Mocking the ResizeObserver
-      window.ResizeObserver = vi.fn().mockImplementation((callback) => ({
-        observe: () => observeMock(callback),
-        disconnect: vi.fn(),
-        unobserve: vi.fn(),
-      }));
+      window.ResizeObserver = vi.fn().mockImplementation(function (
+        this: ResizeObserver,
+        callback: ResizeObserverCallback
+      ) {
+        this.disconnect = vi.fn();
+        this.observe = () => observeMock(callback);
+        this.unobserve = vi.fn();
+      }) as unknown as typeof ResizeObserver;
 
       renderComponentWithRouterProvider(
         <OverflowTip>
@@ -242,11 +250,14 @@ describe('Utility functions', () => {
       });
 
       // Mocking the ResizeObserver
-      window.ResizeObserver = vi.fn().mockImplementation((callback) => ({
-        observe: () => observeMock(callback),
-        disconnect: vi.fn(),
-        unobserve: vi.fn(),
-      }));
+      window.ResizeObserver = vi.fn().mockImplementation(function (
+        this: ResizeObserver,
+        callback: ResizeObserverCallback
+      ) {
+        this.disconnect = vi.fn();
+        this.observe = () => observeMock(callback);
+        this.unobserve = vi.fn();
+      }) as unknown as typeof ResizeObserver;
 
       renderComponentWithRouterProvider(
         <OverflowTip>Some long text that overflows</OverflowTip>
@@ -384,4 +395,12 @@ describe('getNonEmptyTrimmedString', () => {
     expect(getNonEmptyTrimmedString({})).toBeUndefined();
     expect(getNonEmptyTrimmedString([])).toBeUndefined();
   });
+});
+
+it('should toggle localstorage token', () => {
+  setLocalStorageToken(false);
+  expect(localStorage.getItem('scigateway:token')).toBe(DEFAULT_ROLE_TOKEN);
+
+  setLocalStorageToken(true);
+  expect(localStorage.getItem('scigateway:token')).toBe(ADMIN_ROLE_TOKEN);
 });
