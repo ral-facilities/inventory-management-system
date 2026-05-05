@@ -15,6 +15,7 @@ import {
 import { AxiosError } from 'axios';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import z from 'zod';
 import {
   APIError,
   Manufacturer,
@@ -29,13 +30,19 @@ import { ManufacturerSchema, RequestType } from '../form.schemas';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { createFormControlWithRootErrorClearing } from '../utils';
 
-const formControl = createFormControlWithRootErrorClearing<ManufacturerPost>();
 export interface ManufacturerDialogProps {
   open: boolean;
   onClose: () => void;
   selectedManufacturer?: Manufacturer;
   type: RequestType;
 }
+
+const _manufacturerPostSchema = ManufacturerSchema('post');
+const formControl = createFormControlWithRootErrorClearing<
+  z.input<typeof _manufacturerPostSchema>,
+  undefined,
+  ManufacturerPost
+>();
 
 function ManufacturerDialog(props: ManufacturerDialogProps) {
   const { open, onClose, selectedManufacturer, type } = props;
@@ -84,7 +91,11 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     setError,
     clearErrors,
     reset,
-  } = useForm<ManufacturerPost>({
+  } = useForm<
+    z.input<typeof _manufacturerPostSchema>,
+    undefined,
+    ManufacturerPost
+  >({
     formControl,
     resolver: zodResolver(ManufacturerSchema(type)),
     defaultValues: initialManufacturer,
