@@ -156,20 +156,6 @@ export interface SystemTableType extends System {
   type?: { id: string; value: string };
 }
 // ------------------------------------ ITEMS ------------------------------------
-export interface ItemDetailsStep {
-  purchase_order_number?: string | null;
-  is_defective: string;
-  usage_status_id: string;
-  warranty_end_date?: string | null;
-  asset_number?: string | null;
-  serial_number: {
-    serial_number?: string | null;
-    quantity?: string;
-    starting_value?: string;
-  };
-  delivered_date?: string | null;
-  notes?: string | null;
-}
 
 export interface ItemDetailsStepPost {
   purchase_order_number?: string | null;

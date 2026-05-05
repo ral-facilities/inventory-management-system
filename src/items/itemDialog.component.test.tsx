@@ -266,11 +266,9 @@ describe('ItemDialog', () => {
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
-        asset_number: null,
         catalogue_item_id: '1',
         delivered_date: null,
         is_defective: false,
-        notes: null,
         properties: [
           { id: '1', value: 12 },
           { id: '2', value: 30 },
@@ -279,7 +277,6 @@ describe('ItemDialog', () => {
           { id: '5', value: true },
           { id: '6', value: false },
         ],
-        purchase_order_number: null,
         serial_number: null,
         system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
         usage_status_id: '0',
@@ -304,11 +301,9 @@ describe('ItemDialog', () => {
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
-        asset_number: null,
         catalogue_item_id: '1',
         delivered_date: null,
         is_defective: false,
-        notes: null,
         properties: [
           { id: '1', value: 12 },
           { id: '2', value: 30 },
@@ -317,7 +312,6 @@ describe('ItemDialog', () => {
           { id: '5', value: true },
           { id: '6', value: false },
         ],
-        purchase_order_number: null,
         serial_number: null,
         system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
         usage_status_id: '0',
@@ -348,11 +342,9 @@ describe('ItemDialog', () => {
 
       for (let i = 0; i < 2; i++) {
         expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
-          asset_number: null,
           catalogue_item_id: '1',
           delivered_date: null,
           is_defective: false,
-          notes: null,
           properties: [
             {
               id: '1',
@@ -379,7 +371,6 @@ describe('ItemDialog', () => {
               value: false,
             },
           ],
-          purchase_order_number: null,
           serial_number: `test12 ${i + 10}`,
           system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
           usage_status_id: '0',
@@ -462,11 +453,9 @@ describe('ItemDialog', () => {
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
-        asset_number: null,
         catalogue_item_id: '17',
         delivered_date: null,
         is_defective: false,
-        notes: null,
         properties: [
           { id: '17', value: 400 },
           { id: '18', value: 10 },
@@ -475,7 +464,6 @@ describe('ItemDialog', () => {
             value: 'z',
           },
         ],
-        purchase_order_number: null,
         serial_number: null,
         system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
         usage_status_id: '0',
@@ -779,11 +767,9 @@ describe('ItemDialog', () => {
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
-        asset_number: null,
         catalogue_item_id: '1',
         delivered_date: null,
         is_defective: false,
-        notes: null,
         properties: [
           { id: '1', value: 12 },
           { id: '2', value: 30 },
@@ -792,7 +778,6 @@ describe('ItemDialog', () => {
           { id: '5', value: true },
           { id: '6', value: false },
         ],
-        purchase_order_number: null,
         serial_number: null,
         system_id: '65328f34a40ff5301575a4e3',
         usage_status_id: '1',

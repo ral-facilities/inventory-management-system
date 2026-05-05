@@ -157,7 +157,7 @@ const NullableNumberSchema = (props: NumberZodSchemaProps) =>
 
 const NullableDateSchema = (props: DateZodSchemaProps) =>
   z
-    .any()
+    .string()
     .transform((val) => (!val ? null : val))
     .pipe(
       z.coerce
@@ -180,7 +180,7 @@ const NullableDateSchema = (props: DateZodSchemaProps) =>
 
 const OptionalDateSchema = (props: DateZodSchemaProps) =>
   z
-    .any()
+    .string()
     .transform((val) => (!val ? undefined : val))
     .pipe(
       z.coerce
@@ -649,6 +649,8 @@ export const ItemDetailsStepSchema = (
     notes: OptionalOrNullableStringSchema({ requestType }),
   });
 };
+
+export const ItemDetailsStepSchemaPost = ItemDetailsStepSchema('post', false);
 
 // ------------------------------------ FILES ------------------------------------
 
