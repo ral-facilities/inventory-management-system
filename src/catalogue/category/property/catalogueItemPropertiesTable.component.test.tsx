@@ -2,9 +2,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { FormProvider, useForm } from 'react-hook-form';
+import z from 'zod';
 import { CatalogueCategory } from '../../../api/api.types';
-import { AddCatalogueCategoryWithPlacementIds } from '../../../app.types';
 import { CatalogueCategorySchema } from '../../../form.schemas';
+import { RootState } from '../../../state/store';
 import {
   getCatalogueCategoryById,
   renderComponentWithRouterProvider,
@@ -13,10 +14,13 @@ import { transformToAddCatalogueCategoryWithPlacementIds } from '../catalogueCat
 import PropertiesTable, {
   PropertiesTableProps,
 } from './catalogueItemPropertiesTable.component';
-import { RootState } from '../../../state/store';
 
 const TestComponent = (props: PropertiesTableProps) => {
-  const formMethods = useForm<AddCatalogueCategoryWithPlacementIds>({
+  const formMethods = useForm<
+    z.input<typeof CatalogueCategorySchema>,
+    undefined,
+    z.output<typeof CatalogueCategorySchema>
+  >({
     resolver: zodResolver(CatalogueCategorySchema),
     defaultValues: transformToAddCatalogueCategoryWithPlacementIds(
       getCatalogueCategoryById('12') as CatalogueCategory
