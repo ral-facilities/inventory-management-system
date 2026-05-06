@@ -157,7 +157,7 @@ const NullableNumberSchema = (props: NumberZodSchemaProps) =>
 
 const NullableDateSchema = (props: DateZodSchemaProps) =>
   z
-    .any()
+    .string()
     .transform((val) => (!val ? null : val))
     .pipe(
       z.coerce
@@ -180,7 +180,7 @@ const NullableDateSchema = (props: DateZodSchemaProps) =>
 
 const OptionalDateSchema = (props: DateZodSchemaProps) =>
   z
-    .any()
+    .string()
     .transform((val) => (!val ? undefined : val))
     .pipe(
       z.coerce
@@ -255,6 +255,8 @@ export const ManufacturerSchema = (requestType: RequestType) => {
   });
 };
 
+export const ManufacturerPostSchema = ManufacturerSchema('post');
+
 // ------------------------------------ UNITS -------------------------------------------------------
 
 export const UnitSchema = z.object({
@@ -280,6 +282,8 @@ export const SystemsSchema = (requestType: RequestType) =>
       errorMessage: 'Please select a type.',
     }),
   });
+
+export const SystemsPostSchema = SystemsSchema('post');
 
 // ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
 
@@ -547,6 +551,9 @@ export const CatalogueItemDetailsStepSchema = (requestType: RequestType) => {
   });
 };
 
+export const CatalogueItemDetailsStepPostSchema =
+  CatalogueItemDetailsStepSchema('post');
+
 export const PropertiesStepSchema = z.object({
   properties: z.array(z.discriminatedUnion('valueType', propertiesTypeList)),
 });
@@ -642,6 +649,8 @@ export const ItemDetailsStepSchema = (
     notes: OptionalOrNullableStringSchema({ requestType }),
   });
 };
+
+export const ItemDetailsStepSchemaPost = ItemDetailsStepSchema('post', false);
 
 // ------------------------------------ FILES ------------------------------------
 

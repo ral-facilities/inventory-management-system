@@ -97,19 +97,6 @@ export interface MoveToCatalogueCategory {
 
 // ------------------------------------ CATALOGUE ITEM ------------------------------------
 
-export interface CatalogueItemDetailsStep {
-  manufacturer_id: string;
-  name: string;
-  description?: string | null;
-  cost_gbp: string;
-  cost_to_rework_gbp?: string | null;
-  days_to_replace: string;
-  days_to_rework?: string | null;
-  expected_lifetime_days?: string | null;
-  item_model_number?: string | null;
-  notes?: string | null;
-}
-
 export interface CatalogueItemDetailsStepPost {
   manufacturer_id: string;
   name: string;
@@ -169,20 +156,6 @@ export interface SystemTableType extends System {
   type?: { id: string; value: string };
 }
 // ------------------------------------ ITEMS ------------------------------------
-export interface ItemDetailsStep {
-  purchase_order_number?: string | null;
-  is_defective: string;
-  usage_status_id: string;
-  warranty_end_date?: string | null;
-  asset_number?: string | null;
-  serial_number: {
-    serial_number?: string | null;
-    quantity?: string;
-    starting_value?: string;
-  };
-  delivered_date?: string | null;
-  notes?: string | null;
-}
 
 export interface ItemDetailsStepPost {
   purchase_order_number?: string | null;

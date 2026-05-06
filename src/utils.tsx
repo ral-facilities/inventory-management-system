@@ -623,14 +623,21 @@ export const deselectRowById = <TData extends MRT_RowData>(
 export const COLUMN_FILTER_BOOLEAN_OPTIONS = ['Yes', 'No'];
 
 export function createFormControlWithRootErrorClearing<
-  T extends FieldValues,
+  TFieldValues extends FieldValues,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  TContext = any,
+  TTransformedValues = TFieldValues,
 >(options?: {
-  name?: Path<T> | readonly Path<T>[];
+  name?: Path<TFieldValues> | readonly Path<TFieldValues>[];
   customCallback?: Parameters<
-    UseFormReturn<T, unknown, T>['subscribe']
+    UseFormReturn<TFieldValues, TContext, TTransformedValues>['subscribe']
   >[0]['callback'];
 }) {
-  const { formControl } = createFormControl<T>();
+  const { formControl } = createFormControl<
+    TFieldValues,
+    TContext,
+    TTransformedValues
+  >();
   formControl.subscribe({
     name: options?.name,
     // In React Hook Form, isDirty becomes true as soon as the user changes
