@@ -18,11 +18,11 @@ import {
   useFormContext,
 } from 'react-hook-form';
 import z from 'zod';
+import { AddPropertyMigration } from '../../../app.types';
 import {
-  AddCatalogueCategoryWithPlacementIds,
-  AddPropertyMigration,
-} from '../../../app.types';
-import { CatalogueCategorySchema } from '../../../form.schemas';
+  CatalogueCategoryPropertyPatchSchema,
+  CatalogueCategorySchema,
+} from '../../../form.schemas';
 
 const AllowedValuesListTextFields = (props: {
   property?: NonNullable<
@@ -38,7 +38,13 @@ const AllowedValuesListTextFields = (props: {
     watch,
     setValue,
   } = useFormContext<
-    AddPropertyMigration | AddCatalogueCategoryWithPlacementIds
+    | AddPropertyMigration
+    | z.input<typeof CatalogueCategorySchema>
+    | z.input<typeof CatalogueCategoryPropertyPatchSchema>,
+    undefined,
+    | AddPropertyMigration
+    | z.output<typeof CatalogueCategorySchema>
+    | z.output<typeof CatalogueCategoryPropertyPatchSchema>
   >();
 
   const propertyRHF = watch();
