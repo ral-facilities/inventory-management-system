@@ -8,6 +8,7 @@ jq \
   --arg imsApiUrl "$IMS_API_URL" \
   --arg osApiUrl "$OS_API_URL" \
   --arg imsJsApiUrl "$IMS_JS_API_URL" \
+  --arg imsIngestApiUrl "$IMS_INGEST_API_URL" \
   --argjson maxAttachmentSizeBytes $MAX_ATTACHMENT_SIZE_BYTES \
   --argjson attachmentAllowedFileExtensions "$ATTACHMENT_ALLOWED_FILE_EXTENSIONS" \
   --argjson imageAllowedFileExtensions "$IMAGE_ALLOWED_FILE_EXTENSIONS" \
@@ -17,6 +18,7 @@ jq \
   '.imsApiUrl = $imsApiUrl |
    .osApiUrl = $osApiUrl |
    .imsJsApiUrl = $imsJsApiUrl |
+   .imsIngestApiUrl = $imsIngestApiUrl |
    .maxAttachmentSizeBytes = $maxAttachmentSizeBytes |
    .attachmentAllowedFileExtensions = $attachmentAllowedFileExtensions |
    .imageAllowedFileExtensions = $imageAllowedFileExtensions |
