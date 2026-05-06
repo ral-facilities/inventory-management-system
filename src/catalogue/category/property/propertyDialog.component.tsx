@@ -37,10 +37,7 @@ import {
   usePostCatalogueCategoryProperty,
 } from '../../../api/catalogueCategories';
 import { useGetUnits } from '../../../api/units';
-import {
-  AddCatalogueCategoryPropertyWithPlacementIds,
-  AddPropertyMigration,
-} from '../../../app.types';
+import { AddPropertyMigration } from '../../../app.types';
 import {
   CatalogueCategoryPropertyPatchSchema,
   CatalogueCategoryPropertyPostSchema,
@@ -123,7 +120,9 @@ export interface PropertyDialogProps {
   onClose: (removeRow?: boolean) => void;
   type: RequestType;
   catalogueCategory?: CatalogueCategory;
-  selectedProperty?: AddCatalogueCategoryPropertyWithPlacementIds;
+  selectedProperty?: NonNullable<
+    z.input<typeof CatalogueCategorySchema>['properties']
+  >[number];
   isMigration: boolean;
   index?: number;
   isAdminMode: boolean;

@@ -65,6 +65,9 @@ describe('CatalogueItemPropertiesTable', () => {
     const pumpingSpeed = await screen.findByText('Pumping Speed');
     expect(pumpingSpeed).toBeInTheDocument();
 
+    const pumpingSpeedUnit = await screen.findByText('liters per second');
+    expect(pumpingSpeedUnit).toBeInTheDocument();
+
     expect(asFragment()).toMatchSnapshot();
   });
 
