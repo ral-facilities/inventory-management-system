@@ -32,6 +32,7 @@ describe('ItemDialog', () => {
       catalogueCategory: getCatalogueCategoryById('4'),
       catalogueItem: getCatalogueItemById('1'),
       isAdminMode: false,
+      serialNumberPrefillEnabled: false,
     };
     user = userEvent.setup();
   });
@@ -280,7 +281,7 @@ describe('ItemDialog', () => {
           { id: '6', value: false },
         ],
         purchase_order_number: null,
-        serial_number: 'Cameras %s',
+        serial_number: null,
         system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
         usage_status_id: '0',
         warranty_end_date: null,
@@ -318,7 +319,7 @@ describe('ItemDialog', () => {
           { id: '6', value: false },
         ],
         purchase_order_number: null,
-        serial_number: 'Cameras %s',
+        serial_number: null,
         system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
         usage_status_id: '0',
         warranty_end_date: null,
@@ -387,6 +388,34 @@ describe('ItemDialog', () => {
         });
       }
     }, 10000);
+
+    it('prefills serial number with default value when enabled', async () => {
+      props.serialNumberPrefillEnabled = true;
+      createView();
+
+      await user.click(screen.getByText('Add item details'));
+
+      await waitFor(() => {
+        expect(screen.getByDisplayValue('Cameras %s'));
+      });
+    });
+
+    it('displays an error message when serial number field contains %s and advanced option fields are empty', async () => {
+      createView();
+
+      await user.click(screen.getByText('Add item details'));
+
+      await modifyDetailsValues({
+        serialNumber: 'Cameras %s',
+        serialNumberAdvancedOptions: { quantity: '', starting_value: '' },
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await waitFor(() => {
+        expect(screen.getByText('Please remove or replace %s.'));
+      });
+    });
 
     it('navigates through the stepper using the labels', async () => {
       createView();
@@ -476,7 +505,7 @@ describe('ItemDialog', () => {
           },
         ],
         purchase_order_number: null,
-        serial_number: 'Dry Vacuum Pumps %s',
+        serial_number: null,
         system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
         usage_status_id: '0',
         warranty_end_date: null,
@@ -654,6 +683,7 @@ describe('ItemDialog', () => {
       await user.click(screen.getByText('Add item details'));
 
       await modifyDetailsValues({
+        serialNumber: '',
         serialNumberAdvancedOptions: { starting_value: '10' },
       });
 
@@ -661,6 +691,11 @@ describe('ItemDialog', () => {
 
       expect(
         screen.getByText('Please enter a quantity value.')
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          'Please use %s to specify the location you want to append the number to serial number.'
+        )
       ).toBeInTheDocument();
 
       await user.click(screen.getByText('Close advanced options'));
@@ -673,7 +708,6 @@ describe('ItemDialog', () => {
       ).toBeInTheDocument();
 
       await user.click(screen.getByText('Close advanced options'));
-
       await modifyDetailsValues({
         serialNumberAdvancedOptions: { quantity: '10a', starting_value: '10a' },
       });
@@ -721,12 +755,6 @@ describe('ItemDialog', () => {
 
       expect(
         await screen.findByText('Number must be less than or equal to 99')
-      ).toBeInTheDocument();
-
-      expect(
-        screen.getByText(
-          'Please use %s to specify the location you want to append the number to serial number.'
-        )
       ).toBeInTheDocument();
 
       await user.click(screen.getByText('Close advanced options'));
@@ -831,7 +859,7 @@ describe('ItemDialog', () => {
           { id: '6', value: false },
         ],
         purchase_order_number: null,
-        serial_number: 'Cameras %s',
+        serial_number: null,
         system_id: '65328f34a40ff5301575a4e3',
         usage_status_id: '1',
         warranty_end_date: null,

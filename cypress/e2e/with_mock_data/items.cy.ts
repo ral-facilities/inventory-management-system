@@ -126,6 +126,8 @@ describe('Items', () => {
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Next' }).click();
+
+    cy.findByLabelText('Serial number').type('{selectall}{del}');
     cy.findByRole('button', { name: 'Next' }).click();
 
     cy.findByRole('button', { name: 'Finish' }).click();
@@ -247,34 +249,36 @@ describe('Items', () => {
     cy.findByLabelText('Starting value').clear();
 
     cy.findByLabelText('Quantity').type('10a');
-    cy.findByLabelText('Starting value').type('10a');
+    cy.findAllByText('Please enter a valid number.').should('exist');
 
-    cy.findAllByText('Please enter a valid number.').should('have.length', 2);
+    cy.findByLabelText('Starting value').type('10a');
+    cy.findAllByText('Please enter a valid number.').should('exist');
 
     cy.findByLabelText('Quantity').clear();
     cy.findByLabelText('Starting value').clear();
 
     cy.findByLabelText('Quantity').type('10.5');
+    cy.findAllByText('Please enter a valid integer.').should('exist');
+    
     cy.findByLabelText('Starting value').type('10.5');
-
-    cy.findAllByText('Please enter a valid integer.').should('have.length', 2);
+    cy.findAllByText('Please enter a valid integer.').should('exist');
 
     cy.findByLabelText('Quantity').clear();
     cy.findByLabelText('Starting value').clear();
 
     cy.findByLabelText('Quantity').type('-1');
-    cy.findByLabelText('Starting value').type('-1');
-
-    cy.findByText('Number must be greater than or equal to 0').should('exist');
     cy.findByText('Number must be greater than or equal to 2').should('exist');
+
+    cy.findByLabelText('Starting value').type('-1');
+    cy.findByText('Number must be greater than or equal to 0').should('exist');
 
     cy.findByLabelText('Quantity').clear();
     cy.findByLabelText('Starting value').clear();
 
     cy.findByLabelText('Quantity').type('100');
-    cy.findByLabelText('Starting value').type('2');
-
     cy.findByText('Number must be less than or equal to 99').should('exist');
+
+    cy.findByLabelText('Starting value').type('2');
 
     cy.findByLabelText('Quantity').clear();
     cy.findByLabelText('Starting value').clear();
@@ -308,6 +312,8 @@ describe('Items', () => {
     cy.findByText('Item Creation Rule Applied').should('exist');
 
     cy.findByRole('button', { name: 'Next' }).click();
+    
+    cy.findByLabelText('Serial number').type('{selectall}{del}');
 
     cy.findByRole('button', { name: 'Next' }).click();
 
@@ -334,7 +340,7 @@ describe('Items', () => {
           usage_status_id: '0',
           warranty_end_date: null,
           asset_number: null,
-          serial_number: 'Dry Vacuum Pumps %s',
+          serial_number: null,
           delivered_date: null,
           notes: null,
           properties: [
@@ -441,6 +447,7 @@ describe('Items', () => {
     cy.findByRole('option', { name: 'In Use' }).click();
 
     cy.startSnoopingBrowserMockedRequest();
+    cy.findByLabelText('Serial number').type('{selectall}{del}');
 
     cy.findByRole('button', { name: 'Next' }).click();
 
@@ -459,7 +466,7 @@ describe('Items', () => {
           usage_status_id: '1',
           warranty_end_date: null,
           asset_number: null,
-          serial_number: 'Cameras %s',
+          serial_number: null,
           delivered_date: null,
           notes: null,
           properties: [
@@ -491,6 +498,7 @@ describe('Items', () => {
     cy.findByText('Item Creation Rule Applied').should('exist');
 
     cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByLabelText('Serial number').type('{selectall}{del}');
 
     cy.findByLabelText('Warranty end date').type('12/02/');
     cy.findByLabelText('Delivered date').type('12/02/');
