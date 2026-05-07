@@ -2,6 +2,7 @@ import AddIcon from '@mui/icons-material/Add';
 import BlockIcon from '@mui/icons-material/Block';
 import ClearIcon from '@mui/icons-material/Clear';
 import DeleteIcon from '@mui/icons-material/Delete';
+import DownloadIcon from '@mui/icons-material/Download';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
@@ -49,6 +50,7 @@ import {
   ROWS_PER_PAGE_OPTIONS,
 } from '../../common/consts';
 import CriticalityTooltipIcon from '../../common/criticalityTooltipIcon.component';
+import DownloadTemplateDialog from '../../common/downloadTemplateDialog';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import { SparesColumnHeaderInformationTooltip } from '../../common/sparesInformationTooltip.component';
 import { useAppSelector } from '../../state/hook';
@@ -258,6 +260,9 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     React.useState<boolean>(false);
 
   const [obsoleteItemDialogOpen, setObsoleteItemDialogOpen] =
+    React.useState<boolean>(false);
+
+  const [downloadTemplateDialogOpen, setDownloadTemplateDialogOpen] =
     React.useState<boolean>(false);
 
   const [selectedCatalogueItem, setSelectedCatalogueItem] = React.useState<
@@ -1094,6 +1099,17 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           >
             Add Catalogue Item
           </Button>
+
+          <Button
+            startIcon={<DownloadIcon />}
+            sx={{ mx: 0.5 }}
+            variant="outlined"
+            onClick={() => {
+              setDownloadTemplateDialogOpen(true);
+            }}
+          >
+            Download Template
+          </Button>
           {
             // Don't show for the move to and obsolete dialogues
             requestOrigin === undefined && (
@@ -1268,6 +1284,13 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             onClose={() => setObsoleteItemDialogOpen(false)}
             catalogueItem={selectedCatalogueItem}
             parentInfo={parentInfo}
+          />
+          <DownloadTemplateDialog
+            open={downloadTemplateDialogOpen}
+            onClose={() => setDownloadTemplateDialogOpen(false)}
+            collection="catalogue-items"
+            id={parentInfo.id}
+            name={parentInfo.name}
           />
         </>
       )}

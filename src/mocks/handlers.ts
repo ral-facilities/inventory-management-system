@@ -1434,4 +1434,26 @@ export const handlers = [
       { status: 200 }
     );
   }),
+  // --------------------------------- INGEST ------------------------------------------------------
+
+  http.get<PathParams, DefaultBodyType, ErrorResponse | NonNullable<unknown>>(
+    '/ingest/:collection/:id',
+    async ({ params }) => {
+      const { collection } = params;
+      let template;
+      if (collection === 'catalogue-items') {
+        const response = await fetch('/src/mocks/CatalogueItemTemplate.xlsx');
+        const buffer = await response.arrayBuffer();
+        template = buffer;
+      }
+      return new HttpResponse(template, {
+        status: 200,
+        headers: {
+          'Content-Type':
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+          'Content-Disposition': `attachment; filename="${collection}-template.xlsx"`,
+        },
+      });
+    }
+  ),
 ];
