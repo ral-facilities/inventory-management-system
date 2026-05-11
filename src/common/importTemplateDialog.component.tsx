@@ -88,22 +88,27 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
 
       if (!container) return;
 
-      const { files = {}, error, recoveredState } = uppy.getState();
-      const { isAllComplete } = uppy.getObjectOfFilesPerState();
-
-      const uploadState = getUploadingState(
+      const {
+        files = {},
         error,
-        isAllComplete,
         recoveredState,
-        files
-      );
-      const fileCount = Object.keys(files || {}).length;
-      console.log(uploadState);
+        hideUploadButton,
+        allowNewUpload,
+      } = uppy.getState();
+      const {
+        isAllComplete,
+        isAllPaused,
+        isSomeGhost,
+        isUploadInProgress,
+        newFiles,
+      } = uppy.getObjectOfFilesPerState();
+
       const showVerifyBtn =
         !error &&
-        fileCount === 1 &&
-        !recoveredState &&
-        uploadState !== statusBarStates.STATE_UPLOADING;
+        newFiles &&
+        ((!isUploadInProgress && !isAllPaused) || recoveredState) &&
+        allowNewUpload &&
+        !hideUploadButton;
 
       // ✅ Remove if shouldn't show
       if (!showVerifyBtn) {
@@ -140,13 +145,18 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
     };
 
     const update = () => {
-      setTimeout(injectVerifyButton, 0);
+      requestAnimationFrame(() => {
+        setTimeout(injectVerifyButton, 0);
+      });
     };
 
     uppy.on('file-added', update);
     uppy.on('file-removed', update);
     uppy.on('upload-progress', update);
     uppy.on('upload', update);
+    uppy.on('upload-start', update);
+
+    uppy.on('state-update', update);
     uppy.on('complete', update);
 
     update();
@@ -156,6 +166,8 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
       uppy.off('file-removed', update);
       uppy.off('upload-progress', update);
       uppy.off('upload', update);
+      uppy.off('upload-start', update);
+      uppy.off('state-update', update);
       uppy.off('complete', update);
     };
   }, [uppy, handleVerifyClick]);
