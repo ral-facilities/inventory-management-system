@@ -20,6 +20,10 @@ export interface DownloadTemplateDialogProps {
   id: string;
 }
 
+const mapToParentCollection = {
+  'catalogue-items': 'catalogue-categories',
+};
+
 const DownloadTemplateDialog = (props: DownloadTemplateDialogProps) => {
   const { open, onClose, collection, name, id } = props;
 
@@ -27,7 +31,7 @@ const DownloadTemplateDialog = (props: DownloadTemplateDialogProps) => {
 
   const handleClick = React.useCallback(async () => {
     queryClient
-      .fetchQuery(getTemplateQuery(collection, id))
+      .fetchQuery(getTemplateQuery(mapToParentCollection[collection], id))
       .then((response) => {
         const blob = response.data;
 
@@ -55,12 +59,11 @@ const DownloadTemplateDialog = (props: DownloadTemplateDialogProps) => {
   }, [queryClient, collection, id, name, onClose]);
 
   return (
-    <Dialog open={open} maxWidth="lg">
+    <Dialog open={open} sx={{ zIndex: 1300 + 2 }} maxWidth="lg">
       <DialogTitle>Download Template</DialogTitle>
-
       <DialogContent>
-        Are you sure you want to download the template for the{' '}
-        {collection.replace('-', ' ')} within <strong>{name}</strong>?
+        Download a template spreadsheet to create {collection.replace('-', ' ')}{' '}
+        in <strong>{name}</strong>?
       </DialogContent>
 
       <DialogActions>

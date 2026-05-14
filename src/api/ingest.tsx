@@ -6,7 +6,7 @@ export const getTemplate = async (
   collection: string,
   id: string
 ): Promise<AxiosResponse<Blob>> => {
-  return ingestApi.get(`/ingest/${collection}/${id}`, {
+  return ingestApi.get(`/spreadsheets/${collection}/${id}/template`, {
     responseType: 'blob',
   });
 };

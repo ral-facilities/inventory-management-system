@@ -14,6 +14,7 @@ import { uppyOnAfterResponse, uppyOnBeforeRequest } from '../api/api';
 import { UppyImageUploadResponse, UppyUploadMetadata } from '../app.types';
 import { useAppSelector } from '../state/hook';
 import { selectSettings } from '../state/slices/configSlice';
+import DownloadTemplateDialog from './downloadTemplateDialog';
 import {
   getUploadingState,
   StyledUppyBox,
@@ -23,28 +24,32 @@ import {
 export interface ImportTemplateDialogProps {
   open: boolean;
   onClose: () => void;
-  collection: string;
+  collection: 'catalogue-items';
   parentId: string;
+  name: string;
 }
 
 const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
-  const { open, onClose, collection, parentId } = props;
+  const { open, onClose, collection, parentId, name } = props;
 
   const theme = useTheme();
+
+  const [downloadTemplateDialogOpen, setDownloadTemplateDialogOpen] =
+    React.useState<boolean>(false);
 
   const queryClient = useQueryClient();
 
   const {
     settings: {
-      maxImageSizeBytes,
+      // maxImageSizeBytes,
       imsIngestApiUrl,
-      attachmentAllowedFileExtensions,
+      // attachmentAllowedFileExtensions,
     },
   } = useAppSelector(selectSettings);
 
   // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000,
   // so here the former is expected despite them really being GiB, MiB and KiB.
-  const maxFileSizeMB = maxImageSizeBytes / 1024 ** 2;
+  // const maxFileSizeMB = maxImageSizeBytes / 1024 ** 2;
 
   const [uppy] = React.useState<
     Uppy<UppyUploadMetadata, UppyImageUploadResponse>
@@ -53,10 +58,10 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
       autoProceed: false,
       infoTimeout: 10000,
       restrictions: {
-        maxFileSize: maxImageSizeBytes,
+        // maxFileSize: maxImageSizeBytes,
         maxNumberOfFiles: 1,
         requiredMetaFields: ['name'],
-        allowedFileTypes: attachmentAllowedFileExtensions,
+        // allowedFileTypes: attachmentAllowedFileExtensions,
       },
     }).use(ProgressBar);
 
@@ -80,6 +85,10 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
     console.log('Verify button clicked');
   }, []);
 
+  const handleDownloadTemplate = React.useCallback(() => {
+    setDownloadTemplateDialogOpen(true);
+  }, []);
+
   React.useEffect(() => {
     const injectVerifyButton = () => {
       const container = document.querySelector(
@@ -88,17 +97,11 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
 
       if (!container) return;
 
+      const { error, recoveredState, hideUploadButton, allowNewUpload } =
+        uppy.getState();
       const {
-        files = {},
-        error,
-        recoveredState,
-        hideUploadButton,
-        allowNewUpload,
-      } = uppy.getState();
-      const {
-        isAllComplete,
         isAllPaused,
-        isSomeGhost,
+
         isUploadInProgress,
         newFiles,
       } = uppy.getObjectOfFilesPerState();
@@ -110,13 +113,20 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
         allowNewUpload &&
         !hideUploadButton;
 
-      // ✅ Remove if shouldn't show
+      const existingBtn = document.getElementById('verify-button');
+
       if (!showVerifyBtn) {
-        document.getElementById('verify-button')?.remove();
+        if (existingBtn) {
+          existingBtn.style.display = 'none';
+
+          //
+          requestAnimationFrame(() => {
+            existingBtn.remove();
+          });
+        }
         return;
       }
 
-      // ✅ Prevent duplicate
       if (document.getElementById('verify-button')) return;
 
       const verifyBtn = document.createElement('button');
@@ -146,7 +156,7 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
 
     const update = () => {
       requestAnimationFrame(() => {
-        setTimeout(injectVerifyButton, 0);
+        injectVerifyButton();
       });
     };
 
@@ -171,6 +181,67 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
       uppy.off('complete', update);
     };
   }, [uppy, handleVerifyClick]);
+
+  React.useEffect(() => {
+    const injectDownloadLink = () => {
+      const title = document.querySelector(
+        '.uppy-Dashboard-AddFiles-title'
+      ) as HTMLElement;
+
+      if (!title) return;
+
+      const { files = {} } = uppy.getState();
+      const fileCount = Object.keys(files).length;
+
+      if (fileCount > 0) {
+        document.getElementById('download-template-link')?.remove();
+        return;
+      }
+
+      if (document.getElementById('download-template-link')) return;
+
+      const browseBtn = title.querySelector(
+        '.uppy-Dashboard-browse'
+      ) as HTMLElement;
+
+      if (!browseBtn) return;
+
+      const link = document.createElement('button');
+      link.id = 'download-template-link';
+
+      link.className = 'uppy-u-reset uppy-c-btn uppy-Dashboard-browse';
+
+      link.innerText = 'download template';
+
+      link.onclick = () => {
+        handleDownloadTemplate();
+      };
+
+      browseBtn.insertAdjacentElement('afterend', link);
+
+      browseBtn.insertAdjacentText('afterend', ' or ');
+    };
+
+    const update = () => {
+      requestAnimationFrame(() => {
+        injectDownloadLink();
+      });
+    };
+
+    uppy.on('file-added', update);
+    uppy.on('file-removed', update);
+    uppy.on('state-update', update);
+    uppy.on('dashboard:modal-open', update);
+
+    update();
+
+    return () => {
+      uppy.off('file-added', update);
+      uppy.off('file-removed', update);
+      uppy.off('state-update', update);
+      uppy.off('dashboard:modal-open', update);
+    };
+  }, [handleDownloadTemplate, uppy]);
 
   // Destroy uppy instance on unmount (Should also avoid errors in tests e.g. 'ReferenceError: window is not defined' from code
   // executing after tests have completed)
@@ -214,29 +285,39 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
   ]);
 
   return (
-    <StyledUppyBox>
-      <DashboardModal
-        open={open}
-        locale={{
-          strings: {
-            ...en_US.strings, // Spread default strings
-            dropPasteFiles: 'Drop template here or %{browseFiles}',
-          } as UppyDashboardLocaleStrings<
-            UppyUploadMetadata,
-            UppyImageUploadResponse
-          >,
-        }}
-        onRequestClose={handleClose}
-        closeModalOnClickOutside={false}
-        animateOpenClose={false}
-        uppy={uppy}
-        note={`Files cannot be larger than ${maxFileSizeMB}MB. Supported file types: ${attachmentAllowedFileExtensions.join(', ')}.`}
-        proudlyDisplayPoweredByUppy={false}
-        theme={theme.palette.mode}
-        doneButtonHandler={handleClose}
-        metaFields={[]}
+    <>
+      <StyledUppyBox>
+        <DashboardModal
+          open={open}
+          locale={{
+            strings: {
+              ...en_US.strings, // Spread default strings
+
+              dropPasteFiles: 'Drop template here or %{browseFiles}',
+            } as UppyDashboardLocaleStrings<
+              UppyUploadMetadata,
+              UppyImageUploadResponse
+            >,
+          }}
+          onRequestClose={handleClose}
+          closeModalOnClickOutside={false}
+          animateOpenClose={false}
+          uppy={uppy}
+          // note={`Files cannot be larger than ${maxFileSizeMB}MB. Supported file types: ${attachmentAllowedFileExtensions.join(', ')}.`}
+          proudlyDisplayPoweredByUppy={false}
+          theme={theme.palette.mode}
+          doneButtonHandler={handleClose}
+          metaFields={[]}
+        />
+      </StyledUppyBox>
+      <DownloadTemplateDialog
+        open={downloadTemplateDialogOpen}
+        onClose={() => setDownloadTemplateDialogOpen(false)}
+        collection={collection}
+        id={parentId}
+        name={name}
       />
-    </StyledUppyBox>
+    </>
   );
 };
 
