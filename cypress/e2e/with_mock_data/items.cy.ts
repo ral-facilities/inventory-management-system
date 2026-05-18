@@ -138,14 +138,11 @@ describe('Items', () => {
       expect(postRequests.length).eq(1);
       expect(JSON.stringify(await postRequests[0].json())).equal(
         JSON.stringify({
-          purchase_order_number: null,
           is_defective: false,
           usage_status_id: '0',
           warranty_end_date: null,
-          asset_number: null,
           serial_number: null,
           delivered_date: null,
-          notes: null,
           properties: [
             { id: '1', value: 12 },
             { id: '2', value: 30 },
@@ -196,14 +193,11 @@ describe('Items', () => {
       for (let i = 0; i < 3; i++) {
         expect(JSON.stringify(await postRequests[i].json())).equal(
           JSON.stringify({
-            purchase_order_number: null,
             is_defective: false,
             usage_status_id: '0',
             warranty_end_date: null,
-            asset_number: null,
             serial_number: `test ${i + 2}`,
             delivered_date: null,
-            notes: null,
             properties: [
               { id: '1', value: 12 },
               { id: '2', value: 30 },
@@ -327,14 +321,11 @@ describe('Items', () => {
       expect(postRequests.length).eq(1);
       expect(JSON.stringify(await postRequests[0].json())).equal(
         JSON.stringify({
-          purchase_order_number: null,
           is_defective: false,
           usage_status_id: '0',
           warranty_end_date: null,
-          asset_number: null,
           serial_number: null,
           delivered_date: null,
-          notes: null,
           properties: [
             { id: '17', value: 400 },
             { id: '18', value: 0.2 },
@@ -452,14 +443,11 @@ describe('Items', () => {
       expect(postRequests.length).eq(1);
       expect(JSON.stringify(await postRequests[0].json())).equal(
         JSON.stringify({
-          purchase_order_number: null,
           is_defective: false,
           usage_status_id: '1',
           warranty_end_date: null,
-          asset_number: null,
           serial_number: null,
           delivered_date: null,
-          notes: null,
           properties: [
             { id: '1', value: 12 },
             { id: '2', value: 30 },

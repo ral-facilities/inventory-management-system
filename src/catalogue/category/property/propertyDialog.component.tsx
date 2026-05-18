@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import WarningIcon from '@mui/icons-material/Warning';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import WarningIcon from '@mui/icons-material/Warning';
 import {
   Autocomplete,
   Button,
@@ -13,21 +13,20 @@ import {
   Paper,
   Stack,
   TextField,
-  Typography,
   Tooltip,
+  Typography,
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import React from 'react';
 import {
-  Control,
   Controller,
   FormProvider,
-  UseFormReturn,
+  Resolver,
   useForm,
   useFormContext,
 } from 'react-hook-form';
+import z from 'zod';
 import {
-  AllowedValuesListType,
   CatalogueCategory,
   CatalogueCategoryPropertyPatch,
   CatalogueCategoryPropertyPost,
@@ -38,18 +37,19 @@ import {
   usePostCatalogueCategoryProperty,
 } from '../../../api/catalogueCategories';
 import { useGetUnits } from '../../../api/units';
-import {
-  AddCatalogueCategoryPropertyWithPlacementIds,
-  AddCatalogueCategoryWithPlacementIds,
-  AddPropertyMigration,
-} from '../../../app.types';
+import { AddPropertyMigration } from '../../../app.types';
 import {
   CatalogueCategoryPropertyPatchSchema,
   CatalogueCategoryPropertyPostSchema,
+  CatalogueCategorySchema,
   RequestType,
 } from '../../../form.schemas';
 import { transformAllowedValues } from '../catalogueCategoryDialog.component';
 import AllowedValuesListTextFields from './allowedValuesListTextFields.component';
+import AllowedValuesController from './controllers/allowedValuesContoller.component';
+import MandatoryController from './controllers/mandatoryContoller.component';
+import TypeController from './controllers/typeContoller.component';
+import UnitController from './controllers/unitContoller.component';
 
 interface MigrationWarningMessageProps {
   isChecked: boolean;
@@ -120,7 +120,9 @@ export interface PropertyDialogProps {
   onClose: (removeRow?: boolean) => void;
   type: RequestType;
   catalogueCategory?: CatalogueCategory;
-  selectedProperty?: AddCatalogueCategoryPropertyWithPlacementIds;
+  selectedProperty?: NonNullable<
+    z.input<typeof CatalogueCategorySchema>['properties']
+  >[number];
   isMigration: boolean;
   index?: number;
   isAdminMode: boolean;
@@ -138,7 +140,14 @@ const PropertyDialog = (props: PropertyDialogProps) => {
     isAdminMode,
   } = props;
 
-  const formMethodsAdd = useFormContext<AddCatalogueCategoryWithPlacementIds>();
+  const [isMigrationWarningChecked, setIsMigrationWarningChecked] =
+    React.useState(false);
+
+  const formMethodsAdd = useFormContext<
+    z.input<typeof CatalogueCategorySchema>,
+    undefined,
+    z.output<typeof CatalogueCategorySchema>
+  >();
 
   const {
     watch: watchAdd,
@@ -158,23 +167,22 @@ const PropertyDialog = (props: PropertyDialogProps) => {
 
   const typeAdd = propertyAdd.properties && propertyAdd.properties[index]?.type;
 
-  const formMethods = useForm<AddPropertyMigration>({
+  const formMethodsMigPost = useForm({
+    // Zod correctly validates and discriminates the `properties` union at runtime,
+    // but TypeScript is unable to fully infer the resulting shape of complex
+    // `z.discriminatedUnion` schemas (specifically the nested `value.value` field).
+    // This causes the inferred resolver type from `zodResolver` to conflict with
+    //  the form's declared `AddPropertyMigration` type, even though the runtime behaviour
+    //  is correct.
+    //  We therefore explicitly assert the resolver to `Resolver<AddPropertyMigration>`
+    //  to bridge the gap between Zod's runtime guarantees and React Hook Form's
     resolver: zodResolver(
-      type === 'post'
-        ? CatalogueCategoryPropertyPostSchema
-        : CatalogueCategoryPropertyPatchSchema
-    ),
+      CatalogueCategoryPropertyPostSchema
+    ) as unknown as Resolver<AddPropertyMigration>,
     defaultValues: {
-      ...(type === 'post'
-        ? {
-            name: '',
-            type: CatalogueCategoryPropertyType.Text,
-            mandatory: 'false',
-          }
-        : {
-            ...selectedProperty,
-            unit_id: selectedProperty?.unit_id ?? null,
-          }),
+      name: '',
+      type: CatalogueCategoryPropertyType.Text,
+      mandatory: 'false',
       default_value: {
         valueType: 'string_false',
         value: { av_placement_id: crypto.randomUUID(), value: '' },
@@ -182,29 +190,56 @@ const PropertyDialog = (props: PropertyDialogProps) => {
     },
   });
 
+  const formMethodsMigPatch = useForm({
+    resolver: zodResolver(CatalogueCategoryPropertyPatchSchema),
+    defaultValues: {
+      ...selectedProperty,
+      unit_id: selectedProperty?.unit_id ?? null,
+    },
+  });
+
   const { data: units } = useGetUnits();
 
   const {
-    handleSubmit,
-    register,
-    formState: { errors },
-    watch,
-    control,
-    setValue,
-    clearErrors,
-    setError,
-    resetField,
-    reset,
-  } = formMethods;
+    handleSubmit: handleSubmitMigPost,
+    register: registerMigPost,
+    formState: { errors: errorsMigPost },
+    watch: watchMigPost,
+    control: controlMigPost,
+    setValue: setValueMigPost,
+    clearErrors: clearErrorsMigPost,
+    setError: setErrorMigPost,
+    resetField: resetFieldMigPost,
+    reset: resetMigPost,
+  } = formMethodsMigPost;
+
+  const {
+    handleSubmit: handleSubmitMigPatch,
+    register: registerMigPatch,
+    formState: { errors: errorsMigPatch },
+    watch: watchMigPatch,
+    control: controlMigPatch,
+    clearErrors: clearErrorsMigPatch,
+    setError: setErrorMigPatch,
+    reset: resetMigPatch,
+  } = formMethodsMigPatch;
 
   const handleClose = React.useCallback(
     (removeRow?: boolean) => {
-      reset();
-      clearErrors();
+      resetMigPost();
+      resetMigPatch();
+      clearErrorsMigPost();
+      clearErrorsMigPatch();
       onClose(removeRow);
       setIsMigrationWarningChecked(false);
     },
-    [clearErrors, onClose, reset]
+    [
+      clearErrorsMigPatch,
+      clearErrorsMigPost,
+      onClose,
+      resetMigPatch,
+      resetMigPost,
+    ]
   );
 
   const handleAddSubmit = React.useCallback(() => {
@@ -214,7 +249,10 @@ const PropertyDialog = (props: PropertyDialogProps) => {
       }
     });
   }, [handleClose, index, triggerAdd]);
-  const property = watch();
+
+  const propertyMigPost = watchMigPost();
+
+  const propertyMigPatch = watchMigPatch();
 
   const { mutate: postCatalogueCategoryProperty } =
     usePostCatalogueCategoryProperty();
@@ -230,16 +268,29 @@ const PropertyDialog = (props: PropertyDialogProps) => {
       );
 
       if (propertyNames.includes(property.name)) {
-        setError('name', {
-          message: 'Duplicate property name. Please change the name.',
-        });
+        if (type === 'post') {
+          setErrorMigPost('name', {
+            message: 'Duplicate property name. Please change the name.',
+          });
+        } else {
+          setErrorMigPatch('name', {
+            message: 'Duplicate property name. Please change the name.',
+          });
+        }
         return;
       }
 
       postCatalogueCategoryProperty({ catalogueCategory, property });
       handleClose();
     },
-    [catalogueCategory, handleClose, postCatalogueCategoryProperty, setError]
+    [
+      catalogueCategory,
+      handleClose,
+      postCatalogueCategoryProperty,
+      setErrorMigPatch,
+      setErrorMigPost,
+      type,
+    ]
   );
 
   const handleEditPropertyMigration = React.useCallback(
@@ -253,9 +304,15 @@ const PropertyDialog = (props: PropertyDialogProps) => {
         .filter((name) => name !== selectedProperty?.name);
 
       if (property.name && propertyNames.includes(property.name)) {
-        setError('name', {
-          message: 'Duplicate property name. Please change the name.',
-        });
+        if (type === 'post') {
+          setErrorMigPost('name', {
+            message: 'Duplicate property name. Please change the name.',
+          });
+        } else {
+          setErrorMigPatch('name', {
+            message: 'Duplicate property name. Please change the name.',
+          });
+        }
         return;
       }
       const patchProperty: CatalogueCategoryPropertyPatch = {};
@@ -282,9 +339,15 @@ const PropertyDialog = (props: PropertyDialogProps) => {
           propertyId: propertyAPIFormat.id,
         });
       } else {
-        setError('name', {
-          message: `There have been no changes made. Please change ${isAdminMode ? 'a' : 'the name'} field value or press Close.`,
-        });
+        if (type === 'post') {
+          setErrorMigPost('name', {
+            message: `There have been no changes made. Please change ${isAdminMode ? 'a' : 'the name'} field value or press Close.`,
+          });
+        } else {
+          setErrorMigPatch('name', {
+            message: `There have been no changes made. Please change ${isAdminMode ? 'a' : 'the name'} field value or press Close.`,
+          });
+        }
         return;
       }
       handleClose();
@@ -294,18 +357,25 @@ const PropertyDialog = (props: PropertyDialogProps) => {
       handleClose,
       isAdminMode,
       patchCatalogueCategoryProperty,
-      selectedProperty,
-      setError,
+      selectedProperty?.name,
+      setErrorMigPatch,
+      setErrorMigPost,
+      type,
     ]
   );
 
-  const onSubmit = (data: AddPropertyMigration) => {
-    if (type === 'post') {
+  const onSubmitMigPost = React.useCallback(
+    (data: AddPropertyMigration) => {
       const transformedData =
         transformAddPropertyMigrationToCatalogueCategoryPropertyPost(data);
 
       handleAddPropertyMigration(transformedData);
-    } else {
+    },
+    [handleAddPropertyMigration]
+  );
+
+  const onSubmitMigPatch = React.useCallback(
+    (data: z.output<typeof CatalogueCategoryPropertyPatchSchema>) => {
       const transformedData: CatalogueCategoryPropertyPatch = {
         name: data.name,
         unit_id: data.unit_id,
@@ -314,26 +384,24 @@ const PropertyDialog = (props: PropertyDialogProps) => {
         }),
       };
       handleEditPropertyMigration(transformedData);
-    }
-  };
-  const resetDefaultValue = () =>
-    setValue('default_value', {
-      valueType: `${property.type}_${property.mandatory}`,
-      value: { av_placement_id: crypto.randomUUID(), value: '' },
-    });
+    },
+    [handleEditPropertyMigration]
+  );
 
-  const [isMigrationWarningChecked, setIsMigrationWarningChecked] =
-    React.useState(false);
-  const newControl = (isMigration ? control : controlAdd) as Control<
-    AddPropertyMigration | AddCatalogueCategoryWithPlacementIds,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    any
-  >;
+  const resetDefaultValue = React.useCallback(
+    () =>
+      setValueMigPost('default_value', {
+        valueType: `${propertyMigPost.type}_${propertyMigPost.mandatory}`,
+        value: { av_placement_id: crypto.randomUUID(), value: '' },
+      }),
+    [propertyMigPost, setValueMigPost]
+  );
 
   // Create a record object to switch between the correct property type based on isMigration
   const propertyType = isMigration
-    ? property.type
+    ? propertyMigPost.type
     : propertyAdd?.properties?.[index]?.type;
+
   return (
     <Dialog open={open} maxWidth="sm" fullWidth>
       <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
@@ -368,205 +436,146 @@ const PropertyDialog = (props: PropertyDialogProps) => {
             variant="outlined"
             required
             {...(isMigration
-              ? register('name')
+              ? type === 'post'
+                ? registerMigPost('name')
+                : registerMigPatch('name')
               : registerAdd(`properties.${index}.name`))}
             error={
               isMigration
-                ? !!errors?.name
+                ? type === 'post'
+                  ? !!errorsMigPost?.name
+                  : !!errorsMigPatch?.name
                 : !!errorsAdd?.properties?.[index]?.name
             }
             helperText={
               isMigration
-                ? errors?.name?.message
+                ? type === 'post'
+                  ? errorsMigPost?.name?.message
+                  : errorsMigPatch?.name?.message
                 : errorsAdd?.properties?.[index]?.name?.message
             }
             fullWidth
           />
-          <Controller
-            control={newControl}
-            name={isMigration ? 'type' : `properties.${index}.type`}
-            render={({ field: { value, onChange } }) => (
-              <Autocomplete
-                id={crypto.randomUUID()}
-                disableClearable
-                disabled={type === 'patch' && isMigration}
-                value={(
-                  Object.keys(CatalogueCategoryPropertyType) as Array<
-                    keyof typeof CatalogueCategoryPropertyType
-                  >
-                ).find((key) => CatalogueCategoryPropertyType[key] === value)}
-                onChange={(_event, value) => {
-                  const formattedValue =
-                    CatalogueCategoryPropertyType[
-                      value as keyof typeof CatalogueCategoryPropertyType
-                    ];
-                  onChange(formattedValue);
+          {isMigration ? (
+            <TypeController
+              control={controlMigPost}
+              name="type"
+              disabled={type === 'patch'}
+              extraOnChange={(formattedValue) => {
+                resetDefaultValue();
 
-                  if (isMigration) {
-                    resetDefaultValue();
+                clearErrorsMigPost('default_value.value');
+                clearErrorsMigPost('allowed_values');
 
-                    clearErrors('default_value.value');
-                    clearErrors('allowed_values');
-
-                    if (
-                      property.allowed_values?.type &&
-                      formattedValue !== CatalogueCategoryPropertyType.Boolean
-                    )
-                      setValue(
-                        'allowed_values.values.valueType',
-                        formattedValue
-                      );
-
-                    if (
-                      formattedValue === CatalogueCategoryPropertyType.Boolean
-                    ) {
-                      resetField('allowed_values');
-                      resetField('unit_id');
-                    }
-                  } else {
-                    if (
-                      allowedValuesTypeAdd &&
-                      formattedValue !== CatalogueCategoryPropertyType.Boolean
-                    ) {
-                      setValueAdd(
-                        `properties.${index}.allowed_values.values.valueType`,
-                        formattedValue
-                      );
-                    }
-
-                    if (formattedValue === 'boolean') {
-                      resetFieldAdd(`properties.${index}.allowed_values`);
-                      resetFieldAdd(`properties.${index}.unit_id`);
-                    }
-                  }
-                }}
-                fullWidth
-                options={Object.keys(CatalogueCategoryPropertyType)}
-                isOptionEqualToValue={(option, value) =>
-                  option === value || value === ''
+                if (
+                  propertyMigPost.allowed_values?.type &&
+                  formattedValue !== CatalogueCategoryPropertyType.Boolean
+                ) {
+                  setValueMigPost(
+                    'allowed_values.values.valueType',
+                    formattedValue
+                  );
                 }
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    disabled={type === 'patch' && isMigration}
-                    required={true}
-                    label="Select Type"
-                    variant="outlined"
-                  />
-                )}
-              />
-            )}
-          />
-          <Controller
-            control={newControl}
-            name={
-              isMigration
-                ? `allowed_values`
-                : `properties.${index}.allowed_values`
-            }
-            render={({ field: { value, onChange } }) => {
-              return (
-                <Autocomplete
-                  disableClearable
-                  disabled={
-                    propertyType === CatalogueCategoryPropertyType.Boolean ||
-                    (type === 'patch' && isMigration)
-                  }
-                  id={crypto.randomUUID()}
-                  value={
-                    (
-                      Object.keys(AllowedValuesListType) as Array<
-                        keyof typeof AllowedValuesListType
-                      >
-                    ).find(
-                      (key) => AllowedValuesListType[key] === value?.type
-                    ) ?? 'Any'
-                  }
-                  onChange={(_event, value) => {
-                    const formattedValue =
-                      AllowedValuesListType[
-                        value as keyof typeof AllowedValuesListType
-                      ];
 
-                    if (isMigration) resetDefaultValue();
+                if (formattedValue === CatalogueCategoryPropertyType.Boolean) {
+                  resetFieldMigPost('allowed_values');
+                  resetFieldMigPost('unit_id');
+                }
+              }}
+            />
+          ) : (
+            <TypeController
+              control={controlAdd}
+              name={`properties.${index}.type`}
+              extraOnChange={(formattedValue) => {
+                if (
+                  allowedValuesTypeAdd &&
+                  formattedValue !== CatalogueCategoryPropertyType.Boolean
+                ) {
+                  setValueAdd(
+                    `properties.${index}.allowed_values.values.valueType`,
+                    formattedValue
+                  );
+                }
 
-                    onChange(
-                      formattedValue === 'list'
-                        ? {
-                            type: formattedValue,
-                            values: {
-                              valueType: isMigration
-                                ? property.type
-                                : propertyAdd?.properties?.[index].type,
-                              values: [],
-                            },
-                          }
-                        : undefined
-                    );
-                  }}
-                  fullWidth
-                  options={Object.keys(AllowedValuesListType)}
-                  isOptionEqualToValue={(option, value) =>
-                    option.toLowerCase() == value.toLowerCase() || value == ''
-                  }
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      required
-                      label="Select Allowed values"
-                      variant="outlined"
-                      disabled={
-                        property.type ===
-                          CatalogueCategoryPropertyType.Boolean ||
-                        (type === 'patch' && isMigration)
-                      }
-                    />
-                  )}
-                />
-              );
-            }}
-          />
-          {(isMigration
-            ? property.allowed_values?.type === 'list' &&
-              property.type !== CatalogueCategoryPropertyType.Boolean
-            : allowedValuesTypeAdd &&
-              typeAdd !== CatalogueCategoryPropertyType.Boolean) && (
-            <Stack direction="column" spacing={1}>
-              <FormProvider
-                {...((isMigration
-                  ? formMethods
-                  : formMethodsAdd) as UseFormReturn<
-                  AddCatalogueCategoryWithPlacementIds | AddPropertyMigration,
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  any,
-                  undefined
-                >)}
-              >
-                <AllowedValuesListTextFields
-                  property={isMigration ? selectedProperty : undefined}
-                  propertyIndex={isMigration ? undefined : index}
-                />
-              </FormProvider>
-            </Stack>
+                if (formattedValue === 'boolean') {
+                  resetFieldAdd(`properties.${index}.allowed_values`);
+                  resetFieldAdd(`properties.${index}.unit_id`);
+                }
+              }}
+            />
           )}
+
+          {isMigration ? (
+            <AllowedValuesController
+              control={controlMigPost}
+              name={'allowed_values'}
+              valueType={propertyMigPost.type}
+              extraOnChange={() => {
+                resetDefaultValue();
+              }}
+              disabled={
+                propertyMigPost.type ===
+                  CatalogueCategoryPropertyType.Boolean ||
+                (type === 'patch' && isMigration)
+              }
+            />
+          ) : (
+            <AllowedValuesController
+              control={controlAdd}
+              name={`properties.${index}.allowed_values`}
+              valueType={propertyAdd?.properties?.[index].type}
+              disabled={
+                propertyAdd?.properties?.[index].type ===
+                CatalogueCategoryPropertyType.Boolean
+              }
+            />
+          )}
+
+          {isMigration &&
+            type === 'post' &&
+            propertyMigPost.allowed_values?.type === 'list' && (
+              <Stack direction="column" spacing={1}>
+                <FormProvider {...formMethodsMigPost}>
+                  <AllowedValuesListTextFields property={selectedProperty} />
+                </FormProvider>
+              </Stack>
+            )}
+
+          {isMigration &&
+            type === 'patch' &&
+            propertyMigPatch.allowed_values?.type === 'list' && (
+              <Stack direction="column" spacing={1}>
+                <FormProvider {...formMethodsMigPatch}>
+                  <AllowedValuesListTextFields property={selectedProperty} />
+                </FormProvider>
+              </Stack>
+            )}
+
+          {!isMigration &&
+            allowedValuesTypeAdd &&
+            typeAdd !== CatalogueCategoryPropertyType.Boolean && (
+              <Stack direction="column" spacing={1}>
+                <FormProvider {...formMethodsAdd}>
+                  <AllowedValuesListTextFields propertyIndex={index} />
+                </FormProvider>
+              </Stack>
+            )}
 
           {type === 'post' && isMigration && (
             <>
-              {property.allowed_values?.type === 'list' ? (
+              {propertyMigPost.allowed_values?.type === 'list' ? (
                 <Controller
-                  control={control}
+                  control={controlMigPost}
                   name={`default_value`}
                   render={({ field: { value: defaultValue, onChange } }) => (
                     <Autocomplete
-                      disableClearable={property.mandatory === 'true'}
-                      componentsProps={{
-                        clearIndicator: { onClick: resetDefaultValue },
-                      }}
+                      disableClearable={propertyMigPost.mandatory === 'true'}
                       id={crypto.randomUUID()}
                       value={defaultValue?.value || ''}
                       onChange={(_event, newValue) => {
                         onChange({
-                          valueType: `${property.type}_${property.mandatory}`,
+                          valueType: `${propertyMigPost.type}_${propertyMigPost.mandatory}`,
                           value:
                             newValue !== null
                               ? {
@@ -580,8 +589,8 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                       }}
                       fullWidth
                       options={
-                        property.allowed_values
-                          ? property.allowed_values.values.values.filter(
+                        propertyMigPost.allowed_values
+                          ? propertyMigPost.allowed_values.values.values.filter(
                               (val) => val.value
                             )
                           : []
@@ -600,10 +609,10 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                           {...params}
                           label="Select Default value"
                           variant="outlined"
-                          required={property.mandatory === 'true'}
-                          error={!!errors?.default_value?.value?.value}
+                          required={propertyMigPost.mandatory === 'true'}
+                          error={!!errorsMigPost?.default_value?.value?.value}
                           helperText={
-                            errors?.default_value?.value?.value
+                            errorsMigPost?.default_value?.value?.value
                               ?.message as string
                           }
                         />
@@ -613,12 +622,12 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                 />
               ) : propertyType === CatalogueCategoryPropertyType.Boolean ? (
                 <Controller
-                  control={control}
+                  control={controlMigPost}
                   name={`default_value`}
                   render={({ field: { value: defaultValue, onChange } }) => {
                     return (
                       <Autocomplete
-                        disableClearable={property.mandatory === 'true'}
+                        disableClearable={propertyMigPost.mandatory === 'true'}
                         id={crypto.randomUUID()}
                         value={
                           defaultValue?.value?.value
@@ -630,7 +639,7 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                         }
                         onChange={(_event, newValue) => {
                           onChange({
-                            valueType: `${property.type}_${property.mandatory}`,
+                            valueType: `${propertyMigPost.type}_${propertyMigPost.mandatory}`,
                             value: {
                               av_placement_id:
                                 defaultValue.value.av_placement_id,
@@ -649,30 +658,27 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                             {...params}
                             label="Select Default value"
                             variant="outlined"
-                            required={property.mandatory === 'true'}
-                            error={!!errors?.default_value?.value?.value}
+                            required={propertyMigPost.mandatory === 'true'}
+                            error={!!errorsMigPost?.default_value?.value?.value}
                             helperText={
-                              errors?.default_value?.value?.value
+                              errorsMigPost?.default_value?.value?.value
                                 ?.message as string
                             }
                           />
                         )}
-                        slotProps={{
-                          clearIndicator: { onClick: resetDefaultValue },
-                        }}
                       />
                     );
                   }}
                 />
               ) : (
                 <Controller
-                  control={control}
+                  control={controlMigPost}
                   name={`default_value`}
                   render={({ field }) => {
                     const defaultValue = field.value;
                     return (
                       <TextField
-                        required={property.mandatory === 'true'}
+                        required={propertyMigPost.mandatory === 'true'}
                         label="Default value"
                         id={crypto.randomUUID()}
                         variant="outlined"
@@ -680,7 +686,7 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                         value={defaultValue?.value?.value ?? ''}
                         onChange={(event) => {
                           field.onChange({
-                            valueType: `${property.type}_${property.mandatory}`,
+                            valueType: `${propertyMigPost.type}_${propertyMigPost.mandatory}`,
                             value: {
                               av_placement_id:
                                 defaultValue.value.av_placement_id,
@@ -688,9 +694,10 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                             },
                           });
                         }}
-                        error={!!errors?.default_value?.value?.value}
+                        error={!!errorsMigPost?.default_value?.value?.value}
                         helperText={
-                          errors?.default_value?.value?.value?.message as string
+                          errorsMigPost?.default_value?.value?.value
+                            ?.message as string
                         }
                         fullWidth
                       />
@@ -701,71 +708,64 @@ const PropertyDialog = (props: PropertyDialogProps) => {
             </>
           )}
 
-          <Controller
-            control={newControl}
-            name={isMigration ? `unit_id` : `properties.${index}.unit_id`}
-            render={({ field: { value, onChange } }) => (
-              <Autocomplete
+          {isMigration ? (
+            type === 'post' ? (
+              <UnitController
+                control={controlMigPost}
+                units={units}
+                name={`unit_id`}
                 disabled={
-                  propertyType === CatalogueCategoryPropertyType.Boolean ||
-                  (type === 'patch' && isMigration && !isAdminMode)
+                  propertyMigPost.type === CatalogueCategoryPropertyType.Boolean
                 }
-                id={crypto.randomUUID()}
-                options={units ?? []}
-                getOptionLabel={(option) => option.value}
-                value={units?.find((unit) => unit.id === value) || null}
-                fullWidth
-                onChange={(_event, unit) => {
-                  onChange(unit?.id ?? null);
-                  clearErrors();
+                extraOnChange={() => {
+                  clearErrorsMigPost();
                 }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Select Unit"
-                    variant="outlined"
-                    disabled={
-                      property.type === CatalogueCategoryPropertyType.Boolean ||
-                      (type === 'patch' && isMigration && !isAdminMode)
-                    }
-                  />
-                )}
               />
-            )}
-          />
-          <Controller
-            control={newControl}
-            name={isMigration ? `mandatory` : `properties.${index}.mandatory`}
-            render={({ field: { value, onChange } }) => (
-              <Autocomplete
-                disableClearable
-                disabled={type === 'patch' && isMigration}
-                id={crypto.randomUUID()}
-                value={value === 'true' ? 'Yes' : 'No'}
-                onChange={(_event, value) => {
-                  const newValue = value === 'Yes' ? 'true' : 'false';
-                  if (isMigration) {
-                    setValue(
-                      'default_value.valueType',
-                      `${property.type}_${newValue}`
-                    );
-                    clearErrors('default_value.value');
-                  }
-                  onChange(newValue);
+            ) : (
+              <UnitController
+                control={controlMigPatch}
+                units={units}
+                name={`unit_id`}
+                disabled={
+                  selectedProperty?.type ===
+                    CatalogueCategoryPropertyType.Boolean || !isAdminMode
+                }
+                extraOnChange={() => {
+                  clearErrorsMigPatch();
                 }}
-                fullWidth
-                options={['Yes', 'No']}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Select is mandatory?"
-                    variant="outlined"
-                    disabled={type === 'patch' && isMigration}
-                  />
-                )}
               />
-            )}
-          />
+            )
+          ) : (
+            <UnitController
+              control={controlAdd}
+              units={units}
+              name={`properties.${index}.unit_id`}
+              disabled={
+                propertyAdd?.properties?.[index].type ===
+                CatalogueCategoryPropertyType.Boolean
+              }
+            />
+          )}
+
+          {isMigration ? (
+            <MandatoryController
+              control={controlMigPost}
+              name={`mandatory`}
+              disabled={type === 'patch'}
+              extraOnChange={(newValue) => {
+                setValueMigPost(
+                  'default_value.valueType',
+                  `${propertyMigPost.type}_${newValue}`
+                );
+                clearErrorsMigPost('default_value.value');
+              }}
+            />
+          ) : (
+            <MandatoryController
+              control={controlAdd}
+              name={`properties.${index}.mandatory`}
+            />
+          )}
         </Stack>
       </DialogContent>
       <DialogActions>
@@ -803,11 +803,20 @@ const PropertyDialog = (props: PropertyDialogProps) => {
             <Button
               variant="outlined"
               sx={{ width: '50%', mx: 1 }}
-              onClick={isMigration ? handleSubmit(onSubmit) : handleAddSubmit}
+              onClick={
+                isMigration
+                  ? type === 'post'
+                    ? handleSubmitMigPost(onSubmitMigPost)
+                    : handleSubmitMigPatch(onSubmitMigPatch)
+                  : handleAddSubmit
+              }
               disabled={
                 isMigration
-                  ? Object.values(errors).length !== 0 ||
-                    !isMigrationWarningChecked
+                  ? type === 'post'
+                    ? Object.values(errorsMigPost).length !== 0 ||
+                      !isMigrationWarningChecked
+                    : Object.values(errorsMigPatch).length !== 0 ||
+                      !isMigrationWarningChecked
                   : errorsAdd?.properties?.[index] !== undefined
               }
             >

@@ -17,14 +17,17 @@ import {
   useFieldArray,
   useFormContext,
 } from 'react-hook-form';
+import z from 'zod';
+import { AddPropertyMigration } from '../../../app.types';
 import {
-  AddCatalogueCategoryPropertyWithPlacementIds,
-  AddCatalogueCategoryWithPlacementIds,
-  AddPropertyMigration,
-} from '../../../app.types';
+  CatalogueCategoryPropertyPatchSchema,
+  CatalogueCategorySchema,
+} from '../../../form.schemas';
 
 const AllowedValuesListTextFields = (props: {
-  property?: AddCatalogueCategoryPropertyWithPlacementIds;
+  property?: NonNullable<
+    z.input<typeof CatalogueCategorySchema>['properties']
+  >[number];
   propertyIndex?: number;
 }) => {
   const { property, propertyIndex } = props;
@@ -35,7 +38,13 @@ const AllowedValuesListTextFields = (props: {
     watch,
     setValue,
   } = useFormContext<
-    AddPropertyMigration | AddCatalogueCategoryWithPlacementIds
+    | AddPropertyMigration
+    | z.input<typeof CatalogueCategorySchema>
+    | z.input<typeof CatalogueCategoryPropertyPatchSchema>,
+    undefined,
+    | AddPropertyMigration
+    | z.output<typeof CatalogueCategorySchema>
+    | z.output<typeof CatalogueCategoryPropertyPatchSchema>
   >();
 
   const propertyRHF = watch();
@@ -156,18 +165,20 @@ const AllowedValuesListTextFields = (props: {
               render={({ field: controllerField }) => (
                 <TextField
                   disabled={allowedValuesIds?.includes(field.av_placement_id)}
-                  id={`list-item-input-${controllerField.value.av_placement_id}`}
+                  id={`list-item-input-${controllerField.value?.av_placement_id}`}
                   label="List item"
                   variant="outlined"
                   fullWidth
                   {...controllerField}
-                  value={controllerField.value.value}
+                  value={controllerField.value?.value}
                   onChange={(event) => {
                     controllerField.onChange({
-                      av_placement_id: controllerField.value.av_placement_id,
+                      av_placement_id: controllerField.value?.av_placement_id,
                       value: event.target.value,
                     });
-                    clearDefaultValue(controllerField.value.av_placement_id);
+                    clearDefaultValue(
+                      controllerField.value?.av_placement_id ?? ''
+                    );
                     clearDuplicateValueErrors();
                   }}
                   error={!!allowedValueError}

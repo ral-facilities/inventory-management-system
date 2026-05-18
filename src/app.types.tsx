@@ -2,6 +2,7 @@ import type { Body, Meta } from '@uppy/core';
 import { MRT_ColumnFiltersState } from 'material-react-table';
 import {
   CatalogueCategory,
+  CatalogueCategoryPropertyType,
   CatalogueItem,
   Item,
   ItemPost,
@@ -54,7 +55,7 @@ export type AllowedValues = AllowedValuesList;
 
 export interface AddCatalogueCategoryProperty {
   name: string;
-  type: string;
+  type: CatalogueCategoryPropertyType;
   unit_id?: string | null;
   unit?: string | null;
   mandatory: string;

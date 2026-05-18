@@ -640,9 +640,7 @@ export function createFormControlWithRootErrorClearing<
   >();
   formControl.subscribe({
     name: options?.name,
-    // In React Hook Form, isDirty becomes true as soon as the user changes
-    // the value of any field from its default value.
-    formState: { isDirty: true },
+    formState: { values: true },
     callback: (data) => {
       if (options?.customCallback) {
         options.customCallback(data);
