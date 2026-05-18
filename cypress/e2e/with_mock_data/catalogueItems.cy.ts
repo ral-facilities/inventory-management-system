@@ -58,12 +58,12 @@ describe('Catalogue Items', () => {
         JSON.stringify({
           manufacturer_id: '1',
           name: 'test',
-          description: 'test Description',
           cost_gbp: 5000,
           cost_to_rework_gbp: 400,
           days_to_replace: 14,
           days_to_rework: 5,
           expected_lifetime_days: 345,
+          description: 'test Description',
           item_model_number: 'MXtest',
           notes: 'This is a test note',
           properties: [
@@ -142,13 +142,12 @@ describe('Catalogue Items', () => {
         JSON.stringify({
           manufacturer_id: '3',
           name: 'Energy Meters 27_copy_1',
-          description: 'Precision energy meters for accurate measurements. 27',
           cost_gbp: 600,
           cost_to_rework_gbp: 89,
           days_to_replace: 7,
           days_to_rework: 60,
           expected_lifetime_days: 3635,
-          item_model_number: null,
+          description: 'Precision energy meters for accurate measurements. 27',
           notes: 'Need to find new manufacturer. 27',
           properties: [
             { id: '7', value: 2000 },
@@ -202,14 +201,8 @@ describe('Catalogue Items', () => {
         JSON.stringify({
           manufacturer_id: '1',
           name: 'test',
-          description: null,
           cost_gbp: 5000,
-          cost_to_rework_gbp: null,
           days_to_replace: 14,
-          days_to_rework: null,
-          expected_lifetime_days: null,
-          item_model_number: null,
-          notes: null,
           properties: [
             { id: '1', value: 18 },
             { id: '2', value: null },
@@ -267,14 +260,8 @@ describe('Catalogue Items', () => {
         JSON.stringify({
           manufacturer_id: '1',
           name: 'test',
-          description: null,
           cost_gbp: 5000,
-          cost_to_rework_gbp: null,
           days_to_replace: 14,
-          days_to_rework: null,
-          expected_lifetime_days: null,
-          item_model_number: null,
-          notes: null,
           properties: [
             { id: '17', value: 400 },
             { id: '18', value: 0.2 },
