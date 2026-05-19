@@ -49,12 +49,13 @@ const getImages = async (
 
 export const useGetImages = (
   entityId?: string,
-  primary?: boolean
+  primary?: boolean,
+  enabled = true
 ): UseQueryResult<APIImage[], AxiosError> => {
   return useQuery({
     queryKey: ['Images', entityId, primary],
     queryFn: () => getImages(entityId ?? '', primary),
-    enabled: !!entityId,
+    enabled: !!entityId && enabled,
   });
 };
 

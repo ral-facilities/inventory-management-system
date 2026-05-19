@@ -91,9 +91,16 @@ describe('PrimaryImage Component', () => {
     });
   });
 
-  it('Removes the remove primary image button when there is no set primary image', async () => {
+  it('falls back to the first available image when there is no set primary image', async () => {
     props.entityId = '90';
     createView();
+
+    await waitFor(() => {
+      expect(screen.getByRole('img')).toHaveAttribute(
+        'src',
+        expect.stringContaining('UklGRmYUAAB')
+      );
+    });
 
     const actionButton = screen.getByLabelText('primary images action menu');
     await user.click(actionButton);

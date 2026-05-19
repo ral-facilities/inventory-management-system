@@ -86,23 +86,30 @@ export interface PrimaryImageProps {
 const PrimaryImage = (props: PrimaryImageProps) => {
   const { entityId, isDetailsPanel = false } = props;
 
-  const { data: imagesData, isLoading: imageLoading } = useGetImages(
-    entityId,
-    true
-  );
+  const { data: primaryImagesData, isLoading: primaryImageLoading } =
+    useGetImages(entityId, true);
 
-  const primaryImageExists = !!imagesData && imagesData.length > 0;
+  const primaryImageExists =
+    !!primaryImagesData && primaryImagesData.length > 0;
+
+  const useFallbackImage = !primaryImageLoading && !primaryImageExists;
+  const { data: fallbackImagesData, isLoading: fallbackImageLoading } =
+    useGetImages(entityId, undefined, useFallbackImage);
+
+  const imageData = primaryImagesData?.[0] ?? fallbackImagesData?.[0];
+  const imageLoading =
+    primaryImageLoading || (useFallbackImage && fallbackImageLoading);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleViewPrimary = React.useCallback(() => {
-    if (imagesData?.[0]) {
+    if (imageData) {
       const updatedParams = new URLSearchParams(searchParams);
       updatedParams.set('tab', 'Gallery');
-      updatedParams.set('image', imagesData?.[0].id);
+      updatedParams.set('image', imageData.id);
       setSearchParams(updatedParams);
     }
-  }, [searchParams, setSearchParams, imagesData]);
+  }, [searchParams, setSearchParams, imageData]);
 
   const [primaryDialogOpen, setPrimaryDialogOpen] = React.useState<
     false | 'set' | 'remove'
@@ -111,7 +118,7 @@ const PrimaryImage = (props: PrimaryImageProps) => {
   return (
     <>
       <ThumbnailImage
-        image={imagesData?.[0]}
+        image={imageData}
         dense={isDetailsPanel}
         isPrimaryThumbnail
         imageLoading={imageLoading}
@@ -138,7 +145,7 @@ const PrimaryImage = (props: PrimaryImageProps) => {
               onClose={() => {
                 setPrimaryDialogOpen(false);
               }}
-              image={imagesData[0]}
+              image={primaryImagesData[0]}
             />
           )}
         </>
