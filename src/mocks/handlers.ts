@@ -1436,23 +1436,26 @@ export const handlers = [
   }),
   // --------------------------------- INGEST ------------------------------------------------------
 
-  http.get<PathParams, DefaultBodyType, ErrorResponse | NonNullable<unknown>>(
-    '/ingest/:collection/:id',
-    async ({ params }) => {
-      const { collection } = params;
-      let template;
-      if (collection === 'catalogue-items') {
-        const response = await fetch('/src/mocks/CatalogueItemTemplate.xlsx');
-        const buffer = await response.arrayBuffer();
-        template = buffer;
-      }
-      return new HttpResponse(template, {
+  http.post<PathParams, { catalogueCategoryId: string }, ErrorResponse | Blob>(
+    '/spreadsheets/catalogue-items/template',
+    async () => {
+      const response = await fetch('/src/mocks/CatalogueItemTemplate.xlsx');
+      const blob = await response.blob();
+      return new HttpResponse(blob, {
         status: 200,
         headers: {
           'Content-Type':
             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-          'Content-Disposition': `attachment; filename="${collection}-template.xlsx"`,
+          'Content-Disposition': `attachment; filename="catalogue-items-template.xlsx"`,
         },
+      });
+    }
+  ),
+  http.post<PathParams, DefaultBodyType, ErrorResponse | NonNullable<unknown>>(
+    '/spreadsheets/catalogue-items/ingest',
+    async () => {
+      return new HttpResponse(undefined, {
+        status: 204,
       });
     }
   ),

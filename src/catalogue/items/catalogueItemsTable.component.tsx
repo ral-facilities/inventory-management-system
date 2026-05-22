@@ -1289,9 +1289,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           <ImportTemplateDialog
             open={importTemplateDialogOpen}
             onClose={() => setImportTemplateDialogOpen(false)}
-            collection="catalogue-items"
             parentId={parentInfo.id}
-            name={parentInfo.name}
+            parentName={parentInfo.name}
           />
         </>
       )}

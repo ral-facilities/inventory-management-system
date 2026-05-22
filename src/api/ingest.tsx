@@ -1,23 +1,34 @@
-import { queryOptions } from '@tanstack/react-query';
+import {
+  useMutation,
+  UseMutationResult,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { AxiosError, AxiosResponse } from 'axios';
 import { ingestApi } from './api';
 
-export const getTemplate = async (
-  collection: string,
-  id: string
+const postCatalogueItemsTemplate = async (
+  catalogueCategoryId: string
 ): Promise<AxiosResponse<Blob>> => {
-  return ingestApi.get(`/spreadsheets/${collection}/${id}/template`, {
-    responseType: 'blob',
-  });
+  return ingestApi.post(
+    '/spreadsheets/catalogue-items/template',
+    { catalogue_category_id: catalogueCategoryId },
+    {
+      responseType: 'blob',
+    }
+  );
 };
 
-export const getTemplateQuery = (
-  collection: string,
-  id: string,
-  retry?: boolean
-) =>
-  queryOptions<AxiosResponse<Blob>, AxiosError>({
-    queryKey: ['Ingest', collection, id],
-    queryFn: () => getTemplate(collection, id),
-    retry: retry ? false : undefined,
+export const usePostCatalogueItemsTemplate = (): UseMutationResult<
+  AxiosResponse<Blob>,
+  AxiosError,
+  { catalogueCategoryId: string }
+> => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ catalogueCategoryId }: { catalogueCategoryId: string }) =>
+      postCatalogueItemsTemplate(catalogueCategoryId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['CatalogueItems'] });
+    },
   });
+};
