@@ -2,6 +2,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {
   Box,
   Button,
+  Divider,
   ListItemIcon,
   ListItemText,
   MenuItem,
@@ -39,12 +40,24 @@ import {
   mrtTheme,
 } from '../../../utils';
 
+import {
+  FLEX_CONTAINER_PROPS,
+  FLEX_TABLE_CONTAINER_PROP,
+} from '../../../common/consts';
+
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { useGetUnits } from '../../../api/units';
+import {
+  DEFAULT_ROWS_PER_PAGE_VALUE,
+  ROWS_PER_PAGE_OPTIONS,
+} from '../../../common/consts';
 import { RequestType } from '../../../form.schemas';
+import { useAppSelector } from '../../../state/hook';
+import { selectAuthorisation } from '../../../state/slices/authorisationSlice';
+import DeletePropertyDialog from './deletePropertyDialog.component';
 import PropertyDialog from './propertyDialog.component';
 
 export interface PropertiesTableProps {
@@ -54,6 +67,8 @@ export interface PropertiesTableProps {
 
 export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
   const { catalogueCategory, requestType } = props;
+
+  const { isAdminMode } = useAppSelector(selectAuthorisation);
 
   const { control, clearErrors } =
     useFormContext<AddCatalogueCategoryWithPlacementIds>();
@@ -66,8 +81,17 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
     name: 'properties',
   });
 
+  const [isAdminDialog, setIsAdminDialog] = React.useState<boolean>(false);
+
   const [propertyDialogRequestType, setPropertyDialogRequestType] =
     React.useState<RequestType>('post');
+
+  const [deletePropertyDialogOpen, setDeletePropertyDialogOpen] =
+    React.useState<boolean>(false);
+
+  const [selectedProperty, setSelectedProperty] = React.useState<
+    AddCatalogueCategoryPropertyWithPlacementIds | undefined
+  >(undefined);
 
   const [index, setIndex] = React.useState<number | undefined>();
 
@@ -87,7 +111,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.name,
         id: 'name',
-        size: 220,
+        size: 345,
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
@@ -132,7 +156,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
             .map((value) => value['value'])
             .join(', '),
         id: 'allowed_values',
-        size: 300,
+        size: 345,
         filterVariant: 'multi-select',
         filterFn: 'arrIncludesSome',
         columnFilterModeOptions: [
@@ -232,7 +256,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
     initialState: {
       columnVisibility: { actions: false },
       pagination: {
-        pageSize: 5,
+        pageSize: DEFAULT_ROWS_PER_PAGE_VALUE,
         pageIndex: 0,
       },
       columnFilterFns: initialColumnFilterFnState,
@@ -272,8 +296,9 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
     //MRT
     mrtTheme,
     // MUI
+    muiTablePaperProps: { sx: FLEX_CONTAINER_PROPS },
     muiTableContainerProps: {
-      sx: { height: '350px', width: '1152px' },
+      sx: FLEX_TABLE_CONTAINER_PROP,
       // @ts-expect-error: MRT Table Container props does not have data-testid
       'data-testid': 'properties-table-container',
     },
@@ -311,7 +336,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
     },
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: [5],
+      rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
       shape: 'rounded',
       variant: 'outlined',
     },
@@ -332,6 +357,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
           selectedProperty={row.original}
           isMigration={requestType === 'patch'}
           index={requestType === 'post' ? index : undefined}
+          isAdminMode={isAdminDialog}
         />
       );
     },
@@ -380,6 +406,7 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
           key="edit"
           aria-label={`Edit property ${row.original.name}`}
           onClick={() => {
+            setIsAdminDialog(false);
             setPropertyDialogRequestType('patch');
             setIndex(row.index);
             table.setCreatingRow(row);
@@ -410,6 +437,48 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
               </MenuItem>,
             ]
           : []),
+        ...(isAdminMode
+          ? [
+              <Divider key="divider" />,
+              <MenuItem
+                key="edit-as-admin"
+                aria-label={`Edit property ${row.original.name} as admin`}
+                onClick={() => {
+                  setIsAdminDialog(true);
+                  setPropertyDialogRequestType('patch');
+                  setIndex(row.index);
+                  table.setCreatingRow(row);
+                  closeMenu();
+                }}
+                sx={{ m: 0 }}
+              >
+                <ListItemIcon>
+                  <EditIcon />
+                </ListItemIcon>
+                <ListItemText>Edit as Admin</ListItemText>
+              </MenuItem>,
+              ...(requestType === 'patch'
+                ? [
+                    <MenuItem
+                      key="delete-as-admin"
+                      aria-label={`Delete property ${row.original.name} as admin`}
+                      onClick={() => {
+                        setDeletePropertyDialogOpen(true);
+                        setSelectedProperty(row.original);
+                        setIndex(row.index);
+                        closeMenu();
+                      }}
+                      sx={{ m: 0 }}
+                    >
+                      <ListItemIcon>
+                        <DeleteIcon />
+                      </ListItemIcon>
+                      <ListItemText>Delete as Admin</ListItemText>
+                    </MenuItem>,
+                  ]
+                : []),
+            ]
+          : []),
       ];
     },
     // Functions
@@ -420,9 +489,21 @@ export function CatalogueItemsPropertiesTable(props: PropertiesTableProps) {
       }),
   });
   return (
-    <div style={{ width: '100%' }}>
+    <Box sx={{ width: '100%', p: 1, ...FLEX_CONTAINER_PROPS }}>
       <MaterialReactTable table={table} />
-    </div>
+      <DeletePropertyDialog
+        open={deletePropertyDialogOpen}
+        onClose={({ successfulDeletion }) => {
+          setDeletePropertyDialogOpen(false);
+          setSelectedProperty(undefined);
+          if (successfulDeletion) {
+            remove(index);
+          }
+        }}
+        selectedProperty={selectedProperty}
+        catalogueCategory={catalogueCategory}
+      />
+    </Box>
   );
 }
 

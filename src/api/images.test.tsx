@@ -27,7 +27,7 @@ describe('images api functions', () => {
         expect(result.current.isSuccess).toBeTruthy();
       });
 
-      expect(result.current.data?.length).toEqual(20);
+      expect(result.current.data?.length).toEqual(35);
     });
 
     it('sends request to fetch primary image data and returns successful response', async () => {

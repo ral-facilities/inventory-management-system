@@ -2,153 +2,183 @@
 
 exports[`SettingsCardView > renders settings card view correctly 1`] = `
 <DocumentFragment>
-  <div
-    class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1jxwjqx-MuiGrid2-root"
-  >
+  <div>
     <div
-      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
+      class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-1jxwjqx-MuiGrid2-root"
     >
-      <a
-        class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-fullWidth css-yz7a7v-MuiButtonBase-root-MuiButton-root"
-        data-discover="true"
-        href="/units"
-        tabindex="0"
+      <div
+        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
       >
-        <div
-          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1al1a8u-MuiPaper-root-MuiCard-root"
-          style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+        <a
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1h6ga5r-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
+          href="/units"
+          tabindex="0"
         >
           <div
-            class="MuiCardContent-root css-1j2arte-MuiCardContent-root"
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1al1a8u-MuiPaper-root-MuiCard-root"
+            style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
           >
             <div
-              class="MuiGrid2-root MuiGrid2-direction-xs-row css-caftml-MuiGrid2-root"
+              class="MuiCardContent-root css-1j2arte-MuiCardContent-root"
             >
-              <p
-                class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+              <div
+                class="MuiGrid2-root MuiGrid2-direction-xs-row css-caftml-MuiGrid2-root"
               >
-                Units
-              </p>
+                <p
+                  class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+                >
+                  Units
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      </a>
-    </div>
-    <div
-      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
-    >
-      <a
-        class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-fullWidth css-yz7a7v-MuiButtonBase-root-MuiButton-root"
-        data-discover="true"
-        href="/usage-statuses"
-        tabindex="0"
+        </a>
+      </div>
+      <div
+        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
       >
-        <div
-          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1al1a8u-MuiPaper-root-MuiCard-root"
-          style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+        <a
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1h6ga5r-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
+          href="/usage-statuses"
+          tabindex="0"
         >
           <div
-            class="MuiCardContent-root css-1j2arte-MuiCardContent-root"
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1al1a8u-MuiPaper-root-MuiCard-root"
+            style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
           >
             <div
-              class="MuiGrid2-root MuiGrid2-direction-xs-row css-caftml-MuiGrid2-root"
+              class="MuiCardContent-root css-1j2arte-MuiCardContent-root"
             >
-              <p
-                class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+              <div
+                class="MuiGrid2-root MuiGrid2-direction-xs-row css-caftml-MuiGrid2-root"
               >
-                Usage Statuses
-              </p>
+                <p
+                  class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+                >
+                  Usage Statuses
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      </a>
-    </div>
-    <div
-      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
-    >
-      <a
-        class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-fullWidth css-yz7a7v-MuiButtonBase-root-MuiButton-root"
-        data-discover="true"
-        href="/system-types"
-        tabindex="0"
+        </a>
+      </div>
+      <div
+        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
       >
-        <div
-          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1al1a8u-MuiPaper-root-MuiCard-root"
-          style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+        <a
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1h6ga5r-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
+          href="/system-types"
+          tabindex="0"
         >
           <div
-            class="MuiCardContent-root css-1j2arte-MuiCardContent-root"
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1al1a8u-MuiPaper-root-MuiCard-root"
+            style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
           >
             <div
-              class="MuiGrid2-root MuiGrid2-direction-xs-row css-caftml-MuiGrid2-root"
+              class="MuiCardContent-root css-1j2arte-MuiCardContent-root"
             >
-              <p
-                class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+              <div
+                class="MuiGrid2-root MuiGrid2-direction-xs-row css-caftml-MuiGrid2-root"
               >
-                System Types
-              </p>
+                <p
+                  class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+                >
+                  System Types
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      </a>
-    </div>
-    <div
-      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
-    >
-      <a
-        class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-fullWidth css-yz7a7v-MuiButtonBase-root-MuiButton-root"
-        data-discover="true"
-        href="/rules"
-        tabindex="0"
+        </a>
+      </div>
+      <div
+        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
       >
-        <div
-          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1al1a8u-MuiPaper-root-MuiCard-root"
-          style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+        <a
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1h6ga5r-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
+          href="/rules"
+          tabindex="0"
         >
           <div
-            class="MuiCardContent-root css-1j2arte-MuiCardContent-root"
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1al1a8u-MuiPaper-root-MuiCard-root"
+            style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
           >
             <div
-              class="MuiGrid2-root MuiGrid2-direction-xs-row css-caftml-MuiGrid2-root"
+              class="MuiCardContent-root css-1j2arte-MuiCardContent-root"
             >
-              <p
-                class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+              <div
+                class="MuiGrid2-root MuiGrid2-direction-xs-row css-caftml-MuiGrid2-root"
               >
-                Rules
-              </p>
+                <p
+                  class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+                >
+                  Rules
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      </a>
-    </div>
-    <div
-      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
-    >
-      <a
-        class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-fullWidth css-yz7a7v-MuiButtonBase-root-MuiButton-root"
-        data-discover="true"
-        href="/system-types?state=N4IgxgYiBcDaoEsAmMQIM4GUAOBDATgKYgA0IAbrgDYCux0oALgJ7b0jqP4IB2A5qQrU6qAJqF0IAL5SAulKA"
-        tabindex="0"
+        </a>
+      </div>
+      <div
+        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
       >
-        <div
-          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1al1a8u-MuiPaper-root-MuiCard-root"
-          style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+        <a
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1h6ga5r-MuiButtonBase-root-MuiButton-root"
+          data-discover="true"
+          href="/system-types?state=N4IgxgYiBcDaoEsAmMQIM4GUAOBDATgKYgA0IAbrgDYCux0oALgJ7b0jqP4IB2A5qQrU6qAJqF0IAL5SAulKA"
+          tabindex="0"
         >
           <div
-            class="MuiCardContent-root css-1j2arte-MuiCardContent-root"
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1al1a8u-MuiPaper-root-MuiCard-root"
+            style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
           >
             <div
-              class="MuiGrid2-root MuiGrid2-direction-xs-row css-caftml-MuiGrid2-root"
+              class="MuiCardContent-root css-1j2arte-MuiCardContent-root"
             >
-              <p
-                class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+              <div
+                class="MuiGrid2-root MuiGrid2-direction-xs-row css-caftml-MuiGrid2-root"
               >
-                Spares Definition
-              </p>
+                <p
+                  class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+                >
+                  Spares Definition
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      </a>
+        </a>
+      </div>
+      <div
+        class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
+      >
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1h6ga5r-MuiButtonBase-root-MuiButton-root"
+          tabindex="0"
+          type="button"
+        >
+          <div
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1al1a8u-MuiPaper-root-MuiCard-root"
+            style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+          >
+            <div
+              class="MuiCardContent-root css-1j2arte-MuiCardContent-root"
+            >
+              <div
+                class="MuiGrid2-root MuiGrid2-direction-xs-row css-caftml-MuiGrid2-root"
+              >
+                <p
+                  class="MuiTypography-root MuiTypography-body1 css-rizt0-MuiTypography-root"
+                >
+                  Criticality
+                </p>
+              </div>
+            </div>
+          </div>
+        </button>
+      </div>
     </div>
   </div>
 </DocumentFragment>

@@ -12,6 +12,34 @@ describe('Systems', () => {
     cy.findByText('Giant laser').should('be.visible');
   });
 
+  it('should eventually load in critical mode  at root', () => {
+    cy.setMode({ critical: true });
+    cy.findByText('Root systems').should('be.visible');
+    cy.findByText('Giant laser').should('be.visible');
+
+    cy.findAllByTestId('ErrorIcon').first().should('exist');
+    cy.findAllByTestId('ErrorIcon').first().trigger('mouseover');
+    cy.findByText('This system is critical.');
+  });
+
+  it('should eventually load in critical mode', () => {
+    cy.visit(
+      '/systems/656da8ef9cba7a76c6f81a5d?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0CAzgPoBm2a%2B%2BxKANCAG44kYoDAE8ADsVR0MAJwQA7fCB79sg6CACaxOiAC%2BegLp6gA'
+    );
+    cy.setMode({ critical: true });
+    cy.findAllByText('Pulse Laser').should('have.length', 2);
+
+    cy.findAllByTestId('ErrorIcon').first().should('exist');
+    cy.findAllByTestId('ErrorIcon').first().trigger('mouseover');
+    cy.findByText('This system is critical.');
+
+    cy.findByText('Returned 3 out of 56 Items').scrollIntoView();
+
+    cy.findAllByTestId('ErrorIcon').last().should('exist');
+    cy.findAllByTestId('ErrorIcon').last().trigger('mouseover');
+    cy.findByText('This catalogue item is critical.');
+  });
+
   it('should eventually load displaying system not found when system does not exist', () => {
     cy.visit('/systems/invalid_id');
 
@@ -54,7 +82,7 @@ describe('Systems', () => {
 
     cy.location('search').should(
       'eq',
-      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuhvMgIaw32PM4SNCEYAHEvFhcAdhkGsRZZHg44xDEjJbD0JAO4zk8HWxAAbEhh44tp5AF8HQA'
+      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuhvMgIaw32PM4SNCEYAHEvFhcAdhkGsRZZHg44xDEjJbD0JAO4zk8HWxAAbEhh44tpkflphzXAOauaMMF3N5kAX38gA'
     );
     cy.findByText('Storage system for various items.').scrollIntoView();
     cy.findByText('Storage system for various items.').should('be.visible');
@@ -69,7 +97,7 @@ describe('Systems', () => {
 
     cy.location('search').should(
       'eq',
-      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuhvMgIaw32PM4SNCEYAHEvFhcAdhkGsRZZHg44xDEjJbD0JAO4zk8HWxAAbEhh44tp5AF8HQA'
+      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuhvMgIaw32PM4SNCEYAHEvFhcAdhkGsRZZHg44xDEjJbD0JAO4zk8HWxAAbEhh44tpkflphzXAOauaMMF3N5kAX38gA'
     );
     cy.findByText('Storage system for various items.').scrollIntoView();
     cy.findByText('Storage system for various items.').should('be.visible');
@@ -84,21 +112,21 @@ describe('Systems', () => {
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(0)
       .within(() => {
-        cy.findByText('15').should('be.visible');
+        cy.findByText('30').should('be.visible');
       });
     cy.findAllByRole('combobox', { name: 'Rows per page' }).eq(0).click();
     cy.findByRole('listbox').within(() => {
-      cy.findByText(30).click();
+      cy.findByText(45).click();
     });
     cy.location('search').should(
       'eq',
-      '?subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
+      '?subState=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygAYBfBoA'
     );
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(0)
       .within(() => {
-        cy.findByText('15').should('not.exist');
-        cy.findByText('30').should('be.visible');
+        cy.findByText('30').should('not.exist');
+        cy.findByText('45').should('be.visible');
       });
 
     // Rows per page (items)
@@ -108,23 +136,23 @@ describe('Systems', () => {
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(1)
       .within(() => {
-        cy.findByText('15').should('be.visible');
+        cy.findByText('30').should('be.visible');
       });
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(1)
       .click({ force: true });
     cy.findByRole('listbox').within(() => {
-      cy.findByText(30).click();
+      cy.findByText(45).click();
     });
     cy.location('search', { timeout: 10000 }).should(
       'eq',
-      '?subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g&state=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
+       '?subState=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygAYBfBoA&state=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygAYBfBoA'
     );
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(1)
       .within(() => {
-        cy.findByText('15').should('not.exist');
-        cy.findByText('30').should('be.visible');
+        cy.findByText('30').should('not.exist');
+        cy.findByText('45').should('be.visible');
       });
 
     //Ensure same state is recovered
@@ -134,18 +162,18 @@ describe('Systems', () => {
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(0)
       .within(() => {
-        cy.findByText('15').should('not.exist');
-        cy.findByText('30').should('be.visible');
+        cy.findByText('30').should('not.exist');
+        cy.findByText('45').should('be.visible');
       });
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(1)
       .within(() => {
-        cy.findByText('30').should('not.exist');
-        cy.findByText('15').should('be.visible');
+        cy.findByText('45').should('not.exist');
+        cy.findByText('30').should('be.visible');
       });
     cy.location('search').should(
       'eq',
-      '?subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
+      '?subState=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygAYBfBoA'
     );
 
     cy.go('back');
@@ -153,14 +181,14 @@ describe('Systems', () => {
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(0)
       .within(() => {
-        cy.findByText('30').should('not.exist');
-        cy.findByText('15').should('be.visible');
+        cy.findByText('45').should('not.exist');
+        cy.findByText('30').should('be.visible');
       });
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(1)
       .within(() => {
-        cy.findByText('30').should('not.exist');
-        cy.findByText('15').should('be.visible');
+        cy.findByText('45').should('not.exist');
+        cy.findByText('30').should('be.visible');
       });
     cy.location('search').should('eq', '');
   });
@@ -176,21 +204,21 @@ describe('Systems', () => {
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(0)
       .within(() => {
-        cy.findByText('15').should('be.visible');
+        cy.findByText('30').should('be.visible');
       });
     cy.findAllByRole('combobox', { name: 'Rows per page' }).eq(0).click();
     cy.findByRole('listbox').within(() => {
-      cy.findByText(30).click();
+      cy.findByText(45).click();
     });
     cy.location('search').should(
       'eq',
-      '?subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
+      '?subState=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygAYBfBoA'
     );
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(0)
       .within(() => {
-        cy.findByText('15').should('not.exist');
-        cy.findByText('30').should('be.visible');
+        cy.findByText('30').should('not.exist');
+        cy.findByText('45').should('be.visible');
       });
 
     // Rows per page (items)
@@ -201,23 +229,23 @@ describe('Systems', () => {
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(1)
       .within(() => {
-        cy.findByText('15').should('be.visible');
+        cy.findByText('30').should('be.visible');
       });
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(1)
       .click({ force: true });
     cy.findByRole('listbox').within(() => {
-      cy.findByText(30).click();
+      cy.findByText(45).click();
     });
     cy.location('search').should(
       'eq',
-      '?subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g&state=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
+      '?subState=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygAYBfBoA&state=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygAYBfBoA'
     );
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(1)
       .within(() => {
-        cy.findByText('15').should('not.exist');
-        cy.findByText('30').should('be.visible');
+        cy.findByText('30').should('not.exist');
+        cy.findByText('45').should('be.visible');
       });
 
     // Navigate deeper
@@ -228,10 +256,10 @@ describe('Systems', () => {
     cy.findByText('Pulse Laser').should('be.visible');
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(0)
-      .within(() => cy.findByText('15').should('be.visible'));
+      .within(() => cy.findByText('30').should('be.visible'));
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(1)
-      .within(() => cy.findByText('15').should('be.visible'));
+      .within(() => cy.findByText('30').should('be.visible'));
     cy.location('search').should('eq', '');
 
     //Ensure same state is recovered
@@ -244,19 +272,19 @@ describe('Systems', () => {
     // Rows per page
     cy.location('search').should(
       'eq',
-      '?subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g&state=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
+      '?subState=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygAYBfBoA&state=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygAYBfBoA'
     );
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(0)
       .within(() => {
-        cy.findByText('15').should('not.exist');
-        cy.findByText('30').should('be.visible');
+        cy.findByText('30').should('not.exist');
+        cy.findByText('45').should('be.visible');
       });
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(1)
       .within(() => {
-        cy.findByText('15').should('not.exist');
-        cy.findByText('30').should('be.visible');
+        cy.findByText('30').should('not.exist');
+        cy.findByText('45').should('be.visible');
       });
   });
 
@@ -280,6 +308,7 @@ describe('Systems', () => {
 
   it("should be able to navigate to an item's landing page", () => {
     cy.findByRole('link', { name: 'Pulse Laser' }).click();
+
     cy.findAllByRole('button', { name: 'Show/Hide filters' })
       .eq(1)
       .scrollIntoView();
@@ -928,6 +957,7 @@ describe('Systems', () => {
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
           type_id: '2',
+          is_flagged: true,
           type: {
             id: '2',
             value: 'Operational',
@@ -948,6 +978,7 @@ describe('Systems', () => {
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
           type_id: '2',
+          is_flagged: false,
           type: {
             id: '2',
             value: 'Operational',
@@ -960,6 +991,7 @@ describe('Systems', () => {
   describe('Move', () => {
     it('moves items', () => {
       cy.findByRole('link', { name: 'Pulse Laser' }).click();
+
       cy.findAllByRole('button', { name: 'Show/Hide filters' })
         .eq(1)
         .scrollIntoView();
@@ -1028,7 +1060,7 @@ describe('Systems', () => {
 
     it('moves items (admin mode)', () => {
       cy.visit('/systems');
-      cy.setCurrentUserToAdmin();
+      cy.setMode({ admin: true });
 
       cy.findByRole('link', { name: 'Pulse Laser' }).click();
       cy.findAllByRole('button', { name: 'Show/Hide filters' })

@@ -1,7 +1,9 @@
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { Item } from '../api/api.types';
+import APIConfigProvider from '../apiConfigProvider.component';
 import ItemJSON from '../mocks/Items.json';
+import { RootState } from '../state/store';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import {
   SystemItemsUsageStatusTable,
@@ -14,11 +16,14 @@ describe('SystemItemsUsageStatusTable', () => {
   let props: SystemItemsUsageStatusTableProps;
   let user: UserEvent;
 
-  const createView = () => {
+  const createView = (preloadedState?: Partial<RootState>) => {
     return renderComponentWithRouterProvider(
-      <SystemItemsUsageStatusTable {...props} />,
+      <APIConfigProvider>
+        <SystemItemsUsageStatusTable {...props} />
+      </APIConfigProvider>,
       'any',
-      '/'
+      '/',
+      preloadedState
     );
   };
 
@@ -125,6 +130,30 @@ describe('SystemItemsUsageStatusTable', () => {
 
   it('renders correctly', async () => {
     const view = createView();
+
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Cameras 1 (2)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    // Ensure no loading bars visible
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
+    // Rest in a snapshot
+    expect(view.asFragment()).toMatchSnapshot();
+  });
+
+  it('renders correctly in critical mode', async () => {
+    const view = createView({ criticality: { isCriticalMode: true } });
 
     // Name (obtained from catalogue category item)
     await waitFor(

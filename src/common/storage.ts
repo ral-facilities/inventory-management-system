@@ -2,15 +2,26 @@ import { PluginId } from '../app.types';
 
 const key = (suffix: string) => `${PluginId}:${suffix}`;
 
-export function loadIsAdminMode(): boolean | undefined {
-  const v = localStorage.getItem(key('isAdminMode'));
-  return v === 'true' ? true : v === 'false' ? false : undefined;
+export interface StorageDeps {
+  load: () => boolean | undefined;
+  save: (v: boolean) => void;
+  clear: () => void;
 }
 
-export function saveIsAdminMode(value: boolean) {
-  localStorage.setItem(key('isAdminMode'), value.toString());
+export function createBooleanLocalStorage(keyName: string): StorageDeps {
+  return {
+    load(): boolean | undefined {
+      const v = localStorage.getItem(key(keyName));
+      return v === 'true' ? true : v === 'false' ? false : undefined;
+    },
+    save(value: boolean) {
+      localStorage.setItem(key(keyName), value.toString());
+    },
+    clear() {
+      localStorage.removeItem(key(keyName));
+    },
+  };
 }
 
-export function clearIsAdminMode() {
-  localStorage.removeItem(key('isAdminMode'));
-}
+export const authorisationStorage = createBooleanLocalStorage('isAdminMode');
+export const criticalityStorage = createBooleanLocalStorage('isCriticalMode');

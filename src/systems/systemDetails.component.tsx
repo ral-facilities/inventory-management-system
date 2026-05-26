@@ -85,11 +85,10 @@ function SystemDetails(props: SystemDetailsProps) {
         <Grid size={9}>
           <OverflowTip
             sx={{
-              typography: 'h5',
-              fontWeight: 'bold',
+              typography: 'h6',
             }}
           >
-            {system === undefined ? 'No system selected' : system.name}
+            {system === undefined ? 'No system selected' : 'Details'}
           </OverflowTip>
         </Grid>
         {system !== undefined && <SystemDetailsActionMenu system={system} />}

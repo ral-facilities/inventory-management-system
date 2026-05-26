@@ -1,6 +1,7 @@
 {
   "imsApiUrl": "",
   "osApiUrl": "",
+  "imsJsApiUrl": "",
   "hsApiUrl": "",
   "maxAttachmentSizeBytes": 104857600,
   "attachmentAllowedFileExtensions": [

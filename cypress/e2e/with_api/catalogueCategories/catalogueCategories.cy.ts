@@ -12,7 +12,7 @@ describe('Catalogue Category', () => {
   beforeEach(() => {
     cy.dropIMSCollections(['catalogue_categories', 'units']);
     cy.visit('/catalogue');
-    cy.setCurrentUserToAdmin();
+    cy.setMode({ admin: true });
   });
   afterEach(() => {
     cy.clearMocks();

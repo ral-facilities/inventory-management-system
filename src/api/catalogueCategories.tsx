@@ -131,7 +131,7 @@ export const usePostCatalogueCategoryProperty = (): UseMutationResult<
         {
           name: catalogueCategory.name,
           message: `Adding property ${property.name} in ${catalogueCategory.name}`,
-          state: 'information',
+          state: 'info',
         },
       ]);
       return postCatalogueCategoryProperty(catalogueCategory, property);
@@ -208,7 +208,7 @@ export const usePatchCatalogueCategoryProperty = (): UseMutationResult<
         {
           name: catalogueCategory.name,
           message: `Editing property ${property.name} in ${catalogueCategory.name}`,
-          state: 'information',
+          state: 'info',
         },
       ]);
       return patchCatalogueCategoryProperty(
@@ -465,6 +465,66 @@ export const useDeleteCatalogueCategory = (): UseMutationResult<
   });
 };
 
+const deleteCatalogueCategoryProperty = async (
+  catalogueCategoryId: string,
+  propertyId: string
+): Promise<void> => {
+  return imsApi
+    .delete(
+      `/v1/catalogue-categories/${catalogueCategoryId}/properties/${propertyId}`
+    )
+    .then((response) => response.data);
+};
+
+export const useDeleteCatalogueCategoryProperty = (): UseMutationResult<
+  void,
+  AxiosError,
+  {
+    catalogueCategory: CatalogueCategory;
+    property: CatalogueCategoryProperty;
+  }
+> => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ catalogueCategory, property }) => {
+      handleTransferState([
+        {
+          name: catalogueCategory.name,
+          message: `Deleting property ${property.name} from ${catalogueCategory.name}`,
+          state: 'info',
+        },
+      ]);
+      return deleteCatalogueCategoryProperty(catalogueCategory.id, property.id);
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: [
+          'CatalogueCategories',
+          variables.catalogueCategory.parent_id ?? 'null',
+        ],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['CatalogueItems', variables.catalogueCategory.id],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['CatalogueItem'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['Items'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['Item'],
+      });
+      handleTransferState([
+        {
+          name: variables.catalogueCategory.name,
+          message: `Successfully deleted property ${variables.property.name} from ${variables.catalogueCategory.name}`,
+          state: 'success',
+        },
+      ]);
+    },
+  });
+};
 const getCatalogueCategory = async (
   id: string | undefined
 ): Promise<CatalogueCategory> => {

@@ -1,5 +1,5 @@
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { Box, Tooltip, Typography } from '@mui/material';
+import { Box, Tooltip } from '@mui/material';
 import { SparesDefinition } from '../api/api.types';
 
 export interface SparesInformationTooltipProps {
@@ -11,8 +11,7 @@ export const SparesColumnHeaderInformationTooltip = ({
   title,
   sparesDefinition,
 }: SparesInformationTooltipProps) => {
-  let tooltipContent =
-    'The spares values is determined by the location of an item. ';
+  let tooltipContent = 'This value is determined by the location of an item. ';
 
   if (sparesDefinition == undefined || sparesDefinition == '') {
     tooltipContent = tooltipContent.concat(
@@ -41,14 +40,7 @@ export const SparesColumnHeaderInformationTooltip = ({
 
   return (
     <Box sx={{ alignItems: 'center', display: 'flex' }}>
-      <Tooltip
-        title={
-          <Typography style={{ whiteSpace: 'pre-line' }}>
-            {tooltipContent}
-          </Typography>
-        }
-        aria-label="Spares Info Tooltip"
-      >
+      <Tooltip title={tooltipContent} aria-label="Spares Info Tooltip">
         <InfoOutlinedIcon fontSize="small" sx={{ mr: 1 }} />
       </Tooltip>
       {title}

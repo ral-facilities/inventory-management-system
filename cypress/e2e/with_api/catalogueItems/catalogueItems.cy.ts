@@ -32,7 +32,7 @@ describe('catalogue items', () => {
     ]);
     // Prepare relevant data for catalogue items
     cy.visit('/manufacturers');
-    cy.setCurrentUserToAdmin();
+    cy.setMode({ admin: true });
     addManufacturer(true);
     cy.visit('/settings/units');
     addUnits(['mm', 'nm'], true);

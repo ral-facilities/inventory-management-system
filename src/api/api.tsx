@@ -146,6 +146,10 @@ export const storageApi = createAuthenticatedClient({
   getURL: (settings) => settings.osApiUrl,
 });
 
+export const jobSchedulerApi = createAuthenticatedClient({
+  getURL: (settings) => settings.imsJsApiUrl,
+});
+
 export const historyApi = createAuthenticatedClient({
   getURL: (settings) => settings.hsApiUrl,
 });

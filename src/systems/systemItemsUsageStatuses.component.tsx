@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import {
   MRT_ColumnDef,
+  MRT_Row,
   MRT_RowSelectionState,
   MaterialReactTable,
   useMaterialReactTable,
@@ -20,9 +21,21 @@ import React from 'react';
 import { CatalogueItem, Item, UsageStatus } from '../api/api.types';
 import { useGetCatalogueItemIds } from '../api/catalogueItems';
 import { useGetUsageStatuses } from '../api/usageStatuses';
+import { APISettingsContext } from '../apiConfigProvider.component';
+import { getCICriticalityLabel } from '../catalogue/items/catalogueItemsTable.component';
+import {
+  DEFAULT_ROWS_PER_PAGE_VALUE,
+  FLEX_CONTAINER_PROPS,
+  FLEX_TABLE_CONTAINER_PROP,
+  ROWS_PER_PAGE_OPTIONS,
+} from '../common/consts';
+import CriticalityTooltipIcon from '../common/criticalityTooltipIcon.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
+import { useAppSelector } from '../state/hook';
+import { selectCriticality } from '../state/slices/criticalitySlice';
 import {
+  COLUMN_FILTER_BOOLEAN_OPTIONS,
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
   COLUMN_FILTER_VARIANTS,
@@ -31,6 +44,7 @@ import {
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
   TableHeaderOverflowTip,
+  criticalityRowStyle,
   customFilterFunctions,
   getInitialColumnFilterFnState,
   mrtTheme,
@@ -63,6 +77,11 @@ export function SystemItemsUsageStatusTable(
     React.useState<Omit<UsageStatusesType, 'item_id'>[]>([]);
 
   const { data: usageStatusesData } = useGetUsageStatuses();
+
+  const { isCriticalMode } = useAppSelector(selectCriticality);
+
+  const apiSettings = React.useContext(APISettingsContext);
+  const isSparesDefinitionDefined = !!apiSettings.spares;
 
   // Fetch catalogue items for each item to display in the table
   const catalogueItemIdSet = React.useMemo(
@@ -122,6 +141,40 @@ export function SystemItemsUsageStatusTable(
 
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     return [
+      ...(isSparesDefinitionDefined
+        ? [
+            {
+              header: 'Is Critical',
+              accessorFn: (row: TableRowData) =>
+                row.catalogueItem?.is_flagged ? 'Yes' : 'No',
+              id: 'catalogueItem.is_flagged',
+              filterVariant: COLUMN_FILTER_VARIANTS.boolean,
+              enableColumnFilterModes: false,
+              size: 200,
+              filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
+              AggregatedCell: ({ row }: { row: MRT_Row<TableRowData> }) => {
+                const showFlagged =
+                  row.original.catalogueItem?.is_flagged ?? null;
+                return (
+                  <CriticalityTooltipIcon
+                    label={getCICriticalityLabel(showFlagged)}
+                    showFlagged={showFlagged}
+                  />
+                );
+              },
+              Cell: ({ row }: { row: MRT_Row<TableRowData> }) => {
+                const showFlagged =
+                  row.original.catalogueItem?.is_flagged ?? null;
+                return (
+                  <CriticalityTooltipIcon
+                    showFlagged={showFlagged}
+                    label={getCICriticalityLabel(showFlagged)}
+                  />
+                );
+              },
+            },
+          ]
+        : []),
       {
         header: 'Catalogue Item',
         Header: TableHeaderOverflowTip,
@@ -182,7 +235,7 @@ export function SystemItemsUsageStatusTable(
           ...COLUMN_FILTER_MODE_OPTIONS.string,
           ...['betweenInclusive'],
         ],
-        size: 250,
+        size: isCriticalMode ? 460 : 660,
         enableGrouping: false,
       },
       {
@@ -323,11 +376,12 @@ export function SystemItemsUsageStatusTable(
       },
     ];
   }, [
-    aggregatedCellUsageStatus,
-    setAggregatedCellUsageStatus,
-    onChangeUsageStatuses,
-    usageStatuses,
+    isSparesDefinitionDefined,
+    isCriticalMode,
     usageStatusesData,
+    usageStatuses,
+    aggregatedCellUsageStatus,
+    onChangeUsageStatuses,
   ]);
 
   const initialColumnFilterFnState = React.useMemo(() => {
@@ -338,7 +392,7 @@ export function SystemItemsUsageStatusTable(
     initialState: {
       columnVisibility: { 'item.created_time': false },
       grouping: ['catalogueItem.name'],
-      pagination: { pageSize: 15, pageIndex: 0 },
+      pagination: { pageSize: DEFAULT_ROWS_PER_PAGE_VALUE, pageIndex: 0 },
       columnFilterFns: initialColumnFilterFnState,
     },
   });
@@ -359,7 +413,7 @@ export function SystemItemsUsageStatusTable(
     enableColumnOrdering: false,
     enableFacetedValues: true,
     enableColumnFilterModes: true,
-    enableColumnResizing: false,
+    enableColumnResizing: true,
     enableStickyHeader: true,
     enableDensityToggle: false,
     enableHiding: false,
@@ -393,6 +447,9 @@ export function SystemItemsUsageStatusTable(
       showColumnFilters: true,
       showGlobalFilter: true,
       expanded: initialExpanded,
+      columnVisibility: {
+        'catalogueItem.is_flagged': isCriticalMode,
+      },
     },
     state: {
       ...preservedState,
@@ -429,30 +486,25 @@ export function SystemItemsUsageStatusTable(
           },
 
     // MUI
-    muiTablePaperProps: ({ table }) => ({
-      // sx doesn't work here currently - see https://www.material-react-table.com/docs/guides/full-screen-toggle
-      style: {
-        maxWidth: '100%',
-        // SciGateway navigation drawer is 1200, modal is 1300
-        zIndex: table.getState().isFullScreen ? 1210 : undefined,
-      },
-    }),
-    muiTableContainerProps: ({ table }) => {
+    muiTableBodyRowProps: ({ row }) => {
+      const showFlagged = row.original.catalogueItem?.is_flagged ?? null;
       return {
-        sx: {
-          height: table.getState().isFullScreen ? '100%' : undefined,
-
-          maxHeight: '670px',
-        },
+        sx: (theme) => ({
+          ...(isCriticalMode &&
+            isSparesDefinitionDefined &&
+            criticalityRowStyle({ showFlagged, theme })),
+        }),
       };
     },
+    muiTablePaperProps: { sx: FLEX_CONTAINER_PROPS },
+    muiTableContainerProps: { sx: FLEX_TABLE_CONTAINER_PROP },
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',
     },
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: [15, 30, 45],
+      rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
       shape: 'rounded',
       variant: 'outlined',
     },
@@ -500,6 +552,21 @@ export function SystemItemsUsageStatusTable(
         />
       ) : undefined,
   });
+
+  React.useEffect(() => {
+    if (isSparesDefinitionDefined)
+      table.setColumnVisibility((prev) => {
+        const nextOn = isCriticalMode;
+        const same = prev['catalogueItem.is_flagged'] === nextOn;
+
+        if (same) return prev;
+
+        return {
+          ...prev,
+          'catalogueItem.is_flagged': nextOn,
+        };
+      });
+  }, [isCriticalMode, isSparesDefinitionDefined, table]);
 
   return <MaterialReactTable table={table} />;
 }

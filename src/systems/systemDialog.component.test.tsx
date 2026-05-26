@@ -272,6 +272,7 @@ describe('Systems Dialog', () => {
       id: '65328f34a40ff5301575a4e3',
       type_id: '1',
       code: 'mock-laser',
+      is_flagged: false,
       ...CREATED_MODIFIED_TIME_VALUES,
     };
 
@@ -494,6 +495,7 @@ describe('Systems Dialog', () => {
       id: '65328f34a40ff5301575a4e3',
       code: 'mock-laser',
       type_id: '2',
+      is_flagged: false,
       ...CREATED_MODIFIED_TIME_VALUES,
     };
 
@@ -504,6 +506,7 @@ describe('Systems Dialog', () => {
     delete MOCK_SELECTED_SYSTEM_POST_DATA.code;
     delete MOCK_SELECTED_SYSTEM_POST_DATA.created_time;
     delete MOCK_SELECTED_SYSTEM_POST_DATA.modified_time;
+    delete MOCK_SELECTED_SYSTEM_POST_DATA.is_flagged;
 
     beforeEach(() => {
       props.requestType = 'post';

@@ -28,7 +28,7 @@ export type TabValue = (typeof TAB_VALUES)[number];
 export interface TransferState {
   name: string;
   message: string;
-  state: 'success' | 'error' | 'information';
+  state: 'success' | 'error' | 'info' | 'warning';
 }
 
 export enum RoutesHomeLocation {
@@ -68,8 +68,7 @@ export interface AddCatalogueCategoryWithPlacementIds {
   properties?: AddCatalogueCategoryPropertyWithPlacementIds[];
 }
 
-export interface AddCatalogueCategoryPropertyWithPlacementIds
-  extends AddCatalogueCategoryProperty {
+export interface AddCatalogueCategoryPropertyWithPlacementIds extends AddCatalogueCategoryProperty {
   cip_placement_id: string; // Catalogue item properties (cip)
 }
 
@@ -107,8 +106,6 @@ export interface CatalogueItemDetailsStep {
   days_to_replace: string;
   days_to_rework?: string | null;
   expected_lifetime_days?: string | null;
-  drawing_number?: string | null;
-  drawing_link?: string | null;
   item_model_number?: string | null;
   notes?: string | null;
 }
@@ -122,8 +119,6 @@ export interface CatalogueItemDetailsStepPost {
   days_to_replace: number;
   days_to_rework?: number | null;
   expected_lifetime_days?: number | null;
-  drawing_number?: string | null;
-  drawing_link?: string | null;
   item_model_number?: string | null;
   notes?: string | null;
 }

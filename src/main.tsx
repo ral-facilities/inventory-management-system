@@ -127,6 +127,11 @@ export const fetchSettings =
           throw new Error('osApiUrl is undefined in settings');
         }
 
+        // Ensure the imsJsApiUrl name exists.
+        if (!('imsJsApiUrl' in settings)) {
+          throw new Error('imsJsApiUrl is undefined in settings');
+        }
+
         // Ensure the hsApiUrl name exists.
         if (!('hsApiUrl' in settings)) {
           throw new Error('hsApiUrl is undefined in settings');
@@ -216,6 +221,7 @@ async function prepare() {
     import.meta.env.VITE_INCLUDE_MSW === 'true' ||
     settingsResult?.imsApiUrl === '' ||
     settingsResult?.osApiUrl === '' ||
+    settingsResult?.imsJsApiUrl === ''
     settingsResult?.hsApiUrl === ''
   ) {
     // Need to use require instead of import as import breaks when loaded in SG

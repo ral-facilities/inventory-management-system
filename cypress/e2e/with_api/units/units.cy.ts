@@ -4,7 +4,7 @@ describe('Units', () => {
   beforeEach(() => {
     cy.dropIMSCollections(['units']);
     cy.visit('/settings/units');
-    cy.setCurrentUserToAdmin();
+    cy.setMode({ admin: true });
   });
   afterEach(() => {
     cy.clearMocks();

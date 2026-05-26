@@ -478,6 +478,7 @@ export const CatalogueCategoryPropertyPatchSchema = z.object({
     errorMessage: 'Please enter a property name.',
   }),
   allowed_values: AllowedValuesListSchema.nullable().optional(),
+  unit_id: OptionalOrNullableStringSchema({ requestType: 'patch' }),
 });
 
 export const CatalogueCategoryPostPropertySchema =
@@ -541,12 +542,6 @@ export const CatalogueItemDetailsStepSchema = (requestType: RequestType) => {
       min: 0,
     }),
     description: OptionalOrNullableStringSchema({ requestType }),
-    drawing_number: OptionalOrNullableStringSchema({ requestType }),
-    drawing_link: OptionalOrNullableURLSchema({
-      requestType,
-      errorMessage:
-        'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted.',
-    }),
     item_model_number: OptionalOrNullableStringSchema({ requestType }),
     notes: OptionalOrNullableStringSchema({ requestType }),
   });

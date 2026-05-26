@@ -1,7 +1,7 @@
 describe('UsageStatus', () => {
   beforeEach(() => {
     cy.visit('/settings/usage-statuses');
-    cy.setCurrentUserToAdmin();
+    cy.setMode({ admin: true });
   });
   afterEach(() => {
     cy.clearMocks();

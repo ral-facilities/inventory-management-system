@@ -115,11 +115,11 @@ jobs:
           --env AUTHENTICATION__ENABLED=false \
           --env API__TITLE="Inventory Management System API" \
           --env API__DESCRIPTION="This is the API for the Inventory Management System" \
-          --env DATABASE__PROTOCOL="mongodb" \
-          --env DATABASE__USERNAME="root" \
-          --env DATABASE__PASSWORD="example" \
-          --env DATABASE__HOST_AND_OPTIONS="localhost:27017/?authMechanism=SCRAM-SHA-256&authSource=admin" \
-          --env DATABASE__NAME="ims" \
+          --env IMS_DATABASE__PROTOCOL="mongodb" \
+          --env IMS_DATABASE__USERNAME="root" \
+          --env IMS_DATABASE__PASSWORD="example" \
+          --env IMS_DATABASE__HOST_AND_OPTIONS="localhost:27017/?authMechanism=SCRAM-SHA-256&authSource=admin" \
+          --env IMS_DATABASE__NAME="ims" \
           --env API__ALLOWED_CORS_HEADERS='["*"]' \
           --env API__ALLOWED_CORS_ORIGINS='["*"]' \
           --env API__ALLOWED_CORS_METHODS='["*"]' \
@@ -162,11 +162,11 @@ jobs:
           --env AUTHENTICATION__ENABLED=false \
           --env API__TITLE="Object Storage Service API" \
           --env API__DESCRIPTION="This is the API for the Object Storage Service" \
-          --env DATABASE__PROTOCOL="mongodb" \
-          --env DATABASE__USERNAME="root" \
-          --env DATABASE__PASSWORD="example" \
-          --env DATABASE__HOST_AND_OPTIONS="object-storage-api-mongodb:27017" \
-          --env DATABASE__NAME="object-storage" \
+          --env OS_DATABASE__PROTOCOL="mongodb" \
+          --env OS_DATABASE__USERNAME="root" \
+          --env OS_DATABASE__PASSWORD="example" \
+          --env OS_DATABASE__HOST_AND_OPTIONS="object-storage-api-mongodb:27017" \
+          --env OS_DATABASE__NAME="object-storage" \
           --env API__ALLOWED_CORS_HEADERS='["*"]' \
           --env API__ALLOWED_CORS_ORIGINS='["*"]' \
           --env API__ALLOWED_CORS_METHODS='["*"]' \

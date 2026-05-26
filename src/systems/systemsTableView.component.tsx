@@ -1,13 +1,17 @@
 import AddIcon from '@mui/icons-material/Add';
+import InfoOutlined from '@mui/icons-material/InfoOutlined';
 import {
   Box,
   Button,
   MenuItem,
   TableCellBaseProps,
   TableRow,
+  Tooltip,
 } from '@mui/material';
 import {
+  MRT_Column,
   MRT_ColumnDef,
+  MRT_Row,
   MaterialReactTable,
   useMaterialReactTable,
 } from 'material-react-table';
@@ -15,9 +19,20 @@ import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { System } from '../api/api.types';
 import { useGetSystemTypes } from '../api/systemTypes';
+import { APISettingsContext } from '../apiConfigProvider.component';
 import type { SystemTableType } from '../app.types';
-import { SystemTypeColumnHeaderInformationTooltip } from '../common/systemTypesInformationTooltip.component';
 import {
+  DEFAULT_ROWS_PER_PAGE_VALUE,
+  FLEX_CONTAINER_PROPS,
+  FLEX_TABLE_CONTAINER_PROP,
+  ROWS_PER_PAGE_OPTIONS,
+} from '../common/consts';
+import CriticalityTooltipIcon from '../common/criticalityTooltipIcon.component';
+import { SystemTypeColumnHeaderInformationTooltip } from '../common/systemTypesInformationTooltip.component';
+import { useAppSelector } from '../state/hook';
+import { selectCriticality } from '../state/slices/criticalitySlice';
+import {
+  COLUMN_FILTER_BOOLEAN_OPTIONS,
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
   COLUMN_FILTER_VARIANTS,
@@ -25,11 +40,13 @@ import {
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
   TableHeaderOverflowTip,
+  criticalityRowStyle,
   customFilterFunctions,
   formatDateTimeStrings,
   mrtTheme,
 } from '../utils';
 import SystemDialog from './systemDialog.component';
+import { CriticalTooltipText, getSCriticalityLabel } from './systems.component';
 
 export interface SystemsTableViewProps {
   systemsData?: System[];
@@ -59,6 +76,9 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
 
   const { data: systemTypesData, isLoading: systemTypesLoading } =
     useGetSystemTypes();
+  const { isCriticalMode } = useAppSelector(selectCriticality);
+  const apiSettings = React.useContext(APISettingsContext);
+  const isSparesDefinitionDefined = !!apiSettings.spares;
 
   const isLoading = systemsDataLoading || systemTypesLoading;
   const [tableRows, setTableRows] = React.useState<SystemTableType[]>([]);
@@ -79,11 +99,45 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
   const noResultsText = 'No systems found';
   const columns = React.useMemo<MRT_ColumnDef<SystemTableType>[]>(
     () => [
+      ...(isSparesDefinitionDefined
+        ? [
+            {
+              header: 'is Critical',
+              Header: ({
+                column,
+              }: {
+                column: MRT_Column<SystemTableType, unknown>;
+              }) => (
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Tooltip title={CriticalTooltipText}>
+                    <InfoOutlined sx={{ mr: 1 }} fontSize="small" />
+                  </Tooltip>
+                  {column.columnDef.header}
+                </Box>
+              ),
+              accessorFn: (row: System) => (row.is_flagged ? 'Yes' : 'No'),
+              id: 'is_flagged',
+              filterVariant: COLUMN_FILTER_VARIANTS.boolean,
+              enableColumnFilterModes: false,
+              size: 200,
+              filterSelectOptions: COLUMN_FILTER_BOOLEAN_OPTIONS,
+              Cell: ({ row }: { row: MRT_Row<SystemTableType> }) => {
+                const showFlagged = row.original.is_flagged;
+                return (
+                  <CriticalityTooltipIcon
+                    showFlagged={showFlagged}
+                    label={getSCriticalityLabel(showFlagged)}
+                  />
+                );
+              },
+            },
+          ]
+        : []),
       {
         header: 'Name',
         id: 'name',
         accessorKey: 'name',
-        size: 400,
+        size: isCriticalMode ? 520 : 720,
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
@@ -133,13 +187,13 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
         filterVariant: COLUMN_FILTER_VARIANTS.datetime,
         filterFn: COLUMN_FILTER_FUNCTIONS.datetime,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.datetime,
-        size: 400,
+        size: 360,
         enableGrouping: false,
         Cell: ({ row }) =>
           formatDateTimeStrings(row.original.modified_time, true),
       },
     ],
-    [systemTypesData]
+    [isCriticalMode, isSparesDefinitionDefined, systemTypesData]
   );
   const table = useMaterialReactTable({
     // Data
@@ -150,7 +204,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
     enableColumnFilterModes: true,
     enableColumnPinning: false,
     enableTopToolbar: true,
-    enableColumnResizing: false,
+    enableColumnResizing: true,
     enableFacetedValues: true,
     enableRowActions: false,
     enableGlobalFilter: false,
@@ -175,7 +229,8 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
     initialState: {
       showColumnFilters: true,
       showGlobalFilter: true,
-      pagination: { pageSize: 5, pageIndex: 0 },
+      pagination: { pageSize: DEFAULT_ROWS_PER_PAGE_VALUE, pageIndex: 0 },
+      columnVisibility: { is_flagged: isCriticalMode },
     },
     state: {
       showProgressBars: systemsDataLoading,
@@ -188,13 +243,18 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
         (type === 'copyTo' || !selectedSystemIds.includes(row.original.id)) &&
         (isSystemSelectable ? isSystemSelectable(row.original) : true);
 
+      const showFlagged = row.original.is_flagged;
+
       return {
         component: TableRow,
         onClick: () => canPlaceHere && onChangeParentId(row.original.id),
         'aria-label': `${row.original.name} row`,
-        style: {
+        sx: (theme) => ({
           cursor: canPlaceHere ? 'pointer' : 'not-allowed',
-        },
+          ...(isCriticalMode &&
+            isSparesDefinitionDefined &&
+            criticalityRowStyle({ theme, showFlagged })),
+        }),
       };
     },
     muiTableBodyCellProps: ({ column, row }) =>
@@ -220,10 +280,11 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
               );
             },
           },
-    muiTableContainerProps: { sx: { height: '360.4px' } },
+    muiTablePaperProps: { sx: FLEX_CONTAINER_PROPS },
+    muiTableContainerProps: { sx: FLEX_TABLE_CONTAINER_PROP },
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: [5],
+      rowsPerPageOptions: ROWS_PER_PAGE_OPTIONS,
       shape: 'rounded',
       variant: 'outlined',
     },

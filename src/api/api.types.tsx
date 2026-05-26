@@ -26,6 +26,10 @@ export interface Rule {
 export interface SparesDefinition {
   system_types: SystemType[];
 }
+
+// ------------------------------------- IN USE -----------------------------------------------------
+
+export type InUseDefinition = SparesDefinition;
 // ------------------------------------ MANUFACTURERS -----------------------------------------------
 
 interface AddressPost {
@@ -103,6 +107,7 @@ export type SystemPatch = Partial<SystemPost>;
 export interface System extends CreatedModifiedMixin, Required<SystemPost> {
   id: string;
   code: string;
+  is_flagged: boolean | null;
 }
 
 export interface SystemType {
@@ -146,6 +151,7 @@ export interface CatalogueCategoryPropertyPost extends CatalogueCategoryPostProp
 export interface CatalogueCategoryPropertyPatch {
   name?: string;
   allowed_values?: AllowedValues | null;
+  unit_id?: string | null;
 }
 
 export interface CatalogueCategoryProperty extends Required<CatalogueCategoryPostProperty> {
@@ -168,6 +174,7 @@ export interface CatalogueCategory
     CreatedModifiedMixin {
   id: string;
   code: string;
+  is_flagged: boolean | null;
   properties: CatalogueCategoryProperty[];
 }
 
@@ -195,8 +202,6 @@ export interface CatalogueItemPost {
   days_to_replace: number;
   days_to_rework?: number | null;
   expected_lifetime_days?: number | null;
-  drawing_number?: string | null;
-  drawing_link?: string | null;
   item_model_number?: string | null;
   is_obsolete: boolean;
   obsolete_reason?: string | null;
@@ -213,6 +218,9 @@ export interface CatalogueItem
   id: string;
   properties: Property[];
   number_of_spares: number | null;
+  number_of_spares_required: number | null;
+  criticality: number | null;
+  is_flagged: boolean | null;
 }
 
 // ------------------------------------ ITEMS ------------------------------------------------
@@ -313,4 +321,23 @@ export interface APIImageWithURL extends APIImage {
   not to their client first. */
   view_url: string;
   download_url: string;
+}
+
+// ------------------------------------ JOB SCHEDULER ------------------------------------------------
+
+export enum JobStatus {
+  Running = 'running',
+  Failed = 'failed',
+  Finished = 'finished',
+}
+
+export interface Job {
+  id: string;
+  last_executed_start_time: string | null;
+  last_executed_end_time: string | null;
+  status: JobStatus | null;
+  last_successful_executed_start_time: string | null;
+  last_successful_executed_end_time: string | null;
+  last_successful_duration_seconds: number | null;
+  next_scheduled_execution_time: string;
 }

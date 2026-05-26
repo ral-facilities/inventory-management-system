@@ -216,7 +216,7 @@ export const navigateToItemsTableViaSpares = () => {
   cy.findByText('Number of spares').should('exist');
   // eslint-disable-next-line cypress/no-unnecessary-waiting
   cy.wait(1000);
-  cy.findByRole('link', { name: '1' }).click();
+  cy.findAllByRole('link', { name: '1' }).first().click();
   cy.findByText('MX432424').should('exist');
 
   // Catalogue items landing page
@@ -226,7 +226,7 @@ export const navigateToItemsTableViaSpares = () => {
   // eslint-disable-next-line cypress/no-unnecessary-waiting
   cy.wait(100);
   cy.findByText('Number of spares').should('exist');
-  cy.findByRole('link', { name: '1' }).click();
+  cy.findAllByRole('link', { name: '1' }).first().click();
   cy.findByText('MX432424').should('exist');
   cy.visit('/systems');
 };

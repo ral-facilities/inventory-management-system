@@ -37,6 +37,7 @@ describe('delete Catalogue Category dialogue', () => {
       parent_id: null,
       id: '1',
       code: 'test',
+      is_flagged: false,
       is_leaf: false,
       properties: [],
       ...CREATED_MODIFIED_TIME_VALUES,

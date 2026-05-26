@@ -2,7 +2,7 @@ import { renderHook, waitFor } from '@testing-library/react';
 import SystemTypesJSON from '../mocks/SystemTypes.json';
 import { hooksWrapperWithProviders } from '../testUtils';
 
-import { useGetSparesDefinition } from './settings';
+import { useGetInUseDefinition, useGetSparesDefinition } from './settings';
 
 describe('settings api functions', () => {
   afterEach(() => {
@@ -21,6 +21,22 @@ describe('settings api functions', () => {
 
       expect(result.current.data).toEqual({
         system_types: [SystemTypesJSON[0]],
+      });
+    });
+  });
+
+  describe('useGetInUseDefinition', () => {
+    it('sends request to fetch the in use definition and returns successful response', async () => {
+      const { result } = renderHook(() => useGetInUseDefinition(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+
+      expect(result.current.data).toEqual({
+        system_types: [SystemTypesJSON[1]],
       });
     });
   });

@@ -25,4 +25,23 @@ describe('Settings Page', () => {
       'be.disabled'
     );
   });
+
+  it('open and close the criticality Dialog', () => {
+    cy.findByRole('button', { name: 'Criticality' }).click();
+    cy.findByRole('dialog').should('exist');
+    cy.findByText('finished');
+    cy.findByRole('button', { name: 'Run Job' }).should('not.exist');
+    cy.findByRole('button', { name: 'Close' }).click();
+    cy.findByRole('dialog').should('not.exist');
+  });
+
+  it('open and close the criticality Dialog in admin mode', () => {
+    cy.setMode({ admin: true });
+    cy.findByRole('button', { name: 'Criticality' }).click();
+    cy.findByRole('dialog').should('exist');
+    cy.findByText('finished');
+    cy.findByRole('button', { name: 'Run Job' }).should('exist');
+    cy.findByRole('button', { name: 'Close' }).click();
+    cy.findByRole('dialog').should('not.exist');
+  });
 });
