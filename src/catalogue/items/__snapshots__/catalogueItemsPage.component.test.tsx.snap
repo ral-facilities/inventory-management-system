@@ -616,6 +616,7 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
                   class="uppy-Dashboard-AddFiles"
                 >
                   <input
+                    accept=".xlsx"
                     aria-hidden="true"
                     class="uppy-Dashboard-input"
                     hidden=""
@@ -624,6 +625,7 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
                     type="file"
                   />
                   <input
+                    accept=".xlsx"
                     aria-hidden="true"
                     class="uppy-Dashboard-input"
                     hidden=""
@@ -660,7 +662,13 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
                   </div>
                   <div
                     class="uppy-Dashboard-AddFiles-info"
-                  />
+                  >
+                    <div
+                      class="uppy-Dashboard-note"
+                    >
+                      Files cannot be larger than 100MB. Supported file types: .xlsx.
+                    </div>
+                  </div>
                 </div>
                 <div
                   class="uppy-Dashboard-progressindicators"

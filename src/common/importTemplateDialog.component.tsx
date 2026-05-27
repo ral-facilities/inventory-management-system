@@ -39,12 +39,16 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
   const queryClient = useQueryClient();
 
   const {
-    settings: { imsIngestApiUrl },
+    settings: {
+      imsIngestApiUrl,
+      spreadsheetAllowedFileExtensions,
+      maxSpreadsheetSizeBytes,
+    },
   } = useAppSelector(selectSettings);
 
   // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000,
   // so here the former is expected despite them really being GiB, MiB and KiB.
-  // const maxFileSizeMB = maxImageSizeBytes / 1024 ** 2;
+  const maxFileSizeMB = maxSpreadsheetSizeBytes / 1024 ** 2;
 
   const [uppy] = React.useState<
     Uppy<UppyUploadMetadata, UppyImageUploadResponse>
@@ -54,7 +58,9 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
       infoTimeout: 10000,
       restrictions: {
         maxNumberOfFiles: 1,
+        maxFileSize: maxSpreadsheetSizeBytes,
         requiredMetaFields: ['name'],
+        allowedFileTypes: spreadsheetAllowedFileExtensions,
       },
     }).use(ProgressBar);
 
@@ -199,30 +205,29 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
   }, [parentId, uppy]);
 
   return (
-    <>
-      <StyledUppyBox>
-        <DashboardModal
-          open={open}
-          locale={{
-            strings: {
-              ...en_US.strings,
-              dropPasteFiles: 'Drop template here or %{browseFiles}',
-            } as UppyDashboardLocaleStrings<
-              UppyUploadMetadata,
-              UppyImageUploadResponse
-            >,
-          }}
-          onRequestClose={handleClose}
-          closeModalOnClickOutside={false}
-          animateOpenClose={false}
-          uppy={uppy}
-          proudlyDisplayPoweredByUppy={false}
-          theme={theme.palette.mode}
-          doneButtonHandler={handleClose}
-          metaFields={[]}
-        />
-      </StyledUppyBox>
-    </>
+    <StyledUppyBox>
+      <DashboardModal
+        open={open}
+        locale={{
+          strings: {
+            ...en_US.strings,
+            dropPasteFiles: 'Drop template here or %{browseFiles}',
+          } as UppyDashboardLocaleStrings<
+            UppyUploadMetadata,
+            UppyImageUploadResponse
+          >,
+        }}
+        onRequestClose={handleClose}
+        closeModalOnClickOutside={false}
+        note={`Files cannot be larger than ${maxFileSizeMB}MB. Supported file types: ${spreadsheetAllowedFileExtensions.join(', ')}.`}
+        animateOpenClose={false}
+        uppy={uppy}
+        proudlyDisplayPoweredByUppy={false}
+        theme={theme.palette.mode}
+        doneButtonHandler={handleClose}
+        metaFields={[]}
+      />
+    </StyledUppyBox>
   );
 };
 
