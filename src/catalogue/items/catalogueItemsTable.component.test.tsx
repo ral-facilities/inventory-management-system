@@ -159,6 +159,33 @@ describe('Catalogue Items Table', () => {
     });
   });
 
+  it('opens import data dialog and can close the dialog', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', {
+          name: 'Import data',
+        })
+      ).toBeInTheDocument();
+    });
+
+    const importDataButton = screen.getByRole('button', {
+      name: 'Import data',
+    });
+
+    await user.click(importDataButton);
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const closeButton = screen.getByRole('button', { name: 'Close Modal' });
+    await user.click(closeButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
   it('renders table correctly (section 3 due to column virtualisation )', async () => {
     createView();
     await waitFor(() => {

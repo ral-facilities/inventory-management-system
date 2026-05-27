@@ -17,7 +17,7 @@ import { UppyImageUploadResponse, UppyUploadMetadata } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { useAppSelector } from '../state/hook';
 import { selectSettings } from '../state/slices/configSlice';
-import { downloadFileByLink } from '../utils';
+import { handleBlobDownload } from '../utils';
 import {
   getUploadingState,
   StyledUppyBox,
@@ -87,12 +87,9 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
 
   const handleDownloadTemplate = React.useCallback(async () => {
     postCatalogueItemsTemplate({ catalogueCategoryId: parentId })
-      .then((response) => {
-        const blob = response.data;
-        const filename = `CatalogueItemTemplate-${parentName}.xlsx`;
-        const url = window.URL.createObjectURL(blob);
-        downloadFileByLink(url, filename);
-      })
+      .then((response) =>
+        handleBlobDownload(response, `CatalogueItemTemplate-${parentName}.xlsx`)
+      )
       .catch((error: AxiosError) => {
         handleIMS_APIError(error);
       });
