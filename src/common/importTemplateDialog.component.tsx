@@ -21,7 +21,7 @@ import { UppyImageUploadResponse, UppyUploadMetadata } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { useAppSelector } from '../state/hook';
 import { selectSettings } from '../state/slices/configSlice';
-import { downloadFileByLink } from '../utils';
+import { handleBlobDownload } from '../utils';
 import {
   getUploadingState,
   StyledUppyBox,
@@ -48,12 +48,16 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
   const queryClient = useQueryClient();
 
   const {
-    settings: { imsIngestApiUrl },
+    settings: {
+      imsIngestApiUrl,
+      spreadsheetAllowedFileExtensions,
+      maxSpreadsheetSizeBytes,
+    },
   } = useAppSelector(selectSettings);
 
   // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000,
   // so here the former is expected despite them really being GiB, MiB and KiB.
-  // const maxFileSizeMB = maxImageSizeBytes / 1024 ** 2;
+  const maxFileSizeMB = maxSpreadsheetSizeBytes / 1024 ** 2;
 
   const [uppy] = React.useState<
     Uppy<UppyUploadMetadata, UppyImageUploadResponse>
@@ -63,7 +67,9 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
       infoTimeout: 10000,
       restrictions: {
         maxNumberOfFiles: 1,
+        maxFileSize: maxSpreadsheetSizeBytes,
         requiredMetaFields: ['name'],
+        allowedFileTypes: spreadsheetAllowedFileExtensions,
       },
     })
       .use(ProgressBar)
@@ -89,12 +95,9 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
 
   const handleDownloadTemplate = React.useCallback(async () => {
     postCatalogueItemsTemplate({ catalogueCategoryId: parentId })
-      .then((response) => {
-        const blob = response.data;
-        const filename = `CatalogueItemTemplate-${parentName}.xlsx`;
-        const url = window.URL.createObjectURL(blob);
-        downloadFileByLink(url, filename);
-      })
+      .then((response) =>
+        handleBlobDownload(response, `CatalogueItemTemplate-${parentName}.xlsx`)
+      )
       .catch((error: AxiosError) => {
         handleIMS_APIError(error);
       });
@@ -293,30 +296,29 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
   }, [uppy, parentId, postCatalogueItemsTemplateValidation, parentName]);
 
   return (
-    <>
-      <StyledUppyBox>
-        <DashboardModal
-          open={open}
-          locale={{
-            strings: {
-              ...en_US.strings,
-              dropPasteFiles: 'Drop template here or %{browseFiles}',
-            } as UppyDashboardLocaleStrings<
-              UppyUploadMetadata,
-              UppyImageUploadResponse
-            >,
-          }}
-          onRequestClose={handleClose}
-          closeModalOnClickOutside={false}
-          animateOpenClose={false}
-          uppy={uppy}
-          proudlyDisplayPoweredByUppy={false}
-          theme={theme.palette.mode}
-          doneButtonHandler={handleClose}
-          metaFields={[]}
-        />
-      </StyledUppyBox>
-    </>
+    <StyledUppyBox>
+      <DashboardModal
+        open={open}
+        locale={{
+          strings: {
+            ...en_US.strings,
+            dropPasteFiles: 'Drop template here or %{browseFiles}',
+          } as UppyDashboardLocaleStrings<
+            UppyUploadMetadata,
+            UppyImageUploadResponse
+          >,
+        }}
+        onRequestClose={handleClose}
+        closeModalOnClickOutside={false}
+        note={`Files cannot be larger than ${maxFileSizeMB}MB. Supported file types: ${spreadsheetAllowedFileExtensions.join(', ')}.`}
+        animateOpenClose={false}
+        uppy={uppy}
+        proudlyDisplayPoweredByUppy={false}
+        theme={theme.palette.mode}
+        doneButtonHandler={handleClose}
+        metaFields={[]}
+      />
+    </StyledUppyBox>
   );
 };
 

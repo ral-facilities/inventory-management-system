@@ -1436,21 +1436,6 @@ export const handlers = [
   }),
   // --------------------------------- INGEST ------------------------------------------------------
 
-  http.post<PathParams, { catalogueCategoryId: string }, ErrorResponse | Blob>(
-    '/spreadsheets/catalogue-items/template',
-    async () => {
-      const response = await fetch('/src/mocks/CatalogueItemTemplate.xlsx');
-      const blob = await response.blob();
-      return new HttpResponse(blob, {
-        status: 200,
-        headers: {
-          'Content-Type':
-            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-          'Content-Disposition': `attachment; filename="catalogue-items-template.xlsx"`,
-        },
-      });
-    }
-  ),
   http.post<PathParams, DefaultBodyType, ErrorResponse | NonNullable<unknown>>(
     '/spreadsheets/catalogue-items/ingest',
     async () => {
