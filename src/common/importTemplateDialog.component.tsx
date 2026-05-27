@@ -1,9 +1,10 @@
 import { useTheme } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
-import Uppy from '@uppy/core';
+import Uppy, { UppyFile } from '@uppy/core';
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 import '@uppy/image-editor/dist/style.css';
+import Informer from '@uppy/informer';
 import en_US from '@uppy/locales/lib/en_US';
 import ProgressBar from '@uppy/progress-bar'; // Import the ProgressBar plugin
 import { DashboardModal } from '@uppy/react';
@@ -12,7 +13,10 @@ import XHR from '@uppy/xhr-upload';
 import { AxiosError } from 'axios';
 import React from 'react';
 import { uppyOnAfterResponse, uppyOnBeforeRequest } from '../api/api';
-import { usePostCatalogueItemsTemplate } from '../api/ingest';
+import {
+  usePostCatalogueItemsTemplate,
+  usePostCatalogueItemsTemplateValidation,
+} from '../api/ingest';
 import { UppyImageUploadResponse, UppyUploadMetadata } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { useAppSelector } from '../state/hook';
@@ -35,6 +39,11 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
   const { open, onClose, parentId, parentName } = props;
 
   const theme = useTheme();
+  const { mutateAsync: postCatalogueItemsTemplate } =
+    usePostCatalogueItemsTemplate();
+
+  const { mutateAsync: postCatalogueItemsTemplateValidation } =
+    usePostCatalogueItemsTemplateValidation();
 
   const queryClient = useQueryClient();
 
@@ -56,7 +65,9 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
         maxNumberOfFiles: 1,
         requiredMetaFields: ['name'],
       },
-    }).use(ProgressBar);
+    })
+      .use(ProgressBar)
+      .use(Informer);
 
     newUppy.use(XHR, {
       endpoint: `${imsIngestApiUrl}/spreadsheets/catalogue-items/ingest`,
@@ -75,9 +86,6 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
 
     return newUppy;
   });
-
-  const { mutateAsync: postCatalogueItemsTemplate } =
-    usePostCatalogueItemsTemplate();
 
   const handleDownloadTemplate = React.useCallback(async () => {
     postCatalogueItemsTemplate({ catalogueCategoryId: parentId })
@@ -197,6 +205,92 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
   React.useEffect(() => {
     uppy.setMeta({ catalogue_category_id: parentId });
   }, [parentId, uppy]);
+
+  React.useEffect(() => {
+    const handleFileAdded = (
+      file: UppyFile<UppyUploadMetadata, UppyImageUploadResponse>
+    ) => {
+      const actualFile = file.data as File;
+
+      uppy.info('Validation started. Please wait.', 'info', 15000);
+
+      postCatalogueItemsTemplateValidation({
+        catalogueCategoryId: parentId,
+        spreadsheetFile: actualFile,
+      })
+        .then((response) => {
+          const headers = response.headers;
+
+          const isValid = headers['imsingestapi-validation-valid'] === 'true';
+
+          const errorCount = Number(
+            headers['imsingestapi-validation-errors'] ?? 0
+          );
+
+          const warningCount = Number(
+            headers['imsingestapi-validation-warnings'] ?? 0
+          );
+
+          console.log(headers);
+          const hasErrors = !isValid || errorCount > 0;
+          const hasWarnings = warningCount > 0;
+
+          if (hasErrors) {
+            const errorText = `${errorCount} error${errorCount !== 1 ? 's' : ''}`;
+
+            const warningText = hasWarnings
+              ? ` and ${warningCount} warning${warningCount !== 1 ? 's' : ''}`
+              : '';
+
+            const message = `Validation failed with ${errorText}${warningText}. A spreadsheet with highlighted issues has been downloaded.`;
+
+            uppy.info(message, 'error', 15000);
+
+            const blob = response.data;
+            const filename = `CatalogueItemsValidationErrors-${parentName}.xlsx`;
+            const url = window.URL.createObjectURL(blob);
+            downloadFileByLink(url, filename);
+
+            uppy.removeFile(file.id);
+
+            return;
+          }
+
+          if (hasWarnings) {
+            const warningText = `${warningCount} warning${
+              warningCount !== 1 ? 's' : ''
+            }`;
+
+            const message = `Validation completed with ${warningText}. A spreadsheet highlighting the warnings has been downloaded.`;
+
+            uppy.info(message, 'warning', 15000);
+
+            const blob = response.data;
+            const filename = `CatalogueItemsValidationWarnings-${parentName}.xlsx`;
+            const url = window.URL.createObjectURL(blob);
+            downloadFileByLink(url, filename);
+
+            return;
+          }
+
+          uppy.info(
+            'Validation complete. No errors or warnings found. Please click Upload to proceed.',
+            'success',
+            5000
+          );
+        })
+
+        .catch((error: AxiosError) => {
+          handleIMS_APIError(error);
+        });
+    };
+
+    uppy.on('file-added', handleFileAdded);
+
+    return () => {
+      uppy.off('file-added', handleFileAdded);
+    };
+  }, [uppy, parentId, postCatalogueItemsTemplateValidation, parentName]);
 
   return (
     <>

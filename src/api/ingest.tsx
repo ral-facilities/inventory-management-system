@@ -32,3 +32,40 @@ export const usePostCatalogueItemsTemplate = (): UseMutationResult<
     },
   });
 };
+
+const postCatalogueItemsTemplateValidation = async (
+  catalogueCategoryId: string,
+  spreadsheetFile: File
+): Promise<AxiosResponse<Blob>> => {
+  const formData = new FormData();
+
+  formData.append('catalogue_category_id', catalogueCategoryId);
+  formData.append('spreadsheet_file', spreadsheetFile);
+
+  return ingestApi.post('/spreadsheets/catalogue-items/validate', formData, {
+    responseType: 'blob',
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};
+
+export const usePostCatalogueItemsTemplateValidation = (): UseMutationResult<
+  AxiosResponse<Blob>,
+  AxiosError,
+  { catalogueCategoryId: string; spreadsheetFile: File }
+> => {
+  return useMutation({
+    mutationFn: ({
+      catalogueCategoryId,
+      spreadsheetFile,
+    }: {
+      catalogueCategoryId: string;
+      spreadsheetFile: File;
+    }) =>
+      postCatalogueItemsTemplateValidation(
+        catalogueCategoryId,
+        spreadsheetFile
+      ),
+  });
+};
