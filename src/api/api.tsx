@@ -3,7 +3,7 @@ import { MicroFrontendId } from '../app.types';
 import { readSciGatewayToken } from '../parseTokens';
 import { InventoryManagementSystemSettings, settings } from '../settings';
 import { InvalidateTokenType } from '../state/actions/actions.types';
-import { parseErrorResponse } from '../utils';
+import { getErrorMessage } from '../utils';
 import { APIError } from './api.types';
 
 // These are for ensuring refresh request is only sent once when multiple requests
@@ -42,12 +42,9 @@ const createAuthenticatedClient = (props: {
 
   apiClient.interceptors.response.use(
     (response) => response,
-    (error) => {
+    async (error) => {
       const originalRequest = error.config;
-      const errorMessage: string = error.response?.data
-        ? ((error.response.data as APIError).detail.toLocaleLowerCase() ??
-          error.message)
-        : error.message;
+      const errorMessage = await getErrorMessage(error);
 
       // Check if the token is invalid and needs refreshing
       // only allow a request to be retried once. Don't retry if not logged
@@ -92,7 +89,10 @@ const createAuthenticatedClient = (props: {
   return apiClient;
 };
 
-export function uppyOnAfterResponse(xhr: XMLHttpRequest) {
+export function uppyOnAfterResponse(
+  xhr: XMLHttpRequest,
+  parseError: (msg: string) => string
+) {
   if (xhr.status >= 400 && xhr.status < 600) {
     const errorMessage: string = (
       JSON.parse(xhr.responseText) as APIError
@@ -128,7 +128,7 @@ export function uppyOnAfterResponse(xhr: XMLHttpRequest) {
         });
       });
     } else {
-      const returnMessage = parseErrorResponse(errorMessage);
+      const returnMessage = parseError(errorMessage);
       throw new Error(returnMessage);
     }
   }

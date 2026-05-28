@@ -21,7 +21,11 @@ import { UppyImageUploadResponse, UppyUploadMetadata } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { useAppSelector } from '../state/hook';
 import { selectSettings } from '../state/slices/configSlice';
-import { handleBlobDownload } from '../utils';
+import {
+  getErrorMessage,
+  handleBlobDownload,
+  parseSpreadsheetError,
+} from '../utils';
 import {
   getUploadingState,
   StyledUppyBox,
@@ -86,7 +90,7 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
         return xhr.status === 204 ? '' : xhr.response;
       },
       async onAfterResponse(xhr) {
-        await uppyOnAfterResponse(xhr);
+        await uppyOnAfterResponse(xhr, parseSpreadsheetError);
       },
     });
 
@@ -234,7 +238,6 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
             headers['imsingestapi-validation-warnings'] ?? 0
           );
 
-          console.log(headers);
           const hasErrors = !isValid || errorCount > 0;
           const hasWarnings = warningCount > 0;
 
@@ -249,10 +252,9 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
 
             uppy.info(message, 'error', 15000);
 
-            const blob = response.data;
             const filename = `CatalogueItemsValidationErrors-${parentName}.xlsx`;
-            const url = window.URL.createObjectURL(blob);
-            downloadFileByLink(url, filename);
+
+            handleBlobDownload(response, filename);
 
             uppy.removeFile(file.id);
 
@@ -268,10 +270,8 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
 
             uppy.info(message, 'warning', 15000);
 
-            const blob = response.data;
             const filename = `CatalogueItemsValidationWarnings-${parentName}.xlsx`;
-            const url = window.URL.createObjectURL(blob);
-            downloadFileByLink(url, filename);
+            handleBlobDownload(response, filename);
 
             return;
           }
@@ -282,9 +282,14 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
             5000
           );
         })
-
-        .catch((error: AxiosError) => {
-          handleIMS_APIError(error);
+        .catch(async (error: AxiosError) => {
+          const errorMessage = await getErrorMessage(error);
+          const parsedErrorMessage = parseSpreadsheetError(errorMessage);
+          if (parsedErrorMessage === 'There was an unexpected error.') {
+            return handleIMS_APIError(error);
+          }
+          uppy.info(parsedErrorMessage, 'error', 15000);
+          uppy.removeFile(file.id);
         });
     };
 

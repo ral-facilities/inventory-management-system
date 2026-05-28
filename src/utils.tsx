@@ -9,7 +9,7 @@ import {
   type TableCellProps,
 } from '@mui/material';
 import { FilterFn, FilterMeta, Row } from '@tanstack/table-core';
-import { AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { format, parseISO } from 'date-fns';
 import LZString from 'lz-string';
 import {
@@ -26,6 +26,7 @@ import {
   type MRT_Theme,
 } from 'material-react-table';
 import React from 'react';
+import { APIError } from './api/api.types';
 import { useGetSparesDefinition } from './api/settings';
 import { MicroFrontendToken, SparesFilterStateType } from './app.types';
 import { TokenUpdatedType } from './state/actions/actions.types';
@@ -612,24 +613,81 @@ export const mrtTheme = (theme: Theme): Partial<MRT_Theme> => ({
   baseBackgroundColor: theme.palette.background.default,
 });
 
-export function parseErrorResponse(errorMessage: string): string {
-  let returnMessage = 'There was an unexpected error.';
-  if (errorMessage.includes('limit for the maximum number of')) {
-    returnMessage = 'Maximum number of files reached.';
-  } else if (errorMessage.includes('does not contain the correct extension')) {
-    returnMessage = 'File extension does not match content type.';
-  } else if (errorMessage.includes('is not supported')) {
-    returnMessage = 'Content type not supported.';
-  } else if (errorMessage.includes('not a valid image')) {
-    returnMessage = 'File given is not a valid image.';
-  } else if (
-    errorMessage.includes('file name already exists within the parent entity.')
-  ) {
-    returnMessage =
-      'A file with this name already exists. To rename your file: remove it, add it back and click the edit icon below the file to change its name.';
+export function parseBaseError(message: string): string {
+  if (message.includes('does not contain the correct extension')) {
+    return 'File extension does not match content type.';
+  }
+  if (message.includes('is not supported')) {
+    return 'Content type not supported.';
+  }
+  return 'There was an unexpected error.';
+}
+
+export function parseImageError(message: string): string {
+  if (message.includes('limit for the maximum number of')) {
+    return 'Maximum number of files reached.';
   }
 
-  return returnMessage;
+  if (message.includes('not a valid image')) {
+    return 'File given is not a valid image.';
+  }
+
+  if (message.includes('file name already exists within the parent entity.')) {
+    return 'A file with this name already exists. To rename your file: remove it, add it back and click the edit icon below the file to change its name.';
+  }
+
+  return parseBaseError(message);
+}
+
+export function parseAttachmentError(message: string): string {
+  if (message.includes('limit for the maximum number of')) {
+    return 'Maximum number of files reached.';
+  }
+
+  if (message.includes('file name already exists within the parent entity.')) {
+    return 'A file with this name already exists. To rename your file: remove it, add it back and click the edit icon below the file to change its name.';
+  }
+
+  return parseBaseError(message);
+}
+
+export function parseSpreadsheetError(message: string): string {
+  if (message.includes(`imsingestapiversion`)) {
+    return `Unable to find the required custom document property 'ImsIngestAPIVersion' in your workbook. Please download a new template and copy your data over, as your current file appears to be missing required properties or is corrupted`;
+  }
+
+  if (message.includes('too many catalogue items in spreadsheet')) {
+    const match = message.match(/maximum of (\d+)/);
+    const max = match ? match[1] : '1000';
+
+    return `Too many catalogue items found in your spreadsheet. The maximum allowed is ${max} rows, so please reduce the number of entries and try again.`;
+  }
+
+  if (message.includes('not a valid spreadsheet')) {
+    return `The file provided is not a valid spreadsheet. Please upload a supported file and try again.`;
+  }
+
+  if (message.includes('catalogue category does not exist')) {
+    return `The specified catalogue category was not found, so no catalogue items can be added.`;
+  }
+
+  return parseBaseError(message);
+}
+
+export async function getErrorMessage(error: AxiosError): Promise<string> {
+  const fallback = error?.message ?? 'Unknown error';
+  const data = error?.response?.data as APIError;
+
+  if (data instanceof Blob) {
+    try {
+      const { detail } = JSON.parse(await data.text()) as APIError;
+      return detail?.toLowerCase?.() ?? fallback;
+    } catch {
+      return fallback;
+    }
+  }
+
+  return data?.detail?.toLowerCase?.() ?? fallback;
 }
 
 export const deselectRowById = <TData extends MRT_RowData>(
