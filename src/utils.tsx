@@ -614,7 +614,10 @@ export const mrtTheme = (theme: Theme): Partial<MRT_Theme> => ({
 });
 
 export function parseBaseError(message: string): string {
-  if (message.includes('does not contain the correct extension')) {
+  if (
+    message.includes('does not contain the correct extension') ||
+    message.includes('content type do not match')
+  ) {
     return 'File extension does not match content type.';
   }
   if (message.includes('is not supported')) {
