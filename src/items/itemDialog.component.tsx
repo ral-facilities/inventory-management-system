@@ -68,10 +68,16 @@ import {
 } from '../form.schemas';
 import handleIMS_APIError from '../handleIMS_APIError';
 import handleTransferState from '../handleTransferState';
+import { useAppSelector } from '../state/hook';
+import { selectSettings } from '../state/slices/configSlice';
 import { SystemsTableView } from '../systems/systemsTableView.component';
 import Breadcrumbs from '../view/breadcrumbs.component';
 
-function toItemDetailsStep(item: Item | undefined): ItemDetailsStep {
+function toItemDetailsStep(
+  item: Item | undefined,
+  catalogueCategory: CatalogueCategory | undefined,
+  serialNumberPrefillEnabled: boolean
+): ItemDetailsStep {
   if (!item) {
     return {
       purchase_order_number: '',
@@ -80,7 +86,8 @@ function toItemDetailsStep(item: Item | undefined): ItemDetailsStep {
       warranty_end_date: null,
       asset_number: '',
       serial_number: {
-        serial_number: '',
+        serial_number:
+          (serialNumberPrefillEnabled && catalogueCategory?.name + '/%s') || '',
         starting_value: '',
         quantity: '',
       },
@@ -164,6 +171,10 @@ function ItemDialog(props: ItemDialogProps) {
     isAdminMode,
   } = props;
 
+  const {
+    settings: { serialNumberPrefillEnabled },
+  } = useAppSelector(selectSettings);
+
   // Fetch the catalogue category if it hasn't already been given (as required to know what properties are available)
   const { data: fetchedCatalogueCategory } = useGetCatalogueCategory(
     props.catalogueCategory ? undefined : catalogueItem?.catalogue_category_id
@@ -232,7 +243,11 @@ function ItemDialog(props: ItemDialogProps) {
     resolver: zodResolver(
       ItemDetailsStepSchema(requestType, isAdminMode && parentSystemId !== null)
     ),
-    defaultValues: toItemDetailsStep(selectedItem),
+    defaultValues: toItemDetailsStep(
+      selectedItem,
+      catalogueCategory,
+      serialNumberPrefillEnabled
+    ),
   });
 
   const {
@@ -271,7 +286,13 @@ function ItemDialog(props: ItemDialogProps) {
   const serialNumberAdvancedOptions = itemDetails.serial_number;
   // Load the values for editing.
   React.useEffect(() => {
-    resetDetailsStep(toItemDetailsStep(selectedItem));
+    resetDetailsStep(
+      toItemDetailsStep(
+        selectedItem,
+        catalogueCategory,
+        serialNumberPrefillEnabled
+      )
+    );
     resetPropertiesStep({
       properties: convertToPropertyValueList(
         catalogueCategory,
@@ -289,6 +310,7 @@ function ItemDialog(props: ItemDialogProps) {
     resetPropertiesStep,
     selectedItem,
     selectedItem?.properties,
+    serialNumberPrefillEnabled,
   ]);
 
   // Set usage status based on the selected Rule
@@ -356,10 +378,14 @@ function ItemDialog(props: ItemDialogProps) {
   ]);
 
   React.useEffect(() => {
-    if (
+    const neitherProvided =
       !serialNumberAdvancedOptions.quantity &&
-      !serialNumberAdvancedOptions.starting_value
-    ) {
+      !serialNumberAdvancedOptions.starting_value;
+    const bothProvided =
+      serialNumberAdvancedOptions.quantity ||
+      serialNumberAdvancedOptions.starting_value;
+
+    if (neitherProvided || bothProvided) {
       clearErrorsDetailsStep([
         'serial_number.quantity',
         'serial_number.serial_number',
@@ -764,19 +790,43 @@ function ItemDialog(props: ItemDialogProps) {
                       )
                     }
                   >
-                    <Typography
-                      variant="caption"
-                      sx={{
-                        ml: 1,
-                        mb: 0,
-                        cursor: 'pointer',
-                        '&:hover': { textDecoration: 'underline' },
-                      }}
-                    >
-                      {showAdvancedSerialNumberOptions
-                        ? 'Close advanced options'
-                        : 'Show advanced options'}
-                    </Typography>
+                    <Box sx={{ alignItems: 'center', display: 'flex' }}>
+                      <Tooltip
+                        title={
+                          <Box>
+                            <Typography>
+                              When adding multiple items, %s marks where the
+                              generated number will appear. This number is based
+                              on the Starting Value and Quantity.
+                            </Typography>
+                            <Typography sx={{ mt: 2 }}>Example: </Typography>
+                            <Typography>
+                              Serial number: item %s. Quantity: 2. Starting
+                              value: 1
+                            </Typography>
+                            <Typography>
+                              Resulting serial numbers: item 1, item 2
+                            </Typography>
+                          </Box>
+                        }
+                        aria-label="Serial Number Advanced Options Tooltip"
+                      >
+                        <InfoOutlinedIcon fontSize="small" />
+                      </Tooltip>
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          ml: 1,
+                          mb: 0,
+                          cursor: 'pointer',
+                          '&:hover': { textDecoration: 'underline' },
+                        }}
+                      >
+                        {showAdvancedSerialNumberOptions
+                          ? 'Close advanced options'
+                          : 'Show advanced options'}
+                      </Typography>
+                    </Box>
                   </Grid>
                   <Grid container size={12}>
                     <Collapse
