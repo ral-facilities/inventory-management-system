@@ -68,6 +68,8 @@ import {
 } from '../form.schemas';
 import handleIMS_APIError from '../handleIMS_APIError';
 import handleTransferState from '../handleTransferState';
+import { useAppSelector } from '../state/hook';
+import { selectSettings } from '../state/slices/configSlice';
 import { SystemsTableView } from '../systems/systemsTableView.component';
 import Breadcrumbs from '../view/breadcrumbs.component';
 
@@ -156,7 +158,6 @@ export interface ItemDialogProps {
   catalogueCategory?: CatalogueCategory;
   selectedItem?: Item;
   isAdminMode: boolean;
-  serialNumberPrefillEnabled: boolean;
 }
 
 function ItemDialog(props: ItemDialogProps) {
@@ -168,8 +169,11 @@ function ItemDialog(props: ItemDialogProps) {
     catalogueItem,
     selectedItem,
     isAdminMode,
-    serialNumberPrefillEnabled,
   } = props;
+
+  const {
+    settings: { serialNumberPrefillEnabled },
+  } = useAppSelector(selectSettings);
 
   // Fetch the catalogue category if it hasn't already been given (as required to know what properties are available)
   const { data: fetchedCatalogueCategory } = useGetCatalogueCategory(
