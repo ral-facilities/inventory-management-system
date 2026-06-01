@@ -32,7 +32,6 @@ describe('ItemDialog', () => {
       catalogueCategory: getCatalogueCategoryById('4'),
       catalogueItem: getCatalogueItemById('1'),
       isAdminMode: false,
-      serialNumberPrefillEnabled: false,
     };
     user = userEvent.setup();
   });
@@ -184,6 +183,10 @@ describe('ItemDialog', () => {
       //navigate through stepper
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
+      await modifyDetailsValues({
+        serialNumber: 'Cameras',
+      });
+
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       const finishButton = screen.getByRole('button', { name: 'Finish' });
@@ -262,6 +265,10 @@ describe('ItemDialog', () => {
       //navigate through stepper
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
+      await modifyDetailsValues({
+        serialNumber: ' ',
+      });
+
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       await user.click(screen.getByRole('button', { name: 'Finish' }));
@@ -299,6 +306,10 @@ describe('ItemDialog', () => {
 
       //navigate through stepper
       await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await modifyDetailsValues({
+        serialNumber: ' ',
+      });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
@@ -390,13 +401,12 @@ describe('ItemDialog', () => {
     }, 10000);
 
     it('prefills serial number with default value when enabled', async () => {
-      props.serialNumberPrefillEnabled = true;
       createView();
 
       await user.click(screen.getByText('Add item details'));
 
       await waitFor(() => {
-        expect(screen.getByDisplayValue('Cameras %s'));
+        expect(screen.getByDisplayValue('Cameras/%s'));
       });
     });
 
@@ -406,14 +416,18 @@ describe('ItemDialog', () => {
       await user.click(screen.getByText('Add item details'));
 
       await modifyDetailsValues({
-        serialNumber: 'Cameras %s',
+        serialNumber: 'Cameras/%s',
         serialNumberAdvancedOptions: { quantity: '', starting_value: '' },
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       await waitFor(() => {
-        expect(screen.getByText('Please remove or replace %s.'));
+        expect(
+          screen.getByText(
+            'Please remove %s or fill in the advanced options fields.'
+          )
+        );
       });
     });
 
@@ -471,6 +485,12 @@ describe('ItemDialog', () => {
 
       await modifySystemValue({
         system: 'Storage',
+      });
+
+      await user.click(screen.getByText('Add item details'));
+
+      await modifyDetailsValues({
+        serialNumber: '',
       });
 
       await user.click(screen.getByText('Add item properties'));
@@ -838,6 +858,7 @@ describe('ItemDialog', () => {
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       await modifyDetailsValues({
+        serialNumber: ' ',
         usageStatus: 'U{arrowdown}{enter}',
       });
 
@@ -871,6 +892,10 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByText('Add item details'));
 
+      await modifyDetailsValues({
+        serialNumber: 'Cameras',
+      });
+
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
@@ -889,7 +914,9 @@ describe('ItemDialog', () => {
       });
 
       expect(screen.queryByRole('button', { name: 'Next' })).not.toBeDisabled();
+
       await user.click(screen.getByRole('button', { name: 'Next' }));
+
       expect(
         screen.queryByText('Invalid item details')
       ).not.toBeInTheDocument();
@@ -905,6 +932,9 @@ describe('ItemDialog', () => {
       await user.click(screen.getByText('Add item details'));
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
+      await modifyDetailsValues({
+        serialNumber: 'Cameras',
+      });
 
       expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
       expect(screen.getByText('Invalid item details')).toBeInTheDocument();
@@ -1098,6 +1128,9 @@ describe('ItemDialog', () => {
 
       //navigate through stepper
       await user.click(screen.getByRole('button', { name: 'Next' }));
+      await modifyDetailsValues({
+        serialNumber: 'Cameras',
+      });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
 

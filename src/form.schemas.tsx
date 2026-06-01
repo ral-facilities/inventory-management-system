@@ -612,7 +612,7 @@ export const ItemDetailsStepSchema = (
         ) {
           issues.push({
             path: ['serial_number'],
-            message: 'Please remove or replace %s.',
+            message: 'Please remove %s or fill in the advanced options fields.',
             code: 'custom',
           });
         }

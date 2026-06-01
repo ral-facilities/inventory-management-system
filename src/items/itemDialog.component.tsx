@@ -87,7 +87,7 @@ function toItemDetailsStep(
       asset_number: '',
       serial_number: {
         serial_number:
-          (serialNumberPrefillEnabled && catalogueCategory?.name + ' %s') || '',
+          (serialNumberPrefillEnabled && catalogueCategory?.name + '/%s') || '',
         starting_value: '',
         quantity: '',
       },
