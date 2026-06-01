@@ -469,6 +469,17 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           formatDateTimeStrings(row.original.catalogueItem.modified_time, true),
       },
       {
+        header: 'Modified by',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => row.catalogueItem.modified_by,
+        id: 'catalogueItem.modified_by',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
+        size: 250,
+        enableGrouping: false,
+      },
+      {
         header: 'Created',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.catalogueItem.created_time),

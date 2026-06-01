@@ -394,6 +394,23 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                     color: 'text.primary',
                   }}
                 >
+                  Modified By
+                </Typography>
+                <Typography
+                  sx={{
+                    color: 'text.secondary',
+                  }}
+                >
+                  {catalogueItemIdData.modified_by}
+                </Typography>
+              </Grid>
+
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <Typography
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
                   Created
                 </Typography>
                 <Typography
