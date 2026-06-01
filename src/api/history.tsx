@@ -21,7 +21,6 @@ const getHistoryEntries = async (
       params: queryParams,
     })
     .then((response) => {
-      console.log(response.data);
       return response.data;
     });
 };
@@ -41,7 +40,6 @@ export const useGetHistoryEntries = (
   collection: string,
   element_id: string | null
 ): UseQueryResult<HistoryEntry[], AxiosError> => {
-  console.log('IN QUERY');
   return useQuery({
     queryKey: ['history_entries', collection, element_id],
     queryFn: () => getHistoryEntries(collection, element_id),

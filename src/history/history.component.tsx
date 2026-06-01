@@ -3,10 +3,8 @@ import {
   Box,
   Button,
   capitalize,
-  Table,
   TableCellBaseProps,
   TableRow,
-  Typography,
 } from '@mui/material';
 import {
   MRT_ColumnDef,
@@ -20,6 +18,7 @@ import {
   COLUMN_FILTER_FUNCTIONS,
   COLUMN_FILTER_MODE_OPTIONS,
   COLUMN_FILTER_VARIANTS,
+  OverflowTip,
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
   TableHeaderOverflowTip,
@@ -45,38 +44,119 @@ const getOperationTypeName = (operation: string) => {
   }
 };
 
+type HistoryFieldRow = HistoryEntry & {
+  updated_field: string;
+  updated_value: unknown;
+};
+
+const transformUpdatedFieldValue = (value: unknown) => {
+  if (value === null || value === undefined) {
+    return 'N/A';
+  }
+  if (typeof value === 'object') {
+    return Object.entries(value)
+      .map((key, val) => `${key}: ${val}`)
+      .join('\n');
+  }
+  return String(value);
+};
+
 function HistoryEntries() {
   const { element_id } = useParams();
   const location = useLocation();
   const historyPath = location.pathname.split('/');
   const collection = historyPath[historyPath.length - 3];
-  console.log(collection);
 
   const { data: historyData, isLoading: historyDataLoading } =
     useGetHistoryEntries(collection!, element_id ?? null);
 
+  const flattenedHistoryData = React.useMemo<HistoryFieldRow[]>(() => {
+    if (!historyData) {
+      return [];
+    }
+    return historyData.flatMap((entry) =>
+      Object.entries(entry.updated_fields ?? {}).map(([field, value]) => {
+        // skip ObjectIds here, and parse values as well
+        return {
+          ...entry,
+          updated_field: field,
+          updated_value: value,
+        };
+      })
+    );
+  }, [historyData]);
+
   // Breadcrumbs + Mui table V2 + extra
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
 
-  //   const [deleteUnitDialog, setDeleteUnitDialog] =
-  //     React.useState<boolean>(false);
-
-  //   const [selectedUnit, setSelectedUnit] = React.useState<Unit | undefined>(
-  //     undefined
-  //   );
-
-  const columns = React.useMemo<MRT_ColumnDef<HistoryEntry>[]>(() => {
+  const columns = React.useMemo<MRT_ColumnDef<HistoryFieldRow>[]>(() => {
     return [
       {
         header: 'Comment',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.data_modified_comment,
+        // Group by ID here so it is per history entry, but shows the user it is by comment,
+        // so 2 changes with the same comment are grouped separately
         getGroupingValue: (row) => row.id,
-        id: 'data_modified_comment',
+        id: 'id',
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
-        Cell: ({ row }) => row.original.data_modified_comment,
+        Cell: ({ row }) => {
+          return (
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <OverflowTip sx={{ fontSize: 'inherit' }}>
+                {row.original.data_modified_comment ?? 'No comment'}
+              </OverflowTip>
+            </Box>
+          );
+        },
+        size: 350,
+        GroupedCell: ({ row }) => {
+          return (
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+
+                width: '100%',
+              }}
+            >
+              <OverflowTip
+                disableParagraph
+                sx={{
+                  fontSize: 'inherit',
+                  mx: 0.5,
+                }}
+              >
+                {row.original.data_modified_comment ?? 'No comment'}
+              </OverflowTip>
+            </Box>
+          );
+        },
+      },
+      {
+        header: 'Field',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => row.updated_field,
+        id: 'updated_field',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
+        Cell: ({ row }) => row.original.updated_field,
+        size: 250,
+      },
+      {
+        header: 'Value',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => row.updated_value,
+        id: 'updated_value',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
+        Cell: ({ row }) =>
+          transformUpdatedFieldValue(row.original.updated_value),
+        size: 250,
       },
 
       {
@@ -102,6 +182,7 @@ function HistoryEntries() {
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
         Cell: ({ row }) => row.original.data_modified_by,
+        size: 250,
       },
       {
         header: 'Operation Type',
@@ -112,6 +193,7 @@ function HistoryEntries() {
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
         Cell: ({ row }) => getOperationTypeName(row.original.operation_type),
+        size: 250,
       },
     ];
   }, []);
@@ -126,25 +208,30 @@ function HistoryEntries() {
     initialState: {
       columnFilterFns: initialColumnFilterFnState,
       pagination: { pageSize: 15, pageIndex: 0 },
+      grouping: ['id'],
     },
     storeInUrl: true,
   });
 
   const table = useMaterialReactTable({
     columns: columns,
-    data: historyData ?? [],
+    data: flattenedHistoryData ?? [],
     // Features
     enableColumnOrdering: true,
     enableColumnFilterModes: true,
+    enableColumnResizing: true,
     enableFacetedValues: true,
     enableRowActions: false,
     enableStickyHeader: true,
     enableRowSelection: false,
     enableDensityToggle: false,
     enableFullScreenToggle: false,
+    enableRowVirtualization: false,
+    enableColumnVirtualization: false,
+    enableGrouping: true,
     enablePagination: true,
-    filterFns: customFilterFunctions,
     // Other settings
+    filterFns: customFilterFunctions,
     manualFiltering: false,
     paginationDisplayMode: 'pages',
     positionToolbarAlertBanner: 'bottom',
@@ -167,7 +254,7 @@ function HistoryEntries() {
     },
     state: {
       ...preservedState,
-      showProgressBars: historyDataLoading, //or showSkeletons
+      showProgressBars: historyDataLoading,
     },
     //MRT
     mrtTheme,
@@ -175,10 +262,12 @@ function HistoryEntries() {
     muiTableBodyRowProps: ({ row }) => {
       return {
         component: TableRow,
-        'aria-label': `${row.original.data_modified_comment} row`,
+        'aria-label': `${row.original.id} row`,
       };
     },
     muiTableBodyCellProps: ({ column }) =>
+      // The overflow of grouped cells is done manually in the column definition
+      (column.id === 'id' && column.getIsGrouped()) ||
       // Ignore MRT rendered cells e.g. expand , spacer etc
       column.id.startsWith('mrt')
         ? {}
@@ -228,64 +317,9 @@ function HistoryEntries() {
       </Button>
     ),
     renderBottomToolbarCustomActions: ({ table }) =>
-      displayTableRowCountText(table, historyData, 'History Entries', {
+      displayTableRowCountText(table, flattenedHistoryData, 'History Entries', {
         paddingLeft: '8px',
       }),
-    renderDetailPanel: ({ row }) => {
-      const fields = row.original.updated_fields;
-
-      // Helper to flatten nested objects (like address) into "key: value" pairs
-      const flattenedEntries = Object.entries(fields).flatMap(([key, val]) => {
-        if (val && typeof val === 'object' && !Array.isArray(val)) {
-          return Object.entries(val).map(([subKey, subVal]) => [
-            `${key}.${subKey}`,
-            subVal,
-          ]);
-        }
-        let prevVal;
-        const older = historyData?.find(
-          (hD) =>
-            new Date(hD.data_modified_time) <
-              new Date(row.original.data_modified_time) &&
-            key in hD.updated_fields
-        );
-        if (older) {
-          prevVal = older.updated_fields[key];
-        }
-        return [[key, val, prevVal]];
-      });
-
-      return (
-        <Box
-          sx={{
-            display: 'grid',
-            margin: 'auto',
-            gridTemplateColumns: '1fr',
-            width: '100%',
-          }}
-        >
-          <Typography mb="xs">Updated Fields Details:</Typography>
-          <Table>
-            <thead>
-              <tr>
-                <th>Property</th>
-                <th>New Value</th>
-                <th>Previous Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              {flattenedEntries.map(([key, value, prev]) => (
-                <tr key={key}>
-                  <td style={{ fontWeight: 500, width: '30%' }}>{key}</td>
-                  <td>{value?.toString() ?? 'N/A'}</td>
-                  <td>{prev?.toString() ?? 'N/A'}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </Box>
-      );
-    },
   });
 
   return (

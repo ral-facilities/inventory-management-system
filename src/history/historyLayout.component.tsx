@@ -32,7 +32,6 @@ function HistoryLayout() {
 
   React.useEffect(() => {
     if (historyData) {
-      console.log(historyData);
       setHistoryBreadcrumbs({
         full_trail: true,
         trail: [

@@ -144,7 +144,6 @@ export const handlers = [
   http.get<PathParams, DefaultBodyType, CatalogueCategory[]>(
     '/v1/catalogue-categories',
     ({ request }) => {
-      console.log('CAT HANDLING');
       const url = new URL(request.url);
       const catalogueCategoryParams = url.searchParams;
       const parentId = catalogueCategoryParams.get('parent_id');

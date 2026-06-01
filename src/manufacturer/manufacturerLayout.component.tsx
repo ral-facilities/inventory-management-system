@@ -52,8 +52,6 @@ function ManufacturerLayout() {
   const location = useLocation();
 
   React.useEffect(() => {
-    console.log('MAN DATA');
-    console.log(manufacturerData);
     if (manufacturerData) {
       setManufacturerBreadcrumbs({
         full_trail: true,
