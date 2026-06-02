@@ -9,6 +9,7 @@ export interface InventoryManagementSystemSettings {
   imageAllowedFileExtensions: string[];
   maxImageSizeBytes: number;
   privilegedRoles: string[];
+  serialNumberPrefillEnabled: boolean;
   routes: PluginRoute[];
   pluginHost?: string;
 }

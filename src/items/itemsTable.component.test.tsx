@@ -138,7 +138,7 @@ describe('Items Table', () => {
     ).toBeInTheDocument();
   });
 
-  it.only('displays warranty end date grouped cell', async () => {
+  it('displays warranty end date grouped cell', async () => {
     createView();
 
     const serialNumber = '5YUQDDjKpz2z';
