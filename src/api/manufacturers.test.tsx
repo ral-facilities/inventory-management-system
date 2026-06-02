@@ -1,9 +1,6 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import ManufacturersJSON from '../mocks/Manufacturers.json';
-import {
-  CREATED_MODIFIED_TIME_VALUES,
-  hooksWrapperWithProviders,
-} from '../testUtils';
+import { BASE_FIELD_VALUES, hooksWrapperWithProviders } from '../testUtils';
 import { Manufacturer, ManufacturerPost } from './api.types';
 import {
   useDeleteManufacturer,
@@ -58,6 +55,8 @@ describe('manufacturer api functions', () => {
         telephone: '07349612203',
         created_time: '2024-01-01T12:00:00.000+00:00',
         modified_time: '2024-01-02T13:10:10.000+00:00',
+        modified_comment: null,
+        modified_by: 'Unknown',
       });
     });
   });
@@ -78,7 +77,7 @@ describe('manufacturer api functions', () => {
           country: 'United Kingdom',
         },
         telephone: '07334893348',
-        ...CREATED_MODIFIED_TIME_VALUES,
+        ...BASE_FIELD_VALUES,
       };
     });
 

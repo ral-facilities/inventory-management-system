@@ -274,6 +274,20 @@ exports[`Items details panel > renders details panel correctly (None values for 
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
                       >
+                        Modified By
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+                      >
+                        Unknown
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                      >
                         Created
                       </p>
                       <p
@@ -873,6 +887,20 @@ exports[`Items details panel > renders details panel correctly (no dates) 1`] = 
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
                       >
+                        Modified By
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+                      >
+                        Unknown
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                      >
                         Created
                       </p>
                       <p
@@ -1464,6 +1492,20 @@ exports[`Items details panel > renders details panel correctly (when there are n
                         class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                       >
                         02 Jan 2024 13:10
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                      >
+                        Modified By
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+                      >
+                        Unknown
                       </p>
                     </div>
                     <div
@@ -2082,6 +2124,20 @@ exports[`Items details panel > renders details panel correctly 1`] = `
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
                       >
+                        Modified By
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+                      >
+                        Unknown
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                      >
                         Created
                       </p>
                       <p
@@ -2678,6 +2734,20 @@ exports[`Items details panel > renders manufacturer panel correctly 1`] = `
                         class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                       >
                         02 Jan 2024 13:10
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                      >
+                        Modified By
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+                      >
+                        Unknown
                       </p>
                     </div>
                     <div
@@ -3307,6 +3377,20 @@ exports[`Items details panel > renders notes panel correctly 1`] = `
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
                       >
+                        Modified By
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+                      >
+                        Unknown
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                      >
                         Created
                       </p>
                       <p
@@ -3928,6 +4012,20 @@ exports[`Items details panel > renders properties panel correctly (empty propert
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
                       >
+                        Modified By
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+                      >
+                        Unknown
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                      >
                         Created
                       </p>
                       <p
@@ -4426,6 +4524,20 @@ exports[`Items details panel > renders properties panel correctly 1`] = `
                         class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                       >
                         02 Jan 2024 13:10
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-4leci6-MuiTypography-root"
+                      >
+                        Modified By
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
+                      >
+                        Unknown
                       </p>
                     </div>
                     <div

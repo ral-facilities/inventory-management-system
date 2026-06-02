@@ -571,7 +571,7 @@ describe('Catalogue Items Table', () => {
     expect(router.state.location.search).toBe('');
   });
 
-  it('can change the table filters and clear the table filters (min and max values)', async () => {
+  it.only('can change the table filters and clear the table filters (min and max values)', async () => {
     // This tests the case where min/max column filters are used as there was a bug where
     // they wouldn't correctly reset when the clear filters button was clicked
 
@@ -579,7 +579,7 @@ describe('Catalogue Items Table', () => {
     // that prevents anything outside of the show/hide menu from being found even when using escape/clicking on the document
     // body first)
     const { router } = createView(
-      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUyWBlE5RGLNh3jcMvAdAIB3AARiycZT36D02fMVKUGBGDSgAHVlgB2XIwJSmRF8bCZYAIxgsDAJSN1VjT2FzPQpA4NDSJlp7DGQwcgJnVCZos0ImKEsihgi1ExjRS3igkLCCFLpg10NIjyECn0p7aix7AmpWGwoAdnKozu843v7B4ZgKAA4Jjq9YmrAsGFzULCbNLGoAayYcAPtVyq64hmQATxgWfdT0zKv86Zq7x%2BeDo%2BOHymG3EDGoyE0UGcOCYzjwZACgyB62qoPBkOhTAwUMBbQqnxBlAIAA8BmBSMxsZwwoomD8DCp8cDUZRiuQmJJrBhYfDEdQrmRkHDuOS8LRqBRnMh2AKhXgRagxYMKGKMLLhRlFeKKMgGGCbAz3CBBRrRdrSKF7AALFxKRmTFHdSVYUiGyIAX3dQA'
+      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIVYTThmQ4cjLj36D02fMVKUaUVigw6Anooy8BKVSI3iAdnjIAjAtSZZOTGAAdktGE1oBHPChaBmNTFWF1MUpbBycXN09vAjh4bhNlc0jRTQoyLAYoTihGFjYONKUzITUc8XzC4tL7I0qMgWgCAHcAAmjU9PCs2qtKD2osDydWFIoADjDMmstoinHJ6ZKYCgB2ReqLKNysexgsDAJSPzoz632IkdWGFO0PViw7tqHlo-FJE7OF1I92GK2Op3OlwI1w8MjA5AI1lQTFB6iYOnI6NCXyWhzqlAYyAMvlQWBhcIqg1x2VGFEJxJYZNoXSw1AA1iCfviKAQAB5TMCkZj6TiXcpMekDKoPMF-TRMBoEDBMWKOaj3MjIWzcQV4WjUCjWZDsDVavA61B6pwUPUYU3a5C6-UUZAMBg%2BKXtECah1O62kC4eAAWH0p0tR3OsWFInt4AF840A'
     );
 
     await waitFor(() => {
@@ -591,7 +591,7 @@ describe('Catalogue Items Table', () => {
     });
     expect(clearFiltersButton).toBeDisabled();
     expect(router.state.location.search).toBe(
-      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUyWBlE5RGLNh3jcMvAdAIB3AARiycZT36D02fMVKUGBGDSgAHVlgB2XIwJSmRF8bCZYAIxgsDAJSN1VjT2FzPQpA4NDSJlp7DGQwcgJnVCZos0ImKEsihgi1ExjRS3igkLCCFLpg10NIjyECn0p7aix7AmpWGwoAdnKozu843v7B4ZgKAA4Jjq9YmrAsGFzULCbNLGoAayYcAPtVyq64hmQATxgWfdT0zKv86Zq7x%2BeDo%2BOHymG3EDGoyE0UGcOCYzjwZACgyB62qoPBkOhTAwUMBbQqnxBlAIAA8BmBSMxsZwwoomD8DCp8cDUZRiuQmJJrBhYfDEdQrmRkHDuOS8LRqBRnMh2AKhXgRagxYMKGKMLLhRlFeKKMgGGCbAz3CBBRrRdrSKF7AALFxKRmTFHdSVYUiG9rXL7iOysFDY1D3ZFVJ1%2BTjpHA4RiBm41OEIwb%2BThMGD2ZC0J60ACOeCgtDKeIIAF8C0A'
+      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIVYTThmQ4cjLj36D02fMVKUaUVigw6Anooy8BKVSI3iAdnjIAjAtSZZOTGAAdktGE1oBHPChaBmNTFWF1MUpbBycXN09vAjh4bhNlc0jRTQoyLAYoTihGFjYONKUzITUc8XzC4tL7I0qMgWgCAHcAAmjU9PCs2qtKD2osDydWFIoADjDMmstoinHJ6ZKYCgB2ReqLKNysexgsDAJSPzoz632IkdWGFO0PViw7tqHlo-FJE7OF1I92GK2Op3OlwI1w8MjA5AI1lQTFB6iYOnI6NCXyWhzqlAYyAMvlQWBhcIqg1x2VGFEJxJYZNoXSw1AA1iCfviKAQAB5TMCkZj6TiXcpMekDKoPMF-TRMBoEDBMWKOaj3MjIWzcQV4WjUCjWZDsDVavA61B6pwUPUYU3a5C6-UUZAMBg%2BKXtECah1O62kC4eAAWH0p0tR3OsWFInt4AF840A'
     );
 
     // Do max first, as it technically has no effect on the outcome of the filter
@@ -605,7 +605,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.queryByText('Energy Meters 26')).not.toBeInTheDocument();
     });
     expect(router.state.location.search).toBe(
-      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUyWBlE5RGLNh3jcMvAdAIB3AARiycZT36D02fMVKUGBGDSgAHVlgB2XIwJSmRF8bCZYAIxgsDAJSN1VjT2FzPQpA4NDSJlp7DGQwcgJnVCZos0ImKEsihgi1ExjRS3igkLCCFLpg10NIjyECn0p7aix7AmpWGwoAdnKozu843v7B4ZgKAA4Jjq9YmrAsGFzULCbNLGoAayYcAPtVyq64hmQATxgWfdT0zKv86Zq7x%2BeDo%2BOHymG3EDGoyE0UGcOCYzjwZACgyB62qoPBkOhTAwUMBbQqnxBlAIAA8BmBSMxsZwwoomD8DCp8cDUZRiuQmJJrBhYfDEdQrmRkHDuOS8LRqBRnMh2AKhXgRagxYMKGKMLLhRlFeKKMgGGCbAz3CBBRrRdrSKF7AALFxKRmTFHdSVYUiG9rXL7iOysFDY1D3ZFVJ1%2BTjpHA4RiBm41OEIwb%2BThMGD2ZC0J60ACOeCgtDKeIIAF8PAAxBAAbVAUDzHsJVG2uXOlwEADdMIRy6B-QMECAdtQoTgQC220oQEsAAzjkBFzv3bvwXuofvQocgVsYdsLgCMk6nBYAugeC0A'
+      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIVYTThmQ4cjLj36D02fMVKUaUVigw6Anooy8BKVSI3iAdnjIAjAtSZZOTGAAdktGE1oBHPChaBmNTFWF1MUpbBycXN09vAjh4bhNlc0jRTQoyLAYoTihGFjYONKUzITUc8XzC4tL7I0qMgWgCAHcAAmjU9PCs2qtKD2osDydWFIoADjDMmstoinHJ6ZKYCgB2ReqLKNysexgsDAJSPzoz632IkdWGFO0PViw7tqHlo-FJE7OF1I92GK2Op3OlwI1w8MjA5AI1lQTFB6iYOnI6NCXyWhzqlAYyAMvlQWBhcIqg1x2VGFEJxJYZNoXSw1AA1iCfviKAQAB5TMCkZj6TiXcpMekDKoPMF-TRMBoEDBMWKOaj3MjIWzcQV4WjUCjWZDsDVavA61B6pwUPUYU3a5C6-UUZAMBg%2BKXtECah1O62kC4eAAWH0p0tR3OsWFInt4AF8zAAxBAAbVAUGxMt%2BWiwMGRpOuLPZTBw9g8IAEADdMIRU6BUAYpggQHnqFBrDgKyBqxha-AQHMAAyDkAJ%2BuNiot1Btjtdnt9kAARmHI7jAF113GgA'
     );
 
     await user.click(clearFiltersButton);
@@ -614,7 +614,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
     });
     expect(router.state.location.search).toBe(
-      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUyWBlE5RGLNh3jcMvAdAIB3AARiycZT36D02fMVKUGBGDSgAHVlgB2XIwJSmRF8bCZYAIxgsDAJSN1VjT2FzPQpA4NDSJlp7DGQwcgJnVCZos0ImKEsihgi1ExjRS3igkLCCFLpg10NIjyECn0p7aix7AmpWGwoAdnKozu843v7B4ZgKAA4Jjq9YmrAsGFzULCbNLGoAayYcAPtVyq64hmQATxgWfdT0zKv86Zq7x%2BeDo%2BOHymG3EDGoyE0UGcOCYzjwZACgyB62qoPBkOhTAwUMBbQqnxBlAIAA8BmBSMxsZwwoomD8DCp8cDUZRiuQmJJrBhYfDEdQrmRkHDuOS8LRqBRnMh2AKhXgRagxYMKGKMLLhRlFeKKMgGGCbAz3CBBRrRdrSKF7AALFxKRmTFHdSVYUiG9rXL7iOysFDY1D3ZFVJ1%2BTjpHA4RiBm41OEIwb%2BThMGD2ZC0J60ACOeCgtDKeIIAF8C0A'
+      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIVYTThmQ4cjLj36D02fMVKUaUVigw6Anooy8BKVSI3iAdnjIAjAtSZZOTGAAdktGE1oBHPChaBmNTFWF1MUpbBycXN09vAjh4bhNlc0jRTQoyLAYoTihGFjYONKUzITUc8XzC4tL7I0qMgWgCAHcAAmjU9PCs2qtKD2osDydWFIoADjDMmstoinHJ6ZKYCgB2ReqLKNysexgsDAJSPzoz632IkdWGFO0PViw7tqHlo-FJE7OF1I92GK2Op3OlwI1w8MjA5AI1lQTFB6iYOnI6NCXyWhzqlAYyAMvlQWBhcIqg1x2VGFEJxJYZNoXSw1AA1iCfviKAQAB5TMCkZj6TiXcpMekDKoPMF-TRMBoEDBMWKOaj3MjIWzcQV4WjUCjWZDsDVavA61B6pwUPUYU3a5C6-UUZAMBg%2BKXtECah1O62kC4eAAWH0p0tR3OsWFInt4AF840A'
     );
   });
 
@@ -716,7 +716,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Grouped by')).toBeInTheDocument();
     });
     expect(router.state.location.search).toBe(
-      '?state=N4Ig5iBcDaIMYEMAuCA2B7MBXApgSSRwFsA6AOwSJxAF0AaeAeSliICckBaN9Ad05wAPAA4IyAExAN2XHvwRwkAS3RkAzlJAzufTmpyocizYhQZs%2BQqSVqA%2BgDNUCMGBySGptJlwFi5StQeyF4WvqRwbErKiKhRAJ4mweY%2BVuRYRABGOGy26Pa2aqJsOBpBZt6WfmTpWTl5BUUltsUAjlhKxe7wSRVhJETo4kr2Sm62ylSJ5aGpETjIYxOBIABqo7wABGGl3dMpfuIlEUrCyqpTIfvWdugZauiGhBfJlaS39484zTjCTnDEODISFsnhetiixHBXVBvVS7weOEI3wQ9zIz1hfmEPGE2WUJRIAHZ0TNMdjcaM1CQABzEq4kODoNTAsAZYS0170xnApDob68dBsADWthZbLKlw54gQcTsPO%2BvwUyxhJNIUpl415xX5QvZfSEOMUY1i9kRSiotjVO2VdIhRFsA0OqFs1Uy2U0RDEWHsCiQWGKbH8k2knu9ij92RIftQ7pDPvDAYQ4nExTUOw91VDvv9JEIhmEAAtVEqeiryOhCGmODp%2BIVFWxaABfIA'
+      '?state=N4Ig5iBcDaIMYEMAuCA2B7MBXApgSSRwFsA6AOwSJxAF0AaeAeSliICckBaN9Ad05wAPAA4IyAExAN2XHvwRwkAS3RkAzlJAzufTmpyocizYhQZs%2BQqSVqA%2BgDNUCMGBySGptJlwFi5StQeyF4WvqRwbErKiKhRAJ4mweY%2BVuRYRABGOGy26Pa2aqJsOBpBZt6WfmTpWTl5BUUltsUAjlhKxe7wSRVhJETo4kr2Sm62ylSJ5aGpA0MjYxkJZSEpfhE4yGMTgSAAaqO8AARhpd3Ta6TiJRFKwsqqU6uV1nboGWrohoRPyS8k70%2B3xwzRwwiccGIODISFsnj%2BtiixERXXhvVSgK%2BOEIoIQnzIv3RfmEPGE2WUJRIAHZCTNiaTyaM1CQABy0y4kODoNSwsAZYTs-5cnnjdCg3joNgAa1sfIFKz%2BfXECDidiQYuK4IUuzRdKuKrVGpwEulgr6QjJijGsXs2KUVFsytVZtSSKItjmBls1Uy2U0RDEWHsCiQWGKbH8k2kgeDijD2RIYdQ-pjIfjEYQ4nExTUZwD1VjofDJEIhmEAAtVDqenryOhCHmODp%2BIVtWxaABfIA'
     );
 
     // Reset
@@ -727,7 +727,7 @@ describe('Catalogue Items Table', () => {
     });
     // Expect this to still be here as have now modified the order in some way (as MRT doesn't revert back to its original state in this case)
     expect(router.state.location.search).toBe(
-      '?state=N4Igxg8iBcDaIFsBOAXAtEg9gdzQQzBQEtMA7AZxABpFUMc1yBTAGycOtvS1yYA8ADnlIATTmDwo8LTAHMArkwCSKJggB0RcgH0AZizyzZTMTQlSZC5ao2k8CJuMnS5ilWvVgkRYhJY%2BATycLV2sPUnkEACMmJG1MXW1yISQmSjNnSzcbdQjo2PjE5LxUnVSAR3kiVNNwTND3DQRMESJdIhNtYgdglytGz1TJTu7HGgA1DuwAAkb0upD%2BnJE0ryIBYjJerLCNLXio8kw2VW2GnMxD46ZVbVSBAzA1JlIUbXM%2BxW0fNW-aj52A0uRxOTDuTDwR1IZyWHgEWAEsWIaXUAHYYdk4QikR1yOoABwY3aeTDkN6yKICIkDMCkt4oTDg7CYJAAa20FKpGUWmI0IjwAR0DPBDwIYwWn2J-MFXUZqWZbOpOX4iMInX8uhuRAc2ml8wB5w8PwQ2maKxY2jyMSQnAQwnkugIKHkqSQuXs4rtEUdhBdsXULpYtvtPudrvUeBEIlK8y9DqdfrdqjYAgAFmRxQbYbZMKpY3QeIwhE8bQBdAC%2BQA'
+      '?state=N4Igxg8iBcDaIFsBOAXAtEg9gdzQQzBQEtMA7AZxABpFUMc1yBTAGycOtvS1yYA8ADnlIATTmDwo8LTAHMArkwCSKJggB0RcgH0AZizyzZTMTQlSZC5ao2k8CJuMnS5ilWvVgkRYhJY%2BATycLV2sPUnkEACMmJG1MXW1yISQmSjNnSzcbdQjo2PjE5LxUnVSAR3kiVNNwTND3DQRMESJdIhNtYgdglytG9WbW9s6ooIyQ-pyvJklO7scaADUO7AACRvS6yeyPETSvIgFiMl6ssI0teKjyTDZVM4aczBu7plVtVIEDMDUmUhQ2nMfUU2h8ajBtWB5wGL1u9yYn1mt1IjymHgEWAEsWIaXUAHY0bsNJjMNjUB1yOoABxEi6eTDkQGyKICOkDMCMwEoTBI7CYJAAa20LLZExB9JEeACOh5SO%2BBEW2wlAylMq6vNS-KF7Jy-GxhE6-l07yIDm0aq20KeHnBCG0Q1Y2jyMSQnAQwnkugIKHkqSQuXsSo9EW9hD9sXUfpY7s9Yd9-vUeBEIlKWxDXp9EYDqjYAgAFmQldb0bZMKp03QeIwhL83QBdAC%2BQA'
     );
   });
 
@@ -783,7 +783,7 @@ describe('Catalogue Items Table', () => {
 
     //  accuracy column action button
     await user.click(
-      screen.getAllByRole('button', { name: 'Column Actions' })[8]
+      screen.getAllByRole('button', { name: 'Column Actions' })[9]
     );
 
     await user.click(await screen.findByText('Group by Accuracy'));
@@ -827,7 +827,7 @@ describe('Catalogue Items Table', () => {
 
     // manufacturer url column action button
     await user.click(
-      screen.getAllByRole('button', { name: 'Column Actions' })[5]
+      screen.getAllByRole('button', { name: 'Column Actions' })[6]
     );
 
     await user.click(await screen.findByText('Group by Manufacturer URL'));

@@ -2,10 +2,7 @@ import { RenderResult, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { APIImageWithURL } from '../../api/api.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
-import {
-  CREATED_MODIFIED_TIME_VALUES,
-  renderComponentWithRouterProvider,
-} from '../../testUtils';
+import { renderComponentWithRouterProvider } from '../../testUtils';
 import RemovePrimaryImageDialog, {
   RemovePrimaryImageProps,
 } from './removePrimaryImageDialog.component';
@@ -32,7 +29,8 @@ describe('Remove Primary Image dialogue', () => {
       description: 'a description',
       primary: false,
       thumbnail_base64: 'base64_thumbnail_test',
-      ...CREATED_MODIFIED_TIME_VALUES,
+      created_time: '2024-01-01T12:00:00.000+00:00',
+      modified_time: '2024-01-02T13:10:10.000+00:00',
       view_url: 'view_url',
       download_url: 'download_url',
     };

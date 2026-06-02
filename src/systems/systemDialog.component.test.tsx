@@ -7,7 +7,7 @@ import { System, SystemImportanceType } from '../api/api.types';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { server } from '../mocks/server';
 import {
-  CREATED_MODIFIED_TIME_VALUES,
+  BASE_FIELD_VALUES,
   renderComponentWithRouterProvider,
 } from '../testUtils';
 import SystemDialog, { SystemDialogProps } from './systemDialog.component';
@@ -273,7 +273,7 @@ describe('Systems Dialog', () => {
       type_id: '1',
       code: 'mock-laser',
       is_flagged: false,
-      ...CREATED_MODIFIED_TIME_VALUES,
+      ...BASE_FIELD_VALUES,
     };
 
     beforeEach(() => {
@@ -496,7 +496,7 @@ describe('Systems Dialog', () => {
       code: 'mock-laser',
       type_id: '2',
       is_flagged: false,
-      ...CREATED_MODIFIED_TIME_VALUES,
+      ...BASE_FIELD_VALUES,
     };
 
     const MOCK_SELECTED_SYSTEM_POST_DATA = JSON.parse(
@@ -506,6 +506,8 @@ describe('Systems Dialog', () => {
     delete MOCK_SELECTED_SYSTEM_POST_DATA.code;
     delete MOCK_SELECTED_SYSTEM_POST_DATA.created_time;
     delete MOCK_SELECTED_SYSTEM_POST_DATA.modified_time;
+    delete MOCK_SELECTED_SYSTEM_POST_DATA.modified_by;
+    delete MOCK_SELECTED_SYSTEM_POST_DATA.modified_comment;
     delete MOCK_SELECTED_SYSTEM_POST_DATA.is_flagged;
 
     beforeEach(() => {

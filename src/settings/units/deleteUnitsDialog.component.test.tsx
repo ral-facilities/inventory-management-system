@@ -27,6 +27,8 @@ describe('delete Unit dialog', () => {
       code: 'test',
       created_time: '2024-01-01T12:00:00.000+00:00',
       modified_time: '2024-01-02T13:10:10.000+00:00',
+      modified_comment: null,
+      modified_by: 'Unknown',
     };
 
     props = {

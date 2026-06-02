@@ -9,7 +9,7 @@ import APIConfigProvider from '../../apiConfigProvider.component';
 import { server } from '../../mocks/server';
 import { RootState } from '../../state/store';
 import {
-  CREATED_MODIFIED_TIME_VALUES,
+  BASE_FIELD_VALUES,
   renderComponentWithRouterProvider,
 } from '../../testUtils';
 import CatalogueCategoryTableView, {
@@ -44,6 +44,8 @@ describe('CatalogueCategoryTableView', () => {
         is_leaf: true,
         created_time: '2024-01-01T12:00:00.000+00:00',
         modified_time: '2024-01-02T13:10:10.000+00:00',
+        modified_comment: null,
+        modified_by: 'Unknown',
         properties: [],
       });
     }
@@ -80,7 +82,7 @@ describe('CatalogueCategoryTableView', () => {
               mandatory: false,
             },
           ],
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
       ],
       onChangeParentCategoryId: onChangeParentCategoryId,
@@ -95,7 +97,7 @@ describe('CatalogueCategoryTableView', () => {
           is_flagged: false,
           is_leaf: false,
           properties: [],
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
         {
           id: '4',
@@ -160,7 +162,7 @@ describe('CatalogueCategoryTableView', () => {
               allowed_values: null,
             },
           ],
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
         {
           id: '5',
@@ -189,7 +191,7 @@ describe('CatalogueCategoryTableView', () => {
               allowed_values: null,
             },
           ],
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
         {
           id: '6',
@@ -218,7 +220,7 @@ describe('CatalogueCategoryTableView', () => {
               allowed_values: null,
             },
           ],
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
         {
           id: '18',
@@ -247,7 +249,7 @@ describe('CatalogueCategoryTableView', () => {
               allowed_values: null,
             },
           ],
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
         {
           id: '19',
@@ -256,7 +258,7 @@ describe('CatalogueCategoryTableView', () => {
           code: 'amp-meters',
           is_flagged: false,
           is_leaf: false,
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
           properties: [],
         },
       ],
@@ -352,7 +354,7 @@ describe('CatalogueCategoryTableView', () => {
         code: 'test_dup',
         is_flagged: false,
         is_leaf: false,
-        ...CREATED_MODIFIED_TIME_VALUES,
+        ...BASE_FIELD_VALUES,
         properties: [],
       },
       {
@@ -362,7 +364,7 @@ describe('CatalogueCategoryTableView', () => {
         code: 'amp-meters',
         is_flagged: false,
         is_leaf: false,
-        ...CREATED_MODIFIED_TIME_VALUES,
+        ...BASE_FIELD_VALUES,
         properties: [],
       },
     ];
@@ -416,7 +418,7 @@ describe('CatalogueCategoryTableView', () => {
         code: 'test_dup',
         is_flagged: false,
         is_leaf: false,
-        ...CREATED_MODIFIED_TIME_VALUES,
+        ...BASE_FIELD_VALUES,
         properties: [],
       },
       {
@@ -426,7 +428,7 @@ describe('CatalogueCategoryTableView', () => {
         code: 'amp-meters',
         is_flagged: false,
         is_leaf: false,
-        ...CREATED_MODIFIED_TIME_VALUES,
+        ...BASE_FIELD_VALUES,
         properties: [],
       },
     ];
@@ -470,7 +472,7 @@ describe('CatalogueCategoryTableView', () => {
         code: 'test_dup',
         is_flagged: false,
         is_leaf: false,
-        ...CREATED_MODIFIED_TIME_VALUES,
+        ...BASE_FIELD_VALUES,
         properties: [],
       },
       {
@@ -480,7 +482,7 @@ describe('CatalogueCategoryTableView', () => {
         code: 'amp-meters',
         is_flagged: false,
         is_leaf: false,
-        ...CREATED_MODIFIED_TIME_VALUES,
+        ...BASE_FIELD_VALUES,
         properties: [],
       },
     ];

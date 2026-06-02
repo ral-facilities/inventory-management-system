@@ -222,7 +222,7 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
         >
           <table
             class="MuiTable-root MuiTable-stickyHeader css-1gcyac0-MuiTable-root"
-            style="--header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-item_serial_number-size: 225; --col-item_serial_number-size: 225; --header-item_modified_time-size: 350; --col-item_modified_time-size: 350; --header-item_created_time-size: 350; --col-item_created_time-size: 350; --header-item_asset_number-size: 225; --col-item_asset_number-size: 225; --header-item_purchase_order_number-size: 275; --col-item_purchase_order_number-size: 275; --header-item_warranty_end_date-size: 350; --col-item_warranty_end_date-size: 350; --header-item_delivered_date-size: 350; --col-item_delivered_date-size: 350; --header-item_is_defective-size: 200; --col-item_is_defective-size: 200; --header-item_usage_status-size: 350; --col-item_usage_status-size: 350; --header-system_name-size: 350; --col-system_name-size: 350; --header-system_type_value-size: 350; --col-system_type_value-size: 350; --header-item_notes-size: 200; --col-item_notes-size: 200; --header-item_properties_1-size: 250; --col-item_properties_1-size: 250; --header-item_properties_2-size: 250; --col-item_properties_2-size: 250; --header-item_properties_3-size: 250; --col-item_properties_3-size: 250; --header-item_properties_4-size: 250; --col-item_properties_4-size: 250; --header-item_properties_5-size: 250; --col-item_properties_5-size: 250; --header-item_properties_6-size: 250; --col-item_properties_6-size: 250; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
+            style="--header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-item_serial_number-size: 225; --col-item_serial_number-size: 225; --header-item_modified_time-size: 350; --col-item_modified_time-size: 350; --header-item_modified_by-size: 225; --col-item_modified_by-size: 225; --header-item_created_time-size: 350; --col-item_created_time-size: 350; --header-item_asset_number-size: 225; --col-item_asset_number-size: 225; --header-item_purchase_order_number-size: 275; --col-item_purchase_order_number-size: 275; --header-item_warranty_end_date-size: 350; --col-item_warranty_end_date-size: 350; --header-item_delivered_date-size: 350; --col-item_delivered_date-size: 350; --header-item_is_defective-size: 200; --col-item_is_defective-size: 200; --header-item_usage_status-size: 350; --col-item_usage_status-size: 350; --header-system_name-size: 350; --col-system_name-size: 350; --header-system_type_value-size: 350; --col-system_type_value-size: 350; --header-item_notes-size: 200; --col-item_notes-size: 200; --header-item_properties_1-size: 250; --col-item_properties_1-size: 250; --header-item_properties_2-size: 250; --col-item_properties_2-size: 250; --header-item_properties_3-size: 250; --col-item_properties_3-size: 250; --header-item_properties_4-size: 250; --col-item_properties_4-size: 250; --header-item_properties_5-size: 250; --col-item_properties_5-size: 250; --header-item_properties_6-size: 250; --col-item_properties_6-size: 250; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
           >
             <thead
               class="MuiTableHead-root css-7psuou-MuiTableHead-root"
@@ -693,7 +693,7 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
                 </th>
                 <th
                   aria-sort="none"
-                  class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-hyuxk2-MuiTableCell-root"
+                  class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-19y9kb-MuiTableCell-root"
                   colspan="1"
                   data-can-sort="true"
                   data-index="3"
@@ -710,240 +710,21 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
                         class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                       >
                         <p
-                          aria-label="Created"
+                          aria-label="Modified by"
                           class="MuiTypography-root MuiTypography-body1 css-1bnbo3v-MuiTypography-root"
                           data-mui-internal-clone-element="true"
                           role="tooltip"
                         >
-                          Created
+                          Modified by
                         </p>
                       </div>
                       <span
-                        aria-label="Sort by Created descending"
+                        aria-label="Sort by Modified by ascending"
                         class="MuiBadge-root css-63ezxx-MuiBadge-root"
                         data-mui-internal-clone-element="true"
                       >
                         <span
-                          aria-label="Sort by Created descending"
-                          class="MuiButtonBase-root MuiTableSortLabel-root Mui-active MuiTableSortLabel-directionAsc css-bgz9z4-MuiButtonBase-root-MuiTableSortLabel-root"
-                          role="button"
-                          tabindex="0"
-                        >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-7ojauk-MuiSvgIcon-root-MuiTableSortLabel-icon"
-                            data-testid="SyncAltIcon"
-                            focusable="false"
-                            style="transform: rotate(-90deg) scaleX(0.9) translateX(-1px);"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="m18 12 4-4-4-4v3H3v2h15zM6 12l-4 4 4 4v-3h15v-2H6z"
-                            />
-                          </svg>
-                        </span>
-                        <span
-                          class="MuiBadge-badge MuiBadge-standard MuiBadge-invisible MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightCircular MuiBadge-overlapCircular css-hkekw-MuiBadge-badge"
-                        >
-                          0
-                        </span>
-                      </span>
-                    </div>
-                    <div
-                      class="Mui-TableHeadCell-Content-Actions MuiBox-root css-epvm6"
-                    >
-                      <button
-                        aria-label="Move"
-                        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-498d1l-MuiButtonBase-root-MuiIconButton-root"
-                        data-mui-internal-clone-element="true"
-                        draggable="true"
-                        tabindex="0"
-                        type="button"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                          data-testid="DragHandleIcon"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M20 9H4v2h16zM4 15h16v-2H4z"
-                          />
-                        </svg>
-                      </button>
-                      <button
-                        aria-label="Column Actions"
-                        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1a3u37w-MuiButtonBase-root-MuiIconButton-root"
-                        data-mui-internal-clone-element="true"
-                        tabindex="0"
-                        type="button"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                          data-testid="MoreVertIcon"
-                          focusable="false"
-                          style="transform: scale(0.9);"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                    <div
-                      class="Mui-TableHeadCell-ResizeHandle-Wrapper MuiBox-root css-1ug570k"
-                    >
-                      <div
-                        aria-orientation="vertical"
-                        class="MuiDivider-root MuiDivider-fullWidth MuiDivider-vertical MuiDivider-flexItem Mui-TableHeadCell-ResizeHandle-Divider css-138kmo-MuiDivider-root"
-                        role="separator"
-                      />
-                    </div>
-                  </div>
-                  <div
-                    class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-entered css-qr6njo-MuiCollapse-root"
-                    style="min-height: 0px;"
-                  >
-                    <div
-                      class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
-                    >
-                      <div
-                        class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
-                      >
-                        <div
-                          class="MuiBox-root css-8yqbvs"
-                        >
-                          <div
-                            class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w93hbh-MuiFormControl-root-MuiTextField-root"
-                          >
-                            <div
-                              class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
-                            >
-                              <input
-                                aria-describedby=":r19:-helper-text"
-                                aria-invalid="false"
-                                autocomplete="off"
-                                class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                                id=":r19:"
-                                inputmode="text"
-                                placeholder="Min"
-                                type="text"
-                                value=""
-                              />
-                              <div
-                                class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-elo8k2-MuiInputAdornment-root"
-                              >
-                                <button
-                                  aria-label="Choose date"
-                                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1ysp02-MuiButtonBase-root-MuiIconButton-root"
-                                  tabindex="0"
-                                  type="button"
-                                >
-                                  <svg
-                                    aria-hidden="true"
-                                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                                    data-testid="CalendarIcon"
-                                    focusable="false"
-                                    viewBox="0 0 24 24"
-                                  >
-                                    <path
-                                      d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
-                                    />
-                                  </svg>
-                                </button>
-                              </div>
-                            </div>
-                            <p
-                              class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-18y2hez-MuiFormHelperText-root"
-                              id=":r19:-helper-text"
-                            >
-                              <label>
-                                Filter Mode: Between Inclusive
-                              </label>
-                            </p>
-                          </div>
-                          <div
-                            class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w93hbh-MuiFormControl-root-MuiTextField-root"
-                          >
-                            <div
-                              class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
-                            >
-                              <input
-                                aria-invalid="false"
-                                autocomplete="off"
-                                class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                                id=":r1c:"
-                                inputmode="text"
-                                placeholder="Max"
-                                type="text"
-                                value=""
-                              />
-                              <div
-                                class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-elo8k2-MuiInputAdornment-root"
-                              >
-                                <button
-                                  aria-label="Choose date"
-                                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1ysp02-MuiButtonBase-root-MuiIconButton-root"
-                                  tabindex="0"
-                                  type="button"
-                                >
-                                  <svg
-                                    aria-hidden="true"
-                                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                                    data-testid="CalendarIcon"
-                                    focusable="false"
-                                    viewBox="0 0 24 24"
-                                  >
-                                    <path
-                                      d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
-                                    />
-                                  </svg>
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </th>
-                <th
-                  aria-sort="none"
-                  class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-uzrh89-MuiTableCell-root"
-                  colspan="1"
-                  data-can-sort="true"
-                  data-index="4"
-                  scope="col"
-                  tabindex="0"
-                >
-                  <div
-                    class="Mui-TableHeadCell-Content MuiBox-root css-c8wlay"
-                  >
-                    <div
-                      class="Mui-TableHeadCell-Content-Labels MuiBox-root css-68rqdf"
-                    >
-                      <div
-                        class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
-                      >
-                        <p
-                          aria-label="Asset Number"
-                          class="MuiTypography-root MuiTypography-body1 css-1bnbo3v-MuiTypography-root"
-                          data-mui-internal-clone-element="true"
-                          role="tooltip"
-                        >
-                          Asset Number
-                        </p>
-                      </div>
-                      <span
-                        aria-label="Sort by Asset Number ascending"
-                        class="MuiBadge-root css-63ezxx-MuiBadge-root"
-                        data-mui-internal-clone-element="true"
-                      >
-                        <span
-                          aria-label="Sort by Asset Number ascending"
+                          aria-label="Sort by Modified by ascending"
                           class="MuiButtonBase-root MuiTableSortLabel-root Mui-active MuiTableSortLabel-directionAsc css-bgz9z4-MuiButtonBase-root-MuiTableSortLabel-root"
                           role="button"
                           tabindex="0"
@@ -1073,14 +854,14 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
                               </span>
                             </div>
                             <input
-                              aria-describedby=":r1l:-helper-text"
+                              aria-describedby=":r19:-helper-text"
                               aria-invalid="false"
-                              aria-label="Filter by Asset Number"
+                              aria-label="Filter by Modified by"
                               autocomplete="off"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                              id=":r1l:"
-                              placeholder="Filter by Asset Number"
-                              title="Filter by Asset Number"
+                              id=":r19:"
+                              placeholder="Filter by Modified by"
+                              title="Filter by Modified by"
                               type="text"
                               value=""
                             />
@@ -1116,7 +897,7 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
                           </div>
                           <p
                             class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                            id=":r1l:-helper-text"
+                            id=":r19:-helper-text"
                           >
                             <label>
                               Filter Mode: Fuzzy
@@ -1128,7 +909,226 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
                   </div>
                 </th>
                 <th
-                  style="display: flex; width: 3000px;"
+                  aria-sort="none"
+                  class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-hyuxk2-MuiTableCell-root"
+                  colspan="1"
+                  data-can-sort="true"
+                  data-index="4"
+                  scope="col"
+                  tabindex="0"
+                >
+                  <div
+                    class="Mui-TableHeadCell-Content MuiBox-root css-c8wlay"
+                  >
+                    <div
+                      class="Mui-TableHeadCell-Content-Labels MuiBox-root css-68rqdf"
+                    >
+                      <div
+                        class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
+                      >
+                        <p
+                          aria-label="Created"
+                          class="MuiTypography-root MuiTypography-body1 css-1bnbo3v-MuiTypography-root"
+                          data-mui-internal-clone-element="true"
+                          role="tooltip"
+                        >
+                          Created
+                        </p>
+                      </div>
+                      <span
+                        aria-label="Sort by Created descending"
+                        class="MuiBadge-root css-63ezxx-MuiBadge-root"
+                        data-mui-internal-clone-element="true"
+                      >
+                        <span
+                          aria-label="Sort by Created descending"
+                          class="MuiButtonBase-root MuiTableSortLabel-root Mui-active MuiTableSortLabel-directionAsc css-bgz9z4-MuiButtonBase-root-MuiTableSortLabel-root"
+                          role="button"
+                          tabindex="0"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-7ojauk-MuiSvgIcon-root-MuiTableSortLabel-icon"
+                            data-testid="SyncAltIcon"
+                            focusable="false"
+                            style="transform: rotate(-90deg) scaleX(0.9) translateX(-1px);"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="m18 12 4-4-4-4v3H3v2h15zM6 12l-4 4 4 4v-3h15v-2H6z"
+                            />
+                          </svg>
+                        </span>
+                        <span
+                          class="MuiBadge-badge MuiBadge-standard MuiBadge-invisible MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightCircular MuiBadge-overlapCircular css-hkekw-MuiBadge-badge"
+                        >
+                          0
+                        </span>
+                      </span>
+                    </div>
+                    <div
+                      class="Mui-TableHeadCell-Content-Actions MuiBox-root css-epvm6"
+                    >
+                      <button
+                        aria-label="Move"
+                        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-498d1l-MuiButtonBase-root-MuiIconButton-root"
+                        data-mui-internal-clone-element="true"
+                        draggable="true"
+                        tabindex="0"
+                        type="button"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                          data-testid="DragHandleIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M20 9H4v2h16zM4 15h16v-2H4z"
+                          />
+                        </svg>
+                      </button>
+                      <button
+                        aria-label="Column Actions"
+                        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1a3u37w-MuiButtonBase-root-MuiIconButton-root"
+                        data-mui-internal-clone-element="true"
+                        tabindex="0"
+                        type="button"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                          data-testid="MoreVertIcon"
+                          focusable="false"
+                          style="transform: scale(0.9);"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                    <div
+                      class="Mui-TableHeadCell-ResizeHandle-Wrapper MuiBox-root css-1ug570k"
+                    >
+                      <div
+                        aria-orientation="vertical"
+                        class="MuiDivider-root MuiDivider-fullWidth MuiDivider-vertical MuiDivider-flexItem Mui-TableHeadCell-ResizeHandle-Divider css-138kmo-MuiDivider-root"
+                        role="separator"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-entered css-qr6njo-MuiCollapse-root"
+                    style="min-height: 0px;"
+                  >
+                    <div
+                      class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
+                    >
+                      <div
+                        class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
+                      >
+                        <div
+                          class="MuiBox-root css-8yqbvs"
+                        >
+                          <div
+                            class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w93hbh-MuiFormControl-root-MuiTextField-root"
+                          >
+                            <div
+                              class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
+                            >
+                              <input
+                                aria-describedby=":r1k:-helper-text"
+                                aria-invalid="false"
+                                autocomplete="off"
+                                class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
+                                id=":r1k:"
+                                inputmode="text"
+                                placeholder="Min"
+                                type="text"
+                                value=""
+                              />
+                              <div
+                                class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-elo8k2-MuiInputAdornment-root"
+                              >
+                                <button
+                                  aria-label="Choose date"
+                                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1ysp02-MuiButtonBase-root-MuiIconButton-root"
+                                  tabindex="0"
+                                  type="button"
+                                >
+                                  <svg
+                                    aria-hidden="true"
+                                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                                    data-testid="CalendarIcon"
+                                    focusable="false"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <path
+                                      d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
+                                    />
+                                  </svg>
+                                </button>
+                              </div>
+                            </div>
+                            <p
+                              class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-18y2hez-MuiFormHelperText-root"
+                              id=":r1k:-helper-text"
+                            >
+                              <label>
+                                Filter Mode: Between Inclusive
+                              </label>
+                            </p>
+                          </div>
+                          <div
+                            class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w93hbh-MuiFormControl-root-MuiTextField-root"
+                          >
+                            <div
+                              class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
+                            >
+                              <input
+                                aria-invalid="false"
+                                autocomplete="off"
+                                class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
+                                id=":r1n:"
+                                inputmode="text"
+                                placeholder="Max"
+                                type="text"
+                                value=""
+                              />
+                              <div
+                                class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-elo8k2-MuiInputAdornment-root"
+                              >
+                                <button
+                                  aria-label="Choose date"
+                                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1ysp02-MuiButtonBase-root-MuiIconButton-root"
+                                  tabindex="0"
+                                  type="button"
+                                >
+                                  <svg
+                                    aria-hidden="true"
+                                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                                    data-testid="CalendarIcon"
+                                    focusable="false"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <path
+                                      d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
+                                    />
+                                  </svg>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </th>
+                <th
+                  style="display: flex; width: 3200px;"
                 />
               </tr>
             </thead>
@@ -1198,8 +1198,22 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
                   </div>
                 </td>
                 <td
-                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yufrx1-MuiTableCell-root-MuiTableCell-root"
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1w2a95x-MuiTableCell-root-MuiTableCell-root"
                   data-index="3"
+                  tabindex="0"
+                >
+                  <div
+                    aria-label="Unknown"
+                    class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                    data-mui-internal-clone-element="true"
+                    role="tooltip"
+                  >
+                    Unknown
+                  </div>
+                </td>
+                <td
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yufrx1-MuiTableCell-root-MuiTableCell-root"
+                  data-index="4"
                   tabindex="0"
                 >
                   <div
@@ -1211,21 +1225,7 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
                   </div>
                 </td>
                 <td
-                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-3286pl-MuiTableCell-root-MuiTableCell-root"
-                  data-index="4"
-                  tabindex="0"
-                >
-                  <div
-                    aria-label="LyH8yp1FHf"
-                    class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
-                    data-mui-internal-clone-element="true"
-                    role="tooltip"
-                  >
-                    LyH8yp1FHf
-                  </div>
-                </td>
-                <td
-                  style="display: flex; width: 3000px;"
+                  style="display: flex; width: 3200px;"
                 />
               </tr>
               <tr
@@ -1291,8 +1291,22 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
                   </div>
                 </td>
                 <td
-                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yufrx1-MuiTableCell-root-MuiTableCell-root"
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1w2a95x-MuiTableCell-root-MuiTableCell-root"
                   data-index="3"
+                  tabindex="0"
+                >
+                  <div
+                    aria-label="Unknown"
+                    class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                    data-mui-internal-clone-element="true"
+                    role="tooltip"
+                  >
+                    Unknown
+                  </div>
+                </td>
+                <td
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yufrx1-MuiTableCell-root-MuiTableCell-root"
+                  data-index="4"
                   tabindex="0"
                 >
                   <div
@@ -1304,21 +1318,7 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
                   </div>
                 </td>
                 <td
-                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-3286pl-MuiTableCell-root-MuiTableCell-root"
-                  data-index="4"
-                  tabindex="0"
-                >
-                  <div
-                    aria-label="03MXnOfP5C"
-                    class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
-                    data-mui-internal-clone-element="true"
-                    role="tooltip"
-                  >
-                    03MXnOfP5C
-                  </div>
-                </td>
-                <td
-                  style="display: flex; width: 3000px;"
+                  style="display: flex; width: 3200px;"
                 />
               </tr>
               <tr
@@ -1384,8 +1384,22 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
                   </div>
                 </td>
                 <td
-                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yufrx1-MuiTableCell-root-MuiTableCell-root"
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1w2a95x-MuiTableCell-root-MuiTableCell-root"
                   data-index="3"
+                  tabindex="0"
+                >
+                  <div
+                    aria-label="Unknown"
+                    class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                    data-mui-internal-clone-element="true"
+                    role="tooltip"
+                  >
+                    Unknown
+                  </div>
+                </td>
+                <td
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yufrx1-MuiTableCell-root-MuiTableCell-root"
+                  data-index="4"
                   tabindex="0"
                 >
                   <div
@@ -1397,21 +1411,7 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
                   </div>
                 </td>
                 <td
-                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-3286pl-MuiTableCell-root-MuiTableCell-root"
-                  data-index="4"
-                  tabindex="0"
-                >
-                  <div
-                    aria-label="dvI4GyEsFt"
-                    class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
-                    data-mui-internal-clone-element="true"
-                    role="tooltip"
-                  >
-                    dvI4GyEsFt
-                  </div>
-                </td>
-                <td
-                  style="display: flex; width: 3000px;"
+                  style="display: flex; width: 3200px;"
                 />
               </tr>
               <tr
@@ -1477,8 +1477,22 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
                   </div>
                 </td>
                 <td
-                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yufrx1-MuiTableCell-root-MuiTableCell-root"
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1w2a95x-MuiTableCell-root-MuiTableCell-root"
                   data-index="3"
+                  tabindex="0"
+                >
+                  <div
+                    aria-label="Unknown"
+                    class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
+                    data-mui-internal-clone-element="true"
+                    role="tooltip"
+                  >
+                    Unknown
+                  </div>
+                </td>
+                <td
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yufrx1-MuiTableCell-root-MuiTableCell-root"
+                  data-index="4"
                   tabindex="0"
                 >
                   <div
@@ -1490,21 +1504,7 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
                   </div>
                 </td>
                 <td
-                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-3286pl-MuiTableCell-root-MuiTableCell-root"
-                  data-index="4"
-                  tabindex="0"
-                >
-                  <div
-                    aria-label="75YWiLwy54"
-                    class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
-                    data-mui-internal-clone-element="true"
-                    role="tooltip"
-                  >
-                    75YWiLwy54
-                  </div>
-                </td>
-                <td
-                  style="display: flex; width: 3000px;"
+                  style="display: flex; width: 3200px;"
                 />
               </tr>
             </tbody>
@@ -2095,12 +2095,12 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                               </span>
                             </div>
                             <input
-                              aria-describedby=":r74:-helper-text"
+                              aria-describedby=":r77:-helper-text"
                               aria-invalid="false"
                               aria-label="Filter by Notes"
                               autocomplete="off"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                              id=":r74:"
+                              id=":r77:"
                               placeholder="Filter by Notes"
                               title="Filter by Notes"
                               type="text"
@@ -2138,7 +2138,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                           </div>
                           <p
                             class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                            id=":r74:-helper-text"
+                            id=":r77:-helper-text"
                           >
                             <label>
                               Filter Mode: Fuzzy
@@ -2315,12 +2315,12 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                                 </span>
                               </div>
                               <input
-                                aria-describedby=":r7n:-helper-text"
+                                aria-describedby=":r7q:-helper-text"
                                 aria-invalid="false"
                                 aria-label="Min"
                                 autocomplete="off"
                                 class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                                id=":r7n:"
+                                id=":r7q:"
                                 placeholder="Min"
                                 title="Min"
                                 type="text"
@@ -2358,7 +2358,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                             </div>
                             <p
                               class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                              id=":r7n:-helper-text"
+                              id=":r7q:-helper-text"
                             >
                               <label>
                                 Filter Mode: Between Inclusive
@@ -2376,7 +2376,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                                 aria-label="Max"
                                 autocomplete="off"
                                 class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                                id=":r7s:"
+                                id=":r7v:"
                                 placeholder="Max"
                                 title="Max"
                                 type="text"
@@ -2581,12 +2581,12 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                               </span>
                             </div>
                             <input
-                              aria-describedby=":r8h:-helper-text"
+                              aria-describedby=":r8k:-helper-text"
                               aria-invalid="false"
                               aria-label="Filter by Sensor Type "
                               autocomplete="off"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                              id=":r8h:"
+                              id=":r8k:"
                               placeholder="Filter by Sensor Type "
                               title="Filter by Sensor Type "
                               type="text"
@@ -2624,7 +2624,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                           </div>
                           <p
                             class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                            id=":r8h:-helper-text"
+                            id=":r8k:-helper-text"
                           >
                             <label>
                               Filter Mode: Fuzzy
@@ -2767,9 +2767,9 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                               aria-expanded="false"
                               aria-haspopup="listbox"
                               aria-label="Filter by Broken "
-                              aria-labelledby=":r9g:"
+                              aria-labelledby=":r9j:"
                               class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-10y8whu-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                              id=":r9g:"
+                              id=":r9j:"
                               role="combobox"
                               tabindex="0"
                             >
@@ -3363,7 +3363,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
         >
           <table
             class="MuiTable-root MuiTable-stickyHeader css-ithv9-MuiTable-root"
-            style="--header-mrt_row_expand-size: 60; --col-mrt_row_expand-size: 60; --header-item_serial_number-size: 400; --col-item_serial_number-size: 400; --header-item_modified_time-size: 400; --col-item_modified_time-size: 400; --header-item_created_time-size: 400; --col-item_created_time-size: 400; --header-item_warranty_end_date-size: 400; --col-item_warranty_end_date-size: 400; --header-item_delivered_date-size: 400; --col-item_delivered_date-size: 400; --header-item_is_defective-size: 400; --col-item_is_defective-size: 400;"
+            style="--header-mrt_row_expand-size: 60; --col-mrt_row_expand-size: 60; --header-item_serial_number-size: 400; --col-item_serial_number-size: 400; --header-item_modified_time-size: 400; --col-item_modified_time-size: 400; --header-item_modified_by-size: 400; --col-item_modified_by-size: 400; --header-item_purchase_order_number-size: 400; --col-item_purchase_order_number-size: 400; --header-item_warranty_end_date-size: 400; --col-item_warranty_end_date-size: 400; --header-item_delivered_date-size: 400; --col-item_delivered_date-size: 400;"
           >
             <thead
               class="MuiTableHead-root css-1e5wupo-MuiTableHead-root"
@@ -3557,12 +3557,12 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                               </span>
                             </div>
                             <input
-                              aria-describedby=":r3e9:-helper-text"
+                              aria-describedby=":r3g4:-helper-text"
                               aria-invalid="false"
                               aria-label="Filter by Serial Number"
                               autocomplete="off"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                              id=":r3e9:"
+                              id=":r3g4:"
                               placeholder="Filter by Serial Number"
                               title="Filter by Serial Number"
                               type="text"
@@ -3600,7 +3600,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                           </div>
                           <p
                             class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                            id=":r3e9:-helper-text"
+                            id=":r3g4:-helper-text"
                           >
                             <label>
                               Filter Mode: Fuzzy
@@ -3714,11 +3714,11 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                               class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                             >
                               <input
-                                aria-describedby=":r3ei:-helper-text"
+                                aria-describedby=":r3gd:-helper-text"
                                 aria-invalid="false"
                                 autocomplete="off"
                                 class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                                id=":r3ei:"
+                                id=":r3gd:"
                                 inputmode="text"
                                 placeholder="Min"
                                 type="text"
@@ -3749,7 +3749,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                             </div>
                             <p
                               class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-18y2hez-MuiFormHelperText-root"
-                              id=":r3ei:-helper-text"
+                              id=":r3gd:-helper-text"
                             >
                               <label>
                                 Filter Mode: Between Inclusive
@@ -3766,7 +3766,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                                 aria-invalid="false"
                                 autocomplete="off"
                                 class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                                id=":r3el:"
+                                id=":r3gg:"
                                 inputmode="text"
                                 placeholder="Max"
                                 type="text"
@@ -3803,7 +3803,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 </th>
                 <th
                   aria-sort="none"
-                  class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1sbgc6t-MuiTableCell-root"
+                  class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pigj4j-MuiTableCell-root"
                   colspan="1"
                   data-can-sort="true"
                   data-index="3"
@@ -3820,21 +3820,21 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                         class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                       >
                         <p
-                          aria-label="Created"
+                          aria-label="Modified by"
                           class="MuiTypography-root MuiTypography-body1 css-1bnbo3v-MuiTypography-root"
                           data-mui-internal-clone-element="true"
                           role="tooltip"
                         >
-                          Created
+                          Modified by
                         </p>
                       </div>
                       <span
-                        aria-label="Sort by Created descending"
+                        aria-label="Sort by Modified by ascending"
                         class="MuiBadge-root css-63ezxx-MuiBadge-root"
                         data-mui-internal-clone-element="true"
                       >
                         <span
-                          aria-label="Sort by Created descending"
+                          aria-label="Sort by Modified by ascending"
                           class="MuiButtonBase-root MuiTableSortLabel-root Mui-active MuiTableSortLabel-directionAsc css-bgz9z4-MuiButtonBase-root-MuiTableSortLabel-root"
                           role="button"
                           tabindex="0"
@@ -3895,97 +3895,283 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                         class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
                       >
                         <div
-                          class="MuiBox-root css-8yqbvs"
+                          class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-p1we6z-MuiFormControl-root-MuiTextField-root"
                         >
                           <div
-                            class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w93hbh-MuiFormControl-root-MuiTextField-root"
+                            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                           >
                             <div
-                              class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
+                              class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1nowbqt-MuiInputAdornment-root"
                             >
-                              <input
-                                aria-describedby=":r3es:-helper-text"
-                                aria-invalid="false"
-                                autocomplete="off"
-                                class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                                id=":r3es:"
-                                inputmode="text"
-                                placeholder="Min"
-                                type="text"
-                                value=""
-                              />
-                              <div
-                                class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-elo8k2-MuiInputAdornment-root"
+                              <span
+                                aria-hidden="true"
+                                class="notranslate"
+                              >
+                                ​
+                              </span>
+                              <span
+                                aria-label="Change filter mode"
+                                class=""
+                                data-mui-internal-clone-element="true"
                               >
                                 <button
-                                  aria-label="Choose date"
-                                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1ysp02-MuiButtonBase-root-MuiIconButton-root"
+                                  aria-label="Change filter mode"
+                                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-egflwm-MuiButtonBase-root-MuiIconButton-root"
                                   tabindex="0"
                                   type="button"
                                 >
                                   <svg
                                     aria-hidden="true"
                                     class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                                    data-testid="CalendarIcon"
+                                    data-testid="FilterListIcon"
                                     focusable="false"
                                     viewBox="0 0 24 24"
                                   >
                                     <path
-                                      d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
+                                      d="M10 18h4v-2h-4zM3 6v2h18V6zm3 7h12v-2H6z"
                                     />
                                   </svg>
                                 </button>
-                              </div>
+                              </span>
                             </div>
-                            <p
-                              class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-18y2hez-MuiFormHelperText-root"
-                              id=":r3es:-helper-text"
+                            <input
+                              aria-describedby=":r3gn:-helper-text"
+                              aria-invalid="false"
+                              aria-label="Filter by Modified by"
+                              autocomplete="off"
+                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
+                              id=":r3gn:"
+                              placeholder="Filter by Modified by"
+                              title="Filter by Modified by"
+                              type="text"
+                              value=""
+                            />
+                            <div
+                              class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1exhmnf-MuiInputAdornment-root"
                             >
-                              <label>
-                                Filter Mode: Between Inclusive
-                              </label>
-                            </p>
+                              <span
+                                aria-label="Clear filter"
+                                class=""
+                                data-mui-internal-clone-element="true"
+                              >
+                                <button
+                                  aria-label="Clear filter"
+                                  class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeSmall css-pqx1bi-MuiButtonBase-root-MuiIconButton-root"
+                                  disabled=""
+                                  tabindex="-1"
+                                  type="button"
+                                >
+                                  <svg
+                                    aria-hidden="true"
+                                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                                    data-testid="CloseIcon"
+                                    focusable="false"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <path
+                                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                                    />
+                                  </svg>
+                                </button>
+                              </span>
+                            </div>
                           </div>
+                          <p
+                            class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
+                            id=":r3gn:-helper-text"
+                          >
+                            <label>
+                              Filter Mode: Fuzzy
+                            </label>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </th>
+                <th
+                  aria-sort="none"
+                  class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-oizn4i-MuiTableCell-root"
+                  colspan="1"
+                  data-can-sort="true"
+                  data-index="4"
+                  scope="col"
+                  tabindex="0"
+                >
+                  <div
+                    class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
+                  >
+                    <div
+                      class="Mui-TableHeadCell-Content-Labels MuiBox-root css-68rqdf"
+                    >
+                      <div
+                        class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-1t5kuvk"
+                      >
+                        <p
+                          aria-label="Purchase Order Number"
+                          class="MuiTypography-root MuiTypography-body1 css-1bnbo3v-MuiTypography-root"
+                          data-mui-internal-clone-element="true"
+                          role="tooltip"
+                        >
+                          Purchase Order Number
+                        </p>
+                      </div>
+                      <span
+                        aria-label="Sort by Purchase Order Number ascending"
+                        class="MuiBadge-root css-63ezxx-MuiBadge-root"
+                        data-mui-internal-clone-element="true"
+                      >
+                        <span
+                          aria-label="Sort by Purchase Order Number ascending"
+                          class="MuiButtonBase-root MuiTableSortLabel-root Mui-active MuiTableSortLabel-directionAsc css-bgz9z4-MuiButtonBase-root-MuiTableSortLabel-root"
+                          role="button"
+                          tabindex="0"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-7ojauk-MuiSvgIcon-root-MuiTableSortLabel-icon"
+                            data-testid="SyncAltIcon"
+                            focusable="false"
+                            style="transform: rotate(-90deg) scaleX(0.9) translateX(-1px);"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="m18 12 4-4-4-4v3H3v2h15zM6 12l-4 4 4 4v-3h15v-2H6z"
+                            />
+                          </svg>
+                        </span>
+                        <span
+                          class="MuiBadge-badge MuiBadge-standard MuiBadge-invisible MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightCircular MuiBadge-overlapCircular css-hkekw-MuiBadge-badge"
+                        >
+                          0
+                        </span>
+                      </span>
+                    </div>
+                    <div
+                      class="Mui-TableHeadCell-Content-Actions MuiBox-root css-epvm6"
+                    >
+                      <button
+                        aria-label="Column Actions"
+                        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1a3u37w-MuiButtonBase-root-MuiIconButton-root"
+                        data-mui-internal-clone-element="true"
+                        tabindex="0"
+                        type="button"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                          data-testid="MoreVertIcon"
+                          focusable="false"
+                          style="transform: scale(0.9);"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-entered css-qr6njo-MuiCollapse-root"
+                    style="min-height: 0px;"
+                  >
+                    <div
+                      class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
+                    >
+                      <div
+                        class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
+                      >
+                        <div
+                          class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-p1we6z-MuiFormControl-root-MuiTextField-root"
+                        >
                           <div
-                            class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1w93hbh-MuiFormControl-root-MuiTextField-root"
+                            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                           >
                             <div
-                              class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
+                              class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1nowbqt-MuiInputAdornment-root"
                             >
-                              <input
-                                aria-invalid="false"
-                                autocomplete="off"
-                                class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                                id=":r3ev:"
-                                inputmode="text"
-                                placeholder="Max"
-                                type="text"
-                                value=""
-                              />
-                              <div
-                                class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-elo8k2-MuiInputAdornment-root"
+                              <span
+                                aria-hidden="true"
+                                class="notranslate"
+                              >
+                                ​
+                              </span>
+                              <span
+                                aria-label="Change filter mode"
+                                class=""
+                                data-mui-internal-clone-element="true"
                               >
                                 <button
-                                  aria-label="Choose date"
-                                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1ysp02-MuiButtonBase-root-MuiIconButton-root"
+                                  aria-label="Change filter mode"
+                                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-egflwm-MuiButtonBase-root-MuiIconButton-root"
                                   tabindex="0"
                                   type="button"
                                 >
                                   <svg
                                     aria-hidden="true"
                                     class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                                    data-testid="CalendarIcon"
+                                    data-testid="FilterListIcon"
                                     focusable="false"
                                     viewBox="0 0 24 24"
                                   >
                                     <path
-                                      d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
+                                      d="M10 18h4v-2h-4zM3 6v2h18V6zm3 7h12v-2H6z"
                                     />
                                   </svg>
                                 </button>
-                              </div>
+                              </span>
+                            </div>
+                            <input
+                              aria-describedby=":r3h0:-helper-text"
+                              aria-invalid="false"
+                              aria-label="Filter by Purchase Order Number"
+                              autocomplete="off"
+                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
+                              id=":r3h0:"
+                              placeholder="Filter by Purchase Order Number"
+                              title="Filter by Purchase Order Number"
+                              type="text"
+                              value=""
+                            />
+                            <div
+                              class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1exhmnf-MuiInputAdornment-root"
+                            >
+                              <span
+                                aria-label="Clear filter"
+                                class=""
+                                data-mui-internal-clone-element="true"
+                              >
+                                <button
+                                  aria-label="Clear filter"
+                                  class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeSmall css-pqx1bi-MuiButtonBase-root-MuiIconButton-root"
+                                  disabled=""
+                                  tabindex="-1"
+                                  type="button"
+                                >
+                                  <svg
+                                    aria-hidden="true"
+                                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                                    data-testid="CloseIcon"
+                                    focusable="false"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <path
+                                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                                    />
+                                  </svg>
+                                </button>
+                              </span>
                             </div>
                           </div>
+                          <p
+                            class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
+                            id=":r3h0:-helper-text"
+                          >
+                            <label>
+                              Filter Mode: Fuzzy
+                            </label>
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -3996,7 +4182,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                   class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-mr3hei-MuiTableCell-root"
                   colspan="1"
                   data-can-sort="true"
-                  data-index="4"
+                  data-index="5"
                   scope="col"
                   tabindex="0"
                 >
@@ -4094,11 +4280,11 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                               class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                             >
                               <input
-                                aria-describedby=":r3f6:-helper-text"
+                                aria-describedby=":r3h9:-helper-text"
                                 aria-invalid="false"
                                 autocomplete="off"
                                 class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                                id=":r3f6:"
+                                id=":r3h9:"
                                 inputmode="text"
                                 placeholder="Min"
                                 type="text"
@@ -4129,7 +4315,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                             </div>
                             <p
                               class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-18y2hez-MuiFormHelperText-root"
-                              id=":r3f6:-helper-text"
+                              id=":r3h9:-helper-text"
                             >
                               <label>
                                 Filter Mode: Between Inclusive
@@ -4146,7 +4332,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                                 aria-invalid="false"
                                 autocomplete="off"
                                 class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                                id=":r3f9:"
+                                id=":r3hc:"
                                 inputmode="text"
                                 placeholder="Max"
                                 type="text"
@@ -4186,7 +4372,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                   class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1u07cae-MuiTableCell-root"
                   colspan="1"
                   data-can-sort="true"
-                  data-index="5"
+                  data-index="6"
                   scope="col"
                   tabindex="0"
                 >
@@ -4284,11 +4470,11 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                               class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                             >
                               <input
-                                aria-describedby=":r3fg:-helper-text"
+                                aria-describedby=":r3hj:-helper-text"
                                 aria-invalid="false"
                                 autocomplete="off"
                                 class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                                id=":r3fg:"
+                                id=":r3hj:"
                                 inputmode="text"
                                 placeholder="Min"
                                 type="text"
@@ -4319,7 +4505,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                             </div>
                             <p
                               class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-18y2hez-MuiFormHelperText-root"
-                              id=":r3fg:-helper-text"
+                              id=":r3hj:-helper-text"
                             >
                               <label>
                                 Filter Mode: Between Inclusive
@@ -4336,7 +4522,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                                 aria-invalid="false"
                                 autocomplete="off"
                                 class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                                id=":r3fj:"
+                                id=":r3hm:"
                                 inputmode="text"
                                 placeholder="Max"
                                 type="text"
@@ -4364,176 +4550,6 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                                   </svg>
                                 </button>
                               </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </th>
-                <th
-                  aria-sort="none"
-                  class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-l6l27w-MuiTableCell-root"
-                  colspan="1"
-                  data-can-sort="true"
-                  data-index="6"
-                  scope="col"
-                  tabindex="0"
-                >
-                  <div
-                    class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
-                  >
-                    <div
-                      class="Mui-TableHeadCell-Content-Labels MuiBox-root css-68rqdf"
-                    >
-                      <div
-                        class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
-                      >
-                        <p
-                          aria-label="Is Defective"
-                          class="MuiTypography-root MuiTypography-body1 css-1bnbo3v-MuiTypography-root"
-                          data-mui-internal-clone-element="true"
-                          role="tooltip"
-                        >
-                          Is Defective
-                        </p>
-                      </div>
-                      <span
-                        aria-label="Sort by Is Defective ascending"
-                        class="MuiBadge-root css-63ezxx-MuiBadge-root"
-                        data-mui-internal-clone-element="true"
-                      >
-                        <span
-                          aria-label="Sort by Is Defective ascending"
-                          class="MuiButtonBase-root MuiTableSortLabel-root Mui-active MuiTableSortLabel-directionAsc css-bgz9z4-MuiButtonBase-root-MuiTableSortLabel-root"
-                          role="button"
-                          tabindex="0"
-                        >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-7ojauk-MuiSvgIcon-root-MuiTableSortLabel-icon"
-                            data-testid="SyncAltIcon"
-                            focusable="false"
-                            style="transform: rotate(-90deg) scaleX(0.9) translateX(-1px);"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="m18 12 4-4-4-4v3H3v2h15zM6 12l-4 4 4 4v-3h15v-2H6z"
-                            />
-                          </svg>
-                        </span>
-                        <span
-                          class="MuiBadge-badge MuiBadge-standard MuiBadge-invisible MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightCircular MuiBadge-overlapCircular css-hkekw-MuiBadge-badge"
-                        >
-                          0
-                        </span>
-                      </span>
-                    </div>
-                    <div
-                      class="Mui-TableHeadCell-Content-Actions MuiBox-root css-epvm6"
-                    >
-                      <button
-                        aria-label="Column Actions"
-                        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1a3u37w-MuiButtonBase-root-MuiIconButton-root"
-                        data-mui-internal-clone-element="true"
-                        tabindex="0"
-                        type="button"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                          data-testid="MoreVertIcon"
-                          focusable="false"
-                          style="transform: scale(0.9);"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                  <div
-                    class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-entered css-qr6njo-MuiCollapse-root"
-                    style="min-height: 0px;"
-                  >
-                    <div
-                      class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
-                    >
-                      <div
-                        class="MuiCollapse-wrapperInner MuiCollapse-vertical css-1i4ywhz-MuiCollapse-wrapperInner"
-                      >
-                        <div
-                          class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-p1we6z-MuiFormControl-root-MuiTextField-root"
-                        >
-                          <div
-                            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiSelect-root css-6h9cc6-MuiInputBase-root-MuiInput-root"
-                          >
-                            <div
-                              aria-expanded="false"
-                              aria-haspopup="listbox"
-                              aria-label="Filter by Is Defective"
-                              aria-labelledby=":r3fq:"
-                              class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-10y8whu-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                              id=":r3fq:"
-                              role="combobox"
-                              tabindex="0"
-                            >
-                              <div
-                                class="MuiBox-root css-1tzeee1"
-                              >
-                                Filter by Is Defective
-                              </div>
-                            </div>
-                            <input
-                              aria-hidden="true"
-                              aria-invalid="false"
-                              autocomplete="off"
-                              class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
-                              tabindex="-1"
-                              title="Filter by Is Defective"
-                              value=""
-                            />
-                            <svg
-                              aria-hidden="true"
-                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-1gpuzre-MuiSvgIcon-root-MuiSelect-icon"
-                              data-testid="ArrowDropDownIcon"
-                              focusable="false"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                d="M7 10l5 5 5-5z"
-                              />
-                            </svg>
-                            <div
-                              class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-atf1rt-MuiInputAdornment-root"
-                            >
-                              <span
-                                aria-label="Clear filter"
-                                class=""
-                                data-mui-internal-clone-element="true"
-                              >
-                                <button
-                                  aria-label="Clear filter"
-                                  class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeSmall css-pqx1bi-MuiButtonBase-root-MuiIconButton-root"
-                                  disabled=""
-                                  tabindex="-1"
-                                  type="button"
-                                >
-                                  <svg
-                                    aria-hidden="true"
-                                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                                    data-testid="CloseIcon"
-                                    focusable="false"
-                                    viewBox="0 0 24 24"
-                                  >
-                                    <path
-                                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                                    />
-                                  </svg>
-                                </button>
-                              </span>
                             </div>
                           </div>
                         </div>
@@ -4615,21 +4631,36 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                   </div>
                 </td>
                 <td
-                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-174kvlj-MuiTableCell-root-MuiTableCell-root"
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-o1ob8j-MuiTableCell-root-MuiTableCell-root"
                   data-index="3"
                   tabindex="0"
                 >
                   <div
+                    aria-label="Unknown"
                     class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                     data-mui-internal-clone-element="true"
                     role="tooltip"
                   >
-                    01 Jan 2024 12:00
+                    Unknown
+                  </div>
+                </td>
+                <td
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-135xqtt-MuiTableCell-root-MuiTableCell-root"
+                  data-index="4"
+                  tabindex="0"
+                >
+                  <div
+                    aria-label="6JYHEjwN"
+                    class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
+                    data-mui-internal-clone-element="true"
+                    role="tooltip"
+                  >
+                    6JYHEjwN
                   </div>
                 </td>
                 <td
                   class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1y8lr9e-MuiTableCell-root-MuiTableCell-root"
-                  data-index="4"
+                  data-index="5"
                   tabindex="0"
                 >
                   <div
@@ -4642,7 +4673,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 </td>
                 <td
                   class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1j1to2k-MuiTableCell-root-MuiTableCell-root"
-                  data-index="5"
+                  data-index="6"
                   tabindex="0"
                 >
                   <div
@@ -4651,20 +4682,6 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                     role="tooltip"
                   >
                     17 Mar 2023
-                  </div>
-                </td>
-                <td
-                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1bdkx9u-MuiTableCell-root-MuiTableCell-root"
-                  data-index="6"
-                  tabindex="0"
-                >
-                  <div
-                    aria-label="No"
-                    class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
-                    data-mui-internal-clone-element="true"
-                    role="tooltip"
-                  >
-                    No
                   </div>
                 </td>
               </tr>
@@ -4746,21 +4763,36 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                   </div>
                 </td>
                 <td
-                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-174kvlj-MuiTableCell-root-MuiTableCell-root"
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-o1ob8j-MuiTableCell-root-MuiTableCell-root"
                   data-index="3"
                   tabindex="0"
                 >
                   <div
+                    aria-label="Unknown"
                     class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                     data-mui-internal-clone-element="true"
                     role="tooltip"
                   >
-                    01 Jan 2024 12:00
+                    Unknown
+                  </div>
+                </td>
+                <td
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-135xqtt-MuiTableCell-root-MuiTableCell-root"
+                  data-index="4"
+                  tabindex="0"
+                >
+                  <div
+                    aria-label="tIWiCOow"
+                    class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
+                    data-mui-internal-clone-element="true"
+                    role="tooltip"
+                  >
+                    tIWiCOow
                   </div>
                 </td>
                 <td
                   class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1y8lr9e-MuiTableCell-root-MuiTableCell-root"
-                  data-index="4"
+                  data-index="5"
                   tabindex="0"
                 >
                   <div
@@ -4773,7 +4805,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 </td>
                 <td
                   class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1j1to2k-MuiTableCell-root-MuiTableCell-root"
-                  data-index="5"
+                  data-index="6"
                   tabindex="0"
                 >
                   <div
@@ -4782,20 +4814,6 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                     role="tooltip"
                   >
                     11 May 2023
-                  </div>
-                </td>
-                <td
-                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1bdkx9u-MuiTableCell-root-MuiTableCell-root"
-                  data-index="6"
-                  tabindex="0"
-                >
-                  <div
-                    aria-label="No"
-                    class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
-                    data-mui-internal-clone-element="true"
-                    role="tooltip"
-                  >
-                    No
                   </div>
                 </td>
               </tr>
@@ -4877,21 +4895,36 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                   </div>
                 </td>
                 <td
-                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-174kvlj-MuiTableCell-root-MuiTableCell-root"
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-o1ob8j-MuiTableCell-root-MuiTableCell-root"
                   data-index="3"
                   tabindex="0"
                 >
                   <div
+                    aria-label="Unknown"
                     class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                     data-mui-internal-clone-element="true"
                     role="tooltip"
                   >
-                    01 Jan 2024 12:00
+                    Unknown
+                  </div>
+                </td>
+                <td
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-135xqtt-MuiTableCell-root-MuiTableCell-root"
+                  data-index="4"
+                  tabindex="0"
+                >
+                  <div
+                    aria-label="Qf65nCwO"
+                    class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
+                    data-mui-internal-clone-element="true"
+                    role="tooltip"
+                  >
+                    Qf65nCwO
                   </div>
                 </td>
                 <td
                   class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1y8lr9e-MuiTableCell-root-MuiTableCell-root"
-                  data-index="4"
+                  data-index="5"
                   tabindex="0"
                 >
                   <div
@@ -4904,7 +4937,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 </td>
                 <td
                   class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1j1to2k-MuiTableCell-root-MuiTableCell-root"
-                  data-index="5"
+                  data-index="6"
                   tabindex="0"
                 >
                   <div
@@ -4913,20 +4946,6 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                     role="tooltip"
                   >
                     16 Jun 2023
-                  </div>
-                </td>
-                <td
-                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1bdkx9u-MuiTableCell-root-MuiTableCell-root"
-                  data-index="6"
-                  tabindex="0"
-                >
-                  <div
-                    aria-label="No"
-                    class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
-                    data-mui-internal-clone-element="true"
-                    role="tooltip"
-                  >
-                    No
                   </div>
                 </td>
               </tr>
@@ -5008,21 +5027,36 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                   </div>
                 </td>
                 <td
-                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-174kvlj-MuiTableCell-root-MuiTableCell-root"
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-o1ob8j-MuiTableCell-root-MuiTableCell-root"
                   data-index="3"
                   tabindex="0"
                 >
                   <div
+                    aria-label="Unknown"
                     class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
                     data-mui-internal-clone-element="true"
                     role="tooltip"
                   >
-                    01 Jan 2024 12:00
+                    Unknown
+                  </div>
+                </td>
+                <td
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-135xqtt-MuiTableCell-root-MuiTableCell-root"
+                  data-index="4"
+                  tabindex="0"
+                >
+                  <div
+                    aria-label="hpGBgi0d"
+                    class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
+                    data-mui-internal-clone-element="true"
+                    role="tooltip"
+                  >
+                    hpGBgi0d
                   </div>
                 </td>
                 <td
                   class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1y8lr9e-MuiTableCell-root-MuiTableCell-root"
-                  data-index="4"
+                  data-index="5"
                   tabindex="0"
                 >
                   <div
@@ -5035,7 +5069,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 </td>
                 <td
                   class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1j1to2k-MuiTableCell-root-MuiTableCell-root"
-                  data-index="5"
+                  data-index="6"
                   tabindex="0"
                 >
                   <div
@@ -5044,20 +5078,6 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                     role="tooltip"
                   >
                     05 Dec 2023
-                  </div>
-                </td>
-                <td
-                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1bdkx9u-MuiTableCell-root-MuiTableCell-root"
-                  data-index="6"
-                  tabindex="0"
-                >
-                  <div
-                    aria-label="Yes"
-                    class="MuiTypography-root MuiTypography-body1 css-18omczm-MuiTypography-root"
-                    data-mui-internal-clone-element="true"
-                    role="tooltip"
-                  >
-                    Yes
                   </div>
                 </td>
               </tr>
@@ -5127,7 +5147,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 >
                   <label
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-10j3yc8-MuiFormLabel-root-MuiInputLabel-root"
-                    for="mrt-rows-per-page-:r3e2:"
+                    for="mrt-rows-per-page-:r3ft:"
                   >
                     Rows per page
                   </label>
@@ -5148,7 +5168,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                       aria-hidden="true"
                       aria-invalid="false"
                       class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
-                      id="mrt-rows-per-page-:r3e2:"
+                      id="mrt-rows-per-page-:r3ft:"
                       tabindex="-1"
                       value="30"
                     />

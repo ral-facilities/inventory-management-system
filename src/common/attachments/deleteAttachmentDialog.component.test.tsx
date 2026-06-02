@@ -9,10 +9,7 @@ import { http } from 'msw';
 import { AttachmentMetadata } from '../../api/api.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { server } from '../../mocks/server';
-import {
-  CREATED_MODIFIED_TIME_VALUES,
-  renderComponentWithRouterProvider,
-} from '../../testUtils';
+import { renderComponentWithRouterProvider } from '../../testUtils';
 import DeleteAttachmentDialog, {
   DeleteAttachmentProps,
 } from './deleteAttachmentDialog.component';
@@ -37,7 +34,8 @@ describe('delete Attachment dialogue', () => {
       entity_id: '2',
       title: 'a title',
       description: 'a description',
-      ...CREATED_MODIFIED_TIME_VALUES,
+      created_time: '2024-01-01T12:00:00.000+00:00',
+      modified_time: '2024-01-02T13:10:10.000+00:00',
     };
     props = {
       open: true,
