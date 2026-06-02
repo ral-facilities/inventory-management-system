@@ -571,7 +571,7 @@ describe('Catalogue Items Table', () => {
     expect(router.state.location.search).toBe('');
   });
 
-  it.only('can change the table filters and clear the table filters (min and max values)', async () => {
+  it('can change the table filters and clear the table filters (min and max values)', async () => {
     // This tests the case where min/max column filters are used as there was a bug where
     // they wouldn't correctly reset when the clear filters button was clicked
 
