@@ -293,7 +293,7 @@ describe('SystemItemsTable', () => {
 
     // Delivered date column action button
     await user.click(
-      screen.getAllByRole('button', { name: 'Column Actions' })[5]
+      screen.getAllByRole('button', { name: 'Column Actions' })[6]
     );
 
     await user.click(await screen.findByText('Group by Delivered Date'));

@@ -118,7 +118,7 @@ describe('Items Table', () => {
     // Get the table element (assuming it has a specific class or role)
     const table = screen.getByTestId('items-table-container');
 
-    fireEvent.scroll(table, { target: { scrollLeft: 500 } });
+    fireEvent.scroll(table, { target: { scrollLeft: 700 } });
 
     // Check if the delivered date cell is visible after scrolling
     expect(await screen.findByText(deliveredDate)).toBeInTheDocument();
@@ -130,7 +130,7 @@ describe('Items Table', () => {
 
     await user.click(await screen.findByText('Group by Delivered Date'));
 
-    fireEvent.scroll(table, { target: { scrollLeft: -500 } });
+    fireEvent.scroll(table, { target: { scrollLeft: -700 } });
 
     // Check if the delivered date grouped cell is visible after scrolling
     expect(
@@ -149,7 +149,7 @@ describe('Items Table', () => {
     // Get the table element (assuming it has a specific class or role)
     const table = screen.getByTestId('items-table-container');
 
-    fireEvent.scroll(table, { target: { scrollLeft: 300 } });
+    fireEvent.scroll(table, { target: { scrollLeft: 500 } });
 
     // Check if the warranty end date cell is visible after scrolling
     expect(await screen.findByText(warrantyEndDate)).toBeInTheDocument();
@@ -161,7 +161,7 @@ describe('Items Table', () => {
 
     await user.click(await screen.findByText('Group by Warranty End Date'));
 
-    fireEvent.scroll(table, { target: { scrollLeft: -300 } });
+    fireEvent.scroll(table, { target: { scrollLeft: -500 } });
 
     // Check if the warranty end date grouped cell is visible after scrolling
     expect(
