@@ -97,7 +97,7 @@ describe('Systems', () => {
 
     cy.location('search').should(
       'eq',
-      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuhvMgIaw32PM4SNCEYAHEvFhcAdhkGsRZZHg44xDEjJbD0JAO4zk8HWxAAbEhh44tpkflphzXAOauaMMF3N5kAX38gA'
+      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuqRVTbQEYCeLJGkzxkAQ1jcGTQWxCMADiXiwxAOwzM4Q9GWR4M8HAoYk1s4SQDua5PAvoANiQwScZh-Ly0wjsQHN-GhgwMUc8ZABfSKA'
     );
     cy.findByText('Storage system for various items.').scrollIntoView();
     cy.findByText('Storage system for various items.').should('be.visible');
@@ -980,6 +980,8 @@ describe('Systems', () => {
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
           type_id: '2',
+          modified_comment: null,
+          modified_by: 'Unknown',
           is_flagged: false,
           type: {
             id: '2',
