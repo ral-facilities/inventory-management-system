@@ -177,7 +177,7 @@ export const getCatalogueItemById = (id: string): CatalogueItem | undefined => {
 export const catalogueItemData = (id: string): CatalogueItem[] => {
   return CatalogueItemsJSON.filter(
     (catalogueItem) => catalogueItem.catalogue_category_id === id
-  );
+  ) as CatalogueItem[];
 };
 
 export const getManufacturerById = (id: string): Manufacturer | undefined => {

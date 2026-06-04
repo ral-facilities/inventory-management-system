@@ -393,7 +393,9 @@ export const handlers = [
           );
         }
 
-        return HttpResponse.json(CatalogueItemData, { status: 200 });
+        return HttpResponse.json(CatalogueItemData as CatalogueItem, {
+          status: 200,
+        });
       }
     }
   ),
@@ -410,7 +412,9 @@ export const handlers = [
           (catalogueItem) => catalogueItem.catalogue_category_id === id
         );
 
-        return HttpResponse.json(CatalogueItemData, { status: 200 });
+        return HttpResponse.json(CatalogueItemData as CatalogueItem[], {
+          status: 200,
+        });
       } else {
         return HttpResponse.json({ detail: '' }, { status: 422 });
       }
