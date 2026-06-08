@@ -655,23 +655,46 @@ export function parseAttachmentError(message: string): string {
 }
 
 export function parseSpreadsheetError(message: string): string {
-  if (message.includes(`imsingestapiversion`)) {
-    return `Unable to find the required custom document property 'ImsIngestAPIVersion' in your workbook. Please download a new template and copy your data over, as your current file appears to be missing required properties or is corrupted`;
+  if (
+    message.includes('imsingestapiversion') ||
+    message.includes('unable to find the custom document property') ||
+    message.includes(
+      "unable to find the 'catalogueitems template' sheet in the workbook"
+    ) ||
+    message.includes('not a valid spreadsheet')
+  ) {
+    return `This spreadsheet appears to be corrupted or invalid. Please download a new template and copy your data into it before trying again.`;
+  }
+
+  if (
+    message.includes(
+      'the columns within the template are either out of date or have been modified.'
+    )
+  ) {
+    return `The columns in this spreadsheet are outdated or have been modified. Please download a new template and copy your data into it before trying again.`;
   }
 
   if (message.includes('too many catalogue items in spreadsheet')) {
     const match = message.match(/maximum of (\d+)/);
     const max = match ? match[1] : '1000';
 
-    return `Too many catalogue items found in your spreadsheet. The maximum allowed is ${max} rows, so please reduce the number of entries and try again.`;
-  }
-
-  if (message.includes('not a valid spreadsheet')) {
-    return `The file provided is not a valid spreadsheet. Please upload a supported file and try again.`;
+    return `Your spreadsheet contains too many catalogue items. The maximum allowed is ${max}. Please reduce the number of rows and try again.`;
   }
 
   if (message.includes('catalogue category does not exist')) {
-    return `The specified catalogue category was not found, so no catalogue items can be added.`;
+    return `The selected catalogue category no longer exists or is invalid. Please navigate a valid category catalogue that contains catalogue items and try again.`;
+  }
+
+  if (
+    message.includes(
+      'spreadsheet was generated for a catalogue category with a different id than the one provided'
+    )
+  ) {
+    return `This spreadsheet was created for a different catalogue category. Please download a new template for the correct catalogue category and copy your data into it before trying again.`;
+  }
+
+  if (message.includes('spreadsheet was created by ims ingest api v')) {
+    return `This spreadsheet was created using an outdated or incompatible template. Please download the latest template and copy your data into it before trying again.`;
   }
 
   return parseBaseError(message);

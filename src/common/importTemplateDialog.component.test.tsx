@@ -35,11 +35,20 @@ const backendErrorMessage = {
   IMSIngestAPIVersion:
     "Unable to find the custom document property 'IMSIngestAPIVersion' in the workbook properties",
   InvalidSpreadsheetFile: 'File given is not a valid spreadsheet',
-  FileTypeMismatch: 'File extension and content type do not match',
+  FileTypeMismatch:
+    'File does not contain the correct extension or content type do not match',
   UnsupportedFileExtension: 'File extension is not supported',
   MissingEntity: 'The specified catalogue category does not exist',
   TooManyCatalogueItems:
     'Too many catalogue items in spreadsheet. Found 1050 but only a maximum of 1000 can be processed at once.',
+  CategoryMismatch:
+    'Spreadsheet was generated for a catalogue category with a different ID than the one provided',
+  TemplateVersionMismatch:
+    'Spreadsheet was created by IMS Ingest API v1 which is incompatible with the current version',
+  MissingSheet:
+    "Unable to find the 'CatalogueItems Template' sheet in the workbook",
+  ColumnsModified:
+    'The columns within the template are either out of date or have been modified.',
 };
 
 interface IngestEndpointHelperProps {
