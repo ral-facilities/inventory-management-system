@@ -182,6 +182,7 @@ export interface ItemDetailsStep {
   };
   delivered_date?: string | null;
   notes?: string | null;
+  modified_comment: string | null;
 }
 
 export interface ItemDetailsStepPost {
@@ -193,6 +194,7 @@ export interface ItemDetailsStepPost {
   serial_number?: string | null;
   delivered_date?: string | null;
   notes?: string | null;
+  modified_comment: string | null;
 }
 
 export interface PostItems {
@@ -210,6 +212,7 @@ export interface BaseMoveItemsToSystem {
   mode: 'single' | 'multiple';
   selectedItems: Item[];
   targetSystem: System;
+  modifiedComment: string | null;
 }
 export interface MoveItemsMultipleUsageStatus extends BaseMoveItemsToSystem {
   mode: 'multiple';

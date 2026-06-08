@@ -72,6 +72,7 @@ import { useAppSelector } from '../state/hook';
 import { selectSettings } from '../state/slices/configSlice';
 import { SystemsTableView } from '../systems/systemsTableView.component';
 import Breadcrumbs from '../view/breadcrumbs.component';
+import HistoryCommentDialog from '../history/historyCommentDialog.component';
 
 function toItemDetailsStep(
   item: Item | undefined,
@@ -93,6 +94,7 @@ function toItemDetailsStep(
       },
       delivered_date: null,
       notes: '',
+      modified_comment: '',
     };
   }
 
@@ -109,6 +111,7 @@ function toItemDetailsStep(
     },
     delivered_date: item.delivered_date,
     notes: item.notes ?? '',
+    modified_comment: '',
   };
 }
 
@@ -128,6 +131,7 @@ function convertToItemDetailsStepPost(
       ? new Date(item.delivered_date).toISOString()
       : null,
     notes: item.notes ?? null,
+    modified_comment: item.modified_comment ?? null,
   };
 }
 
@@ -188,6 +192,9 @@ function ItemDialog(props: ItemDialogProps) {
     () => catalogueCategory?.properties ?? [],
     [catalogueCategory]
   );
+
+  const [historyCommentDialog, setHistoryCommentDialog] =
+    React.useState<boolean>(false);
 
   const [showAdvancedSerialNumberOptions, setShowAdvancedSerialNumberOptions] =
     React.useState(false);
@@ -595,7 +602,7 @@ function ItemDialog(props: ItemDialogProps) {
   };
 
   const handleFinish = React.useCallback(
-    async (event: React.SyntheticEvent) => {
+    async (event: React.SyntheticEvent, allowSubmit: boolean) => {
       let hasErrors = false;
       const {
         detailsStepData,
@@ -622,6 +629,11 @@ function ItemDialog(props: ItemDialogProps) {
         hasErrors = true;
       }
       if (hasErrors) return;
+
+      if (!allowSubmit) {
+        setHistoryCommentDialog(true);
+        return;
+      }
 
       if (detailsStepData && propertiesStepData && parentSystemId) {
         const data: ItemPost = {
@@ -1389,7 +1401,7 @@ function ItemDialog(props: ItemDialogProps) {
               Object.values(errorsDetailsStep).length !== 0 ||
               !!parentSystemIdError
             }
-            onClick={handleFinish}
+            onClick={(event) => handleFinish(event, false)}
             sx={{ mr: 3 }}
             endIcon={
               isAddItemsPending || isAddItemPending || isEditItemPending ? (
@@ -1424,6 +1436,16 @@ function ItemDialog(props: ItemDialogProps) {
           </FormHelperText>
         </Box>
       )}
+      <HistoryCommentDialog
+        open={historyCommentDialog}
+        onSubmit={(event) => {
+          setHistoryCommentDialog(false);
+          handleFinish(event, true);
+        }}
+        onChange={registerDetailsStep('modified_comment')}
+        action={requestType === 'post' || duplicate ? 'adding' : 'editing'}
+        entityTypeName={'Item'}
+      />
     </Dialog>
   );
 }
