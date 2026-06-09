@@ -39,6 +39,9 @@ const HistoryCommentDialog = (props: HistoryCommentProps) => {
             <TextField
               id="comment-input"
               label="Comment"
+              size="small"
+              multiline
+              minRows={3}
               {...onChange}
               fullWidth
             />

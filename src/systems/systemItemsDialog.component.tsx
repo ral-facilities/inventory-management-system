@@ -92,13 +92,12 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   const [historyCommentDialog, setHistoryCommentDialog] =
     React.useState<boolean>(false);
 
+  // very basic react-hook-form logic to capture modified_comment in popup
   const { register, watch } = useForm({
     defaultValues: {
-      modified_comment: '',
+      modified_comment: null,
     },
   });
-
-  // Then watch the value to use it later:
   const modifiedComment = watch('modified_comment');
 
   const { data: dstSystem } = useGetSystem(parentSystemId);

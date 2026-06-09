@@ -164,6 +164,7 @@ export const moveItemToSystem = (values: {
 
   cy.findByRole('button', { name: 'Move here' }).should('not.be.disabled');
   cy.findByRole('button', { name: 'Move here' }).click();
+  cy.findByRole('button', { name: 'Submit' }).click();
   cy.findByRole('dialog').should('not.exist', { timeout: 10000 });
 
   cy.findByRole('button', { name: 'navigate to systems home' }).click();

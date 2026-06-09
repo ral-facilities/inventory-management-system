@@ -1038,6 +1038,7 @@ describe('Systems', () => {
           cy.findByRole('button', { name: 'Move here' }).click();
         });
 
+      cy.findByRole('button', { name: 'Submit' }).click();
       cy.findByRole('dialog').should('not.exist');
 
       cy.findBrowserMockedRequests({
@@ -1050,6 +1051,7 @@ describe('Systems', () => {
           JSON.stringify({
             system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
             usage_status_id: '2',
+            modified_comment: null,
           })
         );
         expect(patchRequests[1].url.toString()).to.contain('/4mYoI7pr');
@@ -1057,6 +1059,7 @@ describe('Systems', () => {
           JSON.stringify({
             system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
             usage_status_id: '2',
+            modified_comment: null,
           })
         );
       });
@@ -1112,6 +1115,7 @@ describe('Systems', () => {
 
       cy.findByRole('button', { name: 'Finish' }).click();
 
+      cy.findByRole('button', { name: 'Submit' }).click();
       cy.findByRole('dialog').should('not.exist');
 
       cy.findBrowserMockedRequests({
@@ -1124,6 +1128,7 @@ describe('Systems', () => {
           JSON.stringify({
             system_id: '65328f34a40ff5301575a4e3',
             usage_status_id: '3',
+            modified_comment: null,
           })
         );
         expect(patchRequests[1].url.toString()).to.contain('/4mYoI7pr');
@@ -1131,6 +1136,7 @@ describe('Systems', () => {
           JSON.stringify({
             system_id: '65328f34a40ff5301575a4e3',
             usage_status_id: '3',
+            modified_comment: null,
           })
         );
       });
@@ -1198,6 +1204,7 @@ describe('Systems', () => {
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
@@ -1206,7 +1213,10 @@ describe('Systems', () => {
     }).should(async (patchRequests) => {
       expect(patchRequests.length).eq(1);
       expect(JSON.stringify(await patchRequests[0].json())).equal(
-        JSON.stringify({ serial_number: 'dfzqkOJbqifOtest1234' })
+        JSON.stringify({
+          serial_number: 'dfzqkOJbqifOtest1234',
+          modified_comment: null,
+        })
       );
     });
   });
@@ -1226,6 +1236,7 @@ describe('Systems', () => {
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
@@ -1256,6 +1267,7 @@ describe('Systems', () => {
           ],
           catalogue_item_id: '11',
           system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
+          modified_comment: null,
         })
       );
     });

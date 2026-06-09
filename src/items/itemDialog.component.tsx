@@ -476,6 +476,8 @@ function ItemDialog(props: ItemDialogProps) {
 
         const item: ItemPatch = {};
 
+        item.modified_comment = data.modified_comment; // always set modified comment
+
         if (isSerialNumberUpdated) item.serial_number = data.serial_number;
         if (isPurchaseOrderNumberUpdated)
           item.purchase_order_number = data.purchase_order_number;
