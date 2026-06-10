@@ -9,6 +9,7 @@ describe('HistoryCommentDialog', () => {
   let props: HistoryCommentProps;
   let user: UserEvent;
   const mockOnSubmit = vi.fn();
+  const mockOnChange = vi.fn();
 
   const createView = () => {
     return renderComponentWithRouterProvider(
@@ -21,7 +22,7 @@ describe('HistoryCommentDialog', () => {
       open: true,
       onSubmit: mockOnSubmit,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      onChange: vi.fn() as any, // could not resolve types between mock and UseFormRegisterReturn
+      onChange: mockOnChange as any, // could not resolve types between mock and UseFormRegisterReturn
       action: 'editing',
       entityTypeName: 'Item',
     };
