@@ -549,7 +549,6 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         'catalogueItem.criticality': isCriticalMode,
         'catalogueItem.number_of_spares_required': isCriticalMode,
       },
-      grouping: ['catalogueItem.name'],
       pagination: { pageSize: DEFAULT_ROWS_PER_PAGE_VALUE, pageIndex: 0 },
       columnFilterFns: initialColumnFilterFnState,
     },
@@ -599,20 +598,6 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     initialState: {
       showColumnFilters: true,
       showGlobalFilter: true,
-      columnOrder: [
-        'item.serial_number',
-        'catalogueItem.is_flagged',
-        'catalogueItem.name',
-        'catalogueItem.criticality',
-        'catalogueItem.number_of_spares',
-        'catalogueItem.number_of_spares_required',
-        'item.modified_time',
-        'item.created_time',
-        'item.delivered_date',
-        'item.is_defective',
-        'item.usage_status',
-        'catalogueItem.expected_lifetime_days',
-      ],
     },
     state: {
       ...preservedState,
