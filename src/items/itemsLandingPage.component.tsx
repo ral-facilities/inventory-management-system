@@ -429,7 +429,7 @@ function ItemsLandingPage() {
                                 color: 'text.primary',
                               }}
                             >
-                              Last modified
+                              Last Modified
                             </Typography>
                             <Typography
                               align="left"
@@ -441,6 +441,24 @@ function ItemsLandingPage() {
                                 itemData.modified_time,
                                 true
                               )}
+                            </Typography>
+                          </Grid>
+                          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.primary',
+                              }}
+                            >
+                              Modified By
+                            </Typography>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.secondary',
+                              }}
+                            >
+                              {itemData.modified_by}
                             </Typography>
                           </Grid>
                           <Grid size={{ xs: 12, sm: 6, md: 4 }}>

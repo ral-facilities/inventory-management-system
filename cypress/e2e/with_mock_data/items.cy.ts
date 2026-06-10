@@ -259,7 +259,7 @@ describe('Items', () => {
 
     cy.findByLabelText('Quantity').type('10.5');
     cy.findAllByText('Please enter a valid integer.').should('exist');
-    
+
     cy.findByLabelText('Starting value').type('10.5');
     cy.findAllByText('Please enter a valid integer.').should('exist');
 
@@ -312,7 +312,7 @@ describe('Items', () => {
     cy.findByText('Item Creation Rule Applied').should('exist');
 
     cy.findByRole('button', { name: 'Next' }).click();
-    
+
     cy.findByLabelText('Serial number').type('{selectall}{del}');
 
     cy.findByRole('button', { name: 'Next' }).click();
@@ -610,7 +610,7 @@ describe('Items', () => {
       'Items that are contained within the system type Storage are classified as spares'
     ).should('exist');
 
-    cy.findAllByRole('button', { name: 'Column Actions' }).eq(3).click();
+    cy.findAllByRole('button', { name: 'Column Actions' }).eq(4).click();
     cy.findByText('Group by Asset Number').click();
 
     cy.findByText('Spares Definition Filter Applied').should('exist');

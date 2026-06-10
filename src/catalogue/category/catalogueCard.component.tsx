@@ -133,7 +133,7 @@ function CatalogueCard(props: CatalogueCardProps) {
             right: '12px',
           }}
         >
-          {`Last modified: ${formatDateTimeStrings(card.row.original.modified_time, true)}`}
+          {`Last modified: ${formatDateTimeStrings(card.row.original.modified_time, true)} by ${card.row.original.modified_by}`}
         </Typography>
       </Card>
     </Button>

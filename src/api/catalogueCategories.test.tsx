@@ -4,7 +4,7 @@ import { MockInstance } from 'vitest';
 import { CopyToCatalogueCategory, MoveToCatalogueCategory } from '../app.types';
 import handleTransferState from '../handleTransferState';
 import {
-  CREATED_MODIFIED_TIME_VALUES,
+  BASE_FIELD_VALUES,
   getCatalogueCategoryById,
   hooksWrapperWithProviders,
 } from '../testUtils';
@@ -146,6 +146,8 @@ describe('catalogue categories api functions', () => {
         parent_id: '1',
         created_time: '2024-01-01T12:00:00.000+00:00',
         modified_time: '2024-01-02T13:10:10.000+00:00',
+        modified_comment: null,
+        modified_by: 'Unknown',
       });
     });
   });
@@ -161,7 +163,7 @@ describe('catalogue categories api functions', () => {
         is_flagged: false,
         is_leaf: false,
         properties: [],
-        ...CREATED_MODIFIED_TIME_VALUES,
+        ...BASE_FIELD_VALUES,
       };
     });
 
@@ -202,6 +204,8 @@ describe('catalogue categories api functions', () => {
           properties: [],
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          modified_comment: null,
+          modified_by: 'Unknown',
         },
       ]);
     });
@@ -267,6 +271,8 @@ describe('catalogue categories api functions', () => {
         properties: [],
         created_time: '2024-01-01T12:00:00.000+00:00',
         modified_time: '2024-01-02T13:10:10.000+00:00',
+        modified_comment: null,
+        modified_by: 'Unknown',
       });
     });
   });
@@ -281,7 +287,7 @@ describe('catalogue categories api functions', () => {
         is_flagged: false,
         is_leaf: false,
         properties: [],
-        ...CREATED_MODIFIED_TIME_VALUES,
+        ...BASE_FIELD_VALUES,
       },
       {
         id: '6',
@@ -310,7 +316,7 @@ describe('catalogue categories api functions', () => {
             mandatory: false,
           },
         ],
-        ...CREATED_MODIFIED_TIME_VALUES,
+        ...BASE_FIELD_VALUES,
       },
       {
         id: '5',
@@ -339,7 +345,7 @@ describe('catalogue categories api functions', () => {
             mandatory: false,
           },
         ],
-        ...CREATED_MODIFIED_TIME_VALUES,
+        ...BASE_FIELD_VALUES,
       },
     ];
 
@@ -413,7 +419,7 @@ describe('catalogue categories api functions', () => {
         is_flagged: true,
         is_leaf: false,
         properties: [],
-        ...CREATED_MODIFIED_TIME_VALUES,
+        ...BASE_FIELD_VALUES,
       };
       moveToCatalogueCategory.targetCategory = targetCategory;
 
@@ -460,7 +466,7 @@ describe('catalogue categories api functions', () => {
         code: 'test_dup',
         is_leaf: false,
         properties: [],
-        ...CREATED_MODIFIED_TIME_VALUES,
+        ...BASE_FIELD_VALUES,
       },
       {
         id: '6',
@@ -489,7 +495,7 @@ describe('catalogue categories api functions', () => {
             mandatory: false,
           },
         ],
-        ...CREATED_MODIFIED_TIME_VALUES,
+        ...BASE_FIELD_VALUES,
       },
       {
         id: '5',
@@ -518,7 +524,7 @@ describe('catalogue categories api functions', () => {
             mandatory: false,
           },
         ],
-        ...CREATED_MODIFIED_TIME_VALUES,
+        ...BASE_FIELD_VALUES,
       },
     ];
 
@@ -597,7 +603,7 @@ describe('catalogue categories api functions', () => {
         is_flagged: true,
         is_leaf: false,
         properties: [],
-        ...CREATED_MODIFIED_TIME_VALUES,
+        ...BASE_FIELD_VALUES,
       };
       copyToCatalogueCategory.targetCategory = targetCategory;
 
