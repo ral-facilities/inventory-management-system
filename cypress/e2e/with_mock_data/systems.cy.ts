@@ -1126,17 +1126,17 @@ describe('Systems', () => {
         expect(patchRequests[0].url.toString()).to.contain('/z1hJvV8Z');
         expect(JSON.stringify(await patchRequests[0].json())).equal(
           JSON.stringify({
+            modified_comment: null,
             system_id: '65328f34a40ff5301575a4e3',
             usage_status_id: '3',
-            modified_comment: null,
           })
         );
         expect(patchRequests[1].url.toString()).to.contain('/4mYoI7pr');
         expect(JSON.stringify(await patchRequests[1].json())).equal(
           JSON.stringify({
+            modified_comment: null,
             system_id: '65328f34a40ff5301575a4e3',
             usage_status_id: '3',
-            modified_comment: null,
           })
         );
       });

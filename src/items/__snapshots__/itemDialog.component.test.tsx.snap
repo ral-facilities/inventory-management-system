@@ -27,7 +27,7 @@ exports[`ItemDialog > Add Item > displays warning when in admin mode 1`] = `
       tabindex="-1"
     >
       <div
-        aria-labelledby=":r8q:"
+        aria-labelledby=":r0:"
         aria-modal="true"
         class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthXl MuiDialog-paperFullWidth css-v3yqi3-MuiPaper-root-MuiDialog-paper"
         role="dialog"
@@ -35,7 +35,7 @@ exports[`ItemDialog > Add Item > displays warning when in admin mode 1`] = `
       >
         <h2
           class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-17ltkeq-MuiTypography-root-MuiDialogTitle-root"
-          id=":r8q:"
+          id=":r0:"
         >
           Add Item as Admin
           <svg
@@ -500,12 +500,12 @@ exports[`ItemDialog > Add Item > displays warning when in admin mode 1`] = `
                                         </span>
                                       </div>
                                       <input
-                                        aria-describedby=":r95:-helper-text"
+                                        aria-describedby=":rb:-helper-text"
                                         aria-invalid="false"
                                         aria-label="Filter by Name"
                                         autocomplete="off"
                                         class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                                        id=":r95:"
+                                        id=":rb:"
                                         placeholder="Filter by Name"
                                         title="Filter by Name"
                                         type="text"
@@ -543,7 +543,7 @@ exports[`ItemDialog > Add Item > displays warning when in admin mode 1`] = `
                                     </div>
                                     <p
                                       class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                                      id=":r95:-helper-text"
+                                      id=":rb:-helper-text"
                                     >
                                       <label>
                                         Filter Mode: Fuzzy
@@ -707,13 +707,13 @@ exports[`ItemDialog > Add Item > displays warning when in admin mode 1`] = `
                                         </span>
                                       </div>
                                       <div
-                                        aria-describedby=":r9e:-helper-text"
+                                        aria-describedby=":rk:-helper-text"
                                         aria-expanded="false"
                                         aria-haspopup="listbox"
                                         aria-label="Filter by Type"
-                                        aria-labelledby=":r9e:"
+                                        aria-labelledby=":rk:"
                                         class="MuiSelect-select MuiSelect-standard MuiSelect-multiple MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-10y8whu-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                                        id=":r9e:"
+                                        id=":rk:"
                                         role="combobox"
                                         tabindex="0"
                                       >
@@ -775,7 +775,7 @@ exports[`ItemDialog > Add Item > displays warning when in admin mode 1`] = `
                                     </div>
                                     <p
                                       class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                                      id=":r9e:-helper-text"
+                                      id=":rk:-helper-text"
                                     >
                                       <label>
                                         Filter Mode: Includes any
@@ -891,11 +891,11 @@ exports[`ItemDialog > Add Item > displays warning when in admin mode 1`] = `
                                         class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                                       >
                                         <input
-                                          aria-describedby=":r9n:-helper-text"
+                                          aria-describedby=":rt:-helper-text"
                                           aria-invalid="false"
                                           autocomplete="off"
                                           class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                                          id=":r9n:"
+                                          id=":rt:"
                                           inputmode="text"
                                           placeholder="Min"
                                           type="text"
@@ -926,7 +926,7 @@ exports[`ItemDialog > Add Item > displays warning when in admin mode 1`] = `
                                       </div>
                                       <p
                                         class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-18y2hez-MuiFormHelperText-root"
-                                        id=":r9n:-helper-text"
+                                        id=":rt:-helper-text"
                                       >
                                         <label>
                                           Filter Mode: Between Inclusive
@@ -943,7 +943,7 @@ exports[`ItemDialog > Add Item > displays warning when in admin mode 1`] = `
                                           aria-invalid="false"
                                           autocomplete="off"
                                           class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                                          id=":r9q:"
+                                          id=":r10:"
                                           inputmode="text"
                                           placeholder="Max"
                                           type="text"
@@ -1114,12 +1114,12 @@ exports[`ItemDialog > Add Item > displays warning when in admin mode 1`] = `
                                         </span>
                                       </div>
                                       <input
-                                        aria-describedby=":ra0:-helper-text"
+                                        aria-describedby=":r16:-helper-text"
                                         aria-invalid="false"
                                         aria-label="Filter by Modified by"
                                         autocomplete="off"
                                         class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                                        id=":ra0:"
+                                        id=":r16:"
                                         placeholder="Filter by Modified by"
                                         title="Filter by Modified by"
                                         type="text"
@@ -1157,7 +1157,7 @@ exports[`ItemDialog > Add Item > displays warning when in admin mode 1`] = `
                                     </div>
                                     <p
                                       class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                                      id=":ra0:-helper-text"
+                                      id=":r16:-helper-text"
                                     >
                                       <label>
                                         Filter Mode: Fuzzy
@@ -1552,7 +1552,7 @@ exports[`ItemDialog > Add Item > displays warning when in admin mode 1`] = `
                           >
                             <label
                               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-10j3yc8-MuiFormLabel-root-MuiInputLabel-root"
-                              for="mrt-rows-per-page-:r8u:"
+                              for="mrt-rows-per-page-:r4:"
                             >
                               Rows per page
                             </label>
@@ -1573,7 +1573,7 @@ exports[`ItemDialog > Add Item > displays warning when in admin mode 1`] = `
                                 aria-hidden="true"
                                 aria-invalid="false"
                                 class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
-                                id="mrt-rows-per-page-:r8u:"
+                                id="mrt-rows-per-page-:r4:"
                                 tabindex="-1"
                                 value="30"
                               />
@@ -1699,7 +1699,7 @@ exports[`ItemDialog > Add Item > displays warning when in admin mode 1`] = `
     data-popper-escaped=""
     data-popper-placement="top"
     data-popper-reference-hidden=""
-    id=":r8r:"
+    id=":r1:"
     role="tooltip"
     style="position: absolute; top: auto; left: 0px; margin: 0px; right: auto; bottom: 0px; transform: translate(0px, 0px);"
   >
@@ -1744,7 +1744,7 @@ exports[`ItemDialog > Edit Item > displays warning when in admin mode for edit 1
       tabindex="-1"
     >
       <div
-        aria-labelledby=":r4vb:"
+        aria-labelledby=":r24:"
         aria-modal="true"
         class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthXl MuiDialog-paperFullWidth css-v3yqi3-MuiPaper-root-MuiDialog-paper"
         role="dialog"
@@ -1752,7 +1752,7 @@ exports[`ItemDialog > Edit Item > displays warning when in admin mode for edit 1
       >
         <h2
           class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-17ltkeq-MuiTypography-root-MuiDialogTitle-root"
-          id=":r4vb:"
+          id=":r24:"
         >
           Edit Item as Admin
           <svg
@@ -2299,12 +2299,12 @@ exports[`ItemDialog > Edit Item > displays warning when in admin mode for edit 1
                                         </span>
                                       </div>
                                       <input
-                                        aria-describedby=":r4vm:-helper-text"
+                                        aria-describedby=":r2f:-helper-text"
                                         aria-invalid="false"
                                         aria-label="Filter by Name"
                                         autocomplete="off"
                                         class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                                        id=":r4vm:"
+                                        id=":r2f:"
                                         placeholder="Filter by Name"
                                         title="Filter by Name"
                                         type="text"
@@ -2342,7 +2342,7 @@ exports[`ItemDialog > Edit Item > displays warning when in admin mode for edit 1
                                     </div>
                                     <p
                                       class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                                      id=":r4vm:-helper-text"
+                                      id=":r2f:-helper-text"
                                     >
                                       <label>
                                         Filter Mode: Fuzzy
@@ -2506,13 +2506,13 @@ exports[`ItemDialog > Edit Item > displays warning when in admin mode for edit 1
                                         </span>
                                       </div>
                                       <div
-                                        aria-describedby=":r4vv:-helper-text"
+                                        aria-describedby=":r2o:-helper-text"
                                         aria-expanded="false"
                                         aria-haspopup="listbox"
                                         aria-label="Filter by Type"
-                                        aria-labelledby=":r4vv:"
+                                        aria-labelledby=":r2o:"
                                         class="MuiSelect-select MuiSelect-standard MuiSelect-multiple MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-10y8whu-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                                        id=":r4vv:"
+                                        id=":r2o:"
                                         role="combobox"
                                         tabindex="0"
                                       >
@@ -2574,7 +2574,7 @@ exports[`ItemDialog > Edit Item > displays warning when in admin mode for edit 1
                                     </div>
                                     <p
                                       class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                                      id=":r4vv:-helper-text"
+                                      id=":r2o:-helper-text"
                                     >
                                       <label>
                                         Filter Mode: Includes any
@@ -2690,11 +2690,11 @@ exports[`ItemDialog > Edit Item > displays warning when in admin mode for edit 1
                                         class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-6h9cc6-MuiInputBase-root-MuiInput-root"
                                       >
                                         <input
-                                          aria-describedby=":r508:-helper-text"
+                                          aria-describedby=":r31:-helper-text"
                                           aria-invalid="false"
                                           autocomplete="off"
                                           class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                                          id=":r508:"
+                                          id=":r31:"
                                           inputmode="text"
                                           placeholder="Min"
                                           type="text"
@@ -2725,7 +2725,7 @@ exports[`ItemDialog > Edit Item > displays warning when in admin mode for edit 1
                                       </div>
                                       <p
                                         class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-18y2hez-MuiFormHelperText-root"
-                                        id=":r508:-helper-text"
+                                        id=":r31:-helper-text"
                                       >
                                         <label>
                                           Filter Mode: Between Inclusive
@@ -2742,7 +2742,7 @@ exports[`ItemDialog > Edit Item > displays warning when in admin mode for edit 1
                                           aria-invalid="false"
                                           autocomplete="off"
                                           class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1yrc8ca-MuiInputBase-input-MuiInput-input"
-                                          id=":r50b:"
+                                          id=":r34:"
                                           inputmode="text"
                                           placeholder="Max"
                                           type="text"
@@ -2913,12 +2913,12 @@ exports[`ItemDialog > Edit Item > displays warning when in admin mode for edit 1
                                         </span>
                                       </div>
                                       <input
-                                        aria-describedby=":r50h:-helper-text"
+                                        aria-describedby=":r3a:-helper-text"
                                         aria-invalid="false"
                                         aria-label="Filter by Modified by"
                                         autocomplete="off"
                                         class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                                        id=":r50h:"
+                                        id=":r3a:"
                                         placeholder="Filter by Modified by"
                                         title="Filter by Modified by"
                                         type="text"
@@ -2956,7 +2956,7 @@ exports[`ItemDialog > Edit Item > displays warning when in admin mode for edit 1
                                     </div>
                                     <p
                                       class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                                      id=":r50h:-helper-text"
+                                      id=":r3a:-helper-text"
                                     >
                                       <label>
                                         Filter Mode: Fuzzy
@@ -3030,7 +3030,7 @@ exports[`ItemDialog > Edit Item > displays warning when in admin mode for edit 1
                           >
                             <label
                               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-10j3yc8-MuiFormLabel-root-MuiInputLabel-root"
-                              for="mrt-rows-per-page-:r4vf:"
+                              for="mrt-rows-per-page-:r28:"
                             >
                               Rows per page
                             </label>
@@ -3051,7 +3051,7 @@ exports[`ItemDialog > Edit Item > displays warning when in admin mode for edit 1
                                 aria-hidden="true"
                                 aria-invalid="false"
                                 class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
-                                id="mrt-rows-per-page-:r4vf:"
+                                id="mrt-rows-per-page-:r28:"
                                 tabindex="-1"
                                 value="30"
                               />
@@ -3166,7 +3166,7 @@ exports[`ItemDialog > Edit Item > displays warning when in admin mode for edit 1
     data-popper-escaped=""
     data-popper-placement="top"
     data-popper-reference-hidden=""
-    id=":r4vc:"
+    id=":r25:"
     role="tooltip"
     style="position: absolute; top: auto; left: 0px; margin: 0px; right: auto; bottom: 0px; transform: translate(0px, 0px);"
   >
