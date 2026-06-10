@@ -8,12 +8,6 @@ import { RootState } from '../../state/store';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 import CatalogueItemsLandingPage from './catalogueItemsLandingPage.component';
 
-const mockedUseNavigate = vi.fn();
-vi.mock('react-router', async () => ({
-  ...(await vi.importActual('react-router')),
-  useNavigate: () => mockedUseNavigate,
-}));
-
 describe('Catalogue Items Landing Page', () => {
   let user: UserEvent;
   const createView = (path: string, preloadedState?: Partial<RootState>) => {
