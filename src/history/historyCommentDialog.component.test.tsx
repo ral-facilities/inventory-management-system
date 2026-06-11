@@ -9,7 +9,13 @@ describe('HistoryCommentDialog', () => {
   let props: HistoryCommentProps;
   let user: UserEvent;
   const mockOnSubmit = vi.fn();
-  const mockOnChange = vi.fn();
+  const mockOnChange = {
+    // need to mock all the inner functions of `UseFormRegisterReturn`
+    onChange: vi.fn(),
+    onBlur: vi.fn(),
+    ref: vi.fn(),
+    name: 'comment',
+  };
 
   const createView = () => {
     return renderComponentWithRouterProvider(
@@ -21,8 +27,7 @@ describe('HistoryCommentDialog', () => {
     props = {
       open: true,
       onSubmit: mockOnSubmit,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      onChange: mockOnChange as any, // could not resolve types between mock and UseFormRegisterReturn
+      onChange: mockOnChange,
       action: 'editing',
       entityTypeName: 'Item',
     };
