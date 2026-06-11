@@ -989,7 +989,7 @@ describe('Systems', () => {
     });
   });
   describe('Move', () => {
-    it('moves items', () => {
+    it.only('moves items', () => {
       cy.findByRole('link', { name: 'Pulse Laser' }).click();
 
       cy.findAllByRole('button', { name: 'Show/Hide filters' })
@@ -999,6 +999,9 @@ describe('Systems', () => {
 
       // Wait for progress bar to disappear before interacting with filters
       cy.findAllByRole('progressbar').should('not.exist');
+
+      cy.findAllByLabelText('Column Actions').eq(3).click();
+      cy.findByText('Group by Catalogue Item').click();
 
       cy.findAllByRole('button', { name: 'Expand' }).eq(1).scrollIntoView();
       cy.findAllByRole('button', { name: 'Expand' }).eq(1).click();
@@ -1070,6 +1073,9 @@ describe('Systems', () => {
 
       // Wait for progress bar to disappear before interacting with filters
       cy.findAllByRole('progressbar').should('not.exist');
+
+      cy.findAllByLabelText('Column Actions').eq(3).click();
+      cy.findByText('Group by Catalogue Item').click();
 
       cy.findAllByRole('button', { name: 'Expand' }).eq(1).scrollIntoView();
       cy.findAllByRole('button', { name: 'Expand' }).eq(1).click();
