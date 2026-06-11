@@ -989,7 +989,7 @@ describe('Systems', () => {
     });
   });
   describe('Move', () => {
-    it.only('moves items', () => {
+    it('moves items', () => {
       cy.findByRole('link', { name: 'Pulse Laser' }).click();
 
       cy.findAllByRole('button', { name: 'Show/Hide filters' })
