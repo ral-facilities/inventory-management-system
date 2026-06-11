@@ -1038,6 +1038,7 @@ describe('Systems', () => {
           cy.findByRole('button', { name: 'Move here' }).click();
         });
 
+      cy.findByRole('button', { name: 'Submit' }).click();
       cy.findByRole('dialog').should('not.exist');
 
       cy.findBrowserMockedRequests({
@@ -1048,6 +1049,7 @@ describe('Systems', () => {
         expect(patchRequests[0].url.toString()).to.contain('/z1hJvV8Z');
         expect(JSON.stringify(await patchRequests[0].json())).equal(
           JSON.stringify({
+            modified_comment: null,
             system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
             usage_status_id: '2',
           })
@@ -1055,6 +1057,7 @@ describe('Systems', () => {
         expect(patchRequests[1].url.toString()).to.contain('/4mYoI7pr');
         expect(JSON.stringify(await patchRequests[1].json())).equal(
           JSON.stringify({
+            modified_comment: null,
             system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
             usage_status_id: '2',
           })
@@ -1112,6 +1115,7 @@ describe('Systems', () => {
 
       cy.findByRole('button', { name: 'Finish' }).click();
 
+      cy.findByRole('button', { name: 'Submit' }).click();
       cy.findByRole('dialog').should('not.exist');
 
       cy.findBrowserMockedRequests({
@@ -1122,6 +1126,7 @@ describe('Systems', () => {
         expect(patchRequests[0].url.toString()).to.contain('/z1hJvV8Z');
         expect(JSON.stringify(await patchRequests[0].json())).equal(
           JSON.stringify({
+            modified_comment: null,
             system_id: '65328f34a40ff5301575a4e3',
             usage_status_id: '3',
           })
@@ -1129,6 +1134,7 @@ describe('Systems', () => {
         expect(patchRequests[1].url.toString()).to.contain('/4mYoI7pr');
         expect(JSON.stringify(await patchRequests[1].json())).equal(
           JSON.stringify({
+            modified_comment: null,
             system_id: '65328f34a40ff5301575a4e3',
             usage_status_id: '3',
           })
@@ -1198,6 +1204,7 @@ describe('Systems', () => {
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
@@ -1206,7 +1213,10 @@ describe('Systems', () => {
     }).should(async (patchRequests) => {
       expect(patchRequests.length).eq(1);
       expect(JSON.stringify(await patchRequests[0].json())).equal(
-        JSON.stringify({ serial_number: 'dfzqkOJbqifOtest1234' })
+        JSON.stringify({
+          modified_comment: null,
+          serial_number: 'dfzqkOJbqifOtest1234',
+        })
       );
     });
   });
@@ -1226,6 +1236,7 @@ describe('Systems', () => {
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
@@ -1244,6 +1255,7 @@ describe('Systems', () => {
           delivered_date: '2023-06-15T23:00:00.000Z',
           notes:
             'uaw8BqYE3vMI5CmOJgFP\n\nThis is a copy of the item with this Serial Number: dfzqkOJbqifO',
+          modified_comment: null,
           properties: [
             {
               id: '13',

@@ -5,6 +5,10 @@ interface BaseFieldsMixin {
   modified_by: string;
 }
 
+export interface BaseFieldsPost {
+  modified_comment: string | null;
+}
+
 export interface APIError {
   detail: string;
 }
@@ -235,6 +239,7 @@ export interface ItemPost {
   delivered_date?: string | null;
   notes?: string | null;
   properties?: PropertyPost[] | null;
+  modified_comment: string | null;
 }
 
 export type ItemPatch = Partial<ItemPost>;
