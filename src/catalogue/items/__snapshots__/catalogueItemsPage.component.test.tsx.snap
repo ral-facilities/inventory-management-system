@@ -73,7 +73,7 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
                     />
                   </svg>
                 </span>
-                Import data
+                Validate spreadsheet
               </button>
               <button
                 class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary Mui-disabled MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1ioyh7z-MuiButtonBase-root-MuiButton-root"

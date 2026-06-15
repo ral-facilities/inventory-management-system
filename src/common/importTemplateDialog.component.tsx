@@ -33,7 +33,7 @@ import {
 } from './uppy.utils';
 
 // use default timeout
-const UPPY_INFORMER_TIMEOUT = undefined;
+const UPPY_INFORMER_TIMEOUT = 10000;
 const parseXHRHeaders = (headerString: string): Record<string, string> => {
   return headerString
     .trim()
@@ -155,7 +155,6 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
     const newUppy = new Uppy<UppyUploadMetadata, UppyImageUploadResponse>({
       autoProceed: false,
       infoTimeout: 10000,
-      debug: true,
       restrictions: {
         maxNumberOfFiles: 1,
         maxFileSize: maxSpreadsheetSizeBytes,
@@ -313,7 +312,7 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
   ]);
 
   React.useEffect(() => {
-    uppy.setMeta({ catalogue_category_id: parentId });
+    uppy.setMeta({ catalogue_category_id: parentId, relativePath: undefined });
   }, [parentId, uppy]);
 
   React.useEffect(() => {

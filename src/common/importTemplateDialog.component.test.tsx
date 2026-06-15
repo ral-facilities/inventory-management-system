@@ -103,6 +103,7 @@ describe('Upload attachment dialog', () => {
       onClose: onClose,
       parentId: catalogueCategory.id,
       parentName: catalogueCategory.name,
+      isAdminMode: false,
     };
     user = userEvent.setup();
     axiosPostSpy = vi.spyOn(ingestApi, 'post');
@@ -156,221 +157,18 @@ describe('Upload attachment dialog', () => {
     expect(handleBlobDownload).toHaveBeenCalled();
   });
 
-  it('posts spreadsheet successfully', async () => {
-    createView();
-
-    const file1 = new File(['test'], 'test1.xlsx', {
-      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  describe('Admin mode', () => {
+    beforeEach(() => {
+      props = {
+        ...props,
+        isAdminMode: true,
+      };
     });
 
-    const dropZone = screen.getByText('Files cannot be larger than', {
-      exact: false,
-    });
-
-    Object.defineProperty(dropZone, 'files', {
-      value: [file1],
-    });
-
-    fireEvent.drop(dropZone, {
-      dataTransfer: {
-        files: [file1],
-      },
-    });
-
-    await waitFor(() => {
-      expect(screen.getByText('test1.xlsx')).toBeInTheDocument();
-    });
-
-    expect(xhrPostSpy).toHaveBeenCalledWith(
-      'POST',
-      '/spreadsheets/catalogue-items/validate',
-      true
-    );
-
-    await user.click(await screen.findByText('Upload 1 file'));
-
-    expect(xhrPostSpy).toHaveBeenCalledWith(
-      'POST',
-      '/spreadsheets/catalogue-items/ingest',
-      true
-    );
-
-    expect(await screen.findByText('Complete')).toBeInTheDocument();
-  });
-
-  it('displays a warning message when there is warnings in the spreadsheet', async () => {
-    server.use(
-      http.post('/spreadsheets/catalogue-items/validate', async () => {
-        return ingestEndpointHelper({
-          warnings: 5,
-          errors: 0,
-          valid: true,
-          catalogueCategoryId: props.parentId,
-        });
-      })
-    );
-    createView();
-
-    const file1 = new File(['test'], 'test1.xlsx', {
-      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    });
-
-    const dropZone = screen.getByText('Files cannot be larger than', {
-      exact: false,
-    });
-
-    Object.defineProperty(dropZone, 'files', {
-      value: [file1],
-    });
-
-    fireEvent.drop(dropZone, {
-      dataTransfer: {
-        files: [file1],
-      },
-    });
-
-    await waitFor(() => {
-      expect(screen.getByText('test1.xlsx')).toBeInTheDocument();
-    });
-
-    expect(xhrPostSpy).toHaveBeenCalledWith(
-      'POST',
-      '/spreadsheets/catalogue-items/validate',
-      true
-    );
-
-    expect(
-      await screen.findByText(
-        'Validation completed with 5 warnings. A spreadsheet highlighting the warnings has been downloaded.'
-      )
-    ).toBeInTheDocument();
-
-    await user.click(await screen.findByText('Upload 1 file'));
-
-    expect(xhrPostSpy).toHaveBeenCalledWith(
-      'POST',
-      '/spreadsheets/catalogue-items/ingest',
-      true
-    );
-
-    expect(await screen.findByText('Complete')).toBeInTheDocument();
-  });
-
-  it('displays an error message when there is errors in the spreadsheet', async () => {
-    server.use(
-      http.post('/spreadsheets/catalogue-items/validate', async () => {
-        return ingestEndpointHelper({
-          warnings: 0,
-          errors: 5,
-          valid: false,
-          catalogueCategoryId: props.parentId,
-        });
-      })
-    );
-    createView();
-
-    const file1 = new File(['test'], 'test1.xlsx', {
-      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    });
-
-    const dropZone = screen.getByText('Files cannot be larger than', {
-      exact: false,
-    });
-
-    Object.defineProperty(dropZone, 'files', {
-      value: [file1],
-    });
-
-    fireEvent.drop(dropZone, {
-      dataTransfer: {
-        files: [file1],
-      },
-    });
-
-    await waitFor(() => {
-      expect(screen.getByText('test1.xlsx')).toBeInTheDocument();
-    });
-
-    expect(xhrPostSpy).toHaveBeenCalledWith(
-      'POST',
-      '/spreadsheets/catalogue-items/validate',
-      true
-    );
-
-    expect(
-      await screen.findByText(
-        'Validation failed with 5 errors. A spreadsheet with highlighted issues has been downloaded.'
-      )
-    ).toBeInTheDocument();
-
-    await waitFor(() => {
-      expect(screen.queryByText('Upload 1 file')).not.toBeInTheDocument();
-    });
-  });
-
-  it('displays an error and warning message when there is errors and warnings in the spreadsheet', async () => {
-    server.use(
-      http.post('/spreadsheets/catalogue-items/validate', async () => {
-        return ingestEndpointHelper({
-          warnings: 5,
-          errors: 5,
-          valid: false,
-          catalogueCategoryId: props.parentId,
-        });
-      })
-    );
-    createView();
-
-    const file1 = new File(['test'], 'test1.xlsx', {
-      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    });
-
-    const dropZone = screen.getByText('Files cannot be larger than', {
-      exact: false,
-    });
-
-    Object.defineProperty(dropZone, 'files', {
-      value: [file1],
-    });
-
-    fireEvent.drop(dropZone, {
-      dataTransfer: {
-        files: [file1],
-      },
-    });
-
-    await waitFor(() => {
-      expect(screen.getByText('test1.xlsx')).toBeInTheDocument();
-    });
-
-    expect(xhrPostSpy).toHaveBeenCalledWith(
-      'POST',
-      '/spreadsheets/catalogue-items/validate',
-      true
-    );
-
-    expect(
-      await screen.findByText(
-        'Validation failed with 5 errors and 5 warnings. A spreadsheet with highlighted issues has been downloaded.'
-      )
-    ).toBeInTheDocument();
-
-    await waitFor(() => {
-      expect(screen.queryByText('Upload 1 file')).not.toBeInTheDocument();
-    });
-  });
-
-  Object.entries(backendErrorMessage).forEach(([key, backendMessage]) => {
-    it(`displays ${key} error message`, async () => {
-      server.use(
-        http.post('/spreadsheets/catalogue-items/validate', async () => {
-          return HttpResponse.json({ detail: backendMessage }, { status: 422 });
-        })
-      );
-
+    it('posts spreadsheet successfully', async () => {
       createView();
 
-      const file = new File(['test'], 'test.xlsx', {
+      const file1 = new File(['test'], 'test1.xlsx', {
         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       });
 
@@ -378,14 +176,70 @@ describe('Upload attachment dialog', () => {
         exact: false,
       });
 
+      Object.defineProperty(dropZone, 'files', {
+        value: [file1],
+      });
+
       fireEvent.drop(dropZone, {
         dataTransfer: {
-          files: [file],
+          files: [file1],
         },
       });
 
       await waitFor(() => {
-        expect(screen.getByText('test.xlsx')).toBeInTheDocument();
+        expect(screen.getByText('test1.xlsx')).toBeInTheDocument();
+      });
+
+      expect(xhrPostSpy).toHaveBeenCalledWith(
+        'POST',
+        '/spreadsheets/catalogue-items/validate',
+        true
+      );
+
+      await user.click(await screen.findByText('Upload 1 file'));
+
+      expect(xhrPostSpy).toHaveBeenCalledWith(
+        'POST',
+        '/spreadsheets/catalogue-items/ingest',
+        true
+      );
+
+      expect(await screen.findByText('Complete')).toBeInTheDocument();
+    });
+
+    it('displays a warning message when there is warnings in the spreadsheet', async () => {
+      server.use(
+        http.post('/spreadsheets/catalogue-items/validate', async () => {
+          return ingestEndpointHelper({
+            warnings: 5,
+            errors: 0,
+            valid: true,
+            catalogueCategoryId: props.parentId,
+          });
+        })
+      );
+      createView();
+
+      const file1 = new File(['test'], 'test1.xlsx', {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+
+      const dropZone = screen.getByText('Files cannot be larger than', {
+        exact: false,
+      });
+
+      Object.defineProperty(dropZone, 'files', {
+        value: [file1],
+      });
+
+      fireEvent.drop(dropZone, {
+        dataTransfer: {
+          files: [file1],
+        },
+      });
+
+      await waitFor(() => {
+        expect(screen.getByText('test1.xlsx')).toBeInTheDocument();
       });
 
       expect(xhrPostSpy).toHaveBeenCalledWith(
@@ -396,13 +250,419 @@ describe('Upload attachment dialog', () => {
 
       expect(
         await screen.findByText(
-          parseSpreadsheetError(backendMessage.toLowerCase())
+          'Validation completed with 5 warnings. A spreadsheet highlighting the warnings has been downloaded. Please click Upload to proceed.'
+        )
+      ).toBeInTheDocument();
+
+      await user.click(await screen.findByText('Upload 1 file'));
+
+      expect(xhrPostSpy).toHaveBeenCalledWith(
+        'POST',
+        '/spreadsheets/catalogue-items/ingest',
+        true
+      );
+
+      expect(await screen.findByText('Complete')).toBeInTheDocument();
+    });
+
+    it('displays an error message when there is errors in the spreadsheet', async () => {
+      server.use(
+        http.post('/spreadsheets/catalogue-items/validate', async () => {
+          return ingestEndpointHelper({
+            warnings: 0,
+            errors: 5,
+            valid: false,
+            catalogueCategoryId: props.parentId,
+          });
+        })
+      );
+      createView();
+
+      const file1 = new File(['test'], 'test1.xlsx', {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+
+      const dropZone = screen.getByText('Files cannot be larger than', {
+        exact: false,
+      });
+
+      Object.defineProperty(dropZone, 'files', {
+        value: [file1],
+      });
+
+      fireEvent.drop(dropZone, {
+        dataTransfer: {
+          files: [file1],
+        },
+      });
+
+      await waitFor(() => {
+        expect(screen.getByText('test1.xlsx')).toBeInTheDocument();
+      });
+
+      expect(xhrPostSpy).toHaveBeenCalledWith(
+        'POST',
+        '/spreadsheets/catalogue-items/validate',
+        true
+      );
+
+      expect(
+        await screen.findByText(
+          'Validation failed with 5 errors. A spreadsheet with highlighted issues has been downloaded.'
         )
       ).toBeInTheDocument();
 
       await waitFor(() => {
         expect(screen.queryByText('Upload 1 file')).not.toBeInTheDocument();
       });
+    });
+
+    it('displays an error and warning message when there is errors and warnings in the spreadsheet', async () => {
+      server.use(
+        http.post('/spreadsheets/catalogue-items/validate', async () => {
+          return ingestEndpointHelper({
+            warnings: 5,
+            errors: 5,
+            valid: false,
+            catalogueCategoryId: props.parentId,
+          });
+        })
+      );
+      createView();
+
+      const file1 = new File(['test'], 'test1.xlsx', {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+
+      const dropZone = screen.getByText('Files cannot be larger than', {
+        exact: false,
+      });
+
+      Object.defineProperty(dropZone, 'files', {
+        value: [file1],
+      });
+
+      fireEvent.drop(dropZone, {
+        dataTransfer: {
+          files: [file1],
+        },
+      });
+
+      await waitFor(() => {
+        expect(screen.getByText('test1.xlsx')).toBeInTheDocument();
+      });
+
+      expect(xhrPostSpy).toHaveBeenCalledWith(
+        'POST',
+        '/spreadsheets/catalogue-items/validate',
+        true
+      );
+
+      expect(
+        await screen.findByText(
+          'Validation failed with 5 errors and 5 warnings. A spreadsheet with highlighted issues has been downloaded.'
+        )
+      ).toBeInTheDocument();
+
+      await waitFor(() => {
+        expect(screen.queryByText('Upload 1 file')).not.toBeInTheDocument();
+      });
+    });
+
+    Object.entries(backendErrorMessage).forEach(([key, backendMessage]) => {
+      it(`displays ${key} error message`, async () => {
+        server.use(
+          http.post('/spreadsheets/catalogue-items/validate', async () => {
+            return HttpResponse.json(
+              { detail: backendMessage },
+              { status: 422 }
+            );
+          })
+        );
+
+        createView();
+
+        const file = new File(['test'], 'test.xlsx', {
+          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        });
+
+        const dropZone = screen.getByText('Files cannot be larger than', {
+          exact: false,
+        });
+
+        fireEvent.drop(dropZone, {
+          dataTransfer: {
+            files: [file],
+          },
+        });
+
+        await waitFor(() => {
+          expect(screen.getByText('test.xlsx')).toBeInTheDocument();
+        });
+
+        expect(xhrPostSpy).toHaveBeenCalledWith(
+          'POST',
+          '/spreadsheets/catalogue-items/validate',
+          true
+        );
+
+        expect(
+          await screen.findByText(
+            parseSpreadsheetError(backendMessage.toLowerCase())
+          )
+        ).toBeInTheDocument();
+
+        await waitFor(() => {
+          expect(screen.queryByText('Upload 1 file')).not.toBeInTheDocument();
+        });
+      });
+    });
+  });
+
+  describe('normal mode', () => {
+    beforeEach(() => {
+      props = {
+        ...props,
+        isAdminMode: false,
+      };
+    });
+
+    it('validates spreadsheet successfully', async () => {
+      createView();
+
+      const file1 = new File(['test'], 'test1.xlsx', {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+
+      const dropZone = screen.getByText('Files cannot be larger than', {
+        exact: false,
+      });
+
+      Object.defineProperty(dropZone, 'files', {
+        value: [file1],
+      });
+
+      fireEvent.drop(dropZone, {
+        dataTransfer: {
+          files: [file1],
+        },
+      });
+
+      await waitFor(() => {
+        expect(screen.getByText('test1.xlsx')).toBeInTheDocument();
+      });
+
+      await user.click(await screen.findByText('Upload 1 file'));
+
+      expect(xhrPostSpy).toHaveBeenCalledWith(
+        'POST',
+        '/spreadsheets/catalogue-items/validate',
+        true
+      );
+      expect(
+        await screen.findByText(
+          'Validation complete. No errors or warnings found. Please contact an admin to import the spreadsheet.'
+        )
+      ).toBeInTheDocument();
+      expect(await screen.findByText('Complete')).toBeInTheDocument();
+    });
+
+    it('displays a warning message when there is warnings in the spreadsheet', async () => {
+      server.use(
+        http.post('/spreadsheets/catalogue-items/validate', async () => {
+          return ingestEndpointHelper({
+            warnings: 5,
+            errors: 0,
+            valid: true,
+            catalogueCategoryId: props.parentId,
+          });
+        })
+      );
+      createView();
+
+      const file1 = new File(['test'], 'test1.xlsx', {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+
+      const dropZone = screen.getByText('Files cannot be larger than', {
+        exact: false,
+      });
+
+      Object.defineProperty(dropZone, 'files', {
+        value: [file1],
+      });
+
+      fireEvent.drop(dropZone, {
+        dataTransfer: {
+          files: [file1],
+        },
+      });
+
+      await waitFor(() => {
+        expect(screen.getByText('test1.xlsx')).toBeInTheDocument();
+      });
+
+      await user.click(await screen.findByText('Upload 1 file'));
+
+      expect(xhrPostSpy).toHaveBeenCalledWith(
+        'POST',
+        '/spreadsheets/catalogue-items/validate',
+        true
+      );
+
+      expect(await screen.findByText('Complete')).toBeInTheDocument();
+
+      expect(
+        await screen.findByText(
+          'Validation completed with 5 warnings. A spreadsheet highlighting the warnings has been downloaded. Please contact an admin to import the spreadsheet.'
+        )
+      ).toBeInTheDocument();
+    });
+
+    it('displays an error message when there is errors in the spreadsheet', async () => {
+      server.use(
+        http.post('/spreadsheets/catalogue-items/validate', async () => {
+          return ingestEndpointHelper({
+            warnings: 0,
+            errors: 5,
+            valid: false,
+            catalogueCategoryId: props.parentId,
+          });
+        })
+      );
+      createView();
+
+      const file1 = new File(['test'], 'test1.xlsx', {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+
+      const dropZone = screen.getByText('Files cannot be larger than', {
+        exact: false,
+      });
+
+      Object.defineProperty(dropZone, 'files', {
+        value: [file1],
+      });
+
+      fireEvent.drop(dropZone, {
+        dataTransfer: {
+          files: [file1],
+        },
+      });
+
+      await waitFor(() => {
+        expect(screen.getByText('test1.xlsx')).toBeInTheDocument();
+      });
+
+      await user.click(await screen.findByText('Upload 1 file'));
+
+      expect(
+        await screen.findByText(
+          'Validation failed with 5 errors. A spreadsheet with highlighted issues has been downloaded.'
+        )
+      ).toBeInTheDocument();
+    });
+
+    it('displays an error and warning message when there is errors and warnings in the spreadsheet', async () => {
+      server.use(
+        http.post('/spreadsheets/catalogue-items/validate', async () => {
+          return ingestEndpointHelper({
+            warnings: 5,
+            errors: 5,
+            valid: false,
+            catalogueCategoryId: props.parentId,
+          });
+        })
+      );
+      createView();
+
+      const file1 = new File(['test'], 'test1.xlsx', {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+
+      const dropZone = screen.getByText('Files cannot be larger than', {
+        exact: false,
+      });
+
+      Object.defineProperty(dropZone, 'files', {
+        value: [file1],
+      });
+
+      fireEvent.drop(dropZone, {
+        dataTransfer: {
+          files: [file1],
+        },
+      });
+
+      await waitFor(() => {
+        expect(screen.getByText('test1.xlsx')).toBeInTheDocument();
+      });
+
+      await user.click(await screen.findByText('Upload 1 file'));
+
+      await waitFor(() => {
+        expect(screen.queryByText('Upload 1 file')).not.toBeInTheDocument();
+      });
+
+      expect(
+        await screen.findByText(
+          'Validation failed with 5 errors and 5 warnings. A spreadsheet with highlighted issues has been downloaded.'
+        )
+      ).toBeInTheDocument();
+    });
+
+    Object.entries(backendErrorMessage).forEach(([key, backendMessage]) => {
+      it(`displays ${key} error message`, async () => {
+        server.use(
+          http.post('/spreadsheets/catalogue-items/validate', async () => {
+            return HttpResponse.json(
+              { detail: backendMessage },
+              { status: 422 }
+            );
+          })
+        );
+
+        createView();
+
+        const file = new File(['test'], 'test.xlsx', {
+          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        });
+
+        const dropZone = screen.getByText('Files cannot be larger than', {
+          exact: false,
+        });
+
+        fireEvent.drop(dropZone, {
+          dataTransfer: {
+            files: [file],
+          },
+        });
+
+        await waitFor(() => {
+          expect(screen.getByText('test.xlsx')).toBeInTheDocument();
+        });
+
+        await user.click(await screen.findByText('Upload 1 file'));
+
+        await waitFor(() => {
+          expect(screen.queryByText('Upload 1 file')).not.toBeInTheDocument();
+        });
+
+        await waitFor(
+          () => {
+            expect(screen.getByText('Upload failed')).toBeInTheDocument();
+          },
+          { timeout: 10000 }
+        );
+
+        await waitFor(() => {
+          expect(
+            screen.getAllByLabelText(
+              parseSpreadsheetError(backendMessage.toLowerCase())
+            ).length
+          ).toBe(2);
+        });
+      }, 15000);
     });
   });
 });
