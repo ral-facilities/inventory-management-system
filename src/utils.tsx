@@ -582,14 +582,15 @@ export function downloadFileByLink(url: string, filename: string): void {
 }
 
 export function handleBlobDownload(
-  response: AxiosResponse<Blob>,
+  data: Blob,
+  headers: AxiosResponse['headers'],
   fallbackFilename: string = 'download'
 ): void {
-  const blob = response.data;
+  const blob = data;
 
   let filename = fallbackFilename;
 
-  const contentDisposition = response.headers['content-disposition'];
+  const contentDisposition = headers['content-disposition'];
 
   if (contentDisposition) {
     const match = contentDisposition.match(
@@ -700,20 +701,59 @@ export function parseSpreadsheetError(message: string): string {
   return parseBaseError(message);
 }
 
-export async function getErrorMessage(error: AxiosError): Promise<string> {
+
+export async function getErrorMessage(
+  error: AxiosError
+): Promise<string> {
   const fallback = error?.message ?? 'Unknown error';
-  const data = error?.response?.data as APIError;
+  const data = error?.response?.data;
 
   if (data instanceof Blob) {
     try {
-      const { detail } = JSON.parse(await data.text()) as APIError;
-      return detail?.toLowerCase?.() ?? fallback;
+      const text = await data.text();
+      const parsed = JSON.parse(text) as APIError;
+
+      return typeof parsed?.detail === 'string'
+        ? parsed.detail.toLowerCase()
+        : fallback;
     } catch {
       return fallback;
     }
   }
 
-  return data?.detail?.toLowerCase?.() ?? fallback;
+  if (data && typeof data === 'object') {
+    const parsed = data as APIError;
+
+    return typeof parsed?.detail === 'string'
+      ? parsed.detail.toLowerCase()
+      : fallback;
+  }
+
+  return fallback;
+}
+
+
+export async function getXHRErrorMessage(xhr: XMLHttpRequest): Promise<string> {
+  const fallback = 'Unknown error';
+
+  try {
+    if (xhr.response instanceof Blob) {
+      const text = await xhr.response.text();
+      const parsed = JSON.parse(text) as APIError;
+
+      return parsed?.detail?.toLowerCase?.() ?? fallback;
+    }
+
+    if (xhr.responseText) {
+      const parsed = JSON.parse(xhr.responseText) as APIError;
+
+      return parsed?.detail?.toLowerCase?.() ?? fallback;
+    }
+
+    return fallback;
+  } catch {
+    return fallback;
+  }
 }
 
 export const deselectRowById = <TData extends MRT_RowData>(

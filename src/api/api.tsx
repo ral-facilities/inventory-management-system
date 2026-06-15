@@ -3,8 +3,7 @@ import { MicroFrontendId } from '../app.types';
 import { readSciGatewayToken } from '../parseTokens';
 import { InventoryManagementSystemSettings, settings } from '../settings';
 import { InvalidateTokenType } from '../state/actions/actions.types';
-import { getErrorMessage } from '../utils';
-import { APIError } from './api.types';
+import { getErrorMessage, getXHRErrorMessage } from '../utils';
 
 // These are for ensuring refresh request is only sent once when multiple requests
 // are failing due to 401's at the same time
@@ -89,14 +88,12 @@ const createAuthenticatedClient = (props: {
   return apiClient;
 };
 
-export function uppyOnAfterResponse(
+export async function uppyOnAfterResponse(
   xhr: XMLHttpRequest,
   parseError: (msg: string) => string
 ) {
   if (xhr.status >= 400 && xhr.status < 600) {
-    const errorMessage: string = (
-      JSON.parse(xhr.responseText) as APIError
-    ).detail.toLocaleLowerCase();
+    const errorMessage: string = await getXHRErrorMessage(xhr);
 
     // Check if the token is invalid and needs refreshing
     if (
