@@ -40,6 +40,7 @@ const initialSettings: InventoryManagementSystemSettings = {
     '.webp',
   ],
   privilegedRoles: ['admin'],
+  serialNumberPrefillEnabled: true,
   routes: [],
   pluginHost: '',
 };

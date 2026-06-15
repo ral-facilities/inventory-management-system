@@ -101,12 +101,12 @@ exports[`Home page component > homepage renders correctly 1`] = `
               <h3
                 class="MuiTypography-root MuiTypography-h3 css-rp9k13-MuiTypography-root"
               >
-                Catalogue
+                home_page.card1.title
               </h3>
               <p
                 class="MuiTypography-root MuiTypography-body1 css-1i0o32f css-rizt0-MuiTypography-root"
               >
-                Browse catalogue categories, sub categories and catalogue items to locate specific items or add new ones.
+                home_page.card1.description
               </p>
               <div
                 class="MuiBox-root css-1yuhvjn"
@@ -115,10 +115,10 @@ exports[`Home page component > homepage renders correctly 1`] = `
                   class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-74d805-MuiButtonBase-root-MuiButton-root"
                   data-discover="true"
                   data-testid="catalogue-button"
-                  href="/catalogue"
+                  href="/home_page.card1.link"
                   tabindex="0"
                 >
-                  Explore
+                  home_page.card1.button
                 </a>
               </div>
             </div>
@@ -152,12 +152,12 @@ exports[`Home page component > homepage renders correctly 1`] = `
               <h4
                 class="MuiTypography-root MuiTypography-h4 css-13wasa5 css-f84ov1-MuiTypography-root"
               >
-                Systems
+                home_page.card2.title
               </h4>
               <p
                 class="MuiTypography-root MuiTypography-body1 css-1i0o32f css-rizt0-MuiTypography-root"
               >
-                Navigate through systems and their sub systems to view their component items.
+                home_page.card2.description
               </p>
               <div
                 class="MuiBox-root css-8xl60i"
@@ -166,10 +166,10 @@ exports[`Home page component > homepage renders correctly 1`] = `
                   class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-74d805-MuiButtonBase-root-MuiButton-root"
                   data-discover="true"
                   data-testid="systems-button"
-                  href="/systems"
+                  href="/home_page.card2.link"
                   tabindex="0"
                 >
-                  Explore
+                  home_page.card2.button
                 </a>
               </div>
             </div>
@@ -188,12 +188,12 @@ exports[`Home page component > homepage renders correctly 1`] = `
               <h4
                 class="MuiTypography-root MuiTypography-h4 css-13wasa5 css-f84ov1-MuiTypography-root"
               >
-                Manufacturers
+                home_page.card3.title
               </h4>
               <p
                 class="MuiTypography-root MuiTypography-body1 css-1i0o32f css-rizt0-MuiTypography-root"
               >
-                View the manufacturers of parts used by EPAC.
+                home_page.card3.description
               </p>
               <div
                 class="MuiBox-root css-8xl60i"
@@ -202,10 +202,10 @@ exports[`Home page component > homepage renders correctly 1`] = `
                   class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-74d805-MuiButtonBase-root-MuiButton-root"
                   data-discover="true"
                   data-testid="manufacturer-button"
-                  href="/manufacturers"
+                  href="/home_page.card3.link"
                   tabindex="0"
                 >
-                  Explore
+                  home_page.card3.button
                 </a>
               </div>
             </div>
@@ -227,12 +227,12 @@ exports[`Home page component > homepage renders correctly 1`] = `
                 <h4
                   class="MuiTypography-root MuiTypography-h4 css-1yppny8 css-f84ov1-MuiTypography-root"
                 >
-                  EPAC
+                  home_page.card4.title
                 </h4>
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-1i0o32f css-uksnwd-MuiTypography-root"
                 >
-                  World-leading centre for scientific and industrial research.
+                  home_page.card4.description
                 </p>
                 <div
                   class="MuiBox-root css-8xl60i"
@@ -240,10 +240,10 @@ exports[`Home page component > homepage renders correctly 1`] = `
                   <a
                     class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-cx4aoo-MuiButtonBase-root-MuiButton-root"
                     data-testid="facility-button"
-                    href="https://www.clf.stfc.ac.uk/Pages/EPAC-Applications.aspx"
+                    href="home_page.card4.link"
                     tabindex="0"
                   >
-                    Read more
+                    home_page.card4.button
                   </a>
                 </div>
               </div>
