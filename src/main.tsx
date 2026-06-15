@@ -5,6 +5,7 @@ import ReactDOMClient from 'react-dom/client';
 import singleSpaReact from 'single-spa-react';
 import App from './App';
 import { MicroFrontendId } from './app.types';
+import './i18n';
 import { InventoryManagementSystemSettings, setSettings } from './settings';
 import { PluginRoute, RegisterRouteType } from './state/actions/actions.types';
 
@@ -176,6 +177,13 @@ export const fetchSettings =
         // Ensure the privilegedRoles value exists.
         if (!('privilegedRoles' in settings)) {
           throw new Error('privilegedRoles is undefined in settings');
+        }
+
+        // Ensure serialNumberPrefillEnabled value exists.
+        if (!('serialNumberPrefillEnabled' in settings)) {
+          throw new Error(
+            'serialNumberPrefillEnabled is undefined in settings'
+          );
         }
 
         if (Array.isArray(settings['routes']) && settings['routes'].length) {
