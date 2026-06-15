@@ -13,6 +13,7 @@ jq \
   --argjson attachmentAllowedFileExtensions "$ATTACHMENT_ALLOWED_FILE_EXTENSIONS" \
   --argjson imageAllowedFileExtensions "$IMAGE_ALLOWED_FILE_EXTENSIONS" \
   --argjson maxImageSizeBytes $MAX_IMAGE_SIZE_BYTES \
+  --argjson serialNumberPrefillEnabled $SERIAL_NUMBER_PREFILL_ENABLED \
   --argjson privilegedRoles $PRIVILEGED_ROLES \
   --arg pluginHost "$PLUGIN_HOST" \
   '.imsApiUrl = $imsApiUrl |
@@ -23,6 +24,7 @@ jq \
    .attachmentAllowedFileExtensions = $attachmentAllowedFileExtensions |
    .imageAllowedFileExtensions = $imageAllowedFileExtensions |
    .maxImageSizeBytes = $maxImageSizeBytes |
+   .serialNumberPrefillEnabled = $serialNumberPrefillEnabled |
    .privilegedRoles = $privilegedRoles |
    .pluginHost = $pluginHost' \
   /usr/local/apache2/htdocs/inventory-management-system-settings.json > "$TEMPFILE"
