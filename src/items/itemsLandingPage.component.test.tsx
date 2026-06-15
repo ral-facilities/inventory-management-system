@@ -6,13 +6,6 @@ import { server } from '../mocks/server';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import ItemsLandingPage from './itemsLandingPage.component';
 
-const mockedUseNavigate = vi.fn();
-
-vi.mock('react-router', async () => ({
-  ...(await vi.importActual('react-router')),
-  useNavigate: () => mockedUseNavigate,
-}));
-
 describe('Items Landing Page', () => {
   let user: UserEvent;
   const createView = (path: string) => {

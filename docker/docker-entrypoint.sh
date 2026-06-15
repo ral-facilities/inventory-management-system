@@ -15,6 +15,7 @@ jq \
   --argjson maxImageSizeBytes $MAX_IMAGE_SIZE_BYTES \
   --argjson serialNumberPrefillEnabled $SERIAL_NUMBER_PREFILL_ENABLED \
   --argjson privilegedRoles $PRIVILEGED_ROLES \
+  --argjson serialNumberPrefillEnabled $SERIAL_NUMBER_PREFILL_ENABLED \
   --arg pluginHost "$PLUGIN_HOST" \
   '.imsApiUrl = $imsApiUrl |
    .osApiUrl = $osApiUrl |
@@ -26,6 +27,7 @@ jq \
    .maxImageSizeBytes = $maxImageSizeBytes |
    .serialNumberPrefillEnabled = $serialNumberPrefillEnabled |
    .privilegedRoles = $privilegedRoles |
+   .serialNumberPrefillEnabled = $serialNumberPrefillEnabled |
    .pluginHost = $pluginHost' \
   /usr/local/apache2/htdocs/inventory-management-system-settings.json > "$TEMPFILE"
 
