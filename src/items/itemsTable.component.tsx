@@ -154,7 +154,6 @@ export function ItemsTable(props: ItemTableProps) {
   >('create');
 
   const [isAdminDialog, setIsAdminDialog] = React.useState<boolean>(false);
-
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     const viewCatalogueItemProperties = catalogueCategory?.properties ?? [];
     const systemTypeValues = systemTypesData?.map((type) => type.value);

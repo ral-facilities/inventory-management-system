@@ -126,6 +126,7 @@ jobs:
           --env OBJECT_STORAGE__ENABLED=true \
           --env OBJECT_STORAGE__API_REQUEST_TIMEOUT_SECONDS=10 \
           --env OBJECT_STORAGE__API_URL=http://localhost:8002 \
+          --env BULK__MAX_CATALOGUE_ITEMS=1000 \
           --volume /home/runner/work/inventory-management-system/inventory-management-system-api/logging.example.ini:/app/logging.ini \
           harbor.stfc.ac.uk/inventory-management-system/ims-api:develop
 

@@ -607,6 +607,18 @@ export const ItemDetailsStepSchema = (
 
         if (
           typeof data.starting_value !== 'number' &&
+          typeof data.quantity !== 'number' &&
+          data.serial_number?.includes('%s')
+        ) {
+          issues.push({
+            path: ['serial_number'],
+            message: 'Please remove %s or fill in the advanced options fields.',
+            code: 'custom',
+          });
+        }
+
+        if (
+          typeof data.starting_value !== 'number' &&
           typeof data.quantity === 'number'
         ) {
           issues.push({

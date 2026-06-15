@@ -28,6 +28,7 @@
     ".webp"
   ],
   "privilegedRoles": ["admin"],
+  "serialNumberPrefillEnabled": true,
   "routes": [
     {
       "section": "Inventory Management System",

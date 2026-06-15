@@ -33,6 +33,7 @@ describe('configSlice', () => {
       '.webp',
     ],
     privilegedRoles: ['admin'],
+    serialNumberPrefillEnabled: true,
     routes: [],
     pluginHost: '',
   };
