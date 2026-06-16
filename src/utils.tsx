@@ -606,7 +606,6 @@ export function handleBlobDownload(
 
   downloadFileByLink(url, filename);
 
-  // Cleanup
   window.URL.revokeObjectURL(url);
 }
 

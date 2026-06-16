@@ -1322,7 +1322,7 @@ describe('Catalogue Items', () => {
       cy.findBrowserMockedRequests({
         method: 'POST',
         url: '/spreadsheets/catalogue-items/validate',
-      }).should(async (postRequests) => {
+      }).should((postRequests) => {
         expect(postRequests.length).eq(1);
       });
 
@@ -1333,7 +1333,7 @@ describe('Catalogue Items', () => {
       cy.findBrowserMockedRequests({
         method: 'POST',
         url: '/spreadsheets/catalogue-items/ingest',
-      }).should(async (postRequests) => {
+      }).should((postRequests) => {
         expect(postRequests.length).eq(1);
       });
     });
@@ -1375,7 +1375,7 @@ describe('Catalogue Items', () => {
       cy.findBrowserMockedRequests({
         method: 'POST',
         url: '/spreadsheets/catalogue-items/validate',
-      }).should(async (postRequests) => {
+      }).should((postRequests) => {
         expect(postRequests.length).eq(1);
       });
 
@@ -1386,7 +1386,7 @@ describe('Catalogue Items', () => {
       cy.findBrowserMockedRequests({
         method: 'POST',
         url: '/spreadsheets/catalogue-items/ingest',
-      }).should(async (postRequests) => {
+      }).should((postRequests) => {
         expect(postRequests.length).eq(1);
       });
 
@@ -1432,7 +1432,7 @@ describe('Catalogue Items', () => {
       cy.findBrowserMockedRequests({
         method: 'POST',
         url: '/spreadsheets/catalogue-items/validate',
-      }).should(async (postRequests) => {
+      }).should((postRequests) => {
         expect(postRequests.length).eq(1);
       });
 
@@ -1443,7 +1443,7 @@ describe('Catalogue Items', () => {
       cy.findBrowserMockedRequests({
         method: 'POST',
         url: '/spreadsheets/catalogue-items/ingest',
-      }).should(async (postRequests) => {
+      }).should((postRequests) => {
         expect(postRequests.length).eq(1);
       });
 
@@ -1602,7 +1602,7 @@ describe('Catalogue Items', () => {
       cy.findBrowserMockedRequests({
         method: 'POST',
         url: '/spreadsheets/catalogue-items/validate',
-      }).should(async (postRequests) => {
+      }).should((postRequests) => {
         expect(postRequests.length).eq(1);
       });
 
@@ -1652,7 +1652,7 @@ describe('Catalogue Items', () => {
       cy.findBrowserMockedRequests({
         method: 'POST',
         url: '/spreadsheets/catalogue-items/validate',
-      }).should(async (postRequests) => {
+      }).should((postRequests) => {
         expect(postRequests.length).eq(1);
       });
 
