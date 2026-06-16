@@ -5,7 +5,7 @@ import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 import '@uppy/image-editor/dist/style.css';
 import en_US from '@uppy/locales/lib/en_US';
-import ProgressBar from '@uppy/progress-bar'; // Import the ProgressBar plugin
+import ProgressBar from '@uppy/progress-bar';
 import { DashboardModal } from '@uppy/react';
 import statusBarStates from '@uppy/status-bar/lib/StatusBarStates';
 import XHR from '@uppy/xhr-upload';
