@@ -159,7 +159,7 @@ describe('Catalogue Items Table', () => {
     });
   });
 
-  it('opens import data dialog and can close the dialog (admin mode)', async () => {
+  it('opens import spreadsheet dialog and can close the dialog (admin mode)', async () => {
     createView(undefined, {
       authorisation: {
         role: 'admin',
@@ -192,7 +192,7 @@ describe('Catalogue Items Table', () => {
     });
   });
 
-  it('opens import data dialog and can close the dialog (normal mode)', async () => {
+  it('opens validate spreadsheet dialog and can close the dialog (normal mode)', async () => {
     createView();
 
     await waitFor(() => {

@@ -32,7 +32,6 @@ import {
   UppyDashboardLocaleStrings,
 } from './uppy.utils';
 
-// use default timeout
 const UPPY_INFORMER_TIMEOUT = 10000;
 const parseXHRHeaders = (headerString: string): Record<string, string> => {
   return headerString

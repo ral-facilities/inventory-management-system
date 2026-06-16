@@ -165,7 +165,7 @@ describe('Upload attachment dialog', () => {
       };
     });
 
-    it('posts spreadsheet successfully', async () => {
+    it('imports spreadsheet successfully', async () => {
       createView();
 
       const file1 = new File(['test'], 'test1.xlsx', {
