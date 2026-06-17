@@ -157,6 +157,7 @@ export default defineConfig(({ mode }) => {
           // Leave handlers to show up unused code
           'src/mocks/browser.ts',
           'src/mocks/browserHandlers.ts',
+          'src/mocks/serverHandlers.ts',
           'src/mocks/server.ts',
           'src/vite-env.d.ts',
           'src/main.tsx',
