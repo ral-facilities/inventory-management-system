@@ -1,6 +1,6 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "types": ["vitest/globals", "vitest/jsdom"],
-  },
+    "types": ["vitest/globals", "vitest/jsdom", "node"]
+  }
 }

@@ -1190,4 +1190,40 @@ describe('Catalogue Items', () => {
         );
       });
   });
+
+  it('downloads template', () => {
+    cy.findByRole('button', { name: 'Import data' }).click();
+
+    cy.findByRole('dialog').should('be.visible');
+    cy.findByRole('button', { name: 'download template' }).click();
+    cy.readFile(
+      './cypress/downloads/CatalogueItemTemplate-Cameras.xlsx'
+    ).should('exist');
+  });
+
+  it('uploads a template', () => {
+    cy.findByRole('button', { name: 'Import data' }).click();
+
+    cy.findByRole('dialog').should('be.visible');
+
+    cy.get('.uppy-Dashboard-input').as('fileInput');
+
+    cy.get('@fileInput')
+      .first()
+      .selectFile(
+        ['cypress/fixtures/spreadsheets/CatalogueItemTemplate-test.xlsx'],
+        { force: true }
+      );
+    cy.startSnoopingBrowserMockedRequest();
+    cy.findByText('Upload 1 file').click();
+
+    cy.findByText('Complete').should('be.visible');
+
+    cy.findBrowserMockedRequests({
+      method: 'POST',
+      url: '/spreadsheets/catalogue-items/ingest',
+    }).should((postRequests) => {
+      expect(postRequests.length).eq(1);
+    });
+  });
 });

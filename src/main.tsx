@@ -150,6 +150,18 @@ export const fetchSettings =
           );
         }
 
+        // Ensure the maxSpreadsheetSizeBytes value exists.
+        if (!('maxSpreadsheetSizeBytes' in settings)) {
+          throw new Error('maxSpreadsheetSizeBytes is undefined in settings');
+        }
+
+        // Ensure the spreadsheetAllowedFileExtensions name exists.
+        if (!('spreadsheetAllowedFileExtensions' in settings)) {
+          throw new Error(
+            'spreadsheetAllowedFileExtensions is undefined in settings'
+          );
+        }
+
         // Ensure the imageAllowedFileExtensions name exists.
         if (!('imageAllowedFileExtensions' in settings)) {
           throw new Error(

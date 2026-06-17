@@ -19,6 +19,9 @@ describe('configSlice', () => {
       '.xls',
       '.xlsx',
     ],
+    maxSpreadsheetSizeBytes: 10485760,
+    spreadsheetAllowedFileExtensions: ['.xlsx'],
+    maxImageSizeBytes: 52428800,
     imageAllowedFileExtensions: [
       '.bmp',
       '.jpe',
@@ -29,7 +32,6 @@ describe('configSlice', () => {
       '.tiff',
       '.webp',
     ],
-    maxImageSizeBytes: 52428800,
     privilegedRoles: ['admin'],
     serialNumberPrefillEnabled: true,
     routes: [],

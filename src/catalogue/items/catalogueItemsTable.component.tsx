@@ -7,6 +7,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
 import InfoOutlined from '@mui/icons-material/InfoOutlined';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
+import UploadIcon from '@mui/icons-material/Upload';
 import {
   Box,
   Button,
@@ -49,6 +50,7 @@ import {
   ROWS_PER_PAGE_OPTIONS,
 } from '../../common/consts';
 import CriticalityTooltipIcon from '../../common/criticalityTooltipIcon.component';
+import ImportTemplateDialog from '../../common/importTemplateDialog.component';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import { SparesColumnHeaderInformationTooltip } from '../../common/sparesInformationTooltip.component';
 import { useAppSelector } from '../../state/hook';
@@ -258,6 +260,9 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     React.useState<boolean>(false);
 
   const [obsoleteItemDialogOpen, setObsoleteItemDialogOpen] =
+    React.useState<boolean>(false);
+
+  const [importTemplateDialogOpen, setImportTemplateDialogOpen] =
     React.useState<boolean>(false);
 
   const [selectedCatalogueItem, setSelectedCatalogueItem] = React.useState<
@@ -1094,6 +1099,17 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           >
             Add Catalogue Item
           </Button>
+
+          <Button
+            startIcon={<UploadIcon />}
+            sx={{ mx: 0.5 }}
+            variant="outlined"
+            onClick={() => {
+              setImportTemplateDialogOpen(true);
+            }}
+          >
+            Import data
+          </Button>
           {
             // Don't show for the move to and obsolete dialogues
             requestOrigin === undefined && (
@@ -1268,6 +1284,13 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             onClose={() => setObsoleteItemDialogOpen(false)}
             catalogueItem={selectedCatalogueItem}
             parentInfo={parentInfo}
+          />
+
+          <ImportTemplateDialog
+            open={importTemplateDialogOpen}
+            onClose={() => setImportTemplateDialogOpen(false)}
+            parentId={parentInfo.id}
+            parentName={parentInfo.name}
           />
         </>
       )}

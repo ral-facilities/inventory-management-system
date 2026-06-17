@@ -54,6 +54,28 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
                 Add Catalogue Item
               </button>
               <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1ioyh7z-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="button"
+              >
+                <span
+                  class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1sh91j5-MuiButton-startIcon"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    data-testid="UploadIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M5 20h14v-2H5zm0-10h4v6h6v-6h4l-7-7z"
+                    />
+                  </svg>
+                </span>
+                Import data
+              </button>
+              <button
                 class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary Mui-disabled MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1ioyh7z-MuiButtonBase-root-MuiButton-root"
                 disabled=""
                 tabindex="-1"
@@ -112,7 +134,7 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
                           aria-invalid="false"
                           autocomplete="off"
                           class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12tjcea-MuiInputBase-input-MuiOutlinedInput-input"
-                          id=":r3:"
+                          id=":r4:"
                           placeholder="Search"
                           type="text"
                           value=""
@@ -537,6 +559,127 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
                   </li>
                 </ul>
               </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="css-1vr3ng5"
+    >
+      <div
+        class="uppy-Container"
+      >
+        <div
+          class="uppy-Root"
+          dir="ltr"
+        >
+          <div
+            aria-disabled="false"
+            aria-hidden="true"
+            aria-label="Uppy Dashboard Window (Press escape to close)"
+            class="uppy-Dashboard uppy-Dashboard--modal"
+            data-uppy-drag-drop-supported="true"
+            data-uppy-num-acquirers="0"
+            data-uppy-theme="light"
+          >
+            <div
+              aria-hidden="true"
+              class="uppy-Dashboard-overlay"
+              tabindex="-1"
+            />
+            <div
+              class="uppy-Dashboard-inner"
+              role="dialog"
+            >
+              <button
+                aria-label="Close Modal"
+                class="uppy-u-reset uppy-Dashboard-close"
+                title="Close Modal"
+                type="button"
+              >
+                <span
+                  aria-hidden="true"
+                >
+                  ×
+                </span>
+              </button>
+              <div
+                class="uppy-Dashboard-innerWrap"
+              >
+                <div
+                  class="uppy-Dashboard-dropFilesHereHint"
+                >
+                  Drop your files here
+                </div>
+                <div
+                  class="uppy-Dashboard-AddFiles"
+                >
+                  <input
+                    accept=".xlsx"
+                    aria-hidden="true"
+                    class="uppy-Dashboard-input"
+                    hidden=""
+                    name="files[]"
+                    tabindex="-1"
+                    type="file"
+                  />
+                  <input
+                    accept=".xlsx"
+                    aria-hidden="true"
+                    class="uppy-Dashboard-input"
+                    hidden=""
+                    name="files[]"
+                    tabindex="-1"
+                    type="file"
+                    webkitdirectory="true"
+                  />
+                  <div
+                    class="uppy-Dashboard-AddFiles-title"
+                  >
+                    Drop template here or 
+                    <button
+                      class="uppy-u-reset uppy-c-btn uppy-Dashboard-browse"
+                      data-uppy-super-focusable="true"
+                      type="button"
+                    >
+                      browse files
+                    </button>
+                     or 
+                    <button
+                      class="uppy-u-reset uppy-c-btn uppy-Dashboard-browse"
+                      id="download-template-link"
+                    />
+                  </div>
+                  <div
+                    class="uppy-Dashboard-AddFiles-list"
+                    role="tablist"
+                  >
+                    <span
+                      role="presentation"
+                      style="white-space: nowrap;"
+                    />
+                  </div>
+                  <div
+                    class="uppy-Dashboard-AddFiles-info"
+                  >
+                    <div
+                      class="uppy-Dashboard-note"
+                    >
+                      Files cannot be larger than 10MB. Supported file types: .xlsx.
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="uppy-Dashboard-progressindicators"
+                >
+                  <div
+                    class="uppy uppy-Informer"
+                  >
+                    <span />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

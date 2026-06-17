@@ -9,6 +9,7 @@ import {
   type TableCellProps,
 } from '@mui/material';
 import { FilterFn, FilterMeta, Row } from '@tanstack/table-core';
+import { AxiosResponse } from 'axios';
 import { format, parseISO } from 'date-fns';
 import LZString from 'lz-string';
 import {
@@ -577,6 +578,33 @@ export function downloadFileByLink(url: string, filename: string): void {
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+}
+
+export function handleBlobDownload(
+  response: AxiosResponse<Blob>,
+  fallbackFilename: string = 'download'
+): void {
+  const blob = response.data;
+
+  let filename = fallbackFilename;
+
+  const contentDisposition = response.headers['content-disposition'];
+
+  if (contentDisposition) {
+    const match = contentDisposition.match(
+      /filename\*?=(?:UTF-8'')?"?([^";]+)"?/i
+    );
+
+    if (match?.[1]) {
+      filename = decodeURIComponent(match[1]);
+    }
+  }
+
+  const url = window.URL.createObjectURL(blob);
+
+  downloadFileByLink(url, filename);
+
+  window.URL.revokeObjectURL(url);
 }
 
 export const mrtTheme = (theme: Theme): Partial<MRT_Theme> => ({
