@@ -42,8 +42,18 @@ export const serverHandlers = [
     { catalogue_category_id: string },
     ErrorResponse | Blob
   >('/spreadsheets/catalogue-items/validate', async ({ request }) => {
-    const data = await request.formData();
-    const catalogueCategoryId = data.get('catalogue_category_id');
+    const text = await request.text();
+
+    // Extract the `catalogue_category_id` value from the raw multipart body.
+    // We match the form field name, skip the blank line after headers, and capture
+    // the following line as the field value.
+    // This is needed because request.formData() fails in tests due to malformed
+    // multipart data produced by JSDOM ("[object Blob]").
+    const match = text.match(
+      /name="catalogue_category_id"\s*\r?\n\r?\n([^\r\n]+)/
+    );
+
+    const catalogueCategoryId = match?.[1];
 
     const fileBuffer = fs.readFileSync(filePath);
 

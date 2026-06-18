@@ -28,14 +28,33 @@ export const backendErrorMessage = {
   MissingEntity: {
     apiMessage: 'The specified catalogue category does not exist',
     uiMessage:
-      'The selected catalogue category no longer exists or is invalid. Please navigate a valid category catalogue that contains catalogue items and try again.',
+      'The selected catalogue category no longer exists or is invalid. Please navigate to a valid category catalogue that contains catalogue items and try again.',
   },
 
+  NonLeafCatalogueCategoryError: {
+    apiMessage:
+      'Cannot have a catalogue items template for a non-leaf catalogue category',
+    uiMessage:
+      'The selected catalogue category no longer exists or is invalid. Please navigate to a valid category catalogue that contains catalogue items and try again.',
+  },
+
+  InvalidCatalogueItemData: {
+    apiMessage: 'Invalid catalogue item data',
+    uiMessage:
+      'The uploaded spreadsheet contains invalid catalogue item data. Please upload the file again to view the validation errors, correct them in the spreadsheet, and then try again.',
+  },
   TooManyCatalogueItems: {
     apiMessage:
       'Too many catalogue items in spreadsheet. Found 1050 but only a maximum of 1000 can be processed at once.',
     uiMessage:
       'Your spreadsheet contains too many catalogue items. The maximum allowed is 1000. Please reduce the number of rows and try again.',
+  },
+
+  MaximumAllowedCatalogueItems: {
+    apiMessage:
+      'Too many catalogue items in spreadsheet. Found 1050 but only a maximum can be processed at once.',
+    uiMessage:
+      'Unable to determine maximum allowed catalogue items. Please contact the system administrator.',
   },
 
   CategoryMismatch: {
@@ -61,7 +80,7 @@ export const backendErrorMessage = {
 
   ColumnsModified: {
     apiMessage:
-      'The columns within the template are either out of date or have been modified.',
+      'The columns within the template are either out of date or have been modified. Please generate a new template.',
     uiMessage:
       'The columns in this spreadsheet are outdated or have been modified. Please download a new template and copy your data into it before trying again.',
   },
@@ -1419,24 +1438,13 @@ describe('Catalogue Items', () => {
       );
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByText('Upload 1 file').click();
-
-    cy.findByText('Complete').should('be.visible');
-
-    cy.findBrowserMockedRequests({
-      method: 'POST',
-      url: '/spreadsheets/catalogue-items/validate',
-    }).should((postRequests) => {
-      expect(postRequests.length).eq(1);
-    });
-
     cy.findByText(
       'Validation failed with 5 errors. A spreadsheet with highlighted issues has been downloaded.'
     ).should('exist');
 
     cy.findBrowserMockedRequests({
       method: 'POST',
-      url: '/spreadsheets/catalogue-items/ingest',
+      url: '/spreadsheets/catalogue-items/validate',
     }).should((postRequests) => {
       expect(postRequests.length).eq(1);
     });

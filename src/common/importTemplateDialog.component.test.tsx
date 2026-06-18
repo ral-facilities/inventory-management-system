@@ -35,12 +35,17 @@ const backendErrorMessage = {
   IMSIngestAPIVersion:
     "Unable to find the custom document property 'IMSIngestAPIVersion' in the workbook properties",
   InvalidSpreadsheetFile: 'File given is not a valid spreadsheet',
+  NonLeafCatalogueCategoryError:
+    'Cannot have a catalogue items template for a non-leaf catalogue category',
+  InvalidCatalogueItemData: 'Invalid catalogue item data',
   FileTypeMismatch:
     'File does not contain the correct extension or content type do not match',
   UnsupportedFileExtension: 'File extension is not supported',
   MissingEntity: 'The specified catalogue category does not exist',
   TooManyCatalogueItems:
     'Too many catalogue items in spreadsheet. Found 1050 but only a maximum of 1000 can be processed at once.',
+  MaximumAllowedCatalogueItems:
+    'Too many catalogue items in spreadsheet. Found 1050 but only a maximum can be processed at once.',
   CategoryMismatch:
     'Spreadsheet was generated for a catalogue category with a different ID than the one provided',
   TemplateVersionMismatch:
@@ -198,7 +203,7 @@ describe('Upload attachment dialog', () => {
     expect(await screen.findByText('Complete')).toBeInTheDocument();
   });
 
-  it('displays a warning message when there is warnings in the spreadsheet', async () => {
+  it('displays a warning message when there are warnings in the spreadsheet', async () => {
     server.use(
       http.post('/spreadsheets/catalogue-items/validate', async () => {
         return ingestEndpointHelper({
@@ -256,7 +261,7 @@ describe('Upload attachment dialog', () => {
     expect(await screen.findByText('Complete')).toBeInTheDocument();
   });
 
-  it('displays an error message when there is errors in the spreadsheet', async () => {
+  it('displays an error message when there are errors in the spreadsheet', async () => {
     server.use(
       http.post('/spreadsheets/catalogue-items/validate', async () => {
         return ingestEndpointHelper({
@@ -308,7 +313,7 @@ describe('Upload attachment dialog', () => {
     });
   });
 
-  it('displays an error and warning message when there is errors and warnings in the spreadsheet', async () => {
+  it('displays an error and warning message when there are errors and warnings in the spreadsheet', async () => {
     server.use(
       http.post('/spreadsheets/catalogue-items/validate', async () => {
         return ingestEndpointHelper({

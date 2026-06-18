@@ -622,7 +622,7 @@ export function parseBaseError(message: string): string {
   if (message.includes('is not supported')) {
     return 'Content type not supported.';
   }
-  return 'There was an unexpected error.';
+  return 'There was an unexpected error. Please try again or contact the system administrator.';
 }
 
 export function parseImageError(message: string): string {
@@ -673,15 +673,27 @@ export function parseSpreadsheetError(message: string): string {
     return `The columns in this spreadsheet are outdated or have been modified. Please download a new template and copy your data into it before trying again.`;
   }
 
+  if (message.includes('invalid catalogue item data')) {
+    return `The uploaded spreadsheet contains invalid catalogue item data. Please upload the file again to view the validation errors, correct them in the spreadsheet, and then try again.`;
+  }
+
   if (message.includes('too many catalogue items in spreadsheet')) {
     const match = message.match(/maximum of (\d+)/);
-    const max = match ? match[1] : '1000';
+    const max = match?.[1];
+
+    if (!max)
+      return 'Unable to determine maximum allowed catalogue items. Please contact the system administrator.';
 
     return `Your spreadsheet contains too many catalogue items. The maximum allowed is ${max}. Please reduce the number of rows and try again.`;
   }
 
-  if (message.includes('catalogue category does not exist')) {
-    return `The selected catalogue category no longer exists or is invalid. Please navigate a valid category catalogue that contains catalogue items and try again.`;
+  if (
+    message.includes('catalogue category does not exist') ||
+    message.includes(
+      'cannot have a catalogue items template for a non-leaf catalogue category'
+    )
+  ) {
+    return `The selected catalogue category no longer exists or is invalid. Please navigate to a valid category catalogue that contains catalogue items and try again.`;
   }
 
   if (
