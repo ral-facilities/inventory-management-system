@@ -19,7 +19,7 @@ describe('configSlice', () => {
       '.xls',
       '.xlsx',
     ],
-    maxSpreadsheetSizeBytes: 104857600,
+    maxSpreadsheetSizeBytes: 10485760,
     spreadsheetAllowedFileExtensions: ['.xlsx'],
     maxImageSizeBytes: 52428800,
     imageAllowedFileExtensions: [

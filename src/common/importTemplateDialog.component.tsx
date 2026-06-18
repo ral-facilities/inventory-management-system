@@ -65,32 +65,23 @@ export const handleValidationHeaders = <M extends Meta, B extends Body>(
 ) => {
   const { headers, uppy, fileId, parentName, data, isAdminMode } = props;
   const isValid = headers['imsingestapi-validation-valid'] === 'true';
-
   const errorCount = Number(headers['imsingestapi-validation-errors'] ?? 0);
-
   const warningCount = Number(headers['imsingestapi-validation-warnings'] ?? 0);
-
   const hasErrors = !isValid || errorCount > 0;
   const hasWarnings = warningCount > 0;
 
   if (hasErrors) {
     const errorText = `${errorCount} error${errorCount !== 1 ? 's' : ''}`;
-
     const warningText = hasWarnings
       ? ` and ${warningCount} warning${warningCount !== 1 ? 's' : ''}`
       : '';
-
     const message = `Validation failed with ${errorText}${warningText}. A spreadsheet with highlighted issues has been downloaded.`;
-
     uppy?.info(message, 'error', UPPY_INFORMER_TIMEOUT);
-
     const filename = `CatalogueItemsValidationErrors-${parentName}.xlsx`;
     handleBlobDownload(data, headers, filename);
-
     if (fileId) {
       uppy?.removeFile(fileId);
     }
-
     return;
   }
 
@@ -98,14 +89,10 @@ export const handleValidationHeaders = <M extends Meta, B extends Body>(
     const warningText = `${warningCount} warning${
       warningCount !== 1 ? 's' : ''
     }`;
-
     const message = `Validation completed with ${warningText}. A spreadsheet highlighting the warnings has been downloaded.${isAdminMode ? ' Please click Upload to proceed.' : ' Please contact an admin to import the spreadsheet.'}`;
-
     uppy?.info(message, 'warning', UPPY_INFORMER_TIMEOUT);
-
     const filename = `CatalogueItemsValidationWarnings-${parentName}.xlsx`;
     handleBlobDownload(data, headers, filename);
-
     return;
   }
 
@@ -131,8 +118,10 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
   const { mutateAsync: postCatalogueItemsTemplate } =
     usePostCatalogueItemsTemplate();
 
-  const { mutateAsync: postCatalogueItemsTemplateValidation } =
-    usePostCatalogueItemsTemplateValidation();
+  const {
+    mutateAsync: postCatalogueItemsTemplateValidation,
+    isPending: isPendingCatalogueItemsTemplateValidation,
+  } = usePostCatalogueItemsTemplateValidation();
 
   const queryClient = useQueryClient();
 
@@ -234,17 +223,12 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
 
       const link = document.createElement('button');
       link.id = 'download-template-link';
-
       link.className = 'uppy-u-reset uppy-c-btn uppy-Dashboard-browse';
-
       link.innerText = 'download template';
-
       link.onclick = () => {
         handleDownloadTemplate();
       };
-
       browseBtn.insertAdjacentElement('afterend', link);
-
       browseBtn.insertAdjacentText('afterend', ' or ');
     };
 
@@ -353,9 +337,6 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
         .catch(async (error: AxiosError) => {
           const errorMessage = await getErrorMessage(error);
           const parsedErrorMessage = parseSpreadsheetError(errorMessage);
-          if (parsedErrorMessage === 'There was an unexpected error.') {
-            return handleIMS_APIError(error);
-          }
           uppy.info(parsedErrorMessage, 'error', UPPY_INFORMER_TIMEOUT);
           uppy.removeFile(file.id);
         });
@@ -389,6 +370,7 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
         }}
         onRequestClose={handleClose}
         closeModalOnClickOutside={false}
+        hideUploadButton={isPendingCatalogueItemsTemplateValidation}
         note={`Files cannot be larger than ${maxFileSizeMB}MB. Supported file types: ${spreadsheetAllowedFileExtensions.join(', ')}.`}
         animateOpenClose={false}
         uppy={uppy}

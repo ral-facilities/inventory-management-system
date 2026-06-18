@@ -666,7 +666,7 @@ exports[`CatalogueItemsPage > renders a catalogue items page correctly 1`] = `
                     <div
                       class="uppy-Dashboard-note"
                     >
-                      Files cannot be larger than 100MB. Supported file types: .xlsx.
+                      Files cannot be larger than 10MB. Supported file types: .xlsx.
                     </div>
                   </div>
                 </div>
