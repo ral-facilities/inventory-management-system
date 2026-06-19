@@ -54,6 +54,17 @@
     "vite-plugin-css-injected-by-js": "^3.5.2",
     "zod": "^3.25.0"
   },
+  "dependenciesMeta": {
+    "cypress": {
+      "built": true
+    },
+    "esbuild": {
+      "built": true
+    },
+    "msw": {
+      "built": true
+    }
+  },
   "scripts": {
     "dev": "vite --open",
     "dev-docker": "vite --host",
