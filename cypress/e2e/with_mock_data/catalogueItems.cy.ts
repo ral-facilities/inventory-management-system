@@ -22,7 +22,7 @@ export const backendErrorMessage = {
 
   UnsupportedFileExtension: {
     apiMessage: 'File extension is not supported',
-    uiMessage: 'Content type not supported.',
+    uiMessage: 'File type not supported.',
   },
 
   MissingEntity: {

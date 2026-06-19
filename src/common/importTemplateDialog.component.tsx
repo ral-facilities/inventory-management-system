@@ -18,7 +18,6 @@ import {
   usePostCatalogueItemsTemplateValidation,
 } from '../api/ingest';
 import { UppyImageUploadResponse, UppyUploadMetadata } from '../app.types';
-import handleIMS_APIError from '../handleIMS_APIError';
 import { useAppSelector } from '../state/hook';
 import { selectSettings } from '../state/slices/configSlice';
 import {
@@ -192,10 +191,22 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
           `CatalogueItemTemplate-${parentName}.xlsx`
         )
       )
-      .catch((error: AxiosError) => {
-        handleIMS_APIError(error);
+      .catch(async (error: AxiosError) => {
+        const errorMessage = await getErrorMessage(error);
+        console.log(errorMessage);
+        let parsedErrorMessage =
+          'There was an unexpected error. Please try again or contact the system administrator.';
+        if (
+          errorMessage ===
+            'cannot generate a catalogue items template for a non-leaf catalogue category' ||
+          errorMessage === 'the specified catalogue category does not exist'
+        ) {
+          parsedErrorMessage = `The selected catalogue category no longer exists or is invalid. Please navigate to a valid category catalogue that contains catalogue items and try again.`;
+        }
+        console.log(parsedErrorMessage);
+        uppy.info(parsedErrorMessage, 'error', UPPY_INFORMER_TIMEOUT);
       });
-  }, [postCatalogueItemsTemplate, parentId, parentName]);
+  }, [postCatalogueItemsTemplate, parentId, parentName, uppy]);
 
   React.useEffect(() => {
     const injectDownloadLink = () => {
@@ -295,7 +306,7 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
   ]);
 
   React.useEffect(() => {
-    uppy.setMeta({ catalogue_category_id: parentId, relativePath: undefined });
+    uppy.setMeta({ catalogue_category_id: parentId });
   }, [parentId, uppy]);
 
   React.useEffect(() => {

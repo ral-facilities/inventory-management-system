@@ -162,6 +162,87 @@ describe('Upload attachment dialog', () => {
     expect(handleBlobDownload).toHaveBeenCalled();
   });
 
+  it('display an error message when "Cannot generate a catalogue items template for a non-leaf catalogue category" and user try to download a template', async () => {
+    server.use(
+      http.post('/spreadsheets/catalogue-items/template', () => {
+        return HttpResponse.json(
+          {
+            detail:
+              'Cannot generate a catalogue items template for a non-leaf catalogue category',
+          },
+          { status: 422 }
+        );
+      })
+    );
+
+    // jsdom does not execute requestAnimationFrame like a real browser.
+    // Our download button is injected via requestAnimationFrame (injectDownloadLink),
+    // so in tests the button may not exist or may appear too late.
+    // This mock forces requestAnimationFrame to run immediately,
+    // ensuring the button is added to the DOM before interactions occur.
+    vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => {
+      cb(0);
+      return 0;
+    });
+
+    createView();
+
+    expect(
+      screen.getByText('Files cannot be larger than', { exact: false })
+    ).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getAllByRole('button')).toHaveLength(3);
+    });
+
+    await user.click(screen.getAllByRole('button')[2]);
+
+    expect(
+      await screen.findByText(
+        'The selected catalogue category no longer exists or is invalid. Please navigate to a valid category catalogue that contains catalogue items and try again.'
+      )
+    ).toBeInTheDocument();
+  });
+
+  it('display an error message when "The specified catalogue category does not exist" and user try to download a template', async () => {
+    server.use(
+      http.post('/spreadsheets/catalogue-items/template', () => {
+        return HttpResponse.json(
+          { detail: 'The specified catalogue category does not exist' },
+          { status: 422 }
+        );
+      })
+    );
+
+    // jsdom does not execute requestAnimationFrame like a real browser.
+    // Our download button is injected via requestAnimationFrame (injectDownloadLink),
+    // so in tests the button may not exist or may appear too late.
+    // This mock forces requestAnimationFrame to run immediately,
+    // ensuring the button is added to the DOM before interactions occur.
+    vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => {
+      cb(0);
+      return 0;
+    });
+
+    createView();
+
+    expect(
+      screen.getByText('Files cannot be larger than', { exact: false })
+    ).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getAllByRole('button')).toHaveLength(3);
+    });
+
+    await user.click(screen.getAllByRole('button')[2]);
+
+    expect(
+      await screen.findByText(
+        'The selected catalogue category no longer exists or is invalid. Please navigate to a valid category catalogue that contains catalogue items and try again.'
+      )
+    ).toBeInTheDocument();
+  });
+
   describe('Admin mode', () => {
     beforeEach(() => {
       props = {

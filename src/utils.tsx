@@ -587,25 +587,18 @@ export function handleBlobDownload(
   fallbackFilename: string = 'download'
 ): void {
   const blob = data;
-
   let filename = fallbackFilename;
-
   const contentDisposition = headers['content-disposition'];
-
   if (contentDisposition) {
     const match = contentDisposition.match(
       /filename\*?=(?:UTF-8'')?"?([^";]+)"?/i
     );
-
     if (match?.[1]) {
       filename = decodeURIComponent(match[1]);
     }
   }
-
   const url = window.URL.createObjectURL(blob);
-
   downloadFileByLink(url, filename);
-
   window.URL.revokeObjectURL(url);
 }
 
@@ -621,7 +614,7 @@ export function parseBaseError(message: string): string {
     return 'File extension does not match content type.';
   }
   if (message.includes('is not supported')) {
-    return 'Content type not supported.';
+    return 'File type not supported.';
   }
   return 'There was an unexpected error. Please try again or contact the system administrator.';
 }
@@ -712,10 +705,7 @@ export function parseSpreadsheetError(message: string): string {
   return parseBaseError(message);
 }
 
-
-export async function getErrorMessage(
-  error: AxiosError
-): Promise<string> {
+export async function getErrorMessage(error: AxiosError): Promise<string> {
   const fallback = error?.message ?? 'Unknown error';
   const data = error?.response?.data;
 
@@ -742,7 +732,6 @@ export async function getErrorMessage(
 
   return fallback;
 }
-
 
 export async function getXHRErrorMessage(xhr: XMLHttpRequest): Promise<string> {
   const fallback = 'Unknown error';
