@@ -1,16 +1,26 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import * as fs from 'fs';
+import { http, HttpResponse } from 'msw';
+import * as path from 'path';
 import { act } from 'react';
 import { MockInstance } from 'vitest';
 import { ingestApi } from '../api/api';
+import CatalogueCategoriesJSON from '../mocks/CatalogueCategories.json';
+import { server } from '../mocks/server';
 import {
   getCatalogueCategoryById,
   renderComponentWithRouterProvider,
 } from '../testUtils';
-import { handleBlobDownload } from '../utils';
+import { handleBlobDownload, parseSpreadsheetError } from '../utils';
 import ImportTemplateDialog, {
   ImportTemplateDialogProps,
 } from './importTemplateDialog.component';
+
+const filePath = path.resolve(
+  __dirname,
+  '../mocks/CatalogueItemTemplate-test.xlsx'
+);
 
 vi.mock('../utils', async (importOriginal) => {
   const actual = await importOriginal<typeof import('../utils')>();
@@ -20,6 +30,62 @@ vi.mock('../utils', async (importOriginal) => {
     handleBlobDownload: vi.fn(),
   };
 });
+
+const backendErrorMessage = {
+  IMSIngestAPIVersion:
+    "Unable to find the custom document property 'IMSIngestAPIVersion' in the workbook properties",
+  InvalidSpreadsheetFile: 'File given is not a valid spreadsheet',
+  NonLeafCatalogueCategoryError:
+    'Cannot have a catalogue items template for a non-leaf catalogue category',
+  InvalidCatalogueItemData: 'Invalid catalogue item data',
+  FileTypeMismatch:
+    'File does not contain the correct extension or content type do not match',
+  UnsupportedFileExtension: 'File extension is not supported',
+  MissingEntity: 'The specified catalogue category does not exist',
+  TooManyCatalogueItems:
+    'Too many catalogue items in spreadsheet. Found 1050 but only a maximum of 1000 can be processed at once.',
+  MaximumAllowedCatalogueItems:
+    'Too many catalogue items in spreadsheet. Found 1050 but only a maximum can be processed at once.',
+  CategoryMismatch:
+    'Spreadsheet was generated for a catalogue category with a different ID than the one provided',
+  TemplateVersionMismatch:
+    'Spreadsheet was created by IMS Ingest API v1 which is incompatible with the current version',
+  MissingSheet:
+    "Unable to find the 'CatalogueItems Template' sheet in the workbook",
+  ColumnsModified:
+    'The columns within the template are either out of date or have been modified.',
+};
+
+interface IngestEndpointHelperProps {
+  warnings: number;
+  errors: number;
+  valid: boolean;
+  catalogueCategoryId: string;
+}
+const ingestEndpointHelper = (props: IngestEndpointHelperProps) => {
+  const { warnings, errors, valid, catalogueCategoryId } = props;
+  const fileBuffer = fs.readFileSync(filePath);
+
+  const blob = new Blob([fileBuffer], {
+    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  });
+
+  const catalogueCategory = CatalogueCategoriesJSON.find(
+    (val) => val.id === catalogueCategoryId
+  );
+
+  return new HttpResponse(blob, {
+    status: 200,
+    headers: {
+      'Content-Type':
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'Content-Disposition': `attachment; filename="CatalogueItemTemplate-${catalogueCategory?.name}-Validated.xlsx"`,
+      'IMSIngestAPI-Validation-Warnings': String(warnings),
+      'IMSIngestAPI-Validation-Errors': String(errors),
+      'IMSIngestAPI-Validation-Valid': String(valid),
+    },
+  });
+};
 
 describe('Upload attachment dialog', () => {
   let props: ImportTemplateDialogProps;
@@ -95,7 +161,7 @@ describe('Upload attachment dialog', () => {
     expect(handleBlobDownload).toHaveBeenCalled();
   });
 
-  it('posts spreadsheet metadata successfully', async () => {
+  it('posts spreadsheet successfully', async () => {
     createView();
 
     const file1 = new File(['test'], 'test1.xlsx', {
@@ -120,6 +186,12 @@ describe('Upload attachment dialog', () => {
       expect(screen.getByText('test1.xlsx')).toBeInTheDocument();
     });
 
+    expect(xhrPostSpy).toHaveBeenCalledWith(
+      'POST',
+      '/spreadsheets/catalogue-items/validate',
+      true
+    );
+
     await user.click(await screen.findByText('Upload 1 file'));
 
     expect(xhrPostSpy).toHaveBeenCalledWith(
@@ -129,5 +201,213 @@ describe('Upload attachment dialog', () => {
     );
 
     expect(await screen.findByText('Complete')).toBeInTheDocument();
+  });
+
+  it('displays a warning message when there are warnings in the spreadsheet', async () => {
+    server.use(
+      http.post('/spreadsheets/catalogue-items/validate', async () => {
+        return ingestEndpointHelper({
+          warnings: 5,
+          errors: 0,
+          valid: true,
+          catalogueCategoryId: props.parentId,
+        });
+      })
+    );
+    createView();
+
+    const file1 = new File(['test'], 'test1.xlsx', {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+
+    const dropZone = screen.getByText('Files cannot be larger than', {
+      exact: false,
+    });
+
+    Object.defineProperty(dropZone, 'files', {
+      value: [file1],
+    });
+
+    fireEvent.drop(dropZone, {
+      dataTransfer: {
+        files: [file1],
+      },
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('test1.xlsx')).toBeInTheDocument();
+    });
+
+    expect(xhrPostSpy).toHaveBeenCalledWith(
+      'POST',
+      '/spreadsheets/catalogue-items/validate',
+      true
+    );
+
+    expect(
+      await screen.findByText(
+        'Validation completed with 5 warnings. A spreadsheet highlighting the warnings has been downloaded.'
+      )
+    ).toBeInTheDocument();
+
+    await user.click(await screen.findByText('Upload 1 file'));
+
+    expect(xhrPostSpy).toHaveBeenCalledWith(
+      'POST',
+      '/spreadsheets/catalogue-items/ingest',
+      true
+    );
+
+    expect(await screen.findByText('Complete')).toBeInTheDocument();
+  });
+
+  it('displays an error message when there are errors in the spreadsheet', async () => {
+    server.use(
+      http.post('/spreadsheets/catalogue-items/validate', async () => {
+        return ingestEndpointHelper({
+          warnings: 0,
+          errors: 5,
+          valid: false,
+          catalogueCategoryId: props.parentId,
+        });
+      })
+    );
+    createView();
+
+    const file1 = new File(['test'], 'test1.xlsx', {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+
+    const dropZone = screen.getByText('Files cannot be larger than', {
+      exact: false,
+    });
+
+    Object.defineProperty(dropZone, 'files', {
+      value: [file1],
+    });
+
+    fireEvent.drop(dropZone, {
+      dataTransfer: {
+        files: [file1],
+      },
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('test1.xlsx')).toBeInTheDocument();
+    });
+
+    expect(xhrPostSpy).toHaveBeenCalledWith(
+      'POST',
+      '/spreadsheets/catalogue-items/validate',
+      true
+    );
+
+    expect(
+      await screen.findByText(
+        'Validation failed with 5 errors. A spreadsheet with highlighted issues has been downloaded.'
+      )
+    ).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.queryByText('Upload 1 file')).not.toBeInTheDocument();
+    });
+  });
+
+  it('displays an error and warning message when there are errors and warnings in the spreadsheet', async () => {
+    server.use(
+      http.post('/spreadsheets/catalogue-items/validate', async () => {
+        return ingestEndpointHelper({
+          warnings: 5,
+          errors: 5,
+          valid: false,
+          catalogueCategoryId: props.parentId,
+        });
+      })
+    );
+    createView();
+
+    const file1 = new File(['test'], 'test1.xlsx', {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+
+    const dropZone = screen.getByText('Files cannot be larger than', {
+      exact: false,
+    });
+
+    Object.defineProperty(dropZone, 'files', {
+      value: [file1],
+    });
+
+    fireEvent.drop(dropZone, {
+      dataTransfer: {
+        files: [file1],
+      },
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('test1.xlsx')).toBeInTheDocument();
+    });
+
+    expect(xhrPostSpy).toHaveBeenCalledWith(
+      'POST',
+      '/spreadsheets/catalogue-items/validate',
+      true
+    );
+
+    expect(
+      await screen.findByText(
+        'Validation failed with 5 errors and 5 warnings. A spreadsheet with highlighted issues has been downloaded.'
+      )
+    ).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.queryByText('Upload 1 file')).not.toBeInTheDocument();
+    });
+  });
+
+  Object.entries(backendErrorMessage).forEach(([key, backendMessage]) => {
+    it(`displays ${key} error message`, async () => {
+      server.use(
+        http.post('/spreadsheets/catalogue-items/validate', async () => {
+          return HttpResponse.json({ detail: backendMessage }, { status: 422 });
+        })
+      );
+
+      createView();
+
+      const file = new File(['test'], 'test.xlsx', {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+
+      const dropZone = screen.getByText('Files cannot be larger than', {
+        exact: false,
+      });
+
+      fireEvent.drop(dropZone, {
+        dataTransfer: {
+          files: [file],
+        },
+      });
+
+      await waitFor(() => {
+        expect(screen.getByText('test.xlsx')).toBeInTheDocument();
+      });
+
+      expect(xhrPostSpy).toHaveBeenCalledWith(
+        'POST',
+        '/spreadsheets/catalogue-items/validate',
+        true
+      );
+
+      expect(
+        await screen.findByText(
+          parseSpreadsheetError(backendMessage.toLowerCase())
+        )
+      ).toBeInTheDocument();
+
+      await waitFor(() => {
+        expect(screen.queryByText('Upload 1 file')).not.toBeInTheDocument();
+      });
+    });
   });
 });

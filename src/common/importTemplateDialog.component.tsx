@@ -1,9 +1,10 @@
 import { useTheme } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
-import Uppy from '@uppy/core';
+import Uppy, { UppyFile } from '@uppy/core';
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 import '@uppy/image-editor/dist/style.css';
+import Informer from '@uppy/informer';
 import en_US from '@uppy/locales/lib/en_US';
 import ProgressBar from '@uppy/progress-bar';
 import { DashboardModal } from '@uppy/react';
@@ -12,12 +13,19 @@ import XHR from '@uppy/xhr-upload';
 import { AxiosError } from 'axios';
 import React from 'react';
 import { uppyOnAfterResponse, uppyOnBeforeRequest } from '../api/api';
-import { usePostCatalogueItemsTemplate } from '../api/ingest';
+import {
+  usePostCatalogueItemsTemplate,
+  usePostCatalogueItemsTemplateValidation,
+} from '../api/ingest';
 import { UppyImageUploadResponse, UppyUploadMetadata } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { useAppSelector } from '../state/hook';
 import { selectSettings } from '../state/slices/configSlice';
-import { handleBlobDownload } from '../utils';
+import {
+  getErrorMessage,
+  handleBlobDownload,
+  parseSpreadsheetError,
+} from '../utils';
 import {
   getUploadingState,
   StyledUppyBox,
@@ -35,6 +43,13 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
   const { open, onClose, parentId, parentName } = props;
 
   const theme = useTheme();
+  const { mutateAsync: postCatalogueItemsTemplate } =
+    usePostCatalogueItemsTemplate();
+
+  const {
+    mutateAsync: postCatalogueItemsTemplateValidation,
+    isPending: isPendingCatalogueItemsTemplateValidation,
+  } = usePostCatalogueItemsTemplateValidation();
 
   const queryClient = useQueryClient();
 
@@ -62,7 +77,9 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
         requiredMetaFields: ['name'],
         allowedFileTypes: spreadsheetAllowedFileExtensions,
       },
-    }).use(ProgressBar);
+    })
+      .use(ProgressBar)
+      .use(Informer);
 
     newUppy.use(XHR, {
       endpoint: `${imsIngestApiUrl}/spreadsheets/catalogue-items/ingest`,
@@ -75,15 +92,12 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
         return xhr.status === 204 ? '' : xhr.response;
       },
       async onAfterResponse(xhr) {
-        await uppyOnAfterResponse(xhr);
+        await uppyOnAfterResponse(xhr, parseSpreadsheetError);
       },
     });
 
     return newUppy;
   });
-
-  const { mutateAsync: postCatalogueItemsTemplate } =
-    usePostCatalogueItemsTemplate();
 
   const handleDownloadTemplate = React.useCallback(async () => {
     postCatalogueItemsTemplate({ catalogueCategoryId: parentId })
@@ -121,17 +135,12 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
 
       const link = document.createElement('button');
       link.id = 'download-template-link';
-
       link.className = 'uppy-u-reset uppy-c-btn uppy-Dashboard-browse';
-
       link.innerText = 'download template';
-
       link.onclick = () => {
         handleDownloadTemplate();
       };
-
       browseBtn.insertAdjacentElement('afterend', link);
-
       browseBtn.insertAdjacentText('afterend', ' or ');
     };
 
@@ -201,6 +210,75 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
     uppy.setMeta({ catalogue_category_id: parentId });
   }, [parentId, uppy]);
 
+  React.useEffect(() => {
+    const handleFileAdded = (
+      file: UppyFile<UppyUploadMetadata, UppyImageUploadResponse>
+    ) => {
+      const actualFile = file.data as File;
+
+      uppy.info('Validation started. Please wait.', 'info', 15000);
+
+      postCatalogueItemsTemplateValidation({
+        catalogueCategoryId: parentId,
+        spreadsheetFile: actualFile,
+      })
+        .then((response) => {
+          const headers = response.headers;
+          const isValid = headers['imsingestapi-validation-valid'] === 'true';
+          const errorCount = Number(
+            headers['imsingestapi-validation-errors'] ?? 0
+          );
+          const warningCount = Number(
+            headers['imsingestapi-validation-warnings'] ?? 0
+          );
+          const hasErrors = !isValid || errorCount > 0;
+          const hasWarnings = warningCount > 0;
+
+          if (hasErrors) {
+            const errorText = `${errorCount} error${errorCount !== 1 ? 's' : ''}`;
+            const warningText = hasWarnings
+              ? ` and ${warningCount} warning${warningCount !== 1 ? 's' : ''}`
+              : '';
+            const message = `Validation failed with ${errorText}${warningText}. A spreadsheet with highlighted issues has been downloaded.`;
+            uppy.info(message, 'error', 15000);
+            const filename = `CatalogueItemsValidationErrors-${parentName}.xlsx`;
+            handleBlobDownload(response, filename);
+            uppy.removeFile(file.id);
+
+            return;
+          }
+
+          if (hasWarnings) {
+            const warningText = `${warningCount} warning${
+              warningCount !== 1 ? 's' : ''
+            }`;
+            const message = `Validation completed with ${warningText}. A spreadsheet highlighting the warnings has been downloaded.`;
+            uppy.info(message, 'warning', 15000);
+            const filename = `CatalogueItemsValidationWarnings-${parentName}.xlsx`;
+            handleBlobDownload(response, filename);
+            return;
+          }
+          uppy.info(
+            'Validation complete. No errors or warnings found. Please click Upload to proceed.',
+            'success',
+            5000
+          );
+        })
+        .catch(async (error: AxiosError) => {
+          const errorMessage = await getErrorMessage(error);
+          const parsedErrorMessage = parseSpreadsheetError(errorMessage);
+          uppy.info(parsedErrorMessage, 'error', 15000);
+          uppy.removeFile(file.id);
+        });
+    };
+
+    uppy.on('file-added', handleFileAdded);
+
+    return () => {
+      uppy.off('file-added', handleFileAdded);
+    };
+  }, [uppy, parentId, postCatalogueItemsTemplateValidation, parentName]);
+
   return (
     <StyledUppyBox>
       <DashboardModal
@@ -216,6 +294,7 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
         }}
         onRequestClose={handleClose}
         closeModalOnClickOutside={false}
+        hideUploadButton={isPendingCatalogueItemsTemplateValidation}
         note={`Files cannot be larger than ${maxFileSizeMB}MB. Supported file types: ${spreadsheetAllowedFileExtensions.join(', ')}.`}
         animateOpenClose={false}
         uppy={uppy}

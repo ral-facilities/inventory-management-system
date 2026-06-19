@@ -9,7 +9,7 @@ import {
   type TableCellProps,
 } from '@mui/material';
 import { FilterFn, FilterMeta, Row } from '@tanstack/table-core';
-import { AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { format, parseISO } from 'date-fns';
 import LZString from 'lz-string';
 import {
@@ -26,6 +26,7 @@ import {
   type MRT_Theme,
 } from 'material-react-table';
 import React from 'react';
+import { APIError } from './api/api.types';
 import { useGetSparesDefinition } from './api/settings';
 import { MicroFrontendToken, SparesFilterStateType } from './app.types';
 import { TokenUpdatedType } from './state/actions/actions.types';
@@ -611,24 +612,119 @@ export const mrtTheme = (theme: Theme): Partial<MRT_Theme> => ({
   baseBackgroundColor: theme.palette.background.default,
 });
 
-export function parseErrorResponse(errorMessage: string): string {
-  let returnMessage = 'There was an unexpected error.';
-  if (errorMessage.includes('limit for the maximum number of')) {
-    returnMessage = 'Maximum number of files reached.';
-  } else if (errorMessage.includes('does not contain the correct extension')) {
-    returnMessage = 'File extension does not match content type.';
-  } else if (errorMessage.includes('is not supported')) {
-    returnMessage = 'Content type not supported.';
-  } else if (errorMessage.includes('not a valid image')) {
-    returnMessage = 'File given is not a valid image.';
-  } else if (
-    errorMessage.includes('file name already exists within the parent entity.')
+export function parseBaseError(message: string): string {
+  if (
+    message.includes('does not contain the correct extension') ||
+    message.includes('content type do not match')
   ) {
-    returnMessage =
-      'A file with this name already exists. To rename your file: remove it, add it back and click the edit icon below the file to change its name.';
+    return 'File extension does not match content type.';
+  }
+  if (message.includes('is not supported')) {
+    return 'Content type not supported.';
+  }
+  return 'There was an unexpected error. Please try again or contact the system administrator.';
+}
+
+export function parseImageError(message: string): string {
+  if (message.includes('limit for the maximum number of')) {
+    return 'Maximum number of files reached.';
   }
 
-  return returnMessage;
+  if (message.includes('not a valid image')) {
+    return 'File given is not a valid image.';
+  }
+
+  if (message.includes('file name already exists within the parent entity.')) {
+    return 'A file with this name already exists. To rename your file: remove it, add it back and click the edit icon below the file to change its name.';
+  }
+
+  return parseBaseError(message);
+}
+
+export function parseAttachmentError(message: string): string {
+  if (message.includes('limit for the maximum number of')) {
+    return 'Maximum number of files reached.';
+  }
+
+  if (message.includes('file name already exists within the parent entity.')) {
+    return 'A file with this name already exists. To rename your file: remove it, add it back and click the edit icon below the file to change its name.';
+  }
+
+  return parseBaseError(message);
+}
+
+export function parseSpreadsheetError(message: string): string {
+  if (
+    message.includes('imsingestapiversion') ||
+    message.includes('unable to find the custom document property') ||
+    message.includes(
+      "unable to find the 'catalogueitems template' sheet in the workbook"
+    ) ||
+    message.includes('not a valid spreadsheet')
+  ) {
+    return `This spreadsheet appears to be corrupted or invalid. Please download a new template and copy your data into it before trying again.`;
+  }
+
+  if (
+    message.includes(
+      'the columns within the template are either out of date or have been modified.'
+    )
+  ) {
+    return `The columns in this spreadsheet are outdated or have been modified. Please download a new template and copy your data into it before trying again.`;
+  }
+
+  if (message.includes('invalid catalogue item data')) {
+    return `The uploaded spreadsheet contains invalid catalogue item data. Please upload the file again to view the validation errors, correct them in the spreadsheet, and then try again.`;
+  }
+
+  if (message.includes('too many catalogue items in spreadsheet')) {
+    const match = message.match(/maximum of (\d+)/);
+    const max = match?.[1];
+
+    if (!max)
+      return 'Unable to determine maximum allowed catalogue items. Please contact the system administrator.';
+
+    return `Your spreadsheet contains too many catalogue items. The maximum allowed is ${max}. Please reduce the number of rows and try again.`;
+  }
+
+  if (
+    message.includes('catalogue category does not exist') ||
+    message.includes(
+      'cannot have a catalogue items template for a non-leaf catalogue category'
+    )
+  ) {
+    return `The selected catalogue category no longer exists or is invalid. Please navigate to a valid category catalogue that contains catalogue items and try again.`;
+  }
+
+  if (
+    message.includes(
+      'spreadsheet was generated for a catalogue category with a different id than the one provided'
+    )
+  ) {
+    return `This spreadsheet was created for a different catalogue category. Please download a new template for the correct catalogue category and copy your data into it before trying again.`;
+  }
+
+  if (message.includes('spreadsheet was created by ims ingest api v')) {
+    return `This spreadsheet was created using an outdated or incompatible template. Please download the latest template and copy your data into it before trying again.`;
+  }
+
+  return parseBaseError(message);
+}
+
+export async function getErrorMessage(error: AxiosError): Promise<string> {
+  const fallback = error?.message ?? 'Unknown error';
+  const data = error?.response?.data as APIError;
+
+  if (data instanceof Blob) {
+    try {
+      const { detail } = JSON.parse(await data.text()) as APIError;
+      return detail?.toLowerCase?.() ?? fallback;
+    } catch {
+      return fallback;
+    }
+  }
+
+  return data?.detail?.toLowerCase?.() ?? fallback;
 }
 
 export const deselectRowById = <TData extends MRT_RowData>(
