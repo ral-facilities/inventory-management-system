@@ -159,19 +159,52 @@ describe('Catalogue Items Table', () => {
     });
   });
 
-  it('opens import data dialog and can close the dialog', async () => {
-    createView();
+  it('opens import spreadsheet dialog and can close the dialog (admin mode)', async () => {
+    createView(undefined, {
+      authorisation: {
+        role: 'admin',
+        isAdminUser: true,
+        isAdminMode: true,
+      },
+    });
 
     await waitFor(() => {
       expect(
         screen.getByRole('button', {
-          name: 'Import data',
+          name: 'Import spreadsheet',
         })
       ).toBeInTheDocument();
     });
 
     const importDataButton = screen.getByRole('button', {
-      name: 'Import data',
+      name: 'Import spreadsheet',
+    });
+
+    await user.click(importDataButton);
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const closeButton = screen.getByRole('button', { name: 'Close Modal' });
+    await user.click(closeButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('opens validate spreadsheet dialog and can close the dialog (normal mode)', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', {
+          name: 'Validate spreadsheet',
+        })
+      ).toBeInTheDocument();
+    });
+
+    const importDataButton = screen.getByRole('button', {
+      name: 'Validate spreadsheet',
     });
 
     await user.click(importDataButton);
