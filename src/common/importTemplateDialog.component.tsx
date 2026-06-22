@@ -193,7 +193,6 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
       )
       .catch(async (error: AxiosError) => {
         const errorMessage = await getErrorMessage(error);
-        console.log(errorMessage);
         let parsedErrorMessage =
           'There was an unexpected error. Please try again or contact the system administrator.';
         if (
@@ -203,7 +202,6 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
         ) {
           parsedErrorMessage = `The selected catalogue category no longer exists or is invalid. Please navigate to a valid category catalogue that contains catalogue items and try again.`;
         }
-        console.log(parsedErrorMessage);
         uppy.info(parsedErrorMessage, 'error', UPPY_INFORMER_TIMEOUT);
       });
   }, [postCatalogueItemsTemplate, parentId, parentName, uppy]);
