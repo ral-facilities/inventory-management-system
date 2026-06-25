@@ -161,17 +161,6 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
         uppyOnBeforeRequest(xhr);
       },
       getResponseData(xhr) {
-        if (!isAdminMode) {
-          const parsedHeaders = parseXHRHeaders(xhr.getAllResponseHeaders());
-          handleValidationHeaders({
-            headers: parsedHeaders,
-            parentName: parentName,
-            data: xhr.response,
-            uppy: newUppy,
-            isAdminMode: isAdminMode,
-          });
-        }
-
         return xhr.status === 204 ? '' : xhr.response;
       },
       async onAfterResponse(xhr) {
@@ -312,9 +301,23 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
     if (xhrPlugin) {
       xhrPlugin.setOptions({
         endpoint: `${imsIngestApiUrl}/spreadsheets/catalogue-items/${isAdminMode ? 'ingest' : 'validate'}`,
+        getResponseData: (xhr: XMLHttpRequest) => {
+          if (!isAdminMode) {
+            const parsedHeaders = parseXHRHeaders(xhr.getAllResponseHeaders());
+            handleValidationHeaders({
+              headers: parsedHeaders,
+              parentName: parentName,
+              data: xhr.response,
+              uppy: uppy,
+              isAdminMode: isAdminMode,
+            });
+          }
+
+          return xhr.status === 204 ? '' : xhr.response;
+        },
       });
     }
-  }, [isAdminMode, uppy, imsIngestApiUrl]);
+  }, [isAdminMode, uppy, imsIngestApiUrl, parentName]);
 
   React.useEffect(() => {
     const handleFileAdded = (
@@ -379,6 +382,7 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
         }}
         onRequestClose={handleClose}
         closeModalOnClickOutside={false}
+        showRemoveButtonAfterComplete={true}
         hideUploadButton={isPendingCatalogueItemsTemplateValidation}
         note={`Files cannot be larger than ${maxFileSizeMB}MB. Supported file types: ${spreadsheetAllowedFileExtensions.join(', ')}.`}
         animateOpenClose={false}
