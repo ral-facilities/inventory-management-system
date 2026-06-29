@@ -571,6 +571,14 @@ exports[`Systems Layout Error Component > renders system error page correctly 1`
               class="MuiTouchRipple-root css-r3djoj-MuiTouchRipple-root"
             >
               <span
+                class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible"
+                style="width: 1px; height: 1px; top: -0.5px; left: -0.5px;"
+              >
+                <span
+                  class="MuiTouchRipple-child MuiTouchRipple-childLeaving"
+                />
+              </span>
+              <span
                 class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible MuiTouchRipple-ripplePulsate"
                 style="width: 1px; height: 1px; top: -0.5px; left: -0.5px;"
               >

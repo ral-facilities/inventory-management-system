@@ -1,7 +1,119 @@
+import { HttpResponse } from 'msw';
+
+export const backendErrorMessage = {
+  IMSIngestAPIVersion: {
+    apiMessage:
+      "Unable to find the custom document property 'IMSIngestAPIVersion' in the workbook properties",
+    uiMessage:
+      'This spreadsheet appears to be corrupted or invalid. Please download a new template and copy your data into it before trying again.',
+  },
+
+  InvalidSpreadsheetFile: {
+    apiMessage: 'File given is not a valid spreadsheet',
+    uiMessage:
+      'This spreadsheet appears to be corrupted or invalid. Please download a new template and copy your data into it before trying again.',
+  },
+
+  FileTypeMismatch: {
+    apiMessage:
+      'File does not contain the correct extension or content type do not match',
+    uiMessage: 'File extension does not match content type.',
+  },
+
+  UnsupportedFileExtension: {
+    apiMessage: 'File extension is not supported',
+    uiMessage: 'File type not supported.',
+  },
+
+  MissingEntity: {
+    apiMessage: 'The specified catalogue category does not exist',
+    uiMessage:
+      'The selected catalogue category no longer exists or is invalid. Please navigate to a valid category catalogue that contains catalogue items and try again.',
+  },
+
+  NonLeafCatalogueCategoryError: {
+    apiMessage:
+      'Cannot have a catalogue items template for a non-leaf catalogue category',
+    uiMessage:
+      'The selected catalogue category no longer exists or is invalid. Please navigate to a valid category catalogue that contains catalogue items and try again.',
+  },
+
+  InvalidCatalogueItemData: {
+    apiMessage: 'Invalid catalogue item data',
+    uiMessage:
+      'The uploaded spreadsheet contains invalid catalogue item data. Please upload the file again to view the validation errors, correct them in the spreadsheet, and then try again.',
+  },
+  TooManyCatalogueItems: {
+    apiMessage:
+      'Too many catalogue items in spreadsheet. Found 1050 but only a maximum of 1000 can be processed at once.',
+    uiMessage:
+      'Your spreadsheet contains too many catalogue items. The maximum allowed is 1000. Please reduce the number of rows and try again.',
+  },
+
+  MaximumAllowedCatalogueItems: {
+    apiMessage:
+      'Too many catalogue items in spreadsheet. Found 1050 but only a maximum can be processed at once.',
+    uiMessage:
+      'Unable to determine maximum allowed catalogue items. Please contact the system administrator.',
+  },
+
+  CategoryMismatch: {
+    apiMessage:
+      'Spreadsheet was generated for a catalogue category with a different ID than the one provided',
+    uiMessage:
+      'This spreadsheet was created for a different catalogue category. Please download a new template for the correct catalogue category and copy your data into it before trying again.',
+  },
+
+  TemplateVersionMismatch: {
+    apiMessage:
+      'Spreadsheet was created by IMS Ingest API v1 which is incompatible with the current version',
+    uiMessage:
+      'This spreadsheet was created using an outdated or incompatible template. Please download the latest template and copy your data into it before trying again.',
+  },
+
+  MissingSheet: {
+    apiMessage:
+      "Unable to find the 'CatalogueItems Template' sheet in the workbook",
+    uiMessage:
+      'This spreadsheet appears to be corrupted or invalid. Please download a new template and copy your data into it before trying again.',
+  },
+
+  ColumnsModified: {
+    apiMessage:
+      'The columns within the template are either out of date or have been modified. Please generate a new template.',
+    uiMessage:
+      'The columns in this spreadsheet are outdated or have been modified. Please download a new template and copy your data into it before trying again.',
+  },
+};
+
+interface IngestEndpointHelperProps {
+  warnings: number;
+  errors: number;
+  valid: boolean;
+}
+const ingestEndpointHelper = async (props: IngestEndpointHelperProps) => {
+  const { warnings, errors, valid } = props;
+
+  const response = await fetch('/src/mocks/CatalogueItemTemplate-test.xlsx');
+  const blob = await response.blob();
+
+  return new HttpResponse(blob, {
+    status: 200,
+    headers: {
+      'Content-Type':
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'Content-Disposition': `attachment; filename="CatalogueItemTemplate-test-Validated.xlsx"`,
+      'IMSIngestAPI-Validation-Warnings': String(warnings),
+      'IMSIngestAPI-Validation-Errors': String(errors),
+      'IMSIngestAPI-Validation-Valid': String(valid),
+    },
+  });
+};
 describe('Catalogue Items', () => {
   beforeEach(() => {
     cy.visit('/catalogue/4');
   });
+
   afterEach(() => {
     cy.clearMocks();
   });
@@ -13,9 +125,9 @@ describe('Catalogue Items', () => {
 
     cy.findByRole('button', { name: 'Add Catalogue Item' }).should('exist');
   });
+
   it('adds a catalogue item', () => {
     cy.findByRole('button', { name: 'Add Catalogue Item' }).click();
-
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
@@ -1189,5 +1301,455 @@ describe('Catalogue Items', () => {
           'The destination catalogue item properties must precisely match the current destination. Ensure identical attributes, order, and formatting, with no spacing variations.'
         );
       });
+  });
+
+  it('downloads template', () => {
+    cy.setMode({ admin: false });
+    cy.findByRole('button', { name: 'Validate spreadsheet' }).click();
+
+    cy.findByRole('dialog').should('be.visible');
+    cy.findByRole('button', { name: 'download template' }).click();
+    cy.readFile(
+      './cypress/downloads/CatalogueItemTemplate-Cameras.xlsx'
+    ).should('exist');
+  });
+
+  describe('spreadsheets (admin mode)', () => {
+    beforeEach(() => {
+      cy.setMode({ admin: true });
+    });
+
+    it('uploads a template', () => {
+      cy.findByRole('button', { name: 'Import spreadsheet' }).click();
+
+      cy.findByRole('dialog').should('be.visible');
+
+      cy.get('.uppy-Dashboard-input').as('fileInput');
+
+      cy.get('@fileInput')
+        .first()
+        .selectFile(
+          ['cypress/fixtures/spreadsheets/CatalogueItemTemplate-test.xlsx'],
+          { force: true }
+        );
+      cy.startSnoopingBrowserMockedRequest();
+
+      cy.findByText('Upload 1 file').click();
+
+      cy.findByText('Complete').should('be.visible');
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: '/spreadsheets/catalogue-items/validate',
+      }).should((postRequests) => {
+        expect(postRequests.length).eq(1);
+      });
+
+      cy.findByText(
+        'Validation complete. No errors or warnings found. Please click Upload to proceed.'
+      ).should('exist');
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: '/spreadsheets/catalogue-items/ingest',
+      }).should((postRequests) => {
+        expect(postRequests.length).eq(1);
+      });
+    });
+
+    it('displays a warning message when there are warnings in the spreadsheet', () => {
+      cy.window().its('msw').should('not.equal', undefined);
+      cy.window().then((window) => {
+        const { worker, http } = window.msw;
+
+        worker.use(
+          http.post('/spreadsheets/catalogue-items/validate', async () => {
+            return await ingestEndpointHelper({
+              warnings: 5,
+              errors: 0,
+              valid: true,
+            });
+          })
+        );
+      });
+
+      cy.findByRole('button', { name: 'Import spreadsheet' }).click();
+
+      cy.findByRole('dialog').should('be.visible');
+
+      cy.get('.uppy-Dashboard-input').as('fileInput');
+
+      cy.get('@fileInput')
+        .first()
+        .selectFile(
+          ['cypress/fixtures/spreadsheets/CatalogueItemTemplate-test.xlsx'],
+          { force: true }
+        );
+      cy.startSnoopingBrowserMockedRequest();
+
+      cy.findByText('Upload 1 file').click();
+
+      cy.findByText('Complete').should('be.visible');
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: '/spreadsheets/catalogue-items/validate',
+      }).should((postRequests) => {
+        expect(postRequests.length).eq(1);
+      });
+
+      cy.findByText(
+        'Validation completed with 5 warnings. A spreadsheet highlighting the warnings has been downloaded. Please click Upload to proceed.'
+      ).should('exist');
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: '/spreadsheets/catalogue-items/ingest',
+      }).should((postRequests) => {
+        expect(postRequests.length).eq(1);
+      });
+
+      cy.readFile(
+        './cypress/downloads/CatalogueItemTemplate-test-Validated.xlsx'
+      ).should('exist');
+    });
+
+    it('displays an error message when there are errors in the spreadsheet', () => {
+      cy.window().its('msw').should('not.equal', undefined);
+      cy.window().then((window) => {
+        const { worker, http } = window.msw;
+
+        worker.use(
+          http.post('/spreadsheets/catalogue-items/validate', async () => {
+            return await ingestEndpointHelper({
+              warnings: 0,
+              errors: 5,
+              valid: false,
+            });
+          })
+        );
+      });
+
+      cy.findByRole('button', { name: 'Import spreadsheet' }).click();
+
+      cy.findByRole('dialog').should('be.visible');
+
+      cy.get('.uppy-Dashboard-input').as('fileInput');
+
+      cy.get('@fileInput')
+        .first()
+        .selectFile(
+          ['cypress/fixtures/spreadsheets/CatalogueItemTemplate-test.xlsx'],
+          { force: true }
+        );
+      cy.startSnoopingBrowserMockedRequest();
+
+      cy.findByText(
+        'Validation failed with 5 errors. A spreadsheet with highlighted issues has been downloaded.'
+      ).should('exist');
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: '/spreadsheets/catalogue-items/validate',
+      }).should((postRequests) => {
+        expect(postRequests.length).eq(1);
+      });
+
+      cy.readFile(
+        './cypress/downloads/CatalogueItemTemplate-test-Validated.xlsx'
+      ).should('exist');
+    });
+
+    it('displays an error and warning message when there are errors and warnings in the spreadsheet', () => {
+      cy.window().its('msw').should('not.equal', undefined);
+      cy.window().then((window) => {
+        const { worker, http } = window.msw;
+
+        worker.use(
+          http.post('/spreadsheets/catalogue-items/validate', async () => {
+            return await ingestEndpointHelper({
+              warnings: 5,
+              errors: 5,
+              valid: false,
+            });
+          })
+        );
+      });
+
+      cy.findByRole('button', { name: 'Import spreadsheet' }).click();
+
+      cy.findByRole('dialog').should('be.visible');
+
+      cy.get('.uppy-Dashboard-input').as('fileInput');
+
+      cy.get('@fileInput')
+        .first()
+        .selectFile(
+          ['cypress/fixtures/spreadsheets/CatalogueItemTemplate-test.xlsx'],
+          { force: true }
+        );
+      cy.startSnoopingBrowserMockedRequest();
+
+      cy.findByText(
+        'Validation failed with 5 errors and 5 warnings. A spreadsheet with highlighted issues has been downloaded.'
+      ).should('exist');
+
+      cy.readFile(
+        './cypress/downloads/CatalogueItemTemplate-test-Validated.xlsx'
+      ).should('exist');
+    });
+
+    Object.entries(backendErrorMessage).forEach(
+      ([key, { apiMessage, uiMessage }]) => {
+        it(`displays ${key} error message`, () => {
+          cy.window().its('msw').should('not.equal', undefined);
+          cy.window().then((window) => {
+            const { worker, http } = window.msw;
+
+            worker.use(
+              http.post('/spreadsheets/catalogue-items/validate', () => {
+                return HttpResponse.json(
+                  { detail: apiMessage },
+                  { status: 422 }
+                );
+              })
+            );
+          });
+
+          cy.findByRole('button', { name: 'Import spreadsheet' }).click();
+
+          cy.findByRole('dialog').should('be.visible');
+
+          cy.get('.uppy-Dashboard-input')
+            .first()
+            .selectFile(
+              ['cypress/fixtures/spreadsheets/CatalogueItemTemplate-test.xlsx'],
+              { force: true }
+            );
+
+          cy.startSnoopingBrowserMockedRequest();
+
+          cy.contains(uiMessage).should('be.visible');
+
+          cy.findByText('Upload 1 file').should('not.exist');
+        });
+      }
+    );
+  });
+
+  describe('spreadsheets (normal mode)', () => {
+    beforeEach(() => {
+      cy.setMode({ admin: false });
+    });
+
+    it('validates a template', () => {
+      cy.findByRole('button', { name: 'Validate spreadsheet' }).click();
+
+      cy.findByRole('dialog').should('be.visible');
+
+      cy.get('.uppy-Dashboard-input').as('fileInput');
+
+      cy.get('@fileInput')
+        .first()
+        .selectFile(
+          ['cypress/fixtures/spreadsheets/CatalogueItemTemplate-test.xlsx'],
+          { force: true }
+        );
+      cy.startSnoopingBrowserMockedRequest();
+
+      cy.findByText('Upload 1 file').click();
+
+      cy.findByText('Complete').should('be.visible');
+
+      cy.findByText(
+        'Validation complete. No errors or warnings found. Please contact an admin to import the spreadsheet.'
+      ).should('exist');
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: '/spreadsheets/catalogue-items/validate',
+      }).should((postRequests) => {
+        expect(postRequests.length).eq(1);
+      });
+    });
+
+    it('displays a warning message when there are warnings in the spreadsheet', () => {
+      cy.window().its('msw').should('not.equal', undefined);
+      cy.window().then((window) => {
+        const { worker, http } = window.msw;
+
+        worker.use(
+          http.post('/spreadsheets/catalogue-items/validate', async () => {
+            return await ingestEndpointHelper({
+              warnings: 5,
+              errors: 0,
+              valid: true,
+            });
+          })
+        );
+      });
+
+      cy.findByRole('button', { name: 'Validate spreadsheet' }).click();
+
+      cy.findByRole('dialog').should('be.visible');
+
+      cy.get('.uppy-Dashboard-input').as('fileInput');
+
+      cy.get('@fileInput')
+        .first()
+        .selectFile(
+          ['cypress/fixtures/spreadsheets/CatalogueItemTemplate-test.xlsx'],
+          { force: true }
+        );
+      cy.startSnoopingBrowserMockedRequest();
+
+      cy.findByText('Upload 1 file').click();
+
+      cy.findByText('Complete').should('be.visible');
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: '/spreadsheets/catalogue-items/validate',
+      }).should((postRequests) => {
+        expect(postRequests.length).eq(1);
+      });
+
+      cy.findByText(
+        'Validation completed with 5 warnings. A spreadsheet highlighting the warnings has been downloaded. Please contact an admin to import the spreadsheet.'
+      ).should('exist');
+
+      cy.readFile(
+        './cypress/downloads/CatalogueItemTemplate-test-Validated.xlsx'
+      ).should('exist');
+    });
+
+    it('displays an error message when there are errors in the spreadsheet', () => {
+      cy.window().its('msw').should('not.equal', undefined);
+      cy.window().then((window) => {
+        const { worker, http } = window.msw;
+
+        worker.use(
+          http.post('/spreadsheets/catalogue-items/validate', async () => {
+            return await ingestEndpointHelper({
+              warnings: 0,
+              errors: 5,
+              valid: false,
+            });
+          })
+        );
+      });
+
+      cy.findByRole('button', { name: 'Validate spreadsheet' }).click();
+
+      cy.findByRole('dialog').should('be.visible');
+
+      cy.get('.uppy-Dashboard-input').as('fileInput');
+
+      cy.get('@fileInput')
+        .first()
+        .selectFile(
+          ['cypress/fixtures/spreadsheets/CatalogueItemTemplate-test.xlsx'],
+          { force: true }
+        );
+      cy.startSnoopingBrowserMockedRequest();
+
+      cy.findByText('Upload 1 file').click();
+
+      cy.findByText('Complete').should('be.visible');
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: '/spreadsheets/catalogue-items/validate',
+      }).should((postRequests) => {
+        expect(postRequests.length).eq(1);
+      });
+
+      cy.findByText(
+        'Validation failed with 5 errors. A spreadsheet with highlighted issues has been downloaded.'
+      ).should('exist');
+
+      cy.readFile(
+        './cypress/downloads/CatalogueItemTemplate-test-Validated.xlsx'
+      ).should('exist');
+    });
+
+    it('displays an error and warning message when there are errors and warnings in the spreadsheet', () => {
+      cy.window().its('msw').should('not.equal', undefined);
+      cy.window().then((window) => {
+        const { worker, http } = window.msw;
+
+        worker.use(
+          http.post('/spreadsheets/catalogue-items/validate', async () => {
+            return await ingestEndpointHelper({
+              warnings: 5,
+              errors: 5,
+              valid: false,
+            });
+          })
+        );
+      });
+
+      cy.findByRole('button', { name: 'Validate spreadsheet' }).click();
+
+      cy.findByRole('dialog').should('be.visible');
+
+      cy.get('.uppy-Dashboard-input').as('fileInput');
+
+      cy.get('@fileInput')
+        .first()
+        .selectFile(
+          ['cypress/fixtures/spreadsheets/CatalogueItemTemplate-test.xlsx'],
+          { force: true }
+        );
+
+      cy.findByText('Upload 1 file').click();
+
+      cy.startSnoopingBrowserMockedRequest();
+
+      cy.findByText(
+        'Validation failed with 5 errors and 5 warnings. A spreadsheet with highlighted issues has been downloaded.'
+      ).should('exist');
+
+      cy.readFile(
+        './cypress/downloads/CatalogueItemTemplate-test-Validated.xlsx'
+      ).should('exist');
+    });
+
+    Object.entries(backendErrorMessage).forEach(
+      ([key, { apiMessage, uiMessage }]) => {
+        it(`displays ${key} error message`, () => {
+          cy.window().its('msw').should('not.equal', undefined);
+          cy.window().then((window) => {
+            const { worker, http } = window.msw;
+
+            worker.use(
+              http.post('/spreadsheets/catalogue-items/validate', () => {
+                return HttpResponse.json(
+                  { detail: apiMessage },
+                  { status: 422 }
+                );
+              })
+            );
+          });
+
+          cy.findByRole('button', { name: 'Validate spreadsheet' }).click();
+
+          cy.findByRole('dialog').should('be.visible');
+
+          cy.get('.uppy-Dashboard-input')
+            .first()
+            .selectFile(
+              ['cypress/fixtures/spreadsheets/CatalogueItemTemplate-test.xlsx'],
+              { force: true }
+            );
+          cy.findByText('Upload 1 file').click();
+          cy.startSnoopingBrowserMockedRequest();
+
+          cy.findAllByLabelText(uiMessage).should('have.length', 2);
+
+          cy.findByText('Upload 1 file').should('not.exist');
+        });
+      }
+    );
   });
 });

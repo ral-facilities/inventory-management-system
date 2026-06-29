@@ -14,6 +14,7 @@ const initialSettings: InventoryManagementSystemSettings = {
   imsApiUrl: '',
   osApiUrl: '',
   imsJsApiUrl: '',
+  imsIngestApiUrl: '',
   maxAttachmentSizeBytes: 104857600,
   attachmentAllowedFileExtensions: [
     '.csv',
@@ -25,6 +26,9 @@ const initialSettings: InventoryManagementSystemSettings = {
     '.xls',
     '.xlsx',
   ],
+  maxSpreadsheetSizeBytes: 10485760,
+  spreadsheetAllowedFileExtensions: ['.xlsx'],
+  maxImageSizeBytes: 52428800,
   imageAllowedFileExtensions: [
     '.bmp',
     '.jpe',
@@ -35,8 +39,8 @@ const initialSettings: InventoryManagementSystemSettings = {
     '.tiff',
     '.webp',
   ],
-  maxImageSizeBytes: 52428800,
   privilegedRoles: ['admin'],
+  serialNumberPrefillEnabled: true,
   routes: [],
   pluginHost: '',
 };

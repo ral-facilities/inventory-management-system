@@ -7,6 +7,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
 import InfoOutlined from '@mui/icons-material/InfoOutlined';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
+import UploadIcon from '@mui/icons-material/Upload';
 import {
   Box,
   Button,
@@ -49,9 +50,11 @@ import {
   ROWS_PER_PAGE_OPTIONS,
 } from '../../common/consts';
 import CriticalityTooltipIcon from '../../common/criticalityTooltipIcon.component';
+import ImportTemplateDialog from '../../common/importTemplateDialog.component';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import { SparesColumnHeaderInformationTooltip } from '../../common/sparesInformationTooltip.component';
 import { useAppSelector } from '../../state/hook';
+import { selectAuthorisation } from '../../state/slices/authorisationSlice';
 import { selectCriticality } from '../../state/slices/criticalitySlice';
 import {
   COLUMN_FILTER_BOOLEAN_OPTIONS,
@@ -260,6 +263,9 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   const [obsoleteItemDialogOpen, setObsoleteItemDialogOpen] =
     React.useState<boolean>(false);
 
+  const [importTemplateDialogOpen, setImportTemplateDialogOpen] =
+    React.useState<boolean>(false);
+
   const [selectedCatalogueItem, setSelectedCatalogueItem] = React.useState<
     CatalogueItem | undefined
   >(undefined);
@@ -276,6 +282,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     isLoading = isLoading || query.isLoading;
     return query.data;
   });
+
+  const { isAdminMode } = useAppSelector(selectAuthorisation);
 
   // Once loading has finished - pair up all data for the table rows
   // If performance becomes a problem with this should remove find and fetch manufacturer
@@ -1094,6 +1102,18 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           >
             Add Catalogue Item
           </Button>
+          {!dense && (
+            <Button
+              startIcon={<UploadIcon />}
+              sx={{ mx: 0.5 }}
+              variant="outlined"
+              onClick={() => {
+                setImportTemplateDialogOpen(true);
+              }}
+            >
+              {isAdminMode ? 'Import' : 'Validate'} spreadsheet
+            </Button>
+          )}
           {
             // Don't show for the move to and obsolete dialogues
             requestOrigin === undefined && (
@@ -1268,6 +1288,14 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             onClose={() => setObsoleteItemDialogOpen(false)}
             catalogueItem={selectedCatalogueItem}
             parentInfo={parentInfo}
+          />
+
+          <ImportTemplateDialog
+            open={importTemplateDialogOpen}
+            onClose={() => setImportTemplateDialogOpen(false)}
+            parentId={parentInfo.id}
+            parentName={parentInfo.name}
+            isAdminMode={isAdminMode}
           />
         </>
       )}
