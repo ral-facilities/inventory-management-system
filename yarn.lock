@@ -2,7 +2,7 @@
 # Manual changes might be lost - proceed with caution!
 
 __metadata:
-  version: 8
+  version: 10
   cacheKey: 10c0
 
 "@actions/core@npm:^3.0.0":
@@ -6022,6 +6022,13 @@ __metadata:
     vite-plugin-css-injected-by-js: "npm:^3.5.2"
     vitest: "npm:4.1.8"
     zod: "npm:^3.25.0"
+  dependenciesMeta:
+    cypress:
+      built: true
+    esbuild:
+      built: true
+    msw:
+      built: true
   languageName: unknown
   linkType: soft
 
