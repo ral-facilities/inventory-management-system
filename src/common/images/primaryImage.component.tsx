@@ -86,18 +86,15 @@ export interface PrimaryImageProps {
 const PrimaryImage = (props: PrimaryImageProps) => {
   const { entityId, isDetailsPanel = false } = props;
 
-  let { data: imagesData, isLoading: imageLoading } = useGetImages(
+  const { data: imagesData, isLoading: imageLoading } = useGetImages(
     entityId,
     true
   );
 
   let primaryImageExists = !!imagesData && imagesData.length > 0;
 
-  if (imagesData == undefined){
-      imagesData = []
-  }
   const { data: fallbackImagesData, isLoading: fallbackImageLoading } = useGetImages(entityId);
-  if (fallbackImageLoading == false && primaryImageExists==false && fallbackImagesData != undefined){
+  if (fallbackImageLoading == false && primaryImageExists==false && fallbackImagesData != undefined && imagesData!= undefined){
     imagesData.push(fallbackImagesData[0]);
     primaryImageExists=true;
   }
