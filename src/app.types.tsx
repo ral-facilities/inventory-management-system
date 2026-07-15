@@ -3,6 +3,7 @@ import { MRT_ColumnFiltersState } from 'material-react-table';
 import {
   CatalogueCategory,
   CatalogueItem,
+  CatalogueItemSpreadsheetMetadata,
   Item,
   ItemPost,
   SparesDefinition,
@@ -241,6 +242,9 @@ export interface UppyImageUploadResponse extends APIImage, Body {}
 
 export interface UppyUploadMetadata extends ObjectFileUploadMetadata, Meta {}
 
+export interface UppySpreadSheetMetadata
+  extends CatalogueItemSpreadsheetMetadata, Body {}
+export interface UppySpreadSheetResponse extends Blob, Body {}
 // --------------------------------- SPARES -----------------------------------------------------------
 
 export interface SparesFilterStateType {
