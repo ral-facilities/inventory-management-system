@@ -91,7 +91,14 @@ const PrimaryImage = (props: PrimaryImageProps) => {
     true
   );
 
-  const primaryImageExists = !!imagesData && imagesData.length > 0;
+  let primaryImageExists = !!imagesData && imagesData.length > 0;
+
+  const { data: fallbackImagesData, isLoading: fallbackImageLoading } = useGetImages(entityId);
+  if (fallbackImageLoading == false && primaryImageExists==false && fallbackImagesData != undefined && imagesData!= undefined){
+    imagesData.push(fallbackImagesData[0]);
+    primaryImageExists=true;
+  }
+
 
   const [searchParams, setSearchParams] = useSearchParams();
 
