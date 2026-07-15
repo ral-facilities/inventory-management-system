@@ -1,23 +1,34 @@
-import { useTheme } from '@mui/material';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import DownloadIcon from '@mui/icons-material/Download';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Paper,
+  Step,
+  StepLabel,
+  Stepper,
+  styled,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
-import Uppy, { Body, Meta, UppyFile } from '@uppy/core';
-import '@uppy/core/dist/style.css';
-import '@uppy/dashboard/dist/style.css';
-import '@uppy/image-editor/dist/style.css';
+import Uppy, { Body, Meta } from '@uppy/core';
 import Informer from '@uppy/informer';
 import en_US from '@uppy/locales/lib/en_US';
 import ProgressBar from '@uppy/progress-bar';
-import { DashboardModal } from '@uppy/react';
+import { Dashboard } from '@uppy/react';
 import statusBarStates from '@uppy/status-bar/lib/StatusBarStates';
 import XHR from '@uppy/xhr-upload';
 import { AxiosError, AxiosResponse } from 'axios';
 import React from 'react';
 import { uppyOnAfterResponse, uppyOnBeforeRequest } from '../api/api';
-import {
-  usePostCatalogueItemsTemplate,
-  usePostCatalogueItemsTemplateValidation,
-} from '../api/ingest';
+import { usePostCatalogueItemsTemplate } from '../api/ingest';
 import { UppyImageUploadResponse, UppyUploadMetadata } from '../app.types';
+import handleTransferState from '../handleTransferState';
 import { useAppSelector } from '../state/hook';
 import { selectSettings } from '../state/slices/configSlice';
 import {
@@ -25,13 +36,56 @@ import {
   handleBlobDownload,
   parseSpreadsheetError,
 } from '../utils';
-import {
-  getUploadingState,
-  StyledUppyBox,
-  UppyDashboardLocaleStrings,
-} from './uppy.utils';
+import { FLEX_CONTAINER_PROPS, FORM_WITH_STEPPER_DIALOG_PROPS } from './consts';
+import { getUploadingState, UppyDashboardLocaleStrings } from './uppy.utils';
+
+const BaseUppyBox = styled('div')({
+  '& .uppy-Root': {
+    height: '100%',
+  },
+  '& .uppy-Dashboard.uppy-Dashboard--animateOpenClose.uppy-Dashboard--isInnerWrapVisible':
+    {
+      height: '100%',
+    },
+});
+
+export const ValidationUppyBox = styled(BaseUppyBox)({
+  // No override, keep remove button visible
+});
+
+export const ImportUppyBox = styled(BaseUppyBox)({
+  '& .uppy-Dashboard-Item-actionWrapper': {
+    display: 'none',
+  },
+});
 
 const UPPY_INFORMER_TIMEOUT = 10000;
+
+const getUppyLocale = (isAdminMode: boolean) => {
+  const action = isAdminMode ? 'Import' : 'Validate';
+  const actioning = isAdminMode ? 'Importing' : 'Validating';
+
+  return {
+    ...en_US.strings,
+
+    cancelUpload: `Cancel ${action.toLowerCase()}`,
+    pauseUpload: `Pause ${action.toLowerCase()}`,
+    resumeUpload: `Resume ${action.toLowerCase()}`,
+    retryUpload: `Retry ${action.toLowerCase()}`,
+
+    upload: action,
+    uploadComplete: `${action} complete`,
+    uploadFailed: `${action} failed`,
+    uploading: actioning,
+    uploadPaused: `${action} paused`,
+    uploadStalled: `${action} has not made any progress for %{seconds} seconds. You may want to retry it.`,
+
+    uploadXFiles: {
+      '0': `${action} %{smart_count} file`,
+      '1': `${action} %{smart_count} file`,
+    },
+  };
+};
 const parseXHRHeaders = (headerString: string): Record<string, string> => {
   return headerString
     .trim()
@@ -56,13 +110,14 @@ export interface ValidationHeadersProps<M extends Meta, B extends Body> {
   fileId?: string;
   parentName: string;
   data: Blob;
-  isAdminMode: boolean;
+  onChangeSpreadsheetValid: (val: boolean) => void;
 }
 
 export const handleValidationHeaders = <M extends Meta, B extends Body>(
   props: ValidationHeadersProps<M, B>
 ) => {
-  const { headers, uppy, fileId, parentName, data, isAdminMode } = props;
+  const { headers, uppy, fileId, parentName, data, onChangeSpreadsheetValid } =
+    props;
   const isValid = headers['imsingestapi-validation-valid'] === 'true';
   const errorCount = Number(headers['imsingestapi-validation-errors'] ?? 0);
   const warningCount = Number(headers['imsingestapi-validation-warnings'] ?? 0);
@@ -70,12 +125,20 @@ export const handleValidationHeaders = <M extends Meta, B extends Body>(
   const hasWarnings = warningCount > 0;
 
   if (hasErrors) {
+    onChangeSpreadsheetValid(false);
     const errorText = `${errorCount} error${errorCount !== 1 ? 's' : ''}`;
     const warningText = hasWarnings
       ? ` and ${warningCount} warning${warningCount !== 1 ? 's' : ''}`
       : '';
     const message = `Validation failed with ${errorText}${warningText}. A spreadsheet with highlighted issues has been downloaded.`;
     uppy?.info(message, 'error', UPPY_INFORMER_TIMEOUT);
+    handleTransferState([
+      {
+        name: 'Spreadsheet',
+        message: 'Invalid',
+        state: 'error',
+      },
+    ]);
     const filename = `CatalogueItemsValidationErrors-${parentName}.xlsx`;
     handleBlobDownload(data, headers, filename);
     if (fileId) {
@@ -85,23 +148,101 @@ export const handleValidationHeaders = <M extends Meta, B extends Body>(
   }
 
   if (hasWarnings) {
+    onChangeSpreadsheetValid(true);
     const warningText = `${warningCount} warning${
       warningCount !== 1 ? 's' : ''
     }`;
-    const message = `Validation completed with ${warningText}. A spreadsheet highlighting the warnings has been downloaded.${isAdminMode ? ' Please click Upload to proceed.' : ' Please contact an admin to import the spreadsheet.'}`;
+    const message = `Validation completed with ${warningText}. A spreadsheet highlighting the warnings has been downloaded. Please click Next to proceed.`;
     uppy?.info(message, 'warning', UPPY_INFORMER_TIMEOUT);
+    handleTransferState([
+      {
+        name: 'Spreadsheet',
+        message: 'Valid with warnings',
+        state: 'warning',
+      },
+    ]);
     const filename = `CatalogueItemsValidationWarnings-${parentName}.xlsx`;
     handleBlobDownload(data, headers, filename);
     return;
   }
-
+  onChangeSpreadsheetValid(true);
   uppy?.info(
-    `Validation complete. No errors or warnings found.${isAdminMode ? ' Please click Upload to proceed.' : ' Please contact an admin to import the spreadsheet.'}`,
+    `Validation complete. No errors or warnings found. Please click Next to proceed.`,
     'success',
     5000
   );
+  handleTransferState([
+    {
+      name: 'Spreadsheet',
+      message: 'Valid',
+      state: 'success',
+    },
+  ]);
 };
 
+interface CreateSpreadsheetUppyProps<M extends Meta, B extends Body> {
+  endpoint: string;
+  parentName: string;
+  maxSpreadsheetSizeBytes: number;
+  spreadsheetAllowedFileExtensions: string[];
+  onChangeSpreadsheetValid: (val: boolean) => void;
+  handleValidationHeaders?: (props: ValidationHeadersProps<M, B>) => void;
+}
+const createSpreadsheetUppy = <M extends Meta, B extends Body>(
+  props: CreateSpreadsheetUppyProps<M, B>
+) => {
+  const {
+    endpoint,
+    parentName,
+    handleValidationHeaders,
+    maxSpreadsheetSizeBytes,
+    spreadsheetAllowedFileExtensions,
+    onChangeSpreadsheetValid,
+  } = props;
+  const uppy = new Uppy<M, B>({
+    autoProceed: false,
+    infoTimeout: UPPY_INFORMER_TIMEOUT,
+    restrictions: {
+      maxNumberOfFiles: 1,
+      maxFileSize: maxSpreadsheetSizeBytes,
+      requiredMetaFields: ['name'],
+      allowedFileTypes: spreadsheetAllowedFileExtensions,
+    },
+  })
+    .use(ProgressBar)
+    .use(Informer);
+
+  uppy.use(XHR, {
+    endpoint,
+    method: 'POST',
+    fieldName: 'spreadsheet_file',
+    responseType: 'blob',
+
+    async onBeforeRequest(xhr) {
+      uppyOnBeforeRequest(xhr);
+    },
+
+    getResponseData(xhr) {
+      const parsedHeaders = parseXHRHeaders(xhr.getAllResponseHeaders());
+      if (handleValidationHeaders)
+        handleValidationHeaders({
+          headers: parsedHeaders,
+          parentName: parentName,
+          data: xhr.response,
+          uppy: uppy,
+          onChangeSpreadsheetValid: onChangeSpreadsheetValid,
+        });
+
+      return xhr.status === 204 ? '' : xhr.response;
+    },
+
+    async onAfterResponse(xhr) {
+      await uppyOnAfterResponse(xhr, parseSpreadsheetError);
+    },
+  });
+
+  return uppy;
+};
 export interface ImportTemplateDialogProps {
   open: boolean;
   onClose: () => void;
@@ -113,17 +254,6 @@ export interface ImportTemplateDialogProps {
 const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
   const { open, onClose, parentId, parentName, isAdminMode } = props;
 
-  const theme = useTheme();
-  const { mutateAsync: postCatalogueItemsTemplate } =
-    usePostCatalogueItemsTemplate();
-
-  const {
-    mutateAsync: postCatalogueItemsTemplateValidation,
-    isPending: isPendingCatalogueItemsTemplateValidation,
-  } = usePostCatalogueItemsTemplateValidation();
-
-  const queryClient = useQueryClient();
-
   const {
     settings: {
       imsIngestApiUrl,
@@ -132,44 +262,133 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
     },
   } = useAppSelector(selectSettings);
 
+  const theme = useTheme();
+
+  const queryClient = useQueryClient();
+
+  const [isValidSpreadsheet, setIsValidSpreadsheet] =
+    React.useState<boolean>(false);
+
+  const [activeStep, setActiveStep] = React.useState<number>(0);
+
   // Note: File systems use a factor of 1024 for GB, MB and KB instead of 1000,
   // so here the former is expected despite them really being GiB, MiB and KiB.
   const maxFileSizeMB = maxSpreadsheetSizeBytes / 1024 ** 2;
 
-  const [uppy] = React.useState<
+  const [validateUppy] = React.useState<
     Uppy<UppyUploadMetadata, UppyImageUploadResponse>
-  >(() => {
-    const newUppy = new Uppy<UppyUploadMetadata, UppyImageUploadResponse>({
-      autoProceed: false,
-      infoTimeout: 10000,
-      restrictions: {
-        maxNumberOfFiles: 1,
-        maxFileSize: maxSpreadsheetSizeBytes,
-        requiredMetaFields: ['name'],
-        allowedFileTypes: spreadsheetAllowedFileExtensions,
-      },
+  >(() =>
+    createSpreadsheetUppy({
+      endpoint: `${imsIngestApiUrl}/spreadsheets/catalogue-items/validate`,
+      parentName: parentName,
+      maxSpreadsheetSizeBytes: maxSpreadsheetSizeBytes,
+      spreadsheetAllowedFileExtensions: spreadsheetAllowedFileExtensions,
+      onChangeSpreadsheetValid: setIsValidSpreadsheet,
+      handleValidationHeaders: handleValidationHeaders,
     })
-      .use(ProgressBar)
-      .use(Informer);
+  );
 
-    newUppy.use(XHR, {
-      endpoint: `${imsIngestApiUrl}/spreadsheets/catalogue-items/${isAdminMode ? 'ingest' : 'validate'}`,
-      method: 'POST',
-      fieldName: 'spreadsheet_file',
-      responseType: 'blob',
-      async onBeforeRequest(xhr) {
-        uppyOnBeforeRequest(xhr);
-      },
-      getResponseData(xhr) {
-        return xhr.status === 204 ? '' : xhr.response;
-      },
-      async onAfterResponse(xhr) {
-        await uppyOnAfterResponse(xhr, parseSpreadsheetError);
-      },
-    });
+  const [importUppy] = React.useState<
+    Uppy<UppyUploadMetadata, UppyImageUploadResponse>
+  >(() =>
+    createSpreadsheetUppy({
+      endpoint: `${imsIngestApiUrl}/spreadsheets/catalogue-items/ingest`,
+      parentName: parentName,
+      maxSpreadsheetSizeBytes: maxSpreadsheetSizeBytes,
+      spreadsheetAllowedFileExtensions: spreadsheetAllowedFileExtensions,
+      onChangeSpreadsheetValid: setIsValidSpreadsheet,
+    })
+  );
 
-    return newUppy;
-  });
+  validateUppy.on('upload-error', () => setIsValidSpreadsheet(false));
+  validateUppy.on('file-removed', () => setIsValidSpreadsheet(false));
+
+  const {
+    files: validateFiles = {},
+    error: validateError,
+    recoveredState: validateRecoveredState,
+  } = validateUppy.getState();
+  const { isAllComplete: validateIsAllComplete } =
+    validateUppy.getObjectOfFilesPerState();
+
+  const {
+    files: importFiles = {},
+    error: importError,
+    recoveredState: importRecoveredState,
+  } = validateUppy.getState();
+  const { isAllComplete: importIsAllComplete } =
+    validateUppy.getObjectOfFilesPerState();
+
+  const handleClose = React.useCallback(() => {
+    // prevent users from closing the dialog while the download is in progress
+    const validateUploadState = getUploadingState(
+      validateError,
+      validateIsAllComplete,
+      validateRecoveredState,
+      validateFiles
+    );
+
+    const importUploadState = getUploadingState(
+      importError,
+      importIsAllComplete,
+      importRecoveredState,
+      importFiles
+    );
+    if (
+      validateUploadState === statusBarStates.STATE_POSTPROCESSING ||
+      validateUploadState === statusBarStates.STATE_PREPROCESSING ||
+      validateUploadState === statusBarStates.STATE_UPLOADING ||
+      importUploadState === statusBarStates.STATE_POSTPROCESSING ||
+      importUploadState === statusBarStates.STATE_PREPROCESSING ||
+      importUploadState === statusBarStates.STATE_UPLOADING
+    ) {
+      return;
+    }
+    onClose();
+
+    validateUppy.clear();
+    importUppy.clear();
+    queryClient.invalidateQueries({ queryKey: ['CatalogueItems', parentId] });
+    setIsValidSpreadsheet(false);
+    setActiveStep(0);
+  }, [
+    validateError,
+    validateIsAllComplete,
+    validateRecoveredState,
+    validateFiles,
+    importError,
+    importIsAllComplete,
+    importRecoveredState,
+    importFiles,
+    onClose,
+    validateUppy,
+    importUppy,
+    queryClient,
+    parentId,
+  ]);
+
+  React.useEffect(() => {
+    validateUppy.setMeta({ catalogue_category_id: parentId });
+  }, [parentId, validateUppy]);
+
+  React.useEffect(() => {
+    importUppy.setMeta({ catalogue_category_id: parentId });
+  }, [parentId, importUppy]);
+
+  React.useEffect(() => {
+    if (isValidSpreadsheet) {
+      importUppy.clear();
+      const uploadedFile = validateUppy.getFiles()[0];
+      importUppy.addFile({
+        name: uploadedFile.name || '',
+        type: uploadedFile.type,
+        data: uploadedFile.data,
+      });
+    }
+  }, [parentId, importUppy, isValidSpreadsheet, validateUppy]);
+
+  const { mutateAsync: postCatalogueItemsTemplate } =
+    usePostCatalogueItemsTemplate();
 
   const handleDownloadTemplate = React.useCallback(async () => {
     postCatalogueItemsTemplate({ catalogueCategoryId: parentId })
@@ -191,208 +410,251 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
         ) {
           parsedErrorMessage = `The selected catalogue category no longer exists or is invalid. Please navigate to a valid category catalogue that contains catalogue items and try again.`;
         }
-        uppy.info(parsedErrorMessage, 'error', UPPY_INFORMER_TIMEOUT);
+        handleTransferState([
+          {
+            name: 'Download template',
+            message: parsedErrorMessage,
+            state: 'error',
+          },
+        ]);
       });
-  }, [postCatalogueItemsTemplate, parentId, parentName, uppy]);
+  }, [postCatalogueItemsTemplate, parentId, parentName]);
 
-  React.useEffect(() => {
-    const injectDownloadLink = () => {
-      const title = document.querySelector(
-        '.uppy-Dashboard-AddFiles-title'
-      ) as HTMLElement;
+  // Stepper
+  const STEPS = [
+    'Download spreadsheet',
+    'Validate spreadsheet',
+    'Import spreadsheet',
+  ];
 
-      if (!title) return;
-
-      const { files = {} } = uppy.getState();
-      const fileCount = Object.keys(files).length;
-
-      if (fileCount > 0) {
-        document.getElementById('download-template-link')?.remove();
-        return;
-      }
-
-      if (document.getElementById('download-template-link')) return;
-
-      const browseBtn = title.querySelector(
-        '.uppy-Dashboard-browse'
-      ) as HTMLElement;
-
-      if (!browseBtn) return;
-
-      const link = document.createElement('button');
-      link.id = 'download-template-link';
-      link.className = 'uppy-u-reset uppy-c-btn uppy-Dashboard-browse';
-      link.innerText = 'download template';
-      link.onclick = () => {
-        handleDownloadTemplate();
-      };
-      browseBtn.insertAdjacentElement('afterend', link);
-      browseBtn.insertAdjacentText('afterend', ' or ');
-    };
-
-    const update = () => {
-      requestAnimationFrame(() => {
-        injectDownloadLink();
-      });
-    };
-
-    uppy.on('file-added', update);
-    uppy.on('file-removed', update);
-    uppy.on('state-update', update);
-    uppy.on('dashboard:modal-open', update);
-
-    update();
-
-    return () => {
-      uppy.off('file-added', update);
-      uppy.off('file-removed', update);
-      uppy.off('state-update', update);
-      uppy.off('dashboard:modal-open', update);
-    };
-  }, [handleDownloadTemplate, uppy]);
-
-  // Destroy uppy instance on unmount (Should also avoid errors in tests e.g. 'ReferenceError: window is not defined' from code
-  // executing after tests have completed)
-  React.useEffect(
-    () => () => {
-      uppy.destroy();
-    },
-    [uppy]
-  );
-
-  const { files = {}, error, recoveredState } = uppy.getState();
-  const { isAllComplete } = uppy.getObjectOfFilesPerState();
-
-  const handleClose = React.useCallback(() => {
-    // prevent users from closing the dialog while the download is in progress
-    const uploadState = getUploadingState(
-      error,
-      isAllComplete,
-      recoveredState,
-      files
-    );
-    if (
-      uploadState === statusBarStates.STATE_POSTPROCESSING ||
-      uploadState === statusBarStates.STATE_PREPROCESSING ||
-      uploadState === statusBarStates.STATE_UPLOADING
-    ) {
-      return;
+  const handleNext = React.useCallback((activeStep: number) => {
+    switch (activeStep) {
+      case 0:
+        return setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      case 1:
+        return setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      case 2:
+        return false;
     }
-    onClose();
-    uppy.clear();
-    queryClient.invalidateQueries({ queryKey: ['CatalogueItems', parentId] });
-  }, [
-    parentId,
-    error,
-    files,
-    isAllComplete,
-    onClose,
-    queryClient,
-    recoveredState,
-    uppy,
-  ]);
+  }, []);
 
-  React.useEffect(() => {
-    uppy.setMeta({ catalogue_category_id: parentId });
-  }, [parentId, uppy]);
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
 
-  React.useEffect(() => {
-    const xhrPlugin = uppy.getPlugin('XHRUpload');
-    if (xhrPlugin) {
-      xhrPlugin.setOptions({
-        endpoint: `${imsIngestApiUrl}/spreadsheets/catalogue-items/${isAdminMode ? 'ingest' : 'validate'}`,
-        getResponseData: (xhr: XMLHttpRequest) => {
-          if (!isAdminMode) {
-            const parsedHeaders = parseXHRHeaders(xhr.getAllResponseHeaders());
-            handleValidationHeaders({
-              headers: parsedHeaders,
-              parentName: parentName,
-              data: xhr.response,
-              uppy: uppy,
-              isAdminMode: isAdminMode,
-            });
-          }
+  const renderStepContent = (step: number) => {
+    switch (step) {
+      case 0:
+        return (
+          <Paper
+            variant="outlined"
+            sx={{
+              p: 2,
+              borderRadius: 2,
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              textAlign: 'center',
+            }}
+          >
+            <DownloadIcon color="primary" sx={{ fontSize: 64, mb: 2 }} />
 
-          return xhr.status === 204 ? '' : xhr.response;
-        },
-      });
+            <Typography variant="h6" gutterBottom>
+              Download Catalogue Template
+            </Typography>
+
+            <Typography color="text.secondary" sx={{ mb: 3, maxWidth: 500 }}>
+              Download the spreadsheet template, populate it with catalogue item
+              data, then proceed to validation.
+            </Typography>
+
+            <Button
+              variant="contained"
+              size="large"
+              startIcon={<DownloadIcon />}
+              onClick={handleDownloadTemplate}
+            >
+              Download Template
+            </Button>
+          </Paper>
+        );
+
+      case 1:
+        return (
+          <Paper
+            variant="outlined"
+            sx={{
+              p: 2,
+              borderRadius: 2,
+              display: 'flex',
+              flexDirection: 'column',
+              ...FLEX_CONTAINER_PROPS,
+            }}
+          >
+            <Typography color="text.secondary" sx={{ mb: 3 }}>
+              Upload your completed spreadsheet to validate catalogue items. Any
+              errors or warnings will be highlighted in a downloadable
+              spreadsheet.
+            </Typography>
+            <ValidationUppyBox style={FLEX_CONTAINER_PROPS}>
+              <Dashboard
+                uppy={validateUppy}
+                proudlyDisplayPoweredByUppy={false}
+                width="100%"
+                height="100%"
+                locale={{
+                  strings: getUppyLocale(false) as UppyDashboardLocaleStrings<
+                    UppyUploadMetadata,
+                    UppyImageUploadResponse
+                  >,
+                }}
+                style={{ ...FLEX_CONTAINER_PROPS }}
+                theme={theme.palette.mode}
+                showRemoveButtonAfterComplete={true}
+                doneButtonHandler={null}
+                note={`Files cannot be larger than ${maxFileSizeMB}MB. Supported file types: ${spreadsheetAllowedFileExtensions.join(', ')}.`}
+              />
+            </ValidationUppyBox>
+          </Paper>
+        );
+      case 2:
+        return (
+          <>
+            {isAdminMode ? (
+              <Paper
+                variant="outlined"
+                sx={{
+                  p: 2,
+                  borderRadius: 2,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  ...FLEX_CONTAINER_PROPS,
+                }}
+              >
+                <Typography color="text.secondary" sx={{ mb: 3 }}>
+                  Validation completed successfully. The spreadsheet is ready to
+                  be imported into the catalogue.
+                </Typography>
+                <ImportUppyBox style={FLEX_CONTAINER_PROPS}>
+                  <Dashboard
+                    uppy={importUppy}
+                    proudlyDisplayPoweredByUppy={false}
+                    locale={{
+                      strings: getUppyLocale(
+                        true
+                      ) as UppyDashboardLocaleStrings<
+                        UppyUploadMetadata,
+                        UppyImageUploadResponse
+                      >,
+                    }}
+                    width="100%"
+                    height="100%"
+                    style={{ ...FLEX_CONTAINER_PROPS }}
+                    theme={theme.palette.mode}
+                    showRemoveButtonAfterComplete={false}
+                    doneButtonHandler={null}
+                    note={`Files cannot be larger than ${maxFileSizeMB}MB. Supported file types: ${spreadsheetAllowedFileExtensions.join(', ')}.`}
+                  />
+                </ImportUppyBox>
+              </Paper>
+            ) : (
+              <Paper
+                variant="outlined"
+                sx={{
+                  p: 2,
+                  borderRadius: 2,
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  textAlign: 'center',
+                }}
+              >
+                <AdminPanelSettingsIcon
+                  color="primary"
+                  sx={{ fontSize: 64, mb: 2 }}
+                />
+
+                <Typography variant="h6" gutterBottom>
+                  Administrator Action Required
+                </Typography>
+
+                <Typography color="text.secondary" sx={{ maxWidth: 550 }}>
+                  Your spreadsheet has been validated successfully. Please
+                  contact an administrator to import the spreadsheet so the
+                  catalogue items can be made available.
+                </Typography>
+              </Paper>
+            )}
+          </>
+        );
     }
-  }, [isAdminMode, uppy, imsIngestApiUrl, parentName]);
-
-  React.useEffect(() => {
-    const handleFileAdded = (
-      file: UppyFile<UppyUploadMetadata, UppyImageUploadResponse>
-    ) => {
-      const actualFile = file.data as File;
-
-      uppy.info(
-        'Validation started. Please wait.',
-        'info',
-        UPPY_INFORMER_TIMEOUT
-      );
-
-      postCatalogueItemsTemplateValidation({
-        catalogueCategoryId: parentId,
-        spreadsheetFile: actualFile,
-      })
-        .then((response) => {
-          const headers = response.headers;
-          handleValidationHeaders({
-            headers: headers,
-            parentName: parentName,
-            data: response.data,
-            uppy: uppy,
-            isAdminMode: isAdminMode,
-            fileId: file.id,
-          });
-        })
-        .catch(async (error: AxiosError) => {
-          const errorMessage = await getErrorMessage(error);
-          const parsedErrorMessage = parseSpreadsheetError(errorMessage);
-          uppy.info(parsedErrorMessage, 'error', UPPY_INFORMER_TIMEOUT);
-          uppy.removeFile(file.id);
-        });
-    };
-
-    if (isAdminMode) uppy.on('file-added', handleFileAdded);
-
-    return () => {
-      if (isAdminMode) uppy.off('file-added', handleFileAdded);
-    };
-  }, [
-    uppy,
-    parentId,
-    postCatalogueItemsTemplateValidation,
-    parentName,
-    isAdminMode,
-  ]);
-
+  };
   return (
-    <StyledUppyBox>
-      <DashboardModal
-        open={open}
-        locale={{
-          strings: {
-            ...en_US.strings,
-            dropPasteFiles: 'Drop template here or %{browseFiles}',
-          } as UppyDashboardLocaleStrings<
-            UppyUploadMetadata,
-            UppyImageUploadResponse
-          >,
-        }}
-        onRequestClose={handleClose}
-        closeModalOnClickOutside={false}
-        showRemoveButtonAfterComplete={true}
-        hideUploadButton={isPendingCatalogueItemsTemplateValidation}
-        note={`Files cannot be larger than ${maxFileSizeMB}MB. Supported file types: ${spreadsheetAllowedFileExtensions.join(', ')}.`}
-        animateOpenClose={false}
-        uppy={uppy}
-        proudlyDisplayPoweredByUppy={false}
-        theme={theme.palette.mode}
-        doneButtonHandler={handleClose}
-        metaFields={[]}
-      />
-    </StyledUppyBox>
+    <Dialog
+      open={open}
+      {...FORM_WITH_STEPPER_DIALOG_PROPS}
+      disableEscapeKeyDown
+    >
+      <DialogTitle>Import spreadsheet</DialogTitle>
+      <DialogContent sx={{ ...FLEX_CONTAINER_PROPS, minHeight: '400px' }}>
+        <Stepper
+          nonLinear
+          activeStep={activeStep}
+          orientation="horizontal"
+          sx={{ marginTop: 2 }}
+        >
+          {STEPS.map((label, index) => {
+            const labelProps: {
+              optional?: React.ReactNode;
+              error?: boolean;
+            } = {};
+
+            return (
+              <Step sx={{ cursor: 'pointer' }} key={label}>
+                <StepLabel
+                  {...labelProps}
+                  onClick={() => {
+                    if (!isValidSpreadsheet && index === 2) return;
+                    setActiveStep(index);
+                  }}
+                >
+                  {label}
+                </StepLabel>
+              </Step>
+            );
+          })}
+        </Stepper>
+        <Box sx={{ ...FLEX_CONTAINER_PROPS, marginTop: 2 }}>
+          {renderStepContent(activeStep)}
+        </Box>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose} sx={{ mr: 'auto' }}>
+          Cancel
+        </Button>
+        <Button disabled={activeStep === 0} onClick={handleBack} sx={{ mr: 2 }}>
+          Back
+        </Button>
+
+        {activeStep === STEPS.length - 1 ? (
+          <Button onClick={handleClose} sx={{ mr: 3 }}>
+            Finish
+          </Button>
+        ) : (
+          <Button
+            disabled={!isValidSpreadsheet && activeStep === 1}
+            onClick={() => handleNext(activeStep)}
+            sx={{ mr: 3 }}
+          >
+            Next
+          </Button>
+        )}
+      </DialogActions>
+    </Dialog>
   );
 };
 

@@ -185,26 +185,26 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
     });
 
-    const closeButton = screen.getByRole('button', { name: 'Close Modal' });
-    await user.click(closeButton);
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
   });
 
-  it('opens validate spreadsheet dialog and can close the dialog (normal mode)', async () => {
+  it('opens import spreadsheet dialog and can close the dialog (normal mode)', async () => {
     createView();
 
     await waitFor(() => {
       expect(
         screen.getByRole('button', {
-          name: 'Validate spreadsheet',
+          name: 'Import spreadsheet',
         })
       ).toBeInTheDocument();
     });
 
     const importDataButton = screen.getByRole('button', {
-      name: 'Validate spreadsheet',
+      name: 'Import spreadsheet',
     });
 
     await user.click(importDataButton);
@@ -212,8 +212,8 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
     });
 
-    const closeButton = screen.getByRole('button', { name: 'Close Modal' });
-    await user.click(closeButton);
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
