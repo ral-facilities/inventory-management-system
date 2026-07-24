@@ -1114,36 +1114,36 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/core-downloads-tracker@npm:^6.4.11":
-  version: 6.4.11
-  resolution: "@mui/core-downloads-tracker@npm:6.4.11"
-  checksum: 10c0/6875a06188119320083566bbe000369a838ea4badbae81fb36fcc750103f3c9ec15fac3407c1efd7f3596889f30732780c58842434d0d48f997219192f7fc3d1
+"@mui/core-downloads-tracker@npm:^6.5.0":
+  version: 6.5.0
+  resolution: "@mui/core-downloads-tracker@npm:6.5.0"
+  checksum: 10c0/dea763c8d4b4f9415d6c6ac3a04115d04c249461ce5635f0012a75b91c38f43c0d0411201664a77c7ff10ff11ea12a0bfeea6562ec22ceec6bac82478b6384c3
   languageName: node
   linkType: hard
 
 "@mui/icons-material@npm:^6.0.0":
-  version: 6.4.11
-  resolution: "@mui/icons-material@npm:6.4.11"
+  version: 6.5.0
+  resolution: "@mui/icons-material@npm:6.5.0"
   dependencies:
     "@babel/runtime": "npm:^7.26.0"
   peerDependencies:
-    "@mui/material": ^6.4.11
+    "@mui/material": ^6.5.0
     "@types/react": ^17.0.0 || ^18.0.0 || ^19.0.0
     react: ^17.0.0 || ^18.0.0 || ^19.0.0
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 10c0/f3d3eaada6db71a9f0d4da4a7343830990c585d90b39beb63251006a27e141bee953ce680eeaa6e755bb1021611ad645821307dff5b349e781bb15fce362f962
+  checksum: 10c0/0afec2280e8dde4ff34686481497c4b3ced8193f0038bf8984fd502808c053ba8464c35409def0380424cade1d282f647fac1db7c55046b2b232b0d2c52a589d
   languageName: node
   linkType: hard
 
 "@mui/material@npm:^6.0.0":
-  version: 6.4.11
-  resolution: "@mui/material@npm:6.4.11"
+  version: 6.5.0
+  resolution: "@mui/material@npm:6.5.0"
   dependencies:
     "@babel/runtime": "npm:^7.26.0"
-    "@mui/core-downloads-tracker": "npm:^6.4.11"
-    "@mui/system": "npm:^6.4.11"
+    "@mui/core-downloads-tracker": "npm:^6.5.0"
+    "@mui/system": "npm:^6.5.0"
     "@mui/types": "npm:~7.2.24"
     "@mui/utils": "npm:^6.4.9"
     "@popperjs/core": "npm:^2.11.8"
@@ -1156,7 +1156,7 @@ __metadata:
   peerDependencies:
     "@emotion/react": ^11.5.0
     "@emotion/styled": ^11.3.0
-    "@mui/material-pigment-css": ^6.4.11
+    "@mui/material-pigment-css": ^6.5.0
     "@types/react": ^17.0.0 || ^18.0.0 || ^19.0.0
     react: ^17.0.0 || ^18.0.0 || ^19.0.0
     react-dom: ^17.0.0 || ^18.0.0 || ^19.0.0
@@ -1169,7 +1169,7 @@ __metadata:
       optional: true
     "@types/react":
       optional: true
-  checksum: 10c0/49640579e299ef650e6efe25ceb479fe2df8636ebebd00a9d1e7dd32d2cd3c81a99f093f4fb6de58a6463f2be4f5c93fb6331ded6085f0ebeea3a30629fe8ecb
+  checksum: 10c0/24dfb582fe4655cc8e15476637d60d17cc1be6326be36d7fbc8c9a99f044ba10e5b68841f292e2cd1ce7e1ca26bc1006e37e7bba1e6979992850c907aa4c17b4
   languageName: node
   linkType: hard
 
@@ -1190,9 +1190,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/styled-engine@npm:^6.4.11":
-  version: 6.4.11
-  resolution: "@mui/styled-engine@npm:6.4.11"
+"@mui/styled-engine@npm:^6.5.0":
+  version: 6.5.0
+  resolution: "@mui/styled-engine@npm:6.5.0"
   dependencies:
     "@babel/runtime": "npm:^7.26.0"
     "@emotion/cache": "npm:^11.13.5"
@@ -1209,17 +1209,17 @@ __metadata:
       optional: true
     "@emotion/styled":
       optional: true
-  checksum: 10c0/332ff6c32e7bfb34e9cd8a3d8d4abb13deaeea3216fb6d1441d8d154c615a76d594595cc34076bc0911f7f4784042a7fe0a83bf1924e78040935fa7242ee5a70
+  checksum: 10c0/aa44806d2cdd1b65c756a97927edcd7907cc5649d206382b5b5b8c27f899552a002e713fb167aa0e5aa980542bd309166113830dc550672d7598ad5993e7ff66
   languageName: node
   linkType: hard
 
-"@mui/system@npm:^6.4.11":
-  version: 6.4.11
-  resolution: "@mui/system@npm:6.4.11"
+"@mui/system@npm:^6.5.0":
+  version: 6.5.0
+  resolution: "@mui/system@npm:6.5.0"
   dependencies:
     "@babel/runtime": "npm:^7.26.0"
     "@mui/private-theming": "npm:^6.4.9"
-    "@mui/styled-engine": "npm:^6.4.11"
+    "@mui/styled-engine": "npm:^6.5.0"
     "@mui/types": "npm:~7.2.24"
     "@mui/utils": "npm:^6.4.9"
     clsx: "npm:^2.1.1"
@@ -1237,7 +1237,7 @@ __metadata:
       optional: true
     "@types/react":
       optional: true
-  checksum: 10c0/6d1875232d8836c84b6f94bf32215f8b46370c98c4948a68ba934ef2baa652a5eb08e3048fa77ad16c464167a4d8d0548809d62d5f221829cfa744a5cdd90be5
+  checksum: 10c0/2603ca8997625924e867504a53a20f81ad2dd7f3abb314709175341e4d2143bb22e2a9b4e8a008c92bf12e0333775dec651e8b9c237c4848650aabb60d8dab06
   languageName: node
   linkType: hard
 
