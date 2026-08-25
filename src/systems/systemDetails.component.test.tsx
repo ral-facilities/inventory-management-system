@@ -47,11 +47,11 @@ describe('SystemDetails', () => {
   it('renders correctly when a system is selected', async () => {
     createView();
 
-    await waitFor(() => {
-      expect(
-        screen.getByText(mockSystemTypeDetails.value ?? '')
-      ).toBeInTheDocument();
-    });
+
+    expect(
+      await screen.findByText(mockSystemTypeDetails.value ?? '')
+    ).toBeInTheDocument();
+
     expect(screen.queryByText('Please select a system')).toBeFalsy();
 
     expect(screen.getByText(mockSystemDetails.owner ?? '')).toBeInTheDocument();

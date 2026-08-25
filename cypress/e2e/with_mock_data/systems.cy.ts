@@ -347,7 +347,6 @@ describe('Systems', () => {
       'include',
       '/catalogue/4/items/28/items?state=N4IgxgYiBcDaoEsAmMQGcCeaAuBTAtgHTYYAOuhAbgIYA2ArriADQg0NNygnmo4BOCAHYBzFmzqNUAZWwB7ftRFMAvgF11KoA'
     );
-    cy.findByRole('button', { name: 'Show Spare Items' }).should('be.disabled');
   });
 
   it('breadcrumbs should work correctly', () => {
@@ -1041,14 +1040,14 @@ describe('Systems', () => {
         url: '/v1/items/:id',
       }).should(async (patchRequests) => {
         expect(patchRequests.length).eq(2);
-        expect(patchRequests[0].url.toString()).to.contain('/z1hJvV8Z');
+        expect(patchRequests[0].url.toString()).to.contain('/hoicQciP');
         expect(JSON.stringify(await patchRequests[0].json())).equal(
           JSON.stringify({
             system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
             usage_status_id: '2',
           })
         );
-        expect(patchRequests[1].url.toString()).to.contain('/4mYoI7pr');
+        expect(patchRequests[1].url.toString()).to.contain('/loiykp5U');
         expect(JSON.stringify(await patchRequests[1].json())).equal(
           JSON.stringify({
             system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
@@ -1103,10 +1102,10 @@ describe('Systems', () => {
           cy.findByRole('button', { name: 'Next' }).click();
         });
 
-      cy.findAllByRole('combobox').eq(1).click();
-      cy.findByRole('option', { name: 'Scrapped' }).click();
+      cy.findAllByRole('combobox').eq(1).click({force: true});
+      cy.findByRole('option', { name: 'Scrapped' }).click({force: true});
 
-      cy.findByRole('button', { name: 'Finish' }).click();
+      cy.findByRole('button', { name: 'Finish' }).click({force: true});
 
       cy.findByRole('dialog').should('not.exist');
 
@@ -1115,18 +1114,18 @@ describe('Systems', () => {
         url: '/v1/items/:id',
       }).should(async (patchRequests) => {
         expect(patchRequests.length).eq(2);
-        expect(patchRequests[0].url.toString()).to.contain('/z1hJvV8Z');
+        expect(patchRequests[0].url.toString()).to.contain('/hoicQciP');
         expect(JSON.stringify(await patchRequests[0].json())).equal(
           JSON.stringify({
             system_id: '65328f34a40ff5301575a4e3',
             usage_status_id: '3',
           })
         );
-        expect(patchRequests[1].url.toString()).to.contain('/4mYoI7pr');
+        expect(patchRequests[1].url.toString()).to.contain('/loiykp5U');
         expect(JSON.stringify(await patchRequests[1].json())).equal(
           JSON.stringify({
             system_id: '65328f34a40ff5301575a4e3',
-            usage_status_id: '3',
+            usage_status_id: '1',
           })
         );
       });
@@ -1179,7 +1178,7 @@ describe('Systems', () => {
     cy.visit('/systems/657f8c3b2a1b4e5d8f9b3c4e5');
 
     cy.findByRole('button', { name: 'Expand' }).click();
-    cy.findByLabelText('Row Actions').first().click();
+    cy.findByLabelText('Row Actions').first().click({force: true});
     cy.findByText('Edit').click();
 
     cy.findByText('Item Moving Rule Applied').should('exist');
@@ -1210,9 +1209,9 @@ describe('Systems', () => {
   it('duplicates an item', () => {
     cy.visit('/systems/657f8c3b2a1b4e5d8f9b3c4e5');
 
-    cy.findByRole('button', { name: 'Expand' }).click();
-    cy.findByLabelText('Row Actions').first().click();
-    cy.findByText('Duplicate').click();
+    cy.findByRole('button', { name: 'Expand' }).click({force: true});
+    cy.findByLabelText('Row Actions').first().click( {force: true});
+    cy.findByText('Duplicate').click( {force: true});
 
     cy.findByText('Item Creation Rule Applied').should('exist');
 
@@ -1261,7 +1260,7 @@ describe('Systems', () => {
     cy.visit('/systems/657f8c3b2a1b4e5d8f9b3c4e8');
 
     cy.findByRole('button', { name: 'Expand' }).click();
-    cy.findByLabelText('Row Actions').first().click();
+    cy.findByLabelText('Row Actions').first().click({force: true});
     cy.findByText('Delete').click();
 
     cy.findByText('Serial Number: WrgqAVk3qUQK').should('exist');

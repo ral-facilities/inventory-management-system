@@ -21,9 +21,7 @@ describe('SystemTypes', () => {
   it('renders table correctly', async () => {
     const view = createView();
 
-    await waitFor(() => {
-      expect(screen.getByText('Storage')).toBeInTheDocument();
-    });
+    expect(await screen.findByText('Storage')).toBeInTheDocument();
 
     await waitFor(
       () => {
