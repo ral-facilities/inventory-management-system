@@ -119,7 +119,7 @@
     "prettier": "3.8.1",
     "serve": "14.2.6",
     "serve-static": "2.2.1",
-    "start-server-and-test": "2.1.3",
+    "start-server-and-test": "2.1.5",
     "typescript-eslint": "8.55.0",
     "vitest": "4.1.11"
   },
