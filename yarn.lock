@@ -5946,7 +5946,7 @@ __metadata:
     typescript: "npm:^5.4.5"
     typescript-eslint: "npm:8.55.0"
     vite: "npm:^7.0.0"
-    vite-plugin-css-injected-by-js: "npm:^3.5.2"
+    vite-plugin-css-injected-by-js: "npm:^5.0.0"
     vitest: "npm:4.1.11"
     zod: "npm:^3.25.0"
   dependenciesMeta:
@@ -9610,12 +9610,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-css-injected-by-js@npm:^3.5.2":
-  version: 3.5.2
-  resolution: "vite-plugin-css-injected-by-js@npm:3.5.2"
+"vite-plugin-css-injected-by-js@npm:^5.0.0":
+  version: 5.0.2
+  resolution: "vite-plugin-css-injected-by-js@npm:5.0.2"
   peerDependencies:
-    vite: ">2.0.0-0"
-  checksum: 10c0/5c6a2434d4f302640a4bfc7695d56cf83eca03a4f89f05820057fedd8a2e788186105942360d19808042872ba0970ed6b1c04cd02337bbe67d8321993a464c04
+    vite: ">8.0.0-0"
+  checksum: 10c0/1b0fe1959d84ae8a182efb4836e824a9b327ca93c2ca1ef28a8c0f02d7996fab6996d6b52c13a7a7c72149c795eab39663d8e4b8ff55de5919bf20f12e12cb4e
   languageName: node
   linkType: hard
 
