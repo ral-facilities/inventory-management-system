@@ -3346,7 +3346,7 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
               </button>
               <button
                 aria-selected="true"
-                class="MuiButtonBase-root Mui-focusVisible MuiTab-root MuiTab-textColorPrimary Mui-selected css-1usuzwp-MuiButtonBase-root-MuiTab-root"
+                class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1usuzwp-MuiButtonBase-root-MuiTab-root"
                 role="tab"
                 tabindex="0"
                 type="button"
@@ -3361,14 +3361,6 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                   >
                     <span
                       class="MuiTouchRipple-child MuiTouchRipple-childLeaving"
-                    />
-                  </span>
-                  <span
-                    class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible MuiTouchRipple-ripplePulsate"
-                    style="width: 1px; height: 1px; top: -0.5px; left: -0.5px;"
-                  >
-                    <span
-                      class="MuiTouchRipple-child MuiTouchRipple-childPulsate"
                     />
                   </span>
                 </span>
@@ -3905,7 +3897,7 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
               </button>
               <button
                 aria-selected="true"
-                class="MuiButtonBase-root Mui-focusVisible MuiTab-root MuiTab-textColorPrimary Mui-selected css-1usuzwp-MuiButtonBase-root-MuiTab-root"
+                class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1usuzwp-MuiButtonBase-root-MuiTab-root"
                 role="tab"
                 tabindex="0"
                 type="button"
@@ -3920,14 +3912,6 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                   >
                     <span
                       class="MuiTouchRipple-child MuiTouchRipple-childLeaving"
-                    />
-                  </span>
-                  <span
-                    class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible MuiTouchRipple-ripplePulsate"
-                    style="width: 1px; height: 1px; top: -0.5px; left: -0.5px;"
-                  >
-                    <span
-                      class="MuiTouchRipple-child MuiTouchRipple-childPulsate"
                     />
                   </span>
                 </span>
@@ -4437,7 +4421,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly (emp
               </button>
               <button
                 aria-selected="true"
-                class="MuiButtonBase-root Mui-focusVisible MuiTab-root MuiTab-textColorPrimary Mui-selected css-1usuzwp-MuiButtonBase-root-MuiTab-root"
+                class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1usuzwp-MuiButtonBase-root-MuiTab-root"
                 role="tab"
                 tabindex="0"
                 type="button"
@@ -4452,14 +4436,6 @@ exports[`Catalogue Items details panel > renders properties panel correctly (emp
                   >
                     <span
                       class="MuiTouchRipple-child MuiTouchRipple-childLeaving"
-                    />
-                  </span>
-                  <span
-                    class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible MuiTouchRipple-ripplePulsate"
-                    style="width: 1px; height: 1px; top: -0.5px; left: -0.5px;"
-                  >
-                    <span
-                      class="MuiTouchRipple-child MuiTouchRipple-childPulsate"
                     />
                   </span>
                 </span>
@@ -4958,7 +4934,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
               </button>
               <button
                 aria-selected="true"
-                class="MuiButtonBase-root Mui-focusVisible MuiTab-root MuiTab-textColorPrimary Mui-selected css-1usuzwp-MuiButtonBase-root-MuiTab-root"
+                class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1usuzwp-MuiButtonBase-root-MuiTab-root"
                 role="tab"
                 tabindex="0"
                 type="button"
@@ -4973,14 +4949,6 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                   >
                     <span
                       class="MuiTouchRipple-child MuiTouchRipple-childLeaving"
-                    />
-                  </span>
-                  <span
-                    class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible MuiTouchRipple-ripplePulsate"
-                    style="width: 1px; height: 1px; top: -0.5px; left: -0.5px;"
-                  >
-                    <span
-                      class="MuiTouchRipple-child MuiTouchRipple-childPulsate"
                     />
                   </span>
                 </span>

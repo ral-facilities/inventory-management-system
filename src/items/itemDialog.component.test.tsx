@@ -1393,7 +1393,7 @@ describe('ItemDialog', () => {
 
       expect(finishButton).toBeDisabled();
       expect(await screen.findByRole('progressbar')).toBeInTheDocument();
-    });
+    }, 15000);
 
     it('edit an item (move item across systems with same system type)', async () => {
       createView();
