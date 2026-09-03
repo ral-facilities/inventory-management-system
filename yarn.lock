@@ -2435,15 +2435,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uppy/aws-s3@npm:4.1.3":
-  version: 4.1.3
-  resolution: "@uppy/aws-s3@npm:4.1.3"
+"@uppy/aws-s3@npm:4.3.2":
+  version: 4.3.2
+  resolution: "@uppy/aws-s3@npm:4.3.2"
   dependencies:
-    "@uppy/companion-client": "npm:^4.2.0"
-    "@uppy/utils": "npm:^6.0.5"
+    "@uppy/companion-client": "npm:^4.5.2"
+    "@uppy/utils": "npm:^6.2.2"
   peerDependencies:
-    "@uppy/core": ^4.3.0
-  checksum: 10c0/08607d19474712f912bc5a8a5f488e1b1df32bbdaa82846d75c4dc7cd47f008171b8dbdf165710b72311937586d80b2dd0b8ab73ce34f0a5b690114c32aae1b0
+    "@uppy/core": ^4.5.2
+  checksum: 10c0/a3571638418dcf5d688aeaffef032fe90cc79e0071f263dec76df95e866df21fae2c94e493cd4a1378bb16c24ecd2c2223085a802076d8dac1c16102397c32b7
   languageName: node
   linkType: hard
 
@@ -2461,7 +2461,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uppy/companion-client@npm:^4.2.0, @uppy/companion-client@npm:^4.5.2":
+"@uppy/companion-client@npm:^4.5.2":
   version: 4.5.2
   resolution: "@uppy/companion-client@npm:4.5.2"
   dependencies:
@@ -2815,7 +2815,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uppy/utils@npm:^6.0.5, @uppy/utils@npm:^6.2.2":
+"@uppy/utils@npm:^6.2.2":
   version: 6.2.2
   resolution: "@uppy/utils@npm:6.2.2"
   dependencies:
@@ -5880,7 +5880,7 @@ __metadata:
     "@types/node": "npm:^24.0.0"
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.3.0"
-    "@uppy/aws-s3": "npm:4.1.3"
+    "@uppy/aws-s3": "npm:4.3.2"
     "@uppy/core": "npm:^4.4.3"
     "@uppy/dashboard": "npm:^4.1.0"
     "@uppy/drag-drop": "npm:^4.0.2"
