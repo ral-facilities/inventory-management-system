@@ -21,6 +21,7 @@ const DelayedLoader = (props: DelayedLoaderProps) => {
         setShowLoader(true);
       }, timeMS);
     } else {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setShowLoader(false);
     }
 

@@ -69,7 +69,6 @@ export function SystemItemsUsageStatusTable(
   const { items, usageStatuses, onChangeUsageStatuses } = props;
 
   // States
-  const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
   const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
     {}
   );
@@ -101,21 +100,16 @@ export function SystemItemsUsageStatusTable(
   // Once loading has finished - pair up all data for the table rows
   // If performance becomes a problem with this should remove find and fetch catalogue
   // item for each item/implement a fullDetails or something in backend
-  React.useEffect(() => {
-    if (!isLoading) {
-      setTableRows(
-        items.map(
-          (itemData) =>
-            ({
-              item: itemData,
-              catalogueItem: catalogueItemList?.find(
-                (catalogueItem) =>
-                  catalogueItem?.id === itemData.catalogue_item_id
-              ),
-            }) as TableRowData
-        )
-      );
+  const tableRows = React.useMemo<TableRowData[]>(() => {
+    if (isLoading) {
+      return [];
     }
+    return items.map((itemData) => ({
+      item: itemData,
+      catalogueItem: catalogueItemList.find(
+        (catalogueItem) => catalogueItem?.id === itemData.catalogue_item_id
+      ),
+    }));
     // Purposefully leave out catalogueItemList - this will never be the same due
     // to the reference changing so instead am relying on isLoading to have changed to
     // false and then back to true again for any re-fetches that occur - only
@@ -130,7 +124,7 @@ export function SystemItemsUsageStatusTable(
           catalogue_item_id: catalogue_item_id,
           usage_status_id: '',
         }));
-
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setAggregatedCellUsageStatus(initialUsageStatuses);
     }
   }, [

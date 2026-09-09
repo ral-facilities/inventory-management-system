@@ -273,19 +273,15 @@ function Systems() {
   const { isCriticalMode } = useAppSelector(selectCriticality);
 
   const isLoading = systemTypesLoading || subsystemsDataLoading;
-  const [tableRows, setTableRows] = React.useState<SystemTableType[]>([]);
 
-  React.useEffect(() => {
-    if (!isLoading && subsystemsData) {
-      setTableRows(
-        subsystemsData.map((system) => ({
-          ...system,
-          type: systemTypesData?.find((type) => type.id === system.type_id),
-        }))
-      );
-    } else {
-      setTableRows([]);
+  const tableRows = React.useMemo<SystemTableType[]>(() => {
+    if (isLoading || !subsystemsData) {
+      return [];
     }
+    return subsystemsData.map((system) => ({
+      ...system,
+      type: systemTypesData?.find((type) => type.id === system.type_id),
+    }));
     //Purposefully leave out systemTypesList from dependencies for same reasons as catalogueItemsTable
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subsystemsData, isLoading]);
@@ -808,12 +804,13 @@ function Systems() {
 
   // Reset table sate when systemId changes
   // This ensures that the table is reset when navigating to a different system
+  /* eslint-disable react-hooks/set-state-in-effect */
   React.useEffect(() => {
     subsystemsTable.reset();
     setSelectedSystemForMenu(undefined);
     setMenuDialogType(undefined);
   }, [systemId, subsystemsTable]);
-
+  /* eslint-enable react-hooks/set-state-in-effect */
   return (
     <>
       <Grid container direction="row" sx={{ margin: 0, alignItems: 'stretch' }}>

@@ -38,27 +38,16 @@ function ManufacturerLayout() {
 
   const { data: manufacturerData } = useGetManufacturer(manufacturerId);
 
-  const [manufacturerBreadcrumbs, setManufacturerBreadcrumbs] = React.useState<
-    BreadcrumbsInfo | undefined
-  >(undefined);
-
-  React.useEffect(() => {
-    if (manufacturerData) {
-      setManufacturerBreadcrumbs({
-        full_trail: true,
-        trail: [
-          [
-            `${paths.manufacturer}/${manufacturerData.id}`,
-            manufacturerData.name,
-          ],
-        ],
-      });
-    } else {
-      setManufacturerBreadcrumbs({
-        full_trail: true,
-        trail: [],
-      });
+  const manufacturerBreadcrumbs = React.useMemo<BreadcrumbsInfo>(() => {
+    if (!manufacturerData) {
+      return { full_trail: true, trail: [] };
     }
+    return {
+      full_trail: true,
+      trail: [
+        [`${paths.manufacturer}/${manufacturerData.id}`, manufacturerData.name],
+      ],
+    };
   }, [manufacturerData]);
 
   return (

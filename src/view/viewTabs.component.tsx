@@ -10,33 +10,33 @@ import paths from '../paths';
 import { getSciGatewayPageHeightCalc, isRunningInDevelopment } from '../utils';
 
 function ViewTabs() {
-  const [value, setValue] = React.useState<TabValue | false>('Catalogue');
   const navigate = useNavigate();
   const location = useLocation();
 
-  // The useEffect below is only active when it is in not production
+  // The useMemo below is only active when it is in not production
   // because that is when the tabs are visible
-  React.useEffect(() => {
-    if (import.meta.env.DEV) {
-      const prefixIndex = location.pathname.indexOf(paths.root);
-      let tabValue =
-        prefixIndex !== -1
-          ? location.pathname
-              .substring(prefixIndex + paths.root.length)
-              .split('/')[0]
-          : '';
+  const value: TabValue | false = React.useMemo(() => {
+    if (!import.meta.env.DEV) return false;
 
-      if (tabValue !== value && tabValue !== '') {
-        tabValue = tabValue.charAt(0).toUpperCase() + tabValue.slice(1);
-        if (TAB_VALUES.includes(tabValue as TabValue))
-          setValue(tabValue as TabValue);
-        else setValue(false);
-      } else setValue(false);
-    }
-  }, [location.pathname, value]);
+    const prefixIndex = location.pathname.indexOf(paths.root);
+
+    let tabValue =
+      prefixIndex !== -1
+        ? location.pathname
+            .substring(prefixIndex + paths.root.length)
+            .split('/')[0]
+        : '';
+
+    if (!tabValue) return false;
+
+    tabValue = tabValue.charAt(0).toUpperCase() + tabValue.slice(1);
+
+    return TAB_VALUES.includes(tabValue as TabValue)
+      ? (tabValue as TabValue)
+      : false;
+  }, [location.pathname]);
 
   const handleChange = (_event: React.SyntheticEvent, newValue: TabValue) => {
-    setValue(newValue);
     navigate(`/${newValue.toLowerCase()}`);
   };
 
