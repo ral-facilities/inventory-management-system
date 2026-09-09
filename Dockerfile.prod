@@ -34,7 +34,7 @@ FROM httpd:2.4.68-alpine3.24@sha256:1b766f17b84026429b7cb243317b142921b24432336e
 
 # Install specific version of jq (Used for assigning config values in entrypoint script)
 # Reference: https://pkgs.alpinelinux.org/package/edge/main/x86/jq
-RUN apk add --no-cache jq=1.8.1-r0
+RUN apk add --no-cache jq=1.8.2-r0
 
 WORKDIR /usr/local/apache2/htdocs
 
