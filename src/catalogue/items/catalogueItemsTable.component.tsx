@@ -251,12 +251,10 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     useGetCatalogueItems(parentInfo.id);
   const { isCriticalMode } = useAppSelector(selectCriticality);
   const apiSettings = React.useContext(APISettingsContext);
-  const sparesFilterState = apiSettings?.spares?.sparesFilterState;
+  const sparesFilterState = apiSettings.spares?.sparesFilterState;
   const isSparesDefinitionDefined = !!apiSettings.spares;
 
   // States
-  const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
-
   const [deleteItemDialogOpen, setDeleteItemDialogOpen] =
     React.useState<boolean>(false);
 
@@ -275,31 +273,31 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       (catalogue_item) => catalogue_item.manufacturer_id
     ) ?? []
   );
-  let isLoading = isLoadingCatalogueItems;
-  const manufacturerList: (Manufacturer | undefined)[] = useGetManufacturerIds(
+  const manufacturerQueries = useGetManufacturerIds(
     Array.from(manufacturerIdSet.values())
-  ).map((query) => {
-    isLoading = isLoading || query.isLoading;
-    return query.data;
-  });
+  );
+  const manufacturerList: (Manufacturer | undefined)[] = manufacturerQueries.map(
+    (query) => query.data
+  );
+  const isLoading =
+    isLoadingCatalogueItems ||
+    manufacturerQueries.some((query) => query.isLoading);
 
   const { isAdminMode } = useAppSelector(selectAuthorisation);
 
   // Once loading has finished - pair up all data for the table rows
   // If performance becomes a problem with this should remove find and fetch manufacturer
   // for each catalogue item/implement a fullDetails or something in backend
-  React.useEffect(() => {
-    if (!isLoading && catalogueItemsData) {
-      setTableRows(
-        catalogueItemsData.map((catalogueItemData) => ({
-          catalogueItem: catalogueItemData,
-          manufacturer: manufacturerList?.find(
-            (manufacturer) =>
-              manufacturer?.id === catalogueItemData.manufacturer_id
-          ),
-        }))
-      );
+  const tableRows = React.useMemo<TableRowData[]>(() => {
+    if (isLoading || !catalogueItemsData) {
+      return [];
     }
+    return catalogueItemsData.map((catalogueItemData) => ({
+      catalogueItem: catalogueItemData,
+      manufacturer: manufacturerList?.find(
+        (manufacturer) => manufacturer?.id === catalogueItemData.manufacturer_id
+      ),
+    }));
     // Purposefully leave out manufacturerList - this will never be the same due
     // to the reference changing so instead am relying on isLoading to have changed to
     // false and then back to true again for any re-fetches that occur - only
@@ -406,7 +404,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
               }) => (
                 <SparesColumnHeaderInformationTooltip
                   title={column.columnDef.header}
-                  sparesDefinition={apiSettings?.spares?.sparesDefinition}
+                  sparesDefinition={apiSettings.spares?.sparesDefinition}
                 />
               ),
               TableHeaderOverflowTip,
@@ -813,7 +811,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
     ];
   }, [
-    apiSettings?.spares?.sparesDefinition,
+    apiSettings.spares?.sparesDefinition,
     dense,
     isSparesDefinitionDefined,
     parentInfo.properties,

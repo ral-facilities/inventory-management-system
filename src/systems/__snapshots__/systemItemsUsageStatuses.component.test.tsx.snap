@@ -1924,7 +1924,7 @@ exports[`SystemItemsUsageStatusTable > renders correctly in critical mode 1`] = 
                         aria-invalid="false"
                         autocomplete="off"
                         class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12tjcea-MuiInputBase-input-MuiOutlinedInput-input"
-                        id=":r2f:"
+                        id=":r2t:"
                         placeholder="Search"
                         type="text"
                         value=""
@@ -2160,13 +2160,13 @@ exports[`SystemItemsUsageStatusTable > renders correctly in critical mode 1`] = 
                             </span>
                           </div>
                           <div
-                            aria-describedby=":r2o:-helper-text"
+                            aria-describedby=":r36:-helper-text"
                             aria-expanded="false"
                             aria-haspopup="listbox"
                             aria-label="Filter by Catalogue Item"
-                            aria-labelledby=":r2o:"
+                            aria-labelledby=":r36:"
                             class="MuiSelect-select MuiSelect-standard MuiSelect-multiple MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-10y8whu-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                            id=":r2o:"
+                            id=":r36:"
                             role="combobox"
                             tabindex="0"
                           >
@@ -2228,7 +2228,7 @@ exports[`SystemItemsUsageStatusTable > renders correctly in critical mode 1`] = 
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                          id=":r2o:-helper-text"
+                          id=":r36:-helper-text"
                         >
                           <label>
                             Filter Mode: Includes any
@@ -2425,9 +2425,9 @@ exports[`SystemItemsUsageStatusTable > renders correctly in critical mode 1`] = 
                             aria-expanded="false"
                             aria-haspopup="listbox"
                             aria-label="Filter by Is Critical"
-                            aria-labelledby=":r35:"
+                            aria-labelledby=":r3j:"
                             class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-10y8whu-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                            id=":r35:"
+                            id=":r3j:"
                             role="combobox"
                             tabindex="0"
                           >
@@ -2635,12 +2635,12 @@ exports[`SystemItemsUsageStatusTable > renders correctly in critical mode 1`] = 
                             </span>
                           </div>
                           <input
-                            aria-describedby=":r3d:-helper-text"
+                            aria-describedby=":r3r:-helper-text"
                             aria-invalid="false"
                             aria-label="Filter by Serial Number"
                             autocomplete="off"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                            id=":r3d:"
+                            id=":r3r:"
                             placeholder="Filter by Serial Number"
                             title="Filter by Serial Number"
                             type="text"
@@ -2678,7 +2678,7 @@ exports[`SystemItemsUsageStatusTable > renders correctly in critical mode 1`] = 
                         </div>
                         <p
                           class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                          id=":r3d:-helper-text"
+                          id=":r3r:-helper-text"
                         >
                           <label>
                             Filter Mode: Fuzzy
@@ -3903,7 +3903,7 @@ exports[`SystemItemsUsageStatusTable > renders correctly in critical mode 1`] = 
               >
                 <label
                   class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-10j3yc8-MuiFormLabel-root-MuiInputLabel-root"
-                  for="mrt-rows-per-page-:r2d:"
+                  for="mrt-rows-per-page-:r2r:"
                 >
                   Rows per page
                 </label>
@@ -3924,7 +3924,7 @@ exports[`SystemItemsUsageStatusTable > renders correctly in critical mode 1`] = 
                     aria-hidden="true"
                     aria-invalid="false"
                     class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
-                    id="mrt-rows-per-page-:r2d:"
+                    id="mrt-rows-per-page-:r2r:"
                     tabindex="-1"
                     value="30"
                   />
