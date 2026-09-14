@@ -786,7 +786,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                 }
                                 sx={{ alignItems: 'center' }}
                                 fullWidth
-                                options={property.allowed_values?.values ?? []}
+                                options={sortDataList(
+                                  property.allowed_values?.values ?? []
+                                )}
                                 getOptionLabel={(option) => option.toString()}
                                 isOptionEqualToValue={(option, value) =>
                                   option.toString() === value.toString() ||
