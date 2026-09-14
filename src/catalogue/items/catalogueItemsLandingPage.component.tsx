@@ -1,6 +1,7 @@
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
 import NotesIcon from '@mui/icons-material/Notes';
+import AddIcon from '@mui/icons-material/Add';
 import {
   Box,
   Button,
@@ -24,10 +25,12 @@ import PrimaryImage from '../../common/images/primaryImage.component';
 import TabView from '../../common/tab/tabView.component';
 import { useAppSelector } from '../../state/hook';
 import { selectCriticality } from '../../state/slices/criticalitySlice';
+import { selectAuthorisation } from '../../state/slices/authorisationSlice.tsx';
 import { formatDateTimeStrings, roundUpTenth } from '../../utils';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import { getCICriticalityLabel } from './catalogueItemsTable.component';
 import CatalogueLink from './catalogueLink.component';
+import ItemDialog from '../../items/itemDialog.component.tsx';
 
 export const CriticalityInfoToolTip = () => {
   return (
@@ -60,6 +63,58 @@ export const NumberOfSparesRequiredInfoToolTip = () => {
     </Tooltip>
   );
 };
+
+const AddItemActions = (props: {
+  catalogueItem: CatalogueItem;
+  catalogueCategory: CatalogueCategory;
+}) => {
+  const { catalogueItem, catalogueCategory } = props;
+  const { isAdminMode } = useAppSelector(selectAuthorisation);
+  const [createItemDialogOpen, setCreateItemDialogOpen] = React.useState<boolean>(false);
+  const [isAdminDialog, setIsAdminDialog] = React.useState<boolean>(false);
+  return (
+    <Grid>
+      <Button
+        startIcon={<AddIcon />}
+        sx={{ ml: 0.5, py: '5.75px' }}
+        variant="outlined"
+        onClick={() => {
+          setCreateItemDialogOpen(true);
+          setIsAdminDialog(false);
+        }}
+      >
+        Add Item
+      </Button>
+
+      {isAdminMode && (
+        <Button
+          startIcon={<AddIcon />}
+          sx={{ ml: 0.5, py: '5.75px' }}
+          variant="outlined"
+          onClick={() => {
+            setCreateItemDialogOpen(true);
+            setIsAdminDialog(true);
+          }}
+        >
+          Add Item as Admin
+        </Button>
+      )}
+
+      {/* Remount component on dialog open to clear form fields */}
+      {createItemDialogOpen && (
+        <ItemDialog
+          open={createItemDialogOpen}
+          onClose={() => setCreateItemDialogOpen(false)}
+          requestType="post"
+          isAdminMode={isAdminDialog}
+          catalogueCategory={catalogueCategory}
+          catalogueItem={catalogueItem}
+        />
+      )}
+    </Grid>
+  )
+}
+
 const CatalogueItemsActionMenu = (props: {
   catalogueItem: CatalogueItem;
   catalogueCategory: CatalogueCategory;
@@ -238,6 +293,10 @@ function CatalogueItemsLandingPage() {
                     catalogueCategory={catalogueCategoryData}
                   />
                 </Grid>
+                <AddItemActions
+                  catalogueItem={catalogueItemIdData}
+                  catalogueCategory={catalogueCategoryData}
+                />
                 <Grid>
                   <Button
                     sx={{ ml: 0.5, py: '5.75px' }}
