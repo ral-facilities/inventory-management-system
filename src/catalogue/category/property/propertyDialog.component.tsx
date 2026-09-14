@@ -615,10 +615,12 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                       fullWidth
                       options={
                         property.allowed_values
-                          ? property.allowed_values.values.values.filter(
-                              (val) => val.value
-                            )
-                          : []
+                          ? sortDataList(
+                              property.allowed_values.values.values.filter(
+                                (val) => val.value
+                              ),
+                              'value'
+                          ) : []
                       }
                       getOptionLabel={(option) =>
                         option.value ? option.value.toString() : ''
