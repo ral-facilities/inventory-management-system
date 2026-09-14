@@ -50,6 +50,7 @@ import {
 } from '../../../form.schemas';
 import { transformAllowedValues } from '../catalogueCategoryDialog.component';
 import AllowedValuesListTextFields from './allowedValuesListTextFields.component';
+import { sortDataList } from '../../../utils.tsx';
 
 // Using `any` instead of `FieldPath` to avoid circular dependencies
 function getProperty<T extends Record<string, unknown>>(
@@ -744,7 +745,7 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                   (type === 'patch' && isMigration && !isAdminMode)
                 }
                 id={crypto.randomUUID()}
-                options={units ?? []}
+                options={sortDataList(units ?? [], 'code')}
                 getOptionLabel={(option) => option.value}
                 value={units?.find((unit) => unit.id === value) || null}
                 fullWidth
