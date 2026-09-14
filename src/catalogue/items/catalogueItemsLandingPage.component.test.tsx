@@ -265,6 +265,66 @@ describe('Catalogue Items Landing Page', () => {
     spy.mockRestore();
   });
 
+  it('opens and closes add item dialog', async () => {
+    createView('/catalogue/4/items/1');
+
+    await waitFor(() => {
+      expect(
+        screen.getByText('High-resolution cameras for beam characterization. 1')
+      ).toBeInTheDocument();
+    });
+
+    await user.click(
+      screen.getByRole('button', {
+        name: 'add item button',
+      })
+    );
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('opens and closes add item dialog in admin mode', async () => {
+    createView('/catalogue/4/items/1', {
+      authorisation: {
+        role: 'admin',
+        isAdminUser: true,
+        isAdminMode: true,
+      },
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByText('High-resolution cameras for beam characterization. 1')
+      ).toBeInTheDocument();
+    });
+
+    await user.click(
+      screen.getByRole('button', {
+        name: 'add item admin button',
+      })
+    );
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    expect(within(screen.getByRole('dialog')).getByText('Add Item as Admin')).toBeInTheDocument();
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
   it('navigates to items table view', async () => {
     createView('/catalogue/5/items/89');
     await waitFor(() => {

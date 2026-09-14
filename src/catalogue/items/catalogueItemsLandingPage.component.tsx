@@ -78,6 +78,7 @@ const AddItemActions = (props: {
         startIcon={<AddIcon />}
         sx={{ ml: 0.5, py: '5.75px' }}
         variant="outlined"
+        aria-label="add item button"
         onClick={() => {
           setCreateItemDialogOpen(true);
           setIsAdminDialog(false);
@@ -91,6 +92,7 @@ const AddItemActions = (props: {
           startIcon={<AddIcon />}
           sx={{ ml: 0.5, py: '5.75px' }}
           variant="outlined"
+          aria-label="add item admin button"
           onClick={() => {
             setCreateItemDialogOpen(true);
             setIsAdminDialog(true);
@@ -112,7 +114,7 @@ const AddItemActions = (props: {
         />
       )}
     </Grid>
-  )
+  );
 }
 
 const CatalogueItemsActionMenu = (props: {
