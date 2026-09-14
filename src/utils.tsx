@@ -413,7 +413,17 @@ export function sortDataList(data: any[], sortedValue?: string) {
   return data.sort((a, b) => {
     const valueA = sortedValue ? a[sortedValue] : a;
     const valueB = sortedValue ? b[sortedValue] : b;
-    return valueA.localeCompare(valueB);
+
+    // Narrow type and use different sorting method for each
+    if (typeof valueA === 'string' && typeof valueB === 'string') {
+      return valueA.localeCompare(valueB);
+    } else if (typeof valueA === 'number' && typeof valueB === 'number') {
+      return valueA - valueB;
+    } else {
+      throw new Error(
+        `Invalid types: cannot compare ${typeof valueA} and ${typeof valueB}`
+      );
+    }
   });
 }
 
