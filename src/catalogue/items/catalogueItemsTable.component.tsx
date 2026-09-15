@@ -1111,7 +1111,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                 setImportTemplateDialogOpen(true);
               }}
             >
-              {isAdminMode ? 'Import' : 'Validate'} spreadsheet
+              Import spreadsheet
             </Button>
           )}
           {
