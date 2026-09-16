@@ -21,6 +21,9 @@ import { Unit } from '../../api/api.types.tsx';
 import { useGetUnits } from '../../api/units.tsx';
 import {
   DEFAULT_ROWS_PER_PAGE_VALUE,
+  FLEX_CONTAINER_PROPS,
+  FLEX_TABLE_CONTAINER_PROP,
+  MINIMUM_TABLE_HEIGHT,
   ROWS_PER_PAGE_OPTIONS,
 } from '../../common/consts.tsx';
 import { usePreservedTableState } from '../../common/preservedTableState.component.tsx';
@@ -37,7 +40,6 @@ import {
   displayTableRowCountText,
   formatDateTimeStrings,
   getInitialColumnFilterFnState,
-  getPageHeightCalc,
   mrtTheme,
 } from '../../utils.tsx';
 import DeleteUnitDialog from './deleteUnitsDialog.component.tsx';
@@ -47,9 +49,6 @@ function Units() {
   const { data: unitData, isLoading: unitDataLoading } = useGetUnits();
 
   const { isAdminMode } = useAppSelector(selectAuthorisation);
-
-  // Breadcrumbs + Mui table V2 + extra
-  const tableHeight = getPageHeightCalc('50px + 110px + 48px');
 
   const [deleteUnitDialog, setDeleteUnitDialog] =
     React.useState<boolean>(false);
@@ -170,8 +169,10 @@ function Units() {
               );
             },
           },
-    muiTablePaperProps: { sx: { maxHeight: '100%' } },
-    muiTableContainerProps: { sx: { height: tableHeight } },
+    muiTablePaperProps: {
+      sx: { ...FLEX_CONTAINER_PROPS, minHeight: MINIMUM_TABLE_HEIGHT },
+    },
+    muiTableContainerProps: { sx: FLEX_TABLE_CONTAINER_PROP },
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',

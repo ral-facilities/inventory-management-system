@@ -41,4 +41,4 @@ export const FLEX_TABLE_CONTAINER_PROP: React.CSSProperties = {
   overflow: 'auto',
 };
 
-export const MINIMUM_TABLE_HEIGHT = '500px';
+export const MINIMUM_TABLE_HEIGHT = '600px';
