@@ -38,6 +38,7 @@ import {
   DEFAULT_ROWS_PER_PAGE_VALUE,
   FLEX_CONTAINER_PROPS,
   FLEX_TABLE_CONTAINER_PROP,
+  MINIMUM_TABLE_HEIGHT,
   ROWS_PER_PAGE_OPTIONS,
 } from '../common/consts';
 import MRTTopTableAlert from '../common/mrtTopTableAlert.component';
@@ -809,7 +810,7 @@ export function ItemsTable(props: ItemTableProps) {
   });
 
   return (
-    <Box sx={FLEX_CONTAINER_PROPS}>
+    <Box sx={{ ...FLEX_CONTAINER_PROPS, minHeight: MINIMUM_TABLE_HEIGHT }}>
       {isSparesDefinitionDefined &&
         sparesDefinition &&
         isSparesFilterApplied && (
