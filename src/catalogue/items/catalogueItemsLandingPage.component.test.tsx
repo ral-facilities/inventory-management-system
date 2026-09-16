@@ -308,9 +308,11 @@ describe('Catalogue Items Landing Page', () => {
 
     await user.click(
       screen.getByRole('button', {
-        name: 'add item admin button',
+        name: 'catalogue items landing page actions menu',
       })
     );
+
+    await user.click(screen.getByText('Add Item as Admin'));
 
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
