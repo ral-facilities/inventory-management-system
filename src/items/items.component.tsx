@@ -1,5 +1,4 @@
 import { Box, LinearProgress } from '@mui/material';
-import Grid from '@mui/material/Grid2';
 import { useParams } from 'react-router';
 import { useGetCatalogueCategory } from '../api/catalogueCategories';
 import { useGetCatalogueItem } from '../api/catalogueItems';
@@ -15,23 +14,23 @@ export function Items() {
     catalogueItem?.catalogue_category_id
   );
 
-  return (
-    <Grid container>
-      {catalogueCategory && catalogueItem && (
-        <ItemsTable
-          catalogueCategory={catalogueCategory}
-          catalogueItem={catalogueItem}
-          dense={false}
-        />
-      )}
+  if (catalogueItemLoading) {
+    return (
+      <Box sx={{ width: '100%' }}>
+        <LinearProgress />
+      </Box>
+    );
+  }
 
-      {catalogueItemLoading && (
-        <Box sx={{ width: '100%' }}>
-          <LinearProgress />
-        </Box>
-      )}
-    </Grid>
-  );
+  if (catalogueCategory && catalogueItem) {
+    return (
+      <ItemsTable
+        catalogueCategory={catalogueCategory}
+        catalogueItem={catalogueItem}
+        dense={false}
+      />
+    );
+  }
 }
 
 export default Items;
