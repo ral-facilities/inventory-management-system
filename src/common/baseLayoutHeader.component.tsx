@@ -63,7 +63,7 @@ function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
         />
         <AuthRoleStatus />
       </Grid>
-      <Box sx={{ ...FLEX_CONTAINER_PROPS }}>{children}</Box>
+      <Box sx={{ ...FLEX_CONTAINER_PROPS, overflow: 'scroll' }}>{children}</Box>
     </Box>
   );
 }
