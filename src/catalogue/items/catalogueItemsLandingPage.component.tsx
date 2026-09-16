@@ -25,7 +25,6 @@ import PrimaryImage from '../../common/images/primaryImage.component';
 import TabView from '../../common/tab/tabView.component';
 import { useAppSelector } from '../../state/hook';
 import { selectCriticality } from '../../state/slices/criticalitySlice';
-import { selectAuthorisation } from '../../state/slices/authorisationSlice.tsx';
 import { formatDateTimeStrings, roundUpTenth } from '../../utils';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import { getCICriticalityLabel } from './catalogueItemsTable.component';
@@ -69,9 +68,8 @@ const AddItemActions = (props: {
   catalogueCategory: CatalogueCategory;
 }) => {
   const { catalogueItem, catalogueCategory } = props;
-  const { isAdminMode } = useAppSelector(selectAuthorisation);
   const [createItemDialogOpen, setCreateItemDialogOpen] = React.useState<boolean>(false);
-  const [isAdminDialog, setIsAdminDialog] = React.useState<boolean>(false);
+
   return (
     <Grid>
       <Button
@@ -79,28 +77,10 @@ const AddItemActions = (props: {
         sx={{ ml: 0.5, py: '5.75px' }}
         variant="outlined"
         aria-label="add item button"
-        onClick={() => {
-          setCreateItemDialogOpen(true);
-          setIsAdminDialog(false);
-        }}
+        onClick={() => setCreateItemDialogOpen(true)}
       >
         Add Item
       </Button>
-
-      {isAdminMode && (
-        <Button
-          startIcon={<AddIcon />}
-          sx={{ ml: 0.5, py: '5.75px' }}
-          variant="outlined"
-          aria-label="add item admin button"
-          onClick={() => {
-            setCreateItemDialogOpen(true);
-            setIsAdminDialog(true);
-          }}
-        >
-          Add Item as Admin
-        </Button>
-      )}
 
       {/* Remount component on dialog open to clear form fields */}
       {createItemDialogOpen && (
@@ -108,7 +88,7 @@ const AddItemActions = (props: {
           open={createItemDialogOpen}
           onClose={() => setCreateItemDialogOpen(false)}
           requestType="post"
-          isAdminMode={isAdminDialog}
+          isAdminMode={false}
           catalogueCategory={catalogueCategory}
           catalogueItem={catalogueItem}
         />
@@ -124,6 +104,7 @@ const CatalogueItemsActionMenu = (props: {
   const { catalogueItem, catalogueCategory } = props;
   const [editItemDialogOpen, setEditItemDialogOpen] =
     React.useState<boolean>(false);
+  const [createItemDialogOpen, setCreateItemDialogOpen] = React.useState<boolean>(false);
   return (
     <ActionMenu
       ariaLabelPrefix="catalogue items landing page"
@@ -139,6 +120,19 @@ const CatalogueItemsActionMenu = (props: {
             parentInfo={catalogueCategory}
             selectedCatalogueItem={catalogueItem}
             requestType="patch"
+          />
+        ),
+      }}
+      addItemAdminMenuItem={{
+        onClick: () => setCreateItemDialogOpen(true),
+        dialog: (
+          <ItemDialog
+            open={createItemDialogOpen}
+            onClose={() => setCreateItemDialogOpen(false)}
+            requestType="post"
+            isAdminMode={true}
+            catalogueCategory={catalogueCategory}
+            catalogueItem={catalogueItem}
           />
         ),
       }}
