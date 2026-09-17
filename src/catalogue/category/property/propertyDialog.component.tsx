@@ -615,12 +615,16 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                       fullWidth
                       options={
                         property.allowed_values
-                          ? sortDataList(
-                              property.allowed_values.values.values.filter(
+                          ? sortDataList({
+                              data: property.allowed_values.values.values.filter(
                                 (val) => val.value
                               ),
-                              'value'
-                          ) : []
+                              config: {
+                                type: property.allowed_values.values.valueType,
+                                selector: (val) => val.value,
+                              }
+                            })
+                          : []
                       }
                       getOptionLabel={(option) =>
                         option.value ? option.value.toString() : ''
@@ -747,7 +751,13 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                   (type === 'patch' && isMigration && !isAdminMode)
                 }
                 id={crypto.randomUUID()}
-                options={sortDataList(units ?? [], 'code')}
+                options={sortDataList({
+                  data: units ?? [],
+                  config: {
+                    type: 'string',
+                    selector: (unit) => unit.code,
+                  },
+                })}
                 getOptionLabel={(option) => option.value}
                 value={units?.find((unit) => unit.id === value) || null}
                 fullWidth

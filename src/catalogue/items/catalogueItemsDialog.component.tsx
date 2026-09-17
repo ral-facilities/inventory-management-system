@@ -521,9 +521,23 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
     /*returns them in reverse alphabetical order, since they will be sorted by "isRecent",
     and then reversed to put "Recently Added" section first */
-    return sortDataList(recentManufacturers, 'name')
+    return sortDataList({
+      data: recentManufacturers,
+      config: {
+        type: 'string',
+        selector: (manufacturer) => manufacturer.name,
+      },
+    })
       .reverse()
-      .concat(sortDataList(classifiedManufacturers, 'name').reverse());
+      .concat(
+        sortDataList({
+          data: classifiedManufacturers,
+          config: {
+            type: 'string',
+            selector: (manufacturer) => manufacturer.name,
+          },
+        }).reverse()
+      );
   };
 
   const renderStepContent = (step: number) => {
@@ -633,20 +647,25 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                   render={({ field: { value, onChange } }) => (
                     <Autocomplete
                       value={
-                        manufacturerList?.find(
+                        // disableClearable means MUI types the value as non-nullable, but
+                        // it must stay null (not undefined) to keep the input controlled
+                        (options().find(
                           (manufacturer) => manufacturer.id === value
-                        ) || null
+                        ) ?? null) as Manufacturer & { isRecent: string }
                       }
-                      onChange={(
-                        _event: React.SyntheticEvent,
-                        newManufacturer: Manufacturer | null
-                      ) => {
+                      onChange={(_event, newManufacturer) => {
                         onChange(newManufacturer?.id);
                       }}
                       id="catalogue-item-manufacturer-input"
                       disableClearable
                       options={
-                        sortDataList(options(), 'isRecent').reverse() ?? []
+                        sortDataList({
+                          data: options(),
+                          config: {
+                            type: 'string',
+                            selector: (option) => option.isRecent,
+                          },
+                        }).reverse() ?? []
                       }
                       groupBy={(option) => option.isRecent}
                       size="small"
@@ -786,9 +805,19 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                 }
                                 sx={{ alignItems: 'center' }}
                                 fullWidth
-                                options={sortDataList(
-                                  property.allowed_values?.values ?? []
-                                )}
+                                options={sortDataList({
+                                  data: property.allowed_values?.values ?? [],
+                                  config:
+                                    property.type === 'number'
+                                      ? {
+                                          type: 'number',
+                                          selector: (value) => Number(value),
+                                        }
+                                      : {
+                                          type: 'string',
+                                          selector: (value) => String(value),
+                                        },
+                                })}
                                 getOptionLabel={(option) => option.toString()}
                                 isOptionEqualToValue={(option, value) =>
                                   option.toString() === value.toString() ||

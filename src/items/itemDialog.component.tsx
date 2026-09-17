@@ -1203,9 +1203,19 @@ function ItemDialog(props: ItemDialogProps) {
                                 }
                                 sx={{ alignItems: 'center' }}
                                 fullWidth
-                                options={sortDataList(
-                                  property.allowed_values?.values ?? []
-                                )}
+                                options={sortDataList({
+                                  data: property.allowed_values?.values ?? [],
+                                  config:
+                                    property.type === 'number'
+                                      ? {
+                                          type: 'number',
+                                          selector: (value) => Number(value),
+                                        }
+                                      : {
+                                          type: 'string',
+                                          selector: (value) => String(value),
+                                        },
+                                })}
                                 getOptionLabel={(option) => option.toString()}
                                 isOptionEqualToValue={(option, value) =>
                                   option.toString() === value.toString() ||

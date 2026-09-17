@@ -408,22 +408,28 @@ export const resetUniqueIdCounter = () => {
   lastId = 0;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function sortDataList(data: any[], sortedValue?: string) {
-  return data.sort((a, b) => {
-    const valueA = sortedValue ? a[sortedValue] : a;
-    const valueB = sortedValue ? b[sortedValue] : b;
+interface StringSortConfig<T> {
+  type: 'string';
+  selector: (item: T) => string;
+}
 
-    // Narrow type and use different sorting method for each
-    if (typeof valueA === 'string' && typeof valueB === 'string') {
-      return valueA.localeCompare(valueB);
-    } else if (typeof valueA === 'number' && typeof valueB === 'number') {
-      return valueA - valueB;
-    } else {
-      throw new Error(
-        `Invalid types: cannot compare ${typeof valueA} and ${typeof valueB}`
-      );
+interface NumberSortConfig<T> {
+  type: 'number';
+  selector: (item: T) => number;
+}
+
+type SortConfig<T> = StringSortConfig<T> | NumberSortConfig<T>;
+
+export function sortDataList<T>(props: {
+  data: T[];
+  config: SortConfig<T>;
+}): T[] {
+  const { data, config } = props;
+  return [...data].sort((a, b) => {
+    if (config.type === 'number') {
+      return config.selector(a) - config.selector(b);
     }
+    return config.selector(a).localeCompare(config.selector(b));
   });
 }
 
@@ -848,8 +854,24 @@ export function isExactFilterActive<TData extends MRT_RowData>(
 
     if (Array.isArray(value)) {
       return (
-        JSON.stringify(sortDataList(actualFilter.value as string[])) ===
-        JSON.stringify(sortDataList(value))
+        JSON.stringify(
+          sortDataList({
+            data: actualFilter.value as string[],
+            config: {
+              type: 'string',
+              selector: (val) => val,
+            },
+          })
+        ) ===
+        JSON.stringify(
+          sortDataList({
+            data: value,
+            config: {
+              type: 'string',
+              selector: (val) => val,
+            },
+          })
+        )
       );
     } else {
       return JSON.stringify(actualFilter.value) === JSON.stringify(value);
