@@ -4,6 +4,7 @@ import React from 'react';
 import { Outlet, useLocation, useParams } from 'react-router';
 import { useGetCatalogueItem } from '../../api/catalogueItems';
 import { APISettingsContext } from '../../apiConfigProvider.component';
+import { FLEX_CONTAINER_PROPS } from '../../common/consts';
 import CriticalityTooltipIcon from '../../common/criticalityTooltipIcon.component';
 import { useAppSelector } from '../../state/hook';
 import { selectCriticality } from '../../state/slices/criticalitySlice';
@@ -36,7 +37,7 @@ function CatalogueItemLayout() {
   const subtitle = getPageSubtitle();
 
   return (
-    <Box>
+    <Box sx={{ ...FLEX_CONTAINER_PROPS, overflow: 'scroll' }}>
       <Box
         sx={{
           display: 'flex',

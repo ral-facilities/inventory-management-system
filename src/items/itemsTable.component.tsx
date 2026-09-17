@@ -36,6 +36,9 @@ import type { SystemTableType } from '../app.types';
 import { findPropertyValue } from '../catalogue/items/catalogueItemsTable.component';
 import {
   DEFAULT_ROWS_PER_PAGE_VALUE,
+  FLEX_CONTAINER_PROPS,
+  FLEX_TABLE_CONTAINER_PROP,
+  MINIMUM_TABLE_HEIGHT,
   ROWS_PER_PAGE_OPTIONS,
 } from '../common/consts';
 import MRTTopTableAlert from '../common/mrtTopTableAlert.component';
@@ -52,7 +55,6 @@ import {
   displayTableRowCountText,
   formatDateTimeStrings,
   getInitialColumnFilterFnState,
-  getPageHeightCalc,
   MRT_Functions_Localisation,
   mrtTheme,
   OPTIONAL_FILTER_MODE_OPTIONS,
@@ -545,21 +547,12 @@ export function ItemsTable(props: ItemTableProps) {
     //MRT
     mrtTheme,
     //MUI
-    muiTableContainerProps: ({ table }) => {
-      const showAlert =
-        table.getState().showAlertBanner ||
-        table.getFilteredSelectedRowModel().rows.length > 0 ||
-        table.getState().grouping.length > 0;
+
+    muiTablePaperProps: { sx: FLEX_CONTAINER_PROPS },
+    muiTableContainerProps: () => {
       return {
-        sx: {
-          height: dense
-            ? '360.4px'
-            : getPageHeightCalc(
-                // Breadcrumbs + Mui table V2 + header + extra
-                `50px + 110px + 78px + 44px ${showAlert ? '+ 64px' : ''} ${isSparesFilterApplied ? ' + 54px' : ''}`
-              ),
-          flexShrink: 1,
-        },
+        sx: FLEX_TABLE_CONTAINER_PROP,
+
         'data-testid': 'items-table-container',
       };
     },
@@ -817,7 +810,7 @@ export function ItemsTable(props: ItemTableProps) {
   });
 
   return (
-    <div style={{ width: '100%' }}>
+    <Box sx={{ ...FLEX_CONTAINER_PROPS, minHeight: MINIMUM_TABLE_HEIGHT }}>
       {isSparesDefinitionDefined &&
         sparesDefinition &&
         isSparesFilterApplied && (
@@ -837,6 +830,7 @@ export function ItemsTable(props: ItemTableProps) {
           />
         )}
       <MaterialReactTable table={table} />
+
       {!dense && selectedItem && (
         <DeleteItemDialog
           open={deleteItemDialogOpen}
@@ -849,7 +843,7 @@ export function ItemsTable(props: ItemTableProps) {
           isAdminMode={isAdminDialog}
         />
       )}
-    </div>
+    </Box>
   );
 }
 

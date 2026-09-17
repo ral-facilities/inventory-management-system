@@ -8,6 +8,7 @@ import { isRunningInDevelopment } from '../utils';
 import AuthToggle from '../view/authToggle.component';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import AuthRoleStatus from './authRoleStatus.component';
+import { FLEX_CONTAINER_PROPS } from './consts';
 
 export interface BaseLayoutHeaderProps {
   breadcrumbsInfo?: BreadcrumbsInfo;
@@ -30,6 +31,8 @@ function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
       sx={{
         height: '100%',
         width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
       {/* Also render authorisation state toggle so it is inline with tabs, but not on home page */}
@@ -60,7 +63,7 @@ function BaseLayoutHeader(props: BaseLayoutHeaderProps) {
         />
         <AuthRoleStatus />
       </Grid>
-      {children}
+      <Box sx={{ ...FLEX_CONTAINER_PROPS, overflow: 'scroll' }}>{children}</Box>
     </Box>
   );
 }
