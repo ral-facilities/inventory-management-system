@@ -13,8 +13,7 @@ import {
 export interface HistoryCommentProps {
   open: boolean;
   onSubmit: (event: React.SyntheticEvent) => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onChange: UseFormRegisterReturn<any>;
+  onChange: UseFormRegisterReturn | ((modifiedComment: string | null) => void);
   action: 'editing' | 'adding' | 'moving';
   entityTypeName: 'Item' | 'Items';
 }
@@ -42,7 +41,9 @@ const HistoryCommentDialog = (props: HistoryCommentProps) => {
               size="small"
               multiline
               minRows={3}
-              {...onChange}
+              {...(typeof onChange === 'function'
+                ? { onChange: (event) => onChange(event.target.value) }
+                : onChange)}
               fullWidth
             />
           </Box>

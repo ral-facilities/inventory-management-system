@@ -1411,7 +1411,7 @@ function ItemDialog(props: ItemDialogProps) {
               ) : null
             }
           >
-            Finish
+            Continue
           </Button>
         ) : (
           <Button

@@ -5,10 +5,6 @@ interface BaseFieldsMixin {
   modified_by: string;
 }
 
-export interface BaseFieldsPost {
-  modified_comment: string | null;
-}
-
 export interface APIError {
   detail: string;
 }

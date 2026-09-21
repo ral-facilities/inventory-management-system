@@ -114,7 +114,7 @@ export const modifyItem = (
     cy.findByRole('option', { name: values.broken }).click();
   }
 
-  cy.findByRole('button', { name: 'Finish' }).click();
+  cy.findByRole('button', { name: 'Continue' }).click();
   cy.findByRole('button', { name: 'Submit' }).click();
 
   if (!ignoreChecks) {
@@ -300,7 +300,7 @@ export const duplicateItem = (serialNumber: string, index: number) => {
 
   cy.findByRole('button', { name: 'Next' }).click();
   cy.findByRole('button', { name: 'Next' }).click();
-  cy.findByRole('button', { name: 'Finish' }).click();
+  cy.findByRole('button', { name: 'Continue' }).click();
   cy.findByRole('button', { name: 'Submit' }).click();
 
   cy.findAllByText(serialNumber).should('have.length.gte', 2);

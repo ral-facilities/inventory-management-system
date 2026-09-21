@@ -430,7 +430,7 @@ describe('SystemItemsDialog', () => {
       expect((await screen.findAllByRole('combobox'))[2]).toHaveValue('In Use');
       expect(screen.getAllByRole('combobox')[3]).toHaveValue('In Use');
 
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/KvT2Ox7n', {
@@ -458,9 +458,9 @@ describe('SystemItemsDialog', () => {
         expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
       );
 
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
 
-      expect(screen.getByRole('button', { name: 'Finish' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Continue' })).toBeDisabled();
       expect(
         screen.getByText(
           'Move items from current location or root to another system'
@@ -494,7 +494,9 @@ describe('SystemItemsDialog', () => {
         expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
       );
 
-      expect(screen.getByRole('button', { name: 'Finish' })).not.toBeDisabled();
+      expect(
+        screen.getByRole('button', { name: 'Continue' })
+      ).not.toBeDisabled();
     }, 10000);
   });
 });

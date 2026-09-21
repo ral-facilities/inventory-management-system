@@ -189,7 +189,7 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
-      const finishButton = screen.getByRole('button', { name: 'Finish' });
+      const finishButton = screen.getByRole('button', { name: 'Continue' });
       await user.click(finishButton);
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
@@ -272,7 +272,7 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
 
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
@@ -317,7 +317,7 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
 
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
@@ -363,7 +363,7 @@ describe('ItemDialog', () => {
       //navigate through stepper
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
 
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
@@ -518,7 +518,7 @@ describe('ItemDialog', () => {
       const axisAutocomplete = screen.getAllByRole('combobox')[1];
       await user.type(axisAutocomplete, 'z{arrowdown}{enter}');
 
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
 
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
@@ -574,7 +574,7 @@ describe('ItemDialog', () => {
         older: 'F{arrowdown}{enter}',
       });
 
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
 
       await user.type(screen.getByLabelText('Comment'), 'A test comment');
 
@@ -647,18 +647,18 @@ describe('ItemDialog', () => {
         resolution: 'ds',
       });
 
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
-      expect(screen.getByRole('button', { name: 'Finish' })).toBeDisabled();
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
+      expect(screen.getByRole('button', { name: 'Continue' })).toBeDisabled();
       expect(screen.getByText('Invalid item properties')).toBeInTheDocument();
 
-      expect(screen.getByRole('button', { name: 'Finish' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Continue' })).toBeDisabled();
 
       await modifyPropertiesValues({
         resolution: '12',
       });
 
       expect(
-        await screen.findByRole('button', { name: 'Finish' })
+        await screen.findByRole('button', { name: 'Continue' })
       ).not.toBeDisabled();
     }, 15000);
 
@@ -667,14 +667,14 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByText('Add item properties'));
 
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
 
       expect(
         await screen.findByText('Please select a parent system')
       ).toBeInTheDocument();
       expect(screen.getByText('Invalid item details')).toBeInTheDocument();
       expect(
-        await screen.findByRole('button', { name: 'Finish' })
+        await screen.findByRole('button', { name: 'Continue' })
       ).toBeDisabled();
     }, 10000);
 
@@ -841,7 +841,7 @@ describe('ItemDialog', () => {
         older: 'T{arrowdown}{enter}',
       });
 
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
 
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
@@ -884,7 +884,7 @@ describe('ItemDialog', () => {
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
@@ -1026,7 +1026,7 @@ describe('ItemDialog', () => {
         sensorType: '',
       });
 
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
 
       const mandatoryFieldHelperText = screen.getAllByText(
         'Please enter a valid value as this field is mandatory.'
@@ -1034,7 +1034,7 @@ describe('ItemDialog', () => {
 
       expect(mandatoryFieldHelperText.length).toBe(2);
 
-      expect(screen.getByRole('button', { name: 'Finish' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Continue' })).toBeDisabled();
 
       await modifyPropertiesValues({
         broken: 'F{arrowdown}{enter}',
@@ -1052,7 +1052,7 @@ describe('ItemDialog', () => {
         ).not.toBeInTheDocument();
       });
 
-      expect(screen.getByRole('button', { name: 'Finish' })).not.toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Continue' })).not.toBeDisabled();
     }, 20000);
 
     it('displays error message when property values type is incorrect', async () => {
@@ -1116,7 +1116,7 @@ describe('ItemDialog', () => {
         broken: 'None',
       });
 
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
 
       const validNumberHelperText = screen.getByText(
         'Please enter a valid number.'
@@ -1124,7 +1124,7 @@ describe('ItemDialog', () => {
 
       expect(validNumberHelperText).toBeInTheDocument();
 
-      expect(screen.getByRole('button', { name: 'Finish' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Continue' })).toBeDisabled();
 
       await modifyPropertiesValues({
         resolution: '12',
@@ -1160,7 +1160,7 @@ describe('ItemDialog', () => {
       const ultimatePressureTextBox = screen.getAllByRole('textbox')[0];
       await user.clear(ultimatePressureTextBox);
 
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
 
       const mandatoryFieldHelperText = screen.getByText(
         'Please enter a valid value as this field is mandatory.'
@@ -1168,12 +1168,12 @@ describe('ItemDialog', () => {
 
       expect(mandatoryFieldHelperText).toBeInTheDocument();
 
-      expect(screen.getByRole('button', { name: 'Finish' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Continue' })).toBeDisabled();
 
       await user.type(ultimatePressureTextBox, '10');
 
       expect(mandatoryFieldHelperText).not.toBeInTheDocument();
-      expect(screen.getByRole('button', { name: 'Finish' })).not.toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Continue' })).not.toBeDisabled();
     });
 
     it('displays warning message when an unknown error occurs', async () => {
@@ -1191,7 +1191,7 @@ describe('ItemDialog', () => {
       });
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
       await user.click(screen.getByRole('button', { name: 'Submit' }));
       expect(handleIMS_APIError).toHaveBeenCalled();
       expect(onClose).not.toHaveBeenCalled();
@@ -1221,7 +1221,7 @@ describe('ItemDialog', () => {
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
@@ -1274,7 +1274,7 @@ describe('ItemDialog', () => {
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
@@ -1307,7 +1307,7 @@ describe('ItemDialog', () => {
       createView();
 
       await user.click(screen.getByText('Add item properties'));
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
 
       expect(
         screen.getByText(
@@ -1416,7 +1416,7 @@ describe('ItemDialog', () => {
       await user.click(screen.getByRole('button', { name: 'Next' }));
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
-      const finishButton = screen.getByRole('button', { name: 'Finish' });
+      const finishButton = screen.getByRole('button', { name: 'Continue' });
       await user.click(finishButton);
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
@@ -1448,7 +1448,7 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
@@ -1472,7 +1472,7 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
@@ -1526,7 +1526,7 @@ describe('ItemDialog', () => {
         older: 'F{arrowdown}{enter}',
       });
 
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
 
       await user.type(screen.getByLabelText('Comment'), 'A test comment');
 
@@ -1592,7 +1592,7 @@ describe('ItemDialog', () => {
         older: 'F{arrowdown}{enter}',
       });
 
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
 
       await user.type(screen.getByLabelText('Comment'), 'A test comment');
 
@@ -1643,7 +1643,7 @@ describe('ItemDialog', () => {
       const axisAutocomplete = screen.getAllByRole('combobox')[1];
       await user.type(axisAutocomplete, 'z{arrowdown}{enter}');
 
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
       await user.click(screen.getByRole('button', { name: 'Submit' }));
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
         properties: [
@@ -1681,7 +1681,7 @@ describe('ItemDialog', () => {
       const axisAutocomplete = screen.getAllByRole('combobox')[1];
       await user.type(axisAutocomplete, 'N{enter}');
 
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
       await user.click(screen.getByRole('button', { name: 'Submit' }));
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
         properties: [
@@ -1719,7 +1719,7 @@ describe('ItemDialog', () => {
         broken: 'N{arrowdown}{enter}',
       });
 
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
 
       const validNumberHelperText = screen.getByText(
         'Please enter a valid number.'
@@ -1727,7 +1727,7 @@ describe('ItemDialog', () => {
 
       expect(validNumberHelperText).toBeInTheDocument();
 
-      expect(screen.getByRole('button', { name: 'Finish' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Continue' })).toBeDisabled();
 
       await modifyPropertiesValues({
         resolution: '12',
@@ -1744,7 +1744,7 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
       await user.click(screen.getByRole('button', { name: 'Next' }));
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       await waitFor(() => {
@@ -1764,7 +1764,7 @@ describe('ItemDialog', () => {
         serialNumber: 'Error 500',
       });
       await user.click(screen.getByRole('button', { name: 'Next' }));
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      await user.click(screen.getByRole('button', { name: 'Continue' }));
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(handleIMS_APIError).toHaveBeenCalled();

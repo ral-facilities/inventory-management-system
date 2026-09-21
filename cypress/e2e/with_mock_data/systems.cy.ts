@@ -1113,7 +1113,7 @@ describe('Systems', () => {
       cy.findAllByRole('combobox').eq(1).click();
       cy.findByRole('option', { name: 'Scrapped' }).click();
 
-      cy.findByRole('button', { name: 'Finish' }).click();
+      cy.findByRole('button', { name: 'Continue' }).click();
 
       cy.findByRole('button', { name: 'Submit' }).click();
       cy.findByRole('dialog').should('not.exist');
@@ -1203,7 +1203,7 @@ describe('Systems', () => {
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Continue' }).click();
     cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
@@ -1235,7 +1235,7 @@ describe('Systems', () => {
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Continue' }).click();
     cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 

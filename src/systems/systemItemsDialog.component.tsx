@@ -37,7 +37,6 @@ import Breadcrumbs from '../view/breadcrumbs.component';
 import { SystemItemsUsageStatusTable } from './systemItemsUsageStatuses.component';
 import { SystemsTableView } from './systemsTableView.component';
 import HistoryCommentDialog from '../history/historyCommentDialog.component';
-import { useForm } from 'react-hook-form';
 
 export interface SystemItemsDialogProps {
   open: boolean;
@@ -92,13 +91,9 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   const [historyCommentDialog, setHistoryCommentDialog] =
     React.useState<boolean>(false);
 
-  // very basic react-hook-form logic to capture modified_comment in popup
-  const { register, watch } = useForm({
-    defaultValues: {
-      modified_comment: null,
-    },
-  });
-  const modifiedComment = watch('modified_comment');
+  const [modifiedComment, setModifiedComment] = React.useState<string | null>(
+    null
+  );
 
   const { data: dstSystem } = useGetSystem(parentSystemId);
   const { data: srcSystem } = useGetSystem(props.parentSystemId);
@@ -467,7 +462,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
               onClick={() => handleMoveTo(false)}
               sx={{ mr: 3 }}
             >
-              Finish
+              Continue
             </Button>
           ) : (
             <Button
@@ -514,7 +509,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
           setHistoryCommentDialog(false);
           handleMoveTo(true);
         }}
-        onChange={register('modified_comment')}
+        onChange={setModifiedComment}
         action={'moving'}
         entityTypeName={selectedItems.length > 1 ? 'Items' : 'Item'}
       />

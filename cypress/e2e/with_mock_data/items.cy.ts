@@ -130,7 +130,7 @@ describe('Items', () => {
     cy.findByLabelText('Serial number').type('{selectall}{del}');
     cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Continue' }).click();
     cy.findByRole('button', { name: 'Submit' }).click();
 
     cy.findByRole('dialog').should('not.exist');
@@ -189,7 +189,7 @@ describe('Items', () => {
 
     cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Continue' }).click();
     cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
@@ -330,7 +330,7 @@ describe('Items', () => {
     cy.findByRole('option', { name: 'y' }).click();
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Continue' }).click();
     cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
@@ -400,7 +400,7 @@ describe('Items', () => {
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Continue' }).click();
 
     cy.findByLabelText('Comment').type('A test comment');
     cy.findByRole('button', { name: 'Submit' }).click();
@@ -462,7 +462,7 @@ describe('Items', () => {
 
     cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Continue' }).click();
     cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
@@ -543,7 +543,7 @@ describe('Items', () => {
     cy.findByLabelText('Resolution (megapixels) *').clear();
     cy.findByLabelText('Sensor Type *').clear();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Continue' }).click();
 
     cy.findAllByText(
       'Please enter a valid value as this field is mandatory.'
@@ -1760,7 +1760,7 @@ describe('Items', () => {
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Continue' }).click();
 
     cy.findByLabelText('Comment').type('A test comment');
     cy.findByRole('button', { name: 'Submit' }).click();
@@ -1807,7 +1807,7 @@ describe('Items', () => {
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Continue' }).click();
     cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
@@ -1843,7 +1843,7 @@ describe('Items', () => {
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Continue' }).click();
     cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
@@ -1894,7 +1894,7 @@ describe('Items', () => {
 
     cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Continue' }).click();
     cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
@@ -1918,7 +1918,7 @@ describe('Items', () => {
 
     cy.findByRole('button', { name: 'Next' }).click();
     cy.findByRole('button', { name: 'Next' }).click();
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Continue' }).click();
     cy.findByRole('button', { name: 'Submit' }).click();
 
     cy.findByText(
@@ -1953,7 +1953,7 @@ describe('Items', () => {
 
     cy.findByRole('button', { name: 'Next' }).click();
     cy.findByRole('button', { name: 'Next' }).click();
-    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('button', { name: 'Continue' }).click();
     cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
