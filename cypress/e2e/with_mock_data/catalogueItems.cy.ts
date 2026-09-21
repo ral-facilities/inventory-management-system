@@ -1278,6 +1278,8 @@ describe('Catalogue Items', () => {
           number_of_spares_required: null,
           criticality: null,
           is_flagged: false,
+          modified_by: 'David Kim',
+          modified_comment: 'item properties updated',
         })
       );
     });
