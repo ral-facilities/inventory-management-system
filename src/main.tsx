@@ -133,6 +133,11 @@ export const fetchSettings =
           throw new Error('imsJsApiUrl is undefined in settings');
         }
 
+        // Ensure the imsIngestApiUrl name exists.
+        if (!('imsIngestApiUrl' in settings)) {
+          throw new Error('imsIngestApiUrl is undefined in settings');
+        }
+
         // Ensure the maxAttachmentSizeBytes value exists.
         if (!('maxAttachmentSizeBytes' in settings)) {
           throw new Error('maxAttachmentSizeBytes is undefined in settings');
@@ -142,6 +147,18 @@ export const fetchSettings =
         if (!('attachmentAllowedFileExtensions' in settings)) {
           throw new Error(
             'attachmentAllowedFileExtensions is undefined in settings'
+          );
+        }
+
+        // Ensure the maxSpreadsheetSizeBytes value exists.
+        if (!('maxSpreadsheetSizeBytes' in settings)) {
+          throw new Error('maxSpreadsheetSizeBytes is undefined in settings');
+        }
+
+        // Ensure the spreadsheetAllowedFileExtensions name exists.
+        if (!('spreadsheetAllowedFileExtensions' in settings)) {
+          throw new Error(
+            'spreadsheetAllowedFileExtensions is undefined in settings'
           );
         }
 
@@ -224,7 +241,8 @@ async function prepare() {
     import.meta.env.VITE_INCLUDE_MSW === 'true' ||
     settingsResult?.imsApiUrl === '' ||
     settingsResult?.osApiUrl === '' ||
-    settingsResult?.imsJsApiUrl === ''
+    settingsResult?.imsJsApiUrl === '' ||
+    settingsResult?.imsIngestApiUrl === ''
   ) {
     // Need to use require instead of import as import breaks when loaded in SG
     const { worker } = await import('./mocks/browser');

@@ -146,8 +146,8 @@ describe('catalogue categories api functions', () => {
         parent_id: '1',
         created_time: '2024-01-01T12:00:00.000+00:00',
         modified_time: '2024-01-02T13:10:10.000+00:00',
-        modified_comment: null,
-        modified_by: 'Unknown',
+        modified_by: 'Sarah Jenkins',
+        modified_comment: 'category code updated',
       });
     });
   });
@@ -204,8 +204,8 @@ describe('catalogue categories api functions', () => {
           properties: [],
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
-          modified_comment: null,
-          modified_by: 'Unknown',
+          modified_by: 'Sarah Jenkins',
+          modified_comment: 'category code updated',
         },
       ]);
     });
@@ -271,8 +271,8 @@ describe('catalogue categories api functions', () => {
         properties: [],
         created_time: '2024-01-01T12:00:00.000+00:00',
         modified_time: '2024-01-02T13:10:10.000+00:00',
-        modified_comment: null,
-        modified_by: 'Unknown',
+        modified_by: 'Alex Chen',
+        modified_comment: 'category name updated',
       });
     });
   });

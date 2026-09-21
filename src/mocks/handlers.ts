@@ -535,8 +535,8 @@ export const handlers = [
           telephone: '07349612203',
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
-          modified_comment: null,
-          modified_by: 'Unknown',
+          modified_comment: 'This is a comment',
+          modified_by: 'IMS user',
         },
         { status: 200 }
       );
@@ -1446,4 +1446,14 @@ export const handlers = [
       { status: 200 }
     );
   }),
+  // --------------------------------- INGEST ------------------------------------------------------
+
+  http.post<PathParams, DefaultBodyType, ErrorResponse | NonNullable<unknown>>(
+    '/spreadsheets/catalogue-items/ingest',
+    async () => {
+      return new HttpResponse(undefined, {
+        status: 204,
+      });
+    }
+  ),
 ];

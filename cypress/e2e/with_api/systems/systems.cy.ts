@@ -33,6 +33,7 @@ describe('systems', () => {
     addUnits(['mm', 'nm'], true);
     cy.visit('/systems');
     addSystems();
+    cy.findByRole('button', { name: 'Add System' }).should('exist');
     cy.visit('/catalogue');
     addCatalogueCategories(true);
     addCatalogueItem(true);

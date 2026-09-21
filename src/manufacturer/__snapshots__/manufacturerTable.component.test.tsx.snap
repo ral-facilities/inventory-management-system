@@ -1867,12 +1867,12 @@ exports[`Manufacturer Table > renders table data correctly 1`] = `
               tabindex="0"
             >
               <div
-                aria-label="Unknown"
+                aria-label="Alex Chen"
                 class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
                 data-mui-internal-clone-element="true"
                 role="tooltip"
               >
-                Unknown
+                Alex Chen
               </div>
             </td>
             <td
@@ -2040,12 +2040,12 @@ exports[`Manufacturer Table > renders table data correctly 1`] = `
               tabindex="0"
             >
               <div
-                aria-label="Unknown"
+                aria-label="Sarah Jenkins"
                 class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
                 data-mui-internal-clone-element="true"
                 role="tooltip"
               >
-                Unknown
+                Sarah Jenkins
               </div>
             </td>
             <td
@@ -2213,12 +2213,12 @@ exports[`Manufacturer Table > renders table data correctly 1`] = `
               tabindex="0"
             >
               <div
-                aria-label="Unknown"
+                aria-label="Marcus Vance"
                 class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
                 data-mui-internal-clone-element="true"
                 role="tooltip"
               >
-                Unknown
+                Marcus Vance
               </div>
             </td>
             <td
@@ -2386,12 +2386,12 @@ exports[`Manufacturer Table > renders table data correctly 1`] = `
               tabindex="0"
             >
               <div
-                aria-label="Unknown"
+                aria-label="David Kim"
                 class="MuiTypography-root MuiTypography-body1 css-1bjpc7y-MuiTypography-root"
                 data-mui-internal-clone-element="true"
                 role="tooltip"
               >
-                Unknown
+                David Kim
               </div>
             </td>
             <td

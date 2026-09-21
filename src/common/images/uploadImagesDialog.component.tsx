@@ -18,7 +18,7 @@ import type {
 } from '../../app.types';
 import { useAppSelector } from '../../state/hook';
 import { selectSettings } from '../../state/slices/configSlice';
-import { getNonEmptyTrimmedString } from '../../utils';
+import { getNonEmptyTrimmedString, parseImageError } from '../../utils';
 import {
   getUploadingState,
   useMetaFields,
@@ -69,7 +69,7 @@ const UploadImagesDialog = (props: UploadImagesDialogProps) => {
         uppyOnBeforeRequest(xhr);
       },
       async onAfterResponse(xhr) {
-        await uppyOnAfterResponse(xhr);
+        await uppyOnAfterResponse(xhr, parseImageError);
       },
     });
 

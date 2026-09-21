@@ -279,7 +279,7 @@ exports[`Items details panel > renders details panel correctly (None values for 
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                       >
-                        Unknown
+                        Alex Chen
                       </p>
                     </div>
                     <div
@@ -892,7 +892,7 @@ exports[`Items details panel > renders details panel correctly (no dates) 1`] = 
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                       >
-                        Unknown
+                        David Kim
                       </p>
                     </div>
                     <div
@@ -1505,7 +1505,7 @@ exports[`Items details panel > renders details panel correctly (when there are n
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                       >
-                        Unknown
+                        Alex Chen
                       </p>
                     </div>
                     <div
@@ -2129,7 +2129,7 @@ exports[`Items details panel > renders details panel correctly 1`] = `
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                       >
-                        Unknown
+                        Alex Chen
                       </p>
                     </div>
                     <div
@@ -2484,7 +2484,7 @@ exports[`Items details panel > renders manufacturer panel correctly 1`] = `
             </button>
             <button
               aria-selected="true"
-              class="MuiButtonBase-root Mui-focusVisible MuiTab-root MuiTab-textColorPrimary Mui-selected css-1usuzwp-MuiButtonBase-root-MuiTab-root"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1usuzwp-MuiButtonBase-root-MuiTab-root"
               role="tab"
               tabindex="0"
               type="button"
@@ -2499,14 +2499,6 @@ exports[`Items details panel > renders manufacturer panel correctly 1`] = `
                 >
                   <span
                     class="MuiTouchRipple-child MuiTouchRipple-childLeaving"
-                  />
-                </span>
-                <span
-                  class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible MuiTouchRipple-ripplePulsate"
-                  style="width: 1px; height: 1px; top: -0.5px; left: -0.5px;"
-                >
-                  <span
-                    class="MuiTouchRipple-child MuiTouchRipple-childPulsate"
                   />
                 </span>
               </span>
@@ -2747,7 +2739,7 @@ exports[`Items details panel > renders manufacturer panel correctly 1`] = `
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                       >
-                        Unknown
+                        Alex Chen
                       </p>
                     </div>
                     <div
@@ -3128,7 +3120,7 @@ exports[`Items details panel > renders notes panel correctly 1`] = `
             </button>
             <button
               aria-selected="true"
-              class="MuiButtonBase-root Mui-focusVisible MuiTab-root MuiTab-textColorPrimary Mui-selected css-1usuzwp-MuiButtonBase-root-MuiTab-root"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1usuzwp-MuiButtonBase-root-MuiTab-root"
               role="tab"
               tabindex="0"
               type="button"
@@ -3143,14 +3135,6 @@ exports[`Items details panel > renders notes panel correctly 1`] = `
                 >
                   <span
                     class="MuiTouchRipple-child MuiTouchRipple-childLeaving"
-                  />
-                </span>
-                <span
-                  class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible MuiTouchRipple-ripplePulsate"
-                  style="width: 1px; height: 1px; top: -0.5px; left: -0.5px;"
-                >
-                  <span
-                    class="MuiTouchRipple-child MuiTouchRipple-childPulsate"
                   />
                 </span>
               </span>
@@ -3382,7 +3366,7 @@ exports[`Items details panel > renders notes panel correctly 1`] = `
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                       >
-                        Unknown
+                        Alex Chen
                       </p>
                     </div>
                     <div
@@ -3745,7 +3729,7 @@ exports[`Items details panel > renders properties panel correctly (empty propert
             </button>
             <button
               aria-selected="true"
-              class="MuiButtonBase-root Mui-focusVisible MuiTab-root MuiTab-textColorPrimary Mui-selected css-1usuzwp-MuiButtonBase-root-MuiTab-root"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1usuzwp-MuiButtonBase-root-MuiTab-root"
               role="tab"
               tabindex="0"
               type="button"
@@ -3760,14 +3744,6 @@ exports[`Items details panel > renders properties panel correctly (empty propert
                 >
                   <span
                     class="MuiTouchRipple-child MuiTouchRipple-childLeaving"
-                  />
-                </span>
-                <span
-                  class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible MuiTouchRipple-ripplePulsate"
-                  style="width: 1px; height: 1px; top: -0.5px; left: -0.5px;"
-                >
-                  <span
-                    class="MuiTouchRipple-child MuiTouchRipple-childPulsate"
                   />
                 </span>
               </span>
@@ -4017,7 +3993,7 @@ exports[`Items details panel > renders properties panel correctly (empty propert
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                       >
-                        Unknown
+                        Alex Chen
                       </p>
                     </div>
                     <div
@@ -4265,7 +4241,7 @@ exports[`Items details panel > renders properties panel correctly 1`] = `
             </button>
             <button
               aria-selected="true"
-              class="MuiButtonBase-root Mui-focusVisible MuiTab-root MuiTab-textColorPrimary Mui-selected css-1usuzwp-MuiButtonBase-root-MuiTab-root"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1usuzwp-MuiButtonBase-root-MuiTab-root"
               role="tab"
               tabindex="0"
               type="button"
@@ -4280,14 +4256,6 @@ exports[`Items details panel > renders properties panel correctly 1`] = `
                 >
                   <span
                     class="MuiTouchRipple-child MuiTouchRipple-childLeaving"
-                  />
-                </span>
-                <span
-                  class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible MuiTouchRipple-ripplePulsate"
-                  style="width: 1px; height: 1px; top: -0.5px; left: -0.5px;"
-                >
-                  <span
-                    class="MuiTouchRipple-child MuiTouchRipple-childPulsate"
                   />
                 </span>
               </span>
@@ -4537,7 +4505,7 @@ exports[`Items details panel > renders properties panel correctly 1`] = `
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                       >
-                        Unknown
+                        Alex Chen
                       </p>
                     </div>
                     <div

@@ -19,7 +19,7 @@ import type { UppyUploadMetadata } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { useAppSelector } from '../../state/hook';
 import { selectSettings } from '../../state/slices/configSlice';
-import { getNonEmptyTrimmedString, parseErrorResponse } from '../../utils';
+import { getNonEmptyTrimmedString, parseAttachmentError } from '../../utils';
 import {
   getUploadingState,
   useMetaFields,
@@ -76,7 +76,7 @@ const UploadAttachmentsDialog = (props: UploadAttachmentsDialogProps) => {
           }).catch((error) => {
             const response = error.response?.data as APIError;
             const errorMessage = response.detail.toLocaleLowerCase();
-            const returnMessage = parseErrorResponse(errorMessage);
+            const returnMessage = parseAttachmentError(errorMessage);
             throw new Error(returnMessage);
           });
 
