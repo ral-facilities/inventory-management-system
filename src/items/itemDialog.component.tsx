@@ -1060,7 +1060,13 @@ function ItemDialog(props: ItemDialogProps) {
                     }}
                     sx={{ alignItems: 'center' }}
                     fullWidth
-                    options={usageStatuses ?? []}
+                    options={sortDataList({
+                      data: usageStatuses ?? [],
+                      config: {
+                        type: 'string',
+                        selector: (value) => value.code
+                      }
+                    })}
                     isOptionEqualToValue={(option, value) =>
                       option.id == value.id
                     }
