@@ -1247,6 +1247,8 @@ describe('Catalogue Items', () => {
           number_of_spares_required: null,
           criticality: null,
           is_flagged: false,
+          modified_by: 'Marcus Vance',
+          modified_comment: 'manufacturer details updated',
         })
       );
       expect(JSON.stringify(await patchRequests[1].json())).equal(

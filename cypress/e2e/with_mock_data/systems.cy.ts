@@ -956,8 +956,8 @@ describe('Systems', () => {
           code: 'pulse-laser',
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
-          modified_comment: null,
-          modified_by: 'Unknown',
+          modified_comment: 'system owner updated',
+          modified_by: 'Alex Chen',
           type_id: '2',
           is_flagged: true,
           type: {
