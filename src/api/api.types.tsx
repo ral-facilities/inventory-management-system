@@ -331,3 +331,9 @@ export interface Job {
   last_successful_duration_seconds: number | null;
   next_scheduled_execution_time: string;
 }
+
+// ------------------------------- INGEST -----------------------------------------------------
+
+export interface CatalogueItemSpreadsheetMetadata {
+  catalogue_category_id: string;
+}

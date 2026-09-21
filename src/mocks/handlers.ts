@@ -1446,4 +1446,14 @@ export const handlers = [
       { status: 200 }
     );
   }),
+  // --------------------------------- INGEST ------------------------------------------------------
+
+  http.post<PathParams, DefaultBodyType, ErrorResponse | NonNullable<unknown>>(
+    '/spreadsheets/catalogue-items/ingest',
+    async () => {
+      return new HttpResponse(undefined, {
+        status: 204,
+      });
+    }
+  ),
 ];
