@@ -647,9 +647,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                   render={({ field: { value, onChange } }) => (
                     <Autocomplete
                       value={
-                        options().find(
+                        (options().find(
                           (manufacturer) => manufacturer.id === value
-                        )
+                        ) || null) as Manufacturer & { isRecent: string }
                       }
                       onChange={(_event, newManufacturer) => {
                         onChange(newManufacturer?.id);
