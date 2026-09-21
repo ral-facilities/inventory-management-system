@@ -295,7 +295,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                         >
-                          Unknown
+                          Marcus Vance
                         </p>
                       </div>
                       <div
@@ -879,7 +879,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                         >
-                          Unknown
+                          Marcus Vance
                         </p>
                       </div>
                       <div
@@ -1468,7 +1468,9 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
-                        />
+                        >
+                          Alex Chen
+                        </p>
                       </div>
                       <div
                         class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
@@ -1990,7 +1992,9 @@ exports[`Catalogue Items details panel > renders details panel correctly (withou
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
-                        />
+                        >
+                          Marcus Vance
+                        </p>
                       </div>
                       <div
                         class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
@@ -2532,7 +2536,9 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
-                        />
+                        >
+                          Marcus Vance
+                        </p>
                       </div>
                       <div
                         class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
@@ -3140,7 +3146,9 @@ exports[`Catalogue Items details panel > renders details panel correctly in crit
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
-                        />
+                        >
+                          Marcus Vance
+                        </p>
                       </div>
                       <div
                         class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
@@ -3703,7 +3711,9 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
-                        />
+                        >
+                          Marcus Vance
+                        </p>
                       </div>
                       <div
                         class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
@@ -4265,7 +4275,9 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
-                        />
+                        >
+                          Marcus Vance
+                        </p>
                       </div>
                       <div
                         class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"
@@ -4822,7 +4834,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly (emp
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                         >
-                          Unknown
+                          Marcus Vance
                         </p>
                       </div>
                       <div
@@ -5362,7 +5374,9 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
-                        />
+                        >
+                          Marcus Vance
+                        </p>
                       </div>
                       <div
                         class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 MuiGrid2-grid-sm-6 css-1lu792j-MuiGrid2-root"

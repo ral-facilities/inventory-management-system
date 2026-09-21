@@ -279,7 +279,7 @@ exports[`Items details panel > renders details panel correctly (None values for 
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                       >
-                        Unknown
+                        Alex Chen
                       </p>
                     </div>
                     <div
@@ -892,7 +892,7 @@ exports[`Items details panel > renders details panel correctly (no dates) 1`] = 
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                       >
-                        Unknown
+                        David Kim
                       </p>
                     </div>
                     <div
@@ -1505,7 +1505,7 @@ exports[`Items details panel > renders details panel correctly (when there are n
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                       >
-                        Unknown
+                        Alex Chen
                       </p>
                     </div>
                     <div
@@ -2129,7 +2129,7 @@ exports[`Items details panel > renders details panel correctly 1`] = `
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                       >
-                        Unknown
+                        Alex Chen
                       </p>
                     </div>
                     <div
@@ -2747,7 +2747,7 @@ exports[`Items details panel > renders manufacturer panel correctly 1`] = `
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                       >
-                        Unknown
+                        Alex Chen
                       </p>
                     </div>
                     <div
@@ -3382,7 +3382,7 @@ exports[`Items details panel > renders notes panel correctly 1`] = `
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                       >
-                        Unknown
+                        Alex Chen
                       </p>
                     </div>
                     <div
@@ -4017,7 +4017,7 @@ exports[`Items details panel > renders properties panel correctly (empty propert
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                       >
-                        Unknown
+                        Alex Chen
                       </p>
                     </div>
                     <div
@@ -4537,7 +4537,7 @@ exports[`Items details panel > renders properties panel correctly 1`] = `
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-k16oju-MuiTypography-root"
                       >
-                        Unknown
+                        Alex Chen
                       </p>
                     </div>
                     <div
