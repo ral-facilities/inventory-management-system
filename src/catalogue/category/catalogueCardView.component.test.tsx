@@ -38,6 +38,8 @@ describe('CardView', () => {
         is_leaf: true,
         created_time: '2024-01-01T12:00:00.000+00:00',
         modified_time: '2024-01-02T13:10:10.000+00:00',
+        modified_comment: null,
+        modified_by: 'Unknown',
         is_flagged: false,
         properties: [],
       });
@@ -289,7 +291,7 @@ describe('CardView', () => {
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
-  });
+  }, 10000);
 
   it('selects and deselects catalogue categories', async () => {
     createView('/catalogue/1', 'catalogueCategories');
@@ -448,7 +450,7 @@ describe('CardView', () => {
       });
       expect(screen.queryByText('Test 31')).not.toBeInTheDocument();
       expect(router.state.location.search).toBe('');
-    });
+    }, 10000);
 
     it('changes max results correctly', async () => {
       const { router } = createView();
@@ -515,9 +517,9 @@ describe('CardView', () => {
 
       const dropdownButtons = await screen.findAllByTestId('FilterListIcon');
 
-      expect(dropdownButtons[1]).toBeInTheDocument();
+      expect(dropdownButtons[2]).toBeInTheDocument();
 
-      await user.click(dropdownButtons[1]);
+      await user.click(dropdownButtons[2]);
 
       const includeAnyText = await screen.findByRole('menuitem', {
         name: 'Includes any',

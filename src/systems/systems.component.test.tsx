@@ -122,7 +122,7 @@ describe('Systems', () => {
     await user.click(toggleFullScreenButton);
 
     expect(router.state.location.search).toBe(
-      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuhvMgIaw32PM4SNCEYAHEvFhcAdhkGsRZZHg44xDEjJbD0JAO4zk8HWxAAbEhh44tpkflphzXAOauaMMF3N5kAX38gA'
+      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuqRVTbQEYCeLJGkzxkAQ1jcGTQWxCMADiXiwxAOwzM4Q9GWR4M8HAoYk1s4SQDua5PAvoANiQwScZh-Ly0wjsQHN-GhgwMUc8ZABfSKA'
     );
 
     await waitFor(() => {
@@ -165,7 +165,7 @@ describe('Systems', () => {
     await user.click(toggleFullScreenButton);
 
     expect(router.state.location.search).toBe(
-      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuhvMgIaw32PM4SNCEYAHEvFhcAdhkGsRZZHg44xDEjJbD0JAO4zk8HWxAAbEhh44tpkflphzXAOauaMMF3N5kAX38gA'
+      '?subState=N4IgZgyiBcAuBOBXApgGhAYwGoEsDOMoAtgPYAmOYOyZA%2BrDkcjAiuqRVTbQEYCeLJGkzxkAQ1jcGTQWxCMADiXiwxAOwzM4Q9GWR4M8HAoYk1s4SQDua5PAvoANiQwScZh-Ly0wjsQHN-GhgwMUc8ZABfSKA'
     );
 
     const clearFiltersButton = await screen.findByRole('button', {

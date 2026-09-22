@@ -251,6 +251,7 @@ function Systems() {
   const hiddenColumns = React.useMemo(
     () => [
       'modified_time',
+      'modified_by',
       'created_time',
       'importance',
       'description',
@@ -404,6 +405,20 @@ function Systems() {
         enableGrouping: false,
         Cell: ({ row }) =>
           formatDateTimeStrings(row.original.modified_time, true),
+      },
+      {
+        header: 'Modified by',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => row.modified_by,
+        id: 'modified_by',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: [
+          ...COLUMN_FILTER_MODE_OPTIONS.string,
+          ...OPTIONAL_FILTER_MODE_OPTIONS,
+        ],
+        size: 250,
+        enableGrouping: false,
       },
       {
         header: 'Created Time',

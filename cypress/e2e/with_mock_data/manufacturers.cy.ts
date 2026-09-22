@@ -10,6 +10,7 @@ describe('Manufacturer', () => {
     cy.visit('/manufacturers');
     cy.findByText('Actions').should('be.visible');
     cy.findByText('Name').should('be.visible');
+    cy.findByText('Modified by').scrollIntoView();
     cy.findByText('URL').should('be.visible');
     cy.findByText('Telephone number').scrollIntoView();
     cy.findByText('Address').should('be.visible');
@@ -36,6 +37,7 @@ describe('Manufacturer', () => {
   });
 
   it('manufacturer url is correct and opens new webpage', () => {
+    cy.viewport(1600, 900); // expand viewport as url does not scroll into view correctly
     cy.visit('/manufacturers');
 
     cy.findByText('http://example.com')

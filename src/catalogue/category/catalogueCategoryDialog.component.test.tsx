@@ -11,7 +11,7 @@ import { AddCatalogueCategoryProperty } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { server } from '../../mocks/server';
 import {
-  CREATED_MODIFIED_TIME_VALUES,
+  BASE_FIELD_VALUES,
   renderComponentWithRouterProvider,
 } from '../../testUtils';
 import { resetUniqueIdCounter } from '../../utils';
@@ -29,8 +29,7 @@ describe('Catalogue Category Dialog', () => {
   let props: CatalogueCategoryDialogProps;
   let user: UserEvent;
 
-  interface TestAddCatalogueCategoryProperty
-    extends AddCatalogueCategoryProperty {
+  interface TestAddCatalogueCategoryProperty extends AddCatalogueCategoryProperty {
     unit?: string;
     skipSave?: boolean;
     skipSaveValidation?: boolean;
@@ -1192,7 +1191,7 @@ describe('Catalogue Category Dialog', () => {
       code: 'test',
       is_flagged: false,
       is_leaf: false,
-      ...CREATED_MODIFIED_TIME_VALUES,
+      ...BASE_FIELD_VALUES,
       properties: [],
     };
 
@@ -1407,7 +1406,7 @@ describe('Catalogue Category Dialog', () => {
       is_flagged: false,
       is_leaf: false,
       properties: [],
-      ...CREATED_MODIFIED_TIME_VALUES,
+      ...BASE_FIELD_VALUES,
     };
 
     beforeEach(() => {

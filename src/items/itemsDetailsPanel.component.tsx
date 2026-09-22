@@ -296,6 +296,23 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                     color: 'text.primary',
                   }}
                 >
+                  Modified By
+                </Typography>
+                <Typography
+                  sx={{
+                    color: 'text.secondary',
+                  }}
+                >
+                  {itemData.modified_by}
+                </Typography>
+              </Grid>
+
+              <Grid size={{ xs: 12, sm: 6 }} key={11}>
+                <Typography
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
                   Created
                 </Typography>
                 <Typography
