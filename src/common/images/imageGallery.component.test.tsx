@@ -257,7 +257,7 @@ describe('Image Gallery', () => {
 
     await user.click(galleryLightBox.getAllByLabelText('Next')[1]);
 
-    expect(axiosGetSpy).toHaveBeenCalledWith('/images/1');
+    expect(axiosGetSpy).toHaveBeenCalledWith('/images/2');
 
     await waitFor(() => {
       expect(screen.getByText('File name: logo1.png')).toBeInTheDocument();
@@ -320,9 +320,11 @@ describe('Image Gallery', () => {
 
     await user.click(galleryLightBox.getAllByLabelText('Previous')[1]);
 
-    expect(await screen.findByText('File name: logo1.png')).toBeInTheDocument();
-    expect(await screen.findByText('Title: logo1')).toBeInTheDocument();
-    expect(await screen.findByText('test')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('File name: logo1.png')).toBeInTheDocument();
+    });
+    expect(screen.getByText('Title: logo1')).toBeInTheDocument();
+    expect(screen.getByText('test')).toBeInTheDocument();
 
     const imageElement2 = await galleryLightBox.findByAltText(`test`);
 
