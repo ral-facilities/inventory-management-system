@@ -647,15 +647,13 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                   render={({ field: { value, onChange } }) => (
                     <Autocomplete
                       value={
-                        (options().find(
-                          (manufacturer) => manufacturer.id === value
-                        ) || null) as Manufacturer & { isRecent: string }
+                        options().find((manufacturer) => manufacturer.id === value) ?? null
                       }
                       onChange={(_event, newManufacturer) => {
                         onChange(newManufacturer?.id);
                       }}
                       id="catalogue-item-manufacturer-input"
-                      disableClearable
+                      disableClearable={value != null}
                       options={
                         sortDataList({
                           data: options(),
