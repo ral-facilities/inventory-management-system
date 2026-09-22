@@ -347,6 +347,7 @@ describe('Systems', () => {
       'include',
       '/catalogue/4/items/28/items?state=N4IgxgYiBcDaoEsAmMQGcCeaAuBTAtgHTYYAOuhAbgIYA2ArriADQg0NNygnmo4BOCAHYBzFmzqNUAZWwB7ftRFMAvgF11KoA'
     );
+    cy.findByRole('button', { name: 'Show Spare Items' }).should('be.disabled');
   });
 
   it('breadcrumbs should work correctly', () => {
@@ -1102,10 +1103,12 @@ describe('Systems', () => {
           cy.findByRole('button', { name: 'Next' }).click();
         });
 
-      cy.findAllByRole('combobox').eq(1).click({force: true});
-      cy.findByRole('option', { name: 'Scrapped' }).click({force: true});
+      cy.get('[id="usage-statuses-Cameras 8"]').click({
+        scrollBehavior: 'center',
+      });
+      cy.findByRole('option', { name: 'Scrapped' }).click();
 
-      cy.findByRole('button', { name: 'Finish' }).click({force: true});
+      cy.findByRole('button', { name: 'Finish' }).click();
 
       cy.findByRole('dialog').should('not.exist');
 
@@ -1178,7 +1181,7 @@ describe('Systems', () => {
     cy.visit('/systems/657f8c3b2a1b4e5d8f9b3c4e5');
 
     cy.findByRole('button', { name: 'Expand' }).click();
-    cy.findByLabelText('Row Actions').first().click({force: true});
+    cy.findByLabelText('Row Actions').first().click();
     cy.findByText('Edit').click();
 
     cy.findByText('Item Moving Rule Applied').should('exist');
@@ -1209,9 +1212,9 @@ describe('Systems', () => {
   it('duplicates an item', () => {
     cy.visit('/systems/657f8c3b2a1b4e5d8f9b3c4e5');
 
-    cy.findByRole('button', { name: 'Expand' }).click({force: true});
-    cy.findByLabelText('Row Actions').first().click( {force: true});
-    cy.findByText('Duplicate').click( {force: true});
+    cy.findByRole('button', { name: 'Expand' }).click();
+    cy.findByLabelText('Row Actions').first().click();
+    cy.findByText('Duplicate').click();
 
     cy.findByText('Item Creation Rule Applied').should('exist');
 
@@ -1260,7 +1263,7 @@ describe('Systems', () => {
     cy.visit('/systems/657f8c3b2a1b4e5d8f9b3c4e8');
 
     cy.findByRole('button', { name: 'Expand' }).click();
-    cy.findByLabelText('Row Actions').first().click({force: true});
+    cy.findByLabelText('Row Actions').first().click();
     cy.findByText('Delete').click();
 
     cy.findByText('Serial Number: WrgqAVk3qUQK').should('exist');

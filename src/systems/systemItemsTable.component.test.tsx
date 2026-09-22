@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react';
+import { screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { System } from '../api/api.types';
@@ -692,9 +692,11 @@ describe('SystemItemsTable', () => {
     await waitFor(() => {
       expect(screen.getByText(serialNumber)).toBeInTheDocument();
     });
-    const rowActionsButton = screen.getAllByLabelText('Row Actions');
-    await user.click(rowActionsButton[3]);
 
+    const noSerialNumberRow = screen.getByRole('row', {
+      name: new RegExp(serialNumber),
+    });
+    await user.click(within(noSerialNumberRow).getByLabelText('Row Actions'));
     await waitFor(() => {
       expect(screen.getByText('Duplicate')).toBeInTheDocument();
     });
@@ -706,6 +708,11 @@ describe('SystemItemsTable', () => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
     });
 
+    await user.click(screen.getByText('Add item details'));
+
+    expect(screen.getByLabelText('Notes')).toHaveValue(
+      'MJuSPgXEiXmBbf1Vlq4B\n\nThis is a copy of the item with this Serial Number: No serial number'
+    );
   }, 20000);
 
   it('can open the delete dialog and close it again', async () => {
