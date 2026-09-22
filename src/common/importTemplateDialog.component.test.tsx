@@ -3,9 +3,10 @@ import userEvent, { UserEvent } from '@testing-library/user-event';
 import * as fs from 'fs';
 import { http, HttpResponse } from 'msw';
 import * as path from 'path';
-import { act } from 'react';
+
 import { MockInstance } from 'vitest';
 import { ingestApi } from '../api/api';
+import handleTransferState from '../handleTransferState';
 import CatalogueCategoriesJSON from '../mocks/CatalogueCategories.json';
 import { server } from '../mocks/server';
 import {
@@ -21,6 +22,8 @@ const filePath = path.resolve(
   __dirname,
   '../mocks/CatalogueItemTemplate-test.xlsx'
 );
+
+vi.mock('../handleTransferState');
 
 vi.mock('../utils', async (importOriginal) => {
   const actual = await importOriginal<typeof import('../utils')>();
@@ -122,22 +125,10 @@ describe('Upload attachment dialog', () => {
     xhrPostSpy.mockRestore();
   });
 
-  it('renders dialog correctly', async () => {
-    let baseElement;
-    await act(async () => {
-      baseElement = createView().baseElement;
-    });
-
-    expect(
-      screen.getByText('Files cannot be larger than', { exact: false })
-    ).toBeInTheDocument();
-    expect(baseElement).toMatchSnapshot();
-  });
-
-  it('calls onclose when close button is clicked', async () => {
+  it('calls onclose when the cancel button is clicked', async () => {
     createView();
 
-    await user.click(screen.getByLabelText('Close Modal'));
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
 
     expect(onClose).toHaveBeenCalled();
   });
@@ -146,10 +137,12 @@ describe('Upload attachment dialog', () => {
     createView();
 
     await waitFor(() => {
-      expect(screen.getAllByRole('button')).toHaveLength(2);
+      expect(
+        screen.getByRole('button', { name: 'Download Template' })
+      ).toBeInTheDocument();
     });
 
-    await user.click(screen.getAllByRole('button')[2]);
+    await user.click(screen.getByRole('button', { name: 'Download Template' }));
 
     expect(axiosPostSpy).toHaveBeenCalledWith(
       '/spreadsheets/catalogue-items/template',
@@ -187,21 +180,25 @@ describe('Upload attachment dialog', () => {
 
     createView();
 
-    expect(
-      screen.getByText('Files cannot be larger than', { exact: false })
-    ).toBeInTheDocument();
-
     await waitFor(() => {
-      expect(screen.getAllByRole('button')).toHaveLength(3);
+      expect(
+        screen.getByRole('button', { name: 'Download Template' })
+      ).toBeInTheDocument();
     });
 
-    await user.click(screen.getAllByRole('button')[2]);
+    await user.click(screen.getByRole('button', { name: 'Download Template' }));
 
-    expect(
-      await screen.findByText(
-        'The selected catalogue category no longer exists or is invalid. Please navigate to a valid category catalogue that contains catalogue items and try again.'
-      )
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(handleTransferState).toHaveBeenCalled();
+    });
+    expect(handleTransferState).toHaveBeenCalledWith([
+      {
+        message:
+          'The selected catalogue category no longer exists or is invalid. Please navigate to a valid category catalogue that contains catalogue items and try again.',
+        name: 'Download template',
+        state: 'error',
+      },
+    ]);
   });
 
   it('display an error message when "The specified catalogue category does not exist" and user try to download a template', async () => {
@@ -226,21 +223,25 @@ describe('Upload attachment dialog', () => {
 
     createView();
 
-    expect(
-      screen.getByText('Files cannot be larger than', { exact: false })
-    ).toBeInTheDocument();
-
     await waitFor(() => {
-      expect(screen.getAllByRole('button')).toHaveLength(3);
+      expect(
+        screen.getByRole('button', { name: 'Download Template' })
+      ).toBeInTheDocument();
     });
 
-    await user.click(screen.getAllByRole('button')[2]);
+    await user.click(screen.getByRole('button', { name: 'Download Template' }));
 
-    expect(
-      await screen.findByText(
-        'The selected catalogue category no longer exists or is invalid. Please navigate to a valid category catalogue that contains catalogue items and try again.'
-      )
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(handleTransferState).toHaveBeenCalled();
+    });
+    expect(handleTransferState).toHaveBeenCalledWith([
+      {
+        message:
+          'The selected catalogue category no longer exists or is invalid. Please navigate to a valid category catalogue that contains catalogue items and try again.',
+        name: 'Download template',
+        state: 'error',
+      },
+    ]);
   });
 
   describe('Admin mode', () => {
@@ -253,6 +254,13 @@ describe('Upload attachment dialog', () => {
 
     it('imports spreadsheet successfully', async () => {
       createView();
+      await waitFor(() => {
+        expect(
+          screen.getByRole('button', { name: 'Download Template' })
+        ).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
 
       const file1 = new File(['test'], 'test1.xlsx', {
         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -276,14 +284,32 @@ describe('Upload attachment dialog', () => {
         expect(screen.getByText('test1.xlsx')).toBeInTheDocument();
       });
 
+      await user.click(await screen.findByText('Validate 1 file'));
+
       expect(xhrPostSpy).toHaveBeenCalledWith(
         'POST',
         '/spreadsheets/catalogue-items/validate',
         true
       );
+      expect(handleTransferState).toHaveBeenCalledWith([
+        {
+          message: 'Valid',
+          name: 'Spreadsheet',
+          state: 'success',
+        },
+      ]);
 
-      await user.click(await screen.findByText('Upload 1 file'));
+      expect(
+        await screen.findByText(
+          `Validation complete. No errors or warnings found. Please click Next to proceed.`
+        )
+      ).toBeInTheDocument();
 
+      expect(await screen.findByText('Complete')).toBeInTheDocument();
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await user.click(await screen.findByText('Import 1 file'));
       expect(xhrPostSpy).toHaveBeenCalledWith(
         'POST',
         '/spreadsheets/catalogue-items/ingest',
@@ -291,6 +317,10 @@ describe('Upload attachment dialog', () => {
       );
 
       expect(await screen.findByText('Complete')).toBeInTheDocument();
+
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+
+      expect(onClose).toHaveBeenCalled();
     });
 
     it('displays a warning message when there are warnings in the spreadsheet', async () => {
@@ -306,6 +336,14 @@ describe('Upload attachment dialog', () => {
       );
       createView();
 
+      await waitFor(() => {
+        expect(
+          screen.getByRole('button', { name: 'Download Template' })
+        ).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
       const file1 = new File(['test'], 'test1.xlsx', {
         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       });
@@ -328,19 +366,33 @@ describe('Upload attachment dialog', () => {
         expect(screen.getByText('test1.xlsx')).toBeInTheDocument();
       });
 
+      await user.click(await screen.findByText('Validate 1 file'));
+
       expect(xhrPostSpy).toHaveBeenCalledWith(
         'POST',
         '/spreadsheets/catalogue-items/validate',
         true
       );
 
+      expect(handleTransferState).toHaveBeenCalledWith([
+        {
+          message: 'Valid with warnings',
+          name: 'Spreadsheet',
+          state: 'warning',
+        },
+      ]);
+
       expect(
         await screen.findByText(
-          'Validation completed with 5 warnings. A spreadsheet highlighting the warnings has been downloaded. Please click Upload to proceed.'
+          'Validation completed with 5 warnings. A spreadsheet highlighting the warnings has been downloaded. Please click Next to proceed.'
         )
       ).toBeInTheDocument();
 
-      await user.click(await screen.findByText('Upload 1 file'));
+      expect(await screen.findByText('Complete')).toBeInTheDocument();
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await user.click(await screen.findByText('Import 1 file'));
 
       expect(xhrPostSpy).toHaveBeenCalledWith(
         'POST',
@@ -364,6 +416,14 @@ describe('Upload attachment dialog', () => {
       );
       createView();
 
+      await waitFor(() => {
+        expect(
+          screen.getByRole('button', { name: 'Download Template' })
+        ).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
       const file1 = new File(['test'], 'test1.xlsx', {
         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       });
@@ -386,11 +446,21 @@ describe('Upload attachment dialog', () => {
         expect(screen.getByText('test1.xlsx')).toBeInTheDocument();
       });
 
+      await user.click(await screen.findByText('Validate 1 file'));
+
       expect(xhrPostSpy).toHaveBeenCalledWith(
         'POST',
         '/spreadsheets/catalogue-items/validate',
         true
       );
+
+      expect(handleTransferState).toHaveBeenCalledWith([
+        {
+          message: 'Invalid',
+          name: 'Spreadsheet',
+          state: 'error',
+        },
+      ]);
 
       expect(
         await screen.findByText(
@@ -399,7 +469,7 @@ describe('Upload attachment dialog', () => {
       ).toBeInTheDocument();
 
       await waitFor(() => {
-        expect(screen.queryByText('Upload 1 file')).not.toBeInTheDocument();
+        expect(screen.queryByText('Validate 1 file')).not.toBeInTheDocument();
       });
     });
 
@@ -416,6 +486,14 @@ describe('Upload attachment dialog', () => {
       );
       createView();
 
+      await waitFor(() => {
+        expect(
+          screen.getByRole('button', { name: 'Download Template' })
+        ).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
       const file1 = new File(['test'], 'test1.xlsx', {
         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       });
@@ -438,11 +516,21 @@ describe('Upload attachment dialog', () => {
         expect(screen.getByText('test1.xlsx')).toBeInTheDocument();
       });
 
+      await user.click(await screen.findByText('Validate 1 file'));
+
       expect(xhrPostSpy).toHaveBeenCalledWith(
         'POST',
         '/spreadsheets/catalogue-items/validate',
         true
       );
+
+      expect(handleTransferState).toHaveBeenCalledWith([
+        {
+          message: 'Invalid',
+          name: 'Spreadsheet',
+          state: 'error',
+        },
+      ]);
 
       expect(
         await screen.findByText(
@@ -451,7 +539,7 @@ describe('Upload attachment dialog', () => {
       ).toBeInTheDocument();
 
       await waitFor(() => {
-        expect(screen.queryByText('Upload 1 file')).not.toBeInTheDocument();
+        expect(screen.queryByText('Validate 1 file')).not.toBeInTheDocument();
       });
     });
 
@@ -467,6 +555,14 @@ describe('Upload attachment dialog', () => {
         );
 
         createView();
+
+        await waitFor(() => {
+          expect(
+            screen.getByRole('button', { name: 'Download Template' })
+          ).toBeInTheDocument();
+        });
+
+        await user.click(screen.getByRole('button', { name: 'Next' }));
 
         const file = new File(['test'], 'test.xlsx', {
           type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -486,22 +582,33 @@ describe('Upload attachment dialog', () => {
           expect(screen.getByText('test.xlsx')).toBeInTheDocument();
         });
 
+        await user.click(await screen.findByText('Validate 1 file'));
+
         expect(xhrPostSpy).toHaveBeenCalledWith(
           'POST',
           '/spreadsheets/catalogue-items/validate',
           true
         );
 
-        expect(
-          await screen.findByText(
-            parseSpreadsheetError(backendMessage.toLowerCase())
-          )
-        ).toBeInTheDocument();
+        await waitFor(
+          () => {
+            expect(screen.getByText('Validate failed')).toBeInTheDocument();
+          },
+          { timeout: 5000 }
+        );
+
+        await waitFor(() => {
+          expect(
+            screen.getAllByLabelText(
+              parseSpreadsheetError(backendMessage.toLowerCase())
+            ).length
+          ).toBe(2);
+        });
 
         await waitFor(() => {
           expect(screen.queryByText('Upload 1 file')).not.toBeInTheDocument();
         });
-      });
+      }, 10000);
     });
   });
 
@@ -515,6 +622,13 @@ describe('Upload attachment dialog', () => {
 
     it('validates spreadsheet successfully', async () => {
       createView();
+      await waitFor(() => {
+        expect(
+          screen.getByRole('button', { name: 'Download Template' })
+        ).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
 
       const file1 = new File(['test'], 'test1.xlsx', {
         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -538,19 +652,31 @@ describe('Upload attachment dialog', () => {
         expect(screen.getByText('test1.xlsx')).toBeInTheDocument();
       });
 
-      await user.click(await screen.findByText('Upload 1 file'));
+      await user.click(await screen.findByText('Validate 1 file'));
 
       expect(xhrPostSpy).toHaveBeenCalledWith(
         'POST',
         '/spreadsheets/catalogue-items/validate',
         true
       );
+      expect(handleTransferState).toHaveBeenCalledWith([
+        {
+          message: 'Valid',
+          name: 'Spreadsheet',
+          state: 'success',
+        },
+      ]);
       expect(
         await screen.findByText(
-          'Validation complete. No errors or warnings found. Please contact an admin to import the spreadsheet.'
+          `Validation complete. No errors or warnings found. Please click Next to proceed.`
         )
       ).toBeInTheDocument();
       expect(await screen.findByText('Complete')).toBeInTheDocument();
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      expect(
+        await screen.findByText('Administrator Action Required')
+      ).toBeInTheDocument();
     });
 
     it('displays a warning message when there are warnings in the spreadsheet', async () => {
@@ -565,6 +691,13 @@ describe('Upload attachment dialog', () => {
         })
       );
       createView();
+      await waitFor(() => {
+        expect(
+          screen.getByRole('button', { name: 'Download Template' })
+        ).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
 
       const file1 = new File(['test'], 'test1.xlsx', {
         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -588,7 +721,7 @@ describe('Upload attachment dialog', () => {
         expect(screen.getByText('test1.xlsx')).toBeInTheDocument();
       });
 
-      await user.click(await screen.findByText('Upload 1 file'));
+      await user.click(await screen.findByText('Validate 1 file'));
 
       expect(xhrPostSpy).toHaveBeenCalledWith(
         'POST',
@@ -596,11 +729,19 @@ describe('Upload attachment dialog', () => {
         true
       );
 
+      expect(handleTransferState).toHaveBeenCalledWith([
+        {
+          message: 'Valid with warnings',
+          name: 'Spreadsheet',
+          state: 'warning',
+        },
+      ]);
+
       expect(await screen.findByText('Complete')).toBeInTheDocument();
 
       expect(
         await screen.findByText(
-          'Validation completed with 5 warnings. A spreadsheet highlighting the warnings has been downloaded. Please contact an admin to import the spreadsheet.'
+          'Validation completed with 5 warnings. A spreadsheet highlighting the warnings has been downloaded. Please click Next to proceed.'
         )
       ).toBeInTheDocument();
     });
@@ -617,6 +758,13 @@ describe('Upload attachment dialog', () => {
         })
       );
       createView();
+      await waitFor(() => {
+        expect(
+          screen.getByRole('button', { name: 'Download Template' })
+        ).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
 
       const file1 = new File(['test'], 'test1.xlsx', {
         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -640,7 +788,15 @@ describe('Upload attachment dialog', () => {
         expect(screen.getByText('test1.xlsx')).toBeInTheDocument();
       });
 
-      await user.click(await screen.findByText('Upload 1 file'));
+      await user.click(await screen.findByText('Validate 1 file'));
+
+      expect(handleTransferState).toHaveBeenCalledWith([
+        {
+          message: 'Invalid',
+          name: 'Spreadsheet',
+          state: 'error',
+        },
+      ]);
 
       expect(
         await screen.findByText(
@@ -661,6 +817,13 @@ describe('Upload attachment dialog', () => {
         })
       );
       createView();
+      await waitFor(() => {
+        expect(
+          screen.getByRole('button', { name: 'Download Template' })
+        ).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
 
       const file1 = new File(['test'], 'test1.xlsx', {
         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -684,12 +847,19 @@ describe('Upload attachment dialog', () => {
         expect(screen.getByText('test1.xlsx')).toBeInTheDocument();
       });
 
-      await user.click(await screen.findByText('Upload 1 file'));
+      await user.click(await screen.findByText('Validate 1 file'));
 
       await waitFor(() => {
-        expect(screen.queryByText('Upload 1 file')).not.toBeInTheDocument();
+        expect(screen.queryByText('Validate 1 file')).not.toBeInTheDocument();
       });
 
+      expect(handleTransferState).toHaveBeenCalledWith([
+        {
+          message: 'Invalid',
+          name: 'Spreadsheet',
+          state: 'error',
+        },
+      ]);
       expect(
         await screen.findByText(
           'Validation failed with 5 errors and 5 warnings. A spreadsheet with highlighted issues has been downloaded.'
@@ -709,6 +879,13 @@ describe('Upload attachment dialog', () => {
         );
 
         createView();
+        await waitFor(() => {
+          expect(
+            screen.getByRole('button', { name: 'Download Template' })
+          ).toBeInTheDocument();
+        });
+
+        await user.click(screen.getByRole('button', { name: 'Next' }));
 
         const file = new File(['test'], 'test.xlsx', {
           type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -727,18 +904,13 @@ describe('Upload attachment dialog', () => {
         await waitFor(() => {
           expect(screen.getByText('test.xlsx')).toBeInTheDocument();
         });
-
-        await user.click(await screen.findByText('Upload 1 file'));
-
-        await waitFor(() => {
-          expect(screen.queryByText('Upload 1 file')).not.toBeInTheDocument();
-        });
+        await user.click(await screen.findByText('Validate 1 file'));
 
         await waitFor(
           () => {
-            expect(screen.getByText('Upload failed')).toBeInTheDocument();
+            expect(screen.getByText('Validate failed')).toBeInTheDocument();
           },
-          { timeout: 10000 }
+          { timeout: 5000 }
         );
 
         await waitFor(() => {
@@ -748,7 +920,7 @@ describe('Upload attachment dialog', () => {
             ).length
           ).toBe(2);
         });
-      }, 15000);
+      }, 10000);
     });
   });
 });
