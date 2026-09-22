@@ -99,7 +99,7 @@ const PrimaryImage = (props: PrimaryImageProps) => {
       updatedParams.set('image', primaryImage.id);
       setSearchParams(updatedParams);
     }
-  }, [searchParams, setSearchParams, imagesData]);
+  }, [searchParams, setSearchParams, primaryImage]);
 
   const [primaryDialogOpen, setPrimaryDialogOpen] = React.useState<
     false | 'set' | 'remove'
