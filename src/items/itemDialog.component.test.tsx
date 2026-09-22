@@ -167,7 +167,7 @@ describe('ItemDialog', () => {
       axiosPostSpy = vi.spyOn(imsApi, 'post');
     });
 
-    it('disables finish button and shows circular progress indicator when request is pending', async () => {
+    it('disables continue button and shows circular progress indicator when request is pending', async () => {
       server.use(
         http.post('/v1/items', () => {
           return new Promise(() => {});
@@ -189,11 +189,11 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
-      const finishButton = screen.getByRole('button', { name: 'Continue' });
-      await user.click(finishButton);
+      const continueButton = screen.getByRole('button', { name: 'Continue' });
+      await user.click(continueButton);
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
-      expect(finishButton).toBeDisabled();
+      expect(continueButton).toBeDisabled();
       expect(await screen.findByRole('progressbar')).toBeInTheDocument();
     });
 
@@ -603,7 +603,7 @@ describe('ItemDialog', () => {
       });
     }, 10000);
 
-    it('displays an error message if a step is disabled and clears the errors until the finish button is enabled', async () => {
+    it('displays an error message if a step is disabled and clears the errors until the continue button is enabled', async () => {
       createView();
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -662,7 +662,7 @@ describe('ItemDialog', () => {
       ).not.toBeDisabled();
     }, 15000);
 
-    it('displays placement and items details error message user skips to last step and presses finish', async () => {
+    it('displays placement and items details error message user skips to last step and presses continue', async () => {
       createView();
 
       await user.click(screen.getByText('Add item properties'));
@@ -1052,7 +1052,9 @@ describe('ItemDialog', () => {
         ).not.toBeInTheDocument();
       });
 
-      expect(screen.getByRole('button', { name: 'Continue' })).not.toBeDisabled();
+      expect(
+        screen.getByRole('button', { name: 'Continue' })
+      ).not.toBeDisabled();
     }, 20000);
 
     it('displays error message when property values type is incorrect', async () => {
@@ -1173,7 +1175,9 @@ describe('ItemDialog', () => {
       await user.type(ultimatePressureTextBox, '10');
 
       expect(mandatoryFieldHelperText).not.toBeInTheDocument();
-      expect(screen.getByRole('button', { name: 'Continue' })).not.toBeDisabled();
+      expect(
+        screen.getByRole('button', { name: 'Continue' })
+      ).not.toBeDisabled();
     });
 
     it('displays warning message when an unknown error occurs', async () => {
@@ -1395,7 +1399,7 @@ describe('ItemDialog', () => {
       expect(baseElement).toMatchSnapshot();
     });
 
-    it('disables finish button and shows circular progress indicator when request is pending', async () => {
+    it('disables continue button and shows circular progress indicator when request is pending', async () => {
       server.use(
         http.patch('/v1/items/:id', () => {
           return new Promise(() => {});
@@ -1416,11 +1420,11 @@ describe('ItemDialog', () => {
       await user.click(screen.getByRole('button', { name: 'Next' }));
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
-      const finishButton = screen.getByRole('button', { name: 'Continue' });
-      await user.click(finishButton);
+      const continueButton = screen.getByRole('button', { name: 'Continue' });
+      await user.click(continueButton);
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
-      expect(finishButton).toBeDisabled();
+      expect(continueButton).toBeDisabled();
       expect(await screen.findByRole('progressbar')).toBeInTheDocument();
     }, 15000);
 
