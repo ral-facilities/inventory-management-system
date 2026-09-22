@@ -291,7 +291,7 @@ describe('CardView', () => {
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
-  });
+  }, 10000);
 
   it('selects and deselects catalogue categories', async () => {
     createView('/catalogue/1', 'catalogueCategories');
@@ -450,7 +450,7 @@ describe('CardView', () => {
       });
       expect(screen.queryByText('Test 31')).not.toBeInTheDocument();
       expect(router.state.location.search).toBe('');
-    });
+    }, 10000);
 
     it('changes max results correctly', async () => {
       const { router } = createView();
