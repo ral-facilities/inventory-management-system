@@ -61,6 +61,18 @@ describe('Items', () => {
     cy.findAllByText('(Item Details)').should('exist');
   });
 
+  it('navigates to systems history page from landing page, and displays data correctly', () => {
+    cy.visit('/catalogue/4/items/1/items/KvT2Ox7n');
+
+    cy.findByRole('link', { name: "5YUQDDjKpz2z's sytems history" })
+      .should('have.attr', 'href')
+      .should('include', '/catalogue/4/items/1/items/KvT2Ox7n/systems-history');
+
+    cy.findByRole('link', { name: "5YUQDDjKpz2z's sytems history" }).click();
+    cy.findByText('Giant laser').should('be.visible');
+    cy.findByText('Laser Xpress').should('be.visible');
+  });
+
   it('should be able to navigate back to the catalogue home', () => {
     cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
     cy.findByText('Motion').should('be.visible');
@@ -259,7 +271,7 @@ describe('Items', () => {
 
     cy.findByLabelText('Quantity').type('10.5');
     cy.findAllByText('Please enter a valid integer.').should('exist');
-    
+
     cy.findByLabelText('Starting value').type('10.5');
     cy.findAllByText('Please enter a valid integer.').should('exist');
 
@@ -312,7 +324,7 @@ describe('Items', () => {
     cy.findByText('Item Creation Rule Applied').should('exist');
 
     cy.findByRole('button', { name: 'Next' }).click();
-    
+
     cy.findByLabelText('Serial number').type('{selectall}{del}');
 
     cy.findByRole('button', { name: 'Next' }).click();
