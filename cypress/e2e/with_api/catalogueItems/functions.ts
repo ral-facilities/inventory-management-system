@@ -530,4 +530,6 @@ export const removePrimaryImage = () => {
   cy.findByRole('dialog').should('not.exist');
   cy.findByRole('button', { name: 'primary images action menu' }).click();
   cy.findByText('Remove Primary Image').should('not.exist');
+  // Close action dialog to stop it covering other elements
+  cy.findByRole('button', { name: 'primary images action menu' }).click();
 };
