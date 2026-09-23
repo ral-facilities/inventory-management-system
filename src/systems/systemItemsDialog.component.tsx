@@ -36,6 +36,7 @@ import handleTransferState from '../handleTransferState';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { SystemItemsUsageStatusTable } from './systemItemsUsageStatuses.component';
 import { SystemsTableView } from './systemsTableView.component';
+import HistoryCommentDialog from '../history/historyCommentDialog.component';
 
 export interface SystemItemsDialogProps {
   open: boolean;
@@ -85,6 +86,13 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   );
   const [usageStatuses, setUsageStatuses] = React.useState<UsageStatusesType[]>(
     []
+  );
+
+  const [historyCommentDialog, setHistoryCommentDialog] =
+    React.useState<boolean>(false);
+
+  const [modifiedComment, setModifiedComment] = React.useState<string | null>(
+    null
   );
 
   const { data: dstSystem } = useGetSystem(parentSystemId);
@@ -182,62 +190,73 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     // or when attempting to move to root i.e. no system
     props.parentSystemId === parentSystemId || parentSystemId === null;
 
-  const handleMoveTo = React.useCallback(() => {
-    if (hasSystemErrors) {
-      setPlaceIntoSystemError(
-        'Please move items from current location or root to another system.'
-      );
-      return;
-    }
-
-    // Ensure finished loading and not moving to root
-    // (where we don't need to load anything as the name is known)
-    if (!targetSystemLoading && targetSystem !== undefined) {
-      if (isAdminMode) {
-        moveItemsToSystem({
-          mode: 'multiple',
-          usageStatuses: convertToSystemUsageStatuses(usageStatuses),
-          selectedItems: selectedItems,
-          // Only reason for targetSystem to be undefined here is if not loading at all
-          // which happens when at root
-          targetSystem: targetSystem,
-        }).then((response) => {
-          handleTransferState(response);
-          onChangeSelectedItems({});
-          handleClose();
-        });
-      } else {
-        moveItemsToSystem({
-          mode: 'single',
-          usageStatusId:
-            srcSystemTypeId === dstSystemTypeId || selectedRules?.length === 0
-              ? undefined
-              : selectedRules?.[0]?.dst_usage_status?.id,
-          selectedItems: selectedItems,
-          // Only reason for targetSystem to be undefined here is if not loading at all
-          // which happens when at root
-          targetSystem: targetSystem,
-        }).then((response) => {
-          handleTransferState(response);
-          onChangeSelectedItems({});
-          handleClose();
-        });
+  const handleMoveTo = React.useCallback(
+    (allowSubmit: boolean) => {
+      if (hasSystemErrors) {
+        setPlaceIntoSystemError(
+          'Please move items from current location or root to another system.'
+        );
+        return;
       }
-    }
-  }, [
-    hasSystemErrors,
-    usageStatuses,
-    srcSystemTypeId,
-    dstSystemTypeId,
-    selectedRules,
-    targetSystemLoading,
-    targetSystem,
-    moveItemsToSystem,
-    isAdminMode,
-    selectedItems,
-    onChangeSelectedItems,
-    handleClose,
-  ]);
+
+      if (!allowSubmit) {
+        setHistoryCommentDialog(true);
+        return;
+      }
+
+      // Ensure finished loading and not moving to root
+      // (where we don't need to load anything as the name is known)
+      if (!targetSystemLoading && targetSystem !== undefined) {
+        if (isAdminMode) {
+          moveItemsToSystem({
+            mode: 'multiple',
+            modifiedComment: modifiedComment,
+            usageStatuses: convertToSystemUsageStatuses(usageStatuses),
+            selectedItems: selectedItems,
+            // Only reason for targetSystem to be undefined here is if not loading at all
+            // which happens when at root
+            targetSystem: targetSystem,
+          }).then((response) => {
+            handleTransferState(response);
+            onChangeSelectedItems({});
+            handleClose();
+          });
+        } else {
+          moveItemsToSystem({
+            mode: 'single',
+            modifiedComment: modifiedComment,
+            usageStatusId:
+              srcSystemTypeId === dstSystemTypeId || selectedRules?.length === 0
+                ? undefined
+                : selectedRules?.[0]?.dst_usage_status?.id,
+            selectedItems: selectedItems,
+            // Only reason for targetSystem to be undefined here is if not loading at all
+            // which happens when at root
+            targetSystem: targetSystem,
+          }).then((response) => {
+            handleTransferState(response);
+            onChangeSelectedItems({});
+            handleClose();
+          });
+        }
+      }
+    },
+    [
+      hasSystemErrors,
+      targetSystemLoading,
+      targetSystem,
+      isAdminMode,
+      moveItemsToSystem,
+      modifiedComment,
+      usageStatuses,
+      selectedItems,
+      onChangeSelectedItems,
+      handleClose,
+      srcSystemTypeId,
+      dstSystemTypeId,
+      selectedRules,
+    ]
+  );
 
   const handleNext = React.useCallback(
     (step: number) => {
@@ -440,10 +459,10 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
                   ? true
                   : !targetSystemLoading && targetSystem !== undefined)
               }
-              onClick={handleMoveTo}
+              onClick={() => handleMoveTo(false)}
               sx={{ mr: 3 }}
             >
-              Finish
+              Continue
             </Button>
           ) : (
             <Button
@@ -470,7 +489,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
                 ? true
                 : !targetSystemLoading && targetSystem !== undefined)
             }
-            onClick={handleMoveTo}
+            onClick={() => handleMoveTo(false)}
             sx={{ mr: 3 }}
           >
             Move here
@@ -484,6 +503,16 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
           </FormHelperText>
         </Box>
       )}
+      <HistoryCommentDialog
+        open={historyCommentDialog}
+        onSubmit={(_) => {
+          setHistoryCommentDialog(false);
+          handleMoveTo(true);
+        }}
+        onChange={setModifiedComment}
+        action={'moving'}
+        entityTypeName={selectedItems.length > 1 ? 'Items' : 'Item'}
+      />
     </Dialog>
   );
 });

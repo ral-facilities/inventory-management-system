@@ -235,6 +235,7 @@ export interface ItemPost {
   delivered_date?: string | null;
   notes?: string | null;
   properties?: PropertyPost[] | null;
+  modified_comment: string | null;
 }
 
 export type ItemPatch = Partial<ItemPost>;
