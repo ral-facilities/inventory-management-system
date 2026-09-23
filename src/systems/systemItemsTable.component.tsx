@@ -64,7 +64,6 @@ import {
   displayTableRowCountText,
   formatDateTimeStrings,
   getInitialColumnFilterFnState,
-  getPageHeightCalc,
   mrtTheme,
   roundUpTenth,
 } from '../utils';
@@ -648,19 +647,8 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         }),
       };
     },
-    muiTableContainerProps: ({ table }) => {
-      const showAlert =
-        table.getState().showAlertBanner ||
-        table.getFilteredSelectedRowModel().rows.length > 0 ||
-        table.getState().grouping.length > 0;
-      return {
-        sx: {
-          height: table.getState().isFullScreen
-            ? '100%'
-            : getPageHeightCalc(`272px  ${showAlert ? '+ 72px' : ''}`),
-        },
-      };
-    },
+    muiTableContainerProps: { sx: { minHeight: '300px', maxHeight: '600px' } },
+
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',

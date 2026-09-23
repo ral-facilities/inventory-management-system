@@ -885,6 +885,15 @@ export const criticalityCardStyle = (props: {
   };
 };
 
+export const getCombinedFlagged = (
+  flags: (boolean | null)[]
+): boolean | null | undefined => {
+  if (flags.length === 0) return undefined;
+  if (flags.includes(true)) return true;
+  if (flags.includes(null)) return null;
+  return false;
+};
+
 export const criticalityHeaderStyle = (props: {
   theme: Theme;
   showFlagged: boolean | null;
