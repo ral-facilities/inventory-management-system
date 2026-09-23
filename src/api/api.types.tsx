@@ -339,7 +339,6 @@ export interface CatalogueItemSpreadsheetMetadata {
 // ------------------------------------ HISTORY API -----------------------------------------
 
 export interface ItemSystemsHistoryEntry {
-  item_id: string;
   system_id: string;
   system_name: string;
   entered_at: string;
