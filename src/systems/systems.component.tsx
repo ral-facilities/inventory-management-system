@@ -5,9 +5,12 @@ import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined
 import EditIcon from '@mui/icons-material/Edit';
 import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
 import InfoOutlined from '@mui/icons-material/InfoOutlined';
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
+  Backdrop,
   Box,
   Button,
   Chip,
@@ -21,9 +24,10 @@ import {
   Link as MuiLink,
   Tooltip,
   Typography,
+  useMediaQuery,
+  useTheme,
   type TableCellBaseProps,
 } from '@mui/material';
-import Grid from '@mui/material/Grid2';
 import {
   MaterialReactTable,
   MRT_Column,
@@ -37,7 +41,7 @@ import {
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { Link, useParams } from 'react-router';
+import { Link, useParams, useSearchParams } from 'react-router';
 import { System, SystemImportanceType } from '../api/api.types';
 import { getSystemImportanceColour, useGetSystems } from '../api/systems';
 import { useGetSystemTypes } from '../api/systemTypes';
@@ -69,6 +73,7 @@ import {
   displayTableRowCountText,
   formatDateTimeStrings,
   generateUniqueName,
+  getCombinedFlagged,
   getInitialColumnFilterFnState,
   MRT_Functions_Localisation,
   mrtTheme,
@@ -222,7 +227,72 @@ const SystemsActionMenu = (props: {
   );
 };
 
-const MIN_SUBSYSTEMS_WIDTH = '500px';
+const SUBSYSTEMS_PANEL_WIDTH = '500px';
+const SUBSYSTEMS_RAIL_WIDTH = '64px';
+export const SUBSYSTEMS_PANEL_URL_PARAM = 'subsystems';
+
+export const getSubsystemsCriticalityLabel = (showFlagged: boolean | null) => {
+  if (showFlagged === true) {
+    return 'At least one of these systems is critical.';
+  }
+  if (showFlagged === false) {
+    return 'None of these systems are critical.';
+  }
+  return 'Unable to determine if all of these systems are critical. Please wait until this is recalculated.';
+};
+
+const SubsystemsRail = (props: {
+  title: string;
+  count?: number;
+  showFlagged?: boolean | null;
+  onExpand: () => void;
+}) => {
+  const ariaLabelText = `Show ${props.title.toLowerCase()}`;
+
+  const { showFlagged, count, title, onExpand } = props;
+
+  return (
+    <Box
+      sx={(theme) => ({
+        flex: '0 0 auto',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: 1,
+        borderRight: 1,
+        borderRightColor: theme.palette.divider,
+        width: SUBSYSTEMS_RAIL_WIDTH,
+        py: 1,
+      })}
+    >
+      <Tooltip title={ariaLabelText}>
+        <span>
+          <IconButton aria-label={ariaLabelText} onClick={onExpand}>
+            <KeyboardDoubleArrowRightIcon />
+          </IconButton>
+        </span>
+      </Tooltip>
+      {showFlagged !== undefined && (
+        <CriticalityTooltipIcon
+          showFlagged={showFlagged}
+          label={getSubsystemsCriticalityLabel(showFlagged)}
+          iconSx={{ px: 0.5 }}
+        />
+      )}
+      <Typography
+        variant="subtitle2"
+        noWrap
+        sx={{
+          color: 'text.secondary',
+          writingMode: 'vertical-rl',
+          transform: 'rotate(180deg)',
+        }}
+      >
+        {count === undefined ? title : `${title} (${count})`}
+      </Typography>
+    </Box>
+  );
+};
 
 export const CriticalTooltipText = (
   <Typography style={{ whiteSpace: 'pre-line' }}>
@@ -249,6 +319,9 @@ function Systems() {
   >(undefined);
 
   const noResultsTxt = `No ${systemId === null ? 'systems' : 'subsystems'} found`;
+  const panelTitle = systemId === null ? 'Root systems' : 'Subsystems';
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const hiddenColumns = React.useMemo(
     () => [
@@ -275,6 +348,43 @@ function Systems() {
   const { isCriticalMode } = useAppSelector(selectCriticality);
 
   const isLoading = systemTypesLoading || subsystemsDataLoading;
+
+  const subsystemsFlagged = React.useMemo(
+    () =>
+      isCriticalMode && isSparesDefinitionDefined && !isLoading
+        ? getCombinedFlagged(
+            (subsystemsData ?? []).map((row) => row.is_flagged)
+          )
+        : undefined,
+    [isCriticalMode, isSparesDefinitionDefined, isLoading, subsystemsData]
+  );
+
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('xl'));
+
+  const subsystemsPanelParam = searchParams.get(SUBSYSTEMS_PANEL_URL_PARAM);
+  const subsystemsCollapsed =
+    subsystemsPanelParam !== null
+      ? subsystemsPanelParam === 'hide'
+      : systemId !== null &&
+        (isSmallScreen || (!isLoading && subsystemsData?.length === 0));
+
+  const onChangeSubsystemsCollapsed = React.useCallback(
+    (collapsed: boolean) =>
+      setSearchParams(
+        (prevSearchParams) => {
+          const newSearchParams = new URLSearchParams(prevSearchParams);
+          newSearchParams.set(
+            SUBSYSTEMS_PANEL_URL_PARAM,
+            collapsed ? 'hide' : 'show'
+          );
+          return newSearchParams;
+        },
+        { replace: false }
+      ),
+    [setSearchParams]
+  );
+
   const [tableRows, setTableRows] = React.useState<SystemTableType[]>([]);
 
   React.useEffect(() => {
@@ -697,10 +807,21 @@ function Systems() {
             sx={{ display: 'flex', alignItems: 'center', margin: 0.5, my: 1 }}
           >
             <Typography variant="h6" sx={{ marginRight: 'auto' }}>
-              {systemId === null ? 'Root systems' : 'Subsystems'}
+              {panelTitle}
             </Typography>
 
             <AddSystemButton systemId={systemId} isIcon />
+
+            <Tooltip title={`Hide ${panelTitle.toLowerCase()}`}>
+              <span>
+                <IconButton
+                  aria-label={`Hide ${panelTitle.toLowerCase()}`}
+                  onClick={() => onChangeSubsystemsCollapsed(true)}
+                >
+                  <KeyboardDoubleArrowLeftIcon />
+                </IconButton>
+              </span>
+            </Tooltip>
           </Box>
           <Divider role="presentation" />
           <Box sx={{ display: 'flex', alignItems: 'center', margin: 1 }}>
@@ -810,65 +931,106 @@ function Systems() {
     setMenuDialogType(undefined);
   }, [systemId, subsystemsTable]);
 
+  const subsystemsTableContents = isLoading ? (
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+        height: '100%',
+        minHeight: 200,
+      }}
+    >
+      <CircularProgress />
+    </Box>
+  ) : (
+    <MaterialReactTable table={subsystemsTable} />
+  );
+
+  const subsystemsOverlaid = isSmallScreen && !subsystemsCollapsed;
+
+  const subsystemsRail = (
+    <SubsystemsRail
+      title={panelTitle}
+      count={isLoading ? undefined : subsystemsData?.length}
+      showFlagged={subsystemsFlagged}
+      onExpand={() => onChangeSubsystemsCollapsed(false)}
+    />
+  );
+
+  const subsystemsPanel = (
+    <Box
+      sx={{
+        textAlign: 'left',
+        width: SUBSYSTEMS_PANEL_WIDTH,
+        ...(subsystemsOverlaid
+          ? {
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              bottom: 0,
+              maxWidth: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden',
+              backgroundColor: 'background.paper',
+              boxShadow: 8,
+              zIndex: theme.zIndex.drawer - 1,
+              padding: 0,
+            }
+          : {
+              flex: '0 0 auto',
+              minWidth: 0,
+              minHeight: MINIMUM_TABLE_HEIGHT,
+              padding: 1,
+              paddingRight: 2,
+              paddingBottom: 0,
+            }),
+      }}
+    >
+      {subsystemsTableContents}
+    </Box>
+  );
+
+  const detailsPanel = (
+    <Box
+      sx={{
+        flex: '1 1 auto',
+        minWidth: 0,
+        textAlign: 'left',
+        padding: 1,
+      }}
+    >
+      <SystemDetails id={systemId} />
+    </Box>
+  );
+
   return (
     <>
-      <Grid
-        container
-        direction="row"
+      <Box
         sx={{
-          margin: 0,
+          display: 'flex',
+          flexDirection: 'row',
           alignItems: 'stretch',
           minHeight: MINIMUM_TABLE_HEIGHT,
+          position: 'relative',
         }}
       >
-        <Grid
-          size={{
-            xs: 12,
-            md: 'grow',
-          }}
-          sx={{
-            minWidth: MIN_SUBSYSTEMS_WIDTH,
-            textAlign: 'left',
-            padding: 1,
-            paddingRight: 2,
-            paddingBottom: 0,
-            minHeight: MINIMUM_TABLE_HEIGHT,
-          }}
-        >
-          {isLoading ? (
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '100%',
-                height: '100%',
-                minHeight: 200,
-              }}
-            >
-              <CircularProgress />
-            </Box>
-          ) : (
-            <MaterialReactTable table={subsystemsTable} />
-          )}
-        </Grid>
-        <Grid
-          size={{
-            xs: 12,
-            lg: 10,
-          }}
-          sx={{
-            textAlign: 'left',
-            padding: 1,
-            maxWidth: {
-              xs: '100%',
-              lg: `calc(100% - ${MIN_SUBSYSTEMS_WIDTH})`,
-            },
-          }}
-        >
-          <SystemDetails id={systemId} />
-        </Grid>
-      </Grid>
+        {(subsystemsCollapsed || subsystemsOverlaid) && subsystemsRail}
+        {subsystemsOverlaid && (
+          <Backdrop
+            aria-hidden
+            open={subsystemsOverlaid}
+            onClick={() => onChangeSubsystemsCollapsed(true)}
+            sx={{
+              zIndex: theme.zIndex.drawer - 2,
+            }}
+          />
+        )}
+        {!subsystemsCollapsed && subsystemsPanel}
+        {detailsPanel}
+      </Box>
 
       <SystemDialog
         open={menuDialogType !== undefined && menuDialogType !== 'delete'}
