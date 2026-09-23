@@ -37,7 +37,7 @@ function ItemSystemHistory() {
   const { item_id } = useParams();
 
   const { data: historyData, isLoading: historyDataLoading } =
-    useGetItemSystemsEntries(item_id!);
+    useGetItemSystemsEntries(item_id ?? '');
 
   // Breadcrumbs + Mui table V2 + extra
   const tableHeight = getPageHeightCalc('50px + 110px + 48px + 16px');
