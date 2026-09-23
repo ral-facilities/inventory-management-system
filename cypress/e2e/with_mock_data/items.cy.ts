@@ -1260,7 +1260,7 @@ describe('Items', () => {
         cy.findByText('stfc-logo-blue-text').should('exist');
         cy.findByText('stfc-logo-blue-text.png').should('exist');
         cy.findByText('test').should('exist');
-        cy.findByText('No').should('exist');
+        cy.findByText('Yes').should('exist');
 
         cy.findByRole('button', { name: 'Close' }).click();
       });
