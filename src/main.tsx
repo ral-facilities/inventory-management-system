@@ -138,6 +138,11 @@ export const fetchSettings =
           throw new Error('imsIngestApiUrl is undefined in settings');
         }
 
+        // Ensure the imsHistoryApiUrl name exists.
+        if (!('imsHistoryApiUrl' in settings)) {
+          throw new Error('imsHistoryApiUrl is undefined in settings');
+        }
+
         // Ensure the maxAttachmentSizeBytes value exists.
         if (!('maxAttachmentSizeBytes' in settings)) {
           throw new Error('maxAttachmentSizeBytes is undefined in settings');

@@ -5,6 +5,7 @@ export interface InventoryManagementSystemSettings {
   osApiUrl: string;
   imsJsApiUrl: string;
   imsIngestApiUrl: string;
+  imsHistoryApiUrl: string;
   maxAttachmentSizeBytes: number;
   attachmentAllowedFileExtensions: string[];
   maxSpreadsheetSizeBytes: number;

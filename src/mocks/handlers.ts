@@ -21,6 +21,7 @@ import {
   Item,
   ItemPatch,
   ItemPost,
+  ItemSystemsHistoryEntry,
   Job,
   JobStatus,
   Manufacturer,
@@ -51,6 +52,7 @@ import SystemsJSON from './Systems.json';
 import SystemTypesJSON from './SystemTypes.json';
 import UnitsJSON from './Units.json';
 import UsageStatusJSON from './UsageStatuses.json';
+import HistoryItemSystemsEntriesJSON from './HistoryItemSystemsEntries.json';
 
 /* Values defined on the backend that may change */
 
@@ -1441,6 +1443,23 @@ export const handlers = [
     async () => {
       return new HttpResponse(undefined, {
         status: 204,
+      });
+    }
+  ),
+
+  // ------------------------------------ HISTORY ------------------------------------------------
+
+  http.get<{ item_id: string }, DefaultBodyType, ItemSystemsHistoryEntry[]>(
+    '/v1/item-system-entries/item-systems/:item_id',
+    ({ params }) => {
+      const { item_id } = params;
+
+      const data = HistoryItemSystemsEntriesJSON.filter(
+        (entry) => entry.item_id === item_id
+      ) as ItemSystemsHistoryEntry[];
+
+      return HttpResponse.json(data, {
+        status: 200,
       });
     }
   ),
