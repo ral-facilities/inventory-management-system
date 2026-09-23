@@ -1,8 +1,10 @@
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import NotesIcon from '@mui/icons-material/Notes';
+import HistoryIcon from '@mui/icons-material/History';
 import {
   Box,
   Divider,
+  IconButton,
   LinearProgress,
   Link as MuiLink,
   Stack,
@@ -379,14 +381,28 @@ function ItemsLandingPage() {
                             </Typography>
                           </Grid>
                           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-                            <Typography
-                              align="left"
+                            <Box
                               sx={{
-                                color: 'text.primary',
+                                display: 'flex',
+                                alignItems: 'center',
                               }}
                             >
-                              System
-                            </Typography>
+                              <Typography
+                                align="left"
+                                sx={{
+                                  color: 'text.primary',
+                                }}
+                              >
+                                System
+                              </Typography>
+                              <IconButton
+                                component={Link}
+                                to={`${window.location.pathname}/systems-history`}
+                                aria-label={`${itemData.asset_number}'s systems history`}
+                              >
+                                <HistoryIcon />
+                              </IconButton>
+                            </Box>
                             <Typography
                               align="left"
                               sx={{

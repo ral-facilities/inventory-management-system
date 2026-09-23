@@ -9,7 +9,7 @@ jq \
   --arg osApiUrl "$OS_API_URL" \
   --arg imsJsApiUrl "$IMS_JS_API_URL" \
   --arg imsIngestApiUrl "$IMS_INGEST_API_URL" \
-  --arg imsHistoryApiUrl "$HS_API_URL" \
+  --arg imsHistoryApiUrl "$IMS_HISTORY_API_URL" \
   --argjson maxAttachmentSizeBytes $MAX_ATTACHMENT_SIZE_BYTES \
   --argjson attachmentAllowedFileExtensions "$ATTACHMENT_ALLOWED_FILE_EXTENSIONS" \
   --argjson maxSpreadsheetSizeBytes $MAX_SPREADSHEET_SIZE_BYTES \

@@ -75,6 +75,8 @@ import SystemsLayout, {
   systemsLayoutLoader,
 } from './systems/systemsLayout.component';
 import ViewTabs from './view/viewTabs.component';
+import ItemSystemHistory from './history/itemsystemHistoryTable.component';
+// import ItemSystemHistory from './history/itemsystemHistoryTable.component';
 
 export const queryClient = new QueryClient({
   queryCache: new QueryCache({
@@ -184,6 +186,18 @@ const routeObject: RouteObject[] = [
                                     index: true,
                                     Component: ItemsLandingPage,
                                     loader: catalogueLayoutLoader(queryClient),
+                                  },
+                                  {
+                                    path: `${paths.item}/systems-history`,
+                                    Component: Outlet,
+                                    children: [
+                                      {
+                                        index: true,
+                                        Component: ItemSystemHistory,
+                                        loader:
+                                          catalogueLayoutLoader(queryClient),
+                                      },
+                                    ],
                                   },
                                 ],
                               },

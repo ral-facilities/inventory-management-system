@@ -165,6 +165,31 @@ function CatalogueLayout() {
                 ],
               ]
             : []) satisfies BreadcrumbsInfo['trail']),
+          // Item systems history page
+          ...((catalogueItem &&
+          item &&
+          // cataloguePath[-2] === item.id &&
+          lastSegmentOfCataloguePath === 'systems-history'
+            ? [
+                ...catalogueItemBreadcrumbTrail,
+                [
+                  `${catalogueItem.catalogue_category_id}/items/${catalogueItem.id}`,
+                  `${catalogueItem.name}`,
+                ],
+                [
+                  `${catalogueItem.catalogue_category_id}/items/${catalogueItem.id}/items`,
+                  'Items',
+                ],
+                [
+                  `${catalogueItem.catalogue_category_id}/items/${catalogueItem.id}/items/${item.id}`,
+                  item?.serial_number ?? 'No serial number',
+                ],
+                [
+                  `${catalogueItem.catalogue_category_id}/items/${catalogueItem.id}/items/${item.id}`,
+                  'Systems history',
+                ],
+              ]
+            : []) satisfies BreadcrumbsInfo['trail']),
         ],
       });
     } else {
