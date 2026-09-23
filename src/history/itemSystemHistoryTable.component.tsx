@@ -69,7 +69,7 @@ function ItemSystemHistory() {
             {MRT_Functions_Localisation.filterArrExcludesSome}
           </MenuItem>,
         ],
-        size: 200,
+        size: 250,
         Cell: ({ row }) => (
           <MuiLink
             underline="hover"
@@ -103,7 +103,7 @@ function ItemSystemHistory() {
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
-        size: 250,
+        size: 350,
         Cell: ({ row }) => row.original.entered_by,
       },
       {
@@ -114,7 +114,7 @@ function ItemSystemHistory() {
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
-        size: 400,
+        size: 450,
         Cell: ({ row }) => row.original.entered_comment ?? 'No comment',
       },
       {
@@ -139,7 +139,7 @@ function ItemSystemHistory() {
         id: 'removed_by',
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
-        size: 250,
+        size: 350,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
       },
       {
@@ -149,7 +149,7 @@ function ItemSystemHistory() {
         id: 'removed_comment',
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
-        size: 400,
+        size: 450,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
       },
     ];
@@ -175,6 +175,7 @@ function ItemSystemHistory() {
     // Features
     enableColumnOrdering: true,
     enableColumnFilterModes: true,
+    enableColumnResizing: true,
     enableFacetedValues: true,
     enableRowActions: false,
     enableStickyHeader: true,

@@ -8,6 +8,7 @@ import {
   LinearProgress,
   Link as MuiLink,
   Stack,
+  Tooltip,
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
@@ -395,13 +396,17 @@ function ItemsLandingPage() {
                               >
                                 System
                               </Typography>
-                              <IconButton
-                                component={Link}
-                                to={`${window.location.pathname}/systems-history`}
-                                aria-label={`${itemData.asset_number}'s systems history`}
-                              >
-                                <HistoryIcon />
-                              </IconButton>
+                              <Tooltip title={'Systems History'}>
+                                <span>
+                                  <IconButton
+                                    component={Link}
+                                    to={'systems-history'}
+                                    aria-label={`${itemData.serial_number}'s systems history`}
+                                  >
+                                    <HistoryIcon />
+                                  </IconButton>
+                                </span>
+                              </Tooltip>
                             </Box>
                             <Typography
                               align="left"
