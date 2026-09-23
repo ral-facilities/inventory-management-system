@@ -13,6 +13,8 @@ export const paths = {
   catalogueItem: '/catalogue/:catalogue_category_id/items/:catalogue_item_id',
   items: '/catalogue/:catalogue_category_id/items/:catalogue_item_id/items',
   item: '/catalogue/:catalogue_category_id/items/:catalogue_item_id/items/:item_id',
+  itemSystemsHistory:
+    '/catalogue/:catalogue_category_id/items/:catalogue_item_id/items/:item_id/systems-history',
   systems: '/systems',
   system: '/systems/:system_id',
   manufacturers: '/manufacturers',

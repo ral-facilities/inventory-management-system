@@ -335,3 +335,16 @@ export interface Job {
 export interface CatalogueItemSpreadsheetMetadata {
   catalogue_category_id: string;
 }
+
+// ------------------------------------ HISTORY API -----------------------------------------
+
+export interface ItemSystemsHistoryEntry {
+  system_id: string;
+  system_name: string;
+  entered_at: string;
+  entered_by: string;
+  entered_comment: string | null;
+  removed_at: string | null;
+  removed_by: string | null;
+  removed_comment: string | null;
+}

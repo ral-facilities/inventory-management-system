@@ -1,11 +1,14 @@
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import NotesIcon from '@mui/icons-material/Notes';
+import HistoryIcon from '@mui/icons-material/History';
 import {
   Box,
   Divider,
+  IconButton,
   LinearProgress,
   Link as MuiLink,
   Stack,
+  Tooltip,
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
@@ -379,14 +382,32 @@ function ItemsLandingPage() {
                             </Typography>
                           </Grid>
                           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
-                            <Typography
-                              align="left"
+                            <Box
                               sx={{
-                                color: 'text.primary',
+                                display: 'flex',
+                                alignItems: 'center',
                               }}
                             >
-                              System
-                            </Typography>
+                              <Typography
+                                align="left"
+                                sx={{
+                                  color: 'text.primary',
+                                }}
+                              >
+                                System
+                              </Typography>
+                              <Tooltip title={'Systems History'}>
+                                <span>
+                                  <IconButton
+                                    component={Link}
+                                    to={'systems-history'}
+                                    aria-label={`${itemData.serial_number}'s systems history`}
+                                  >
+                                    <HistoryIcon />
+                                  </IconButton>
+                                </span>
+                              </Tooltip>
+                            </Box>
                             <Typography
                               align="left"
                               sx={{
