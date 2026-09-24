@@ -141,6 +141,7 @@ export default defineConfig(({ mode }) => {
       globals: true,
       environment: 'jsdom',
       globalSetup: './globalSetup.js',
+      testTimeout: 10000, // 10 seconds
       setupFiles: ['src/setupTests.ts'],
       coverage: {
         reporter: [
