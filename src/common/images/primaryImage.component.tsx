@@ -86,23 +86,20 @@ export interface PrimaryImageProps {
 const PrimaryImage = (props: PrimaryImageProps) => {
   const { entityId, isDetailsPanel = false } = props;
 
-  const { data: imagesData, isLoading: imageLoading } = useGetImages(
-    entityId,
-    true
-  );
-
-  const primaryImageExists = !!imagesData && imagesData.length > 0;
+  const { data: imagesData, isLoading: imageLoading } = useGetImages(entityId);
+  // Get primary image or fall back to first image in set
+  const primaryImage = imagesData?.find((img) => img.primary) || imagesData?.[0];
 
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleViewPrimary = React.useCallback(() => {
-    if (imagesData?.[0]) {
+    if (primaryImage) {
       const updatedParams = new URLSearchParams(searchParams);
       updatedParams.set('tab', 'Gallery');
-      updatedParams.set('image', imagesData?.[0].id);
+      updatedParams.set('image', primaryImage.id);
       setSearchParams(updatedParams);
     }
-  }, [searchParams, setSearchParams, imagesData]);
+  }, [searchParams, setSearchParams, primaryImage]);
 
   const [primaryDialogOpen, setPrimaryDialogOpen] = React.useState<
     false | 'set' | 'remove'
@@ -111,7 +108,7 @@ const PrimaryImage = (props: PrimaryImageProps) => {
   return (
     <>
       <ThumbnailImage
-        image={imagesData?.[0]}
+        image={primaryImage}
         dense={isDetailsPanel}
         isPrimaryThumbnail
         imageLoading={imageLoading}
@@ -122,7 +119,7 @@ const PrimaryImage = (props: PrimaryImageProps) => {
           <Box sx={{ height: '20%' }}>
             <PrimaryOptionsMenu
               onChangePrimaryDialogOpen={setPrimaryDialogOpen}
-              primaryImageExists={primaryImageExists}
+              primaryImageExists={primaryImage?.primary ?? false}
             />
           </Box>
           <PrimaryImageDialog
@@ -132,13 +129,13 @@ const PrimaryImage = (props: PrimaryImageProps) => {
             }}
             entityID={entityId}
           />
-          {primaryImageExists && (
+          {primaryImage?.primary && (
             <RemovePrimaryImageDialog
               open={primaryDialogOpen == 'remove'}
               onClose={() => {
                 setPrimaryDialogOpen(false);
               }}
-              image={imagesData[0]}
+              image={primaryImage}
             />
           )}
         </>
