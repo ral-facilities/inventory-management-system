@@ -993,17 +993,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@humanwhocodes/retry@npm:^0.4.0":
+"@humanwhocodes/retry@npm:^0.4.0, @humanwhocodes/retry@npm:^0.4.2":
   version: 0.4.3
   resolution: "@humanwhocodes/retry@npm:0.4.3"
   checksum: 10c0/3775bb30087d4440b3f7406d5a057777d90e4b9f435af488a4923ef249e93615fb78565a85f173a186a076c7706a81d0d57d563a2624e4de2c5c9c66c486ce42
-  languageName: node
-  linkType: hard
-
-"@humanwhocodes/retry@npm:^0.4.2":
-  version: 0.4.2
-  resolution: "@humanwhocodes/retry@npm:0.4.2"
-  checksum: 10c0/0235525d38f243bee3bf8b25ed395fbf957fb51c08adae52787e1325673071abe856c7e18e530922ed2dd3ce12ed82ba01b8cee0279ac52a3315fcdc3a69ef0c
   languageName: node
   linkType: hard
 
@@ -4051,9 +4044,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:15.21.0":
-  version: 15.21.0
-  resolution: "cypress@npm:15.21.0"
+"cypress@npm:15.21.1":
+  version: 15.21.1
+  resolution: "cypress@npm:15.21.1"
   dependencies:
     "@cypress/request": "npm:^4.0.0"
     "@cypress/xvfb": "npm:^1.2.4"
@@ -4096,7 +4089,7 @@ __metadata:
     yauzl: "npm:^3.3.1"
   bin:
     cypress: bin/cypress
-  checksum: 10c0/96f76fd57c3362619613f1e5da18f9c3e93686b80707bf4142f6d8ddca926110d622843463085d699dcb7f6db2532ec89854a8337694b971cdc7e86b4f5af4d0
+  checksum: 10c0/4d3d58a7482c04b3c4a1b2cbcf13925a58122a3bf1c55a97253a0de464e49af2c473a125e0cc7e35a44acda671319181acbe2f0010be503a773d7e78d22ec72a
   languageName: node
   linkType: hard
 
@@ -5908,7 +5901,7 @@ __metadata:
     browserslist: "npm:^4.23.0"
     browserslist-to-esbuild: "npm:^2.1.1"
     cross-env: "npm:10.1.0"
-    cypress: "npm:15.21.0"
+    cypress: "npm:15.21.1"
     date-fns: "npm:^4.1.0"
     eslint: "npm:9.39.5"
     eslint-config-prettier: "npm:10.1.8"
