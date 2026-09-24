@@ -1041,14 +1041,14 @@ describe('Systems', () => {
         url: '/v1/items/:id',
       }).should(async (patchRequests) => {
         expect(patchRequests.length).eq(2);
-        expect(patchRequests[0].url.toString()).to.contain('/z1hJvV8Z');
+        expect(patchRequests[0].url.toString()).to.contain('/hoicQciP');
         expect(JSON.stringify(await patchRequests[0].json())).equal(
           JSON.stringify({
             system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
             usage_status_id: '2',
           })
         );
-        expect(patchRequests[1].url.toString()).to.contain('/4mYoI7pr');
+        expect(patchRequests[1].url.toString()).to.contain('/loiykp5U');
         expect(JSON.stringify(await patchRequests[1].json())).equal(
           JSON.stringify({
             system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
@@ -1103,7 +1103,9 @@ describe('Systems', () => {
           cy.findByRole('button', { name: 'Next' }).click();
         });
 
-      cy.findAllByRole('combobox').eq(1).click();
+      cy.get('[id="usage-statuses-Cameras 8"]').click({
+        scrollBehavior: 'center',
+      });
       cy.findByRole('option', { name: 'Scrapped' }).click();
 
       cy.findByRole('button', { name: 'Finish' }).click();
@@ -1115,18 +1117,18 @@ describe('Systems', () => {
         url: '/v1/items/:id',
       }).should(async (patchRequests) => {
         expect(patchRequests.length).eq(2);
-        expect(patchRequests[0].url.toString()).to.contain('/z1hJvV8Z');
+        expect(patchRequests[0].url.toString()).to.contain('/hoicQciP');
         expect(JSON.stringify(await patchRequests[0].json())).equal(
           JSON.stringify({
             system_id: '65328f34a40ff5301575a4e3',
             usage_status_id: '3',
           })
         );
-        expect(patchRequests[1].url.toString()).to.contain('/4mYoI7pr');
+        expect(patchRequests[1].url.toString()).to.contain('/loiykp5U');
         expect(JSON.stringify(await patchRequests[1].json())).equal(
           JSON.stringify({
             system_id: '65328f34a40ff5301575a4e3',
-            usage_status_id: '3',
+            usage_status_id: '1',
           })
         );
       });
