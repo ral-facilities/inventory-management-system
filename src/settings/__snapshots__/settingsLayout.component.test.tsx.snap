@@ -52,7 +52,7 @@ exports[`Settings Error Component > renders Settings error page correctly 1`] = 
 exports[`Settings Layout > renders settings layout page correctly 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-v2kfba"
+    class="MuiBox-root css-tjjfeh"
   >
     <div
       class="MuiBox-root css-k008qs"
@@ -129,6 +129,9 @@ exports[`Settings Layout > renders settings layout page correctly 1`] = `
         </nav>
       </div>
     </div>
+    <div
+      class="MuiBox-root css-4akqf1"
+    />
   </div>
 </DocumentFragment>
 `;
@@ -136,7 +139,7 @@ exports[`Settings Layout > renders settings layout page correctly 1`] = `
 exports[`Settings Layout > renders units breadcrumbs correctly 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-v2kfba"
+    class="MuiBox-root css-tjjfeh"
   >
     <div
       class="MuiBox-root css-k008qs"
@@ -249,6 +252,9 @@ exports[`Settings Layout > renders units breadcrumbs correctly 1`] = `
         </nav>
       </div>
     </div>
+    <div
+      class="MuiBox-root css-4akqf1"
+    />
   </div>
 </DocumentFragment>
 `;
@@ -256,7 +262,7 @@ exports[`Settings Layout > renders units breadcrumbs correctly 1`] = `
 exports[`Settings Layout > renders usage statuses breadcrumbs correctly 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-v2kfba"
+    class="MuiBox-root css-tjjfeh"
   >
     <div
       class="MuiBox-root css-k008qs"
@@ -369,6 +375,9 @@ exports[`Settings Layout > renders usage statuses breadcrumbs correctly 1`] = `
         </nav>
       </div>
     </div>
+    <div
+      class="MuiBox-root css-4akqf1"
+    />
   </div>
 </DocumentFragment>
 `;

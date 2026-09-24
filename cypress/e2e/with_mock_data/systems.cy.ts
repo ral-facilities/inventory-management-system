@@ -52,7 +52,9 @@ describe('Systems', () => {
   });
 
   it('should be able to navigate through subsystems', () => {
+    cy.findByText('No system selected').scrollIntoView();
     cy.findByText('No system selected').should('be.visible');
+
     cy.findByText('Please select a system').should('be.visible');
 
     // Navigate deeper
@@ -61,14 +63,19 @@ describe('Systems', () => {
     cy.findByText('No system selected').should('not.exist');
     cy.findByText('Please select a system').should('not.exist');
 
+    cy.findByRole('link', { name: 'Smaller laser' }).scrollIntoView();
     cy.findByRole('link', { name: 'Smaller laser' }).should('be.visible');
+    cy.findByText('Description').scrollIntoView();
     cy.findByText('Description').should('be.visible');
 
     // Navigate deeper again
+    cy.findByRole('link', { name: 'Smaller laser' }).scrollIntoView();
     cy.findByRole('link', { name: 'Smaller laser' }).click();
     cy.url().should('include', '/systems/65328f34a40ff5301575a4e4');
 
     cy.findByRole('link', { name: 'Pulse Laser' }).should('be.visible');
+
+    cy.findByText('Description').scrollIntoView();
     cy.findByText('Description').should('be.visible');
   });
 
@@ -111,6 +118,9 @@ describe('Systems', () => {
     // Rows per page (subsystems)
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(0)
+      .scrollIntoView();
+    cy.findAllByRole('combobox', { name: 'Rows per page' })
+      .eq(0)
       .within(() => {
         cy.findByText('30').should('be.visible');
       });
@@ -122,6 +132,10 @@ describe('Systems', () => {
       'eq',
       '?subState=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygAYBfBoA'
     );
+
+    cy.findAllByRole('combobox', { name: 'Rows per page' })
+      .eq(0)
+      .scrollIntoView();
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(0)
       .within(() => {
@@ -135,6 +149,9 @@ describe('Systems', () => {
     cy.wait(5000);
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(1)
+      .scrollIntoView();
+    cy.findAllByRole('combobox', { name: 'Rows per page' })
+      .eq(1)
       .within(() => {
         cy.findByText('30').should('be.visible');
       });
@@ -146,7 +163,7 @@ describe('Systems', () => {
     });
     cy.location('search', { timeout: 10000 }).should(
       'eq',
-       '?subState=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygAYBfBoA&state=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygAYBfBoA'
+      '?subState=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygAYBfBoA&state=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygAYBfBoA'
     );
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(1)
@@ -157,7 +174,7 @@ describe('Systems', () => {
 
     //Ensure same state is recovered
     cy.go('back');
-
+    cy.findByText('Smaller laser').scrollIntoView();
     cy.findByText('Smaller laser').should('be.visible');
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(0)
@@ -165,6 +182,9 @@ describe('Systems', () => {
         cy.findByText('30').should('not.exist');
         cy.findByText('45').should('be.visible');
       });
+    cy.findAllByRole('combobox', { name: 'Rows per page' })
+      .eq(1)
+      .scrollIntoView();
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(1)
       .within(() => {
@@ -177,6 +197,7 @@ describe('Systems', () => {
     );
 
     cy.go('back');
+    cy.findByText('Smaller laser').scrollIntoView();
     cy.findByText('Smaller laser').should('be.visible');
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(0)
@@ -184,6 +205,9 @@ describe('Systems', () => {
         cy.findByText('45').should('not.exist');
         cy.findByText('30').should('be.visible');
       });
+    cy.findAllByRole('combobox', { name: 'Rows per page' })
+      .eq(1)
+      .scrollIntoView();
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(1)
       .within(() => {
@@ -203,6 +227,9 @@ describe('Systems', () => {
     // Rows per page (subsystems)
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(0)
+      .scrollIntoView();
+    cy.findAllByRole('combobox', { name: 'Rows per page' })
+      .eq(0)
       .within(() => {
         cy.findByText('30').should('be.visible');
       });
@@ -225,6 +252,9 @@ describe('Systems', () => {
     // To be addressed in #1492
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(5000);
+    cy.findAllByRole('combobox', { name: 'Rows per page' })
+      .eq(1)
+      .scrollIntoView();
 
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(1)
@@ -253,10 +283,14 @@ describe('Systems', () => {
     cy.findAllByRole('progressbar', { timeout: 10000 }).should('not.exist');
     cy.url().should('include', '/systems/65328f34a40ff5301575a4e4');
     cy.location('search').should('eq', '');
+    cy.findByText('Pulse Laser').scrollIntoView();
     cy.findByText('Pulse Laser').should('be.visible');
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(0)
       .within(() => cy.findByText('30').should('be.visible'));
+    cy.findAllByRole('combobox', { name: 'Rows per page' })
+      .eq(1)
+      .scrollIntoView();
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(1)
       .within(() => cy.findByText('30').should('be.visible'));
@@ -265,7 +299,7 @@ describe('Systems', () => {
     //Ensure same state is recovered
     cy.go('back');
     cy.findAllByRole('progressbar', { timeout: 10000 }).should('not.exist');
-
+    cy.findByText('Smaller laser').scrollIntoView();
     cy.findByText('Smaller laser').should('be.visible');
     cy.findByText('Pulse Laser').should('not.exist');
 
@@ -280,6 +314,9 @@ describe('Systems', () => {
         cy.findByText('30').should('not.exist');
         cy.findByText('45').should('be.visible');
       });
+    cy.findAllByRole('combobox', { name: 'Rows per page' })
+      .eq(1)
+      .scrollIntoView();
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(1)
       .within(() => {
@@ -303,6 +340,7 @@ describe('Systems', () => {
 
     // Check now on landing page for the catalogue item
     cy.url().should('include', '/catalogue/4/items/27');
+    cy.findByText('Properties').scrollIntoView();
     cy.findByText('Properties').should('be.visible');
   });
 
@@ -324,6 +362,7 @@ describe('Systems', () => {
 
     // Check now on landing page for the item
     cy.url().should('include', '/catalogue/4/items/28/items/z1hJvV8Z');
+    cy.findByText('Properties').scrollIntoView();
     cy.findByText('Properties').should('be.visible');
   });
 
@@ -371,6 +410,7 @@ describe('Systems', () => {
     cy.url().then((url) => {
       expect(url.endsWith('/systems'));
     });
+    cy.findByText('No system selected').scrollIntoView();
     cy.findByText('No system selected').should('be.visible');
     cy.findByText('Please select a system').should('be.visible');
   });

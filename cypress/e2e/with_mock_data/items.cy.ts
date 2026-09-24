@@ -103,10 +103,11 @@ describe('Items', () => {
 
   it('should be able to navigate back to the catalogue item landing page', () => {
     cy.findByRole('link', { name: 'Cameras 1' }).click();
-    cy.findByText('Obsolete reason').should('be.visible');
     cy.findByText(
       'High-resolution cameras for beam characterization. 1'
     ).should('be.visible');
+    cy.findByText('Obsolete reason').scrollIntoView();
+    cy.findByText('Obsolete reason').should('be.visible');
     cy.findByText('Older than five years').should('be.visible');
   });
 
@@ -259,7 +260,7 @@ describe('Items', () => {
 
     cy.findByLabelText('Quantity').type('10.5');
     cy.findAllByText('Please enter a valid integer.').should('exist');
-    
+
     cy.findByLabelText('Starting value').type('10.5');
     cy.findAllByText('Please enter a valid integer.').should('exist');
 
@@ -312,7 +313,7 @@ describe('Items', () => {
     cy.findByText('Item Creation Rule Applied').should('exist');
 
     cy.findByRole('button', { name: 'Next' }).click();
-    
+
     cy.findByLabelText('Serial number').type('{selectall}{del}');
 
     cy.findByRole('button', { name: 'Next' }).click();
@@ -900,6 +901,7 @@ describe('Items', () => {
       ).should('exist');
 
       cy.findByText('Attachments').click();
+      cy.findByText('Total Attachments: 35').scrollIntoView();
       cy.findByText('Total Attachments: 35').should('be.visible');
 
       cy.findAllByText('safety-protocols.pdf').should('have.length', 8);
@@ -1967,7 +1969,8 @@ describe('Items', () => {
     cy.findByText('Delete').click();
 
     cy.findByText('Serial Number: WrgqAVk3qUQK').should('exist');
-
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(500);
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Continue' }).click();
