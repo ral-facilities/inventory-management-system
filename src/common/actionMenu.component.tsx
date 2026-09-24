@@ -9,6 +9,7 @@ import React from 'react';
 import UploadAttachmentsDialog from './attachments/uploadAttachmentsDialog.component';
 import UploadImagesDialog from './images/uploadImagesDialog.component';
 import { StyledUppyBox } from './uppy.utils';
+import AddIcon from '@mui/icons-material/Add';
 
 export interface ActionMenuProps {
   ariaLabelPrefix: string;
@@ -20,6 +21,10 @@ export interface ActionMenuProps {
   uploadAttachmentsEntityId?: string;
   uploadImagesEntityId?: string;
   showAdminEdit?: boolean;
+  addItemAdminMenuItem?: {
+    onClick: () => void;
+    dialog: React.ReactNode;
+  };
 }
 function ActionMenu(props: ActionMenuProps) {
   const {
@@ -29,6 +34,7 @@ function ActionMenu(props: ActionMenuProps) {
     uploadAttachmentsEntityId,
     uploadImagesEntityId,
     showAdminEdit,
+    addItemAdminMenuItem,
   } = props;
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -150,9 +156,22 @@ function ActionMenu(props: ActionMenuProps) {
               </MenuItem>
             </>
           )}
+
+          {addItemAdminMenuItem && (
+            <MenuItem
+              onClick={() => {
+                addItemAdminMenuItem.onClick();
+                handleMenuClose();
+              }}
+            >
+              <AddIcon fontSize="small" sx={{ mr: 1 }} />
+              Add Item as Admin
+            </MenuItem>
+          )}
         </Menu>
       </Grid>
       {editMenuItem.dialog}
+      {addItemAdminMenuItem?.dialog}
       <StyledUppyBox>
         {uploadAttachmentsEntityId && (
           <UploadAttachmentsDialog
