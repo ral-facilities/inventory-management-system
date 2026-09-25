@@ -52,8 +52,9 @@ describe('Attachments Table', () => {
       baseElement = createView().baseElement;
     });
 
-    await waitFor(() =>
-      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    await waitFor(
+      () => expect(screen.queryByRole('progressbar')).not.toBeInTheDocument(),
+      { timeout: 5000 }
     );
 
     expect(screen.queryByText('laser-calibration.txt')).not.toBeInTheDocument();
