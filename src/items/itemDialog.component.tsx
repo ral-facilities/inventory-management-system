@@ -72,6 +72,7 @@ import { useAppSelector } from '../state/hook';
 import { selectSettings } from '../state/slices/configSlice';
 import { SystemsTableView } from '../systems/systemsTableView.component';
 import Breadcrumbs from '../view/breadcrumbs.component';
+import { sortDataList } from '../utils.tsx';
 
 function toItemDetailsStep(
   item: Item | undefined,
@@ -1059,7 +1060,13 @@ function ItemDialog(props: ItemDialogProps) {
                     }}
                     sx={{ alignItems: 'center' }}
                     fullWidth
-                    options={usageStatuses ?? []}
+                    options={sortDataList({
+                      data: usageStatuses ?? [],
+                      config: {
+                        type: 'string',
+                        selector: (value) => value.code
+                      }
+                    })}
                     isOptionEqualToValue={(option, value) =>
                       option.id == value.id
                     }
@@ -1202,7 +1209,19 @@ function ItemDialog(props: ItemDialogProps) {
                                 }
                                 sx={{ alignItems: 'center' }}
                                 fullWidth
-                                options={property.allowed_values?.values ?? []}
+                                options={sortDataList({
+                                  data: property.allowed_values?.values ?? [],
+                                  config:
+                                    property.type === 'number'
+                                      ? {
+                                          type: 'number',
+                                          selector: (value) => Number(value),
+                                        }
+                                      : {
+                                          type: 'string',
+                                          selector: (value) => String(value),
+                                        },
+                                })}
                                 getOptionLabel={(option) => option.toString()}
                                 isOptionEqualToValue={(option, value) =>
                                   option.toString() === value.toString() ||
