@@ -168,7 +168,6 @@ function CatalogueLayout() {
           // Item systems history page
           ...((catalogueItem &&
           item &&
-          // cataloguePath[-2] === item.id &&
           lastSegmentOfCataloguePath === 'systems-history'
             ? [
                 ...catalogueItemBreadcrumbTrail,

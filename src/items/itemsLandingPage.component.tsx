@@ -173,6 +173,17 @@ function ItemsLandingPage() {
                           {systemData?.name}
                         </MuiLink>
                       </Typography>
+                      <Tooltip title={'Systems History'}>
+                        <span>
+                          <IconButton
+                            component={Link}
+                            to={'systems-history'}
+                            aria-label={`${itemData.serial_number}'s systems history`}
+                          >
+                            <HistoryIcon />
+                          </IconButton>
+                        </span>
+                      </Tooltip>
                     </Box>
 
                     <Typography

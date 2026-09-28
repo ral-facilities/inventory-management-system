@@ -185,10 +185,17 @@ describe('Items Landing Page', () => {
       ).toBeInTheDocument();
     });
 
-    const systemsHistoryButton = screen.getByRole('link', {
+    const systemsHistoryButtons = screen.getAllByRole('link', {
       name: "5YUQDDjKpz2z's systems history",
     });
-    expect(systemsHistoryButton).toHaveAttribute(
+
+    expect(systemsHistoryButtons).toHaveLength(2);
+
+    expect(systemsHistoryButtons[0]).toHaveAttribute(
+      'href',
+      '/catalogue/4/items/1/items/KvT2Ox7n/systems-history'
+    );
+    expect(systemsHistoryButtons[1]).toHaveAttribute(
       'href',
       '/catalogue/4/items/1/items/KvT2Ox7n/systems-history'
     );

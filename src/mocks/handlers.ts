@@ -1456,7 +1456,6 @@ export const handlers = [
     ({ params }) => {
       const { item_id } = params;
 
-      // JSON includes item_id specifically to perform this filtering, actual API response does not include it
       const data = HistoryItemSystemsEntriesJSON.filter(
         (entry) => entry.item_id === item_id
       ) as ItemSystemsHistoryEntry[];
