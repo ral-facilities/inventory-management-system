@@ -146,7 +146,7 @@ describe('Systems', () => {
     });
     cy.location('search', { timeout: 10000 }).should(
       'eq',
-       '?subState=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygAYBfBoA&state=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygAYBfBoA'
+      '?subState=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygAYBfBoA&state=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygAYBfBoA'
     );
     cy.findAllByRole('combobox', { name: 'Rows per page' })
       .eq(1)
@@ -325,6 +325,21 @@ describe('Systems', () => {
     // Check now on landing page for the item
     cy.url().should('include', '/catalogue/4/items/28/items/z1hJvV8Z');
     cy.findByText('Properties').should('be.visible');
+  });
+
+  it('should be able to navigate to the items history page', () => {
+    cy.findByRole('link', { name: 'Pulse Laser' }).click();
+
+    // Wait for progress bar to disappear
+    cy.findAllByRole('progressbar', { timeout: 10000 }).should('not.exist');
+
+    cy.findByRole('link', { name: "View Pulse Laser's items history" })
+      .should('have.attr', 'href')
+      .should('include', '/items-history');
+
+    cy.findByRole('link', { name: "View Pulse Laser's items history" }).click();
+
+    cy.findByText('Items history').should('be.visible');
   });
 
   it("should be able to navigate to a filtered item's table using the spares value", () => {
