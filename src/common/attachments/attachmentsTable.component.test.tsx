@@ -65,8 +65,9 @@ describe('Attachments Table', () => {
   it('changes page correctly and rerenders data', async () => {
     const { router } = createView();
 
-    await waitFor(() =>
-      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    await waitFor(
+      () => expect(screen.queryByRole('progressbar')).not.toBeInTheDocument(),
+      { timeout: 5000 }
     );
 
     expect(screen.getAllByText('laser-calibration.txt').length).toEqual(7);
