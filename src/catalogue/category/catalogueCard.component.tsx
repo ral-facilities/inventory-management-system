@@ -125,7 +125,13 @@ function CatalogueCard(props: CatalogueCardProps) {
             position: 'absolute',
             bottom: '8px',
             right: '12px',
-            maxWidth: '50%',
+            maxWidth: {
+              xl: '50%',
+              lg: '100%',
+              md: '100%',
+              sm: '100%',
+              xs: '100%',
+            },
           }}
         >
           {`Last modified: ${formatDateTimeStrings(card.row.original.modified_time, true)} by ${card.row.original.modified_by}`}
