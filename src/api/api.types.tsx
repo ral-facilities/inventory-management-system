@@ -348,3 +348,14 @@ export interface ItemSystemsHistoryEntry {
   removed_by: string | null;
   removed_comment: string | null;
 }
+
+export interface SystemItemsHistoryEntry {
+  item_id: string;
+  item_serial_number: string;
+  entered_at: string;
+  entered_by: string;
+  entered_comment: string | null;
+  removed_at: string | null;
+  removed_by: string | null;
+  removed_comment: string | null;
+}

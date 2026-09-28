@@ -1,6 +1,6 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { historyApi } from './api';
-import { ItemSystemsHistoryEntry } from './api.types';
+import { ItemSystemsHistoryEntry, SystemItemsHistoryEntry } from './api.types';
 import { AxiosError } from 'axios';
 
 const getItemSystemsEntries = async (
@@ -19,5 +19,26 @@ export const useGetItemSystemsEntries = (
   return useQuery({
     queryKey: ['item_systems_entries', item_id],
     queryFn: () => getItemSystemsEntries(item_id),
+    enabled: !!item_id,
+  });
+};
+
+const getSystemItemsEntries = async (
+  system_id: string
+): Promise<SystemItemsHistoryEntry[]> => {
+  return historyApi
+    .get(`/v1/item-system-entries/system-items/${system_id}`)
+    .then((response) => {
+      return response.data;
+    });
+};
+
+export const useGetSystemItemsEntries = (
+  system_id: string
+): UseQueryResult<SystemItemsHistoryEntry[], AxiosError> => {
+  return useQuery({
+    queryKey: ['system_items_entries', system_id],
+    queryFn: () => getSystemItemsEntries(system_id),
+    enabled: !!system_id,
   });
 };

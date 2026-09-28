@@ -3,6 +3,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
+import HistoryIcon from '@mui/icons-material/History';
 import {
   Box,
   Button,
@@ -738,6 +739,16 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                 isAdminMode={true}
               />
             )}
+            <Button
+              startIcon={<HistoryIcon />}
+              sx={{ mx: 0.5 }}
+              variant="outlined"
+              component={Link}
+              to={'items-history'}
+              aria-label={`View ${system.name}'s items history`}
+            >
+              {`View Items History`}
+            </Button>
           </>
         )}
       </Box>
