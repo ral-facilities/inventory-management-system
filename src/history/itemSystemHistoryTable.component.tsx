@@ -40,7 +40,7 @@ function ItemSystemHistory() {
     useGetItemSystemsEntries(item_id ?? '');
 
   // Breadcrumbs + Mui table V2 + extra
-  const tableHeight = getPageHeightCalc('50px + 110px + 48px + 16px');
+  const tableHeight = getPageHeightCalc('50px + 110px + 48px + 75px');
 
   const columns = React.useMemo<
     MRT_ColumnDef<ItemSystemsHistoryEntry>[]

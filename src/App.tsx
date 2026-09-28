@@ -76,7 +76,6 @@ import SystemsLayout, {
 } from './systems/systemsLayout.component';
 import ViewTabs from './view/viewTabs.component';
 import ItemSystemHistory from './history/itemSystemHistoryTable.component';
-// import ItemSystemHistory from './history/itemsystemHistoryTable.component';
 
 export const queryClient = new QueryClient({
   queryCache: new QueryCache({
