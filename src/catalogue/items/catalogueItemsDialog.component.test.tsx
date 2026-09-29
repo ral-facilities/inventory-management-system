@@ -750,7 +750,7 @@ describe('Catalogue Items Dialog', () => {
   it('does not close dialog on background click, or on escape key press', async () => {
     createView();
 
-    await userEvent.click(document.body);
+    await user.click(document.body);
 
     expect(onClose).not.toHaveBeenCalled();
 

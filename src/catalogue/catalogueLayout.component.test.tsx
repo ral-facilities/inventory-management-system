@@ -1,20 +1,13 @@
 import { QueryClient } from '@tanstack/react-query';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import type { LoaderFunctionArgs } from 'react-router';
+import { type LoaderFunctionArgs } from 'react-router';
 import { URLPathKeyType } from '../paths';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import CatalogueLayout, {
   CatalogueLayoutErrorComponent,
   catalogueLayoutLoader,
 } from './catalogueLayout.component';
-
-const mockedUseNavigate = vi.fn();
-
-vi.mock('react-router', async () => ({
-  ...(await vi.importActual('react-router')),
-  useNavigate: () => mockedUseNavigate,
-}));
 
 describe('Catalogue Layout', () => {
   let user: UserEvent;
@@ -59,7 +52,14 @@ describe('Catalogue Layout', () => {
   });
 
   it('navigates to catalogue category table view', async () => {
-    createView('/catalogue/5/items/89', 'catalogueItem');
+    const consoleErrorSpy = vi
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
+
+    const consoleWarnSpy = vi
+      .spyOn(console, 'warn')
+      .mockImplementation(() => {});
+    const { router } = createView('/catalogue/5/items/89', 'catalogueItem');
     await waitFor(() => {
       expect(
         screen.getByRole('link', { name: 'Energy Meters' })
@@ -72,8 +72,10 @@ describe('Catalogue Layout', () => {
 
     await user.click(breadcrumb);
 
-    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
-    expect(mockedUseNavigate).toHaveBeenCalledWith('/catalogue/5/items');
+    expect(router.state.location.pathname).toBe('/catalogue/5/items');
+
+    consoleErrorSpy.mockRestore();
+    consoleWarnSpy.mockRestore();
   });
 
   it('renders a catalogue items page correctly', async () => {
@@ -117,7 +119,14 @@ describe('Catalogue Layout', () => {
   });
 
   it('calls useNavigate when the home button is clicked', async () => {
-    createView('/catalogue/4/items/1/items', 'items');
+    const consoleErrorSpy = vi
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
+
+    const consoleWarnSpy = vi
+      .spyOn(console, 'warn')
+      .mockImplementation(() => {});
+    const { router } = createView('/catalogue/4/items/1/items', 'items');
 
     await waitFor(() => {
       expect(screen.getByText('Items')).toBeInTheDocument();
@@ -129,8 +138,10 @@ describe('Catalogue Layout', () => {
 
     await user.click(homeButton);
 
-    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
-    expect(mockedUseNavigate).toHaveBeenCalledWith('/catalogue');
+    expect(router.state.location.pathname).toBe('/catalogue');
+
+    consoleErrorSpy.mockRestore();
+    consoleWarnSpy.mockRestore();
   });
 });
 
@@ -149,7 +160,7 @@ describe('Catalogue Layout Error Component', () => {
   });
 
   it('renders catalogue error page correctly', async () => {
-    const view = createView();
+    const { asFragment, router } = createView();
 
     await waitFor(() => {
       expect(
@@ -165,10 +176,9 @@ describe('Catalogue Layout Error Component', () => {
 
     await user.click(homeButton);
 
-    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
-    expect(mockedUseNavigate).toHaveBeenCalledWith('/catalogue');
+    expect(router.state.location.pathname).toBe('/catalogue');
 
-    expect(view.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 });
 

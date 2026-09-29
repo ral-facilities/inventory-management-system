@@ -9,6 +9,7 @@ import {
   type TableCellProps,
 } from '@mui/material';
 import { FilterFn, FilterMeta, Row } from '@tanstack/table-core';
+import { AxiosError, AxiosResponse } from 'axios';
 import { format, parseISO } from 'date-fns';
 import LZString from 'lz-string';
 import {
@@ -31,6 +32,7 @@ import {
   type FieldValues,
   type UseFormReturn,
 } from 'react-hook-form';
+import { APIError } from './api/api.types';
 import { useGetSparesDefinition } from './api/settings';
 import { MicroFrontendToken, SparesFilterStateType } from './app.types';
 import { TokenUpdatedType } from './state/actions/actions.types';
@@ -412,12 +414,28 @@ export const resetUniqueIdCounter = () => {
   lastId = 0;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function sortDataList(data: any[], sortedValue?: string) {
-  return data.sort((a, b) => {
-    const valueA = sortedValue ? a[sortedValue] : a;
-    const valueB = sortedValue ? b[sortedValue] : b;
-    return valueA.localeCompare(valueB);
+interface StringSortConfig<T> {
+  type: 'string';
+  selector: (item: T) => string;
+}
+
+interface NumberSortConfig<T> {
+  type: 'number';
+  selector: (item: T) => number;
+}
+
+type SortConfig<T> = StringSortConfig<T> | NumberSortConfig<T>;
+
+export function sortDataList<T>(props: {
+  data: T[];
+  config: SortConfig<T>;
+}): T[] {
+  const { data, config } = props;
+  return [...data].sort((a, b) => {
+    if (config.type === 'number') {
+      return config.selector(a) - config.selector(b);
+    }
+    return config.selector(a).localeCompare(config.selector(b));
   });
 }
 
@@ -585,28 +603,179 @@ export function downloadFileByLink(url: string, filename: string): void {
   document.body.removeChild(link);
 }
 
+export function handleBlobDownload(
+  data: Blob,
+  headers: AxiosResponse['headers'],
+  fallbackFilename: string = 'download'
+): void {
+  const blob = data;
+  let filename = fallbackFilename;
+  const contentDisposition = headers['content-disposition'];
+  if (contentDisposition) {
+    const match = contentDisposition.match(
+      /filename\*?=(?:UTF-8'')?"?([^";]+)"?/i
+    );
+    if (match?.[1]) {
+      filename = decodeURIComponent(match[1]);
+    }
+  }
+  const url = window.URL.createObjectURL(blob);
+  downloadFileByLink(url, filename);
+  window.URL.revokeObjectURL(url);
+}
+
 export const mrtTheme = (theme: Theme): Partial<MRT_Theme> => ({
   baseBackgroundColor: theme.palette.background.default,
 });
 
-export function parseErrorResponse(errorMessage: string): string {
-  let returnMessage = 'There was an unexpected error.';
-  if (errorMessage.includes('limit for the maximum number of')) {
-    returnMessage = 'Maximum number of files reached.';
-  } else if (errorMessage.includes('does not contain the correct extension')) {
-    returnMessage = 'File extension does not match content type.';
-  } else if (errorMessage.includes('is not supported')) {
-    returnMessage = 'Content type not supported.';
-  } else if (errorMessage.includes('not a valid image')) {
-    returnMessage = 'File given is not a valid image.';
-  } else if (
-    errorMessage.includes('file name already exists within the parent entity.')
+export function parseBaseError(message: string): string {
+  if (
+    message.includes('does not contain the correct extension') ||
+    message.includes('content type do not match')
   ) {
-    returnMessage =
-      'A file with this name already exists. To rename your file: remove it, add it back and click the edit icon below the file to change its name.';
+    return 'File extension does not match content type.';
+  }
+  if (message.includes('is not supported')) {
+    return 'File type not supported.';
+  }
+  return 'There was an unexpected error. Please try again or contact the system administrator.';
+}
+
+export function parseImageError(message: string): string {
+  if (message.includes('limit for the maximum number of')) {
+    return 'Maximum number of files reached.';
   }
 
-  return returnMessage;
+  if (message.includes('not a valid image')) {
+    return 'File given is not a valid image.';
+  }
+
+  if (message.includes('file name already exists within the parent entity.')) {
+    return 'A file with this name already exists. To rename your file: remove it, add it back and click the edit icon below the file to change its name.';
+  }
+
+  return parseBaseError(message);
+}
+
+export function parseAttachmentError(message: string): string {
+  if (message.includes('limit for the maximum number of')) {
+    return 'Maximum number of files reached.';
+  }
+
+  if (message.includes('file name already exists within the parent entity.')) {
+    return 'A file with this name already exists. To rename your file: remove it, add it back and click the edit icon below the file to change its name.';
+  }
+
+  return parseBaseError(message);
+}
+
+export function parseSpreadsheetError(message: string): string {
+  if (
+    message.includes('imsingestapiversion') ||
+    message.includes('unable to find the custom document property') ||
+    message.includes(
+      "unable to find the 'catalogueitems template' sheet in the workbook"
+    ) ||
+    message.includes('not a valid spreadsheet')
+  ) {
+    return `This spreadsheet appears to be corrupted or invalid. Please download a new template and copy your data into it before trying again.`;
+  }
+
+  if (
+    message.includes(
+      'the columns within the template are either out of date or have been modified.'
+    )
+  ) {
+    return `The columns in this spreadsheet are outdated or have been modified. Please download a new template and copy your data into it before trying again.`;
+  }
+
+  if (message.includes('invalid catalogue item data')) {
+    return `The uploaded spreadsheet contains invalid catalogue item data. Please upload the file again to view the validation errors, correct them in the spreadsheet, and then try again.`;
+  }
+
+  if (message.includes('too many catalogue items in spreadsheet')) {
+    const match = message.match(/maximum of (\d+)/);
+    const max = match?.[1];
+
+    if (!max)
+      return 'Unable to determine maximum allowed catalogue items. Please contact the system administrator.';
+
+    return `Your spreadsheet contains too many catalogue items. The maximum allowed is ${max}. Please reduce the number of rows and try again.`;
+  }
+
+  if (
+    message.includes('catalogue category does not exist') ||
+    message.includes(
+      'cannot have a catalogue items template for a non-leaf catalogue category'
+    )
+  ) {
+    return `The selected catalogue category no longer exists or is invalid. Please navigate to a valid category catalogue that contains catalogue items and try again.`;
+  }
+
+  if (
+    message.includes(
+      'spreadsheet was generated for a catalogue category with a different id than the one provided'
+    )
+  ) {
+    return `This spreadsheet was created for a different catalogue category. Please download a new template for the correct catalogue category and copy your data into it before trying again.`;
+  }
+
+  if (message.includes('spreadsheet was created by ims ingest api v')) {
+    return `This spreadsheet was created using an outdated or incompatible template. Please download the latest template and copy your data into it before trying again.`;
+  }
+
+  return parseBaseError(message);
+}
+
+export async function getErrorMessage(error: AxiosError): Promise<string> {
+  const fallback = error?.message ?? 'Unknown error';
+  const data = error?.response?.data;
+
+  if (data instanceof Blob) {
+    try {
+      const text = await data.text();
+      const parsed = JSON.parse(text) as APIError;
+
+      return typeof parsed?.detail === 'string'
+        ? parsed.detail.toLowerCase()
+        : fallback;
+    } catch {
+      return fallback;
+    }
+  }
+
+  if (data && typeof data === 'object') {
+    const parsed = data as APIError;
+
+    return typeof parsed?.detail === 'string'
+      ? parsed.detail.toLowerCase()
+      : fallback;
+  }
+
+  return fallback;
+}
+
+export async function getXHRErrorMessage(xhr: XMLHttpRequest): Promise<string> {
+  const fallback = 'Unknown error';
+
+  try {
+    if (xhr.response instanceof Blob) {
+      const text = await xhr.response.text();
+      const parsed = JSON.parse(text) as APIError;
+
+      return parsed?.detail?.toLowerCase?.() ?? fallback;
+    }
+
+    if (xhr.responseText) {
+      const parsed = JSON.parse(xhr.responseText) as APIError;
+
+      return parsed?.detail?.toLowerCase?.() ?? fallback;
+    }
+
+    return fallback;
+  } catch {
+    return fallback;
+  }
 }
 
 export const deselectRowById = <TData extends MRT_RowData>(
@@ -716,8 +885,24 @@ export function isExactFilterActive<TData extends MRT_RowData>(
 
     if (Array.isArray(value)) {
       return (
-        JSON.stringify(sortDataList(actualFilter.value as string[])) ===
-        JSON.stringify(sortDataList(value))
+        JSON.stringify(
+          sortDataList({
+            data: actualFilter.value as string[],
+            config: {
+              type: 'string',
+              selector: (val) => val,
+            },
+          })
+        ) ===
+        JSON.stringify(
+          sortDataList({
+            data: value,
+            config: {
+              type: 'string',
+              selector: (val) => val,
+            },
+          })
+        )
       );
     } else {
       return JSON.stringify(actualFilter.value) === JSON.stringify(value);

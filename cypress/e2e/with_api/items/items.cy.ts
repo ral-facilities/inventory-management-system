@@ -66,6 +66,7 @@ describe('items', () => {
       editIndex: 0,
       system: 'Scrapped',
     });
+    cy.findByRole('progressbar').should('not.exist');
     deleteItem('No serial number', 0);
     cy.findByRole('progressbar').should('not.exist');
     cy.findAllByText('MX4332424').should('have.length', 1);

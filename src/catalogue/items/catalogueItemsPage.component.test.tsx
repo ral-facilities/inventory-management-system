@@ -28,4 +28,28 @@ describe('CatalogueItemsPage', () => {
 
     expect(view.asFragment()).toMatchSnapshot();
   }, 15000);
+
+  it('redirects to the catalogue catalogue page if isLeaf is false', async () => {
+    const consoleErrorSpy = vi
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
+
+    const consoleWarnSpy = vi
+      .spyOn(console, 'warn')
+      .mockImplementation(() => {});
+    const { router } = createView('/catalogue/1/items', 'catalogueItems');
+
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
+    await waitFor(
+      () => {
+        expect(router.state.location.pathname).toBe('/catalogue/1');
+      },
+      { timeout: 10000 }
+    );
+    consoleErrorSpy.mockRestore();
+    consoleWarnSpy.mockRestore();
+  }, 15000);
 });
