@@ -636,17 +636,14 @@ describe('SystemItemsTable', () => {
       { timeout: 4000 }
     );
 
-    const expandButtons = screen.getAllByRole('button', {
-      name: 'Expand',
-    });
-    await user.click(expandButtons[5]);
-
     const serialNumber = 'RncNJlDk1pXC';
     await waitFor(() => {
       expect(screen.getByText(serialNumber)).toBeInTheDocument();
     });
-    const rowActionsButton = screen.getAllByLabelText('Row Actions');
-    await user.click(rowActionsButton[0]);
+    const serialNumberRow = screen.getByRole('row', {
+      name: new RegExp(serialNumber),
+    });
+    await user.click(within(serialNumberRow).getByLabelText('Row Actions'));
 
     await waitFor(() => {
       expect(screen.getByText('Duplicate')).toBeInTheDocument();
@@ -662,7 +659,7 @@ describe('SystemItemsTable', () => {
     await user.click(screen.getByText('Add item details'));
 
     expect(screen.getByLabelText('Notes')).toHaveValue(
-      'b54FfMW2M7A621XjyoVT\n\nThis is a copy of the item with this Serial Number: SgEnbfb2W1yC'
+      `\n\nThis is a copy of the item with this Serial Number: ${serialNumber}`
     );
   }, 20000);
 

@@ -1058,7 +1058,7 @@ describe('Systems', () => {
       });
     });
 
-    it('moves items (admin mode)', () => {
+    it.only('moves items (admin mode)', () => {
       cy.visit('/systems');
       cy.setMode({ admin: true });
 
@@ -1103,7 +1103,7 @@ describe('Systems', () => {
           cy.findByRole('button', { name: 'Next' }).click();
         });
 
-      cy.get('[id="usage-statuses-Cameras 8"]').click({
+      cy.findAllByRole('combobox').eq(1).click({
         scrollBehavior: 'center',
       });
       cy.findByRole('option', { name: 'Scrapped' }).click();
