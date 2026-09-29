@@ -30,6 +30,7 @@ import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import { getCICriticalityLabel } from './catalogueItemsTable.component';
 import CatalogueLink from './catalogueLink.component';
 import ItemDialog from '../../items/itemDialog.component.tsx';
+import { selectAuthorisation } from '../../state/slices/authorisationSlice.tsx';
 
 export const CriticalityInfoToolTip = () => {
   return (
@@ -101,10 +102,12 @@ const CatalogueItemsActionMenu = (props: {
   catalogueItem: CatalogueItem;
   catalogueCategory: CatalogueCategory;
 }) => {
+  const { isAdminMode } = useAppSelector(selectAuthorisation);
   const { catalogueItem, catalogueCategory } = props;
   const [editItemDialogOpen, setEditItemDialogOpen] =
     React.useState<boolean>(false);
   const [createItemDialogOpen, setCreateItemDialogOpen] = React.useState<boolean>(false);
+
   return (
     <ActionMenu
       ariaLabelPrefix="catalogue items landing page"
@@ -123,19 +126,23 @@ const CatalogueItemsActionMenu = (props: {
           />
         ),
       }}
-      addItemAdminMenuItem={{
-        onClick: () => setCreateItemDialogOpen(true),
-        dialog: (
-          <ItemDialog
-            open={createItemDialogOpen}
-            onClose={() => setCreateItemDialogOpen(false)}
-            requestType="post"
-            isAdminMode={true}
-            catalogueCategory={catalogueCategory}
-            catalogueItem={catalogueItem}
-          />
-        ),
-      }}
+      otherItems={isAdminMode ? [
+        {
+          label: 'Add Item as Admin',
+          icon: <AddIcon fontSize="small" sx={{ mr: 1 }} />,
+          onClick: () => setCreateItemDialogOpen(true),
+          dialog: (
+            <ItemDialog
+              open={createItemDialogOpen}
+              onClose={() => setCreateItemDialogOpen(false)}
+              requestType="post"
+              isAdminMode={true}
+              catalogueCategory={catalogueCategory}
+              catalogueItem={catalogueItem}
+            />
+          ),
+        }
+      ] : undefined}
     />
   );
 };
