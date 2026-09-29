@@ -211,7 +211,7 @@ function SystemDetails(props: SystemDetailsProps) {
                     color: 'text.primary',
                   }}
                 >
-                  Last modified
+                  Last Modified
                 </Typography>
                 <Typography
                   variant="body1"
@@ -220,6 +220,24 @@ function SystemDetails(props: SystemDetailsProps) {
                   }}
                 >
                   {formatDateTimeStrings(system.modified_time, true)}
+                </Typography>
+              </Grid>
+
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <Typography
+                  sx={{
+                    color: 'text.primary',
+                  }}
+                >
+                  Modified By
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: 'text.secondary',
+                  }}
+                >
+                  {system.modified_by}
                 </Typography>
               </Grid>
 

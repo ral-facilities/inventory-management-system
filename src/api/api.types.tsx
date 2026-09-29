@@ -1,6 +1,8 @@
-interface CreatedModifiedMixin {
+interface BaseFieldsMixin {
   created_time: string;
   modified_time: string;
+  modified_comment: string | null;
+  modified_by: string;
 }
 
 export interface APIError {
@@ -57,7 +59,7 @@ export interface ManufacturerPatch extends Partial<
 }
 
 export interface Manufacturer
-  extends Required<Omit<ManufacturerPost, 'address'>>, CreatedModifiedMixin {
+  extends Required<Omit<ManufacturerPost, 'address'>>, BaseFieldsMixin {
   id: string;
   code: string;
   address: Address;
@@ -69,7 +71,7 @@ export interface UnitPost {
   value: string;
 }
 
-export interface Unit extends UnitPost, CreatedModifiedMixin {
+export interface Unit extends UnitPost, BaseFieldsMixin {
   id: string;
   code: string;
 }
@@ -79,7 +81,7 @@ export interface Unit extends UnitPost, CreatedModifiedMixin {
 export interface UsageStatusPost {
   value: string;
 }
-export interface UsageStatus extends UsageStatusPost, CreatedModifiedMixin {
+export interface UsageStatus extends UsageStatusPost, BaseFieldsMixin {
   id: string;
   code: string;
 }
@@ -104,7 +106,7 @@ export interface SystemPost {
 
 export type SystemPatch = Partial<SystemPost>;
 
-export interface System extends CreatedModifiedMixin, Required<SystemPost> {
+export interface System extends BaseFieldsMixin, Required<SystemPost> {
   id: string;
   code: string;
   is_flagged: boolean | null;
@@ -169,9 +171,7 @@ export interface CatalogueCategoryPost {
 export type CatalogueCategoryPatch = Partial<CatalogueCategoryPost>;
 
 export interface CatalogueCategory
-  extends
-    Required<Omit<CatalogueCategoryPost, 'properties'>>,
-    CreatedModifiedMixin {
+  extends Required<Omit<CatalogueCategoryPost, 'properties'>>, BaseFieldsMixin {
   id: string;
   code: string;
   is_flagged: boolean | null;
@@ -212,9 +212,7 @@ export interface CatalogueItemPost {
 
 export type CatalogueItemPatch = Partial<CatalogueItemPost>;
 export interface CatalogueItem
-  extends
-    CreatedModifiedMixin,
-    Required<Omit<CatalogueItemPost, 'properties'>> {
+  extends BaseFieldsMixin, Required<Omit<CatalogueItemPost, 'properties'>> {
   id: string;
   properties: Property[];
   number_of_spares: number | null;
@@ -242,7 +240,7 @@ export interface ItemPost {
 export type ItemPatch = Partial<ItemPost>;
 
 export interface Item
-  extends CreatedModifiedMixin, Required<Omit<ItemPost, 'properties'>> {
+  extends BaseFieldsMixin, Required<Omit<ItemPost, 'properties'>> {
   id: string;
   usage_status: string;
   properties: Property[];
@@ -272,7 +270,9 @@ export interface AttachmentUploadInfo {
 }
 
 export interface AttachmentMetadata
-  extends Required<AttachmentPostMetadata>, CreatedModifiedMixin {
+  extends
+    Required<AttachmentPostMetadata>,
+    Omit<BaseFieldsMixin, 'modified_comment' | 'modified_by'> {
   id: string;
 }
 
@@ -294,7 +294,9 @@ export interface ImagePost extends ObjectFileUploadMetadata {
 }
 
 export interface APIImage
-  extends Required<Omit<ImagePost, 'upload_file'>>, CreatedModifiedMixin {
+  extends
+    Required<Omit<ImagePost, 'upload_file'>>,
+    Omit<BaseFieldsMixin, 'modified_comment' | 'modified_by'> {
   id: string;
   primary: boolean;
   thumbnail_base64: string;

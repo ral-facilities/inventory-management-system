@@ -137,7 +137,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
         header: 'Name',
         id: 'name',
         accessorKey: 'name',
-        size: isCriticalMode ? 520 : 720,
+        size: isCriticalMode ? 320 : 520,
         filterVariant: COLUMN_FILTER_VARIANTS.string,
         filterFn: COLUMN_FILTER_FUNCTIONS.string,
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
@@ -191,6 +191,15 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
         enableGrouping: false,
         Cell: ({ row }) =>
           formatDateTimeStrings(row.original.modified_time, true),
+      },
+      {
+        header: 'Modified by',
+        accessorFn: (row) => row.modified_by,
+        id: 'modified_by',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
+        size: 250,
       },
     ],
     [isCriticalMode, isSparesDefinitionDefined, systemTypesData]

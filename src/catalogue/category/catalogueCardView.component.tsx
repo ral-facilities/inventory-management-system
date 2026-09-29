@@ -267,6 +267,15 @@ function CatalogueCardView() {
         enableGrouping: false,
       },
       {
+        header: 'Modified by',
+        accessorFn: (row) => row.modified_by,
+        id: 'modified_by',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
+        size: 300,
+      },
+      {
         header: 'Created',
         accessorFn: (row) => new Date(row.created_time),
         id: 'created',
