@@ -1996,6 +1996,9 @@ describe('Items', () => {
 
     cy.findByText('Serial Number: WrgqAVk3qUQK').should('exist');
 
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100);
+
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Continue' }).click();
@@ -2022,6 +2025,9 @@ describe('Items', () => {
     cy.findByText('Delete').click();
 
     cy.findByText('Serial Number: 5YUQDDjKpz2z').should('exist');
+
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100);
 
     cy.startSnoopingBrowserMockedRequest();
 
