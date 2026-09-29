@@ -1,0 +1,30 @@
+{
+  "home_page": {
+    "title_line1": "<0>Inventory Management</0>",
+    "title_line2": "for <1>EPAC</1>",
+    "card1": {
+      "title": "Catalogue",
+      "description": "Browse catalogue categories, sub categories and catalogue items to locate specific items or add new ones.",
+      "link": "/catalogue",
+      "button": "Explore"
+    },
+    "card2": {
+      "title": "Systems",
+      "description": "Navigate through systems and their sub systems to view their component items.",
+      "link": "/systems",
+      "button": "Explore"
+    },
+    "card3": {
+      "title": "Manufacturers",
+      "description": "View the manufacturers of parts used by EPAC.",
+      "link": "/manufacturers",
+      "button": "Explore"
+    },
+    "card4": {
+      "title": "EPAC",
+      "description": "World-leading centre for scientific and industrial research.",
+      "link": "https://www.clf.stfc.ac.uk/Pages/EPAC-Applications.aspx",
+      "button": "Read more"
+    }
+  }
+}

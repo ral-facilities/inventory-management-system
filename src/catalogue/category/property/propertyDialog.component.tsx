@@ -44,6 +44,7 @@ import {
   CatalogueCategorySchema,
   RequestType,
 } from '../../../form.schemas';
+import { sortDataList } from '../../../utils.tsx';
 import { transformAllowedValues } from '../catalogueCategoryDialog.component';
 import AllowedValuesListTextFields from './allowedValuesListTextFields.component';
 import AllowedValuesController from './controllers/allowedValuesContoller.component';
@@ -590,9 +591,16 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                       fullWidth
                       options={
                         propertyMigPost.allowed_values
-                          ? propertyMigPost.allowed_values.values.values.filter(
-                              (val) => val.value
-                            )
+                          ? sortDataList({
+                              data: propertyMigPost.allowed_values.values.values.filter(
+                                (val) => val.value
+                              ),
+                              config: {
+                                type: propertyMigPost.allowed_values.values
+                                  .valueType,
+                                selector: (val) => val.value,
+                              },
+                            })
                           : []
                       }
                       getOptionLabel={(option) =>

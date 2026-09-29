@@ -3,13 +3,6 @@ import { URLPathKeyType } from '../paths';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import Items from './items.component';
 
-const mockedUseNavigate = vi.fn();
-
-vi.mock('react-router', async () => ({
-  ...(await vi.importActual('react-router')),
-  useNavigate: () => mockedUseNavigate,
-}));
-
 describe('Items', () => {
   const createView = (path: string, urlPathKey?: URLPathKeyType) => {
     return renderComponentWithRouterProvider(

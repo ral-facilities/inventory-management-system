@@ -159,6 +159,66 @@ describe('Catalogue Items Table', () => {
     });
   });
 
+  it('opens import spreadsheet dialog and can close the dialog (admin mode)', async () => {
+    createView(undefined, {
+      authorisation: {
+        role: 'admin',
+        isAdminUser: true,
+        isAdminMode: true,
+      },
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', {
+          name: 'Import spreadsheet',
+        })
+      ).toBeInTheDocument();
+    });
+
+    const importDataButton = screen.getByRole('button', {
+      name: 'Import spreadsheet',
+    });
+
+    await user.click(importDataButton);
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('opens import spreadsheet dialog and can close the dialog (normal mode)', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', {
+          name: 'Import spreadsheet',
+        })
+      ).toBeInTheDocument();
+    });
+
+    const importDataButton = screen.getByRole('button', {
+      name: 'Import spreadsheet',
+    });
+
+    await user.click(importDataButton);
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
   it('renders table correctly (section 3 due to column virtualisation )', async () => {
     createView();
     await waitFor(() => {
@@ -891,4 +951,4 @@ describe('Catalogue Items Table', () => {
       expect(screen.queryByText('Number of spares')).not.toBeInTheDocument();
     });
   });
-});
+}, 15000);

@@ -2,6 +2,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { Control, Controller, FieldPath, FieldValues } from 'react-hook-form';
 import { Unit } from '../../../../api/api.types';
+import { sortDataList } from '../../../../utils';
 
 interface UnitControllerProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -31,7 +32,13 @@ function UnitController<
         <Autocomplete
           disabled={disabled}
           id={crypto.randomUUID()}
-          options={units ?? []}
+          options={sortDataList({
+            data: units ?? [],
+            config: {
+              type: 'string',
+              selector: (unit) => unit.code,
+            },
+          })}
           getOptionLabel={(option) => option.value}
           value={units?.find((unit) => unit.id === value) || null}
           fullWidth
