@@ -397,7 +397,9 @@ export const handlers = [
           );
         }
 
-        return HttpResponse.json(CatalogueItemData, { status: 200 });
+        return HttpResponse.json(CatalogueItemData as CatalogueItem, {
+          status: 200,
+        });
       }
     }
   ),
@@ -414,7 +416,9 @@ export const handlers = [
           (catalogueItem) => catalogueItem.catalogue_category_id === id
         );
 
-        return HttpResponse.json(CatalogueItemData, { status: 200 });
+        return HttpResponse.json(CatalogueItemData as CatalogueItem[], {
+          status: 200,
+        });
       } else {
         return HttpResponse.json({ detail: '' }, { status: 422 });
       }
@@ -535,6 +539,8 @@ export const handlers = [
           telephone: '07349612203',
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          modified_comment: 'This is a comment',
+          modified_by: 'IMS user',
         },
         { status: 200 }
       );
@@ -603,6 +609,8 @@ export const handlers = [
           telephone: '0000000000',
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          modified_comment: null,
+          modified_by: 'Unknown',
         },
         { status: 200 }
       );
@@ -971,6 +979,8 @@ export const handlers = [
           code: 'kelvin',
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          modified_comment: null,
+          modified_by: 'Unknown',
         },
         { status: 200 }
       );
@@ -1027,6 +1037,8 @@ export const handlers = [
           code: 'archived',
           created_time: '2024-01-01T12:00:00.000+00:00',
           modified_time: '2024-01-02T13:10:10.000+00:00',
+          modified_comment: null,
+          modified_by: 'Unknown',
         },
         { status: 200 }
       );

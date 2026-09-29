@@ -1,9 +1,6 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import AttachmentsJSON from '../mocks/Attachments.json';
-import {
-  CREATED_MODIFIED_TIME_VALUES,
-  hooksWrapperWithProviders,
-} from '../testUtils';
+import { hooksWrapperWithProviders } from '../testUtils';
 import {
   AttachmentMetadata,
   AttachmentMetadataPatch,
@@ -129,7 +126,8 @@ describe('attachments api functions', () => {
         entity_id: '2',
         title: '2',
         description: 'a description',
-        ...CREATED_MODIFIED_TIME_VALUES,
+        created_time: '2024-01-01T12:00:00.000+00:00',
+        modified_time: '2024-01-02T13:10:10.000+00:00',
       };
     });
 

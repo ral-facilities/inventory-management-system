@@ -8,7 +8,7 @@ import handleIMS_APIError from '../handleIMS_APIError';
 import SystemsJSON from '../mocks/Systems.json';
 import { server } from '../mocks/server';
 import {
-  CREATED_MODIFIED_TIME_VALUES,
+  BASE_FIELD_VALUES,
   renderComponentWithRouterProvider,
 } from '../testUtils';
 import {
@@ -43,7 +43,7 @@ describe('DeleteSystemDialog', () => {
         type_id: '1',
         code: '',
         is_flagged: false,
-        ...CREATED_MODIFIED_TIME_VALUES,
+        ...BASE_FIELD_VALUES,
       };
 
     return renderComponentWithRouterProvider(<DeleteSystemDialog {...props} />);
