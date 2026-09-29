@@ -357,12 +357,14 @@ export const addFile = (
   cy.findAllByRole('dialog')
     .first()
     .within(() => {
-      cy.findAllByRole('button', {
+      cy.findByRole('button', {
         name: 'Close Modal',
       })
         .last()
         .click();
     });
+
+  cy.findByRole('dialog').should('not.exist');
 
   if (!ignoreChecks) {
     cy.findByText(tabValue).click();

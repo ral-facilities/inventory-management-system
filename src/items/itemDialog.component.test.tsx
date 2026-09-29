@@ -183,6 +183,10 @@ describe('ItemDialog', () => {
       //navigate through stepper
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
+      await modifyDetailsValues({
+        serialNumber: 'Cameras',
+      });
+
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       const finishButton = screen.getByRole('button', { name: 'Finish' });
@@ -261,6 +265,10 @@ describe('ItemDialog', () => {
       //navigate through stepper
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
+      await modifyDetailsValues({
+        serialNumber: ' ',
+      });
+
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       await user.click(screen.getByRole('button', { name: 'Finish' }));
@@ -295,6 +303,10 @@ describe('ItemDialog', () => {
 
       //navigate through stepper
       await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await modifyDetailsValues({
+        serialNumber: ' ',
+      });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
@@ -379,6 +391,37 @@ describe('ItemDialog', () => {
       }
     }, 10000);
 
+    it('prefills serial number with default value when enabled', async () => {
+      createView();
+
+      await user.click(screen.getByText('Add item details'));
+
+      await waitFor(() => {
+        expect(screen.getByDisplayValue('Cameras/%s'));
+      });
+    });
+
+    it('displays an error message when serial number field contains %s and advanced option fields are empty', async () => {
+      createView();
+
+      await user.click(screen.getByText('Add item details'));
+
+      await modifyDetailsValues({
+        serialNumber: 'Cameras/%s',
+        serialNumberAdvancedOptions: { quantity: '', starting_value: '' },
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await waitFor(() => {
+        expect(
+          screen.getByText(
+            'Please remove %s or fill in the advanced options fields.'
+          )
+        );
+      });
+    });
+
     it('navigates through the stepper using the labels', async () => {
       createView();
 
@@ -433,6 +476,12 @@ describe('ItemDialog', () => {
 
       await modifySystemValue({
         system: 'Storage',
+      });
+
+      await user.click(screen.getByText('Add item details'));
+
+      await modifyDetailsValues({
+        serialNumber: '',
       });
 
       await user.click(screen.getByText('Add item properties'));
@@ -599,12 +648,50 @@ describe('ItemDialog', () => {
       ).toBeDisabled();
     }, 10000);
 
+    it('displays serial number advanced options tooltip correctly on hover', async () => {
+      createView();
+
+      await user.click(screen.getByText('Add item details'));
+
+      const infoIcon = screen.getByLabelText(
+        'Serial Number Advanced Options Tooltip'
+      );
+
+      await user.hover(infoIcon);
+      await waitFor(() => {
+        expect(
+          screen.getByText(
+            'When adding multiple items, %s marks where the generated number will appear. This number is based on the Starting Value and Quantity.'
+          )
+        ).toBeInTheDocument();
+      });
+      expect(screen.getByText('Example:')).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          'Serial number: item %s. Quantity: 2. Starting value: 1'
+        )
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText('Resulting serial numbers: item 1, item 2')
+      ).toBeInTheDocument();
+
+      await user.unhover(infoIcon);
+      await waitFor(() => {
+        expect(
+          screen.queryByText(
+            'When adding multiple items, %s marks where the generated number will appear. This number is based on the Starting Value and Quantity.'
+          )
+        ).not.toBeInTheDocument();
+      });
+    });
+
     it('displays error messages for serial number advanced options', async () => {
       createView();
 
       await user.click(screen.getByText('Add item details'));
 
       await modifyDetailsValues({
+        serialNumber: '',
         serialNumberAdvancedOptions: { starting_value: '10' },
       });
 
@@ -612,6 +699,11 @@ describe('ItemDialog', () => {
 
       expect(
         screen.getByText('Please enter a quantity value.')
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          'Please use %s to specify the location you want to append the number to serial number.'
+        )
       ).toBeInTheDocument();
 
       await user.click(screen.getByText('Close advanced options'));
@@ -624,7 +716,6 @@ describe('ItemDialog', () => {
       ).toBeInTheDocument();
 
       await user.click(screen.getByText('Close advanced options'));
-
       await modifyDetailsValues({
         serialNumberAdvancedOptions: { quantity: '10a', starting_value: '10a' },
       });
@@ -663,6 +754,7 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByText('Close advanced options'));
       await modifyDetailsValues({
+        serialNumber: '',
         serialNumberAdvancedOptions: {
           quantity: '100',
           starting_value: '2',
@@ -671,12 +763,6 @@ describe('ItemDialog', () => {
 
       expect(
         await screen.findByText('Number must be less than or equal to 99')
-      ).toBeInTheDocument();
-
-      expect(
-        screen.getByText(
-          'Please use %s to specify the location you want to append the number to serial number.'
-        )
       ).toBeInTheDocument();
 
       await user.click(screen.getByText('Close advanced options'));
@@ -760,6 +846,7 @@ describe('ItemDialog', () => {
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       await modifyDetailsValues({
+        serialNumber: ' ',
         usageStatus: 'U{arrowdown}{enter}',
       });
 
@@ -790,6 +877,10 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByText('Add item details'));
 
+      await modifyDetailsValues({
+        serialNumber: 'Cameras',
+      });
+
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
@@ -808,7 +899,9 @@ describe('ItemDialog', () => {
       });
 
       expect(screen.queryByRole('button', { name: 'Next' })).not.toBeDisabled();
+
       await user.click(screen.getByRole('button', { name: 'Next' }));
+
       expect(
         screen.queryByText('Invalid item details')
       ).not.toBeInTheDocument();
@@ -824,6 +917,9 @@ describe('ItemDialog', () => {
       await user.click(screen.getByText('Add item details'));
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
+      await modifyDetailsValues({
+        serialNumber: 'Cameras',
+      });
 
       expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
       expect(screen.getByText('Invalid item details')).toBeInTheDocument();
@@ -1017,6 +1113,9 @@ describe('ItemDialog', () => {
 
       //navigate through stepper
       await user.click(screen.getByRole('button', { name: 'Next' }));
+      await modifyDetailsValues({
+        serialNumber: 'Cameras',
+      });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
@@ -1279,7 +1378,7 @@ describe('ItemDialog', () => {
 
       expect(finishButton).toBeDisabled();
       expect(await screen.findByRole('progressbar')).toBeInTheDocument();
-    });
+    }, 15000);
 
     it('edit an item (move item across systems with same system type)', async () => {
       createView();

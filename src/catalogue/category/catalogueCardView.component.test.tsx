@@ -57,7 +57,7 @@ describe('CardView', () => {
     vi.clearAllMocks();
   });
 
-  it('redirects to catalogue items if isLeaf is true ', async () => {
+  it('redirects to the catalogue items page if isLeaf is true ', async () => {
     const consoleErrorSpy = vi
       .spyOn(console, 'error')
       .mockImplementation(() => {});

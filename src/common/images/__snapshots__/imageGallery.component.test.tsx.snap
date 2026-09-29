@@ -201,7 +201,7 @@ exports[`Image Gallery > displays no images message and can open and close uploa
           >
             <div
               class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-cwrbtg-MuiCollapse-root"
-              style="min-height: 0px; width: 100%;"
+              style="min-height: 0px; width: 100%; height: fit-content;"
             >
               <div
                 class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
@@ -1117,7 +1117,7 @@ exports[`Image Gallery > renders correctly 1`] = `
           >
             <div
               class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-cwrbtg-MuiCollapse-root"
-              style="min-height: 0px; width: 100%;"
+              style="min-height: 0px; width: 100%; height: fit-content;"
             >
               <div
                 class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
@@ -4186,7 +4186,7 @@ exports[`Image Gallery > renders correctly in dense view 1`] = `
           >
             <div
               class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-cwrbtg-MuiCollapse-root"
-              style="min-height: 0px; width: 100%;"
+              style="min-height: 0px; width: 100%; height: fit-content;"
             >
               <div
                 class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
@@ -7662,7 +7662,7 @@ exports[`Image Gallery > renders no results page correctly 1`] = `
           >
             <div
               class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-cwrbtg-MuiCollapse-root"
-              style="min-height: 0px; width: 100%;"
+              style="min-height: 0px; width: 100%; height: fit-content;"
             >
               <div
                 class="MuiCollapse-wrapper MuiCollapse-vertical css-1x6hinx-MuiCollapse-wrapper"
