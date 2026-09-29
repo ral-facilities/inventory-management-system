@@ -1058,7 +1058,7 @@ describe('Systems', () => {
       });
     });
 
-    it.only('moves items (admin mode)', () => {
+    it('moves items (admin mode)', () => {
       cy.visit('/systems');
       cy.setMode({ admin: true });
 
