@@ -627,7 +627,7 @@ describe('Items', () => {
       'Items that are contained within the system type Storage are classified as spares'
     ).should('exist');
 
-    cy.findAllByRole('button', { name: 'Column Actions' }).eq(3).click();
+    cy.findAllByRole('button', { name: 'Column Actions' }).eq(4).click();
     cy.findByText('Group by Asset Number').click();
 
     cy.findByText('Spares Definition Filter Applied').should('exist');
@@ -1985,6 +1985,9 @@ describe('Items', () => {
 
     cy.findByText('Serial Number: WrgqAVk3qUQK').should('exist');
 
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100);
+
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Continue' }).click();
@@ -2011,6 +2014,9 @@ describe('Items', () => {
     cy.findByText('Delete').click();
 
     cy.findByText('Serial Number: 5YUQDDjKpz2z').should('exist');
+
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100);
 
     cy.startSnoopingBrowserMockedRequest();
 

@@ -1,10 +1,4 @@
-import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  Typography,
-} from '@mui/material';
+import { Button, Card, CardActions, CardContent } from '@mui/material';
 import {
   MRT_SelectCheckbox,
   MRT_ToggleRowActionMenuButton,
@@ -124,17 +118,24 @@ function CatalogueCard(props: CatalogueCardProps) {
             }}
           />
         </CardActions>
-        <Typography
+        <OverflowTip
           sx={{
             fontSize: '0.8rem',
             color: 'text.secondary',
             position: 'absolute',
             bottom: '8px',
             right: '12px',
+            maxWidth: {
+              xl: '50%',
+              lg: '100%',
+              md: '100%',
+              sm: '100%',
+              xs: '100%',
+            },
           }}
         >
-          {`Last modified: ${formatDateTimeStrings(card.row.original.modified_time, true)}`}
-        </Typography>
+          {`Last modified: ${formatDateTimeStrings(card.row.original.modified_time, true)} by ${card.row.original.modified_by}`}
+        </OverflowTip>
       </Card>
     </Button>
   );

@@ -451,6 +451,16 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           formatDateTimeStrings(row.original.item.modified_time, true),
       },
       {
+        header: 'Modified by',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => row.item.modified_by,
+        id: 'item.modified_by',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
+        size: 250,
+      },
+      {
         header: 'Created',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.item.created_time),

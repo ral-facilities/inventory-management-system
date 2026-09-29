@@ -2,7 +2,7 @@ import { renderHook, waitFor } from '@testing-library/react';
 import { TransferToCatalogueItem } from '../app.types';
 import CatalogueItemsJSON from '../mocks/CatalogueItems.json';
 import {
-  CREATED_MODIFIED_TIME_VALUES,
+  BASE_FIELD_VALUES,
   catalogueItemData,
   hooksWrapperWithProviders,
 } from '../testUtils';
@@ -167,7 +167,7 @@ describe('catalogue items api functions', () => {
         number_of_spares_required: null,
         criticality: null,
         is_flagged: null,
-        ...CREATED_MODIFIED_TIME_VALUES,
+        ...BASE_FIELD_VALUES,
       };
     });
 
@@ -282,7 +282,7 @@ describe('catalogue items api functions', () => {
               },
             ],
             id: '657305e51e468454e97b638b',
-            ...CREATED_MODIFIED_TIME_VALUES,
+            ...BASE_FIELD_VALUES,
           },
           {
             catalogue_category_id: '657305a01e468454e97b6389',
@@ -313,7 +313,7 @@ describe('catalogue items api functions', () => {
               },
             ],
             id: '657324df1e468454e97b638e',
-            ...CREATED_MODIFIED_TIME_VALUES,
+            ...BASE_FIELD_VALUES,
           },
         ],
         targetCatalogueCategory: {
@@ -334,7 +334,7 @@ describe('catalogue items api functions', () => {
           id: '657305bc1e468454e97b638a',
           code: 'rf-lenses',
           is_flagged: false,
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
       };
     });
@@ -423,7 +423,7 @@ describe('catalogue items api functions', () => {
               },
             ],
             id: '657305e51e468454e97b638b',
-            ...CREATED_MODIFIED_TIME_VALUES,
+            ...BASE_FIELD_VALUES,
           },
           {
             catalogue_category_id: '657305a01e468454e97b6389',
@@ -454,7 +454,7 @@ describe('catalogue items api functions', () => {
               },
             ],
             id: '657324df1e468454e97b638e',
-            ...CREATED_MODIFIED_TIME_VALUES,
+            ...BASE_FIELD_VALUES,
           },
         ],
         targetCatalogueCategory: {
@@ -475,7 +475,7 @@ describe('catalogue items api functions', () => {
           id: '657305bc1e468454e97b638a',
           code: 'rf-lenses',
           is_flagged: false,
-          ...CREATED_MODIFIED_TIME_VALUES,
+          ...BASE_FIELD_VALUES,
         },
       };
     });

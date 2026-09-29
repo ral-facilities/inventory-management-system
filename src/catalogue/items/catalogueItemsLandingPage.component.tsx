@@ -587,6 +587,24 @@ function CatalogueItemsLandingPage() {
                                 color: 'text.primary',
                               }}
                             >
+                              Modified By
+                            </Typography>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.secondary',
+                              }}
+                            >
+                              {catalogueItemIdData.modified_by}
+                            </Typography>
+                          </Grid>
+                          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+                            <Typography
+                              align="left"
+                              sx={{
+                                color: 'text.primary',
+                              }}
+                            >
                               Created
                             </Typography>
                             <Typography
