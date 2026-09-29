@@ -2,7 +2,12 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import type { QueryClient } from '@tanstack/react-query';
 import React from 'react';
-import { Outlet, useParams, type LoaderFunctionArgs } from 'react-router';
+import {
+  Outlet,
+  useLocation,
+  useParams,
+  type LoaderFunctionArgs,
+} from 'react-router';
 import {
   getSystemQuery,
   useGetSystem,
@@ -45,6 +50,7 @@ export const systemsLayoutLoader =
 function SystemsLayout() {
   const { system_id: systemId } = useParams();
 
+  const location = useLocation();
   // Remove the trailing slash (if it exists) before splitting
   const cleanPath = location.pathname.replace(/\/$/, '');
 
