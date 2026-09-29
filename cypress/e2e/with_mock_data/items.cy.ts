@@ -64,11 +64,16 @@ describe('Items', () => {
   it('navigates to systems history page from landing page, and displays data correctly', () => {
     cy.visit('/catalogue/4/items/1/items/KvT2Ox7n');
 
-    cy.findByRole('link', { name: "5YUQDDjKpz2z's systems history" })
+    cy.findAllByRole('link', { name: "5YUQDDjKpz2z's systems history" })
+      .first()
       .should('have.attr', 'href')
       .should('include', '/catalogue/4/items/1/items/KvT2Ox7n/systems-history');
 
-    cy.findByRole('link', { name: "5YUQDDjKpz2z's systems history" }).click();
+    cy.findAllByRole('link', {
+      name: "5YUQDDjKpz2z's systems history",
+    })
+      .first()
+      .click();
     cy.findByText('Giant laser').should('be.visible');
     cy.findByText('Laser Xpress').should('be.visible');
   });
