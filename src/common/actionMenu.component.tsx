@@ -161,8 +161,9 @@ function ActionMenu(props: ActionMenuProps) {
           )}
 
           {otherItems?.map(
-            (item) => (
+            (item, index) => (
               <MenuItem
+                key={index}
                 onClick={() => {
                   item.onClick();
                   handleMenuClose();
