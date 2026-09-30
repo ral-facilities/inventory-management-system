@@ -36,7 +36,7 @@ describe('ItemSystemHistory', () => {
       expect(screen.getByText('Giant laser')).toBeInTheDocument();
     });
 
-    //also unhide entered at column
+    //also hide entered at column
     await user.click(screen.getByRole('button', { name: 'Show/Hide columns' }));
     await user.click(screen.getAllByText('Entered At')[1]);
 

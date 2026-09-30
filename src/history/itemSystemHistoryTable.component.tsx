@@ -240,13 +240,6 @@ function ItemSystemHistory() {
       shape: 'rounded',
       variant: 'outlined',
     },
-    muiDetailPanelProps: {
-      sx: {
-        '.MuiCollapse-vertical': {
-          width: '800px',
-        },
-      },
-    },
     ...onPreservedStatesChange,
     renderTopToolbarCustomActions: ({ table }) => (
       <Button
