@@ -17,7 +17,7 @@ export const useGetItemSystemsEntries = (
   item_id: string
 ): UseQueryResult<ItemSystemsHistoryEntry[], AxiosError> => {
   return useQuery({
-    queryKey: ['item_systems_entries', item_id],
+    queryKey: ['ItemSystemsEntries', item_id],
     queryFn: () => getItemSystemsEntries(item_id),
     enabled: !!item_id,
   });
@@ -37,7 +37,7 @@ export const useGetSystemItemsEntries = (
   system_id: string
 ): UseQueryResult<SystemItemsHistoryEntry[], AxiosError> => {
   return useQuery({
-    queryKey: ['system_items_entries', system_id],
+    queryKey: ['SystemItemsEntries', system_id],
     queryFn: () => getSystemItemsEntries(system_id),
     enabled: !!system_id,
   });
