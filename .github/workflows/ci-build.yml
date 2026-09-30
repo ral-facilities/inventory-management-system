@@ -49,7 +49,7 @@ jobs:
         uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          report-type: test_results
+          report_type: test_results
 
   e2e-tests:
     name: End-to-End (with mock data) Tests
@@ -144,16 +144,22 @@ jobs:
           mv -v inventory-management-system/* .
           cd object-storage-api/
 
-      - name: Start MongoDB and MinIO (For object-storage-api)
+      - name: Create RustFS volume directory
         working-directory: ../object-storage-api
         run: |
-          docker compose up --detach mongo-db minio
+          mkdir -p rustfs/data
+          sudo chown -R 10001:10001 rustfs/data
+
+      - name: Start MongoDB and RustFS (For object-storage-api)
+        working-directory: ../object-storage-api
+        run: |
+          docker compose up --detach mongo-db rustfs
           sleep 10
 
-      - name: Create MinIO buckets (For object-storage-api)
+      - name: Create RustFS buckets (For object-storage-api)
         working-directory: ../object-storage-api
         run: |
-          docker compose up minio-create-buckets
+          docker compose up rustfs-create-buckets
 
       - name: Start object-storage-api
         run: |
@@ -214,9 +220,9 @@ jobs:
         if: failure()
         run: docker logs object-storage-api-mongodb
 
-      - name: Output docker logs (object-storage minio)
+      - name: Output docker logs (object-storage rustfs)
         if: failure()
-        run: docker logs object-storage-minio
+        run: docker logs object-storage-rustfs
 
       - name: Output docker logs (object-storage api)
         if: failure()

@@ -502,7 +502,7 @@ function Systems() {
             {MRT_Functions_Localisation.filterArrExcludesSome}
           </MenuItem>,
         ],
-        size: 160,
+        size: 180,
         filterSelectOptions: systemTypeValues,
       },
       {
@@ -705,7 +705,7 @@ function Systems() {
     muiTableContainerProps: () =>
       // main app bar + breadcrumbs (incl AuthRole banner) + title + top toolbar + column heading + critical mode spacing + header spacing  + critical mode header spacing
       ({ sx: FLEX_TABLE_CONTAINER_PROP }),
-    muiTableBodyCellProps: ({ table, column }) =>
+    muiTableBodyCellProps: ({ column }) =>
       // Ignore MRT rendered cells e.g. expand , spacer etc
       column.id.startsWith('mrt')
         ? {}
@@ -715,12 +715,6 @@ function Systems() {
                 <TableBodyCellOverFlowTip
                   {...({
                     ...props,
-                    overFlowTipSx: {
-                      maxWidth: table.getState().isFullScreen
-                        ? undefined
-                        : { md: 'max(8vw, 155px)', xs: '68vw' },
-                      width: table.getState().isFullScreen ? '25vw' : undefined,
-                    },
                   } as TableCellOverFlowTipProps)}
                 />
               );
