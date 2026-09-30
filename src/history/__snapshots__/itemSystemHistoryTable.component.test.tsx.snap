@@ -4175,7 +4175,7 @@ exports[`ItemSystemHistory > SystemItems Table > renders no results correctly 1`
       </div>
     </div>
     <div
-      class="MuiTableContainer-root css-104y6p0-MuiTableContainer-root"
+      class="MuiTableContainer-root css-1tzw2dp-MuiTableContainer-root"
     >
       <table
         class="MuiTable-root MuiTable-stickyHeader css-1gcyac0-MuiTable-root"
@@ -6140,7 +6140,7 @@ exports[`ItemSystemHistory > SystemItems Table > renders table data correctly 1`
       </div>
     </div>
     <div
-      class="MuiTableContainer-root css-104y6p0-MuiTableContainer-root"
+      class="MuiTableContainer-root css-1tzw2dp-MuiTableContainer-root"
     >
       <table
         class="MuiTable-root MuiTable-stickyHeader css-1gcyac0-MuiTable-root"
