@@ -493,17 +493,14 @@ describe('SystemItemsTable', () => {
       { timeout: 4000 }
     );
 
-    const expandButtons = screen.getAllByRole('button', {
-      name: 'Expand',
-    });
-    await user.click(expandButtons[0]);
-
     const serialNumber = '5xE1KSraISvu';
     await waitFor(() => {
-      expect(screen.getAllByText(serialNumber)).toHaveLength(3);
+      expect(screen.getAllByText(serialNumber)).toHaveLength(2);
     });
-    const rowActionsButton = screen.getAllByLabelText('Row Actions');
-    await user.click(rowActionsButton[0]);
+    const serialNumberRow = screen.getAllByRole('row', {
+      name: new RegExp(serialNumber),
+    })[0];
+    await user.click(within(serialNumberRow).getByLabelText('Row Actions'));
 
     await waitFor(() => {
       expect(screen.getByText('Duplicate')).toBeInTheDocument();
@@ -544,17 +541,14 @@ describe('SystemItemsTable', () => {
       { timeout: 4000 }
     );
 
-    const expandButtons = screen.getAllByRole('button', {
-      name: 'Expand',
-    });
-    await user.click(expandButtons[0]);
-
     const serialNumber = '5xE1KSraISvu';
     await waitFor(() => {
-      expect(screen.getAllByText(serialNumber)).toHaveLength(3);
+      expect(screen.getAllByText(serialNumber)).toHaveLength(2);
     });
-    const rowActionsButton = screen.getAllByLabelText('Row Actions');
-    await user.click(rowActionsButton[0]);
+    const serialNumberRow = screen.getAllByRole('row', {
+      name: new RegExp(serialNumber),
+    })[0];
+    await user.click(within(serialNumberRow).getByLabelText('Row Actions'));
 
     await waitFor(() => {
       expect(screen.getByText('Duplicate as Admin')).toBeInTheDocument();
@@ -589,17 +583,14 @@ describe('SystemItemsTable', () => {
       { timeout: 4000 }
     );
 
-    const expandButtons = screen.getAllByRole('button', {
-      name: 'Expand',
-    });
-    await user.click(expandButtons[0]);
-
     const serialNumber = '5xE1KSraISvu';
     await waitFor(() => {
-      expect(screen.getAllByText(serialNumber)).toHaveLength(3);
+      expect(screen.getAllByText(serialNumber)).toHaveLength(2);
     });
-    const rowActionsButton = screen.getAllByLabelText('Row Actions');
-    await user.click(rowActionsButton[0]);
+    const serialNumberRow = screen.getAllByRole('row', {
+      name: new RegExp(serialNumber),
+    })[0];
+    await user.click(within(serialNumberRow).getByLabelText('Row Actions'));
 
     await waitFor(() => {
       expect(screen.getByText('Duplicate')).toBeInTheDocument();
@@ -615,7 +606,7 @@ describe('SystemItemsTable', () => {
     await user.click(screen.getByText('Add item details'));
 
     expect(screen.getByLabelText('Notes')).toHaveValue(
-      'ihwCjMdJ4n7KKcaM34Lj\n\nThis is a copy of the item with this Serial Number: 5xE1KSraISvu'
+      `ihwCjMdJ4n7KKcaM34Lj\n\nThis is a copy of the item with this Serial Number: ${serialNumber}`
     );
   }, 15000);
 
@@ -679,11 +670,6 @@ describe('SystemItemsTable', () => {
       },
       { timeout: 4000 }
     );
-
-    const expandButtons = screen.getAllByRole('button', {
-      name: 'Expand',
-    });
-    await user.click(expandButtons[5]);
 
     const serialNumber = 'No serial number';
     await waitFor(() => {
