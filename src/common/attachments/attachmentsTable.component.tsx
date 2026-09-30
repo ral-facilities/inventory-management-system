@@ -31,7 +31,6 @@ import {
   displayTableRowCountText,
   formatDateTimeStrings,
   getInitialColumnFilterFnState,
-  getPageHeightCalc,
   mrtTheme,
 } from '../../utils';
 import { DEFAULT_ROWS_PER_PAGE_VALUE, ROWS_PER_PAGE_OPTIONS } from '../consts';
@@ -182,20 +181,7 @@ function AttachmentsTable(props: AttachmentTableProps) {
         'aria-label': `${row.original.file_name} row`,
       };
     },
-    muiTablePaperProps: { sx: { maxHeight: '100%' } },
-    muiTableContainerProps: ({ table }) => {
-      const showAlert =
-        table.getState().showAlertBanner ||
-        table.getFilteredSelectedRowModel().rows.length > 0 ||
-        table.getState().grouping.length > 0;
-      return {
-        sx: {
-          height: table.getState().isFullScreen
-            ? '100%'
-            : getPageHeightCalc(`272px  ${showAlert ? '+ 72px' : ''}`),
-        },
-      };
-    },
+    muiTableContainerProps: { sx: { minHeight: '300px', maxHeight: '600px' } },
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',
