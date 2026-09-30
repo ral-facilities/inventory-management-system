@@ -51,7 +51,7 @@ function ItemSystemHistory() {
     isItemSystemsHistoryView ? itemSystemsHistory : systemItemsHistory;
 
   // Breadcrumbs + Mui table V2 + extra
-  const tableHeight = getPageHeightCalc('50px + 110px + 48px + 75px');
+  const tableHeight = getPageHeightCalc('50px + 110px + 48px + 78px');
 
   const columns = React.useMemo<
     MRT_ColumnDef<ItemSystemsHistoryEntry | SystemItemsHistoryEntry>[]
