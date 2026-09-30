@@ -464,14 +464,23 @@ export function ItemsTable(props: ItemTableProps) {
     if (preservedState.columnFilters.length !== 1) return false;
     if (preservedState.columnFilters[0].id !== 'system.type.value')
       return false;
-    const orderedColumnFilterValues = sortDataList(
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      preservedState.columnFilters[0].value as any[]
-    );
+    const orderedColumnFilterValues = sortDataList({
+      data: preservedState.columnFilters[0].value as string[],
+      config: {
+        type: 'string',
+        selector: (value) => value,
+      },
+    });
     const sparesSystemTypeValues = sparesDefinition.system_types.map(
       (type) => type.value
     );
-    const orderedSparesDefinitionValues = sortDataList(sparesSystemTypeValues);
+    const orderedSparesDefinitionValues = sortDataList({
+      data: sparesSystemTypeValues,
+      config: {
+        type: 'string',
+        selector: (value) => value,
+      },
+    });
 
     return (
       JSON.stringify(orderedColumnFilterValues) ===
