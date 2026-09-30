@@ -96,37 +96,48 @@ function SystemsLayout() {
       breadcrumbsInfo={systemBreadcrumbs}
     >
       <Box
-        sx={(theme) => ({
+        sx={{
           display: 'flex',
+          flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: 1,
-          padding: 1,
-          mt: 1,
-          mx: 1,
-          ...(isCriticalMode &&
-            isSparesDefinitionDefined &&
-            showFlagged !== undefined &&
-            criticalityHeaderStyle({ theme, showFlagged })),
-        })}
+          p: 1,
+          gap: 0.5,
+        }}
       >
-        {isCriticalMode &&
-          isSparesDefinitionDefined &&
-          showFlagged !== undefined && (
-            <CriticalityTooltipIcon
-              showFlagged={showFlagged}
-              label={getSCriticalityLabel(showFlagged)}
-            />
-          )}
-        <Typography
-          variant="h4"
-          sx={{
-            fontWeight: 'bold',
-            wordWrap: 'break-word',
-          }}
+        <Box
+          sx={(theme) => ({
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+
+            width: '100%',
+            gap: 1,
+            padding: 1,
+            ...(isCriticalMode &&
+              isSparesDefinitionDefined &&
+              showFlagged !== undefined &&
+              criticalityHeaderStyle({ theme, showFlagged })),
+          })}
         >
-          {system?.name}
-        </Typography>
+          {isCriticalMode &&
+            isSparesDefinitionDefined &&
+            showFlagged !== undefined && (
+              <CriticalityTooltipIcon
+                showFlagged={showFlagged}
+                label={getSCriticalityLabel(showFlagged)}
+              />
+            )}
+          <Typography
+            variant="h4"
+            sx={{
+              fontWeight: 'bold',
+              wordWrap: 'break-word',
+            }}
+          >
+            {system?.name}
+          </Typography>
+        </Box>
       </Box>
       <Outlet />
     </BaseLayoutHeader>
