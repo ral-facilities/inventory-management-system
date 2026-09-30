@@ -3,6 +3,7 @@
   "osApiUrl": "http://127.0.0.1:8002",
   "imsJsApiUrl": "",
   "imsIngestApiUrl": "",
+  "imsHistoryApiUrl": "",
   "maxAttachmentSizeBytes": 104857600,
   "attachmentAllowedFileExtensions": [
     ".csv",

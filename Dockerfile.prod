@@ -70,6 +70,7 @@ ENV IMS_API_URL="/inventory-management-system-api"
 ENV OS_API_URL="/object-storage-api"
 ENV IMS_JS_API_URL="/ims-job-scheduler-api"
 ENV IMS_INGEST_API_URL="/ims-ingest-api"
+ENV IMS_HISTORY_API_URL="/ims-history-api"
 ENV PLUGIN_HOST="/inventory-management-system"
 ENV MAX_ATTACHMENT_SIZE_BYTES=104857600
 ENV ATTACHMENT_ALLOWED_FILE_EXTENSIONS='[".csv", ".doc", ".docx", ".pdf", ".rtf", ".txt", ".xls", ".xlsx"]'

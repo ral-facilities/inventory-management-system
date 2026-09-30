@@ -138,6 +138,11 @@ export const fetchSettings =
           throw new Error('imsIngestApiUrl is undefined in settings');
         }
 
+        // Ensure the imsHistoryApiUrl name exists.
+        if (!('imsHistoryApiUrl' in settings)) {
+          throw new Error('imsHistoryApiUrl is undefined in settings');
+        }
+
         // Ensure the maxAttachmentSizeBytes value exists.
         if (!('maxAttachmentSizeBytes' in settings)) {
           throw new Error('maxAttachmentSizeBytes is undefined in settings');
@@ -242,7 +247,8 @@ async function prepare() {
     settingsResult?.imsApiUrl === '' ||
     settingsResult?.osApiUrl === '' ||
     settingsResult?.imsJsApiUrl === '' ||
-    settingsResult?.imsIngestApiUrl === ''
+    settingsResult?.imsIngestApiUrl === '' ||
+    settingsResult?.imsHistoryApiUrl === ''
   ) {
     // Need to use require instead of import as import breaks when loaded in SG
     const { worker } = await import('./mocks/browser');

@@ -176,4 +176,28 @@ describe('Items Landing Page', () => {
     const url = await screen.findByText('Manufacturer A');
     expect(url).toHaveAttribute('href', '/manufacturers/1');
   });
+
+  it('navigates to item systems history page', async () => {
+    createView('/catalogue/4/items/1/items/KvT2Ox7n');
+    await waitFor(() => {
+      expect(
+        screen.getByText('High-resolution cameras for beam characterization. 1')
+      ).toBeInTheDocument();
+    });
+
+    const systemsHistoryButtons = screen.getAllByRole('link', {
+      name: "5YUQDDjKpz2z's systems history",
+    });
+
+    expect(systemsHistoryButtons).toHaveLength(2);
+
+    expect(systemsHistoryButtons[0]).toHaveAttribute(
+      'href',
+      '/catalogue/4/items/1/items/KvT2Ox7n/systems-history'
+    );
+    expect(systemsHistoryButtons[1]).toHaveAttribute(
+      'href',
+      '/catalogue/4/items/1/items/KvT2Ox7n/systems-history'
+    );
+  });
 });
