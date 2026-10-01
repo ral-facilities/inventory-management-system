@@ -103,7 +103,7 @@
     "@types/eslint-plugin-jsx-a11y": "6.10.1",
     "@vitest/coverage-v8": "4.1.11",
     "cross-env": "10.1.0",
-    "cypress": "15.21.0",
+    "cypress": "15.21.1",
     "eslint": "9.39.5",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-cypress": "7.0.1",
