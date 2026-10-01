@@ -20,6 +20,9 @@ import { useGetSystemTypes } from '../../api/systemTypes';
 import { useGetUsageStatuses } from '../../api/usageStatuses';
 import {
   DEFAULT_ROWS_PER_PAGE_VALUE,
+  FLEX_CONTAINER_PROPS,
+  FLEX_TABLE_CONTAINER_PROP,
+  MINIMUM_TABLE_HEIGHT,
   ROWS_PER_PAGE_OPTIONS,
 } from '../../common/consts';
 import MRTTopTableAlert from '../../common/mrtTopTableAlert.component';
@@ -32,7 +35,6 @@ import {
   customFilterFunctions,
   displayTableRowCountText,
   getInitialColumnFilterFnState,
-  getPageHeightCalc,
   isExactFilterActive,
   mrtTheme,
 } from '../../utils';
@@ -247,18 +249,10 @@ function Rules() {
               );
             },
           },
-    muiTablePaperProps: { sx: { maxHeight: '100%' } },
-    muiTableContainerProps: ({ table }) => {
-      const isRuleApplied = !!getAppliedRuleType(table);
-      return {
-        sx: {
-          height: getPageHeightCalc(
-            // Breadcrumbs + Mui table V2 + extra
-            `50px + 110px + 48px  ${isRuleApplied ? ' + 54px' : ''}`
-          ),
-        },
-      };
+    muiTablePaperProps: {
+      sx: { ...FLEX_CONTAINER_PROPS, minHeight: MINIMUM_TABLE_HEIGHT },
     },
+    muiTableContainerProps: { sx: FLEX_TABLE_CONTAINER_PROP },
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',
@@ -399,7 +393,13 @@ function Rules() {
   });
 
   return (
-    <div style={{ width: '100%' }}>
+    <div
+      style={{
+        ...FLEX_CONTAINER_PROPS,
+        width: '100%',
+        minHeight: MINIMUM_TABLE_HEIGHT,
+      }}
+    >
       {getAppliedRuleType(table) && (
         <MRTTopTableAlert
           title={`${getAppliedRuleType(table)} Filter Applied`}
