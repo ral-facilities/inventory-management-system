@@ -148,6 +148,8 @@ describe('Items', () => {
     cy.findByRole('button', { name: 'Next' }).click();
 
     cy.findByRole('button', { name: 'Continue' }).click();
+    cy.findByLabelText('Comment *').clear();
+    cy.findByLabelText('Comment *').type('A test comment');
     cy.findByRole('button', { name: 'Submit' }).click();
 
     cy.findByRole('dialog').should('not.exist');
@@ -167,7 +169,7 @@ describe('Items', () => {
           serial_number: null,
           delivered_date: null,
           notes: null,
-          modified_comment: null,
+          modified_comment: 'A test comment',
           properties: [
             { id: '1', value: 12 },
             { id: '2', value: 30 },
@@ -207,6 +209,8 @@ describe('Items', () => {
     cy.findByRole('button', { name: 'Next' }).click();
 
     cy.findByRole('button', { name: 'Continue' }).click();
+    cy.findByLabelText('Comment *').clear();
+    cy.findByLabelText('Comment *').type('A test comment');
     cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
@@ -227,7 +231,7 @@ describe('Items', () => {
             serial_number: `test ${i + 2}`,
             delivered_date: null,
             notes: null,
-            modified_comment: null,
+            modified_comment: 'A test comment',
             properties: [
               { id: '1', value: 12 },
               { id: '2', value: 30 },
@@ -348,6 +352,8 @@ describe('Items', () => {
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Continue' }).click();
+    cy.findByLabelText('Comment *').clear();
+    cy.findByLabelText('Comment *').type('A test comment');
     cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
@@ -366,7 +372,7 @@ describe('Items', () => {
           serial_number: null,
           delivered_date: null,
           notes: null,
-          modified_comment: null,
+          modified_comment: 'A test comment',
           properties: [
             { id: '17', value: 400 },
             { id: '18', value: 0.2 },
@@ -480,6 +486,8 @@ describe('Items', () => {
     cy.findByRole('button', { name: 'Next' }).click();
 
     cy.findByRole('button', { name: 'Continue' }).click();
+    cy.findByLabelText('Comment *').clear();
+    cy.findByLabelText('Comment *').type('A test comment');
     cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
@@ -498,7 +506,7 @@ describe('Items', () => {
           serial_number: null,
           delivered_date: null,
           notes: null,
-          modified_comment: null,
+          modified_comment: 'A test comment',
           properties: [
             { id: '1', value: 12 },
             { id: '2', value: 30 },
@@ -1779,7 +1787,8 @@ describe('Items', () => {
 
     cy.findByRole('button', { name: 'Continue' }).click();
 
-    cy.findByLabelText('Comment').type('A test comment');
+    cy.findByLabelText('Comment *').clear();
+    cy.findByLabelText('Comment *').type('A test comment');
     cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
@@ -1825,6 +1834,8 @@ describe('Items', () => {
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Continue' }).click();
+    cy.findByLabelText('Comment *').clear();
+    cy.findByLabelText('Comment *').type('A test comment');
     cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
@@ -1835,7 +1846,7 @@ describe('Items', () => {
       expect(patchRequests.length).eq(1);
       expect(JSON.stringify(await patchRequests[0].json())).equal(
         JSON.stringify({
-          modified_comment: null,
+          modified_comment: 'A test comment',
           serial_number: 'Zf7P8Qu8TD8ctest1234',
         })
       );
@@ -1861,6 +1872,8 @@ describe('Items', () => {
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Continue' }).click();
+    cy.findByLabelText('Comment *').clear();
+    cy.findByLabelText('Comment *').type('A test comment');
     cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
@@ -1871,7 +1884,7 @@ describe('Items', () => {
       expect(patchRequests.length).eq(1);
       expect(JSON.stringify(await patchRequests[0].json())).equal(
         JSON.stringify({
-          modified_comment: null,
+          modified_comment: 'A test comment',
           properties: [
             { id: '1', value: 1218 },
             { id: '2', value: 3060 },
@@ -1912,6 +1925,8 @@ describe('Items', () => {
     cy.findByRole('button', { name: 'Next' }).click();
 
     cy.findByRole('button', { name: 'Continue' }).click();
+    cy.findByLabelText('Comment *').clear();
+    cy.findByLabelText('Comment *').type('A test comment');
     cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
@@ -1922,7 +1937,7 @@ describe('Items', () => {
       expect(patchRequests.length).eq(1);
       expect(JSON.stringify(await patchRequests[0].json())).equal(
         JSON.stringify({
-          modified_comment: null,
+          modified_comment: 'A test comment',
           system_id: '65328f34a40ff5301575a4e3',
         })
       );
@@ -1936,6 +1951,8 @@ describe('Items', () => {
     cy.findByRole('button', { name: 'Next' }).click();
     cy.findByRole('button', { name: 'Next' }).click();
     cy.findByRole('button', { name: 'Continue' }).click();
+    cy.findByLabelText('Comment *').clear();
+    cy.findByLabelText('Comment *').type('A test comment');
     cy.findByRole('button', { name: 'Submit' }).click();
 
     cy.findByText(
@@ -1971,6 +1988,8 @@ describe('Items', () => {
     cy.findByRole('button', { name: 'Next' }).click();
     cy.findByRole('button', { name: 'Next' }).click();
     cy.findByRole('button', { name: 'Continue' }).click();
+    cy.findByLabelText('Comment *').clear();
+    cy.findByLabelText('Comment *').type('A test comment');
     cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
@@ -1990,7 +2009,7 @@ describe('Items', () => {
           delivered_date: '2023-03-17T00:00:00.000Z',
           notes:
             '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this Serial Number: 5YUQDDjKpz2z',
-          modified_comment: null,
+          modified_comment: 'A test comment',
           properties: [
             { id: '1', value: 0 },
             { id: '2', value: null },

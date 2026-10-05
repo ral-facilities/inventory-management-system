@@ -1,3 +1,4 @@
+import React from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import {
   Box,
@@ -13,13 +14,36 @@ import {
 export interface HistoryCommentProps {
   open: boolean;
   onSubmit: (event: React.SyntheticEvent) => void;
-  onChange: UseFormRegisterReturn | ((modifiedComment: string | null) => void);
+  onChange: UseFormRegisterReturn | ((modifiedComment: string) => void);
+  onCancel: () => void;
   action: 'editing' | 'adding' | 'moving';
   entityTypeName: 'Item' | 'Items';
 }
 
 const HistoryCommentDialog = (props: HistoryCommentProps) => {
-  const { open, onSubmit, onChange, action, entityTypeName } = props;
+  const { open, onSubmit, onChange, onCancel, action, entityTypeName } = props;
+
+  const [comment, setComment] = React.useState<string>('');
+  const [commentError, setCommentError] = React.useState<string | undefined>(
+    undefined
+  );
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setComment(event.target.value);
+    setCommentError(undefined);
+
+    if (typeof onChange === 'function') onChange(event.target.value);
+    else onChange.onChange(event);
+  };
+
+  const handleSubmit = (event: React.SyntheticEvent) => {
+    if (!comment.trim()) {
+      setCommentError('Please enter a comment.');
+      return;
+    }
+
+    onSubmit(event);
+  };
 
   return (
     <Dialog open={open} maxWidth="lg">
@@ -38,12 +62,15 @@ const HistoryCommentDialog = (props: HistoryCommentProps) => {
             <TextField
               id="comment-input"
               label="Comment"
+              required
               size="small"
               multiline
               minRows={3}
-              {...(typeof onChange === 'function'
-                ? { onChange: (event) => onChange(event.target.value) }
-                : onChange)}
+              {...(typeof onChange === 'function' ? {} : onChange)}
+              value={comment}
+              onChange={handleChange}
+              error={!!commentError}
+              helperText={commentError}
               fullWidth
             />
           </Box>
@@ -61,10 +88,14 @@ const HistoryCommentDialog = (props: HistoryCommentProps) => {
             my: 2,
           }}
         >
+          <Button sx={{ width: '25%' }} onClick={onCancel}>
+            Cancel
+          </Button>
           <Button
+            disabled={!!commentError}
             variant="outlined"
             sx={{ width: '25%', mx: 1 }}
-            onClick={(event) => onSubmit(event)}
+            onClick={handleSubmit}
           >
             Submit
           </Button>

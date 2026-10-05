@@ -9,6 +9,7 @@ describe('HistoryCommentDialog', () => {
   let props: HistoryCommentProps;
   let user: UserEvent;
   const mockOnSubmit = vi.fn();
+  const mockOnCancel = vi.fn();
   const mockOnChange = {
     // need to mock all the inner functions of `UseFormRegisterReturn`
     onChange: vi.fn(),
@@ -28,6 +29,7 @@ describe('HistoryCommentDialog', () => {
       open: true,
       onSubmit: mockOnSubmit,
       onChange: mockOnChange,
+      onCancel: mockOnCancel,
       action: 'editing',
       entityTypeName: 'Item',
     };
@@ -44,7 +46,7 @@ describe('HistoryCommentDialog', () => {
     expect(
       screen.getByText('Please add a comment to justify editing this Item')
     );
-    expect(screen.getByLabelText('Comment')).toHaveTextContent('');
+    expect(screen.getByLabelText('Comment *')).toHaveTextContent('');
   });
 
   it('renders correctly (moving multiple items)', async () => {
@@ -55,15 +57,58 @@ describe('HistoryCommentDialog', () => {
     expect(
       screen.getByText('Please add a comment to justify moving these Items')
     );
-    expect(screen.getByLabelText('Comment')).toHaveTextContent('');
+    expect(screen.getByLabelText('Comment *')).toHaveTextContent('');
   });
 
   it('calls onSubmit when submit button is clicked', async () => {
     createView();
 
+    await user.type(screen.getByLabelText('Comment *'), 'A test comment');
     await user.click(screen.getByRole('button', { name: 'Submit' }));
 
     expect(props.onSubmit).toHaveBeenCalled();
+  });
+
+  it('calls onSubmit when submit button is clicked', async () => {
+    createView();
+
+    await user.type(screen.getByLabelText('Comment *'), 'A test comment');
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+
+    expect(props.onCancel).toHaveBeenCalled();
+  });
+
+  it('displays an error message and does not call onSubmit when the comment is empty', async () => {
+    createView();
+
+    await user.click(screen.getByRole('button', { name: 'Submit' }));
+
+    expect(screen.getByText('Please enter a comment.'));
+    expect(props.onSubmit).not.toHaveBeenCalled();
+  });
+
+  it('clears the error message once a comment is entered', async () => {
+    createView();
+
+    await user.click(screen.getByRole('button', { name: 'Submit' }));
+
+    expect(screen.getByText('Please enter a comment.'));
+
+    await user.type(screen.getByLabelText('Comment *'), 'A test comment');
+
+    expect(
+      screen.queryByText('Please enter a comment.')
+    ).not.toBeInTheDocument();
+  });
+
+  it('does not allow a comment consisting only of whitespace', async () => {
+    createView();
+
+    await user.type(screen.getByLabelText('Comment *'), '   ');
+    await user.click(screen.getByRole('button', { name: 'Submit' }));
+
+    expect(screen.getByText('Please enter a comment.'));
+    expect(props.onSubmit).not.toHaveBeenCalled();
   });
 
   it('does not close dialog on background click, or on escape key press', async () => {
@@ -89,7 +134,7 @@ describe('HistoryCommentDialog', () => {
       screen.getByText('Please add a comment to justify editing this Item')
     );
 
-    fireEvent.change(screen.getByLabelText('Comment'), {
+    fireEvent.change(screen.getByLabelText('Comment *'), {
       target: { value: 'A test comment' },
     });
 

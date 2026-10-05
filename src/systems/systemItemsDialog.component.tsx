@@ -509,6 +509,10 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
           setHistoryCommentDialog(false);
           handleMoveTo(true);
         }}
+        onCancel={() => {
+          setHistoryCommentDialog(false);
+          handleClose();
+        }}
         onChange={setModifiedComment}
         action={'moving'}
         entityTypeName={selectedItems.length > 1 ? 'Items' : 'Item'}
