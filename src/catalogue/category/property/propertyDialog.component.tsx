@@ -188,6 +188,10 @@ const PropertyDialog = (props: PropertyDialogProps) => {
         valueType: 'string_false',
         value: { av_placement_id: crypto.randomUUID(), value: '' },
       },
+      ...(type === 'patch' && {
+        ...selectedProperty,
+        unit_id: selectedProperty?.unit_id ?? null,
+      }),
     },
   });
 
@@ -585,7 +589,7 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                                     ? String(newValue.value)
                                     : '',
                                 }
-                              : null,
+                              : '',
                         });
                       }}
                       fullWidth
