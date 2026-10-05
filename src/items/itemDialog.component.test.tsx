@@ -420,7 +420,7 @@ describe('ItemDialog', () => {
       await user.click(screen.getByText('Add item details'));
 
       await waitFor(() => {
-        expect(screen.getByDisplayValue('Cameras/%s'));
+        expect(screen.getByDisplayValue('Cameras 1/%s'));
       });
     });
 

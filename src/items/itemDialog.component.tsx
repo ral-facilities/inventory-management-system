@@ -77,7 +77,7 @@ import { sortDataList } from '../utils.tsx';
 
 function toItemDetailsStep(
   item: Item | undefined,
-  catalogueCategory: CatalogueCategory | undefined,
+  catalogueItem: CatalogueItem | undefined,
   serialNumberPrefillEnabled: boolean
 ): ItemDetailsStep {
   if (!item) {
@@ -89,7 +89,7 @@ function toItemDetailsStep(
       asset_number: '',
       serial_number: {
         serial_number:
-          (serialNumberPrefillEnabled && catalogueCategory?.name + '/%s') || '',
+          (serialNumberPrefillEnabled && catalogueItem?.name + '/%s') || '',
         starting_value: '',
         quantity: '',
       },
@@ -253,7 +253,7 @@ function ItemDialog(props: ItemDialogProps) {
     ),
     defaultValues: toItemDetailsStep(
       selectedItem,
-      catalogueCategory,
+      catalogueItem,
       serialNumberPrefillEnabled
     ),
   });
@@ -295,11 +295,7 @@ function ItemDialog(props: ItemDialogProps) {
   // Load the values for editing.
   React.useEffect(() => {
     resetDetailsStep(
-      toItemDetailsStep(
-        selectedItem,
-        catalogueCategory,
-        serialNumberPrefillEnabled
-      )
+      toItemDetailsStep(selectedItem, catalogueItem, serialNumberPrefillEnabled)
     );
     resetPropertiesStep({
       properties: convertToPropertyValueList(
@@ -311,6 +307,7 @@ function ItemDialog(props: ItemDialogProps) {
     });
   }, [
     catalogueCategory,
+    catalogueItem,
     catalogueItem?.properties,
     duplicate,
     requestType,
@@ -1078,8 +1075,8 @@ function ItemDialog(props: ItemDialogProps) {
                       data: usageStatuses ?? [],
                       config: {
                         type: 'string',
-                        selector: (value) => value.code
-                      }
+                        selector: (value) => value.code,
+                      },
                     })}
                     isOptionEqualToValue={(option, value) =>
                       option.id == value.id
