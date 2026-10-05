@@ -327,6 +327,21 @@ describe('Systems', () => {
     cy.findByText('Properties').should('be.visible');
   });
 
+  it('should be able to navigate to the items history page', () => {
+    cy.findByRole('link', { name: 'Pulse Laser' }).click();
+
+    // Wait for progress bar to disappear
+    cy.findAllByRole('progressbar', { timeout: 10000 }).should('not.exist');
+
+    cy.findByRole('link', { name: "View Pulse Laser's items history" })
+      .should('have.attr', 'href')
+      .should('include', '/items-history');
+
+    cy.findByRole('link', { name: "View Pulse Laser's items history" }).click();
+
+    cy.findByText('Items history').should('be.visible');
+  });
+
   it("should be able to navigate to a filtered item's table using the spares value", () => {
     cy.findByRole('link', { name: 'Pulse Laser' }).click();
     cy.findAllByRole('button', { name: 'Show/Hide filters' })

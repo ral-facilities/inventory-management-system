@@ -118,26 +118,30 @@ exports[`Systems Layout > renders critical mode correctly 1`] = `
         </div>
       </div>
       <div
-        class="MuiBox-root css-1gdsly1"
+        class="MuiBox-root css-sh1o1l"
       >
-        <svg
-          aria-hidden="true"
-          aria-label="This system is critical."
-          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-lsa6h-MuiSvgIcon-root"
-          data-mui-internal-clone-element="true"
-          data-testid="ErrorIcon"
-          focusable="false"
-          viewBox="0 0 24 24"
+        <div
+          class="MuiBox-root css-h4k2gx"
         >
-          <path
-            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m1 15h-2v-2h2zm0-4h-2V7h2z"
-          />
-        </svg>
-        <h4
-          class="MuiTypography-root MuiTypography-h4 css-13tjivu-MuiTypography-root"
-        >
-          Giant laser
-        </h4>
+          <svg
+            aria-hidden="true"
+            aria-label="This system is critical."
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-lsa6h-MuiSvgIcon-root"
+            data-mui-internal-clone-element="true"
+            data-testid="ErrorIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m1 15h-2v-2h2zm0-4h-2V7h2z"
+            />
+          </svg>
+          <h4
+            class="MuiTypography-root MuiTypography-h4 css-13tjivu-MuiTypography-root"
+          >
+            Giant laser
+          </h4>
+        </div>
       </div>
     </div>
   </div>
@@ -262,13 +266,17 @@ exports[`Systems Layout > renders critical mode correctly when spares is not def
         </div>
       </div>
       <div
-        class="MuiBox-root css-4tuplk"
+        class="MuiBox-root css-sh1o1l"
       >
-        <h4
-          class="MuiTypography-root MuiTypography-h4 css-13tjivu-MuiTypography-root"
+        <div
+          class="MuiBox-root css-npry8j"
         >
-          Giant laser
-        </h4>
+          <h4
+            class="MuiTypography-root MuiTypography-h4 css-13tjivu-MuiTypography-root"
+          >
+            Giant laser
+          </h4>
+        </div>
       </div>
     </div>
   </div>
@@ -357,11 +365,15 @@ exports[`Systems Layout > renders root systems correctly 1`] = `
         </div>
       </div>
       <div
-        class="MuiBox-root css-4tuplk"
+        class="MuiBox-root css-sh1o1l"
       >
-        <h4
-          class="MuiTypography-root MuiTypography-h4 css-13tjivu-MuiTypography-root"
-        />
+        <div
+          class="MuiBox-root css-npry8j"
+        >
+          <h4
+            class="MuiTypography-root MuiTypography-h4 css-13tjivu-MuiTypography-root"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -486,13 +498,17 @@ exports[`Systems Layout > renders units breadcrumbs correctly 1`] = `
         </div>
       </div>
       <div
-        class="MuiBox-root css-4tuplk"
+        class="MuiBox-root css-sh1o1l"
       >
-        <h4
-          class="MuiTypography-root MuiTypography-h4 css-13tjivu-MuiTypography-root"
+        <div
+          class="MuiBox-root css-npry8j"
         >
-          Giant laser
-        </h4>
+          <h4
+            class="MuiTypography-root MuiTypography-h4 css-13tjivu-MuiTypography-root"
+          >
+            Giant laser
+          </h4>
+        </div>
       </div>
     </div>
   </div>
