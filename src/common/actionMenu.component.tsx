@@ -10,6 +10,13 @@ import UploadAttachmentsDialog from './attachments/uploadAttachmentsDialog.compo
 import UploadImagesDialog from './images/uploadImagesDialog.component';
 import { StyledUppyBox } from './uppy.utils';
 
+type MenuItemConfig = {
+  label: string;
+  icon?: React.ReactNode;
+  onClick: () => void;
+  dialog: React.ReactNode;
+};
+
 export interface ActionMenuProps {
   ariaLabelPrefix: string;
   editMenuItem: {
@@ -20,6 +27,7 @@ export interface ActionMenuProps {
   uploadAttachmentsEntityId?: string;
   uploadImagesEntityId?: string;
   showAdminEdit?: boolean;
+  otherItems?: MenuItemConfig[];
 }
 function ActionMenu(props: ActionMenuProps) {
   const {
@@ -29,6 +37,7 @@ function ActionMenu(props: ActionMenuProps) {
     uploadAttachmentsEntityId,
     uploadImagesEntityId,
     showAdminEdit,
+    otherItems,
   } = props;
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -150,9 +159,25 @@ function ActionMenu(props: ActionMenuProps) {
               </MenuItem>
             </>
           )}
+
+          {otherItems?.map(
+            (item, index) => (
+              <MenuItem
+                key={index}
+                onClick={() => {
+                  item.onClick();
+                  handleMenuClose();
+                }}
+              >
+                {item.icon}
+                {item.label}
+              </MenuItem>
+            )
+          )}
         </Menu>
       </Grid>
       {editMenuItem.dialog}
+      {otherItems?.map((item) => item.dialog)}
       <StyledUppyBox>
         {uploadAttachmentsEntityId && (
           <UploadAttachmentsDialog
