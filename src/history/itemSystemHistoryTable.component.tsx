@@ -29,29 +29,48 @@ import {
   getPageHeightCalc,
   mrtTheme,
 } from '../utils.tsx';
-import { useGetItemSystemsEntries } from '../api/history.tsx';
-import { ItemSystemsHistoryEntry } from '../api/api.types.tsx';
+import {
+  useGetItemSystemsEntries,
+  useGetSystemItemsEntries,
+} from '../api/history.tsx';
+import {
+  ItemSystemsHistoryEntry,
+  SystemItemsHistoryEntry,
+} from '../api/api.types.tsx';
 import { useParams } from 'react-router';
 
 function ItemSystemHistory() {
-  const { item_id } = useParams();
+  const { item_id, system_id } = useParams();
+
+  const isItemSystemsHistoryView = !!item_id && !system_id;
+
+  const itemSystemsHistory = useGetItemSystemsEntries(item_id ?? '');
+  const systemItemsHistory = useGetSystemItemsEntries(system_id ?? '');
 
   const { data: historyData, isLoading: historyDataLoading } =
-    useGetItemSystemsEntries(item_id ?? '');
+    isItemSystemsHistoryView ? itemSystemsHistory : systemItemsHistory;
 
   // Breadcrumbs + Mui table V2 + extra
   const tableHeight = getPageHeightCalc('50px + 110px + 48px + 78px');
 
   const columns = React.useMemo<
-    MRT_ColumnDef<ItemSystemsHistoryEntry>[]
+    MRT_ColumnDef<ItemSystemsHistoryEntry | SystemItemsHistoryEntry>[]
   >(() => {
+    const isItemSystemsHistoryRow = (
+      row: ItemSystemsHistoryEntry | SystemItemsHistoryEntry
+    ): row is ItemSystemsHistoryEntry => 'system_name' in row;
+
     return [
       {
-        header: 'System',
+        header: isItemSystemsHistoryView ? 'System' : 'Item',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => row.system_name,
-        getGroupingValue: (row) => row.system_id,
-        id: 'system_name',
+        accessorFn: (row) =>
+          isItemSystemsHistoryRow(row)
+            ? row.system_name
+            : row.item_serial_number,
+        getGroupingValue: (row) =>
+          isItemSystemsHistoryRow(row) ? row.system_id : row.item_id,
+        id: isItemSystemsHistoryView ? 'system_name' : 'item_serial_number',
         filterVariant: 'multi-select',
         filterFn: 'arrIncludesSome',
         columnFilterModeOptions: ['arrIncludesSome', 'arrExcludesSome'],
@@ -70,17 +89,20 @@ function ItemSystemHistory() {
           </MenuItem>,
         ],
         size: 250,
-        Cell: ({ row }) => (
-          <MuiLink
-            underline="hover"
-            component={Link}
-            to={'/systems/' + row.original.system_id}
-            // For ensuring space when grouping
-            sx={{ marginRight: 0.5 }}
-          >
-            {row.original.system_name}
-          </MuiLink>
-        ),
+        Cell: ({ row }) =>
+          isItemSystemsHistoryRow(row.original) ? (
+            <MuiLink
+              underline="hover"
+              component={Link}
+              to={'/systems/' + row.original.system_id}
+              // For ensuring space when grouping
+              sx={{ marginRight: 0.5 }}
+            >
+              {row.original.system_name}
+            </MuiLink>
+          ) : (
+            row.original.item_serial_number
+          ),
       },
       {
         header: 'Entered At',
@@ -153,7 +175,7 @@ function ItemSystemHistory() {
         columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
       },
     ];
-  }, []);
+  }, [isItemSystemsHistoryView]);
 
   const noResultsText = 'No results found: Refresh to try again';
 
