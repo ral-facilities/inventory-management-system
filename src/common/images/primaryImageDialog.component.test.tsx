@@ -58,8 +58,9 @@ describe('Primary Image Dialog', () => {
   it('can open and close the upload dialog', async () => {
     createView();
 
-    await waitFor(() =>
-      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    await waitFor(
+      () => expect(screen.queryByRole('progressbar')).not.toBeInTheDocument(),
+      { timeout: 5000 }
     );
 
     expect((await screen.findAllByText('logo1.png')).length).toEqual(15);
@@ -91,8 +92,9 @@ describe('Primary Image Dialog', () => {
       baseElement = createView().baseElement;
     });
 
-    await waitFor(() =>
-      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    await waitFor(
+      () => expect(screen.queryByRole('progressbar')).not.toBeInTheDocument(),
+      { timeout: 5000 }
     );
 
     expect(

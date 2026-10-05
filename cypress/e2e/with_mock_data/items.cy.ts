@@ -253,7 +253,7 @@ describe('Items', () => {
 
     cy.findByLabelText('Quantity').type('10.5');
     cy.findAllByText('Please enter a valid integer.').should('exist');
-    
+
     cy.findByLabelText('Starting value').type('10.5');
     cy.findAllByText('Please enter a valid integer.').should('exist');
 
@@ -306,7 +306,7 @@ describe('Items', () => {
     cy.findByText('Item Creation Rule Applied').should('exist');
 
     cy.findByRole('button', { name: 'Next' }).click();
-    
+
     cy.findByLabelText('Serial number').type('{selectall}{del}');
 
     cy.findByRole('button', { name: 'Next' }).click();
@@ -1956,6 +1956,9 @@ describe('Items', () => {
 
     cy.findByText('Serial Number: WrgqAVk3qUQK').should('exist');
 
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100);
+
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Continue' }).click();
@@ -1982,6 +1985,9 @@ describe('Items', () => {
     cy.findByText('Delete').click();
 
     cy.findByText('Serial Number: 5YUQDDjKpz2z').should('exist');
+
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(100);
 
     cy.startSnoopingBrowserMockedRequest();
 

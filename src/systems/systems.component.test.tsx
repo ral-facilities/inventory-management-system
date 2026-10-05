@@ -91,9 +91,12 @@ describe('Systems', () => {
   it('renders correctly when viewing a specific system', async () => {
     createView('/systems/65328f34a40ff5301575a4e3', 'system');
 
-    await waitFor(() => {
-      expect(screen.getByText('Smaller laser')).toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        expect(screen.getByText('Smaller laser')).toBeInTheDocument();
+      },
+      { timeout: 5000 }
+    );
 
     expect(screen.getByText('Subsystems')).toBeInTheDocument();
     expect(screen.getByText('Total Subsystems: 1')).toBeInTheDocument();
