@@ -425,7 +425,7 @@ describe('Items', () => {
 
     cy.findByRole('button', { name: 'Continue' }).click();
 
-    cy.findByLabelText('Comment').type('A test comment');
+    cy.findByLabelText('Comment *').type('A test comment');
     cy.findByRole('button', { name: 'Submit' }).click();
     cy.findByRole('dialog').should('not.exist');
 
