@@ -309,7 +309,7 @@ describe('Catalogue Category', () => {
     });
   });
 
-  it('clears selected catalogue category when user cancels out of the delete dialog ', () => {
+  it('clears the selected catalogue category when user cancels out of the delete dialog ', () => {
     cy.findAllByRole('button', {
       name: 'Card Actions',
     })
