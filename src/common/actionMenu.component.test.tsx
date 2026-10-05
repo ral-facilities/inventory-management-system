@@ -11,6 +11,11 @@ describe('ActionMenu Component', () => {
     onClick: vi.fn(),
     dialog: <div data-testid="edit-dialog">Edit Dialog</div>,
   };
+  const mockOtherMenuItem = {
+    label: 'Other Item',
+    onClick: vi.fn(),
+    dialog: <div data-testid="other-dialog">Other Dialog</div>,
+  };
 
   const createView = () => {
     renderComponentWithRouterProvider(<ActionMenu {...props} />);
@@ -24,6 +29,7 @@ describe('ActionMenu Component', () => {
       editMenuItem: mockEditMenuItem,
       printMenuItem: true,
       showAdminEdit: true, // true to check it renders the option correctly
+      otherItems: [mockOtherMenuItem]
     };
     user = userEvent.setup();
     // Mock the window.print function
@@ -57,6 +63,9 @@ describe('ActionMenu Component', () => {
 
     // Check if the "Print" option is visible
     expect(screen.getByText('Print')).toBeVisible();
+
+    // Check if the "Other Item" option is visible
+    expect(screen.getByText('Other Item')).toBeVisible();
   });
 
   it('triggers edit action and closes menu on clicking Edit', async () => {
@@ -116,6 +125,26 @@ describe('ActionMenu Component', () => {
 
     // Verify that window.print was called
     expect(window.print).toHaveBeenCalled();
+  });
+
+  it('triggers other action and closes menu on clicking Other Item', async () => {
+    createView();
+
+    // Open the menu
+    const actionButton = screen.getByLabelText(
+      'catalogue items landing page actions menu'
+    );
+    await user.click(actionButton);
+
+    // Click on the "Other Item" option
+    const otherButton = screen.getByText('Other Item');
+    await user.click(otherButton);
+
+    // Verify that the mock other function was called
+    expect(mockOtherMenuItem.onClick).toHaveBeenCalled();
+
+    // Check if the dialog is displayed
+    expect(screen.getByTestId('other-dialog')).toBeInTheDocument();
   });
 
   it('opens the upload attachment dialog', async () => {
