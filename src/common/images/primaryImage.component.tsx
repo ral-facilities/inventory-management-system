@@ -87,8 +87,10 @@ const PrimaryImage = (props: PrimaryImageProps) => {
   const { entityId, isDetailsPanel = false } = props;
 
   const { data: imagesData, isLoading: imageLoading } = useGetImages(entityId);
-  // Get primary image or fall back to first image in set
-  const primaryImage = imagesData?.find((img) => img.primary) || imagesData?.[0];
+  // Get primary image or fall back to oldest image in set
+  const primaryImage = imagesData?.find((img) => img.primary) || imagesData?.toSorted((a, b) => {
+    return Date.parse(a.created_time) - Date.parse(b.created_time)
+  }).at(0);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
