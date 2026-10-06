@@ -150,3 +150,7 @@ export const jobSchedulerApi = createAuthenticatedClient({
 export const ingestApi = createAuthenticatedClient({
   getURL: (settings) => settings.imsIngestApiUrl,
 });
+
+export const historyApi = createAuthenticatedClient({
+  getURL: (settings) => settings.imsHistoryApiUrl,
+});

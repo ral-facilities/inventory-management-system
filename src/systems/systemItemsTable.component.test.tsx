@@ -227,6 +227,25 @@ describe('SystemItemsTable', () => {
     ).toHaveAttribute('href', '/catalogue/13/items/21');
   });
 
+  it('links to system items history page', async () => {
+    createView();
+
+    // Name (obtained from catalogue category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Turbomolecular Pumps 42 (2)`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    const itemsHistoryButton = screen.getByText('View Items History');
+    expect(itemsHistoryButton).toHaveAttribute('href', '/items-history');
+  });
+
   it('can set a table filter and clear them again', async () => {
     createView();
 
@@ -293,7 +312,7 @@ describe('SystemItemsTable', () => {
 
     // Delivered date column action button
     await user.click(
-      screen.getAllByRole('button', { name: 'Column Actions' })[5]
+      screen.getAllByRole('button', { name: 'Column Actions' })[6]
     );
 
     await user.click(await screen.findByText('Group by Delivered Date'));

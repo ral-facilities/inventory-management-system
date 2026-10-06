@@ -84,6 +84,16 @@ function Units() {
           formatDateTimeStrings(row.original.modified_time, true),
       },
       {
+        header: 'Modified by',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => row.modified_by,
+        id: 'modified_by',
+        filterVariant: COLUMN_FILTER_VARIANTS.string,
+        filterFn: COLUMN_FILTER_FUNCTIONS.string,
+        columnFilterModeOptions: COLUMN_FILTER_MODE_OPTIONS.string,
+        Cell: ({ row }) => row.original.modified_by,
+      },
+      {
         header: 'Created',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.created_time),

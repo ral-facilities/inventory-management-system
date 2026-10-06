@@ -652,6 +652,7 @@ export const ItemDetailsStepSchema = (
       dateFormatErrorMessage: INVALID_DATE_FORMAT_MESSAGE,
     }),
     notes: OptionalOrNullableStringSchema({ requestType }),
+    modified_comment: NullableStringSchema(),
   });
 };
 
@@ -663,4 +664,10 @@ export const FileSchemaPatch = z.object({
   }),
   title: NullableStringSchema(),
   description: NullableStringSchema(),
+});
+
+// ------------------------------------ HISTORY ------------------------------------
+
+export const HistoryComment = z.object({
+  modified_comment: NullableStringSchema(),
 });
