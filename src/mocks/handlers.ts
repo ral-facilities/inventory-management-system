@@ -1275,6 +1275,11 @@ export const handlers = [
         } else {
           image = {
             ...ImagesJSON[1],
+            ...(id === 1 && {
+              primary: entityId !== '90',
+              entity_id: entityId,
+              ...(entityId === '3' && { thumbnail_base64: 'test' }),
+            }),
             ...(id === 3 && {
               thumbnail_base64: 'test',
               description: undefined,
