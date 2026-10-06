@@ -3,12 +3,11 @@ import NotesIcon from '@mui/icons-material/Notes';
 import HistoryIcon from '@mui/icons-material/History';
 import {
   Box,
+  Button,
   Divider,
-  IconButton,
   LinearProgress,
   Link as MuiLink,
   Stack,
-  Tooltip,
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
@@ -173,17 +172,6 @@ function ItemsLandingPage() {
                           {systemData?.name}
                         </MuiLink>
                       </Typography>
-                      <Tooltip title={'Systems History'}>
-                        <span>
-                          <IconButton
-                            component={Link}
-                            to={'systems-history'}
-                            aria-label={`${itemData.serial_number}'s systems history`}
-                          >
-                            <HistoryIcon />
-                          </IconButton>
-                        </span>
-                      </Tooltip>
                     </Box>
 
                     <Typography
@@ -208,12 +196,25 @@ function ItemsLandingPage() {
                 </Grid>
 
                 {/* Actions Section */}
-
-                <ItemsActionMenu
-                  item={itemData}
-                  catalogueItem={catalogueItemData}
-                  catalogueCategory={catalogueCategoryData}
-                />
+                <Grid>
+                  <ItemsActionMenu
+                    item={itemData}
+                    catalogueItem={catalogueItemData}
+                    catalogueCategory={catalogueCategoryData}
+                  />
+                </Grid>
+                <Grid>
+                  <Button
+                    startIcon={<HistoryIcon />}
+                    sx={{ ml: 0.5, py: '5.75px' }}
+                    variant="outlined"
+                    component={Link}
+                    to={'systems-history'}
+                    aria-label={`${itemData.serial_number}'s systems history`}
+                  >
+                    {`Systems History`}
+                  </Button>
+                </Grid>
               </Grid>
 
               <TabView
@@ -407,17 +408,6 @@ function ItemsLandingPage() {
                               >
                                 System
                               </Typography>
-                              <Tooltip title={'Systems History'}>
-                                <span>
-                                  <IconButton
-                                    component={Link}
-                                    to={'systems-history'}
-                                    aria-label={`${itemData.serial_number}'s systems history`}
-                                  >
-                                    <HistoryIcon />
-                                  </IconButton>
-                                </span>
-                              </Tooltip>
                             </Box>
                             <Typography
                               align="left"
