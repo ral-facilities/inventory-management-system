@@ -418,7 +418,12 @@ interface NumberSortConfig<T> {
   selector: (item: T) => number;
 }
 
-type SortConfig<T> = StringSortConfig<T> | NumberSortConfig<T>;
+interface DateSortConfig<T> {
+  type: 'date';
+  selector: (item: T) => Date;
+}
+
+type SortConfig<T> = StringSortConfig<T> | NumberSortConfig<T> | DateSortConfig<T>;
 
 export function sortDataList<T>(props: {
   data: T[];
@@ -428,6 +433,11 @@ export function sortDataList<T>(props: {
   return [...data].sort((a, b) => {
     if (config.type === 'number') {
       return config.selector(a) - config.selector(b);
+    }
+    if (config.type === 'date') {
+      return (
+        config.selector(a).getTime() - config.selector(b).getTime()
+      );
     }
     return config.selector(a).localeCompare(config.selector(b));
   });
