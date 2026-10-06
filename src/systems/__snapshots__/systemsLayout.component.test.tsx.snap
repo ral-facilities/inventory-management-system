@@ -120,7 +120,7 @@ exports[`Systems Layout > renders critical mode correctly 1`] = `
         </div>
       </div>
       <div
-        class="MuiBox-root css-4akqf1"
+        class="MuiBox-root css-og34p2"
       >
         <div
           class="MuiBox-root css-1gdsly1"
@@ -270,7 +270,7 @@ exports[`Systems Layout > renders critical mode correctly when spares is not def
         </div>
       </div>
       <div
-        class="MuiBox-root css-4akqf1"
+        class="MuiBox-root css-og34p2"
       >
         <div
           class="MuiBox-root css-4tuplk"
@@ -371,7 +371,7 @@ exports[`Systems Layout > renders root systems correctly 1`] = `
         </div>
       </div>
       <div
-        class="MuiBox-root css-4akqf1"
+        class="MuiBox-root css-og34p2"
       >
         <div
           class="MuiBox-root css-4tuplk"
@@ -506,7 +506,7 @@ exports[`Systems Layout > renders units breadcrumbs correctly 1`] = `
         </div>
       </div>
       <div
-        class="MuiBox-root css-4akqf1"
+        class="MuiBox-root css-og34p2"
       >
         <div
           class="MuiBox-root css-4tuplk"
@@ -616,7 +616,7 @@ exports[`Systems Layout Error Component > renders system error page correctly 1`
       </div>
     </div>
     <div
-      class="MuiBox-root css-4akqf1"
+      class="MuiBox-root css-og34p2"
     >
       <div>
         <div
