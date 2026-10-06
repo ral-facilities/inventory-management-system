@@ -259,6 +259,12 @@ const PropertyDialog = (props: PropertyDialogProps) => {
 
   const propertyMigPatch = watchMigPatch();
 
+  // Allowed values already saved on the property cannot be edited or removed.
+  const lockedPlacementIds =
+    selectedProperty?.allowed_values?.values?.values.map(
+      (val) => val.av_placement_id
+    );
+
   const { mutate: postCatalogueCategoryProperty } =
     usePostCatalogueCategoryProperty();
 
@@ -542,7 +548,11 @@ const PropertyDialog = (props: PropertyDialogProps) => {
             propertyMigPost.allowed_values?.type === 'list' && (
               <Stack direction="column" spacing={1}>
                 <FormProvider {...formMethodsMigPost}>
-                  <AllowedValuesListTextFields property={selectedProperty} />
+                  <AllowedValuesListTextFields
+                    name="allowed_values"
+                    lockedPlacementIds={lockedPlacementIds}
+                    hasDefaultValue
+                  />
                 </FormProvider>
               </Stack>
             )}
@@ -552,7 +562,10 @@ const PropertyDialog = (props: PropertyDialogProps) => {
             propertyMigPatch.allowed_values?.type === 'list' && (
               <Stack direction="column" spacing={1}>
                 <FormProvider {...formMethodsMigPatch}>
-                  <AllowedValuesListTextFields property={selectedProperty} />
+                  <AllowedValuesListTextFields
+                    name="allowed_values"
+                    lockedPlacementIds={lockedPlacementIds}
+                  />
                 </FormProvider>
               </Stack>
             )}
@@ -562,7 +575,9 @@ const PropertyDialog = (props: PropertyDialogProps) => {
             typeAdd !== CatalogueCategoryPropertyType.Boolean && (
               <Stack direction="column" spacing={1}>
                 <FormProvider {...formMethodsAdd}>
-                  <AllowedValuesListTextFields propertyIndex={index} />
+                  <AllowedValuesListTextFields
+                    name={`properties.${index}.allowed_values`}
+                  />
                 </FormProvider>
               </Stack>
             )}
