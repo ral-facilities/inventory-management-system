@@ -576,6 +576,9 @@ const PropertyDialog = (props: PropertyDialogProps) => {
                   render={({ field: { value: defaultValue, onChange } }) => (
                     <Autocomplete
                       disableClearable={propertyMigPost.mandatory === 'true'}
+                      slotProps={{
+                        clearIndicator: { onClick: resetDefaultValue },
+                      }}
                       id={crypto.randomUUID()}
                       value={defaultValue?.value || ''}
                       onChange={(_event, newValue) => {
