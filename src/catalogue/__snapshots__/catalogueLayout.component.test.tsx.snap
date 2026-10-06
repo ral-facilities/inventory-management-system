@@ -117,7 +117,7 @@ exports[`Catalogue Layout > renders a catalogue categories page correctly 1`] = 
       </div>
     </div>
     <div
-      class="MuiBox-root css-4akqf1"
+      class="MuiBox-root css-og34p2"
     />
   </div>
 </DocumentFragment>
@@ -308,7 +308,7 @@ exports[`Catalogue Layout > renders a catalogue items landing page correctly 1`]
       </div>
     </div>
     <div
-      class="MuiBox-root css-4akqf1"
+      class="MuiBox-root css-og34p2"
     />
   </div>
 </DocumentFragment>
@@ -465,7 +465,7 @@ exports[`Catalogue Layout > renders a catalogue items page correctly 1`] = `
       </div>
     </div>
     <div
-      class="MuiBox-root css-4akqf1"
+      class="MuiBox-root css-og34p2"
     />
   </div>
 </DocumentFragment>
@@ -552,7 +552,7 @@ exports[`Catalogue Layout > renders catalogue home page correctly 1`] = `
       </div>
     </div>
     <div
-      class="MuiBox-root css-4akqf1"
+      class="MuiBox-root css-og34p2"
     />
   </div>
 </DocumentFragment>
@@ -811,7 +811,7 @@ exports[`Catalogue Layout > renders the item landing page page correctly 1`] = `
       </div>
     </div>
     <div
-      class="MuiBox-root css-4akqf1"
+      class="MuiBox-root css-og34p2"
     />
   </div>
 </DocumentFragment>
@@ -1036,7 +1036,7 @@ exports[`Catalogue Layout > renders the items page correctly 1`] = `
       </div>
     </div>
     <div
-      class="MuiBox-root css-4akqf1"
+      class="MuiBox-root css-og34p2"
     />
   </div>
 </DocumentFragment>
@@ -1135,7 +1135,7 @@ exports[`Catalogue Layout Error Component > renders catalogue error page correct
       </div>
     </div>
     <div
-      class="MuiBox-root css-4akqf1"
+      class="MuiBox-root css-og34p2"
     >
       <div>
         <div

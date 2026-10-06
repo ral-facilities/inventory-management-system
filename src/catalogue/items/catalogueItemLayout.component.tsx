@@ -37,7 +37,7 @@ function CatalogueItemLayout() {
   const subtitle = getPageSubtitle();
 
   return (
-    <Box sx={{ ...FLEX_CONTAINER_PROPS, overflow: 'scroll' }}>
+    <Box sx={{ ...FLEX_CONTAINER_PROPS, overflow: 'auto' }}>
       <Box
         sx={{
           display: 'flex',
