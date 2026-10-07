@@ -1461,7 +1461,14 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  liters per second
+                  <p
+                    aria-label="liters per second"
+                    class="MuiTypography-root MuiTypography-body1 css-7l715a-MuiTypography-root"
+                    data-mui-internal-clone-element="true"
+                    role="tooltip"
+                  >
+                    liters per second
+                  </p>
                 </div>
               </td>
               <td
@@ -1559,7 +1566,14 @@ exports[`CatalogueItemPropertiesTable > renders table correctly (not editing pro
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
-                  millibar
+                  <p
+                    aria-label="millibar"
+                    class="MuiTypography-root MuiTypography-body1 css-7l715a-MuiTypography-root"
+                    data-mui-internal-clone-element="true"
+                    role="tooltip"
+                  >
+                    millibar
+                  </p>
                 </div>
               </td>
               <td

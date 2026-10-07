@@ -309,6 +309,22 @@ describe('Catalogue Category', () => {
     });
   });
 
+  it('clears the selected catalogue category when user cancels out of the delete dialog ', () => {
+    cy.findAllByRole('button', {
+      name: 'Card Actions',
+    })
+      .eq(0)
+      .click();
+
+    cy.findByRole('menuitem', {
+      name: 'delete Beam Characterization catalogue category button',
+    }).click();
+    cy.findByRole('button', { name: 'Cancel' }).click();
+
+    cy.findByRole('button', { name: 'Add Catalogue Category' }).click();
+    cy.findByDisplayValue('Beam Characterization').should('not.exist');
+  });
+
   it('adds a catalogue category where isLeaf is true', () => {
     cy.findByRole('button', { name: 'Add Catalogue Category' }).click();
     cy.findByLabelText('Name *').type('test');
@@ -1018,6 +1034,7 @@ describe('Catalogue Category', () => {
       );
     });
   });
+
   it('add a new property (type number)', () => {
     cy.visit('/catalogue/10');
 
@@ -1194,6 +1211,66 @@ describe('Catalogue Category', () => {
           mandatory: true,
           allowed_values: { type: 'list', values: ['10', '11'] },
           default_value: '11',
+        })
+      );
+    });
+  });
+
+  it('add a new property (type string and with allowed values and default value null )', () => {
+    cy.visit('/catalogue/10');
+
+    cy.findAllByRole('button', {
+      name: 'Card Actions',
+    })
+      .eq(1)
+      .click();
+
+    cy.findByRole('menuitem', {
+      name: 'edit Dry Vacuum Pumps catalogue category button',
+    }).click();
+
+    cy.findByText('Add Property').click();
+
+    cy.findByLabelText('Property Name *').type('test 1');
+
+    cy.findByLabelText('Select Allowed values *').click();
+    cy.findByRole('option', { name: 'List' }).click();
+
+    cy.findByRole('button', { name: 'Add list item' }).click();
+    cy.findAllByLabelText('List item').eq(0).type('10');
+
+    cy.findByRole('button', { name: 'Add list item' }).click();
+    cy.findAllByLabelText('List item').eq(1).type('11');
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('checkbox', {
+      name: 'Confirm understanding and proceed checkbox',
+    }).click();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findByText('Add Property').should('have.length', 1);
+
+    // Active waiting (test column filters) for the patch request below
+    cy.findAllByLabelText('Filter by Name').last().type('Axis');
+    cy.findByRole('button', { name: 'Clear Filters' }).should('exist');
+    cy.findByRole('button', { name: 'Clear Filters' }).should(
+      'be.not.disabled'
+    );
+
+    cy.findBrowserMockedRequests({
+      method: 'POST',
+      url: '/v1/catalogue-categories/:catalogue_category_id/properties',
+    }).should(async (patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      const request = patchRequests[0];
+      expect(JSON.stringify(await request.json())).equal(
+        JSON.stringify({
+          name: 'test 1',
+          type: 'string',
+          mandatory: false,
+          allowed_values: { type: 'list', values: ['10', '11'] },
         })
       );
     });
@@ -1384,6 +1461,15 @@ describe('Catalogue Category', () => {
 
     cy.findAllByLabelText('Row Actions').last().click();
     cy.findByLabelText('Edit property Axis').click();
+
+    cy.findByRole('dialog', { name: 'Edit Property' }).within(() => {
+      cy.findByDisplayValue('Text').should('exist');
+      cy.findByDisplayValue('List').should('exist');
+      cy.findByDisplayValue('y').should('exist');
+      cy.findByDisplayValue('x').should('exist');
+      cy.findByDisplayValue('z').should('exist');
+      cy.findByDisplayValue('No').should('exist');
+    });
 
     cy.findByLabelText('Property Name *').clear();
     cy.findByLabelText('Property Name *').type('test 1');
