@@ -348,6 +348,18 @@ describe('Add manufacturer dialog', () => {
           "There have been no changes made. Please change a field's value or press Cancel to exit."
         )
       ).toBeInTheDocument();
+      expect(onClose).not.toHaveBeenCalled();
+      modifyManufacturerValues({
+        name: 'test',
+      });
+
+      await waitFor(() =>
+        expect(
+          screen.queryByText(
+            "There have been no changes made. Please change a field's value or press Cancel to exit."
+          )
+        ).not.toBeInTheDocument()
+      );
     });
 
     it('Invalid url displays correct error message', async () => {

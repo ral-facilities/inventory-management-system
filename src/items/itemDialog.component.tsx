@@ -71,6 +71,7 @@ import handleTransferState from '../handleTransferState';
 import { useAppSelector } from '../state/hook';
 import { selectSettings } from '../state/slices/configSlice';
 import { SystemsTableView } from '../systems/systemsTableView.component';
+import { createFormControlWithRootErrorClearing } from '../utils';
 import { sortDataList } from '../utils.tsx';
 import Breadcrumbs from '../view/breadcrumbs.component';
 
@@ -149,6 +150,15 @@ const dateErrorMessageHandler = (props: {
       return '';
   }
 };
+
+const formControlPropertiesStep =
+  createFormControlWithRootErrorClearing<PropertiesStep>();
+
+const formControlDetailsStep =
+  createFormControlWithRootErrorClearing<ItemDetailsStep>({
+    customCallback: () =>
+      formControlPropertiesStep.clearErrors('root.formError'),
+  });
 
 export interface ItemDialogProps {
   open: boolean;
@@ -241,6 +251,7 @@ function ItemDialog(props: ItemDialogProps) {
     useGetSystemsBreadcrumbs(parentSystemId);
 
   const ItemDetailsStepFormMethods = useForm<ItemDetailsStep>({
+    formControl: formControlDetailsStep,
     resolver: zodResolver(
       ItemDetailsStepSchema(requestType, isAdminMode && parentSystemId !== null)
     ),
@@ -263,6 +274,7 @@ function ItemDialog(props: ItemDialogProps) {
   } = ItemDetailsStepFormMethods;
 
   const itemPropertiesStepFormMethods = useForm<PropertiesStep>({
+    formControl: formControlPropertiesStep,
     resolver: zodResolver(PropertiesStepSchema),
     defaultValues: {
       properties: convertToPropertyValueList(
@@ -279,7 +291,6 @@ function ItemDialog(props: ItemDialogProps) {
     control: controlPropertiesStep,
     clearErrors: clearErrorsPropertiesStep,
     reset: resetPropertiesStep,
-    watch: watchPropertiesStep,
     setError: setErrorPropertiesStep,
   } = itemPropertiesStepFormMethods;
 
@@ -348,13 +359,6 @@ function ItemDialog(props: ItemDialogProps) {
     );
     return () => subscription.unsubscribe();
   }, [clearErrorsPropertiesStep, watchDetailsStep]);
-
-  React.useEffect(() => {
-    const subscription = watchPropertiesStep(() =>
-      clearErrorsPropertiesStep('root.formError')
-    );
-    return () => subscription.unsubscribe();
-  }, [clearErrorsPropertiesStep, watchPropertiesStep]);
 
   React.useEffect(() => {
     if (parentSystemId !== selectedItem?.system_id) {
