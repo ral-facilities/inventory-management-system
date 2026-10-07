@@ -2,12 +2,14 @@
 
 exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
 <DocumentFragment>
-  <div>
+  <div
+    style="height: 100%;"
+  >
     <div
-      class="MuiBox-root css-123hto"
+      class="MuiBox-root css-ep5mx3"
     >
       <div
-        class="MuiStack-root css-un2tl4-MuiStack-root"
+        class="MuiStack-root css-78oguy-MuiStack-root"
       >
         <div
           class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-th9pv0-MuiPaper-root"
