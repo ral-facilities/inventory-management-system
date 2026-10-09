@@ -191,6 +191,8 @@ describe('ItemDialog', () => {
 
       const continueButton = screen.getByRole('button', { name: 'Continue' });
       await user.click(continueButton);
+
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(continueButton).toBeDisabled();
@@ -278,6 +280,7 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Continue' }));
 
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
@@ -299,7 +302,7 @@ describe('ItemDialog', () => {
         system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
         usage_status_id: '0',
         warranty_end_date: null,
-        modified_comment: null,
+        modified_comment: 'A test comment',
       });
     });
 
@@ -323,6 +326,7 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Continue' }));
 
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
@@ -344,7 +348,7 @@ describe('ItemDialog', () => {
         system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
         usage_status_id: '0',
         warranty_end_date: null,
-        modified_comment: null,
+        modified_comment: 'A test comment',
       });
     });
 
@@ -369,6 +373,7 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Continue' }));
 
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       for (let i = 0; i < 2; i++) {
@@ -409,7 +414,7 @@ describe('ItemDialog', () => {
           system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
           usage_status_id: '0',
           warranty_end_date: null,
-          modified_comment: null,
+          modified_comment: 'A test comment',
         });
       }
     }, 10000);
@@ -524,6 +529,7 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Continue' }));
 
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
@@ -545,7 +551,7 @@ describe('ItemDialog', () => {
         system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
         usage_status_id: '0',
         warranty_end_date: null,
-        modified_comment: null,
+        modified_comment: 'A test comment',
       });
     });
 
@@ -580,7 +586,7 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Continue' }));
 
-      await user.type(screen.getByLabelText('Comment'), 'A test comment');
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
 
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
@@ -847,6 +853,7 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Continue' }));
 
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
@@ -868,7 +875,7 @@ describe('ItemDialog', () => {
         system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
         usage_status_id: '0',
         warranty_end_date: '2035-02-17T00:00:00.000Z',
-        modified_comment: null,
+        modified_comment: 'A test comment',
       });
     }, 10000);
 
@@ -889,6 +896,8 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
       await user.click(screen.getByRole('button', { name: 'Continue' }));
+
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
@@ -910,7 +919,7 @@ describe('ItemDialog', () => {
         system_id: '65328f34a40ff5301575a4e3',
         usage_status_id: '1',
         warranty_end_date: null,
-        modified_comment: null,
+        modified_comment: 'A test comment',
       });
     }, 10000);
 
@@ -1200,6 +1209,8 @@ describe('ItemDialog', () => {
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       await user.click(screen.getByRole('button', { name: 'Continue' }));
+
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
       await user.click(screen.getByRole('button', { name: 'Submit' }));
       expect(handleIMS_APIError).toHaveBeenCalled();
       expect(onClose).not.toHaveBeenCalled();
@@ -1230,6 +1241,8 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
       await user.click(screen.getByRole('button', { name: 'Continue' }));
+
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
@@ -1251,7 +1264,7 @@ describe('ItemDialog', () => {
         system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
         usage_status_id: '0',
         warranty_end_date: '2023-05-18T23:00:00.000Z',
-        modified_comment: null,
+        modified_comment: 'A test comment',
       });
     }, 10000);
 
@@ -1283,6 +1296,8 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
       await user.click(screen.getByRole('button', { name: 'Continue' }));
+
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
@@ -1304,7 +1319,7 @@ describe('ItemDialog', () => {
         system_id: '657f8c3b2a1b4e5d8f9b3c4e5',
         usage_status_id: '0',
         warranty_end_date: '2023-05-18T23:00:00.000Z',
-        modified_comment: null,
+        modified_comment: 'A test comment',
       });
     }, 10000);
 
@@ -1426,6 +1441,8 @@ describe('ItemDialog', () => {
 
       const continueButton = screen.getByRole('button', { name: 'Continue' });
       await user.click(continueButton);
+
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(continueButton).toBeDisabled();
@@ -1457,11 +1474,13 @@ describe('ItemDialog', () => {
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       await user.click(screen.getByRole('button', { name: 'Continue' }));
+
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
         system_id: '65328f34a40ff5301575a4e3',
-        modified_comment: null,
+        modified_comment: 'A test comment',
       });
     }, 10000);
 
@@ -1481,12 +1500,14 @@ describe('ItemDialog', () => {
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       await user.click(screen.getByRole('button', { name: 'Continue' }));
+
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
         system_id: '657f8c3b2a1b4e5d8f9b3c4e8',
         usage_status_id: '3',
-        modified_comment: null,
+        modified_comment: 'A test comment',
       });
     });
 
@@ -1536,7 +1557,7 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Continue' }));
 
-      await user.type(screen.getByLabelText('Comment'), 'A test comment');
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
 
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
@@ -1602,7 +1623,7 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Continue' }));
 
-      await user.type(screen.getByLabelText('Comment'), 'A test comment');
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
 
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
@@ -1652,6 +1673,8 @@ describe('ItemDialog', () => {
       await user.type(axisAutocomplete, 'z{arrowdown}{enter}');
 
       await user.click(screen.getByRole('button', { name: 'Continue' }));
+
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
       await user.click(screen.getByRole('button', { name: 'Submit' }));
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
         properties: [
@@ -1662,7 +1685,7 @@ describe('ItemDialog', () => {
             value: 'z',
           },
         ],
-        modified_comment: null,
+        modified_comment: 'A test comment',
       });
     });
 
@@ -1690,6 +1713,8 @@ describe('ItemDialog', () => {
       await user.type(axisAutocomplete, 'N{enter}');
 
       await user.click(screen.getByRole('button', { name: 'Continue' }));
+
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
       await user.click(screen.getByRole('button', { name: 'Submit' }));
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
         properties: [
@@ -1700,7 +1725,7 @@ describe('ItemDialog', () => {
             value: null,
           },
         ],
-        modified_comment: null,
+        modified_comment: 'A test comment',
       });
     });
 
@@ -1753,6 +1778,8 @@ describe('ItemDialog', () => {
       await user.click(screen.getByRole('button', { name: 'Next' }));
       await user.click(screen.getByRole('button', { name: 'Next' }));
       await user.click(screen.getByRole('button', { name: 'Continue' }));
+
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       await waitFor(() => {
@@ -1773,6 +1800,8 @@ describe('ItemDialog', () => {
       });
       await user.click(screen.getByRole('button', { name: 'Next' }));
       await user.click(screen.getByRole('button', { name: 'Continue' }));
+
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(handleIMS_APIError).toHaveBeenCalled();

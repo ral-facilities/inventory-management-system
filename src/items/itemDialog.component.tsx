@@ -1461,6 +1461,9 @@ function ItemDialog(props: ItemDialogProps) {
           handleFinish(event, true);
         }}
         onChange={registerDetailsStep('modified_comment')}
+        onCancel={() => {
+          setHistoryCommentDialog(false);
+        }}
         action={requestType === 'post' || duplicate ? 'adding' : 'editing'}
         entityTypeName={'Item'}
       />

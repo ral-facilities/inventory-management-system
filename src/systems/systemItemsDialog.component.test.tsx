@@ -318,7 +318,7 @@ describe('SystemItemsDialog', () => {
       await user.click(screen.getByRole('button', { name: 'Move here' }));
 
       // comments dialog
-      await user.type(screen.getByLabelText('Comment'), 'A test comment');
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/KvT2Ox7n', {
@@ -363,15 +363,18 @@ describe('SystemItemsDialog', () => {
       ).toBeInTheDocument();
 
       await user.click(screen.getByRole('button', { name: 'Move here' }));
+
+      // comments dialog
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/KvT2Ox7n', {
         system_id: '656da8ef9cba7a76c6f81a5d',
-        modified_comment: null,
+        modified_comment: 'A test comment',
       });
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
         system_id: '656da8ef9cba7a76c6f81a5d',
-        modified_comment: null,
+        modified_comment: 'A test comment',
       });
 
       expect(mockOnClose).toHaveBeenCalled();
@@ -431,17 +434,20 @@ describe('SystemItemsDialog', () => {
       expect(screen.getAllByRole('combobox')[3]).toHaveValue('In Use');
 
       await user.click(screen.getByRole('button', { name: 'Continue' }));
+
+      // comments dialog
+      await user.type(screen.getByLabelText('Comment *'), 'A test comment');
       await user.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/KvT2Ox7n', {
         system_id: '65328f34a40ff5301575a4e3',
         usage_status_id: '1',
-        modified_comment: null,
+        modified_comment: 'A test comment',
       });
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
         system_id: '65328f34a40ff5301575a4e3',
         usage_status_id: '1',
-        modified_comment: null,
+        modified_comment: 'A test comment',
       });
 
       expect(mockOnClose).toHaveBeenCalled();
