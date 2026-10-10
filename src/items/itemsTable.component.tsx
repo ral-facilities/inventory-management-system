@@ -82,8 +82,6 @@ export function ItemsTable(props: ItemTableProps) {
 
   const { isAdminMode } = useAppSelector(selectAuthorisation);
 
-  const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
-
   const noResultsText =
     'No results found: Try adding an item by using the Add Item button on the top left of your screen';
   const { data: itemsData, isLoading: isLoadingItems } = useGetItems(
@@ -114,37 +112,35 @@ export function ItemsTable(props: ItemTableProps) {
     itemsData?.map((item) => item.system_id) ?? []
   );
 
-  let isLoading =
-    isLoadingItems || isLoadingSystemTypes || isLoadingUsageStatus;
-  const systemList: (System | undefined)[] = useGetSystemIds(
-    Array.from(systemIdSet.values())
-  ).map((query) => {
-    isLoading = isLoading || query.isLoading;
-    return query.data;
-  });
+  const systemQueries = useGetSystemIds(Array.from(systemIdSet.values()));
+  const systemList: (System | undefined)[] = systemQueries.map(
+    (query) => query.data
+  );
+  const isLoading =
+    isLoadingItems ||
+    isLoadingSystemTypes ||
+    isLoadingUsageStatus ||
+    systemQueries.some((query) => query.isLoading);
 
   //Once loading finished - use same logic as catalogueItemsTable to pair up data
-  React.useEffect(() => {
-    if (!isLoading && itemsData) {
-      setTableRows(
-        itemsData.map((itemData) => {
-          const system = systemList?.find(
-            (system) => system?.id === itemData.system_id
-          );
-          return {
-            item: itemData,
-            system: system
-              ? {
-                  ...system,
-                  type: systemTypesData?.find(
-                    (type) => type.id === system.type_id
-                  ),
-                }
-              : undefined,
-          };
-        })
-      );
+  const tableRows = React.useMemo<TableRowData[]>(() => {
+    if (isLoading || !itemsData) {
+      return [];
     }
+    return itemsData.map((itemData) => {
+      const system = systemList?.find(
+        (system) => system?.id === itemData.system_id
+      );
+      return {
+        item: itemData,
+        system: system
+          ? {
+              ...system,
+              type: systemTypesData?.find((type) => type.id === system.type_id),
+            }
+          : undefined,
+      };
+    });
     //Purposefully leave out systemList from dependencies for same reasons as catalogueItemsTable
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [itemsData, isLoading]);

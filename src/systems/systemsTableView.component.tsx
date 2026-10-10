@@ -81,17 +81,15 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
   const isSparesDefinitionDefined = !!apiSettings.spares;
 
   const isLoading = systemsDataLoading || systemTypesLoading;
-  const [tableRows, setTableRows] = React.useState<SystemTableType[]>([]);
 
-  React.useEffect(() => {
-    if (!isLoading && systemsData) {
-      setTableRows(
-        systemsData.map((system) => ({
-          ...system,
-          type: systemTypesData?.find((type) => type.id === system.type_id),
-        }))
-      );
-    }
+  const tableRows = React.useMemo<SystemTableType[]>(() => {
+    if (isLoading || !systemsData) return [];
+
+    return systemsData.map((system) => ({
+      ...system,
+
+      type: systemTypesData?.find((type) => type.id === system.type_id),
+    }));
     //Purposefully leave out systemTypesList from dependencies for same reasons as catalogueItemsTable
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [systemsData, isLoading]);

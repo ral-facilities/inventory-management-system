@@ -43,6 +43,7 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
     props.parentSystemId
   );
   React.useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setParentSystemId(props.parentSystemId);
   }, [props.parentSystemId]);
 

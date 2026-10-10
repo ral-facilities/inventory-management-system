@@ -233,6 +233,7 @@ function CatalogueCardView() {
       );
 
       // Update the state with the updated category, triggering a re-render of the dialog
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSelectedCatalogueCategory(updatedCategory);
     }
     // Dependencies for this effect: it will re-run when either catalogueCategoryData or selectedCatalogueCategory changes

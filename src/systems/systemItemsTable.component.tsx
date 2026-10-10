@@ -118,7 +118,6 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
   const { isAdminMode } = useAppSelector(selectAuthorisation);
 
   // States
-  const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
   const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
     {}
   );
@@ -144,7 +143,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
   const { isCriticalMode } = useAppSelector(selectCriticality);
 
   const apiSettings = React.useContext(APISettingsContext);
-  const sparesFilterState = apiSettings?.spares?.sparesFilterState;
+  const sparesFilterState = apiSettings.spares?.sparesFilterState;
   const isSparesDefinitionDefined = !!apiSettings.spares;
 
   // Obtain the selected system data, not just the selection state
@@ -158,34 +157,32 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       new Set<string>(itemsData?.map((item) => item.catalogue_item_id) ?? []),
     [itemsData]
   );
-  let isLoading = isLoadingItems || isLoadingUsageStatuses;
-
+  const catalogueItemQueries = useGetCatalogueItemIds(
+    Array.from(catalogueItemIdSet.values())
+  );
   const catalogueItemList: (CatalogueItem | undefined)[] =
-    useGetCatalogueItemIds(Array.from(catalogueItemIdSet.values())).map(
-      (query) => {
-        isLoading = isLoading || query.isLoading;
-        return query.data;
-      }
-    );
+    catalogueItemQueries.map((query) => query.data);
+  const isLoading =
+    isLoadingItems ||
+    isLoadingUsageStatuses ||
+    catalogueItemQueries.some((query) => query.isLoading);
 
   // Once loading has finished - pair up all data for the table rows
   // If performance becomes a problem with this should remove find and fetch catalogue
   // item for each item/implement a fullDetails or something in backend
-  React.useEffect(() => {
-    if (!isLoading && itemsData) {
-      setTableRows(
-        itemsData.map(
-          (itemData) =>
-            ({
-              item: itemData,
-              catalogueItem: catalogueItemList?.find(
-                (catalogueItem) =>
-                  catalogueItem?.id === itemData.catalogue_item_id
-              ),
-            }) as TableRowData
-        )
-      );
+  const tableRows = React.useMemo<TableRowData[]>(() => {
+    if (isLoading || !itemsData) {
+      return [];
     }
+    return itemsData.map(
+      (itemData) =>
+        ({
+          item: itemData,
+          catalogueItem: catalogueItemList?.find(
+            (catalogueItem) => catalogueItem?.id === itemData.catalogue_item_id
+          ),
+        }) as TableRowData
+    );
     // Purposefully leave out catalogueItemList - this will never be the same due
     // to the reference changing so instead am relying on isLoading to have changed to
     // false and then back to true again for any re-fetches that occur - only
@@ -361,7 +358,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
               }) => (
                 <SparesColumnHeaderInformationTooltip
                   title={column.columnDef.header}
-                  sparesDefinition={apiSettings?.spares?.sparesDefinition}
+                  sparesDefinition={apiSettings.spares?.sparesDefinition}
                 />
               ),
               TableHeaderOverflowTip,
@@ -531,7 +528,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       },
     ];
   }, [
-    apiSettings?.spares?.sparesDefinition,
+    apiSettings.spares?.sparesDefinition,
     isSparesDefinitionDefined,
     sparesFilterState,
     usageStatusData,

@@ -93,6 +93,7 @@ const ObsoleteCatalogueItemDialog = (
       setCatalogueCurrDirId(catalogueItem.catalogue_category_id);
   }, [catalogueItem, catalogueItemObsoleteData]);
   React.useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setDefaultCatalogueCurrDirId();
   }, [setDefaultCatalogueCurrDirId]);
 
@@ -110,6 +111,7 @@ const ObsoleteCatalogueItemDialog = (
   // Reset when a new item is selected
   React.useEffect(() => {
     if (catalogueItem)
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       handleObsoleteDetailChanged(catalogueItem as ObsoleteDetails);
   }, [catalogueItem, handleObsoleteDetailChanged]);
 

@@ -59,6 +59,7 @@ const CatalogueItemDirectoryDialog = (
   );
 
   React.useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setParentCategoryId(props.parentCategoryId);
   }, [props.parentCategoryId]);
 
@@ -78,6 +79,7 @@ const CatalogueItemDirectoryDialog = (
 
   // reset error message when catalogue category id changes
   React.useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setErrorMessage(undefined);
   }, [parentCategoryId]);
 

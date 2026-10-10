@@ -44,21 +44,18 @@ function SystemTypes() {
   const apiSettings = React.useContext(APISettingsContext);
   const sparesDefinition = apiSettings?.spares?.sparesDefinition;
 
-  const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
-
   const isLoading = isLoadingSystemTypes;
   //Once loading finished - use same logic as catalogueItemsTable to pair up data
-  React.useEffect(() => {
-    if (!isLoading && systemTypesData) {
-      setTableRows(
-        systemTypesData.map((type) => ({
-          ...type,
-          isSpare: !sparesDefinition
-            ? false
-            : sparesDefinition.system_types.some((def) => def.id === type.id),
-        }))
-      );
+  const tableRows = React.useMemo<TableRowData[]>(() => {
+    if (isLoading || !systemTypesData) {
+      return [];
     }
+    return systemTypesData.map((type) => ({
+      ...type,
+      isSpare: !sparesDefinition
+        ? false
+        : sparesDefinition.system_types.some((def) => def.id === type.id),
+    }));
   }, [systemTypesData, isLoading, sparesDefinition]);
 
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {

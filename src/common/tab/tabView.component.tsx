@@ -38,20 +38,12 @@ function TabView<T extends string>(props: TabViewProps<T>) {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const urlTabValue =
+  // The tab value is derived from the url so it stays in sync with navigation
+  const tabValue: T | AdditionalTabValues =
     (searchParams.get('tab') as T | AdditionalTabValues) || defaultTab;
-  const [tabValue, setTabValue] = React.useState<T | AdditionalTabValues>(
-    urlTabValue
-  );
-
-  React.useEffect(() => {
-    setTabValue(urlTabValue);
-  }, [urlTabValue]);
 
   const handleTabChange = React.useCallback(
     (_event: React.SyntheticEvent, newValue: T) => {
-      setTabValue(newValue);
-
       const updatedParams = new URLSearchParams(searchParams);
 
       if (newValue === defaultTab) {

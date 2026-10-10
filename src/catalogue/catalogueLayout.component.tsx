@@ -97,21 +97,22 @@ function CatalogueLayout() {
 
   const { data: item } = useGetItem(itemId);
 
-  const [catalogueBreadcrumbs, setCatalogueBreadcrumbs] = React.useState<
-    BreadcrumbsInfo | undefined
-  >(breadcrumbs);
-  React.useEffect(() => {
-    if (breadcrumbs) {
-      const catalogueItemBreadcrumbTrail: BreadcrumbsInfo['trail'] =
-        breadcrumbs.trail.map((breadcrumb) => {
-          if (breadcrumb[0] === catalogueCategory?.id) {
-            return [`${breadcrumb[0]}/items`, breadcrumb[1]];
-          }
-          return breadcrumb;
-        });
-      setCatalogueBreadcrumbs({
-        ...breadcrumbs,
-        trail: [
+  const catalogueBreadcrumbs = React.useMemo<BreadcrumbsInfo | undefined>(() => {
+    if (!breadcrumbs) {
+      return undefined;
+    }
+
+    const catalogueItemBreadcrumbTrail: BreadcrumbsInfo['trail'] =
+      breadcrumbs.trail.map((breadcrumb) => {
+        if (breadcrumb[0] === catalogueCategory?.id) {
+          return [`${breadcrumb[0]}/items`, breadcrumb[1]];
+        }
+        return breadcrumb;
+      });
+
+    return {
+      ...breadcrumbs,
+      trail: [
           // Catalogue categories
           ...(lastSegmentOfCataloguePath === catalogueCategory?.id &&
           !catalogueCategory?.is_leaf
@@ -165,11 +166,8 @@ function CatalogueLayout() {
                 ],
               ]
             : []) satisfies BreadcrumbsInfo['trail']),
-        ],
-      });
-    } else {
-      setCatalogueBreadcrumbs(undefined);
-    }
+      ],
+    };
   }, [
     breadcrumbs,
     catalogueCategory,
