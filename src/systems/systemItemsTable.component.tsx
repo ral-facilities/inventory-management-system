@@ -5,7 +5,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   Box,
-  Button,
   Divider,
   ListItemIcon,
   ListItemText,
@@ -69,38 +68,76 @@ import {
   roundUpTenth,
 } from '../utils';
 import SystemItemsDialog from './systemItemsDialog.component';
+import { TableActionMenu } from '../common/tableActionMenu.tsx';
 
-const MoveItemsButton = (props: {
-  selectedItems: Item[];
-  system: System;
-  onChangeSelectedItems: (selectedItems: MRT_RowSelectionState) => void;
+const SystemItemsTableActionMenu = (props: {
   isAdminMode: boolean;
+  system: System | undefined;
+  selectedItems: Item[];
+  onChangeSelectedItems: (selectedItems: MRT_RowSelectionState) => void;
+  filtersEnabled: boolean;
+  onClearFiltersClick: () => void;
 }) => {
+  const {
+    isAdminMode,
+    system,
+    selectedItems,
+    onChangeSelectedItems,
+    filtersEnabled,
+    onClearFiltersClick
+  } = props;
+
   const [moveItemsDialogOpen, setMoveItemsDialogOpen] =
+    React.useState<boolean>(false);
+  const [isDialogAdminMode, setDialogAdminMode] =
     React.useState<boolean>(false);
 
   return (
     <>
-      <Button
-        startIcon={<DriveFileMoveOutlinedIcon />}
-        sx={{ mx: 0.5 }}
-        variant="outlined"
-        disabled={props.selectedItems.length === 0}
-        onClick={() => setMoveItemsDialogOpen(true)}
-      >
-        {`Move to ${props.isAdminMode ? 'as Admin' : ''}`}
-      </Button>
-      <SystemItemsDialog
-        open={moveItemsDialogOpen}
-        onClose={() => setMoveItemsDialogOpen(false)}
-        selectedItems={props.selectedItems}
-        onChangeSelectedItems={props.onChangeSelectedItems}
-        parentSystemId={props.system.id}
-        isAdminMode={props.isAdminMode}
+      <TableActionMenu
+        ariaLabelPrefix="system items"
+        items={[
+          {
+            label: 'Clear Filters',
+            icon: <ClearIcon />,
+            onClick: onClearFiltersClick,
+            isDisabled: !filtersEnabled,
+          },
+          ...(system ? [
+            {
+              label: 'Move to',
+              icon: <DriveFileMoveOutlinedIcon />,
+              onClick: () => {
+                setDialogAdminMode(false);
+                setMoveItemsDialogOpen(true);
+              },
+              isDisabled: selectedItems.length === 0,
+            },
+            ...(isAdminMode ? [{
+              label: 'Move to as Admin',
+              icon: <DriveFileMoveOutlinedIcon />,
+              onClick: () => {
+                setDialogAdminMode(true);
+                setMoveItemsDialogOpen(true);
+              },
+              isDisabled: selectedItems.length === 0,
+            }]: [])
+          ]: [])
+        ]}
       />
+      {system && (
+        <SystemItemsDialog
+          open={moveItemsDialogOpen}
+          onClose={() => setMoveItemsDialogOpen(false)}
+          selectedItems={selectedItems}
+          onChangeSelectedItems={onChangeSelectedItems}
+          parentSystemId={system.id}
+          isAdminMode={isDialogAdminMode}
+        />
+      )}
     </>
   );
-};
+}
 
 /* Each table row needs the item and catalogue item */
 interface TableRowData {
@@ -709,37 +746,14 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       );
     },
     renderTopToolbarCustomActions: ({ table }) => (
-      <Box sx={{ display: 'flex' }}>
-        <Button
-          startIcon={<ClearIcon />}
-          sx={{ mx: 0.5 }}
-          variant="outlined"
-          disabled={preservedState.columnFilters.length === 0}
-          onClick={() => {
-            table.resetColumnFilters();
-          }}
-        >
-          Clear Filters
-        </Button>
-        {system && (
-          <>
-            <MoveItemsButton
-              selectedItems={selectedItems}
-              system={system}
-              onChangeSelectedItems={setRowSelection}
-              isAdminMode={false}
-            />
-            {isAdminMode && (
-              <MoveItemsButton
-                selectedItems={selectedItems}
-                system={system}
-                onChangeSelectedItems={setRowSelection}
-                isAdminMode={true}
-              />
-            )}
-          </>
-        )}
-      </Box>
+      <SystemItemsTableActionMenu
+        isAdminMode={isAdminMode}
+        system={system}
+        selectedItems={selectedItems}
+        onChangeSelectedItems={setRowSelection}
+        filtersEnabled={preservedState.columnFilters.length > 0}
+        onClearFiltersClick={() => table.resetColumnFilters()}
+      />
     ),
     renderRowActionMenuItems: ({ closeMenu, row, table }) => {
       return [

@@ -10,7 +10,6 @@ import SaveAsIcon from '@mui/icons-material/SaveAs';
 import UploadIcon from '@mui/icons-material/Upload';
 import {
   Box,
-  Button,
   ListItemIcon,
   ListItemText,
   MenuItem,
@@ -85,6 +84,7 @@ import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import CatalogueLink from './catalogueLink.component';
 import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
 import ObsoleteCatalogueItemDialog from './obsoleteCatalogueItemDialog.component';
+import { TableActionMenu } from '../../common/tableActionMenu.tsx';
 
 export const CriticalityHeaderInfoToolTip = () => {
   const { data } = useGetInUseDefinition();
@@ -142,65 +142,96 @@ export const getCICriticalityLabel = (showFlagged: boolean | null) => {
   return 'Unable to determine if this catalogue item is critical. If the expected lifetime is "None" or 0 please update this field. Otherwise wait until this is recalculated.';
 };
 
-const MoveCatalogueItemsButton = (props: {
+const CatalogueItemsTableActionMenu = (props: {
+  dense: boolean;
+  filtersEnabled: boolean;
+  requestOrigin: 'move to' | 'obsolete' | undefined;
+  parentInfo: CatalogueCategory;
   selectedItems: CatalogueItem[];
   onChangeSelectedItems: (selectedItems: MRT_RowSelectionState) => void;
-  parentCategoryId: string | null;
-  parentInfo: CatalogueCategory;
+  onAddCatalogueItemClick: () => void;
+  onImportSpreadsheetClick: () => void;
+  onClearFiltersClick: () => void;
 }) => {
-  const [moveCatalogueItemsDialogOpen, setMoveCatalogueItemsDialogOpen] =
-    React.useState<boolean>(false);
+  const {
+    dense,
+    filtersEnabled,
+    requestOrigin,
+    parentInfo,
+    selectedItems,
+    onChangeSelectedItems,
+    onAddCatalogueItemClick,
+    onImportSpreadsheetClick,
+    onClearFiltersClick,
+  } = props;
 
-  return (
-    <>
-      <Button
-        sx={{ mx: 0.5 }}
-        variant="outlined"
-        startIcon={<DriveFileMoveOutlinedIcon />}
-        onClick={() => setMoveCatalogueItemsDialogOpen(true)}
-      >
-        Move to
-      </Button>
-      <CatalogueItemDirectoryDialog
-        open={moveCatalogueItemsDialogOpen}
-        onClose={() => setMoveCatalogueItemsDialogOpen(false)}
-        selectedItems={props.selectedItems}
-        onChangeSelectedItems={props.onChangeSelectedItems}
-        parentCategoryId={props.parentCategoryId}
-        requestType="moveTo"
-        parentInfo={props.parentInfo}
-      />
-    </>
+  const [
+    catalogueItemDirectoryDialogOpen,
+    setCatalogueItemDirectoryDialogOpen,
+  ] = React.useState<boolean>(false);
+  const [dialogType, setDialogType] = React.useState<'moveTo' | 'copyTo'>(
+    'moveTo'
   );
-};
-
-const CopyCatalogueItemsButton = (props: {
-  selectedItems: CatalogueItem[];
-  onChangeSelectedItems: (selectedItems: MRT_RowSelectionState) => void;
-  parentCategoryId: string | null;
-  parentInfo: CatalogueCategory;
-}) => {
-  const [copyCatalogueItemsDialogOpen, setCopyCatalogueItemsDialogOpen] =
-    React.useState<boolean>(false);
 
   return (
     <>
-      <Button
-        sx={{ mx: 0.5 }}
-        variant="outlined"
-        startIcon={<FolderCopyOutlinedIcon />}
-        onClick={() => setCopyCatalogueItemsDialogOpen(true)}
-      >
-        Copy to
-      </Button>
+      <TableActionMenu
+        ariaLabelPrefix="catalogue items"
+        items={[
+          {
+            label: 'Add Catalogue Item',
+            icon: <AddIcon />,
+            onClick: onAddCatalogueItemClick,
+          },
+          ...(!dense
+            ? [
+                {
+                  label: 'Import spreadsheet',
+                  icon: <UploadIcon />,
+                  onClick: onImportSpreadsheetClick,
+                },
+              ]
+            : []),
+          ...(requestOrigin === undefined
+            ? [
+                ...(selectedItems.length > 0
+                  ? [
+                      {
+                        label: 'Move to',
+                        icon: <DriveFileMoveOutlinedIcon />,
+                        onClick: () => {
+                          setDialogType('moveTo');
+                          setCatalogueItemDirectoryDialogOpen(true);
+                        },
+                      },
+                      {
+                        label: 'Copy to',
+                        icon: <FolderCopyOutlinedIcon />,
+                        onClick: () => {
+                          setDialogType('copyTo');
+                          setCatalogueItemDirectoryDialogOpen(true);
+                        },
+                      },
+                    ]
+                  : []),
+                {
+                  label: 'Clear Filters',
+                  icon: <ClearIcon />,
+                  onClick: onClearFiltersClick,
+                  isDisabled: !filtersEnabled,
+                },
+              ]
+            : []),
+        ]}
+      />
       <CatalogueItemDirectoryDialog
-        open={copyCatalogueItemsDialogOpen}
-        onClose={() => setCopyCatalogueItemsDialogOpen(false)}
-        selectedItems={props.selectedItems}
-        onChangeSelectedItems={props.onChangeSelectedItems}
-        parentCategoryId={props.parentCategoryId}
-        requestType="copyTo"
-        parentInfo={props.parentInfo}
+        open={catalogueItemDirectoryDialogOpen}
+        onClose={() => setCatalogueItemDirectoryDialogOpen(false)}
+        selectedItems={selectedItems}
+        onChangeSelectedItems={onChangeSelectedItems}
+        parentCategoryId={parentInfo.id}
+        requestType={dialogType}
+        parentInfo={parentInfo}
       />
     </>
   );
@@ -1090,65 +1121,20 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
 
     renderTopToolbarCustomActions: ({ table }) =>
       dense && requestOrigin === 'move to' ? undefined : (
-        <Box sx={{ display: 'flex' }}>
-          <Button
-            startIcon={<AddIcon />}
-            sx={{ mx: 0.5 }}
-            variant="outlined"
-            onClick={() => {
-              setItemsDialogType('create');
-              table.setCreatingRow(true);
-            }}
-          >
-            Add Catalogue Item
-          </Button>
-          {!dense && (
-            <Button
-              startIcon={<UploadIcon />}
-              sx={{ mx: 0.5 }}
-              variant="outlined"
-              onClick={() => {
-                setImportTemplateDialogOpen(true);
-              }}
-            >
-              Import spreadsheet
-            </Button>
-          )}
-          {
-            // Don't show for the move to and obsolete dialogues
-            requestOrigin === undefined && (
-              <>
-                {selectedRowIds.length > 0 && (
-                  <>
-                    <MoveCatalogueItemsButton
-                      selectedItems={selectedCatalogueItems}
-                      onChangeSelectedItems={setRowSelection}
-                      parentCategoryId={parentInfo.id}
-                      parentInfo={parentInfo}
-                    />
-                    <CopyCatalogueItemsButton
-                      selectedItems={selectedCatalogueItems}
-                      onChangeSelectedItems={setRowSelection}
-                      parentCategoryId={parentInfo.id}
-                      parentInfo={parentInfo}
-                    />
-                  </>
-                )}
-                <Button
-                  startIcon={<ClearIcon />}
-                  sx={{ mx: 0.5 }}
-                  variant="outlined"
-                  disabled={preservedState.columnFilters.length === 0}
-                  onClick={() => {
-                    table.resetColumnFilters();
-                  }}
-                >
-                  Clear Filters
-                </Button>
-              </>
-            )
-          }
-        </Box>
+        <CatalogueItemsTableActionMenu
+          dense={dense}
+          filtersEnabled={preservedState.columnFilters.length > 0}
+          requestOrigin={requestOrigin}
+          parentInfo={parentInfo}
+          selectedItems={selectedCatalogueItems}
+          onChangeSelectedItems={setRowSelection}
+          onAddCatalogueItemClick={() => {
+            setItemsDialogType('create');
+            table.setCreatingRow(true);
+          }}
+          onImportSpreadsheetClick={() => setImportTemplateDialogOpen(true)}
+          onClearFiltersClick={() => table.resetColumnFilters()}
+        />
       ),
     renderRowActionMenuItems: ({ closeMenu, row, table }) => {
       return [
