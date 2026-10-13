@@ -82,7 +82,10 @@ export const TableActionMenu = (props: TableActionMenuProps) => {
         {items.map((item, i) => (
           <MenuItem
             key={`table-action-menu-${i}`}
-            onClick={item.onClick}
+            onClick={() => {
+              handleClose();
+              item.onClick?.();
+            }}
             disabled={item.isDisabled}
           >
             <ListItemIcon>{item.icon}</ListItemIcon>
