@@ -103,10 +103,11 @@ describe('Items', () => {
 
   it('should be able to navigate back to the catalogue item landing page', () => {
     cy.findByRole('link', { name: 'Cameras 1' }).click();
-    cy.findByText('Obsolete reason').should('be.visible');
     cy.findByText(
       'High-resolution cameras for beam characterization. 1'
     ).should('be.visible');
+    cy.findByText('Obsolete reason').scrollIntoView();
+    cy.findByText('Obsolete reason').should('be.visible');
     cy.findByText('Older than five years').should('be.visible');
   });
 
@@ -900,6 +901,7 @@ describe('Items', () => {
       ).should('exist');
 
       cy.findByText('Attachments').click();
+      cy.findByText('Total Attachments: 35').scrollIntoView();
       cy.findByText('Total Attachments: 35').should('be.visible');
 
       cy.findAllByText('safety-protocols.pdf').should('have.length', 8);
