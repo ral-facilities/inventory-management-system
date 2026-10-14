@@ -366,8 +366,7 @@ function Systems() {
   const subsystemsCollapsed =
     subsystemsPanelParam !== null
       ? subsystemsPanelParam === 'hide'
-      : systemId !== null &&
-        (isSmallScreen || (!isLoading && subsystemsData?.length === 0));
+      : !isLoading && subsystemsData?.length === 0;
 
   const onChangeSubsystemsCollapsed = React.useCallback(
     (collapsed: boolean) =>
@@ -1003,13 +1002,22 @@ function Systems() {
   return (
     <>
       <Box
-        sx={{
+        sx={(theme) => ({
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'stretch',
           minHeight: MINIMUM_TABLE_HEIGHT,
-          position: 'relative',
-        }}
+
+          ...(!subsystemsCollapsed && subsystemsOverlaid
+            ? {
+                position: 'fixed',
+                zIndex: theme.zIndex.drawer - 2,
+                // Main app bar
+                top: '64px',
+                height: 'calc(100vh - 64px)',
+              }
+            : { position: 'relative' }),
+        })}
       >
         {(subsystemsCollapsed || subsystemsOverlaid) && subsystemsRail}
         {subsystemsOverlaid && (
