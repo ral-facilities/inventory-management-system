@@ -22,7 +22,8 @@ import {
 import Grid from '@mui/material/Grid2';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, Resolver, useForm } from 'react-hook-form';
+import z from 'zod';
 import {
   APIError,
   CatalogueCategory,
@@ -40,13 +41,13 @@ import {
 } from '../../api/catalogueItems';
 import { useGetManufacturers } from '../../api/manufacturers';
 import {
-  CatalogueItemDetailsStep,
   CatalogueItemDetailsStepPost,
   PropertiesStep,
   PropertyValue,
 } from '../../app.types';
 import { FORM_WITH_STEPPER_DIALOG_PROPS } from '../../common/consts';
 import {
+  CatalogueItemDetailsStepPostSchema,
   CatalogueItemDetailsStepSchema,
   PropertiesStepSchema,
   RequestType,
@@ -62,7 +63,7 @@ const RECENT_MANUFACTURER_CUTOFF_TIME = 10 * 60 * 1000;
 
 function toCatalogueItemDetailsStep(
   item: CatalogueItem | undefined
-): CatalogueItemDetailsStep {
+): z.input<typeof CatalogueItemDetailsStepPostSchema> {
   if (!item) {
     return {
       manufacturer_id: '',
@@ -133,40 +134,16 @@ export function convertToPropertyPost(
   });
 }
 
-function convertToCatalogueItemDetailsStepPost(
-  item: CatalogueItemDetailsStep
-): CatalogueItemDetailsStepPost {
-  return {
-    manufacturer_id: item.manufacturer_id,
-    name: item.name,
-    description: item.description ?? null,
-    cost_gbp: Number(item.cost_gbp), // Convert string to number
-    cost_to_rework_gbp:
-      typeof item.cost_to_rework_gbp === 'number'
-        ? Number(item.cost_to_rework_gbp)
-        : null,
-    days_to_replace: Number(item.days_to_replace),
-    days_to_rework:
-      typeof item.days_to_rework === 'number'
-        ? Number(item.days_to_rework)
-        : null,
-    expected_lifetime_days:
-      typeof item.expected_lifetime_days === 'number'
-        ? Number(item.expected_lifetime_days)
-        : null,
-    item_model_number: item.item_model_number ?? null,
-    notes: item.notes ?? null,
-  };
-}
-
 const formControlPropertiesStep =
   createFormControlWithRootErrorClearing<PropertiesStep>();
 
-const formControlDetailsStep =
-  createFormControlWithRootErrorClearing<CatalogueItemDetailsStep>({
-    customCallback: () =>
-      formControlPropertiesStep.clearErrors('root.formError'),
-  });
+const formControlDetailsStep = createFormControlWithRootErrorClearing<
+  z.input<typeof CatalogueItemDetailsStepPostSchema>,
+  undefined,
+  CatalogueItemDetailsStepPost
+>({
+  customCallback: () => formControlPropertiesStep.clearErrors('root.formError'),
+});
 
 export interface CatalogueItemsDialogProps {
   open: boolean;
@@ -192,13 +169,15 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     [parentInfo]
   );
 
-  const catalogueItemDetailsStepFormMethods = useForm<CatalogueItemDetailsStep>(
-    {
-      formControl: formControlDetailsStep,
-      resolver: zodResolver(CatalogueItemDetailsStepSchema(requestType)),
-      defaultValues: toCatalogueItemDetailsStep(selectedCatalogueItem),
-    }
-  );
+  const catalogueItemDetailsStepFormMethods = useForm<
+    z.input<typeof CatalogueItemDetailsStepPostSchema>,
+    undefined,
+    CatalogueItemDetailsStepPost
+  >({
+    formControl: formControlDetailsStep,
+    resolver: zodResolver(CatalogueItemDetailsStepSchema(requestType)),
+    defaultValues: toCatalogueItemDetailsStep(selectedCatalogueItem),
+  });
 
   const {
     handleSubmit: handleSubmitDetailsStep,
@@ -211,7 +190,17 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
   const catalogueItemPropertiesStepFormMethods = useForm<PropertiesStep>({
     formControl: formControlPropertiesStep,
-    resolver: zodResolver(PropertiesStepSchema),
+    // Zod correctly validates and discriminates the `properties` union at runtime,
+    // but TypeScript is unable to fully infer the resulting shape of complex
+    // `z.discriminatedUnion` schemas (specifically the nested `value.value` field).
+    // This causes the inferred resolver type from `zodResolver` to conflict with
+    //  the form's declared `PropertiesStep` type, even though the runtime behaviour
+    //  is correct.
+    //  We therefore explicitly assert the resolver to `Resolver<PropertiesStep>`
+    //  to bridge the gap between Zod's runtime guarantees and React Hook Form's
+    resolver: zodResolver(
+      PropertiesStepSchema
+    ) as unknown as Resolver<PropertiesStep>,
     defaultValues: {
       properties: convertToPropertyValueList(
         parentInfo,
@@ -430,7 +419,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
   const handleFinish = React.useCallback(
     async (event: React.SyntheticEvent) => {
-      let DetailsStepData: CatalogueItemDetailsStep | undefined;
+      let DetailsStepData: CatalogueItemDetailsStepPost | undefined;
       let PropertiesStepData: PropertiesStep | undefined;
 
       // Wrap the handleSubmit call for Step 1 in a promise
@@ -446,7 +435,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       if (!PropertiesStepData) return;
 
       const data: CatalogueItemPost = {
-        ...convertToCatalogueItemDetailsStepPost(DetailsStepData),
+        ...DetailsStepData,
         properties: convertToPropertyPost(PropertiesStepData.properties),
         catalogue_category_id: parentId ?? '',
         is_obsolete: false,
