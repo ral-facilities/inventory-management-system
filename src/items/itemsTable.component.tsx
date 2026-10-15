@@ -712,7 +712,8 @@ export function ItemsTable(props: ItemTableProps) {
           table.setCreatingRow(true);
         }}
         onShowSparesClick={() => {
-          sparesColumnsFilters && onPreservedStatesChange.onColumnFiltersChange(
+          if (!sparesColumnsFilters) { return }
+          onPreservedStatesChange.onColumnFiltersChange(
             sparesColumnsFilters.cF.map((filter) => ({
               id: filter.id,
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
