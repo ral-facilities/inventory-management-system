@@ -29,58 +29,62 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
             <div
               class="MuiBox-root css-k008qs"
             >
-              <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1ioyh7z-MuiButtonBase-root-MuiButton-root"
-                tabindex="0"
-                type="button"
+              <div
+                class="MuiStack-root css-2x8g68-MuiStack-root"
               >
-                <span
-                  class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1sh91j5-MuiButton-startIcon"
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1blvszr-MuiButtonBase-root-MuiButton-root"
+                  tabindex="0"
+                  type="button"
                 >
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                    data-testid="AddIcon"
-                    focusable="false"
-                    viewBox="0 0 24 24"
+                  <span
+                    class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1sh91j5-MuiButton-startIcon"
                   >
-                    <path
-                      d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"
-                    />
-                  </svg>
-                </span>
-                Add Item
-              </button>
-              <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary Mui-disabled MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1ioyh7z-MuiButtonBase-root-MuiButton-root"
-                disabled=""
-                tabindex="-1"
-                type="button"
-              >
-                <span
-                  class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1sh91j5-MuiButton-startIcon"
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                      data-testid="AddIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"
+                      />
+                    </svg>
+                  </span>
+                  Add Item
+                </button>
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1blvszr-MuiButtonBase-root-MuiButton-root"
+                  tabindex="0"
+                  type="button"
                 >
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                    data-testid="ClearIcon"
-                    focusable="false"
-                    viewBox="0 0 24 24"
+                  Show Spare Items
+                </button>
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary Mui-disabled MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1blvszr-MuiButtonBase-root-MuiButton-root"
+                  disabled=""
+                  tabindex="-1"
+                  type="button"
+                >
+                  <span
+                    class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1sh91j5-MuiButton-startIcon"
                   >
-                    <path
-                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                    />
-                  </svg>
-                </span>
-                Clear Filters
-              </button>
-              <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1ioyh7z-MuiButtonBase-root-MuiButton-root"
-                tabindex="0"
-                type="button"
-              >
-                Show Spare Items
-              </button>
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                      data-testid="ClearIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      />
+                    </svg>
+                  </span>
+                  Clear Filters
+                </button>
+              </div>
             </div>
             <div
               class="MuiBox-root css-1p0wbhh"
@@ -1703,58 +1707,62 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
             <div
               class="MuiBox-root css-k008qs"
             >
-              <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1ioyh7z-MuiButtonBase-root-MuiButton-root"
-                tabindex="0"
-                type="button"
+              <div
+                class="MuiStack-root css-2x8g68-MuiStack-root"
               >
-                <span
-                  class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1sh91j5-MuiButton-startIcon"
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1blvszr-MuiButtonBase-root-MuiButton-root"
+                  tabindex="0"
+                  type="button"
                 >
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                    data-testid="AddIcon"
-                    focusable="false"
-                    viewBox="0 0 24 24"
+                  <span
+                    class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1sh91j5-MuiButton-startIcon"
                   >
-                    <path
-                      d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"
-                    />
-                  </svg>
-                </span>
-                Add Item
-              </button>
-              <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary Mui-disabled MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1ioyh7z-MuiButtonBase-root-MuiButton-root"
-                disabled=""
-                tabindex="-1"
-                type="button"
-              >
-                <span
-                  class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1sh91j5-MuiButton-startIcon"
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                      data-testid="AddIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"
+                      />
+                    </svg>
+                  </span>
+                  Add Item
+                </button>
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1blvszr-MuiButtonBase-root-MuiButton-root"
+                  tabindex="0"
+                  type="button"
                 >
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                    data-testid="ClearIcon"
-                    focusable="false"
-                    viewBox="0 0 24 24"
+                  Show Spare Items
+                </button>
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary Mui-disabled MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1blvszr-MuiButtonBase-root-MuiButton-root"
+                  disabled=""
+                  tabindex="-1"
+                  type="button"
+                >
+                  <span
+                    class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1sh91j5-MuiButton-startIcon"
                   >
-                    <path
-                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                    />
-                  </svg>
-                </span>
-                Clear Filters
-              </button>
-              <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary css-1ioyh7z-MuiButtonBase-root-MuiButton-root"
-                tabindex="0"
-                type="button"
-              >
-                Show Spare Items
-              </button>
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                      data-testid="ClearIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      />
+                    </svg>
+                  </span>
+                  Clear Filters
+                </button>
+              </div>
             </div>
             <div
               class="MuiBox-root css-1p0wbhh"
@@ -1791,7 +1799,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                           aria-invalid="false"
                           autocomplete="off"
                           class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12tjcea-MuiInputBase-input-MuiOutlinedInput-input"
-                          id=":r2m:"
+                          id=":r4:"
                           placeholder="Search"
                           type="text"
                           value=""
@@ -2095,12 +2103,12 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                               </span>
                             </div>
                             <input
-                              aria-describedby=":r74:-helper-text"
+                              aria-describedby=":r4i:-helper-text"
                               aria-invalid="false"
                               aria-label="Filter by Notes"
                               autocomplete="off"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                              id=":r74:"
+                              id=":r4i:"
                               placeholder="Filter by Notes"
                               title="Filter by Notes"
                               type="text"
@@ -2138,7 +2146,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                           </div>
                           <p
                             class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                            id=":r74:-helper-text"
+                            id=":r4i:-helper-text"
                           >
                             <label>
                               Filter Mode: Fuzzy
@@ -2315,12 +2323,12 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                                 </span>
                               </div>
                               <input
-                                aria-describedby=":r7n:-helper-text"
+                                aria-describedby=":r55:-helper-text"
                                 aria-invalid="false"
                                 aria-label="Min"
                                 autocomplete="off"
                                 class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                                id=":r7n:"
+                                id=":r55:"
                                 placeholder="Min"
                                 title="Min"
                                 type="text"
@@ -2358,7 +2366,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                             </div>
                             <p
                               class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                              id=":r7n:-helper-text"
+                              id=":r55:-helper-text"
                             >
                               <label>
                                 Filter Mode: Between Inclusive
@@ -2376,7 +2384,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                                 aria-label="Max"
                                 autocomplete="off"
                                 class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                                id=":r7s:"
+                                id=":r5a:"
                                 placeholder="Max"
                                 title="Max"
                                 type="text"
@@ -2581,12 +2589,12 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                               </span>
                             </div>
                             <input
-                              aria-describedby=":r8h:-helper-text"
+                              aria-describedby=":r5v:-helper-text"
                               aria-invalid="false"
                               aria-label="Filter by Sensor Type "
                               autocomplete="off"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-110vr2a-MuiInputBase-input-MuiInput-input"
-                              id=":r8h:"
+                              id=":r5v:"
                               placeholder="Filter by Sensor Type "
                               title="Filter by Sensor Type "
                               type="text"
@@ -2624,7 +2632,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                           </div>
                           <p
                             class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-v98l45-MuiFormHelperText-root"
-                            id=":r8h:-helper-text"
+                            id=":r5v:-helper-text"
                           >
                             <label>
                               Filter Mode: Fuzzy
@@ -2767,9 +2775,9 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                               aria-expanded="false"
                               aria-haspopup="listbox"
                               aria-label="Filter by Broken "
-                              aria-labelledby=":r9g:"
+                              aria-labelledby=":r6u:"
                               class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-10y8whu-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                              id=":r9g:"
+                              id=":r6u:"
                               role="combobox"
                               tabindex="0"
                             >
@@ -3237,7 +3245,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                 >
                   <label
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-animated MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-animated css-10j3yc8-MuiFormLabel-root-MuiInputLabel-root"
-                    for="mrt-rows-per-page-:r2i:"
+                    for="mrt-rows-per-page-:r0:"
                   >
                     Rows per page
                   </label>
@@ -3258,7 +3266,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                       aria-hidden="true"
                       aria-invalid="false"
                       class="MuiSelect-nativeInput css-j0riat-MuiSelect-nativeInput"
-                      id="mrt-rows-per-page-:r2i:"
+                      id="mrt-rows-per-page-:r0:"
                       tabindex="-1"
                       value="30"
                     />
