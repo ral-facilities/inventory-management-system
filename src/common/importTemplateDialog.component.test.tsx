@@ -13,8 +13,12 @@ import {
   getCatalogueCategoryById,
   renderComponentWithRouterProvider,
 } from '../testUtils';
-import { handleBlobDownload, parseSpreadsheetError } from '../utils';
+import {
+  handleBlobDownload,
+  parseCatalogueItemSpreadsheetError,
+} from '../utils';
 import ImportTemplateDialog, {
+  ImportSpreadsheetConfig,
   ImportTemplateDialogProps,
 } from './importTemplateDialog.component';
 
@@ -90,6 +94,34 @@ const ingestEndpointHelper = (props: IngestEndpointHelperProps) => {
   });
 };
 
+const catalogueItemsImportConfig: ImportSpreadsheetConfig = {
+  endpointSegment: 'catalogue-items',
+  parentIdMetaField: 'catalogue_category_id',
+  templateFileNamePrefix: 'CatalogueItemTemplate',
+  validationFileNamePrefix: 'CatalogueItemsValidation',
+  downloadStepTitle: 'Download Catalogue Template',
+  downloadStepDescription:
+    'Download the spreadsheet template, populate it with catalogue item data, then proceed to validation.',
+  validateStepDescription:
+    'Upload your completed spreadsheet to validate catalogue items. Any errors or warnings will be highlighted in a downloadable spreadsheet.',
+  importReadyDescription:
+    'Validation completed successfully. The spreadsheet is ready to be imported into the catalogue.',
+  importPendingApprovalDescription:
+    'Your spreadsheet has been validated successfully. Please contact an administrator to import the spreadsheet so the catalogue items can be made available.',
+  getDownloadErrorMessage: (errorMessage) => {
+    if (
+      errorMessage ===
+        'cannot generate a catalogue items template for a non-leaf catalogue category' ||
+      errorMessage === 'the specified catalogue category does not exist'
+    ) {
+      return 'The selected catalogue category no longer exists or is invalid. Please navigate to a valid category catalogue that contains catalogue items and try again.';
+    }
+    return undefined;
+  },
+  parseImportError: parseCatalogueItemSpreadsheetError,
+  getInvalidateQueryKey: (parentId) => ['CatalogueItems', parentId],
+};
+
 describe('Upload attachment dialog', () => {
   let props: ImportTemplateDialogProps;
   let user: UserEvent;
@@ -112,6 +144,7 @@ describe('Upload attachment dialog', () => {
       parentId: catalogueCategory.id,
       parentName: catalogueCategory.name,
       isAdminMode: false,
+      config: catalogueItemsImportConfig,
     };
     user = userEvent.setup();
     axiosPostSpy = vi.spyOn(ingestApi, 'post');
@@ -600,7 +633,7 @@ describe('Upload attachment dialog', () => {
         await waitFor(() => {
           expect(
             screen.getAllByLabelText(
-              parseSpreadsheetError(backendMessage.toLowerCase())
+              parseCatalogueItemSpreadsheetError(backendMessage.toLowerCase())
             ).length
           ).toBe(2);
         });
@@ -916,7 +949,7 @@ describe('Upload attachment dialog', () => {
         await waitFor(() => {
           expect(
             screen.getAllByLabelText(
-              parseSpreadsheetError(backendMessage.toLowerCase())
+              parseCatalogueItemSpreadsheetError(backendMessage.toLowerCase())
             ).length
           ).toBe(2);
         });

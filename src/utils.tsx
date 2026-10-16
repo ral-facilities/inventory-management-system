@@ -423,7 +423,8 @@ interface DateSortConfig<T> {
   selector: (item: T) => Date;
 }
 
-type SortConfig<T> = StringSortConfig<T> | NumberSortConfig<T> | DateSortConfig<T>;
+type SortConfig<T> =
+  StringSortConfig<T> | NumberSortConfig<T> | DateSortConfig<T>;
 
 export function sortDataList<T>(props: {
   data: T[];
@@ -435,9 +436,7 @@ export function sortDataList<T>(props: {
       return config.selector(a) - config.selector(b);
     }
     if (config.type === 'date') {
-      return (
-        config.selector(a).getTime() - config.selector(b).getTime()
-      );
+      return config.selector(a).getTime() - config.selector(b).getTime();
     }
     return config.selector(a).localeCompare(config.selector(b));
   });
@@ -673,7 +672,7 @@ export function parseAttachmentError(message: string): string {
   return parseBaseError(message);
 }
 
-export function parseSpreadsheetError(message: string): string {
+export function parseCatalogueItemSpreadsheetError(message: string): string {
   if (
     message.includes('imsingestapiversion') ||
     message.includes('unable to find the custom document property') ||
