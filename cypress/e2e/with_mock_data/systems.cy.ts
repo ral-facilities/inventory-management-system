@@ -17,8 +17,8 @@ describe('Systems', () => {
     cy.findByText('Root systems').should('be.visible');
     cy.findByText('Giant laser').should('be.visible');
 
-    cy.findAllByTestId('ErrorIcon').first().should('exist');
-    cy.findAllByTestId('ErrorIcon').first().trigger('mouseover');
+    cy.findAllByTestId('ErrorIcon').eq(1).should('exist');
+    cy.findAllByTestId('ErrorIcon').eq(1).trigger('mouseover');
     cy.findByText('This system is critical.');
   });
 
@@ -52,12 +52,16 @@ describe('Systems', () => {
   });
 
   it('should be able to navigate through subsystems', () => {
+    cy.findByRole('button', { name: 'Hide root systems' }).click();
+
     cy.findByText('No system selected').scrollIntoView();
     cy.findByText('No system selected').should('be.visible');
 
     cy.findByText('Please select a system').should('be.visible');
 
     // Navigate deeper
+
+    cy.findByRole('button', { name: 'Show root systems' }).click();
     cy.findByRole('link', { name: 'Giant laser' }).click();
     cy.url().should('include', '/systems/65328f34a40ff5301575a4e3');
     cy.findByText('No system selected').should('not.exist');
@@ -65,16 +69,23 @@ describe('Systems', () => {
 
     cy.findByRole('link', { name: 'Smaller laser' }).scrollIntoView();
     cy.findByRole('link', { name: 'Smaller laser' }).should('be.visible');
+    cy.findByRole('button', { name: 'Hide subsystems' }).click();
+
+    cy.findByText('Juan Horton').should('be.visible');
     cy.findByText('Description').scrollIntoView();
     cy.findByText('Description').should('be.visible');
 
     // Navigate deeper again
+    cy.findByRole('button', { name: 'Show subsystems' }).click();
     cy.findByRole('link', { name: 'Smaller laser' }).scrollIntoView();
     cy.findByRole('link', { name: 'Smaller laser' }).click();
     cy.url().should('include', '/systems/65328f34a40ff5301575a4e4');
 
     cy.findByRole('link', { name: 'Pulse Laser' }).should('be.visible');
 
+    cy.findByRole('button', { name: 'Hide subsystems' }).click();
+
+    cy.findByText('Daniel Morrison').should('be.visible');
     cy.findByText('Description').scrollIntoView();
     cy.findByText('Description').should('be.visible');
   });
@@ -111,6 +122,8 @@ describe('Systems', () => {
   });
 
   it('should be able to use browser back to undo a pagination state change', () => {
+    // Full HD standard desktop resolution
+    cy.viewport(1920, 1080);
     cy.visit('/systems/65328f34a40ff5301575a4e3');
 
     cy.findByText('Smaller laser').should('be.visible');
@@ -218,6 +231,8 @@ describe('Systems', () => {
   });
 
   it('should be able to navigate through subsystems while preserving the table states when going back', () => {
+    // Full HD standard desktop resolution
+    cy.viewport(1920, 1080);
     cy.visit('/systems/65328f34a40ff5301575a4e3');
 
     cy.findAllByRole('progressbar', { timeout: 10000 }).should('not.exist');
@@ -328,10 +343,8 @@ describe('Systems', () => {
   it('should be able to navigate to an items catalogue item landing page', () => {
     cy.findByRole('link', { name: 'Pulse Laser' }).click();
 
-    cy.findAllByRole('button', { name: 'Show/Hide filters' })
-      .eq(1)
-      .scrollIntoView();
-    cy.findAllByRole('button', { name: 'Show/Hide filters' }).eq(1).click();
+    cy.findByRole('button', { name: 'Show/Hide filters' }).scrollIntoView();
+    cy.findByRole('button', { name: 'Show/Hide filters' }).click();
 
     cy.findAllByRole('link', { name: 'Cameras 8' }).first().scrollIntoView();
     cy.findAllByRole('link', { name: 'Cameras 8' })
@@ -347,10 +360,8 @@ describe('Systems', () => {
   it("should be able to navigate to an item's landing page", () => {
     cy.findByRole('link', { name: 'Pulse Laser' }).click();
 
-    cy.findAllByRole('button', { name: 'Show/Hide filters' })
-      .eq(1)
-      .scrollIntoView();
-    cy.findAllByRole('button', { name: 'Show/Hide filters' }).eq(1).click();
+    cy.findByRole('button', { name: 'Show/Hide filters' }).scrollIntoView();
+    cy.findByRole('button', { name: 'Show/Hide filters' }).click();
 
     // Wait for progress bar to disappear before interacting with filters
     cy.findAllByRole('progressbar', { timeout: 10000 }).should('not.exist');
@@ -368,10 +379,8 @@ describe('Systems', () => {
 
   it("should be able to navigate to a filtered item's table using the spares value", () => {
     cy.findByRole('link', { name: 'Pulse Laser' }).click();
-    cy.findAllByRole('button', { name: 'Show/Hide filters' })
-      .eq(1)
-      .scrollIntoView();
-    cy.findAllByRole('button', { name: 'Show/Hide filters' }).eq(1).click();
+    cy.findByRole('button', { name: 'Show/Hide filters' }).scrollIntoView();
+    cy.findByRole('button', { name: 'Show/Hide filters' }).click();
 
     // Wait for progress bar to disappear before interacting with filters
     cy.findAllByRole('progressbar', { timeout: 10000 }).should('not.exist');
@@ -406,10 +415,13 @@ describe('Systems', () => {
     cy.findAllByText('Laser Tech').should('have.length', 2);
 
     // Check can go back to root
+    cy.findByRole('button', { name: 'Hide subsystems' }).click();
     cy.findByRole('button', { name: 'navigate to systems home' }).click();
     cy.url().then((url) => {
       expect(url.endsWith('/systems'));
     });
+
+    cy.findByRole('button', { name: 'Hide root systems' }).click();
     cy.findByText('No system selected').scrollIntoView();
     cy.findByText('No system selected').should('be.visible');
     cy.findByText('Please select a system').should('be.visible');
@@ -824,6 +836,8 @@ describe('Systems', () => {
     });
     cy.visit('/systems/65328f34a40ff5301575a4e3');
 
+    cy.findByRole('button', { name: 'Hide subsystems' }).click();
+
     cy.findByRole('button', { name: 'systems page actions menu' }).click();
     cy.findByRole('menuitem', { name: 'Edit' }).should('exist');
     cy.findByRole('menuitem', { name: 'Edit' }).click();
@@ -1031,11 +1045,10 @@ describe('Systems', () => {
   describe('Move', () => {
     it('moves items', () => {
       cy.findByRole('link', { name: 'Pulse Laser' }).click();
+      cy.findByText('Antony Yates').should('exist');
 
-      cy.findAllByRole('button', { name: 'Show/Hide filters' })
-        .eq(1)
-        .scrollIntoView();
-      cy.findAllByRole('button', { name: 'Show/Hide filters' }).eq(1).click();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).scrollIntoView();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).click();
 
       // Wait for progress bar to disappear before interacting with filters
       cy.findAllByRole('progressbar').should('not.exist');
@@ -1044,8 +1057,8 @@ describe('Systems', () => {
       cy.findAllByRole('button', { name: 'Expand' }).eq(1).click();
 
       // Second table, first checkbox
-      cy.findAllByRole('table')
-        .eq(1)
+      cy.findByRole('table')
+
         .within(() => {
           cy.findAllByRole('checkbox', {
             name: 'Toggle select row',
@@ -1103,10 +1116,9 @@ describe('Systems', () => {
       cy.setMode({ admin: true });
 
       cy.findByRole('link', { name: 'Pulse Laser' }).click();
-      cy.findAllByRole('button', { name: 'Show/Hide filters' })
-        .eq(1)
-        .scrollIntoView();
-      cy.findAllByRole('button', { name: 'Show/Hide filters' }).eq(1).click();
+      cy.findByText('Antony Yates').should('exist');
+      cy.findByRole('button', { name: 'Show/Hide filters' }).scrollIntoView();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).click();
 
       // Wait for progress bar to disappear before interacting with filters
       cy.findAllByRole('progressbar').should('not.exist');
@@ -1115,21 +1127,19 @@ describe('Systems', () => {
       cy.findAllByRole('button', { name: 'Expand' }).eq(1).click();
 
       // Second table, first checkbox
-      cy.findAllByRole('table')
-        .eq(1)
-        .within(() => {
-          cy.findAllByRole('checkbox', {
-            name: 'Toggle select row',
-          })
-            .eq(1)
-            .click({ force: true });
+      cy.findByRole('table').within(() => {
+        cy.findAllByRole('checkbox', {
+          name: 'Toggle select row',
+        })
+          .eq(1)
+          .click({ force: true });
 
-          cy.findAllByRole('checkbox', {
-            name: 'Toggle select row',
-          })
-            .eq(2)
-            .click({ force: true });
-        });
+        cy.findAllByRole('checkbox', {
+          name: 'Toggle select row',
+        })
+          .eq(2)
+          .click({ force: true });
+      });
 
       cy.findByRole('button', { name: 'Move to as Admin' }).click();
 
@@ -1176,10 +1186,10 @@ describe('Systems', () => {
 
     it('display errors message and clears error message when resolved', () => {
       cy.findByRole('link', { name: 'Pulse Laser' }).click();
-      cy.findAllByRole('button', { name: 'Show/Hide filters' })
-        .eq(1)
+      cy.findByRole('button', { name: 'Show/Hide filters' })
+
         .scrollIntoView();
-      cy.findAllByRole('button', { name: 'Show/Hide filters' }).eq(1).click();
+      cy.findByRole('button', { name: 'Show/Hide filters' }).click();
 
       // Wait for progress bar to disappear before interacting with filters
       cy.findAllByRole('progressbar').should('not.exist');
@@ -1188,8 +1198,8 @@ describe('Systems', () => {
       cy.findAllByRole('button', { name: 'Expand' }).eq(1).click();
 
       // Second table, first checkbox
-      cy.findAllByRole('table')
-        .eq(1)
+      cy.findByRole('table')
+
         .within(() => {
           cy.findAllByRole('checkbox', {
             name: 'Toggle select row',
