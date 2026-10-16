@@ -3,6 +3,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
+import UploadIcon from '@mui/icons-material/Upload';
 import {
   Box,
   Button,
@@ -39,6 +40,7 @@ import {
   ROWS_PER_PAGE_OPTIONS,
 } from '../common/consts';
 import CriticalityTooltipIcon from '../common/criticalityTooltipIcon.component';
+import ImportTemplateDialog from '../common/importTemplateDialog.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import { SparesColumnHeaderInformationTooltip } from '../common/sparesInformationTooltip.component';
 import DeleteItemDialog from '../items/deleteItemDialog.component';
@@ -68,6 +70,7 @@ import {
   mrtTheme,
   roundUpTenth,
 } from '../utils';
+import { useItemsImportConfig } from './itemsImportConfig';
 import SystemItemsDialog from './systemItemsDialog.component';
 
 const MoveItemsButton = (props: {
@@ -117,6 +120,8 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
 
   const { isAdminMode } = useAppSelector(selectAuthorisation);
 
+  const itemsImportConfig = useItemsImportConfig();
+
   // States
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
   const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
@@ -126,6 +131,8 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     'edit' | 'duplicate'
   >('edit');
   const [deleteItemDialogOpen, setDeleteItemDialogOpen] =
+    React.useState<boolean>(false);
+  const [importTemplateDialogOpen, setImportTemplateDialogOpen] =
     React.useState<boolean>(false);
 
   const [isAdminDialog, setIsAdminDialog] = React.useState<boolean>(false);
@@ -723,6 +730,16 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         </Button>
         {system && (
           <>
+            <Button
+              startIcon={<UploadIcon />}
+              sx={{ mx: 0.5 }}
+              variant="outlined"
+              onClick={() => {
+                setImportTemplateDialogOpen(true);
+              }}
+            >
+              Import spreadsheet
+            </Button>
             <MoveItemsButton
               selectedItems={selectedItems}
               system={system}
@@ -889,6 +906,16 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           isAdminMode={isAdminDialog}
           item={selectedItem}
           onChangeItem={setSelectedItem}
+        />
+      )}
+      {system && (
+        <ImportTemplateDialog
+          open={importTemplateDialogOpen}
+          onClose={() => setImportTemplateDialogOpen(false)}
+          parentId={system.id}
+          parentName={system.name}
+          isAdminMode={isAdminMode}
+          config={itemsImportConfig}
         />
       )}
     </>
