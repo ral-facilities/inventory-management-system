@@ -1,5 +1,5 @@
 import { ImportSpreadsheetConfig } from '../common/importTemplateDialog.component';
-import { parseBaseError } from '../utils';
+import { parseItemSpreadsheetError } from '../utils';
 
 export const useItemsImportConfig = (): ImportSpreadsheetConfig => {
   return {
@@ -22,7 +22,7 @@ export const useItemsImportConfig = (): ImportSpreadsheetConfig => {
       }
       return undefined;
     },
-    parseImportError: parseBaseError,
+    parseImportError: parseItemSpreadsheetError,
     getInvalidateQueryKey: (parentId) => ['Items', parentId],
   };
 };
