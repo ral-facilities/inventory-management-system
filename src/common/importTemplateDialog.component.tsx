@@ -293,7 +293,9 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
 
   const { mutateAsync: postSpreadsheetTemplate } = usePostSpreadsheetTemplate(
     config.endpointSegment,
-    config.parentIdMetaField
+    config.parentIdMetaField === 'system_id'
+      ? undefined
+      : { parentIdField: config.parentIdMetaField, parentId: parentId }
   );
 
   const [isValidSpreadsheet, setIsValidSpreadsheet] =
@@ -425,7 +427,7 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
   }, [parentId, importUppy, isValidSpreadsheet, validateUppy]);
 
   const handleDownloadTemplate = React.useCallback(async () => {
-    postSpreadsheetTemplate({ parentId })
+    postSpreadsheetTemplate()
       .then((response) =>
         handleBlobDownload(
           response.data,
@@ -446,7 +448,7 @@ const ImportTemplateDialog = (props: ImportTemplateDialogProps) => {
           },
         ]);
       });
-  }, [postSpreadsheetTemplate, config, parentId, parentName]);
+  }, [postSpreadsheetTemplate, config, parentName]);
 
   // Stepper
   const STEPS = [
