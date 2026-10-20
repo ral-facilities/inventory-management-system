@@ -2,7 +2,9 @@
 
 exports[`Catalogue Items details panel > renders details panel correctly (None values for telephone and url) 1`] = `
 <DocumentFragment>
-  <div>
+  <div
+    style="height: 100%;"
+  >
     <div
       class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-smpqgx-MuiGrid2-root"
     >
@@ -572,7 +574,9 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
 
 exports[`Catalogue Items details panel > renders details panel correctly (when there are no Notes) 1`] = `
 <DocumentFragment>
-  <div>
+  <div
+    style="height: 100%;"
+  >
     <div
       class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-smpqgx-MuiGrid2-root"
     >
@@ -1142,7 +1146,9 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
 
 exports[`Catalogue Items details panel > renders details panel correctly (with obsolete replacement link) 1`] = `
 <DocumentFragment>
-  <div>
+  <div
+    style="height: 100%;"
+  >
     <div
       class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-smpqgx-MuiGrid2-root"
     >
@@ -1672,7 +1678,9 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
 
 exports[`Catalogue Items details panel > renders details panel correctly (without spares) 1`] = `
 <DocumentFragment>
-  <div>
+  <div
+    style="height: 100%;"
+  >
     <div
       class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-smpqgx-MuiGrid2-root"
     >
@@ -2182,7 +2190,9 @@ exports[`Catalogue Items details panel > renders details panel correctly (withou
 
 exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
 <DocumentFragment>
-  <div>
+  <div
+    style="height: 100%;"
+  >
     <div
       class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-smpqgx-MuiGrid2-root"
     >
@@ -2712,7 +2722,9 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
 
 exports[`Catalogue Items details panel > renders details panel correctly in critical mode  1`] = `
 <DocumentFragment>
-  <div>
+  <div
+    style="height: 100%;"
+  >
     <div
       class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-smpqgx-MuiGrid2-root"
     >
@@ -3308,7 +3320,9 @@ exports[`Catalogue Items details panel > renders details panel correctly in crit
 
 exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`] = `
 <DocumentFragment>
-  <div>
+  <div
+    style="height: 100%;"
+  >
     <div
       class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-smpqgx-MuiGrid2-root"
     >
@@ -3850,7 +3864,9 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
 
 exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
 <DocumentFragment>
-  <div>
+  <div
+    style="height: 100%;"
+  >
     <div
       class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-smpqgx-MuiGrid2-root"
     >
@@ -4392,7 +4408,9 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
 
 exports[`Catalogue Items details panel > renders properties panel correctly (empty property list) 1`] = `
 <DocumentFragment>
-  <div>
+  <div
+    style="height: 100%;"
+  >
     <div
       class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-smpqgx-MuiGrid2-root"
     >
@@ -4905,7 +4923,9 @@ exports[`Catalogue Items details panel > renders properties panel correctly (emp
 
 exports[`Catalogue Items details panel > renders properties panel correctly 1`] = `
 <DocumentFragment>
-  <div>
+  <div
+    style="height: 100%;"
+  >
     <div
       class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row css-smpqgx-MuiGrid2-root"
     >
