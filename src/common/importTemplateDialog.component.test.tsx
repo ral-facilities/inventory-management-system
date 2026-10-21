@@ -64,6 +64,9 @@ const backendErrorMessage = {
     "Unable to find the 'CatalogueItems Template' sheet in the workbook",
   ColumnsModified:
     'The columns within the template are either out of date or have been modified.',
+  UnrelatedIssue:
+    'Validation failed due to an issue unrelated to the spreadsheet contents',
+  Error500: 'Internal server error',
 };
 
 interface IngestEndpointHelperProps {
@@ -196,6 +199,9 @@ const itemBackendErrorMessage = {
   MissingSheet: "Unable to find the 'Items Template' sheet in the workbook",
   ColumnsModified:
     'The columns within the template are either out of date or have been modified.',
+  UnrelatedIssue:
+    'Validation failed due to an issue unrelated to the spreadsheet contents',
+  Error500: 'Internal server error',
 };
 
 describe('Upload attachment dialog', () => {
