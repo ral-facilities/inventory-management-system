@@ -47,6 +47,7 @@ import {
   DEFAULT_ROWS_PER_PAGE_VALUE,
   FLEX_CONTAINER_PROPS,
   FLEX_TABLE_CONTAINER_PROP,
+  MINIMUM_TABLE_HEIGHT,
   ROWS_PER_PAGE_OPTIONS,
 } from '../../common/consts';
 import CriticalityTooltipIcon from '../../common/criticalityTooltipIcon.component';
@@ -1259,11 +1260,18 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   }, [dense, table, isCriticalMode]);
 
   return (
-    <Box sx={{ width: '100%', ...FLEX_CONTAINER_PROPS }}>
+    <Box
+      sx={{
+        width: '100%',
+        ...FLEX_CONTAINER_PROPS,
+        minHeight: MINIMUM_TABLE_HEIGHT,
+      }}
+    >
       <Stack
         sx={{
           ...FLEX_CONTAINER_PROPS,
           width: '100%',
+          minHeight: MINIMUM_TABLE_HEIGHT,
           ...(!dense ? { height: contentHeight, flex: undefined } : { p: 1 }),
         }}
       >

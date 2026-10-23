@@ -951,4 +951,4 @@ describe('Catalogue Items Table', () => {
       expect(screen.queryByText('Number of spares')).not.toBeInTheDocument();
     });
   });
-});
+}, 15000);

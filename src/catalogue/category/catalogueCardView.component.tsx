@@ -39,6 +39,7 @@ import { APISettingsContext } from '../../apiConfigProvider.component';
 import CardViewFilters from '../../common/cardView/cardViewFilters.component';
 import {
   DEFAULT_ROWS_PER_PAGE_VALUE,
+  MINIMUM_TABLE_HEIGHT,
   ROWS_PER_PAGE_OPTIONS,
 } from '../../common/consts';
 import ErrorPage from '../../common/errorPage.component';
@@ -597,6 +598,7 @@ function CatalogueCardView() {
             height: cardViewHeight,
             maxHeight: cardViewHeight,
             width: '100%',
+            minHeight: MINIMUM_TABLE_HEIGHT,
           }}
         >
           {isCriticalFilterApplied && isCriticalMode && (

@@ -45,6 +45,9 @@ import { APISettingsContext } from '../apiConfigProvider.component';
 import type { SystemTableType } from '../app.types';
 import {
   DEFAULT_ROWS_PER_PAGE_VALUE,
+  FLEX_CONTAINER_PROPS,
+  FLEX_TABLE_CONTAINER_PROP,
+  MINIMUM_TABLE_HEIGHT,
   ROWS_PER_PAGE_OPTIONS,
 } from '../common/consts';
 import CriticalityTooltipIcon from '../common/criticalityTooltipIcon.component';
@@ -67,7 +70,6 @@ import {
   formatDateTimeStrings,
   generateUniqueName,
   getInitialColumnFilterFnState,
-  getPageHeightCalc,
   MRT_Functions_Localisation,
   mrtTheme,
   OPTIONAL_FILTER_MODE_OPTIONS,
@@ -390,7 +392,7 @@ function Systems() {
             {MRT_Functions_Localisation.filterArrExcludesSome}
           </MenuItem>,
         ],
-        size: 160,
+        size: 180,
         filterSelectOptions: systemTypeValues,
       },
       {
@@ -586,20 +588,14 @@ function Systems() {
         // SciGateway navigation drawer is 1200, modal is 1300
         zIndex: table.getState().isFullScreen ? 1210 : undefined,
       },
+      sx: FLEX_CONTAINER_PROPS,
     }),
     muiBottomToolbarProps: ({ table }) =>
       table.getState().isFullScreen ? {} : { sx: { boxShadow: 0 } },
-    muiTableContainerProps: ({ table }) => ({
+    muiTableContainerProps: () =>
       // main app bar + breadcrumbs (incl AuthRole banner) + title + top toolbar + column heading + critical mode spacing + header spacing  + critical mode header spacing
-      sx: {
-        height: table.getState().isFullScreen
-          ? '100%'
-          : getPageHeightCalc(
-              `64px + 88px + 40px + 47px + 40px + 20px  ${systemId ? ' + 42px' : ''} ${isCriticalMode && isSparesDefinitionDefined && systemId ? '+ 4px' : ''}`
-            ),
-      },
-    }),
-    muiTableBodyCellProps: ({ table, column }) =>
+      ({ sx: FLEX_TABLE_CONTAINER_PROP }),
+    muiTableBodyCellProps: ({ column }) =>
       // Ignore MRT rendered cells e.g. expand , spacer etc
       column.id.startsWith('mrt')
         ? {}
@@ -609,12 +605,6 @@ function Systems() {
                 <TableBodyCellOverFlowTip
                   {...({
                     ...props,
-                    overFlowTipSx: {
-                      maxWidth: table.getState().isFullScreen
-                        ? undefined
-                        : { md: 'max(8vw, 155px)', xs: '68vw' },
-                      width: table.getState().isFullScreen ? '25vw' : undefined,
-                    },
                   } as TableCellOverFlowTipProps)}
                 />
               );
@@ -816,7 +806,15 @@ function Systems() {
 
   return (
     <>
-      <Grid container direction="row" sx={{ margin: 0, alignItems: 'stretch' }}>
+      <Grid
+        container
+        direction="row"
+        sx={{
+          margin: 0,
+          alignItems: 'stretch',
+          minHeight: MINIMUM_TABLE_HEIGHT,
+        }}
+      >
         <Grid
           size={{
             xs: 12,
@@ -828,6 +826,7 @@ function Systems() {
             padding: 1,
             paddingRight: 2,
             paddingBottom: 0,
+            minHeight: MINIMUM_TABLE_HEIGHT,
           }}
         >
           {isLoading ? (
