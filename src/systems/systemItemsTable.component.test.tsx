@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react';
+import { screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { System } from '../api/api.types';
@@ -58,9 +58,9 @@ describe('SystemItemsTable', () => {
     await waitFor(
       () => {
         expect(
-          screen.getByRole('cell', {
-            name: `Turbomolecular Pumps 42 (2)`,
-          })
+          screen.getAllByRole('cell', {
+            name: `Turbomolecular Pumps 42`,
+          })[0]
         ).toBeInTheDocument();
       },
       { timeout: 4000 }
@@ -112,9 +112,9 @@ describe('SystemItemsTable', () => {
     await waitFor(
       () => {
         expect(
-          screen.getByRole('cell', {
-            name: `Turbomolecular Pumps 42 (2)`,
-          })
+          screen.getAllByRole('cell', {
+            name: `Turbomolecular Pumps 42`,
+          })[0]
         ).toBeInTheDocument();
       },
       { timeout: 4000 }
@@ -164,9 +164,9 @@ describe('SystemItemsTable', () => {
     await waitFor(
       () => {
         expect(
-          screen.getByRole('cell', {
-            name: `Turbomolecular Pumps 42 (2)`,
-          })
+          screen.getAllByRole('cell', {
+            name: `Turbomolecular Pumps 42`,
+          })[0]
         ).toBeInTheDocument();
       },
       { timeout: 4000 }
@@ -212,18 +212,18 @@ describe('SystemItemsTable', () => {
     await waitFor(
       () => {
         expect(
-          screen.getByRole('cell', {
-            name: `Turbomolecular Pumps 42 (2)`,
-          })
+          screen.getAllByRole('cell', {
+            name: `Turbomolecular Pumps 42`,
+          })[0]
         ).toBeInTheDocument();
       },
       { timeout: 4000 }
     );
 
     expect(
-      screen.getByRole('link', {
+      screen.getAllByRole('link', {
         name: `Turbomolecular Pumps 42`,
-      })
+      })[0]
     ).toHaveAttribute('href', '/catalogue/13/items/21');
   });
 
@@ -234,9 +234,9 @@ describe('SystemItemsTable', () => {
     await waitFor(
       () => {
         expect(
-          screen.getByRole('cell', {
-            name: `Turbomolecular Pumps 42 (2)`,
-          })
+          screen.getAllByRole('cell', {
+            name: `Turbomolecular Pumps 42`,
+          })[0]
         ).toBeInTheDocument();
       },
       { timeout: 4000 }
@@ -253,7 +253,7 @@ describe('SystemItemsTable', () => {
       () => {
         expect(
           screen.queryByRole('cell', {
-            name: `Turbomolecular Pumps 42 (2)`,
+            name: `Turbomolecular Pumps 42`,
           })
         ).not.toBeInTheDocument();
       },
@@ -265,9 +265,9 @@ describe('SystemItemsTable', () => {
     await waitFor(
       () => {
         expect(
-          screen.getByRole('cell', {
-            name: `Turbomolecular Pumps 42 (2)`,
-          })
+          screen.getAllByRole('cell', {
+            name: `Turbomolecular Pumps 42`,
+          })[0]
         ).toBeInTheDocument();
       },
       { timeout: 4000 }
@@ -281,15 +281,13 @@ describe('SystemItemsTable', () => {
     await waitFor(
       () => {
         expect(
-          screen.getByRole('cell', {
-            name: 'Turbomolecular Pumps 42 (2)',
-          })
+          screen.getAllByRole('cell', {
+            name: 'Turbomolecular Pumps 42',
+          })[0]
         ).toBeInTheDocument();
       },
       { timeout: 4000 }
     );
-
-    await user.click(screen.getByTestId('CancelIcon'));
 
     // Delivered date column action button
     await user.click(
@@ -305,6 +303,8 @@ describe('SystemItemsTable', () => {
     expect(
       screen.getByRole('tooltip', { name: 'No Delivered Date (1)' })
     ).toBeInTheDocument();
+
+    await user.click(screen.getByTestId('CancelIcon'));
   });
 
   it('can select and deselect items', async () => {
@@ -314,9 +314,9 @@ describe('SystemItemsTable', () => {
     await waitFor(
       () => {
         expect(
-          screen.getByRole('cell', {
-            name: `Turbomolecular Pumps 42 (2)`,
-          })
+          screen.getAllByRole('cell', {
+            name: `Turbomolecular Pumps 42`,
+          })[0]
         ).toBeInTheDocument();
       },
       { timeout: 4000 }
@@ -350,9 +350,9 @@ describe('SystemItemsTable', () => {
     await waitFor(
       () => {
         expect(
-          screen.getByRole('cell', {
-            name: `Turbomolecular Pumps 42 (2)`,
-          })
+          screen.getAllByRole('cell', {
+            name: `Turbomolecular Pumps 42`,
+          })[0]
         ).toBeInTheDocument();
       },
       { timeout: 4000 }
@@ -389,9 +389,9 @@ describe('SystemItemsTable', () => {
     await waitFor(
       () => {
         expect(
-          screen.getByRole('cell', {
-            name: `Turbomolecular Pumps 42 (2)`,
-          })
+          screen.getAllByRole('cell', {
+            name: `Turbomolecular Pumps 42`,
+          })[0]
         ).toBeInTheDocument();
       },
       { timeout: 4000 }
@@ -404,7 +404,7 @@ describe('SystemItemsTable', () => {
 
     const serialNumber = '5xE1KSraISvu';
     await waitFor(() => {
-      expect(screen.getAllByText(serialNumber)).toHaveLength(2);
+      expect(screen.getAllByText(serialNumber)).toHaveLength(3);
     });
     const rowActionsButton = screen.getAllByLabelText('Row Actions');
     await user.click(rowActionsButton[0]);
@@ -440,9 +440,9 @@ describe('SystemItemsTable', () => {
     await waitFor(
       () => {
         expect(
-          screen.getByRole('cell', {
-            name: `Turbomolecular Pumps 42 (2)`,
-          })
+          screen.getAllByRole('cell', {
+            name: `Turbomolecular Pumps 42`,
+          })[0]
         ).toBeInTheDocument();
       },
       { timeout: 4000 }
@@ -455,7 +455,7 @@ describe('SystemItemsTable', () => {
 
     const serialNumber = '5xE1KSraISvu';
     await waitFor(() => {
-      expect(screen.getAllByText(serialNumber)).toHaveLength(2);
+      expect(screen.getAllByText(serialNumber)).toHaveLength(3);
     });
     const rowActionsButton = screen.getAllByLabelText('Row Actions');
     await user.click(rowActionsButton[0]);
@@ -485,25 +485,22 @@ describe('SystemItemsTable', () => {
     await waitFor(
       () => {
         expect(
-          screen.getByRole('cell', {
-            name: `Turbomolecular Pumps 42 (2)`,
-          })
+          screen.getAllByRole('cell', {
+            name: `Turbomolecular Pumps 42`,
+          })[0]
         ).toBeInTheDocument();
       },
       { timeout: 4000 }
     );
 
-    const expandButtons = screen.getAllByRole('button', {
-      name: 'Expand',
-    });
-    await user.click(expandButtons[0]);
-
     const serialNumber = '5xE1KSraISvu';
     await waitFor(() => {
       expect(screen.getAllByText(serialNumber)).toHaveLength(2);
     });
-    const rowActionsButton = screen.getAllByLabelText('Row Actions');
-    await user.click(rowActionsButton[0]);
+    const serialNumberRow = screen.getAllByRole('row', {
+      name: new RegExp(serialNumber),
+    })[0];
+    await user.click(within(serialNumberRow).getByLabelText('Row Actions'));
 
     await waitFor(() => {
       expect(screen.getByText('Duplicate')).toBeInTheDocument();
@@ -536,25 +533,22 @@ describe('SystemItemsTable', () => {
     await waitFor(
       () => {
         expect(
-          screen.getByRole('cell', {
-            name: `Turbomolecular Pumps 42 (2)`,
-          })
+          screen.getAllByRole('cell', {
+            name: `Turbomolecular Pumps 42`,
+          })[0]
         ).toBeInTheDocument();
       },
       { timeout: 4000 }
     );
 
-    const expandButtons = screen.getAllByRole('button', {
-      name: 'Expand',
-    });
-    await user.click(expandButtons[0]);
-
     const serialNumber = '5xE1KSraISvu';
     await waitFor(() => {
       expect(screen.getAllByText(serialNumber)).toHaveLength(2);
     });
-    const rowActionsButton = screen.getAllByLabelText('Row Actions');
-    await user.click(rowActionsButton[0]);
+    const serialNumberRow = screen.getAllByRole('row', {
+      name: new RegExp(serialNumber),
+    })[0];
+    await user.click(within(serialNumberRow).getByLabelText('Row Actions'));
 
     await waitFor(() => {
       expect(screen.getByText('Duplicate as Admin')).toBeInTheDocument();
@@ -581,25 +575,22 @@ describe('SystemItemsTable', () => {
     await waitFor(
       () => {
         expect(
-          screen.getByRole('cell', {
-            name: `Turbomolecular Pumps 42 (2)`,
-          })
+          screen.getAllByRole('cell', {
+            name: `Turbomolecular Pumps 42`,
+          })[0]
         ).toBeInTheDocument();
       },
       { timeout: 4000 }
     );
 
-    const expandButtons = screen.getAllByRole('button', {
-      name: 'Expand',
-    });
-    await user.click(expandButtons[0]);
-
     const serialNumber = '5xE1KSraISvu';
     await waitFor(() => {
       expect(screen.getAllByText(serialNumber)).toHaveLength(2);
     });
-    const rowActionsButton = screen.getAllByLabelText('Row Actions');
-    await user.click(rowActionsButton[0]);
+    const serialNumberRow = screen.getAllByRole('row', {
+      name: new RegExp(serialNumber),
+    })[0];
+    await user.click(within(serialNumberRow).getByLabelText('Row Actions'));
 
     await waitFor(() => {
       expect(screen.getByText('Duplicate')).toBeInTheDocument();
@@ -615,7 +606,7 @@ describe('SystemItemsTable', () => {
     await user.click(screen.getByText('Add item details'));
 
     expect(screen.getByLabelText('Notes')).toHaveValue(
-      'ihwCjMdJ4n7KKcaM34Lj\n\nThis is a copy of the item with this Serial Number: 5xE1KSraISvu'
+      `ihwCjMdJ4n7KKcaM34Lj\n\nThis is a copy of the item with this Serial Number: ${serialNumber}`
     );
   }, 15000);
 
@@ -628,25 +619,22 @@ describe('SystemItemsTable', () => {
     await waitFor(
       () => {
         expect(
-          screen.getByRole('cell', {
-            name: `Cameras 13 (4)`,
-          })
+          screen.getAllByRole('cell', {
+            name: `Cameras 13`,
+          })[0]
         ).toBeInTheDocument();
       },
       { timeout: 4000 }
     );
 
-    const expandButtons = screen.getAllByRole('button', {
-      name: 'Expand',
-    });
-    await user.click(expandButtons[5]);
-
     const serialNumber = 'RncNJlDk1pXC';
     await waitFor(() => {
       expect(screen.getByText(serialNumber)).toBeInTheDocument();
     });
-    const rowActionsButton = screen.getAllByLabelText('Row Actions');
-    await user.click(rowActionsButton[0]);
+    const serialNumberRow = screen.getByRole('row', {
+      name: new RegExp(serialNumber),
+    });
+    await user.click(within(serialNumberRow).getByLabelText('Row Actions'));
 
     await waitFor(() => {
       expect(screen.getByText('Duplicate')).toBeInTheDocument();
@@ -662,7 +650,7 @@ describe('SystemItemsTable', () => {
     await user.click(screen.getByText('Add item details'));
 
     expect(screen.getByLabelText('Notes')).toHaveValue(
-      '\n\nThis is a copy of the item with this Serial Number: RncNJlDk1pXC'
+      `\n\nThis is a copy of the item with this Serial Number: ${serialNumber}`
     );
   }, 20000);
 
@@ -675,26 +663,23 @@ describe('SystemItemsTable', () => {
     await waitFor(
       () => {
         expect(
-          screen.getByRole('cell', {
-            name: `Cameras 13 (4)`,
-          })
+          screen.getAllByRole('cell', {
+            name: `Cameras 13`,
+          })[0]
         ).toBeInTheDocument();
       },
       { timeout: 4000 }
     );
 
-    const expandButtons = screen.getAllByRole('button', {
-      name: 'Expand',
-    });
-    await user.click(expandButtons[5]);
-
     const serialNumber = 'No serial number';
     await waitFor(() => {
       expect(screen.getByText(serialNumber)).toBeInTheDocument();
     });
-    const rowActionsButton = screen.getAllByLabelText('Row Actions');
-    await user.click(rowActionsButton[3]);
 
+    const noSerialNumberRow = screen.getByRole('row', {
+      name: new RegExp(serialNumber),
+    });
+    await user.click(within(noSerialNumberRow).getByLabelText('Row Actions'));
     await waitFor(() => {
       expect(screen.getByText('Duplicate')).toBeInTheDocument();
     });
@@ -720,9 +705,9 @@ describe('SystemItemsTable', () => {
     await waitFor(
       () => {
         expect(
-          screen.getByRole('cell', {
-            name: `Turbomolecular Pumps 42 (2)`,
-          })
+          screen.getAllByRole('cell', {
+            name: `Turbomolecular Pumps 42`,
+          })[0]
         ).toBeInTheDocument();
       },
       { timeout: 4000 }
@@ -735,7 +720,7 @@ describe('SystemItemsTable', () => {
 
     const serialNumber = '5xE1KSraISvu';
     await waitFor(() => {
-      expect(screen.getAllByText(serialNumber)).toHaveLength(2);
+      expect(screen.getAllByText(serialNumber)).toHaveLength(3);
     });
     const rowActionsButton = screen.getAllByLabelText('Row Actions');
     await user.click(rowActionsButton[0]);
@@ -771,9 +756,9 @@ describe('SystemItemsTable', () => {
     await waitFor(
       () => {
         expect(
-          screen.getByRole('cell', {
-            name: `Turbomolecular Pumps 42 (2)`,
-          })
+          screen.getAllByRole('cell', {
+            name: `Turbomolecular Pumps 42`,
+          })[0]
         ).toBeInTheDocument();
       },
       { timeout: 4000 }
@@ -786,7 +771,7 @@ describe('SystemItemsTable', () => {
 
     const serialNumber = '5xE1KSraISvu';
     await waitFor(() => {
-      expect(screen.getAllByText(serialNumber)).toHaveLength(2);
+      expect(screen.getAllByText(serialNumber)).toHaveLength(3);
     });
     const rowActionsButton = screen.getAllByLabelText('Row Actions');
     await user.click(rowActionsButton[0]);

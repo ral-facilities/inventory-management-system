@@ -549,7 +549,6 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         'catalogueItem.criticality': isCriticalMode,
         'catalogueItem.number_of_spares_required': isCriticalMode,
       },
-      grouping: ['catalogueItem.name'],
       pagination: { pageSize: DEFAULT_ROWS_PER_PAGE_VALUE, pageIndex: 0 },
       columnFilterFns: initialColumnFilterFnState,
     },

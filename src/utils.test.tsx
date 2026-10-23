@@ -288,22 +288,80 @@ describe('Utility functions', () => {
     });
   });
 
-  it('should sort data based on given value to be sorted on', () => {
-    const testList = [
-      { name: 'John' },
-      { name: 'Amanda' },
-      { name: 'Susan' },
-      { name: 'Jack' },
-    ];
+  describe('sortDataList', () => {
+    it('should sort data when given no value to be sorted on', () => {
+      const testList = ['John', 'Amanda', 'Susan', 'Jack'];
 
-    const sortedList = sortDataList(testList, 'name');
+      const sortedList = sortDataList({
+        data: testList,
+        config: { type: 'string', selector: (val) => val },
+      });
 
-    expect(sortedList).toEqual([
-      { name: 'Amanda' },
-      { name: 'Jack' },
-      { name: 'John' },
-      { name: 'Susan' },
-    ]);
+      expect(sortedList).toEqual(['Amanda', 'Jack', 'John', 'Susan']);
+    });
+
+    it('should sort string data based on given value to be sorted on', () => {
+      const testList = [
+        { name: 'John' },
+        { name: 'Amanda' },
+        { name: 'Susan' },
+        { name: 'Jack' },
+      ];
+
+      const sortedList = sortDataList({
+        data: testList,
+        config: { type: 'string', selector: (val) => val.name },
+      });
+
+      expect(sortedList).toEqual([
+        { name: 'Amanda' },
+        { name: 'Jack' },
+        { name: 'John' },
+        { name: 'Susan' },
+      ]);
+    });
+
+    it('should sort number data based on given value to be sorted on', () => {
+      const testList = [
+        { age: 24 },
+        { age: 20 },
+        { age: 36 },
+        { age: 18 },
+      ];
+
+      const sortedList = sortDataList({
+        data: testList,
+        config: { type: 'number', selector: (val) => val.age },
+      });
+
+      expect(sortedList).toEqual([
+        { age: 18 },
+        { age: 20 },
+        { age: 24 },
+        { age: 36 },
+      ]);
+    });
+
+    it('should sort date data based on given value to be sorted on', () => {
+      const testList = [
+        { dob: new Date('2026-01-03T12:00:00.0Z') },
+        { dob: new Date('2026-01-05T12:00:00.0Z') },
+        { dob: new Date('2026-01-02T12:00:00.0Z') },
+        { dob: new Date('2026-01-04T12:00:00.0Z') },
+      ];
+
+      const sortedList = sortDataList({
+        data: testList,
+        config: { type: 'date', selector: (val) => val.dob },
+      });
+
+      expect(sortedList).deep.equal([
+        { dob: new Date('2026-01-02T12:00:00.0Z') },
+        { dob: new Date('2026-01-03T12:00:00.0Z') },
+        { dob: new Date('2026-01-04T12:00:00.0Z') },
+        { dob: new Date('2026-01-05T12:00:00.0Z') },
+      ]);
+    });
   });
 
   it('getInitialColumnFilterFnState correctly creates filterFns initial state', () => {
