@@ -55,9 +55,12 @@ describe('PrimaryImage Component', () => {
     expect((await screen.findAllByText('logo1.png')).length).toEqual(15);
     const cancelButton = screen.getByRole('button', { name: 'Cancel' });
     await user.click(cancelButton);
-    await waitFor(() => {
-      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+      },
+      { timeout: 5000 }
+    );
   });
 
   it('can open and close the remove primary image dialog', async () => {

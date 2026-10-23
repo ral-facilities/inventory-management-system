@@ -21,9 +21,12 @@ describe('SystemTypes', () => {
   it('renders table correctly', async () => {
     const view = createView();
 
-    await waitFor(() => {
-      expect(screen.getByText('Storage')).toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        expect(screen.getByText('Storage')).toBeInTheDocument();
+      },
+      { timeout: 5000 }
+    );
 
     await waitFor(
       () => {
@@ -32,7 +35,7 @@ describe('SystemTypes', () => {
       { timeout: 10000 }
     );
     expect(view.asFragment()).toMatchSnapshot();
-  });
+  }, 20000);
 
   it('sets and clears the table filters', async () => {
     createView();

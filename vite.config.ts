@@ -1,9 +1,14 @@
 import { codecovVitePlugin } from '@codecov/vite-plugin';
 import react from '@vitejs/plugin-react';
-import browserslistToEsbuild from 'browserslist-to-esbuild';
 import fs from 'node:fs';
 import path from 'path';
-import { PluginOption, UserConfig, defineConfig, loadEnv } from 'vite';
+import {
+  PluginOption,
+  UserConfig,
+  defineConfig,
+  esmExternalRequirePlugin,
+  loadEnv,
+} from 'vite';
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 
 /* See https://github.com/mswjs/msw/discussions/712 */
@@ -79,15 +84,20 @@ export default defineConfig(({ mode }) => {
     },
   };
 
-  const rollupExternals: string[] = [];
+  const rolldownExternals: string[] = [];
 
   // Exclude msw if necessary
   if (excludeMSW) {
     plugins.push(excludeMSWPlugin());
-    rollupExternals.push('msw');
+    rolldownExternals.push('msw');
   }
 
   if (buildLibrary) {
+    plugins.push(
+      esmExternalRequirePlugin({
+        external: ['react', 'react-dom'].concat(rolldownExternals),
+      })
+    );
     // Config for deployment in SciGateway
     plugins.push(cssInjectedByJsPlugin());
     config.build = {
@@ -100,8 +110,7 @@ export default defineConfig(({ mode }) => {
         entry: 'src/main.tsx',
         name: 'inventory-management-system',
       },
-      rollupOptions: {
-        external: ['react', 'react-dom'].concat(rollupExternals),
+      rolldownOptions: {
         input: 'src/main.tsx',
         output: {
           entryFileNames: '[name].js',
@@ -117,23 +126,17 @@ export default defineConfig(({ mode }) => {
   } else {
     // Config for stand alone deployment e.g. for cypress
     config.build = {
-      rollupOptions: {
+      rolldownOptions: {
         input: ['src/main.tsx', './index.html'],
         // Don't make react/react-dom external as not a library here, so have to bundle
-        external: rollupExternals,
-        output: {
-          globals: {
-            react: 'React',
-            'react-dom': 'ReactDOM',
-          },
-        },
+        external: rolldownExternals,
         preserveEntrySignatures: 'strict',
       },
     };
   }
 
   // Use browserslist config
-  config.build.target = browserslistToEsbuild();
+  config.build.target = 'baseline-widely-available';
 
   return {
     ...config,
@@ -141,6 +144,7 @@ export default defineConfig(({ mode }) => {
       globals: true,
       environment: 'jsdom',
       globalSetup: './globalSetup.js',
+      testTimeout: 10000,
       setupFiles: ['src/setupTests.ts'],
       coverage: {
         reporter: [

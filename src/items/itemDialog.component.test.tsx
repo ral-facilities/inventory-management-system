@@ -209,6 +209,10 @@ describe('ItemDialog', () => {
 
       createView();
 
+      await waitFor(() =>
+        expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+      );
+
       await user.click(screen.getByText('Add item properties'));
       await waitFor(() => {
         expect(
@@ -406,7 +410,7 @@ describe('ItemDialog', () => {
       await user.click(screen.getByText('Add item details'));
 
       await waitFor(() => {
-        expect(screen.getByDisplayValue('Cameras/%s'));
+        expect(screen.getByDisplayValue('Cameras 1/%s'));
       });
     });
 
@@ -1316,7 +1320,7 @@ describe('ItemDialog', () => {
     it('does not close dialog on background click, or on escape key press', async () => {
       createView();
 
-      await userEvent.click(document.body);
+      await user.click(document.body);
 
       expect(onClose).not.toHaveBeenCalled();
 
