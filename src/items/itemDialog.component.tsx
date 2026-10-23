@@ -71,11 +71,12 @@ import handleTransferState from '../handleTransferState';
 import { useAppSelector } from '../state/hook';
 import { selectSettings } from '../state/slices/configSlice';
 import { SystemsTableView } from '../systems/systemsTableView.component';
+import { sortDataList } from '../utils.tsx';
 import Breadcrumbs from '../view/breadcrumbs.component';
 
 function toItemDetailsStep(
   item: Item | undefined,
-  catalogueCategory: CatalogueCategory | undefined,
+  catalogueItem: CatalogueItem | undefined,
   serialNumberPrefillEnabled: boolean
 ): ItemDetailsStep {
   if (!item) {
@@ -87,7 +88,7 @@ function toItemDetailsStep(
       asset_number: '',
       serial_number: {
         serial_number:
-          (serialNumberPrefillEnabled && catalogueCategory?.name + '/%s') || '',
+          (serialNumberPrefillEnabled && catalogueItem?.name + '/%s') || '',
         starting_value: '',
         quantity: '',
       },
@@ -245,7 +246,7 @@ function ItemDialog(props: ItemDialogProps) {
     ),
     defaultValues: toItemDetailsStep(
       selectedItem,
-      catalogueCategory,
+      catalogueItem,
       serialNumberPrefillEnabled
     ),
   });
@@ -287,11 +288,7 @@ function ItemDialog(props: ItemDialogProps) {
   // Load the values for editing.
   React.useEffect(() => {
     resetDetailsStep(
-      toItemDetailsStep(
-        selectedItem,
-        catalogueCategory,
-        serialNumberPrefillEnabled
-      )
+      toItemDetailsStep(selectedItem, catalogueItem, serialNumberPrefillEnabled)
     );
     resetPropertiesStep({
       properties: convertToPropertyValueList(
@@ -303,6 +300,7 @@ function ItemDialog(props: ItemDialogProps) {
     });
   }, [
     catalogueCategory,
+    catalogueItem,
     catalogueItem?.properties,
     duplicate,
     requestType,
@@ -1059,7 +1057,13 @@ function ItemDialog(props: ItemDialogProps) {
                     }}
                     sx={{ alignItems: 'center' }}
                     fullWidth
-                    options={usageStatuses ?? []}
+                    options={sortDataList({
+                      data: usageStatuses ?? [],
+                      config: {
+                        type: 'string',
+                        selector: (value) => value.code,
+                      },
+                    })}
                     isOptionEqualToValue={(option, value) =>
                       option.id == value.id
                     }
@@ -1202,7 +1206,19 @@ function ItemDialog(props: ItemDialogProps) {
                                 }
                                 sx={{ alignItems: 'center' }}
                                 fullWidth
-                                options={property.allowed_values?.values ?? []}
+                                options={sortDataList({
+                                  data: property.allowed_values?.values ?? [],
+                                  config:
+                                    property.type === 'number'
+                                      ? {
+                                          type: 'number',
+                                          selector: (value) => Number(value),
+                                        }
+                                      : {
+                                          type: 'string',
+                                          selector: (value) => String(value),
+                                        },
+                                })}
                                 getOptionLabel={(option) => option.toString()}
                                 isOptionEqualToValue={(option, value) =>
                                   option.toString() === value.toString() ||

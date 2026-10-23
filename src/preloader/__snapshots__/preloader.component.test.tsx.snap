@@ -2,7 +2,9 @@
 
 exports[`Preloader component > does not render when the site is not loading 1`] = `
 <DocumentFragment>
-  <div>
+  <div
+    style="height: 100%;"
+  >
     <div>
       Test
     </div>
@@ -12,7 +14,9 @@ exports[`Preloader component > does not render when the site is not loading 1`] 
 
 exports[`Preloader component > renders when the site is loading 1`] = `
 <DocumentFragment>
-  <div>
+  <div
+    style="height: 100%;"
+  >
     <div
       class="MuiBox-root css-1axvgr5"
     >

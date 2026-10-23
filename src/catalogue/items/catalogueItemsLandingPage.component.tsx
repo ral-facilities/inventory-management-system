@@ -1,6 +1,7 @@
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
 import NotesIcon from '@mui/icons-material/Notes';
+import AddIcon from '@mui/icons-material/Add';
 import {
   Box,
   Button,
@@ -28,6 +29,8 @@ import { formatDateTimeStrings, roundUpTenth } from '../../utils';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import { getCICriticalityLabel } from './catalogueItemsTable.component';
 import CatalogueLink from './catalogueLink.component';
+import ItemDialog from '../../items/itemDialog.component.tsx';
+import { selectAuthorisation } from '../../state/slices/authorisationSlice.tsx';
 
 export const CriticalityInfoToolTip = () => {
   return (
@@ -60,13 +63,51 @@ export const NumberOfSparesRequiredInfoToolTip = () => {
     </Tooltip>
   );
 };
-const CatalogueItemsActionMenu = (props: {
+
+const AddItemActions = (props: {
   catalogueItem: CatalogueItem;
   catalogueCategory: CatalogueCategory;
 }) => {
   const { catalogueItem, catalogueCategory } = props;
+  const [createItemDialogOpen, setCreateItemDialogOpen] = React.useState<boolean>(false);
+
+  return (
+    <Grid>
+      <Button
+        startIcon={<AddIcon />}
+        sx={{ ml: 0.5, py: '5.75px' }}
+        variant="outlined"
+        aria-label="add item button"
+        onClick={() => setCreateItemDialogOpen(true)}
+      >
+        Add Item
+      </Button>
+
+      {/* Remount component on dialog open to clear form fields */}
+      {createItemDialogOpen && (
+        <ItemDialog
+          open={createItemDialogOpen}
+          onClose={() => setCreateItemDialogOpen(false)}
+          requestType="post"
+          isAdminMode={false}
+          catalogueCategory={catalogueCategory}
+          catalogueItem={catalogueItem}
+        />
+      )}
+    </Grid>
+  );
+}
+
+const CatalogueItemsActionMenu = (props: {
+  catalogueItem: CatalogueItem;
+  catalogueCategory: CatalogueCategory;
+}) => {
+  const { isAdminMode } = useAppSelector(selectAuthorisation);
+  const { catalogueItem, catalogueCategory } = props;
   const [editItemDialogOpen, setEditItemDialogOpen] =
     React.useState<boolean>(false);
+  const [createItemDialogOpen, setCreateItemDialogOpen] = React.useState<boolean>(false);
+
   return (
     <ActionMenu
       ariaLabelPrefix="catalogue items landing page"
@@ -85,6 +126,23 @@ const CatalogueItemsActionMenu = (props: {
           />
         ),
       }}
+      otherItems={isAdminMode ? [
+        {
+          label: 'Add Item as Admin',
+          icon: <AddIcon fontSize="small" sx={{ mr: 1 }} />,
+          onClick: () => setCreateItemDialogOpen(true),
+          dialog: (
+            <ItemDialog
+              open={createItemDialogOpen}
+              onClose={() => setCreateItemDialogOpen(false)}
+              requestType="post"
+              isAdminMode={true}
+              catalogueCategory={catalogueCategory}
+              catalogueItem={catalogueItem}
+            />
+          ),
+        }
+      ] : undefined}
     />
   );
 };
@@ -238,6 +296,10 @@ function CatalogueItemsLandingPage() {
                     catalogueCategory={catalogueCategoryData}
                   />
                 </Grid>
+                <AddItemActions
+                  catalogueItem={catalogueItemIdData}
+                  catalogueCategory={catalogueCategoryData}
+                />
                 <Grid>
                   <Button
                     sx={{ ml: 0.5, py: '5.75px' }}
