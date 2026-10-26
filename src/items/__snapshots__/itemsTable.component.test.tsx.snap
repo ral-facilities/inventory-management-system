@@ -2,12 +2,14 @@
 
 exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = `
 <DocumentFragment>
-  <div>
+  <div
+    style="height: 100%;"
+  >
     <div
-      style="width: 100%;"
+      class="MuiBox-root css-o2282t"
     >
       <div
-        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-1hoqul-MuiPaper-root"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-th9pv0-MuiPaper-root"
         style="--Paper-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);"
       >
         <div
@@ -217,7 +219,7 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
           </div>
         </div>
         <div
-          class="MuiTableContainer-root css-1at0h20-MuiTableContainer-root"
+          class="MuiTableContainer-root css-1qjrzjp-MuiTableContainer-root"
           data-testid="items-table-container"
         >
           <table
@@ -1676,12 +1678,14 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
 
 exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = `
 <DocumentFragment>
-  <div>
+  <div
+    style="height: 100%;"
+  >
     <div
-      style="width: 100%;"
+      class="MuiBox-root css-o2282t"
     >
       <div
-        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-1hoqul-MuiPaper-root"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-th9pv0-MuiPaper-root"
         style="--Paper-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);"
       >
         <div
@@ -1894,7 +1898,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
           </div>
         </div>
         <div
-          class="MuiTableContainer-root css-1at0h20-MuiTableContainer-root"
+          class="MuiTableContainer-root css-1qjrzjp-MuiTableContainer-root"
           data-testid="items-table-container"
         >
           <table
@@ -3349,16 +3353,18 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
 
 exports[`Items Table > renders the dense table correctly 1`] = `
 <DocumentFragment>
-  <div>
+  <div
+    style="height: 100%;"
+  >
     <div
-      style="width: 100%;"
+      class="MuiBox-root css-o2282t"
     >
       <div
-        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-1hoqul-MuiPaper-root"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-th9pv0-MuiPaper-root"
         style="--Paper-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);"
       >
         <div
-          class="MuiTableContainer-root css-a76s90-MuiTableContainer-root"
+          class="MuiTableContainer-root css-1qjrzjp-MuiTableContainer-root"
           data-testid="items-table-container"
         >
           <table
